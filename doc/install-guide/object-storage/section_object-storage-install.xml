@@ -69,15 +69,15 @@
                     the <literal>swift</literal> user. Use the
                         <literal>service</literal> tenant and give the user the
                         <literal>admin</literal> role:</para>
-                <screen><prompt>$</prompt> <userinput>keystone user-create --name=swift --pass=<replaceable>SWIFT_PASS</replaceable> \
-  --email=<replaceable>swift@example.com</replaceable></userinput>
-<prompt>$</prompt> <userinput>keystone user-role-add --user=swift --tenant=service --role=admin</userinput></screen>
+                <screen><prompt>$</prompt> <userinput>keystone user-create --name swift --pass <replaceable>SWIFT_PASS</replaceable> \
+  --email <replaceable>swift@example.com</replaceable></userinput>
+<prompt>$</prompt> <userinput>keystone user-role-add --user swift --tenant service --role admin</userinput></screen>
             </step>
             <step>
                 <para>Create a service entry for the Object Storage
                     Service:</para>
-                <screen><prompt>$</prompt> <userinput>keystone service-create --name=swift --type=object-store \
-  --description="OpenStack Object Storage"</userinput>
+                <screen><prompt>$</prompt> <userinput>keystone service-create --name swift --type object-store \
+  --description "OpenStack Object Storage"</userinput>
 <computeroutput>+-------------+----------------------------------+
 |   Property  |              Value               |
 +-------------+----------------------------------+
@@ -98,10 +98,10 @@
                     API. In this guide, the <literal>controller</literal> host
                     name is used:</para>
                 <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id=$(keystone service-list | awk '/ object-store / {print $2}') \
-  --publicurl='http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
-  --internalurl='http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
-  --adminurl=http://<replaceable>controller</replaceable>:8080</userinput>
+  --service-id $(keystone service-list | awk '/ object-store / {print $2}') \
+  --publicurl 'http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
+  --internalurl 'http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
+  --adminurl http://<replaceable>controller</replaceable>:8080</userinput>
 <computeroutput>+-------------+---------------------------------------------------+
 |   Property  |                       Value                       |
 +-------------+---------------------------------------------------+

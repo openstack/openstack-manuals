@@ -55,7 +55,7 @@
       <substeps>
         <step>
           <para>Create a <literal>cinder</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name=cinder --pass=<replaceable>CINDER_PASS</replaceable> --email=<replaceable>EMAIL_ADDRESS</replaceable></userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name cinder --pass <replaceable>CINDER_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput></screen>
           <para>Replace <replaceable>CINDER_PASS</replaceable> with a suitable
             password and <replaceable>EMAIL_ADDRESS</replaceable> with
             a suitable e-mail address.</para>
@@ -64,27 +64,27 @@
           <para>Link the <literal>cinder</literal> user to the
             <literal>service</literal> tenant and <literal>admin</literal>
             role:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user=cinder --tenant=service --role=admin</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user cinder --tenant service --role admin</userinput></screen>
         </step>
       </substeps>
     </step>
     <step>
       <para>Create the Block Storage service (version 1 API) endpoints:</para>
-      <screen><prompt>$</prompt> <userinput>keystone service-create --name=cinder --type=volume --description="OpenStack Block Storage"</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name cinder --type volume --description "OpenStack Block Storage"</userinput>
 <prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id=$(keystone service-list | awk '/ volume / {print $2}') \
-  --publicurl=http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
-  --internalurl=http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
-  --adminurl=http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s</userinput></screen>
+  --service-id $(keystone service-list | awk '/ volume / {print $2}') \
+  --publicurl http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
+  --internalurl http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
+  --adminurl http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s</userinput></screen>
     </step>
     <step>
       <para>Create the Block Storage service (version 2 API) endpoints:</para>
-      <screen><prompt>$</prompt> <userinput>keystone service-create --name=cinderv2 --type=volumev2 --description="OpenStack Block Storage v2"</userinput>
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name cinderv2 --type volumev2 --description "OpenStack Block Storage v2"</userinput>
 <prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id=$(keystone service-list | awk '/ volumev2 / {print $2}') \
-  --publicurl=http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
-  --internalurl=http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
-  --adminurl=http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s</userinput></screen>
+  --service-id $(keystone service-list | awk '/ volumev2 / {print $2}') \
+  --publicurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
+  --internalurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
+  --adminurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s</userinput></screen>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
