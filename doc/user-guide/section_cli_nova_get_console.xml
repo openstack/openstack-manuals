@@ -5,15 +5,43 @@
   version="5.0"
   xml:id="instance_console">
     <title>Access an instance through a console</title>
-    <para>To access an instance through a VNC console, run the
-        following command:</para> <screen><prompt>$</prompt> <userinput>nova get-vnc-console <replaceable>INSTANCE_NAME</replaceable> xvpvnc</userinput></screen>
+    <para>In order to see the console output of an instance, regardless
+        of whether or not the console log has output, either VNC or SPICE
+        is used. This allows for relaying keyboard and mouse activity to
+        and from the instance in question.</para>
+    <para>There are three common remote console access methods in use
+        with OpenStack:</para>
+    <variablelist>
+        <varlistentry><term>novnc</term>
+            <listitem><para>An in-browser VNC client implemented
+                using HTML5 Canvas and WebSockets</para></listitem>
+        </varlistentry>
+        <varlistentry><term>spice</term>
+            <listitem><para>A complete in-browser client solution for
+                interaction with virtualized instances</para></listitem>
+        </varlistentry>
+        <varlistentry><term>xvpvnc</term>
+            <listitem><para>A Java client offering console access to
+                an instance</para></listitem>
+        </varlistentry>
+    </variablelist>
+    <para>Example:</para>
+    <para>To access an instance through a remote console, run the
+        following command:</para> <screen><prompt>$</prompt> <userinput>nova <command>get-vnc-console</command> <replaceable>INSTANCE_NAME</replaceable> <replaceable>VNC_TYPE</replaceable></userinput></screen>
 <para>The command returns a URL from which you can access your instance:</para>
 <screen><computeroutput>+--------+------------------------------------------------------------------------------+
 | Type   | Url                                                                          |
 +--------+------------------------------------------------------------------------------+
-| xvpvnc | http://166.78.190.96:6081/console?token=c83ae3a3-15c4-4890-8d45-aefb494a8d6c |
+| xvpvnc | http://192.168.5.96:6081/console?token=c83ae3a3-15c4-4890-8d45-aefb494a8d6c |
 +--------+------------------------------------------------------------------------------+</computeroutput></screen>
-<note><para>To access an instance through a non-VNC console, specify the
-                <parameter>novnc</parameter> parameter instead of the
-                <parameter>xvpvnc</parameter> parameter.</para></note>
+    <para><replaceable>VNC_TYPE</replaceable> can be replaced by any of
+        the above values as connection types.</para>
+    <para>When using SPICE to view the console of an instance,
+        a browser plugin can be used directly on the instance page,
+        or the <command>get-vnc-console</command> command can be
+        used with it, as well, by returning a token-authenticated
+        address such as the one above.</para>
+    <para>For further information and comparisons (including security
+        considerations, please see the
+        <link xlink:href="http://docs.openstack.org/security-guide/content/ch026_compute.html">security guide</link>.</para>
 </section>
