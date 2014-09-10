@@ -15,7 +15,7 @@
        OpenStack command-line interface (CLI).
 
        This chapter documents <command>openstack</command> version
-        0.4.0.
+        <literal>0.4.1</literal>.
     </para>
 
     <para>For help on a specific <command>openstack</command>
@@ -40,11 +40,13 @@
                  [--os-region-name &lt;auth-region-name&gt;]
                  [--os-cacert &lt;ca-bundle-file&gt;] [--verify | --insecure]
                  [--os-default-domain &lt;auth-domain&gt;] [--os-token &lt;token&gt;]
-                 [--os-url &lt;url&gt;] [--os-use-keyring]
-                 [--os-identity-api-version &lt;identity-api-version&gt;]
-                 [--os-volume-api-version &lt;volume-api-version&gt;]
-                 [--os-image-api-version &lt;image-api-version&gt;]
+                 [--os-url &lt;url&gt;] [--timing]
                  [--os-compute-api-version &lt;compute-api-version&gt;]
+                 [--os-network-api-version &lt;network-api-version&gt;]
+                 [--os-image-api-version &lt;image-api-version&gt;]
+                 [--os-volume-api-version &lt;volume-api-version&gt;]
+                 [--os-identity-api-version &lt;identity-api-version&gt;]
+                 [--os-trust-id &lt;trust-id&gt;]
                  [--os-object-api-version &lt;object-api-version&gt;] [-h]</computeroutput></screen>
     </section>
     <section xml:id="openstackclient_command_optional">
@@ -252,29 +254,28 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-use-keyring</command></term>
+    <term><command>--timing</command></term>
     <listitem>
       <para>
-        Use keyring to store password, default=False (Env:
-      OS_USE_KEYRING)
+        Print API call timing info
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-identity-api-version &lt;identity-api-version&gt;</command></term>
+    <term><command>--os-compute-api-version &lt;compute-api-version&gt;</command></term>
     <listitem>
       <para>
-      Identity API version, default=2.0 (Env:
-      OS_IDENTITY_API_VERSION)
+      Compute API version, default=2 (Env:
+      OS_COMPUTE_API_VERSION)
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-volume-api-version &lt;volume-api-version&gt;</command></term>
+    <term><command>--os-network-api-version &lt;network-api-version&gt;</command></term>
     <listitem>
       <para>
-      Volume API version, default=1 (Env:
-      OS_VOLUME_API_VERSION)
+      Network API version, default=2 (Env:
+      OS_NETWORK_API_VERSION)
       </para>
     </listitem>
   </varlistentry>
@@ -288,11 +289,29 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-compute-api-version &lt;compute-api-version&gt;</command></term>
+    <term><command>--os-volume-api-version &lt;volume-api-version&gt;</command></term>
     <listitem>
       <para>
-      Compute API version, default=2 (Env:
-      OS_COMPUTE_API_VERSION)
+      Volume API version, default=1 (Env:
+      OS_VOLUME_API_VERSION)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-identity-api-version &lt;identity-api-version&gt;</command></term>
+    <listitem>
+      <para>
+      Identity API version, default=2.0 (Env:
+      OS_IDENTITY_API_VERSION)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-trust-id &lt;trust-id&gt;</command></term>
+    <listitem>
+      <para>
+      Trust ID to use when authenticating. This can only be
+      used with Keystone v3 API (Env: OS_TRUST_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -316,7 +335,7 @@
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_add_host">
-        <title>openstack aggregate add host command</title>
+        <title>openstack aggregate add host</title>
         <screen><computeroutput>usage: openstack aggregate add host [-h] [-f {shell,table,value}] [-c COLUMN]
                                     [--max-width &lt;integer&gt;]
                                     [--variable VARIABLE] [--prefix PREFIX]
@@ -355,7 +374,7 @@ Add host to aggregate
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_create">
-        <title>openstack aggregate create command</title>
+        <title>openstack aggregate create</title>
         <screen><computeroutput>usage: openstack aggregate create [-h] [-f {shell,table,value}] [-c COLUMN]
                                   [--max-width &lt;integer&gt;]
                                   [--variable VARIABLE] [--prefix PREFIX]
@@ -405,7 +424,7 @@ Create a new aggregate
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_delete">
-        <title>openstack aggregate delete command</title>
+        <title>openstack aggregate delete</title>
         <screen><computeroutput>usage: openstack aggregate delete [-h] &lt;aggregate&gt;</computeroutput></screen>
         <para>
 Delete an existing aggregate
@@ -433,7 +452,7 @@ Delete an existing aggregate
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_list">
-        <title>openstack aggregate list command</title>
+        <title>openstack aggregate list</title>
         <screen><computeroutput>usage: openstack aggregate list [-h] [-f {csv,table}] [-c COLUMN]
                                 [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
@@ -461,7 +480,7 @@ List all aggregates
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_remove_host">
-        <title>openstack aggregate remove host command</title>
+        <title>openstack aggregate remove host</title>
         <screen><computeroutput>usage: openstack aggregate remove host [-h] [-f {shell,table,value}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
                                        [--variable VARIABLE] [--prefix PREFIX]
@@ -500,7 +519,7 @@ Remove host from aggregate
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_set">
-        <title>openstack aggregate set command</title>
+        <title>openstack aggregate set</title>
         <screen><computeroutput>usage: openstack aggregate set [-h] [-f {shell,table,value}] [-c COLUMN]
                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                [--prefix PREFIX] [--name &lt;new-name&gt;]
@@ -558,7 +577,7 @@ Set aggregate properties
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_show">
-        <title>openstack aggregate show command</title>
+        <title>openstack aggregate show</title>
         <screen><computeroutput>usage: openstack aggregate show [-h] [-f {shell,table,value}] [-c COLUMN]
                                 [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                 [--prefix PREFIX]
@@ -589,7 +608,7 @@ Show a specific aggregate
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_backup_create">
-        <title>openstack backup create command</title>
+        <title>openstack backup create</title>
         <screen><computeroutput>usage: openstack backup create [-h] [-f {shell,table,value}] [-c COLUMN]
                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                [--prefix PREFIX] [--container &lt;container&gt;]
@@ -645,7 +664,7 @@ Create backup command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_backup_delete">
-        <title>openstack backup delete command</title>
+        <title>openstack backup delete</title>
         <screen><computeroutput>usage: openstack backup delete [-h] &lt;backup&gt;</computeroutput></screen>
         <para>
 Delete backup command
@@ -673,7 +692,7 @@ Delete backup command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_backup_list">
-        <title>openstack backup list command</title>
+        <title>openstack backup list</title>
         <screen><computeroutput>usage: openstack backup list [-h] [-f {csv,table}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -692,7 +711,7 @@ List backup command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_backup_restore">
-        <title>openstack backup restore command</title>
+        <title>openstack backup restore</title>
         <screen><computeroutput>usage: openstack backup restore [-h] &lt;backup&gt; &lt;dest-volume&gt;</computeroutput></screen>
         <para>
 Restore backup command
@@ -728,7 +747,7 @@ Restore backup command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_backup_show">
-        <title>openstack backup show command</title>
+        <title>openstack backup show</title>
         <screen><computeroutput>usage: openstack backup show [-h] [-f {shell,table,value}] [-c COLUMN]
                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
                              [--prefix PREFIX]
@@ -759,7 +778,7 @@ Show backup command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_compute_agent_create">
-        <title>openstack compute agent create command</title>
+        <title>openstack compute agent create</title>
         <screen><computeroutput>usage: openstack compute agent create [-h] [-f {shell,table,value}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--variable VARIABLE] [--prefix PREFIX]
@@ -831,7 +850,7 @@ Create compute agent command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_compute_agent_delete">
-        <title>openstack compute agent delete command</title>
+        <title>openstack compute agent delete</title>
         <screen><computeroutput>usage: openstack compute agent delete [-h] &lt;id&gt;</computeroutput></screen>
         <para>
 Delete compute agent command
@@ -859,7 +878,7 @@ Delete compute agent command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_compute_agent_list">
-        <title>openstack compute agent list command</title>
+        <title>openstack compute agent list</title>
         <screen><computeroutput>usage: openstack compute agent list [-h] [-f {csv,table}] [-c COLUMN]
                                     [--max-width &lt;integer&gt;]
                                     [--quote {all,minimal,none,nonnumeric}]
@@ -887,7 +906,7 @@ List compute agent command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_compute_agent_set">
-        <title>openstack compute agent set command</title>
+        <title>openstack compute agent set</title>
         <screen><computeroutput>usage: openstack compute agent set [-h] [-f {shell,table,value}] [-c COLUMN]
                                    [--max-width &lt;integer&gt;]
                                    [--variable VARIABLE] [--prefix PREFIX]
@@ -942,7 +961,7 @@ Set compute agent command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_compute_service_list">
-        <title>openstack compute service list command</title>
+        <title>openstack compute service list</title>
         <screen><computeroutput>usage: openstack compute service list [-h] [-f {csv,table}] [-c COLUMN]
                                       [--max-width &lt;integer&gt;]
                                       [--quote {all,minimal,none,nonnumeric}]
@@ -978,7 +997,7 @@ List service command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_compute_service_set">
-        <title>openstack compute service set command</title>
+        <title>openstack compute service set</title>
         <screen><computeroutput>usage: openstack compute service set [-h] [-f {csv,table}] [-c COLUMN]
                                      [--max-width &lt;integer&gt;]
                                      [--quote {all,minimal,none,nonnumeric}]
@@ -1034,17 +1053,17 @@ Set service command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_console_log_show">
-        <title>openstack console log show command</title>
+        <title>openstack console log show</title>
         <screen><computeroutput>usage: openstack console log show [-h] [--lines &lt;num-lines&gt;] &lt;server&gt;</computeroutput></screen>
         <para>
-Show console-log command
+Show server's console output
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of server to display console log
+        Server (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -1071,21 +1090,21 @@ Show console-log command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_console_url_show">
-        <title>openstack console url show command</title>
+        <title>openstack console url show</title>
         <screen><computeroutput>usage: openstack console url show [-h] [-f {shell,table,value}] [-c COLUMN]
                                   [--max-width &lt;integer&gt;]
                                   [--variable VARIABLE] [--prefix PREFIX]
                                   [--novnc | --xvpvnc | --spice]
                                   &lt;server&gt;</computeroutput></screen>
         <para>
-Show console-url command
+Show server's remote console URL
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of server to display console log
+        Server (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -1126,8 +1145,67 @@ Show console-url command
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_container_create">
+        <title>openstack container create</title>
+        <screen><computeroutput>usage: openstack container create [-h] [-f {shell,table,value}] [-c COLUMN]
+                                  [--max-width &lt;integer&gt;]
+                                  [--variable VARIABLE] [--prefix PREFIX]
+                                  &lt;container&gt;</computeroutput></screen>
+        <para>
+Create a container
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        New container name
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_container_delete">
+        <title>openstack container delete</title>
+        <screen><computeroutput>usage: openstack container delete [-h] &lt;container&gt;</computeroutput></screen>
+        <para>
+Delete a container
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Container name to delete
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_container_list">
-        <title>openstack container list command</title>
+        <title>openstack container list</title>
         <screen><computeroutput>usage: openstack container list [-h] [-f {csv,table}] [-c COLUMN]
                                 [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
@@ -1197,7 +1275,7 @@ List containers
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_container_show">
-        <title>openstack container show command</title>
+        <title>openstack container show</title>
         <screen><computeroutput>usage: openstack container show [-h] [-f {shell,table,value}] [-c COLUMN]
                                 [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                 [--prefix PREFIX]
@@ -1228,7 +1306,7 @@ Show container information
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_create">
-        <title>openstack ec2 credentials create command</title>
+        <title>openstack ec2 credentials create</title>
         <screen><computeroutput>usage: openstack ec2 credentials create [-h] [-f {shell,table,value}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
                                         [--variable VARIABLE]
@@ -1265,7 +1343,7 @@ Create EC2 credentials
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_delete">
-        <title>openstack ec2 credentials delete command</title>
+        <title>openstack ec2 credentials delete</title>
         <screen><computeroutput>usage: openstack ec2 credentials delete [-h] [--user &lt;user&gt;] &lt;access-key&gt;</computeroutput></screen>
         <para>
 Delete EC2 credentials
@@ -1301,7 +1379,7 @@ Delete EC2 credentials
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_list">
-        <title>openstack ec2 credentials list command</title>
+        <title>openstack ec2 credentials list</title>
         <screen><computeroutput>usage: openstack ec2 credentials list [-h] [-f {csv,table}] [-c COLUMN]
                                       [--max-width &lt;integer&gt;]
                                       [--quote {all,minimal,none,nonnumeric}]
@@ -1329,7 +1407,7 @@ List EC2 credentials
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_show">
-        <title>openstack ec2 credentials show command</title>
+        <title>openstack ec2 credentials show</title>
         <screen><computeroutput>usage: openstack ec2 credentials show [-h] [-f {shell,table,value}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--variable VARIABLE] [--prefix PREFIX]
@@ -1369,7 +1447,7 @@ Show EC2 credentials
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_create">
-        <title>openstack endpoint create command</title>
+        <title>openstack endpoint create</title>
         <screen><computeroutput>usage: openstack endpoint create [-h] [-f {shell,table,value}] [-c COLUMN]
                                  [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                  [--prefix PREFIX] [--region &lt;region&gt;]
@@ -1435,7 +1513,7 @@ Create endpoint command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_delete">
-        <title>openstack endpoint delete command</title>
+        <title>openstack endpoint delete</title>
         <screen><computeroutput>usage: openstack endpoint delete [-h] &lt;endpoint-id&gt;</computeroutput></screen>
         <para>
 Delete endpoint command
@@ -1463,7 +1541,7 @@ Delete endpoint command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_list">
-        <title>openstack endpoint list command</title>
+        <title>openstack endpoint list</title>
         <screen><computeroutput>usage: openstack endpoint list [-h] [-f {csv,table}] [-c COLUMN]
                                [--max-width &lt;integer&gt;]
                                [--quote {all,minimal,none,nonnumeric}]
@@ -1491,7 +1569,7 @@ List endpoint command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_show">
-        <title>openstack endpoint show command</title>
+        <title>openstack endpoint show</title>
         <screen><computeroutput>usage: openstack endpoint show [-h] [-f {shell,table,value}] [-c COLUMN]
                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                [--prefix PREFIX]
@@ -1522,11 +1600,11 @@ Show endpoint command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_extension_list">
-        <title>openstack extension list command</title>
+        <title>openstack extension list</title>
         <screen><computeroutput>usage: openstack extension list [-h] [-f {csv,table}] [-c COLUMN]
                                 [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
-                                [--long] [--identity]</computeroutput></screen>
+                                [--long] [--identity] [--compute] [--volume]</computeroutput></screen>
         <para>
 List extension command
         </para>  <variablelist wordsize="10">
@@ -1555,10 +1633,26 @@ List extension command
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--compute</command></term>
+    <listitem>
+      <para>
+        List extensions for the Compute API
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--volume</command></term>
+    <listitem>
+      <para>
+        List extensions for the Volume API
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_flavor_create">
-        <title>openstack flavor create command</title>
+        <title>openstack flavor create</title>
         <screen><computeroutput>usage: openstack flavor create [-h] [-f {shell,table,value}] [-c COLUMN]
                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                [--prefix PREFIX] [--id &lt;id&gt;] [--ram &lt;size-mb&gt;]
@@ -1567,14 +1661,14 @@ List extension command
                                [--rxtx-factor &lt;factor&gt;] [--public | --private]
                                &lt;name&gt;</computeroutput></screen>
         <para>
-Create flavor command
+Create new flavor
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;name&gt;</command></term>
     <listitem>
       <para>
-        Name of the new flavor
+        New flavor name
       </para>
     </listitem>
   </varlistentry>
@@ -1650,7 +1744,7 @@ Create flavor command
     <term><command>--public</command></term>
     <listitem>
       <para>
-        Flavor is accessible to the public (default)
+        Flavor is accessible to other projects (default)
       </para>
     </listitem>
   </varlistentry>
@@ -1658,24 +1752,24 @@ Create flavor command
     <term><command>--private</command></term>
     <listitem>
       <para>
-        Flavor is inaccessible to the public
+        Flavor is inaccessible to other projects
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_flavor_delete">
-        <title>openstack flavor delete command</title>
+        <title>openstack flavor delete</title>
         <screen><computeroutput>usage: openstack flavor delete [-h] &lt;flavor&gt;</computeroutput></screen>
         <para>
-Delete flavor command
+Delete a flavor
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;flavor&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of flavor to delete
+        Flavor to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -1693,12 +1787,12 @@ Delete flavor command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_flavor_list">
-        <title>openstack flavor list command</title>
+        <title>openstack flavor list</title>
         <screen><computeroutput>usage: openstack flavor list [-h] [-f {csv,table}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
-List flavor command
+List flavors
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -1712,20 +1806,20 @@ List flavor command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_flavor_show">
-        <title>openstack flavor show command</title>
+        <title>openstack flavor show</title>
         <screen><computeroutput>usage: openstack flavor show [-h] [-f {shell,table,value}] [-c COLUMN]
                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
                              [--prefix PREFIX]
                              &lt;flavor&gt;</computeroutput></screen>
         <para>
-Show flavor command
+Show flavor details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;flavor&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of flavor to display
+        Flavor to display (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -1743,7 +1837,7 @@ Show flavor command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_host_list">
-        <title>openstack host list command</title>
+        <title>openstack host list</title>
         <screen><computeroutput>usage: openstack host list [-h] [-f {csv,table}] [-c COLUMN]
                            [--max-width &lt;integer&gt;]
                            [--quote {all,minimal,none,nonnumeric}]
@@ -1771,7 +1865,7 @@ List host command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_host_show">
-        <title>openstack host show command</title>
+        <title>openstack host show</title>
         <screen><computeroutput>usage: openstack host show [-h] [-f {csv,table}] [-c COLUMN]
                            [--max-width &lt;integer&gt;]
                            [--quote {all,minimal,none,nonnumeric}]
@@ -1802,13 +1896,13 @@ Show host command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_hypervisor_list">
-        <title>openstack hypervisor list command</title>
+        <title>openstack hypervisor list</title>
         <screen><computeroutput>usage: openstack hypervisor list [-h] [-f {csv,table}] [-c COLUMN]
                                  [--max-width &lt;integer&gt;]
                                  [--quote {all,minimal,none,nonnumeric}]
-                                 [--matching &lt;hostname&gt;]</computeroutput></screen>
+                                 [--matching &lt;hostname-str&gt;]</computeroutput></screen>
         <para>
-List hypervisor command
+List hypervisors
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -1820,24 +1914,23 @@ List hypervisor command
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--matching &lt;hostname&gt;</command></term>
+    <term><command>--matching &lt;hostname-str&gt;</command></term>
     <listitem>
       <para>
-      List hypervisors with hostnames matching the given
-      substring
+      Filter hypervisors using &lt;hostname-str&gt; substring
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_hypervisor_show">
-        <title>openstack hypervisor show command</title>
+        <title>openstack hypervisor show</title>
         <screen><computeroutput>usage: openstack hypervisor show [-h] [-f {shell,table,value}] [-c COLUMN]
                                  [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                  [--prefix PREFIX]
                                  &lt;id&gt;</computeroutput></screen>
         <para>
-Show hypervisor command
+Show hypervisor details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1862,7 +1955,7 @@ Show hypervisor command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_image_create">
-        <title>openstack image create command</title>
+        <title>openstack image create</title>
         <screen><computeroutput>usage: openstack image create [-h] [-f {shell,table,value}] [-c COLUMN]
                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
                               [--prefix PREFIX] [--id &lt;id&gt;] [--store &lt;store&gt;]
@@ -2058,7 +2151,7 @@ Create/upload an image
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_image_delete">
-        <title>openstack image delete command</title>
+        <title>openstack image delete</title>
         <screen><computeroutput>usage: openstack image delete [-h] &lt;image&gt;</computeroutput></screen>
         <para>
 Delete an image
@@ -2086,11 +2179,11 @@ Delete an image
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_image_list">
-        <title>openstack image list command</title>
+        <title>openstack image list</title>
         <screen><computeroutput>usage: openstack image list [-h] [-f {csv,table}] [-c COLUMN]
                             [--max-width &lt;integer&gt;]
                             [--quote {all,minimal,none,nonnumeric}]
-                            [--page-size &lt;size&gt;]</computeroutput></screen>
+                            [--page-size &lt;size&gt;] [--long]</computeroutput></screen>
         <para>
 List available images
         </para>  <variablelist wordsize="10">
@@ -2111,10 +2204,18 @@ List available images
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--long</command></term>
+    <listitem>
+      <para>
+        List additional fields in output
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_image_save">
-        <title>openstack image save command</title>
+        <title>openstack image save</title>
         <screen><computeroutput>usage: openstack image save [-h] [--file &lt;filename&gt;] &lt;image&gt;</computeroutput></screen>
         <para>
 Save an image locally
@@ -2150,7 +2251,7 @@ Save an image locally
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_image_set">
-        <title>openstack image set command</title>
+        <title>openstack image set</title>
         <screen><computeroutput>usage: openstack image set [-h] [-f {shell,table,value}] [-c COLUMN]
                            [--max-width &lt;integer&gt;] [--variable VARIABLE]
                            [--prefix PREFIX] [--name &lt;name&gt;]
@@ -2258,7 +2359,7 @@ Change image properties
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_image_show">
-        <title>openstack image show command</title>
+        <title>openstack image show</title>
         <screen><computeroutput>usage: openstack image show [-h] [-f {shell,table,value}] [-c COLUMN]
                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
                             [--prefix PREFIX]
@@ -2289,7 +2390,7 @@ Show image details
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ip_fixed_add">
-        <title>openstack ip fixed add command</title>
+        <title>openstack ip fixed add</title>
         <screen><computeroutput>usage: openstack ip fixed add [-h] &lt;network&gt; &lt;server&gt;</computeroutput></screen>
         <para>
 Add fixed-ip command
@@ -2325,7 +2426,7 @@ Add fixed-ip command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ip_fixed_remove">
-        <title>openstack ip fixed remove command</title>
+        <title>openstack ip fixed remove</title>
         <screen><computeroutput>usage: openstack ip fixed remove [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
         <para>
 Remove fixed-ip command
@@ -2361,10 +2462,10 @@ Remove fixed-ip command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_add">
-        <title>openstack ip floating add command</title>
+        <title>openstack ip floating add</title>
         <screen><computeroutput>usage: openstack ip floating add [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
         <para>
-Add floating-ip command
+Add floating-ip to server
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -2379,7 +2480,7 @@ Add floating-ip command
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Name of the server to receive the IP address
+        Server to receive the IP address (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -2397,13 +2498,13 @@ Add floating-ip command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_create">
-        <title>openstack ip floating create command</title>
+        <title>openstack ip floating create</title>
         <screen><computeroutput>usage: openstack ip floating create [-h] [-f {shell,table,value}] [-c COLUMN]
                                     [--max-width &lt;integer&gt;]
                                     [--variable VARIABLE] [--prefix PREFIX]
                                     &lt;pool&gt;</computeroutput></screen>
         <para>
-Create floating-ip command
+Create new floating-ip
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -2428,10 +2529,10 @@ Create floating-ip command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_delete">
-        <title>openstack ip floating delete command</title>
+        <title>openstack ip floating delete</title>
         <screen><computeroutput>usage: openstack ip floating delete [-h] &lt;ip-address&gt;</computeroutput></screen>
         <para>
-Delete floating-ip command
+Delete a floating-ip
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -2456,12 +2557,12 @@ Delete floating-ip command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_list">
-        <title>openstack ip floating list command</title>
+        <title>openstack ip floating list</title>
         <screen><computeroutput>usage: openstack ip floating list [-h] [-f {csv,table}] [-c COLUMN]
                                   [--max-width &lt;integer&gt;]
                                   [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
-List floating-ip command
+List floating-ips
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -2475,12 +2576,12 @@ List floating-ip command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_pool_list">
-        <title>openstack ip floating pool list command</title>
+        <title>openstack ip floating pool list</title>
         <screen><computeroutput>usage: openstack ip floating pool list [-h] [-f {csv,table}] [-c COLUMN]
                                        [--max-width &lt;integer&gt;]
                                        [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
-List floating-ip-pool command
+List floating-ip-pools
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -2494,10 +2595,10 @@ List floating-ip-pool command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_remove">
-        <title>openstack ip floating remove command</title>
+        <title>openstack ip floating remove</title>
         <screen><computeroutput>usage: openstack ip floating remove [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
         <para>
-Remove floating-ip command
+Remove floating-ip from server
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -2512,7 +2613,7 @@ Remove floating-ip command
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Name of the server to remove the IP address from
+        Server to remove the IP address from (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -2530,13 +2631,13 @@ Remove floating-ip command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_keypair_create">
-        <title>openstack keypair create command</title>
+        <title>openstack keypair create</title>
         <screen><computeroutput>usage: openstack keypair create [-h] [-f {shell,table,value}] [-c COLUMN]
                                 [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                 [--prefix PREFIX] [--public-key &lt;file&gt;]
                                 &lt;name&gt;</computeroutput></screen>
         <para>
-Create keypair command
+Create new keypair
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -2569,10 +2670,10 @@ Create keypair command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_keypair_delete">
-        <title>openstack keypair delete command</title>
+        <title>openstack keypair delete</title>
         <screen><computeroutput>usage: openstack keypair delete [-h] &lt;name&gt;</computeroutput></screen>
         <para>
-Delete keypair command
+Delete a keypair
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -2597,12 +2698,12 @@ Delete keypair command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_keypair_list">
-        <title>openstack keypair list command</title>
+        <title>openstack keypair list</title>
         <screen><computeroutput>usage: openstack keypair list [-h] [-f {csv,table}] [-c COLUMN]
                               [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
-List keypair command
+List keypairs
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -2616,13 +2717,13 @@ List keypair command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_keypair_show">
-        <title>openstack keypair show command</title>
+        <title>openstack keypair show</title>
         <screen><computeroutput>usage: openstack keypair show [-h] [-f {shell,table,value}] [-c COLUMN]
                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
                               [--prefix PREFIX] [--public-key]
                               &lt;name&gt;</computeroutput></screen>
         <para>
-Show keypair command
+Show keypair details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -2655,7 +2756,7 @@ Show keypair command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_limits_show">
-        <title>openstack limits show command</title>
+        <title>openstack limits show</title>
         <screen><computeroutput>usage: openstack limits show [-h] [-f {csv,table}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
@@ -2700,7 +2801,7 @@ Show compute and volume limits
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_module_list">
-        <title>openstack module list command</title>
+        <title>openstack module list</title>
         <screen><computeroutput>usage: openstack module list [-h] [-f {shell,table,value}] [-c COLUMN]
                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
                              [--prefix PREFIX] [--all]</computeroutput></screen>
@@ -2726,8 +2827,245 @@ List module versions
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_network_create">
+        <title>openstack network create</title>
+        <screen><computeroutput>usage: openstack network create [-h] [-f {shell,table,value}] [-c COLUMN]
+                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
+                                [--prefix PREFIX] [--enable | --disable]
+                                [--share | --no-share]
+                                &lt;network_name&gt;</computeroutput></screen>
+        <para>
+Create a network
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;network_name&gt;</command></term>
+    <listitem>
+      <para>
+        Name of network to create
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--enable</command></term>
+    <listitem>
+      <para>
+        Set administrative state up
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--disable</command></term>
+    <listitem>
+      <para>
+        Set administrative state down
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--share</command></term>
+    <listitem>
+      <para>
+        Share the network across tenants
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--no-share</command></term>
+    <listitem>
+      <para>
+        Do not share the network across tenants
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_network_delete">
+        <title>openstack network delete</title>
+        <screen><computeroutput>usage: openstack network delete [-h] &lt;network&gt;</computeroutput></screen>
+        <para>
+Delete a network
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;network&gt;</command></term>
+    <listitem>
+      <para>
+        Name or identifier of network to delete
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_network_list">
+        <title>openstack network list</title>
+        <screen><computeroutput>usage: openstack network list [-h] [-f {csv,table}] [-c COLUMN]
+                              [--max-width &lt;integer&gt;]
+                              [--quote {all,minimal,none,nonnumeric}]
+                              [--external] [--dhcp DHCP] [--long]</computeroutput></screen>
+        <para>
+List networks
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--external</command></term>
+    <listitem>
+      <para>
+        List external networks
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--dhcp DHCP ID</command></term>
+    <listitem>
+      <para>
+        of the DHCP agent
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--long</command></term>
+    <listitem>
+      <para>
+        Long listing
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_network_set">
+        <title>openstack network set</title>
+        <screen><computeroutput>usage: openstack network set [-h] [--enable | --disable]
+                             [--name &lt;network_name&gt;] [--share | --no-share]
+                             &lt;network&gt;</computeroutput></screen>
+        <para>
+Set network properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;network&gt;</command></term>
+    <listitem>
+      <para>
+        Name or identifier of network to set
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--enable</command></term>
+    <listitem>
+      <para>
+        Set administrative state up
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--disable</command></term>
+    <listitem>
+      <para>
+        Set administrative state down
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--name &lt;network_name&gt;</command></term>
+    <listitem>
+      <para>
+      New name for the network
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--share</command></term>
+    <listitem>
+      <para>
+        Share the network across tenants
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--no-share</command></term>
+    <listitem>
+      <para>
+        Do not share the network across tenants
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_network_show">
+        <title>openstack network show</title>
+        <screen><computeroutput>usage: openstack network show [-h] [-f {shell,table,value}] [-c COLUMN]
+                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
+                              [--prefix PREFIX]
+                              &lt;network&gt;</computeroutput></screen>
+        <para>
+Show network details
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;network&gt;</command></term>
+    <listitem>
+      <para>
+        Name or identifier of network to show
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_object_list">
-        <title>openstack object list command</title>
+        <title>openstack object list</title>
         <screen><computeroutput>usage: openstack object list [-h] [-f {csv,table}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
@@ -2817,7 +3155,7 @@ List objects
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_object_show">
-        <title>openstack object show command</title>
+        <title>openstack object show</title>
         <screen><computeroutput>usage: openstack object show [-h] [-f {shell,table,value}] [-c COLUMN]
                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
                              [--prefix PREFIX]
@@ -2856,7 +3194,7 @@ Show object information
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_project_create">
-        <title>openstack project create command</title>
+        <title>openstack project create</title>
         <screen><computeroutput>usage: openstack project create [-h] [-f {shell,table,value}] [-c COLUMN]
                                 [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                 [--prefix PREFIX]
@@ -2923,7 +3261,7 @@ Create new project
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_project_delete">
-        <title>openstack project delete command</title>
+        <title>openstack project delete</title>
         <screen><computeroutput>usage: openstack project delete [-h] &lt;project&gt;</computeroutput></screen>
         <para>
 Delete project
@@ -2951,7 +3289,7 @@ Delete project
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_project_list">
-        <title>openstack project list command</title>
+        <title>openstack project list</title>
         <screen><computeroutput>usage: openstack project list [-h] [-f {csv,table}] [-c COLUMN]
                               [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
@@ -2978,7 +3316,7 @@ List projects
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_project_set">
-        <title>openstack project set command</title>
+        <title>openstack project set</title>
         <screen><computeroutput>usage: openstack project set [-h] [--name &lt;new-project-name&gt;]
                              [--description &lt;project-description&gt;]
                              [--enable | --disable] [--property &lt;key=value&gt;]
@@ -3050,7 +3388,7 @@ Set project properties
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_project_show">
-        <title>openstack project show command</title>
+        <title>openstack project show</title>
         <screen><computeroutput>usage: openstack project show [-h] [-f {shell,table,value}] [-c COLUMN]
                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
                               [--prefix PREFIX]
@@ -3081,7 +3419,7 @@ Show project details
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_project_usage_list">
-        <title>openstack project usage list command</title>
+        <title>openstack project usage list</title>
         <screen><computeroutput>usage: openstack project usage list [-h] [-f {csv,table}] [-c COLUMN]
                                     [--max-width &lt;integer&gt;]
                                     [--quote {all,minimal,none,nonnumeric}]
@@ -3119,7 +3457,7 @@ List resource usage per project.
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_quota_set">
-        <title>openstack quota set command</title>
+        <title>openstack quota set</title>
         <screen><computeroutput>usage: openstack quota set [-h] [--class] [--properties &lt;new-properties&gt;]
                            [--ram &lt;new-ram&gt;]
                            [--secgroup-rules &lt;new-secgroup-rules&gt;]
@@ -3290,7 +3628,7 @@ Set quotas for project or class
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_quota_show">
-        <title>openstack quota show command</title>
+        <title>openstack quota show</title>
         <screen><computeroutput>usage: openstack quota show [-h] [-f {shell,table,value}] [-c COLUMN]
                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
                             [--prefix PREFIX] [--class | --default]
@@ -3337,7 +3675,7 @@ Show quotas for project or class
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_role_add">
-        <title>openstack role add command</title>
+        <title>openstack role add</title>
         <screen><computeroutput>usage: openstack role add [-h] [-f {shell,table,value}] [-c COLUMN]
                           [--max-width &lt;integer&gt;] [--variable VARIABLE]
                           [--prefix PREFIX] --project &lt;project&gt; --user &lt;user&gt;
@@ -3384,7 +3722,7 @@ Add role to project:user
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_role_create">
-        <title>openstack role create command</title>
+        <title>openstack role create</title>
         <screen><computeroutput>usage: openstack role create [-h] [-f {shell,table,value}] [-c COLUMN]
                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
                              [--prefix PREFIX]
@@ -3415,7 +3753,7 @@ Create new role
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_role_delete">
-        <title>openstack role delete command</title>
+        <title>openstack role delete</title>
         <screen><computeroutput>usage: openstack role delete [-h] &lt;role&gt;</computeroutput></screen>
         <para>
 Delete existing role
@@ -3443,7 +3781,7 @@ Delete existing role
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_role_list">
-        <title>openstack role list command</title>
+        <title>openstack role list</title>
         <screen><computeroutput>usage: openstack role list [-h] [-f {csv,table}] [-c COLUMN]
                            [--max-width &lt;integer&gt;]
                            [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -3462,7 +3800,7 @@ List roles
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_role_remove">
-        <title>openstack role remove command</title>
+        <title>openstack role remove</title>
         <screen><computeroutput>usage: openstack role remove [-h] --project &lt;project&gt; --user &lt;user&gt; &lt;role&gt;</computeroutput></screen>
         <para>
 Remove role from project:user
@@ -3506,7 +3844,7 @@ Remove role from project:user
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_role_show">
-        <title>openstack role show command</title>
+        <title>openstack role show</title>
         <screen><computeroutput>usage: openstack role show [-h] [-f {shell,table,value}] [-c COLUMN]
                            [--max-width &lt;integer&gt;] [--variable VARIABLE]
                            [--prefix PREFIX]
@@ -3537,7 +3875,7 @@ Show single role
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_security_group_create">
-        <title>openstack security group create command</title>
+        <title>openstack security group create</title>
         <screen><computeroutput>usage: openstack security group create [-h] [-f {shell,table,value}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
                                        [--variable VARIABLE] [--prefix PREFIX]
@@ -3577,7 +3915,7 @@ Create a new security group
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_security_group_delete">
-        <title>openstack security group delete command</title>
+        <title>openstack security group delete</title>
         <screen><computeroutput>usage: openstack security group delete [-h] &lt;group&gt;</computeroutput></screen>
         <para>
 Delete a security group
@@ -3605,7 +3943,7 @@ Delete a security group
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_security_group_list">
-        <title>openstack security group list command</title>
+        <title>openstack security group list</title>
         <screen><computeroutput>usage: openstack security group list [-h] [-f {csv,table}] [-c COLUMN]
                                      [--max-width &lt;integer&gt;]
                                      [--quote {all,minimal,none,nonnumeric}]
@@ -3633,7 +3971,7 @@ List all security groups
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_security_group_rule_create">
-        <title>openstack security group rule create command</title>
+        <title>openstack security group rule create</title>
         <screen><computeroutput>usage: openstack security group rule create [-h] [-f {shell,table,value}]
                                             [-c COLUMN]
                                             [--max-width &lt;integer&gt;]
@@ -3694,7 +4032,7 @@ Create a new security group rule
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_security_group_rule_delete">
-        <title>openstack security group rule delete command</title>
+        <title>openstack security group rule delete</title>
         <screen><computeroutput>usage: openstack security group rule delete [-h] [--proto &lt;proto&gt;]
                                             [--src-ip &lt;ip-address&gt;]
                                             [--dst-port &lt;port-range&gt;]
@@ -3750,7 +4088,7 @@ Delete a security group rule
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_security_group_rule_list">
-        <title>openstack security group rule list command</title>
+        <title>openstack security group rule list</title>
         <screen><computeroutput>usage: openstack security group rule list [-h] [-f {csv,table}] [-c COLUMN]
                                           [--max-width &lt;integer&gt;]
                                           [--quote {all,minimal,none,nonnumeric}]
@@ -3781,7 +4119,7 @@ List all security group rules
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_security_group_set">
-        <title>openstack security group set command</title>
+        <title>openstack security group set</title>
         <screen><computeroutput>usage: openstack security group set [-h] [-f {shell,table,value}] [-c COLUMN]
                                     [--max-width &lt;integer&gt;]
                                     [--variable VARIABLE] [--prefix PREFIX]
@@ -3830,7 +4168,7 @@ Set security group properties
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_security_group_show">
-        <title>openstack security group show command</title>
+        <title>openstack security group show</title>
         <screen><computeroutput>usage: openstack security group show [-h] [-f {shell,table,value}] [-c COLUMN]
                                      [--max-width &lt;integer&gt;]
                                      [--variable VARIABLE] [--prefix PREFIX]
@@ -3861,7 +4199,7 @@ Show a specific security group
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_add_security_group">
-        <title>openstack server add security group command</title>
+        <title>openstack server add security group</title>
         <screen><computeroutput>usage: openstack server add security group [-h] &lt;server&gt; &lt;group&gt;</computeroutput></screen>
         <para>
 Add security group to server
@@ -3897,7 +4235,7 @@ Add security group to server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_add_volume">
-        <title>openstack server add volume command</title>
+        <title>openstack server add volume</title>
         <screen><computeroutput>usage: openstack server add volume [-h] [--device &lt;device&gt;] &lt;server&gt; &lt;volume&gt;</computeroutput></screen>
         <para>
 Add volume to server
@@ -3941,7 +4279,7 @@ Add volume to server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_create">
-        <title>openstack server create command</title>
+        <title>openstack server create</title>
         <screen><computeroutput>usage: openstack server create [-h] [-f {shell,table,value}] [-c COLUMN]
                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                [--prefix PREFIX] --image &lt;image&gt; --flavor
@@ -4111,7 +4449,7 @@ Create a new server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_delete">
-        <title>openstack server delete command</title>
+        <title>openstack server delete</title>
         <screen><computeroutput>usage: openstack server delete [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Delete server command
@@ -4139,7 +4477,7 @@ Delete server command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_image_create">
-        <title>openstack server image create command</title>
+        <title>openstack server image create</title>
         <screen><computeroutput>usage: openstack server image create [-h] [-f {shell,table,value}] [-c COLUMN]
                                      [--max-width &lt;integer&gt;]
                                      [--variable VARIABLE] [--prefix PREFIX]
@@ -4187,7 +4525,7 @@ Create a new disk image from a running server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_list">
-        <title>openstack server list command</title>
+        <title>openstack server list</title>
         <screen><computeroutput>usage: openstack server list [-h] [-f {csv,table}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
@@ -4301,7 +4639,7 @@ List servers
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_lock">
-        <title>openstack server lock command</title>
+        <title>openstack server lock</title>
         <screen><computeroutput>usage: openstack server lock [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Lock server
@@ -4329,7 +4667,7 @@ Lock server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_migrate">
-        <title>openstack server migrate command</title>
+        <title>openstack server migrate</title>
         <screen><computeroutput>usage: openstack server migrate [-h] [--wait] [--live &lt;hostname&gt;]
                                 [--shared-migration | --block-migration]
                                 [--no-disk-overcommit | --disk-overcommit]
@@ -4409,7 +4747,7 @@ Migrate server to different host
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_pause">
-        <title>openstack server pause command</title>
+        <title>openstack server pause</title>
         <screen><computeroutput>usage: openstack server pause [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Pause server
@@ -4437,7 +4775,7 @@ Pause server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_reboot">
-        <title>openstack server reboot command</title>
+        <title>openstack server reboot</title>
         <screen><computeroutput>usage: openstack server reboot [-h] [--hard | --soft] [--wait] &lt;server&gt;</computeroutput></screen>
         <para>
 Perform a hard or soft server reboot
@@ -4489,7 +4827,7 @@ Perform a hard or soft server reboot
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_rebuild">
-        <title>openstack server rebuild command</title>
+        <title>openstack server rebuild</title>
         <screen><computeroutput>usage: openstack server rebuild [-h] [-f {shell,table,value}] [-c COLUMN]
                                 [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                 [--prefix PREFIX] --image &lt;image&gt;
@@ -4545,7 +4883,7 @@ Rebuild server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_remove_security_group">
-        <title>openstack server remove security group command</title>
+        <title>openstack server remove security group</title>
         <screen><computeroutput>usage: openstack server remove security group [-h] &lt;server&gt; &lt;group&gt;</computeroutput></screen>
         <para>
 Remove security group from server
@@ -4581,7 +4919,7 @@ Remove security group from server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_remove_volume">
-        <title>openstack server remove volume command</title>
+        <title>openstack server remove volume</title>
         <screen><computeroutput>usage: openstack server remove volume [-h] &lt;server&gt; &lt;volume&gt;</computeroutput></screen>
         <para>
 Remove volume from server
@@ -4617,7 +4955,7 @@ Remove volume from server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_rescue">
-        <title>openstack server rescue command</title>
+        <title>openstack server rescue</title>
         <screen><computeroutput>usage: openstack server rescue [-h] [-f {shell,table,value}] [-c COLUMN]
                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                [--prefix PREFIX]
@@ -4648,12 +4986,24 @@ Put server in rescue mode
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_resize">
-        <title>openstack server resize command</title>
+        <title>openstack server resize</title>
         <screen><computeroutput>usage: openstack server resize [-h] [--flavor &lt;flavor&gt; | --verify | --revert]
-                               [--wait]</computeroutput></screen>
+                               [--wait]
+                               &lt;server&gt;</computeroutput></screen>
         <para>
-Convert server to a new flavor
+Scale server to a new flavor
         </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;server&gt;</command></term>
+    <listitem>
+      <para>
+        Server (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
     <term><command>-h, --help</command></term>
@@ -4667,7 +5017,7 @@ Convert server to a new flavor
     <term><command>--flavor &lt;flavor&gt;</command></term>
     <listitem>
       <para>
-        Resize server to this flavor
+        Resize server to specified flavor
       </para>
     </listitem>
   </varlistentry>
@@ -4675,7 +5025,7 @@ Convert server to a new flavor
     <term><command>--verify</command></term>
     <listitem>
       <para>
-        Verify previous server resize
+        Verify server resize is complete
       </para>
     </listitem>
   </varlistentry>
@@ -4683,7 +5033,7 @@ Convert server to a new flavor
     <term><command>--revert</command></term>
     <listitem>
       <para>
-        Restore server before resize
+        Restore server state before resize
       </para>
     </listitem>
   </varlistentry>
@@ -4698,7 +5048,7 @@ Convert server to a new flavor
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_resume">
-        <title>openstack server resume command</title>
+        <title>openstack server resume</title>
         <screen><computeroutput>usage: openstack server resume [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Resume server
@@ -4726,7 +5076,7 @@ Resume server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_set">
-        <title>openstack server set command</title>
+        <title>openstack server set</title>
         <screen><computeroutput>usage: openstack server set [-h] [--name &lt;new-name&gt;] [--root-password]
                             [--property &lt;key=value&gt;]
                             &lt;server&gt;</computeroutput></screen>
@@ -4781,7 +5131,7 @@ Set server properties
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_show">
-        <title>openstack server show command</title>
+        <title>openstack server show</title>
         <screen><computeroutput>usage: openstack server show [-h] [-f {shell,table,value}] [-c COLUMN]
                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
                              [--prefix PREFIX] [--diagnostics]
@@ -4820,7 +5170,7 @@ Show server details
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_ssh">
-        <title>openstack server ssh command</title>
+        <title>openstack server ssh</title>
         <screen><computeroutput>usage: openstack server ssh [-h] [--login &lt;login-name&gt;] [--port &lt;port&gt;]
                             [--identity &lt;keyfile&gt;] [--option &lt;config-options&gt;]
                             [-4 | -6]
@@ -4924,7 +5274,7 @@ Ssh to server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_suspend">
-        <title>openstack server suspend command</title>
+        <title>openstack server suspend</title>
         <screen><computeroutput>usage: openstack server suspend [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Suspend server
@@ -4952,7 +5302,7 @@ Suspend server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_unlock">
-        <title>openstack server unlock command</title>
+        <title>openstack server unlock</title>
         <screen><computeroutput>usage: openstack server unlock [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Unlock server
@@ -4980,7 +5330,7 @@ Unlock server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_unpause">
-        <title>openstack server unpause command</title>
+        <title>openstack server unpause</title>
         <screen><computeroutput>usage: openstack server unpause [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Unpause server
@@ -5008,7 +5358,7 @@ Unpause server
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_unrescue">
-        <title>openstack server unrescue command</title>
+        <title>openstack server unrescue</title>
         <screen><computeroutput>usage: openstack server unrescue [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Restore server from rescue mode
@@ -5036,7 +5386,7 @@ Restore server from rescue mode
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_server_unset">
-        <title>openstack server unset command</title>
+        <title>openstack server unset</title>
         <screen><computeroutput>usage: openstack server unset [-h] [--property &lt;key&gt;] &lt;server&gt;</computeroutput></screen>
         <para>
 Unset server properties
@@ -5073,7 +5423,7 @@ Unset server properties
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_service_create">
-        <title>openstack service create command</title>
+        <title>openstack service create</title>
         <screen><computeroutput>usage: openstack service create [-h] [-f {shell,table,value}] [-c COLUMN]
                                 [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                 [--prefix PREFIX] --type &lt;service-type&gt;
@@ -5122,7 +5472,7 @@ Create new service
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_service_delete">
-        <title>openstack service delete command</title>
+        <title>openstack service delete</title>
         <screen><computeroutput>usage: openstack service delete [-h] &lt;service&gt;</computeroutput></screen>
         <para>
 Delete service
@@ -5150,7 +5500,7 @@ Delete service
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_service_list">
-        <title>openstack service list command</title>
+        <title>openstack service list</title>
         <screen><computeroutput>usage: openstack service list [-h] [-f {csv,table}] [-c COLUMN]
                               [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
@@ -5177,7 +5527,7 @@ List services
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_service_show">
-        <title>openstack service show command</title>
+        <title>openstack service show</title>
         <screen><computeroutput>usage: openstack service show [-h] [-f {shell,table,value}] [-c COLUMN]
                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
                               [--prefix PREFIX] [--catalog]
@@ -5216,7 +5566,7 @@ Show service details
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_create">
-        <title>openstack snapshot create command</title>
+        <title>openstack snapshot create</title>
         <screen><computeroutput>usage: openstack snapshot create [-h] [-f {shell,table,value}] [-c COLUMN]
                                  [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                  [--prefix PREFIX] --name &lt;name&gt;
@@ -5273,7 +5623,7 @@ Create snapshot command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_delete">
-        <title>openstack snapshot delete command</title>
+        <title>openstack snapshot delete</title>
         <screen><computeroutput>usage: openstack snapshot delete [-h] &lt;snapshot&gt;</computeroutput></screen>
         <para>
 Delete snapshot command
@@ -5301,7 +5651,7 @@ Delete snapshot command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_list">
-        <title>openstack snapshot list command</title>
+        <title>openstack snapshot list</title>
         <screen><computeroutput>usage: openstack snapshot list [-h] [-f {csv,table}] [-c COLUMN]
                                [--max-width &lt;integer&gt;]
                                [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -5320,7 +5670,7 @@ List snapshot command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_set">
-        <title>openstack snapshot set command</title>
+        <title>openstack snapshot set</title>
         <screen><computeroutput>usage: openstack snapshot set [-h] [--name &lt;new-snapshot-name&gt;]
                               [--description &lt;new-snapshot-description&gt;]
                               &lt;snapshot&gt;</computeroutput></screen>
@@ -5366,7 +5716,7 @@ Set snapshot command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_show">
-        <title>openstack snapshot show command</title>
+        <title>openstack snapshot show</title>
         <screen><computeroutput>usage: openstack snapshot show [-h] [-f {shell,table,value}] [-c COLUMN]
                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                [--prefix PREFIX]
@@ -5397,12 +5747,12 @@ Show snapshot command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_token_issue">
-        <title>openstack token issue command</title>
+        <title>openstack token issue</title>
         <screen><computeroutput>usage: openstack token issue [-h] [-f {shell,table,value}] [-c COLUMN]
                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
                              [--prefix PREFIX]</computeroutput></screen>
         <para>
-Issue token command
+Issue new token
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -5416,10 +5766,10 @@ Issue token command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_token_revoke">
-        <title>openstack token revoke command</title>
+        <title>openstack token revoke</title>
         <screen><computeroutput>usage: openstack token revoke [-h] &lt;token&gt;</computeroutput></screen>
         <para>
-Revoke token command
+Revoke existing token
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -5444,7 +5794,7 @@ Revoke token command
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_user_create">
-        <title>openstack user create command</title>
+        <title>openstack user create</title>
         <screen><computeroutput>usage: openstack user create [-h] [-f {shell,table,value}] [-c COLUMN]
                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
                              [--prefix PREFIX] [--password &lt;user-password&gt;]
@@ -5525,7 +5875,7 @@ Create new user
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_user_delete">
-        <title>openstack user delete command</title>
+        <title>openstack user delete</title>
         <screen><computeroutput>usage: openstack user delete [-h] &lt;user&gt;</computeroutput></screen>
         <para>
 Delete user
@@ -5553,7 +5903,7 @@ Delete user
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_user_list">
-        <title>openstack user list command</title>
+        <title>openstack user list</title>
         <screen><computeroutput>usage: openstack user list [-h] [-f {csv,table}] [-c COLUMN]
                            [--max-width &lt;integer&gt;]
                            [--quote {all,minimal,none,nonnumeric}]
@@ -5589,7 +5939,7 @@ List users
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_user_role_list">
-        <title>openstack user role list command</title>
+        <title>openstack user role list</title>
         <screen><computeroutput>usage: openstack user role list [-h] [-f {csv,table}] [-c COLUMN]
                                 [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
@@ -5629,7 +5979,7 @@ List user-role assignments
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_user_set">
-        <title>openstack user set command</title>
+        <title>openstack user set</title>
         <screen><computeroutput>usage: openstack user set [-h] [--name &lt;new-user-name&gt;]
                           [--password &lt;user-password&gt;] [--password-prompt]
                           [--email &lt;user-email&gt;] [--project &lt;project&gt;]
@@ -5717,7 +6067,7 @@ Set user properties
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_user_show">
-        <title>openstack user show command</title>
+        <title>openstack user show</title>
         <screen><computeroutput>usage: openstack user show [-h] [-f {shell,table,value}] [-c COLUMN]
                            [--max-width &lt;integer&gt;] [--variable VARIABLE]
                            [--prefix PREFIX]
@@ -5748,7 +6098,7 @@ Show user details
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_create">
-        <title>openstack volume create command</title>
+        <title>openstack volume create</title>
         <screen><computeroutput>usage: openstack volume create [-h] [-f {shell,table,value}] [-c COLUMN]
                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
                                [--prefix PREFIX] --size &lt;size&gt;
@@ -5768,7 +6118,7 @@ Create new volume
     <term><command>&lt;name&gt;</command></term>
     <listitem>
       <para>
-        Name of the volume
+        Name of the new volume
       </para>
     </listitem>
   </varlistentry>
@@ -5795,7 +6145,7 @@ Create new volume
     <term><command>--snapshot-id &lt;snapshot-id&gt;</command></term>
     <listitem>
       <para>
-      ID of the snapshot
+      Use &lt;snapshot-id&gt; as source of new volume
       </para>
     </listitem>
   </varlistentry>
@@ -5835,7 +6185,7 @@ Create new volume
     <term><command>--availability-zone &lt;availability-zone&gt;</command></term>
     <listitem>
       <para>
-      Availability zone to use
+      Create new volume in &lt;availability-zone&gt;
       </para>
     </listitem>
   </varlistentry>
@@ -5852,7 +6202,7 @@ Create new volume
     <term><command>--image &lt;image&gt;</command></term>
     <listitem>
       <para>
-        Reference to a stored image
+        Use &lt;image&gt; as source of new volume
       </para>
     </listitem>
   </varlistentry>
@@ -5860,24 +6210,24 @@ Create new volume
     <term><command>--source &lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Source for volume clone
+        Volume to clone (name or ID)
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_delete">
-        <title>openstack volume delete command</title>
+        <title>openstack volume delete</title>
         <screen><computeroutput>usage: openstack volume delete [-h] [--force] &lt;volume&gt;</computeroutput></screen>
         <para>
-Delete volume
+Delete a volume
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of volume to delete
+        Volume to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -5903,7 +6253,7 @@ Delete volume
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_list">
-        <title>openstack volume list command</title>
+        <title>openstack volume list</title>
         <screen><computeroutput>usage: openstack volume list [-h] [-f {csv,table}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
@@ -5956,7 +6306,7 @@ List volumes
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_set">
-        <title>openstack volume set command</title>
+        <title>openstack volume set</title>
         <screen><computeroutput>usage: openstack volume set [-h] [--name &lt;new-name&gt;]
                             [--description &lt;new-description&gt;]
                             [--property &lt;key=value&gt;]
@@ -5969,7 +6319,7 @@ Set volume properties
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of volume to change
+        Volume to change (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6012,20 +6362,20 @@ Set volume properties
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_show">
-        <title>openstack volume show command</title>
+        <title>openstack volume show</title>
         <screen><computeroutput>usage: openstack volume show [-h] [-f {shell,table,value}] [-c COLUMN]
                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
                              [--prefix PREFIX]
                              &lt;volume&gt;</computeroutput></screen>
         <para>
-Show specific volume
+Show volume details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of volume to display
+        Volume to display (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6043,7 +6393,7 @@ Show specific volume
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_create">
-        <title>openstack volume type create command</title>
+        <title>openstack volume type create</title>
         <screen><computeroutput>usage: openstack volume type create [-h] [-f {shell,table,value}] [-c COLUMN]
                                     [--max-width &lt;integer&gt;]
                                     [--variable VARIABLE] [--prefix PREFIX]
@@ -6084,7 +6434,7 @@ Create new volume type
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_delete">
-        <title>openstack volume type delete command</title>
+        <title>openstack volume type delete</title>
         <screen><computeroutput>usage: openstack volume type delete [-h] &lt;volume-type&gt;</computeroutput></screen>
         <para>
 Delete volume type
@@ -6112,7 +6462,7 @@ Delete volume type
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_list">
-        <title>openstack volume type list command</title>
+        <title>openstack volume type list</title>
         <screen><computeroutput>usage: openstack volume type list [-h] [-f {csv,table}] [-c COLUMN]
                                   [--max-width &lt;integer&gt;]
                                   [--quote {all,minimal,none,nonnumeric}]
@@ -6140,7 +6490,7 @@ List volume types
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_set">
-        <title>openstack volume type set command</title>
+        <title>openstack volume type set</title>
         <screen><computeroutput>usage: openstack volume type set [-h] [--property &lt;key=value&gt;] &lt;volume-type&gt;</computeroutput></screen>
         <para>
 Set volume type property
@@ -6177,7 +6527,7 @@ Set volume type property
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_unset">
-        <title>openstack volume type unset command</title>
+        <title>openstack volume type unset</title>
         <screen><computeroutput>usage: openstack volume type unset [-h] [--property &lt;key&gt;] &lt;volume-type&gt;</computeroutput></screen>
         <para>
 Unset volume type property
@@ -6214,7 +6564,7 @@ Unset volume type property
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_unset">
-        <title>openstack volume unset command</title>
+        <title>openstack volume unset</title>
         <screen><computeroutput>usage: openstack volume unset [-h] [--property &lt;key&gt;] &lt;volume&gt;</computeroutput></screen>
         <para>
 Unset volume properties
@@ -6224,7 +6574,7 @@ Unset volume properties
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of volume to change
+        Volume to change (name or ID)
       </para>
     </listitem>
   </varlistentry>
