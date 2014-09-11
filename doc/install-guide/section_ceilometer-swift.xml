@@ -46,6 +46,14 @@ use = egg:ceilometer#swift</programlisting>
 pipeline = healthcheck cache authtoken keystoneauth ceilometer proxy-server</programlisting>
     </step>
     <step>
+      <para>Add the system user <literal>swift</literal> to the system group
+      <literal>ceilometer</literal> to give Object Storage access to the
+      <filename>ceilometer.conf</filename> file.</para>
+      <screen>
+        <prompt>#</prompt> <userinput>usermod -a -G ceilometer swift</userinput>
+      </screen>
+    </step>
+    <step>
       <para>Add <literal>ResellerAdmin</literal> to the
         <literal>operator_roles</literal> parameter of that same file:</para>
       <programlisting language="ini">operator_roles = Member,admin,swiftoperator,_member_,ResellerAdmin</programlisting>
