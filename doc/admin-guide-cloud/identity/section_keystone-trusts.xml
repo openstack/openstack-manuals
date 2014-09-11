@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="section_keystone-trusts">
+  <?dbhtml stop-chunking?>
+  <title>Use trusts</title>
+  <para>OpenStack Identity manages authentication and authorization. A trust is
+   an OpenStack Identity extension that enables delegation and, optionally,
+   impersonation through <literal>keystone</literal>. A trust extension defines
+   a relationship between:</para>
+   <variablelist>
+    <varlistentry>
+        <term>Trustor</term>
+        <listitem><para>The user delegating a limited set of their own rights
+         to  another user.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+        <term>Trustee</term>
+        <listitem><para>The user the trust is being delegated to, for a limited
+    time.</para></listitem>
+    </varlistentry>
+  </variablelist>
+  <para>The trust can eventually allow the trustee to impersonate the trustor.
+   For security reasons, some safeties are added. For example, if a trustor
+   loses a given role, any trusts the user issued with that role, and the
+   related tokens, are automatically revoked.</para>
+    <para>The delegation parameters are:</para>
+    <variablelist>
+    <varlistentry>
+        <term>User ID</term>
+        <listitem><para>The user IDs for the trustor and trustee.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+        <term>Privileges</term>
+        <listitem><para>The delegated privileges are a combination of a tenant
+         ID and a number of roles that must be a subset of the roles assigned to
+         the trustor.</para>
+       <para>If you omit all privileges, nothing is delegated. You cannot
+        delegate everything.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+        <term>Delegation depth</term>
+        <listitem><para>Defines whether or not the delegation is recursive. If
+         it is recursive, defines the delegation chain length.</para>
+         <para>Specify one of the following values:</para>
+          <itemizedlist>
+            <listitem><para><literal>0</literal>. The delegate cannot delegate
+             these permissions further.</para></listitem>
+            <listitem><para><literal>1</literal>. The delegate can delegate the
+             permissions to any set of delegates but the latter cannot delegate
+             further.</para></listitem>
+            <listitem><para><literal>inf</literal>. The delegation is infinitely
+             recursive.</para></listitem>
+          </itemizedlist></listitem>
+    </varlistentry>
+    <varlistentry>
+        <term>Endpoints</term>
+        <listitem><para>A list of endpoints associated with the delegation.</para>
+          <para>This parameter further restricts the delegation to the specified
+           endpoints only. If you omit the endpoints, the delegation is useless.
+           A special value of <literal>all_endpoints</literal> allows the trust
+           to be used by all endpoints associated with the delegated tenant.</para></listitem>
+    </varlistentry>
+    <varlistentry>
+        <term>Duration</term>
+        <listitem><para>(Optional) Comprised of the start time and end time for
+         the trust.</para></listitem>
+    </varlistentry>
+  </variablelist>
+  </section>
