@@ -10,10 +10,14 @@
     <?dbhtml stop-chunking?>
 
     <title>Block Storage command-line client</title>
-    <para>The <command>cinder</command> client is the command-line interface
-         (CLI) for the OpenStack Block Storage API and its extensions. This chapter documents
-         <command>cinder</command> version 1.0.9.
+
+    <para>The <command>cinder</command> client is the command-line
+        interface (CLI) for the OpenStack Block Storage API and its extensions.
+
+       This chapter documents <command>cinder</command> version
+        <literal>1.1.0</literal>.
     </para>
+
     <para>For help on a specific <command>cinder</command>
        command, enter:
     </para>
@@ -21,17 +25,25 @@
 
     <section xml:id="cinderclient_command_usage">
        <title>cinder usage</title>
-        <screen><computeroutput>usage: cinder [--version] [--debug] [--os-username &lt;auth-user-name&gt;]
-              [--os-password &lt;auth-password&gt;]
-              [--os-tenant-name &lt;auth-tenant-name&gt;]
-              [--os-tenant-id &lt;auth-tenant-id&gt;] [--os-auth-url &lt;auth-url&gt;]
-              [--os-region-name &lt;region-name&gt;]
-              [--os-auth-system &lt;auth-system&gt;] [--service-type &lt;service-type&gt;]
-              [--service-name &lt;service-name&gt;]
+        <screen><computeroutput>usage: cinder [--version] [--debug] [--os-auth-system &lt;auth-system&gt;]
+              [--service-type &lt;service-type&gt;] [--service-name &lt;service-name&gt;]
               [--volume-service-name &lt;volume-service-name&gt;]
               [--endpoint-type &lt;endpoint-type&gt;]
-              [--os-volume-api-version &lt;volume-api-ver&gt;]
-              [--os-cacert &lt;ca-certificate&gt;] [--retries &lt;retries&gt;]
+              [--os-volume-api-version &lt;volume-api-ver&gt;] [--retries &lt;retries&gt;]
+              [--os-auth-strategy &lt;auth-strategy&gt;]
+              [--os-username &lt;auth-user-name&gt;] [--os-password &lt;auth-password&gt;]
+              [--os-tenant-name &lt;auth-tenant-name&gt;]
+              [--os-tenant-id &lt;auth-tenant-id&gt;] [--os-auth-url &lt;auth-url&gt;]
+              [--os-user-id &lt;auth-user-id&gt;]
+              [--os-user-domain-id &lt;auth-user-domain-id&gt;]
+              [--os-user-domain-name &lt;auth-user-domain-name&gt;]
+              [--os-project-id &lt;auth-project-id&gt;]
+              [--os-project-name &lt;auth-project-name&gt;]
+              [--os-project-domain-id &lt;auth-project-domain-id&gt;]
+              [--os-project-domain-name &lt;auth-project-domain-name&gt;]
+              [--os-cert &lt;certificate&gt;] [--os-key &lt;key&gt;]
+              [--os-region-name &lt;region-name&gt;] [--os-token &lt;token&gt;]
+              [--os-url &lt;url&gt;] [--os-cacert &lt;ca-certificate&gt;]
               &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
@@ -39,7 +51,7 @@
     <term><command>absolute-limits</command></term>
     <listitem>
       <para>
-        Print a list of absolute limits for a user
+        Lists absolute limits for a user.
       </para>
     </listitem>
   </varlistentry>
@@ -47,7 +59,7 @@
     <term><command>availability-zone-list</command></term>
     <listitem>
       <para>
-      List all the availability zones.
+      Lists all availability zones.
       </para>
     </listitem>
   </varlistentry>
@@ -55,7 +67,7 @@
     <term><command>backup-create</command></term>
     <listitem>
       <para>
-        Creates a backup.
+        Creates a volume backup.
       </para>
     </listitem>
   </varlistentry>
@@ -63,7 +75,7 @@
     <term><command>backup-delete</command></term>
     <listitem>
       <para>
-        Remove a backup.
+        Removes a backup.
       </para>
     </listitem>
   </varlistentry>
@@ -71,7 +83,7 @@
     <term><command>backup-list</command></term>
     <listitem>
       <para>
-        List all the backups.
+        Lists all backups.
       </para>
     </listitem>
   </varlistentry>
@@ -79,7 +91,7 @@
     <term><command>backup-restore</command></term>
     <listitem>
       <para>
-        Restore a backup.
+        Restores a backup.
       </para>
     </listitem>
   </varlistentry>
@@ -87,7 +99,7 @@
     <term><command>backup-show</command></term>
     <listitem>
       <para>
-        Show details about a backup.
+        Show backup details.
       </para>
     </listitem>
   </varlistentry>
@@ -95,7 +107,7 @@
     <term><command>create</command></term>
     <listitem>
       <para>
-        Add a new volume.
+        Creates a volume.
       </para>
     </listitem>
   </varlistentry>
@@ -103,7 +115,7 @@
     <term><command>credentials</command></term>
     <listitem>
       <para>
-        Show user credentials returned from auth.
+        Shows user credentials returned from auth.
       </para>
     </listitem>
   </varlistentry>
@@ -111,7 +123,7 @@
     <term><command>delete</command></term>
     <listitem>
       <para>
-        Remove volume(s).
+        Removes one or more volumes.
       </para>
     </listitem>
   </varlistentry>
@@ -119,8 +131,7 @@
     <term><command>encryption-type-create</command></term>
     <listitem>
       <para>
-      Create a new encryption type for a volume type (Admin
-      Only).
+      Creates encryption type for a volume type. Admin only.
       </para>
     </listitem>
   </varlistentry>
@@ -128,8 +139,7 @@
     <term><command>encryption-type-delete</command></term>
     <listitem>
       <para>
-      Delete the encryption type for a volume type (Admin
-      Only).
+      Deletes encryption type for a volume type. Admin only.
       </para>
     </listitem>
   </varlistentry>
@@ -137,8 +147,8 @@
     <term><command>encryption-type-list</command></term>
     <listitem>
       <para>
-      List encryption type information for all volume types
-      (Admin Only).
+      Shows encryption type details for volume types. Admin
+      only.
       </para>
     </listitem>
   </varlistentry>
@@ -146,8 +156,8 @@
     <term><command>encryption-type-show</command></term>
     <listitem>
       <para>
-      Show the encryption type information for a volume type
-      (Admin Only).
+      Shows encryption type details for volume type. Admin
+      only.
       </para>
     </listitem>
   </varlistentry>
@@ -155,8 +165,8 @@
     <term><command>endpoints</command></term>
     <listitem>
       <para>
-        Discover endpoints that get returned from the
-      authenticate services.
+        Discovers endpoints registered by authentication
+      service.
       </para>
     </listitem>
   </varlistentry>
@@ -164,7 +174,7 @@
     <term><command>extend</command></term>
     <listitem>
       <para>
-        Attempt to extend the size of an existing volume.
+        Attempts to extend size of an existing volume.
       </para>
     </listitem>
   </varlistentry>
@@ -172,8 +182,7 @@
     <term><command>extra-specs-list</command></term>
     <listitem>
       <para>
-        Print a list of current 'volume types and extra specs'
-      (Admin Only).
+        Lists current volume types and extra specs.
       </para>
     </listitem>
   </varlistentry>
@@ -181,8 +190,7 @@
     <term><command>force-delete</command></term>
     <listitem>
       <para>
-        Attempt forced removal of volume(s), regardless of the
-      state(s).
+        Attempts force-delete of volume, regardless of state.
       </para>
     </listitem>
   </varlistentry>
@@ -190,7 +198,7 @@
     <term><command>list</command></term>
     <listitem>
       <para>
-        List all the volumes.
+        Lists all volumes.
       </para>
     </listitem>
   </varlistentry>
@@ -198,7 +206,7 @@
     <term><command>metadata</command></term>
     <listitem>
       <para>
-        Set or Delete metadata on a volume.
+        Sets or deletes volume metadata.
       </para>
     </listitem>
   </varlistentry>
@@ -206,7 +214,7 @@
     <term><command>metadata-show</command></term>
     <listitem>
       <para>
-        Show metadata of given volume.
+        Shows volume metadata.
       </para>
     </listitem>
   </varlistentry>
@@ -214,7 +222,7 @@
     <term><command>metadata-update-all</command></term>
     <listitem>
       <para>
-      Update all metadata of a volume.
+      Updates volume metadata.
       </para>
     </listitem>
   </varlistentry>
@@ -222,7 +230,7 @@
     <term><command>migrate</command></term>
     <listitem>
       <para>
-        Migrate the volume to the new host.
+        Migrates volume to a new host.
       </para>
     </listitem>
   </varlistentry>
@@ -230,7 +238,7 @@
     <term><command>qos-associate</command></term>
     <listitem>
       <para>
-        Associate qos specs with specific volume type.
+        Associates qos specs with specified volume type.
       </para>
     </listitem>
   </varlistentry>
@@ -238,7 +246,7 @@
     <term><command>qos-create</command></term>
     <listitem>
       <para>
-        Create a new qos specs.
+        Creates a qos specs.
       </para>
     </listitem>
   </varlistentry>
@@ -246,7 +254,7 @@
     <term><command>qos-delete</command></term>
     <listitem>
       <para>
-        Delete a specific qos specs.
+        Deletes a specified qos specs.
       </para>
     </listitem>
   </varlistentry>
@@ -254,7 +262,7 @@
     <term><command>qos-disassociate</command></term>
     <listitem>
       <para>
-        Disassociate qos specs from specific volume type.
+        Disassociates qos specs from specified volume type.
       </para>
     </listitem>
   </varlistentry>
@@ -262,7 +270,7 @@
     <term><command>qos-disassociate-all</command></term>
     <listitem>
       <para>
-      Disassociate qos specs from all of its associations.
+      Disassociates qos specs from all associations.
       </para>
     </listitem>
   </varlistentry>
@@ -270,7 +278,7 @@
     <term><command>qos-get-association</command></term>
     <listitem>
       <para>
-      Get all associations of specific qos specs.
+      Gets all associations for specified qos specs.
       </para>
     </listitem>
   </varlistentry>
@@ -278,7 +286,7 @@
     <term><command>qos-key</command></term>
     <listitem>
       <para>
-        Set or unset specifications for a qos spec.
+        Sets or unsets specifications for a qos spec.
       </para>
     </listitem>
   </varlistentry>
@@ -286,7 +294,7 @@
     <term><command>qos-list</command></term>
     <listitem>
       <para>
-        Get full list of qos specs.
+        Lists qos specs.
       </para>
     </listitem>
   </varlistentry>
@@ -294,7 +302,7 @@
     <term><command>qos-show</command></term>
     <listitem>
       <para>
-        Get a specific qos specs.
+        Shows a specified qos specs.
       </para>
     </listitem>
   </varlistentry>
@@ -302,7 +310,7 @@
     <term><command>quota-class-show</command></term>
     <listitem>
       <para>
-        List the quotas for a quota class.
+        Lists quotas for a quota class.
       </para>
     </listitem>
   </varlistentry>
@@ -310,7 +318,7 @@
     <term><command>quota-class-update</command></term>
     <listitem>
       <para>
-        Update the quotas for a quota class.
+        Updates quotas for a quota class.
       </para>
     </listitem>
   </varlistentry>
@@ -318,7 +326,7 @@
     <term><command>quota-defaults</command></term>
     <listitem>
       <para>
-        List the default quotas for a tenant.
+        Lists default quotas for a tenant.
       </para>
     </listitem>
   </varlistentry>
@@ -334,7 +342,7 @@
     <term><command>quota-show</command></term>
     <listitem>
       <para>
-        List the quotas for a tenant.
+        Lists quotas for a tenant.
       </para>
     </listitem>
   </varlistentry>
@@ -342,7 +350,7 @@
     <term><command>quota-update</command></term>
     <listitem>
       <para>
-        Update the quotas for a tenant.
+        Updates quotas for a tenant.
       </para>
     </listitem>
   </varlistentry>
@@ -350,7 +358,7 @@
     <term><command>quota-usage</command></term>
     <listitem>
       <para>
-        List the quota usage for a tenant.
+        Lists quota usage for a tenant.
       </para>
     </listitem>
   </varlistentry>
@@ -358,7 +366,7 @@
     <term><command>rate-limits</command></term>
     <listitem>
       <para>
-        Print a list of rate limits for a user
+        Lists rate limits for a user.
       </para>
     </listitem>
   </varlistentry>
@@ -366,7 +374,7 @@
     <term><command>readonly-mode-update</command></term>
     <listitem>
       <para>
-      Update volume read-only access mode read_only.
+      Updates volume read-only access-mode flag.
       </para>
     </listitem>
   </varlistentry>
@@ -374,7 +382,7 @@
     <term><command>rename</command></term>
     <listitem>
       <para>
-        Rename a volume.
+        Renames a volume.
       </para>
     </listitem>
   </varlistentry>
@@ -382,7 +390,7 @@
     <term><command>reset-state</command></term>
     <listitem>
       <para>
-        Explicitly update the state of a volume.
+        Explicitly updates the volume state.
       </para>
     </listitem>
   </varlistentry>
@@ -390,7 +398,7 @@
     <term><command>service-disable</command></term>
     <listitem>
       <para>
-        Disable the service.
+        Disables the service.
       </para>
     </listitem>
   </varlistentry>
@@ -398,7 +406,7 @@
     <term><command>service-enable</command></term>
     <listitem>
       <para>
-        Enable the service.
+        Enables the service.
       </para>
     </listitem>
   </varlistentry>
@@ -406,8 +414,15 @@
     <term><command>service-list</command></term>
     <listitem>
       <para>
-        List all the services. Filter by host &amp; service
-      binary.
+        Lists all services. Filter by host and service binary.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>set-bootable</command></term>
+    <listitem>
+      <para>
+        Update bootable status of a volume.
       </para>
     </listitem>
   </varlistentry>
@@ -415,7 +430,7 @@
     <term><command>show</command></term>
     <listitem>
       <para>
-        Show details about a volume.
+        Shows volume details.
       </para>
     </listitem>
   </varlistentry>
@@ -423,7 +438,7 @@
     <term><command>snapshot-create</command></term>
     <listitem>
       <para>
-        Add a new snapshot.
+        Creates a snapshot.
       </para>
     </listitem>
   </varlistentry>
@@ -439,7 +454,7 @@
     <term><command>snapshot-list</command></term>
     <listitem>
       <para>
-        List all the snapshots.
+        Lists all snapshots.
       </para>
     </listitem>
   </varlistentry>
@@ -447,7 +462,7 @@
     <term><command>snapshot-metadata</command></term>
     <listitem>
       <para>
-        Set or Delete metadata of a snapshot.
+        Sets or deletes snapshot metadata.
       </para>
     </listitem>
   </varlistentry>
@@ -455,7 +470,7 @@
     <term><command>snapshot-metadata-show</command></term>
     <listitem>
       <para>
-      Show metadata of given snapshot.
+      Shows snapshot metadata.
       </para>
     </listitem>
   </varlistentry>
@@ -463,7 +478,7 @@
     <term><command>snapshot-metadata-update-all</command></term>
     <listitem>
       <para>
-      Update all metadata of a snapshot.
+      Updates snapshot metadata.
       </para>
     </listitem>
   </varlistentry>
@@ -471,7 +486,7 @@
     <term><command>snapshot-rename</command></term>
     <listitem>
       <para>
-        Rename a snapshot.
+        Renames a snapshot.
       </para>
     </listitem>
   </varlistentry>
@@ -479,7 +494,7 @@
     <term><command>snapshot-reset-state</command></term>
     <listitem>
       <para>
-      Explicitly update the state of a snapshot.
+      Explicitly updates the snapshot state.
       </para>
     </listitem>
   </varlistentry>
@@ -487,7 +502,7 @@
     <term><command>snapshot-show</command></term>
     <listitem>
       <para>
-        Show details about a snapshot.
+        Shows snapshot details.
       </para>
     </listitem>
   </varlistentry>
@@ -511,7 +526,7 @@
     <term><command>transfer-delete</command></term>
     <listitem>
       <para>
-        Undo a transfer.
+        Undoes a transfer.
       </para>
     </listitem>
   </varlistentry>
@@ -519,7 +534,7 @@
     <term><command>transfer-list</command></term>
     <listitem>
       <para>
-        List all the transfers.
+        Lists all transfers.
       </para>
     </listitem>
   </varlistentry>
@@ -527,7 +542,7 @@
     <term><command>transfer-show</command></term>
     <listitem>
       <para>
-        Show details about a transfer.
+        Show transfer details.
       </para>
     </listitem>
   </varlistentry>
@@ -535,7 +550,7 @@
     <term><command>type-create</command></term>
     <listitem>
       <para>
-        Create a new volume type.
+        Creates a volume type.
       </para>
     </listitem>
   </varlistentry>
@@ -543,7 +558,7 @@
     <term><command>type-delete</command></term>
     <listitem>
       <para>
-        Delete a specific volume type.
+        Deletes a specified volume type.
       </para>
     </listitem>
   </varlistentry>
@@ -551,7 +566,7 @@
     <term><command>type-key</command></term>
     <listitem>
       <para>
-        Set or unset extra_spec for a volume type.
+        Sets or unsets extra_spec for a volume type.
       </para>
     </listitem>
   </varlistentry>
@@ -559,7 +574,7 @@
     <term><command>type-list</command></term>
     <listitem>
       <para>
-        Print a list of available 'volume types'.
+        Lists available 'volume types'.
       </para>
     </listitem>
   </varlistentry>
@@ -567,7 +582,7 @@
     <term><command>upload-to-image</command></term>
     <listitem>
       <para>
-        Upload volume to image service as image.
+        Uploads volume to Image Service as an image.
       </para>
     </listitem>
   </varlistentry>
@@ -575,7 +590,7 @@
     <term><command>bash-completion</command></term>
     <listitem>
       <para>
-        Print arguments for bash_completion.
+        Prints arguments for bash_completion.
       </para>
     </listitem>
   </varlistentry>
@@ -583,7 +598,7 @@
     <term><command>help</command></term>
     <listitem>
       <para>
-        Display help about this program or one of its
+        Shows help about this program or one of its
       subcommands.
       </para>
     </listitem>
@@ -592,7 +607,7 @@
     <term><command>list-extensions</command></term>
     <listitem>
       <para>
-        List all the os-api extensions that are available.
+        Lists all available os-api extensions.
       </para>
     </listitem>
   </varlistentry>
@@ -613,55 +628,7 @@
     <term><command>--debug</command></term>
     <listitem>
       <para>
-        Print debugging output
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-username &lt;auth-user-name&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_USERNAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-password &lt;auth-password&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_PASSWORD]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-tenant-name &lt;auth-tenant-name&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_TENANT_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-tenant-id &lt;auth-tenant-id&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_TENANT_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-auth-url &lt;auth-url&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_AUTH_URL]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-region-name &lt;region-name&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_REGION_NAME]</code>.
+        Shows debugging output.
       </para>
     </listitem>
   </varlistentry>
@@ -677,7 +644,7 @@
     <term><command>--service-type &lt;service-type&gt;</command></term>
     <listitem>
       <para>
-      Defaults to volume for most actions
+      Service type. For most actions, default is volume.
       </para>
     </listitem>
   </varlistentry>
@@ -685,7 +652,7 @@
     <term><command>--service-name &lt;service-name&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[CINDER_SERVICE_NAME]</code>
+      Service name. Default=<code>env[CINDER_SERVICE_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -693,7 +660,8 @@
     <term><command>--volume-service-name &lt;volume-service-name&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[CINDER_VOLUME_SERVICE_NAME]</code>
+      Volume service name.
+      Default=<code>env[CINDER_VOLUME_SERVICE_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -701,7 +669,8 @@
     <term><command>--endpoint-type &lt;endpoint-type&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[CINDER_ENDPOINT_TYPE]</code> or publicURL.
+      Endpoint type, which is publicURL or internalURL.
+      Default=nova <code>env[CINDER_ENDPOINT_TYPE]</code> or publicURL.
       </para>
     </listitem>
   </varlistentry>
@@ -709,7 +678,169 @@
     <term><command>--os-volume-api-version &lt;volume-api-ver&gt;</command></term>
     <listitem>
       <para>
-      Accepts 1 or 2,defaults to <code>env[OS_VOLUME_API_VERSION]</code>.
+      Block Storage API version. Valid values are 1 or 2.
+      Default=<code>env[OS_VOLUME_API_VERSION]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--retries &lt;retries&gt;</command></term>
+    <listitem>
+      <para>
+        Number of retries.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-strategy &lt;auth-strategy&gt;</command></term>
+    <listitem>
+      <para>
+      Authentication strategy (Env: OS_AUTH_STRATEGY,
+      default keystone). For now, any other value will
+      disable the authentication
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-username &lt;auth-user-name&gt;</command></term>
+    <listitem>
+      <para>
+      OpenStack user name. Default=<code>env[OS_USERNAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-password &lt;auth-password&gt;</command></term>
+    <listitem>
+      <para>
+      Password for OpenStack user. Default=<code>env[OS_PASSWORD]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-tenant-name &lt;auth-tenant-name&gt;</command></term>
+    <listitem>
+      <para>
+      Tenant name. Default=<code>env[OS_TENANT_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-tenant-id &lt;auth-tenant-id&gt;</command></term>
+    <listitem>
+      <para>
+      ID for the tenant. Default=<code>env[OS_TENANT_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-url &lt;auth-url&gt;</command></term>
+    <listitem>
+      <para>
+      URL for the authentication service.
+      Default=<code>env[OS_AUTH_URL]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-id &lt;auth-user-id&gt;</command></term>
+    <listitem>
+      <para>
+      Authentication user ID (Env: OS_USER_ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id &lt;auth-user-domain-id&gt;</command></term>
+    <listitem>
+      <para>
+      OpenStack user domain ID. Defaults to
+      <code>env[OS_USER_DOMAIN_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name &lt;auth-user-domain-name&gt;</command></term>
+    <listitem>
+      <para>
+      OpenStack user domain name. Defaults to
+      <code>env[OS_USER_DOMAIN_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id &lt;auth-project-id&gt;</command></term>
+    <listitem>
+      <para>
+      Another way to specify tenant ID. This option is
+      mutually exclusive with --os-tenant-id. Defaults to
+      <code>env[OS_PROJECT_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-name &lt;auth-project-name&gt;</command></term>
+    <listitem>
+      <para>
+      Another way to specify tenant name. This option is
+      mutually exclusive with --os-tenant-name. Defaults to
+      <code>env[OS_PROJECT_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-id &lt;auth-project-domain-id&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_PROJECT_DOMAIN_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-name &lt;auth-project-domain-name&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_PROJECT_DOMAIN_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cert &lt;certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_CERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-key &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_KEY]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-region-name &lt;region-name&gt;</command></term>
+    <listitem>
+      <para>
+      Region name. Default=<code>env[OS_REGION_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-token &lt;token&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_TOKEN]</code>
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-url &lt;url&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_URL]</code>
       </para>
     </listitem>
   </varlistentry>
@@ -722,45 +853,40 @@
       </para>
     </listitem>
   </varlistentry>
-  <varlistentry>
-    <term><command>--retries &lt;retries&gt;</command></term>
-    <listitem>
-      <para>
-        Number of retries.
-      </para>
-    </listitem>
-  </varlistentry>
  </variablelist>
     </section>
+
+    <section xml:id="cinder_cli_v1">
+       <title>Block Storage API v1 commands</title>
     <section xml:id="cinderclient_subcommand_absolute-limits">
-        <title>cinder absolute-limits command</title>
+        <title>cinder absolute-limits</title>
         <screen><computeroutput>usage: cinder absolute-limits</computeroutput></screen>
         <para>
-Print a list of absolute limits for a user
+Lists absolute limits for a user.
         </para>
     </section>
     <section xml:id="cinderclient_subcommand_availability-zone-list">
-        <title>cinder availability-zone-list command</title>
+        <title>cinder availability-zone-list</title>
         <screen><computeroutput>usage: cinder availability-zone-list</computeroutput></screen>
         <para>
-List all the availability zones.
+Lists all availability zones.
         </para>
     </section>
     <section xml:id="cinderclient_subcommand_backup-create">
-        <title>cinder backup-create command</title>
+        <title>cinder backup-create</title>
         <screen><computeroutput>usage: cinder backup-create [--container &lt;container&gt;]
                             [--display-name &lt;display-name&gt;]
                             [--display-description &lt;display-description&gt;]
                             &lt;volume&gt;</computeroutput></screen>
         <para>
-Creates a backup.
+Creates a volume backup.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the volume to backup.
+        Name or ID of volume to back up.
       </para>
     </listitem>
   </varlistentry>
@@ -771,7 +897,7 @@ Creates a backup.
     <term><command>--container &lt;container&gt;</command></term>
     <listitem>
       <para>
-      Optional Backup container name. (Default=None)
+      Backup container name. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -779,7 +905,7 @@ Creates a backup.
     <term><command>--display-name &lt;display-name&gt;</command></term>
     <listitem>
       <para>
-      Optional backup name. (Default=None)
+      Backup name. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -787,48 +913,48 @@ Creates a backup.
     <term><command>--display-description &lt;display-description&gt;</command></term>
     <listitem>
       <para>
-      Optional backup description. (Default=None)
+      Backup description. Default=None.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="cinderclient_subcommand_backup-delete">
-        <title>cinder backup-delete command</title>
+        <title>cinder backup-delete</title>
         <screen><computeroutput>usage: cinder backup-delete &lt;backup&gt;</computeroutput></screen>
         <para>
-Remove a backup.
+Removes a backup.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;backup&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the backup to delete.
+        Name or ID of backup to delete.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="cinderclient_subcommand_backup-list">
-        <title>cinder backup-list command</title>
+        <title>cinder backup-list</title>
         <screen><computeroutput>usage: cinder backup-list</computeroutput></screen>
         <para>
-List all the backups.
+Lists all backups.
         </para>
     </section>
     <section xml:id="cinderclient_subcommand_backup-restore">
-        <title>cinder backup-restore command</title>
+        <title>cinder backup-restore</title>
         <screen><computeroutput>usage: cinder backup-restore [--volume-id &lt;volume&gt;] &lt;backup&gt;</computeroutput></screen>
         <para>
-Restore a backup.
+Restores a backup.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;backup&gt;</command></term>
     <listitem>
       <para>
-        ID of the backup to restore.
+        ID of backup to restore.
       </para>
     </listitem>
   </varlistentry>
@@ -836,34 +962,35 @@ Restore a backup.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--volume-id &lt;volume&gt;</command></term>
+    <term><command>--volume-id &lt;volume&gt; ID</command></term>
     <listitem>
       <para>
-        Optional ID(or name) of the volume to restore to.
+        or name of backup volume to which to restore.
+      Default=None.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="cinderclient_subcommand_backup-show">
-        <title>cinder backup-show command</title>
+        <title>cinder backup-show</title>
         <screen><computeroutput>usage: cinder backup-show &lt;backup&gt;</computeroutput></screen>
         <para>
-Show details about a backup.
+Show backup details.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;backup&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the backup.
+        Name or ID of backup.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="cinderclient_subcommand_create">
-        <title>cinder create command</title>
+        <title>cinder create</title>
         <screen><computeroutput>usage: cinder create [--snapshot-id &lt;snapshot-id&gt;]
                      [--source-volid &lt;source-volid&gt;] [--image-id &lt;image-id&gt;]
                      [--display-name &lt;display-name&gt;]
@@ -873,14 +1000,14 @@ Show details about a backup.
                      [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
                      &lt;size&gt;</computeroutput></screen>
         <para>
-Add a new volume.
+Creates a volume.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;size&gt;</command></term>
     <listitem>
       <para>
-        Size of volume in GB
+        Volume size, in GBs.
       </para>
     </listitem>
   </varlistentry>
@@ -891,8 +1018,7 @@ Add a new volume.
     <term><command>--snapshot-id &lt;snapshot-id&gt;</command></term>
     <listitem>
       <para>
-      Create volume from snapshot id (Optional,
-      Default=None)
+      Creates volume from snapshot ID. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -900,7 +1026,7 @@ Add a new volume.
     <term><command>--source-volid &lt;source-volid&gt;</command></term>
     <listitem>
       <para>
-      Create volume from volume id (Optional, Default=None)
+      Creates volume from volume ID. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -908,7 +1034,7 @@ Add a new volume.
     <term><command>--image-id &lt;image-id&gt;</command></term>
     <listitem>
       <para>
-      Create volume from image id (Optional, Default=None)
+      Creates volume from image ID. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -916,12 +1042,2362 @@ Add a new volume.
     <term><command>--display-name &lt;display-name&gt;</command></term>
     <listitem>
       <para>
-      Volume name (Optional, Default=None)
+      Volume name. Default=None.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
     <term><command>--display-description &lt;display-description&gt;</command></term>
+    <listitem>
+      <para>
+      Volume description. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--volume-type &lt;volume-type&gt;</command></term>
+    <listitem>
+      <para>
+      Volume type. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--availability-zone &lt;availability-zone&gt;</command></term>
+    <listitem>
+      <para>
+      Availability zone for volume. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]</command></term>
+    <listitem>
+      <para>
+      Metadata key and value pairs. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_credentials">
+        <title>cinder credentials</title>
+        <screen><computeroutput>usage: cinder credentials</computeroutput></screen>
+        <para>
+Shows user credentials returned from auth.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_delete">
+        <title>cinder delete</title>
+        <screen><computeroutput>usage: cinder delete &lt;volume&gt; [&lt;volume&gt; ...]</computeroutput></screen>
+        <para>
+Removes one or more volumes.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to delete. Separate multiple volumes with a
+      space.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_encryption-type-create">
+        <title>cinder encryption-type-create</title>
+        <screen><computeroutput>usage: cinder encryption-type-create [--cipher &lt;cipher&gt;]
+                                     [--key_size &lt;key_size&gt;]
+                                     [--control_location &lt;control_location&gt;]
+                                     &lt;volume_type&gt; &lt;provider&gt;</computeroutput></screen>
+        <para>
+Creates encryption type for a volume type. Admin only.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume_type&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;provider&gt;</command></term>
+    <listitem>
+      <para>
+        The class that provides encryption support. For
+      example, a volume driver class path.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--cipher &lt;cipher&gt;</command></term>
+    <listitem>
+      <para>
+        The encryption algorithm and mode. For example, aes-
+      xts-plain64. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--key_size &lt;key_size&gt;</command></term>
+    <listitem>
+      <para>
+      Size of encryption key, in bits. For example, 128 or
+      256. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--control_location &lt;control_location&gt;</command></term>
+    <listitem>
+      <para>
+      Notional service where encryption is performed. Valid
+      values are "front-end" or "back-end." For example,
+      front-end=Nova. Default is "front-end."
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_encryption-type-delete">
+        <title>cinder encryption-type-delete</title>
+        <screen><computeroutput>usage: cinder encryption-type-delete &lt;volume_type&gt;</computeroutput></screen>
+        <para>
+Deletes encryption type for a volume type. Admin only.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume_type&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_encryption-type-list">
+        <title>cinder encryption-type-list</title>
+        <screen><computeroutput>usage: cinder encryption-type-list</computeroutput></screen>
+        <para>
+Shows encryption type details for volume types. Admin only.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_encryption-type-show">
+        <title>cinder encryption-type-show</title>
+        <screen><computeroutput>usage: cinder encryption-type-show &lt;volume_type&gt;</computeroutput></screen>
+        <para>
+Shows encryption type details for volume type. Admin only.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume_type&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_endpoints">
+        <title>cinder endpoints</title>
+        <screen><computeroutput>usage: cinder endpoints</computeroutput></screen>
+        <para>
+Discovers endpoints registered by authentication service.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_extend">
+        <title>cinder extend</title>
+        <screen><computeroutput>usage: cinder extend &lt;volume&gt; &lt;new-size&gt;</computeroutput></screen>
+        <para>
+Attempts to extend size of an existing volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to extend.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;new-size&gt;</command></term>
+    <listitem>
+      <para>
+        Size of volume, in GBs.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_extra-specs-list">
+        <title>cinder extra-specs-list</title>
+        <screen><computeroutput>usage: cinder extra-specs-list</computeroutput></screen>
+        <para>
+Lists current volume types and extra specs.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_force-delete">
+        <title>cinder force-delete</title>
+        <screen><computeroutput>usage: cinder force-delete &lt;volume&gt; [&lt;volume&gt; ...]</computeroutput></screen>
+        <para>
+Attempts force-delete of volume, regardless of state.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to delete. Separate multiple volumes with a
+      space.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_list">
+        <title>cinder list</title>
+        <screen><computeroutput>usage: cinder list [--all-tenants [&lt;0|1&gt;]] [--display-name &lt;display-name&gt;]
+                   [--status &lt;status&gt;]
+                   [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]</computeroutput></screen>
+        <para>
+Lists all volumes.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--all-tenants [&lt;0|1&gt;]</command></term>
+    <listitem>
+      <para>
+      Shows details for all tenants. Admin only.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--display-name &lt;display-name&gt;</command></term>
+    <listitem>
+      <para>
+      Filters list by a volume display name. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--status &lt;status&gt;</command></term>
+    <listitem>
+      <para>
+        Filters list by a status. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]</command></term>
+    <listitem>
+      <para>
+      Filters list by metadata key and value pair.
+      Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_list-extensions">
+        <title>cinder list-extensions</title>
+        <screen><computeroutput>usage: cinder list-extensions</computeroutput></screen>
+        <para>
+Lists all available os-api extensions.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_metadata">
+        <title>cinder metadata</title>
+        <screen><computeroutput>usage: cinder metadata &lt;volume&gt; &lt;action&gt; &lt;key=value&gt; [&lt;key=value&gt; ...]</computeroutput></screen>
+        <para>
+Sets or deletes volume metadata.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume for which to update metadata.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;action&gt;</command></term>
+    <listitem>
+      <para>
+        The action. Valid values are 'set' or 'unset.'
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+        The metadata key and pair to set or unset. For unset, specify
+      only the key. Default=[].
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_metadata-show">
+        <title>cinder metadata-show</title>
+        <screen><computeroutput>usage: cinder metadata-show &lt;volume&gt;</computeroutput></screen>
+        <para>
+Shows volume metadata.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_metadata-update-all">
+        <title>cinder metadata-update-all</title>
+        <screen><computeroutput>usage: cinder metadata-update-all &lt;volume&gt; &lt;key=value&gt; [&lt;key=value&gt; ...]</computeroutput></screen>
+        <para>
+Updates volume metadata.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume for which to update metadata.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+        Metadata key and value pair or pairs to update. Default=[].
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_migrate">
+        <title>cinder migrate</title>
+        <screen><computeroutput>usage: cinder migrate [--force-host-copy &lt;True|False&gt;] &lt;volume&gt; &lt;host&gt;</computeroutput></screen>
+        <para>
+Migrates volume to a new host.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume to migrate.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;host&gt;</command></term>
+    <listitem>
+      <para>
+        Destination host.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--force-host-copy &lt;True|False&gt;</command></term>
+    <listitem>
+      <para>
+      Enables or disables generic host-based force-
+      migration, which bypasses driver optimizations.
+      Default=False.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_qos-associate">
+        <title>cinder qos-associate</title>
+        <screen><computeroutput>usage: cinder qos-associate &lt;qos_specs&gt; &lt;volume_type_id&gt;</computeroutput></screen>
+        <para>
+Associates qos specs with specified volume type.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos_specs&gt;</command></term>
+    <listitem>
+      <para>
+        ID of QoS specifications.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;volume_type_id&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_qos-create">
+        <title>cinder qos-create</title>
+        <screen><computeroutput>usage: cinder qos-create &lt;name&gt; &lt;key=value&gt; [&lt;key=value&gt; ...]</computeroutput></screen>
+        <para>
+Creates a qos specs.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Name of new QoS specifications.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+        Specifications for QoS.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_qos-delete">
+        <title>cinder qos-delete</title>
+        <screen><computeroutput>usage: cinder qos-delete [--force &lt;True|False&gt;] &lt;qos_specs&gt;</computeroutput></screen>
+        <para>
+Deletes a specified qos specs.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos_specs&gt;</command></term>
+    <listitem>
+      <para>
+        ID of QoS specifications.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--force &lt;True|False&gt;</command></term>
+    <listitem>
+      <para>
+        Enables or disables deletion of in-use QoS
+      specifications. Default=False.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_qos-disassociate">
+        <title>cinder qos-disassociate</title>
+        <screen><computeroutput>usage: cinder qos-disassociate &lt;qos_specs&gt; &lt;volume_type_id&gt;</computeroutput></screen>
+        <para>
+Disassociates qos specs from specified volume type.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos_specs&gt;</command></term>
+    <listitem>
+      <para>
+        ID of QoS specifications.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;volume_type_id&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_qos-disassociate-all">
+        <title>cinder qos-disassociate-all</title>
+        <screen><computeroutput>usage: cinder qos-disassociate-all &lt;qos_specs&gt;</computeroutput></screen>
+        <para>
+Disassociates qos specs from all associations.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos_specs&gt;</command></term>
+    <listitem>
+      <para>
+        ID of QoS specifications.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_qos-get-association">
+        <title>cinder qos-get-association</title>
+        <screen><computeroutput>usage: cinder qos-get-association &lt;qos_specs&gt;</computeroutput></screen>
+        <para>
+Gets all associations for specified qos specs.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos_specs&gt;</command></term>
+    <listitem>
+      <para>
+        ID of QoS specifications.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_qos-key">
+        <title>cinder qos-key</title>
+        <screen><computeroutput>usage: cinder qos-key &lt;qos_specs&gt; &lt;action&gt; key=value [key=value ...]</computeroutput></screen>
+        <para>
+Sets or unsets specifications for a qos spec.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos_specs&gt;</command></term>
+    <listitem>
+      <para>
+        ID of QoS specifications.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;action&gt;</command></term>
+    <listitem>
+      <para>
+        The action. Valid values are 'set' or 'unset.'
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>key=value</command></term>
+    <listitem>
+      <para>
+        Metadata key and value pair to set or unset. For unset, specify
+      only the key.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_qos-list">
+        <title>cinder qos-list</title>
+        <screen><computeroutput>usage: cinder qos-list</computeroutput></screen>
+        <para>
+Lists qos specs.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_qos-show">
+        <title>cinder qos-show</title>
+        <screen><computeroutput>usage: cinder qos-show &lt;qos_specs&gt;</computeroutput></screen>
+        <para>
+Shows a specified qos specs.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos_specs&gt;</command></term>
+    <listitem>
+      <para>
+        ID of QoS specifications.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_quota-class-show">
+        <title>cinder quota-class-show</title>
+        <screen><computeroutput>usage: cinder quota-class-show &lt;class&gt;</computeroutput></screen>
+        <para>
+Lists quotas for a quota class.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;class&gt;</command></term>
+    <listitem>
+      <para>
+        Name of quota class for which to list quotas.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_quota-class-update">
+        <title>cinder quota-class-update</title>
+        <screen><computeroutput>usage: cinder quota-class-update [--volumes &lt;volumes&gt;]
+                                 [--snapshots &lt;snapshots&gt;]
+                                 [--gigabytes &lt;gigabytes&gt;]
+                                 [--volume-type &lt;volume_type_name&gt;]
+                                 &lt;class&gt;</computeroutput></screen>
+        <para>
+Updates quotas for a quota class.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;class&gt;</command></term>
+    <listitem>
+      <para>
+        Name of quota class for which to set quotas.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--volumes &lt;volumes&gt;</command></term>
+    <listitem>
+      <para>
+        The new "volumes" quota value. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--snapshots &lt;snapshots&gt;</command></term>
+    <listitem>
+      <para>
+      The new "snapshots" quota value. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--gigabytes &lt;gigabytes&gt;</command></term>
+    <listitem>
+      <para>
+      The new "gigabytes" quota value. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--volume-type &lt;volume_type_name&gt;</command></term>
+    <listitem>
+      <para>
+      Volume type. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_quota-defaults">
+        <title>cinder quota-defaults</title>
+        <screen><computeroutput>usage: cinder quota-defaults &lt;tenant_id&gt;</computeroutput></screen>
+        <para>
+Lists default quotas for a tenant.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;tenant_id&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the tenant for which to list default quotas.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_quota-delete">
+        <title>cinder quota-delete</title>
+        <screen><computeroutput>usage: cinder quota-delete &lt;tenant_id&gt;</computeroutput></screen>
+        <para>
+Delete the quotas for a tenant.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;tenant_id&gt;</command></term>
+    <listitem>
+      <para>
+        UUID of tenant to delete the quotas for.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_quota-show">
+        <title>cinder quota-show</title>
+        <screen><computeroutput>usage: cinder quota-show &lt;tenant_id&gt;</computeroutput></screen>
+        <para>
+Lists quotas for a tenant.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;tenant_id&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the tenant for which to list quotas.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_quota-update">
+        <title>cinder quota-update</title>
+        <screen><computeroutput>usage: cinder quota-update [--volumes &lt;volumes&gt;] [--snapshots &lt;snapshots&gt;]
+                           [--gigabytes &lt;gigabytes&gt;]
+                           [--volume-type &lt;volume_type_name&gt;]
+                           &lt;tenant_id&gt;</computeroutput></screen>
+        <para>
+Updates quotas for a tenant.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;tenant_id&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the tenant for which to set quotas.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--volumes &lt;volumes&gt;</command></term>
+    <listitem>
+      <para>
+        The new "volumes" quota value. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--snapshots &lt;snapshots&gt;</command></term>
+    <listitem>
+      <para>
+      The new "snapshots" quota value. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--gigabytes &lt;gigabytes&gt;</command></term>
+    <listitem>
+      <para>
+      The new "gigabytes" quota value. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--volume-type &lt;volume_type_name&gt;</command></term>
+    <listitem>
+      <para>
+      Volume type. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_quota-usage">
+        <title>cinder quota-usage</title>
+        <screen><computeroutput>usage: cinder quota-usage &lt;tenant_id&gt;</computeroutput></screen>
+        <para>
+Lists quota usage for a tenant.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;tenant_id&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the tenant for which to list quota usage.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_rate-limits">
+        <title>cinder rate-limits</title>
+        <screen><computeroutput>usage: cinder rate-limits</computeroutput></screen>
+        <para>
+Lists rate limits for a user.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_readonly-mode-update">
+        <title>cinder readonly-mode-update</title>
+        <screen><computeroutput>usage: cinder readonly-mode-update &lt;volume&gt; &lt;True|true|False|false&gt;</computeroutput></screen>
+        <para>
+Updates volume read-only access-mode flag.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume to update.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;True|true|False|false&gt;</command></term>
+    <listitem>
+      <para>
+      Enables or disables update of volume to read-only
+      access mode.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_rename">
+        <title>cinder rename</title>
+        <screen><computeroutput>usage: cinder rename [--display-description &lt;display-description&gt;]
+                     &lt;volume&gt; [&lt;display-name&gt;]</computeroutput></screen>
+        <para>
+Renames a volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to rename.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;display-name&gt;</command></term>
+    <listitem>
+      <para>
+        New display name for volume.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--display-description &lt;display-description&gt;</command></term>
+    <listitem>
+      <para>
+      Volume description. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_reset-state">
+        <title>cinder reset-state</title>
+        <screen><computeroutput>usage: cinder reset-state [--state &lt;state&gt;] &lt;volume&gt; [&lt;volume&gt; ...]</computeroutput></screen>
+        <para>
+Explicitly updates the volume state.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to modify. Separate multiple volumes
+      with a space.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--state &lt;state&gt;</command></term>
+    <listitem>
+      <para>
+        The state to assign to the volume. Valid values are
+      "available," "error," "creating," "deleting," or
+      "error_deleting." Default is "available."
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_service-disable">
+        <title>cinder service-disable</title>
+        <screen><computeroutput>usage: cinder service-disable [--reason &lt;reason&gt;] &lt;hostname&gt; &lt;binary&gt;</computeroutput></screen>
+        <para>
+Disables the service.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;hostname&gt;</command></term>
+    <listitem>
+      <para>
+        Host name.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;binary&gt;</command></term>
+    <listitem>
+      <para>
+        Service binary.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--reason &lt;reason&gt;</command></term>
+    <listitem>
+      <para>
+        Reason for disabling service.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_service-enable">
+        <title>cinder service-enable</title>
+        <screen><computeroutput>usage: cinder service-enable &lt;hostname&gt; &lt;binary&gt;</computeroutput></screen>
+        <para>
+Enables the service.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;hostname&gt;</command></term>
+    <listitem>
+      <para>
+        Host name.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;binary&gt;</command></term>
+    <listitem>
+      <para>
+        Service binary.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_service-list">
+        <title>cinder service-list</title>
+        <screen><computeroutput>usage: cinder service-list [--host &lt;hostname&gt;] [--binary &lt;binary&gt;]</computeroutput></screen>
+        <para>
+Lists all services. Filter by host and service binary.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--host &lt;hostname&gt;</command></term>
+    <listitem>
+      <para>
+        Host name. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--binary &lt;binary&gt;</command></term>
+    <listitem>
+      <para>
+        Service binary. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_set-bootable">
+        <title>cinder set-bootable</title>
+        <screen><computeroutput>usage: cinder set-bootable &lt;volume&gt; &lt;True|true|False|false&gt;</computeroutput></screen>
+        <para>
+Update bootable status of a volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the volume to update.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;True|true|False|false&gt;</command></term>
+    <listitem>
+      <para>
+      Flag to indicate whether volume is bootable.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_show">
+        <title>cinder show</title>
+        <screen><computeroutput>usage: cinder show &lt;volume&gt;</computeroutput></screen>
+        <para>
+Shows volume details.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Volume name or ID.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_snapshot-create">
+        <title>cinder snapshot-create</title>
+        <screen><computeroutput>usage: cinder snapshot-create [--force &lt;True|False&gt;]
+                              [--display-name &lt;display-name&gt;]
+                              [--display-description &lt;display-description&gt;]
+                              &lt;volume&gt;</computeroutput></screen>
+        <para>
+Creates a snapshot.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--force &lt;True|False&gt;</command></term>
+    <listitem>
+      <para>
+        Allows or disallows snapshot of a volume when the
+      volume is attached to an instance. If set to True,
+      ignores the current status of the volume when
+      attempting to snapshot it rather than forcing it to be
+      available. Default=False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--display-name &lt;display-name&gt;</command></term>
+    <listitem>
+      <para>
+      The snapshot name. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--display-description &lt;display-description&gt;</command></term>
+    <listitem>
+      <para>
+      The snapshot description. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_snapshot-delete">
+        <title>cinder snapshot-delete</title>
+        <screen><computeroutput>usage: cinder snapshot-delete &lt;snapshot&gt; [&lt;snapshot&gt; ...]</computeroutput></screen>
+        <para>
+Remove one or more snapshots.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the snapshot(s) to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_snapshot-list">
+        <title>cinder snapshot-list</title>
+        <screen><computeroutput>usage: cinder snapshot-list [--all-tenants [&lt;0|1&gt;]]
+                            [--display-name &lt;display-name&gt;]
+                            [--status &lt;status&gt;] [--volume-id &lt;volume-id&gt;]</computeroutput></screen>
+        <para>
+Lists all snapshots.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--all-tenants [&lt;0|1&gt;]</command></term>
+    <listitem>
+      <para>
+      Shows details for all tenants. Admin only.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--display-name &lt;display-name&gt;</command></term>
+    <listitem>
+      <para>
+      Filters list by a display name. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--status &lt;status&gt;</command></term>
+    <listitem>
+      <para>
+        Filters list by a status. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--volume-id &lt;volume-id&gt;</command></term>
+    <listitem>
+      <para>
+      Filters list by a volume ID. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_snapshot-metadata">
+        <title>cinder snapshot-metadata</title>
+        <screen><computeroutput>usage: cinder snapshot-metadata &lt;snapshot&gt; &lt;action&gt; &lt;key=value&gt;
+                                [&lt;key=value&gt; ...]</computeroutput></screen>
+        <para>
+Sets or deletes snapshot metadata.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        ID of snapshot for which to update metadata.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;action&gt;</command></term>
+    <listitem>
+      <para>
+        The action. Valid values are 'set' or 'unset.'
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+        The metadata key and value pair to set or unset. For unset,
+      specify only the key.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_snapshot-metadata-show">
+        <title>cinder snapshot-metadata-show</title>
+        <screen><computeroutput>usage: cinder snapshot-metadata-show &lt;snapshot&gt;</computeroutput></screen>
+        <para>
+Shows snapshot metadata.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        ID of snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_snapshot-metadata-update-all">
+        <title>cinder snapshot-metadata-update-all</title>
+        <screen><computeroutput>usage: cinder snapshot-metadata-update-all &lt;snapshot&gt; &lt;key=value&gt;
+                                           [&lt;key=value&gt; ...]</computeroutput></screen>
+        <para>
+Updates snapshot metadata.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        ID of snapshot for which to update metadata.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+        Metadata key and value pair or pairs to update. Default=[].
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_snapshot-rename">
+        <title>cinder snapshot-rename</title>
+        <screen><computeroutput>usage: cinder snapshot-rename [--display-description &lt;display-description&gt;]
+                              &lt;snapshot&gt; [&lt;display-name&gt;]</computeroutput></screen>
+        <para>
+Renames a snapshot.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;display-name&gt;</command></term>
+    <listitem>
+      <para>
+        New display name for snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--display-description &lt;display-description&gt;</command></term>
+    <listitem>
+      <para>
+      Snapshot description. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_snapshot-reset-state">
+        <title>cinder snapshot-reset-state</title>
+        <screen><computeroutput>usage: cinder snapshot-reset-state [--state &lt;state&gt;]
+                                   &lt;snapshot&gt; [&lt;snapshot&gt; ...]</computeroutput></screen>
+        <para>
+Explicitly updates the snapshot state.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of snapshot to modify.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--state &lt;state&gt;</command></term>
+    <listitem>
+      <para>
+        The state to assign to the snapshot. Valid values are
+      "available," "error," "creating," "deleting," or
+      "error_deleting." Default is "available."
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_snapshot-show">
+        <title>cinder snapshot-show</title>
+        <screen><computeroutput>usage: cinder snapshot-show &lt;snapshot&gt;</computeroutput></screen>
+        <para>
+Shows snapshot details.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_transfer-accept">
+        <title>cinder transfer-accept</title>
+        <screen><computeroutput>usage: cinder transfer-accept &lt;transfer&gt; &lt;auth_key&gt;</computeroutput></screen>
+        <para>
+Accepts a volume transfer.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;transfer&gt;</command></term>
+    <listitem>
+      <para>
+        ID of transfer to accept.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;auth_key&gt;</command></term>
+    <listitem>
+      <para>
+        Authentication key of transfer to accept.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_transfer-create">
+        <title>cinder transfer-create</title>
+        <screen><computeroutput>usage: cinder transfer-create [--display-name &lt;display-name&gt;] &lt;volume&gt;</computeroutput></screen>
+        <para>
+Creates a volume transfer.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to transfer.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--display-name &lt;display-name&gt;</command></term>
+    <listitem>
+      <para>
+      Transfer name. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_transfer-delete">
+        <title>cinder transfer-delete</title>
+        <screen><computeroutput>usage: cinder transfer-delete &lt;transfer&gt;</computeroutput></screen>
+        <para>
+Undoes a transfer.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;transfer&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of transfer to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_transfer-list">
+        <title>cinder transfer-list</title>
+        <screen><computeroutput>usage: cinder transfer-list</computeroutput></screen>
+        <para>
+Lists all transfers.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_transfer-show">
+        <title>cinder transfer-show</title>
+        <screen><computeroutput>usage: cinder transfer-show &lt;transfer&gt;</computeroutput></screen>
+        <para>
+Show transfer details.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;transfer&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of transfer to accept.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_type-create">
+        <title>cinder type-create</title>
+        <screen><computeroutput>usage: cinder type-create &lt;name&gt;</computeroutput></screen>
+        <para>
+Creates a volume type.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Name for the volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_type-delete">
+        <title>cinder type-delete</title>
+        <screen><computeroutput>usage: cinder type-delete &lt;id&gt;</computeroutput></screen>
+        <para>
+Deletes a specified volume type.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;id&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume type to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_type-key">
+        <title>cinder type-key</title>
+        <screen><computeroutput>usage: cinder type-key &lt;vtype&gt; &lt;action&gt; [&lt;key=value&gt; [&lt;key=value&gt; ...]]</computeroutput></screen>
+        <para>
+Sets or unsets extra_spec for a volume type.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;vtype&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;action&gt;</command></term>
+    <listitem>
+      <para>
+        The action. Valid values are 'set' or 'unset.'
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+        The extra specs key and value pair to set or unset. For unset,
+      specify only the key. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_type-list">
+        <title>cinder type-list</title>
+        <screen><computeroutput>usage: cinder type-list</computeroutput></screen>
+        <para>
+Lists available 'volume types'.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_upload-to-image">
+        <title>cinder upload-to-image</title>
+        <screen><computeroutput>usage: cinder upload-to-image [--force &lt;True|False&gt;]
+                              [--container-format &lt;container-format&gt;]
+                              [--disk-format &lt;disk-format&gt;]
+                              &lt;volume&gt; &lt;image-name&gt;</computeroutput></screen>
+        <para>
+Uploads volume to Image Service as an image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to upload to an image.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;image-name&gt;</command></term>
+    <listitem>
+      <para>
+        The new image name.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--force &lt;True|False&gt;</command></term>
+    <listitem>
+      <para>
+        Enables or disables upload of a volume that is
+      attached to an instance. Default=False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--container-format &lt;container-format&gt;</command></term>
+    <listitem>
+      <para>
+      Container format type. Default is bare.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--disk-format &lt;disk-format&gt;</command></term>
+    <listitem>
+      <para>
+      Disk format type. Default is raw.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    </section>
+
+    <section xml:id="cinder_cli_v2">
+       <title>Block Storage API v2 commands</title>
+    <para>
+       You can select an API version to use by adding the
+       <parameter>--os-volume-api-version</parameter> option or by setting
+       the corresponding environment variable:
+<screen><prompt>$</prompt> <userinput>export OS_VOLUME_API_VERSION=2</userinput></screen>
+</para>
+    <section xml:id="cinderclient_subcommand_absolute-limits_v2">
+        <title>cinder absolute-limits (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 absolute-limits</computeroutput></screen>
+        <para>
+Lists absolute limits for a user.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_availability-zone-list_v2">
+        <title>cinder availability-zone-list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 availability-zone-list</computeroutput></screen>
+        <para>
+Lists all availability zones.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_backup-create_v2">
+        <title>cinder backup-create (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 backup-create [--container &lt;container&gt;] [--name &lt;name&gt;]
+                            [--description &lt;description&gt;]
+                            &lt;volume&gt;</computeroutput></screen>
+        <para>
+Creates a volume backup.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to backup.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--container &lt;container&gt;</command></term>
+    <listitem>
+      <para>
+      Backup container name. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Backup name. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+      Backup description. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_backup-delete_v2">
+        <title>cinder backup-delete (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 backup-delete &lt;backup&gt;</computeroutput></screen>
+        <para>
+Removes a backup.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;backup&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of backup to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_backup-export_v2">
+        <title>cinder backup-export (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 backup-export &lt;backup&gt;</computeroutput></screen>
+        <para>
+Export backup metadata record.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;backup&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the backup to export.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_backup-import_v2">
+        <title>cinder backup-import (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 backup-import &lt;backup_service&gt; &lt;backup_url&gt;</computeroutput></screen>
+        <para>
+Import backup metadata record.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;backup_service&gt;</command></term>
+    <listitem>
+      <para>
+        Backup service to use for importing the backup.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;backup_url&gt;</command></term>
+    <listitem>
+      <para>
+        Backup URL for importing the backup metadata.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_backup-list_v2">
+        <title>cinder backup-list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 backup-list</computeroutput></screen>
+        <para>
+Lists all backups.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_backup-restore_v2">
+        <title>cinder backup-restore (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 backup-restore [--volume &lt;volume&gt;] &lt;backup&gt;</computeroutput></screen>
+        <para>
+Restores a backup.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;backup&gt;</command></term>
+    <listitem>
+      <para>
+        ID of backup to restore.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--volume &lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to which to restore. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_backup-show_v2">
+        <title>cinder backup-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 backup-show &lt;backup&gt;</computeroutput></screen>
+        <para>
+Shows backup details.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;backup&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of backup.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_cgsnapshot-create_v2">
+        <title>cinder cgsnapshot-create (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 cgsnapshot-create [--name &lt;name&gt;] [--description &lt;description&gt;]
+                                &lt;consistencygroup&gt;</computeroutput></screen>
+        <para>
+Creates a cgsnapshot.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;consistencygroup&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of a consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Cgsnapshot name. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+      Cgsnapshot description. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_cgsnapshot-delete_v2">
+        <title>cinder cgsnapshot-delete (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 cgsnapshot-delete &lt;cgsnapshot&gt; [&lt;cgsnapshot&gt; ...]</computeroutput></screen>
+        <para>
+Removes one or more cgsnapshots.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;cgsnapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of one or more cgsnapshots to be deleted.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_cgsnapshot-list_v2">
+        <title>cinder cgsnapshot-list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 cgsnapshot-list [--all-tenants [&lt;0|1&gt;]] [--status &lt;status&gt;]
+                              [--consistencygroup-id &lt;consistencygroup_id&gt;]</computeroutput></screen>
+        <para>
+Lists all cgsnapshots.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--all-tenants [&lt;0|1&gt;]</command></term>
+    <listitem>
+      <para>
+      Shows details for all tenants. Admin only.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--status &lt;status&gt;</command></term>
+    <listitem>
+      <para>
+        Filters results by a status. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--consistencygroup-id &lt;consistencygroup_id&gt;</command></term>
+    <listitem>
+      <para>
+      Filters results by a consistency group ID.
+      Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_cgsnapshot-show_v2">
+        <title>cinder cgsnapshot-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 cgsnapshot-show &lt;cgsnapshot&gt;</computeroutput></screen>
+        <para>
+Shows cgsnapshot details.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;cgsnapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of cgsnapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_consisgroup-create_v2">
+        <title>cinder consisgroup-create (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 consisgroup-create [--name &lt;name&gt;] [--description &lt;description&gt;]
+                                 [--availability-zone &lt;availability-zone&gt;]
+                                 &lt;volume-types&gt;</computeroutput></screen>
+        <para>
+Creates a consistency group.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume-types&gt;</command></term>
+    <listitem>
+      <para>
+        Volume types.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Name of a consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+      Description of a consistency group. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--availability-zone &lt;availability-zone&gt;</command></term>
+    <listitem>
+      <para>
+      Availability zone for volume. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_consisgroup-delete_v2">
+        <title>cinder consisgroup-delete (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 consisgroup-delete [--force]
+                                 &lt;consistencygroup&gt; [&lt;consistencygroup&gt; ...]</computeroutput></screen>
+        <para>
+Removes one or more consistency groups.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;consistencygroup&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of one or more consistency groups to be
+      deleted.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--force</command></term>
+    <listitem>
+      <para>
+        Allows or disallows consistency groups to be deleted. If
+      the consistency group is empty, it can be deleted
+      without the force flag. If the consistency group is not
+      empty, the force flag is required for it to be deleted.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_consisgroup-list_v2">
+        <title>cinder consisgroup-list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 consisgroup-list [--all-tenants [&lt;0|1&gt;]]</computeroutput></screen>
+        <para>
+Lists all consistencygroups.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--all-tenants [&lt;0|1&gt;]</command></term>
+    <listitem>
+      <para>
+      Shows details for all tenants. Admin only.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_consisgroup-show_v2">
+        <title>cinder consisgroup-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 consisgroup-show &lt;consistencygroup&gt;</computeroutput></screen>
+        <para>
+Shows details of a consistency group.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;consistencygroup&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of a consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_create_v2">
+        <title>cinder create (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 create [--consisgroup-id &lt;consistencygroup-id&gt;]
+                     [--snapshot-id &lt;snapshot-id&gt;]
+                     [--source-volid &lt;source-volid&gt;]
+                     [--source-replica &lt;source-replica&gt;]
+                     [--image-id &lt;image-id&gt;] [--name &lt;name&gt;]
+                     [--description &lt;description&gt;]
+                     [--volume-type &lt;volume-type&gt;]
+                     [--availability-zone &lt;availability-zone&gt;]
+                     [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
+                     [--hint &lt;key=value&gt;]
+                     [&lt;size&gt;]</computeroutput></screen>
+        <para>
+Creates a volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;size&gt;</command></term>
+    <listitem>
+      <para>
+        Size of volume, in GBs. (Required unless snapshot-id
+      /source-volid is specified).
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--consisgroup-id &lt;consistencygroup-id&gt;</command></term>
+    <listitem>
+      <para>
+      ID of a consistency group where the new volume belongs
+      to. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--snapshot-id &lt;snapshot-id&gt;</command></term>
+    <listitem>
+      <para>
+      Creates volume from snapshot ID. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--source-volid &lt;source-volid&gt;</command></term>
+    <listitem>
+      <para>
+      Creates volume from volume ID. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--source-replica &lt;source-replica&gt;</command></term>
+    <listitem>
+      <para>
+      Creates volume from replicated volume ID.
+      Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--image-id &lt;image-id&gt;</command></term>
+    <listitem>
+      <para>
+      Creates volume from image ID. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Volume name. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+      Volume description. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--volume-type &lt;volume-type&gt;</command></term>
+    <listitem>
+      <para>
+      Volume type. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--availability-zone &lt;availability-zone&gt;</command></term>
+    <listitem>
+      <para>
+      Availability zone for volume. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]</command></term>
+    <listitem>
+      <para>
+      Metadata key and value pairs. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--hint &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+        Scheduler hint, like in nova.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_credentials_v2">
+        <title>cinder credentials (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 credentials</computeroutput></screen>
+        <para>
+Shows user credentials returned from auth.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_delete_v2">
+        <title>cinder delete (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 delete &lt;volume&gt; [&lt;volume&gt; ...]</computeroutput></screen>
+        <para>
+Removes one or more volumes.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume or volumes to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_encryption-type-create_v2">
+        <title>cinder encryption-type-create (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 encryption-type-create [--cipher &lt;cipher&gt;]
+                                     [--key_size &lt;key_size&gt;]
+                                     [--control_location &lt;control_location&gt;]
+                                     &lt;volume_type&gt; &lt;provider&gt;</computeroutput></screen>
+        <para>
+Creates encryption type for a volume type. Admin only.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume_type&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;provider&gt;</command></term>
+    <listitem>
+      <para>
+        The class that provides encryption support. For
+      example, LuksEncryptor.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--cipher &lt;cipher&gt;</command></term>
+    <listitem>
+      <para>
+        The encryption algorithm or mode. For example, aes-
+      xts-plain64. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--key_size &lt;key_size&gt;</command></term>
+    <listitem>
+      <para>
+      Size of encryption key, in bits. For example, 128 or
+      256. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--control_location &lt;control_location&gt;</command></term>
+    <listitem>
+      <para>
+      Notional service where encryption is performed. Valid
+      values are "front-end" or "back-end." For example,
+      front-end=Nova. Default is "front-end."
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_encryption-type-delete_v2">
+        <title>cinder encryption-type-delete (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 encryption-type-delete &lt;volume_type&gt;</computeroutput></screen>
+        <para>
+Deletes encryption type for a volume type. Admin only.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume_type&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_encryption-type-list_v2">
+        <title>cinder encryption-type-list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 encryption-type-list</computeroutput></screen>
+        <para>
+Shows encryption type details for volume types. Admin only.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_encryption-type-show_v2">
+        <title>cinder encryption-type-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 encryption-type-show &lt;volume_type&gt;</computeroutput></screen>
+        <para>
+Shows encryption type details for a volume type. Admin only.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume_type&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_endpoints_v2">
+        <title>cinder endpoints (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 endpoints</computeroutput></screen>
+        <para>
+Discovers endpoints registered by authentication service.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_extend_v2">
+        <title>cinder extend (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 extend &lt;volume&gt; &lt;new_size&gt;</computeroutput></screen>
+        <para>
+Attempts to extend size of an existing volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to extend.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;new_size&gt;</command></term>
+    <listitem>
+      <para>
+        New size of volume, in GBs.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_extra-specs-list_v2">
+        <title>cinder extra-specs-list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 extra-specs-list</computeroutput></screen>
+        <para>
+Lists current volume types and extra specs.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_force-delete_v2">
+        <title>cinder force-delete (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 force-delete &lt;volume&gt; [&lt;volume&gt; ...]</computeroutput></screen>
+        <para>
+Attempts force-delete of volume, regardless of state.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume or volumes to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_list_v2">
+        <title>cinder list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 list [--all-tenants [&lt;0|1&gt;]] [--name &lt;name&gt;] [--status &lt;status&gt;]
+                   [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
+                   [--marker &lt;marker&gt;] [--limit &lt;limit&gt;]
+                   [--sort_key &lt;sort_key&gt;] [--sort_dir &lt;sort_dir&gt;]</computeroutput></screen>
+        <para>
+Lists all volumes.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--all-tenants [&lt;0|1&gt;]</command></term>
+    <listitem>
+      <para>
+      Shows details for all tenants. Admin only.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Filters results by a name. OPTIONAL: Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--status &lt;status&gt;</command></term>
+    <listitem>
+      <para>
+        Filters results by a status. OPTIONAL: Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]</command></term>
+    <listitem>
+      <para>
+      Filters results by a metadata key and value pair.
+      OPTIONAL: Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker &lt;marker&gt;</command></term>
+    <listitem>
+      <para>
+        Begin returning volumes that appear later in the
+      volume list than that represented by this volume id.
+      OPTIONAL: Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of volumes to return. OPTIONAL:
+      Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort_key &lt;sort_key&gt;</command></term>
+    <listitem>
+      <para>
+      Key to be sorted, should be (`id`, `status`, `size`,
+      `availability_zone`, `name`, `bootable`,
+      `created_at`). OPTIONAL: Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort_dir &lt;sort_dir&gt;</command></term>
+    <listitem>
+      <para>
+      Sort direction, should be `desc` or `asc`. OPTIONAL:
+      Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_list-extensions_v2">
+        <title>cinder list-extensions (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 list-extensions</computeroutput></screen>
+        <para>
+Lists all available os-api extensions.
+        </para>
+    </section>
+    <section xml:id="cinderclient_subcommand_manage_v2">
+        <title>cinder manage (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 manage [--source-name &lt;source-name&gt;] [--source-id &lt;source-id&gt;]
+                     [--name &lt;name&gt;] [--description &lt;description&gt;]
+                     [--volume-type &lt;volume-type&gt;]
+                     [--availability-zone &lt;availability-zone&gt;]
+                     [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]] [--bootable]
+                     &lt;host&gt; [&lt;key=value&gt; [&lt;key=value&gt; ...]]</computeroutput></screen>
+        <para>
+Manage an existing volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;host&gt;</command></term>
+    <listitem>
+      <para>
+        Cinder host on which the existing volume resides
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+        Driver-specific reference to the existing volume as
+      key=value pairs
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--source-name &lt;source-name&gt;</command></term>
+    <listitem>
+      <para>
+      Name of the volume to manage (Optional)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--source-id &lt;source-id&gt;</command></term>
+    <listitem>
+      <para>
+      ID of the volume to manage (Optional)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Volume name (Optional, Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
       Volume description (Optional, Default=None)
@@ -952,251 +3428,29 @@ Add a new volume.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--bootable</command></term>
+    <listitem>
+      <para>
+        Specifies that the newly created volume should be
+      marked as bootable
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_credentials">
-        <title>cinder credentials command</title>
-        <screen><computeroutput>usage: cinder credentials</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_metadata_v2">
+        <title>cinder metadata (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 metadata &lt;volume&gt; &lt;action&gt; &lt;key=value&gt; [&lt;key=value&gt; ...]</computeroutput></screen>
         <para>
-Show user credentials returned from auth.
-        </para>
-    </section>
-    <section xml:id="cinderclient_subcommand_delete">
-        <title>cinder delete command</title>
-        <screen><computeroutput>usage: cinder delete &lt;volume&gt; [&lt;volume&gt; ...]</computeroutput></screen>
-        <para>
-Remove volume(s).
+Sets or deletes volume metadata.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the volume(s) to delete.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="cinderclient_subcommand_encryption-type-create">
-        <title>cinder encryption-type-create command</title>
-        <screen><computeroutput>usage: cinder encryption-type-create [--cipher &lt;cipher&gt;]
-                                     [--key_size &lt;key_size&gt;]
-                                     [--control_location &lt;control_location&gt;]
-                                     &lt;volume_type&gt; &lt;provider&gt;</computeroutput></screen>
-        <para>
-Create a new encryption type for a volume type (Admin Only).
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;volume_type&gt;</command></term>
-    <listitem>
-      <para>
-        Name or ID of the volume type
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>&lt;provider&gt;</command></term>
-    <listitem>
-      <para>
-        Class providing encryption support (e.g.
-      LuksEncryptor)
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-  <variablelist wordsize="10">
-    <title>Optional arguments</title>
-  <varlistentry>
-    <term><command>--cipher &lt;cipher&gt;</command></term>
-    <listitem>
-      <para>
-        Encryption algorithm/mode to use (e.g., aes-xts-
-      plain64) (Optional, Default=None)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--key_size &lt;key_size&gt;</command></term>
-    <listitem>
-      <para>
-      Size of the encryption key, in bits (e.g., 128, 256)
-      (Optional, Default=None)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--control_location &lt;control_location&gt;</command></term>
-    <listitem>
-      <para>
-      Notional service where encryption is performed (e.g.,
-      front-end=Nova) Values: 'front-end', 'back-end'
-      (Default='front-end')
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="cinderclient_subcommand_encryption-type-delete">
-        <title>cinder encryption-type-delete command</title>
-        <screen><computeroutput>usage: cinder encryption-type-delete &lt;volume_type&gt;</computeroutput></screen>
-        <para>
-Delete the encryption type for a volume type (Admin Only).
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;volume_type&gt;</command></term>
-    <listitem>
-      <para>
-        Name or ID of the volume type
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="cinderclient_subcommand_encryption-type-list">
-        <title>cinder encryption-type-list command</title>
-        <screen><computeroutput>usage: cinder encryption-type-list</computeroutput></screen>
-        <para>
-List encryption type information for all volume types (Admin Only).
-        </para>
-    </section>
-    <section xml:id="cinderclient_subcommand_encryption-type-show">
-        <title>cinder encryption-type-show command</title>
-        <screen><computeroutput>usage: cinder encryption-type-show &lt;volume_type&gt;</computeroutput></screen>
-        <para>
-Show the encryption type information for a volume type (Admin Only).
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;volume_type&gt;</command></term>
-    <listitem>
-      <para>
-        Name or ID of the volume type
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="cinderclient_subcommand_endpoints">
-        <title>cinder endpoints command</title>
-        <screen><computeroutput>usage: cinder endpoints</computeroutput></screen>
-        <para>
-Discover endpoints that get returned from the authenticate services.
-        </para>
-    </section>
-    <section xml:id="cinderclient_subcommand_extend">
-        <title>cinder extend command</title>
-        <screen><computeroutput>usage: cinder extend &lt;volume&gt; &lt;new-size&gt;</computeroutput></screen>
-        <para>
-Attempt to extend the size of an existing volume.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;volume&gt;</command></term>
-    <listitem>
-      <para>
-        Name or ID of the volume to extend.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>&lt;new-size&gt;</command></term>
-    <listitem>
-      <para>
-        New size of volume in GB
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="cinderclient_subcommand_extra-specs-list">
-        <title>cinder extra-specs-list command</title>
-        <screen><computeroutput>usage: cinder extra-specs-list</computeroutput></screen>
-        <para>
-Print a list of current 'volume types and extra specs' (Admin Only).
-        </para>
-    </section>
-    <section xml:id="cinderclient_subcommand_force-delete">
-        <title>cinder force-delete command</title>
-        <screen><computeroutput>usage: cinder force-delete &lt;volume&gt; [&lt;volume&gt; ...]</computeroutput></screen>
-        <para>
-Attempt forced removal of volume(s), regardless of the state(s).
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;volume&gt;</command></term>
-    <listitem>
-      <para>
-        Name or ID of the volume(s) to delete.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="cinderclient_subcommand_list">
-        <title>cinder list command</title>
-        <screen><computeroutput>usage: cinder list [--all-tenants [&lt;0|1&gt;]] [--display-name &lt;display-name&gt;]
-                   [--status &lt;status&gt;]
-                   [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]</computeroutput></screen>
-        <para>
-List all the volumes.
-        </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
-  <varlistentry>
-    <term><command>--all-tenants [&lt;0|1&gt;]</command></term>
-    <listitem>
-      <para>
-      Display information from all tenants (Admin only).
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--display-name &lt;display-name&gt;</command></term>
-    <listitem>
-      <para>
-      Filter results by display-name
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--status &lt;status&gt;</command></term>
-    <listitem>
-      <para>
-        Filter results by status
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]</command></term>
-    <listitem>
-      <para>
-      Filter results by metadata
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="cinderclient_subcommand_list-extensions">
-        <title>cinder list-extensions command</title>
-        <screen><computeroutput>usage: cinder list-extensions</computeroutput></screen>
-        <para>
-List all the os-api extensions that are available.
-        </para>
-    </section>
-    <section xml:id="cinderclient_subcommand_metadata">
-        <title>cinder metadata command</title>
-        <screen><computeroutput>usage: cinder metadata &lt;volume&gt; &lt;action&gt; &lt;key=value&gt; [&lt;key=value&gt; ...]</computeroutput></screen>
-        <para>
-Set or Delete metadata on a volume.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;volume&gt;</command></term>
-    <listitem>
-      <para>
-        Name or ID of the volume to update metadata on.
+        Name or ID of volume for which to update metadata.
       </para>
     </listitem>
   </varlistentry>
@@ -1204,7 +3458,7 @@ Set or Delete metadata on a volume.
     <term><command>&lt;action&gt;</command></term>
     <listitem>
       <para>
-        Actions: 'set' or 'unset'
+        The action. Valid values are 'set' or 'unset.'
       </para>
     </listitem>
   </varlistentry>
@@ -1212,41 +3466,42 @@ Set or Delete metadata on a volume.
     <term><command>&lt;key=value&gt;</command></term>
     <listitem>
       <para>
-        Metadata to set/unset (only key is necessary on unset)
+        Metadata key and value pair to set or unset. For unset, specify
+      only the key.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_metadata-show">
-        <title>cinder metadata-show command</title>
-        <screen><computeroutput>usage: cinder metadata-show &lt;volume&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_metadata-show_v2">
+        <title>cinder metadata-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 metadata-show &lt;volume&gt;</computeroutput></screen>
         <para>
-Show metadata of given volume.
+Shows volume metadata.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        ID of volume
+        ID of volume.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_metadata-update-all">
-        <title>cinder metadata-update-all command</title>
-        <screen><computeroutput>usage: cinder metadata-update-all &lt;volume&gt; &lt;key=value&gt; [&lt;key=value&gt; ...]</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_metadata-update-all_v2">
+        <title>cinder metadata-update-all (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 metadata-update-all &lt;volume&gt; &lt;key=value&gt; [&lt;key=value&gt; ...]</computeroutput></screen>
         <para>
-Update all metadata of a volume.
+Updates volume metadata.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        ID of the volume to update metadata on.
+        ID of volume for which to update metadata.
       </para>
     </listitem>
   </varlistentry>
@@ -1254,24 +3509,24 @@ Update all metadata of a volume.
     <term><command>&lt;key=value&gt;</command></term>
     <listitem>
       <para>
-        Metadata entry/entries to update.
+        Metadata key and value pair or pairs to update.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_migrate">
-        <title>cinder migrate command</title>
-        <screen><computeroutput>usage: cinder migrate [--force-host-copy &lt;True|False&gt;] &lt;volume&gt; &lt;host&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_migrate_v2">
+        <title>cinder migrate (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 migrate [--force-host-copy &lt;True|False&gt;] &lt;volume&gt; &lt;host&gt;</computeroutput></screen>
         <para>
-Migrate the volume to the new host.
+Migrates volume to a new host.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        ID of the volume to migrate
+        ID of volume to migrate.
       </para>
     </listitem>
   </varlistentry>
@@ -1279,7 +3534,7 @@ Migrate the volume to the new host.
     <term><command>&lt;host&gt;</command></term>
     <listitem>
       <para>
-        Destination host
+        Destination host.
       </para>
     </listitem>
   </varlistentry>
@@ -1290,26 +3545,26 @@ Migrate the volume to the new host.
     <term><command>--force-host-copy &lt;True|False&gt;</command></term>
     <listitem>
       <para>
-      Optional flag to force the use of the generic host-
-      based migration mechanism, bypassing driver
-      optimizations (Default=False).
+      Enables or disables generic host-based force-
+      migration, which bypasses driver optimizations.
+      Default=False.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_qos-associate">
-        <title>cinder qos-associate command</title>
-        <screen><computeroutput>usage: cinder qos-associate &lt;qos_specs&gt; &lt;volume_type_id&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_qos-associate_v2">
+        <title>cinder qos-associate (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 qos-associate &lt;qos_specs&gt; &lt;volume_type_id&gt;</computeroutput></screen>
         <para>
-Associate qos specs with specific volume type.
+Associates qos specs with specified volume type.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;qos_specs&gt;</command></term>
     <listitem>
       <para>
-        ID of qos_specs.
+        ID of QoS specifications.
       </para>
     </listitem>
   </varlistentry>
@@ -1317,24 +3572,25 @@ Associate qos specs with specific volume type.
     <term><command>&lt;volume_type_id&gt;</command></term>
     <listitem>
       <para>
-        ID of volume type to be associated with.
+        ID of volume type with which to associate QoS
+      specifications.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_qos-create">
-        <title>cinder qos-create command</title>
-        <screen><computeroutput>usage: cinder qos-create &lt;name&gt; &lt;key=value&gt; [&lt;key=value&gt; ...]</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_qos-create_v2">
+        <title>cinder qos-create (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 qos-create &lt;name&gt; &lt;key=value&gt; [&lt;key=value&gt; ...]</computeroutput></screen>
         <para>
-Create a new qos specs.
+Creates a qos specs.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;name&gt;</command></term>
     <listitem>
       <para>
-        Name of the new QoS specs
+        Name of new QoS specifications.
       </para>
     </listitem>
   </varlistentry>
@@ -1342,24 +3598,24 @@ Create a new qos specs.
     <term><command>&lt;key=value&gt;</command></term>
     <listitem>
       <para>
-        Specifications for QoS
+        QoS specifications.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_qos-delete">
-        <title>cinder qos-delete command</title>
-        <screen><computeroutput>usage: cinder qos-delete [--force &lt;True|False&gt;] &lt;qos_specs&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_qos-delete_v2">
+        <title>cinder qos-delete (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 qos-delete [--force &lt;True|False&gt;] &lt;qos_specs&gt;</computeroutput></screen>
         <para>
-Delete a specific qos specs.
+Deletes a specified qos specs.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;qos_specs&gt;</command></term>
     <listitem>
       <para>
-        ID of the qos_specs to delete.
+        ID of QoS specifications to delete.
       </para>
     </listitem>
   </varlistentry>
@@ -1370,25 +3626,25 @@ Delete a specific qos specs.
     <term><command>--force &lt;True|False&gt;</command></term>
     <listitem>
       <para>
-        Optional flag that indicates whether to delete
-      specified qos specs even if it is in-use.
+        Enables or disables deletion of in-use QoS
+      specifications. Default=False.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_qos-disassociate">
-        <title>cinder qos-disassociate command</title>
-        <screen><computeroutput>usage: cinder qos-disassociate &lt;qos_specs&gt; &lt;volume_type_id&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_qos-disassociate_v2">
+        <title>cinder qos-disassociate (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 qos-disassociate &lt;qos_specs&gt; &lt;volume_type_id&gt;</computeroutput></screen>
         <para>
-Disassociate qos specs from specific volume type.
+Disassociates qos specs from specified volume type.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;qos_specs&gt;</command></term>
     <listitem>
       <para>
-        ID of qos_specs.
+        ID of QoS specifications.
       </para>
     </listitem>
   </varlistentry>
@@ -1396,58 +3652,59 @@ Disassociate qos specs from specific volume type.
     <term><command>&lt;volume_type_id&gt;</command></term>
     <listitem>
       <para>
-        ID of volume type to be associated with.
+        ID of volume type with which to associate QoS
+      specifications.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_qos-disassociate-all">
-        <title>cinder qos-disassociate-all command</title>
-        <screen><computeroutput>usage: cinder qos-disassociate-all &lt;qos_specs&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_qos-disassociate-all_v2">
+        <title>cinder qos-disassociate-all (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 qos-disassociate-all &lt;qos_specs&gt;</computeroutput></screen>
         <para>
-Disassociate qos specs from all of its associations.
+Disassociates qos specs from all its associations.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;qos_specs&gt;</command></term>
     <listitem>
       <para>
-        ID of qos_specs to be operate on.
+        ID of QoS specifications on which to operate.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_qos-get-association">
-        <title>cinder qos-get-association command</title>
-        <screen><computeroutput>usage: cinder qos-get-association &lt;qos_specs&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_qos-get-association_v2">
+        <title>cinder qos-get-association (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 qos-get-association &lt;qos_specs&gt;</computeroutput></screen>
         <para>
-Get all associations of specific qos specs.
+Lists all associations for specified qos specs.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;qos_specs&gt;</command></term>
     <listitem>
       <para>
-        ID of the qos_specs.
+        ID of QoS specifications.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_qos-key">
-        <title>cinder qos-key command</title>
-        <screen><computeroutput>usage: cinder qos-key &lt;qos_specs&gt; &lt;action&gt; key=value [key=value ...]</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_qos-key_v2">
+        <title>cinder qos-key (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 qos-key &lt;qos_specs&gt; &lt;action&gt; key=value [key=value ...]</computeroutput></screen>
         <para>
-Set or unset specifications for a qos spec.
+Sets or unsets specifications for a qos spec.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;qos_specs&gt;</command></term>
     <listitem>
       <para>
-        ID of qos specs
+        ID of QoS specifications.
       </para>
     </listitem>
   </varlistentry>
@@ -1455,7 +3712,7 @@ Set or unset specifications for a qos spec.
     <term><command>&lt;action&gt;</command></term>
     <listitem>
       <para>
-        Actions: 'set' or 'unset'
+        The action. Valid values are 'set' or 'unset.'
       </para>
     </listitem>
   </varlistentry>
@@ -1463,69 +3720,70 @@ Set or unset specifications for a qos spec.
     <term><command>key=value</command></term>
     <listitem>
       <para>
-        QoS specs to set/unset (only key is necessary on unset)
+        Metadata key and value pair to set or unset. For unset, specify
+      only the key.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_qos-list">
-        <title>cinder qos-list command</title>
-        <screen><computeroutput>usage: cinder qos-list</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_qos-list_v2">
+        <title>cinder qos-list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 qos-list</computeroutput></screen>
         <para>
-Get full list of qos specs.
+Lists qos specs.
         </para>
     </section>
-    <section xml:id="cinderclient_subcommand_qos-show">
-        <title>cinder qos-show command</title>
-        <screen><computeroutput>usage: cinder qos-show &lt;qos_specs&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_qos-show_v2">
+        <title>cinder qos-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 qos-show &lt;qos_specs&gt;</computeroutput></screen>
         <para>
-Get a specific qos specs.
+Shows qos specs details.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;qos_specs&gt;</command></term>
     <listitem>
       <para>
-        ID of the qos_specs to show.
+        ID of QoS specifications to show.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_quota-class-show">
-        <title>cinder quota-class-show command</title>
-        <screen><computeroutput>usage: cinder quota-class-show &lt;class&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_quota-class-show_v2">
+        <title>cinder quota-class-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 quota-class-show &lt;class&gt;</computeroutput></screen>
         <para>
-List the quotas for a quota class.
+Lists quotas for a quota class.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;class&gt;</command></term>
     <listitem>
       <para>
-        Name of quota class to list the quotas for.
+        Name of quota class for which to list quotas.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_quota-class-update">
-        <title>cinder quota-class-update command</title>
-        <screen><computeroutput>usage: cinder quota-class-update [--volumes &lt;volumes&gt;]
+    <section xml:id="cinderclient_subcommand_quota-class-update_v2">
+        <title>cinder quota-class-update (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 quota-class-update [--volumes &lt;volumes&gt;]
                                  [--snapshots &lt;snapshots&gt;]
                                  [--gigabytes &lt;gigabytes&gt;]
                                  [--volume-type &lt;volume_type_name&gt;]
-                                 &lt;class&gt;</computeroutput></screen>
+                                 &lt;class-name&gt;</computeroutput></screen>
         <para>
-Update the quotas for a quota class.
+Updates quotas for a quota class.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;class&gt;</command></term>
+    <term><command>&lt;class-name&gt;</command></term>
     <listitem>
       <para>
-        Name of quota class to set the quotas for.
+        Name of quota class for which to set quotas.
       </para>
     </listitem>
   </varlistentry>
@@ -1536,7 +3794,7 @@ Update the quotas for a quota class.
     <term><command>--volumes &lt;volumes&gt;</command></term>
     <listitem>
       <para>
-        New value for the "volumes" quota.
+        The new "volumes" quota value. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -1544,7 +3802,7 @@ Update the quotas for a quota class.
     <term><command>--snapshots &lt;snapshots&gt;</command></term>
     <listitem>
       <para>
-      New value for the "snapshots" quota.
+      The new "snapshots" quota value. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -1552,7 +3810,7 @@ Update the quotas for a quota class.
     <term><command>--gigabytes &lt;gigabytes&gt;</command></term>
     <listitem>
       <para>
-      New value for the "gigabytes" quota.
+      The new "gigabytes" quota value. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -1560,32 +3818,32 @@ Update the quotas for a quota class.
     <term><command>--volume-type &lt;volume_type_name&gt;</command></term>
     <listitem>
       <para>
-      Volume type (Optional, Default=None)
+      Volume type. Default=None.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_quota-defaults">
-        <title>cinder quota-defaults command</title>
-        <screen><computeroutput>usage: cinder quota-defaults &lt;tenant_id&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_quota-defaults_v2">
+        <title>cinder quota-defaults (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 quota-defaults &lt;tenant_id&gt;</computeroutput></screen>
         <para>
-List the default quotas for a tenant.
+Lists default quotas for a tenant.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;tenant_id&gt;</command></term>
     <listitem>
       <para>
-        UUID of tenant to list the default quotas for.
+        ID of tenant for which to list quota defaults.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_quota-delete">
-        <title>cinder quota-delete command</title>
-        <screen><computeroutput>usage: cinder quota-delete &lt;tenant_id&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_quota-delete_v2">
+        <title>cinder quota-delete (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 quota-delete &lt;tenant_id&gt;</computeroutput></screen>
         <para>
 Delete the quotas for a tenant.
         </para>  <variablelist wordsize="10">
@@ -1600,38 +3858,38 @@ Delete the quotas for a tenant.
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_quota-show">
-        <title>cinder quota-show command</title>
-        <screen><computeroutput>usage: cinder quota-show &lt;tenant_id&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_quota-show_v2">
+        <title>cinder quota-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 quota-show &lt;tenant_id&gt;</computeroutput></screen>
         <para>
-List the quotas for a tenant.
+Lists quotas for a tenant.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;tenant_id&gt;</command></term>
     <listitem>
       <para>
-        UUID of tenant to list the quotas for.
+        ID of tenant for which to list quotas.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_quota-update">
-        <title>cinder quota-update command</title>
-        <screen><computeroutput>usage: cinder quota-update [--volumes &lt;volumes&gt;] [--snapshots &lt;snapshots&gt;]
+    <section xml:id="cinderclient_subcommand_quota-update_v2">
+        <title>cinder quota-update (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 quota-update [--volumes &lt;volumes&gt;] [--snapshots &lt;snapshots&gt;]
                            [--gigabytes &lt;gigabytes&gt;]
                            [--volume-type &lt;volume_type_name&gt;]
                            &lt;tenant_id&gt;</computeroutput></screen>
         <para>
-Update the quotas for a tenant.
+Updates quotas for a tenant.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;tenant_id&gt;</command></term>
     <listitem>
       <para>
-        UUID of tenant to set the quotas for.
+        ID of tenant for which to set quotas.
       </para>
     </listitem>
   </varlistentry>
@@ -1642,7 +3900,7 @@ Update the quotas for a tenant.
     <term><command>--volumes &lt;volumes&gt;</command></term>
     <listitem>
       <para>
-        New value for the "volumes" quota.
+        The new "volumes" quota value. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -1650,7 +3908,7 @@ Update the quotas for a tenant.
     <term><command>--snapshots &lt;snapshots&gt;</command></term>
     <listitem>
       <para>
-      New value for the "snapshots" quota.
+      The new "snapshots" quota value. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -1658,7 +3916,7 @@ Update the quotas for a tenant.
     <term><command>--gigabytes &lt;gigabytes&gt;</command></term>
     <listitem>
       <para>
-      New value for the "gigabytes" quota.
+      The new "gigabytes" quota value. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -1666,48 +3924,48 @@ Update the quotas for a tenant.
     <term><command>--volume-type &lt;volume_type_name&gt;</command></term>
     <listitem>
       <para>
-      Volume type (Optional, Default=None)
+      Volume type. Default=None.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_quota-usage">
-        <title>cinder quota-usage command</title>
-        <screen><computeroutput>usage: cinder quota-usage &lt;tenant_id&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_quota-usage_v2">
+        <title>cinder quota-usage (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 quota-usage &lt;tenant_id&gt;</computeroutput></screen>
         <para>
-List the quota usage for a tenant.
+Lists quota usage for a tenant.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;tenant_id&gt;</command></term>
     <listitem>
       <para>
-        UUID of tenant to list the quota usage for.
+        ID of tenant for which to list quota usage.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_rate-limits">
-        <title>cinder rate-limits command</title>
-        <screen><computeroutput>usage: cinder rate-limits</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_rate-limits_v2">
+        <title>cinder rate-limits (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 rate-limits</computeroutput></screen>
         <para>
-Print a list of rate limits for a user
+Lists rate limits for a user.
         </para>
     </section>
-    <section xml:id="cinderclient_subcommand_readonly-mode-update">
-        <title>cinder readonly-mode-update command</title>
-        <screen><computeroutput>usage: cinder readonly-mode-update &lt;volume&gt; &lt;True|true|False|false&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_readonly-mode-update_v2">
+        <title>cinder readonly-mode-update (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 readonly-mode-update &lt;volume&gt; &lt;True|true|False|false&gt;</computeroutput></screen>
         <para>
-Update volume read-only access mode read_only.
+Updates volume read-only access-mode flag.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        ID of the volume to update.
+        ID of volume to update.
       </para>
     </listitem>
   </varlistentry>
@@ -1715,34 +3973,33 @@ Update volume read-only access mode read_only.
     <term><command>&lt;True|true|False|false&gt;</command></term>
     <listitem>
       <para>
-      Flag to indicate whether to update volume to read-only
+      Enables or disables update of volume to read-only
       access mode.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_rename">
-        <title>cinder rename command</title>
-        <screen><computeroutput>usage: cinder rename [--display-description &lt;display-description&gt;]
-                     &lt;volume&gt; [&lt;display-name&gt;]</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_rename_v2">
+        <title>cinder rename (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 rename [--description &lt;description&gt;] &lt;volume&gt; [&lt;name&gt;]</computeroutput></screen>
         <para>
-Rename a volume.
+Renames a volume.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the volume to rename.
+        Name or ID of volume to rename.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>&lt;display-name&gt;</command></term>
+    <term><command>&lt;name&gt;</command></term>
     <listitem>
       <para>
-        New display-name for the volume.
+        New name for volume.
       </para>
     </listitem>
   </varlistentry>
@@ -1750,27 +4007,61 @@ Rename a volume.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--display-description &lt;display-description&gt;</command></term>
+    <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
-      Optional volume description. (Default=None)
+      Volume description. Default=None.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_reset-state">
-        <title>cinder reset-state command</title>
-        <screen><computeroutput>usage: cinder reset-state [--state &lt;state&gt;] &lt;volume&gt; [&lt;volume&gt; ...]</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_replication-promote_v2">
+        <title>cinder replication-promote (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 replication-promote &lt;volume&gt;</computeroutput></screen>
         <para>
-Explicitly update the state of a volume.
+Promote a secondary volume to primary for a relationship.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the volume to modify.
+        Name or ID of the volume to promote.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_replication-reenable_v2">
+        <title>cinder replication-reenable (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 replication-reenable &lt;volume&gt;</computeroutput></screen>
+        <para>
+Sync the secondary volume with primary for a relationship.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the volume to reenable replication.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_reset-state_v2">
+        <title>cinder reset-state (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 reset-state [--state &lt;state&gt;] &lt;volume&gt; [&lt;volume&gt; ...]</computeroutput></screen>
+        <para>
+Explicitly updates the volume state.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to modify.
       </para>
     </listitem>
   </varlistentry>
@@ -1781,26 +4072,63 @@ Explicitly update the state of a volume.
     <term><command>--state &lt;state&gt;</command></term>
     <listitem>
       <para>
-        Indicate which state to assign the volume. Options include
-      available, error, creating, deleting, error_deleting. If no
-      state is provided, available will be used.
+        The state to assign to the volume. Valid values are
+      "available," "error," "creating," "deleting," and
+      "error_deleting." Default=available.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_service-disable">
-        <title>cinder service-disable command</title>
-        <screen><computeroutput>usage: cinder service-disable [--reason &lt;reason&gt;] &lt;hostname&gt; &lt;binary&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_retype_v2">
+        <title>cinder retype (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 retype [--migration-policy &lt;never|on-demand&gt;]
+                     &lt;volume&gt; &lt;volume-type&gt;</computeroutput></screen>
         <para>
-Disable the service.
+Changes the volume type for a volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume for which to modify type.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;volume-type&gt;</command></term>
+    <listitem>
+      <para>
+        New volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--migration-policy &lt;never|on-demand&gt;</command></term>
+    <listitem>
+      <para>
+      Migration policy during retype of volume.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_service-disable_v2">
+        <title>cinder service-disable (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 service-disable [--reason &lt;reason&gt;] &lt;hostname&gt; &lt;binary&gt;</computeroutput></screen>
+        <para>
+Disables the service.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;hostname&gt;</command></term>
     <listitem>
       <para>
-        Name of host.
+        Host name.
       </para>
     </listitem>
   </varlistentry>
@@ -1825,18 +4153,18 @@ Disable the service.
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_service-enable">
-        <title>cinder service-enable command</title>
-        <screen><computeroutput>usage: cinder service-enable &lt;hostname&gt; &lt;binary&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_service-enable_v2">
+        <title>cinder service-enable (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 service-enable &lt;hostname&gt; &lt;binary&gt;</computeroutput></screen>
         <para>
-Enable the service.
+Enables the service.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;hostname&gt;</command></term>
     <listitem>
       <para>
-        Name of host.
+        Host name.
       </para>
     </listitem>
   </varlistentry>
@@ -1850,18 +4178,18 @@ Enable the service.
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_service-list">
-        <title>cinder service-list command</title>
-        <screen><computeroutput>usage: cinder service-list [--host &lt;hostname&gt;] [--binary &lt;binary&gt;]</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_service-list_v2">
+        <title>cinder service-list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 service-list [--host &lt;hostname&gt;] [--binary &lt;binary&gt;]</computeroutput></screen>
         <para>
-List all the services. Filter by host &amp; service binary.
+Lists all services. Filter by host and service binary.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
     <term><command>--host &lt;hostname&gt;</command></term>
     <listitem>
       <para>
-        Name of host.
+        Host name. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -1869,44 +4197,68 @@ List all the services. Filter by host &amp; service binary.
     <term><command>--binary &lt;binary&gt;</command></term>
     <listitem>
       <para>
-        Service binary.
+        Service binary. Default=None.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_show">
-        <title>cinder show command</title>
-        <screen><computeroutput>usage: cinder show &lt;volume&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_set-bootable_v2">
+        <title>cinder set-bootable (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 set-bootable &lt;volume&gt; &lt;True|true|False|false&gt;</computeroutput></screen>
         <para>
-Show details about a volume.
+Update bootable status of a volume.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the volume.
+        ID of the volume to update.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;True|true|False|false&gt;</command></term>
+    <listitem>
+      <para>
+      Flag to indicate whether volume is bootable.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_snapshot-create">
-        <title>cinder snapshot-create command</title>
-        <screen><computeroutput>usage: cinder snapshot-create [--force &lt;True|False&gt;]
-                              [--display-name &lt;display-name&gt;]
-                              [--display-description &lt;display-description&gt;]
+    <section xml:id="cinderclient_subcommand_show_v2">
+        <title>cinder show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 show &lt;volume&gt;</computeroutput></screen>
+        <para>
+Shows volume details.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_snapshot-create_v2">
+        <title>cinder snapshot-create (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-create [--force &lt;True|False&gt;] [--name &lt;name&gt;]
+                              [--description &lt;description&gt;]
                               &lt;volume&gt;</computeroutput></screen>
         <para>
-Add a new snapshot.
+Creates a snapshot.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the volume to snapshot
+        Name or ID of volume to snapshot.
       </para>
     </listitem>
   </varlistentry>
@@ -1917,34 +4269,37 @@ Add a new snapshot.
     <term><command>--force &lt;True|False&gt;</command></term>
     <listitem>
       <para>
-        Optional flag to indicate whether to snapshot a volume
-      even if it's attached to an instance. (Default=False)
+        Allows or disallows snapshot of a volume when the
+      volume is attached to an instance. If set to True,
+      ignores the current status of the volume when
+      attempting to snapshot it rather than forcing it to be
+      available. Default=False.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--display-name &lt;display-name&gt;</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-      Optional snapshot name. (Default=None)
+        Snapshot name. Default=None.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--display-description &lt;display-description&gt;</command></term>
+    <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
-      Optional snapshot description. (Default=None)
+      Snapshot description. Default=None.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_snapshot-delete">
-        <title>cinder snapshot-delete command</title>
-        <screen><computeroutput>usage: cinder snapshot-delete &lt;snapshot&gt; [&lt;snapshot&gt; ...]</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_snapshot-delete_v2">
+        <title>cinder snapshot-delete (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-delete &lt;snapshot&gt; [&lt;snapshot&gt; ...]</computeroutput></screen>
         <para>
-Remove one or more snapshots.
+Removes one or more snapshots.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1957,28 +4312,27 @@ Remove one or more snapshots.
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_snapshot-list">
-        <title>cinder snapshot-list command</title>
-        <screen><computeroutput>usage: cinder snapshot-list [--all-tenants [&lt;0|1&gt;]]
-                            [--display-name &lt;display-name&gt;]
+    <section xml:id="cinderclient_subcommand_snapshot-list_v2">
+        <title>cinder snapshot-list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-list [--all-tenants [&lt;0|1&gt;]] [--name &lt;name&gt;]
                             [--status &lt;status&gt;] [--volume-id &lt;volume-id&gt;]</computeroutput></screen>
         <para>
-List all the snapshots.
+Lists all snapshots.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
     <term><command>--all-tenants [&lt;0|1&gt;]</command></term>
     <listitem>
       <para>
-      Display information from all tenants (Admin only).
+      Shows details for all tenants. Admin only.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--display-name &lt;display-name&gt;</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-      Filter results by display-name
+        Filters results by a name. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -1986,7 +4340,7 @@ List all the snapshots.
     <term><command>--status &lt;status&gt;</command></term>
     <listitem>
       <para>
-        Filter results by status
+        Filters results by a status. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -1994,25 +4348,25 @@ List all the snapshots.
     <term><command>--volume-id &lt;volume-id&gt;</command></term>
     <listitem>
       <para>
-      Filter results by volume-id
+      Filters results by a volume ID. Default=None.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_snapshot-metadata">
-        <title>cinder snapshot-metadata command</title>
-        <screen><computeroutput>usage: cinder snapshot-metadata &lt;snapshot&gt; &lt;action&gt; &lt;key=value&gt;
+    <section xml:id="cinderclient_subcommand_snapshot-metadata_v2">
+        <title>cinder snapshot-metadata (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-metadata &lt;snapshot&gt; &lt;action&gt; &lt;key=value&gt;
                                 [&lt;key=value&gt; ...]</computeroutput></screen>
         <para>
-Set or Delete metadata of a snapshot.
+Sets or deletes snapshot metadata.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;snapshot&gt;</command></term>
     <listitem>
       <para>
-        ID of the snapshot to update metadata on.
+        ID of snapshot for which to update metadata.
       </para>
     </listitem>
   </varlistentry>
@@ -2020,7 +4374,7 @@ Set or Delete metadata of a snapshot.
     <term><command>&lt;action&gt;</command></term>
     <listitem>
       <para>
-        Actions: 'set' or 'unset'
+        The action. Valid values are 'set' or 'unset.'
       </para>
     </listitem>
   </varlistentry>
@@ -2028,42 +4382,43 @@ Set or Delete metadata of a snapshot.
     <term><command>&lt;key=value&gt;</command></term>
     <listitem>
       <para>
-        Metadata to set/unset (only key is necessary on unset)
+        Metadata key and value pair to set or unset. For unset, specify
+      only the key.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_snapshot-metadata-show">
-        <title>cinder snapshot-metadata-show command</title>
-        <screen><computeroutput>usage: cinder snapshot-metadata-show &lt;snapshot&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_snapshot-metadata-show_v2">
+        <title>cinder snapshot-metadata-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-metadata-show &lt;snapshot&gt;</computeroutput></screen>
         <para>
-Show metadata of given snapshot.
+Shows snapshot metadata.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;snapshot&gt;</command></term>
     <listitem>
       <para>
-        ID of snapshot
+        ID of snapshot.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_snapshot-metadata-update-all">
-        <title>cinder snapshot-metadata-update-all command</title>
-        <screen><computeroutput>usage: cinder snapshot-metadata-update-all &lt;snapshot&gt; &lt;key=value&gt;
+    <section xml:id="cinderclient_subcommand_snapshot-metadata-update-all_v2">
+        <title>cinder snapshot-metadata-update-all (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-metadata-update-all &lt;snapshot&gt; &lt;key=value&gt;
                                            [&lt;key=value&gt; ...]</computeroutput></screen>
         <para>
-Update all metadata of a snapshot.
+Updates snapshot metadata.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;snapshot&gt;</command></term>
     <listitem>
       <para>
-        ID of the snapshot to update metadata on.
+        ID of snapshot for which to update metadata.
       </para>
     </listitem>
   </varlistentry>
@@ -2071,33 +4426,33 @@ Update all metadata of a snapshot.
     <term><command>&lt;key=value&gt;</command></term>
     <listitem>
       <para>
-        Metadata entry/entries to update.
+        Metadata key and value pair to update.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_snapshot-rename">
-        <title>cinder snapshot-rename command</title>
-        <screen><computeroutput>usage: cinder snapshot-rename [--display-description &lt;display-description&gt;]
-                              &lt;snapshot&gt; [&lt;display-name&gt;]</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_snapshot-rename_v2">
+        <title>cinder snapshot-rename (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-rename [--description &lt;description&gt;]
+                              &lt;snapshot&gt; [&lt;name&gt;]</computeroutput></screen>
         <para>
-Rename a snapshot.
+Renames a snapshot.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;snapshot&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the snapshot.
+        Name or ID of snapshot.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>&lt;display-name&gt;</command></term>
+    <term><command>&lt;name&gt;</command></term>
     <listitem>
       <para>
-        New display-name for the snapshot.
+        New name for snapshot.
       </para>
     </listitem>
   </varlistentry>
@@ -2105,28 +4460,28 @@ Rename a snapshot.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--display-description &lt;display-description&gt;</command></term>
+    <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
-      Optional snapshot description. (Default=None)
+      Snapshot description. Default=None.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_snapshot-reset-state">
-        <title>cinder snapshot-reset-state command</title>
-        <screen><computeroutput>usage: cinder snapshot-reset-state [--state &lt;state&gt;]
+    <section xml:id="cinderclient_subcommand_snapshot-reset-state_v2">
+        <title>cinder snapshot-reset-state (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-reset-state [--state &lt;state&gt;]
                                    &lt;snapshot&gt; [&lt;snapshot&gt; ...]</computeroutput></screen>
         <para>
-Explicitly update the state of a snapshot.
+Explicitly updates the snapshot state.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;snapshot&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the snapshot to modify.
+        Name or ID of snapshot to modify.
       </para>
     </listitem>
   </varlistentry>
@@ -2137,35 +4492,34 @@ Explicitly update the state of a snapshot.
     <term><command>--state &lt;state&gt;</command></term>
     <listitem>
       <para>
-        Indicate which state to assign the snapshot. Options
-      include available, error, creating, deleting,
-      error_deleting. If no state is provided, available will be
-      used.
+        The state to assign to the snapshot. Valid values are
+      "available," "error," "creating," "deleting," and
+      "error_deleting." Default is "available."
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_snapshot-show">
-        <title>cinder snapshot-show command</title>
-        <screen><computeroutput>usage: cinder snapshot-show &lt;snapshot&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_snapshot-show_v2">
+        <title>cinder snapshot-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-show &lt;snapshot&gt;</computeroutput></screen>
         <para>
-Show details about a snapshot.
+Shows snapshot details.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;snapshot&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the snapshot.
+        Name or ID of snapshot.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_transfer-accept">
-        <title>cinder transfer-accept command</title>
-        <screen><computeroutput>usage: cinder transfer-accept &lt;transfer&gt; &lt;auth_key&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_transfer-accept_v2">
+        <title>cinder transfer-accept (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 transfer-accept &lt;transfer&gt; &lt;auth_key&gt;</computeroutput></screen>
         <para>
 Accepts a volume transfer.
         </para>  <variablelist wordsize="10">
@@ -2174,7 +4528,7 @@ Accepts a volume transfer.
     <term><command>&lt;transfer&gt;</command></term>
     <listitem>
       <para>
-        ID of the transfer to accept.
+        ID of transfer to accept.
       </para>
     </listitem>
   </varlistentry>
@@ -2182,15 +4536,15 @@ Accepts a volume transfer.
     <term><command>&lt;auth_key&gt;</command></term>
     <listitem>
       <para>
-        Auth key of the transfer to accept.
+        Authentication key of transfer to accept.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_transfer-create">
-        <title>cinder transfer-create command</title>
-        <screen><computeroutput>usage: cinder transfer-create [--display-name &lt;display-name&gt;] &lt;volume&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_transfer-create_v2">
+        <title>cinder transfer-create (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 transfer-create [--name &lt;name&gt;] &lt;volume&gt;</computeroutput></screen>
         <para>
 Creates a volume transfer.
         </para>  <variablelist wordsize="10">
@@ -2199,7 +4553,7 @@ Creates a volume transfer.
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the volume to transfer.
+        Name or ID of volume to transfer.
       </para>
     </listitem>
   </varlistentry>
@@ -2207,102 +4561,102 @@ Creates a volume transfer.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--display-name &lt;display-name&gt;</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-      Optional transfer name. (Default=None)
+        Transfer name. Default=None.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_transfer-delete">
-        <title>cinder transfer-delete command</title>
-        <screen><computeroutput>usage: cinder transfer-delete &lt;transfer&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_transfer-delete_v2">
+        <title>cinder transfer-delete (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 transfer-delete &lt;transfer&gt;</computeroutput></screen>
         <para>
-Undo a transfer.
+Undoes a transfer.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;transfer&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the transfer to delete.
+        Name or ID of transfer to delete.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_transfer-list">
-        <title>cinder transfer-list command</title>
-        <screen><computeroutput>usage: cinder transfer-list</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_transfer-list_v2">
+        <title>cinder transfer-list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 transfer-list</computeroutput></screen>
         <para>
-List all the transfers.
+Lists all transfers.
         </para>
     </section>
-    <section xml:id="cinderclient_subcommand_transfer-show">
-        <title>cinder transfer-show command</title>
-        <screen><computeroutput>usage: cinder transfer-show &lt;transfer&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_transfer-show_v2">
+        <title>cinder transfer-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 transfer-show &lt;transfer&gt;</computeroutput></screen>
         <para>
-Show details about a transfer.
+Shows transfer details.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;transfer&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the transfer to accept.
+        Name or ID of transfer to accept.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_type-create">
-        <title>cinder type-create command</title>
-        <screen><computeroutput>usage: cinder type-create &lt;name&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_type-create_v2">
+        <title>cinder type-create (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 type-create &lt;name&gt;</computeroutput></screen>
         <para>
-Create a new volume type.
+Creates a volume type.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;name&gt;</command></term>
     <listitem>
       <para>
-        Name of the new volume type
+        Name of new volume type.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_type-delete">
-        <title>cinder type-delete command</title>
-        <screen><computeroutput>usage: cinder type-delete &lt;id&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_type-delete_v2">
+        <title>cinder type-delete (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 type-delete &lt;id&gt;</computeroutput></screen>
         <para>
-Delete a specific volume type.
+Deletes a volume type.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;id&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the volume type to delete
+        ID of volume type to delete.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_type-key">
-        <title>cinder type-key command</title>
-        <screen><computeroutput>usage: cinder type-key &lt;vtype&gt; &lt;action&gt; [&lt;key=value&gt; [&lt;key=value&gt; ...]]</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_type-key_v2">
+        <title>cinder type-key (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 type-key &lt;vtype&gt; &lt;action&gt; &lt;key=value&gt; [&lt;key=value&gt; ...]</computeroutput></screen>
         <para>
-Set or unset extra_spec for a volume type.
+Sets or unsets extra_spec for a volume type.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;vtype&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the volume type
+        Name or ID of volume type.
       </para>
     </listitem>
   </varlistentry>
@@ -2310,7 +4664,7 @@ Set or unset extra_spec for a volume type.
     <term><command>&lt;action&gt;</command></term>
     <listitem>
       <para>
-        Actions: 'set' or 'unset'
+        The action. Valid values are 'set' or 'unset.'
       </para>
     </listitem>
   </varlistentry>
@@ -2318,34 +4672,51 @@ Set or unset extra_spec for a volume type.
     <term><command>&lt;key=value&gt;</command></term>
     <listitem>
       <para>
-        Extra_specs to set/unset (only key is necessary on unset)
+        The extra specs key and value pair to set or unset. For unset,
+      specify only the key.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="cinderclient_subcommand_type-list">
-        <title>cinder type-list command</title>
-        <screen><computeroutput>usage: cinder type-list</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_type-list_v2">
+        <title>cinder type-list (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 type-list</computeroutput></screen>
         <para>
-Print a list of available 'volume types'.
+Lists available 'volume types'.
         </para>
     </section>
-    <section xml:id="cinderclient_subcommand_upload-to-image">
-        <title>cinder upload-to-image command</title>
-        <screen><computeroutput>usage: cinder upload-to-image [--force &lt;True|False&gt;]
-                              [--container-format &lt;container-format&gt;]
-                              [--disk-format &lt;disk-format&gt;]
-                              &lt;volume&gt; &lt;image-name&gt;</computeroutput></screen>
+    <section xml:id="cinderclient_subcommand_unmanage_v2">
+        <title>cinder unmanage (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 unmanage &lt;volume&gt;</computeroutput></screen>
         <para>
-Upload volume to image service as image.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of the volume to upload to an image
+        Name or ID of the volume to unmanage.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_upload-to-image_v2">
+        <title>cinder upload-to-image (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 upload-to-image [--force &lt;True|False&gt;]
+                              [--container-format &lt;container-format&gt;]
+                              [--disk-format &lt;disk-format&gt;]
+                              &lt;volume&gt; &lt;image-name&gt;</computeroutput></screen>
+        <para>
+Uploads volume to Image Service as an image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of volume to snapshot.
       </para>
     </listitem>
   </varlistentry>
@@ -2353,7 +4724,7 @@ Upload volume to image service as image.
     <term><command>&lt;image-name&gt;</command></term>
     <listitem>
       <para>
-        Name for created image
+        The new image name.
       </para>
     </listitem>
   </varlistentry>
@@ -2364,8 +4735,8 @@ Upload volume to image service as image.
     <term><command>--force &lt;True|False&gt;</command></term>
     <listitem>
       <para>
-        Optional flag to indicate whether to upload a volume
-      even if it's attached to an instance. (Default=False)
+        Enables or disables upload of a volume that is
+      attached to an instance. Default=False.
       </para>
     </listitem>
   </varlistentry>
@@ -2373,7 +4744,7 @@ Upload volume to image service as image.
     <term><command>--container-format &lt;container-format&gt;</command></term>
     <listitem>
       <para>
-      Optional type for container format (Default=bare)
+      Container format type. Default is bare.
       </para>
     </listitem>
   </varlistentry>
@@ -2381,10 +4752,11 @@ Upload volume to image service as image.
     <term><command>--disk-format &lt;disk-format&gt;</command></term>
     <listitem>
       <para>
-      Optional type for disk format (Default=raw)
+      Disk format type. Default is raw.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
+    </section>
     </section>
 </chapter>
