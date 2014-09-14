@@ -108,6 +108,23 @@ lock file = /var/lock/object.lock</programlisting>
             </note>
         </step>
         <step>
+            <para>Set the <option>bind_ip</option> configuration option to
+                <replaceable>STORAGE_LOCAL_NET_IP</replaceable>.</para>
+            <para>Edit the <filename>account-server.conf</filename>,
+                <filename>acontainer-server.conf</filename> and
+                <filename>object-server.conf</filename> files in the
+                <filename>/etc/swift</filename> directory. In each file,
+                update the <literal>[DEFAULT]</literal> section as follows:
+                <programlisting language="ini">[DEFAULT]
+bind_ip = <replaceable>STORAGE_LOCAL_NET_IP</replaceable>
+...</programlisting>
+            </para>
+        </step>
+        <step>
+            <para>Make sure the swift user owns all configuration files:</para>
+            <screen><prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift</userinput></screen>
+        </step>
+        <step>
             <para>Create the swift recon cache directory and set its
                 permissions:</para>
             <screen><prompt>#</prompt> <userinput>mkdir -p /var/swift/recon</userinput>
