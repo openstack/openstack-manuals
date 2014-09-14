@@ -1,0 +1,129 @@
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xml:id="zfssa-volume-driver" version="5.0">
+    <title>Oracle ZFSSA iSCSI Driver</title>
+    <para>Oracle ZFS Storage Appliances (ZFSSAs) provide advanced software to protect data, speed tuning and
+        troubleshooting, and deliver high performance and high availability.
+        Through the Oracle ZFSSA iSCSI Driver, OpenStack Block Storage can use an Oracle ZFSSA as a block storage resource.
+        The driver enables you to create iSCSI volumes that an OpenStack Block Storage server can allocate to any virtual machine running on a compute host.
+        The Oracle ZFSSA iSCSI Driver, version <literal>1.0.0</literal>, supports ZFSSA software release <literal>2013.1.2.0</literal> and later.
+    </para>
+
+    <simplesect>
+        <title>Configuration</title>
+<procedure>
+    <step>
+        <para>Enable RESTful service on the ZFSSA Storage Appliance.</para>
+    </step>
+    <step>
+        <para>Create a new user on the appliance with the following authorizations:</para>
+        <itemizedlist>
+            <listitem>
+                <para><code>scope=stmf - allow_configure=true</code></para>
+            </listitem>
+            <listitem>
+                <para><code>scope=nas - allow_clone=true, allow_createProject=true, allow_createShare=true, allow_changeSpaceProps=true, allow_changeGeneralProps=true, allow_destroy=true, allow_rollback=true, allow_takeSnap=true</code></para>
+            </listitem>
+        </itemizedlist>
+        <para>
+            You can create a role with authorizations as follows:
+        </para>
+        <screen><prompt>zfssa:></prompt> <userinput>configuration roles</userinput>
+<prompt>zfssa:configuration roles></prompt> <userinput>role OpenStackRole</userinput>
+<prompt>zfssa:configuration roles OpenStackRole (uncommitted)></prompt> <userinput>set description="OpenStack Cinder Driver"</userinput>
+<prompt>zfssa:configuration roles OpenStackRole (uncommitted)></prompt> <userinput>commit</userinput>
+<prompt>zfssa:configuration roles></prompt> <userinput>select OpenStackRole</userinput>
+<prompt>zfssa:configuration roles OpenStackRole></prompt> <userinput>authorizations create</userinput>
+<prompt>zfssa:configuration roles OpenStackRole auth (uncommitted)></prompt> <userinput>set scope=stmf</userinput>
+<prompt>zfssa:configuration roles OpenStackRole auth (uncommitted)></prompt> <userinput>set allow_configure=true</userinput>
+<prompt>zfssa:configuration roles OpenStackRole auth (uncommitted)></prompt> <userinput>commit</userinput></screen>
+        <para>You can create a user with a specific role as follows:</para>
+        <screen><prompt>zfssa:></prompt> <userinput>configuration users</userinput>
+<prompt>zfssa:configuration users></prompt> <userinput>user cinder</userinput>
+<prompt>zfssa:configuration users cinder (uncommitted)></prompt> <userinput>set fullname="OpenStack Cinder Driver"</userinput>
+<prompt>zfssa:configuration users cinder (uncommitted)></prompt> <userinput>set initial_password=12345</userinput>
+<prompt>zfssa:configuration users cinder (uncommitted)></prompt> <userinput>commit</userinput>
+<prompt>zfssa:configuration users></prompt> <userinput>select cinder set roles=OpenStackRole</userinput></screen>
+        <note>
+            <para>
+                You can also run this <link xlink:href="https://java.net/projects/solaris-userland/sources/gate/content/components/openstack/cinder/files/zfssa/cinder.akwf?rev=2047">workflow</link> to automate the above tasks.
+            </para>
+        </note>
+    </step>
+    <step>
+        <para>
+            Ensure that the ZFSSA iSCSI service is online. If the ZFSSA iSCSI service is not online, enable the service by using the BUI, CLI or REST API in the appliance.
+        </para>
+        <screen><prompt>zfssa:></prompt> <userinput>configuration services iscsi</userinput>
+<prompt>zfssa:configuration services iscsi></prompt> <userinput>enable</userinput>
+<prompt>zfssa:configuration services iscsi></prompt> <userinput>show</userinput>
+<computeroutput>Properties:
+&lt;status&gt;= online
+...</computeroutput></screen>
+    </step>
+</procedure>
+
+<para>Define the following required properties in the <filename>cinder.conf</filename> file:</para>
+        <programlisting language="ini">volume_driver = cinder.volume.drivers.zfssa.zfssaiscsi.ZFSSAISCSIDriver
+san_ip = <replaceable>myhost</replaceable>
+san_login = <replaceable>username</replaceable>
+san_password = <replaceable>password</replaceable>
+zfssa_pool = <replaceable>mypool</replaceable>
+zfssa_project = <replaceable>myproject</replaceable>
+zfssa_initiator_group = <replaceable>default</replaceable>
+zfssa_target_portal = <replaceable>w.x.y.z:3260</replaceable>
+zfssa_target_interfaces = <replaceable>e1000g0</replaceable></programlisting>
+<para>Optionally, you can define additional properties.</para>
+        <para>Target interfaces can be seen as follows in the CLI:</para>
+        <screen><prompt>zfssa:></prompt> <userinput>configuration net interfaces</userinput>
+<prompt>zfssa:configuration net interfaces></prompt> <userinput>show</userinput>
+<computeroutput>Interfaces:
+INTERFACE STATE CLASS LINKS    ADDRS          LABEL
+e1000g0   up    ip    e1000g0  1.10.20.30/24  Untitled Interface
+...</computeroutput></screen>
+            <note>
+                <para>
+                    Do not use management interfaces for <code>zfssa_target_interfaces</code>.
+                </para>
+            </note>
+    </simplesect>
+
+    <simplesect>
+        <title>Supported operations</title>
+        <itemizedlist>
+            <listitem>
+                <para>Create and delete volumes</para>
+            </listitem>
+            <listitem>
+                <para>Extend volume</para>
+            </listitem>
+            <listitem>
+                <para>Create and delete snapshots</para>
+            </listitem>
+            <listitem>
+                <para>Create volume from snapshot</para>
+            </listitem>
+            <listitem>
+                <para>Delete volume snapshots</para>
+            </listitem>
+            <listitem>
+                <para>Attach and detach volumes</para>
+            </listitem>
+            <listitem>
+                <para>Get volume stats</para>
+            </listitem>
+            <listitem>
+                <para>Clone volumes</para>
+            </listitem>
+        </itemizedlist>
+    </simplesect>
+
+    <simplesect>
+        <title>Driver options</title>
+        <para>The Oracle ZFSSA iSCSI Driver supports these options:</para>
+        <xi:include
+            href="../../../common/tables/cinder-zfssa.xml"/>
+    </simplesect>
+
+</section>
