@@ -158,9 +158,7 @@
                     or a subsequent release.
                 </para>
             </warning>
-            <para>If you use the Ryu plug-in, you must install
-                both Open vSwitch and Ryu, in addition to the Ryu
-                agent package.</para>
+            <para>If you use the Ryu plug-in, you must install Open vSwitch, Ryu, and the Ryu agent package.</para>
             <procedure>
                 <title>To set up each node for the Ryu
                     plug-in</title>
@@ -533,8 +531,13 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                     dashboard.</para>
                 <para>Change the <option>enable_lb</option> option
                     to <parameter>True</parameter> in the
-                        <filename>/etc/openstack-dashboard/local_settings</filename>
-                    file:</para>
+                    <filename>local_settings</filename> file
+                    (on Fedora, RHEL, and CentOS:
+                    <filename>/etc/openstack-dashboard/local_settings</filename>,
+                    on Ubuntu and Debian:
+                    <filename>/etc/openstack-dashboard/local_settings.py</filename>,
+                    and on openSUSE and SLES:
+                    <filename>/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>):</para>
                 <programlisting language="python">OPENSTACK_NEUTRON_NETWORK = {
     'enable_lb': True,
     ...
