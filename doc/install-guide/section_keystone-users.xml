@@ -96,12 +96,18 @@
           </note>
         </step>
         <step>
-          <para>By default, the Identity service creates a special
-            <literal>_member_</literal> role. The OpenStack dashboard
-            automatically grants access to users with this role. You must
-            give the <literal>admin</literal> user access to this role in
-            addition to the <literal>admin</literal> role.
-          </para>
+          <para>By default, the dashboard limits access to users with the
+            <literal>_member_</literal> role.</para>
+          <para>Create the <literal>_member_</literal> role:</para>
+          <screen><prompt>$</prompt> <userinput>keystone role-create --name _member_</userinput>
+<computeroutput>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|    id    | 0f198e94ffce416cbcbe344e1843eac8 |
+|   name   |             _member_             |
++----------+----------------------------------+</computeroutput></screen>
+        </step>
+        <step>
           <para>Add the <literal>admin</literal> tenant and user to the
             <literal>_member_</literal> role:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --tenant admin --user admin --role _member_</userinput></screen>
