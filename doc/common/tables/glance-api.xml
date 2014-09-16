@@ -30,14 +30,6 @@
         <td>(StrOpt) Default publisher_id for outgoing notifications.</td>
       </tr>
       <tr>
-        <td>default_store = file</td>
-        <td>(StrOpt) Default scheme to use to store image data. The scheme must be registered by one of the stores defined by the 'known_stores' config option.</td>
-      </tr>
-      <tr>
-        <td>default_swift_reference = ref1</td>
-        <td>(StrOpt) The reference to the default swift account/backing store parameters to use for adding new images.</td>
-      </tr>
-      <tr>
         <td>enable_v1_api = True</td>
         <td>(BoolOpt) Deploy the v1 OpenStack Images API.</td>
       </tr>
@@ -58,10 +50,6 @@
         <td>(IntOpt) Maximum size of image a user can upload in bytes. Defaults to 1099511627776 bytes (1 TB).</td>
       </tr>
       <tr>
-        <td>known_stores = glance.store.filesystem.Store, glance.store.http.Store</td>
-        <td>(ListOpt) List of which store classes and store class locations are currently known to glance at startup.</td>
-      </tr>
-      <tr>
         <td>location_strategy = location_order</td>
         <td>(StrOpt) This value sets what strategy will be used to determine the image location order. Currently two strategies are packaged with Glance 'location_order' and 'store_type'.</td>
       </tr>
@@ -80,6 +68,17 @@
       <tr>
         <td>use_user_token = True</td>
         <td>(BoolOpt) Whether to pass through the user token when making requests to the registry.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[glance_store]</th>
+      </tr>
+      <tr>
+        <td>default_store = file</td>
+        <td>(StrOpt) Default scheme to use to store image data. The scheme must be registered by one of the stores defined by the 'stores' config option.</td>
+      </tr>
+      <tr>
+        <td>stores = file, http</td>
+        <td>(ListOpt) List of stores enabled</td>
       </tr>
       <tr>
         <th colspan="2">[store_type_location_strategy]</th>

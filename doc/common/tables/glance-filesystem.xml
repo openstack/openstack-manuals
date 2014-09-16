@@ -15,7 +15,7 @@
     </thead>
     <tbody>
       <tr>
-        <th colspan="2">[DEFAULT]</th>
+        <th colspan="2">[glance_store]</th>
       </tr>
       <tr>
         <td>filesystem_store_datadir = None</td>
@@ -24,6 +24,10 @@
       <tr>
         <td>filesystem_store_datadirs = None</td>
         <td>(MultiStrOpt) List of directories and its priorities to which the Filesystem backend store writes images.</td>
+      </tr>
+      <tr>
+        <td>filesystem_store_file_perm = 0</td>
+        <td>(IntOpt) The required permission for created image file. In this way the user other service used, e.g. Nova, who consumes the image could be the exclusive member of the group that owns the files created. Assigning it less then or equal to zero means don't change the default permission of the file. This value will be decoded as an octal digit.</td>
       </tr>
       <tr>
         <td>filesystem_store_metadata_file = None</td>
