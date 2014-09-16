@@ -28,19 +28,20 @@
         </step>
         <step>
           <para>Create the <literal>glance</literal> database:</para>
-          <screen><prompt>mysql></prompt> <userinput>CREATE DATABASE glance;</userinput></screen>
+          <screen><userinput>CREATE DATABASE glance;</userinput></screen>
         </step>
         <step>
           <para>Grant proper access to the <literal>glance</literal>
             database:</para>
-          <screen><prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput>
-<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
+          <screen><userinput>GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
+  IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput>
+<userinput>GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
+  IDENTIFIED BY '<replaceable>GLANCE_DBPASS</replaceable>';</userinput></screen>
           <para>Replace <replaceable>GLANCE_DBPASS</replaceable> with a suitable
         password.</para>
         </step>
         <step>
-          <para>Exit the database access client:</para>
-          <screen><prompt>mysql></prompt> <userinput>exit</userinput></screen>
+          <para>Exit the database access clientx</para>
         </step>
       </substeps>
     </step>
@@ -50,11 +51,21 @@
       <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
     </step>
     <step>
-      <para>To create the Identity service credentials, complete these steps:</para>
+      <para>To create the Identity service credentials, complete these
+        steps:</para>
       <substeps>
         <step>
           <para>Create the <literal>glance</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name glance --pass <replaceable>GLANCE_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name glance --pass <replaceable>GLANCE_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput>
+<computeroutput>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|  email   |        glance@example.com        |
+| enabled  |               True               |
+|    id    | f89cca5865dc42b18e2421fa5f5cce66 |
+|   name   |              glance              |
+| username |              glance              |
++----------+----------------------------------+</computeroutput></screen>
           <para>Replace <replaceable>GLANCE_PASS</replaceable> with a suitable
             password and <replaceable>EMAIL_ADDRESS</replaceable> with
             a suitable e-mail address.</para>
@@ -64,11 +75,23 @@
             <literal>service</literal> tenant and <literal>admin</literal>
             role:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --user glance --tenant service --role admin</userinput></screen>
+          <note>
+            <para>This command provides no output.</para>
+          </note>
         </step>
         <step>
           <para>Create the <literal>glance</literal> service:</para>
           <screen><prompt>$</prompt> <userinput>keystone service-create --name glance --type image \
-  --description "OpenStack Image Service"</userinput></screen>
+  --description "OpenStack Image Service"</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |     OpenStack Image Service      |
+|   enabled   |               True               |
+|      id     | 23f409c4e79f4c9e9d23d809c50fbacf |
+|     name    |              glance              |
+|     type    |              image               |
++-------------+----------------------------------+</computeroutput></screen>
         </step>
       </substeps>
     </step>
@@ -78,7 +101,18 @@
   --service-id $(keystone service-list | awk '/ image / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:9292 \
   --internalurl http://<replaceable>controller</replaceable>:9292 \
-  --adminurl http://<replaceable>controller</replaceable>:9292</userinput></screen>
+  --adminurl http://<replaceable>controller</replaceable>:9292 \
+  --region regionOne</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |             Value                |
++-------------+----------------------------------+
+|   adminurl  |   http://controller:9292         |
+|      id     | a2ee818c69cb475199a1ca108332eb35 |
+| internalurl |   http://controller:9292         |
+|  publicurl  |   http://controller:9292         |
+|    region   |           regionOne              |
+|  service_id | 23f409c4e79f4c9e9d23d809c50fbacf |
++-------------+----------------------------------+</computeroutput></screen>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
@@ -109,9 +143,7 @@ connection = mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceabl
           <programlisting language="ini">[keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
-auth_host = <replaceable>controller</replaceable>
-auth_port = 35357
-auth_protocol = http
+identity_uri = http://<replaceable>controller</replaceable>:35357
 admin_tenant_name = service
 admin_user = glance
 admin_password = <replaceable>GLANCE_PASS</replaceable>
@@ -122,6 +154,20 @@ flavor = keystone</programlisting>
           <para>Replace <replaceable>GLANCE_PASS</replaceable> with the
             password you chose for the <literal>glance</literal> user in the
             Identity service.</para>
+          <note>
+            <para>Comment out any <literal>auth_host</literal>,
+              <literal>auth_port</literal>, and
+              <literal>auth_protocol</literal> keys because the
+              <literal>identity_uri</literal> key replaces them.</para>
+          </note>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, we recommend
+            enabling verbose logging to assist with potential
+            troubleshooting:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+verbose = True</programlisting>
         </step>
       </substeps>
     </step>
@@ -145,25 +191,36 @@ connection = mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceabl
           <programlisting language="ini">[keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
-auth_host = <replaceable>controller</replaceable>
-auth_port = 35357
-auth_protocol = http
+identity_uri = http://<replaceable>controller</replaceable>:35357
 admin_tenant_name = service
 admin_user = glance
 admin_password = <replaceable>GLANCE_PASS</replaceable>
-...
+
 [paste_deploy]
 ...
 flavor = keystone</programlisting>
           <para>Replace <replaceable>GLANCE_PASS</replaceable> with the
             password you chose for the <literal>glance</literal> user in the
             Identity service.</para>
+          <note>
+            <para>Comment out any <literal>auth_host</literal>,
+              <literal>auth_port</literal>, and
+              <literal>auth_protocol</literal> keys because the
+              <literal>identity_uri</literal> key replaces them.</para>
+          </note>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, we recommend
+            enabling verbose logging to assist with potential
+            troubleshooting:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+verbose = True</programlisting>
         </step>
       </substeps>
     </step>
     <step>
-      <para>Populate the Image Service
-        database:</para>
+      <para>Populate the Image Service database:</para>
       <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "glance-manage db_sync" glance</userinput></screen>
     </step>
   </procedure>
