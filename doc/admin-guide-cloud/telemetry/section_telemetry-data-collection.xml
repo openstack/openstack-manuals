@@ -225,10 +225,10 @@
         "http://docs.openstack.org/trunk/install-guide/install/apt/content/ceilometer-install.html">
         Install the Telemtery module</link> section in the <citetitle>OpenStack
         Installation Guide</citetitle>.</para>
-      <para>The central agent can be run as a single instance currently. It does not need
-        any database connection directly. The samples collected by this agent are sent via
-        message queue to the collector service, which is responsible for persisting the
-        data into the configured database backend.</para>
+      <para>The central agent does not need direct database connection. The
+        samples collected by this agent are sent via message queue to the collector
+        service, which is responsible for persisting the data into the configured
+        database back end.</para>
     </section>
     <section xml:id="section_telemetry-compute-agent">
       <title>Compute agent</title>
@@ -250,7 +250,7 @@
         <xref linkend="section_telemetry-supported-hypervisors"/>.
         The compute agent uses the API of the hypervisor installed on the compute hosts.
         Therefore the supported meters can be different in case of each virtualization
-        backend, as these tools provide different set of metrics.</para>
+        back end, as these tools provide different set of metrics.</para>
       <para>The list of collected meters can be found in the <link xlink:href=
         "http://docs.openstack.org/developer/ceilometer/measurements.html#compute-nova">
         Compute section</link> in the <citetitle>Telemetery Measurements Reference</citetitle>.
@@ -259,6 +259,68 @@
       <note>
         <para>Telemetry supports Libvirt, which hides the hypervisor under it.</para>
       </note>
+    </section>
+    <section xml:id="section_telemetry-cetral-compute-agent-ha">
+      <title>Support for HA deployment of the central and compute agent services</title>
+      <para>Both the central and the compute agent can run in an HA deployment, which
+        means that multiple instances of these services can run in parallel
+        with workload partitioning among these running instances.</para>
+      <para>The <link xlink:href="https://pypi.python.org/pypi/tooz">Tooz</link>
+        library provides the coordination within the groups of service instances. It
+        provides an API above several back ends that can be used for building
+        distributed applications.</para>
+      <para>Tooz supports the following back-end solutions:
+        <itemizedlist>
+          <listitem>
+            <para><link xlink:href="http://zookeeper.apache.org/">Zookeeper</link>.
+              Recommended solution by the Tooz project.</para>
+          </listitem>
+          <listitem>
+            <para><link xlink:href="http://memcached.org/">Memcached</link></para>
+          </listitem>
+        </itemizedlist>
+        You must configure these back ends to use either of them for the HA deployment
+        of the Telemetry services.</para>
+      <para>For information about the required configuration options that have to be set in the
+        <filename>ceilometer.conf</filename> configuration file for both the central and compute
+        agents, see the
+        <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html">
+        <literal>coordination</literal> section</link>
+        in the <citetitle>OpenStack Configuration Reference</citetitle>.</para>
+      <note>
+        <para>Without the <option>backend_url</option> option being set only one
+          instance of both the central and compute agent service is able to run
+          and function correctly.</para>
+      </note>
+      <para>The availability check of the instances is provided by heartbeat
+        messages. When the connection with an instance is lost, the workload will be
+        reassigned within the remained instances in the next polling cycle.</para>
+      <note>
+        <para><literal>Memcached</literal> uses a <option>timeout</option> value, which
+          should always be set to a value that is higher than the <option>heartbeat</option>
+          value set for Telemetry.</para>
+      </note>
+      <para>For backward compatibility and supporting existing deployments, the central agent
+        configuration also supports using different configuration files for groups of service
+        instances of this type that are running in parallel. For enabling this configuration
+        set a value for the <option>partitioning_group_prefix</option> option in the
+        <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html">
+        <literal>central</literal> section</link> in the <citetitle>OpenStack Configuration
+        Reference</citetitle>.</para>
+      <warning>
+        <para>For each sub-group of the central agent pool with the same
+        <option>partitioning_group_prefix</option> a disjoint subset of meters must be polled,
+        otherwise samples may be missing or duplicated. The list of meters to poll can be set
+        in the <filename>/etc/ceilometer/pipeline.yaml</filename> configuration
+        file. For more information about pipelines see
+        <xref linkend="section_telemetry-data-collection-processing"/>.</para>
+      </warning>
+      <para>To enable the compute agent to run multiple instances simultaneously with
+        workload partitioning, the
+        <option>workload_partitioning</option> option has to be set to <literal>True</literal>
+        under the <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html">
+        compute section</link> in the <filename>ceilometer.conf</filename> configuration
+        file.</para>
     </section>
   </section>
   <section xml:id="section_telemetry-post-api">
@@ -637,12 +699,12 @@ sinks:
     <title>Storing samples</title>
     <para>The Telemetry module has a separate service that is responsible for persisting the data
       that is coming from the pollsters or received as notifications. The data is stored in
-      a database backend, the list of supported databases can be found in
+      a database back end, the list of supported databases can be found in
       <xref linkend="section_telemetry-supported-dbs"/>.
     </para>
     <para>The <systemitem class="service">ceilometer-collector</systemitem> service receives the
       samples as metering messages from the message bus of the configured AMQP service. It stores
-      these samples without any modification in the configured backend. The service has to run on
+      these samples without any modification in the configured back end. The service has to run on
       a host machine from which it has access to the database.</para>
     <para>Multiple <systemitem class="service">ceilometer-collector</systemitem> process can be
       run at a time. It is also supported to start multiple worker threads per collector process.
@@ -652,7 +714,7 @@ sinks:
       collector section</link> of the <filename>ceilometer.conf</filename> configuration file.</para>
     <note>
       <para>Using multiple workers per collector process is not recommended to be used with
-        PostgreSQL as database backend.</para>
+        PostgreSQL as database back end.</para>
     </note>
     <para>By default the time to live value (ttl) for samples is set to -1, which means that they
       are kept in the database forever. This can be changed by modifying the <parameter>time_to_live
@@ -664,9 +726,9 @@ sinks:
       these useless entries, which is called <systemitem class="service">ceilometer-expirer</systemitem>.
       This script should be run periodically, for instance in a cron job, to ensure that the
       database is cleaned up properly.</para>
-    <para>The level of support differs in case of the configured backend:</para>
+    <para>The level of support differs in case of the configured back end:</para>
     <table rules="all">
-      <caption>Time-to-live support for database backends</caption>
+      <caption>Time-to-live support for database back ends</caption>
       <col width="24%"/>
       <col width="38%"/>
       <col width="38%"/>
@@ -689,8 +751,8 @@ sinks:
           </td>
         </tr>
         <tr>
-          <td>SQL-based backends</td>
-          <td>The library (SQLAlchemy) that is used for accessing SQL-based backends does
+          <td>SQL-based back ends</td>
+          <td>The library (SQLAlchemy) that is used for accessing SQL-based back ends does
             not support using the ttl value.</td>
           <td><systemitem class="service">ceilometer-expirer</systemitem> has to be
             used for deleting both the samples and the remaining entires in other
