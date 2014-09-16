@@ -9,27 +9,41 @@
   version="5.0"
   xml:id="keystone-install">
   <title>Install and configure</title>
-  <para>This section describes how to install and configure the OpenStack Identity service on the
-    controller node.</para>
+  <para>This section describes how to install and configure the OpenStack
+    Identity service on the controller node.</para>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure prerequisites</title>
-    <para>Before you configure the OpenStack Identity service, you must create a database and an
-      administration token.</para>
+    <para>Before you configure the OpenStack Identity service, you must create
+      a database and an administration token.</para>
     <step>
-      <para>As the <literal>root</literal> user, connect to the database to create the
-          <literal>keystone</literal> database and grant the proper access to it:</para>
-      <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput>
-<prompt>mysql></prompt> <userinput>CREATE DATABASE keystone;</userinput>
-<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
+      <para>To create the database, complete these steps:</para>
+      <substeps>
+        <step>
+          <para>Use the database access client to connect to the database
+            server as the <literal>root</literal> user:</para>
+          <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen>
+        </step>
+        <step>
+          <para>Create the <literal>keystone</literal> database:</para>
+          <screen><userinput>CREATE DATABASE keystone;</userinput></screen>
+        </step>
+        <step>
+          <para>Grant proper access to the <literal>keystone</literal>
+            database:</para>
+          <screen><userinput>GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
   IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput>
-<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
-  IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput>
-<prompt>mysql></prompt> <userinput>exit</userinput></screen>
-      <para>Replace <replaceable>KEYSTONE_DBPASS</replaceable> with a suitable password.</para>
+<userinput>GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
+  IDENTIFIED BY '<replaceable>KEYSTONE_DBPASS</replaceable>';</userinput></screen>
+          <para>Replace <replaceable>KEYSTONE_DBPASS</replaceable> with a suitable password.</para>
+        </step>
+        <step>
+          <para>Exit the database access client.</para>
+        </step>
+      </substeps>
     </step>
     <step>
-      <para>Generate a random value to use as the administration token during initial
-        configuration:</para>
+      <para>Generate a random value to use as the administration token during
+        initial configuration:</para>
       <screen os="ubuntu;rhel;centos;fedora"><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>openssl rand 10 | hexdump -e '1/1 "%.2x"'</userinput></screen>
     </step>
@@ -37,8 +51,8 @@
   <procedure os="debian">
     <title>To configure prerequisites</title>
     <step>
-      <para>Generate a random value to use as the administration token during initial
-        configuration:</para>
+      <para>Generate a random value to use as the administration token during
+        initial configuration:</para>
       <screen><prompt>#</prompt> <userinput>openssl rand -hex 10</userinput></screen>
     </step>
   </procedure>
@@ -51,43 +65,49 @@
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-keystone python-keystoneclient</userinput></screen>
     </step>
     <step os="ubuntu;rhel;centos;fedora;sles;opensuse">
-      <para>Edit the <filename>/etc/keystone/keystone.conf</filename> file.</para>
+      <para>Edit the <filename>/etc/keystone/keystone.conf</filename> file and
+        complete the following actions:</para>
       <substeps>
         <step os="ubuntu;rhel;centos;fedora;sles;opensuse">
-          <para>In the <literal>[DEFAULT]</literal> section, define the value of the initial
-            administration token:</para>
+          <para>In the <literal>[DEFAULT]</literal> section, define the value
+            of the initial administration token:</para>
           <programlisting language="ini">[DEFAULT]
 ...
 admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
-          <para>Replace <replaceable>ADMIN_TOKEN</replaceable> with the random value that you
-            generated in a previous step.</para>
+          <para>Replace <replaceable>ADMIN_TOKEN</replaceable> with the random
+            value that you generated in a previous step.</para>
         </step>
         <step os="ubuntu;rhel;centos;fedora;sles;opensuse">
-          <para>In the <literal>[database]</literal> section, configure database access:</para>
+          <para>In the <literal>[database]</literal> section, configure
+            database access:</para>
           <programlisting language="ini">[database]
 ...
 connection = mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replaceable>controller</replaceable>/keystone</programlisting>
-          <para>Replace <replaceable>KEYSTONE_DBPASS</replaceable> with the password you chose for
-            the database.</para>
+          <para>Replace <replaceable>KEYSTONE_DBPASS</replaceable> with the
+            password you chose for the database.</para>
         </step>
-        <step os="ubuntu">
-          <para>In the <literal>[DEFAULT]</literal> section, configure the log directory:</para>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, we recommend
+            enabling verbose logging to assist with potential
+            troubleshooting:</para>
           <programlisting language="ini">[DEFAULT]
 ...
-log_dir = /var/log/keystone</programlisting>
+verbose = True</programlisting>
         </step>
       </substeps>
     </step>
     <step os="rhel;centos;fedora;opensuse;sles">
-      <para>By default, the Identity service uses public key infrastructure (PKI).</para>
-      <para>Create generic certificates and keys and restrict access to the associated files:</para>
+      <para>By default, the Identity service uses public key infrastructure
+        (PKI).</para>
+      <para>Create generic certificates and keys and restrict access to the
+        associated files:</para>
       <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user keystone --keystone-group keystone</userinput>
 <prompt>#</prompt> <userinput>chown keystone:keystone /var/log/keystone/keystone.log</userinput>
 <prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/ssl</userinput>
 <prompt>#</prompt> <userinput>chmod -R o-rwx /etc/keystone/ssl</userinput></screen>
     </step>
     <step os="ubuntu;rhel;centos;fedora;sles;opensuse">
-      <para>Run the following command to populate the Identity service database:</para>
+      <para>Populate the Identity service database:</para>
       <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "keystone-manage db_sync" keystone</userinput></screen>
     </step>
   </procedure>
@@ -109,9 +129,9 @@ log_dir = /var/log/keystone</programlisting>
           </imageobject>
         </mediaobject>
       </informalfigure>
-      <para>Use the random value that you generated in a previous step. If you install using
-        non-interactive mode or you do not specify this token, the configuration tool generates a
-        random value.</para>
+      <para>Use the random value that you generated in a previous step. If you
+        install using non-interactive mode or you do not specify this token,
+        the configuration tool generates a random value.</para>
     </step>
     <step>
       <para>Create the <literal>admin</literal> tenant and user:</para>
@@ -161,7 +181,7 @@ log_dir = /var/log/keystone</programlisting>
       </informalfigure>
     </step>
     <step>
-      <para>Register the Identity service in the catalog:</para>
+      <para>Create the Identity service endpoints:</para>
       <informalfigure>
         <mediaobject>
           <imageobject>
@@ -179,33 +199,34 @@ log_dir = /var/log/keystone</programlisting>
       <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
     </step>
     <step os="rhel;fedora;centos;opensuse;sles">
-      <para>Start the Identity service and configure it to start when the system boots:</para>
+      <para>Start the Identity service and configure it to start when the
+        system boots:</para>
       <screen><prompt>#</prompt> <userinput>service openstack-keystone start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-keystone on</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create a SQLite database.</para>
-      <para>Because this configuration uses a SQL database server, you can remove the SQLite
-        database file:</para>
-      <screen><prompt>#</prompt> <userinput>rm /var/lib/keystone/keystone.db</userinput></screen>
+      <para>Because this configuration uses a SQL database server, you can
+        remove the SQLite database file:</para>
+      <screen><prompt>#</prompt> <userinput>rm -f /var/lib/keystone/keystone.db</userinput></screen>
     </step>
     <step>
-      <para>By default, the Identity service stores expired tokens in the database indefinitely. The
-        accumulation of expired tokens considerably increases the database size and might degrade
-        service performance, particularly in test environments with limited resources.</para>
-      <para>We recommend that you use <systemitem class="service">cron</systemitem> to configure a
-        periodic task that purges expired tokens hourly.</para>
-      <para>Run the following command to purge expired tokens every hour and log the output to the
-          <filename>/var/log/keystone/keystone-tokenflush.log</filename> file:</para>
+      <para>By default, the Identity service stores expired tokens in the
+        database indefinitely. The accumulation of expired tokens considerably
+        increases the database size and might degrade service performance,
+        particularly in environments with limited resources.</para>
+      <para>We recommend that you use
+        <systemitem class="service">cron</systemitem> to configure a periodic
+        task that purges expired tokens hourly:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
-echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
->> /var/spool/cron/crontabs/keystone</userinput></screen>
+  echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
+  >> /var/spool/cron/crontabs/keystone</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
-echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
->> /var/spool/cron/keystone</userinput></screen>
+  echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
+  >> /var/spool/cron/keystone</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
-echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
->> /var/spool/cron/tabs/keystone</userinput></screen>
+  echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
+  >> /var/spool/cron/tabs/keystone</userinput></screen>
     </step>
   </procedure>
 </section>
