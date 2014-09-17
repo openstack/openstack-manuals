@@ -52,32 +52,36 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
             <application>RabbitMQ</application>.</para>
         </step>
         <step>
-          <para>In the <literal>[keystone_authtoken</literal>] section,
+          <para>In the <literal>[keystone_authtoken]</literal> section,
             configure Identity service access:</para>
          <programlisting language="ini">
 [keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
-auth_host = <replaceable>controller</replaceable>
-auth_port = 35357
-auth_protocol = http
+identity_uri = http://<replaceable>controller</replaceable>:35357
 admin_tenant_name = service
 admin_user = nova
 admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
           <para>Replace <replaceable>NOVA_PASS</replaceable> with the password
             you chose for the <literal>nova</literal> user in the Identity
             service.</para>
+          <note>
+            <para>Comment out any <literal>auth_host</literal>,
+              <literal>auth_port</literal>, and
+              <literal>auth_protocol</literal> options because the
+              <literal>identity_uri</literal> option replaces them.</para>
+          </note>
         </step>
         <step>
           <para>In the <literal>[DEFAULT]</literal> section, configure the
-            <literal>my_ip</literal> key:</para>
+            <literal>my_ip</literal> option:</para>
           <programlisting language="ini">[DEFAULT]
 ...
 my_ip = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable></programlisting>
           <para>Replace
             <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable> with
             the IP address of the management network interface on your
-            first compute node, typically 10.0.0.31 in the
+            compute node, typically 10.0.0.31 for the first node in the
             <link linkend="architecture_example-architectures">example
             architecture</link>.</para>
         </step>
@@ -98,7 +102,7 @@ novncproxy_base_url = http://<replaceable>controller</replaceable>:6080/vnc_auto
           <para>Replace
             <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable> with
             the IP address of the management network interface on your
-            first compute node, typically 10.0.0.31 in the
+            compute node, typically 10.0.0.31 for the first node in the
             <link linkend="architecture_example-architectures">example
             architecture</link>.</para>
           <note>
@@ -115,6 +119,13 @@ novncproxy_base_url = http://<replaceable>controller</replaceable>:6080/vnc_auto
           <programlisting language="ini">[glance]
 ...
 host = <replaceable>controller</replaceable></programlisting>
+        </step>
+        <step>
+          <para>(Optional) To assist with troubleshooting,
+            enable verbose logging in the <literal>[DEFAULT]</literal> section:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+verbose = True</programlisting>
         </step>
       </substeps>
     </step>
