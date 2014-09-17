@@ -21,19 +21,20 @@
         </step>
         <step>
           <para>Create the <literal>nova</literal> database:</para>
-          <screen><prompt>mysql></prompt> <userinput>CREATE DATABASE nova;</userinput></screen>
+          <screen><userinput>CREATE DATABASE nova;</userinput></screen>
         </step>
         <step>
           <para>Grant proper access to the <literal>nova</literal>
             database:</para>
-          <screen><prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput>
-<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput></screen>
+          <screen><userinput>GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
+  IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput>
+<userinput>GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
+  IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput></screen>
           <para>Replace <replaceable>NOVA_DBPASS</replaceable> with a suitable
         password.</para>
         </step>
         <step>
-          <para>Exit the database access client:</para>
-          <screen><prompt>mysql></prompt> <userinput>exit</userinput></screen>
+          <para>Exit the database access client.</para>
         </step>
       </substeps>
     </step>
@@ -48,7 +49,16 @@
       <substeps>
         <step>
           <para>Create the <literal>nova</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name nova --pass <replaceable>NOVA_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name nova --pass <replaceable>NOVA_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput>
+<computeroutput>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|  email   |         nova@example.com         |
+| enabled  |               True               |
+|    id    | 387dd4f7e46d4f72965ee99c76ae748c |
+|   name   |               nova               |
+| username |               nova               |
++----------+----------------------------------+</computeroutput></screen>
           <para>Replace <replaceable>NOVA_PASS</replaceable> with a suitable
             password and <replaceable>EMAIL_ADDRESS</replaceable> with
             a suitable e-mail address.</para>
@@ -58,10 +68,22 @@
             <literal>service</literal> tenant and <literal>admin</literal>
             role:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --user nova --tenant service --role admin</userinput></screen>
+          <note>
+            <para>This command provides no output.</para>
+          </note>
         </step>
         <step>
           <para>Create the <literal>nova</literal> service:</para>
-          <screen><prompt>$</prompt> <userinput>keystone service-create --name nova --type compute --description "OpenStack Compute"</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone service-create --name nova --type compute --description "OpenStack Compute"</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |        OpenStack Compute         |
+|   enabled   |               True               |
+|      id     | 6c7854f52ce84db795557ebc0373f6b9 |
+|     name    |               nova               |
+|     type    |             compute              |
++-------------+----------------------------------+</computeroutput></screen>
         </step>
       </substeps>
     </step>
@@ -71,7 +93,18 @@
   --service-id $(keystone service-list | awk '/ compute / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:8774/v2/%\(tenant_id\)s \
   --internalurl http://<replaceable>controller</replaceable>:8774/v2/%\(tenant_id\)s \
-  --adminurl http://<replaceable>controller</replaceable>:8774/v2/%\(tenant_id\)s</userinput></screen>
+  --adminurl http://<replaceable>controller</replaceable>:8774/v2/%\(tenant_id\)s \
+  --region regionOne</userinput>
+<computeroutput>+-------------+-----------------------------------------+
+|   Property  |                  Value                  |
++-------------+-----------------------------------------+
+|   adminurl  | http://controller:8774/v2/%(tenant_id)s |
+|      id     |    c397438bd82c41198ec1a9d85cb7cc74     |
+| internalurl | http://controller:8774/v2/%(tenant_id)s |
+|  publicurl  | http://controller:8774/v2/%(tenant_id)s |
+|    region   |                regionOne                |
+|  service_id |    6c7854f52ce84db795557ebc0373f6b9     |
++-------------+-----------------------------------------+</computeroutput></screen>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
@@ -115,23 +148,26 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
         <step>
           <para>In the <literal>[keystone_authtoken]</literal> section,
             configure Identity service access:</para>
-          <programlisting language="ini">
-[keystone_authtoken]
+          <programlisting language="ini">[keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
-auth_host = <replaceable>controller</replaceable>
-auth_port = 35357
-auth_protocol = http
+identity_uri = http://<replaceable>controller</replaceable>:35357
 admin_tenant_name = service
 admin_user = nova
 admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
           <para>Replace <replaceable>NOVA_PASS</replaceable> with the password
             you chose for the <literal>nova</literal> user in the Identity
             service.</para>
+          <note>
+            <para>Comment out any <literal>auth_host</literal>,
+              <literal>auth_port</literal>, and
+              <literal>auth_protocol</literal> options because the
+              <literal>identity_uri</literal> option replaces them.</para>
+          </note>
         </step>
         <step>
           <para>In the <literal>[DEFAULT]</literal> section, configure the
-            <literal>my_ip</literal> key to use the management interface IP
+            <literal>my_ip</literal> option to use the management interface IP
             address of the controller node:</para>
           <programlisting language="ini">[DEFAULT]
 ...
@@ -147,11 +183,18 @@ vncserver_listen = 10.0.0.11
 vncserver_proxyclient_address = 10.0.0.11</programlisting>
         </step>
         <step>
-          <para>In the <literal>[DEFAULT]</literal> section, configure the
+          <para>In the <literal>[glance]</literal> section, configure the
             location of the Image Service:</para>
+          <programlisting language="ini">[glance]
+...
+host = <replaceable>controller</replaceable></programlisting>
+        </step>
+        <step>
+          <para>(Optional) To assist with troubleshooting,
+            enable verbose logging in the <literal>[DEFAULT]</literal> section:</para>
           <programlisting language="ini">[DEFAULT]
 ...
-glance_host = <replaceable>controller</replaceable></programlisting>
+verbose = True</programlisting>
         </step>
       </substeps>
     </step>
