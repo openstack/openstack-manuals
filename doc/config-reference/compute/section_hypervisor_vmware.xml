@@ -747,10 +747,14 @@ trusty-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
     <section xml:id="VMware_tagging_images">
       <title>Tag VMware images</title>
       <para>In a mixed hypervisor environment, OpenStack Compute uses
-        the <option>hypervisor_type</option> tag to match images to the
-        correct hypervisor type. For VMware images, set the hypervisor
-        type to <literal>vmware</literal>. Other valid hypervisor
-        types include: xen, qemu, kvm, lxc, uml, and hyperv.</para>
+        the <option>hypervisor_type</option> tag to match images to
+        the correct hypervisor type. For VMware images, set the
+        hypervisor type to <literal>vmware</literal>. Other valid
+        hypervisor types include: <literal>xen</literal>,
+        <literal>qemu</literal>, <literal>lxc</literal>,
+        <literal>uml</literal>, and <literal>hyperv</literal>.
+        Note that <literal>qemu</literal> is used for both QEMU and
+        KVM hypervisor types.</para>
       <screen><prompt>$</prompt> <userinput>glance image-create --name "ubuntu-thick-scsi" --disk-format vmdk \
 --container-format bare \
 --property vmware_adaptertype="lsiLogic" \
