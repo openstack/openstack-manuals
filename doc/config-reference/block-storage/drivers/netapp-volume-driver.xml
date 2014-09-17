@@ -434,6 +434,26 @@ nfs_shares_config = <replaceable>/etc/cinder/nfs_shares</replaceable></programli
                 achieve the desired functionality. The driver uses REST
                 APIs to interact with the E-Series proxy instance, which in
                 turn interacts directly with the E-Series controllers.</para>
+            <para>The use of multipath and DM-MP are required when using the
+                OpenStack Block Storage driver for E-Series. In order for
+                OpenStack Block Storage and OpenStack Compute to take advantage
+                of multiple paths, the following configuration options must be
+                correctly configured:</para>
+            <itemizedlist>
+                <listitem>
+                    <para>The <option>use_multipath_for_image_xfer</option> option
+                          should be set to <literal>True</literal> in the
+                          <filename>cinder.conf</filename> file within the
+                          driver-specific stanza (for example,
+                          <literal>[<replaceable>myDriver</replaceable>]</literal>).</para>
+                </listitem>
+                <listitem>
+                    <para>The <option>iscsi_use_multipath</option> option
+                          should be set to <literal>True</literal> in the
+                          <filename>nova.conf</filename> file within the
+                          <literal>[libvirt]</literal> stanza.</para>
+                </listitem>
+            </itemizedlist>
             <simplesect>
                 <title>Configuration options for E-Series storage
                     family with iSCSI protocol</title>
@@ -454,7 +474,8 @@ netapp_login = <replaceable>username</replaceable>
 netapp_password = <replaceable>password</replaceable>
 netapp_controller_ips = <replaceable>1.2.3.4,5.6.7.8</replaceable>
 netapp_sa_password = <replaceable>arrayPassword</replaceable>
-netapp_storage_pools = <replaceable>pool1,pool2</replaceable></programlisting>
+netapp_storage_pools = <replaceable>pool1,pool2</replaceable>
+use_multipath_for_image_xfer = True</programlisting>
                 <note>
                     <para>
                       To use the E-Series driver, you must override
