@@ -10,7 +10,6 @@
         each OpenStack client.</para>
     <section xml:id="install_prereq_software">
         <title>Install the prerequisite software</title>
-
         <para>Most Linux distributions include packaged versions of the
            command-line clients that you can install directly, see <xref
            linkend="cli_clients_install_packages"/>.
@@ -79,6 +78,9 @@
                                 >Python Package Index</link>, and lets
                             you update or remove the packages later
                             on.</para>
+                    <para>Since the installation process compiles source
+                        files, this requires the related Python development
+                        package for your operating system and distribution.</para>
                     <para>Install <package>pip</package> through the
                         package manager for your system:</para>
                     <formalpara>
@@ -106,14 +108,19 @@
                     <formalpara>
                         <title>Ubuntu and Debian</title>
                         <para>
-                          <screen><prompt>#</prompt> <userinput>apt-get install python-pip</userinput></screen>
+                          <screen><prompt>#</prompt> <userinput>apt-get install python-devel python-pip</userinput></screen>
                         </para>
-                            </formalpara>
+                    </formalpara>
+                    <para>
+                        Note that extra dependencies may be required, per
+                        operating system, depending on the package being
+                        installed, such as is the case with Tempest.
+                    </para>
                     <formalpara>
                         <title>Red Hat Enterprise Linux, CentOS, or Fedora</title>
                         <para>A packaged version enables you to use <package>yum</package>
                             to install the package:
-                            <screen><prompt>#</prompt> <userinput>yum install python-pip</userinput></screen>
+                            <screen><prompt>#</prompt> <userinput>yum install python-dev python-pip</userinput></screen>
                             There are also packaged versions of the
                             clients available in <link
                             xlink:href="http://openstack.redhat.com/">RDO</link>
@@ -132,7 +139,7 @@
                             First, add the Open Build Service repository:
                             <screen><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Icehouse/SLE_11_SP3 Icehouse</userinput></screen>
                             Then install <package>pip</package> and use it to manage client installation:
-                            <screen><prompt>#</prompt> <userinput>zypper install python-pip</userinput></screen>
+                            <screen><prompt>#</prompt> <userinput>zypper install python-devel python-pip</userinput></screen>
                             There are also packaged versions of the clients available
                             that enable <package>zypper</package> to install the
                             clients as described in <xref linkend="cli_clients_install_packages"/>.
@@ -143,7 +150,7 @@
                         <para>You can install
                             <package>pip</package> and use it to
                             manage client installation:
-                            <screen><prompt>#</prompt> <userinput>zypper install python-pip</userinput></screen>
+                            <screen><prompt>#</prompt> <userinput>zypper install python-devel python-pip</userinput></screen>
                             There are also packaged versions of the clients available
                             that enable <package>zypper</package> to install the
                             clients as described in <xref linkend="cli_clients_install_packages"/>
