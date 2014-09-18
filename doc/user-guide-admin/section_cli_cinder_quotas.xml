@@ -49,14 +49,14 @@
             </tbody>
         </table>
     </para>
-    <section xml:id="cli_set_block_storage_quotas_procedure">
-        <title>View and update Block Storage service quotas</title>
-        <para>As an administrative user, you can view and update Block
-            Storage service quotas.</para>
+
+    <section xml:id="cli_view_block_storage_quotas">
+      <title>View Block Storage quotas</title>
+        <para>Administrative users can view Block Storage
+              service quotas.</para>
         <procedure>
             <step>
-                <para>List the default quotas for all projects, as
-                    follows:</para>
+                <para>List the default quotas for all projects:</para>
                 <screen><prompt>$</prompt> <userinput>cinder quota-defaults <replaceable>TENANT_ID</replaceable></userinput>
 <computeroutput>+-----------+-------+
 |  Property | Value |
@@ -67,16 +67,7 @@
 +-----------+-------+</computeroutput></screen>
             </step>
             <step>
-                <para>To update a default value for a new project,
-                    update the property in the
-                        <filename>/etc/cinder/cinder.conf</filename>
-                    file.</para>
-            </step>
-
-
-            <step>
-                <para>View Block Storage service quotas for a project, as
-                    follows:</para>
+                <para>View Block Storage service quotas for a project:</para>
                 <screen><prompt>$</prompt> <userinput>cinder quota-show <replaceable>TENANT_NAME</replaceable></userinput></screen>
                 <para>For example:</para>
                 <screen><prompt>$</prompt> <userinput>cinder quota-show tenant01</userinput>
@@ -89,14 +80,41 @@
 +-----------+-------+</computeroutput></screen>
             </step>
             <step>
+                <para>Show the current usage of a per-tenant quota:</para>
+                <screen><prompt>$</prompt> <userinput>cinder quota-usage <replaceable>tenantID</replaceable></userinput>
+            <computeroutput>+-----------+--------+----------+-------+
+|    Type   | In_use | Reserved | Limit |
++-----------+--------+----------+-------+
+| gigabytes |   0    |    0     |  1000 |
+| snapshots |   0    |    0     |   10  |
+|  volumes  |   0    |    0     |   15  |
++-----------+--------+----------+-------+</computeroutput></screen>
+            </step>
+        </procedure>
+    </section>
+
+    <section xml:id="cli_edit_update_block_storage_quotas">
+      <title>Edit and Update Block Storage service quotas</title>
+        <para>Administrative users can edit and update Block Storage
+              service quotas.</para>
+        <procedure>
+            <step>
+                <para>Clear per-tenant quota limits:</para>
+        <screen><prompt>$</prompt> <userinput>cinder quota-delete <replaceable>tenantID</replaceable></userinput></screen>
+            </step>
+            <step>
+                <para>To update a default value for a new project,
+                    update the property in the
+                        <filename>/etc/cinder/cinder.conf</filename>
+                    file.</para>
+            </step>
+            <step>
                 <para>To update Block Storage service quotas, place
-                    the tenant ID in a usable variable, as
-                    follows:</para>
+                    the tenant ID in a variable:</para>
                 <screen><prompt>$</prompt> <userinput>tenant=$(keystone tenant-list | awk '/<replaceable>tenantName</replaceable>/ {print $2}')</userinput></screen>
             </step>
             <step>
-                <para>Update a particular quota value, as
-                    follows:</para>
+                <para>Update a particular quota value:</para>
                 <screen><prompt>$</prompt> <userinput>cinder quota-update --<replaceable>quotaName</replaceable> <replaceable>NewValue</replaceable> <replaceable>tenantID</replaceable></userinput></screen>
                 <para>For example:</para>
                 <screen><prompt>$</prompt> <userinput>cinder quota-update --volumes 15 $tenant</userinput>
@@ -110,22 +128,10 @@
 +-----------+-------+</computeroutput></screen>
             </step>
             <step>
-                <para>To clear per-tenant quota limits, use the
-            <command>quota-delete</command> command:</para>
+              <para>Clear per-tenant quota limits:</para>
         <screen><prompt>$</prompt> <userinput>cinder quota-delete <replaceable>tenantID</replaceable></userinput></screen>
-            </step>
-            <step>
-                <para>To show the current usage of a per-tenant quota use the
-                <command>quota-usage</command> command:</para>
-                <screen><prompt>$</prompt> <userinput>cinder quota-usage <replaceable>tenantID</replaceable></userinput>
-<computeroutput>+-----------+--------+----------+-------+
-|    Type   | In_use | Reserved | Limit |
-+-----------+--------+----------+-------+
-| gigabytes |   0    |    0     |  1000 |
-| snapshots |   0    |    0     |   10  |
-|  volumes  |   0    |    0     |   15  |
-+-----------+--------+----------+-------+</computeroutput></screen>
             </step>
         </procedure>
     </section>
+
 </section>
