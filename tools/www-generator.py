@@ -23,7 +23,7 @@ import jinja2
 
 
 def initialize_logging(debug, verbose):
-    """Initialze the Logger."""
+    """Initialize the Logger."""
 
     logger = logging.getLogger(name='logger')
     formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
