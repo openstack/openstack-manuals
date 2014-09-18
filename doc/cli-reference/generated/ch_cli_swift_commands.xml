@@ -10,10 +10,14 @@
     <?dbhtml stop-chunking?>
 
     <title>Object Storage command-line client</title>
-    <para>The <command>swift</command> client is the command-line interface
-         (CLI) for the OpenStack Object Storage API and its extensions. This chapter documents
-         <command>swift</command> version 2.2.0.
+
+    <para>The <command>swift</command> client is the command-line
+        interface (CLI) for the OpenStack Object Storage API and its extensions.
+
+       This chapter documents <command>swift</command> version
+        <literal>2.3.0</literal>.
     </para>
+
     <para>For help on a specific <command>swift</command>
        command, enter:
     </para>
@@ -25,8 +29,15 @@
              [--auth-version &lt;auth_version&gt;] [--user &lt;username&gt;]
              [--key &lt;api_key&gt;] [--retries &lt;num_retries&gt;]
              [--os-username &lt;auth-user-name&gt;] [--os-password &lt;auth-password&gt;]
+             [--os-user-id &lt;auth-user-id&gt;]
+             [--os-user-domain-id &lt;auth-user-domain-id&gt;]
+             [--os-user-domain-name &lt;auth-user-domain-name&gt;]
              [--os-tenant-id &lt;auth-tenant-id&gt;]
              [--os-tenant-name &lt;auth-tenant-name&gt;]
+             [--os-project-id &lt;auth-project-id&gt;]
+             [--os-project-name &lt;auth-project-name&gt;]
+             [--os-project-domain-id &lt;auth-project-domain-id&gt;]
+             [--os-project-domain-name &lt;auth-project-domain-name&gt;]
              [--os-auth-url &lt;auth-url&gt;] [--os-auth-token &lt;auth-token&gt;]
              [--os-storage-url &lt;storage-url&gt;] [--os-region-name &lt;region-name&gt;]
              [--os-service-type &lt;service-type&gt;]
@@ -111,6 +122,14 @@
   swift -A https://auth.api.rackspacecloud.com/v1.0 -U user -K api_key stat -v
   swift --os-auth-url https://api.example.com/v2.0 --os-tenant-name tenant \
       --os-username user --os-password password list
+  swift --os-auth-url https://api.example.com/v3 --auth-version 3\
+      --os-project-name project1 --os-project-domain-name domain1 \
+      --os-username user --os-user-domain-name domain1 \
+      --os-password password list
+  swift --os-auth-url https://api.example.com/v3 --auth-version 3\
+      --os-project-id 0123456789abcdef0123456789abcdef \
+      --os-user-id abcdef0123456789abcdef0123456789 \
+      --os-password password list
   swift --os-auth-token 6ee5eb33efad4e45ab46806eac010566 \
       --os-storage-url https://10.1.5.2:8080/v1/AUTH_ced809b6a4baea7aeab61a \
       list
@@ -132,6 +151,14 @@
     <listitem>
       <para>
         show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-help</command></term>
+    <listitem>
+      <para>
+        Show OpenStack authentication options.
       </para>
     </listitem>
   </varlistentry>
@@ -164,8 +191,8 @@
     <term><command>--info</command></term>
     <listitem>
       <para>
-        Show the curl commands and results  of all http
-      queries which return an error.
+        Show the curl commands and results of all http queries
+      which return an error.
       </para>
     </listitem>
   </varlistentry>
@@ -218,105 +245,6 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-username=&lt;auth-user-name&gt;</command></term>
-    <listitem>
-      <para>
-      OpenStack username. Defaults to <code>env[OS_USERNAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-password=&lt;auth-password&gt;</command></term>
-    <listitem>
-      <para>
-      OpenStack password. Defaults to <code>env[OS_PASSWORD]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-tenant-id=&lt;auth-tenant-id&gt;</command></term>
-    <listitem>
-      <para>
-      OpenStack tenant ID. Defaults to <code>env[OS_TENANT_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-tenant-name=&lt;auth-tenant-name&gt;</command></term>
-    <listitem>
-      <para>
-      OpenStack tenant name. Defaults to
-      <code>env[OS_TENANT_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-auth-url=&lt;auth-url&gt;</command></term>
-    <listitem>
-      <para>
-      OpenStack auth URL. Defaults to <code>env[OS_AUTH_URL]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-auth-token=&lt;auth-token&gt;</command></term>
-    <listitem>
-      <para>
-      OpenStack token. Defaults to <code>env[OS_AUTH_TOKEN]</code>. Used
-      with --os-storage-url to bypass the usual
-      username/password authentication.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-storage-url=&lt;storage-url&gt;</command></term>
-    <listitem>
-      <para>
-      OpenStack storage URL. Defaults to
-      <code>env[OS_STORAGE_URL]</code>. Overrides the storage url
-      returned during auth. Will bypass authentication when
-      used with --os-auth-token.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-region-name=&lt;region-name&gt;</command></term>
-    <listitem>
-      <para>
-      OpenStack region name. Defaults to
-      <code>env[OS_REGION_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-service-type=&lt;service-type&gt;</command></term>
-    <listitem>
-      <para>
-      OpenStack Service type. Defaults to
-      <code>env[OS_SERVICE_TYPE]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-endpoint-type=&lt;endpoint-type&gt;</command></term>
-    <listitem>
-      <para>
-      OpenStack Endpoint type. Defaults to
-      <code>env[OS_ENDPOINT_TYPE]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-cacert=&lt;ca-certificate&gt;</command></term>
-    <listitem>
-      <para>
-      Specify a CA bundle file to use in verifying a TLS
-      (https) server certificate. Defaults to
-      <code>env[OS_CACERT]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--insecure</command></term>
     <listitem>
       <para>
@@ -339,7 +267,7 @@
  </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_delete">
-        <title>swift delete command</title>
+        <title>swift delete</title>
 
         <screen><computeroutput>Usage: swift delete</computeroutput></screen>
         <para>
@@ -403,7 +331,7 @@ Delete a container or objects within a container.
  </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_download">
-        <title>swift download command</title>
+        <title>swift download</title>
 
         <screen><computeroutput>Usage: swift download</computeroutput></screen>
         <para>
@@ -420,7 +348,7 @@ Download objects from containers.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>[object]</command></term>
+    <term><command>&lt;object&gt;</command></term>
     <listitem>
       <para>
         Name of object to download. Specify multiple times
@@ -436,8 +364,8 @@ Download objects from containers.
     <term><command>--all</command></term>
     <listitem>
       <para>
-        Indicates that you really want to download everything
-      in the account.
+        Indicates that you really want to download
+      everything in the account.
       </para>
     </listitem>
   </varlistentry>
@@ -454,7 +382,7 @@ Download objects from containers.
     <term><command>--prefix &lt;prefix&gt;</command></term>
     <listitem>
       <para>
-        Only download items beginning with &lt;prefix&gt;.
+        Only download items beginning with &lt;prefix&gt;
       </para>
     </listitem>
   </varlistentry>
@@ -473,7 +401,7 @@ Download objects from containers.
     <listitem>
       <para>
       Number of threads to use for downloading objects.
-      Default is 10
+      Default is 10.
       </para>
     </listitem>
   </varlistentry>
@@ -482,7 +410,7 @@ Download objects from containers.
     <listitem>
       <para>
       Number of threads to use for downloading containers.
-      Default is 10
+      Default is 10.
       </para>
     </listitem>
   </varlistentry>
@@ -517,7 +445,7 @@ Download objects from containers.
  </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_list">
-        <title>swift list command</title>
+        <title>swift list</title>
 
         <screen><computeroutput>Usage: swift list</computeroutput></screen>
         <para>
@@ -581,7 +509,7 @@ Lists the containers for the account or the objects for a container.
  </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_post">
-        <title>swift post command</title>
+        <title>swift post</title>
 
         <screen><computeroutput>Usage: swift post</computeroutput></screen>
         <para>
@@ -665,7 +593,7 @@ If the container is not found, it will be created automatically.
  </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_stat">
-        <title>swift stat command</title>
+        <title>swift stat</title>
 
         <screen><computeroutput>Usage: swift stat</computeroutput></screen>
         <para>
@@ -684,8 +612,7 @@ Displays information for the account, container, or object.
     <term><command>[object]</command></term>
     <listitem>
       <para>
-        Name of object to stat. Specify multiple times
-      for multiple objects.
+        Name of object to stat.
       </para>
     </listitem>
   </varlistentry>
@@ -704,7 +631,7 @@ Displays information for the account, container, or object.
  </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_upload">
-        <title>swift upload command</title>
+        <title>swift upload</title>
 
         <screen><computeroutput>Usage: swift upload</computeroutput></screen>
         <para>
