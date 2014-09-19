@@ -43,12 +43,14 @@
     <procedure>
       <title>To create the external network</title>
       <step>
-        <para>Source the <literal>admin</literal> tenant credentials:</para>
+        <para>Source the <literal>admin</literal> credentials to gain access to
+          admin-only CLI commands:</para>
         <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
       </step>
       <step>
         <para>Create the network:</para>
-        <screen><prompt>$</prompt> <userinput>neutron net-create ext-net --shared --router:external True</userinput>
+        <screen><prompt>$</prompt> <userinput>neutron net-create ext-net --shared --router:external True \
+  --provider:physical_network external --provider:network_type flat</userinput>
 <computeroutput>Created a new network:
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
@@ -56,9 +58,9 @@
 | admin_state_up            | True                                 |
 | id                        | 893aebb9-1c1e-48be-8908-6b947f3237b3 |
 | name                      | ext-net                              |
-| provider:network_type     | gre                                  |
-| provider:physical_network |                                      |
-| provider:segmentation_id  | 1                                    |
+| provider:network_type     | flat                                 |
+| provider:physical_network | external                             |
+| provider:segmentation_id  |                                      |
 | router:external           | True                                 |
 | shared                    | True                                 |
 | status                    | ACTIVE                               |
@@ -74,16 +76,6 @@
       network node. You should specify an exclusive slice of this subnet
       for <glossterm>router</glossterm> and floating IP addresses to prevent
       interference with other devices on the external network.</para>
-    <para>Replace <replaceable>FLOATING_IP_START</replaceable> and
-      <replaceable>FLOATING_IP_END</replaceable> with the first and last
-      IP addresses of the range that you want to allocate for floating IP
-      addresses. Replace <replaceable>EXTERNAL_NETWORK_CIDR</replaceable>
-      with the subnet associated with the physical network. Replace
-      <replaceable>EXTERNAL_NETWORK_GATEWAY</replaceable> with the gateway
-      associated with the physical network, typically the ".1" IP address.
-      You should disable <glossterm>DHCP</glossterm> on this subnet because
-      instances do not connect directly to the external network and floating
-      IP addresses require manual assignment.</para>
     <procedure>
       <title>To create a subnet on the external network</title>
       <step>
@@ -91,6 +83,16 @@
         <screen><prompt>$</prompt> <userinput>neutron subnet-create ext-net --name ext-subnet \
   --allocation-pool start=<replaceable>FLOATING_IP_START</replaceable>,end=<replaceable>FLOATING_IP_END</replaceable> \
   --disable-dhcp --gateway <replaceable>EXTERNAL_NETWORK_GATEWAY</replaceable> <replaceable>EXTERNAL_NETWORK_CIDR</replaceable></userinput></screen>
+        <para>Replace <replaceable>FLOATING_IP_START</replaceable> and
+          <replaceable>FLOATING_IP_END</replaceable> with the first and last
+          IP addresses of the range that you want to allocate for floating IP
+          addresses. Replace <replaceable>EXTERNAL_NETWORK_CIDR</replaceable>
+          with the subnet associated with the physical network. Replace
+          <replaceable>EXTERNAL_NETWORK_GATEWAY</replaceable> with the gateway
+          associated with the physical network, typically the ".1" IP address.
+          You should disable <glossterm>DHCP</glossterm> on this subnet because
+          instances do not connect directly to the external network and
+          floating IP addresses require manual assignment.</para>
         <para>For example, using <literal>203.0.113.0/24</literal> with
           floating IP address range <literal>203.0.113.101</literal> to
           <literal>203.0.113.200</literal>:</para>
@@ -130,7 +132,8 @@
     <procedure>
       <title>To create the tenant network</title>
       <step>
-        <para>Source the <literal>demo</literal> tenant credentials:</para>
+        <para>Source the <literal>demo</literal> credentials to gain access to
+          user-only CLI commands:</para>
         <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
       </step>
       <step>
@@ -152,19 +155,18 @@
     </procedure>
     <para>Like the external network, your tenant network also requires
       a subnet attached to it. You can specify any valid subnet because the
-      architecture isolates tenant networks. Replace
-      <replaceable>TENANT_NETWORK_CIDR</replaceable> with the subnet
-      you want to associate with the tenant network. Replace
-      <replaceable>TENANT_NETWORK_GATEWAY</replaceable> with the gateway you
-      want to associate with this network, typically the ".1" IP address. By
-      default, this subnet will use DHCP so your instances can obtain IP
-      addresses.</para>
+      architecture isolates tenant networks. By default, this subnet will
+      use DHCP so your instances can obtain IP addresses.</para>
     <procedure>
       <title>To create a subnet on the tenant network</title>
       <step>
         <para>Create the subnet:</para>
         <screen><prompt>$</prompt> <userinput>neutron subnet-create demo-net --name demo-subnet \
   --gateway <replaceable>TENANT_NETWORK_GATEWAY</replaceable> <replaceable>TENANT_NETWORK_CIDR</replaceable></userinput></screen>
+        <para>Replace <replaceable>TENANT_NETWORK_CIDR</replaceable> with the
+          subnet you want to associate with the tenant network and
+          <replaceable>TENANT_NETWORK_GATEWAY</replaceable> with the gateway
+          you want to associate with it, typically the ".1" IP address.</para>
         <para>Example using <literal>192.168.1.0/24</literal>:</para>
         <screen><prompt>$</prompt> <userinput>neutron subnet-create demo-net --name demo-subnet \
   --gateway 192.168.1.1 192.168.1.0/24</userinput>
