@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-09-18 05:05+0000\n"
-"PO-Revision-Date: 2014-09-17 22:04+0000\n"
+"POT-Creation-Date: 2014-09-18 20:21+0000\n"
+"PO-Revision-Date: 2014-09-18 06:19+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -384,6 +384,7 @@ msgid "Create the Identity service endpoints:"
 msgstr "Identity のエンドポイントを作成します。"
 
 #: ./doc/install-guide/section_keystone-install.xml195(title)
+#: ./doc/install-guide/section_basics-database.xml67(title)
 #: ./doc/install-guide/section_cinder-controller.xml164(title)
 #: ./doc/install-guide/section_nova-controller-install.xml240(title)
 #: ./doc/install-guide/section_glance-install.xml255(title)
@@ -438,122 +439,110 @@ msgstr "データベース"
 
 #: ./doc/install-guide/section_basics-database.xml9(para)
 msgid ""
-"Most OpenStack services require a database to store information. These "
-"examples use a MySQL database that runs on the controller node. You must "
-"install the MySQL database on the controller node. You must also install the"
-" MySQL Python library on any additional nodes that access MySQL. The "
-"following sections give detailed instructions."
+"Most OpenStack services use an SQL database to store information. The "
+"procedures in this guide use <application>MariaDB</application> or "
+"<application>MySQL</application> depending on the distribution. OpenStack "
+"services also support other SQL databases including <link "
+"href=\"http://www.postgresql.org/\">PostgreSQL</link>."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml15(para)
-msgid ""
-"Most OpenStack services require a database to store information. This guide "
-"uses a MySQL database on SUSE Linux Enterprise Server and a compatible "
-"database on openSUSE running on the controller node. This compatible "
-"database for openSUSE is MariaDB. You must install the MariaDB database on "
-"the controller node. You must install the MySQL Python library on any "
-"additional nodes that access MySQL or MariaDB. The following sections give "
-"detailed instructions."
-msgstr ""
-
-#: ./doc/install-guide/section_basics-database.xml25(title)
+#: ./doc/install-guide/section_basics-database.xml15(title)
 #: ./doc/install-guide/section_basics-networking-neutron.xml48(title)
 #: ./doc/install-guide/section_basics-ntp.xml15(title)
 #: ./doc/install-guide/section_basics-networking-nova.xml44(title)
 msgid "Controller node"
 msgstr "コントローラーノード"
 
+#: ./doc/install-guide/section_basics-database.xml17(title)
+msgid "To install and configure the database server"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml19(para)
+#: ./doc/install-guide/section_cinder-controller.xml93(para)
+#: ./doc/install-guide/section_cinder-controller.xml149(para)
+#: ./doc/install-guide/section_nova-controller-install.xml113(para)
+#: ./doc/install-guide/section_nova-controller-install.xml209(para)
+#: ./doc/install-guide/section_glance-install.xml121(para)
+#: ./doc/install-guide/section_glance-install.xml229(para)
+#: ./doc/install-guide/section_nova-compute-install.xml24(para)
+#: ./doc/install-guide/section_nova-compute-install.xml136(para)
+#: ./doc/install-guide/section_ceilometer-controller.xml160(para)
+#: ./doc/install-guide/section_ceilometer-controller.xml266(para)
+msgid "Install the packages:"
+msgstr "パッケージをインストールします。"
+
+#: ./doc/install-guide/section_basics-database.xml21(para)
+msgid "The Python MySQL library is compatible with MariaDB."
+msgstr ""
+
 #: ./doc/install-guide/section_basics-database.xml26(para)
+#: ./doc/install-guide/section_basics-database.xml77(para)
+msgid "On SLES:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml28(para)
+#: ./doc/install-guide/section_basics-database.xml80(para)
+msgid "On openSUSE:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml32(para)
+msgid "Choose a suitable password for the database root account."
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml35(para)
 msgid ""
-"<phrase os=\"sles\">For SUSE Linux Enterprise Server: </phrase> On the "
-"controller node, install the MySQL client and server packages, and the "
-"Python library."
-msgstr "<phrase os=\"sles\">SUSE Linux Enterprise Server の場合: </phrase> コントローラーノードに MySQL クライアントとサーバーパッケージ、Python ライブラリをインストールします。"
+"Edit the <filename>/etc/mysql/my.cnf</filename> file and complete the "
+"following actions:"
+msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml30(para)
+#: ./doc/install-guide/section_basics-database.xml38(para)
 msgid ""
-"For openSUSE: On the controller node, install the MariaDB client and "
-"database server packages, and the MySQL Python library."
-msgstr "openSUSE の場合: コントローラーノードに MariaDB クライアントとデータベースサーバーパッケージ、MySQL Python ライブラリをインストールします。"
+"Edit the <filename>/etc/my.cnf</filename> file and complete the following "
+"actions:"
+msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml37(para)
+#: ./doc/install-guide/section_basics-database.xml43(para)
 msgid ""
-"When you install the server package, you are prompted for the root password "
-"for the database. Choose a strong password and remember it."
-msgstr "サーバーパッケージをインストールするとき、データベースの root パスワードを入力するよう求められます。強いパスワードを選択し、それを覚えておきます。"
-
-#: ./doc/install-guide/section_basics-database.xml41(para)
-msgid "The MySQL configuration requires some changes to work with OpenStack."
-msgstr "OpenStack を扱うために、いくつかの MySQL の設定変更が必要になります。"
-
-#: ./doc/install-guide/section_basics-database.xml45(para)
-msgid "Edit the <filename>/etc/mysql/my.cnf</filename> file:"
-msgstr "<filename>/etc/mysql/my.cnf</filename> ファイルを編集します。"
-
-#: ./doc/install-guide/section_basics-database.xml47(para)
-msgid "Edit the <filename>/etc/my.cnf</filename> file:"
-msgstr "<filename>/etc/my.cnf</filename> ファイルを編集します。"
-
-#: ./doc/install-guide/section_basics-database.xml51(para)
-msgid ""
-"Under the <literal>[mysqld]</literal> section, set the <literal>bind-"
+"In the <literal>[mysqld]</literal> section, set the <literal>bind-"
 "address</literal> key to the management IP address of the controller node to"
 " enable access by other nodes via the management network:"
-msgstr "管理ネットワーク経由で他のノードからアクセスできるようにするために、<literal>[mysqld]</literal> セクションの下で、<literal>bind-address</literal> キーにコントローラーノードの管理 IP アドレスを設定します。"
+msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml60(para)
+#: ./doc/install-guide/section_basics-database.xml52(para)
 msgid ""
-"Under the <literal>[mysqld]</literal> section, set the following keys to "
-"enable InnoDB, UTF-8 character set, and UTF-8 collation by default:"
-msgstr "デフォルトで InnoDB、UTF-8 文字セット、UTF-8 照合順序を設定するために、<literal>[mysqld]</literal> セクションの下で、以下のキーを設定します。"
+"In the <literal>[mysqld]</literal> section, set the following keys to enable"
+" useful options and the UTF-8 character set:"
+msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml74(para)
-msgid "Restart the MySQL service to apply the changes:"
-msgstr "変更を適用するために MySQL サービスを再起動します。"
+#: ./doc/install-guide/section_basics-database.xml69(para)
+msgid "Restart the database service:"
+msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml77(para)
+#: ./doc/install-guide/section_basics-database.xml73(para)
 msgid ""
-"Start the <phrase os=\"rhel;fedora;centos\">MySQL</phrase><phrase "
-"os=\"opensuse;sles\">MariaDB or MySQL</phrase> database server and set it to"
-" start automatically when the system boots:"
-msgstr "<phrase os=\"rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse;sles\">MariaDB または MySQL</phrase> データベースサーバーを起動し、システム起動時に自動的に起動するよう設定します。"
+"Start the database service and configure it to start when the system boots:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml85(para)
+msgid "Secure the database service:"
+msgstr ""
 
 #: ./doc/install-guide/section_basics-database.xml86(para)
 msgid ""
-"Finally, you should set a root password for your <phrase "
-"os=\"rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse;sles\">MariaDB"
-" or MySQL</phrase> database. The OpenStack programs that set up databases "
-"and tables prompt you for this password if it is set."
-msgstr "最後に <phrase os=\"rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse;sles\">MariaDB または MySQL</phrase> データベースの root パスワードを設定すべきです。データベースとテーブルをセットアップする OpenStack のプログラムは、パスワードが設定されているとプロンプトを表示します。"
+"Secure the database service including choosing a suitable password for the "
+"root account:"
+msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml92(para)
-msgid ""
-"You must delete the anonymous users that are created when the database is "
-"first started. Otherwise, database connection problems occur when you follow"
-" the instructions in this guide. To do this, use the <placeholder-1/> "
-"command. Note that if <placeholder-2/> fails you might need to use "
-"<placeholder-3/> first:"
-msgstr "データベースを初めて起動したときに作成される匿名ユーザーを削除する必要があります。そうしなければ、このガイドにある説明に従うとき、データベースの接続に関する問題が発生します。これをするために <placeholder-1/> コマンドを使用します。<placeholder-2/> が失敗した場合、まず <placeholder-3/> を使用する必要があるかもしれないことに注意してください。"
-
-#: ./doc/install-guide/section_basics-database.xml101(para)
-msgid ""
-"<phrase os=\"rhel;centos;fedora;opensuse;sles\">If you have not already set "
-"a root database password, press <keycap>ENTER</keycap> when you are prompted"
-" for the password.</phrase> This command presents a number of options for "
-"you to secure your database installation. Respond <placeholder-1/> to all "
-"prompts unless you have a good reason to do otherwise."
-msgstr "<phrase os=\"rhel;centos;fedora;opensuse;sles\">root データベースパスワードをまだ設定していなければ、パスワードのプロンプトが出たときに、そのまま <keycap>ENTER</keycap> を押します。</phrase> このコマンドはデータベース環境をセキュアにするための多くのオプションを示します。他に良い理由がなければ、すべてのプロンプトに <placeholder-1/> と答えます。"
-
-#: ./doc/install-guide/section_basics-database.xml110(title)
+#: ./doc/install-guide/section_basics-database.xml94(title)
 #: ./doc/install-guide/section_basics-ntp.xml66(title)
 msgid "Other nodes"
 msgstr "その他ノード"
 
-#: ./doc/install-guide/section_basics-database.xml111(para)
+#: ./doc/install-guide/section_basics-database.xml95(para)
 msgid ""
-"On nodes other than the controller node, you only need to install the MySQL "
-"Python library:"
-msgstr "コントローラーノード以外のノードでは、MySQL Python ライブラリのみをインストールする必要があります。"
+"On nodes other than the controller node, only install the Python MySQL "
+"library:"
+msgstr ""
 
 #: ./doc/install-guide/section_cinder-controller.xml7(title)
 #: ./doc/install-guide/section_nova-controller-install.xml7(title)
@@ -667,19 +656,6 @@ msgstr ""
 #: ./doc/install-guide/section_cinder-controller.xml147(title)
 msgid "To install and configure Block Storage controller components"
 msgstr ""
-
-#: ./doc/install-guide/section_cinder-controller.xml93(para)
-#: ./doc/install-guide/section_cinder-controller.xml149(para)
-#: ./doc/install-guide/section_nova-controller-install.xml113(para)
-#: ./doc/install-guide/section_nova-controller-install.xml209(para)
-#: ./doc/install-guide/section_glance-install.xml121(para)
-#: ./doc/install-guide/section_glance-install.xml229(para)
-#: ./doc/install-guide/section_nova-compute-install.xml24(para)
-#: ./doc/install-guide/section_nova-compute-install.xml136(para)
-#: ./doc/install-guide/section_ceilometer-controller.xml160(para)
-#: ./doc/install-guide/section_ceilometer-controller.xml266(para)
-msgid "Install the packages:"
-msgstr "パッケージをインストールします。"
 
 #: ./doc/install-guide/section_cinder-controller.xml99(para)
 msgid ""
