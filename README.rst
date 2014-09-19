@@ -35,6 +35,11 @@ On Fedora 20 and later::
 
     yum install maven
 
+On openSUSE 13.1 and later::
+
+    zypper ar http://download.opensuse.org/repositories/devel:/tools:/building/openSUSE_13.1/devel:tools:building.repo
+    zypper install maven
+
 Building
 ========
 The different manuals are in subdirectories of the
