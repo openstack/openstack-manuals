@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-09-18 06:13+0000\n"
+"POT-Creation-Date: 2014-09-19 06:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -171,7 +171,7 @@ msgstr ""
 msgid "Create the Identity service endpoints:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-install.xml:195(title) ./doc/install-guide/section_cinder-controller.xml:164(title) ./doc/install-guide/section_nova-controller-install.xml:240(title) ./doc/install-guide/section_glance-install.xml:255(title) ./doc/install-guide/section_neutron-ml2-controller-node.xml:299(title) ./doc/install-guide/section_nova-compute-install.xml:151(title) ./doc/install-guide/section_heat-install.xml:183(title) ./doc/install-guide/section_ceilometer-controller.xml:315(title)
+#: ./doc/install-guide/section_keystone-install.xml:195(title) ./doc/install-guide/section_basics-database.xml:67(title) ./doc/install-guide/section_cinder-controller.xml:164(title) ./doc/install-guide/section_nova-controller-install.xml:240(title) ./doc/install-guide/section_glance-install.xml:255(title) ./doc/install-guide/section_neutron-ml2-controller-node.xml:299(title) ./doc/install-guide/section_nova-compute-install.xml:151(title) ./doc/install-guide/section_heat-install.xml:183(title) ./doc/install-guide/section_ceilometer-controller.xml:315(title)
 msgid "To finalize installation"
 msgstr ""
 
@@ -204,75 +204,75 @@ msgid "Database"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-database.xml:9(para)
-msgid "Most OpenStack services require a database to store information. These examples use a MySQL database that runs on the controller node. You must install the MySQL database on the controller node. You must also install the MySQL Python library on any additional nodes that access MySQL. The following sections give detailed instructions."
+msgid "Most OpenStack services use an SQL database to store information. The procedures in this guide use <application>MariaDB</application> or <application>MySQL</application> depending on the distribution. OpenStack services also support other SQL databases including <link href=\"http://www.postgresql.org/\">PostgreSQL</link>."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:15(para)
-msgid "Most OpenStack services require a database to store information. This guide uses a MySQL database on SUSE Linux Enterprise Server and a compatible database on openSUSE running on the controller node. This compatible database for openSUSE is MariaDB. You must install the MariaDB database on the controller node. You must install the MySQL Python library on any additional nodes that access MySQL or MariaDB. The following sections give detailed instructions."
-msgstr ""
-
-#: ./doc/install-guide/section_basics-database.xml:25(title) ./doc/install-guide/section_basics-networking-neutron.xml:48(title) ./doc/install-guide/section_basics-ntp.xml:15(title) ./doc/install-guide/section_basics-networking-nova.xml:44(title)
+#: ./doc/install-guide/section_basics-database.xml:15(title) ./doc/install-guide/section_basics-networking-neutron.xml:48(title) ./doc/install-guide/section_basics-ntp.xml:15(title) ./doc/install-guide/section_basics-networking-nova.xml:44(title)
 msgid "Controller node"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:26(para)
-msgid "<phrase os=\"sles\">For SUSE Linux Enterprise Server: </phrase> On the controller node, install the MySQL client and server packages, and the Python library."
+#: ./doc/install-guide/section_basics-database.xml:17(title)
+msgid "To install and configure the database server"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:30(para)
-msgid "For openSUSE: On the controller node, install the MariaDB client and database server packages, and the MySQL Python library."
+#: ./doc/install-guide/section_basics-database.xml:19(para) ./doc/install-guide/section_cinder-controller.xml:93(para) ./doc/install-guide/section_cinder-controller.xml:149(para) ./doc/install-guide/section_nova-controller-install.xml:113(para) ./doc/install-guide/section_nova-controller-install.xml:209(para) ./doc/install-guide/section_glance-install.xml:121(para) ./doc/install-guide/section_glance-install.xml:229(para) ./doc/install-guide/section_nova-compute-install.xml:24(para) ./doc/install-guide/section_nova-compute-install.xml:136(para) ./doc/install-guide/section_ceilometer-controller.xml:160(para) ./doc/install-guide/section_ceilometer-controller.xml:266(para)
+msgid "Install the packages:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:37(para)
-msgid "When you install the server package, you are prompted for the root password for the database. Choose a strong password and remember it."
+#: ./doc/install-guide/section_basics-database.xml:21(para)
+msgid "The Python MySQL library is compatible with MariaDB."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:41(para)
-msgid "The MySQL configuration requires some changes to work with OpenStack."
+#: ./doc/install-guide/section_basics-database.xml:26(para) ./doc/install-guide/section_basics-database.xml:77(para)
+msgid "On SLES:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:45(para)
-msgid "Edit the <filename>/etc/mysql/my.cnf</filename> file:"
+#: ./doc/install-guide/section_basics-database.xml:28(para) ./doc/install-guide/section_basics-database.xml:80(para)
+msgid "On openSUSE:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:47(para)
-msgid "Edit the <filename>/etc/my.cnf</filename> file:"
+#: ./doc/install-guide/section_basics-database.xml:32(para)
+msgid "Choose a suitable password for the database root account."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:51(para)
-msgid "Under the <literal>[mysqld]</literal> section, set the <literal>bind-address</literal> key to the management IP address of the controller node to enable access by other nodes via the management network:"
+#: ./doc/install-guide/section_basics-database.xml:35(para)
+msgid "Edit the <filename>/etc/mysql/my.cnf</filename> file and complete the following actions:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:60(para)
-msgid "Under the <literal>[mysqld]</literal> section, set the following keys to enable InnoDB, UTF-8 character set, and UTF-8 collation by default:"
+#: ./doc/install-guide/section_basics-database.xml:38(para)
+msgid "Edit the <filename>/etc/my.cnf</filename> file and complete the following actions:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:74(para)
-msgid "Restart the MySQL service to apply the changes:"
+#: ./doc/install-guide/section_basics-database.xml:43(para)
+msgid "In the <literal>[mysqld]</literal> section, set the <literal>bind-address</literal> key to the management IP address of the controller node to enable access by other nodes via the management network:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:77(para)
-msgid "Start the <phrase os=\"rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse;sles\">MariaDB or MySQL</phrase> database server and set it to start automatically when the system boots:"
+#: ./doc/install-guide/section_basics-database.xml:52(para)
+msgid "In the <literal>[mysqld]</literal> section, set the following keys to enable useful options and the UTF-8 character set:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:69(para)
+msgid "Restart the database service:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:73(para)
+msgid "Start the database service and configure it to start when the system boots:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-database.xml:85(para)
+msgid "Secure the database service:"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-database.xml:86(para)
-msgid "Finally, you should set a root password for your <phrase os=\"rhel;fedora;centos\">MySQL</phrase><phrase os=\"opensuse;sles\">MariaDB or MySQL</phrase> database. The OpenStack programs that set up databases and tables prompt you for this password if it is set."
+msgid "Secure the database service including choosing a suitable password for the root account:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:92(para)
-msgid "You must delete the anonymous users that are created when the database is first started. Otherwise, database connection problems occur when you follow the instructions in this guide. To do this, use the <placeholder-1/> command. Note that if <placeholder-2/> fails you might need to use <placeholder-3/> first:"
-msgstr ""
-
-#: ./doc/install-guide/section_basics-database.xml:101(para)
-msgid "<phrase os=\"rhel;centos;fedora;opensuse;sles\">If you have not already set a root database password, press <keycap>ENTER</keycap> when you are prompted for the password.</phrase> This command presents a number of options for you to secure your database installation. Respond <placeholder-1/> to all prompts unless you have a good reason to do otherwise."
-msgstr ""
-
-#: ./doc/install-guide/section_basics-database.xml:110(title) ./doc/install-guide/section_basics-ntp.xml:66(title)
+#: ./doc/install-guide/section_basics-database.xml:94(title) ./doc/install-guide/section_basics-ntp.xml:66(title)
 msgid "Other nodes"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-database.xml:111(para)
-msgid "On nodes other than the controller node, you only need to install the MySQL Python library:"
+#: ./doc/install-guide/section_basics-database.xml:95(para)
+msgid "On nodes other than the controller node, only install the Python MySQL library:"
 msgstr ""
 
 #: ./doc/install-guide/section_cinder-controller.xml:7(title) ./doc/install-guide/section_nova-controller-install.xml:7(title) ./doc/install-guide/section_ceilometer-controller.xml:11(title)
@@ -349,10 +349,6 @@ msgstr ""
 
 #: ./doc/install-guide/section_cinder-controller.xml:91(title) ./doc/install-guide/section_cinder-controller.xml:147(title)
 msgid "To install and configure Block Storage controller components"
-msgstr ""
-
-#: ./doc/install-guide/section_cinder-controller.xml:93(para) ./doc/install-guide/section_cinder-controller.xml:149(para) ./doc/install-guide/section_nova-controller-install.xml:113(para) ./doc/install-guide/section_nova-controller-install.xml:209(para) ./doc/install-guide/section_glance-install.xml:121(para) ./doc/install-guide/section_glance-install.xml:229(para) ./doc/install-guide/section_nova-compute-install.xml:24(para) ./doc/install-guide/section_nova-compute-install.xml:136(para) ./doc/install-guide/section_ceilometer-controller.xml:160(para) ./doc/install-guide/section_ceilometer-controller.xml:266(para)
-msgid "Install the packages:"
 msgstr ""
 
 #: ./doc/install-guide/section_cinder-controller.xml:99(para)
