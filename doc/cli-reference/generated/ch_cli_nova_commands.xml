@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Compute API and its extensions.
 
        This chapter documents <command>nova</command> version
-        <literal>2.19.0</literal>.
+        <literal>2.20.0</literal>.
     </para>
 
     <para>For help on a specific <command>nova</command>
@@ -515,6 +515,14 @@
     <listitem>
       <para>
         Get a rdp console to a server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>get-serial-console</command></term>
+    <listitem>
+      <para>
+        Get a serial console to a server.
       </para>
     </listitem>
   </varlistentry>
@@ -1434,28 +1442,50 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>cell-capacities</command></term>
+    <term><command>force-delete</command></term>
     <listitem>
       <para>
-        Get cell capacities for all cells or a given
-      cell.
+        Force delete a server.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>cell-show</command></term>
+    <term><command>restore</command></term>
     <listitem>
       <para>
-        Show details of a given cell.
+        Restore a soft-deleted server.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-servers-migrate</command></term>
+    <term><command>net</command></term>
     <listitem>
       <para>
-        Migrate all instances of the specified host to
-      other available hosts.
+        Show a network
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>net-create</command></term>
+    <listitem>
+      <para>
+        Create a network
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>net-delete</command></term>
+    <listitem>
+      <para>
+        Delete a network
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>net-list</command></term>
+    <listitem>
+      <para>
+        List networks
       </para>
     </listitem>
   </varlistentry>
@@ -1519,36 +1549,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>force-delete</command></term>
+    <term><command>host-evacuate</command></term>
     <listitem>
       <para>
-        Force delete a server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>restore</command></term>
-    <listitem>
-      <para>
-        Restore a soft-deleted server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>list-extensions</command></term>
-    <listitem>
-      <para>
-        List all the os-api extensions that are
-      available.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-meta</command></term>
-    <listitem>
-      <para>
-        Set or Delete metadata on all instances of a
-      host.
+        Evacuate all instances from failed host.
       </para>
     </listitem>
   </varlistentry>
@@ -1569,50 +1573,54 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-evacuate</command></term>
-    <listitem>
-      <para>
-        Evacuate all instances from failed host.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>net</command></term>
-    <listitem>
-      <para>
-        Show a network
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>net-create</command></term>
-    <listitem>
-      <para>
-        Create a network
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>net-delete</command></term>
-    <listitem>
-      <para>
-        Delete a network
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>net-list</command></term>
-    <listitem>
-      <para>
-        List networks
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>migration-list</command></term>
     <listitem>
       <para>
         Print a list of migrations.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-servers-migrate</command></term>
+    <listitem>
+      <para>
+        Migrate all instances of the specified host to
+      other available hosts.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cell-capacities</command></term>
+    <listitem>
+      <para>
+        Get cell capacities for all cells or a given
+      cell.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cell-show</command></term>
+    <listitem>
+      <para>
+        Show details of a given cell.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-meta</command></term>
+    <listitem>
+      <para>
+        Set or Delete metadata on all instances of a
+      host.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>list-extensions</command></term>
+    <listitem>
+      <para>
+        List all the os-api extensions that are
+      available.
       </para>
     </listitem>
   </varlistentry>
@@ -3700,6 +3708,34 @@ Get a rdp console to a server.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="novaclient_subcommand_get-serial-console">
+        <title>nova get-serial-console</title>
+        <screen><computeroutput>usage: nova get-serial-console [--console_type CONSOLE_TYPE] &lt;server&gt;</computeroutput></screen>
+        <para>
+Get a serial console to a server.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;server&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of server.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--console_type CONSOLE_TYPE</command></term>
+    <listitem>
+      <para>
+        Type of serial console, default="serial".
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="novaclient_subcommand_get-spice-console">
         <title>nova get-spice-console</title>
         <screen><computeroutput>usage: nova get-spice-console &lt;server&gt; &lt;console-type&gt;</computeroutput></screen>
@@ -5117,6 +5153,8 @@ List the quotas for a quota class.
                                [--key-pairs &lt;key-pairs&gt;]
                                [--security-groups &lt;security-groups&gt;]
                                [--security-group-rules &lt;security-group-rules&gt;]
+                               [--server-groups &lt;server-groups&gt;]
+                               [--server-group-members &lt;server-group-members&gt;]
                                &lt;class&gt;</computeroutput></screen>
         <para>
 Update the quotas for a quota class.
@@ -5232,6 +5270,23 @@ Update the quotas for a quota class.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--server-groups &lt;server-groups&gt;</command></term>
+    <listitem>
+      <para>
+      New value for the "server-groups" quota.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--server-group-members &lt;server-group-members&gt;</command></term>
+    <listitem>
+      <para>
+      New value for the "server-group-members"
+      quota.
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="novaclient_subcommand_quota-defaults">
@@ -5314,6 +5369,8 @@ List the quotas for a tenant/user.
                          [--key-pairs &lt;key-pairs&gt;]
                          [--security-groups &lt;security-groups&gt;]
                          [--security-group-rules &lt;security-group-rules&gt;]
+                         [--server-groups &lt;server-groups&gt;]
+                         [--server-group-members &lt;server-group-members&gt;]
                          [--force]
                          &lt;tenant-id&gt;</computeroutput></screen>
         <para>
@@ -5434,6 +5491,23 @@ Update the quotas for a tenant/user.
     <listitem>
       <para>
       New value for the "security-group-rules"
+      quota.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--server-groups &lt;server-groups&gt;</command></term>
+    <listitem>
+      <para>
+      New value for the "server-groups" quota.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--server-group-members &lt;server-group-members&gt;</command></term>
+    <listitem>
+      <para>
+      New value for the "server-group-members"
       quota.
       </para>
     </listitem>
@@ -6026,7 +6100,7 @@ Add a rule to a security group.
     </section>
     <section xml:id="novaclient_subcommand_secgroup-create">
         <title>nova secgroup-create</title>
-        <screen><computeroutput>usage: nova secgroup-create &lt;name&gt; [&lt;description&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: nova secgroup-create &lt;name&gt; &lt;description&gt;</computeroutput></screen>
         <para>
 Create a security group.
         </para>  <variablelist wordsize="10">
