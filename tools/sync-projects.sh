@@ -20,13 +20,21 @@ if [ -z "$PROJECT_DIR" ] ; then
 fi
 
 case "$PROJECT_DIR" in
-    security-doc)
-        GLOSSARY_SUB_DIR="glossary"
-        ENT_DIR="security-guide"
+    ha-guide)
+        GLOSSARY_SUB_DIR="doc/glossary"
+        ENT_DIR="high-availability-guide"
         ;;
     operations-guide)
         GLOSSARY_SUB_DIR="doc/glossary"
         ENT_DIR="openstack-ops"
+        ;;
+    security-doc)
+        GLOSSARY_SUB_DIR="glossary"
+        ENT_DIR="security-guide"
+        ;;
+    training-guides)
+        GLOSSARY_SUB_DIR="doc/glossary"
+        ENT_DIR="training-guides"
         ;;
     *)
         echo "$PROJECT_DIR not handled"
@@ -36,8 +44,9 @@ esac
 GLOSSARY_DIR="$PROJECT_DIR/$GLOSSARY_SUB_DIR"
 
 cp doc/glossary/glossary-terms.xml $GLOSSARY_DIR/
-# Copy only Japanese translation since security-guide and
-# operations-guide are only translated to Japanese for now.
+# Copy only Japanese translation since ha-guide, security-guide, and
+# operations-guide are only translated to Japanese currently - and
+# training-guides is not translated at all.
 cp doc/glossary/locale/ja.po $GLOSSARY_DIR/locale/
 sed -i -e "s|\"../common/entities/openstack.ent\"|\"../$ENT_DIR/openstack.ent\"|" \
     $GLOSSARY_DIR/glossary-terms.xml
