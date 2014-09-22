@@ -10,10 +10,14 @@
     <?dbhtml stop-chunking?>
 
     <title>Telemetry command-line client</title>
-    <para>The <command>ceilometer</command> client is the command-line interface
-         (CLI) for the Telemetry API and its extensions. This chapter documents
-         <command>ceilometer</command> version 1.0.10.
+
+    <para>The <command>ceilometer</command> client is the command-line
+        interface (CLI) for the Telemetry API and its extensions.
+
+       This chapter documents <command>ceilometer</command> version
+        <literal>1.0.11</literal>.
     </para>
+
     <para>For help on a specific <command>ceilometer</command>
        command, enter:
     </para>
@@ -21,19 +25,24 @@
 
     <section xml:id="ceilometerclient_command_usage">
        <title>ceilometer usage</title>
-        <screen><computeroutput>usage: ceilometer [--version] [-d] [-v] [-k] [--cert-file CERT_FILE]
-                  [--key-file KEY_FILE] [--os-cacert &lt;ca-certificate-file&gt;]
-                  [--ca-file OS_CACERT] [--timeout TIMEOUT]
-                  [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
-                  [--os-tenant-id OS_TENANT_ID]
-                  [--os-tenant-name OS_TENANT_NAME]
-                  [--os-auth-url OS_AUTH_URL]
-                  [--os-region-name OS_REGION_NAME]
-                  [--os-auth-token OS_AUTH_TOKEN]
+        <screen><computeroutput>usage: ceilometer [--version] [-d] [-v] [--timeout TIMEOUT]
                   [--ceilometer-url CEILOMETER_URL]
                   [--ceilometer-api-version CEILOMETER_API_VERSION]
-                  [--os-service-type OS_SERVICE_TYPE]
-                  [--os-endpoint-type OS_ENDPOINT_TYPE]
+                  [--os-tenant-id &lt;tenant-id&gt;]
+                  [--os-region-name &lt;region-name&gt;]
+                  [--os-auth-token &lt;auth-token&gt;]
+                  [--os-service-type &lt;service-type&gt;]
+                  [--os-endpoint-type &lt;endpoint-type&gt;] [--os-cacert &lt;cacert&gt;]
+                  [--os-insecure &lt;insecure&gt;] [--os-cert-file &lt;cert-file&gt;]
+                  [--os-key-file &lt;key-file&gt;] [--os-cert &lt;cert&gt;]
+                  [--os-key &lt;key&gt;] [--os-project-name &lt;project-name&gt;]
+                  [--os-project-id &lt;project-id&gt;]
+                  [--os-user-domain-id &lt;user-domain-id&gt;]
+                  [--os-user-domain-name &lt;user-domain-name&gt;]
+                  [--os-endpoint &lt;endpoint&gt;] [--os-auth-system &lt;auth-system&gt;]
+                  [--os-username &lt;username&gt;] [--os-password &lt;password&gt;]
+                  [--os-tenant-name &lt;tenant-name&gt;] [--os-token &lt;token&gt;]
+                  [--os-auth-url &lt;auth-url&gt;]
                   &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
@@ -41,7 +50,8 @@
     <term><command>alarm-combination-create</command></term>
     <listitem>
       <para>
-      Create a new alarm based on state of other alarms.
+        Create a new alarm based on state of other
+      alarms.
       </para>
     </listitem>
   </varlistentry>
@@ -49,8 +59,8 @@
     <term><command>alarm-combination-update</command></term>
     <listitem>
       <para>
-      Update an existing alarm based on state of other
-      alarms.
+        Update an existing alarm based on state of
+      other alarms.
       </para>
     </listitem>
   </varlistentry>
@@ -58,8 +68,8 @@
     <term><command>alarm-create</command></term>
     <listitem>
       <para>
-        Create a new alarm (Deprecated). Use alarm-threshold-
-      create instead.
+        Create a new alarm (Deprecated). Use alarm-
+      threshold-create instead.
       </para>
     </listitem>
   </varlistentry>
@@ -115,7 +125,8 @@
     <term><command>alarm-threshold-create</command></term>
     <listitem>
       <para>
-      Create a new alarm based on computed statistics.
+        Create a new alarm based on computed
+      statistics.
       </para>
     </listitem>
   </varlistentry>
@@ -123,7 +134,8 @@
     <term><command>alarm-threshold-update</command></term>
     <listitem>
       <para>
-      Update an existing alarm based on computed statistics.
+        Update an existing alarm based on computed
+      statistics.
       </para>
     </listitem>
   </varlistentry>
@@ -171,7 +183,7 @@
     <term><command>query-alarm-history</command></term>
     <listitem>
       <para>
-      Query Alarm History.
+        Query Alarm History.
       </para>
     </listitem>
   </varlistentry>
@@ -235,7 +247,7 @@
     <term><command>trait-description-list</command></term>
     <listitem>
       <para>
-      List trait info for an event type.
+        List trait info for an event type.
       </para>
     </listitem>
   </varlistentry>
@@ -243,8 +255,8 @@
     <term><command>trait-list</command></term>
     <listitem>
       <para>
-        List trait all traits with name &lt;trait_name&gt; for Event
-      Type
+        List trait all traits with name &lt;trait_name&gt;
+      for Event Type
       </para>
     </listitem>
   </varlistentry>
@@ -252,7 +264,8 @@
     <term><command>bash-completion</command></term>
     <listitem>
       <para>
-        Prints all of the commands and options to stdout.
+        Prints all of the commands and options to
+      stdout.
       </para>
     </listitem>
   </varlistentry>
@@ -295,116 +308,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-k, --insecure</command></term>
-    <listitem>
-      <para>
-        Explicitly allow ceilometerclient to perform
-      "insecure" SSL (https) requests. The server's
-      certificate will not be verified against any
-      certificate authorities. This option should be used
-      with caution.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--cert-file CERT_FILE</command></term>
-    <listitem>
-      <para>
-      Path of certificate file to use in SSL connection.
-      This file can optionally be prepended with the private
-      key.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--key-file KEY_FILE</command></term>
-    <listitem>
-      <para>
-        Path of client key to use in SSL connection. This
-      option is not necessary if your key is prepended to
-      your cert file.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-cacert &lt;ca-certificate-file&gt;</command></term>
-    <listitem>
-      <para>
-      Path of CA TLS certificate(s) used to verifythe remote
-      server's certificate. Without this option ceilometer
-      looks for the default system CA certificates.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--ca-file OS_CACERT</command></term>
-    <listitem>
-      <para>
-        <emphasis>DEPRECATED!</emphasis> Use --os-cacert.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--timeout TIMEOUT</command></term>
     <listitem>
       <para>
         Number of seconds to wait for a response.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-username OS_USERNAME</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_USERNAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-password OS_PASSWORD</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_PASSWORD]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-tenant-id OS_TENANT_ID</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_TENANT_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-tenant-name OS_TENANT_NAME</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_TENANT_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-auth-url OS_AUTH_URL</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_AUTH_URL]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-region-name OS_REGION_NAME</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_REGION_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-auth-token OS_AUTH_TOKEN</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_AUTH_TOKEN]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -425,7 +332,31 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-service-type OS_SERVICE_TYPE</command></term>
+    <term><command>--os-tenant-id &lt;tenant-id&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_TENANT_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-region-name &lt;region-name&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_REGION_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-token &lt;auth-token&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_AUTH_TOKEN]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-service-type &lt;service-type&gt;</command></term>
     <listitem>
       <para>
       Defaults to <code>env[OS_SERVICE_TYPE]</code>.
@@ -433,17 +364,153 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-endpoint-type OS_ENDPOINT_TYPE</command></term>
+    <term><command>--os-endpoint-type &lt;endpoint-type&gt;</command></term>
     <listitem>
       <para>
       Defaults to <code>env[OS_ENDPOINT_TYPE]</code>.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--os-cacert &lt;cacert&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_CACERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-insecure &lt;insecure&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_INSECURE]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cert-file &lt;cert-file&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_CERT_FILE]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-key-file &lt;key-file&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_KEY_FILE]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cert &lt;cert&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_CERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-key &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_KEY]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-name &lt;project-name&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_PROJECT_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id &lt;project-id&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_PROJECT_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id &lt;user-domain-id&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_USER_DOMAIN_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name &lt;user-domain-name&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_USER_DOMAIN_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-endpoint &lt;endpoint&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_ENDPOINT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-system &lt;auth-system&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_AUTH_SYSTEM]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-username &lt;username&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_USERNAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-password &lt;password&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_PASSWORD]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-tenant-name &lt;tenant-name&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_TENANT_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-token &lt;token&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_TOKEN]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-url &lt;auth-url&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_AUTH_URL]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-combination-create">
-        <title>ceilometer alarm-combination-create command</title>
+        <title>ceilometer alarm-combination-create</title>
         <screen><computeroutput>usage: ceilometer alarm-combination-create --name &lt;NAME&gt;
                                            [--project-id &lt;PROJECT_ID&gt;]
                                            [--user-id &lt;USER_ID&gt;]
@@ -474,8 +541,8 @@ Create a new alarm based on state of other alarms.
     <term><command>--project-id &lt;PROJECT_ID&gt;</command></term>
     <listitem>
       <para>
-      Tenant to associate with alarm (only settable by admin
-      users).
+        Tenant to associate with alarm (only settable
+      by admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -483,8 +550,8 @@ Create a new alarm based on state of other alarms.
     <term><command>--user-id &lt;USER_ID&gt;</command></term>
     <listitem>
       <para>
-        User to associate with alarm (only settable by admin
-      users).
+        User to associate with alarm (only settable by
+      admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -492,7 +559,7 @@ Create a new alarm based on state of other alarms.
     <term><command>--description &lt;DESCRIPTION&gt;</command></term>
     <listitem>
       <para>
-      Free text description of the alarm.
+        Free text description of the alarm.
       </para>
     </listitem>
   </varlistentry>
@@ -501,7 +568,7 @@ Create a new alarm based on state of other alarms.
     <listitem>
       <para>
         State of the alarm, one of: ['ok', 'alarm',
-      'insufficient_data']
+      'insufficient data']
       </para>
     </listitem>
   </varlistentry>
@@ -509,25 +576,25 @@ Create a new alarm based on state of other alarms.
     <term><command>--enabled {True|False}</command></term>
     <listitem>
       <para>
-      True if alarm evaluation/actioning is enabled.
+        True if alarm evaluation/actioning is enabled.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--alarm-action &lt;Webhook URL&gt;</command></term>
+    <term><command>--alarm-action &lt;Webhook URL&gt; URL</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to alarm. May be
-      used multiple times. Defaults to None.
+        to invoke when state transitions to alarm.
+      May be used multiple times. Defaults to None.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--ok-action &lt;Webhook URL&gt;</command></term>
+    <term><command>--ok-action &lt;Webhook URL&gt; URL</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to OK. May be
-      used multiple times. Defaults to None.
+        to invoke when state transitions to OK.
+      May be used multiple times. Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -536,7 +603,7 @@ Create a new alarm based on state of other alarms.
     <listitem>
       <para>
       URL to invoke when state transitions to
-      insufficient_data. May be used multiple times.
+      insufficient data. May be used multiple times.
       Defaults to None.
       </para>
     </listitem>
@@ -545,14 +612,15 @@ Create a new alarm based on state of other alarms.
     <term><command>--time-constraint &lt;Time Constraint&gt;</command></term>
     <listitem>
       <para>
-      Only evaluate the alarm if the time at evaluation is
-      within this time constraint. Start point(s) of the
-      constraint are specified with a cron expression ,
-      whereas its duration is given in seconds. Can be
-      specified multiple times for multiple time
-      constraints, format is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;
-      CRON&gt;;duration=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[t
-      imezone=&lt;IANA Timezone&gt;]] Defaults to None.
+      Only evaluate the alarm if the time at
+      evaluation is within this time constraint.
+      Start point(s) of the constraint are specified
+      with a cron expression , whereas its duration
+      is given in seconds. Can be specified multiple
+      times for multiple time constraints, format
+      is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;CRON&gt;;durati
+      on=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[timez
+      one=&lt;IANA Timezone&gt;]] Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -560,7 +628,7 @@ Create a new alarm based on state of other alarms.
     <term><command>--alarm_ids &lt;ALARM IDS&gt;</command></term>
     <listitem>
       <para>
-      List of alarm ids. Required.
+        List of alarm IDs. Required.
       </para>
     </listitem>
   </varlistentry>
@@ -568,7 +636,8 @@ Create a new alarm based on state of other alarms.
     <term><command>--operator &lt;OPERATOR&gt;</command></term>
     <listitem>
       <para>
-      Operator to compare with, one of: ['and', 'or'].
+        Operator to compare with, one of: ['and',
+      'or'].
       </para>
     </listitem>
   </varlistentry>
@@ -576,16 +645,17 @@ Create a new alarm based on state of other alarms.
     <term><command>--repeat-actions {True|False}</command></term>
     <listitem>
       <para>
-      True if actions should be repeatedly notified while
-      alarm remains in target state. Defaults to False.
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-combination-update">
-        <title>ceilometer alarm-combination-update command</title>
-        <screen><computeroutput>usage: ceilometer alarm-combination-update -a &lt;ALARM_ID&gt; [--name &lt;NAME&gt;]
+        <title>ceilometer alarm-combination-update</title>
+        <screen><computeroutput>usage: ceilometer alarm-combination-update [--name &lt;NAME&gt;]
                                            [--project-id &lt;PROJECT_ID&gt;]
                                            [--user-id &lt;USER_ID&gt;]
                                            [--description &lt;DESCRIPTION&gt;]
@@ -598,19 +668,23 @@ Create a new alarm based on state of other alarms.
                                            [--remove-time-constraint &lt;Constraint names&gt;]
                                            [--alarm_ids &lt;ALARM IDS&gt;]
                                            [--operator &lt;OPERATOR&gt;]
-                                           [--repeat-actions {True|False}]</computeroutput></screen>
+                                           [--repeat-actions {True|False}]
+                                           [&lt;ALARM_ID&gt;]</computeroutput></screen>
         <para>
 Update an existing alarm based on state of other alarms.
         </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
+    <title>Positional arguments</title>
   <varlistentry>
-    <term><command>-a &lt;ALARM_ID&gt;, --alarm_id &lt;ALARM_ID&gt;</command></term>
+    <term><command>&lt;ALARM_ID&gt;</command></term>
     <listitem>
       <para>
-      ID of the alarm to update. Required.
+        ID of the alarm to update.
       </para>
     </listitem>
   </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
   <varlistentry>
     <term><command>--name &lt;NAME&gt;</command></term>
     <listitem>
@@ -623,8 +697,8 @@ Update an existing alarm based on state of other alarms.
     <term><command>--project-id &lt;PROJECT_ID&gt;</command></term>
     <listitem>
       <para>
-      Tenant to associate with alarm (only settable by admin
-      users).
+        Tenant to associate with alarm (only settable
+      by admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -632,8 +706,8 @@ Update an existing alarm based on state of other alarms.
     <term><command>--user-id &lt;USER_ID&gt;</command></term>
     <listitem>
       <para>
-        User to associate with alarm (only settable by admin
-      users).
+        User to associate with alarm (only settable by
+      admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -641,7 +715,7 @@ Update an existing alarm based on state of other alarms.
     <term><command>--description &lt;DESCRIPTION&gt;</command></term>
     <listitem>
       <para>
-      Free text description of the alarm.
+        Free text description of the alarm.
       </para>
     </listitem>
   </varlistentry>
@@ -650,7 +724,7 @@ Update an existing alarm based on state of other alarms.
     <listitem>
       <para>
         State of the alarm, one of: ['ok', 'alarm',
-      'insufficient_data']
+      'insufficient data']
       </para>
     </listitem>
   </varlistentry>
@@ -658,25 +732,25 @@ Update an existing alarm based on state of other alarms.
     <term><command>--enabled {True|False}</command></term>
     <listitem>
       <para>
-      True if alarm evaluation/actioning is enabled.
+        True if alarm evaluation/actioning is enabled.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--alarm-action &lt;Webhook URL&gt;</command></term>
+    <term><command>--alarm-action &lt;Webhook URL&gt; URL</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to alarm. May be
-      used multiple times. Defaults to None.
+        to invoke when state transitions to alarm.
+      May be used multiple times. Defaults to None.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--ok-action &lt;Webhook URL&gt;</command></term>
+    <term><command>--ok-action &lt;Webhook URL&gt; URL</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to OK. May be
-      used multiple times. Defaults to None.
+        to invoke when state transitions to OK.
+      May be used multiple times. Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -685,7 +759,7 @@ Update an existing alarm based on state of other alarms.
     <listitem>
       <para>
       URL to invoke when state transitions to
-      insufficient_data. May be used multiple times.
+      insufficient data. May be used multiple times.
       Defaults to None.
       </para>
     </listitem>
@@ -694,14 +768,15 @@ Update an existing alarm based on state of other alarms.
     <term><command>--time-constraint &lt;Time Constraint&gt;</command></term>
     <listitem>
       <para>
-      Only evaluate the alarm if the time at evaluation is
-      within this time constraint. Start point(s) of the
-      constraint are specified with a cron expression ,
-      whereas its duration is given in seconds. Can be
-      specified multiple times for multiple time
-      constraints, format is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;
-      CRON&gt;;duration=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[t
-      imezone=&lt;IANA Timezone&gt;]] Defaults to None.
+      Only evaluate the alarm if the time at
+      evaluation is within this time constraint.
+      Start point(s) of the constraint are specified
+      with a cron expression , whereas its duration
+      is given in seconds. Can be specified multiple
+      times for multiple time constraints, format
+      is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;CRON&gt;;durati
+      on=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[timez
+      one=&lt;IANA Timezone&gt;]] Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -709,8 +784,8 @@ Update an existing alarm based on state of other alarms.
     <term><command>--remove-time-constraint &lt;Constraint names&gt;</command></term>
     <listitem>
       <para>
-      Name or list of names of the time constraints to
-      remove.
+      Name or list of names of the time constraints
+      to remove.
       </para>
     </listitem>
   </varlistentry>
@@ -718,7 +793,7 @@ Update an existing alarm based on state of other alarms.
     <term><command>--alarm_ids &lt;ALARM IDS&gt;</command></term>
     <listitem>
       <para>
-      List of alarm id.
+        List of alarm IDs.
       </para>
     </listitem>
   </varlistentry>
@@ -726,7 +801,8 @@ Update an existing alarm based on state of other alarms.
     <term><command>--operator &lt;OPERATOR&gt;</command></term>
     <listitem>
       <para>
-      Operator to compare with, one of: ['and', 'or'].
+        Operator to compare with, one of: ['and',
+      'or'].
       </para>
     </listitem>
   </varlistentry>
@@ -734,59 +810,62 @@ Update an existing alarm based on state of other alarms.
     <term><command>--repeat-actions {True|False}</command></term>
     <listitem>
       <para>
-      True if actions should be repeatedly notified while
-      alarm remains in target state.
+      True if actions should be repeatedly notified
+      while alarm remains in target state.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-delete">
-        <title>ceilometer alarm-delete command</title>
-        <screen><computeroutput>usage: ceilometer alarm-delete -a &lt;ALARM_ID&gt;</computeroutput></screen>
+        <title>ceilometer alarm-delete</title>
+        <screen><computeroutput>usage: ceilometer alarm-delete [&lt;ALARM_ID&gt;]</computeroutput></screen>
         <para>
 Delete an alarm.
         </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
+    <title>Positional arguments</title>
   <varlistentry>
-    <term><command>-a &lt;ALARM_ID&gt;, --alarm_id &lt;ALARM_ID&gt;</command></term>
+    <term><command>&lt;ALARM_ID&gt;</command></term>
     <listitem>
       <para>
-      ID of the alarm to delete. Required.
+        ID of the alarm to delete.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-history">
-        <title>ceilometer alarm-history command</title>
-        <screen><computeroutput>usage: ceilometer alarm-history -a &lt;ALARM_ID&gt; [-q &lt;QUERY&gt;]</computeroutput></screen>
+        <title>ceilometer alarm-history</title>
+        <screen><computeroutput>usage: ceilometer alarm-history [-q &lt;QUERY&gt;] [&lt;ALARM_ID&gt;]</computeroutput></screen>
         <para>
 Display the change history of an alarm.
         </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
+    <title>Positional arguments</title>
   <varlistentry>
-    <term><command>-a &lt;ALARM_ID&gt;, --alarm_id &lt;ALARM_ID&gt;</command></term>
+    <term><command>&lt;ALARM_ID&gt;</command></term>
     <listitem>
       <para>
-      ID of the alarm for which history is shown. Required.
+        ID of the alarm for which history is shown.
       </para>
     </listitem>
   </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
   <varlistentry>
     <term><command>-q &lt;QUERY&gt;, --query &lt;QUERY&gt;</command></term>
     <listitem>
       <para>
-      key[op]data_type::value; list. data_type is optional,
-      but if supplied must be string, integer, float, or
-      boolean.
+        key[op]data_type::value; list. data_type is
+      optional, but if supplied must be string,
+      integer, float, or boolean.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-list">
-        <title>ceilometer alarm-list command</title>
+        <title>ceilometer alarm-list</title>
         <screen><computeroutput>usage: ceilometer alarm-list [-q &lt;QUERY&gt;]</computeroutput></screen>
         <para>
 List the user's alarms.
@@ -796,76 +875,79 @@ List the user's alarms.
     <term><command>-q &lt;QUERY&gt;, --query &lt;QUERY&gt;</command></term>
     <listitem>
       <para>
-      key[op]data_type::value; list. data_type is optional,
-      but if supplied must be string, integer, float, or
-      boolean.
+        key[op]data_type::value; list. data_type is
+      optional, but if supplied must be string,
+      integer, float, or boolean.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-show">
-        <title>ceilometer alarm-show command</title>
-        <screen><computeroutput>usage: ceilometer alarm-show -a &lt;ALARM_ID&gt;</computeroutput></screen>
+        <title>ceilometer alarm-show</title>
+        <screen><computeroutput>usage: ceilometer alarm-show [&lt;ALARM_ID&gt;]</computeroutput></screen>
         <para>
 Show an alarm.
         </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
+    <title>Positional arguments</title>
   <varlistentry>
-    <term><command>-a &lt;ALARM_ID&gt;, --alarm_id &lt;ALARM_ID&gt;</command></term>
+    <term><command>&lt;ALARM_ID&gt;</command></term>
     <listitem>
       <para>
-      ID of the alarm to show. Required.
+        ID of the alarm to show.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-state-get">
-        <title>ceilometer alarm-state-get command</title>
-        <screen><computeroutput>usage: ceilometer alarm-state-get -a &lt;ALARM_ID&gt;</computeroutput></screen>
+        <title>ceilometer alarm-state-get</title>
+        <screen><computeroutput>usage: ceilometer alarm-state-get [&lt;ALARM_ID&gt;]</computeroutput></screen>
         <para>
 Get the state of an alarm.
         </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
+    <title>Positional arguments</title>
   <varlistentry>
-    <term><command>-a &lt;ALARM_ID&gt;, --alarm_id &lt;ALARM_ID&gt;</command></term>
+    <term><command>&lt;ALARM_ID&gt;</command></term>
     <listitem>
       <para>
-      ID of the alarm state to show. Required.
+        ID of the alarm state to show.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-state-set">
-        <title>ceilometer alarm-state-set command</title>
-        <screen><computeroutput>usage: ceilometer alarm-state-set -a &lt;ALARM_ID&gt; --state &lt;STATE&gt;</computeroutput></screen>
+        <title>ceilometer alarm-state-set</title>
+        <screen><computeroutput>usage: ceilometer alarm-state-set --state &lt;STATE&gt; [&lt;ALARM_ID&gt;]</computeroutput></screen>
         <para>
 Set the state of an alarm.
         </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
+    <title>Positional arguments</title>
   <varlistentry>
-    <term><command>-a &lt;ALARM_ID&gt;, --alarm_id &lt;ALARM_ID&gt;</command></term>
+    <term><command>&lt;ALARM_ID&gt;</command></term>
     <listitem>
       <para>
-      ID of the alarm state to set. Required.
+        ID of the alarm state to set.
       </para>
     </listitem>
   </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
   <varlistentry>
     <term><command>--state &lt;STATE&gt;</command></term>
     <listitem>
       <para>
-        State of the alarm, one of: ['ok', 'alarm',
-      'insufficient_data']. Required.
+        State of the alarm, one of: ['ok', 'alarm', 'insufficient
+      data']. Required.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-threshold-create">
-        <title>ceilometer alarm-threshold-create command</title>
+        <title>ceilometer alarm-threshold-create</title>
         <screen><computeroutput>usage: ceilometer alarm-threshold-create --name &lt;NAME&gt;
                                          [--project-id &lt;PROJECT_ID&gt;]
                                          [--user-id &lt;USER_ID&gt;]
@@ -899,8 +981,8 @@ Create a new alarm based on computed statistics.
     <term><command>--project-id &lt;PROJECT_ID&gt;</command></term>
     <listitem>
       <para>
-      Tenant to associate with alarm (only settable by admin
-      users).
+        Tenant to associate with alarm (only settable
+      by admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -908,8 +990,8 @@ Create a new alarm based on computed statistics.
     <term><command>--user-id &lt;USER_ID&gt;</command></term>
     <listitem>
       <para>
-        User to associate with alarm (only settable by admin
-      users).
+        User to associate with alarm (only settable by
+      admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -917,7 +999,7 @@ Create a new alarm based on computed statistics.
     <term><command>--description &lt;DESCRIPTION&gt;</command></term>
     <listitem>
       <para>
-      Free text description of the alarm.
+        Free text description of the alarm.
       </para>
     </listitem>
   </varlistentry>
@@ -926,7 +1008,7 @@ Create a new alarm based on computed statistics.
     <listitem>
       <para>
         State of the alarm, one of: ['ok', 'alarm',
-      'insufficient_data']
+      'insufficient data']
       </para>
     </listitem>
   </varlistentry>
@@ -934,25 +1016,25 @@ Create a new alarm based on computed statistics.
     <term><command>--enabled {True|False}</command></term>
     <listitem>
       <para>
-      True if alarm evaluation/actioning is enabled.
+        True if alarm evaluation/actioning is enabled.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--alarm-action &lt;Webhook URL&gt;</command></term>
+    <term><command>--alarm-action &lt;Webhook URL&gt; URL</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to alarm. May be
-      used multiple times. Defaults to None.
+        to invoke when state transitions to alarm.
+      May be used multiple times. Defaults to None.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--ok-action &lt;Webhook URL&gt;</command></term>
+    <term><command>--ok-action &lt;Webhook URL&gt; URL</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to OK. May be
-      used multiple times. Defaults to None.
+        to invoke when state transitions to OK.
+      May be used multiple times. Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -961,7 +1043,7 @@ Create a new alarm based on computed statistics.
     <listitem>
       <para>
       URL to invoke when state transitions to
-      insufficient_data. May be used multiple times.
+      insufficient data. May be used multiple times.
       Defaults to None.
       </para>
     </listitem>
@@ -970,14 +1052,15 @@ Create a new alarm based on computed statistics.
     <term><command>--time-constraint &lt;Time Constraint&gt;</command></term>
     <listitem>
       <para>
-      Only evaluate the alarm if the time at evaluation is
-      within this time constraint. Start point(s) of the
-      constraint are specified with a cron expression ,
-      whereas its duration is given in seconds. Can be
-      specified multiple times for multiple time
-      constraints, format is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;
-      CRON&gt;;duration=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[t
-      imezone=&lt;IANA Timezone&gt;]] Defaults to None.
+      Only evaluate the alarm if the time at
+      evaluation is within this time constraint.
+      Start point(s) of the constraint are specified
+      with a cron expression , whereas its duration
+      is given in seconds. Can be specified multiple
+      times for multiple time constraints, format
+      is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;CRON&gt;;durati
+      on=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[timez
+      one=&lt;IANA Timezone&gt;]] Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -993,7 +1076,8 @@ Create a new alarm based on computed statistics.
     <term><command>--period &lt;PERIOD&gt;</command></term>
     <listitem>
       <para>
-        Length of each period (seconds) to evaluate over.
+        Length of each period (seconds) to evaluate
+      over.
       </para>
     </listitem>
   </varlistentry>
@@ -1001,7 +1085,7 @@ Create a new alarm based on computed statistics.
     <term><command>--evaluation-periods &lt;COUNT&gt;</command></term>
     <listitem>
       <para>
-      Number of periods to evaluate over.
+        Number of periods to evaluate over.
       </para>
     </listitem>
   </varlistentry>
@@ -1009,8 +1093,8 @@ Create a new alarm based on computed statistics.
     <term><command>--statistic &lt;STATISTIC&gt;</command></term>
     <listitem>
       <para>
-      Statistic to evaluate, one of: ['max', 'min', 'avg',
-      'sum', 'count'].
+        Statistic to evaluate, one of: ['max', 'min',
+      'avg', 'sum', 'count'].
       </para>
     </listitem>
   </varlistentry>
@@ -1018,8 +1102,8 @@ Create a new alarm based on computed statistics.
     <term><command>--comparison-operator &lt;OPERATOR&gt;</command></term>
     <listitem>
       <para>
-      Operator to compare with, one of: ['lt', 'le', 'eq',
-      'ne', 'ge', 'gt'].
+      Operator to compare with, one of: ['lt', 'le',
+      'eq', 'ne', 'ge', 'gt'].
       </para>
     </listitem>
   </varlistentry>
@@ -1027,7 +1111,7 @@ Create a new alarm based on computed statistics.
     <term><command>--threshold &lt;THRESHOLD&gt;</command></term>
     <listitem>
       <para>
-      Threshold to evaluate against. Required.
+        Threshold to evaluate against. Required.
       </para>
     </listitem>
   </varlistentry>
@@ -1035,9 +1119,9 @@ Create a new alarm based on computed statistics.
     <term><command>-q &lt;QUERY&gt;, --query &lt;QUERY&gt;</command></term>
     <listitem>
       <para>
-      key[op]data_type::value; list. data_type is optional,
-      but if supplied must be string, integer, float, or
-      boolean.
+        key[op]data_type::value; list. data_type is
+      optional, but if supplied must be string,
+      integer, float, or boolean.
       </para>
     </listitem>
   </varlistentry>
@@ -1045,16 +1129,17 @@ Create a new alarm based on computed statistics.
     <term><command>--repeat-actions {True|False}</command></term>
     <listitem>
       <para>
-      True if actions should be repeatedly notified while
-      alarm remains in target state. Defaults to False.
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-threshold-update">
-        <title>ceilometer alarm-threshold-update command</title>
-        <screen><computeroutput>usage: ceilometer alarm-threshold-update -a &lt;ALARM_ID&gt; [--name &lt;NAME&gt;]
+        <title>ceilometer alarm-threshold-update</title>
+        <screen><computeroutput>usage: ceilometer alarm-threshold-update [--name &lt;NAME&gt;]
                                          [--project-id &lt;PROJECT_ID&gt;]
                                          [--user-id &lt;USER_ID&gt;]
                                          [--description &lt;DESCRIPTION&gt;]
@@ -1071,19 +1156,23 @@ Create a new alarm based on computed statistics.
                                          [--comparison-operator &lt;OPERATOR&gt;]
                                          [--threshold &lt;THRESHOLD&gt;]
                                          [-q &lt;QUERY&gt;]
-                                         [--repeat-actions {True|False}]</computeroutput></screen>
+                                         [--repeat-actions {True|False}]
+                                         [&lt;ALARM_ID&gt;]</computeroutput></screen>
         <para>
 Update an existing alarm based on computed statistics.
         </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
+    <title>Positional arguments</title>
   <varlistentry>
-    <term><command>-a &lt;ALARM_ID&gt;, --alarm_id &lt;ALARM_ID&gt;</command></term>
+    <term><command>&lt;ALARM_ID&gt;</command></term>
     <listitem>
       <para>
-      ID of the alarm to update. Required.
+        ID of the alarm to update.
       </para>
     </listitem>
   </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
   <varlistentry>
     <term><command>--name &lt;NAME&gt;</command></term>
     <listitem>
@@ -1096,8 +1185,8 @@ Update an existing alarm based on computed statistics.
     <term><command>--project-id &lt;PROJECT_ID&gt;</command></term>
     <listitem>
       <para>
-      Tenant to associate with alarm (only settable by admin
-      users).
+        Tenant to associate with alarm (only settable
+      by admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -1105,8 +1194,8 @@ Update an existing alarm based on computed statistics.
     <term><command>--user-id &lt;USER_ID&gt;</command></term>
     <listitem>
       <para>
-        User to associate with alarm (only settable by admin
-      users).
+        User to associate with alarm (only settable by
+      admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -1114,7 +1203,7 @@ Update an existing alarm based on computed statistics.
     <term><command>--description &lt;DESCRIPTION&gt;</command></term>
     <listitem>
       <para>
-      Free text description of the alarm.
+        Free text description of the alarm.
       </para>
     </listitem>
   </varlistentry>
@@ -1123,7 +1212,7 @@ Update an existing alarm based on computed statistics.
     <listitem>
       <para>
         State of the alarm, one of: ['ok', 'alarm',
-      'insufficient_data']
+      'insufficient data']
       </para>
     </listitem>
   </varlistentry>
@@ -1131,25 +1220,25 @@ Update an existing alarm based on computed statistics.
     <term><command>--enabled {True|False}</command></term>
     <listitem>
       <para>
-      True if alarm evaluation/actioning is enabled.
+        True if alarm evaluation/actioning is enabled.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--alarm-action &lt;Webhook URL&gt;</command></term>
+    <term><command>--alarm-action &lt;Webhook URL&gt; URL</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to alarm. May be
-      used multiple times. Defaults to None.
+        to invoke when state transitions to alarm.
+      May be used multiple times. Defaults to None.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--ok-action &lt;Webhook URL&gt;</command></term>
+    <term><command>--ok-action &lt;Webhook URL&gt; URL</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to OK. May be
-      used multiple times. Defaults to None.
+        to invoke when state transitions to OK.
+      May be used multiple times. Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -1158,7 +1247,7 @@ Update an existing alarm based on computed statistics.
     <listitem>
       <para>
       URL to invoke when state transitions to
-      insufficient_data. May be used multiple times.
+      insufficient data. May be used multiple times.
       Defaults to None.
       </para>
     </listitem>
@@ -1167,14 +1256,15 @@ Update an existing alarm based on computed statistics.
     <term><command>--time-constraint &lt;Time Constraint&gt;</command></term>
     <listitem>
       <para>
-      Only evaluate the alarm if the time at evaluation is
-      within this time constraint. Start point(s) of the
-      constraint are specified with a cron expression ,
-      whereas its duration is given in seconds. Can be
-      specified multiple times for multiple time
-      constraints, format is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;
-      CRON&gt;;duration=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[t
-      imezone=&lt;IANA Timezone&gt;]] Defaults to None.
+      Only evaluate the alarm if the time at
+      evaluation is within this time constraint.
+      Start point(s) of the constraint are specified
+      with a cron expression , whereas its duration
+      is given in seconds. Can be specified multiple
+      times for multiple time constraints, format
+      is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;CRON&gt;;durati
+      on=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[timez
+      one=&lt;IANA Timezone&gt;]] Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -1182,8 +1272,8 @@ Update an existing alarm based on computed statistics.
     <term><command>--remove-time-constraint &lt;Constraint names&gt;</command></term>
     <listitem>
       <para>
-      Name or list of names of the time constraints to
-      remove.
+      Name or list of names of the time constraints
+      to remove.
       </para>
     </listitem>
   </varlistentry>
@@ -1199,7 +1289,8 @@ Update an existing alarm based on computed statistics.
     <term><command>--period &lt;PERIOD&gt;</command></term>
     <listitem>
       <para>
-        Length of each period (seconds) to evaluate over.
+        Length of each period (seconds) to evaluate
+      over.
       </para>
     </listitem>
   </varlistentry>
@@ -1207,7 +1298,7 @@ Update an existing alarm based on computed statistics.
     <term><command>--evaluation-periods &lt;COUNT&gt;</command></term>
     <listitem>
       <para>
-      Number of periods to evaluate over.
+        Number of periods to evaluate over.
       </para>
     </listitem>
   </varlistentry>
@@ -1215,8 +1306,8 @@ Update an existing alarm based on computed statistics.
     <term><command>--statistic &lt;STATISTIC&gt;</command></term>
     <listitem>
       <para>
-      Statistic to evaluate, one of: ['max', 'min', 'avg',
-      'sum', 'count'].
+        Statistic to evaluate, one of: ['max', 'min',
+      'avg', 'sum', 'count'].
       </para>
     </listitem>
   </varlistentry>
@@ -1224,8 +1315,8 @@ Update an existing alarm based on computed statistics.
     <term><command>--comparison-operator &lt;OPERATOR&gt;</command></term>
     <listitem>
       <para>
-      Operator to compare with, one of: ['lt', 'le', 'eq',
-      'ne', 'ge', 'gt'].
+      Operator to compare with, one of: ['lt', 'le',
+      'eq', 'ne', 'ge', 'gt'].
       </para>
     </listitem>
   </varlistentry>
@@ -1233,7 +1324,7 @@ Update an existing alarm based on computed statistics.
     <term><command>--threshold &lt;THRESHOLD&gt;</command></term>
     <listitem>
       <para>
-      Threshold to evaluate against.
+        Threshold to evaluate against.
       </para>
     </listitem>
   </varlistentry>
@@ -1241,9 +1332,9 @@ Update an existing alarm based on computed statistics.
     <term><command>-q &lt;QUERY&gt;, --query &lt;QUERY&gt;</command></term>
     <listitem>
       <para>
-      key[op]data_type::value; list. data_type is optional,
-      but if supplied must be string, integer, float, or
-      boolean.
+        key[op]data_type::value; list. data_type is
+      optional, but if supplied must be string,
+      integer, float, or boolean.
       </para>
     </listitem>
   </varlistentry>
@@ -1251,17 +1342,16 @@ Update an existing alarm based on computed statistics.
     <term><command>--repeat-actions {True|False}</command></term>
     <listitem>
       <para>
-      True if actions should be repeatedly notified while
-      alarm remains in target state.
+      True if actions should be repeatedly notified
+      while alarm remains in target state.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-update">
-        <title>ceilometer alarm-update command</title>
-        <screen><computeroutput>usage: ceilometer alarm-update -a &lt;ALARM_ID&gt; [--name &lt;NAME&gt;]
-                               [--project-id &lt;PROJECT_ID&gt;]
+        <title>ceilometer alarm-update</title>
+        <screen><computeroutput>usage: ceilometer alarm-update [--name &lt;NAME&gt;] [--project-id &lt;PROJECT_ID&gt;]
                                [--user-id &lt;USER_ID&gt;]
                                [--description &lt;DESCRIPTION&gt;] [--state &lt;STATE&gt;]
                                [--enabled {True|False}]
@@ -1276,19 +1366,23 @@ Update an existing alarm based on computed statistics.
                                [--comparison-operator &lt;OPERATOR&gt;]
                                [--threshold &lt;THRESHOLD&gt;]
                                [--matching-metadata &lt;Matching Metadata&gt;]
-                               [--repeat-actions {True|False}]</computeroutput></screen>
+                               [--repeat-actions {True|False}]
+                               [&lt;ALARM_ID&gt;]</computeroutput></screen>
         <para>
 Update an existing alarm (Deprecated).
         </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
+    <title>Positional arguments</title>
   <varlistentry>
-    <term><command>-a &lt;ALARM_ID&gt;, --alarm_id &lt;ALARM_ID&gt;</command></term>
+    <term><command>&lt;ALARM_ID&gt;</command></term>
     <listitem>
       <para>
-      ID of the alarm to update. Required.
+        ID of the alarm to update.
       </para>
     </listitem>
   </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
   <varlistentry>
     <term><command>--name &lt;NAME&gt;</command></term>
     <listitem>
@@ -1301,8 +1395,8 @@ Update an existing alarm (Deprecated).
     <term><command>--project-id &lt;PROJECT_ID&gt;</command></term>
     <listitem>
       <para>
-      Tenant to associate with alarm (only settable by admin
-      users).
+        Tenant to associate with alarm (only settable
+      by admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -1310,8 +1404,8 @@ Update an existing alarm (Deprecated).
     <term><command>--user-id &lt;USER_ID&gt;</command></term>
     <listitem>
       <para>
-        User to associate with alarm (only settable by admin
-      users).
+        User to associate with alarm (only settable by
+      admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -1319,7 +1413,7 @@ Update an existing alarm (Deprecated).
     <term><command>--description &lt;DESCRIPTION&gt;</command></term>
     <listitem>
       <para>
-      Free text description of the alarm.
+        Free text description of the alarm.
       </para>
     </listitem>
   </varlistentry>
@@ -1328,7 +1422,7 @@ Update an existing alarm (Deprecated).
     <listitem>
       <para>
         State of the alarm, one of: ['ok', 'alarm',
-      'insufficient_data']
+      'insufficient data']
       </para>
     </listitem>
   </varlistentry>
@@ -1336,25 +1430,25 @@ Update an existing alarm (Deprecated).
     <term><command>--enabled {True|False}</command></term>
     <listitem>
       <para>
-      True if alarm evaluation/actioning is enabled.
+        True if alarm evaluation/actioning is enabled.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--alarm-action &lt;Webhook URL&gt;</command></term>
+    <term><command>--alarm-action &lt;Webhook URL&gt; URL</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to alarm. May be
-      used multiple times. Defaults to None.
+        to invoke when state transitions to alarm.
+      May be used multiple times. Defaults to None.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--ok-action &lt;Webhook URL&gt;</command></term>
+    <term><command>--ok-action &lt;Webhook URL&gt; URL</command></term>
     <listitem>
       <para>
-      URL to invoke when state transitions to OK. May be
-      used multiple times. Defaults to None.
+        to invoke when state transitions to OK.
+      May be used multiple times. Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -1363,7 +1457,7 @@ Update an existing alarm (Deprecated).
     <listitem>
       <para>
       URL to invoke when state transitions to
-      insufficient_data. May be used multiple times.
+      insufficient data. May be used multiple times.
       Defaults to None.
       </para>
     </listitem>
@@ -1372,14 +1466,15 @@ Update an existing alarm (Deprecated).
     <term><command>--time-constraint &lt;Time Constraint&gt;</command></term>
     <listitem>
       <para>
-      Only evaluate the alarm if the time at evaluation is
-      within this time constraint. Start point(s) of the
-      constraint are specified with a cron expression ,
-      whereas its duration is given in seconds. Can be
-      specified multiple times for multiple time
-      constraints, format is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;
-      CRON&gt;;duration=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[t
-      imezone=&lt;IANA Timezone&gt;]] Defaults to None.
+      Only evaluate the alarm if the time at
+      evaluation is within this time constraint.
+      Start point(s) of the constraint are specified
+      with a cron expression , whereas its duration
+      is given in seconds. Can be specified multiple
+      times for multiple time constraints, format
+      is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;CRON&gt;;durati
+      on=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[timez
+      one=&lt;IANA Timezone&gt;]] Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -1387,8 +1482,8 @@ Update an existing alarm (Deprecated).
     <term><command>--remove-time-constraint &lt;Constraint names&gt;</command></term>
     <listitem>
       <para>
-      Name or list of names of the time constraints to
-      remove.
+      Name or list of names of the time constraints
+      to remove.
       </para>
     </listitem>
   </varlistentry>
@@ -1396,7 +1491,8 @@ Update an existing alarm (Deprecated).
     <term><command>--period &lt;PERIOD&gt;</command></term>
     <listitem>
       <para>
-        Length of each period (seconds) to evaluate over.
+        Length of each period (seconds) to evaluate
+      over.
       </para>
     </listitem>
   </varlistentry>
@@ -1404,7 +1500,7 @@ Update an existing alarm (Deprecated).
     <term><command>--evaluation-periods &lt;COUNT&gt;</command></term>
     <listitem>
       <para>
-      Number of periods to evaluate over.
+        Number of periods to evaluate over.
       </para>
     </listitem>
   </varlistentry>
@@ -1420,8 +1516,8 @@ Update an existing alarm (Deprecated).
     <term><command>--statistic &lt;STATISTIC&gt;</command></term>
     <listitem>
       <para>
-      Statistic to evaluate, one of: ['max', 'min', 'avg',
-      'sum', 'count']
+        Statistic to evaluate, one of: ['max', 'min',
+      'avg', 'sum', 'count']
       </para>
     </listitem>
   </varlistentry>
@@ -1429,8 +1525,8 @@ Update an existing alarm (Deprecated).
     <term><command>--comparison-operator &lt;OPERATOR&gt;</command></term>
     <listitem>
       <para>
-      Operator to compare with, one of: ['lt', 'le', 'eq',
-      'ne', 'ge', 'gt'].
+      Operator to compare with, one of: ['lt', 'le',
+      'eq', 'ne', 'ge', 'gt'].
       </para>
     </listitem>
   </varlistentry>
@@ -1438,7 +1534,7 @@ Update an existing alarm (Deprecated).
     <term><command>--threshold &lt;THRESHOLD&gt;</command></term>
     <listitem>
       <para>
-      Threshold to evaluate against.
+        Threshold to evaluate against.
       </para>
     </listitem>
   </varlistentry>
@@ -1447,8 +1543,8 @@ Update an existing alarm (Deprecated).
     <listitem>
       <para>
       A meter should match this resource metadata
-      (key=value) additionally to the meter_name. Defaults
-      to None.
+      (key=value) additionally to the meter_name.
+      Defaults to None.
       </para>
     </listitem>
   </varlistentry>
@@ -1456,15 +1552,15 @@ Update an existing alarm (Deprecated).
     <term><command>--repeat-actions {True|False}</command></term>
     <listitem>
       <para>
-      True if actions should be repeatedly notified while
-      alarm remains in target state.
+      True if actions should be repeatedly notified
+      while alarm remains in target state.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_event-list">
-        <title>ceilometer event-list command</title>
+        <title>ceilometer event-list</title>
         <screen><computeroutput>usage: ceilometer event-list [-q &lt;QUERY&gt;]</computeroutput></screen>
         <para>
 List events.
@@ -1474,40 +1570,40 @@ List events.
     <term><command>-q &lt;QUERY&gt;, --query &lt;QUERY&gt;</command></term>
     <listitem>
       <para>
-      key[op]data_type::value; list. data_type is optional,
-      but if supplied must be string, integer, floator
-      datetime.
+        key[op]data_type::value; list. data_type is
+      optional, but if supplied must be string,
+      integer, floator datetime.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_event-show">
-        <title>ceilometer event-show command</title>
-        <screen><computeroutput>usage: ceilometer event-show -m &lt;message_id&gt;</computeroutput></screen>
+        <title>ceilometer event-show</title>
+        <screen><computeroutput>usage: ceilometer event-show &lt;message_id&gt;</computeroutput></screen>
         <para>
 Show a particular event.
         </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
+    <title>Positional arguments</title>
   <varlistentry>
-    <term><command>-m &lt;message_id&gt;, --message_id &lt;message_id&gt;</command></term>
+    <term><command>&lt;message_id&gt;</command></term>
     <listitem>
       <para>
-      The id of the event. Should be a UUID Required.
+        The ID of the event. Should be a UUID.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_event-type-list">
-        <title>ceilometer event-type-list command</title>
+        <title>ceilometer event-type-list</title>
         <screen><computeroutput>usage: ceilometer event-type-list</computeroutput></screen>
         <para>
 List event types.
         </para>
     </section>
     <section xml:id="ceilometerclient_subcommand_meter-list">
-        <title>ceilometer meter-list command</title>
+        <title>ceilometer meter-list</title>
         <screen><computeroutput>usage: ceilometer meter-list [-q &lt;QUERY&gt;]</computeroutput></screen>
         <para>
 List the user's meters.
@@ -1517,16 +1613,16 @@ List the user's meters.
     <term><command>-q &lt;QUERY&gt;, --query &lt;QUERY&gt;</command></term>
     <listitem>
       <para>
-      key[op]data_type::value; list. data_type is optional,
-      but if supplied must be string, integer, float, or
-      boolean.
+        key[op]data_type::value; list. data_type is
+      optional, but if supplied must be string,
+      integer, float, or boolean.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_query-alarm-history">
-        <title>ceilometer query-alarm-history command</title>
+        <title>ceilometer query-alarm-history</title>
         <screen><computeroutput>usage: ceilometer query-alarm-history [-f &lt;FILTER&gt;] [-o &lt;ORDERBY&gt;]
                                       [-l &lt;LIMIT&gt;]</computeroutput></screen>
         <para>
@@ -1537,9 +1633,10 @@ Query Alarm History.
     <term><command>-f &lt;FILTER&gt;, --filter &lt;FILTER&gt;</command></term>
     <listitem>
       <para>
-      {complex_op: [{simple_op: {field_name: value}}]} The
-      complex_op is one of: ['and', 'or'], simple_op is one
-      of: ['=', '!=', '&lt;', '&lt;=', '&gt;', '&gt;='].
+      {complex_op: [{simple_op: {field_name:
+      value}}]} The complex_op is one of: ['and',
+      'or'], simple_op is one of: ['=', '!=', '&lt;',
+      '&lt;=', '&gt;', '&gt;='].
       </para>
     </listitem>
   </varlistentry>
@@ -1547,8 +1644,9 @@ Query Alarm History.
     <term><command>-o &lt;ORDERBY&gt;, --orderby &lt;ORDERBY&gt;</command></term>
     <listitem>
       <para>
-      [{field_name: direction}, {field_name: direction}] The
-      direction is one of: ['asc', 'desc'].
+      [{field_name: direction}, {field_name:
+      direction}] The direction is one of: ['asc',
+      'desc'].
       </para>
     </listitem>
   </varlistentry>
@@ -1556,14 +1654,15 @@ Query Alarm History.
     <term><command>-l &lt;LIMIT&gt;, --limit &lt;LIMIT&gt;</command></term>
     <listitem>
       <para>
-      Maximum number of alarm history items to return.
+        Maximum number of alarm history items to
+      return.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_query-alarms">
-        <title>ceilometer query-alarms command</title>
+        <title>ceilometer query-alarms</title>
         <screen><computeroutput>usage: ceilometer query-alarms [-f &lt;FILTER&gt;] [-o &lt;ORDERBY&gt;] [-l &lt;LIMIT&gt;]</computeroutput></screen>
         <para>
 Query Alarms.
@@ -1573,9 +1672,10 @@ Query Alarms.
     <term><command>-f &lt;FILTER&gt;, --filter &lt;FILTER&gt;</command></term>
     <listitem>
       <para>
-      {complex_op: [{simple_op: {field_name: value}}]} The
-      complex_op is one of: ['and', 'or'], simple_op is one
-      of: ['=', '!=', '&lt;', '&lt;=', '&gt;', '&gt;='].
+      {complex_op: [{simple_op: {field_name:
+      value}}]} The complex_op is one of: ['and',
+      'or'], simple_op is one of: ['=', '!=', '&lt;',
+      '&lt;=', '&gt;', '&gt;='].
       </para>
     </listitem>
   </varlistentry>
@@ -1583,8 +1683,9 @@ Query Alarms.
     <term><command>-o &lt;ORDERBY&gt;, --orderby &lt;ORDERBY&gt;</command></term>
     <listitem>
       <para>
-      [{field_name: direction}, {field_name: direction}] The
-      direction is one of: ['asc', 'desc'].
+      [{field_name: direction}, {field_name:
+      direction}] The direction is one of: ['asc',
+      'desc'].
       </para>
     </listitem>
   </varlistentry>
@@ -1592,14 +1693,14 @@ Query Alarms.
     <term><command>-l &lt;LIMIT&gt;, --limit &lt;LIMIT&gt;</command></term>
     <listitem>
       <para>
-      Maximum number of alarms to return.
+        Maximum number of alarms to return.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_query-samples">
-        <title>ceilometer query-samples command</title>
+        <title>ceilometer query-samples</title>
         <screen><computeroutput>usage: ceilometer query-samples [-f &lt;FILTER&gt;] [-o &lt;ORDERBY&gt;] [-l &lt;LIMIT&gt;]</computeroutput></screen>
         <para>
 Query samples.
@@ -1609,9 +1710,10 @@ Query samples.
     <term><command>-f &lt;FILTER&gt;, --filter &lt;FILTER&gt;</command></term>
     <listitem>
       <para>
-      {complex_op: [{simple_op: {field_name: value}}]} The
-      complex_op is one of: ['and', 'or'], simple_op is one
-      of: ['=', '!=', '&lt;', '&lt;=', '&gt;', '&gt;='].
+      {complex_op: [{simple_op: {field_name:
+      value}}]} The complex_op is one of: ['and',
+      'or'], simple_op is one of: ['=', '!=', '&lt;',
+      '&lt;=', '&gt;', '&gt;='].
       </para>
     </listitem>
   </varlistentry>
@@ -1619,8 +1721,9 @@ Query samples.
     <term><command>-o &lt;ORDERBY&gt;, --orderby &lt;ORDERBY&gt;</command></term>
     <listitem>
       <para>
-      [{field_name: direction}, {field_name: direction}] The
-      direction is one of: ['asc', 'desc'].
+      [{field_name: direction}, {field_name:
+      direction}] The direction is one of: ['asc',
+      'desc'].
       </para>
     </listitem>
   </varlistentry>
@@ -1628,14 +1731,14 @@ Query samples.
     <term><command>-l &lt;LIMIT&gt;, --limit &lt;LIMIT&gt;</command></term>
     <listitem>
       <para>
-      Maximum number of samples to return.
+        Maximum number of samples to return.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_resource-list">
-        <title>ceilometer resource-list command</title>
+        <title>ceilometer resource-list</title>
         <screen><computeroutput>usage: ceilometer resource-list [-q &lt;QUERY&gt;]</computeroutput></screen>
         <para>
 List the resources.
@@ -1645,33 +1748,33 @@ List the resources.
     <term><command>-q &lt;QUERY&gt;, --query &lt;QUERY&gt;</command></term>
     <listitem>
       <para>
-      key[op]data_type::value; list. data_type is optional,
-      but if supplied must be string, integer, float, or
-      boolean.
+        key[op]data_type::value; list. data_type is
+      optional, but if supplied must be string,
+      integer, float, or boolean.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_resource-show">
-        <title>ceilometer resource-show command</title>
-        <screen><computeroutput>usage: ceilometer resource-show -r &lt;RESOURCE_ID&gt;</computeroutput></screen>
+        <title>ceilometer resource-show</title>
+        <screen><computeroutput>usage: ceilometer resource-show &lt;RESOURCE_ID&gt;</computeroutput></screen>
         <para>
 Show the resource.
         </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
+    <title>Positional arguments</title>
   <varlistentry>
-    <term><command>-r &lt;RESOURCE_ID&gt;, --resource_id &lt;RESOURCE_ID&gt;</command></term>
+    <term><command>&lt;RESOURCE_ID&gt;</command></term>
     <listitem>
       <para>
-      ID of the resource to show. Required.
+        ID of the resource to show.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_sample-create">
-        <title>ceilometer sample-create command</title>
+        <title>ceilometer sample-create</title>
         <screen><computeroutput>usage: ceilometer sample-create [--project-id &lt;PROJECT_ID&gt;]
                                 [--user-id &lt;USER_ID&gt;] -r &lt;RESOURCE_ID&gt; -m
                                 &lt;METER_NAME&gt; --meter-type &lt;METER_TYPE&gt;
@@ -1687,8 +1790,8 @@ Create a sample.
     <term><command>--project-id &lt;PROJECT_ID&gt;</command></term>
     <listitem>
       <para>
-      Tenant to associate with sample (only settable by
-      admin users).
+        Tenant to associate with sample (only settable
+      by admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -1696,8 +1799,8 @@ Create a sample.
     <term><command>--user-id &lt;USER_ID&gt;</command></term>
     <listitem>
       <para>
-        User to associate with sample (only settable by admin
-      users).
+        User to associate with sample (only settable
+      by admin users).
       </para>
     </listitem>
   </varlistentry>
@@ -1721,7 +1824,7 @@ Create a sample.
     <term><command>--meter-type &lt;METER_TYPE&gt;</command></term>
     <listitem>
       <para>
-      The meter type. Required.
+        The meter type. Required.
       </para>
     </listitem>
   </varlistentry>
@@ -1729,7 +1832,7 @@ Create a sample.
     <term><command>--meter-unit &lt;METER_UNIT&gt;</command></term>
     <listitem>
       <para>
-      The meter unit. Required.
+        The meter unit. Required.
       </para>
     </listitem>
   </varlistentry>
@@ -1745,7 +1848,8 @@ Create a sample.
     <term><command>--resource-metadata &lt;RESOURCE_METADATA&gt;</command></term>
     <listitem>
       <para>
-      Resource metadata.
+      Resource metadata. Provided value should be a
+      set of key-value pairs e.g. {"key":"value"}.
       </para>
     </listitem>
   </varlistentry>
@@ -1753,14 +1857,14 @@ Create a sample.
     <term><command>--timestamp &lt;TIMESTAMP&gt;</command></term>
     <listitem>
       <para>
-      The sample timestamp.
+        The sample timestamp.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_sample-list">
-        <title>ceilometer sample-list command</title>
+        <title>ceilometer sample-list</title>
         <screen><computeroutput>usage: ceilometer sample-list [-q &lt;QUERY&gt;] -m &lt;NAME&gt; [-l &lt;NUMBER&gt;]</computeroutput></screen>
         <para>
 List the samples for a meter.
@@ -1770,9 +1874,9 @@ List the samples for a meter.
     <term><command>-q &lt;QUERY&gt;, --query &lt;QUERY&gt;</command></term>
     <listitem>
       <para>
-      key[op]data_type::value; list. data_type is optional,
-      but if supplied must be string, integer, float, or
-      boolean.
+        key[op]data_type::value; list. data_type is
+      optional, but if supplied must be string,
+      integer, float, or boolean.
       </para>
     </listitem>
   </varlistentry>
@@ -1780,7 +1884,7 @@ List the samples for a meter.
     <term><command>-m &lt;NAME&gt;, --meter &lt;NAME&gt;</command></term>
     <listitem>
       <para>
-      Name of meter to show samples for. Required.
+        Name of meter to show samples for. Required.
       </para>
     </listitem>
   </varlistentry>
@@ -1795,7 +1899,7 @@ List the samples for a meter.
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_statistics">
-        <title>ceilometer statistics command</title>
+        <title>ceilometer statistics</title>
         <screen><computeroutput>usage: ceilometer statistics [-q &lt;QUERY&gt;] -m &lt;NAME&gt; [-p &lt;PERIOD&gt;] [-g &lt;FIELD&gt;]
                              [-a &lt;FUNC&gt;[&lt;-&lt;PARAM&gt;]]</computeroutput></screen>
         <para>
@@ -1806,9 +1910,9 @@ List the statistics for a meter.
     <term><command>-q &lt;QUERY&gt;, --query &lt;QUERY&gt;</command></term>
     <listitem>
       <para>
-      key[op]data_type::value; list. data_type is optional,
-      but if supplied must be string, integer, float, or
-      boolean.
+        key[op]data_type::value; list. data_type is
+      optional, but if supplied must be string,
+      integer, float, or boolean.
       </para>
     </listitem>
   </varlistentry>
@@ -1816,7 +1920,8 @@ List the statistics for a meter.
     <term><command>-m &lt;NAME&gt;, --meter &lt;NAME&gt;</command></term>
     <listitem>
       <para>
-      Name of meter to show samples for. Required.
+        Name of meter to list statistics for.
+      Required.
       </para>
     </listitem>
   </varlistentry>
@@ -1840,16 +1945,16 @@ List the statistics for a meter.
     <term><command>-a &lt;FUNC&gt;[&lt;-&lt;PARAM&gt;], --aggregate &lt;FUNC&gt;[&lt;-&lt;PARAM&gt;]</command></term>
     <listitem>
       <para>
-      Function for data aggregation. Available aggregates
-      are: count, cardinality, min, max, sum, stddev, avg.
-      Defaults to [].
+      Function for data aggregation. Available
+      aggregates are: count, cardinality, min, max,
+      sum, stddev, avg. Defaults to [].
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_trait-description-list">
-        <title>ceilometer trait-description-list command</title>
+        <title>ceilometer trait-description-list</title>
         <screen><computeroutput>usage: ceilometer trait-description-list -e &lt;EVENT_TYPE&gt;</computeroutput></screen>
         <para>
 List trait info for an event type.
@@ -1859,15 +1964,15 @@ List trait info for an event type.
     <term><command>-e &lt;EVENT_TYPE&gt;, --event_type &lt;EVENT_TYPE&gt;</command></term>
     <listitem>
       <para>
-      Type of the event for which traits will be shown.
-      Required.
+      Type of the event for which traits will be
+      shown. Required.
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_trait-list">
-        <title>ceilometer trait-list command</title>
+        <title>ceilometer trait-list</title>
         <screen><computeroutput>usage: ceilometer trait-list -e &lt;EVENT_TYPE&gt; -t &lt;TRAIT_NAME&gt;</computeroutput></screen>
         <para>
 List trait all traits with name &lt;trait_name&gt; for Event Type &lt;event_type&gt;.
@@ -1877,8 +1982,8 @@ List trait all traits with name &lt;trait_name&gt; for Event Type &lt;event_type
     <term><command>-e &lt;EVENT_TYPE&gt;, --event_type &lt;EVENT_TYPE&gt;</command></term>
     <listitem>
       <para>
-      Type of the event for which traits will listed.
-      Required.
+      Type of the event for which traits will
+      listed. Required.
       </para>
     </listitem>
   </varlistentry>
