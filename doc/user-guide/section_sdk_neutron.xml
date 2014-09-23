@@ -265,13 +265,19 @@ from utils import print_values_server</programlisting>
             <step>
                 <para>Create a router and add a port to the
                     subnet:</para>
-                <programlisting language="python"># Replace with server_id and network_id from your environment
+                <programlisting language="python"># Replace with network_id from your environment
 
-router_id = '72cf1682-60a8-4890-b0ed-6bad7d9f5466'
 network_id = '81bf592a-9e3f-4f84-a839-ae87df188dc1'
 
 credentials = get_credentials()
 neutron = client.Client(**credentials)
+neutron.format = json
+request = {'router': {'name': 'router name',
+                      'admin_state_up': True}}
+
+router = neutron.create_router(request)
+router_id = router['router']['id']
+# for example: '72cf1682-60a8-4890-b0ed-6bad7d9f5466'
 router = neutron.show_router(router_id)
 print(router)
 body_value = {'port': {
@@ -298,13 +304,18 @@ from utils import print_values_server
 credentials = get_nova_credentials()
 nova_client = nvclient.Client(**credentials)
 
-# Replace with server_id and network_id from your environment
+# Replace with network_id from your environment
 
-router_id = '72cf1682-60a8-4890-b0ed-6bad7d9f5466'
 network_id = '81bf592a-9e3f-4f84-a839-ae87df188dc1'
 try:
     credentials = get_credentials()
     neutron = client.Client(**credentials)
+    neutron.format = 'json'
+    request = {'router': {'name': 'router name',
+                          'admin_state_up': True}}
+    router = neutron.create_router(request)
+    router_id = router['router']['id']
+    # for example: '72cf1682-60a8-4890-b0ed-6bad7d9f5466'
     router = neutron.show_router(router_id)
     print(router)
     body_value = {'port': {
