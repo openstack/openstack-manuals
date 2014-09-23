@@ -322,6 +322,33 @@
         compute section</link> in the <filename>ceilometer.conf</filename> configuration
         file.</para>
     </section>
+    <section xml:id="section_telemetry-IPMI-agent">
+      <title>IPMI agent</title>
+      <para>This agent is responsible for collecting IPMI sensor data and Intel Node Manager
+        data on individual compute nodes within an OpenStack deployment. This
+        agent requires IPMI capable node with <application>ipmitool</application> installed, which
+        is a common utility for IPMI control on various Linux distributions.</para>
+      <para>An IPMI agent instance could be installed on each and every compute node
+        with IPMI support, except that the node is managed by Bare metal module for OpenStack
+        and the <option>conductor.send_sensor_data</option> option is set to <literal>true</literal>
+        in the Bare metal module for OpenStack.
+        It is no harm to install this agent on compute node without IPMI or Intel Node
+        Manager support, as the agent checks for the hardware and if none is available, returns empty data.
+        But it is suggested that you install IPMI agent only on IPMI capable node for performance reason.
+      </para>
+      <para>Just like the central agent, this component also does not need a direct database
+        access. The samples are sent via AMQP to the collector.
+      </para>
+      <para>The list of collected meters can be found in the <link xlink:href=
+        "http://docs.openstack.org/developer/ceilometer/measurements.html#ironic-hardware-ipmi-sensor-data">
+        Ironic Hardware IPMI Sensor Data section</link> in the <citetitle>Telemetery Measurements Reference</citetitle>.</para>
+      <note>
+        <para>Do not deploy both IPMI agent and Bare metal module for OpenStack on
+          one compute node. If <option>conductor.send_sensor_data</option> set, this
+          misconfiguration causes duplicated IPMI sensor samples.
+        </para>
+      </note>
+    </section>
   </section>
   <section xml:id="section_telemetry-post-api">
     <title>Send samples to Telemetry</title>
