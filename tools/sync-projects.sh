@@ -23,18 +23,22 @@ case "$PROJECT_DIR" in
     ha-guide)
         GLOSSARY_SUB_DIR="doc/glossary"
         ENT_DIR="high-availability-guide"
+        CHECK_MARK_DIR="figures"
         ;;
     operations-guide)
         GLOSSARY_SUB_DIR="doc/glossary"
         ENT_DIR="openstack-ops"
+        CHECK_MARK_DIR="figures"
         ;;
     security-doc)
         GLOSSARY_SUB_DIR="glossary"
         ENT_DIR="security-guide"
+        CHECK_MARK_DIR="static"
         ;;
     training-guides)
         GLOSSARY_SUB_DIR="doc/glossary"
         ENT_DIR="training-guides"
+        CHECK_MARK_DIR="figures"
         ;;
     *)
         echo "$PROJECT_DIR not handled"
@@ -54,6 +58,8 @@ sed -i -e "s|\"../common/entities/openstack.ent\"|\"../$ENT_DIR/openstack.ent\"|
 
 # Sync entitites file
 cp doc/common/entities/openstack.ent $GLOSSARY_DIR/../$ENT_DIR/
+sed -i -e "s|imagedata fileref=\"../common/figures|imagedata fileref=\"$CHECK_MARK_DIR|" \
+    $GLOSSARY_DIR/../$ENT_DIR/openstack.ent
 
 # Add files
 (cd $PROJECT_DIR;git add $GLOSSARY_SUB_DIR \
