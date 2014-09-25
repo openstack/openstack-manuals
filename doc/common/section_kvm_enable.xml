@@ -5,98 +5,142 @@
   version="5.0"
   xml:id="section_kvm_enable">
     <title>Enable KVM</title>
-    <para>To perform these steps, you must be logged in as the
-            <systemitem>root</systemitem> user.</para>
-    <procedure>
-        <step>
-            <para>To determine whether the <literal>svm</literal> or
-                    <literal>vmx</literal> CPU extensions are present,
-                run this command:</para>
-            <screen><prompt>#</prompt> <userinput>grep -E 'svm|vmx' /proc/cpuinfo</userinput></screen>
-            <para>This command generates output if the CPU is
-                hardware-virtualization capable. Even if output is
-                shown, you might still need to enable virtualization
-                in the system BIOS for full support.</para>
-            <para>If no output appears, consult your system
-                documentation to ensure that your CPU and motherboard
-                support hardware virtualization. Verify that any
-                relevant hardware virtualization options are enabled
-                in the system BIOS.</para>
-            <para>The BIOS for each manufacturer is different. If you
-                must enable virtualization in the BIOS, look for an
-                option containing the words
+    <para>The following sections outline how to enable KVM based
+        hardware virtualisation on different architectures
+        and platforms. To perform these steps, you must be logged
+        in as the <systemitem>root</systemitem> user.</para>
+    <section xml:id="x86_based_systems">
+        <title>For x86 based systems</title>
+        <procedure>
+            <step>
+                <para>To determine whether the <literal>svm</literal> or
+                        <literal>vmx</literal> CPU extensions are present,
+                    run this command:</para>
+                <screen><prompt>#</prompt> <userinput>grep -E 'svm|vmx' /proc/cpuinfo</userinput></screen>
+                <para>This command generates output if the CPU is
+                    capable of hardware-virtualization. Even if output is
+                    shown, you might still need to enable virtualization
+                    in the system BIOS for full support.</para>
+                <para>If no output appears, consult your system
+                    documentation to ensure that your CPU and motherboard
+                    support hardware virtualization. Verify that any
+                    relevant hardware virtualization options are enabled
+                    in the system BIOS.</para>
+                <para>The BIOS for each manufacturer is different. If you
+                    must enable virtualization in the BIOS, look for an
+                    option containing the words
                     <literal>virtualization</literal>,
                     <literal>VT</literal>, <literal>VMX</literal>, or
                     <literal>SVM</literal>.</para>
-        </step>
-        <step>
-            <para>To list the loaded kernel modules and verify that
-                the <literal>kvm</literal> modules are loaded, run
-                this command:</para>
-            <screen><prompt>#</prompt> <userinput>lsmod | grep kvm</userinput></screen>
-            <para>If the output includes
+            </step>
+            <step>
+                <para>To list the loaded kernel modules and verify that
+                    the <literal>kvm</literal> modules are loaded, run
+                    this command:</para>
+                <screen><prompt>#</prompt> <userinput>lsmod | grep kvm</userinput></screen>
+                <para>If the output includes
                     <systemitem>kvm_intel</systemitem> or
                     <systemitem>kvm_amd</systemitem>, the
                     <systemitem>kvm</systemitem> hardware
-                virtualization modules are loaded and your kernel
-                meets the module requirements for OpenStack
-                Compute.</para>
-            <para>If the output does not show that the
+                    virtualization modules are loaded and your kernel
+                    meets the module requirements for OpenStack
+                    Compute.</para>
+                <para>If the output does not show that the
                     <literal>kvm</literal> module is loaded, run this
                 command to load it:</para>
             <screen><prompt>#</prompt> <userinput>modprobe -a kvm</userinput></screen>
             <para>Run the command for your CPU. For Intel, run this
                 command:</para>
-            <screen><prompt>#</prompt> <userinput>modprobe -a kvm-intel</userinput></screen>
-            <para>For AMD, run this command:</para>
-            <screen><prompt>#</prompt> <userinput>modprobe -a kvm-amd</userinput></screen>
-            <para>Because a KVM installation can change user group
-                membership, you might need to log in again for changes
-                to take effect.</para>
-            <para>If the kernel modules do not load automatically, use
-                the procedures listed in these subsections.</para>
-        </step>
-    </procedure>
-    <para>If the checks indicate that required hardware virtualization
-        support or kernel modules are disabled or unavailable, you
-        must either enable this support on the system or find a system
-        with this support.</para>
-    <note>
-        <para>Some systems require that you enable VT support in the
-            system BIOS. If you believe your processor supports
-            hardware acceleration but the previous command did not
-            produce output, reboot your machine, enter the system
-            BIOS, and enable the VT option.</para>
-    </note>
-    <para>If KVM acceleration is not supported, configure Compute to
-        use a different hypervisor, such as <link
-            xlink:href="http://docs.openstack.org/trunk/config-reference/content/qemu.html"
-            >QEMU</link> or <link
-            xlink:href="http://docs.openstack.org/trunk/config-reference/content/introduction-to-xen.html"
-            >Xen</link>.</para>
-    <para>These procedures help you load the kernel modules for
-        Intel-based and AMD-based processors if they do not load
-        automatically during KVM installation.</para>
-    <section xml:id="kvm-intel">
-        <title>Intel-based processors</title>
-        <para>If your compute host is Intel-based, run these commands
-            as root to load the kernel modules:</para>
-        <screen><prompt>#</prompt> <userinput>modprobe kvm</userinput>
+                <screen><prompt>#</prompt> <userinput>modprobe -a kvm-intel</userinput></screen>
+                <para>For AMD, run this command:</para>
+                <screen><prompt>#</prompt> <userinput>modprobe -a kvm-amd</userinput></screen>
+                <para>Because a KVM installation can change user group
+                    membership, you might need to log in again for changes
+                    to take effect.</para>
+                <para>If the kernel modules do not load automatically, use
+                    the procedures listed in these subsections.</para>
+            </step>
+        </procedure>
+        <para>If the checks indicate that required hardware virtualization
+            support or kernel modules are disabled or unavailable, you
+            must either enable this support on the system or find a system
+            with this support.</para>
+        <note>
+            <para>Some systems require that you enable VT support in the
+                system BIOS. If you believe your processor supports
+                hardware acceleration but the previous command did not
+                produce output, reboot your machine, enter the system
+                BIOS, and enable the VT option.</para>
+        </note>
+        <para>If KVM acceleration is not supported, configure Compute to
+            use a different hypervisor, such as <link
+                xlink:href="http://docs.openstack.org/trunk/config-reference/content/qemu.html"
+                >QEMU</link> or <link
+                xlink:href="http://docs.openstack.org/trunk/config-reference/content/introduction-to-xen.html"
+                >Xen</link>.</para>
+        <para>These procedures help you load the kernel modules for
+            Intel-based and AMD-based processors if they do not load
+            automatically during KVM installation.</para>
+        <section xml:id="kvm-intel">
+            <title>Intel-based processors</title>
+            <para>If your compute host is Intel-based, run these commands
+                as root to load the kernel modules:</para>
+            <screen><prompt>#</prompt> <userinput>modprobe kvm</userinput>
 <prompt>#</prompt> <userinput>modprobe kvm-intel</userinput></screen>
-        <para>Add these lines to the <filename>/etc/modules</filename>
-            file so that these modules load on reboot:</para>
+            <para>Add these lines to the <filename>/etc/modules</filename>
+                file so that these modules load on reboot:</para>
         <programlisting>kvm
 kvm-intel</programlisting>
-    </section>
-    <section xml:id="kvm-amd">
-        <title>AMD-based processors</title>
-        <para>If your compute host is AMD-based, run these commands as
-            root to load the kernel modules:</para>
-        <screen><prompt>#</prompt> <userinput>modprobe kvm</userinput>
+        </section>
+        <section xml:id="kvm-amd">
+            <title>AMD-based processors</title>
+            <para>If your compute host is AMD-based, run these commands as
+                root to load the kernel modules:</para>
+            <screen><prompt>#</prompt> <userinput>modprobe kvm</userinput>
 <prompt>#</prompt> <userinput>modprobe kvm-amd</userinput></screen>
-        <para>Add these lines to <filename>/etc/modules</filename>
-            file so that these modules load on reboot:</para>
-        <programlisting>kvm
+            <para>Add these lines to <filename>/etc/modules</filename>
+                file so that these modules load on reboot:</para>
+            <programlisting>kvm
 kvm-amd</programlisting>
+        </section>
+    </section>
+
+    <section xml:id="kvm-on-POWER">
+        <title>For POWER based systems</title>
+        <para>KVM as a hypervisor is supported on POWER system's PowerNV
+            platform.</para>
+        <procedure>
+            <step>
+                <para>To determine if your POWER platform
+                    supports KVM based virtualization run the
+                    following command:</para>
+                <screen><prompt>#</prompt><userinput>cat /proc/cpuinfo | grep PowerNV</userinput></screen>
+                <para>If the previous command generates the following output,
+                    then CPU supports KVM based virtualization</para>
+                <screen><computeroutput>platform: PowerNV</computeroutput></screen>
+                <para>If no output is displayed, then your POWER platform does not
+                    support KVM based hardware virtualization.</para>
+            </step>
+            <step>
+                <para>To list the loaded kernel modules and verify that
+                    the <literal>kvm</literal> modules are loaded, run
+                    the following command:</para>
+                <screen><prompt>#</prompt> <userinput>lsmod | grep kvm</userinput></screen>
+                <para>If the output includes
+                    <systemitem>kvm_hv</systemitem>, the
+                    <systemitem>kvm</systemitem> hardware
+                virtualization modules are loaded and your kernel
+                meets the module requirements for OpenStack Compute.</para>
+                <para>If the output does not show that the
+                    <literal>kvm</literal> module is loaded, run the
+                    following command to load it:</para>
+                <screen><prompt>#</prompt> <userinput>modprobe -a kvm</userinput></screen>
+                <para>For PowerNV platform, run the following command:</para>
+                <screen><prompt>#</prompt> <userinput>modprobe -a kvm-hv</userinput></screen>
+                <para>Because a KVM installation can change user group
+                membership, you might need to log in again for changes
+                to take effect.</para>
+            </step>
+        </procedure>
     </section>
 </section>
