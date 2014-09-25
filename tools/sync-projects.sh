@@ -51,3 +51,9 @@ cp doc/glossary/locale/ja.po $GLOSSARY_DIR/locale/
 sed -i -e "s|\"../common/entities/openstack.ent\"|\"../$ENT_DIR/openstack.ent\"|" \
     $GLOSSARY_DIR/glossary-terms.xml
 (cd $PROJECT_DIR;git add $GLOSSARY_SUB_DIR)
+
+# Sync entitites file
+cp doc/common/entities/openstack.ent $GLOSSARY_DIR/../$ENT_DIR/
+
+# Add files
+(cd $PROJECT_DIR;git add $GLOSSARY_SUB_DIR $GLOSSARY_DIR/../$ENT_DIR/openstack.ent)
