@@ -56,4 +56,5 @@ sed -i -e "s|\"../common/entities/openstack.ent\"|\"../$ENT_DIR/openstack.ent\"|
 cp doc/common/entities/openstack.ent $GLOSSARY_DIR/../$ENT_DIR/
 
 # Add files
-(cd $PROJECT_DIR;git add $GLOSSARY_SUB_DIR $GLOSSARY_DIR/../$ENT_DIR/openstack.ent)
+(cd $PROJECT_DIR;git add $GLOSSARY_SUB_DIR \
+    $GLOSSARY_SUB_DIR/../$ENT_DIR/openstack.ent)
