@@ -13,6 +13,10 @@
       </tr>
     </thead>
     <tr>
+      <td>[DEFAULT] db_enforce_mysql_charset = True</td>
+      <td>(BoolOpt) DEPRECATED. TO BE REMOVED IN THE JUNO RELEASE. Whether or not to enforce that all DB tables have charset utf8. If your database tables do not have charset utf8 you will need to convert before this option is removed. This option is only relevant if your database engine is MySQL.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] default_swift_reference = ref1</td>
       <td>(StrOpt) The reference to the default swift account/backing store parameters to use for adding new images.</td>
     </tr>
@@ -29,8 +33,28 @@
       <td>(StrOpt) The SQLAlchemy connection string to use to connect to the slave database.</td>
     </tr>
     <tr>
+      <td>[glance_store] default_store = file</td>
+      <td>(StrOpt) Default scheme to use to store image data. The scheme must be registered by one of the stores defined by the 'stores' config option.</td>
+    </tr>
+    <tr>
       <td>[glance_store] default_swift_reference = ref1</td>
       <td>(StrOpt) The reference to the default swift account/backing store parameters to use for adding new images.</td>
+    </tr>
+    <tr>
+      <td>[glance_store] filesystem_store_datadir = None</td>
+      <td>(StrOpt) Directory to which the Filesystem backend store writes images.</td>
+    </tr>
+    <tr>
+      <td>[glance_store] filesystem_store_datadirs = None</td>
+      <td>(MultiStrOpt) List of directories and its priorities to which the Filesystem backend store writes images.</td>
+    </tr>
+    <tr>
+      <td>[glance_store] filesystem_store_metadata_file = None</td>
+      <td>(StrOpt) The path to a file which contains the metadata to be returned with any location associated with this store.  The file must contain a valid JSON dict.</td>
+    </tr>
+    <tr>
+      <td>[glance_store] stores = ['file', 'http']</td>
+      <td>(ListOpt) List of stores enabled</td>
     </tr>
     <tr>
       <td>[glance_store] swift_store_auth_address = None</td>
@@ -130,12 +154,32 @@
       <td>[glance_store] swift_store_auth_address</td>
     </tr>
     <tr>
+      <td>[DEFAULT] filesystem_store_metadata_file</td>
+      <td>[glance_store] filesystem_store_metadata_file</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] swift_store_key</td>
       <td>[glance_store] swift_store_key</td>
     </tr>
     <tr>
+      <td>[DEFAULT] filesystem_store_datadir</td>
+      <td>[glance_store] filesystem_store_datadir</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] known_stores</td>
+      <td>[glance_store] stores</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] default_store</td>
+      <td>[glance_store] default_store</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] swift_store_user</td>
       <td>[glance_store] swift_store_user</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] filesystem_store_datadirs</td>
+      <td>[glance_store] filesystem_store_datadirs</td>
     </tr>
   </table>
 </section>

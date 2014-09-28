@@ -17,8 +17,24 @@
       <td>(StrOpt) Configuration file for WSGI definition of API.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] enable_new_services = True</td>
+      <td>(BoolOpt) Services to be added to the available pool on create</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] fatal_exception_format_errors = False</td>
+      <td>(BoolOpt) Make exception message format errors fatal</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] glance_page_size = 0</td>
       <td>(IntOpt) Number of items to request in each paginated Glance API request (parameter used by glancecelient). If this is less than or equal to 0, page size is not specified (default value in glanceclient is used).</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] instance_name_template = instance-%08x</td>
+      <td>(StrOpt) Template string to be used to generate instance names</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] instance_usage_audit_period = month</td>
+      <td>(StrOpt) Time period to generate instance usages for.  Time period must be hour, day, month or year</td>
     </tr>
     <tr>
       <td>[DEFAULT] ironic_exchange = ironic</td>
@@ -29,16 +45,44 @@
       <td>(StrOpt) Exchange name for Keystone notifications.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] monkey_patch = False</td>
+      <td>(BoolOpt) Whether to log monkey patching</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] monkey_patch_modules = ['nova.api.ec2.cloud:nova.notifications.notify_decorator', 'nova.compute.api:nova.notifications.notify_decorator']</td>
+      <td>(ListOpt) List of modules/decorators to monkey patch</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] network_api_class = nova.network.api.API</td>
+      <td>(StrOpt) The full class name of the network API class to use</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] nova_http_log_debug = False</td>
       <td>(BoolOpt) Allow novaclient's debug log output.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] password_length = 12</td>
+      <td>(IntOpt) Length of generated instance admin passwords</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] qpid_receiver_capacity = 1</td>
+      <td>(IntOpt) The number of prefetched messages held by receiver.</td>
     </tr>
     <tr>
       <td>[DEFAULT] rabbit_login_method = AMQPLAIN</td>
       <td>(StrOpt) the RabbitMQ login method</td>
     </tr>
     <tr>
+      <td>[DEFAULT] rootwrap_config = /etc/ceilometer/rootwrap.conf</td>
+      <td>(StrOpt) Path to the rootwrap configuration file touse for running commands as root</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] sahara_control_exchange = sahara</td>
       <td>(StrOpt) Exchange name for Data Processing notifications</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] snapshot_name_template = snapshot-%s</td>
+      <td>(StrOpt) Template string to be used to generate snapshot names</td>
     </tr>
     <tr>
       <td>[DEFAULT] transport_url = None</td>
@@ -63,6 +107,10 @@
     <tr>
       <td>[api] enable_reverse_dns_lookup = False</td>
       <td>(BoolOpt) Set it to False if your environment does not need or have dns server, otherwise it will delay the response from api.</td>
+    </tr>
+    <tr>
+      <td>[api] pecan_debug = False</td>
+      <td>(BoolOpt) Toggle Pecan Debug Middleware. Defaults to global debug value.</td>
     </tr>
     <tr>
       <td>[central] partitioning_group_prefix = None</td>
@@ -125,6 +173,10 @@
       <td>(BoolOpt) Enable the experimental use of database reconnect on connection lost.</td>
     </tr>
     <tr>
+      <td>[database] use_tpool = False</td>
+      <td>(BoolOpt) Enable the experimental use of thread pooling for all DB API calls</td>
+    </tr>
+    <tr>
       <td>[hardware] readonly_user_name = ro_snmp_user</td>
       <td>(StrOpt) SNMPd user name of all nodes running in the cloud.</td>
     </tr>
@@ -135,6 +187,10 @@
     <tr>
       <td>[hardware] url_scheme = snmp://</td>
       <td>(StrOpt) URL scheme to use for hardware nodes</td>
+    </tr>
+    <tr>
+      <td>[ipmi] node_manager_init_retry = 3</td>
+      <td>(IntOpt) Number of retries upon Intel Node Manager initialization failure</td>
     </tr>
     <tr>
       <td>[keystone_authtoken] check_revocations_for_cached = False</td>
@@ -159,6 +215,30 @@
     <tr>
       <td>[publisher_notifier] metering_topic = metering</td>
       <td>(StrOpt) The topic that ceilometer uses for metering notifications.</td>
+    </tr>
+    <tr>
+      <td>[service_types] glance = image</td>
+      <td>(StrOpt) Glance service type.</td>
+    </tr>
+    <tr>
+      <td>[service_types] kwapi = energy</td>
+      <td>(StrOpt) Kwapi service type.</td>
+    </tr>
+    <tr>
+      <td>[service_types] neutron = network</td>
+      <td>(StrOpt) Neutron service type.</td>
+    </tr>
+    <tr>
+      <td>[service_types] nova = compute</td>
+      <td>(StrOpt) Nova service type.</td>
+    </tr>
+    <tr>
+      <td>[service_types] swift = object-store</td>
+      <td>(StrOpt) Swift service type.</td>
+    </tr>
+    <tr>
+      <td>[upgrade_levels] cells = None</td>
+      <td>(StrOpt) Set a version cap for messages sent to local cells services</td>
     </tr>
     <tr>
       <td>[vmware] wsdl_location = None</td>

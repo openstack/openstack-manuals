@@ -81,6 +81,10 @@
       <td>(BoolOpt) verify the array certificate on each transaction</td>
     </tr>
     <tr>
+      <td>[DEFAULT] glance_ca_certificates_file = None</td>
+      <td>(StrOpt) Location of ca certificates file to use for glance client requests.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] glance_core_properties = ['checksum', 'container_format', 'disk_format', 'image_name', 'image_id', 'min_disk', 'min_ram', 'name', 'size']</td>
       <td>(ListOpt) Default core properties of image</td>
     </tr>
@@ -205,6 +209,34 @@
       <td>(StrOpt) Nimble Subnet Label</td>
     </tr>
     <tr>
+      <td>[DEFAULT] nova_api_insecure = False</td>
+      <td>(BoolOpt) Allow to perform insecure SSL requests to nova</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] nova_ca_certificates_file = None</td>
+      <td>(StrOpt) Location of ca certificates file to use for nova client requests.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] nova_catalog_admin_info = compute:nova:adminURL</td>
+      <td>(StrOpt) Same as nova_catalog_info, but for admin endpoint.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] nova_catalog_info = compute:nova:publicURL</td>
+      <td>(StrOpt) Match this value when searching for nova in the service catalog. Format is: separated values of the form: &lt;service_type&gt;:&lt;service_name&gt;:&lt;endpoint_type&gt;</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] nova_endpoint_admin_template = None</td>
+      <td>(StrOpt) Same as nova_endpoint_template, but for admin endpoint.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] nova_endpoint_template = None</td>
+      <td>(StrOpt) Override service catalog lookup with template for nova endpoint e.g. http://localhost:8774/v2/%(project_id)s</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] os_region_name = None</td>
+      <td>(StrOpt) Region name of this node</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] pure_api_token = None</td>
       <td>(StrOpt) REST API authorization token.</td>
     </tr>
@@ -266,7 +298,7 @@
     </tr>
     <tr>
       <td>[DEFAULT] ssh_hosts_key_file = $state_path/ssh_known_hosts</td>
-      <td>(StrOpt) File containing SSH host keys for the systems with which Cinder needs to communicate.  OPTIONAL: Default=$state_path/known_hosts</td>
+      <td>(StrOpt) File containing SSH host keys for the systems with which Cinder needs to communicate.  OPTIONAL: Default=$state_path/ssh_known_hosts</td>
     </tr>
     <tr>
       <td>[DEFAULT] storage_vnx_authentication_type = global</td>
@@ -307,6 +339,10 @@
     <tr>
       <td>[DEFAULT] tcp_keepalive_interval = None</td>
       <td>(IntOpt) Sets the value of TCP_KEEPINTVL in seconds for each server socket. Not supported on OS X.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] vmware_tmp_dir = /tmp</td>
+      <td>(StrOpt) Directory where virtual disks are stored during volume backup and restore.</td>
     </tr>
     <tr>
       <td>[DEFAULT] volume_copy_blkio_cgroup_name = cinder-volume-copy</td>
@@ -359,6 +395,10 @@
     <tr>
       <td>[DEFAULT] zfssa_project = None</td>
       <td>(StrOpt) Project name.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] zfssa_rest_timeout = None</td>
+      <td>(IntOpt) REST connection timeout. (seconds)</td>
     </tr>
     <tr>
       <td>[DEFAULT] zfssa_target_group = tgt-grp</td>
@@ -505,12 +545,17 @@
     <tr>
       <td>[DEFAULT] default_log_levels</td>
       <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN</td>
-      <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, keystonemiddleware=WARN, routes.middleware=WARN</td>
+      <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN</td>
     </tr>
     <tr>
       <td>[DEFAULT] default_timeout</td>
       <td>20</td>
       <td>525600</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] gpfs_storage_pool</td>
+      <td>None</td>
+      <td>system</td>
     </tr>
     <tr>
       <td>[DEFAULT] max_luns_per_storage_group</td>
