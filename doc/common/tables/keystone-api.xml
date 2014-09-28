@@ -34,8 +34,8 @@
         <td>(StrOpt) A "shared secret" that can be used to bootstrap Keystone. This "token" does not represent a user, and carries no explicit authorization. To disable in production (highly recommended), remove AdminTokenAuthMiddleware from your paste application pipelines (for example, in keystone-paste.ini).</td>
       </tr>
       <tr>
-        <td>admin_workers = 1</td>
-        <td>(IntOpt) The number of worker processes to serve the admin WSGI application</td>
+        <td>admin_workers = None</td>
+        <td>(IntOpt) The number of worker processes to serve the admin WSGI application. Defaults to number of CPUs (minimum of 2).</td>
       </tr>
       <tr>
         <td>compute_port = 8774</td>
@@ -82,8 +82,8 @@
         <td>(IntOpt) The port number which the public service listens on.</td>
       </tr>
       <tr>
-        <td>public_workers = 1</td>
-        <td>(IntOpt) The number of worker processes to serve the public WSGI application</td>
+        <td>public_workers = None</td>
+        <td>(IntOpt) The number of worker processes to serve the public WSGI application. Defaults to number of CPUs (minimum of 2).</td>
       </tr>
       <tr>
         <td>strict_password_check = False</td>
@@ -107,6 +107,13 @@
       <tr>
         <td>return_all_endpoints_if_no_filter = True</td>
         <td>(BoolOpt) Toggle to return all active endpoints if no filter exists.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[endpoint_policy]</th>
+      </tr>
+      <tr>
+        <td>driver = keystone.contrib.endpoint_policy.backends.sql.EndpointPolicy</td>
+        <td>(StrOpt) Endpoint policy backend driver</td>
       </tr>
       <tr>
         <th colspan="2">[paste_deploy]</th>

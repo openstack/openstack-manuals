@@ -10,11 +10,9 @@ backdoor_port debug
 backlog debug
 backup_aes_cbc_key backup
 backup_chunk_size backup
-backup_namespace backup
 backup_runner backup
 backup_runner_options backup
 backup_segment_max_size backup
-backup_strategy backup
 backup_swift_container backup
 backup_use_gzip_compression backup
 backup_use_openssl_encryption backup
@@ -124,7 +122,6 @@ nova_proxy_admin_tenant_name nova
 nova_proxy_admin_user nova
 num_tries rpc
 os_region_name api
-periodic_interval rpc
 publish_errors logging
 pybasedir common
 pydev_debug debug
@@ -163,7 +160,6 @@ remote_nova_client clients
 remote_swift_client clients
 report_interval rpc
 resize_time_out taskmanager
-restore_namespace guestagent
 revert_time_out taskmanager
 root_grant compute
 root_grant_option compute
@@ -216,13 +212,17 @@ verify_swift_checksum_on_restore taskmanager
 volume_format_timeout volume
 volume_fstype volume
 volume_time_out volume
+cassandra/backup_incremental_strategy db_cassandra
+cassandra/backup_namespace db_cassandra
 cassandra/backup_strategy db_cassandra
 cassandra/device_path db_cassandra
 cassandra/mount_point db_cassandra
 cassandra/replication_strategy db_cassandra
+cassandra/restore_namespace db_cassandra
 cassandra/tcp_ports db_cassandra
 cassandra/udp_ports db_cassandra
 cassandra/volume_support db_cassandra
+couchbase/backup_incremental_strategy db_couchbase
 couchbase/backup_namespace db_couchbase
 couchbase/backup_strategy db_couchbase
 couchbase/device_path db_couchbase
@@ -267,6 +267,8 @@ matchmaker_redis/password redis
 matchmaker_redis/port redis
 matchmaker_ring/ringfile redis
 mongodb/api_strategy db_mongodb
+mongodb/backup_incremental_strategy db_mongodb
+mongodb/backup_namespace db_mongodb
 mongodb/backup_strategy db_mongodb
 mongodb/cluster_support db_mongodb
 mongodb/device_path db_mongodb
@@ -275,6 +277,7 @@ mongodb/mount_point db_mongodb
 mongodb/num_config_servers_per_cluster db_mongodb
 mongodb/num_query_routers_per_cluster db_mongodb
 mongodb/replication_strategy db_mongodb
+mongodb/restore_namespace db_mongodb
 mongodb/taskmanager_strategy db_mongodb
 mongodb/tcp_ports db_mongodb
 mongodb/udp_ports db_mongodb
@@ -309,6 +312,7 @@ percona/tcp_ports db_percona
 percona/udp_ports db_percona
 percona/usage_timeout db_percona
 percona/volume_support db_percona
+postgresql/backup_incremental_strategy db_postgresql
 postgresql/backup_namespace db_postgresql
 postgresql/backup_strategy db_postgresql
 postgresql/device_path db_postgresql
@@ -320,10 +324,13 @@ postgresql/root_on_create db_postgresql
 postgresql/tcp_ports db_postgresql
 postgresql/udp_ports db_postgresql
 postgresql/volume_support db_postgresql
+redis/backup_incremental_strategy db_redis
+redis/backup_namespace db_redis
 redis/backup_strategy db_redis
 redis/device_path db_redis
 redis/mount_point db_redis
 redis/replication_strategy db_redis
+redis/restore_namespace db_redis
 redis/tcp_ports db_redis
 redis/udp_ports db_redis
 redis/volume_support db_redis

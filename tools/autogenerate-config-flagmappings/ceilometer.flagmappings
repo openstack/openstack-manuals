@@ -10,8 +10,10 @@ debug debug
 default_log_levels logging
 disable_process_locking common
 dispatcher rpc
+enable_new_services nova
 fake_rabbit rabbitmq
 fatal_deprecations logging
+fatal_exception_format_errors logging
 glance_control_exchange exchange
 glance_page_size glance
 heat_control_exchange exchange
@@ -19,6 +21,8 @@ host common
 http_control_exchanges exchange
 hypervisor_inspector inspector
 instance_format logging
+instance_name_template logging
+instance_usage_audit_period logging
 instance_uuid_format logging
 ironic_exchange exchange
 keystone_control_exchange exchange
@@ -42,12 +46,16 @@ logging_exception_prefix logging
 matchmaker_heartbeat_freq redis
 matchmaker_heartbeat_ttl redis
 memcached_servers common
+monkey_patch nova
+monkey_patch_modules nova
+network_api_class nova
 neutron_control_exchange exchange
 notification_driver amqp
 notification_topics amqp
 notification_workers common
 nova_control_exchange exchange
 nova_http_log_debug debug
+password_length nova
 pipeline_cfg_file api
 policy_default_rule api
 policy_file api
@@ -58,6 +66,7 @@ qpid_hosts qpid
 qpid_password qpid
 qpid_port qpid
 qpid_protocol qpid
+qpid_receiver_capacity qpid
 qpid_sasl_mechanisms qpid
 qpid_tcp_nodelay qpid
 qpid_topology_version qpid
@@ -77,6 +86,7 @@ rabbit_virtual_host rabbitmq
 reseller_prefix swift
 reserved_metadata_length api
 reserved_metadata_namespace api
+rootwrap_config common
 rpc_backend rpc
 rpc_cast_timeout rpc
 rpc_conn_pool_size rpc
@@ -91,6 +101,7 @@ rpc_zmq_port rpc
 rpc_zmq_topic_backlog rpc
 sahara_control_exchange exchange
 sample_source exchange
+snapshot_name_template nova
 syslog_log_facility logging
 transport_url rpc
 trove_control_exchange exchange
@@ -110,6 +121,7 @@ alarm/rest_notifier_ssl_verify alarm
 alarm/user_alarm_quota alarm
 api/enable_reverse_dns_lookup api
 api/host api
+api/pecan_debug api
 api/port api
 cells/bandwidth_update_interval nova_cells
 cells/call_timeout nova_cells
@@ -151,6 +163,7 @@ database/sqlite_db database
 database/sqlite_synchronous database
 database/time_to_live database
 database/use_db_reconnect database
+database/use_tpool database
 dispatcher_file/backup_count collector
 dispatcher_file/file_path collector
 dispatcher_file/max_bytes collector
@@ -159,6 +172,7 @@ event/drop_unmatched_notifications events
 hardware/readonly_user_name tripleo
 hardware/readonly_user_password tripleo
 hardware/url_scheme tripleo
+ipmi/node_manager_init_retry ipmi
 keystone_authtoken/admin_password auth_token
 keystone_authtoken/admin_tenant_name auth_token
 keystone_authtoken/admin_token auth_token
@@ -208,6 +222,12 @@ service_credentials/os_region_name auth
 service_credentials/os_tenant_id auth
 service_credentials/os_tenant_name auth
 service_credentials/os_username auth
+service_types/glance service_types
+service_types/kwapi service_types
+service_types/neutron service_types
+service_types/nova service_types
+service_types/swift service_types
+upgrade_levels/cells nova_cells
 vmware/api_retry_count vmware
 vmware/host_ip vmware
 vmware/host_password vmware
