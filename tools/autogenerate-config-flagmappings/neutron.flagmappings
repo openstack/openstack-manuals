@@ -39,7 +39,6 @@ default_l3_gw_service_uuid vmware
 default_log_levels logging
 default_service_cluster_uuid vmware
 default_tz_uuid vmware
-device_connection_timeout cfg_agent
 device_driver lbaas
 dhcp_agent_notification common
 dhcp_agents_per_network common
@@ -64,9 +63,12 @@ fake_rabbit testing
 fatal_deprecations logging
 force_gateway_on_subnet common
 gateway_external_network_id l3_agent
+ha_confs_path l3_agent
+ha_vrrp_advert_int l3_agent
+ha_vrrp_auth_password l3_agent
+ha_vrrp_auth_type l3_agent
 handle_internal_only_routers l3_agent
 host common
-hosting_device_dead_timeout cfg_agent
 http_timeout vmware
 instance_format logging
 instance_uuid_format logging
@@ -77,6 +79,8 @@ kombu_ssl_ca_certs rabbitmq
 kombu_ssl_certfile rabbitmq
 kombu_ssl_keyfile rabbitmq
 kombu_ssl_version rabbitmq
+l3_ha l3_agent
+l3_ha_net_cidr l3_agent
 loadbalancer_pool_scheduler_driver lbaas
 lock_path common
 log_config_append logging
@@ -95,6 +99,7 @@ max_allowed_address_pair common
 max_dns_nameservers common
 max_fixed_ips_per_port common
 max_header_line api
+max_l3_agents_per_router l3_agent
 max_request_body_size api
 max_routes quotas
 max_subnet_host_routes common
@@ -106,6 +111,7 @@ metadata_port metadata
 metadata_proxy_shared_secret metadata
 metadata_proxy_socket metadata
 metadata_workers metadata
+min_l3_agents_per_router l3_agent
 network_auto_schedule scheduler
 network_device_mtu agent
 network_scheduler_driver scheduler
@@ -148,6 +154,7 @@ qpid_hosts qpid
 qpid_password qpid
 qpid_port qpid
 qpid_protocol qpid
+qpid_receiver_capacity qpid
 qpid_sasl_mechanisms qpid
 qpid_tcp_nodelay qpid
 qpid_topology_version qpid
@@ -176,11 +183,9 @@ router_delete_namespaces scheduler
 router_distributed dvr
 router_id l3_agent
 router_scheduler_driver scheduler
-routing_svc_helper_class cfg_agent
 rpc_backend rpc
 rpc_cast_timeout rpc
 rpc_conn_pool_size rpc
-rpc_loop_interval cfg_agent
 rpc_response_timeout rpc
 rpc_thread_pool_size rpc
 rpc_workers rpc
@@ -231,7 +236,6 @@ AGENT/tunnel_types openvswitch_agent
 AGENT/veth_mtu openvswitch_agent
 AGENT/vxlan_udp_port openvswitch_agent
 CISCO/model_class cisco
-CISCO/nexus_driver cisco
 CISCO/nexus_l3_enable cisco
 CISCO/provider_vlan_auto_create cisco
 CISCO/provider_vlan_auto_trunk cisco
@@ -253,11 +257,8 @@ CISCO_N1K/restrict_policy_profiles cisco
 CISCO_N1K/tenant_network_type cisco
 CISCO_N1K/tunnel_bridge cisco
 CISCO_N1K/vxlan_id_ranges cisco
-CISCO_PLUGINS/nexus_plugin cisco
-CISCO_PLUGINS/vswitch_plugin cisco
 CONTRAIL/api_server_ip opencontrail
 CONTRAIL/api_server_port opencontrail
-ESWITCH/apply_profile_patch ml2_mlnx
 ESWITCH/backoff_rate mlnx
 ESWITCH/daemon_endpoint mlnx
 ESWITCH/physical_interface_mappings mlnx
@@ -426,6 +427,7 @@ SDNVE/userid sdnve
 SDNVE_AGENT/polling_interval sdnve
 SDNVE_AGENT/root_helper sdnve
 SDNVE_AGENT/rpc sdnve
+SECURITYGROUP/enable_ipset securitygroups
 SECURITYGROUP/enable_security_group securitygroups
 SECURITYGROUP/firewall_driver securitygroups
 SRIOV_NIC/exclude_devices sriov
@@ -434,6 +436,8 @@ SWITCH/address brocade
 SWITCH/ostype brocade
 SWITCH/password brocade
 SWITCH/username brocade
+SYNCMANAGER/enable_sync nuage
+SYNCMANAGER/sync_interval nuage
 VLANS/network_vlan_ranges linuxbridge_agent
 VLANS/tenant_network_type linuxbridge_agent
 VXLAN/enable_vxlan linuxbridge_agent
@@ -442,6 +446,10 @@ VXLAN/local_ip linuxbridge_agent
 VXLAN/tos linuxbridge_agent
 VXLAN/ttl linuxbridge_agent
 VXLAN/vxlan_group linuxbridge_agent
+cfg_agent/device_connection_timeout cfg_agent
+cfg_agent/hosting_device_dead_timeout cfg_agent
+cfg_agent/routing_svc_helper_class cfg_agent
+cfg_agent/rpc_loop_interval cfg_agent
 cisco_csr_ipsec/status_check_interval cisco
 database/backend database
 database/connection database
@@ -566,6 +574,7 @@ ml2_brocade/ostype ml2_brocade
 ml2_brocade/osversion ml2_brocade
 ml2_brocade/password ml2_brocade
 ml2_brocade/physical_networks ml2_brocade
+ml2_brocade/rbridge_id ml2_brocade
 ml2_brocade/username ml2_brocade
 ml2_cisco/managed_physical_network ml2_cisco
 ml2_cisco/svi_round_robin cisco
