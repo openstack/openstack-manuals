@@ -13,6 +13,10 @@
       </tr>
     </thead>
     <tr>
+      <td>[DEFAULT] agent_down_time = 75</td>
+      <td>(IntOpt) Seconds to regard the agent is down; should be at least twice report_interval, to be sure the agent is down for good.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] agent_mode = legacy</td>
       <td>(StrOpt) The working mode for the agent. Allowed modes are: 'legacy' - this preserves the existing behavior where the L3 agent is deployed on a centralized networking node to provide L3 services like DNAT, and SNAT. Use this mode if you do not want to adopt DVR. 'dvr' - this mode enables DVR functionality and must be used for an L3 agent that runs on a compute host. 'dvr_snat' - this enables centralized SNAT support in conjunction with DVR.  This mode must be used for an L3 agent running on a centralized node (or in single-host deployments, e.g. devstack)</td>
     </tr>
@@ -37,20 +41,80 @@
       <td>(IntOpt) Interval between checks of child process liveness (seconds)</td>
     </tr>
     <tr>
-      <td>[DEFAULT] device_connection_timeout = 30</td>
-      <td>(IntOpt) Time in seconds for connecting to a hosting device</td>
+      <td>[DEFAULT] dhcp_agents_per_network = 1</td>
+      <td>(IntOpt) Number of DHCP agents scheduled to host a network.</td>
     </tr>
     <tr>
       <td>[DEFAULT] dvr_base_mac = fa:16:3f:00:00:00</td>
       <td>(StrOpt) The base mac address used for unique DVR instances by Neutron</td>
     </tr>
     <tr>
-      <td>[DEFAULT] hosting_device_dead_timeout = 300</td>
-      <td>(IntOpt) The time in seconds until a backlogged hosting device is presumed dead. This value should be set up high enough to recover from a period of connectivity loss or high load when the device may not be responding.</td>
+      <td>[DEFAULT] enable_metadata_proxy = True</td>
+      <td>(BoolOpt) Allow running metadata proxy.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] gateway_external_network_id = </td>
+      <td>(StrOpt) UUID of external network for routers implemented by the agents.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] ha_confs_path = $state_path/ha_confs</td>
+      <td>(StrOpt) Location to store keepalived/conntrackd config files</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] ha_vrrp_advert_int = 2</td>
+      <td>(IntOpt) The advertisement interval in seconds</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] ha_vrrp_auth_password = None</td>
+      <td>(StrOpt) VRRP authentication password</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] ha_vrrp_auth_type = PASS</td>
+      <td>(StrOpt) VRRP authentication type AH/PASS</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] handle_internal_only_routers = True</td>
+      <td>(BoolOpt) Agent should implement routers with no gateway</td>
     </tr>
     <tr>
       <td>[DEFAULT] kombu_reconnect_delay = 1.0</td>
       <td>(FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] l3_ha = False</td>
+      <td>(BoolOpt) Enable HA mode for virtual routers.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] l3_ha_net_cidr = 169.254.192.0/18</td>
+      <td>(StrOpt) Subnet used for the l3 HA admin network.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] loadbalancer_pool_scheduler_driver = neutron.services.loadbalancer.agent_scheduler.ChanceScheduler</td>
+      <td>(StrOpt) Driver to use for scheduling pool to a default loadbalancer agent</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] max_l3_agents_per_router = 3</td>
+      <td>(IntOpt) Maximum number of agents on which a router will be scheduled.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] max_routes = 30</td>
+      <td>(IntOpt) Maximum number of routes</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] metadata_port = 9697</td>
+      <td>(IntOpt) TCP Port used by Neutron metadata namespace proxy.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] min_l3_agents_per_router = 2</td>
+      <td>(IntOpt) Minimum number of agents on which a router will be scheduled.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] network_auto_schedule = True</td>
+      <td>(BoolOpt) Allow auto scheduling networks to DHCP agent.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] network_scheduler_driver = neutron.scheduler.dhcp_agent_scheduler.ChanceScheduler</td>
+      <td>(StrOpt) Driver to use for scheduling network to DHCP agent</td>
     </tr>
     <tr>
       <td>[DEFAULT] nova_api_insecure = False</td>
@@ -77,6 +141,10 @@
       <td>(StrOpt) Protocol to access nova metadata, http or https</td>
     </tr>
     <tr>
+      <td>[DEFAULT] qpid_receiver_capacity = 1</td>
+      <td>(IntOpt) The number of prefetched messages held by receiver.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] ra_confs = $state_path/ra</td>
       <td>(StrOpt) Location to store IPv6 RA config files</td>
     </tr>
@@ -85,16 +153,28 @@
       <td>(StrOpt) the RabbitMQ login method</td>
     </tr>
     <tr>
+      <td>[DEFAULT] router_auto_schedule = True</td>
+      <td>(BoolOpt) Allow auto scheduling of routers to L3 agent.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] router_delete_namespaces = False</td>
+      <td>(BoolOpt) Delete namespace after removing a router.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] router_distributed = False</td>
       <td>(BoolOpt) System-wide flag to determine the type of router that tenants can create. Only admin can override.</td>
     </tr>
     <tr>
-      <td>[DEFAULT] routing_svc_helper_class = neutron.plugins.cisco.cfg_agent.service_helpers.routing_svc_helper.RoutingServiceHelper</td>
-      <td>(StrOpt) Path of the routing service helper class.</td>
+      <td>[DEFAULT] router_id = </td>
+      <td>(StrOpt) If namespaces is disabled, the l3 agent can only configure a router that has the matching router ID.</td>
     </tr>
     <tr>
-      <td>[DEFAULT] rpc_loop_interval = 10</td>
-      <td>(IntOpt) Interval when the process_services() loop executes in seconds. This is when the config agent lets each service helper to process its neutron resources.</td>
+      <td>[DEFAULT] router_scheduler_driver = neutron.scheduler.l3_agent_scheduler.ChanceScheduler</td>
+      <td>(StrOpt) Driver to use for scheduling router to a default L3 agent</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] send_arp_for_ha = 3</td>
+      <td>(IntOpt) Send this many gratuitous ARPs for HA setup, if less than or equal to 0, the feature is disabled</td>
     </tr>
     <tr>
       <td>[DEFAULT] transport_url = None</td>
@@ -137,6 +217,14 @@
       <td>(IntOpt) Port to connect to opencontrail controller</td>
     </tr>
     <tr>
+      <td>[HYPERV] network_vlan_ranges = []</td>
+      <td>(ListOpt) List of &lt;physical_network&gt;:&lt;vlan_min&gt;:&lt;vlan_max&gt; or &lt;physical_network&gt;</td>
+    </tr>
+    <tr>
+      <td>[HYPERV] tenant_network_type = local</td>
+      <td>(StrOpt) Network type for tenant networks (local, flat, vlan or none)</td>
+    </tr>
+    <tr>
       <td>[NOVA] node_override_vif_distributed = []</td>
       <td>(ListOpt) Nova compute nodes to manually set VIF type to distributed</td>
     </tr>
@@ -153,8 +241,96 @@
       <td>(ListOpt) Nova compute nodes to manually set VIF type to vrouter</td>
     </tr>
     <tr>
+      <td>[NSX_DHCP] default_lease_time = 43200</td>
+      <td>(IntOpt) Default DHCP lease time</td>
+    </tr>
+    <tr>
+      <td>[NSX_DHCP] domain_name = openstacklocal</td>
+      <td>(StrOpt) Domain to use for building the hostnames</td>
+    </tr>
+    <tr>
+      <td>[NSX_DHCP] extra_domain_name_servers = []</td>
+      <td>(ListOpt) Comma separated list of additional domain name servers</td>
+    </tr>
+    <tr>
+      <td>[NSX_LSN] sync_on_missing_data = False</td>
+      <td>(BoolOpt) Pull LSN information from NSX in case it is missing from the local data store. This is useful to rebuild the local store in case of server recovery.</td>
+    </tr>
+    <tr>
+      <td>[NSX_METADATA] metadata_server_address = 127.0.0.1</td>
+      <td>(StrOpt) IP address used by Metadata server.</td>
+    </tr>
+    <tr>
+      <td>[NSX_METADATA] metadata_server_port = 8775</td>
+      <td>(IntOpt) TCP Port used by Metadata server.</td>
+    </tr>
+    <tr>
+      <td>[NSX_METADATA] metadata_shared_secret = </td>
+      <td>(StrOpt) Shared secret to sign instance-id request</td>
+    </tr>
+    <tr>
       <td>[OVS] use_veth_interconnection = False</td>
       <td>(BoolOpt) Use veths instead of patch ports to interconnect the integration bridge to physical bridges.</td>
+    </tr>
+    <tr>
+      <td>[PHYSICAL_INTERFACE] physical_interface = eth0</td>
+      <td>(StrOpt) The network interface to use when creatinga port</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_firewall = 1</td>
+      <td>(IntOpt) Number of firewalls allowed per tenant. A negative value means unlimited.</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_firewall_policy = 1</td>
+      <td>(IntOpt) Number of firewall policies allowed per tenant. A negative value means unlimited.</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_firewall_rule = 100</td>
+      <td>(IntOpt) Number of firewall rules allowed per tenant. A negative value means unlimited.</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_floatingip = 50</td>
+      <td>(IntOpt) Number of floating IPs allowed per tenant. A negative value means unlimited.</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_health_monitor = -1</td>
+      <td>(IntOpt) Number of health monitors allowed per tenant. A negative value means unlimited.</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_member = -1</td>
+      <td>(IntOpt) Number of pool members allowed per tenant. A negative value means unlimited.</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_network_gateway = 5</td>
+      <td>(IntOpt) Number of network gateways allowed per tenant, -1 for unlimited</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_packet_filter = 100</td>
+      <td>(IntOpt) Number of packet_filters allowed per tenant, -1 for unlimited</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_pool = 10</td>
+      <td>(IntOpt) Number of pools allowed per tenant. A negative value means unlimited.</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_router = 10</td>
+      <td>(IntOpt) Number of routers allowed per tenant. A negative value means unlimited.</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_security_group = 10</td>
+      <td>(IntOpt) Number of security groups allowed per tenant. A negative value means unlimited.</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_security_group_rule = 100</td>
+      <td>(IntOpt) Number of security rules allowed per tenant. A negative value means unlimited.</td>
+    </tr>
+    <tr>
+      <td>[QUOTAS] quota_vip = 10</td>
+      <td>(IntOpt) Number of vips allowed per tenant. A negative value means unlimited.</td>
+    </tr>
+    <tr>
+      <td>[SECURITYGROUP] enable_ipset = True</td>
+      <td>(BoolOpt) Use ipset to speed-up the iptables based security groups.</td>
     </tr>
     <tr>
       <td>[SRIOV_NIC] exclude_devices = []</td>
@@ -165,12 +341,44 @@
       <td>(ListOpt) List of &lt;physical_network&gt;:&lt;network_device&gt; mapping physical network names to the agent's node-specific physical network device of SR-IOV physical function to be used for VLAN networks. All physical networks listed in network_vlan_ranges on the server should have mappings to appropriate interfaces on each agent</td>
     </tr>
     <tr>
+      <td>[SWITCH] address = </td>
+      <td>(StrOpt) The address of the host to SSH to</td>
+    </tr>
+    <tr>
+      <td>[SWITCH] ostype = NOS</td>
+      <td>(StrOpt) Currently unused</td>
+    </tr>
+    <tr>
+      <td>[SWITCH] password = </td>
+      <td>(StrOpt) The SSH password to use</td>
+    </tr>
+    <tr>
+      <td>[SWITCH] username = </td>
+      <td>(StrOpt) The SSH username to use</td>
+    </tr>
+    <tr>
       <td>[SYNCMANAGER] enable_sync = False</td>
       <td>(BoolOpt) Nuage plugin will sync resources between openstack and VSD</td>
     </tr>
     <tr>
       <td>[SYNCMANAGER] sync_interval = 0</td>
       <td>(IntOpt) Sync interval in seconds between openstack and VSD. It defines how often the synchronization is done. If not set, value of 0 is assumed and sync will be performed only once, at the Neutron startup time.</td>
+    </tr>
+    <tr>
+      <td>[cfg_agent] device_connection_timeout = 30</td>
+      <td>(IntOpt) Time in seconds for connecting to a hosting device</td>
+    </tr>
+    <tr>
+      <td>[cfg_agent] hosting_device_dead_timeout = 300</td>
+      <td>(IntOpt) The time in seconds until a backlogged hosting device is presumed dead. This value should be set up high enough to recover from a period of connectivity loss or high load when the device may not be responding.</td>
+    </tr>
+    <tr>
+      <td>[cfg_agent] routing_svc_helper_class = neutron.plugins.cisco.cfg_agent.service_helpers.routing_svc_helper.RoutingServiceHelper</td>
+      <td>(StrOpt) Path of the routing service helper class.</td>
+    </tr>
+    <tr>
+      <td>[cfg_agent] rpc_loop_interval = 10</td>
+      <td>(IntOpt) Interval when the process_services() loop executes in seconds. This is when the config agent lets each service helper to process its neutron resources.</td>
     </tr>
     <tr>
       <td>[database] mysql_sql_mode = TRADITIONAL</td>
@@ -382,15 +590,15 @@
     </tr>
     <tr>
       <td>[ml2_fslsdn] crd_api_insecure = False</td>
-      <td>(BoolOpt) If set, ignore any SSL validation issues</td>
+      <td>(BoolOpt) If set, ignore any SSL validation issues.</td>
     </tr>
     <tr>
       <td>[ml2_fslsdn] crd_auth_strategy = keystone</td>
-      <td>(StrOpt) Auth strategy for connecting to neutron in admin context</td>
+      <td>(StrOpt) Auth strategy for connecting to neutron in admin context.</td>
     </tr>
     <tr>
       <td>[ml2_fslsdn] crd_auth_url = http://127.0.0.1:5000/v2.0/</td>
-      <td>(StrOpt) CRD Auth URL</td>
+      <td>(StrOpt) CRD Auth URL.</td>
     </tr>
     <tr>
       <td>[ml2_fslsdn] crd_ca_certificates_file = None</td>
@@ -398,27 +606,27 @@
     </tr>
     <tr>
       <td>[ml2_fslsdn] crd_password = password</td>
-      <td>(StrOpt) CRD Service Password</td>
+      <td>(StrOpt) CRD Service Password.</td>
     </tr>
     <tr>
       <td>[ml2_fslsdn] crd_region_name = RegionOne</td>
-      <td>(StrOpt) Region name for connecting to CRD Service in admin context</td>
+      <td>(StrOpt) Region name for connecting to CRD Service in admin context.</td>
     </tr>
     <tr>
       <td>[ml2_fslsdn] crd_tenant_name = service</td>
-      <td>(StrOpt) CRD Tenant Name</td>
+      <td>(StrOpt) CRD Tenant Name.</td>
     </tr>
     <tr>
       <td>[ml2_fslsdn] crd_url = http://127.0.0.1:9797</td>
-      <td>(StrOpt) URL for connecting to CRD service</td>
+      <td>(StrOpt) URL for connecting to CRD service.</td>
     </tr>
     <tr>
       <td>[ml2_fslsdn] crd_url_timeout = 30</td>
-      <td>(IntOpt) Timeout value for connecting to CRD service in seconds</td>
+      <td>(IntOpt) Timeout value for connecting to CRD service in seconds.</td>
     </tr>
     <tr>
       <td>[ml2_fslsdn] crd_user_name = crd</td>
-      <td>(StrOpt) CRD service Username</td>
+      <td>(StrOpt) CRD service Username.</td>
     </tr>
     <tr>
       <td>[ml2_sriov] agent_required = False</td>
@@ -449,12 +657,124 @@
       <td>(StrOpt) Name of N1kv port profile for T2 ports (i.e., ports carrying traffic from VLAN segmented networks).</td>
     </tr>
     <tr>
+      <td>[netscaler_driver] netscaler_ncc_password = None</td>
+      <td>(StrOpt) Password to login to the NetScaler Control Center Server.</td>
+    </tr>
+    <tr>
+      <td>[netscaler_driver] netscaler_ncc_uri = None</td>
+      <td>(StrOpt) The URL to reach the NetScaler Control Center Server.</td>
+    </tr>
+    <tr>
+      <td>[netscaler_driver] netscaler_ncc_username = None</td>
+      <td>(StrOpt) Username to login to the NetScaler Control Center Server.</td>
+    </tr>
+    <tr>
+      <td>[plumgriddirector] director_server = localhost</td>
+      <td>(StrOpt) PLUMgrid Director server to connect to</td>
+    </tr>
+    <tr>
+      <td>[plumgriddirector] director_server_port = 8080</td>
+      <td>(StrOpt) PLUMgrid Director server port to connect to</td>
+    </tr>
+    <tr>
       <td>[plumgriddirector] driver = neutron.plugins.plumgrid.drivers.plumlib.Plumlib</td>
       <td>(StrOpt) PLUMgrid Driver</td>
     </tr>
     <tr>
+      <td>[plumgriddirector] password = password</td>
+      <td>(StrOpt) PLUMgrid Director admin password</td>
+    </tr>
+    <tr>
+      <td>[plumgriddirector] servertimeout = 5</td>
+      <td>(IntOpt) PLUMgrid Director server timeout</td>
+    </tr>
+    <tr>
+      <td>[plumgriddirector] username = username</td>
+      <td>(StrOpt) PLUMgrid Director admin username</td>
+    </tr>
+    <tr>
+      <td>[radware] actions_to_skip = ['setup_l2_l3']</td>
+      <td>(ListOpt) List of actions that are not pushed to the completion queue.</td>
+    </tr>
+    <tr>
       <td>[radware] ha_secondary_address = None</td>
       <td>(StrOpt) IP address of secondary vDirect server.</td>
+    </tr>
+    <tr>
+      <td>[radware] l2_l3_ctor_params = {'ha_network_name': 'HA-Network', 'service': '_REPLACE_', 'ha_ip_pool_name': 'default', 'twoleg_enabled': '_REPLACE_', 'allocate_ha_ips': True, 'allocate_ha_vrrp': True}</td>
+      <td>(DictOpt) Parameter for l2_l3 workflow constructor.</td>
+    </tr>
+    <tr>
+      <td>[radware] l2_l3_setup_params = {'data_ip_address': '192.168.200.99', 'data_port': 1, 'gateway': '192.168.200.1', 'ha_port': 2, 'data_ip_mask': '255.255.255.0'}</td>
+      <td>(DictOpt) Parameter for l2_l3 workflow setup.</td>
+    </tr>
+    <tr>
+      <td>[radware] l2_l3_workflow_name = openstack_l2_l3</td>
+      <td>(StrOpt) Name of l2_l3 workflow. Default: openstack_l2_l3.</td>
+    </tr>
+    <tr>
+      <td>[radware] l4_action_name = BaseCreate</td>
+      <td>(StrOpt) Name of the l4 workflow action. Default: BaseCreate.</td>
+    </tr>
+    <tr>
+      <td>[radware] l4_workflow_name = openstack_l4</td>
+      <td>(StrOpt) Name of l4 workflow. Default: openstack_l4.</td>
+    </tr>
+    <tr>
+      <td>[radware] service_adc_type = VA</td>
+      <td>(StrOpt) Service ADC type. Default: VA.</td>
+    </tr>
+    <tr>
+      <td>[radware] service_adc_version = </td>
+      <td>(StrOpt) Service ADC version.</td>
+    </tr>
+    <tr>
+      <td>[radware] service_cache = 20</td>
+      <td>(IntOpt) Size of service cache. Default: 20.</td>
+    </tr>
+    <tr>
+      <td>[radware] service_compression_throughput = 100</td>
+      <td>(IntOpt) Service compression throughput. Default: 100.</td>
+    </tr>
+    <tr>
+      <td>[radware] service_ha_pair = False</td>
+      <td>(BoolOpt) Enables or disables the Service HA pair. Default: False.</td>
+    </tr>
+    <tr>
+      <td>[radware] service_isl_vlan = -1</td>
+      <td>(IntOpt) A required VLAN for the interswitch link to use.</td>
+    </tr>
+    <tr>
+      <td>[radware] service_resource_pool_ids = []</td>
+      <td>(ListOpt) Resource pool IDs.</td>
+    </tr>
+    <tr>
+      <td>[radware] service_session_mirroring_enabled = False</td>
+      <td>(BoolOpt) Enable or disable Alteon interswitch link for stateful session failover. Default: False.</td>
+    </tr>
+    <tr>
+      <td>[radware] service_ssl_throughput = 100</td>
+      <td>(IntOpt) Service SSL throughput. Default: 100.</td>
+    </tr>
+    <tr>
+      <td>[radware] service_throughput = 1000</td>
+      <td>(IntOpt) Service throughput. Default: 1000.</td>
+    </tr>
+    <tr>
+      <td>[radware] vdirect_address = None</td>
+      <td>(StrOpt) IP address of vDirect server.</td>
+    </tr>
+    <tr>
+      <td>[radware] vdirect_password = radware</td>
+      <td>(StrOpt) vDirect user password.</td>
+    </tr>
+    <tr>
+      <td>[radware] vdirect_user = vDirect</td>
+      <td>(StrOpt) vDirect user name.</td>
+    </tr>
+    <tr>
+      <td>[vpnagent] vpn_device_driver = ['neutron.services.vpn.device_drivers.ipsec.OpenSwanDriver']</td>
+      <td>(MultiStrOpt) The vpn device drivers Neutron will use</td>
     </tr>
   </table>
   <table>
@@ -478,6 +798,11 @@
       <td>[DEFAULT] default_log_levels</td>
       <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, iso8601=WARN</td>
       <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] endpoint_type</td>
+      <td>adminURL</td>
+      <td>publicURL</td>
     </tr>
     <tr>
       <td>[DEFAULT] force_gateway_on_subnet</td>
@@ -505,11 +830,6 @@
       <td>oslo.messaging._drivers.matchmaker.MatchMakerLocalhost</td>
     </tr>
     <tr>
-      <td>[DEFAULT] send_arp_for_ha</td>
-      <td>0</td>
-      <td>3</td>
-    </tr>
-    <tr>
       <td>[CISCO_N1K] poll_duration</td>
       <td>10</td>
       <td>60</td>
@@ -518,11 +838,6 @@
       <td>[NOVA] vif_types</td>
       <td>unbound, binding_failed, ovs, ivs, bridge, 802.1qbg, 802.1qbh, hyperv, midonet, mlnx_direct, hostdev, other</td>
       <td>unbound, binding_failed, ovs, ivs, bridge, 802.1qbg, 802.1qbh, hyperv, midonet, mlnx_direct, hostdev, hw_veb, dvs, other, distributed, vrouter</td>
-    </tr>
-    <tr>
-      <td>[QUOTAS] quota_firewall_rule</td>
-      <td>-1</td>
-      <td>100</td>
     </tr>
     <tr>
       <td>[SDNVE] default_tenant_type</td>
@@ -558,11 +873,6 @@
       <td>[keystone_authtoken] revocation_cache_time</td>
       <td>300</td>
       <td>10</td>
-    </tr>
-    <tr>
-      <td>[radware] l2_l3_ctor_params</td>
-      <td>{'ha_ip_pool_name': 'default', 'allocate_ha_vrrp': True, 'ha_network_name': 'HA-Network', 'service': '_REPLACE_', 'allocate_ha_ips': True}</td>
-      <td>{'ha_network_name': 'HA-Network', 'service': '_REPLACE_', 'ha_ip_pool_name': 'default', 'twoleg_enabled': '_REPLACE_', 'allocate_ha_ips': True, 'allocate_ha_vrrp': True}</td>
     </tr>
   </table>
   <table>

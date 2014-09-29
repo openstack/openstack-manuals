@@ -13,16 +13,40 @@
       </tr>
     </thead>
     <tr>
-      <td>[DEFAULT] admin_workers = 1</td>
-      <td>(IntOpt) The number of worker processes to serve the admin WSGI application</td>
+      <td>[DEFAULT] admin_workers = None</td>
+      <td>(IntOpt) The number of worker processes to serve the admin WSGI application. Defaults to number of CPUs (minimum of 2).</td>
     </tr>
     <tr>
-      <td>[DEFAULT] public_workers = 1</td>
-      <td>(IntOpt) The number of worker processes to serve the public WSGI application</td>
+      <td>[DEFAULT] public_workers = None</td>
+      <td>(IntOpt) The number of worker processes to serve the public WSGI application. Defaults to number of CPUs (minimum of 2).</td>
     </tr>
     <tr>
       <td>[DEFAULT] strict_password_check = False</td>
       <td>(BoolOpt) If set to true, strict password length checking is performed for password manipulation. If a password exceeds the maximum length, the operation will fail with an HTTP 403 Forbidden error. If set to false, passwords are automatically truncated to the maximum length.</td>
+    </tr>
+    <tr>
+      <td>[cache] memcache_dead_retry = 300</td>
+      <td>(IntOpt) Number of seconds memcached server is considered dead before it is tried again. (dogpile.cache.memcache and keystone.cache.memcache_pool backends only)</td>
+    </tr>
+    <tr>
+      <td>[cache] memcache_pool_connection_get_timeout = 10</td>
+      <td>(IntOpt) Number of seconds that an operation will wait to get a memcache client connection.</td>
+    </tr>
+    <tr>
+      <td>[cache] memcache_pool_maxsize = 10</td>
+      <td>(IntOpt) Max total number of open connections to every memcached server. (keystone.cache.memcache_pool backend only)</td>
+    </tr>
+    <tr>
+      <td>[cache] memcache_pool_unused_timeout = 60</td>
+      <td>(IntOpt) Number of seconds a connection to memcached is held unused in the pool before it is closed. (keystone.cache.memcache_pool backend only)</td>
+    </tr>
+    <tr>
+      <td>[cache] memcache_servers = ['localhost:11211']</td>
+      <td>(ListOpt) Memcache servers in the format of "host:port". (dogpile.cache.memcache and keystone.cache.memcache_pool backends only)</td>
+    </tr>
+    <tr>
+      <td>[cache] memcache_socket_timeout = 3</td>
+      <td>(IntOpt) Timeout in seconds for every call to a server. (dogpile.cache.memcache and keystone.cache.memcache_pool backends only)</td>
     </tr>
     <tr>
       <td>[catalog] cache_time = None</td>
@@ -193,6 +217,26 @@
       <td>(BoolOpt) Invert the meaning of the boolean enabled values. Some LDAP servers use a boolean lock attribute where "true" means an account is disabled. Setting "user_enabled_invert = true" will allow these lock attributes to be used. This setting will have no effect if "user_enabled_mask" or "user_enabled_emulation" settings are in use.</td>
     </tr>
     <tr>
+      <td>[memcache] dead_retry = 300</td>
+      <td>(IntOpt) Number of seconds memcached server is considered dead before it is tried again. This is used by the key value store system (e.g. token pooled memcached persistence backend).</td>
+    </tr>
+    <tr>
+      <td>[memcache] pool_connection_get_timeout = 10</td>
+      <td>(IntOpt) Number of seconds that an operation will wait to get a memcache client connection. This is used by the key value store system (e.g. token pooled memcached persistence backend).</td>
+    </tr>
+    <tr>
+      <td>[memcache] pool_maxsize = 10</td>
+      <td>(IntOpt) Max total number of open connections to every memcached server. This is used by the key value store system (e.g. token pooled memcached persistence backend).</td>
+    </tr>
+    <tr>
+      <td>[memcache] pool_unused_timeout = 60</td>
+      <td>(IntOpt) Number of seconds a connection to memcached is held unused in the pool before it is closed. This is used by the key value store system (e.g. token pooled memcached persistence backend).</td>
+    </tr>
+    <tr>
+      <td>[memcache] socket_timeout = 3</td>
+      <td>(IntOpt) Timeout in seconds for every call to a server. This is used by the key value store system (e.g. token pooled memcached persistence backend).</td>
+    </tr>
+    <tr>
       <td>[saml] assertion_expiration_time = 3600</td>
       <td>(IntOpt) Default TTL, in seconds, for any generated SAML assertion created by Keystone.</td>
     </tr>
@@ -327,8 +371,12 @@
       <td>[ldap] project_allow_create</td>
     </tr>
     <tr>
-      <td>[ldap] tenant_enabled_emulation</td>
-      <td>[ldap] project_enabled_emulation</td>
+      <td>[ldap] tenant_objectclass</td>
+      <td>[ldap] project_objectclass</td>
+    </tr>
+    <tr>
+      <td>[ldap] tenant_filter</td>
+      <td>[ldap] project_filter</td>
     </tr>
     <tr>
       <td>[ldap] tenant_member_attribute</td>
@@ -339,12 +387,16 @@
       <td>[ldap] project_additional_attribute_mapping</td>
     </tr>
     <tr>
-      <td>[ldap] tenant_filter</td>
-      <td>[ldap] project_filter</td>
+      <td>[ldap] tenant_allow_update</td>
+      <td>[ldap] project_allow_update</td>
     </tr>
     <tr>
-      <td>[ldap] tenant_domain_id_attribute</td>
-      <td>[ldap] project_domain_id_attribute</td>
+      <td>[ldap] tenant_desc_attribute</td>
+      <td>[ldap] project_desc_attribute</td>
+    </tr>
+    <tr>
+      <td>[ldap] tenant_enabled_emulation</td>
+      <td>[ldap] project_enabled_emulation</td>
     </tr>
     <tr>
       <td>[ldap] tenant_name_attribute</td>
@@ -355,32 +407,24 @@
       <td>[ldap] project_attribute_ignore</td>
     </tr>
     <tr>
-      <td>[ldap] tenant_allow_update</td>
-      <td>[ldap] project_allow_update</td>
-    </tr>
-    <tr>
-      <td>[ldap] tenant_tree_dn</td>
-      <td>[ldap] project_tree_dn</td>
+      <td>[ldap] tenant_enabled_attribute</td>
+      <td>[ldap] project_enabled_attribute</td>
     </tr>
     <tr>
       <td>[ldap] tenant_id_attribute</td>
       <td>[ldap] project_id_attribute</td>
     </tr>
     <tr>
-      <td>[ldap] tenant_desc_attribute</td>
-      <td>[ldap] project_desc_attribute</td>
+      <td>[ldap] tenant_domain_id_attribute</td>
+      <td>[ldap] project_domain_id_attribute</td>
     </tr>
     <tr>
-      <td>[ldap] tenant_objectclass</td>
-      <td>[ldap] project_objectclass</td>
+      <td>[ldap] tenant_tree_dn</td>
+      <td>[ldap] project_tree_dn</td>
     </tr>
     <tr>
       <td>[ldap] tenant_enabled_emulation_dn</td>
       <td>[ldap] project_enabled_emulation_dn</td>
-    </tr>
-    <tr>
-      <td>[ldap] tenant_enabled_attribute</td>
-      <td>[ldap] project_enabled_attribute</td>
     </tr>
   </table>
 </section>

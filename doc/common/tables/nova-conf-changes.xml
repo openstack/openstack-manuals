@@ -33,6 +33,14 @@
       <td>(IntOpt) Length of injected file path</td>
     </tr>
     <tr>
+      <td>[DEFAULT] quota_server_group_members = 10</td>
+      <td>(IntOpt) Number of servers per server group</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] quota_server_groups = 10</td>
+      <td>(IntOpt) Number of server groups per project</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] scheduler_use_baremetal_filters = False</td>
       <td>(BoolOpt) Flag to decide whether to use baremetal_scheduler_default_filters or not.</td>
     </tr>
@@ -177,6 +185,10 @@
       <td>(ListOpt) List of guid targets and ranges.Syntax is guest-gid:host-gid:countMaximum of 5 allowed.</td>
     </tr>
     <tr>
+      <td>[libvirt] hw_disk_discard = None</td>
+      <td>(StrOpt) Discard option for nova managed disks (valid options are: ignore, unmap). Need Libvirt(1.0.6) Qemu1.5 (raw format) Qemu1.6(qcow2 format)</td>
+    </tr>
+    <tr>
       <td>[libvirt] hw_machine_type = None</td>
       <td>(ListOpt) For qemu or KVM guests, set this option to specify a default machine type per host architecture. You can find a list of supported machine types in your environment by checking the output of the "virsh capabilities"command. The format of the value for this config option is host-arch=machine-type. For example: x86_64=machinetype1,armv7l=machinetype2</td>
     </tr>
@@ -305,7 +317,7 @@
     <tr>
       <td>[DEFAULT] default_log_levels</td>
       <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN</td>
-      <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, keystonemiddleware=WARN, routes.middleware=WARN</td>
+      <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN</td>
     </tr>
     <tr>
       <td>[DEFAULT] dhcp_lease_time</td>
@@ -354,10 +366,6 @@
       </tr>
     </thead>
     <tr>
-      <td>[DEFAULT] cinder_api_insecure</td>
-      <td>[cinder] api_insecure</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] quota_injected_file_path_bytes</td>
       <td>[DEFAULT] quota_injected_file_path_length</td>
     </tr>
@@ -368,10 +376,6 @@
     <tr>
       <td>[DEFAULT] neutron_ca_certificates_file</td>
       <td>[neutron] ca_certificates_file</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] cinder_ca_certificates_file</td>
-      <td>[cinder] ca_certificates_file</td>
     </tr>
     <tr>
       <td>[DEFAULT] neutron_api_insecure</td>
@@ -400,10 +404,6 @@
     <tr>
       <td>[DEFAULT] neutron_metadata_proxy_shared_secret</td>
       <td>[neutron] metadata_proxy_shared_secret</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] cinder_cross_az_attach</td>
-      <td>[cinder] cross_az_attach</td>
     </tr>
     <tr>
       <td>[DEFAULT] glance_port</td>
@@ -438,10 +438,6 @@
       <td>[glance] api_insecure</td>
     </tr>
     <tr>
-      <td>[DEFAULT] cinder_http_retries</td>
-      <td>[cinder] http_retries</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] glance_host</td>
       <td>[glance] host</td>
     </tr>
@@ -450,24 +446,12 @@
       <td>[neutron] admin_auth_url</td>
     </tr>
     <tr>
-      <td>[DEFAULT] cinder_endpoint_template</td>
-      <td>[cinder] endpoint_template</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] neutron_extension_sync_interval</td>
       <td>[neutron] extension_sync_interval</td>
     </tr>
     <tr>
       <td>[DEFAULT] neutron_url_timeout</td>
       <td>[neutron] url_timeout</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] os_region_name</td>
-      <td>[cinder] os_region_name</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] cinder_catalog_info</td>
-      <td>[cinder] catalog_info</td>
     </tr>
   </table>
 </section>

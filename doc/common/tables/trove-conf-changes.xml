@@ -14,11 +14,11 @@
     </thead>
     <tr>
       <td>[DEFAULT] bind_host = 0.0.0.0</td>
-      <td>(StrOpt) The IP address the API will listen on.</td>
+      <td>(StrOpt) IP address the API server will listen on.</td>
     </tr>
     <tr>
       <td>[DEFAULT] black_list_regex = None</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Exclude IP addresses that match this regular expression.</td>
     </tr>
     <tr>
       <td>[DEFAULT] cinder_service_type = volumev2</td>
@@ -26,19 +26,19 @@
     </tr>
     <tr>
       <td>[DEFAULT] cinder_volume_type = None</td>
-      <td>(StrOpt) Volume type to use when provisioning a cinder volume.</td>
+      <td>(StrOpt) Volume type to use when provisioning a Cinder volume.</td>
     </tr>
     <tr>
       <td>[DEFAULT] cluster_delete_time_out = 180</td>
-      <td>(IntOpt) None</td>
+      <td>(IntOpt) Maximum time (in seconds) to wait for a cluster delete.</td>
     </tr>
     <tr>
       <td>[DEFAULT] cluster_usage_timeout = 675</td>
-      <td>(IntOpt) Timeout to wait for a cluster to become active.</td>
+      <td>(IntOpt) Maximum time (in seconds) to wait for a cluster to become active.</td>
     </tr>
     <tr>
       <td>[DEFAULT] clusters_page_size = 20</td>
-      <td>(IntOpt) None</td>
+      <td>(IntOpt) Page size for listing clusters.</td>
     </tr>
     <tr>
       <td>[DEFAULT] conductor_manager = trove.conductor.manager.Manager</td>
@@ -54,11 +54,11 @@
     </tr>
     <tr>
       <td>[DEFAULT] http_mgmt_post_rate = 200</td>
-      <td>(IntOpt) None</td>
+      <td>(IntOpt) Maximum number of management HTTP 'POST' requests (per minute).</td>
     </tr>
     <tr>
       <td>[DEFAULT] network_driver = trove.network.nova.NovaNetwork</td>
-      <td>(StrOpt) Describes the actual network manager used for the management of network attributes (security groups, floating IPs, etc.)</td>
+      <td>(StrOpt) Describes the actual network manager used for the management of network attributes (security groups, floating IPs, etc.).</td>
     </tr>
     <tr>
       <td>[DEFAULT] neutron_service_type = network</td>
@@ -78,7 +78,7 @@
     </tr>
     <tr>
       <td>[DEFAULT] remote_neutron_client = trove.common.remote.neutron_client</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Client to send Neutron calls to.</td>
     </tr>
     <tr>
       <td>[DEFAULT] swift_service_type = object-store</td>
@@ -86,7 +86,7 @@
     </tr>
     <tr>
       <td>[DEFAULT] usage_timeout = 600</td>
-      <td>(IntOpt) Timeout to wait for a guest to become active.</td>
+      <td>(IntOpt) Maximum time (in seconds) to wait for a Guest to become active.</td>
     </tr>
     <tr>
       <td>[DEFAULT] use_nova_server_config_drive = False</td>
@@ -97,24 +97,40 @@
       <td>(BoolOpt) (Optional) Enables or disables syslog rfc5424 format for logging. If enabled, prefixes the MSG part of the syslog message with APP-NAME (RFC5424). The format without the APP-NAME is deprecated in I, and will be removed in J.</td>
     </tr>
     <tr>
+      <td>[cassandra] backup_incremental_strategy = {}</td>
+      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.</td>
+    </tr>
+    <tr>
+      <td>[cassandra] backup_namespace = None</td>
+      <td>(StrOpt) Namespace to load backup strategies from.</td>
+    </tr>
+    <tr>
       <td>[cassandra] device_path = /dev/vdb</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Device path for volume if volume support is enabled.</td>
     </tr>
     <tr>
       <td>[cassandra] replication_strategy = None</td>
       <td>(StrOpt) Default strategy for replication.</td>
     </tr>
     <tr>
+      <td>[cassandra] restore_namespace = None</td>
+      <td>(StrOpt) Namespace to load restore strategies from.</td>
+    </tr>
+    <tr>
       <td>[cassandra] volume_support = True</td>
-      <td>(BoolOpt) Whether to provision a cinder volume for datadir.</td>
+      <td>(BoolOpt) Whether to provision a Cinder volume for datadir.</td>
+    </tr>
+    <tr>
+      <td>[couchbase] backup_incremental_strategy = {}</td>
+      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.</td>
     </tr>
     <tr>
       <td>[couchbase] backup_namespace = trove.guestagent.strategies.backup.couchbase_impl</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Namespace to load backup strategies from.</td>
     </tr>
     <tr>
       <td>[couchbase] device_path = /dev/vdb</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Device path for volume if volume support is enabled.</td>
     </tr>
     <tr>
       <td>[couchbase] replication_strategy = None</td>
@@ -122,7 +138,7 @@
     </tr>
     <tr>
       <td>[couchbase] restore_namespace = trove.guestagent.strategies.restore.couchbase_impl</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Namespace to load restore strategies from.</td>
     </tr>
     <tr>
       <td>[couchbase] root_on_create = True</td>
@@ -130,7 +146,7 @@
     </tr>
     <tr>
       <td>[couchbase] volume_support = True</td>
-      <td>(BoolOpt) Whether to provision a cinder volume for datadir.</td>
+      <td>(BoolOpt) Whether to provision a Cinder volume for datadir.</td>
     </tr>
     <tr>
       <td>[keystone_authtoken] check_revocations_for_cached = False</td>
@@ -149,16 +165,24 @@
       <td>(StrOpt) Class that implements datastore-specific API logic.</td>
     </tr>
     <tr>
+      <td>[mongodb] backup_incremental_strategy = {}</td>
+      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.</td>
+    </tr>
+    <tr>
+      <td>[mongodb] backup_namespace = None</td>
+      <td>(StrOpt) Namespace to load backup strategies from.</td>
+    </tr>
+    <tr>
       <td>[mongodb] cluster_support = True</td>
       <td>(BoolOpt) Enable clusters to be created and managed.</td>
     </tr>
     <tr>
       <td>[mongodb] device_path = /dev/vdb</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Device path for volume if volume support is enabled.</td>
     </tr>
     <tr>
       <td>[mongodb] guestagent_strategy = trove.common.strategies.mongodb.guestagent.MongoDbGuestAgentStrategy</td>
-      <td>(StrOpt) Class that implements datastore-specific guest agent API logic.</td>
+      <td>(StrOpt) Class that implements datastore-specific Guest Agent API logic.</td>
     </tr>
     <tr>
       <td>[mongodb] num_config_servers_per_cluster = 3</td>
@@ -173,24 +197,28 @@
       <td>(StrOpt) Default strategy for replication.</td>
     </tr>
     <tr>
+      <td>[mongodb] restore_namespace = None</td>
+      <td>(StrOpt) Namespace to load restore strategies from.</td>
+    </tr>
+    <tr>
       <td>[mongodb] taskmanager_strategy = trove.common.strategies.mongodb.taskmanager.MongoDbTaskManagerStrategy</td>
       <td>(StrOpt) Class that implements datastore-specific task manager logic.</td>
     </tr>
     <tr>
       <td>[mongodb] volume_support = True</td>
-      <td>(BoolOpt) Whether to provision a cinder volume for datadir.</td>
+      <td>(BoolOpt) Whether to provision a Cinder volume for datadir.</td>
     </tr>
     <tr>
       <td>[mysql] backup_incremental_strategy = {'InnoBackupEx': 'InnoBackupExIncremental'}</td>
-      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.</td>
+      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental backup, the runner will use the default full backup.</td>
     </tr>
     <tr>
       <td>[mysql] backup_namespace = trove.guestagent.strategies.backup.mysql_impl</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Namespace to load backup strategies from.</td>
     </tr>
     <tr>
       <td>[mysql] device_path = /dev/vdb</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Device path for volume if volume support is enabled.</td>
     </tr>
     <tr>
       <td>[mysql] replication_namespace = trove.guestagent.strategies.replication.mysql_binlog</td>
@@ -210,23 +238,23 @@
     </tr>
     <tr>
       <td>[mysql] restore_namespace = trove.guestagent.strategies.restore.mysql_impl</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Namespace to load restore strategies from.</td>
     </tr>
     <tr>
       <td>[mysql] volume_support = True</td>
-      <td>(BoolOpt) Whether to provision a cinder volume for datadir.</td>
+      <td>(BoolOpt) Whether to provision a Cinder volume for datadir.</td>
     </tr>
     <tr>
       <td>[percona] backup_incremental_strategy = {'InnoBackupEx': 'InnoBackupExIncremental'}</td>
-      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.</td>
+      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental backup, the runner will use the default full backup.</td>
     </tr>
     <tr>
       <td>[percona] backup_namespace = trove.guestagent.strategies.backup.mysql_impl</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Namespace to load backup strategies from.</td>
     </tr>
     <tr>
       <td>[percona] device_path = /dev/vdb</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Device path for volume if volume support is enabled.</td>
     </tr>
     <tr>
       <td>[percona] replication_namespace = trove.guestagent.strategies.replication.mysql_binlog</td>
@@ -246,15 +274,19 @@
     </tr>
     <tr>
       <td>[percona] restore_namespace = trove.guestagent.strategies.restore.mysql_impl</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Namespace to load restore strategies from.</td>
     </tr>
     <tr>
       <td>[percona] volume_support = True</td>
-      <td>(BoolOpt) Whether to provision a cinder volume for datadir.</td>
+      <td>(BoolOpt) Whether to provision a Cinder volume for datadir.</td>
+    </tr>
+    <tr>
+      <td>[postgresql] backup_incremental_strategy = {}</td>
+      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.</td>
     </tr>
     <tr>
       <td>[postgresql] backup_namespace = trove.guestagent.strategies.backup.postgresql_impl</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Namespace to load backup strategies from.</td>
     </tr>
     <tr>
       <td>[postgresql] backup_strategy = PgDump</td>
@@ -278,7 +310,7 @@
     </tr>
     <tr>
       <td>[postgresql] restore_namespace = trove.guestagent.strategies.restore.postgresql_impl</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Namespace to load restore strategies from.</td>
     </tr>
     <tr>
       <td>[postgresql] root_on_create = False</td>
@@ -294,19 +326,31 @@
     </tr>
     <tr>
       <td>[postgresql] volume_support = True</td>
-      <td>(BoolOpt) Whether to provision a cinder volume for datadir.</td>
+      <td>(BoolOpt) Whether to provision a Cinder volume for datadir.</td>
+    </tr>
+    <tr>
+      <td>[redis] backup_incremental_strategy = {}</td>
+      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.</td>
+    </tr>
+    <tr>
+      <td>[redis] backup_namespace = None</td>
+      <td>(StrOpt) Namespace to load backup strategies from.</td>
     </tr>
     <tr>
       <td>[redis] device_path = None</td>
-      <td>(StrOpt) None</td>
+      <td>(StrOpt) Device path for volume if volume support is enabled.</td>
     </tr>
     <tr>
       <td>[redis] replication_strategy = None</td>
       <td>(StrOpt) Default strategy for replication.</td>
     </tr>
     <tr>
+      <td>[redis] restore_namespace = None</td>
+      <td>(StrOpt) Namespace to load restore strategies from.</td>
+    </tr>
+    <tr>
       <td>[redis] volume_support = False</td>
-      <td>(BoolOpt) Whether to provision a cinder volume for datadir.</td>
+      <td>(BoolOpt) Whether to provision a Cinder volume for datadir.</td>
     </tr>
   </table>
   <table>
@@ -322,11 +366,6 @@
       </tr>
     </thead>
     <tr>
-      <td>[DEFAULT] agent_call_high_timeout</td>
-      <td>60</td>
-      <td>1000</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] cinder_url</td>
       <td>http://localhost:8776/v2</td>
       <td>None</td>
@@ -340,6 +379,11 @@
       <td>[DEFAULT] heat_url</td>
       <td>http://localhost:8004/v1</td>
       <td>None</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] notification_service_id</td>
+      <td>{'couchbase': 'fa62fe68-74d9-4779-a24e-36f19602c415', 'mongodb': 'c8c907af-7375-456f-b929-b637ff9209ee', 'mysql': '2f3ff068-2bfb-4f70-9a9d-a6bb65bc084b', 'redis': 'b216ffc5-1947-456c-a4cf-70f94c05f7d0', 'cassandra': '459a230d-4e97-4344-9067-2a54a310b0ed'}</td>
+      <td>{'postgresql': 'ac277e0d-4f21-40aa-b347-1ea31e571720', 'couchbase': 'fa62fe68-74d9-4779-a24e-36f19602c415', 'mongodb': 'c8c907af-7375-456f-b929-b637ff9209ee', 'redis': 'b216ffc5-1947-456c-a4cf-70f94c05f7d0', 'mysql': '2f3ff068-2bfb-4f70-9a9d-a6bb65bc084b', 'cassandra': '459a230d-4e97-4344-9067-2a54a310b0ed'}</td>
     </tr>
     <tr>
       <td>[DEFAULT] nova_compute_url</td>
@@ -383,16 +427,104 @@
       </tr>
     </thead>
     <tr>
-      <td>[DEFAULT] hostname_require_ipv4</td>
-      <td>[DEFAULT] hostname_require_valid_ip</td>
+      <td>[DEFAULT] backup_namespace</td>
+      <td>[redis] backup_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_strategy</td>
+      <td>[mysql] backup_strategy</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] restore_namespace</td>
+      <td>[mysql] restore_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] restore_namespace</td>
+      <td>[mongodb] restore_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] restore_namespace</td>
+      <td>[redis] restore_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_namespace</td>
+      <td>[cassandra] backup_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_strategy</td>
+      <td>[redis] backup_strategy</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_incremental_strategy</td>
+      <td>[couchbase] backup_incremental_strategy</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_namespace</td>
+      <td>[mongodb] backup_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_strategy</td>
+      <td>[cassandra] backup_strategy</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] restore_namespace</td>
+      <td>[percona] restore_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_namespace</td>
+      <td>[couchbase] backup_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] restore_namespace</td>
+      <td>[couchbase] restore_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_incremental_strategy</td>
+      <td>[cassandra] backup_incremental_strategy</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_incremental_strategy</td>
+      <td>[mongodb] backup_incremental_strategy</td>
     </tr>
     <tr>
       <td>[DEFAULT] backup_incremental_strategy</td>
       <td>[percona] backup_incremental_strategy</td>
     </tr>
     <tr>
+      <td>[DEFAULT] backup_strategy</td>
+      <td>[mongodb] backup_strategy</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] backup_incremental_strategy</td>
       <td>[mysql] backup_incremental_strategy</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] restore_namespace</td>
+      <td>[cassandra] restore_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] hostname_require_ipv4</td>
+      <td>[DEFAULT] hostname_require_valid_ip</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_namespace</td>
+      <td>[mysql] backup_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_strategy</td>
+      <td>[percona] backup_strategy</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_incremental_strategy</td>
+      <td>[redis] backup_incremental_strategy</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_namespace</td>
+      <td>[percona] backup_namespace</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_strategy</td>
+      <td>[couchbase] backup_strategy</td>
     </tr>
   </table>
 </section>
