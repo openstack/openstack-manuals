@@ -754,4 +754,81 @@
       </listitem>
     </itemizedlist>
   </section>
+  <section xml:id="set_up_replication">
+    <title>Set up database replication</title>
+    <para>You can create a replica of an existing database instance. When you make subsequent changes to the original instance, the system automatically applies those changes to the replica.</para>
+    <itemizedlist>
+      <listitem>
+        <para>Replicas are read-only.</para>
+      </listitem>
+      <listitem>
+        <para>When you create a replica, do not specify the <option>--users</option> or <option>--databases</option> options.</para>
+      </listitem>
+      <listitem>
+        <para>You can choose a smaller volume or flavor for a replica than for the original, but the replica's volume must be big enough to hold the data snapshot from the original.</para>
+      </listitem>
+    </itemizedlist>
+    <para>This example shows you how to replicate a MySQL database instance.</para>
+    <procedure>
+      <title>To set up replication</title>
+      <step>
+        <title>Get the instance ID</title>
+        <para>Get the ID of the original instance you want to replicate:</para>
+        <screen><prompt>$</prompt> <userinput>trove list</userinput>
+<computeroutput>+--------------------------------------+----------+-------------+-------------------+--------+-----------+------+
+|                  id                  |  name      | datastore | datastore_version | status | flavor_id | size |
++--------------------------------------+------------+-----------+-------------------+--------+-----------+------+
+| 97b4b853-80f6-414f-ba6f-c6f455a79ae6 | base_1     |   mysql   |     mysql-5.5     | ACTIVE |     10    |  2   |
++--------------------------------------+----------+-------------+-------------------+--------+-----------+------+</computeroutput></screen>
+      </step>
+      <step>
+        <title>Create the replica</title>
+        <para>Create a new instance that will be a replica of the original instance. You do this by passing in the <option>--replica_of</option> option with the trove <command>create</command> command. This example creates a replica called <literal>replica_1</literal>. <literal>replica_1</literal> is a replica of the original instance, <literal>base_1</literal>:</para>
+        <screen><prompt>$</prompt> <userinput>trove create replica_1 6 --size=5 --datastore_version mysql-5.5 --datastore mysql --replica_of <replaceable>ID_OF_ORIGINAL_INSTANCE</replaceable></userinput></screen>
+      </step>
+      <step>
+        <title>Verify replication status</title>
+        <para>Pass in <literal>replica_1</literal>'s instance ID with the trove <command>show</command> command to verify that the newly created <literal>replica_1</literal> instance is a replica of the original <literal>base_1</literal>. Note that the <literal>replica_of</literal> property is set to the ID of <literal>base_1</literal>.</para>
+<screen><prompt>$</prompt> <userinput>trove show <replaceable>INSTANCE_ID_OF_REPLICA_1</replaceable></userinput>
+<computeroutput>+-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| created           | 2014-09-16T11:16:49                  |
+| datastore         | mysql                                |
+| datastore_version | mysql-5.5                            |
+| flavor            | 6                                    |
+| id                | 49c6eff6-ef91-4eff-91c0-efbda7e83c38 |
+| name              | replica_1                            |
+| replica_of        | 97b4b853-80f6-414f-ba6f-c6f455a79ae6 |
+| status            | BUILD                                |
+| updated           | 2014-09-16T11:16:49                  |
+| volume            | 5                                    |
++-------------------+--------------------------------------+</computeroutput></screen>
+        <para>Now pass in <literal>base_1</literal>'s instance ID with the trove <command>show</command> command to list the replica(s) associated with the original instance. Note that the <literal>replicas</literal> property is set to the ID of <literal>replica_1</literal>. If there are multiple replicas, they appear as a comma-separated list.</para>
+        <screen><prompt>$</prompt> <userinput>trove show <replaceable>INSTANCE_ID_OF_BASE_1</replaceable></userinput>
+<computeroutput>+-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| created           | 2014-09-16T11:04:56                  |
+| datastore         | mysql                                |
+| datastore_version | mysql-5.5                            |
+| flavor            | 6                                    |
+| id                | 97b4b853-80f6-414f-ba6f-c6f455a79ae6 |
+| ip                | 172.16.200.2                         |
+| name              | base_1                               |
+| replicas          | 49c6eff6-ef91-4eff-91c0-efbda7e83c38 |
+| status            | ACTIVE                               |
+| updated           | 2014-09-16T11:05:06                  |
+| volume            | 5                                    |
+| volume_used       | 0.11                                 |
++-------------------+--------------------------------------+</computeroutput></screen>
+      </step>
+      <step>
+        <title>Detach the replica</title>
+        <para>If the original instance goes down, you can detach the replica. The replica becomes a standalone database instance. You can then take the new standalone instance and create a new replica of that instance.</para>
+        <para>You detach a replica using the trove <command>detach-replica</command> command:</para>
+        <screen><prompt>$</prompt> <userinput>trove detach-replica <replaceable>INSTANCE_ID_OF_REPLICA</replaceable></userinput></screen>
+      </step>
+    </procedure>
+  </section>
 </section>
