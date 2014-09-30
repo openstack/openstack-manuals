@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-09-14 06:09+0000\n"
+"POT-Creation-Date: 2014-09-30 06:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -725,7 +725,7 @@ msgstr ""
 msgid "To list servers"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_nova.xml:43(para) ./doc/user-guide/section_sdk_nova.xml:85(para) ./doc/user-guide/section_sdk_nova.xml:161(para) ./doc/user-guide/section_sdk_nova.xml:251(para) ./doc/user-guide/section_sdk_nova.xml:338(para) ./doc/user-guide/section_sdk_nova.xml:399(para) ./doc/user-guide/section_sdk_nova.xml:462(para) ./doc/user-guide/section_sdk_neutron.xml:246(para) ./doc/user-guide/section_sdk_neutron.xml:330(para) ./doc/user-guide/section_sdk_neutron.xml:405(para) ./doc/user-guide/section_sdk_neutron.xml:455(para) ./doc/user-guide/section_sdk_neutron.xml:504(para)
+#: ./doc/user-guide/section_sdk_nova.xml:43(para) ./doc/user-guide/section_sdk_nova.xml:85(para) ./doc/user-guide/section_sdk_nova.xml:161(para) ./doc/user-guide/section_sdk_nova.xml:251(para) ./doc/user-guide/section_sdk_nova.xml:338(para) ./doc/user-guide/section_sdk_nova.xml:399(para) ./doc/user-guide/section_sdk_nova.xml:462(para) ./doc/user-guide/section_sdk_neutron.xml:246(para) ./doc/user-guide/section_sdk_neutron.xml:341(para) ./doc/user-guide/section_sdk_neutron.xml:416(para) ./doc/user-guide/section_sdk_neutron.xml:466(para) ./doc/user-guide/section_sdk_neutron.xml:515(para)
 msgid "Import the following modules:"
 msgstr ""
 
@@ -3629,6 +3629,90 @@ msgstr ""
 msgid "Delete a configuration group, using the trove <placeholder-1/> command. You might want to do this if no instances use a group."
 msgstr ""
 
+#: ./doc/user-guide/section_cli_trove.xml:758(title)
+msgid "Set up database replication"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:759(para)
+msgid "You can create a replica of an existing database instance. When you make subsequent changes to the original instance, the system automatically applies those changes to the replica."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:762(para)
+msgid "Replicas are read-only."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:765(para)
+msgid "When you create a replica, do not specify the <option>--users</option> or <option>--databases</option> options."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:768(para)
+msgid "You can choose a smaller volume or flavor for a replica than for the original, but the replica's volume must be big enough to hold the data snapshot from the original."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:771(para)
+msgid "This example shows you how to replicate a MySQL database instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:773(title)
+msgid "To set up replication"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:775(title)
+msgid "Get the instance ID"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:776(para)
+msgid "Get the ID of the original instance you want to replicate:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:785(title)
+msgid "Create the replica"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:786(para)
+msgid "Create a new instance that will be a replica of the original instance. You do this by passing in the <option>--replica_of</option> option with the trove <placeholder-1/> command. This example creates a replica called <literal>replica_1</literal>. <literal>replica_1</literal> is a replica of the original instance, <literal>base_1</literal>:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:787(replaceable)
+msgid "ID_OF_ORIGINAL_INSTANCE"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:790(title)
+msgid "Verify replication status"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:791(para)
+msgid "Pass in <literal>replica_1</literal>'s instance ID with the trove <placeholder-1/> command to verify that the newly created <literal>replica_1</literal> instance is a replica of the original <literal>base_1</literal>. Note that the <literal>replica_of</literal> property is set to the ID of <literal>base_1</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:792(replaceable)
+msgid "INSTANCE_ID_OF_REPLICA_1"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:807(para)
+msgid "Now pass in <literal>base_1</literal>'s instance ID with the trove <placeholder-1/> command to list the replica(s) associated with the original instance. Note that the <literal>replicas</literal> property is set to the ID of <literal>replica_1</literal>. If there are multiple replicas, they appear as a comma-separated list."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:808(replaceable)
+msgid "INSTANCE_ID_OF_BASE_1"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:827(title)
+msgid "Detach the replica"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:828(para)
+msgid "If the original instance goes down, you can detach the replica. The replica becomes a standalone database instance. You can then take the new standalone instance and create a new replica of that instance."
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:829(para)
+msgid "You detach a replica using the trove <placeholder-1/> command:"
+msgstr ""
+
+#: ./doc/user-guide/section_cli_trove.xml:830(replaceable)
+msgid "INSTANCE_ID_OF_REPLICA"
+msgstr ""
+
 #: ./doc/user-guide/section_dashboard_launch_instances.xml:7(title)
 msgid "Launch and manage instances"
 msgstr ""
@@ -3829,7 +3913,7 @@ msgstr ""
 msgid "The following program lists networks:"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:138(para) ./doc/user-guide/section_sdk_neutron.xml:197(para) ./doc/user-guide/section_sdk_neutron.xml:427(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:138(para) ./doc/user-guide/section_sdk_neutron.xml:197(para) ./doc/user-guide/section_sdk_neutron.xml:438(para)
 msgid "For <code>print_values</code> see <xref linkend=\"sdk_neutron_print_values\"/>."
 msgstr ""
 
@@ -3885,99 +3969,99 @@ msgstr ""
 msgid "Create a router and add a port to the subnet:"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:290(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:296(title)
 msgid "Create router: complete code listing"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:324(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:335(title)
 msgid "Delete a network"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:325(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:336(para)
 msgid "This example queries OpenStack Networking to delete a network."
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:328(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:339(title)
 msgid "To delete a network"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:335(para) ./doc/user-guide/section_sdk_neutron.xml:411(para) ./doc/user-guide/section_sdk_neutron.xml:461(para) ./doc/user-guide/section_sdk_neutron.xml:510(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:346(para) ./doc/user-guide/section_sdk_neutron.xml:422(para) ./doc/user-guide/section_sdk_neutron.xml:472(para) ./doc/user-guide/section_sdk_neutron.xml:521(para)
 msgid "Get credentials. See <xref linkend=\"sdk_neutron_get_credentials\"/>."
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:340(para) ./doc/user-guide/section_sdk_neutron.xml:416(para) ./doc/user-guide/section_sdk_neutron.xml:466(para) ./doc/user-guide/section_sdk_neutron.xml:515(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:351(para) ./doc/user-guide/section_sdk_neutron.xml:427(para) ./doc/user-guide/section_sdk_neutron.xml:477(para) ./doc/user-guide/section_sdk_neutron.xml:526(para)
 msgid "Instantiate the <literal>neutron</literal> client object by using the <literal>credentials</literal> dictionary object:"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:347(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:358(para)
 msgid "Delete the network:"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:369(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:380(title)
 msgid "Delete network: complete code listing"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:399(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:410(title)
 msgid "List routers"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:400(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:411(para)
 msgid "This example queries OpenStack Networking to list all routers."
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:403(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:414(title)
 msgid "To list routers"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:423(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:434(para)
 msgid "List the routers"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:433(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:444(title)
 msgid "List routers: complete code listing"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:449(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:460(title)
 msgid "List security groups"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:450(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:461(para)
 msgid "This example queries OpenStack Networking to list security groups."
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:453(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:464(title)
 msgid "To list security groups"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:473(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:484(para)
 msgid "List Security groups"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:479(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:490(title)
 msgid "List security groups: complete code listing"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:491(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:502(para)
 msgid "OpenStack Networking security groups are case-sensitive while the <systemitem class=\"service\">nova-network</systemitem> security groups are case-insensitive."
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:498(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:509(title)
 msgid "List subnets"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:499(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:510(para)
 msgid "This example queries OpenStack Networking to list subnets."
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:502(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:513(title)
 msgid "To list subnets"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:522(para)
+#: ./doc/user-guide/section_sdk_neutron.xml:533(para)
 msgid "List subnets:"
 msgstr ""
 
-#: ./doc/user-guide/section_sdk_neutron.xml:528(title)
+#: ./doc/user-guide/section_sdk_neutron.xml:539(title)
 msgid "List subnets: complete code listing"
 msgstr ""
 
