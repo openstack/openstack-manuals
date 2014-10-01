@@ -23,7 +23,7 @@
                 <para>Server and Core (with the Hyper-V role enabled), and Hyper-V Server</para>
             </listitem>
         </itemizedlist>
-   </para>
+    </para>
     <section xml:id="installation-architecture-hyper-v">
         <title>Hyper-V configuration</title>
         <para>The following sections discuss how to prepare the Windows Hyper-V node for operation
@@ -35,14 +35,16 @@
             it into an OS volume and VM volume. It is up to the individual deploying to
             decide.</para>
     </section>
-    <section xml:id="configure-ntp-hyper-v">
+    <section xml:id="configure-ntp-windows">
         <title>Configure NTP</title>
-        <para>Network time services must be configured to ensure proper operation of the Hyper-V
-            compute node. To set network time on your Hyper-V host you must run the
-            following commands:</para>
+        <para>Network time services must be configured to ensure proper operation of the OpenStack nodes. To set network time on your Windows host you must run the following commands:</para>
         <screen><prompt>C:\></prompt><userinput>net stop w32time</userinput>
 <prompt>C:\></prompt><userinput>w32tm /config /manualpeerlist:pool.ntp.org,0x8 /syncfromflags:MANUAL</userinput>
 <prompt>C:\></prompt><userinput>net start w32time</userinput></screen>
+        <para>Keep in mind that the node will have to be time synchronized with
+            the other nodes of your OpenStack environment, so it is important to use
+            the same NTP server. Note that in case of an Active Directory environment,
+            you may do this only for the AD Domain Controller.</para>
     </section>
     <section xml:id="hyper-v-virtual-switch">
         <title>Configure Hyper-V virtual switching</title>
@@ -152,136 +154,121 @@
                 >http://ariessysadmin.blogspot.ro/2012/04/hyper-v-live-migration-of-windows.html</link>
        </para>
     </section>
-    <section xml:id="python-requirements-hyper-v">
-        <title>Python Requirements</title>
-        <para><emphasis role="bold">Python</emphasis></para>
-        <para>Python 2.7.3 must be installed prior to installing the OpenStack Compute Driver on the
-            Hyper-V server. Download and then install the MSI for windows here:<itemizedlist>
+    <section xml:id="windows-requirements">
+        <title>Requirements</title>
+        <section xml:id="windows-python-requirements">
+            <title>Python</title>
+            <para>Python 2.7 32bit must be installed as most of the libraries are not
+                working properly on the 64bit version.</para>
+            <procedure>
+                <title>Setting up Python prerequisites</title>
+                <step>
+                    <para>Download and then install it using the MSI installer from
+                        here:</para>
+                    <para><link
+                        xlink:href="http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi">
+                        http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi</link></para>
+                    <screen><prompt>PS C:\&gt;</prompt> <userinput>$src = “http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi”</userinput>
+<prompt>PS C:\&gt;</prompt> <userinput>$dest = “$env:temp\python-2.7.3.msi”</userinput>
+<prompt>PS C:\&gt;</prompt> <userinput>Invoke-WebRequest –Uri $src –OutFile $dest</userinput>
+<prompt>PS C:\&gt;</prompt> <userinput>Unblock-File $dest</userinput>
+<prompt>PS C:\&gt;</prompt> <userinput>Start-Process $dest</userinput></screen>
+                </step>
+                <step>
+                    <para>Make sure that the <filename>Python</filename> and
+                    <filename>Python\Scripts</filename> paths are set up in the
+                    <envar>PATH</envar> environment variable.</para>
+                </step>
+            </procedure>
+        </section>
+        <section xml:id="windows-python-dependencies">
+            <title>Python dependencies</title>
+            <para>The following packages need to be downloaded and manually
+                installed:</para>
+            <variablelist>
+                <varlistentry>
+                    <term><package>setuptools</package></term>
+                    <listitem>
+                        <para><link
+                            xlink:href="http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11.win32-py2.7.exe">
+                            http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11.win32-py2.7.exel</link></para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><package>pip</package></term>
+                    <listitem>
+                    <para><link
+                        xlink:href="http://pip.readthedocs.org/en/latest/installing.html">
+                        http://pip.readthedocs.org/en/latest/installing.html</link></para>
+                </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><package>MySQL-python</package></term>
+                    <listitem>
+                        <para><link xlink:href="http://codegood.com/download/10/">
+                            http://codegood.com/download/10/</link></para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><package>PyWin32</package></term>
+                    <listitem>
+                        <para><link
+                            xlink:href="http://sourceforge.net/projects/pywin32/files/pywin32/Build%20217/pywin32-217.win32-py2.7.exe">
+                            http://sourceforge.net/projects/pywin32/files/pywin32/Build%20217/pywin32-217.win32-py2.7.exe</link></para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><package>Greenlet</package></term>
+                    <listitem>
+                        <para><link
+                            xlink:href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#greenlet">
+                            http://www.lfd.uci.edu/~gohlke/pythonlibs/#greenlet</link></para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><package>PyCryto</package></term>
+                    <listitem>
+                        <para><link
+                            xlink:href="http://www.voidspace.org.uk/downloads/pycrypto26/pycrypto-2.6.win32-py2.7.exe">
+                            http://www.voidspace.org.uk/downloads/pycrypto26/pycrypto-2.6.win32-py2.7.exe</link></para>
+                    </listitem>
+                </varlistentry>
+            </variablelist>
+            <para>The following packages must be installed with pip:</para>
+            <itemizedlist>
                 <listitem>
-                    <para>
-                        <link xlink:href="http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi"
-                            >http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi</link>
-                   </para>
+                    <para><package>ecdsa</package></para>
                 </listitem>
                 <listitem>
-                    <para>Install the MSI accepting the default options.</para>
+                    <para><package>amqp</package></para>
                 </listitem>
                 <listitem>
-                    <para>The installation will put python in C:/python27.</para>
+                    <para><package>wmi</package></para>
                 </listitem>
             </itemizedlist>
-       </para>
-        <para><emphasis role="bold">Setuptools</emphasis></para>
-        <para>You will require pip to install the necessary python module dependencies. The
-            installer will install under the C:\python27 directory structure. Setuptools for Python
-            2.7 for Windows can be download from here:</para>
-        <para><link
-                xlink:href="http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11.win32-py2.7.exe#md5=57e1e64f6b7c7f1d2eddfc9746bbaf20"
-                > http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11.win32-py2.7.exe
-            </link>
-       </para>
-        <para><emphasis role="bold">Python Dependencies</emphasis></para>
-        <para>You must download and manually install the following packages on the Compute
-            node:</para>
-        <itemizedlist>
-            <listitem>
-                <para><emphasis role="bold">MySQL-python</emphasis></para>
-                <para>
-                    <link xlink:href="http://codegood.com/download/10/"
-                        >http://codegood.com/download/10/</link>
-               </para>
-            </listitem>
-            <listitem>
-                <para><emphasis role="bold">pywin32</emphasis></para>
-                <para>Download and run the installer from the following location</para>
-                <para>
-                    <link
-                        xlink:href="http://sourceforge.net/projects/pywin32/files/pywin32/Build%20217/pywin32-217.win32-py2.7.exe"
-                        >http://sourceforge.net/projects/pywin32/files/pywin32/Build%20217/pywin32-217.win32-py2.7.exe</link>
-               </para>
-            </listitem>
-            <listitem>
-                <para><emphasis role="bold">greenlet</emphasis></para>
-                <para>Select the link below:</para>
-                <para><link xlink:href="http://www.lfd.uci.edu/~gohlke/pythonlibs/"
-                        >http://www.lfd.uci.edu/~gohlke/pythonlibs/</link></para>
-                <para>You must scroll to the greenlet section for the following file:
-                    greenlet-0.4.0.win32-py2.7.exe</para>
-                <para>Click on the file, to initiate the download. Once the download is complete,
-                    run the installer.</para>
-            </listitem>
-        </itemizedlist>
-        <para>You must install the following Python packages through <command>easy_install</command> or <command>pip</command>. Run the
-            following replacing PACKAGENAME with the following packages:</para>
-        <screen><prompt>C:\></prompt><userinput>c:\Python27\Scripts\pip.exe install <replaceable>PACKAGE_NAME</replaceable></userinput></screen>
-        <itemizedlist>
-            <listitem>
-                <para>amqplib</para>
-            </listitem>
-            <listitem>
-                <para>anyjson</para>
-            </listitem>
-            <listitem>
-                <para>distribute</para>
-            </listitem>
-            <listitem>
-                <para>eventlet</para>
-            </listitem>
-            <listitem>
-                <para>httplib2</para>
-            </listitem>
-            <listitem>
-                <para>iso8601</para>
-            </listitem>
-            <listitem>
-                <para>jsonschema</para>
-            </listitem>
-            <listitem>
-                <para>kombu</para>
-            </listitem>
-            <listitem>
-                <para>netaddr</para>
-            </listitem>
-            <listitem>
-                <para>paste</para>
-            </listitem>
-            <listitem>
-                <para>paste-deploy</para>
-            </listitem>
-            <listitem>
-                <para>prettytable</para>
-            </listitem>
-            <listitem>
-                <para>python-cinderclient</para>
-            </listitem>
-            <listitem>
-                <para>python-glanceclient</para>
-            </listitem>
-            <listitem>
-                <para>python-keystoneclient</para>
-            </listitem>
-            <listitem>
-                <para>repoze.lru</para>
-            </listitem>
-            <listitem>
-                <para>routes</para>
-            </listitem>
-            <listitem>
-                <para>sqlalchemy</para>
-            </listitem>
-            <listitem>
-                <para>simplejson</para>
-            </listitem>
-            <listitem>
-                <para>warlock</para>
-            </listitem>
-            <listitem>
-                <para>webob</para>
-            </listitem>
-            <listitem>
-                <para>wmi</para>
-            </listitem>
-        </itemizedlist>
+            <screen><prompt>PS C:\&gt;</prompt> <userinput>pip install ecdsa</userinput>
+<prompt>PS C:\&gt;</prompt> <userinput>pip install amqp</userinput>
+<prompt>PS C:\&gt;</prompt> <userinput>pip install wmi</userinput></screen>
+        </section>
+        <section xml:id="windows-other-dependencies">
+            <title>Other dependencies</title>
+            <para><literal>qemu-img</literal> is required for some of the image
+                related operations. You can get it from here: <link
+                xlink:href="http://qemu.weilnetz.de/">http://qemu.weilnetz.de/</link>. You
+                must make sure that the <literal>qemu-img</literal> path is set in the
+                PATH environment variable.</para>
+            <para>Some Python packages need to be compiled, so you may use MinGW or
+                Visual Studio. You can get MinGW from here: <link
+                xlink:href="http://sourceforge.net/projects/mingw/">
+                http://sourceforge.net/projects/mingw/</link>. You must configure which
+                compiler to be used for this purpose by using the
+            <filename>distutils.cfg</filename> file in
+            <filename>$Python27\Lib\distutils</filename>, which can contain:</para>
+            <programlisting language="ini">[build]
+compiler = mingw32</programlisting>
+            <para>As a last step for setting up MinGW, make sure that the MinGW
+            binaries' directories are set up in PATH.</para>
+        </section>
     </section>
     <section xml:id="install-nova-windows-hyper-v">
         <title>Install Nova-compute</title>
@@ -354,7 +341,7 @@ connection=mysql://nova:passwd@<replaceable>IP_ADDRESS</replaceable>/nova</progr
                     controller; however, I'm not seeing smiley faces for Hyper-V compute nodes, what
                     do I do?</para>
                 <para><emphasis role="italic">Verify that you are synchronized with a network time
-                        source. For instructions about how to configure NTP on your Hyper-V compute node, see <xref linkend="configure-ntp-hyper-v"/>.</emphasis></para>
+                        source. For instructions about how to configure NTP on your Hyper-V compute node, see <xref linkend="configure-ntp-windows"/>.</emphasis></para>
             </listitem>
         </itemizedlist>
     </section>
