@@ -549,4 +549,40 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
             </step>
         </procedure>
     </section>
+    <section xml:id="install_neutron-hyperv-agent">
+    <title>Configure Hyper-V L2 agent</title>
+    <para>Before you install the OpenStack Networking Hyper-V L2 agent on a
+            Hyper-V compute node, ensure the compute node has been configured
+            correctly using these <link
+                xlink:href="http://docs.openstack.org/trunk/config-reference/content/hyper-v-virtualization-platform.html"
+                >instructions</link>.</para>
+    <procedure>
+      <title>To install the OpenStack Networking Hyper-V agent and configure the node</title>
+      <step>
+        <para>Download the OpenStack Networking code from the repository:</para>
+        <screen><prompt>></prompt> <userinput>cd C:\OpenStack\</userinput>
+<prompt>></prompt> <userinput>git clone https://github.com/openstack/neutron.git</userinput></screen>
+      </step>
+      <step>
+        <para>Install the OpenStack Networking Hyper-V Agent:</para>
+        <screen><prompt>></prompt> cd C:\OpenStack\neutron\
+<prompt>></prompt> python setup.py install</screen>
+      </step>
+      <step>
+        <para>Copy the <filename>policy.json</filename> file:</para>
+        <screen><prompt>></prompt> <userinput>xcopy C:\OpenStack\neutron\etc\policy.json C:\etc\</userinput></screen>
+      </step>
+      <step>
+        <para>Create the <filename>C:\etc\neutron-hyperv-agent.conf</filename> file and add the
+        proper configuration options and the <link
+        xlink:href="http://docs.openstack.org/trunk/config-reference/content/networking-plugin-hyperv_agent.html">Hyper-V
+        related options</link>. Here is a sample config file:</para>
+        <programlisting><xi:include parse="text" href="../../common/samples/neutron-hyperv-agent.conf"/></programlisting>
+      </step>
+      <step>
+        <para>Start the OpenStack Networking Hyper-V agent:</para>
+        <screen><prompt>></prompt> <userinput>C:\Python27\Scripts\neutron-hyperv-agent.exe --config-file C:\etc\neutron-hyperv-agent.conf</userinput></screen>
+      </step>
+    </procedure>
+    </section>
 </section>
