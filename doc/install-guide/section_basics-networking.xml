@@ -28,19 +28,8 @@
     <link os="sles;opensuse"
     xlink:href="http://activedoc.opensuse.org/book/opensuse-reference/chapter-13-basic-networking"
     >openSUSE documentation.</link></para>
-  <procedure os="fedora">
-    <title>To disable <systemitem class="service">NetworkManager</systemitem>
-      and enable the <systemitem class="service">network</systemitem>
-      service:</title>
-    <step>
-      <screen><prompt>#</prompt> <userinput>service NetworkManager stop</userinput>
-<prompt>#</prompt> <userinput>service network start</userinput>
-<prompt>#</prompt> <userinput>chkconfig NetworkManager off</userinput>
-<prompt>#</prompt> <userinput>chkconfig network on</userinput></screen>
-    </step>
-  </procedure>
   <procedure os="sles;opensuse">
-    <title>To disable <systemitem class="service">NetworkManager</systemitem>:</title>
+    <title>To disable Network Manager:</title>
     <step>
       <para>Use the YaST network module:</para>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>yast2 network</userinput></screen>
@@ -52,28 +41,17 @@
       </para>
     </step>
   </procedure>
-  <para os="rhel;centos">RHEL and derivatives including CentOS and Scientific
-    Linux enable a restrictive <glossterm>firewall</glossterm> by default.
-    During this installation, certain steps will fail unless you alter or
-    disable the firewall. For further information about securing your
-    installation, refer to the
-    <link xlink:href="http://docs.openstack.org/sec/">
-    OpenStack Security Guide</link>.</para>
-  <para os="fedora">On Fedora, <literal>firewalld</literal> replaces
-    <literal>iptables</literal> as the default firewall system. While you
-    can use <literal>firewalld</literal> successfully, this guide
-    references <literal>iptables</literal> for compatibility with other
-    distributions.</para>
-  <procedure os="fedora">
-    <title>To disable <literal>firewalld</literal> and enable
-      <literal>iptables</literal>:</title>
-    <step>
-      <screen><prompt>#</prompt> <userinput>service firewalld stop</userinput>
-<prompt>#</prompt> <userinput>service iptables start</userinput>
-<prompt>#</prompt> <userinput>chkconfig firewalld off</userinput>
-<prompt>#</prompt> <userinput>chkconfig iptables on</userinput></screen>
-    </step>
-  </procedure>
+  <para os="rhel;centos">RHEL and CentOS enable a restrictive
+    <glossterm>firewall</glossterm> by default. During the installation
+    process, certain steps will fail unless you alter or disable the
+    firewall. For more information about securing your environment, refer
+    to the <link xlink:href="http://docs.openstack.org/sec/">OpenStack
+    Security Guide</link>.</para>
+  <para os="ubuntu;debian;sles;opensuse">Your distribution does not enable a
+    restrictive <glossterm>firewall</glossterm> by default. For more
+    information about securing your environment, refer to the
+    <link xlink:href="http://docs.openstack.org/sec/">OpenStack
+    Security Guide</link>.</para>
   <para>Proceed to network configuration for the example
     <link linkend="basics-networking-neutron">OpenStack Networking (neutron)
     </link> or <link linkend="basics-networking-nova">legacy

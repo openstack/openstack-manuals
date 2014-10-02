@@ -31,7 +31,7 @@
         <para>Edit the <filename>/etc/ntp.conf</filename> file and add,
           change, or remove the following keys as necessary for your
           environment:</para>
-        <programlisting>server <replaceable>NTP_SERVER</replaceable> iburst
+        <programlisting language="ini">server <replaceable>NTP_SERVER</replaceable> iburst
 restrict -4 default kod notrap nomodify
 restrict -6 default kod notrap nomodify</programlisting>
         <para>Replace <replaceable>NTP_SERVER</replaceable> with the
@@ -55,10 +55,14 @@ restrict -6 default kod notrap nomodify</programlisting>
       <step os="rhel;centos;fedora;sles;opensuse">
         <para>Start the NTP service and configure it to start when the system
           boots:</para>
-        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service ntpd start</userinput>
-<prompt>#</prompt> <userinput>chkconfig ntpd on</userinput></screen>
-        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service ntp start</userinput>
+        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable ntpd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start ntpd.service</userinput></screen>
+        <para os="sles">On SLES:</para>
+        <screen os="sles"><prompt>#</prompt> <userinput>service ntp start</userinput>
 <prompt>#</prompt> <userinput>chkconfig ntp on</userinput></screen>
+        <para os="opensuse">On openSUSE:</para>
+        <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable ntpd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start ntpd.service</userinput></screen>
       </step>
     </procedure>
   </section>
@@ -80,7 +84,7 @@ restrict -6 default kod notrap nomodify</programlisting>
         <para>Edit the <filename>/etc/ntp.conf</filename> file:</para>
         <para>Comment out or remove all but one <literal>server</literal>
           key and change it to reference the controller node.</para>
-        <programlisting>server <replaceable>controller</replaceable> iburst</programlisting>
+        <programlisting language="ini">server <replaceable>controller</replaceable> iburst</programlisting>
         <note os="ubuntu;debian">
           <para>Remove the <filename>/var/lib/ntp/ntp.conf.dhcp</filename> file
             if it exists.</para>
@@ -93,10 +97,14 @@ restrict -6 default kod notrap nomodify</programlisting>
       <step os="rhel;centos;fedora;sles;opensuse">
         <para>Start the NTP service and configure it to start when the system
           boots:</para>
-        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service ntpd start</userinput>
-<prompt>#</prompt> <userinput>chkconfig ntpd on</userinput></screen>
-        <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service ntp start</userinput>
+        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>systemctl enable ntpd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start ntpd.service</userinput></screen>
+        <para os="sles">On SLES:</para>
+        <screen os="sles"><prompt>#</prompt> <userinput>service ntp start</userinput>
 <prompt>#</prompt> <userinput>chkconfig ntp on</userinput></screen>
+        <para os="opensuse">On openSUSE:</para>
+        <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable ntpd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start ntpd.service</userinput></screen>
       </step>
     </procedure>
   </section>
