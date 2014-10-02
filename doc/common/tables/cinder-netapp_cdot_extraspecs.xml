@@ -15,60 +15,57 @@
           </thead>
           <tbody>
               <tr>
-                  <td><literal>netapp:raid_type</literal></td>
+                  <td><literal>netapp_raid_type</literal></td>
                   <td>String</td>
                   <td>Limit the candidate volume list based on one of the following raid types: <literal>raid4, raid_dp</literal>.</td>
               </tr>
               <tr>
-                  <td><literal>netapp:disk_type</literal></td>
+                  <td><literal>netapp_disk_type</literal></td>
                   <td>String</td>
-                  <td>Limit the candidate volume list based on one of the following disk types: <literal>ATA, BSAS, EATA, FCAL, FSAS, LUN, MSATA,
-                      SAS, SATA, SCSI, XATA, XSAS, or SSD.</literal></td>
+                  <td>Limit the candidate volume list based on one of the following disk types: <literal>ATA, BSAS, EATA, FCAL, FSAS, LUN, MSATA, SAS, SATA, SCSI, XATA, XSAS, or SSD.</literal></td>
               </tr>
               <tr>
-                  <td><literal>netapp:qos_policy_group</literal></td>
+                  <td><literal>netapp:qos_policy_group</literal><footnote xml:id="netapp-directive-extra-specs"><para>Please note that this extra spec has a colon (<literal>:</literal>) in its name because it is used by the driver to assign the QoS policy group to the OpenStack Block Storage volume after it has been provisioned.</para></footnote></td>
                   <td>String</td>
-                  <td>Specify the name of a QoS policy group, which defines measurable Service Level Objectives, that should be applied to the OpenStack Block Storage volume
-                      at the time of volume creation. Ensure that the QoS policy group object within Data ONTAP should be defined before an OpenStack Block Storage volume
-                      is created, and that the QoS policy group is not associated with the destination FlexVol volume.</td>
+                  <td>Specify the name of a QoS policy group, which defines measurable Service Level Objectives, that should be applied to the OpenStack Block Storage volume at the time of volume creation. Ensure that the QoS policy group object within Data ONTAP should be defined before an OpenStack Block Storage volume is created, and that the QoS policy group is not associated with the destination FlexVol volume.</td>
               </tr>
               <tr>
-                  <td><literal>netapp_mirrored</literal><footnote xml:id="netapp-conflict-extra-specs"><para>If both the positive and negative specs for a pair are specified (for example, <literal>netapp_dedup</literal> and <literal>netapp_nodedup</literal>) and set to the same value within a single <literal>extra_specs</literal> list, then neither spec will be utilized by the driver.</para></footnote></td>
+                  <td><literal>netapp_mirrored</literal></td>
                   <td>Boolean</td>
                   <td>Limit the candidate volume list to only the ones that are mirrored on the storage controller.</td>
               </tr>
               <tr>
-                  <td><literal>netapp_unmirrored</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td><literal>netapp_unmirrored</literal><footnote xml:id="netapp-deprecated-extra-specs"><para>In the Juno release, these negative-assertion extra specs are formally deprecated by the NetApp unified driver. Instead of using the deprecated negative-assertion extra specs (for example, <option>netapp_unmirrored</option>) with a value of <literal>true</literal>, use the corresponding positive-assertion extra spec (for example, <option>netapp_mirrored</option>) with a value of <literal>false</literal>.</para></footnote></td>
                   <td>Boolean</td>
                   <td>Limit the candidate volume list to only the ones that are not mirrored on the storage controller.</td>
               </tr>
               <tr>
-                  <td><literal>netapp_dedup</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td><literal>netapp_dedup</literal></td>
                   <td>Boolean</td>
                   <td>Limit the candidate volume list to only the ones that have deduplication enabled on the storage controller.</td>
               </tr>
               <tr>
-                  <td><literal>netapp_nodedup</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td><literal>netapp_nodedup</literal><footnoteref linkend="netapp-deprecated-extra-specs"/></td>
                   <td>Boolean</td>
                   <td>Limit the candidate volume list to only the ones that have deduplication disabled on the storage controller.</td>
               </tr>
               <tr>
-                  <td><literal>netapp_compression</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td><literal>netapp_compression</literal></td>
                   <td>Boolean</td>
                   <td>Limit the candidate volume list to only the ones that have compression enabled on the storage controller.</td>
               </tr>
               <tr>
-                  <td><literal>netapp_nocompression</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td><literal>netapp_nocompression</literal><footnoteref linkend="netapp-deprecated-extra-specs"/></td>
                   <td>Boolean</td>
                   <td>Limit the candidate volume list to only the ones that have compression disabled on the storage controller.</td>
               </tr>
               <tr>
-                  <td><literal>netapp_thin_provisioned</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td><literal>netapp_thin_provisioned</literal></td>
                   <td>Boolean</td>
                   <td>Limit the candidate volume list to only the ones that support thin provisioning on the storage controller.</td>
               </tr>
               <tr>
-                  <td><literal>netapp_thick_provisioned</literal><footnoteref linkend="netapp-conflict-extra-specs"/></td>
+                  <td><literal>netapp_thick_provisioned</literal><footnoteref linkend="netapp-deprecated-extra-specs"/></td>
                   <td>Boolean</td>
                   <td>Limit the candidate volume list to only the ones that support thick provisioning on the storage controller.</td>
               </tr>
