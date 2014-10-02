@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<section xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xml:id="pure-storage-driver" version="5.0">
+  <title>Pure Storage volume driver</title>
+  <?dbhtml stop-chunking?>
+    <para>The Pure Storage FlashArray volume driver for OpenStack Block Storage interacts with
+      configured Pure Storage arrays and supports various operations.</para>
+    <para>This driver can be configured in OpenStack Block Storage to work with the iSCSI
+      storage protocol.</para>
+    <para>This driver is compatible with Purity FlashArrays that support the REST API (Purity
+      3.4.0 and newer) and that are capable of iSCSI connectivity. This release supports
+      installation with OpenStack clusters running the Juno version that use the KVM or QEMU
+      hypervisors together with OpenStack Compute service's libvirt driver.</para>
+    <section xml:id="pure-storage-driver-limitations">
+      <title>Limitations and known issues</title>
+      <para>If you do not set up the nodes hosting instances to use multipathing, all iSCSI
+        connectivity will use a single physical 10-gigabit Ethernet port on the array. In addition to
+        significantly limiting the available bandwidth, this means you do not have the
+        high-availability and non-disruptive upgrade benefits provided by FlashArray.</para>
+      <para>Workaround: You must set up multipathing on your hosts.</para>
+      <para>In the default configuration, OpenStack Block Storage does not provision volumes on a backend whose
+        available raw space is less than the logical size of the new volume. Due to Purity's data
+        reduction technology, such a volume could actually fit in the backend, and thus OpenStack Block Storage
+        default configuration does not take advantage of all available space.</para>
+      <para>Workaround: Turn off the CapacityFilter.</para>
+    </section>
+  <section xml:id="pure-storage-driver-supported-operations">
+    <title>Supported operations</title>
+    <itemizedlist>
+      <listitem>
+      <para>Create, delete, attach, detach, clone and extend volumes.</para>
+    </listitem>
+    <listitem>
+      <para>Create a volume from snapshot.</para>
+    </listitem>
+    <listitem>
+      <para>Create and delete volume snapshots.</para>
+    </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="pure-storage-driver-configure">
+    <title>Configure OpenStack and Purity</title>
+    <para>You need to configure both your Purity array and your OpenStack cluster.</para>
+    <note>
+      <para>These instructions assume that the <systemitem class="service"
+      >cinder-api</systemitem> and <systemitem class="service"
+        >cinder-scheduler</systemitem> services are installed and configured in your OpenStack cluster.</para>
+    </note>
+    <procedure>
+      <step>
+        <title>Configure the OpenStack Block Storage service</title>
+        <para>In these steps, you will edit the <filename>cinder.conf</filename> file to configure OpenStack Block Storage
+          service to enable multipathing and to use the Pure Storage FlashArray as back-end storage.</para>
+        <substeps>
+          <step>
+            <title>Retrieve an API token from Purity</title>
+            <para>The OpenStack Block Storage service configuration requires an API token from Purity. Actions
+              performed by the volume driver use this token for authorization. Also, Purity logs the
+              volume driver's actions as being performed by the user who owns this API token.</para>
+            <para>If you created a Purity user account that is dedicated to managing your OpenStack
+              Block Storage volumes, copy the API token from that user account.</para>
+            <para>Use the appropriate create or list command below to display and copy the Purity API
+              token:</para>
+            <stepalternatives>
+              <step>
+                <para>To create a new API token:</para>
+                <screen><prompt>$</prompt> <userinput>pureadmin create --api-token <replaceable>USER</replaceable></userinput></screen>
+                <para>The following is an example output:</para>
+                <para>
+                  <screen><prompt>$</prompt> <userinput>pureadmin create --api-token pureuser</userinput>
+<computeroutput>Name      API Token                             Created
+pureuser  902fdca3-7e3f-d2e4-d6a6-24c2285fe1d9  2014-08-04 14:50:30</computeroutput></screen>
+                </para>
+              </step>
+              <step>
+                <para>To list an existing API token:</para>
+                <screen><prompt>$</prompt> <userinput>pureadmin list --api-token --expose <replaceable>USER</replaceable></userinput></screen>
+                <para>The following is an example output:</para>
+                <para>
+                  <screen><prompt>$</prompt> <userinput>pureadmin list --api-token --expose pureuser</userinput>
+<computeroutput>Name      API Token                             Created
+pureuser  902fdca3-7e3f-d2e4-d6a6-24c2285fe1d9  2014-08-04 14:50:30</computeroutput></screen>
+                </para>
+              </step>
+            </stepalternatives>
+          </step>
+          <step>
+            <para>Copy the API token retrieved
+              (<literal>902fdca3-7e3f-d2e4-d6a6-24c2285fe1d9</literal> from the examples above) to use in the next step.</para>
+          </step>
+          <step>
+            <title>Edit the OpenStack Block Storage service configuration file</title>
+            <para>The following sample <filename>/etc/cinder/cinder.conf</filename> configuration lists
+              the relevant settings for a typical Block Storage service using a single Pure Storage
+              array:</para>
+            <programlisting language="ini">
+[DEFAULT]
+....
+enabled_backends = puredriver-1
+default_volume_type = puredriver-1
+....
+
+[puredriver-1]
+volume_backend_name = puredriver-1
+volume_driver = cinder.volume.drivers.pure.PureISCSIDriver
+san_ip = <replaceable>IP_PURE_MGMT</replaceable>
+pure_api_token = <replaceable>PURE_API_TOKEN</replaceable>
+use_multipath_for_image_xfer = True</programlisting>
+            <para>Replace the following variables accordingly:</para>
+            <variablelist>
+              <varlistentry>
+                <term>IP_PURE_MGMT</term>
+                <listitem>
+                  <para>The IP address of the Pure Storage array's management interface or a domain name
+                    that resolves to that IP address.</para>
+                </listitem>
+              </varlistentry>
+              <varlistentry>
+                <term>PURE_API_TOKEN</term>
+                <listitem>
+                  <para>The Purity Authorization token that the volume driver uses to perform volume
+                    management on the Pure Storage array.</para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </step>
+        </substeps>
+      </step>
+      <step>
+        <title>Create Purity host objects</title>
+        <para>Before using the volume driver, follow these steps to create a host in Purity for each OpenStack
+          iSCSI initiator IQN that will connect to the FlashArray.</para>
+        <para>For every node that the driver runs on and every compute node that will connect to
+          the FlashArray:</para>
+        <substeps>
+          <step>
+            <para>check the file <filename>/etc/iscsi/initiatorname.iscsi</filename>.</para>
+            <para>For each IQN in that file:</para>
+            <substeps>
+              <step>
+                <para>copy the IQN string and run the following command to create a Purity host for an IQN:</para>
+                <screen><prompt>$</prompt> <userinput>purehost create --iqnlist <replaceable>IQN</replaceable> <replaceable>HOST</replaceable></userinput></screen>
+                <para>Replace the following variables accordingly:</para>
+                <variablelist>
+                  <varlistentry>
+                    <term>IQN</term>
+                    <listitem>
+                      <para>The IQN retrieved from the <filename>/etc/iscsi/initiatorname.iscsi</filename> file</para>
+                    </listitem>
+                  </varlistentry>
+                  <varlistentry>
+                    <term>HOST</term>
+                    <listitem>
+                      <para>An unique friendly name for this entry.</para>
+                    </listitem>
+                  </varlistentry>
+                </variablelist>
+                <note>
+                  <para>Do not specify multiple IQNs with the <option>--iqnlist</option> option. Each FlashArray
+                    host must be configured to a single OpenStack IQN.</para>
+                </note>
+              </step>
+            </substeps>
+          </step>
+        </substeps>
+      </step>
+    </procedure>
+  </section>
+</section>
