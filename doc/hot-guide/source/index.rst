@@ -9,5 +9,6 @@ HOT guide
    basic_resources
    software_deployment
    environment
+   composition
    advanced_topics
    functions

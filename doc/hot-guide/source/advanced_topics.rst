@@ -34,8 +34,3 @@ Up scaling and down scaling
 ---------------------------
 
 TODO
-
-Nested stacks
-=============
-
-AWS::CloudFormation::Stack
