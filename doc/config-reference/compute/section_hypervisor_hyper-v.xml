@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+%openstack;
+]>
 <section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -14,22 +18,33 @@
         the Windows Server 2012 platform is recommend for the best experience and is the platform
         for active development. The following Windows platforms have been tested as compute nodes:<itemizedlist>
             <listitem>
-                <para><emphasis role="bold">Windows Server 2008r2</emphasis></para>
+                <para><emphasis role="bold">Windows Server 2008 R2</emphasis></para>
                 <para>Both Server and Server Core with the Hyper-V role enabled (Shared Nothing Live
-                    migration is not supported using 2008r2)</para>
+                    migration is not supported using 2008 R2)</para>
             </listitem>
             <listitem>
-                <para><emphasis role="bold">Windows Server 2012</emphasis></para>
+                <para><emphasis role="bold">Windows Server 2012 and Windows Server 2012 R2</emphasis></para>
                 <para>Server and Core (with the Hyper-V role enabled), and Hyper-V Server</para>
             </listitem>
         </itemizedlist>
     </para>
     <section xml:id="installation-architecture-hyper-v">
         <title>Hyper-V configuration</title>
-        <para>The following sections discuss how to prepare the Windows Hyper-V node for operation
-            as an OpenStack compute node. Unless stated otherwise, any configuration information
-            should work for both the Windows 2008r2 and 2012 platforms.</para>
-        <para><emphasis role="bold">Local Storage Considerations</emphasis></para>
+        <para>The only OpenStack services required on a Hyper-V node are
+        <systemitem class="service">nova-compute</systemitem> and
+        <systemitem class="service">neutron-hyperv-agent</systemitem>.
+        Regarding the resources needed for this host you have to consider that Hyper-V will require 16&nbsp;GB - 20&nbsp;GB of
+        disk space for the OS itself, including updates. Two NICs are required,
+        one connected to the management network and one to the guest data network.
+        </para>
+
+        <para>The following sections discuss how to prepare the Windows Hyper-V
+        node for operation as an OpenStack compute node. Unless stated otherwise,
+        any configuration information should work for the Windows 2008 R2,
+        2012 and 2012 R2 platforms.</para>
+
+    <section xml:id="local-storage-considerations-hyper-v">
+        <title>Local storage considerations</title>
         <para>The Hyper-V compute node needs to have ample storage for storing the virtual machine
             images running on the compute nodes. You may use a single volume for all, or partition
             it into an OS volume and VM volume. It is up to the individual deploying to
@@ -55,15 +70,18 @@
         <para>To quickly enable an interface to be used as a Virtual Interface the following
             PowerShell may be used:</para>
         <screen><prompt>PS C:\></prompt><userinput>$if = Get-NetIPAddress -IPAddress 192* | Get-NetIPInterface</userinput>
-<prompt>PS C:\></prompt><userinput>New-VMSwitch -NetAdapterName $if.ifAlias -Name yourbridgename -AllowManagementOS $false</userinput></screen>
+<prompt>PS C:\></prompt><userinput>New-VMSwitch -NetAdapterName $if.ifAlias -Name <replaceable>YOUR_BRIDGE_NAME</replaceable> <option>-AllowManagementOS</option> $false</userinput></screen>
+       <note><para>It is very important to make sure that when you are using an Hyper-V node with only 1 NIC the -AllowManagementOS
+        option is set on <literal>True</literal>, otherwise you will lose connectivity to the Hyper-V node.
+        </para></note>
     </section>
     <section xml:id="enable-iscsi-services-hyper-v">
         <title>Enable iSCSI initiator service</title>
         <para>To prepare the Hyper-V node to be able to attach to volumes provided by cinder
              you must first make sure the Windows iSCSI initiator service is running and
             started automatically.</para>
-        <screen><prompt>C:\></prompt><userinput>sc start MSiSCSI</userinput>
-<prompt>C:\></prompt><userinput>sc config MSiSCSI start="auto"</userinput></screen>
+        <screen><prompt>PS C:\&gt;</prompt><userinput>Set-Service -Name MSiSCSI -StartupType Automatic</userinput>
+<prompt>PS C:\&gt;Start-Service MSiSCSI</prompt><userinput/></screen>
     </section>
     <section xml:id="live-migration-hyper-v">
         <title>Configure shared nothing live migration</title>
@@ -98,26 +116,26 @@
             live migration and must be added to your <filename>nova.conf</filename> on the Hyper-V
             compute node:<itemizedlist>
                 <listitem>
-                    <para><literal>instances_shared_storage=False</literal></para>
+                    <para><literal>instances_shared_storage = False</literal></para>
                     <para>This needed to support "shared nothing" Hyper-V live migrations. It is
                         used in nova/compute/manager.py</para>
                 </listitem>
                 <listitem>
-                    <para><literal>limit_cpu_features=True</literal></para>
+                    <para><literal>limit_cpu_features = True</literal></para>
                     <para>This flag is needed to support live migration to hosts with different CPU
                         features. This flag is checked during instance creation in order to limit
                         the CPU features used by the VM.</para>
                 </listitem>
                 <listitem>
                     <para>
-                        <literal>instances_path=DRIVELETTER:\PATH\TO\YOUR\INSTANCES</literal>
+                        <literal>instances_path = DRIVELETTER:\PATH\TO\YOUR\INSTANCES</literal>
                    </para>
                 </listitem>
             </itemizedlist></para>
         <para>Additional Requirements:</para>
         <itemizedlist>
             <listitem>
-                <para>Hyper-V 2012 RC or Windows Server 2012 RC with Hyper-V role enabled</para>
+                <para>Hyper-V 2012 R2 or Windows Server 2012 R2 with Hyper-V role enabled</para>
             </listitem>
             <listitem>
                 <para>A Windows domain controller with the Hyper-V compute nodes as domain
@@ -143,7 +161,7 @@
 <prompt>PS C:\></prompt><userinput>Set-VMMigrationNetwork <replaceable>IP_ADDRESS</replaceable></userinput>
 <prompt>PS C:\></prompt><userinput>Set-VMHost -VirtualMachineMigrationAuthenticationTypeKerberos</userinput></screen>
         <note>
-            <para>Please replace the IP_ADDRESS with the address of the interface which will provide
+            <para>Please replace the <replaceable>IP_ADDRESS</replaceable> with the address of the interface which will provide
                 the virtual switching for nova-network.</para>
         </note>
         <para><emphasis role="bold">Additional Reading</emphasis></para>
@@ -153,6 +171,23 @@
                 xlink:href="http://ariessysadmin.blogspot.ro/2012/04/hyper-v-live-migration-of-windows.html"
                 >http://ariessysadmin.blogspot.ro/2012/04/hyper-v-live-migration-of-windows.html</link>
        </para>
+    </section>
+    </section>
+    <section xml:id="install-using-hyper-v-installer">
+    <title>Install nova-compute using OpenStack Hyper-V installer</title>
+
+    <para>In case you want to avoid all the manual setup, you can use Cloudbase Solutions' installer.
+      You can find it here:</para>
+
+    <para><link
+    xlink:href="https://www.cloudbase.it/downloads/HyperVNovaCompute_Beta.msi">https://www.cloudbase.it/downloads/HyperVNovaCompute_Beta.msi</link></para>
+
+    <para>It installs an independent Python environment, in order to avoid conflicts with existing applications, generates dynamically a <filename>nova.conf</filename> file based on the parameters provided by you.</para>
+
+    <para>The installer can also be used for an automated and unattended mode for deployments on a massive number of servers. More details about how to use the installer and its features can be found here:</para>
+
+    <para><link
+    xlink:href="https://www.cloudbase.it">https://www.cloudbase.it</link></para>
     </section>
     <section xml:id="windows-requirements">
         <title>Requirements</title>
@@ -178,6 +213,9 @@
                     <para>Make sure that the <filename>Python</filename> and
                     <filename>Python\Scripts</filename> paths are set up in the
                     <envar>PATH</envar> environment variable.</para>
+                    <screen><prompt>PS C:\&gt;</prompt><userinput>$oldPath = [System.Environment]::GetEnvironmentVariable("Path")</userinput>
+<prompt>PS C:\&gt;</prompt><userinput>$newPath = $oldPath + ";C:\python27\;C:\python27\Scripts\"</userinput>
+<prompt>PS C:\&gt;</prompt><userinput>[System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::User</userinput></screen>
                 </step>
             </procedure>
         </section>
@@ -272,77 +310,147 @@ compiler = mingw32</programlisting>
     </section>
     <section xml:id="install-nova-windows-hyper-v">
         <title>Install Nova-compute</title>
-        <para><emphasis role="bold">Using git on Windows to retrieve source</emphasis></para>
-        <para>Git be used to download the necessary source code. The installer to run Git on Windows
-            can be downloaded here:</para>
+        <section xml:id="get-nova-compute-code">
+            <title>Download the nova code</title>
+            <procedure>
+            <step>
+            <para>Use Git to download the necessary source code. The installer to run Git on Windows
+                can be downloaded here:</para>
+            <para>
+                <link xlink:href="https://github.com/msysgit/msysgit/releases/download/Git-1.9.2-preview20140411/Git-1.9.2-preview20140411.exe">https://github.com/msysgit/msysgit/releases/download/Git-1.9.2-preview20140411/Git-1.9.2-preview20140411.exe</link>
+           </para>
+           </step>
+           <step>
+            <para>Download the installer. Once the download is complete, run the installer and follow the prompts in the installation wizard. The default should be acceptable for the needs of the document.</para>
+
+            <screen><prompt>PS C:\&gt;</prompt><userinput>$src = “https://github.com/msysgit/msysgit/releases/download/Git-1.9.2-preview20140411/Git-1.9.2-preview20140411.exe”</userinput>
+<prompt>PS C:\&gt;</prompt><userinput>$dest = “$env:temp\Git-1.9.2-preview20140411.exe”</userinput>
+<prompt>PS C:\&gt;</prompt><userinput>Invoke-WebRequest –Uri $src –OutFile $dest</userinput>
+<prompt>PS C:\&gt;</prompt><userinput>Unblock-File $dest</userinput>
+<prompt>PS C:\&gt;</prompt><userinput>Start-Process $dest</userinput></screen>
+            </step>
+            <step>
+            <para>Run the following to clone the Nova code.</para>
+            <screen><prompt>PS C:\></prompt><userinput>git.exe clone https://github.com/openstack/nova.git</userinput></screen>
+            </step>
+            </procedure>
+        </section>
+        <section xml:id="install-nova-compute-service">
+            <title>Install nova-compute service</title>
         <para>
-            <link
-                xlink:href="http://code.google.com/p/msysgit/downloads/list?q=full+installer+official+git"
-                >http://code.google.com/p/msysgit/downloads/list?q=full+installer+official+git</link>
-       </para>
-        <para>Download the latest installer. Once the download is complete double click the
-            installer and follow the prompts in the installation wizard. The default should be
-            acceptable for the needs of the document.</para>
-        <para>Once installed you may run the following to clone the Nova code.</para>
-        <screen><prompt>C:\></prompt><userinput>git.exe clone https://github.com/openstack/nova.git</userinput></screen>
-    </section>
-    <section xml:id="sample_nova-conf-hyper-v">
-        <title>Configure Nova.conf</title>
-        <para>The <filename>nova.conf</filename> file must be placed in
-                <literal>C:\etc\nova</literal> for running OpenStack on Hyper-V. Below is a sample
-                <filename>nova.conf</filename> for Windows:</para>
-        <programlisting language="ini">[DEFAULT]
-verbose=true
-force_raw_images=false
-auth_strategy=keystone
-fake_network=true
-vswitch_name=openstack-br
-logdir=c:\openstack\
-state_path=c:\openstack\
-lock_path=c:\openstack\
-instances_path=e:\Hyper-V\instances
-policy_file=C:\Program Files (x86)\OpenStack\nova\etc\nova\policy.json
-api_paste_config=c:\openstack\nova\etc\nova\api-paste.ini
-rabbit_host=<replaceable>IP_ADDRESS</replaceable>
-image_service=nova.image.glance.GlanceImageService
-instances_shared_storage=false
-limit_cpu_features=true
-compute_driver=nova.virt.hyperv.driver.HyperVDriver
-volume_api_class=nova.volume.cinder.API
-[glance]
-api_servers=<replaceable>IP_ADDRESS</replaceable>:9292
-[database]
-connection=mysql://nova:passwd@<replaceable>IP_ADDRESS</replaceable>/nova</programlisting>
-    <para><xref linkend="config_table_nova_hyperv"/> contains a reference of all
-        options for hyper-v.</para>
+        To install <systemitem class="service">Nova-compute</systemitem>, run:
+        </para>
+
+    <screen><prompt>PS C:\&gt;</prompt><userinput>cd c:\Nova</userinput>
+<prompt>PS C:\&gt;</prompt><userinput>python setup.py install</userinput></screen>
+        </section>
+        <section xml:id="sample_nova-conf-hyper-v">
+            <title>Configure nova-compute</title>
+            <para>The <filename>nova.conf</filename> file must be placed in
+                    <filename>C:\etc\nova</filename> for running OpenStack on Hyper-V. Below is a sample
+                    <filename>nova.conf</filename> for Windows:</para>
+            <programlisting language="ini">[DEFAULT]
+[DEFAULT]
+auth_strategy = keystone
+image_service = nova.image.glance.GlanceImageService
+compute_driver = nova.virt.hyperv.driver.HyperVDriver
+volume_api_class = nova.volume.cinder.API
+fake_network = true
+instances_path = C:\Program Files (x86)\OpenStack\Instances
+glance_api_servers = <replaceable>IP_ADDRESS</replaceable>:9292
+use_cow_images = true
+force_config_drive = false
+injected_network_template = C:\Program Files (x86)\OpenStack\Nova\etc\interfaces.template
+policy_file = C:\Program Files (x86)\OpenStack\Nova\etc\policy.json
+mkisofs_cmd = C:\Program Files (x86)\OpenStack\Nova\bin\mkisofs.exe
+verbose = false
+allow_resize_to_same_host = true
+running_deleted_instance_action = reap
+running_deleted_instance_poll_interval = 120
+resize_confirm_window = 5
+resume_guests_state_on_host_boot = true
+rpc_response_timeout = 1800
+lock_path = C:\Program Files (x86)\OpenStack\Log\
+rpc_backend = nova.openstack.common.rpc.impl_kombu
+rabbit_host = <replaceable>IP_ADDRESS</replaceable>
+rabbit_port = 5672
+rabbit_userid = guest
+rabbit_password = Passw0rd
+logdir = C:\Program Files (x86)\OpenStack\Log\
+logfile = nova-compute.log
+instance_usage_audit = true
+instance_usage_audit_period = hour
+network_api_class = nova.network.neutronv2.api.API
+neutron_url = http://<replaceable>IP_ADDRESS</replaceable>:9696
+neutron_auth_strategy = keystone
+neutron_admin_tenant_name = service
+neutron_admin_username = neutron
+neutron_admin_password = Passw0rd
+neutron_admin_auth_url = http://<replaceable>IP_ADDRESS:35357</replaceable>/v2.0
+[hyperv]
+vswitch_name = newVSwitch0
+limit_cpu_features = false
+config_drive_inject_password = false
+qemu_img_cmd = C:\Program Files (x86)\OpenStack\Nova\bin\qemu-img.exe
+config_drive_cdrom = true
+dynamic_memory_ratio = 1
+enable_instance_metrics_collection = true
+[rdp]
+enabled = true
+html5_proxy_base_url = https://<replaceable>IP_ADDRESS</replaceable>:4430</programlisting>
+        <para><xref linkend="config_table_nova_hyperv"/> contains a reference of all
+            options for hyper-v.</para>
     </section>
     <section xml:id="prepare-hyper-v-images">
         <title>Prepare images for use with Hyper-V</title>
-        <para>Hyper-V currently supports only the VHD file format for virtual machine instances.
+        <para>Hyper-V currently supports only the VHD and VHDX file format for virtual machine instances.
             Detailed instructions for installing virtual machines on Hyper-V can be found
             here:</para>
         <para><link xlink:href="http://technet.microsoft.com/en-us/library/cc772480.aspx"
                 >http://technet.microsoft.com/en-us/library/cc772480.aspx</link></para>
         <para>Once you have successfully created a virtual machine, you can then upload the image to
             glance using the native glance-client:</para>
-        <screen><prompt>C:\></prompt><userinput>glance image-create --name "<replaceable>VM_IMAGE_NAME</replaceable>" --is-public False --container-format bare --disk-format vhd</userinput></screen>
+        <screen><prompt>PS C:\></prompt><userinput>glance image-create --name "<replaceable>VM_IMAGE_NAME</replaceable>" --is-public False --container-format bare --disk-format vhd</userinput></screen>
+        <note>
+        <para>VHD and VHDX files sizes can be bigger than their maximum internal size, as such you need to boot instances using a flavor with a slightly bigger disk size than
+        the internal size of the disk file. To create VHDs, use the following PowerShell cmdlet:</para>
+        <screen><prompt>PS C:\></prompt><userinput>New-VHD <replaceable>DISK_NAME.vhd</replaceable> -SizeBytes <replaceable>VHD_SIZE</replaceable></userinput></screen>
+        </note>
     </section>
     <section xml:id="running_compute-with-hyper-v">
         <title>Run Compute with Hyper-V</title>
         <para>To start the <systemitem class="service">nova-compute</systemitem> service, run this command from a console in the Windows
             server:</para>
-        <screen><prompt>C:\></prompt><userinput>C:\python27\python.exe c:\nova\bin\nova-compute.py</userinput></screen>
+        <screen><prompt>PS C:\></prompt><userinput>C:\Python27\python.exe c:\Python27\Scripts\nova-compute --config-file c:\etc\nova\nova.conf</userinput></screen>
     </section>
-    <section xml:id="troubleshooting-hyper-v">
-        <title>Troubleshoot Hyper-V configuration</title>
-        <itemizedlist>
-            <listitem>
-                <para>I ran the <literal>nova-manage service list</literal> command from my
-                    controller; however, I'm not seeing smiley faces for Hyper-V compute nodes, what
-                    do I do?</para>
-                <para><emphasis role="italic">Verify that you are synchronized with a network time
-                        source. For instructions about how to configure NTP on your Hyper-V compute node, see <xref linkend="configure-ntp-windows"/>.</emphasis></para>
-            </listitem>
-        </itemizedlist>
-    </section>
+</section>
+   <section xml:id="troubleshooting-hyper-v">
+    <title>Troubleshoot Hyper-V configuration</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>I ran the <command>nova-manage service list</command> command
+        from my controller; however, I'm not seeing smiley faces for Hyper-V
+        compute nodes, what do I do?</para>
+
+        <para><emphasis role="italic">Verify that you are synchronized with a
+        network time source. For instructions about how to configure NTP on
+        your Hyper-V compute node, see <xref
+        linkend="configure-ntp-windows"/>.</emphasis></para>
+      </listitem>
+
+      <listitem>
+        <para>How do I restart the compute service?</para>
+
+        <screen><prompt>PS C:\&gt;</prompt><userinput>net stop nova-compute &amp;&amp; net start nova-compute</userinput></screen>
+
+      </listitem>
+
+      <listitem>
+        <para>How do I restart the iSCSI initiator service?</para>
+
+        <screen><prompt>PS C:\&gt;</prompt><userinput>net stop msiscsi &amp;&amp; net start msiscsi</userinput></screen>
+      </listitem>
+    </itemizedlist>
+  </section>
 </section>
