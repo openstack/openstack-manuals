@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:id="emc-vmax-driver">
+    <?dbhtml stop-chunking?>
+    <title>EMC VMAX iSCSI and FC drivers</title>
+    <para>The EMC VMAX drivers, <literal>EMCVMAXISCSIDriver</literal>
+        and <literal>EMCVMAXFCDriver</literal>, support the use of EMC
+        VMAX storage arrays under OpenStack Block Storage. They both
+        provide equivalent functions and differ only in support for
+        their respective host attachment methods.</para>
+    <para>The drivers perform volume operations by communicating with
+        the backend VMAX storage. It uses a CIM client in Python
+        called PyWBEM to perform CIM operations over HTTP.</para>
+    <para>The EMC CIM Object Manager (ECOM) is packaged with the EMC
+        SMI-S provider. It is a CIM server that enables CIM clients to
+        perform CIM operations over HTTP by using SMI-S in the
+        back-end for VMAX storage operations.</para>
+    <para>The EMC SMI-S Provider supports the SNIA Storage Management
+        Initiative (SMI), an ANSI standard for storage management. It
+        supports the VMAX storage system.</para>
+    <section xml:id="emc-reqs">
+        <title>System requirements</title>
+        <para>EMC SMI-S Provider V4.6.2.8 and higher is required. You
+            can download SMI-S from the
+            <link xlink:href="https://support.emc.com">EMC's support
+            </link> web site (login is required).
+            See the EMC SMI-S Provider
+            release notes for installation instructions.</para>
+        <para>EMC storage VMAX Family is supported.</para>
+    </section>
+    <section xml:id="emc-supported-ops">
+        <title>Supported operations</title>
+        <para>VMAX drivers support these operations:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Create, delete, attach, and detach volumes.</para>
+          </listitem>
+          <listitem>
+            <para>Create, list, and delete volume snapshots.</para>
+          </listitem>
+          <listitem>
+            <para>Copy an image to a volume.</para>
+          </listitem>
+          <listitem>
+            <para>Copy a volume to an image.</para>
+          </listitem>
+          <listitem>
+            <para>Clone a volume.</para>
+          </listitem>
+          <listitem>
+            <para>Extend a volume.</para>
+          </listitem>
+          <listitem>
+            <para>Retype a volume.</para>
+          </listitem>
+          <listitem>
+            <para>Create a volume from a snapshot.</para>
+          </listitem>
+        </itemizedlist>
+        <para>VMAX drivers also support the following features:</para>
+        <itemizedlist>
+          <listitem>
+            <para>FAST automated storage tiering policy.</para>
+          </listitem>
+          <listitem>
+            <para>Dynamic masking view creation.</para>
+          </listitem>
+          <listitem>
+            <para>Striped volume creation.</para>
+          </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="install-pywbem">
+        <title>Install the <package>python-pywbem</package>
+            package</title>
+        <para>Install the <package>python-pywbem</package>
+            package for your distribution, as follows:</para>
+        <itemizedlist>
+            <listitem>
+                <para>On Ubuntu:</para>
+                <screen><prompt>#</prompt> <userinput>apt-get install python-pywbem</userinput></screen>
+            </listitem>
+            <listitem>
+                <para>On openSUSE:</para>
+                <screen><prompt>#</prompt> <userinput>zypper install python-pywbem</userinput></screen>
+            </listitem>
+            <listitem>
+                <para>On Fedora:</para>
+                <screen><prompt>#</prompt> <userinput>yum install pywbem</userinput></screen>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="setup-smi-s">
+        <title>Set up SMI-S</title>
+        <para>You can install SMI-S on a non-OpenStack host.
+            Supported platforms include different flavors of
+            Windows, Red Hat, and SUSE Linux. SMI-S can be
+            installed on a physical server or a VM hosted by
+            an ESX server. Note that the supported hypervisor
+            for a VM running SMI-S is ESX only. See the EMC
+            SMI-S Provider release notes for more information
+            on supported platforms and installation instructions.
+        </para>
+        <note>
+            <para>You must discover storage arrays on the SMI-S
+                server before you can use the VMAX drivers.
+                Follow instructions in the SMI-S release
+                notes.</para>
+        </note>
+        <para>SMI-S is usually installed at
+            <filename>/opt/emc/ECIM/ECOM/bin</filename> on
+            Linux and <filename>C:\Program
+            Files\EMC\ECIM\ECOM\bin</filename> on Windows.
+            After you install and configure SMI-S, go to that
+            directory and type
+            <command>TestSmiProvider.exe</command>.</para>
+        <para>Use <command>addsys</command> in
+            <command>TestSmiProvider.exe</command> to add an
+            array. Use <command>dv</command> and examine the
+            output after the array is added. Make sure that the
+            arrays are recognized by the SMI-S server before using
+            the EMC VMAX drivers.</para>
+    </section>
+    <section xml:id="emc-config-file">
+        <title><filename>cinder.conf</filename> configuration
+            file</title>
+        <para>Make the following changes in
+            <filename>/etc/cinder/cinder.conf</filename>.</para>
+        <para>Add the following entries, where
+            <literal>10.10.61.45</literal> is the IP address
+            of the VMAX iSCSI target:</para>
+        <programlisting language="ini">enabled_backends = CONF_GROUP_ISCSI, CONF_GROUP_FC
+[CONF_GROUP_ISCSI]
+iscsi_ip_address = 10.10.61.45
+volume_driver = cinder.volume.drivers.emc.emc_vmax_iscsi.EMCVMAXISCSIDriver
+cinder_emc_config_file = /etc/cinder/cinder_emc_config_CONF_GROUP_ISCSI.xml
+volume_backend_name=ISCSI_backend
+[CONF_GROUP_FC]
+volume_driver = cinder.volume.drivers.emc.emc_vmax_fc.EMCVMAXFCDriver
+cinder_emc_config_file = /etc/cinder/cinder_emc_config_CONF_GROUP_FC.xml
+volume_backend_name=FC_backend</programlisting>
+        <para>In this example, two backend configuration groups are
+            enabled: <literal>CONF_GROUP_ISCSI</literal> and
+            <literal>CONF_GROUP_FC</literal>. Each configuration
+            group has a section describing unique parameters for
+            connections, drivers, the volume_backend_name, and the
+            name of the EMC-specific configuration file containing
+            additional settings. Note that the file name is in the
+            format <filename>
+            /etc/cinder/cinder_emc_config_[confGroup].xml</filename>.
+        </para>
+        <para>Once the <filename>cinder.conf</filename> and
+            EMC-specific configuration files have been created, cinder
+            commands need to be issued in order to create and
+            associate OpenStack volume types with the declared
+            volume_backend_names:</para>
+        <screen><prompt>$</prompt> <userinput>cinder type-create VMAX_ISCSI</userinput>
+<prompt>$</prompt> <userinput>cinder type-key VMAX_ISCSI set volume_backend_name=ISCSI_backend</userinput>
+<prompt>$</prompt> <userinput>cinder type-create VMAX_FC</userinput>
+<prompt>$</prompt> <userinput>cinder type-key VMAX_FC set volume_backend_name=FC_backend</userinput></screen>
+        <para>By issuing these commands, the Block Storage volume type
+            <literal>VMAX_ISCSI</literal> is associated with the
+            ISCSI_backend, and the type <literal>VMAX_FC</literal>
+            is associated with the FC_backend.</para>
+        <para>Restart the <systemitem class="service">
+            cinder-volume</systemitem> service.</para>
+    </section>
+    <section xml:id="emc-config-file-2">
+        <title><filename>cinder_emc_config_CONF_GROUP_ISCSI.xml
+            </filename> configuration file</title>
+        <para>Create the <filename>
+            /etc/cinder/cinder_emc_config_CONF_GROUP_ISCSI.xml
+            </filename> file. You do not need to restart the service
+            for this change.</para>
+        <para>Add the following lines to the XML file:</para>
+        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;EMC&gt;
+    &lt;EcomServerIp&gt;1.1.1.1&lt;/EcomServerIp&gt;
+    &lt;EcomServerPort&gt;00&lt;/EcomServerPort&gt;
+    &lt;EcomUserName&gt;user1&lt;/EcomUserName&gt;
+    &lt;EcomPassword&gt;password1&lt;/EcomPassword&gt;
+    &lt;PortGroups&gt;
+      &lt;PortGroup&gt;OS-PORTGROUP1-PG&lt;/PortGroup&gt;
+      &lt;PortGroup&gt;OS-PORTGROUP2-PG&lt;/PortGroup&gt;
+    &lt;/PortGroups&gt;
+   &lt;Array&gt;111111111111&lt;/Array&gt;
+   &lt;Pool&gt;FC_GOLD1&lt;/Pool&gt;
+   &lt;FastPolicy&gt;GOLD1&lt;/FastPolicy&gt;
+&lt;/EMC&gt;</programlisting>
+        <para>Where:</para>
+        <itemizedlist>
+            <listitem>
+                <para><systemitem>EcomServerIp</systemitem> and
+                    <systemitem>EcomServerPort</systemitem> are the IP
+                    address and port number of the ECOM server which
+                    is packaged with SMI-S.</para>
+            </listitem>
+            <listitem>
+                <para><systemitem>EcomUserName</systemitem> and
+                    <systemitem>EcomPassword</systemitem> are
+                    credentials for the ECOM server.</para>
+            </listitem>
+            <listitem>
+                <para><systemitem>PortGroups</systemitem> supplies the
+                    names of VMAX port groups that have been
+                    pre-configured to expose volumes managed by this
+                    backend. Each supplied port group should have
+                    sufficient number and distribution of ports
+                    (across directors and switches) as to ensure
+                    adequate bandwidth and failure protection for the
+                    volume connections.
+                    <systemitem>PortGroups</systemitem> can contain
+                    one or more port groups of either iSCSI or FC
+                    ports. When a dynamic masking view is created by
+                    the VMAX driver, the port group is chosen
+                    randomly from the
+                    <systemitem>PortGroup</systemitem> list, to evenly
+                    distribute load across the set of groups provided.
+                    Make sure that the
+                    <systemitem>PortGroups</systemitem> set contains
+                    either all FC or all iSCSI port groups (for a
+                    given backend), as appropriate for the configured
+                    driver (iSCSI or FC).</para>
+            </listitem>
+            <listitem>
+                <para>The <systemitem>Array</systemitem> tag holds
+                    the unique VMAX array serial number.</para>
+            </listitem>
+            <listitem>
+                <para>The <systemitem>Pool</systemitem> tag holds the
+                    unique pool name within a given array. For
+                    backends not using FAST automated tiering, the
+                    pool is a single pool that has been created by
+                    the administrator. For backends exposing FAST
+                    policy automated tiering, the pool is the bind
+                    pool to be used with the FAST policy.</para>
+            </listitem>
+            <listitem>
+                <para>The <systemitem>FastPolicy</systemitem> tag
+                    conveys the name of the FAST Policy to be used.
+                    By including this tag, volumes managed by this
+                    backend are treated as under FAST control.
+                    Omitting the <systemitem>FastPolicy</systemitem>
+                    tag means FAST is not enabled on the provided
+                    storage pool.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="configuring-connectivity-fc">
+        <title>FC Zoning with VMAX</title>
+        <para>Zone Manager is recommended when using the VMAX FC
+            driver, especially for larger configurations where
+            pre-zoning would be too complex and open-zoning would
+            raise security concerns.</para>
+    </section>
+    <section xml:id="configuring-connectivity-iscsi">
+        <title>iSCSI with VMAX</title>
+        <itemizedlist>
+            <listitem>
+                <para>Make sure the <package>iscsi-initiator-utils
+                    </package> package is installed on the host (use
+                    apt-get, zypper, or yum, depending on Linux
+                    flavor).</para>
+            </listitem>
+            <listitem>
+                <para>Verify host is able to ping VMAX iSCSI target
+                    ports.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="emc-prep">
+        <title>Set up the VMAX drivers</title>
+        <procedure>
+            <title>To set up the EMC VMAX drivers</title>
+            <step>
+                <para>Install the <package>python-pywbem</package>
+                    package for your distribution. See <xref
+                    linkend="install-pywbem"/>.</para>
+            </step>
+            <step>
+                <para>Download SMI-S from PowerLink and install it.
+                    Add your VMAX arrays to SMI-S.</para>
+                <para>For information, see <xref
+                    linkend="setup-smi-s"/> and the SMI-S release
+                    notes.</para>
+            </step>
+            <step>
+                <para>Change configuration files. See <xref
+                    linkend="emc-config-file"/> and <xref
+                    linkend="emc-config-file-2"/>.</para>
+            </step>
+            <step>
+                <para>Configure connectivity. For FC driver,
+                    see <xref linkend="configuring-connectivity-fc"/>.
+                    For iSCSI driver, see <xref
+                    linkend="configuring-connectivity-iscsi"/>.</para>
+            </step>
+        </procedure>
+    </section>
+    <section xml:id="vmax-masking-view-and-group-naming">
+        <title>VMAX masking view and group naming info</title>
+        <simplesect>
+            <title>Masking view names</title>
+            <para>Masking views are dynamically created by the VMAX FC
+                and iSCSI drivers using the following naming
+                conventions:</para>
+            <screen>OS-[shortHostName][poolName]-I-MV (for Masking Views using iSCSI)</screen>
+            <screen>OS-[shortHostName][poolName]-F-MV (for Masking Views using FC)</screen>
+        </simplesect>
+        <simplesect>
+            <title>Initiator group names</title>
+            <para>For each host that is attached to VMAX volumes
+                using the drivers, an initiator group is created
+                or re-used (per attachment type). All initiators of
+                the appropriate type known for that host are included
+                in the group. At each new attach volume operation,
+                the VMAX driver retrieves the initiators (either
+                WWNNs or IQNs) from OpenStack and adds or updates the
+                contents of the Initiator Group as required. Names
+                are of the following format:</para>
+            <screen>OS-[shortHostName]-I-IG (for iSCSI initiators)</screen>
+            <screen>OS-[shortHostName]-F-IG (for Fibre Channel initiators)</screen>
+            <note><para>Hosts attaching to VMAX storage managed by the
+                OpenStack environment cannot also be attached to
+                storage on the same VMAX not being managed by
+                OpenStack. This is due to limitations on VMAX
+                Initiator Group membership.</para>
+            </note>
+        </simplesect>
+        <simplesect>
+            <title>FA port groups</title>
+            <para>VMAX array FA ports to be used in a new masking view
+                are chosen from the list provided in the EMC
+                configuration file.</para>
+        </simplesect>
+        <simplesect>
+            <title>Storage group names</title>
+            <para>As volumes are attached to a host, they are either
+                added to an existing storage group (if it exists) or a
+                new storage group is created and the volume is then
+                added. Storage groups contain volumes created from a
+                pool (either single-pool or FAST-controlled), attached
+                to a single host, over a single connection type (iSCSI
+                or FC). Names are formed:</para>
+            <screen>OS-[shortHostName][poolName]-I-SG (attached over iSCSI)</screen>
+            <screen>OS-[shortHostName][poolName]-F-SG (attached over Fibre Channel)</screen>
+        </simplesect>
+    </section>
+    <section xml:id="concatenated-striped">
+        <title>Concatenated or striped volumes</title>
+        <para>In order to support later expansion of created volumes,
+            the VMAX Block Storage drivers create concatenated volumes
+            as the default layout. If later expansion is not required,
+            users can opt to create striped volumes in order to optimize
+            I/O performance.</para>
+        <para>Below is an example of how to create striped volumes.
+            First, create a volume type. Then define the extra spec for
+            the volume type <literal>storagetype:stripecount</literal>
+            representing the number of meta members in the striped
+            volume. The example below means that each volume created
+            under the <literal>GoldStriped</literal> volume type will
+            be striped and made up of 4 meta members.
+            </para>
+        <screen><prompt>$</prompt> <userinput>cinder type-create GoldStriped</userinput>
+<prompt>$</prompt> <userinput>cinder type-key GoldStriped set volume_backend_name=GOLD_BACKEND</userinput>
+<prompt>$</prompt> <userinput>cinder type-key GoldStriped set storagetype:stripecount=4</userinput></screen>
+    </section>
+</section>
