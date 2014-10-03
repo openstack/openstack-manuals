@@ -250,7 +250,20 @@ vncserver_proxyclient_address = 10.0.0.11</programlisting>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Compute services and configure them to start when the
         system boots:</para>
-      <screen><prompt>#</prompt> <userinput>service openstack-nova-api start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-nova-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-cert.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-consoleauth.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-conductor.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-novncproxy.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-cert.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-consoleauth.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-conductor.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-novncproxy.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-nova-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-cert start</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-consoleauth start</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-scheduler start</userinput>
@@ -262,6 +275,19 @@ vncserver_proxyclient_address = 10.0.0.11</programlisting>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-scheduler on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-conductor on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-novncproxy on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-nova-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-cert.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-consoleauth.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-conductor.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-novncproxy.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-cert.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-consoleauth.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-conductor.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-novncproxy.service</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create an SQLite database.</para>

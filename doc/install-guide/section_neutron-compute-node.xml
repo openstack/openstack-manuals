@@ -92,9 +92,14 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
             <application>RabbitMQ</application>.</para>
         </step>
         <step>
-          <para>In the <literal>[keystone_authtoken]</literal> section,
+          <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[keystone_authtoken]</literal> sections,
             configure Identity service access:</para>
-          <programlisting language="ini">[keystone_authtoken]
+          <programlisting language="ini">[DEFAULT]
+...
+auth_strategy = keystone
+
+[keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
 identity_uri = http://<replaceable>controller</replaceable>:35357
@@ -189,17 +194,17 @@ enable_tunneling = True</programlisting>
     <title>To configure the Open vSwitch (OVS) service</title>
     <para>The OVS service provides the underlying virtual networking framework
       for instances.</para>
-    <step os="rhel;centos;fedora">
+    <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the OVS service and configure it to start when the
         system boots:</para>
-      <screen><prompt>#</prompt> <userinput>service openvswitch start</userinput>
-<prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
-    </step>
-    <step os="sles;opensuse">
-      <para>Start the OVS service and configure it to start when the
-        system boots:</para>
-      <screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openvswitch.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openvswitch.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openvswitch.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openvswitch.service</userinput></screen>
     </step>
     <step os="debian;ubuntu">
       <para>Restart the OVS service:</para>
@@ -260,6 +265,14 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
         If this symbolic link does not exist, create it using the
         following command:</para>
       <screen><prompt>#</prompt> <userinput>ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen>
+      <para>Due to a packaging bug, the Open vSwitch agent initialization
+        script explicitly looks for the Open vSwitch plug-in configuration
+        file rather than a symbolic link
+        <filename>/etc/neutron/plugin.ini</filename> pointing to the ML2
+        plug-in configuration file. Run the following commands to resolve this
+        issue:</para>
+      <screen><prompt>#</prompt> <userinput>cp /usr/lib/systemd/system/neutron-openvswitch-agent.service /usr/lib/systemd/system/neutron-openvswitch-agent.service.orig</userinput>
+<prompt>#</prompt> <userinput>sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /usr/lib/systemd/system/neutron-openvswitch-agent.service</userinput></screen>
     </step>
     <step os="sles;opensuse">
       <para>The Networking service initialization scripts expect the
@@ -272,14 +285,24 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
     </step>
     <step>
       <para>Restart the Compute service:</para>
-      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-nova-compute restart</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-compute.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-nova-compute restart</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-compute.service</userinput></screen>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Open vSwitch (OVS) agent and configure it to
         start when the system boots:</para>
-      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-neutron-openvswitch-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-neutron-openvswitch-agent.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-neutron-openvswitch-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-neutron-openvswitch-agent.service</userinput></screen>
     </step>
     <step os="ubuntu;debian">
       <para>Restart the Open vSwitch (OVS) agent:</para>

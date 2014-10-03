@@ -10,26 +10,33 @@
     networking.</para>
   <procedure>
     <title>To configure legacy networking</title>
-    <step os="rhel;centos;fedora;sles;opensuse">
-      <para>Run the following commands:</para>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  network_api_class nova.network.api.API</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  security_group_api nova</userinput></screen>
-    </step>
-    <step os="ubuntu;debian">
-      <para>Edit the <filename>/etc/nova/nova.conf</filename> file and add the
-        following keys to the <literal>[DEFAULT]</literal> section:</para>
-      <programlisting language="ini">[DEFAULT]
+    <step>
+      <para>Edit the <filename>/etc/nova/nova.conf</filename> file and
+        complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure
+            the network and security group APIs:</para>
+          <programlisting language="ini">[DEFAULT]
 ...
 network_api_class = nova.network.api.API
 security_group_api = nova</programlisting>
+        </step>
+      </substeps>
     </step>
     <step>
       <para>Restart the Compute services:</para>
-      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-conductor.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-scheduler restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-conductor restart</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-conductor.service</userinput></screen>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-api restart</userinput>
 <prompt>#</prompt> <userinput>service nova-scheduler restart</userinput>
 <prompt>#</prompt> <userinput>service nova-conductor restart</userinput></screen>

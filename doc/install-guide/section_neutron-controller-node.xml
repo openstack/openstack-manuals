@@ -185,9 +185,14 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
             <application>RabbitMQ</application>.</para>
         </step>
         <step>
-          <para>In the <literal>[keystone_authtoken]</literal> section,
+          <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[keystone_authtoken]</literal> sections,
             configure Identity service access:</para>
-          <programlisting language="ini">[keystone_authtoken]
+          <programlisting language="ini">[DEFAULT]
+...
+auth_strategy = keystone
+
+[keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
 identity_uri = http://<replaceable>controller</replaceable>:35357
@@ -372,9 +377,17 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
     </step>
     <step>
       <para>Restart the Compute services:</para>
-      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-conductor.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-scheduler restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-conductor restart</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl restart openstack-nova-conductor.service</userinput></screen>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-api restart</userinput>
 <prompt>#</prompt> <userinput>service nova-scheduler restart</userinput>
 <prompt>#</prompt> <userinput>service nova-conductor restart</userinput></screen>
@@ -382,10 +395,14 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Networking service and configure it to start when the
         system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-server start</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-server on</userinput></screen>
-      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable neutron-server.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start neutron-server.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-neutron start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-neutron.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack.neutron.service</userinput></screen>
     </step>
     <step os="ubuntu;debian">
       <para>Restart the Networking service:</para>

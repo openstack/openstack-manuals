@@ -31,15 +31,6 @@
         complete the following actions:</para>
       <substeps>
         <step>
-          <para>In the <literal>[database]</literal> section, configure
-            database access:</para>
-          <programlisting language="ini">[database]
-...
-connection = mysql://nova:<replaceable>NOVA_DBPASS</replaceable>@<replaceable>controller</replaceable>/nova</programlisting>
-          <para>Replace <replaceable>NOVA_DBPASS</replaceable> with the password
-            you chose for the Compute database.</para>
-        </step>
-        <step>
           <para>In the <literal>[DEFAULT]</literal> section, configure
             <application>RabbitMQ</application> message broker access:</para>
           <programlisting language="ini">[DEFAULT]
@@ -180,30 +171,20 @@ virt_type = qemu</programlisting>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Compute service including its dependencies and configure
         them to start automatically when the system boots:</para>
-      <stepalternatives os="rhel;centos;fedora">
-        <step>
-          <para>For RHEL, CentOS, and compatible derivatives:</para>
-          <screen><prompt>#</prompt> <userinput>service libvirtd start</userinput>
-<prompt>#</prompt> <userinput>service messagebus start</userinput>
-<prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
-<prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
-<prompt>#</prompt> <userinput>chkconfig messagebus on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
-        </step>
-        <step>
-          <para>For Fedora:</para>
-          <screen><prompt>#</prompt> <userinput>service libvirtd start</userinput>
-<prompt>#</prompt> <userinput>service dbus start</userinput>
-<prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
-<prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
-<prompt>#</prompt> <userinput>chkconfig dbus on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
-        </step>
-      </stepalternatives>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service libvirtd start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable libvirtd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start libvirtd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-compute.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-compute.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service libvirtd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig libvirtd on</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable libvirtd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start libvirtd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-compute.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-compute.service</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create an SQLite database.</para>
