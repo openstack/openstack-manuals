@@ -5,7 +5,7 @@ auth_encryption_key crypt
 backdoor_port debug
 cloud_backend clients_backends
 control_exchange amqp
-debug debug
+debug logging
 default_log_levels logging
 default_notification_level amqp
 default_publisher_id amqp
@@ -15,7 +15,7 @@ enable_cloud_watch_lite cloudwatch_api
 engine_life_check_timeout rpc
 environment_dir common
 event_purge_batch_size common
-fake_rabbit amqp
+fake_rabbit testing
 fatal_deprecations logging
 heat_metadata_server_url api metadata_api
 heat_stack_user_role api
@@ -54,7 +54,7 @@ max_nested_stack_depth quota
 max_resources_per_stack quota
 max_stacks_per_tenant quota
 max_template_size quota
-memcached_servers auth_token
+memcached_servers common
 notification_driver amqp
 notification_topics amqp
 num_engine_workers api
@@ -63,7 +63,7 @@ periodic_interval common
 plugin_dirs common
 policy_default_rule api
 policy_file api
-publish_errors notification
+publish_errors logging
 qpid_heartbeat qpid
 qpid_hostname qpid
 qpid_hosts qpid
@@ -107,7 +107,7 @@ stack_domain_admin_password api
 stack_user_domain_id api
 stack_user_domain_name api
 syslog_log_facility logging
-transport_url rpc
+transport_url amqp
 trusts_delegated_roles api
 use_stderr logging
 use_syslog logging
@@ -237,14 +237,14 @@ keystone_authtoken/insecure auth_token
 keystone_authtoken/keyfile auth_token
 keystone_authtoken/memcache_secret_key auth_token
 keystone_authtoken/memcache_security_strategy auth_token
-keystone_authtoken/memcached_servers auth_token
+keystone_authtoken/memcached_servers common
 keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
 keystone_authtoken/token_cache_time auth_token
 matchmaker_redis/host redis
 matchmaker_redis/password redis
 matchmaker_redis/port redis
-matchmaker_ring/ringfile rpc
+matchmaker_ring/ringfile redis
 paste_deploy/api_paste_config api
 paste_deploy/flavor api
 revision/heat_revision common

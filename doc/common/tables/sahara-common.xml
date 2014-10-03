@@ -31,10 +31,6 @@
                 compute3 /rack2</td>
       </tr>
       <tr>
-        <td>control_exchange = openstack</td>
-        <td>(StrOpt) The default exchange under which topics are scoped. May be overridden by an exchange name specified in the transport_url option.</td>
-      </tr>
-      <tr>
         <td>detach_volume_timeout = 300</td>
         <td>(IntOpt) Timeout for detaching volumes from instance (in seconds).</td>
       </tr>
@@ -133,10 +129,6 @@
                 node3 /rack2</td>
       </tr>
       <tr>
-        <td>transport_url = None</td>
-        <td>(StrOpt) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.</td>
-      </tr>
-      <tr>
         <td>use_floating_ips = True</td>
         <td>(BoolOpt) If set to True, Sahara will use floating IPs to communicate with instances. To make sure that all instances have floating IPs assigned in Nova Network set "auto_assign_floating_ip=True" in nova.conf. If Neutron is used for networking, make sure that all Node Groups have "floating_ip_pool" parameter defined.</td>
       </tr>
@@ -158,6 +150,13 @@
       <tr>
         <td>use_local = True</td>
         <td>(BoolOpt) Perform sahara-conductor operations locally.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[keystone_authtoken]</th>
+      </tr>
+      <tr>
+        <td>memcached_servers = None</td>
+        <td>(ListOpt) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.</td>
       </tr>
     </tbody>
   </table>

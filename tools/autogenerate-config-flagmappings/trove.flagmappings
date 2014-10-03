@@ -37,13 +37,13 @@ databases_page_size common
 datastore_manager taskmanager
 datastore_registry_ext taskmanager
 db_api_implementation api
-debug debug
+debug logging
 default_datastore common
 default_log_levels logging
 default_neutron_networks common
 default_notification_level common
 default_password_length common
-default_publisher_id common
+default_publisher_id amqp
 device_path volume
 disable_process_locking debug
 dns_account_id dns
@@ -64,7 +64,7 @@ dns_username dns
 exists_notification_ticks taskmanager
 exists_notification_transformer taskmanager
 expected_filetype_suffixes common
-fake_rabbit amqp
+fake_rabbit testing
 fatal_deprecations logging
 format_options logging
 guest_config guestagent
@@ -85,10 +85,10 @@ instance_format logging
 instance_uuid_format logging
 instances_page_size api
 ip_regex compute
-kombu_ssl_ca_certs amqp
-kombu_ssl_certfile amqp
-kombu_ssl_keyfile amqp
-kombu_ssl_version amqp
+kombu_ssl_ca_certs rabbitmq
+kombu_ssl_certfile rabbitmq
+kombu_ssl_keyfile rabbitmq
+kombu_ssl_version rabbitmq
 lock_path common
 log_config_append logging
 log_date_format logging
@@ -106,7 +106,7 @@ max_backups_per_user quota
 max_header_line api
 max_instances_per_user quota
 max_volumes_per_user quota
-memcached_servers auth_token
+memcached_servers common
 mount_options guestagent
 network_driver network
 network_label_regex logging
@@ -258,7 +258,7 @@ keystone_authtoken/insecure auth_token
 keystone_authtoken/keyfile auth_token
 keystone_authtoken/memcache_secret_key auth_token
 keystone_authtoken/memcache_security_strategy auth_token
-keystone_authtoken/memcached_servers auth_token
+keystone_authtoken/memcached_servers common
 keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
 keystone_authtoken/token_cache_time auth_token
