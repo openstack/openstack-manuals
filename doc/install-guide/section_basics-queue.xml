@@ -41,11 +41,17 @@
   </procedure>
   <procedure>
     <title>To configure the message broker service</title>
-    <step os="sles;opensuse;rhel;centos;fedora">
-      <para>Start the message broker service and enable it to start when the
+    <step os="rhel;centos;fedora;sles;opensuse">
+      <para>Start the message broker service and configure it to start when the
           system boots:</para>
-      <screen><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable rabbitmq-server.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start rabbitmq-server.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service rabbitmq-server start</userinput>
 <prompt>#</prompt> <userinput>chkconfig rabbitmq-server on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable rabbitmq-server.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start rabbitmq-server.service</userinput></screen>
     </step>
     <step>
       <para>The message broker creates a default account that uses

@@ -6,116 +6,75 @@
   xml:id="basics-packages">
   <?dbhtml stop-chunking?>
   <title>OpenStack packages</title>
-  <para>Distributions might release OpenStack packages as part of
-    their distribution or through other methods because the
-    OpenStack and distribution release times are independent of each
-    other.</para>
-  <para>This section describes the configuration you must
-    complete after you configure machines to install the latest
-    OpenStack packages.</para>
-  <para os="fedora;centos;rhel">The examples in this guide use the
-    OpenStack packages from the RDO repository. These packages work
-    on Red Hat Enterprise Linux 6, compatible versions of CentOS,
-    and Fedora 20.</para>
-  <para os="fedora;centos;rhel">
-    On all nodes, install the <package>yum-plugin-priorities</package> plug-in. This package
-    allows the assignment of relative priorities to the configured software
-    repositories. This functionality is used by the RDO release packages:
-  </para>
-  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install yum-plugin-priorities</userinput></screen>
-  <para os="fedora;centos;rhel">
-    To enable the RDO repository, download and
-    install the <package>rdo-release-juno</package>
-    package:</para>
-  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install https://rdo.fedorapeople.org/openstack-juno/rdo-release-juno.rpm</userinput></screen>
-  <para os="fedora;centos;rhel">The EPEL package includes GPG keys
-    for package signing and repository information. This should only
-    be installed on Red Hat Enterprise Linux and CentOS, not Fedora.
-    Install the latest <package>epel-release</package> package (see
-    <link
-    xlink:href="http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html"
-    >http://download.fedoraproject.org/pub/epel/6/x86_64/repoview/epel-release.html</link>).
-    For example:</para>
-  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm</userinput></screen>
-  <para os="fedora;centos;rhel">The
-    <package>openstack-utils</package> package contains utility
-    programs that make installation and configuration easier. These
-    programs are used throughout this guide. Install
-    <package>openstack-utils</package>. This verifies that you can
-    access the RDO repository:</para>
-  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-utils</userinput></screen>
-  <para os="opensuse;sles">On all nodes, use the Open Build Service repositories
-    for <glossterm>Juno</glossterm> based on your openSUSE or
-    SUSE Linux Enterprise Server version.</para>
-  <para os="opensuse">For openSUSE 13.1 use:</para>
-  <screen os="opensuse"><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Juno/openSUSE_13.1 Juno</userinput></screen>
-  <para os="sles">If you use SUSE Linux Enterprise Server 11 SP3,
-    use:</para>
-  <screen os="sles"><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Juno/SLE_11_SP3 Juno</userinput></screen>
-  <para os="opensuse;sles">The packages are signed by GPG key 893A90DAD85F9316. You should verify the fingerprint of the imported GPG key before using it.
-<programlisting>Key ID: 893A90DAD85F9316
+  <para>Distributions release OpenStack packages as part of the distribution
+    or using other methods because of differing release schedules. Perform
+    these procedures on all nodes.</para>
+  <note>
+    <para>Disable or remove any automatic update services because they can
+      impact your OpenStack environment.</para>
+  </note>
+  <procedure os="ubuntu">
+    <title>To configure prerequisites</title>
+    <step>
+      <para>Install the <package>python-software-properties</package> package
+        to ease repository management:</para>
+      <screen><prompt>#</prompt> <userinput>apt-get install python-software-properties</userinput></screen>
+    </step>
+  </procedure>
+  <procedure os="ubuntu">
+    <title>To enable the OpenStack repository</title>
+    <step>
+      <para>Enable the Ubuntu Cloud archive repository:</para>
+      <screen><prompt>#</prompt> <userinput>add-apt-repository cloud-archive:juno</userinput></screen>
+    </step>
+  </procedure>
+  <procedure os="rhel;centos;fedora">
+    <title>To configure prerequisites</title>
+    <step>
+      <para>Install the <package>yum-plugin-priorities</package> package to
+        enable assignment of relative priorities within repositories:</para>
+      <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install yum-plugin-priorities</userinput></screen>
+    </step>
+    <step>
+      <para>Install the <package>epel-release</package> package to enable the
+        <link
+        xlink:href="http://download.fedoraproject.org/pub/epel/7/x86_64/repoview/epel-release.html">EPEL</link> repository:</para>
+      <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-2.noarch.rpm</userinput></screen>
+      <note>
+        <para>Fedora does not require this package.</para>
+      </note>
+    </step>
+  </procedure>
+  <procedure os="rhel;centos;fedora">
+    <title>To enable the OpenStack repository</title>
+    <step>
+      <para>Install the <package>rdo-release-juno</package> package to enable
+        the RDO repository:</para>
+      <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum install http://rdo.fedorapeople.org/openstack-juno/rdo-release-juno.rpm</userinput></screen>
+    </step>
+  </procedure>
+  <procedure os="sles;opensuse">
+    <title>To enable the OpenStack repository</title>
+    <step>
+      <para>Enable the Open Build Service repositories based on your openSUSE
+        or SLES version:</para>
+      <para>On openSUSE 13.1:</para>
+      <screen><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Juno/openSUSE_13.1 Juno</userinput></screen>
+      <para>On SLES 11 SP3:</para>
+      <screen><prompt>#</prompt> <userinput>zypper addrepo -f obs://Cloud:OpenStack:Juno/SLE_11_SP3 Juno</userinput></screen>
+      <note>
+        <para>The packages are signed by GPG key 893A90DAD85F9316. You should
+          verify the fingerprint of the imported GPG key before using
+          it.</para>
+        <programlisting>Key ID: 893A90DAD85F9316
 Key Name: Cloud:OpenStack OBS Project &lt;Cloud:OpenStack@build.opensuse.org&gt;
 Key Fingerprint: 35B34E18ABC1076D66D5A86B893A90DAD85F9316
 Key Created: Tue Oct  8 13:34:21 2013
 Key Expires: Thu Dec 17 13:34:21 2015</programlisting>
-  </para>
-  <para os="opensuse;sles">The <package>openstack-utils</package>
-    package contains utility programs that make installation and
-    configuration easier. These programs are used throughout this
-    guide. Install <package>openstack-utils</package>. This verifies
-    that you can access the Open Build Service repository:</para>
-  <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-utils</userinput></screen>
-  <warning os="fedora;centos;rhel;opensuse;sles">
-    <para>The <application>openstack-config</application> program
-      in the <package>openstack-utils</package> package uses
-      <application>crudini</application> to manipulate configuration
-      files. However, <application>crudini</application> version 0.3
-      does not support multi valued options. See
-      <link
-      xlink:href="https://bugs.launchpad.net/openstack-manuals/+bug/1269271"
-      >https://bugs.launchpad.net/openstack-manuals/+bug/1269271</link>.
-      As a work around, you must manually set any multi valued
-      options or the new value overwrites the previous value instead
-      of creating a new option.</para>
-  </warning>
-  <para os="centos;rhel">The
-    <package>openstack-selinux</package> package includes the
-    policy files that are required to configure SELinux during
-    OpenStack installation on RHEL and CentOS. This step is not required during
-    OpenStack installation on Fedora.
-    Install <package>openstack-selinux</package>:</para>
-  <screen os="centos;rhel"><prompt>#</prompt> <userinput>yum install openstack-selinux</userinput></screen>
-  <para os="fedora;centos;rhel;opensuse;sles">Upgrade your system packages:</para>
-  <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>yum upgrade</userinput></screen>
-  <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper refresh</userinput>
-<prompt>#</prompt> <userinput>zypper dist-upgrade</userinput></screen>
-  <para os="fedora;centos;rhel;opensuse;sles">If the upgrade included a new
-    kernel package, reboot the system to ensure the new kernel is running:</para>
-  <screen os="fedora;centos;rhel;opensuse;sles"><prompt>#</prompt> <userinput>reboot</userinput></screen>
-  <procedure xml:id="ubuntu-cloud-archive" os="ubuntu">
-    <title>To use the Ubuntu Cloud Archive for Juno</title>
-    <para>The <link
-      xlink:href="https://wiki.ubuntu.com/ServerTeam/CloudArchive"
-      >Ubuntu Cloud Archive</link> is a special repository that
-      allows you to install newer releases of OpenStack on the
-      stable supported version of Ubuntu.</para>
-    <step>
-      <para>On all nodes, install the Ubuntu Cloud Archive for
-        <glossterm>Juno</glossterm>:
-      <screen><prompt>#</prompt> <userinput>apt-get install python-software-properties</userinput>
-<prompt>#</prompt> <userinput>add-apt-repository cloud-archive:juno</userinput></screen></para>
-    </step>
-    <step>
-        <para>Update the package database and upgrade your system:</para>
-        <screen><prompt>#</prompt> <userinput>apt-get update</userinput>
-<prompt>#</prompt> <userinput>apt-get dist-upgrade</userinput></screen>
-    </step>
-    <step>
-        <para>Reboot the system for all changes to take effect:</para>
-        <screen><prompt>#</prompt> <userinput>reboot</userinput></screen>
+      </note>
     </step>
   </procedure>
-  <procedure xml:id="debian-cloud-archive" os="debian">
+  <procedure os="debian">
     <title>To use the Debian Wheezy backports archive for
       Juno</title>
     <para>The <glossterm>Juno</glossterm> release is available
@@ -150,7 +109,7 @@ Key Expires: Thu Dec 17 13:34:21 2015</programlisting>
     mirrors is available at <link
     xlink:href="http://archive.gplhost.com/readme.mirrors"
     >http://archive.gplhost.com/readme.mirrors</link>.</para>
-  <section xml:id="basics-argparse" os="debian">
+  <procedure xml:id="basics-argparse" os="debian">
     <title>Manually install python-argparse</title>
     <para>The Debian OpenStack packages are maintained on Debian Sid
       (also known as Debian Unstable) - the current development
@@ -164,6 +123,7 @@ Key Expires: Thu Dec 17 13:34:21 2015</programlisting>
       Python 2.7, this package is installed by default. Unfortunately,
       in Python 2.7, this package does not include <code>Provides:
         python-argparse</code> directive.</para>
+    <step>
     <para>Because the packages are maintained in Sid where the
         <code>Provides: python-argparse</code> directive causes an
       error, and the Debian OpenStack maintainer wants to maintain one
@@ -175,5 +135,29 @@ Key Expires: Thu Dec 17 13:34:21 2015</programlisting>
     <screen><prompt>#</prompt> <userinput>apt-get install python-argparse</userinput></screen>
     <para>This caveat applies to most OpenStack packages in
       Wheezy.</para>
-  </section>
+    </step>
+  </procedure>
+  <procedure>
+    <title>To finalize installation</title>
+    <step>
+      <para>Upgrade the packages on your system:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get update &amp;&amp; apt-get dist-upgrade</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum upgrade</userinput></screen>
+      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper refresh &amp;&amp; zypper dist-upgrade</userinput></screen>
+      <note>
+        <para>If the upgrade process includes a new kernel, reboot your system
+          to activate it.</para>
+      </note>
+    </step>
+    <step os="rhel;centos">
+      <para>RHEL and CentOS enable <glossterm>SELinux</glossterm> by
+        by default. Install the <package>openstack-selinux</package> package
+        to automatically manage security policies for OpenStack
+        services:</para>
+      <screen os="rhel;centos"><prompt>#</prompt> <userinput>yum install openstack-selinux</userinput></screen>
+      <note>
+        <para>Fedora does not require this package.</para>
+      </note>
+    </step>
+  </procedure>
 </section>
