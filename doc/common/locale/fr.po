@@ -19,8 +19,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-09-30 04:54+0000\n"
-"PO-Revision-Date: 2014-09-29 12:24+0000\n"
+"POT-Creation-Date: 2014-10-03 06:05+0000\n"
+"PO-Revision-Date: 2014-10-02 22:08+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -12207,31 +12207,36 @@ msgstr "Activer KVM"
 
 #: ./doc/common/section_kvm_enable.xml8(para)
 msgid ""
-"To perform these steps, you must be logged in as the "
-"<systemitem>root</systemitem> user."
+"The following sections outline how to enable KVM based hardware "
+"virtualisation on different architectures and platforms. To perform these "
+"steps, you must be logged in as the <systemitem>root</systemitem> user."
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml12(para)
+#: ./doc/common/section_kvm_enable.xml13(title)
+msgid "For x86 based systems"
+msgstr ""
+
+#: ./doc/common/section_kvm_enable.xml16(para)
 msgid ""
 "To determine whether the <literal>svm</literal> or <literal>vmx</literal> "
 "CPU extensions are present, run this command:"
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml16(para)
+#: ./doc/common/section_kvm_enable.xml20(para)
 msgid ""
-"This command generates output if the CPU is hardware-virtualization capable."
-" Even if output is shown, you might still need to enable virtualization in "
-"the system BIOS for full support."
+"This command generates output if the CPU is capable of hardware-"
+"virtualization. Even if output is shown, you might still need to enable "
+"virtualization in the system BIOS for full support."
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml20(para)
+#: ./doc/common/section_kvm_enable.xml24(para)
 msgid ""
 "If no output appears, consult your system documentation to ensure that your "
 "CPU and motherboard support hardware virtualization. Verify that any "
 "relevant hardware virtualization options are enabled in the system BIOS."
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml25(para)
+#: ./doc/common/section_kvm_enable.xml29(para)
 msgid ""
 "The BIOS for each manufacturer is different. If you must enable "
 "virtualization in the BIOS, look for an option containing the words "
@@ -12239,13 +12244,13 @@ msgid ""
 "<literal>VMX</literal>, or <literal>SVM</literal>."
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml33(para)
+#: ./doc/common/section_kvm_enable.xml37(para)
 msgid ""
 "To list the loaded kernel modules and verify that the <literal>kvm</literal>"
 " modules are loaded, run this command:"
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml37(para)
+#: ./doc/common/section_kvm_enable.xml41(para)
 msgid ""
 "If the output includes <systemitem>kvm_intel</systemitem> or "
 "<systemitem>kvm_amd</systemitem>, the <systemitem>kvm</systemitem> hardware "
@@ -12253,40 +12258,41 @@ msgid ""
 "requirements for OpenStack Compute."
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml44(para)
+#: ./doc/common/section_kvm_enable.xml48(para)
 msgid ""
 "If the output does not show that the <literal>kvm</literal> module is "
 "loaded, run this command to load it:"
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml48(para)
+#: ./doc/common/section_kvm_enable.xml52(para)
 msgid "Run the command for your CPU. For Intel, run this command:"
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml51(para)
+#: ./doc/common/section_kvm_enable.xml55(para)
 msgid "For AMD, run this command:"
 msgstr "Pour AMD, exécutez cette commande:"
 
-#: ./doc/common/section_kvm_enable.xml53(para)
+#: ./doc/common/section_kvm_enable.xml57(para)
+#: ./doc/common/section_kvm_enable.xml140(para)
 msgid ""
 "Because a KVM installation can change user group membership, you might need "
 "to log in again for changes to take effect."
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml56(para)
+#: ./doc/common/section_kvm_enable.xml60(para)
 msgid ""
 "If the kernel modules do not load automatically, use the procedures listed "
 "in these subsections."
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml60(para)
+#: ./doc/common/section_kvm_enable.xml64(para)
 msgid ""
 "If the checks indicate that required hardware virtualization support or "
 "kernel modules are disabled or unavailable, you must either enable this "
 "support on the system or find a system with this support."
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml65(para)
+#: ./doc/common/section_kvm_enable.xml69(para)
 msgid ""
 "Some systems require that you enable VT support in the system BIOS. If you "
 "believe your processor supports hardware acceleration but the previous "
@@ -12294,7 +12300,7 @@ msgid ""
 "and enable the VT option."
 msgstr ""
 
-#: ./doc/common/section_kvm_enable.xml71(para)
+#: ./doc/common/section_kvm_enable.xml75(para)
 msgid ""
 "If KVM acceleration is not supported, configure Compute to use a different "
 "hypervisor, such as <link href=\"http://docs.openstack.org/trunk/config-"
@@ -12303,43 +12309,92 @@ msgid ""
 "/introduction-to-xen.html\">Xen</link>."
 msgstr "Dans le cas où l'accélération KVM n'est pas supportée, Compute devra être configuré pour utiliser un autre hyperviseur comme <link href=\"http://docs.openstack.org/trunk/config-reference/content/qemu.html\">QEMU</link> ou <link href=\"http://docs.openstack.org/trunk/config-reference/content/introduction-to-xen.html\">Xen</link>."
 
-#: ./doc/common/section_kvm_enable.xml77(para)
+#: ./doc/common/section_kvm_enable.xml81(para)
 msgid ""
 "These procedures help you load the kernel modules for Intel-based and AMD-"
 "based processors if they do not load automatically during KVM installation."
 msgstr "Ces procédures décrit comment charger les modules de noyau pour les processeurs Intel et AMD, s'ils n'ont pas été chargés automatiquement par le processus d'installation de KVM de votre distribution."
 
-#: ./doc/common/section_kvm_enable.xml81(title)
+#: ./doc/common/section_kvm_enable.xml85(title)
 msgid "Intel-based processors"
 msgstr "Processeurs Intel"
 
-#: ./doc/common/section_kvm_enable.xml82(para)
+#: ./doc/common/section_kvm_enable.xml86(para)
 msgid ""
 "If your compute host is Intel-based, run these commands as root to load the "
 "kernel modules:"
 msgstr "Si votre ordinateur hôte est basé sur Intel, lancez en tant qu'utilisateur root les modules de noyau : "
 
-#: ./doc/common/section_kvm_enable.xml86(para)
+#: ./doc/common/section_kvm_enable.xml90(para)
 msgid ""
 "Add these lines to the <filename>/etc/modules</filename> file so that these "
 "modules load on reboot:"
 msgstr "Ajoutez les lignes suivantes à <filename>/etc/modules</filename> pour que ces modules soient chargés au redémarrage :"
 
-#: ./doc/common/section_kvm_enable.xml92(title)
+#: ./doc/common/section_kvm_enable.xml96(title)
 msgid "AMD-based processors"
 msgstr "Processeurs AMD"
 
-#: ./doc/common/section_kvm_enable.xml93(para)
+#: ./doc/common/section_kvm_enable.xml97(para)
 msgid ""
 "If your compute host is AMD-based, run these commands as root to load the "
 "kernel modules:"
 msgstr "Si votre ordinateur hôte est basé sur AMD, lancez en tant qu'utilisateur root les modules de noyau : "
 
-#: ./doc/common/section_kvm_enable.xml97(para)
+#: ./doc/common/section_kvm_enable.xml101(para)
 msgid ""
 "Add these lines to <filename>/etc/modules</filename> file so that these "
 "modules load on reboot:"
 msgstr "Ajoutez les lignes suivantes à <filename>/etc/modules</filename> pour que ces modules soient chargés au redémarrage : "
+
+#: ./doc/common/section_kvm_enable.xml109(title)
+msgid "For POWER based systems"
+msgstr ""
+
+#: ./doc/common/section_kvm_enable.xml110(para)
+msgid "KVM as a hypervisor is supported on POWER system's PowerNV platform."
+msgstr ""
+
+#: ./doc/common/section_kvm_enable.xml114(para)
+msgid ""
+"To determine if your POWER platform supports KVM based virtualization run "
+"the following command:"
+msgstr ""
+
+#: ./doc/common/section_kvm_enable.xml118(para)
+msgid ""
+"If the previous command generates the following output, then CPU supports "
+"KVM based virtualization"
+msgstr ""
+
+#: ./doc/common/section_kvm_enable.xml121(para)
+msgid ""
+"If no output is displayed, then your POWER platform does not support KVM "
+"based hardware virtualization."
+msgstr ""
+
+#: ./doc/common/section_kvm_enable.xml125(para)
+msgid ""
+"To list the loaded kernel modules and verify that the <literal>kvm</literal>"
+" modules are loaded, run the following command:"
+msgstr ""
+
+#: ./doc/common/section_kvm_enable.xml129(para)
+msgid ""
+"If the output includes <systemitem>kvm_hv</systemitem>, the "
+"<systemitem>kvm</systemitem> hardware virtualization modules are loaded and "
+"your kernel meets the module requirements for OpenStack Compute."
+msgstr ""
+
+#: ./doc/common/section_kvm_enable.xml134(para)
+msgid ""
+"If the output does not show that the <literal>kvm</literal> module is "
+"loaded, run the following command to load it:"
+msgstr ""
+
+#: ./doc/common/section_kvm_enable.xml138(para)
+msgid "For PowerNV platform, run the following command:"
+msgstr ""
 
 #: ./doc/common/tables/ceilometer-database.xml7(caption)
 #: ./doc/common/tables/cinder-database.xml7(caption)
