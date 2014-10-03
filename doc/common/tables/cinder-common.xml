@@ -34,10 +34,6 @@
         <td>(StrOpt) Default volume type to use</td>
       </tr>
       <tr>
-        <td>disable_process_locking = False</td>
-        <td>(BoolOpt) Whether to disable inter-process locks</td>
-      </tr>
-      <tr>
         <td>enable_new_services = True</td>
         <td>(BoolOpt) Services to be added to the available pool on create</td>
       </tr>
@@ -56,6 +52,10 @@
       <tr>
         <td>lock_path = None</td>
         <td>(StrOpt) Directory to use for lock files. Default to a temp directory</td>
+      </tr>
+      <tr>
+        <td>memcached_servers = None</td>
+        <td>(ListOpt) Memcached servers or None for in process cache.</td>
       </tr>
       <tr>
         <td>monkey_patch = False</td>
@@ -158,8 +158,11 @@
         <td>(BoolOpt) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.</td>
       </tr>
       <tr>
-        <td>use_stderr = True</td>
-        <td>(BoolOpt) Log output to standard error.</td>
+        <th colspan="2">[keystone_authtoken]</th>
+      </tr>
+      <tr>
+        <td>memcached_servers = None</td>
+        <td>(ListOpt) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.</td>
       </tr>
     </tbody>
   </table>

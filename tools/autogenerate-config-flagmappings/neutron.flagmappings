@@ -8,8 +8,8 @@ allow_bulk api
 allow_overlapping_ips policy
 allow_pagination api
 allow_sorting api
-amqp_auto_delete rpc
-amqp_durable_queues rpc
+amqp_auto_delete amqp
+amqp_durable_queues amqp
 api_extensions_path api
 api_paste_config api
 api_workers common
@@ -19,8 +19,8 @@ auth_insecure common
 auth_region common
 auth_strategy common
 auth_url common
-backdoor_port testing
-backlog wsgi
+backdoor_port debug
+backlog api
 base_mac common
 bind_host common
 bind_port common
@@ -28,7 +28,7 @@ ca_certs common
 check_child_processes common
 check_child_processes_action common
 check_child_processes_interval common
-control_exchange rpc
+control_exchange amqp
 core_plugin common
 ctl_cert common
 ctl_privkey common
@@ -47,7 +47,7 @@ dhcp_delete_namespaces common
 dhcp_domain common
 dhcp_driver common
 dhcp_lease_duration common
-disable_process_locking common
+disable_process_locking debug
 dnsmasq_config_file dhcp_agent
 dnsmasq_dns_servers dhcp_agent
 dnsmasq_lease_max dhcp_agent
@@ -104,7 +104,7 @@ max_request_body_size api
 max_routes quotas
 max_subnet_host_routes common
 measure_interval metering_agent
-memcached_servers auth_token
+memcached_servers common
 meta_flavor_driver_mappings metadata
 metadata_backlog metadata
 metadata_port metadata
@@ -115,8 +115,8 @@ min_l3_agents_per_router l3_agent
 network_auto_schedule scheduler
 network_device_mtu agent
 network_scheduler_driver scheduler
-notification_driver notifier
-notification_topics notifier
+notification_driver amqp
+notification_topics amqp
 notify_nova_on_port_data_changes compute
 notify_nova_on_port_status_changes compute
 nova_admin_auth_url compute
@@ -176,7 +176,7 @@ redirects vmware
 report_interval common
 resync_interval dhcp_agent
 retries vmware
-retry_until_window wsgi
+retry_until_window api
 root_helper common
 router_auto_schedule scheduler
 router_delete_namespaces scheduler
@@ -205,8 +205,8 @@ ssl_cert_file ca
 ssl_key_file ca
 state_path common
 syslog_log_facility logging
-tcp_keepidle wsgi
-transport_url rpc
+tcp_keepidle api
+transport_url amqp
 use_namespaces dhcp_agent
 use_ssl logging
 use_stderr logging
@@ -543,7 +543,7 @@ keystone_authtoken/insecure auth_token
 keystone_authtoken/keyfile auth_token
 keystone_authtoken/memcache_secret_key auth_token
 keystone_authtoken/memcache_security_strategy auth_token
-keystone_authtoken/memcached_servers auth_token
+keystone_authtoken/memcached_servers common
 keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
 keystone_authtoken/token_cache_time auth_token
@@ -558,7 +558,7 @@ l3_arista/use_vrf l3_arista
 matchmaker_redis/host redis
 matchmaker_redis/password redis
 matchmaker_redis/port redis
-matchmaker_ring/ringfile rpc
+matchmaker_ring/ringfile redis
 ml2/extension_drivers ml2
 ml2/mechanism_drivers ml2
 ml2/tenant_network_types ml2

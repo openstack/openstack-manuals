@@ -4,7 +4,7 @@
      generated and your changes will be overwritten.
      The tool to do so lives in openstack-doc-tools repository. -->
   <table rules="all" xml:id="config_table_ceilometer_debug">
-    <caption>Description of debug configuration options</caption>
+    <caption>Description of logging configuration options</caption>
     <col width="50%"/>
     <col width="50%"/>
     <thead>
@@ -18,8 +18,12 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>debug = False</td>
-        <td>(BoolOpt) Print debugging output (set logging level to DEBUG instead of default WARNING level).</td>
+        <td>backdoor_port = None</td>
+        <td>(StrOpt) Enable eventlet backdoor.  Acceptable values are 0, &lt;port&gt;, and &lt;start&gt;:&lt;end&gt;, where 0 results in listening on a random tcp port number; &lt;port&gt; results in listening on the specified port number (and not enabling backdoor if that port is in use); and &lt;start&gt;:&lt;end&gt; results in listening on the smallest unused port number within the specified range of port numbers.  The chosen port is displayed in the service's log file.</td>
+      </tr>
+      <tr>
+        <td>disable_process_locking = False</td>
+        <td>(BoolOpt) Enables or disables inter-process locks.</td>
       </tr>
       <tr>
         <td>nova_http_log_debug = False</td>
