@@ -96,9 +96,14 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
             <application>RabbitMQ</application>.</para>
         </step>
         <step>
-          <para>In the <literal>[keystone_authtoken]</literal> section,
+          <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[keystone_authtoken]</literal> sections,
             configure Identity service access:</para>
-          <programlisting language="ini">[keystone_authtoken]
+          <programlisting language="ini">[DEFAULT]
+...
+auth_strategy = keystone
+
+[keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
 identity_uri = http://<replaceable>controller</replaceable>:35357
@@ -389,7 +394,11 @@ metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></progr
     <step>
       <para>On the <emphasis>controller</emphasis> node, restart the
         Compute <glossterm>API</glossterm> service:</para>
-      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-api.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-nova-api restart</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-api.service</userinput></screen>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-api restart</userinput></screen>
     </step>
   </procedure>
@@ -404,17 +413,17 @@ metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></progr
       interface to provide instances with external network access. In
       essence, this port connects the virtual and physical external
       networks in your environment.</para>
-    <step os="rhel;centos;fedora">
+    <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the OVS service and configure it to start when the
         system boots:</para>
-      <screen><prompt>#</prompt> <userinput>service openvswitch start</userinput>
-<prompt>#</prompt> <userinput>chkconfig openvswitch on</userinput></screen>
-    </step>
-    <step os="sles;opensuse">
-      <para>Start the OVS service and configure it to start when the
-        system boots:</para>
-      <screen><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openvswitch.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openvswitch.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openvswitch-switch start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openvswitch-switch on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openvswitch.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openvswitch.service</userinput></screen>
     </step>
     <step os="debian;ubuntu">
       <para>Restart the OVS service:</para>
@@ -451,7 +460,16 @@ metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></progr
         <filename>/etc/neutron/plugins/ml2/ml2_conf.ini</filename>.
         If this symbolic link does not exist, create it using the
         following command:</para>
-      <screen><prompt>#</prompt> <userinput>ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen></step>
+      <screen><prompt>#</prompt> <userinput>ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini</userinput></screen>
+      <para>Due to a packaging bug, the Open vSwitch agent initialization
+        script explicitly looks for the Open vSwitch plug-in configuration
+        file rather than a symbolic link
+        <filename>/etc/neutron/plugin.ini</filename> pointing to the ML2
+        plug-in configuration file. Run the following commands to resolve this
+        issue:</para>
+      <screen><prompt>#</prompt> <userinput>cp /usr/lib/systemd/system/neutron-openvswitch-agent.service /usr/lib/systemd/system/neutron-openvswitch-agent.service.orig</userinput>
+<prompt>#</prompt> <userinput>sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /usr/lib/systemd/system/neutron-openvswitch-agent.service</userinput></screen>
+    </step>
     <step os="sles;opensuse">
       <para>The Networking service initialization scripts expect the
         variable <literal>NEUTRON_PLUGIN_CONF</literal> in the
@@ -464,16 +482,22 @@ metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></progr
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Networking services and configure them to start
         when the system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service neutron-openvswitch-agent start</userinput>
-<prompt>#</prompt> <userinput>service neutron-l3-agent start</userinput>
-<prompt>#</prompt> <userinput>service neutron-dhcp-agent start</userinput>
-<prompt>#</prompt> <userinput>service neutron-metadata-agent start</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-openvswitch-agent on</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-l3-agent on</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-dhcp-agent on</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-metadata-agent on</userinput>
-<prompt>#</prompt> <userinput>chkconfig neutron-ovs-cleanup on</userinput></screen>
-      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable neutron-openvswitch-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable neutron-l3-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable neutron-dhcp-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable neutron-metadata-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable neutron-ovs-cleanup.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start neutron-openvswitch-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start neutron-l3-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start neutron-dhcp-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start neutron-metadata-agent.service</userinput></screen>
+      <note os="rhel;centos;fedora">
+        <para>Do not explictly start the
+          <systemitem class="service">neutron-ovs-cleanup</systemitem>
+          service.</para>
+      </note>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent start</userinput>
 <prompt>#</prompt> <userinput>service openstack-neutron-l3-agent start</userinput>
 <prompt>#</prompt> <userinput>service openstack-neutron-dhcp-agent start</userinput>
 <prompt>#</prompt> <userinput>service openstack-neutron-metadata-agent start</userinput>
@@ -482,6 +506,21 @@ metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></progr
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron-dhcp-agent on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron-metadata-agent on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron-ovs-cleanup on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-neutron-openvswitch-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-neutron-l3-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-neutron-dhcp-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-neutron-metadata-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-neutron-ovs-cleanup.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-neutron-openvswitch-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-neutron-l3-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-neutron-dhcp-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-neutron-metadata-agent.service</userinput></screen>
+      <note os="sles;opensuse">
+        <para>Do not explictly start the
+          <systemitem class="service">openstack-neutron-ovs-cleanup</systemitem>
+          service.</para>
+      </note>
     </step>
     <step os="ubuntu;debian">
       <para>Restart the Networking services:</para>

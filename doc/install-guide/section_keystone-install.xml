@@ -200,8 +200,14 @@ verbose = True</programlisting>
     <step os="rhel;fedora;centos;opensuse;sles">
       <para>Start the Identity service and configure it to start when the
         system boots:</para>
-      <screen><prompt>#</prompt> <userinput>service openstack-keystone start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-keystone.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-keystone.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-keystone start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-keystone on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-keystone.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-keystone.service</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create a SQLite database.</para>

@@ -22,45 +22,14 @@
   </procedure>
   <procedure>
     <title>To configure legacy networking</title>
-    <step os="rhel;centos;fedora;sles;opensuse">
-      <para>Run the following commands:</para>
-      <para>Replace <replaceable>INTERFACE_NAME</replaceable> with the
-        actual interface name for the external network. For example,
-        <emphasis>eth1</emphasis> or <emphasis>ens224</emphasis>.</para>
-      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  network_api_class nova.network.api.API</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  security_group_api nova</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  network_manager nova.network.manager.FlatDHCPManager</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  firewall_driver nova.virt.libvirt.firewall.IptablesFirewallDriver</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  network_size 254</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  allow_same_net_traffic False</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  multi_host True</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  send_arp_for_ha True</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  share_dhcp_address True</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  force_dhcp_release True</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  flat_network_bridge br100</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  flat_interface <replaceable>INTERFACE_NAME</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/nova/nova.conf DEFAULT \
-  public_interface <replaceable>INTERFACE_NAME</replaceable></userinput></screen>
-    </step>
-    <step os="ubuntu;debian">
-      <para>Edit the <filename>/etc/nova/nova.conf</filename> file and add the
-        following keys to the <literal>[DEFAULT]</literal> section:</para>
-      <para>Replace <replaceable>INTERFACE_NAME</replaceable> with the
-        actual interface name for the external network. For example,
-        <emphasis>eth1</emphasis> or <emphasis>ens224</emphasis>.</para>
-      <programlisting language="ini">[DEFAULT]
+    <step>
+      <para>Edit the <filename>/etc/nova/nova.conf</filename> file and
+        complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure
+            the network parameters:</para>
+          <programlisting language="ini">[DEFAULT]
 ...
 network_api_class = nova.network.api.API
 security_group_api = nova
@@ -75,6 +44,11 @@ force_dhcp_release = True
 flat_network_bridge = br100
 flat_interface = <replaceable>INTERFACE_NAME</replaceable>
 public_interface = <replaceable>INTERFACE_NAME</replaceable></programlisting>
+          <para>Replace <replaceable>INTERFACE_NAME</replaceable> with the
+            actual interface name for the external network. For example,
+            <emphasis>eth1</emphasis> or <emphasis>ens224</emphasis>.</para>
+        </step>
+      </substeps>
     </step>
     <step>
       <para os="ubuntu;debian">Restart the services:</para>
@@ -82,14 +56,20 @@ public_interface = <replaceable>INTERFACE_NAME</replaceable></programlisting>
 <prompt>#</prompt> <userinput>service nova-api-metadata restart</userinput></screen>
       <para os="rhel;centos;fedora;sles;opensuse">Start the services and
         configure them to start when the system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service openstack-nova-network start</userinput>
-<prompt>#</prompt> <userinput>service openstack-nova-metadata-api start</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-nova-network on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-nova-metadata-api on</userinput></screen>
-      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-nova-network start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-nova-network.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-metadata-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-network.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-metadata-api.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-nova-network start</userinput>
 <prompt>#</prompt> <userinput>service openstack-nova-api-metadata start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-network on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-api-metadata on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-nova-network.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-nova-metadata-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-network.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-nova-metadata-api.service</userinput></screen>
     </step>
   </procedure>
 </section>
