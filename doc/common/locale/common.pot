@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-10-04 06:08+0000\n"
+"POT-Creation-Date: 2014-10-06 06:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11660,10 +11660,10 @@ msgid "Type"
 msgstr ""
 
 #: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:18(literal)
-msgid "netapp:raid_type"
+msgid "netapp_raid_type"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:19(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:24(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:30(td)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:19(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:24(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:29(td)
 msgid "String"
 msgstr ""
 
@@ -11676,7 +11676,7 @@ msgid "Limit the candidate volume list based on one of the following raid types:
 msgstr ""
 
 #: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:23(literal)
-msgid "netapp:disk_type"
+msgid "netapp_disk_type"
 msgstr ""
 
 #: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:25(literal)
@@ -11687,83 +11687,87 @@ msgstr ""
 msgid "Limit the candidate volume list based on one of the following disk types: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:29(literal)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:28(literal)
 msgid "netapp:qos_policy_group"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:31(td)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:28(para)
+msgid "Please note that this extra spec has a colon (<literal>:</literal>) in its name because it is used by the driver to assign the QoS policy group to the OpenStack Block Storage volume after it has been provisioned."
+msgstr ""
+
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:30(td)
 msgid "Specify the name of a QoS policy group, which defines measurable Service Level Objectives, that should be applied to the OpenStack Block Storage volume at the time of volume creation. Ensure that the QoS policy group object within Data ONTAP should be defined before an OpenStack Block Storage volume is created, and that the QoS policy group is not associated with the destination FlexVol volume."
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:36(literal)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:33(literal)
 msgid "netapp_mirrored"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:36(para)
-msgid "If both the positive and negative specs for a pair are specified (for example, <literal>netapp_dedup</literal> and <literal>netapp_nodedup</literal>) and set to the same value within a single <literal>extra_specs</literal> list, then neither spec will be utilized by the driver."
-msgstr ""
-
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:37(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:42(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:47(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:52(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:57(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:62(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:67(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:72(td)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:34(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:39(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:44(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:49(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:54(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:59(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:64(td) ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:69(td)
 msgid "Boolean"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:38(td)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:35(td)
 msgid "Limit the candidate volume list to only the ones that are mirrored on the storage controller."
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:41(literal)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:38(literal)
 msgid "netapp_unmirrored"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:43(td)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:38(para)
+msgid "In the Juno release, these negative-assertion extra specs are formally deprecated by the NetApp unified driver. Instead of using the deprecated negative-assertion extra specs (for example, <option>netapp_unmirrored</option>) with a value of <literal>true</literal>, use the corresponding positive-assertion extra spec (for example, <option>netapp_mirrored</option>) with a value of <literal>false</literal>."
+msgstr ""
+
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:40(td)
 msgid "Limit the candidate volume list to only the ones that are not mirrored on the storage controller."
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:46(literal)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:43(literal)
 msgid "netapp_dedup"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:48(td)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:45(td)
 msgid "Limit the candidate volume list to only the ones that have deduplication enabled on the storage controller."
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:51(literal)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:48(literal)
 msgid "netapp_nodedup"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:53(td)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:50(td)
 msgid "Limit the candidate volume list to only the ones that have deduplication disabled on the storage controller."
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:56(literal)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:53(literal)
 msgid "netapp_compression"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:58(td)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:55(td)
 msgid "Limit the candidate volume list to only the ones that have compression enabled on the storage controller."
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:61(literal)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:58(literal)
 msgid "netapp_nocompression"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:63(td)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:60(td)
 msgid "Limit the candidate volume list to only the ones that have compression disabled on the storage controller."
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:66(literal)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:63(literal)
 msgid "netapp_thin_provisioned"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:68(td)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:65(td)
 msgid "Limit the candidate volume list to only the ones that support thin provisioning on the storage controller."
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:71(literal)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:68(literal)
 msgid "netapp_thick_provisioned"
 msgstr ""
 
-#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:73(td)
+#: ./doc/common/tables/cinder-netapp_cdot_extraspecs.xml:70(td)
 msgid "Limit the candidate volume list to only the ones that support thick provisioning on the storage controller."
 msgstr ""
 
