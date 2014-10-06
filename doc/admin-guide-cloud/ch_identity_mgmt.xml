@@ -87,10 +87,8 @@ keystoneclient.middleware.auth_token:filter_factory</programlisting>
 auth_strategy=keystone
 
 [keystone_authtoken]
-auth_host = 127.0.0.1
-auth_port = 35357
-auth_protocol = http
-auth_uri = http://127.0.0.1:5000/
+auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+identity_uri = http://<replaceable>controller</replaceable>:35357
 admin_user = admin
 admin_password = SuperSekretPassword
 admin_tenant_name = service</programlisting>
@@ -98,6 +96,12 @@ admin_tenant_name = service</programlisting>
       <para>Middleware parameters in paste config take priority. You
         must remove them to use values in the
           <literal>[keystone_authtoken]</literal> section.</para>
+    </note>
+    <note>
+      <para>Comment out any <literal>auth_host</literal>,
+        <literal>auth_port</literal>, and
+        <literal>auth_protocol</literal> options because the
+        <literal>identity_uri</literal> option replaces them.</para>
     </note>
   </section>
   <section xml:id="monitoring">
@@ -198,10 +202,8 @@ keystoneclient.middleware.auth_token:filter_factory</programlisting>
 auth_strategy=keystone
 
 [keystone_authtoken]
-auth_host = 127.0.0.1
-auth_port = 35357
-auth_protocol = http
-auth_uri = http://127.0.0.1:5000/
+auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+identity_uri = http://<replaceable>controller</replaceable>:35357
 admin_user = admin
 admin_password = SuperSekretPassword
 admin_tenant_name = service</programlisting>
@@ -210,15 +212,19 @@ admin_tenant_name = service</programlisting>
         priority. You must remove them to use the values in the
         [keystone_authtoken] section.</para>
     </note>
+    <note>
+      <para>Comment out any <literal>auth_host</literal>,
+        <literal>auth_port</literal>, and
+        <literal>auth_protocol</literal> options because the
+        <literal>identity_uri</literal> option replaces them.</para>
+    </note>
     <para>This sample paste config filter makes use of the
         <option>admin_user</option> and
         <option>admin_password</option> options:</para>
     <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken]
 paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
-service_port = 5000
-service_host = 127.0.0.1
-auth_port = 35357
-auth_host = 127.0.0.1
+auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+identity_uri = http://<replaceable>controller</replaceable>:35357
 auth_token = 012345SECRET99TOKEN012345
 admin_user = admin
 admin_password = keystone123</programlisting>
@@ -226,6 +232,12 @@ admin_password = keystone123</programlisting>
       <para>Using this option requires an admin tenant/role
         relationship. The admin user is granted access to the admin
         role on the admin tenant.</para>
+    </note>
+    <note>
+      <para>Comment out any <literal>auth_host</literal>,
+        <literal>auth_port</literal>, and
+        <literal>auth_protocol</literal> options because the
+        <literal>identity_uri</literal> option replaces them.</para>
     </note>
   </section>
    <section xml:id="identity-service-api-protection-with-role-based-access-control">

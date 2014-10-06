@@ -126,15 +126,19 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
           <programlisting language="ini">[keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
-auth_host = <replaceable>controller</replaceable>
-auth_port = 35357
-auth_protocol = http
+identity_uri = http://<replaceable>controller</replaceable>:35357
 admin_tenant_name = service
 admin_user = cinder
 admin_password = <replaceable>CINDER_PASS</replaceable></programlisting>
           <para>Replace <replaceable>CINDER_PASS</replaceable> with the
             password you chose for the <literal>cinder</literal> user in the
             Identity service.</para>
+          <note>
+            <para>Comment out any <literal>auth_host</literal>,
+              <literal>auth_port</literal>, and
+              <literal>auth_protocol</literal> options because the
+              <literal>identity_uri</literal> option replaces them.</para>
+          </note>
         </step>
       </substeps>
     </step>
