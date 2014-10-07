@@ -171,13 +171,28 @@ admin_password = <replaceable>CINDER_PASS</replaceable></programlisting>
       <screen><prompt>#</prompt> <userinput>service cinder-scheduler restart</userinput>
 <prompt>#</prompt> <userinput>service cinder-api restart</userinput></screen>
     </step>
-    <step os="rhel;centos;fedora;sles;opensuse">
+    <step os="rhel;centos;fedora">
       <para>Start the Block Storage services and configure them to start when
         the system boots:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-api.service \
+  openstack-cinder-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-cinder-api.service \
+  openstack-cinder-scheduler.service</userinput></screen>
+    </step>
+    <step os="opensuse;sles">
+      <para>Start the Block Storage services and configure them to start when
+        the system boots:</para>
+        <para>On SLES:</para>
       <screen><prompt>#</prompt> <userinput>service openstack-cinder-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-cinder-scheduler start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-cinder-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-cinder-scheduler on</userinput></screen>
+      <para>On openSUSE:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-api.service \
+  openstack-cinder-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-cinder-api.service \
+  openstack-cinder-scheduler.service
+</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create an SQLite database.</para>

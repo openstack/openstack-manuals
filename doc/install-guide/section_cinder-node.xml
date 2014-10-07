@@ -193,24 +193,38 @@ iscsi_helper = <replaceable>lioadm</replaceable></programlisting>
       <screen><prompt>#</prompt> <userinput>rm -f /var/lib/cinder/cinder.sqlite</userinput></screen>
     </step>
     <step os="centos;fedora;rhel">
-      <para>Start the target service:</para>
-      <screen><prompt>#</prompt> <userinput>service target start</userinput></screen>
+      <para>Enable the target service:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl enable target.service</userinput></screen>
     </step>
     <step os="centos;fedora;rhel">
-      <para>Enable the target service:</para>
-      <screen><prompt>#</prompt> <userinput>chkconfig target on</userinput></screen>
+      <para>Start the target service:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl start target.service</userinput></screen>
     </step>
     <step os="opensuse;sles">
       <para>Start and configure the Block Storage services to start
-        when the system boots:</para>
-<screen><prompt>#</prompt> <userinput>service tgtd start</userinput>
+-        when the system boots:</para>
+        <para>On SLES:</para>
+        <screen><prompt>#</prompt> <userinput>service tgtd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig tgtd on</userinput></screen>
+      <para>On openSUSE:</para>
+<screen><prompt>#</prompt> <userinput>systemctl enable tgtd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start tgtd.service</userinput></screen>
     </step>
-    <step os="centos;fedora;opensuse;rhel;sles">
+    <step os="centos;fedora;rhel">
         <para>Start and configure the cinder volume service to start
-         when the system boots:</para>
-<screen><prompt>#</prompt> <userinput>chkconfig openstack-cinder-volume on</userinput>
-<prompt>#</prompt> <userinput>service openstack-cinder-volume start</userinput></screen>
+          when the system boots:</para>
+          <screen><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-volume.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-cinder-volume.service</userinput></screen>
+    </step>
+    <step os="opensuse;sles">
+      <para>Start and configure the cinder volume service to start
+        when the system boots:</para>
+      <para>On SLES:</para>
+        <screen><prompt>#</prompt> <userinput>service openstack-cinder-volume start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-cinder-volume on</userinput></screen>
+      <para>On openSUSE:</para>
+        <screen><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-volume.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-cinder-volume.service</userinput></screen>
     </step>
   </procedure>
 </section>
