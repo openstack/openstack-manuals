@@ -26,9 +26,9 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To install the Networking components</title>
     <step>
-      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-ml2 neutron-plugin-openvswitch-agent</userinput></screen>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron-ml2 openstack-neutron-openvswitch</userinput></screen>
-      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent</userinput></screen>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-ml2 neutron-plugin-openvswitch-agent ipset</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron-ml2 openstack-neutron-openvswitch ipset</userinput></screen>
+      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron-openvswitch-agent ipset</userinput></screen>
       <note os="sles;opensuse">
         <para>SUSE does not use a separate ML2 plug-in package.</para>
       </note>
@@ -167,11 +167,13 @@ tunnel_id_ranges = 1:1000</programlisting>
         </step>
         <step>
           <para>In the <literal>[securitygroup]</literal> section, enable
-            security groups and configure the OVS
-            <glossterm>iptables</glossterm> firewall driver:</para>
+            security groups, enable <glossterm>ipset</glossterm>, and
+            configure the OVS <glossterm>iptables</glossterm> firewall
+            driver:</para>
           <programlisting language="ini">[securitygroup]
 ...
 enable_security_group = True
+enable_ipset = True
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
         </step>
        <step>
