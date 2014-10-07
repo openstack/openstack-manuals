@@ -143,16 +143,18 @@
         </step>
         <step>
             <para>Start the Apache web server and memcached:</para>
-            <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service apache2 start</userinput>
+            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service apache2 restart</userinput>
+<prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
+            <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>systemctl enable httpd.service memcached.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start httpd.service memcached.service</userinput></screen>
+            <para os="sles">On SLES:</para>
+            <screen os="sles"><prompt>#</prompt> <userinput>service apache2 start</userinput>
 <prompt>#</prompt> <userinput>service memcached start</userinput>
 <prompt>#</prompt> <userinput>chkconfig apache2 on</userinput>
 <prompt>#</prompt> <userinput>chkconfig memcached on</userinput></screen>
-            <screen os="fedora;centos;rhel"><prompt>#</prompt> <userinput>service httpd start</userinput>
-<prompt>#</prompt> <userinput>service memcached start</userinput>
-<prompt>#</prompt> <userinput>chkconfig httpd on</userinput>
-<prompt>#</prompt> <userinput>chkconfig memcached on</userinput></screen>
-            <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service apache2 restart</userinput>
-<prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
+            <para os="opensuse">On openSUSE:</para>
+            <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable apache2.service memcached.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start apache2.service memcached.service</userinput></screen>
         </step>
         <step>
             <para>You can now access the dashboard at <uri os="ubuntu"
