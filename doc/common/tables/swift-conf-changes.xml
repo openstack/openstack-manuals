@@ -247,13 +247,12 @@
     </tr>
     <tr>
       <td>object-expirer.conf: [filter-proxy-logging] reveal_sensitive_prefix = 16</td>
-      <td>(StrOpt)
-    The X-Auth-Token is sensitive data. If revealed to an unauthorised person,
-    they can now make requests against an account until the token expires.
+      <td>(StrOpt) The X-Auth-Token is sensitive data. If revealed to an unauthorised person,
+            they can now make requests against an account until the token expires.
 
-    Set reveal_sensitive_prefix to the number of characters of the token that are logged.
-    For example reveal_sensitive_prefix = 12 so only first 12 characters of the token are logged.
-    Or, set to 0 to completely remove the token.</td>
+            Set reveal_sensitive_prefix to the number of characters of the token that are logged.
+            For example reveal_sensitive_prefix = 12 so only first 12 characters of the token are logged.
+            Or, set to 0 to completely remove the token.</td>
     </tr>
     <tr>
       <td>object-expirer.conf: [filter-proxy-logging] use = egg:swift#proxy_logging</td>
@@ -270,6 +269,10 @@
     <tr>
       <td>object-server.conf: [DEFAULT] log_max_line_length = 0</td>
       <td>(StrOpt) Caps the length of log lines to the value given; no limit if set to 0, the default.</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [app-object-server] splice = no</td>
+      <td>(StrOpt) No help text available for this option.</td>
     </tr>
     <tr>
       <td>object-server.conf: [filter-xprofile] dump_interval = 5.0</td>
@@ -321,6 +324,14 @@
     </tr>
     <tr>
       <td>proxy-server.conf: [filter-container_sync] current = //REALM/CLUSTER</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>proxy-server.conf: [filter-keystoneauth] allow_names_in_acls = true</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>proxy-server.conf: [filter-keystoneauth] default_domain_id = default</td>
       <td>(StrOpt) No help text available for this option.</td>
     </tr>
     <tr>
@@ -394,6 +405,11 @@
       <td>object-expirer.conf: [pipeline-main] pipeline</td>
       <td>catch_errors cache proxy-server</td>
       <td>catch_errors proxy-logging cache proxy-server</td>
+    </tr>
+    <tr>
+      <td>proxy-server.conf: [DEFAULT] bind_port</td>
+      <td>80</td>
+      <td>8080</td>
     </tr>
     <tr>
       <td>proxy-server.conf: [DEFAULT] disallowed_sections</td>
