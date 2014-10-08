@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="sahara-install">
+  <title>Install the Data processing service</title>
+  <para>This procedure installs the Data processing service (sahara) on the
+      controller node.</para>
+  <para>To install the Data processing service on the controller:</para>
+  <procedure>
+    <step os="rhel;centos;fedora;opensuse;sles">
+      <para>Install required packages:</para>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-sahara python-saharaclient</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-sahara python-saharaclient</userinput></screen>
+    </step>
+    <step os="ubuntu;debian">
+      <warning><para>You need to install required packages. For now, sahara
+          doesn't have packages for Ubuntu and Debian.
+          Documentation will be updated once packages are available. The rest
+          of this document assumes that you have sahara service packages
+          installed on the system.</para></warning>
+    </step>
+    <step>
+      <para>Edit <filename>/etc/sahara/sahara.conf</filename> configuration file</para>
+      <substeps>
+        <step><para>First, edit <option>connection</option> parameter in
+          the <literal>[database]</literal> section. The URL provided here
+          should point to an empty database. For instance, connection
+          string for MySQL database will be:
+          <programlisting language="ini">connection = mysql://sahara:<replaceable>SAHARA_DBPASS</replaceable>@<replaceable>controller</replaceable>/sahara</programlisting>
+        </para></step>
+        <step><para>Switch to the <literal>[keystone_authtoken]</literal>
+         section. The <option>auth_uri</option> parameter should point to
+         the public Identity API endpoint. <option>identity_uri</option>
+         should point to the admin Identity API endpoint. For example:
+          <programlisting language="ini">auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+identity_uri = http://<replaceable>controller</replaceable>:35357</programlisting>
+        </para></step>
+        <step><para>Next specify <literal>admin_user</literal>,
+          <literal>admin_password</literal> and
+          <literal>admin_tenant_name</literal>. These parameters must specify
+          a keystone user which has the <literal>admin</literal> role in the
+          given tenant. These credentials allow sahara to authenticate and
+          authorize its users.
+        </para></step>
+        <step><para>Switch to the <literal>[DEFAULT]</literal> section.
+          Proceed to the networking parameters. If you are using Neutron
+          for networking, then set <literal>use_neutron=true</literal>.
+          Otherwise if you are using <systemitem>nova-network</systemitem> set
+          the given parameter to <literal>false</literal>.
+        </para></step>
+        <step><para>That should be enough for the first run. If you want to
+          increase logging level for troubleshooting, there are two parameters
+          in the config: <literal>verbose</literal> and
+          <literal>debug</literal>. If the former is set to
+          <literal>true</literal>, sahara will
+          start to write logs of <literal>INFO</literal> level and above. If
+          <literal>debug</literal> is set to
+          <literal>true</literal>, sahara will write all the logs, including
+          the <literal>DEBUG</literal> ones.
+        </para></step>
+      </substeps>
+    </step>
+    <step><para>If you use the Data processing service with MySQL database,
+      then for storing big job binaries in sahara internal database you must
+      configure size of max allowed packet. Edit <filename>my.cnf</filename>
+      file and change parameter:
+      <programlisting language="ini">[mysqld]
+max_allowed_packet = 256M</programlisting>
+      and restart MySQL server.
+    </para></step>
+    <step><para>Create database schema:
+      <screen><prompt>#</prompt> <userinput>sahara-db-manage --config-file /etc/sahara/sahara.conf upgrade head</userinput></screen>
+    </para></step>
+    <step><para>You must register the Data processing service with the Identity
+      service so that other OpenStack services can locate it. Register the
+      service and specify the endpoint:
+      <screen><prompt>$</prompt> <userinput>keystone service-create --name sahara --type data_processing \
+  --description "Data processing service"</userinput>
+<prompt>$</prompt> <userinput>keystone endpoint-create \
+  --service-id $(keystone service-list | awk '/ sahara / {print $2}') \
+  --publicurl http://<replaceable>controller</replaceable>:8386/v1.1/%\(tenant_id\)s \
+  --internalurl http://<replaceable>controller</replaceable>:8386/v1.1/%\(tenant_id\)s \
+  --adminurl http://<replaceable>controller</replaceable>:8386/v1.1/%\(tenant_id\)s</userinput></screen>
+    </para></step>
+    <step><para>Start the sahara service:
+      <screen os="rhel;centos;fedora;opensuse;ubuntu;debian"><prompt>#</prompt> <userinput>systemctl start openstack-sahara-all</userinput></screen>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-sahara-all start</userinput></screen>
+    </para></step>
+    <step><para>(Optional) Enable the Data processing service to start on boot
+      <screen os="rhel;centos;fedora;opensuse;ubuntu;debian"><prompt>#</prompt> <userinput>systemctl enable openstack-sahara-all</userinput></screen>
+      <screen os="sles"><prompt>#</prompt> <userinput>chkconfig openstack-sahara-all on</userinput></screen>
+    </para></step>
+  </procedure>
+</section>
