@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-10-06 06:08+0000\n"
+"POT-Creation-Date: 2014-10-08 06:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -881,87 +881,91 @@ msgstr ""
 msgid "The PKI-based token validation scheme relies on certificates from Identity that are fetched through HTTP and stored in a local directory. The location for this directory is specified by the <literal>signing_dir</literal> configuration option. In your services configuration file, look for a section like this:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:42(para)
+#: ./doc/common/section_identity-troubleshooting.xml:36(replaceable) ./doc/common/section_identity-troubleshooting.xml:37(replaceable) ./doc/common/section_config_format.xml:30(replaceable)
+msgid "controller"
+msgstr ""
+
+#: ./doc/common/section_identity-troubleshooting.xml:40(para)
 msgid "If your service lacks this stanza, the <link href=\"https://github.com/openstack/python-keystoneclient/blob/master/keystoneclient/middleware/auth_token.py#L198\">keystoneclient/middleware/auth_token.py</link> file specifies the defaults. If no value is specified for this directory, it <link href=\"https://github.com/openstack/python-keystoneclient/blob/master/keystoneclient/middleware/auth_token.py#L299\">defaults to a secure temporary directory.</link> Initialization code for the service checks that the directory exists and is writable. If it does not exist, the code tries to create it. If this fails, the service fails to start. However, it often succeeds but problems occur later."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:54(para)
+#: ./doc/common/section_identity-troubleshooting.xml:52(para)
 msgid "The first thing to check is that the <literal>signing_dir</literal> does, in fact, exist. If it does, check for the presence of the certificate files inside there:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:65(para)
+#: ./doc/common/section_identity-troubleshooting.xml:63(para)
 msgid "This directory contains two certificates and the token revocation list. If these files are not present, your service cannot fetch them from Identity. To troubleshoot, try to talk to Identity to make sure it correctly serves files, as follows:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:71(para)
+#: ./doc/common/section_identity-troubleshooting.xml:69(para)
 msgid "This command fetches the signing certificate:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:82(para)
+#: ./doc/common/section_identity-troubleshooting.xml:80(para)
 msgid "Note the expiration dates of the certificate:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:85(para)
+#: ./doc/common/section_identity-troubleshooting.xml:83(para)
 msgid "The token revocation list is updated once a minute, but the certificates are not. One possible problem is that the certificates are the wrong files or garbage. You can remove these files and run another command against your server: They are fetched on demand."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:90(para)
+#: ./doc/common/section_identity-troubleshooting.xml:88(para)
 msgid "The Identity service log should show the access of the certificate files. You might have to turn up your logging levels. Set <literal>debug = True</literal> and <literal>verbose = True</literal> in your Identity configuration file and restart the Identity server."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:99(para)
+#: ./doc/common/section_identity-troubleshooting.xml:97(para)
 msgid "If the files do not appear in your directory after this, it is likely one of the following issues:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:103(para)
+#: ./doc/common/section_identity-troubleshooting.xml:101(para)
 msgid "Your service is configured incorrectly and cannot talk to Identity. Check the <literal>auth_port</literal> and <literal>auth_host</literal> values and make sure that you can talk to that service through cURL, as shown previously."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:111(para)
+#: ./doc/common/section_identity-troubleshooting.xml:109(para)
 msgid "Your signing directory is not writable. Use the <placeholder-1/> command to change its permissions so that the service (POSIX) user can write to it. Verify the change through <placeholder-2/> and <placeholder-3/> commands."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:119(para)
+#: ./doc/common/section_identity-troubleshooting.xml:117(para)
 msgid "The SELinux policy is denying access to the directory."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:123(para)
+#: ./doc/common/section_identity-troubleshooting.xml:121(para)
 msgid "SELinux troubles often occur when you use Fedora/RHEL-based packages and you choose configuration options that do not match the standard policy. Run the <placeholder-1/> command. If that makes a difference, you should relabel the directory. If you are using a sub-directory of the <filename>/var/cache/</filename> directory, run the following command:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:132(para)
+#: ./doc/common/section_identity-troubleshooting.xml:130(para)
 msgid "If you are not using a <filename>/var/cache</filename> sub-directory, you should. Modify the <literal>signing_dir</literal> configuration option for your service and restart."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:136(para)
+#: ./doc/common/section_identity-troubleshooting.xml:134(para)
 msgid "Set back to <literal>setenforce enforcing</literal> to confirm that your changes solve the problem."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:138(para)
+#: ./doc/common/section_identity-troubleshooting.xml:136(para)
 msgid "If your certificates are fetched on demand, the PKI validation is working properly. Most likely, the token from Identity is not valid for the operation you are attempting to perform, and your user needs a different role for the operation."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:145(title)
+#: ./doc/common/section_identity-troubleshooting.xml:143(title)
 msgid "Debug signing key file errors"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:146(para)
+#: ./doc/common/section_identity-troubleshooting.xml:144(para)
 msgid "If an error occurs when the signing key file opens, it is possible that the person who ran the <placeholder-1/> command to generate certificates and keys did not use the correct user. When you run the <placeholder-2/> command, Identity generates a set of certificates and keys in <filename>/etc/keystone/ssl*</filename>, which is owned by root:root."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:155(para)
+#: ./doc/common/section_identity-troubleshooting.xml:153(para)
 msgid "This can present a problem when you run the Identity daemon under the keystone user account (nologin) when you try to run PKI. Unless you run the <placeholder-1/> command against the files keystone:keystone or run the <placeholder-2/> command with the <parameter>--keystone-user</parameter> and <parameter>--keystone-group</parameter> parameters, you get an error, as follows:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:173(title)
+#: ./doc/common/section_identity-troubleshooting.xml:171(title)
 msgid "Flush expired tokens from the token database table"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:175(para)
+#: ./doc/common/section_identity-troubleshooting.xml:173(para)
 msgid "As you generate tokens, the token database table on the Identity server grows. To clear the token table, an administrative user must run the <placeholder-1/> command to flush the tokens. When you flush tokens, expired tokens are deleted and traceability is eliminated."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml:181(para)
+#: ./doc/common/section_identity-troubleshooting.xml:179(para)
 msgid "Use <placeholder-1/> to schedule this command to run frequently based on your workload. For large workloads, running it every minute is recommended."
 msgstr ""
 
@@ -4120,11 +4124,11 @@ msgstr ""
 msgid "6"
 msgstr ""
 
-#: ./doc/common/section_cli_nova_host_aggregates.xml:208(replaceable) ./doc/common/tables/swift-conf-changes.xml:405(td) ./doc/common/tables/swift-conf-changes.xml:410(td) ./doc/common/tables/swift-conf-changes.xml:415(td)
+#: ./doc/common/section_cli_nova_host_aggregates.xml:208(replaceable) ./doc/common/tables/swift-conf-changes.xml:421(td) ./doc/common/tables/swift-conf-changes.xml:426(td) ./doc/common/tables/swift-conf-changes.xml:431(td)
 msgid "8192"
 msgstr ""
 
-#: ./doc/common/section_cli_nova_host_aggregates.xml:208(replaceable)
+#: ./doc/common/section_cli_nova_host_aggregates.xml:208(replaceable) ./doc/common/tables/swift-conf-changes.xml:411(td)
 msgid "80"
 msgstr ""
 
@@ -6690,10 +6694,6 @@ msgstr ""
 
 #: ./doc/common/section_config_format.xml:30(replaceable)
 msgid "KEYSTONE_DBPASS"
-msgstr ""
-
-#: ./doc/common/section_config_format.xml:30(replaceable)
-msgid "controller"
 msgstr ""
 
 #: ./doc/common/section_config_format.xml:33(para)
@@ -9656,7 +9656,7 @@ msgid "IP Address for server to bind to"
 msgstr ""
 
 #: ./doc/common/tables/swift-proxy-server-DEFAULT.xml:32(td)
-msgid "bind_port = 80"
+msgid "bind_port = 8080"
 msgstr ""
 
 #: ./doc/common/tables/swift-proxy-server-DEFAULT.xml:33(td) ./doc/common/tables/swift-container-server-DEFAULT.xml:33(td) ./doc/common/tables/swift-object-server-DEFAULT.xml:29(td) ./doc/common/tables/swift-account-server-DEFAULT.xml:29(td)
@@ -9699,7 +9699,7 @@ msgstr ""
 msgid "disallowed_sections = container_quotas, tempurl, bulk_delete.max_failed_deletes"
 msgstr ""
 
-#: ./doc/common/tables/swift-proxy-server-DEFAULT.xml:53(td) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:61(td) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:65(td) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:89(td) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:147(td) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:155(td) ./doc/common/tables/swift-object-expirer-pipeline-main.xml:21(td) ./doc/common/tables/neutron-rootwrap.xml:49(td) ./doc/common/tables/neutron-rootwrap.xml:53(td) ./doc/common/tables/swift-swift-swift-constraints.xml:21(td) ./doc/common/tables/swift-swift-swift-constraints.xml:25(td) ./doc/common/tables/swift-swift-swift-constraints.xml:29(td) ./doc/common/tables/swift-swift-swift-constraints.xml:33(td) ./doc/common/tables/swift-swift-swift-constraints.xml:37(td) ./doc/common/tables/swift-swift-swift-constraints.xml:45(td) ./doc/common/tables/swift-swift-swift-constraints.xml:49(td) ./doc/common/tables/swift-swift-swift-constraints.xml:53(td) ./doc/common/tables/swift-swift-swift-constraints.xml:57(td) ./doc/common/tables/swift-swift-swift-constraints.xml:61(td) ./doc/common/tables/swift-proxy-server-filter-slo.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-slo.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-slo.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-slo.xml:33(td) ./doc/common/tables/swift-swift-storage-policy-0.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-cache.xml:25(td) ./doc/common/tables/swift-proxy-server-pipeline-main.xml:21(td) ./doc/common/tables/swift-swift-storage-policy-1.xml:21(td) ./doc/common/tables/swift-account-server-filter-healthcheck.xml:21(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:41(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:53(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:65(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:81(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:85(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:89(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:125(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:133(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:141(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:145(td) ./doc/common/tables/swift-container-server-DEFAULT.xml:21(td) ./doc/common/tables/swift-container-server-pipeline-main.xml:21(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:21(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:25(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:29(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:33(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:37(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:41(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:45(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:33(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:37(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:41(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:45(td) ./doc/common/tables/swift-container-server-filter-healthcheck.xml:21(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:21(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:25(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:29(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:33(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:37(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:41(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:45(td) ./doc/common/tables/swift-object-expirer-object-expirer.xml:29(td) ./doc/common/tables/swift-object-expirer-object-expirer.xml:43(td) ./doc/common/tables/swift-object-expirer-object-expirer.xml:55(td) ./doc/common/tables/swift-object-server-filter-healthcheck.xml:21(td) ./doc/common/tables/swift-container-reconciler-container-reconciler.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:25(td) ./doc/common/tables/swift-object-server-DEFAULT.xml:61(td) ./doc/common/tables/swift-object-server-DEFAULT.xml:65(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:65(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:69(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:73(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:77(td) ./doc/common/tables/swift-rsyncd-container.xml:21(td) ./doc/common/tables/swift-rsyncd-container.xml:25(td) ./doc/common/tables/swift-rsyncd-container.xml:29(td) ./doc/common/tables/swift-rsyncd-container.xml:33(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:21(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:25(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:29(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:39(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:43(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:47(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:51(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:55(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:59(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:63(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:67(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:71(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:75(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:79(td) ./doc/common/tables/swift-rsyncd-account.xml:21(td) ./doc/common/tables/swift-rsyncd-account.xml:25(td) ./doc/common/tables/swift-rsyncd-account.xml:29(td) ./doc/common/tables/swift-rsyncd-account.xml:33(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:37(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:41(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:45(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:49(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:53(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:57(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:97(td) ./doc/common/tables/swift-container-sync-realms-DEFAULT.xml:21(td) ./doc/common/tables/swift-object-server-object-replicator.xml:77(td) ./doc/common/tables/swift-object-server-object-replicator.xml:81(td) ./doc/common/tables/swift-object-server-object-replicator.xml:101(td) ./doc/common/tables/swift-proxy-server-filter-dlo.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:33(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:37(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:41(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:45(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:49(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:53(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:57(td) ./doc/common/tables/swift-object-server-pipeline-main.xml:21(td) ./doc/common/tables/swift-memcache-memcache.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:39(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:43(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:47(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:51(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:55(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:59(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:63(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:67(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:71(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:75(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:79(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:21(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:25(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:29(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:33(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:37(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:41(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:45(td) ./doc/common/tables/swift-container-sync-realms-realm2.xml:21(td) ./doc/common/tables/swift-container-sync-realms-realm2.xml:25(td) ./doc/common/tables/swift-container-sync-realms-realm2.xml:29(td) ./doc/common/tables/swift-container-sync-realms-realm2.xml:33(td) ./doc/common/tables/swift-object-server-object-auditor.xml:57(td) ./doc/common/tables/swift-account-server-pipeline-main.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:33(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:37(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:45(td) ./doc/common/tables/swift-object-server-filter-recon.xml:25(td) ./doc/common/tables/swift-rsyncd-object.xml:21(td) ./doc/common/tables/swift-rsyncd-object.xml:25(td) ./doc/common/tables/swift-rsyncd-object.xml:29(td) ./doc/common/tables/swift-rsyncd-object.xml:33(td) ./doc/common/tables/swift-drive-audit-drive-audit.xml:53(td) ./doc/common/tables/swift-container-reconciler-pipeline-main.xml:21(td) ./doc/common/tables/swift-dispersion-dispersion.xml:21(td) ./doc/common/tables/swift-dispersion-dispersion.xml:41(td) ./doc/common/tables/swift-dispersion-dispersion.xml:45(td) ./doc/common/tables/swift-dispersion-dispersion.xml:49(td) ./doc/common/tables/swift-dispersion-dispersion.xml:53(td) ./doc/common/tables/swift-dispersion-dispersion.xml:65(td) ./doc/common/tables/swift-dispersion-dispersion.xml:69(td) ./doc/common/tables/swift-dispersion-dispersion.xml:73(td) ./doc/common/tables/swift-proxy-server-filter-list-endpoints.xml:21(td) ./doc/common/tables/swift-account-server-account-reaper.xml:57(td) ./doc/common/tables/swift-proxy-server-filter-container_sync.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-container_sync.xml:25(td) ./doc/common/tables/swift-container-sync-realms-realm1.xml:21(td) ./doc/common/tables/swift-container-sync-realms-realm1.xml:25(td) ./doc/common/tables/swift-container-sync-realms-realm1.xml:29(td) ./doc/common/tables/swift-container-sync-realms-realm1.xml:33(td) ./doc/common/tables/swift-proxy-server-filter-healthcheck.xml:21(td)
+#: ./doc/common/tables/swift-proxy-server-DEFAULT.xml:53(td) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:61(td) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:65(td) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:89(td) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:147(td) ./doc/common/tables/swift-proxy-server-DEFAULT.xml:155(td) ./doc/common/tables/swift-object-expirer-pipeline-main.xml:21(td) ./doc/common/tables/neutron-rootwrap.xml:49(td) ./doc/common/tables/neutron-rootwrap.xml:53(td) ./doc/common/tables/swift-swift-swift-constraints.xml:21(td) ./doc/common/tables/swift-swift-swift-constraints.xml:25(td) ./doc/common/tables/swift-swift-swift-constraints.xml:29(td) ./doc/common/tables/swift-swift-swift-constraints.xml:33(td) ./doc/common/tables/swift-swift-swift-constraints.xml:37(td) ./doc/common/tables/swift-swift-swift-constraints.xml:45(td) ./doc/common/tables/swift-swift-swift-constraints.xml:49(td) ./doc/common/tables/swift-swift-swift-constraints.xml:53(td) ./doc/common/tables/swift-swift-swift-constraints.xml:57(td) ./doc/common/tables/swift-swift-swift-constraints.xml:61(td) ./doc/common/tables/swift-proxy-server-filter-slo.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-slo.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-slo.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-slo.xml:33(td) ./doc/common/tables/swift-swift-storage-policy-0.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-cache.xml:25(td) ./doc/common/tables/swift-proxy-server-pipeline-main.xml:21(td) ./doc/common/tables/swift-swift-storage-policy-1.xml:21(td) ./doc/common/tables/swift-account-server-filter-healthcheck.xml:21(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:41(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:53(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:65(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:81(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:85(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:89(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:125(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:133(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:141(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:145(td) ./doc/common/tables/swift-container-server-DEFAULT.xml:21(td) ./doc/common/tables/swift-container-server-pipeline-main.xml:21(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:21(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:25(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:29(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:33(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:37(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:41(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:45(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:33(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:37(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:41(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:45(td) ./doc/common/tables/swift-container-server-filter-healthcheck.xml:21(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:21(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:25(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:29(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:33(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:37(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:41(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:45(td) ./doc/common/tables/swift-object-expirer-object-expirer.xml:29(td) ./doc/common/tables/swift-object-expirer-object-expirer.xml:43(td) ./doc/common/tables/swift-object-expirer-object-expirer.xml:55(td) ./doc/common/tables/swift-object-server-filter-healthcheck.xml:21(td) ./doc/common/tables/swift-object-server-app-object-server.xml:93(td) ./doc/common/tables/swift-container-reconciler-container-reconciler.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:33(td) ./doc/common/tables/swift-object-server-DEFAULT.xml:61(td) ./doc/common/tables/swift-object-server-DEFAULT.xml:65(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:65(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:69(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:73(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:77(td) ./doc/common/tables/swift-rsyncd-container.xml:21(td) ./doc/common/tables/swift-rsyncd-container.xml:25(td) ./doc/common/tables/swift-rsyncd-container.xml:29(td) ./doc/common/tables/swift-rsyncd-container.xml:33(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:21(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:25(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:29(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:39(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:43(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:47(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:51(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:55(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:59(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:63(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:67(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:71(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:75(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:79(td) ./doc/common/tables/swift-rsyncd-account.xml:21(td) ./doc/common/tables/swift-rsyncd-account.xml:25(td) ./doc/common/tables/swift-rsyncd-account.xml:29(td) ./doc/common/tables/swift-rsyncd-account.xml:33(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:37(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:41(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:45(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:49(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:53(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:57(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:97(td) ./doc/common/tables/swift-container-sync-realms-DEFAULT.xml:21(td) ./doc/common/tables/swift-object-server-object-replicator.xml:77(td) ./doc/common/tables/swift-object-server-object-replicator.xml:81(td) ./doc/common/tables/swift-object-server-object-replicator.xml:101(td) ./doc/common/tables/swift-proxy-server-filter-dlo.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:33(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:37(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:41(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:45(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:49(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:53(td) ./doc/common/tables/swift-proxy-server-filter-authtoken.xml:57(td) ./doc/common/tables/swift-object-server-pipeline-main.xml:21(td) ./doc/common/tables/swift-memcache-memcache.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:39(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:43(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:47(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:51(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:55(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:59(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:63(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:67(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:71(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:75(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:79(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:21(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:25(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:29(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:33(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:37(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:41(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:45(td) ./doc/common/tables/swift-container-sync-realms-realm2.xml:21(td) ./doc/common/tables/swift-container-sync-realms-realm2.xml:25(td) ./doc/common/tables/swift-container-sync-realms-realm2.xml:29(td) ./doc/common/tables/swift-container-sync-realms-realm2.xml:33(td) ./doc/common/tables/swift-object-server-object-auditor.xml:57(td) ./doc/common/tables/swift-account-server-pipeline-main.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:33(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:37(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:45(td) ./doc/common/tables/swift-object-server-filter-recon.xml:25(td) ./doc/common/tables/swift-rsyncd-object.xml:21(td) ./doc/common/tables/swift-rsyncd-object.xml:25(td) ./doc/common/tables/swift-rsyncd-object.xml:29(td) ./doc/common/tables/swift-rsyncd-object.xml:33(td) ./doc/common/tables/swift-drive-audit-drive-audit.xml:53(td) ./doc/common/tables/swift-container-reconciler-pipeline-main.xml:21(td) ./doc/common/tables/swift-dispersion-dispersion.xml:21(td) ./doc/common/tables/swift-dispersion-dispersion.xml:41(td) ./doc/common/tables/swift-dispersion-dispersion.xml:45(td) ./doc/common/tables/swift-dispersion-dispersion.xml:49(td) ./doc/common/tables/swift-dispersion-dispersion.xml:53(td) ./doc/common/tables/swift-dispersion-dispersion.xml:65(td) ./doc/common/tables/swift-dispersion-dispersion.xml:69(td) ./doc/common/tables/swift-dispersion-dispersion.xml:73(td) ./doc/common/tables/swift-proxy-server-filter-list-endpoints.xml:21(td) ./doc/common/tables/swift-account-server-account-reaper.xml:57(td) ./doc/common/tables/swift-proxy-server-filter-container_sync.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-container_sync.xml:25(td) ./doc/common/tables/swift-container-sync-realms-realm1.xml:21(td) ./doc/common/tables/swift-container-sync-realms-realm1.xml:25(td) ./doc/common/tables/swift-container-sync-realms-realm1.xml:29(td) ./doc/common/tables/swift-container-sync-realms-realm1.xml:33(td) ./doc/common/tables/swift-proxy-server-filter-healthcheck.xml:21(td)
 msgid "No help text available for this option."
 msgstr ""
 
@@ -10907,7 +10907,7 @@ msgstr ""
 msgid "use = egg:swift#cname_lookup"
 msgstr ""
 
-#: ./doc/common/tables/swift-proxy-server-filter-cname_lookup.xml:50(td) ./doc/common/tables/swift-container-reconciler-filter-catch_errors.xml:21(td) ./doc/common/tables/swift-container-reconciler-app-proxy-server.xml:21(td) ./doc/common/tables/swift-object-expirer-filter-catch_errors.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-slo.xml:45(td) ./doc/common/tables/swift-proxy-server-filter-cache.xml:53(td) ./doc/common/tables/swift-container-server-filter-recon.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-account-quotas.xml:21(td) ./doc/common/tables/swift-account-server-filter-healthcheck.xml:25(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:137(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:49(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:49(td) ./doc/common/tables/swift-proxy-server-filter-container-quotas.xml:21(td) ./doc/common/tables/swift-container-server-filter-healthcheck.xml:25(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:49(td) ./doc/common/tables/swift-object-server-filter-healthcheck.xml:25(td) ./doc/common/tables/swift-object-server-app-object-server.xml:97(td) ./doc/common/tables/swift-proxy-server-filter-catch_errors.xml:41(td) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:61(td) ./doc/common/tables/swift-proxy-server-filter-gatekeeper.xml:41(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:93(td) ./doc/common/tables/swift-container-reconciler-filter-proxy-logging.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-tempurl.xml:47(td) ./doc/common/tables/swift-proxy-server-filter-name_check.xml:33(td) ./doc/common/tables/swift-account-server-filter-recon.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:93(td) ./doc/common/tables/swift-proxy-server-filter-dlo.xml:33(td) ./doc/common/tables/swift-account-server-app-account-server.xml:49(td) ./doc/common/tables/swift-proxy-server-filter-formpost.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:93(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:49(td) ./doc/common/tables/swift-object-expirer-filter-cache.xml:21(td) ./doc/common/tables/swift-container-reconciler-filter-cache.xml:21(td) ./doc/common/tables/swift-container-server-app-container-server.xml:61(td) ./doc/common/tables/swift-proxy-server-filter-staticweb.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:41(td) ./doc/common/tables/swift-object-expirer-app-proxy-server.xml:21(td) ./doc/common/tables/swift-object-server-filter-recon.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-domain_remap.xml:54(td) ./doc/common/tables/swift-proxy-server-filter-list-endpoints.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-container_sync.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-healthcheck.xml:25(td)
+#: ./doc/common/tables/swift-proxy-server-filter-cname_lookup.xml:50(td) ./doc/common/tables/swift-container-reconciler-filter-catch_errors.xml:21(td) ./doc/common/tables/swift-container-reconciler-app-proxy-server.xml:21(td) ./doc/common/tables/swift-object-expirer-filter-catch_errors.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-slo.xml:45(td) ./doc/common/tables/swift-proxy-server-filter-cache.xml:53(td) ./doc/common/tables/swift-container-server-filter-recon.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-account-quotas.xml:21(td) ./doc/common/tables/swift-account-server-filter-healthcheck.xml:25(td) ./doc/common/tables/swift-proxy-server-app-proxy-server.xml:137(td) ./doc/common/tables/swift-account-server-filter-xprofile.xml:49(td) ./doc/common/tables/swift-proxy-server-filter-xprofile.xml:49(td) ./doc/common/tables/swift-proxy-server-filter-container-quotas.xml:21(td) ./doc/common/tables/swift-container-server-filter-healthcheck.xml:25(td) ./doc/common/tables/swift-object-server-filter-xprofile.xml:49(td) ./doc/common/tables/swift-object-server-filter-healthcheck.xml:25(td) ./doc/common/tables/swift-object-server-app-object-server.xml:101(td) ./doc/common/tables/swift-proxy-server-filter-catch_errors.xml:41(td) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:37(td) ./doc/common/tables/swift-proxy-server-filter-tempauth.xml:61(td) ./doc/common/tables/swift-proxy-server-filter-gatekeeper.xml:41(td) ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:92(td) ./doc/common/tables/swift-container-reconciler-filter-proxy-logging.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-tempurl.xml:47(td) ./doc/common/tables/swift-proxy-server-filter-name_check.xml:33(td) ./doc/common/tables/swift-account-server-filter-recon.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-ratelimit.xml:93(td) ./doc/common/tables/swift-proxy-server-filter-dlo.xml:33(td) ./doc/common/tables/swift-account-server-app-account-server.xml:49(td) ./doc/common/tables/swift-proxy-server-filter-formpost.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:92(td) ./doc/common/tables/swift-container-server-filter-xprofile.xml:49(td) ./doc/common/tables/swift-object-expirer-filter-cache.xml:21(td) ./doc/common/tables/swift-container-reconciler-filter-cache.xml:21(td) ./doc/common/tables/swift-container-server-app-container-server.xml:61(td) ./doc/common/tables/swift-proxy-server-filter-staticweb.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-bulk.xml:41(td) ./doc/common/tables/swift-object-expirer-app-proxy-server.xml:21(td) ./doc/common/tables/swift-object-server-filter-recon.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-domain_remap.xml:54(td) ./doc/common/tables/swift-proxy-server-filter-list-endpoints.xml:25(td) ./doc/common/tables/swift-proxy-server-filter-container_sync.xml:29(td) ./doc/common/tables/swift-proxy-server-filter-healthcheck.xml:25(td)
 msgid "Entry point of paste.deploy in the server"
 msgstr ""
 
@@ -13279,7 +13279,7 @@ msgstr ""
 msgid "[identity]"
 msgstr ""
 
-#: ./doc/common/tables/keystone-identity.xml:21(td)
+#: ./doc/common/tables/keystone-identity.xml:21(td) ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:24(td)
 msgid "default_domain_id = default"
 msgstr ""
 
@@ -15236,19 +15236,19 @@ msgstr ""
 msgid "[keystone_authtoken] identity_uri = None"
 msgstr ""
 
-#: ./doc/common/tables/heat-conf-changes.xml:137(caption) ./doc/common/tables/glance-conf-changes.xml:105(caption) ./doc/common/tables/neutron-conf-changes.xml:781(caption) ./doc/common/tables/keystone-conf-changes.xml:313(caption) ./doc/common/tables/ceilometer-conf-changes.xml:265(caption) ./doc/common/tables/trove-conf-changes.xml:357(caption) ./doc/common/tables/nova-conf-changes.xml:301(caption) ./doc/common/tables/swift-conf-changes.xml:372(caption) ./doc/common/tables/cinder-conf-changes.xml:529(caption)
+#: ./doc/common/tables/heat-conf-changes.xml:137(caption) ./doc/common/tables/glance-conf-changes.xml:105(caption) ./doc/common/tables/neutron-conf-changes.xml:781(caption) ./doc/common/tables/keystone-conf-changes.xml:313(caption) ./doc/common/tables/ceilometer-conf-changes.xml:265(caption) ./doc/common/tables/trove-conf-changes.xml:357(caption) ./doc/common/tables/nova-conf-changes.xml:301(caption) ./doc/common/tables/swift-conf-changes.xml:383(caption) ./doc/common/tables/cinder-conf-changes.xml:529(caption)
 msgid "New default values"
 msgstr ""
 
-#: ./doc/common/tables/heat-conf-changes.xml:143(td) ./doc/common/tables/glance-conf-changes.xml:111(td) ./doc/common/tables/neutron-conf-changes.xml:787(td) ./doc/common/tables/keystone-conf-changes.xml:319(td) ./doc/common/tables/ceilometer-conf-changes.xml:271(td) ./doc/common/tables/trove-conf-changes.xml:363(td) ./doc/common/tables/nova-conf-changes.xml:307(td) ./doc/common/tables/swift-conf-changes.xml:378(td) ./doc/common/tables/cinder-conf-changes.xml:535(td)
+#: ./doc/common/tables/heat-conf-changes.xml:143(td) ./doc/common/tables/glance-conf-changes.xml:111(td) ./doc/common/tables/neutron-conf-changes.xml:787(td) ./doc/common/tables/keystone-conf-changes.xml:319(td) ./doc/common/tables/ceilometer-conf-changes.xml:271(td) ./doc/common/tables/trove-conf-changes.xml:363(td) ./doc/common/tables/nova-conf-changes.xml:307(td) ./doc/common/tables/swift-conf-changes.xml:389(td) ./doc/common/tables/cinder-conf-changes.xml:535(td)
 msgid "Option"
 msgstr ""
 
-#: ./doc/common/tables/heat-conf-changes.xml:144(td) ./doc/common/tables/glance-conf-changes.xml:112(td) ./doc/common/tables/neutron-conf-changes.xml:788(td) ./doc/common/tables/keystone-conf-changes.xml:320(td) ./doc/common/tables/ceilometer-conf-changes.xml:272(td) ./doc/common/tables/trove-conf-changes.xml:364(td) ./doc/common/tables/nova-conf-changes.xml:308(td) ./doc/common/tables/swift-conf-changes.xml:379(td) ./doc/common/tables/cinder-conf-changes.xml:536(td)
+#: ./doc/common/tables/heat-conf-changes.xml:144(td) ./doc/common/tables/glance-conf-changes.xml:112(td) ./doc/common/tables/neutron-conf-changes.xml:788(td) ./doc/common/tables/keystone-conf-changes.xml:320(td) ./doc/common/tables/ceilometer-conf-changes.xml:272(td) ./doc/common/tables/trove-conf-changes.xml:364(td) ./doc/common/tables/nova-conf-changes.xml:308(td) ./doc/common/tables/swift-conf-changes.xml:390(td) ./doc/common/tables/cinder-conf-changes.xml:536(td)
 msgid "Previous default value"
 msgstr ""
 
-#: ./doc/common/tables/heat-conf-changes.xml:145(td) ./doc/common/tables/glance-conf-changes.xml:113(td) ./doc/common/tables/neutron-conf-changes.xml:789(td) ./doc/common/tables/keystone-conf-changes.xml:321(td) ./doc/common/tables/ceilometer-conf-changes.xml:273(td) ./doc/common/tables/trove-conf-changes.xml:365(td) ./doc/common/tables/nova-conf-changes.xml:309(td) ./doc/common/tables/swift-conf-changes.xml:380(td) ./doc/common/tables/cinder-conf-changes.xml:537(td)
+#: ./doc/common/tables/heat-conf-changes.xml:145(td) ./doc/common/tables/glance-conf-changes.xml:113(td) ./doc/common/tables/neutron-conf-changes.xml:789(td) ./doc/common/tables/keystone-conf-changes.xml:321(td) ./doc/common/tables/ceilometer-conf-changes.xml:273(td) ./doc/common/tables/trove-conf-changes.xml:365(td) ./doc/common/tables/nova-conf-changes.xml:309(td) ./doc/common/tables/swift-conf-changes.xml:391(td) ./doc/common/tables/cinder-conf-changes.xml:537(td)
 msgid "New default value"
 msgstr ""
 
@@ -20375,7 +20375,7 @@ msgstr ""
 msgid "backup_strategy = PgDump"
 msgstr ""
 
-#: ./doc/common/tables/trove-db_postgresql.xml:34(td) ./doc/common/tables/swift-conf-changes.xml:21(td) ./doc/common/tables/swift-conf-changes.xml:25(td) ./doc/common/tables/swift-conf-changes.xml:29(td) ./doc/common/tables/swift-conf-changes.xml:33(td) ./doc/common/tables/swift-conf-changes.xml:37(td) ./doc/common/tables/swift-conf-changes.xml:41(td) ./doc/common/tables/swift-conf-changes.xml:45(td) ./doc/common/tables/swift-conf-changes.xml:124(td) ./doc/common/tables/swift-conf-changes.xml:140(td) ./doc/common/tables/swift-conf-changes.xml:148(td) ./doc/common/tables/swift-conf-changes.xml:152(td) ./doc/common/tables/swift-conf-changes.xml:156(td) ./doc/common/tables/swift-conf-changes.xml:160(td) ./doc/common/tables/swift-conf-changes.xml:164(td) ./doc/common/tables/swift-conf-changes.xml:168(td) ./doc/common/tables/swift-conf-changes.xml:172(td) ./doc/common/tables/swift-conf-changes.xml:188(td) ./doc/common/tables/swift-conf-changes.xml:192(td) ./doc/common/tables/swift-conf-changes.xml:196(td) ./doc/common/tables/swift-conf-changes.xml:206(td) ./doc/common/tables/swift-conf-changes.xml:210(td) ./doc/common/tables/swift-conf-changes.xml:214(td) ./doc/common/tables/swift-conf-changes.xml:218(td) ./doc/common/tables/swift-conf-changes.xml:222(td) ./doc/common/tables/swift-conf-changes.xml:226(td) ./doc/common/tables/swift-conf-changes.xml:230(td) ./doc/common/tables/swift-conf-changes.xml:234(td) ./doc/common/tables/swift-conf-changes.xml:238(td) ./doc/common/tables/swift-conf-changes.xml:242(td) ./doc/common/tables/swift-conf-changes.xml:246(td) ./doc/common/tables/swift-conf-changes.xml:276(td) ./doc/common/tables/swift-conf-changes.xml:280(td) ./doc/common/tables/swift-conf-changes.xml:284(td) ./doc/common/tables/swift-conf-changes.xml:288(td) ./doc/common/tables/swift-conf-changes.xml:292(td) ./doc/common/tables/swift-conf-changes.xml:296(td) ./doc/common/tables/swift-conf-changes.xml:300(td) ./doc/common/tables/swift-conf-changes.xml:320(td) ./doc/common/tables/swift-conf-changes.xml:324(td) ./doc/common/tables/swift-conf-changes.xml:328(td) ./doc/common/tables/swift-conf-changes.xml:332(td) ./doc/common/tables/swift-conf-changes.xml:336(td) ./doc/common/tables/swift-conf-changes.xml:340(td) ./doc/common/tables/swift-conf-changes.xml:344(td) ./doc/common/tables/swift-conf-changes.xml:348(td) ./doc/common/tables/swift-conf-changes.xml:352(td) ./doc/common/tables/swift-conf-changes.xml:364(td) ./doc/common/tables/swift-conf-changes.xml:368(td)
+#: ./doc/common/tables/trove-db_postgresql.xml:34(td) ./doc/common/tables/swift-conf-changes.xml:21(td) ./doc/common/tables/swift-conf-changes.xml:25(td) ./doc/common/tables/swift-conf-changes.xml:29(td) ./doc/common/tables/swift-conf-changes.xml:33(td) ./doc/common/tables/swift-conf-changes.xml:37(td) ./doc/common/tables/swift-conf-changes.xml:41(td) ./doc/common/tables/swift-conf-changes.xml:45(td) ./doc/common/tables/swift-conf-changes.xml:124(td) ./doc/common/tables/swift-conf-changes.xml:140(td) ./doc/common/tables/swift-conf-changes.xml:148(td) ./doc/common/tables/swift-conf-changes.xml:152(td) ./doc/common/tables/swift-conf-changes.xml:156(td) ./doc/common/tables/swift-conf-changes.xml:160(td) ./doc/common/tables/swift-conf-changes.xml:164(td) ./doc/common/tables/swift-conf-changes.xml:168(td) ./doc/common/tables/swift-conf-changes.xml:172(td) ./doc/common/tables/swift-conf-changes.xml:188(td) ./doc/common/tables/swift-conf-changes.xml:192(td) ./doc/common/tables/swift-conf-changes.xml:196(td) ./doc/common/tables/swift-conf-changes.xml:206(td) ./doc/common/tables/swift-conf-changes.xml:210(td) ./doc/common/tables/swift-conf-changes.xml:214(td) ./doc/common/tables/swift-conf-changes.xml:218(td) ./doc/common/tables/swift-conf-changes.xml:222(td) ./doc/common/tables/swift-conf-changes.xml:226(td) ./doc/common/tables/swift-conf-changes.xml:230(td) ./doc/common/tables/swift-conf-changes.xml:234(td) ./doc/common/tables/swift-conf-changes.xml:238(td) ./doc/common/tables/swift-conf-changes.xml:242(td) ./doc/common/tables/swift-conf-changes.xml:246(td) ./doc/common/tables/swift-conf-changes.xml:275(td) ./doc/common/tables/swift-conf-changes.xml:279(td) ./doc/common/tables/swift-conf-changes.xml:283(td) ./doc/common/tables/swift-conf-changes.xml:287(td) ./doc/common/tables/swift-conf-changes.xml:291(td) ./doc/common/tables/swift-conf-changes.xml:295(td) ./doc/common/tables/swift-conf-changes.xml:299(td) ./doc/common/tables/swift-conf-changes.xml:303(td) ./doc/common/tables/swift-conf-changes.xml:323(td) ./doc/common/tables/swift-conf-changes.xml:327(td) ./doc/common/tables/swift-conf-changes.xml:331(td) ./doc/common/tables/swift-conf-changes.xml:335(td) ./doc/common/tables/swift-conf-changes.xml:339(td) ./doc/common/tables/swift-conf-changes.xml:343(td) ./doc/common/tables/swift-conf-changes.xml:347(td) ./doc/common/tables/swift-conf-changes.xml:351(td) ./doc/common/tables/swift-conf-changes.xml:355(td) ./doc/common/tables/swift-conf-changes.xml:359(td) ./doc/common/tables/swift-conf-changes.xml:363(td) ./doc/common/tables/swift-conf-changes.xml:375(td) ./doc/common/tables/swift-conf-changes.xml:379(td)
 msgid "(StrOpt) No help text available for this option."
 msgstr ""
 
@@ -21573,14 +21573,18 @@ msgid "If &gt; 0, Minimum time in seconds for a PUT or DELETE request to complet
 msgstr ""
 
 #: ./doc/common/tables/swift-object-server-app-object-server.xml:92(td)
-msgid "threads_per_disk = 0"
-msgstr ""
-
-#: ./doc/common/tables/swift-object-server-app-object-server.xml:93(td)
-msgid "Size of the per-disk thread pool used for performing disk I/O. The default of 0 means to not use a per-disk thread pool. It is recommended to keep this value small, as large values can result in high read latencies due to large queue depths. A good starting point is 4 threads per disk."
+msgid "splice = no"
 msgstr ""
 
 #: ./doc/common/tables/swift-object-server-app-object-server.xml:96(td)
+msgid "threads_per_disk = 0"
+msgstr ""
+
+#: ./doc/common/tables/swift-object-server-app-object-server.xml:97(td)
+msgid "Size of the per-disk thread pool used for performing disk I/O. The default of 0 means to not use a per-disk thread pool. It is recommended to keep this value small, as large values can result in high read latencies due to large queue depths. A good starting point is 4 threads per disk."
+msgstr ""
+
+#: ./doc/common/tables/swift-object-server-app-object-server.xml:100(td)
 msgid "use = egg:swift#object"
 msgstr ""
 
@@ -21641,14 +21645,18 @@ msgid "[filter-keystoneauth]"
 msgstr ""
 
 #: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:20(td)
-msgid "operator_roles = admin, swiftoperator"
-msgstr ""
-
-#: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:24(td)
-msgid "reseller_admin_role = ResellerAdmin"
+msgid "allow_names_in_acls = true"
 msgstr ""
 
 #: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:28(td)
+msgid "operator_roles = admin, swiftoperator"
+msgstr ""
+
+#: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:32(td)
+msgid "reseller_admin_role = ResellerAdmin"
+msgstr ""
+
+#: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml:36(td)
 msgid "use = egg:swift#keystoneauth"
 msgstr ""
 
@@ -22608,7 +22616,7 @@ msgstr ""
 msgid "The X-Auth-Token is sensitive data. If revealed to an unauthorised person, they can now make requests against an account until the token expires. Set reveal_sensitive_prefix to the number of characters of the token that are logged. For example reveal_sensitive_prefix = 12 so only first 12 characters of the token are logged. Or, set to 0 to completely remove the token."
 msgstr ""
 
-#: ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:92(td) ./doc/common/tables/swift-container-reconciler-filter-proxy-logging.xml:20(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:92(td)
+#: ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml:91(td) ./doc/common/tables/swift-container-reconciler-filter-proxy-logging.xml:20(td) ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml:91(td)
 msgid "use = egg:swift#proxy_logging"
 msgstr ""
 
@@ -28619,7 +28627,7 @@ msgstr ""
 msgid "account-server.conf: [DEFAULT] log_max_line_length = 0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:17(td) ./doc/common/tables/swift-conf-changes.xml:144(td) ./doc/common/tables/swift-conf-changes.xml:180(td) ./doc/common/tables/swift-conf-changes.xml:184(td) ./doc/common/tables/swift-conf-changes.xml:272(td) ./doc/common/tables/swift-conf-changes.xml:316(td)
+#: ./doc/common/tables/swift-conf-changes.xml:17(td) ./doc/common/tables/swift-conf-changes.xml:144(td) ./doc/common/tables/swift-conf-changes.xml:180(td) ./doc/common/tables/swift-conf-changes.xml:184(td) ./doc/common/tables/swift-conf-changes.xml:271(td) ./doc/common/tables/swift-conf-changes.xml:319(td)
 msgid "(StrOpt) Caps the length of log lines to the value given; no limit if set to 0, the default."
 msgstr ""
 
@@ -28655,7 +28663,7 @@ msgstr ""
 msgid "account-server.conf: [filter-xprofile] use = egg:swift#xprofile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:49(td) ./doc/common/tables/swift-conf-changes.xml:112(td) ./doc/common/tables/swift-conf-changes.xml:128(td) ./doc/common/tables/swift-conf-changes.xml:132(td) ./doc/common/tables/swift-conf-changes.xml:136(td) ./doc/common/tables/swift-conf-changes.xml:176(td) ./doc/common/tables/swift-conf-changes.xml:260(td) ./doc/common/tables/swift-conf-changes.xml:304(td) ./doc/common/tables/swift-conf-changes.xml:356(td)
+#: ./doc/common/tables/swift-conf-changes.xml:49(td) ./doc/common/tables/swift-conf-changes.xml:112(td) ./doc/common/tables/swift-conf-changes.xml:128(td) ./doc/common/tables/swift-conf-changes.xml:132(td) ./doc/common/tables/swift-conf-changes.xml:136(td) ./doc/common/tables/swift-conf-changes.xml:176(td) ./doc/common/tables/swift-conf-changes.xml:259(td) ./doc/common/tables/swift-conf-changes.xml:307(td) ./doc/common/tables/swift-conf-changes.xml:367(td)
 msgid "(StrOpt) Entry point of paste.deploy in the server"
 msgstr ""
 
@@ -28787,7 +28795,7 @@ msgstr ""
 msgid "container-reconciler.conf: [container-reconciler] reclaim_age = 604800"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:120(td) ./doc/common/tables/swift-conf-changes.xml:264(td)
+#: ./doc/common/tables/swift-conf-changes.xml:120(td) ./doc/common/tables/swift-conf-changes.xml:263(td)
 msgid "(StrOpt) Time elapsed in seconds before an object can be reclaimed"
 msgstr ""
 
@@ -28927,223 +28935,243 @@ msgstr ""
 msgid "(StrOpt) The X-Auth-Token is sensitive data. If revealed to an unauthorised person, they can now make requests against an account until the token expires. Set reveal_sensitive_prefix to the number of characters of the token that are logged. For example reveal_sensitive_prefix = 12 so only first 12 characters of the token are logged. Or, set to 0 to completely remove the token."
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:259(td)
+#: ./doc/common/tables/swift-conf-changes.xml:258(td)
 msgid "object-expirer.conf: [filter-proxy-logging] use = egg:swift#proxy_logging"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:263(td)
+#: ./doc/common/tables/swift-conf-changes.xml:262(td)
 msgid "object-expirer.conf: [object-expirer] reclaim_age = 604800"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:267(td)
+#: ./doc/common/tables/swift-conf-changes.xml:266(td)
 msgid "object-expirer.conf: [object-expirer] recon_cache_path = /var/cache/swift"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:268(td)
+#: ./doc/common/tables/swift-conf-changes.xml:267(td)
 msgid "(StrOpt) Directory where stats for a few items will be stored"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:271(td)
+#: ./doc/common/tables/swift-conf-changes.xml:270(td)
 msgid "object-server.conf: [DEFAULT] log_max_line_length = 0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:275(td)
+#: ./doc/common/tables/swift-conf-changes.xml:274(td)
+msgid "object-server.conf: [app-object-server] splice = no"
+msgstr ""
+
+#: ./doc/common/tables/swift-conf-changes.xml:278(td)
 msgid "object-server.conf: [filter-xprofile] dump_interval = 5.0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:279(td)
+#: ./doc/common/tables/swift-conf-changes.xml:282(td)
 msgid "object-server.conf: [filter-xprofile] dump_timestamp = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:283(td)
+#: ./doc/common/tables/swift-conf-changes.xml:286(td)
 msgid "object-server.conf: [filter-xprofile] flush_at_shutdown = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:287(td)
+#: ./doc/common/tables/swift-conf-changes.xml:290(td)
 msgid "object-server.conf: [filter-xprofile] log_filename_prefix = /tmp/log/swift/profile/default.profile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:291(td)
+#: ./doc/common/tables/swift-conf-changes.xml:294(td)
 msgid "object-server.conf: [filter-xprofile] path = /__profile__"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:295(td)
+#: ./doc/common/tables/swift-conf-changes.xml:298(td)
 msgid "object-server.conf: [filter-xprofile] profile_module = eventlet.green.profile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:299(td)
+#: ./doc/common/tables/swift-conf-changes.xml:302(td)
 msgid "object-server.conf: [filter-xprofile] unwind = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:303(td)
+#: ./doc/common/tables/swift-conf-changes.xml:306(td)
 msgid "object-server.conf: [filter-xprofile] use = egg:swift#xprofile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:307(td)
+#: ./doc/common/tables/swift-conf-changes.xml:310(td)
 msgid "object-server.conf: [object-auditor] concurrency = 1"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:308(td)
+#: ./doc/common/tables/swift-conf-changes.xml:311(td)
 msgid "(StrOpt) Number of replication workers to spawn"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:311(td)
+#: ./doc/common/tables/swift-conf-changes.xml:314(td)
 msgid "object-server.conf: [object-auditor] disk_chunk_size = 65536"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:312(td)
+#: ./doc/common/tables/swift-conf-changes.xml:315(td)
 msgid "(StrOpt) Size of chunks to read/write to disk"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:315(td)
+#: ./doc/common/tables/swift-conf-changes.xml:318(td)
 msgid "proxy-server.conf: [DEFAULT] log_max_line_length = 0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:319(td)
+#: ./doc/common/tables/swift-conf-changes.xml:322(td)
 msgid "proxy-server.conf: [DEFAULT] strict_cors_mode = True"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:323(td)
+#: ./doc/common/tables/swift-conf-changes.xml:326(td)
 msgid "proxy-server.conf: [filter-container_sync] current = //REALM/CLUSTER"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:327(td)
+#: ./doc/common/tables/swift-conf-changes.xml:330(td)
+msgid "proxy-server.conf: [filter-keystoneauth] allow_names_in_acls = true"
+msgstr ""
+
+#: ./doc/common/tables/swift-conf-changes.xml:334(td)
+msgid "proxy-server.conf: [filter-keystoneauth] default_domain_id = default"
+msgstr ""
+
+#: ./doc/common/tables/swift-conf-changes.xml:338(td)
 msgid "proxy-server.conf: [filter-xprofile] dump_interval = 5.0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:331(td)
+#: ./doc/common/tables/swift-conf-changes.xml:342(td)
 msgid "proxy-server.conf: [filter-xprofile] dump_timestamp = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:335(td)
+#: ./doc/common/tables/swift-conf-changes.xml:346(td)
 msgid "proxy-server.conf: [filter-xprofile] flush_at_shutdown = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:339(td)
+#: ./doc/common/tables/swift-conf-changes.xml:350(td)
 msgid "proxy-server.conf: [filter-xprofile] log_filename_prefix = /tmp/log/swift/profile/default.profile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:343(td)
+#: ./doc/common/tables/swift-conf-changes.xml:354(td)
 msgid "proxy-server.conf: [filter-xprofile] path = /__profile__"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:347(td)
+#: ./doc/common/tables/swift-conf-changes.xml:358(td)
 msgid "proxy-server.conf: [filter-xprofile] profile_module = eventlet.green.profile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:351(td)
+#: ./doc/common/tables/swift-conf-changes.xml:362(td)
 msgid "proxy-server.conf: [filter-xprofile] unwind = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:355(td)
+#: ./doc/common/tables/swift-conf-changes.xml:366(td)
 msgid "proxy-server.conf: [filter-xprofile] use = egg:swift#xprofile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:359(td)
+#: ./doc/common/tables/swift-conf-changes.xml:370(td)
 msgid "swift.conf: [storage-policy-0] default = yes"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:360(td)
+#: ./doc/common/tables/swift-conf-changes.xml:371(td)
 msgid "(StrOpt) 0 means to not use a per-disk thread pool. It is recommended to keep this value small, as large values can result in high read latencies due to large queue depths. A good starting point is 4 threads per disk."
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:363(td)
+#: ./doc/common/tables/swift-conf-changes.xml:374(td)
 msgid "swift.conf: [storage-policy-0] name = Policy-0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:367(td)
+#: ./doc/common/tables/swift-conf-changes.xml:378(td)
 msgid "swift.conf: [storage-policy-1] name = silver"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:384(td)
+#: ./doc/common/tables/swift-conf-changes.xml:395(td)
 msgid "dispersion.conf: [dispersion] auth_version"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:385(td)
+#: ./doc/common/tables/swift-conf-changes.xml:396(td)
 msgid "2.0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:386(td)
+#: ./doc/common/tables/swift-conf-changes.xml:397(td)
 msgid "1.0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:389(td)
+#: ./doc/common/tables/swift-conf-changes.xml:400(td)
 msgid "drive-audit.conf: [drive-audit] log_file_pattern"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:390(td)
+#: ./doc/common/tables/swift-conf-changes.xml:401(td)
 msgid "/var/log/kern*"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:391(td)
+#: ./doc/common/tables/swift-conf-changes.xml:402(td)
 msgid "/var/log/kern.*[!.][!g][!z]"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:394(td)
+#: ./doc/common/tables/swift-conf-changes.xml:405(td)
 msgid "object-expirer.conf: [pipeline-main] pipeline"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:395(td)
+#: ./doc/common/tables/swift-conf-changes.xml:406(td)
 msgid "catch_errors cache proxy-server"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:396(td)
+#: ./doc/common/tables/swift-conf-changes.xml:407(td)
 msgid "catch_errors proxy-logging cache proxy-server"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:399(td)
+#: ./doc/common/tables/swift-conf-changes.xml:410(td)
+msgid "proxy-server.conf: [DEFAULT] bind_port"
+msgstr ""
+
+#: ./doc/common/tables/swift-conf-changes.xml:412(td)
+msgid "8080"
+msgstr ""
+
+#: ./doc/common/tables/swift-conf-changes.xml:415(td)
 msgid "proxy-server.conf: [DEFAULT] disallowed_sections"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:400(td)
+#: ./doc/common/tables/swift-conf-changes.xml:416(td)
 msgid "container_quotas, tempurl"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:401(td)
+#: ./doc/common/tables/swift-conf-changes.xml:417(td)
 msgid "container_quotas, tempurl, bulk_delete.max_failed_deletes"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:404(td)
+#: ./doc/common/tables/swift-conf-changes.xml:420(td)
 msgid "proxy-server.conf: [app-proxy-server] client_chunk_size"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:406(td) ./doc/common/tables/swift-conf-changes.xml:411(td)
+#: ./doc/common/tables/swift-conf-changes.xml:422(td) ./doc/common/tables/swift-conf-changes.xml:427(td)
 msgid "65536"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:409(td)
+#: ./doc/common/tables/swift-conf-changes.xml:425(td)
 msgid "proxy-server.conf: [app-proxy-server] object_chunk_size"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:414(td)
+#: ./doc/common/tables/swift-conf-changes.xml:430(td)
 msgid "proxy-server.conf: [filter-proxy-logging] reveal_sensitive_prefix"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:416(td)
+#: ./doc/common/tables/swift-conf-changes.xml:432(td)
 msgid "16"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:419(td)
+#: ./doc/common/tables/swift-conf-changes.xml:435(td)
 msgid "proxy-server.conf: [filter-tempurl] methods"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:420(td)
+#: ./doc/common/tables/swift-conf-changes.xml:436(td)
 msgid "GET HEAD PUT"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:421(td)
+#: ./doc/common/tables/swift-conf-changes.xml:437(td)
 msgid "GET HEAD PUT POST DELETE"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:424(td)
+#: ./doc/common/tables/swift-conf-changes.xml:440(td)
 msgid "proxy-server.conf: [pipeline-main] pipeline"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:425(td)
+#: ./doc/common/tables/swift-conf-changes.xml:441(td)
 msgid "catch_errors gatekeeper healthcheck proxy-logging cache container_sync bulk tempurl slo dlo ratelimit tempauth container-quotas account-quotas proxy-logging proxy-server"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml:426(td)
+#: ./doc/common/tables/swift-conf-changes.xml:442(td)
 msgid "catch_errors gatekeeper healthcheck proxy-logging cache container_sync bulk tempurl ratelimit tempauth container-quotas account-quotas slo dlo proxy-logging proxy-server"
 msgstr ""
 

@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-10-06 03:14+0000\n"
-"PO-Revision-Date: 2014-10-06 03:30+0000\n"
+"POT-Creation-Date: 2014-10-08 04:30+0000\n"
+"PO-Revision-Date: 2014-10-08 01:31+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -1694,7 +1694,13 @@ msgid ""
 "section like this:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml42(para)
+#: ./doc/common/section_identity-troubleshooting.xml36(replaceable)
+#: ./doc/common/section_identity-troubleshooting.xml37(replaceable)
+#: ./doc/common/section_config_format.xml30(replaceable)
+msgid "controller"
+msgstr "controller"
+
+#: ./doc/common/section_identity-troubleshooting.xml40(para)
 msgid ""
 "If your service lacks this stanza, the <link "
 "href=\"https://github.com/openstack/python-"
@@ -1708,14 +1714,14 @@ msgid ""
 "However, it often succeeds but problems occur later."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml54(para)
+#: ./doc/common/section_identity-troubleshooting.xml52(para)
 msgid ""
 "The first thing to check is that the <literal>signing_dir</literal> does, in"
 " fact, exist. If it does, check for the presence of the certificate files "
 "inside there:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml65(para)
+#: ./doc/common/section_identity-troubleshooting.xml63(para)
 msgid ""
 "This directory contains two certificates and the token revocation list. If "
 "these files are not present, your service cannot fetch them from Identity. "
@@ -1723,15 +1729,15 @@ msgid ""
 "files, as follows:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml71(para)
+#: ./doc/common/section_identity-troubleshooting.xml69(para)
 msgid "This command fetches the signing certificate:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml82(para)
+#: ./doc/common/section_identity-troubleshooting.xml80(para)
 msgid "Note the expiration dates of the certificate:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml85(para)
+#: ./doc/common/section_identity-troubleshooting.xml83(para)
 msgid ""
 "The token revocation list is updated once a minute, but the certificates are"
 " not. One possible problem is that the certificates are the wrong files or "
@@ -1739,7 +1745,7 @@ msgid ""
 "server: They are fetched on demand."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml90(para)
+#: ./doc/common/section_identity-troubleshooting.xml88(para)
 msgid ""
 "The Identity service log should show the access of the certificate files. "
 "You might have to turn up your logging levels. Set <literal>debug = "
@@ -1747,13 +1753,13 @@ msgid ""
 "configuration file and restart the Identity server."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml99(para)
+#: ./doc/common/section_identity-troubleshooting.xml97(para)
 msgid ""
 "If the files do not appear in your directory after this, it is likely one of"
 " the following issues:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml103(para)
+#: ./doc/common/section_identity-troubleshooting.xml101(para)
 msgid ""
 "Your service is configured incorrectly and cannot talk to Identity. Check "
 "the <literal>auth_port</literal> and <literal>auth_host</literal> values and"
@@ -1761,18 +1767,18 @@ msgid ""
 "previously."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml111(para)
+#: ./doc/common/section_identity-troubleshooting.xml109(para)
 msgid ""
 "Your signing directory is not writable. Use the <placeholder-1/> command to "
 "change its permissions so that the service (POSIX) user can write to it. "
 "Verify the change through <placeholder-2/> and <placeholder-3/> commands."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml119(para)
+#: ./doc/common/section_identity-troubleshooting.xml117(para)
 msgid "The SELinux policy is denying access to the directory."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml123(para)
+#: ./doc/common/section_identity-troubleshooting.xml121(para)
 msgid ""
 "SELinux troubles often occur when you use Fedora/RHEL-based packages and you"
 " choose configuration options that do not match the standard policy. Run the"
@@ -1781,20 +1787,20 @@ msgid ""
 "<filename>/var/cache/</filename> directory, run the following command:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml132(para)
+#: ./doc/common/section_identity-troubleshooting.xml130(para)
 msgid ""
 "If you are not using a <filename>/var/cache</filename> sub-directory, you "
 "should. Modify the <literal>signing_dir</literal> configuration option for "
 "your service and restart."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml136(para)
+#: ./doc/common/section_identity-troubleshooting.xml134(para)
 msgid ""
 "Set back to <literal>setenforce enforcing</literal> to confirm that your "
 "changes solve the problem."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml138(para)
+#: ./doc/common/section_identity-troubleshooting.xml136(para)
 msgid ""
 "If your certificates are fetched on demand, the PKI validation is working "
 "properly. Most likely, the token from Identity is not valid for the "
@@ -1802,11 +1808,11 @@ msgid ""
 "role for the operation."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml145(title)
+#: ./doc/common/section_identity-troubleshooting.xml143(title)
 msgid "Debug signing key file errors"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml146(para)
+#: ./doc/common/section_identity-troubleshooting.xml144(para)
 msgid ""
 "If an error occurs when the signing key file opens, it is possible that the "
 "person who ran the <placeholder-1/> command to generate certificates and "
@@ -1815,7 +1821,7 @@ msgid ""
 "<filename>/etc/keystone/ssl*</filename>, which is owned by root:root."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml155(para)
+#: ./doc/common/section_identity-troubleshooting.xml153(para)
 msgid ""
 "This can present a problem when you run the Identity daemon under the "
 "keystone user account (nologin) when you try to run PKI. Unless you run the "
@@ -1825,11 +1831,11 @@ msgid ""
 "follows:"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml173(title)
+#: ./doc/common/section_identity-troubleshooting.xml171(title)
 msgid "Flush expired tokens from the token database table"
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml175(para)
+#: ./doc/common/section_identity-troubleshooting.xml173(para)
 msgid ""
 "As you generate tokens, the token database table on the Identity server "
 "grows. To clear the token table, an administrative user must run the "
@@ -1837,7 +1843,7 @@ msgid ""
 " tokens are deleted and traceability is eliminated."
 msgstr ""
 
-#: ./doc/common/section_identity-troubleshooting.xml181(para)
+#: ./doc/common/section_identity-troubleshooting.xml179(para)
 msgid ""
 "Use <placeholder-1/> to schedule this command to run frequently based on "
 "your workload. For large workloads, running it every minute is recommended."
@@ -6237,13 +6243,14 @@ msgid "6"
 msgstr ""
 
 #: ./doc/common/section_cli_nova_host_aggregates.xml208(replaceable)
-#: ./doc/common/tables/swift-conf-changes.xml405(td)
-#: ./doc/common/tables/swift-conf-changes.xml410(td)
-#: ./doc/common/tables/swift-conf-changes.xml415(td)
+#: ./doc/common/tables/swift-conf-changes.xml421(td)
+#: ./doc/common/tables/swift-conf-changes.xml426(td)
+#: ./doc/common/tables/swift-conf-changes.xml431(td)
 msgid "8192"
 msgstr "8192"
 
 #: ./doc/common/section_cli_nova_host_aggregates.xml208(replaceable)
+#: ./doc/common/tables/swift-conf-changes.xml411(td)
 msgid "80"
 msgstr "80"
 
@@ -8287,20 +8294,20 @@ msgstr ""
 msgid ""
 "<emphasis role=\"bold\">Proxy servers.</emphasis> Handle all of the incoming"
 " API requests."
-msgstr ""
+msgstr "<emphasis role=\"bold\">プロキシサーバー</emphasis>。すべての受信 API リクエストを処理します。"
 
 #: ./doc/common/section_objectstorage-components.xml16(para)
 msgid ""
 "<emphasis role=\"bold\">Rings.</emphasis> Map logical names of data to "
 "locations on particular disks."
-msgstr ""
+msgstr "<emphasis role=\"bold\">リング</emphasis>。データの論理名を具体的なディスクの位置に対応付けます。"
 
 #: ./doc/common/section_objectstorage-components.xml20(para)
 msgid ""
 "<emphasis role=\"bold\">Zones.</emphasis> Isolate data from other zones. A "
 "failure in one zone doesn’t impact the rest of the cluster because data is "
 "replicated across zones."
-msgstr ""
+msgstr "<emphasis role=\"bold\">ゾーン</emphasis>。他のゾーンからデータを分離します。あるゾーンの障害は、クラスターの他の部分に影響を与えません。データがゾーンをまたがり複製されているからです。"
 
 #: ./doc/common/section_objectstorage-components.xml25(para)
 msgid ""
@@ -8312,7 +8319,7 @@ msgstr ""
 
 #: ./doc/common/section_objectstorage-components.xml31(para)
 msgid "<emphasis role=\"bold\">Objects.</emphasis> The data itself."
-msgstr ""
+msgstr "<emphasis role=\"bold\">オブジェクト</emphasis>。データ自身。"
 
 #: ./doc/common/section_objectstorage-components.xml34(para)
 msgid ""
@@ -9867,10 +9874,6 @@ msgstr ""
 #: ./doc/common/section_config_format.xml30(replaceable)
 msgid "KEYSTONE_DBPASS"
 msgstr "KEYSTONE_DBPASS"
-
-#: ./doc/common/section_config_format.xml30(replaceable)
-msgid "controller"
-msgstr "controller"
 
 #: ./doc/common/section_config_format.xml33(para)
 msgid ""
@@ -15913,7 +15916,7 @@ msgid "IP Address for server to bind to"
 msgstr "サーバーがバインドする IP アドレス"
 
 #: ./doc/common/tables/swift-proxy-server-DEFAULT.xml32(td)
-msgid "bind_port = 80"
+msgid "bind_port = 8080"
 msgstr ""
 
 #: ./doc/common/tables/swift-proxy-server-DEFAULT.xml33(td)
@@ -16040,9 +16043,12 @@ msgstr ""
 #: ./doc/common/tables/swift-object-expirer-object-expirer.xml43(td)
 #: ./doc/common/tables/swift-object-expirer-object-expirer.xml55(td)
 #: ./doc/common/tables/swift-object-server-filter-healthcheck.xml21(td)
+#: ./doc/common/tables/swift-object-server-app-object-server.xml93(td)
 #: ./doc/common/tables/swift-container-reconciler-container-reconciler.xml29(td)
 #: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml21(td)
 #: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml25(td)
+#: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml29(td)
+#: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml33(td)
 #: ./doc/common/tables/swift-object-server-DEFAULT.xml61(td)
 #: ./doc/common/tables/swift-object-server-DEFAULT.xml65(td)
 #: ./doc/common/tables/swift-proxy-server-filter-tempauth.xml21(td)
@@ -18094,12 +18100,12 @@ msgstr ""
 #: ./doc/common/tables/swift-container-server-filter-healthcheck.xml25(td)
 #: ./doc/common/tables/swift-object-server-filter-xprofile.xml49(td)
 #: ./doc/common/tables/swift-object-server-filter-healthcheck.xml25(td)
-#: ./doc/common/tables/swift-object-server-app-object-server.xml97(td)
+#: ./doc/common/tables/swift-object-server-app-object-server.xml101(td)
 #: ./doc/common/tables/swift-proxy-server-filter-catch_errors.xml41(td)
-#: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml29(td)
+#: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml37(td)
 #: ./doc/common/tables/swift-proxy-server-filter-tempauth.xml61(td)
 #: ./doc/common/tables/swift-proxy-server-filter-gatekeeper.xml41(td)
-#: ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml93(td)
+#: ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml92(td)
 #: ./doc/common/tables/swift-container-reconciler-filter-proxy-logging.xml21(td)
 #: ./doc/common/tables/swift-proxy-server-filter-tempurl.xml47(td)
 #: ./doc/common/tables/swift-proxy-server-filter-name_check.xml33(td)
@@ -18108,7 +18114,7 @@ msgstr ""
 #: ./doc/common/tables/swift-proxy-server-filter-dlo.xml33(td)
 #: ./doc/common/tables/swift-account-server-app-account-server.xml49(td)
 #: ./doc/common/tables/swift-proxy-server-filter-formpost.xml21(td)
-#: ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml93(td)
+#: ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml92(td)
 #: ./doc/common/tables/swift-container-server-filter-xprofile.xml49(td)
 #: ./doc/common/tables/swift-object-expirer-filter-cache.xml21(td)
 #: ./doc/common/tables/swift-container-reconciler-filter-cache.xml21(td)
@@ -21836,6 +21842,7 @@ msgid "[identity]"
 msgstr ""
 
 #: ./doc/common/tables/keystone-identity.xml21(td)
+#: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml24(td)
 msgid "default_domain_id = default"
 msgstr ""
 
@@ -24281,7 +24288,7 @@ msgstr ""
 #: ./doc/common/tables/ceilometer-conf-changes.xml265(caption)
 #: ./doc/common/tables/trove-conf-changes.xml357(caption)
 #: ./doc/common/tables/nova-conf-changes.xml301(caption)
-#: ./doc/common/tables/swift-conf-changes.xml372(caption)
+#: ./doc/common/tables/swift-conf-changes.xml383(caption)
 #: ./doc/common/tables/cinder-conf-changes.xml529(caption)
 msgid "New default values"
 msgstr ""
@@ -24293,7 +24300,7 @@ msgstr ""
 #: ./doc/common/tables/ceilometer-conf-changes.xml271(td)
 #: ./doc/common/tables/trove-conf-changes.xml363(td)
 #: ./doc/common/tables/nova-conf-changes.xml307(td)
-#: ./doc/common/tables/swift-conf-changes.xml378(td)
+#: ./doc/common/tables/swift-conf-changes.xml389(td)
 #: ./doc/common/tables/cinder-conf-changes.xml535(td)
 msgid "Option"
 msgstr "オプション"
@@ -24305,7 +24312,7 @@ msgstr "オプション"
 #: ./doc/common/tables/ceilometer-conf-changes.xml272(td)
 #: ./doc/common/tables/trove-conf-changes.xml364(td)
 #: ./doc/common/tables/nova-conf-changes.xml308(td)
-#: ./doc/common/tables/swift-conf-changes.xml379(td)
+#: ./doc/common/tables/swift-conf-changes.xml390(td)
 #: ./doc/common/tables/cinder-conf-changes.xml536(td)
 msgid "Previous default value"
 msgstr ""
@@ -24317,7 +24324,7 @@ msgstr ""
 #: ./doc/common/tables/ceilometer-conf-changes.xml273(td)
 #: ./doc/common/tables/trove-conf-changes.xml365(td)
 #: ./doc/common/tables/nova-conf-changes.xml309(td)
-#: ./doc/common/tables/swift-conf-changes.xml380(td)
+#: ./doc/common/tables/swift-conf-changes.xml391(td)
 #: ./doc/common/tables/cinder-conf-changes.xml537(td)
 msgid "New default value"
 msgstr ""
@@ -30627,24 +30634,27 @@ msgstr ""
 #: ./doc/common/tables/swift-conf-changes.xml238(td)
 #: ./doc/common/tables/swift-conf-changes.xml242(td)
 #: ./doc/common/tables/swift-conf-changes.xml246(td)
-#: ./doc/common/tables/swift-conf-changes.xml276(td)
-#: ./doc/common/tables/swift-conf-changes.xml280(td)
-#: ./doc/common/tables/swift-conf-changes.xml284(td)
-#: ./doc/common/tables/swift-conf-changes.xml288(td)
-#: ./doc/common/tables/swift-conf-changes.xml292(td)
-#: ./doc/common/tables/swift-conf-changes.xml296(td)
-#: ./doc/common/tables/swift-conf-changes.xml300(td)
-#: ./doc/common/tables/swift-conf-changes.xml320(td)
-#: ./doc/common/tables/swift-conf-changes.xml324(td)
-#: ./doc/common/tables/swift-conf-changes.xml328(td)
-#: ./doc/common/tables/swift-conf-changes.xml332(td)
-#: ./doc/common/tables/swift-conf-changes.xml336(td)
-#: ./doc/common/tables/swift-conf-changes.xml340(td)
-#: ./doc/common/tables/swift-conf-changes.xml344(td)
-#: ./doc/common/tables/swift-conf-changes.xml348(td)
-#: ./doc/common/tables/swift-conf-changes.xml352(td)
-#: ./doc/common/tables/swift-conf-changes.xml364(td)
-#: ./doc/common/tables/swift-conf-changes.xml368(td)
+#: ./doc/common/tables/swift-conf-changes.xml275(td)
+#: ./doc/common/tables/swift-conf-changes.xml279(td)
+#: ./doc/common/tables/swift-conf-changes.xml283(td)
+#: ./doc/common/tables/swift-conf-changes.xml287(td)
+#: ./doc/common/tables/swift-conf-changes.xml291(td)
+#: ./doc/common/tables/swift-conf-changes.xml295(td)
+#: ./doc/common/tables/swift-conf-changes.xml299(td)
+#: ./doc/common/tables/swift-conf-changes.xml303(td)
+#: ./doc/common/tables/swift-conf-changes.xml323(td)
+#: ./doc/common/tables/swift-conf-changes.xml327(td)
+#: ./doc/common/tables/swift-conf-changes.xml331(td)
+#: ./doc/common/tables/swift-conf-changes.xml335(td)
+#: ./doc/common/tables/swift-conf-changes.xml339(td)
+#: ./doc/common/tables/swift-conf-changes.xml343(td)
+#: ./doc/common/tables/swift-conf-changes.xml347(td)
+#: ./doc/common/tables/swift-conf-changes.xml351(td)
+#: ./doc/common/tables/swift-conf-changes.xml355(td)
+#: ./doc/common/tables/swift-conf-changes.xml359(td)
+#: ./doc/common/tables/swift-conf-changes.xml363(td)
+#: ./doc/common/tables/swift-conf-changes.xml375(td)
+#: ./doc/common/tables/swift-conf-changes.xml379(td)
 msgid "(StrOpt) No help text available for this option."
 msgstr ""
 
@@ -32047,10 +32057,14 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/swift-object-server-app-object-server.xml92(td)
+msgid "splice = no"
+msgstr ""
+
+#: ./doc/common/tables/swift-object-server-app-object-server.xml96(td)
 msgid "threads_per_disk = 0"
 msgstr ""
 
-#: ./doc/common/tables/swift-object-server-app-object-server.xml93(td)
+#: ./doc/common/tables/swift-object-server-app-object-server.xml97(td)
 msgid ""
 "Size of the per-disk thread pool used for performing disk I/O. The default "
 "of 0 means to not use a per-disk thread pool. It is recommended to keep this"
@@ -32058,7 +32072,7 @@ msgid ""
 " queue depths. A good starting point is 4 threads per disk."
 msgstr ""
 
-#: ./doc/common/tables/swift-object-server-app-object-server.xml96(td)
+#: ./doc/common/tables/swift-object-server-app-object-server.xml100(td)
 msgid "use = egg:swift#object"
 msgstr ""
 
@@ -32125,14 +32139,18 @@ msgid "[filter-keystoneauth]"
 msgstr ""
 
 #: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml20(td)
-msgid "operator_roles = admin, swiftoperator"
-msgstr ""
-
-#: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml24(td)
-msgid "reseller_admin_role = ResellerAdmin"
+msgid "allow_names_in_acls = true"
 msgstr ""
 
 #: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml28(td)
+msgid "operator_roles = admin, swiftoperator"
+msgstr ""
+
+#: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml32(td)
+msgid "reseller_admin_role = ResellerAdmin"
+msgstr ""
+
+#: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml36(td)
 msgid "use = egg:swift#keystoneauth"
 msgstr ""
 
@@ -33266,9 +33284,9 @@ msgid ""
 " of the token are logged. Or, set to 0 to completely remove the token."
 msgstr ""
 
-#: ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml92(td)
+#: ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml91(td)
 #: ./doc/common/tables/swift-container-reconciler-filter-proxy-logging.xml20(td)
-#: ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml92(td)
+#: ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml91(td)
 msgid "use = egg:swift#proxy_logging"
 msgstr ""
 
@@ -40049,8 +40067,8 @@ msgstr ""
 #: ./doc/common/tables/swift-conf-changes.xml144(td)
 #: ./doc/common/tables/swift-conf-changes.xml180(td)
 #: ./doc/common/tables/swift-conf-changes.xml184(td)
-#: ./doc/common/tables/swift-conf-changes.xml272(td)
-#: ./doc/common/tables/swift-conf-changes.xml316(td)
+#: ./doc/common/tables/swift-conf-changes.xml271(td)
+#: ./doc/common/tables/swift-conf-changes.xml319(td)
 msgid ""
 "(StrOpt) Caps the length of log lines to the value given; no limit if set to"
 " 0, the default."
@@ -40098,9 +40116,9 @@ msgstr ""
 #: ./doc/common/tables/swift-conf-changes.xml132(td)
 #: ./doc/common/tables/swift-conf-changes.xml136(td)
 #: ./doc/common/tables/swift-conf-changes.xml176(td)
-#: ./doc/common/tables/swift-conf-changes.xml260(td)
-#: ./doc/common/tables/swift-conf-changes.xml304(td)
-#: ./doc/common/tables/swift-conf-changes.xml356(td)
+#: ./doc/common/tables/swift-conf-changes.xml259(td)
+#: ./doc/common/tables/swift-conf-changes.xml307(td)
+#: ./doc/common/tables/swift-conf-changes.xml367(td)
 msgid "(StrOpt) Entry point of paste.deploy in the server"
 msgstr ""
 
@@ -40242,7 +40260,7 @@ msgid "container-reconciler.conf: [container-reconciler] reclaim_age = 604800"
 msgstr ""
 
 #: ./doc/common/tables/swift-conf-changes.xml120(td)
-#: ./doc/common/tables/swift-conf-changes.xml264(td)
+#: ./doc/common/tables/swift-conf-changes.xml263(td)
 msgid "(StrOpt) Time elapsed in seconds before an object can be reclaimed"
 msgstr ""
 
@@ -40418,239 +40436,259 @@ msgid ""
 "remove the token."
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml259(td)
+#: ./doc/common/tables/swift-conf-changes.xml258(td)
 msgid ""
 "object-expirer.conf: [filter-proxy-logging] use = egg:swift#proxy_logging"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml263(td)
+#: ./doc/common/tables/swift-conf-changes.xml262(td)
 msgid "object-expirer.conf: [object-expirer] reclaim_age = 604800"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml267(td)
+#: ./doc/common/tables/swift-conf-changes.xml266(td)
 msgid ""
 "object-expirer.conf: [object-expirer] recon_cache_path = /var/cache/swift"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml268(td)
+#: ./doc/common/tables/swift-conf-changes.xml267(td)
 msgid "(StrOpt) Directory where stats for a few items will be stored"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml271(td)
+#: ./doc/common/tables/swift-conf-changes.xml270(td)
 msgid "object-server.conf: [DEFAULT] log_max_line_length = 0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml275(td)
+#: ./doc/common/tables/swift-conf-changes.xml274(td)
+msgid "object-server.conf: [app-object-server] splice = no"
+msgstr ""
+
+#: ./doc/common/tables/swift-conf-changes.xml278(td)
 msgid "object-server.conf: [filter-xprofile] dump_interval = 5.0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml279(td)
+#: ./doc/common/tables/swift-conf-changes.xml282(td)
 msgid "object-server.conf: [filter-xprofile] dump_timestamp = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml283(td)
+#: ./doc/common/tables/swift-conf-changes.xml286(td)
 msgid "object-server.conf: [filter-xprofile] flush_at_shutdown = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml287(td)
+#: ./doc/common/tables/swift-conf-changes.xml290(td)
 msgid ""
 "object-server.conf: [filter-xprofile] log_filename_prefix = "
 "/tmp/log/swift/profile/default.profile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml291(td)
+#: ./doc/common/tables/swift-conf-changes.xml294(td)
 msgid "object-server.conf: [filter-xprofile] path = /__profile__"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml295(td)
+#: ./doc/common/tables/swift-conf-changes.xml298(td)
 msgid ""
 "object-server.conf: [filter-xprofile] profile_module = "
 "eventlet.green.profile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml299(td)
+#: ./doc/common/tables/swift-conf-changes.xml302(td)
 msgid "object-server.conf: [filter-xprofile] unwind = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml303(td)
+#: ./doc/common/tables/swift-conf-changes.xml306(td)
 msgid "object-server.conf: [filter-xprofile] use = egg:swift#xprofile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml307(td)
+#: ./doc/common/tables/swift-conf-changes.xml310(td)
 msgid "object-server.conf: [object-auditor] concurrency = 1"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml308(td)
+#: ./doc/common/tables/swift-conf-changes.xml311(td)
 msgid "(StrOpt) Number of replication workers to spawn"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml311(td)
+#: ./doc/common/tables/swift-conf-changes.xml314(td)
 msgid "object-server.conf: [object-auditor] disk_chunk_size = 65536"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml312(td)
+#: ./doc/common/tables/swift-conf-changes.xml315(td)
 msgid "(StrOpt) Size of chunks to read/write to disk"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml315(td)
+#: ./doc/common/tables/swift-conf-changes.xml318(td)
 msgid "proxy-server.conf: [DEFAULT] log_max_line_length = 0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml319(td)
+#: ./doc/common/tables/swift-conf-changes.xml322(td)
 msgid "proxy-server.conf: [DEFAULT] strict_cors_mode = True"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml323(td)
+#: ./doc/common/tables/swift-conf-changes.xml326(td)
 msgid "proxy-server.conf: [filter-container_sync] current = //REALM/CLUSTER"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml327(td)
+#: ./doc/common/tables/swift-conf-changes.xml330(td)
+msgid "proxy-server.conf: [filter-keystoneauth] allow_names_in_acls = true"
+msgstr ""
+
+#: ./doc/common/tables/swift-conf-changes.xml334(td)
+msgid "proxy-server.conf: [filter-keystoneauth] default_domain_id = default"
+msgstr ""
+
+#: ./doc/common/tables/swift-conf-changes.xml338(td)
 msgid "proxy-server.conf: [filter-xprofile] dump_interval = 5.0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml331(td)
+#: ./doc/common/tables/swift-conf-changes.xml342(td)
 msgid "proxy-server.conf: [filter-xprofile] dump_timestamp = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml335(td)
+#: ./doc/common/tables/swift-conf-changes.xml346(td)
 msgid "proxy-server.conf: [filter-xprofile] flush_at_shutdown = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml339(td)
+#: ./doc/common/tables/swift-conf-changes.xml350(td)
 msgid ""
 "proxy-server.conf: [filter-xprofile] log_filename_prefix = "
 "/tmp/log/swift/profile/default.profile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml343(td)
+#: ./doc/common/tables/swift-conf-changes.xml354(td)
 msgid "proxy-server.conf: [filter-xprofile] path = /__profile__"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml347(td)
+#: ./doc/common/tables/swift-conf-changes.xml358(td)
 msgid ""
 "proxy-server.conf: [filter-xprofile] profile_module = eventlet.green.profile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml351(td)
+#: ./doc/common/tables/swift-conf-changes.xml362(td)
 msgid "proxy-server.conf: [filter-xprofile] unwind = false"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml355(td)
+#: ./doc/common/tables/swift-conf-changes.xml366(td)
 msgid "proxy-server.conf: [filter-xprofile] use = egg:swift#xprofile"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml359(td)
+#: ./doc/common/tables/swift-conf-changes.xml370(td)
 msgid "swift.conf: [storage-policy-0] default = yes"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml360(td)
+#: ./doc/common/tables/swift-conf-changes.xml371(td)
 msgid ""
 "(StrOpt) 0 means to not use a per-disk thread pool. It is recommended to "
 "keep this value small, as large values can result in high read latencies due"
 " to large queue depths. A good starting point is 4 threads per disk."
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml363(td)
+#: ./doc/common/tables/swift-conf-changes.xml374(td)
 msgid "swift.conf: [storage-policy-0] name = Policy-0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml367(td)
+#: ./doc/common/tables/swift-conf-changes.xml378(td)
 msgid "swift.conf: [storage-policy-1] name = silver"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml384(td)
+#: ./doc/common/tables/swift-conf-changes.xml395(td)
 msgid "dispersion.conf: [dispersion] auth_version"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml385(td)
+#: ./doc/common/tables/swift-conf-changes.xml396(td)
 msgid "2.0"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml386(td)
+#: ./doc/common/tables/swift-conf-changes.xml397(td)
 msgid "1.0"
 msgstr "1.0"
 
-#: ./doc/common/tables/swift-conf-changes.xml389(td)
+#: ./doc/common/tables/swift-conf-changes.xml400(td)
 msgid "drive-audit.conf: [drive-audit] log_file_pattern"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml390(td)
+#: ./doc/common/tables/swift-conf-changes.xml401(td)
 msgid "/var/log/kern*"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml391(td)
+#: ./doc/common/tables/swift-conf-changes.xml402(td)
 msgid "/var/log/kern.*[!.][!g][!z]"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml394(td)
+#: ./doc/common/tables/swift-conf-changes.xml405(td)
 msgid "object-expirer.conf: [pipeline-main] pipeline"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml395(td)
+#: ./doc/common/tables/swift-conf-changes.xml406(td)
 msgid "catch_errors cache proxy-server"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml396(td)
+#: ./doc/common/tables/swift-conf-changes.xml407(td)
 msgid "catch_errors proxy-logging cache proxy-server"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml399(td)
+#: ./doc/common/tables/swift-conf-changes.xml410(td)
+msgid "proxy-server.conf: [DEFAULT] bind_port"
+msgstr ""
+
+#: ./doc/common/tables/swift-conf-changes.xml412(td)
+msgid "8080"
+msgstr ""
+
+#: ./doc/common/tables/swift-conf-changes.xml415(td)
 msgid "proxy-server.conf: [DEFAULT] disallowed_sections"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml400(td)
+#: ./doc/common/tables/swift-conf-changes.xml416(td)
 msgid "container_quotas, tempurl"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml401(td)
+#: ./doc/common/tables/swift-conf-changes.xml417(td)
 msgid "container_quotas, tempurl, bulk_delete.max_failed_deletes"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml404(td)
+#: ./doc/common/tables/swift-conf-changes.xml420(td)
 msgid "proxy-server.conf: [app-proxy-server] client_chunk_size"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml406(td)
-#: ./doc/common/tables/swift-conf-changes.xml411(td)
+#: ./doc/common/tables/swift-conf-changes.xml422(td)
+#: ./doc/common/tables/swift-conf-changes.xml427(td)
 msgid "65536"
 msgstr "65536"
 
-#: ./doc/common/tables/swift-conf-changes.xml409(td)
+#: ./doc/common/tables/swift-conf-changes.xml425(td)
 msgid "proxy-server.conf: [app-proxy-server] object_chunk_size"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml414(td)
+#: ./doc/common/tables/swift-conf-changes.xml430(td)
 msgid "proxy-server.conf: [filter-proxy-logging] reveal_sensitive_prefix"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml416(td)
+#: ./doc/common/tables/swift-conf-changes.xml432(td)
 msgid "16"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml419(td)
+#: ./doc/common/tables/swift-conf-changes.xml435(td)
 msgid "proxy-server.conf: [filter-tempurl] methods"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml420(td)
+#: ./doc/common/tables/swift-conf-changes.xml436(td)
 msgid "GET HEAD PUT"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml421(td)
+#: ./doc/common/tables/swift-conf-changes.xml437(td)
 msgid "GET HEAD PUT POST DELETE"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml424(td)
+#: ./doc/common/tables/swift-conf-changes.xml440(td)
 msgid "proxy-server.conf: [pipeline-main] pipeline"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml425(td)
+#: ./doc/common/tables/swift-conf-changes.xml441(td)
 msgid ""
 "catch_errors gatekeeper healthcheck proxy-logging cache container_sync bulk "
 "tempurl slo dlo ratelimit tempauth container-quotas account-quotas proxy-"
 "logging proxy-server"
 msgstr ""
 
-#: ./doc/common/tables/swift-conf-changes.xml426(td)
+#: ./doc/common/tables/swift-conf-changes.xml442(td)
 msgid ""
 "catch_errors gatekeeper healthcheck proxy-logging cache container_sync bulk "
 "tempurl ratelimit tempauth container-quotas account-quotas slo dlo proxy-"

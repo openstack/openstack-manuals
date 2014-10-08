@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-10-06 06:08+0000\n"
+"POT-Creation-Date: 2014-10-08 06:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2674,7 +2674,7 @@ msgstr ""
 msgid "The Huawei driver supports the iSCSI and Fibre Channel connections and enables OceanStor T series unified storage, OceanStor Dorado high-performance storage, and OceanStor HVS high-end storage to provide block storage services for OpenStack."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:11(title) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:24(title) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:42(title) ./doc/config-reference/block-storage/drivers/zfssa-volume-driver.xml:93(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:66(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:316(title) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:18(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:33(title) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:10(title) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:16(title) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:35(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:231(title) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:24(title)
+#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:11(title) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:24(title) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:42(title) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:30(title) ./doc/config-reference/block-storage/drivers/zfssa-volume-driver.xml:93(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:66(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:316(title) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:18(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:33(title) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:10(title) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:16(title) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:35(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:231(title) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:24(title)
 msgid "Supported operations"
 msgstr ""
 
@@ -3990,6 +3990,182 @@ msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/nexenta-volume-driver.xml:100(para)
 msgid "Each line in this file represents a NFS share. The first part of the line is the NFS share URL, the second is the connection URL to the NexentaStor Appliance."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:6(title)
+msgid "Pure Storage volume driver"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:8(para)
+msgid "The Pure Storage FlashArray volume driver for OpenStack Block Storage interacts with configured Pure Storage arrays and supports various operations."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:10(para)
+msgid "This driver can be configured in OpenStack Block Storage to work with the iSCSI storage protocol."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:12(para)
+msgid "This driver is compatible with Purity FlashArrays that support the REST API (Purity 3.4.0 and newer) and that are capable of iSCSI connectivity. This release supports installation with OpenStack clusters running the Juno version that use the KVM or QEMU hypervisors together with OpenStack Compute service's libvirt driver."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:17(title)
+msgid "Limitations and known issues"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:18(para)
+msgid "If you do not set up the nodes hosting instances to use multipathing, all iSCSI connectivity will use a single physical 10-gigabit Ethernet port on the array. In addition to significantly limiting the available bandwidth, this means you do not have the high-availability and non-disruptive upgrade benefits provided by FlashArray."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:22(para)
+msgid "Workaround: You must set up multipathing on your hosts."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:23(para)
+msgid "In the default configuration, OpenStack Block Storage does not provision volumes on a backend whose available raw space is less than the logical size of the new volume. Due to Purity's data reduction technology, such a volume could actually fit in the backend, and thus OpenStack Block Storage default configuration does not take advantage of all available space."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:27(para)
+msgid "Workaround: Turn off the CapacityFilter."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:33(para)
+msgid "Create, delete, attach, detach, clone and extend volumes."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:36(para)
+msgid "Create a volume from snapshot."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:39(para)
+msgid "Create and delete volume snapshots."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:44(title)
+msgid "Configure OpenStack and Purity"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:45(para)
+msgid "You need to configure both your Purity array and your OpenStack cluster."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:47(para)
+msgid "These instructions assume that the <systemitem class=\"service\">cinder-api</systemitem> and <systemitem class=\"service\">cinder-scheduler</systemitem> services are installed and configured in your OpenStack cluster."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:53(title)
+msgid "Configure the OpenStack Block Storage service"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:54(para)
+msgid "In these steps, you will edit the <filename>cinder.conf</filename> file to configure OpenStack Block Storage service to enable multipathing and to use the Pure Storage FlashArray as back-end storage."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:58(title)
+msgid "Retrieve an API token from Purity"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:59(para)
+msgid "The OpenStack Block Storage service configuration requires an API token from Purity. Actions performed by the volume driver use this token for authorization. Also, Purity logs the volume driver's actions as being performed by the user who owns this API token."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:62(para)
+msgid "If you created a Purity user account that is dedicated to managing your OpenStack Block Storage volumes, copy the API token from that user account."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:64(para)
+msgid "Use the appropriate create or list command below to display and copy the Purity API token:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:68(para)
+msgid "To create a new API token:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:69(replaceable) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:79(replaceable)
+msgid "USER"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:70(para) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:80(para)
+msgid "The following is an example output:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:78(para)
+msgid "To list an existing API token:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:90(para)
+msgid "Copy the API token retrieved (<literal>902fdca3-7e3f-d2e4-d6a6-24c2285fe1d9</literal> from the examples above) to use in the next step."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:94(title)
+msgid "Edit the OpenStack Block Storage service configuration file"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:95(para)
+msgid "The following sample <filename>/etc/cinder/cinder.conf</filename> configuration lists the relevant settings for a typical Block Storage service using a single Pure Storage array:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:108(replaceable) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:114(term)
+msgid "IP_PURE_MGMT"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:109(replaceable) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:121(term)
+msgid "PURE_API_TOKEN"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:111(para) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:145(para)
+msgid "Replace the following variables accordingly:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:116(para)
+msgid "The IP address of the Pure Storage array's management interface or a domain name that resolves to that IP address."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:123(para)
+msgid "The Purity Authorization token that the volume driver uses to perform volume management on the Pure Storage array."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:132(title)
+msgid "Create Purity host objects"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:133(para)
+msgid "Before using the volume driver, follow these steps to create a host in Purity for each OpenStack iSCSI initiator IQN that will connect to the FlashArray."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:135(para)
+msgid "For every node that the driver runs on and every compute node that will connect to the FlashArray:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:139(para)
+msgid "check the file <filename>/etc/iscsi/initiatorname.iscsi</filename>."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:140(para)
+msgid "For each IQN in that file:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:143(para)
+msgid "copy the IQN string and run the following command to create a Purity host for an IQN:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:144(replaceable) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:148(term)
+msgid "IQN"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:144(replaceable) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:154(term)
+msgid "HOST"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:150(para)
+msgid "The IQN retrieved from the <filename>/etc/iscsi/initiatorname.iscsi</filename> file"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:156(para)
+msgid "An unique friendly name for this entry."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:161(para)
+msgid "Do not specify multiple IQNs with the <option>--iqnlist</option> option. Each FlashArray host must be configured to a single OpenStack IQN."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/zfssa-volume-driver.xml:5(title)
