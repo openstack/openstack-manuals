@@ -273,8 +273,10 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
         <filename>/etc/neutron/plugin.ini</filename> pointing to the ML2
         plug-in configuration file. Run the following commands to resolve this
         issue:</para>
-      <screen><prompt>#</prompt> <userinput>cp /usr/lib/systemd/system/neutron-openvswitch-agent.service /usr/lib/systemd/system/neutron-openvswitch-agent.service.orig</userinput>
-<prompt>#</prompt> <userinput>sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /usr/lib/systemd/system/neutron-openvswitch-agent.service</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>cp /usr/lib/systemd/system/neutron-openvswitch-agent.service \
+  /usr/lib/systemd/system/neutron-openvswitch-agent.service.orig</userinput>
+<prompt>#</prompt> <userinput>sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' \
+  /usr/lib/systemd/system/neutron-openvswitch-agent.service</userinput></screen>
     </step>
     <step os="sles;opensuse">
       <para>The Networking service initialization scripts expect the
@@ -297,8 +299,8 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Open vSwitch (OVS) agent and configure it to
         start when the system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-neutron-openvswitch-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-neutron-openvswitch-agent.service</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable neutron-openvswitch-agent.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start neutron-openvswitch-agent.service</userinput></screen>
       <para os="sles">On SLES:</para>
       <screen os="sles"><prompt>#</prompt> <userinput>service openstack-neutron-openvswitch-agent start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron-openvswitch-agent on</userinput></screen>
