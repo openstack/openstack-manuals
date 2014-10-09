@@ -17,6 +17,26 @@
         storage family system. The NetApp unified driver is an
         extensible interface that can support new storage families and
         protocols.</para>
+    <note>
+        <para>With the Juno release of OpenStack, OpenStack Block Storage
+            has introduced the concept of "storage pools", in which a single
+            OpenStack Block Storage back end may present one or more logical
+            storage resource pools from which OpenStack Block Storage will
+            select as a storage location when provisioning volumes.</para>
+        <para>In releases prior to Juno, the NetApp unified driver contained some
+            "scheduling" logic that determined which NetApp storage container
+            (namely, a FlexVol volume for Data ONTAP, or a dynamic disk pool for
+            E-Series) that a new OpenStack Block Storage volume would be
+            placed into.</para>
+        <para>With the introduction of pools, all scheduling logic
+            is performed completely within the OpenStack Block Storage scheduler,
+            as each NetApp storage container is directly exposed to the OpenStack
+            Block Storage scheduler as a storage pool; whereas previously, the
+            NetApp unified driver presented an aggregated view to the scheduler
+            and made a final placement decision as to which NetApp storage
+            container the OpenStack Block Storage volume would be provisioned
+            into.</para>
+    </note>
     <section xml:id="ontap-cluster-family">
         <title>NetApp clustered Data ONTAP storage family</title>
         <para>The NetApp clustered Data ONTAP storage family
@@ -81,9 +101,9 @@ netapp_password = <replaceable>password</replaceable></programlisting>
                     <para>For more information on these options and
                         other deployment and operational scenarios,
                         visit the <link
-                            xlink:href="https://communities.netapp.com/groups/openstack"
-                            > OpenStack NetApp
-                        community</link>.</para>
+                            xlink:href="http://netapp.github.io/openstack-deploy-ops-guide/">
+                            NetApp OpenStack Deployment and Operations Guide</link>.
+                    </para>
                 </tip>
             </simplesect>
         </section>
@@ -251,10 +271,12 @@ nfs_shares_config = <replaceable>/etc/cinder/nfs_shares</replaceable></programli
                         NetApp Support portal</link> (login is required).</para>
                 </tip>
                 <tip>
-                    <para>For more information on these options and other deployment
-                        and operational scenarios, visit the <link
-                        xlink:href="https://communities.netapp.com/groups/openstack">
-                        OpenStack NetApp community</link>.</para>
+                    <para>For more information on these options and
+                        other deployment and operational scenarios,
+                        visit the <link
+                            xlink:href="http://netapp.github.io/openstack-deploy-ops-guide/">
+                            NetApp OpenStack Deployment and Operations Guide</link>.
+                    </para>
                 </tip>
             </simplesect>
         </section>
@@ -341,8 +363,9 @@ netapp_password = <replaceable>password</replaceable></programlisting>
                     <para>For more information on these options and
                         other deployment and operational scenarios,
                         visit the <link
-                            xlink:href="https://communities.netapp.com/groups/openstack"
-                            >OpenStack NetApp community</link>.</para>
+                            xlink:href="http://netapp.github.io/openstack-deploy-ops-guide/">
+                            NetApp OpenStack Deployment and Operations Guide</link>.
+                    </para>
                 </tip>
             </simplesect>
         </section>
@@ -397,8 +420,9 @@ nfs_shares_config = <replaceable>/etc/cinder/nfs_shares</replaceable></programli
                     <para>For more information on these options and
                         other deployment and operational scenarios,
                         visit the <link
-                            xlink:href="https://communities.netapp.com/groups/openstack"
-                            >OpenStack NetApp community</link>.</para>
+                            xlink:href="http://netapp.github.io/openstack-deploy-ops-guide/">
+                            NetApp OpenStack Deployment and Operations Guide</link>.
+                    </para>
                 </tip>
             </simplesect>
         </section>
@@ -487,9 +511,9 @@ use_multipath_for_image_xfer = True</programlisting>
                     <para>For more information on these options and
                         other deployment and operational scenarios,
                         visit the <link
-                            xlink:href="https://communities.netapp.com/groups/openstack"
-                            > OpenStack NetApp
-                        community.</link></para>
+                            xlink:href="http://netapp.github.io/openstack-deploy-ops-guide/">
+                            NetApp OpenStack Deployment and Operations Guide</link>.
+                    </para>
                 </tip>
             </simplesect>
         </section>
@@ -585,11 +609,11 @@ netapp_storage_protocol = nfs</programlisting>
                 </listitem>
             </orderedlist>
             <note>
-                <para>See the <link
-                        xlink:href="https://communities.netapp.com/groups/openstack"
-                        >OpenStack NetApp community</link> for support
-                    information on deprecated NetApp drivers in the
-                    Havana release.</para>
+                <para>For support information on deprecated NetApp drivers
+                    in the Havana release, visit the <link
+                        xlink:href="http://netapp.github.io/openstack-deploy-ops-guide/">
+                        NetApp OpenStack Deployment and Operations Guide</link>.
+                </para>
             </note>
         </section>
     </section>
