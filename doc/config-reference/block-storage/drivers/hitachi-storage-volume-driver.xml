@@ -1,0 +1,193 @@
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../../common/entities/openstack.ent">
+%openstack;
+]>
+<section xml:id="hitachi-storage-volume-driver"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+        <title>Hitachi storage volume driver</title>
+        <para>Hitachi storage volume driver provides iSCSI and Fibre Channel
+              support for Hitachi storages.</para>
+        <section xml:id="hitachi-reqs">
+                <title>System requirements</title>
+                    <para>Supported storages:</para>
+                       <itemizedlist>
+                        <listitem>
+                            <para>Hitachi Virtual Storage Platform G1000 (VSP G1000)</para>
+                        </listitem>
+                        <listitem>
+                            <para>Hitachi Virtual Storage Platform (VSP)</para>
+                        </listitem>
+                        <listitem>
+                            <para>Hitachi Unified Storage VM (HUS VM)</para>
+                        </listitem>
+                        <listitem>
+                            <para>Hitachi Unified Storage 100 Family (HUS 100 Family)</para>
+                        </listitem>
+                       </itemizedlist>
+                     <para>Required software:</para>
+                       <itemizedlist>
+                        <listitem>
+                            <para>RAID Manager Ver 01-32-03/01 or later for VSP G1000/VSP/HUS VM</para>
+                        </listitem>
+                        <listitem>
+                            <para>Hitachi Storage Navigator Modular 2 (HSNM2) Ver 27.50 or later for HUS 100 Family</para>
+                        </listitem>
+                       </itemizedlist>
+                            <note>
+                            <para>HSNM2 needs to be installed under <filename>/usr/stonavm.</filename></para>
+                            </note>
+                         <para>Required licenses:</para>
+                       <itemizedlist>
+                         <listitem>
+                             <para>Hitachi In-System Replication Software for VSP G1000/VSP/HUS VM</para>
+                        </listitem>
+                        <listitem>
+                             <para>(Mandatory) ShadowImage in-system replication for HUS 100 Family</para>
+                        </listitem>
+                        <listitem>
+                             <para>(Optional) Copy-on-Write Snapshot for HUS 100 Family</para>
+                        </listitem>
+                       </itemizedlist>
+                        <para>Additionaly, the <application>pexpect</application> package is required.</para>
+        </section>
+        <section xml:id="hitachi-supported-operations">
+                <title>Supported operations</title>
+                <itemizedlist>
+                        <listitem>
+                                <para>Create, delete, attach and detach volumes.</para>
+                        </listitem>
+                        <listitem>
+                                <para>Create, list and delete volume snapshots.</para>
+                        </listitem>
+                        <listitem>
+                                <para>Create a volume from a snapshot.</para>
+                        </listitem>
+                        <listitem>
+                                <para>Copy a volume to an image.</para>
+                        </listitem>
+                        <listitem>
+                                <para>Copy an image to a volume.</para>
+                        </listitem>
+                        <listitem>
+                                <para>Clone a volume.</para>
+                        </listitem>
+                        <listitem>
+                                <para>Extend a volume.</para>
+                        </listitem>
+                        <listitem>
+                                <para>Get volume statistics.</para>
+                        </listitem>
+               </itemizedlist>
+        </section>
+        <section xml:id="hitachi-configuration">
+                <title>Configuration</title>
+                <simplesect>
+                    <title>Set up Hitachi storage</title>
+                    <para>You need to specify settings as described below. For details about each step, see the user's guide of the storage device. Use a storage administrative software such as Storage Navigator to set up the storage device so that LDEVs and host groups can be created and deleted, and LDEVs can be connected to the server and can be asynchronously copied.</para>
+                    <procedure>
+                    <step>
+                       <para>Create a Dynamic Provisioning pool.</para>
+                    </step>
+                    <step>
+                       <para>Connect the ports at the storage to the Controller node and Compute nodes.</para>
+                    </step>
+                    <step>
+                       <para>For VSP G1000/VSP/HUS VM, set "port security" to "enable" for the ports at the storage.</para>
+                    </step>
+                    <step>
+                       <para>For HUS 100 Family, set "Host Group security"/"iSCSI target security" to "ON" for the ports at the storage.</para>
+                    </step>
+                    <step>
+                       <para>For the ports at the storage, create host groups (iSCSI targets) whose names begin with HBSD- for the Controller node and each Compute node. Then register a WWN (initiator IQN) for each of the Controller node and Compute nodes.</para>
+                    </step>
+                    <step>
+                       <para>For VSP G1000/VSP/HUS VM, perform the following:</para>
+                       <itemizedlist>
+                       <listitem>
+                       <para>Create a storage device account belonging to the Administrator User Group.
+(To use multiple storage devices, create the same account name for all the target storage devices, and specify the same resource group and permissions.)</para>
+                        </listitem>
+                        <listitem>
+                       <para>Create a command device (In-Band), and set user authentication to ON.</para>
+                        </listitem>
+                        <listitem>
+                       <para>Register the created command device to the host group for the Controller node.</para>
+                        </listitem>
+                        <listitem>
+                       <para>To use the Thin Image function, create a pool for Thin Image.</para>
+                        </listitem>
+                       </itemizedlist>
+                    </step>
+                    <step>
+                       <para>For HUS 100 Family, perform the following:</para>
+                       <itemizedlist>
+                       <listitem>
+                       <para>Use the command <command>auunitaddauto</command> to register the unit name and controller of the storage device to HSNM2.</para>
+                        </listitem>
+                        <listitem>
+                       <para>When connecting via iSCSI, if you are using CHAP certification, specify the same user and password as that used for the storage port.</para>
+                       </listitem>
+                       </itemizedlist>
+                    </step>
+                    </procedure>
+                </simplesect>
+                <simplesect>
+                    <title>Set up Hitachi Gigabit Fibre Channel adaptor</title>
+                       <para>Change a parameter of the hfcldd driver and update
+                             the initram file if Hitachi Gigabit Fibre Channel
+                             adaptor is used.</para>
+                       <screen><prompt>#</prompt> <userinput>/opt/hitachi/drivers/hba/hfcmgr -E hfc_rport_lu_scan 1</userinput>
+<prompt>#</prompt> <userinput>dracut -f initramfs-<replaceable>KERNEL_VERSION</replaceable>.img <replaceable>KERNEL_VERSION</replaceable></userinput>
+<prompt>#</prompt> <userinput>reboot</userinput></screen>
+                </simplesect>
+                <simplesect>
+                <title>Set up Hitachi storage volume driver</title>
+                <procedure>
+                   <step>
+                       <para>Create directory.</para>
+                       <screen><prompt>#</prompt> <userinput>mkdir /var/lock/hbsd</userinput>
+<prompt>#</prompt> <userinput>chown cinder:cinder /var/lock/hbsd</userinput></screen>
+                   </step>
+                   <step>
+                       <para>Create "volume type" and "volume key".</para>
+                       <para>This example shows that HUS100_SAMPLE is created
+                             as "volume type" and hus100_backend is registered
+                             as "volume key".</para>
+                       <screen><prompt>$</prompt> <userinput>cinder type-create HUS100_SAMPLE</userinput>
+<prompt>$</prompt> <userinput>cinder type-key HUS100_SAMPLE set volume_backend_name=hus100_backend</userinput></screen>
+
+                       <para>Please specify any identical "volume type" name and "volume key".
+</para>
+                       <para>To confirm the created "volume type", please
+                             execute the following command:</para>
+                       <screen><prompt>$</prompt> <userinput>cinder extra-specs-list</userinput></screen>
+                   </step>
+                   <step>
+                       <para>Edit <filename>/etc/cinder/cinder.conf</filename> as follows.</para>
+                       <para>If you use Fibre Channel:</para>
+                       <programlisting>volume_driver = cinder.volume.drivers.hitachi.hbsd_fc.HBSDFCDriver</programlisting>
+                       <para>If you use iSCSI:</para>
+                       <programlisting>volume_driver = cinder.volume.drivers.hitachi.hbsd_iscsi.HBSDISCSIDriver</programlisting>
+                       <para>Also, set <option>volume_backend_name</option> created by <command>cinder type-key</command></para>
+                       <programlisting>volume_backend_name = hus100_backend</programlisting>
+                       <para>This table shows configuration options for Hitachi storage volume driver.</para>
+<xi:include href="../../../common/tables/cinder-hitachi-hbsd.xml"/>
+                    </step>
+                    <step>
+                        <para>Restart Block Storage service.</para>
+
+                        <para>When the startup is done,
+                               "MSGID0003-I: The storage backend can be used."
+                              is output into <filename>/var/log/cinder/volume.log</filename> as follows.</para>
+
+                        <screen><computeroutput>2014-09-01 10:34:14.169 28734 WARNING cinder.volume.drivers.hitachi.
+hbsd_common [req-a0bb70b5-7c3f-422a-a29e-6a55d6508135 None None]
+MSGID0003-I: The storage backend can be used. (config_group:
+hus100_backend)</computeroutput></screen>
+                    </step>
+               </procedure>
+                </simplesect>
+        </section>
+</section>
