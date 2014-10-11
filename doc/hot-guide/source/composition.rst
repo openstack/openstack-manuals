@@ -101,7 +101,7 @@ OS::Nova::Server with my_nova to get the defaults you want.
   resource_registry:
     "OS::Nova::Server": my_nova.yaml
 
-A more detailed discussion on this can be found here :ref:`environments`
+A more detailed discussion on this can be found :ref:`environments`.
 
 Now you can use "OS::Nova::Server" in our top level template (main.yaml).
 

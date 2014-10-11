@@ -21,7 +21,7 @@ HOT is a new template format meant to replace the Heat
 CloudFormation-compatible format (CFN) as the native format supported
 by the Heat over time. This specification explains in detail all
 elements of the HOT template format. An example driven guide to
-writing HOT templates can be found at :ref:`hot_guide`.
+writing HOT templates can be found at :ref:`hello_world`.
 
 ------
 Status
@@ -392,7 +392,7 @@ In addition to parameters defined by a template author, Heat also creates two
 parameters for every stack that allow referential access to the stack's name
 and identifier. These parameters are named ``OS::stack_name`` for the stack
 name and ``OS::stack_id`` for the stack identifier. These values are accessible
-via the `get_param`_ intrinsic function just like user-defined parameters.
+via the ``get_param`` intrinsic function just like user-defined parameters.
 
 .. _hot_spec_resources:
 

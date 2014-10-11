@@ -1,5 +1,3 @@
-.. _hot_functions:
-
 #############
 HOT functions
 #############
