@@ -108,7 +108,7 @@
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To install the Networking components</title>
     <step>
-      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-server neutron-plugin-ml2</userinput></screen>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-server neutron-plugin-ml2 python-neutronclient</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron openstack-neutron-ml2 python-neutronclient which</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-neutron openstack-neutron-server</userinput></screen>
       <note os="sles;opensuse">
@@ -376,6 +376,16 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
         <filename>/etc/sysconfig/neutron</filename> file and add the
         following:</para>
       <programlisting>NEUTRON_PLUGIN_CONF="/etc/neutron/plugins/ml2/ml2_conf.ini"</programlisting>
+    </step>
+    <step>
+      <para>Populate the database:</para>
+      <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
+  --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade juno" neutron</userinput></screen>
+      <note>
+        <para>Database population occurs later for Networking because the
+          script requires complete server and plug-in configuration
+          files.</para>
+      </note>
     </step>
     <step>
       <para>Restart the Compute services:</para>
