@@ -106,76 +106,97 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
         configure or re-configure <systemitem class="service"
           >cinder-common</systemitem>.</para>
     </step>
-    <step os="centos;fedora;rhel;opensuse;sles">
-      <para>Copy the <filename>/etc/cinder/cinder.conf</filename>
-        configuration file from the controller.</para>
-    </step>
     <step os="centos;debian;fedora;opensuse;rhel;sles;ubuntu">
-      <para>Edit the <filename>/etc/cinder/cinder.conf</filename>
-        configuration file, and complete the following actions:</para>
-     <substeps>
-       <step os="centos;fedora;opensuse;rhel;sles;ubuntu">
-       <para>Add this section for keystone credentials:</para>
-      <programlisting language="ini">...
-[keystone_authtoken]
-auth_uri = http://<replaceable>controller</replaceable>:5000
-auth_host = <replaceable>controller</replaceable>
-auth_port = 35357
-auth_protocol = http
-admin_tenant_name = service
-admin_user = cinder
-admin_password = <replaceable>CINDER_PASS</replaceable></programlisting>
-    </step>
-    <step os="centos;fedora;opensuse;rhel;sles;ubuntu">
-      <para>In the <literal>[DEFAULT]</literal> section, configure RabbitMQ
-        message broker access:</para>
-      <programlisting language="ini">[DEFAULT]
+      <para>Edit the <filename>/etc/cinder/cinder.conf</filename> file
+        and complete the following actions:</para>
+      <substeps>
+        <step os="centos;fedora;opensuse;rhel;sles;ubuntu">
+          <para>In the <literal>[database]</literal> section, configure
+            database access:</para>
+          <programlisting language="ini">[database]
+...
+connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</programlisting>
+          <para>Replace <replaceable>CINDER_DBPASS</replaceable> with
+            the password you chose for the Block Storage database.</para>
+        </step>
+        <step os="centos;fedora;opensuse;rhel;sles;ubuntu">
+          <para>In the <literal>[DEFAULT]</literal> section, configure
+            <application>RabbitMQ</application> message broker access:</para>
+          <programlisting language="ini">[DEFAULT]
 ...
 rpc_backend = rabbit
 rabbit_host = <replaceable>controller</replaceable>
-rabbit_port = 5672
-rabbit_userid = guest
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-      <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password you
-        chose for the <literal>guest</literal> account in RabbitMQ.</para>
-    </step>
-      <step os="opensuse;sles">
-        <para>Configure the Block Storage node target IP address in the
-          <filename>/etc/cinder/cinder.conf</filename> file:</para>
-        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
-            DEFAULT my_ip 10.0.0.41</userinput></screen>
-      </step>
-    <step os="centos;fedora;opensuse;rhel;sles;ubuntu">
-      <para>Configure Block Storage to use your MySQL database, by adding
-        the following key to the <literal>[database]</literal>section:</para>
-      <programlisting language="ini">[database]
+          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
+            password you chose for the <literal>guest</literal> account in
+            RabbitMQ.</para>
+        </step>
+        <step os="centos;fedora;opensuse;rhel;sles;ubuntu">
+          <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[keystone_authtoken]</literal> sections,
+            configure Identity service access:</para>
+          <programlisting language="ini">[DEFAULT]
 ...
-connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</programlisting>
-      <para>Replace <replaceable>CINDER_DBPASS</replaceable> with
-        the password you chose for the Block Storage database.</para>
-      <note os="centos;fedora;opensuse;rhel;sles;ubuntu">
-        <para>In some distributions, the <filename>/etc/cinder/cinder.conf</filename>
-          file does not include the <literal>[database]</literal> section
-          header. You must add this section header to the end of the file
-          before you proceed.</para>
-      </note>
-    </step>
-    <step>
-      <para>In the <literal>[DEFAULT]</literal> section, configure Block
-        Storage to use Image Service by updating the <option>glance_host</option>
-        option:</para>
-      <programlisting language="ini">[DEFAULT]
+auth_strategy = keystone
+
+[keystone_authtoken]
+...
+auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+identity_uri = http://<replaceable>controller</replaceable>:35357
+admin_tenant_name = service
+admin_user = cinder
+admin_password = <replaceable>CINDER_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>CINDER_PASS</replaceable> with the
+            password you chose for the <literal>cinder</literal> user in the
+            Identity service.</para>
+          <note>
+            <para>Comment out any <literal>auth_host</literal>,
+              <literal>auth_port</literal>, and
+              <literal>auth_protocol</literal> options because the
+              <literal>identity_uri</literal> option replaces them.</para>
+          </note>
+        </step>
+        <step os="ubuntu;rhel;centos;fedora;sles;opensuse">
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            <literal>my_ip</literal> option:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+my_ip = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable></programlisting>
+          <para>Replace
+            <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable> with
+            the IP address of the management network interface on your
+            storage node, typically 10.0.0.41 for the first node in the
+            <link linkend="architecture_example-architectures">example
+            architecture</link>.</para>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            location of the Image Service:</para>
+          <programlisting language="ini">[DEFAULT]
 ...
 glance_host = <replaceable>controller</replaceable></programlisting>
-    </step>
-    <step os="centos;fedora;rhel">
-      <para>In the <literal>[DEFAULT]</literal> section, configure Block
-        Storage to use the <command>lioadm</command> <option>iscsi_helper</option>:</para>
-      <programlisting language="ini">[DEFAULT]
+        </step>
+        <step os="centos;fedora;rhel">
+          <para>In the <literal>[DEFAULT]</literal> section, configure Block
+            Storage to use the <command>lioadm</command>
+            <option>iscsi_helper</option>:</para>
+          <programlisting language="ini">[DEFAULT]
 ...
 iscsi_helper = <replaceable>lioadm</replaceable></programlisting>
+        </step>
+      </substeps>
     </step>
-    </substeps>
+    <step os="ubuntu">
+      <para>Due to a packaging bug, the Block Storage service cannot
+        execute commands with administrative privileges using the
+        <command>sudo</command> command. Run the following command to
+        resolve this issue:</para>
+      <screen><prompt>#</prompt> <userinput>cp /etc/sudoers.d/cinder_sudoers /etc/sudoers.d/cinder_sudoers.orig</userinput>
+<prompt>#</prompt> <userinput>sed -i 's,/etc/cinder/rootwrap.conf,/etc/cinder/rootwrap.conf *,g' \
+  /etc/sudoers.d/cinder_sudoers</userinput></screen>
+      <para>For more information, see the
+        <link xlink:href="https://bugs.launchpad.net/ubuntu/+source/cinder/+bug/1380425"
+        >bug report</link>.</para>
     </step>
   </procedure>
   <procedure os="centos;fedora;opensuse;rhel;sles;ubuntu">
@@ -183,8 +204,8 @@ iscsi_helper = <replaceable>lioadm</replaceable></programlisting>
     <step os="ubuntu">
       <para>Restart the Block Storage services with the new
         settings:</para>
-      <screen><prompt>#</prompt> <userinput>service cinder-volume restart</userinput>
-<prompt>#</prompt> <userinput>service tgt restart</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>service tgt restart</userinput>
+<prompt>#</prompt> <userinput>service cinder-volume restart</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create a SQLite database.
