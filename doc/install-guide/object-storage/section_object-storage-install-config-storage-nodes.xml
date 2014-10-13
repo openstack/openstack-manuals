@@ -96,12 +96,16 @@ lock file = /var/lock/object.lock</programlisting>
             <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service rsync start</userinput></screen>
             <para os="rhel;centos;fedora">Start the <systemitem
                 class="service">xinetd</systemitem> service:</para>
-            <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service xinetd start</userinput></screen>
+            <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl start xinetd.service</userinput></screen>
             <para os="sles;opensuse">Start the <systemitem
                 class="service">xinetd</systemitem> service and configure it to
                 start when the system boots:</para>
-            <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service xinetd start</userinput>
+            <para os="sles">On SLES:</para>
+            <screen os="sles"><prompt>#</prompt> <userinput>service xinetd start</userinput>
 <prompt>#</prompt> <userinput>chkconfig xinetd on</userinput></screen>
+            <para os="opensuse">On openSUSE:</para>
+            <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable xinetd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start xinetd.service</userinput></screen>
             <note>
                 <para>The rsync service requires no authentication, so
                     run it on a local, private network.</para>

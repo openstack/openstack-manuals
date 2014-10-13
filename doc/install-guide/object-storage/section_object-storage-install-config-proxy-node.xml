@@ -42,11 +42,21 @@
             <para>Restart the memcached service:</para>
             <screen><prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
         </step>
-        <step os="rhel;centos;fedora;opensuse;sles">
+        <step os="rhel;centos;fedora">
             <para>Start the memcached service and configure it to start when
                 the system boots:</para>
-            <screen><prompt>#</prompt> <userinput>service memcached start</userinput>
+            <screen><prompt>#</prompt> <userinput>systemctl enable memcached.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start memcached.service</userinput></screen>
+        </step>
+        <step os="opensuse;sles">
+            <para>Start the memcached service and configure it to start when
+                the system boots:</para>
+            <para os="sles">On SLES:</para>
+            <screen os="sles"><prompt>#</prompt> <userinput>service memcached start</userinput>
 <prompt>#</prompt> <userinput>chkconfig memcached on</userinput></screen>
+            <para os="opensuse">On openSUSE:</para>
+            <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable memcached.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start memcached.service</userinput></screen>
         </step>
         <step>
             <para><phrase os="ubuntu;debian">Create</phrase>
@@ -190,11 +200,21 @@ use = egg:swift#proxy_logging
             <para>Restart the Proxy service:</para>
             <screen><prompt>#</prompt> <userinput>service swift-proxy restart</userinput></screen>
         </step>
-        <step os="rhel;centos;fedora;sles;opensuse">
+        <step os="rhel;centos;fedora">
             <para>Start the Proxy service and configure it to start when the
                 system boots:</para>
-            <screen><prompt>#</prompt> <userinput>service openstack-swift-proxy start</userinput>
+            <screen><prompt>#</prompt> <userinput>systemctl enable openstack-swift-proxy.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-swift-proxy.service</userinput></screen>
+        </step>
+        <step os="sles;opensuse">
+            <para>Start the Proxy service and configure it to start when the
+                system boots:</para>
+            <para os="sles">On SLES:</para>
+            <screen os="sles"><prompt>#</prompt> <userinput>service openstack-swift-proxy start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-swift-proxy on</userinput></screen>
+            <para os="opensuse">On openSUSE:</para>
+            <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-swift-proxy.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-swift-proxy.service</userinput></screen>
         </step>
     </procedure>
 </section>
