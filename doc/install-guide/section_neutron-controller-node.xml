@@ -421,4 +421,40 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
       <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
     </step>
   </procedure>
+  <procedure>
+    <title>Verify operation</title>
+    <note>
+      <para>Perform these commands on the controller node.</para>
+    </note>
+    <step>
+      <para>Source the <literal>admin</literal> credentials to gain access to
+        admin-only CLI commands:</para>
+      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>List loaded extensions to verify successful launch of the
+        <literal>neutron-server</literal> process:</para>
+      <screen><prompt>$</prompt> <userinput>neutron ext-list</userinput>
+<computeroutput>+-----------------------+-----------------------------------------------+
+| alias                 | name                                          |
++-----------------------+-----------------------------------------------+
+| security-group        | security-group                                |
+| l3_agent_scheduler    | L3 Agent Scheduler                            |
+| ext-gw-mode           | Neutron L3 Configurable external gateway mode |
+| binding               | Port Binding                                  |
+| provider              | Provider Network                              |
+| agent                 | agent                                         |
+| quotas                | Quota management support                      |
+| dhcp_agent_scheduler  | DHCP Agent Scheduler                          |
+| l3-ha                 | HA Router extension                           |
+| multi-provider        | Multi Provider Network                        |
+| external-net          | Neutron external network                      |
+| router                | Neutron L3 Router                             |
+| allowed-address-pairs | Allowed Address Pairs                         |
+| extraroute            | Neutron Extra Route                           |
+| extra_dhcp_opt        | Neutron Extra DHCP opts                       |
+| dvr                   | Distributed Virtual Router                    |
++-----------------------+-----------------------------------------------+</computeroutput></screen>
+    </step>
+  </procedure>
 </section>
