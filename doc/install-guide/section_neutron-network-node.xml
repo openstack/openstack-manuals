@@ -539,4 +539,28 @@ metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></progr
 <prompt>#</prompt> <userinput>service neutron-metadata-agent restart</userinput></screen>
     </step>
   </procedure>
+  <procedure>
+    <title>Verify operation</title>
+    <note>
+      <para>Perform these commands on the controller node.</para>
+    </note>
+    <step>
+      <para>Source the <literal>admin</literal> credentials to gain access to
+        admin-only CLI commands:</para>
+      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>List agents to verify successful launch of the
+        neutron agents:</para>
+      <screen><prompt>$</prompt> <userinput>neutron agent-list</userinput>
+<computeroutput>+--------------------------------------+--------------------+---------+-------+----------------+---------------------------+
+| id                                   | agent_type         | host    | alive | admin_state_up | binary                    |
++--------------------------------------+--------------------+---------+-------+----------------+---------------------------+
+| 30275801-e17a-41e4-8f53-9db63544f689 | Metadata agent     | network | :-)   | True           | neutron-metadata-agent    |
+| 4bd8c50e-7bad-4f3b-955d-67658a491a15 | Open vSwitch agent | network | :-)   | True           | neutron-openvswitch-agent |
+| 756e5bba-b70f-4715-b80e-e37f59803d20 | L3 agent           | network | :-)   | True           | neutron-l3-agent          |
+| 9c45473c-6d6d-4f94-8df1-ebd0b6838d5f | DHCP agent         | network | :-)   | True           | neutron-dhcp-agent        |
++--------------------------------------+--------------------+---------+-------+----------------+---------------------------+</computeroutput></screen>
+    </step>
+  </procedure>
 </section>

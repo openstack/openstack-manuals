@@ -318,4 +318,26 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
       <screen><prompt>#</prompt> <userinput>service neutron-plugin-openvswitch-agent restart</userinput></screen>
     </step>
   </procedure>
+  <procedure>
+    <title>Verify operation</title>
+    <note>
+      <para>Perform these commands on the controller node.</para>
+    </note>
+    <step>
+      <para>Source the <literal>admin</literal> credentials to gain access to
+        admin-only CLI commands:</para>
+      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>List agents to verify successful launch of the
+        neutron agents:</para>
+      <screen><prompt>$</prompt> <userinput>neutron agent-list</userinput>
+<computeroutput>+--------------------------------------+--------------------+---------+-------+----------------+---------------------------+
+| id                                   | agent_type         | host    | alive | admin_state_up | binary                    |
++--------------------------------------+--------------------+---------+-------+----------------+---------------------------+
+...
+| a5a49051-05eb-4b4f-bfc7-d36235fe9131 | Open vSwitch agent | compute1 | :-)   | True           | neutron-openvswitch-agent |
++--------------------------------------+--------------------+---------+-------+----------------+---------------------------+</computeroutput></screen>
+    </step>
+  </procedure>
 </section>
