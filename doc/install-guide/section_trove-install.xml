@@ -83,38 +83,17 @@ sql_connection = mysql://trove:<literal>TROVE_DBPASS</literal>@<replaceable>cont
 notifier_queue_hostname = <replaceable>controller</replaceable></programlisting>
         </step>
 
-        <step os="ubuntu">
+        <step>
           <para>Configure the Database module to use the RabbitMQ message broker by
-          setting the rabbit_password in the <literal>[DEFAULT]</literal>
+          setting the following options in the <literal>[DEFAULT]</literal>
           configuration group of each file:</para>
           <programlisting language="ini">[DEFAULT]
 ...
-rabbit_password = <replaceable>RABBIT_PASS</replaceable>
-...</programlisting>
+rpc_backend = rabbit
+rabbit_host = <replaceable>controller</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
         </step>
 
-        <step os="opensuse;sles;rhel;centos;fedora">
-          <para>Set these configuration keys to configure the Database module to use
-          the RabbitMQ message broker:</para>
-          <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove.conf \
-  DEFAULT rpc_backend rabbit</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmanager.conf \
-  DEFAULT rpc_backend rabbit</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf \
-  DEFAULT rpc_backend rabbit</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove.conf DEFAULT \
-  rabbit_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmanager.conf DEFAULT \
-  rabbit_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT \
-  rabbit_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove.conf DEFAULT \
-  rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-taskmanager.conf DEFAULT \
-  rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/trove/trove-conductor.conf DEFAULT \
-  rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
-        </step>
       </substeps>
     </step>
 

@@ -12,7 +12,6 @@ https://wiki.openstack.org/wiki/Documentation/InstallationGuideImprovements
 
 To do tasks:
 
-- Remove openstack-config (crudini) commands; standardize manual install
 - Unify chapter and section names (such as Overview)
 - Add sample output of each command and highlight important parts
 - Mention project as standard but tenant must be used for CLI params
