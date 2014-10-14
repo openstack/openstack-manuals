@@ -20,21 +20,21 @@
       create a database and Identity service credentials including
       endpoints.</para>
     <step>
-      <para>To create the database:</para>
+      <para>To create the database, complete these steps:</para>
       <substeps>
         <step>
           <para>Use the database access client to connect to the database
             server as the <literal>root</literal> user:</para>
-            <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen>
         </step>
         <step>
           <para>Create the <literal>cinder</literal> database:</para>
-          <screen><prompt>mysql></prompt> <userinput>CREATE DATABASE cinder;</userinput></screen>
+          <screen><userinput>CREATE DATABASE cinder;</userinput></screen>
         </step>
         <step>
           <para>Grant proper access to the <literal>cinder</literal>
             database:</para>
-          <screen><prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
+          <screen><userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
   IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput>
 <prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
   IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
@@ -42,8 +42,7 @@
             a suitable password.</para>
         </step>
         <step>
-          <para>Exit the database access client:</para>
-          <screen><prompt>mysql></prompt> <userinput>exit</userinput></screen>
+          <para>Exit the database access client.</para>
         </step>
       </substeps>
     </step>
@@ -53,11 +52,21 @@
       <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
     </step>
     <step>
-      <para>To create the Identity service credentials:</para>
+      <para>To create the Identity service credentials, complete these
+        steps:</para>
       <substeps>
         <step>
           <para>Create a <literal>cinder</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name cinder --pass <replaceable>CINDER_PASS</replaceable></userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name cinder --pass <replaceable>CINDER_PASS</replaceable></userinput>
+<computeroutput>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|  email   |                                  |
+| enabled  |               True               |
+|    id    | 881ab2de4f7941e79504a759a83308be |
+|   name   |              cinder              |
+| username |              cinder              |
++----------+----------------------------------+</computeroutput></screen>
           <para>Replace <replaceable>CINDER_PASS</replaceable> with a suitable
             password.</para>
         </step>
@@ -66,28 +75,79 @@
             <literal>service</literal> tenant and <literal>admin</literal>
             role:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --user cinder --tenant service --role admin</userinput></screen>
+          <note>
+            <para>This command provides no output.</para>
+          </note>
         </step>
-      </substeps>
-    </step>
-    <step>
-      <para>Create the Block Storage service (version 1 API) endpoints:</para>
-      <screen><prompt>$</prompt> <userinput>keystone service-create --name cinder --type volume --description "OpenStack Block Storage"</userinput>
-<prompt>$</prompt> <userinput>keystone endpoint-create \
+        <step>
+          <para>Create the <literal>cinder</literal> services:</para>
+          <screen><prompt>$</prompt> <userinput>keystone service-create --name cinder --type volume \
+  --description "OpenStack Block Storage"</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |     OpenStack Block Storage      |
+|   enabled   |               True               |
+|      id     | 1e494c3e22a24baaafcaf777d4d467eb |
+|     name    |              cinder              |
+|     type    |              volume              |
++-------------+----------------------------------+</computeroutput>
+<prompt>$</prompt> <userinput>keystone service-create --name cinderv2 --type volumev2 \
+  --description "OpenStack Block Storage"</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |     OpenStack Block Storage      |
+|   enabled   |               True               |
+|      id     | 16e038e449c94b40868277f1d801edb5 |
+|     name    |             cinderv2             |
+|     type    |             volumev2             |
++-------------+----------------------------------+</computeroutput></screen>
+          <note>
+            <para>The Block Storage service requires two different services
+              to support API versions 1 and 2.</para>
+          </note>
+        </step>
+        <step>
+          <para>Create the Block Storage service endpoints:</para>
+          <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ volume / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
   --internalurl http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
   --adminurl http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
-  --region regionOne</userinput></screen>
-    </step>
-    <step>
-      <para>Create the Block Storage service (version 2 API) endpoints:</para>
-      <screen><prompt>$</prompt> <userinput>keystone service-create --name cinderv2 --type volumev2 --description "OpenStack Block Storage"</userinput>
+  --region regionOne</userinput>
+<computeroutput>+-------------+-----------------------------------------+
+|   Property  |                  Value                  |
++-------------+-----------------------------------------+
+|   adminurl  | http://controller:8776/v1/%(tenant_id)s |
+|      id     |    d1b7291a2d794e26963b322c7f2a55a4     |
+| internalurl | http://controller:8776/v1/%(tenant_id)s |
+|  publicurl  | http://controller:8776/v1/%(tenant_id)s |
+|    region   |                regionOne                |
+|  service_id |    1e494c3e22a24baaafcaf777d4d467eb     |
++-------------+-----------------------------------------+</computeroutput>
 <prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ volumev2 / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
   --internalurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
   --adminurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
-  --region regionOne</userinput></screen>
+  --region regionOne</userinput>
+<computeroutput>+-------------+-----------------------------------------+
+|   Property  |                  Value                  |
++-------------+-----------------------------------------+
+|   adminurl  | http://controller:8776/v2/%(tenant_id)s |
+|      id     |    097b4a6fc8ba44b4b10d4822d2d9e076     |
+| internalurl | http://controller:8776/v2/%(tenant_id)s |
+|  publicurl  | http://controller:8776/v2/%(tenant_id)s |
+|    region   |                regionOne                |
+|  service_id |    16e038e449c94b40868277f1d801edb5     |
++-------------+-----------------------------------------+</computeroutput></screen>
+          <note>
+            <para>The Block Storage service requires two different endpoints
+              to support API versions 1 and 2.</para>
+          </note>
+        </step>
+      </substeps>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
@@ -193,11 +253,11 @@ verbose = True</programlisting>
       <para>Respond to the prompts for
         <link linkend="debconf-dbconfig-common">database management</link>,
         <link linkend="debconf-keystone_authtoken">Identity service
-          credentials</link>,
+        credentials</link>,
         <link linkend="debconf-api-endpoints">service endpoint
-          registration</link>, and
+        registration</link>, and
         <link linkend="debconf-rabbitmq">message broker
-          credentials</link>.</para>
+        credentials</link>.</para>
     </step>
   </procedure>
   <procedure>
@@ -207,31 +267,24 @@ verbose = True</programlisting>
       <screen><prompt>#</prompt> <userinput>service cinder-scheduler restart</userinput>
 <prompt>#</prompt> <userinput>service cinder-api restart</userinput></screen>
     </step>
-    <step os="rhel;centos;fedora">
+    <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Block Storage services and configure them to start when
         the system boots:</para>
-      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-api.service openstack-cinder-scheduler.service</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-api.service openstack-cinder-scheduler.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start openstack-cinder-api.service openstack-cinder-scheduler.service</userinput></screen>
-    </step>
-    <step os="opensuse;sles">
-      <para>Start the Block Storage services and configure them to start when
-        the system boots:</para>
-        <para>On SLES:</para>
-      <screen><prompt>#</prompt> <userinput>service openstack-cinder-api start</userinput>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-cinder-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-cinder-scheduler start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-cinder-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-cinder-scheduler on</userinput></screen>
-      <para>On openSUSE:</para>
-      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-api.service \
-  openstack-cinder-scheduler.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-cinder-api.service \
-  openstack-cinder-scheduler.service
-</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-api.service openstack-cinder-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-cinder-api.service openstack-cinder-scheduler.service</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create an SQLite database.</para>
-      <para>Because this configuration uses a SQL database server, remove
-        the SQLite database file:</para>
+      <para>Because this configuration uses a SQL database server, you can
+        remove the SQLite database file:</para>
       <screen><prompt>#</prompt> <userinput>rm -f /var/lib/cinder/cinder.sqlite</userinput></screen>
     </step>
   </procedure>
