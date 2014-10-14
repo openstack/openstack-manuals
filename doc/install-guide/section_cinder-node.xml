@@ -35,9 +35,19 @@
   </procedure>
   <procedure>
     <title>To create a logical volume</title>
-    <step os="ubuntu">
+    <step os="ubuntu;debian;rhel;centos;fedora">
       <para>Install the LVM packages:</para>
-      <screen><prompt>#</prompt> <userinput>apt-get install lvm2</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install lvm2</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install lvm2</userinput></screen>
+       <note>
+         <para>Some distributions include LVM by default.</para>
+       </note>
+    </step>
+    <step os="rhel;centos;fedora">
+      <para>Start the LVM metadata service and configure it to start when the
+        system boots:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl enable lvm2-lvmetad.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start lvm2-lvmetad.service</userinput></screen>
     </step>
     <step>
       <para>Create the LVM physical volume and volume group. This guide
@@ -78,7 +88,7 @@ filter = [ "a/sda1/", "a/sdb/", "r/.*/"]
     <step>
       <para>Install the packages for the Block Storage service:</para>
       <screen os="debian;ubuntu"><prompt>#</prompt> <userinput>apt-get install cinder-volume</userinput></screen>
-      <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>yum install openstack-cinder-volume targetcli</userinput></screen>
+      <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>yum install openstack-cinder targetcli python-oslo-db</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-cinder-volume tgt</userinput></screen>
     </step>
     <step os="debian">
@@ -178,11 +188,19 @@ glance_host = <replaceable>controller</replaceable></programlisting>
         </step>
         <step os="centos;fedora;rhel">
           <para>In the <literal>[DEFAULT]</literal> section, configure Block
-            Storage to use the <command>lioadm</command>
-            <option>iscsi_helper</option>:</para>
+            Storage to use the <command>lioadm</command> iSCSI
+            service:</para>
           <programlisting language="ini">[DEFAULT]
 ...
-iscsi_helper = <replaceable>lioadm</replaceable></programlisting>
+iscsi_helper = lioadm</programlisting>
+        </step>
+        <step>
+          <para>(Optional) To assist with troubleshooting,
+            enable verbose logging in the <literal>[DEFAULT]</literal>
+            section:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+verbose = True</programlisting>
         </step>
       </substeps>
     </step>

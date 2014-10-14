@@ -34,8 +34,10 @@
         <step>
           <para>Grant proper access to the <literal>cinder</literal>
             database:</para>
-          <screen><prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput>
-<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
+          <screen><prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
+  IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput>
+<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
+  IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
           <para>Replace <replaceable>CINDER_DBPASS</replaceable> with
             a suitable password.</para>
         </step>
@@ -93,7 +95,7 @@
     <step>
       <para>Install the packages:</para>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install cinder-api cinder-scheduler python-cinderclient</userinput></screen>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder python-cinderclient</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder python-cinderclient python-oslo-db</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-cinder-api openstack-cinder-scheduler python-cinderclient</userinput></screen>
     </step>
     <step>
@@ -154,6 +156,14 @@ admin_password = <replaceable>CINDER_PASS</replaceable></programlisting>
 ...
 my_ip = 10.0.0.11</programlisting>
         </step>
+        <step>
+          <para>(Optional) To assist with troubleshooting,
+            enable verbose logging in the <literal>[DEFAULT]</literal>
+            section:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+verbose = True</programlisting>
+        </step>
       </substeps>
     </step>
     <step>
@@ -200,10 +210,8 @@ my_ip = 10.0.0.11</programlisting>
     <step os="rhel;centos;fedora">
       <para>Start the Block Storage services and configure them to start when
         the system boots:</para>
-      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-api.service \
-  openstack-cinder-scheduler.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-cinder-api.service \
-  openstack-cinder-scheduler.service</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-api.service openstack-cinder-scheduler.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-cinder-api.service openstack-cinder-scheduler.service</userinput></screen>
     </step>
     <step os="opensuse;sles">
       <para>Start the Block Storage services and configure them to start when
