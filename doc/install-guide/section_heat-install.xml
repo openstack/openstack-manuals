@@ -6,32 +6,59 @@
   xml:id="heat-install-controller-node">
   <title>Install and configure Orchestration</title>
   <para>This section describes how to install and configure the
-    Orchestration module (heat) on the controller node.</para>
+    Orchestration module, code-named heat, on the controller node.</para>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure prerequisites</title>
     <para>Before you install and configure Orchestration, you must create a
       database and Identity service credentials including endpoints.</para>
     <step>
-      <para>Connect to the database server as the <literal>root</literal> user:</para>
-      <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen>
-      <para>Create the <literal>heat</literal> database:</para>
-      <screen><prompt>mysql></prompt> <userinput>CREATE DATABASE heat;</userinput></screen>
-      <para>Grant the
-        proper access to the database:</para>
-      <screen><prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'localhost' \
-IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput>
-<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'%' \
-IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput>
-<prompt>mysql></prompt> <userinput>exit</userinput></screen>
-      <para>Replace <replaceable>HEAT_DBPASS</replaceable> with a suitable
-        password.</para>
+      <para>To create the database, complete these steps:</para>
+      <substeps>
+        <step>
+          <para>Use the database access client to connect to the database
+            server as the <literal>root</literal> user:</para>
+          <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen>
+        </step>
+        <step>
+          <para>Create the <literal>heat</literal> database:</para>
+          <screen><userinput>CREATE DATABASE heat;</userinput></screen>
+        </step>
+        <step>
+          <para>Grant proper access to the <literal>heat</literal>
+            database:</para>
+          <screen><userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'localhost' \
+  IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput>
+<userinput>GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'%' \
+  IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput></screen>
+          <para>Replace <replaceable>HEAT_DBPASS</replaceable> with a suitable
+            password.</para>
+        </step>
+        <step>
+          <para>Exit the database access client.</para>
+        </step>
+      </substeps>
     </step>
     <step>
-      <para>Create Identity service credentials:</para>
+      <para>Source the <literal>admin</literal> credentials to gain access to
+        admin-only CLI commands:</para>
+      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>To create the Identity service credentials, complete these
+        steps:</para>
       <substeps>
         <step>
           <para>Create the <literal>heat</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name heat --pass <replaceable>HEAT_PASS</replaceable></userinput></screen>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name heat --pass <replaceable>HEAT_PASS</replaceable></userinput>
+<computeroutput>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|  email   |                                  |
+| enabled  |               True               |
+|    id    | 7fd67878dcd04d0393469ef825a7e005 |
+|   name   |               heat               |
+| username |               heat               |
++----------+----------------------------------+</computeroutput></screen>
           <para>Replace <replaceable>HEAT_PASS</replaceable> with a suitable
             password.</para>
         </step>
@@ -40,47 +67,94 @@ IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput>
             <literal>service</literal> tenant and <literal>admin</literal>
             role:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --user heat --tenant service --role admin</userinput></screen>
+          <note>
+            <para>This command provides no output.</para>
+          </note>
+        </step>
+        <step>
+          <para>Create the <literal>heat_stack_user</literal> and <literal>heat_stack_owner</literal> roles:</para>
+          <screen><prompt>$</prompt> <userinput>keystone role-create --name heat_stack_user</userinput>
+<prompt>$</prompt> <userinput>keystone role-create --name heat_stack_owner</userinput></screen>
+          <para>By default, users created by Orchestration use the
+            <literal>heat_stack_user</literal> role.</para>
         </step>
         <step>
           <para>Create the <literal>heat</literal> and
             <literal>heat-cfn</literal> services:</para>
           <screen><prompt>$</prompt> <userinput>keystone service-create --name heat --type orchestration \
   --description "Orchestration"</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |          Orchestration           |
+|   enabled   |               True               |
+|      id     | 031112165cad4c2bb23e84603957de29 |
+|     name    |               heat               |
+|     type    |          orchestration           |
++-------------+----------------------------------+</computeroutput>
 <prompt>$</prompt> <userinput>keystone service-create --name heat-cfn --type cloudformation \
-  --description "Orchestration CloudFormation"</userinput></screen>
+  --description "Orchestration"</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |          Orchestration           |
+|   enabled   |               True               |
+|      id     | 297740d74c0a446bbff867acdccb33fa |
+|     name    |             heat-cfn             |
+|     type    |          cloudformation          |
++-------------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
-          <para>Create the <literal>heat_stack_user</literal> and <literal>heat_stack_owner</literal> roles:</para>
-          <para>By default, users created by Orchestration use the role <literal>heat_stack_user</literal>.</para>
-          <screen><prompt>$</prompt> <userinput>keystone role-create --name heat_stack_user</userinput>
-<prompt>$</prompt> <userinput>keystone role-create --name heat_stack_owner</userinput></screen>
-        </step>
-      </substeps>
-    </step>
-    <step>
-      <para>Create the Identity service endpoints:</para>
-      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
+          <para>Create the Identity service endpoints:</para>
+          <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ orchestration / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
   --internalurl http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
-  --adminurl http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s</userinput>
+  --adminurl http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
+  --region regionOne</userinput>
+<computeroutput>+-------------+-----------------------------------------+
+|   Property  |                  Value                  |
++-------------+-----------------------------------------+
+|   adminurl  | http://controller:8004/v1/%(tenant_id)s |
+|      id     |     f41225f665694b95a46448e8676b0dc2    |
+| internalurl | http://controller:8004/v1/%(tenant_id)s |
+|  publicurl  | http://controller:8004/v1/%(tenant_id)s |
+|    region   |                regionOne                |
+|  service_id |     031112165cad4c2bb23e84603957de29    |
++-------------+-----------------------------------------+</computeroutput>
 <prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ cloudformation / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:8000/v1 \
   --internalurl http://<replaceable>controller</replaceable>:8000/v1 \
-  --adminurl http://<replaceable>controller</replaceable>:8000/v1</userinput></screen>
+  --adminurl http://<replaceable>controller</replaceable>:8000/v1 \
+  --region regionOne</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+|   adminurl  |    http://controller:8000/v1     |
+|      id     | f41225f665694b95a46448e8676b0dc2 |
+| internalurl |    http://controller:8000/v1     |
+|  publicurl  |    http://controller:8000/v1     |
+|    region   |            regionOne             |
+|  service_id | 297740d74c0a446bbff867acdccb33fa |
++-------------+----------------------------------+</computeroutput></screen>
+        </step>
+      </substeps>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To install and configure the Orchestration components</title>
     <step>
       <para>Run the following commands to install the packages:</para>
-      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine</userinput></screen>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-heat-api openstack-heat-engine openstack-heat-api-cfn</userinput></screen>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-heat-api openstack-heat-engine openstack-heat-api-cfn</userinput></screen>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine python-heatclient</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-heat-api openstack-heat-api-cfn openstack-heat-engine \
+  python-heatclient</userinput></screen>
+      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-heat-api openstack-heat-api-cfn openstack-heat-engine \
+  python-heatclient</userinput></screen>
     </step>
     <step>
-      <para>Edit the <filename>/etc/heat/heat.conf</filename> file.</para>
+      <para>Edit the <filename>/etc/heat/heat.conf</filename> file and
+        complete the following actions:</para>
       <substeps>
         <step>
           <para>In the <literal>[database]</literal> section, configure
@@ -88,19 +162,19 @@ IDENTIFIED BY '<replaceable>HEAT_DBPASS</replaceable>';</userinput>
           <programlisting language="ini">[database]
 ...
 connection = mysql://heat:<replaceable>HEAT_DBPASS</replaceable>@<replaceable>controller</replaceable>/heat</programlisting>
-          <para>Replace <replaceable>HEAT_DBPASS</replaceable> with the password
-          you chose for the Orchestration database.</para>
+          <para>Replace <replaceable>HEAT_DBPASS</replaceable> with the
+            password you chose for the Orchestration database.</para>
         </step>
         <step>
           <para>In the <literal>[DEFAULT]</literal> section, configure
             <application>RabbitMQ</application> message broker access:</para>
           <programlisting language="ini">[DEFAULT]
 ...
-rpc_backend = heat.openstack.common.rpc.impl_kombu
+rpc_backend = rabbit
 rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
-            you chose for the <literal>guest</literal> account in
+          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
+            password you chose for the <literal>guest</literal> account in
             <application>RabbitMQ</application>.</para>
         </step>
         <step>
@@ -136,18 +210,17 @@ auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0</programlistin
 heat_metadata_server_url = http://<replaceable>controller</replaceable>:8000
 heat_waitcondition_server_url = http://<replaceable>controller</replaceable>:8000/v1/waitcondition</programlisting>
         </step>
-        <step os="ubuntu">
-          <para>Configure the log directory in the <literal>[DEFAULT]</literal>
-            section:</para>
-          <programlisting os="ubuntu" language="ini">[DEFAULT]
+        <step>
+          <para>(Optional) To assist with troubleshooting, enable verbose
+            logging in the <literal>[DEFAULT]</literal> section:</para>
+          <programlisting language="ini">[DEFAULT]
 ...
-log_dir = /var/log/heat</programlisting>
+verbose = True</programlisting>
         </step>
       </substeps>
     </step>
     <step>
-      <para>Run the following command to populate the Orchestration
-        database:</para>
+      <para>Populate the Orchestration database:</para>
       <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "heat-manage db_sync" heat</userinput></screen>
     </step>
   </procedure>
@@ -155,7 +228,7 @@ log_dir = /var/log/heat</programlisting>
     <title>To install and configure the Orchestration components</title>
     <step>
       <para>Run the following commands to install the packages:</para>
-      <screen><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>apt-get install heat-api heat-api-cfn heat-engine python-heat-client</userinput></screen>
     </step>
     <step>
       <para>Respond to prompts for
@@ -168,16 +241,13 @@ log_dir = /var/log/heat</programlisting>
         credentials</link>.</para>
     </step>
     <step>
-      <para>Respond to the <literal>debconf</literal> configuration
-        tool prompts.</para>
-    </step>
-    <step>
-      <para>Edit the <filename>/etc/heat/heat.conf</filename> file.</para>
+      <para>Edit the <filename>/etc/heat/heat.conf</filename> file and
+        complete the following actions:</para>
       <substeps>
         <step>
           <para>In the <literal>[ec2authtoken]</literal> section, configure
-            Identity service access for EC2 operations:</para>
-      <programlisting language="ini">[ec2authtoken]
+            Identity service access:</para>
+          <programlisting language="ini">[ec2authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0</programlisting>
         </step>
@@ -192,15 +262,29 @@ auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0</programlistin
 <prompt>#</prompt> <userinput>service heat-api-cfn restart</userinput>
 <prompt>#</prompt> <userinput>service heat-engine restart</userinput></screen>
     </step>
-    <step os="rhel;fedora;centos;opensuse;sles">
+    <step os="rhel;fedora;centos;sles;opensuse">
       <para>Start the Orchestration services and configure them to start when
         the system boots:</para>
-      <screen os="rhel;fedora;centos;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-heat-api start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-heat-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-heat-api-cfn.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-heat-engine.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-heat-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-heat-api-cfn.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-heat-engine.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-heat-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-heat-api-cfn start</userinput>
 <prompt>#</prompt> <userinput>service openstack-heat-engine start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-heat-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-heat-api-cfn on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-heat-engine on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-heat-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-heat-api-cfn.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-heat-engine.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-heat-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-heat-api-cfn.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-heat-engine.service</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create a SQLite database.</para>
