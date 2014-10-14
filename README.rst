@@ -71,10 +71,12 @@ gating jobs.
 
 If you like to run individual tests, run:
 
+ * ``tox -e checklinks`` - to run the tests for working remote URLs
  * ``tox -e checkniceness`` - to run the niceness tests
  * ``tox -e checksyntax`` - to run syntax checks
  * ``tox -e checkdeletions`` - to check that no deleted files are referenced
  * ``tox -e checkbuild`` - to actually build the manual
+ * ``tox -e checklang`` - to build translated manuals
 
 tox will use the openstack-doc-tools package for execution of these
 tests.
