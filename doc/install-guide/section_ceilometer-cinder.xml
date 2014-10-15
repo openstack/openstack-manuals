@@ -10,19 +10,12 @@
     <step>
       <para>To retrieve volume samples, you must configure the Block
         Storage service to send notifications to the bus.</para>
-
-      <para os="debian;ubuntu">Edit <filename>/etc/cinder/cinder.conf</filename>
+      <para>Edit <filename>/etc/cinder/cinder.conf</filename>
         and add in the <literal>[DEFAULT]</literal> section on the controller
         and volume nodes:</para>
-      <programlisting language="ini" os="debian;ubuntu">control_exchange = cinder
+      <programlisting language="ini">control_exchange = cinder
 notification_driver = cinder.openstack.common.notifier.rpc_notifier</programlisting>
-
-      <para os="opensuse;sles;fedora;rhel;centos">Run the following commands on
-          the controller and volume nodes:</para>
-      <screen os="opensuse;sles;fedora;rhel;centos"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf DEFAULT control_exchange cinder</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf DEFAULT notification_driver cinder.openstack.common.notifier.rpc_notifier</userinput></screen>
     </step>
-
     <step>
       <para>Restart the Block Storage services with their new
         settings.</para>

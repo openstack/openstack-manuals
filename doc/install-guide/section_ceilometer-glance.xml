@@ -9,21 +9,13 @@
     <step>
       <para>To retrieve image samples, you must configure the Image
         Service to send notifications to the bus.</para>
-
-        <para os="debian;ubuntu">Edit
+        <para>Edit
         <filename>/etc/glance/glance-api.conf</filename> and modify the
         <literal>[DEFAULT]</literal> section:</para>
-        <programlisting language="ini" os="debian;ubuntu">notification_driver = messaging
+        <programlisting language="ini">notification_driver = messaging
 rpc_backend = rabbit
 rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-
-        <para os="opensuse;sles;fedora;rhel;centos">Run the following commands:</para>
-        <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT notification_driver messaging</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT rpc_backend rabbit</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT rabbit_host <replaceable>controller</replaceable></userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/glance/glance-api.conf DEFAULT rabbit_password <replaceable>RABBIT_PASS</replaceable></userinput></screen>
-
     </step>
     <step>
         <para>Restart the Image Services with their new
