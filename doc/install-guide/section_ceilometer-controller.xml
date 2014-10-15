@@ -18,6 +18,24 @@
     <para>Before you install and configure Telemetry, you must install
       <application>MongoDB</application>, create a MongoDB database, and
       create Identity service credentials including endpoints.</para>
+    <step os="opensuse;sles">
+      <para>Enable the Open Build Service repositories for MongoDB based on
+        your openSUSE  or SLES version:</para>
+      <para>On openSUSE:</para>
+      <screen><prompt>#</prompt> <userinput>zypper addrepo -f obs://server:database/openSUSE_13.1 Database</userinput></screen>
+      <para>On SLES:</para>
+      <screen><prompt>#</prompt> <userinput>zypper addrepo -f obs://server:database/SLE_11_SP3 Database</userinput></screen>
+      <note>
+        <para>The packages are signed by GPG key
+          <literal>562111AC05905EA8</literal>. You should
+          verify the fingerprint of the imported GPG key before using
+          it.</para>
+        <programlisting>Key Name: server:database OBS Project &lt;server:database@build.opensuse.org&gt;
+Key Fingerprint: 116EB86331583E47E63CDF4D562111AC05905EA8
+Key Created: Thu Oct 11 20:08:39 2012
+Key Expires: Sat Dec 20 20:08:39 2014</programlisting>
+      </note>
+    </step>
     <step>
       <para>Install the MongoDB package:</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install mongodb-server mongodb</userinput></screen>
@@ -57,8 +75,12 @@
         <step os="centos;fedora;opensuse;rhel;sles">
           <para>Start the MongoDB services and configure them to start when
             the system boots:</para>
-          <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service mongodb start</userinput>
+          <para os="sles">On SLES:</para>
+          <screen os="sles"><prompt>#</prompt> <userinput>service mongodb start</userinput>
 <prompt>#</prompt> <userinput>chkconfig mongodb on</userinput></screen>
+          <para os="opensuse">On openSUSE:</para>
+          <screen os="sles"><prompt>#</prompt> <userinput>systemctl enable mongodb.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start mongodb.service</userinput></screen>
       <!-- NB: The use of mongod, and not mongodb, in the below screen is
       intentional. -->
           <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>service mongod start</userinput>
@@ -341,7 +363,8 @@ os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-evaluator on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-notifier on</userinput></screen>
-      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-agent-notification start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-agent-central start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
@@ -353,6 +376,19 @@ os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-evaluator on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-notifier on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-agent-notification.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-agent-central.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-collector.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-alarm-evaluator.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-alarm-notifier.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-api.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-agent-notification.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-agent-central.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-collector.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-alarm-evaluator.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-alarm-notifier.service</userinput></screen>
     </step>
   </procedure>
 </section>
