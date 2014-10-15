@@ -244,6 +244,84 @@ $</computeroutput></screen>
       </note>
     </step>
   </procedure>
+  <procedure xml:id="launch-instance-nova-volumeattach">
+    <title>To attach a Block Storage volume to your instance</title>
+    <para>If your environment includes the Block Storage service, you can
+      attach a volume to the instance.</para>
+    <step>
+      <para>Source the <literal>demo</literal> tenant credentials:</para>
+      <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>List volumes:</para>
+      <screen><prompt>$</prompt> <userinput>nova volume-list</userinput>
+<computeroutput>+--------------------------------------+-----------+--------------+------+-------------+-------------+
+| ID                                   | Status    | Display Name | Size | Volume Type | Attached to |
++--------------------------------------+-----------+--------------+------+-------------+-------------+
+| 158bea89-07db-4ac2-8115-66c0d6a4bb48 | available | demo-volume1 | 1    | None        |             |
++--------------------------------------+-----------+--------------+------+-------------+-------------+</computeroutput></screen>
+    </step>
+    <step>
+      <para>Attach the <literal>demo-volume1</literal> volume to
+        the <literal>demo-instance1</literal> instance:</para>
+      <screen><prompt>$</prompt> <userinput>nova volume-attach demo-instance1 158bea89-07db-4ac2-8115-66c0d6a4bb48</userinput>
+<computeroutput>+----------+--------------------------------------+
+| Property | Value                                |
++----------+--------------------------------------+
+| device   | /dev/vdb                             |
+| id       | 158bea89-07db-4ac2-8115-66c0d6a4bb48 |
+| serverId | 45ea195c-c469-43eb-83db-1a663bbad2fc |
+| volumeId | 158bea89-07db-4ac2-8115-66c0d6a4bb48 |
++----------+--------------------------------------+</computeroutput></screen>
+      <note>
+        <para>You must reference volumes using the IDs instead of
+          names.</para>
+      </note>
+    </step>
+    <step>
+      <para>List volumes:</para>
+      <screen><prompt>$</prompt> <userinput>nova volume-list</userinput>
+<computeroutput>+--------------------------------------+-----------+--------------+------+-------------+--------------------------------------+
+| ID                                   | Status    | Display Name | Size | Volume Type | Attached to                          |
++--------------------------------------+-----------+--------------+------+-------------+--------------------------------------+
+| 158bea89-07db-4ac2-8115-66c0d6a4bb48 | in-use    | demo-volume1 | 1    | None        | 45ea195c-c469-43eb-83db-1a663bbad2fc |
++--------------------------------------+-----------+--------------+------+-------------+--------------------------------------+</computeroutput></screen>
+      <para>The <literal>demo-volume1</literal> volume status should indicate
+        <literal>in-use</literal> by the ID of the
+        <literal>demo-instance1</literal> instance.</para>
+    </step>
+    <step>
+      <para>Access your instance using SSH from the controller node or any
+        host on the external network and use the <command>fdisk</command>
+        command to verify presence of the volume as the
+        <literal>/dev/vdb</literal> block storage device:</para>
+      <screen><prompt>$</prompt> <userinput>ssh cirros@203.0.113.102</userinput>
+<computeroutput>$ sudo fdisk -l
+
+Disk /dev/vda: 1073 MB, 1073741824 bytes
+255 heads, 63 sectors/track, 130 cylinders, total 2097152 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vda1   *       16065     2088449     1036192+  83  Linux
+
+Disk /dev/vdb: 1073 MB, 1073741824 bytes
+16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+Disk /dev/vdb doesn't contain a valid partition table</computeroutput></screen>
+      <note>
+        <para>You must create a partition table and file system to use
+          the volume.</para>
+      </note>
+    </step>
+  </procedure>
   <para>If your instance does not launch or seem to work as you expect, see the
     <link xlink:href="http://docs.openstack.org/ops">
      <citetitle>OpenStack Operations Guide</citetitle></link> for more

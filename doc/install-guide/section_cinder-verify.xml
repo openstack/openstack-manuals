@@ -4,32 +4,35 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
   xml:id="cinder-verify">
-  <title>Verify the Block Storage installation</title>
-  <para>To verify that the Block Storage is installed and configured properly,
-       create a new volume.</para>
+  <title>Verify operation</title>
+  <para>This section describes how to verify operation of the Block Storage
+    service by creating a volume.</para>
   <para>For more information about how to manage volumes, see the <link
       xlink:href="http://docs.openstack.org/user-guide/content/index.html"
-         ><citetitle>OpenStack User Guide</citetitle></link>.</para>
+    ><citetitle>OpenStack User Guide</citetitle></link>.</para>
+  <note>
+    <para>Perform these commands on the controller node.</para>
+  </note>
   <procedure>
     <step>
-      <para>Source the <filename>demo-openrc.sh</filename> file:</para>
+      <para>Source the <literal>demo</literal> tenant credentials to perform
+        these steps as a non-administrative tenant:</para>
       <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
     </step>
-
     <step>
-      <para>Use the <command>cinder create</command> command to create a new volume:</para>
-      <screen><prompt>$</prompt> <userinput>cinder create --display-name myVolume 1</userinput>
+      <para>Create a 1 GB volume:</para>
+      <screen><prompt>$</prompt> <userinput>cinder create --display-name demo-volume1 1</userinput>
 <computeroutput>+---------------------+--------------------------------------+
 |       Property      |                Value                 |
 +---------------------+--------------------------------------+
 |     attachments     |                  []                  |
 |  availability_zone  |                 nova                 |
 |       bootable      |                false                 |
-|      created_at     |      2014-04-17T10:28:19.615050      |
+|      created_at     |      2014-10-14T23:11:50.870239      |
 | display_description |                 None                 |
-|     display_name    |               myVolume               |
+|     display_name    |             demo-volume1             |
 |      encrypted      |                False                 |
-|          id         | 5e691b7b-12e3-40b6-b714-7f17550db5d1 |
+|          id         | 158bea89-07db-4ac2-8115-66c0d6a4bb48 |
 |       metadata      |                  {}                  |
 |         size        |                  1                   |
 |     snapshot_id     |                 None                 |
@@ -39,18 +42,22 @@
 +---------------------+--------------------------------------+</computeroutput></screen>
     </step>
     <step>
-      <para>Make sure that the volume has been correctly created with the
-          <command>cinder list</command> command:</para>
+      <para>Verify creation and availability of the volume:</para>
       <screen><prompt>$</prompt> <userinput>cinder list</userinput>
 <computeroutput>--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
 |                  ID                  |   Status  | Display Name | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
-| 5e691b7b-12e3-40b6-b714-7f17550db5d1 | available |   myVolume   |  1   |     None    |  false   |             |
+| 158bea89-07db-4ac2-8115-66c0d6a4bb48 | available | demo-volume1 |  1   |     None    |  false   |             |
 +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+</computeroutput></screen>
-      <para>If the status value is not <literal>available</literal>, the volume
-          creation failed. Check the log files in the
-          <filename>/var/log/cinder/</filename> directory on the controller and
-          volume nodes to get information about the failure.</para>
+      <para>If the status does not indicate <literal>available</literal>,
+        check the logs in the <filename>/var/log/cinder</filename> directory
+        on the controller and volume nodes for more information.</para>
+      <note>
+        <para>The
+          <link linkend="launch-instance">launch an instance</link>
+          chapter includes instructions for attaching this volume to an
+          instance.</para>
+      </note>
     </step>
   </procedure>
 </section>
