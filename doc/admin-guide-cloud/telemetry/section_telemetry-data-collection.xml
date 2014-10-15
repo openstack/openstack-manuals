@@ -722,6 +722,24 @@ sinks:
       </section>
     </section>
   </section>
+  <section xml:id="section_telemetry-cinder-audit-script">
+     <title>Block Storage audit script setup to get notifications</title>
+     <para>If you want to collect OpenStack Block Storage notification on demand,
+         you can use <command>cinder-volume-usage-audit</command> from OpenStack Block Storage.
+         This script becomes available when you install OpenStack Block Storage, so you can use
+         it without any specific settings and you don't need to authenticate to
+         access the data. To use it, you must run this command in the following format:</para>
+      <screen><prompt>$</prompt> <userinput>cinder-volume-usage-audit \
+  --start_time='YYYY-MM-DD HH:MM:SS' --end_time='YYYY-MM-DD HH:MM:SS' --send_actions</userinput></screen>
+      <para>This script outputs what volumes or snapshots were
+            created or deleted or existed in a given period of time and some
+            information about these volumes or snapshots. Information about the
+            existence and size of volumes and snapshots is store in the Telemetry
+            module.</para>
+      <para>Using this script via cron you can get notifications periodically,
+      for example, every 5 minutes.</para>
+      <programlisting>*/5 * * * * /path/to/cinder-volume-usage-audit --send_actions</programlisting>
+  </section>
   <section xml:id="section_telemetry-storing-data">
     <title>Storing samples</title>
     <para>The Telemetry module has a separate service that is responsible for persisting the data
