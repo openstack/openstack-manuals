@@ -120,6 +120,23 @@ verbose = True</programlisting>
         </step>
       </substeps>
     </step>
+    <step os="opensuse;sles">
+      <substeps>
+        <step>
+          <para>Ensure the kernel module <literal>nbd</literal> is
+            loaded.</para>
+          <screen><prompt>#</prompt> <userinput>modprobe nbd</userinput></screen>
+        </step>
+        <step>
+          <para>Ensure the module will be loaded on every boot.</para>
+          <para>On openSUSE by adding <literal>nbd</literal> in the
+            <filename>/etc/modules-load.d/nbd.conf</filename> file.</para>
+          <para>On SLES by adding or modifying the following line in the
+            <filename>/etc/sysconfig/kernel</filename> file.</para>
+          <programlisting language="ini">MODULES_LOADED_ON_BOOT = "nbd"</programlisting>
+        </step>
+      </substeps>
+    </step>
   </procedure>
   <procedure os="debian">
     <title>To install and configure the Compute hypervisor components</title>
