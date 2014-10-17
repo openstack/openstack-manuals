@@ -139,19 +139,29 @@
                     <para>Resize the root volume file system.</para>
                 </listitem>
             </itemizedlist>
-            <para>The simplest way to support this in your image is to
-                install the <link
-                    xlink:href="https://launchpad.net/cloud-utils"
-                    >cloud-utils</link> package (contains the
-                    <command>growpart</command> tool for extending
-                partitions), the <link
-                    xlink:href="https://launchpad.net/cloud-initramfs-tools"
-                    >cloud-initramfs-growroot</link> package (which
-                supports resizing root partition on the first boot),
-                and the <link
-                    xlink:href="https://launchpad.net/cloud-init"
-                        ><package>cloud-init</package></link> package
-                into your image. With these installed, the image
+            <para>The simplest way to support this is to
+              install in your image the:</para>
+            <itemizedlist>
+              <listitem>
+                <para><link xlink:href="https://launchpad.net/cloud-utils">cloud-utils</link>
+                  package, which contains the <command>growpart</command>
+                  tool for extending partitions.</para>
+                </listitem>
+                <listitem>
+                  <para><link xlink:href="https://launchpad.net/cloud-initramfs-tools">cloud-initramfs-growroot</link>
+                    package for Ubuntu, Debian and Fedora, which supports
+                    resizing root partition on the first boot.</para>
+                </listitem>
+                <listitem>
+                    <para><package>cloud-initramfs-growroot</package>
+                      package for Centos and RHEL.</para>
+                </listitem>
+                <listitem>
+                  <para><link xlink:href="https://launchpad.net/cloud-init">cloud-init</link>
+                    package.</para>
+                </listitem>
+              </itemizedlist>
+              <para>With these packages installed, the image
                 performs the root partition resize on boot. For
                 example, in the <filename>/etc/rc.local</filename>
                 file. These packages are in the Ubuntu and Debian
@@ -376,16 +386,16 @@ done</programlisting>
             (cloud-init)</title>
         <para>In addition to the ssh public key, an image might need
             additional information from OpenStack, such as <link
-                xlink:href="http://docs.openstack.org/user-guide/content/user-data.html"
-                >user data</link> that the user submitted when
-            requesting the image. For example, you might want to set
-            the host name of the instance when it is booted. Or, you
-            might wish to configure your image so that it executes
+              xlink:href="http://docs.openstack.org/user-guide/content/inserting_userdata.html"
+                >Provide user data to instances</link>, that the user
+            submitted when requesting the image. For example, you might
+            want to set the host name of the instance when it is booted.
+            Or, you might wish to configure your image so that it executes
             user data content as a script on boot.</para>
-        <para>This information is accessible through the metadata
-            service or the <link
+        <para>You can access this information through the metadata
+            service or referring to <link
                 xlink:href="http://docs.openstack.org/user-guide/content/config-drive.html"
-                >config drive</link>. As the OpenStack metadata
+                >Store metadata on the configuration drive</link>. As the OpenStack metadata
             service is compatible with version 2009-04-04 of the
             Amazon EC2 metadata service, consult the Amazon EC2
             documentation on <link
