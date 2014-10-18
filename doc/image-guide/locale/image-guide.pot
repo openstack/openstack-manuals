@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-10-17 06:12+0000\n"
+"POT-Creation-Date: 2014-10-18 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1705,7 +1705,7 @@ msgstr ""
 msgid "Disk partitions and resize root partition on boot (<package>cloud-init</package>)"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:27(para) ./doc/image-guide/ch_openstack_images.xml:235(title)
+#: ./doc/image-guide/ch_openstack_images.xml:27(para) ./doc/image-guide/ch_openstack_images.xml:245(title)
 msgid "No hard-coded MAC address information"
 msgstr ""
 
@@ -1713,7 +1713,7 @@ msgstr ""
 msgid "SSH server running"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:33(para) ./doc/image-guide/ch_openstack_images.xml:279(title)
+#: ./doc/image-guide/ch_openstack_images.xml:33(para) ./doc/image-guide/ch_openstack_images.xml:289(title)
 msgid "Disable firewall"
 msgstr ""
 
@@ -1806,258 +1806,278 @@ msgid "Resize the root volume file system."
 msgstr ""
 
 #: ./doc/image-guide/ch_openstack_images.xml:142(para)
-msgid "The simplest way to support this in your image is to install the <link href=\"https://launchpad.net/cloud-utils\">cloud-utils</link> package (contains the <placeholder-1/> tool for extending partitions), the <link href=\"https://launchpad.net/cloud-initramfs-tools\">cloud-initramfs-growroot</link> package (which supports resizing root partition on the first boot), and the <link href=\"https://launchpad.net/cloud-init\"><package>cloud-init</package></link> package into your image. With these installed, the image performs the root partition resize on boot. For example, in the <filename>/etc/rc.local</filename> file. These packages are in the Ubuntu and Debian package repository, as well as the EPEL repository (for Fedora/RHEL/CentOS/Scientific Linux guests)."
+msgid "The simplest way to support this is to install in your image the:"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:161(para)
+#: ./doc/image-guide/ch_openstack_images.xml:146(para)
+msgid "<link href=\"https://launchpad.net/cloud-utils\">cloud-utils</link> package, which contains the <placeholder-1/> tool for extending partitions."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml:151(para)
+msgid "<link href=\"https://launchpad.net/cloud-initramfs-tools\">cloud-initramfs-growroot</link> package for Ubuntu, Debian and Fedora, which supports resizing root partition on the first boot."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml:156(para)
+msgid "<package>cloud-initramfs-growroot</package> package for Centos and RHEL."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml:160(para)
+msgid "<link href=\"https://launchpad.net/cloud-init\">cloud-init</link> package."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml:164(para)
+msgid "With these packages installed, the image performs the root partition resize on boot. For example, in the <filename>/etc/rc.local</filename> file. These packages are in the Ubuntu and Debian package repository, as well as the EPEL repository (for Fedora/RHEL/CentOS/Scientific Linux guests)."
+msgstr ""
+
+#: ./doc/image-guide/ch_openstack_images.xml:171(para)
 msgid "If you cannot install <literal>cloud-initramfs-tools</literal>, Robert Plestenjak has a GitHub project called <link href=\"https://github.com/flegmatik/linux-rootfs-resize\">linux-rootfs-resize</link> that contains scripts that update a ramdisk by using <placeholder-1/> so that the image resizes properly on boot."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:169(para)
+#: ./doc/image-guide/ch_openstack_images.xml:179(para)
 msgid "If you can install the cloud-utils and <package>cloud-init</package> packages, we recommend that when you create your images, you create a single ext3 or ext4 partition (not managed by LVM)."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:176(title)
+#: ./doc/image-guide/ch_openstack_images.xml:186(title)
 msgid "Non-Xen without <package>cloud-init</package>/<package>cloud-tools</package>: LVM"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:179(para)
+#: ./doc/image-guide/ch_openstack_images.xml:189(para)
 msgid "If you cannot install <package>cloud-init</package> and <package>cloud-tools</package> inside of your guest, and you want to support resize, you must write a script that your image runs on boot to modify the partition table. In this case, we recommend using LVM to manage your partitions. Due to a limitation in the Linux kernel (as of this writing), you cannot modify a partition table of a raw disk that has partitions currently mounted, but you can do this for LVM."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:190(para)
+#: ./doc/image-guide/ch_openstack_images.xml:200(para)
 msgid "Detect if any additional space is available on the disk. For example, parse the output of <placeholder-1/>."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:197(para)
+#: ./doc/image-guide/ch_openstack_images.xml:207(para)
 msgid "Create a new LVM partition with the additional space. For example, <placeholder-1/>."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:205(replaceable) ./doc/image-guide/ch_openstack_images.xml:212(replaceable) ./doc/image-guide/ch_openstack_images.xml:219(replaceable)
+#: ./doc/image-guide/ch_openstack_images.xml:215(replaceable) ./doc/image-guide/ch_openstack_images.xml:222(replaceable) ./doc/image-guide/ch_openstack_images.xml:229(replaceable)
 msgid "sda6"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:203(para)
+#: ./doc/image-guide/ch_openstack_images.xml:213(para)
 msgid "Create a new physical volume. For example, <placeholder-1/>."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:211(replaceable)
+#: ./doc/image-guide/ch_openstack_images.xml:221(replaceable)
 msgid "vg00"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:208(para)
+#: ./doc/image-guide/ch_openstack_images.xml:218(para)
 msgid "Extend the volume group with this physical partition. For example, <placeholder-1/>."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:218(replaceable) ./doc/image-guide/ch_openstack_images.xml:224(replaceable)
+#: ./doc/image-guide/ch_openstack_images.xml:228(replaceable) ./doc/image-guide/ch_openstack_images.xml:234(replaceable)
 msgid "node-root"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:215(para)
+#: ./doc/image-guide/ch_openstack_images.xml:225(para)
 msgid "Extend the logical volume contained the root partition by the amount of space. For example, <placeholder-1/>."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:222(para)
+#: ./doc/image-guide/ch_openstack_images.xml:232(para)
 msgid "Resize the root file system. For example, <placeholder-1/>."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:188(para)
+#: ./doc/image-guide/ch_openstack_images.xml:198(para)
 msgid "Your script must do something like the following:<placeholder-1/>"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:227(para)
+#: ./doc/image-guide/ch_openstack_images.xml:237(para)
 msgid "You do not need a <filename>/boot</filename> partition unless your image is an older Linux distribution that requires that <filename>/boot</filename> is not managed by LVM."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:236(para)
+#: ./doc/image-guide/ch_openstack_images.xml:246(para)
 msgid "You must remove the network persistence rules in the image because they cause the network interface in the instance to come up as an interface other than eth0. This is because your image has a record of the MAC address of the network interface card when it was first installed, and this MAC address is different each time that the instance boots. You should alter the following files:"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:246(para)
+#: ./doc/image-guide/ch_openstack_images.xml:256(para)
 msgid "Replace <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> with an empty file (contains network persistence rules, including MAC address)"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:252(para)
+#: ./doc/image-guide/ch_openstack_images.xml:262(para)
 msgid "Replace <filename>/lib/udev/rules.d/75-persistent-net-generator.rules</filename> with an empty file (this generates the file above)"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:258(para)
+#: ./doc/image-guide/ch_openstack_images.xml:268(para)
 msgid "Remove the HWADDR line from <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename> on Fedora-based images"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:264(para)
+#: ./doc/image-guide/ch_openstack_images.xml:274(para)
 msgid "If you delete the network persistent rules files, you may get a udev kernel warning at boot time, which is why we recommend replacing them with empty files instead."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:271(title)
+#: ./doc/image-guide/ch_openstack_images.xml:281(title)
 msgid "Ensure ssh server runs"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:272(para)
+#: ./doc/image-guide/ch_openstack_images.xml:282(para)
 msgid "You must install an ssh server into the image and ensure that it starts up on boot, or you cannot connect to your instance by using ssh when it boots inside of OpenStack. This package is typically called <literal>openssh-server</literal>."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:280(para)
+#: ./doc/image-guide/ch_openstack_images.xml:290(para)
 msgid "In general, we recommend that you disable any firewalls inside of your image and use OpenStack security groups to restrict access to instances. The reason is that having a firewall installed on your instance can make it more difficult to troubleshoot networking issues if you cannot connect to your instance."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:288(title)
+#: ./doc/image-guide/ch_openstack_images.xml:298(title)
 msgid "Access instance by using ssh public key (cloud-init)"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:290(para)
+#: ./doc/image-guide/ch_openstack_images.xml:300(para)
 msgid "The typical way that users access virtual machines running on OpenStack is to ssh using public key authentication. For this to work, your virtual machine image must be configured to download the ssh public key from the OpenStack metadata service or config drive, at boot time."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:297(title)
+#: ./doc/image-guide/ch_openstack_images.xml:307(title)
 msgid "Use <package>cloud-init</package> to fetch the public key"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:299(para)
+#: ./doc/image-guide/ch_openstack_images.xml:309(para)
 msgid "The <package>cloud-init</package> package automatically fetches the public key from the metadata server and places the key in an account. The account varies by distribution. On Ubuntu-based virtual machines, the account is called <literal>ubuntu</literal>. On Fedora-based virtual machines, the account is called <literal>ec2-user</literal>."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:307(para)
+#: ./doc/image-guide/ch_openstack_images.xml:317(para)
 msgid "You can change the name of the account used by <package>cloud-init</package> by editing the <filename>/etc/cloud/cloud.cfg</filename> file and adding a line with a different user. For example, to configure <package>cloud-init</package> to put the key in an account named <literal>admin</literal>, edit the configuration file so it has the line:"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:317(title)
+#: ./doc/image-guide/ch_openstack_images.xml:327(title)
 msgid "Write a custom script to fetch the public key"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:319(para)
+#: ./doc/image-guide/ch_openstack_images.xml:329(para)
 msgid "If you are unable or unwilling to install <package>cloud-init</package> inside the guest, you can write a custom script to fetch the public key and add it to a user account."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:323(para)
+#: ./doc/image-guide/ch_openstack_images.xml:333(para)
 msgid "To fetch the ssh public key and add it to the root account, edit the <filename>/etc/rc.local</filename> file and add the following lines before the line “touch /var/lock/subsys/local”. This code fragment is taken from the <link href=\"https://github.com/rackerjoe/oz-image-build/blob/master/templates/centos60_x86_64.tdl\">rackerjoe oz-image-build CentOS 6 template</link>."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:363(para)
+#: ./doc/image-guide/ch_openstack_images.xml:373(para)
 msgid "Some VNC clients replace : (colon) with ; (semicolon) and _ (underscore) with - (hyphen). If editing a file over a VNC session, make sure it's http: not http; and authorized_keys not authorized-keys."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:375(title)
+#: ./doc/image-guide/ch_openstack_images.xml:385(title)
 msgid "Process user data and other metadata (cloud-init)"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:377(para)
-msgid "In addition to the ssh public key, an image might need additional information from OpenStack, such as <link href=\"http://docs.openstack.org/user-guide/content/user-data.html\">user data</link> that the user submitted when requesting the image. For example, you might want to set the host name of the instance when it is booted. Or, you might wish to configure your image so that it executes user data content as a script on boot."
+#: ./doc/image-guide/ch_openstack_images.xml:387(para)
+msgid "In addition to the ssh public key, an image might need additional information from OpenStack, such as <link href=\"http://docs.openstack.org/user-guide/content/inserting_userdata.html\">Provide user data to instances</link>, that the user submitted when requesting the image. For example, you might want to set the host name of the instance when it is booted. Or, you might wish to configure your image so that it executes user data content as a script on boot."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:385(para)
-msgid "This information is accessible through the metadata service or the <link href=\"http://docs.openstack.org/user-guide/content/config-drive.html\">config drive</link>. As the OpenStack metadata service is compatible with version 2009-04-04 of the Amazon EC2 metadata service, consult the Amazon EC2 documentation on <link href=\"http://docs.amazonwebservices.com/AWSEC2/2009-04-04/UserGuide/AESDG-chapter-instancedata.html\">Using Instance Metadata</link> for details on how to retrieve user data."
+#: ./doc/image-guide/ch_openstack_images.xml:395(para)
+msgid "You can access this information through the metadata service or referring to <link href=\"http://docs.openstack.org/user-guide/content/config-drive.html\">Store metadata on the configuration drive</link>. As the OpenStack metadata service is compatible with version 2009-04-04 of the Amazon EC2 metadata service, consult the Amazon EC2 documentation on <link href=\"http://docs.amazonwebservices.com/AWSEC2/2009-04-04/UserGuide/AESDG-chapter-instancedata.html\">Using Instance Metadata</link> for details on how to retrieve user data."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:396(para)
+#: ./doc/image-guide/ch_openstack_images.xml:406(para)
 msgid "The easiest way to support this type of functionality is to install the <package>cloud-init</package> package into your image, which is configured by default to treat user data as an executable script, and sets the host name."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:403(title)
+#: ./doc/image-guide/ch_openstack_images.xml:413(title)
 msgid "Ensure image writes boot log to console"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:404(para)
+#: ./doc/image-guide/ch_openstack_images.xml:414(para)
 msgid "You must configure the image so that the kernel writes the boot log to the <literal>ttyS0</literal> device. In particular, the <literal>console=ttyS0</literal> argument must be passed to the kernel on boot."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:408(para)
+#: ./doc/image-guide/ch_openstack_images.xml:418(para)
 msgid "If your image uses grub2 as the boot loader, there should be a line in the grub configuration file. For example, <filename>/boot/grub/grub.cfg</filename>, which looks something like this:"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:413(para)
+#: ./doc/image-guide/ch_openstack_images.xml:423(para)
 msgid "If <literal>console=ttyS0</literal> does not appear, you must modify your grub configuration. In general, you should not update the <filename>grub.cfg</filename> directly, since it is automatically generated. Instead, you should edit <filename>/etc/default/grub</filename> and modify the value of the <literal>GRUB_CMDLINE_LINUX_DEFAULT</literal> variable: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:422(para)
+#: ./doc/image-guide/ch_openstack_images.xml:432(para)
 msgid "Next, update the grub configuration. On Debian-based operating-systems such as Ubuntu, run this command:"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:425(para)
+#: ./doc/image-guide/ch_openstack_images.xml:435(para)
 msgid "On Fedora-based systems, such as RHEL and CentOS, and on openSUSE, run this command:"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:430(title)
+#: ./doc/image-guide/ch_openstack_images.xml:440(title)
 msgid "Paravirtualized Xen support in the kernel (Xen hypervisor only)"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:432(para)
+#: ./doc/image-guide/ch_openstack_images.xml:442(para)
 msgid "Prior to Linux kernel version 3.0, the mainline branch of the Linux kernel did not have support paravirtualized Xen virtual machine instances (what Xen calls DomU guests). If you are running the Xen hypervisor with paravirtualization, and you want to create an image for an older Linux distribution that has a pre 3.0 kernel, you must ensure that the image boots a kernel that has been compiled with Xen support."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:442(title)
+#: ./doc/image-guide/ch_openstack_images.xml:452(title)
 msgid "Manage the image cache"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:443(para)
+#: ./doc/image-guide/ch_openstack_images.xml:453(para)
 msgid "Use options in <filename>nova.conf</filename> to control whether, and for how long, unused base images are stored in <filename>/var/lib/nova/instances/_base/</filename>. If you have configured live migration of instances, all your compute nodes share one common <filename>/var/lib/nova/instances/</filename> directory."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:450(para)
+#: ./doc/image-guide/ch_openstack_images.xml:460(para)
 msgid "For information about libvirt images in OpenStack, see <link href=\"http://www.pixelbeat.org/docs/openstack_libvirt_images/\">The life of an OpenStack libvirt image from Pádraig Brady</link>."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:456(caption)
+#: ./doc/image-guide/ch_openstack_images.xml:466(caption)
 msgid "Image cache management configuration options"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:462(td)
+#: ./doc/image-guide/ch_openstack_images.xml:472(td)
 msgid "Configuration option=Default value"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:463(td)
+#: ./doc/image-guide/ch_openstack_images.xml:473(td)
 msgid "(Type) Description"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:468(td)
+#: ./doc/image-guide/ch_openstack_images.xml:478(td)
 msgid "preallocate_images=none"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:469(para)
+#: ./doc/image-guide/ch_openstack_images.xml:479(para)
 msgid "(StrOpt) VM image preallocation mode:"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:472(para)
+#: ./doc/image-guide/ch_openstack_images.xml:482(para)
 msgid "<literal>none</literal>. No storage provisioning occurs up front."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:477(para)
+#: ./doc/image-guide/ch_openstack_images.xml:487(para)
 msgid "<literal>space</literal>. Storage is fully allocated at instance start. The <literal>$instance_dir/</literal> images are <link href=\"http://www.kernel.org/doc/man-pages/online/pages/man2/fallocate.2.html\">fallocate</link>d to immediately determine if enough space is available, and to possibly improve VM I/O performance due to ongoing allocation avoidance, and better locality of block allocations."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:494(td)
+#: ./doc/image-guide/ch_openstack_images.xml:504(td)
 msgid "remove_unused_base_images=True"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:495(td)
+#: ./doc/image-guide/ch_openstack_images.xml:505(td)
 msgid "(BoolOpt) Should unused base images be removed? When set to True, the interval at which base images are removed are set with the following two settings. If set to False base images are never removed by Compute."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:502(td)
+#: ./doc/image-guide/ch_openstack_images.xml:512(td)
 msgid "remove_unused_original_minimum_age_seconds=86400"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:503(td)
+#: ./doc/image-guide/ch_openstack_images.xml:513(td)
 msgid "(IntOpt) Unused unresized base images younger than this are not removed. Default is 86400 seconds, or 24 hours."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:508(td)
+#: ./doc/image-guide/ch_openstack_images.xml:518(td)
 msgid "remove_unused_resized_minimum_age_seconds=3600"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:509(td)
+#: ./doc/image-guide/ch_openstack_images.xml:519(td)
 msgid "(IntOpt) Unused resized base images younger than this are not removed. Default is 3600 seconds, or one hour."
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:515(para)
+#: ./doc/image-guide/ch_openstack_images.xml:525(para)
 msgid "To see how the settings affect the deletion of a running instance, check the directory where the images are stored:"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:519(para)
+#: ./doc/image-guide/ch_openstack_images.xml:529(para)
 msgid "In the <filename>/var/log/compute/compute.log</filename> file, look for the identifier:"
 msgstr ""
 
-#: ./doc/image-guide/ch_openstack_images.xml:526(para)
+#: ./doc/image-guide/ch_openstack_images.xml:536(para)
 msgid "Because 86400 seconds (24 hours) is the default time for <literal>remove_unused_original_minimum_age_seconds</literal>, you can either wait for that time interval to see the base image removed, or set the value to a shorter time period in <filename>nova.conf</filename>. Restart all nova services after changing a setting in <filename>nova.conf</filename>."
 msgstr ""
 
