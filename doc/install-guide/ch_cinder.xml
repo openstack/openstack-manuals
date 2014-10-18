@@ -5,17 +5,21 @@
   version="5.0"
   xml:id="ch_cinder">
   <title>Add the Block Storage service</title>
-  <para>The OpenStack Block Storage service works through the
-    interaction of a series of daemon processes named <systemitem
-      role="process">cinder-*</systemitem> that reside persistently on
-    the host machine or machines. You can run the binaries from a
-    single node or across multiple nodes. You can also run them on the
-    same node as other OpenStack services. The following sections
-    introduce Block Storage service components and concepts and show
-    you how to configure and install the Block Storage service.</para>
+  <para>The OpenStack Block Storage service provides block storage devices
+    to instances using various backends. The Block Storage API and scheduler
+    services run on the controller node and the volume service runs on one
+    or more storage nodes. Storage nodes provide volumes to instances using
+    local block storage devices or SAN/NAS backends with the appropriate
+    drivers. For more information, see the
+    <link xlink:href="http://docs.openstack.org/juno/config-reference/content/section_volume-drivers.html"
+    ><citetitle>Configuration Reference</citetitle></link>.</para>
+  <note>
+    <para>This chapter omits the backup manager because it depends on the
+      Object Storage service.</para>
+  </note>
   <xi:include href="../common/section_getstart_block-storage.xml"/>
-  <xi:include href="section_cinder-controller.xml"/>
-  <xi:include href="section_cinder-node.xml"/>
+  <xi:include href="section_cinder-controller-node.xml"/>
+  <xi:include href="section_cinder-storage-node.xml"/>
   <xi:include href="section_cinder-verify.xml"/>
   <section xml:id="section_cinder_next_steps">
     <title>Next steps</title>
