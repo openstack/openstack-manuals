@@ -7,13 +7,8 @@
   <title>Install and configure controller node</title>
   <para>This section describes how to install and configure the Block
     Storage service, code-named cinder, on the controller node. This
-    optional service requires at least one additional node to provide
-    storage volumes created by the
-    <glossterm baseform="Logical Volume Manager (LVM)"
-      >logical volume manager (LVM)</glossterm>
-    and served over
-    <glossterm baseform="Internet Small Computer System Interface (iSCSI)"
-      >iSCSI</glossterm> transport.</para>
+    service requires at least one additional storage node that provides
+    volumes to instances.</para>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure prerequisites</title>
     <para>Before you install and configure the Block Storage service, you must
@@ -36,7 +31,7 @@
             database:</para>
           <screen><userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
   IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput>
-<prompt>mysql></prompt> <userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
+<userinput>GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
   IDENTIFIED BY '<replaceable>CINDER_DBPASS</replaceable>';</userinput></screen>
           <para>Replace <replaceable>CINDER_DBPASS</replaceable> with
             a suitable password.</para>

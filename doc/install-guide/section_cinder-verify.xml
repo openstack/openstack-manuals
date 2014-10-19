@@ -15,8 +15,24 @@
   </note>
   <procedure>
     <step>
+     <para>Source the <literal>admin</literal> credentials to gain access to
+        admin-only CLI commands:</para>
+      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>List service components to verify successful launch of each
+        process:</para>
+      <screen><prompt>$</prompt> <userinput>cinder service-list</userinput>
+<computeroutput>+------------------+------------+------+---------+-------+----------------------------+-----------------+
+|      Binary      |    Host    | Zone |  Status | State |         Updated_at         | Disabled Reason |
++------------------+------------+------+---------+-------+----------------------------+-----------------+
+| cinder-scheduler | controller | nova | enabled |   up  | 2014-10-18T01:30:54.000000 |       None      |
+|  cinder-volume   |   block1   | nova | enabled |   up  | 2014-10-18T01:30:57.000000 |       None      |
++------------------+------------+------+---------+-------+----------------------------+-----------------+</computeroutput></screen>
+    </step>
+    <step>
       <para>Source the <literal>demo</literal> tenant credentials to perform
-        these steps as a non-administrative tenant:</para>
+        the following steps as a non-administrative tenant:</para>
       <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
     </step>
     <step>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="cinder-install-storage-node">
+  <?dbhtml stop-chunking?>
+  <title>Install and configure a storage node</title>
+  <para>This section describes how to install and configure storage nodes
+    for the Block Storage service. For simplicity, this configuration
+    references one storage node with an empty local block storage device
+    <literal>/dev/sdb</literal>. The service provisions logical volumes
+    on this device using the <glossterm>LVM</glossterm> driver and provides
+    them to instances via
+    <glossterm baseform="Internet Small Computer Systems Interface (iSCSI)"
+    >iSCSI</glossterm> transport. You can follow these instructions with
+    minor modifications to horizontally scale your environment with
+    additional storage nodes.</para>
+  <procedure>
+    <title>To configure prerequisites</title>
+    <para>You must configure the storage node before you install and
+      configure the volume service on it. Similar to the controller node,
+      the storage node contains one network interface on the
+      <glossterm>management network</glossterm>. The storage node also
+      needs an empty block storage device of suitable size for your
+      environment. For more information, see
+      <xref linkend="ch_basic_environment"/>.</para>
+    <step>
+      <para>Configure the management interface:</para>
+      <para>IP address: 10.0.0.41</para>
+      <para>Network mask: 255.255.255.0 (or /24)</para>
+      <para>Default gateway: 10.0.0.1</para>
+    </step>
+    <step>
+      <para>Set the hostname of the node to
+        <replaceable>block1</replaceable>.</para>
+    </step>
+    <step>
+      <para>Copy the contents of the <filename>/etc/hosts</filename> file from
+        the controller node to the storage node and add the following
+        to it:</para>
+      <programlisting language="ini"># block1
+10.0.0.41       block1</programlisting>
+      <para>Also add this content to the <filename>/etc/hosts</filename> file
+        on all other nodes in your environment.</para>
+    </step>
+    <step>
+      <para>Install and configure
+        <glossterm baseform="Network Time Protocol (NTP)">NTP</glossterm>
+        using the instructions in
+        <xref linkend="basics-ntp-other-nodes"/>.</para>
+    </step>
+    <step>
+      <para>Install the LVM packages:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install lvm2</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install lvm2</userinput></screen>
+       <note>
+         <para>Some distributions include LVM by default.</para>
+       </note>
+    </step>
+    <step os="rhel;centos;fedora">
+      <para>Start the LVM metadata service and configure it to start when the
+        system boots:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl enable lvm2-lvmetad.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start lvm2-lvmetad.service</userinput></screen>
+    </step>
+    <step>
+      <para>Create the LVM physical volume <literal>/dev/sdb</literal>:</para>
+      <screen><prompt>#</prompt> <userinput>pvcreate /dev/sdb</userinput>
+<computeroutput>  Physical volume "/dev/sdb" successfully created</computeroutput></screen>
+      <note>
+        <para>If your system uses a different device name, adjust these
+          steps accordingly.</para>
+      </note>
+    </step>
+    <step>
+      <para>Create the LVM volume group
+        <literal>cinder-volumes</literal>:</para>
+      <screen><prompt>#</prompt> <userinput>vgcreate cinder-volumes /dev/sdb</userinput>
+<computeroutput>  Volume group "cinder-volumes" successfully created</computeroutput></screen>
+      <para>The Block Storage service creates logical volumes in this
+        volume group.</para>
+    </step>
+    <step>
+      <para>Only instances can access Block Storage volumes. However, the
+        underlying operating system manages the devices associated with
+        the volumes. By default, the LVM volume scanning tool scans the
+        <literal>/dev</literal> directory for block storage devices that
+        contain volumes. If tenants use LVM on their volumes, the scanning
+        tool detects these volumes and attempts to cache them which can cause
+        a variety of problems with both the underlying operating system
+        and tenant volumes. You must reconfigure LVM to scan only the devices
+        that contain the <literal>cinder-volume</literal> volume group. Edit
+        the <filename>/etc/lvm/lvm.conf</filename> file and complete the
+        following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>devices</literal> section, add a filter
+            that accepts the <literal>/dev/sdb</literal> device and rejects
+            all other devices:</para>
+          <programlisting language="ini">devices {
+...
+filter = [ "a/sdb/", "r/.*/"]</programlisting>
+          <para>Each item in the filter array begins with <literal>a</literal>
+            for <emphasis>accept</emphasis> or <literal>r</literal> for
+            <emphasis>reject</emphasis> and includes a regular expression
+            for the device name. The array must end with
+            <literal>r/.*/</literal> to reject any remaining
+            devices. You can use the <command>vgs -vvvv</command>
+            command to test filters.</para>
+          <warning>
+            <para>If your storage nodes use LVM on the operating system disk,
+              you must also add the associated device to the filter. For
+              example, if the <literal>/dev/sda</literal> device contains
+              the operating system:</para>
+            <programlisting language="ini">filter = [ "a/sda", "a/sdb/", "r/.*/"]</programlisting>
+            <para>Similarly, if your compute nodes use LVM on the operating
+              system disk, you must also modify the filter in the
+              <literal>/etc/lvm/lvm.conf</literal> file on those nodes to
+              include only the operating system disk. For example, if the
+              <literal>/dev/sda</literal> device contains the operating
+              system:</para>
+            <programlisting language="ini">filter = [ "a/sda", "r/.*/"]</programlisting>
+          </warning>
+        </step>
+      </substeps>
+    </step>
+  </procedure>
+  <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
+    <title>Install and configure Block Storage volume components</title>
+    <step>
+      <para>Install the packages:</para>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install cinder-volume python-mysqldb</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-cinder targetcli python-oslo-db MySQL-python</userinput></screen>
+      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-cinder-volume tgt python-mysql</userinput></screen>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/cinder/cinder.conf</filename> file
+        and complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[database]</literal> section, configure
+            database access:</para>
+          <programlisting language="ini">[database]
+...
+connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceable>controller</replaceable>/cinder</programlisting>
+          <para>Replace <replaceable>CINDER_DBPASS</replaceable> with
+            the password you chose for the Block Storage database.</para>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure
+            <application>RabbitMQ</application> message broker access:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+rpc_backend = rabbit
+rabbit_host = <replaceable>controller</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
+            password you chose for the <literal>guest</literal> account in
+            RabbitMQ.</para>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[keystone_authtoken]</literal> sections,
+            configure Identity service access:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+auth_strategy = keystone
+
+[keystone_authtoken]
+...
+auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+identity_uri = http://<replaceable>controller</replaceable>:35357
+admin_tenant_name = service
+admin_user = cinder
+admin_password = <replaceable>CINDER_PASS</replaceable></programlisting>
+          <para>Replace <replaceable>CINDER_PASS</replaceable> with the
+            password you chose for the <literal>cinder</literal> user in the
+            Identity service.</para>
+          <note>
+            <para>Comment out any <literal>auth_host</literal>,
+              <literal>auth_port</literal>, and
+              <literal>auth_protocol</literal> options because the
+              <literal>identity_uri</literal> option replaces them.</para>
+          </note>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            <literal>my_ip</literal> option:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+my_ip = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable></programlisting>
+          <para>Replace
+            <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable> with
+            the IP address of the management network interface on your
+            storage node, typically 10.0.0.41 for the first node in the
+            <link linkend="architecture_example-architectures">example
+            architecture</link>.</para>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            location of the Image Service:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+glance_host = <replaceable>controller</replaceable></programlisting>
+        </step>
+        <step os="rhel;centos;fedora">
+          <para>In the <literal>[DEFAULT]</literal> section, configure Block
+            Storage to use the <command>lioadm</command> iSCSI
+            service:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+iscsi_helper = lioadm</programlisting>
+        </step>
+        <step>
+          <para>(Optional) To assist with troubleshooting,
+            enable verbose logging in the <literal>[DEFAULT]</literal>
+            section:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+verbose = True</programlisting>
+        </step>
+      </substeps>
+    </step>
+    <step os="ubuntu">
+      <para>Due to a packaging bug, the Block Storage service cannot
+        execute commands with administrative privileges using the
+        <command>sudo</command> command. Run the following command to
+        resolve this issue:</para>
+      <screen><prompt>#</prompt> <userinput>cp /etc/sudoers.d/cinder_sudoers /etc/sudoers.d/cinder_sudoers.orig</userinput>
+<prompt>#</prompt> <userinput>sed -i 's,/etc/cinder/rootwrap.conf,/etc/cinder/rootwrap.conf *,g' \
+  /etc/sudoers.d/cinder_sudoers</userinput></screen>
+      <para>For more information, see the
+        <link xlink:href="https://bugs.launchpad.net/ubuntu/+source/cinder/+bug/1380425"
+        >bug report</link>.</para>
+    </step>
+  </procedure>
+  <procedure os="debian">
+    <title>Install and configure Block Storage volume components</title>
+    <step>
+      <para>Install the packages:</para>
+      <screen><prompt>#</prompt> <userinput>apt-get install cinder-volume python-mysqldb</userinput></screen>
+    </step>
+    <step>
+      <para>Respond to the prompts for
+        <link linkend="debconf-dbconfig-common">database management</link>,
+        <link linkend="debconf-keystone_authtoken">Identity service
+        credentials</link>,
+        <link linkend="debconf-api-endpoints">service endpoint
+        registration</link>, and
+        <link linkend="debconf-rabbitmq">message broker
+        credentials.</link>.</para>
+    </step>
+    <step>
+      <para>Respond to prompts for the volume group to associate with the
+        Block Storage service. The script scans for volume groups and
+        attempts to use the first one. If your system only contains the
+        <literal>cinder-volumes</literal> volume group, the script should
+        automatically choose it.</para>
+    </step>
+  </procedure>
+  <procedure>
+    <title>To finalize installation</title>
+    <step os="ubuntu;debian">
+      <para>Restart the Block Storage volume service including its
+        dependencies:</para>
+      <screen><prompt>#</prompt> <userinput>service tgt restart</userinput>
+<prompt>#</prompt> <userinput>service cinder-volume restart</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora;sles;opensuse">
+      <para>Start the Block Storage volume service including its dependencies
+        and configure them to start when the system boots:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-volume.service target.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-cinder-volume.service target.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service tgtd start</userinput>
+<prompt>#</prompt> <userinput>chkconfig tgtd on</userinput>
+<prompt>#</prompt> <userinput>service openstack-cinder-volume start</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-cinder-volume on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-cinder-volume.service tgtd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-cinder-volume.service tgtd.service</userinput></screen>
+    </step>
+    <step os="ubuntu">
+      <para>By default, the Ubuntu packages create an SQLite database.
+        Because this configuration uses a SQL database server, remove
+        the SQLite database file:</para>
+      <screen><prompt>#</prompt> <userinput>rm -f /var/lib/cinder/cinder.sqlite</userinput></screen>
+    </step>
+  </procedure>
+</section>
