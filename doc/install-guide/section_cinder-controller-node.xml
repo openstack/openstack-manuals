@@ -225,18 +225,6 @@ verbose = True</programlisting>
       <para>Populate the Block Storage database:</para>
       <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "cinder-manage db sync" cinder</userinput></screen>
     </step>
-    <step os="ubuntu">
-      <para>Due to a packaging bug, the Block Storage service cannot
-        execute commands with administrative privileges using the
-        <command>sudo</command> command. Run the following command to
-        resolve this issue:</para>
-      <screen><prompt>#</prompt> <userinput>cp /etc/sudoers.d/cinder_sudoers /etc/sudoers.d/cinder_sudoers.orig</userinput>
-<prompt>#</prompt> <userinput>sed -i 's,/etc/cinder/rootwrap.conf,/etc/cinder/rootwrap.conf *,g' \
-  /etc/sudoers.d/cinder_sudoers</userinput></screen>
-      <para>For more information, see the
-        <link xlink:href="https://bugs.launchpad.net/ubuntu/+source/cinder/+bug/1380425"
-        >bug report</link>.</para>
-    </step>
   </procedure>
   <procedure os="debian">
     <title>To install and configure Block Storage controller components</title>
