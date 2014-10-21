@@ -25,8 +25,8 @@
   <procedure>
     <step>
       <para>Install required packages:</para>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-trove python-troveclient python-glanceclient \
-  trove-common trove-api trove-taskmanager</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install python-trove python-troveclient \
+  trove-common trove-api trove-taskmanager trove-conductor</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-trove python-troveclient</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-trove python-troveclient</userinput></screen>
     </step>
@@ -60,18 +60,28 @@
     </step>
 
     <step>
-      <para>Edit the following configuration files, taking the below
+      <para>All configuration files should be placed at <filename>/etc/trove</filename> directory.
+          Edit the following configuration files, taking the below
       actions for each file:</para>
       <itemizedlist>
+        <listitem><para><filename>api-paste.ini</filename></para></listitem>
         <listitem><para><filename>trove.conf</filename></para></listitem>
         <listitem><para><filename>trove-taskmanager.conf</filename></para></listitem>
         <listitem><para><filename>trove-conductor.conf</filename></para></listitem>
       </itemizedlist>
       <substeps>
-
+        <step>
+          <para>You need to take upstream <filename>api-paste.ini</filename> and change content below in it:</para>
+          <programlisting language="ini">[composite:trove]
+auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+identity_uri = http://<replaceable>controller</replaceable>:35357
+auth_host = <replaceable>controller</replaceable>
+admin_tenant_name = service
+admin_user = trove
+admin_password = <replaceable>TROVE_PASS</replaceable></programlisting></step>
         <step><para>Edit the <literal>[DEFAULT]</literal> section of
-        each file and set appropriate values for the OpenStack service
-        URLs, logging and messaging configuration, and SQL
+        each file (except <filename>api-paste.ini</filename>) and set appropriate values for the OpenStack service
+        URLs (can be handled by Keystone service catalog), logging and messaging configuration, and SQL
         connections:</para>
         <programlisting language="ini">[DEFAULT]
 log_dir = /var/log/trove
@@ -88,38 +98,26 @@ notifier_queue_hostname = <replaceable>controller</replaceable></programlisting>
           setting the following options in the <literal>[DEFAULT]</literal>
           configuration group of each file:</para>
           <programlisting language="ini">[DEFAULT]
-...
-rpc_backend = rabbit
+control_exchange = trove
 rabbit_host = <replaceable>controller</replaceable>
-rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+rabbit_userid = <replaceable>guest</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable>
+rabbit_virtual_host= <replaceable>/</replaceable>
+rpc_backend = trove.openstack.common.rpc.impl_kombu</programlisting>
         </step>
 
       </substeps>
-    </step>
-
-    <step os="opensuse;sles;fedora;rhel;centos;ubuntu">
-      <para>Edit the <literal>[filter:authtoken]</literal> section
-      of the <filename>api-paste.ini</filename> file so it matches the
-      listing shown below:</para>
-      <programlisting language="ini">[filter:authtoken]
-auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
-identity_uri = http://<replaceable>controller</replaceable>:35357
-admin_user = trove
-admin_password = <replaceable>ADMIN_PASS</replaceable>
-admin_tenant_name = service
-signing_dir = /var/cache/trove</programlisting>
     </step>
 
     <step><para>Edit the <filename>trove.conf</filename> file so it includes
     appropriate values for the default datastore and network label
     regex as shown below:</para>
     <programlisting language="ini">[DEFAULT]
-default_datastore = mysql
-....
 # Config option for showing the IP address that nova doles out
 add_addresses = True
 network_label_regex = ^NETWORK_LABEL$
-....</programlisting>
+control_exchange = trove
+    </programlisting>
     </step>
 
     <step>
@@ -127,7 +125,6 @@ network_label_regex = ^NETWORK_LABEL$
       so it includes the required settings to
       connect to the OpenStack Compute service as shown below:</para>
       <programlisting language="ini">[DEFAULT]
-....
 # Configuration options for talking to nova via the novaclient.
 # These options are for an admin user in your keystone config.
 # It proxy's the token received from the user to send to nova via this admin users creds,
@@ -136,7 +133,8 @@ nova_proxy_admin_user = admin
 nova_proxy_admin_pass = <replaceable>ADMIN_PASS</replaceable>
 nova_proxy_admin_tenant_name = service
 taskmanager_manager = trove.taskmanager.manager.Manager
-...</programlisting>
+log_file=trove-taskmanager.log
+    </programlisting>
     </step>
 
     <step os="opensuse;sles;fedora;rhel;centos;ubuntu">
@@ -154,7 +152,7 @@ IDENTIFIED BY '<replaceable>TROVE_DBPASS</replaceable>';</userinput></screen>
       <substeps>
         <step>
           <para>Initialize the database:</para>
-          <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "trove-manage db_sync" trove</userinput></screen>
+          <screen><prompt>#</prompt> <userinput>trove-manage db_sync</userinput></screen>
         </step>
         <step>
           <para>Create a datastore. You need to create a separate datastore for
@@ -163,12 +161,6 @@ IDENTIFIED BY '<replaceable>TROVE_DBPASS</replaceable>';</userinput></screen>
           <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "trove-manage datastore_update mysql ''" trove</userinput></screen>
         </step>
       </substeps>
-    </step>
-    <step os="debian">
-      <para>Create a datastore. You need to create a separate datastore for
-          each type of database you want to use, for example, MySQL, MongoDB, Cassandra.
-          This example shows you how to create a datastore for a MySQL database:</para>
-          <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "trove-manage datastore_update mysql ''" trove</userinput></screen>
     </step>
     <step>
       <para>Create a trove image.</para>
@@ -189,17 +181,30 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable>
 nova_proxy_admin_user = admin
 nova_proxy_admin_pass = <replaceable>ADMIN_PASS</replaceable>
 nova_proxy_admin_tenant_name = service
-trove_auth_url = http://<replaceable>controller</replaceable>:35357/v2.0</programlisting>
+trove_auth_url = http://<replaceable>controller</replaceable>:35357/v2.0
+log_file = trove-guestagent.log</programlisting>
         </step>
       </substeps>
     </step>
-
     <step>
-      <para>Update the datastore to use the new image, using the
-      <command>trove-manage</command> command.</para>
-      <para>This example shows you how to create a MySQL 5.5 datastore:</para>
-      <screen><prompt>#</prompt> <userinput>trove-manage --config-file /etc/trove/trove.conf datastore_version_update \
-  mysql mysql-5.5 mysql <replaceable>glance_image_ID</replaceable> mysql-server-5.5 1</userinput></screen>
+      <para>Update the datastore and version to use the specific image with the <command>trove-manage</command> command.</para>
+      <screen><prompt>#</prompt><userinput>trove-manage datastore_update <replaceable>datastore_name</replaceable> <replaceable>datastore_version</replaceable></userinput>
+      <prompt>#</prompt><userinput>trove-manage datastore_version_update <replaceable>datastore_name</replaceable> <replaceable>version_name</replaceable> \
+      <replaceable>datastore_manager</replaceable> <replaceable>glance_image_id</replaceable> <replaceable>packages</replaceable> <replaceable>active</replaceable></userinput></screen>
+      <para>This example shows you how to create a MySQL datastore with version 5.5:</para>
+      <screen><prompt>#</prompt><userinput>trove-manage datastore_update mysql ''</userinput>
+      <prompt>#</prompt><userinput>trove-manage datastore_version_update mysql 5.5 mysql <replaceable>glance_image_ID</replaceable> mysql-server-5.5 1
+      <prompt>#</prompt><userinput>trove-manage datastore_update mysql 5.5</userinput>
+      </userinput></screen>
+      <para>
+          Upload post-provisioning configuration validation rules:
+      </para>
+      <screen><prompt>#</prompt><userinput>trove-manage db_load_datastore_config_parameters <replaceable>datastore_name</replaceable> <replaceable>version_name</replaceable> \
+          <replaceable>/etc/<replaceable>datastore_name</replaceable>/validation-rules.json</replaceable></userinput></screen>
+      <para>Example for uplodating rules for MySQL datastore:</para>
+      <screen><prompt>#</prompt> <userinput>trove-manage db_load_datastore_config_parameters \
+          mysql 5.5 "$PYBASEDIR"/trove/templates/mysql/validation-rules.json
+      </userinput></screen>
     </step>
 
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
