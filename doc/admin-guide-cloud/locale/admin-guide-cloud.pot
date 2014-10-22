@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-10-17 06:12+0000\n"
+"POT-Creation-Date: 2014-10-22 06:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6898,7 +6898,7 @@ msgstr ""
 msgid "The list of supported database back ends:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:91(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:772(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:91(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:790(td)
 msgid "MongoDB"
 msgstr ""
 
@@ -6910,11 +6910,11 @@ msgstr ""
 msgid "PostgreSQL"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:100(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:791(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:100(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:809(td)
 msgid "HBase"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:103(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:799(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:103(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:817(td)
 msgid "DB2"
 msgstr ""
 
@@ -7859,90 +7859,106 @@ msgid "Expression evaluation gracefully handles NaNs and exceptions. In such a c
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:726(title)
-msgid "Storing samples"
+msgid "Block Storage audit script setup to get notifications"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:727(para)
+msgid "If you want to collect OpenStack Block Storage notification on demand, you can use <placeholder-1/> from OpenStack Block Storage. This script becomes available when you install OpenStack Block Storage, so you can use it without any specific settings and you don't need to authenticate to access the data. To use it, you must run this command in the following format:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:734(para)
+msgid "This script outputs what volumes or snapshots were created or deleted or existed in a given period of time and some information about these volumes or snapshots. Information about the existence and size of volumes and snapshots is store in the Telemetry module."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:739(para)
+msgid "Using this script via cron you can get notifications periodically, for example, every 5 minutes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:744(title)
+msgid "Storing samples"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:745(para)
 msgid "The Telemetry module has a separate service that is responsible for persisting the data that is coming from the pollsters or received as notifications. The data is stored in a database back end, the list of supported databases can be found in <xref linkend=\"section_telemetry-supported-dbs\"/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:732(para)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:750(para)
 msgid "The <systemitem class=\"service\">ceilometer-collector</systemitem> service receives the samples as metering messages from the message bus of the configured AMQP service. It stores these samples without any modification in the configured back end. The service has to run on a host machine from which it has access to the database."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:736(para)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:754(para)
 msgid "Multiple <systemitem class=\"service\">ceilometer-collector</systemitem> process can be run at a time. It is also supported to start multiple worker threads per collector process. The <parameter>collector_workers</parameter> configuration option has to be modified in the <link href=\"http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html\"> collector section</link> of the <filename>ceilometer.conf</filename> configuration file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:743(para)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:761(para)
 msgid "Using multiple workers per collector process is not recommended to be used with PostgreSQL as database back end."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:746(para)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:764(para)
 msgid "By default the time to live value (ttl) for samples is set to -1, which means that they are kept in the database forever. This can be changed by modifying the <parameter>time_to_live </parameter> parameter in <filename>ceilometer.conf</filename>. The value has to be specified in seconds and it means that every sample that based on its timestamp is older, than the specified value will be deleted from the database."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:751(para)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:769(para)
 msgid "When the samples are deleted, there are cases, when users and resources remain in the database without any corresponding sample. There is a command line script, that deletes these useless entries, which is called <systemitem class=\"service\">ceilometer-expirer</systemitem>. This script should be run periodically, for instance in a cron job, to ensure that the database is cleaned up properly."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:756(para)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:774(para)
 msgid "The level of support differs in case of the configured back end:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:758(caption)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:776(caption)
 msgid "Time-to-live support for database back ends"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:764(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:782(td)
 msgid "Database"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:765(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:783(td)
 msgid "ttl value support"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:766(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:777(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:784(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:795(systemitem)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:784(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:795(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:802(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:813(systemitem)
 msgid "ceilometer-expirer"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:766(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:784(td)
 msgid "<placeholder-1/> capabilities"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:773(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:791(td)
 msgid "MongoDB has a built-in mechanism for deleting samples that are older than the configured ttl value."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:775(td)
-msgid "In case of this database, only the lingering dead resource, user and project entries entries will be deleted by <placeholder-1/>."
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:793(td)
+msgid "In case of this database, only the lingering dead resource, user and project entries will be deleted by <placeholder-1/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:781(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:799(td)
 msgid "SQL-based back ends"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:782(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:800(td)
 msgid "The library (SQLAlchemy) that is used for accessing SQL-based back ends does not support using the ttl value."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:787(parameter)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:805(parameter)
 msgid "time_to_live"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:784(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:802(td)
 msgid "<placeholder-1/> has to be used for deleting both the samples and the remaining entires in other database tables. The script will delete samples based on the <placeholder-2/> value that is set in the configuration file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:792(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:810(td)
 msgid "HBase does not support this functionality currently, therefore the ttl value in the configuration file is ignored."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:794(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:812(td)
 msgid "The samples are not deleted by using <placeholder-1/>, this functionality is not supported."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:800(td) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:801(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:818(td) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:819(td)
 msgid "Same as in case of MongoDB."
 msgstr ""
 
