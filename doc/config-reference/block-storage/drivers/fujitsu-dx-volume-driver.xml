@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="fujitsu-smis-driver"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+    <?dbhtml stop-chunking?>
+    <title>FUJITSU ETERNUS DX iSCSI and FC drivers</title>
+    <para>The driver runs volume operations by communicating with the
+        back-end FUJITSU storage. It uses a CIM client in Python called PyWBEM
+        to perform CIM operations over HTTP.
+    </para>
+    <section xml:id="fujitsu-reqs">
+        <title>System requirements</title>
+        <para>Supported ETERNUS DX storage systems</para>
+        <itemizedlist>
+            <listitem>
+                <para>ETERNUS DX80 S2/DX90 S2</para>
+            </listitem>
+            <listitem>
+                <para>ETERNUS DX410 S2/DX440 S2</para>
+            </listitem>
+            <listitem>
+                <para>ETERNUS DX8100 S2/DX8700 S2</para>
+            </listitem>
+            <listitem>
+                <para>ETERNUS DX100 S3/DX200 S3 (*1)</para>
+            </listitem>
+            <listitem>
+                <para>ETERNUS DX500 S3/DX600 S3 (*1)</para>
+            </listitem>
+            <listitem>
+                <para>ETERNUS DX200F (*1)</para>
+            </listitem>
+        </itemizedlist>
+        <para>*1: Applying the firmware version V10L2x is required.
+        </para>
+    </section>
+    <section xml:id="fujitsu-supported-ops">
+        <title>Supported operations</title>
+        <para>ETERNUS DX S3 with Thin Provisioning Pool support these operations:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Create, delete, attach, and detach volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Create, list, and delete volume snapshots.</para>
+            </listitem>
+            <listitem>
+                <para>Create a volume from a snapshot.</para>
+            </listitem>
+            <listitem>
+                <para>Copy an image to a volume.</para>
+            </listitem>
+            <listitem>
+                <para>Copy a volume to an image.</para>
+            </listitem>
+            <listitem>
+                <para>Clone a volume.</para>
+            </listitem>
+            <listitem>
+                <para>Extend a volume.</para>
+            </listitem>
+        </itemizedlist>
+        <para>ETERNUS DX S3 with RAID Group support these operations:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Create, delete, attach, and detach volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Create, list, and delete volume snapshots.</para>
+            </listitem>
+            <listitem>
+                <para>Create a volume from a snapshot.</para>
+            </listitem>
+            <listitem>
+                <para>Copy an image to a volume.</para>
+            </listitem>
+            <listitem>
+                <para>Copy a volume to an image.</para>
+            </listitem>
+            <listitem>
+                <para>Clone a volume.</para>
+            </listitem>
+        </itemizedlist>
+        <para>ETERNUS DX S2 with Thin Provisioning Pool support these operations:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Create, delete, attach, and detach volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Create, list, and delete volume snapshots.</para>
+            </listitem>
+            <listitem>
+                <para>Copy an image to a volume.</para>
+            </listitem>
+            <listitem>
+                <para>Copy a volume to an image.</para>
+            </listitem>
+            <listitem>
+                <para>Extend a volume.</para>
+            </listitem>
+        </itemizedlist>
+        <para>ETERNUS DX S2 with RAID Group support these operations:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Create, delete, attach, and detach volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Create, list, and delete volume snapshots.</para>
+            </listitem>
+            <listitem>
+                <para>Copy an image to a volume.</para>
+            </listitem>
+            <listitem>
+                <para>Copy a volume to an image.</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    <section xml:id="fujitsu-prep">
+        <title>Set up the ETERNUS DX drivers</title>
+        <xi:include href="../../../common/tables/cinder-fujitsu_eternus_dx.xml"/>
+        <procedure>
+            <step>
+                <title>Install the <package>python-pywbem</package> package</title>
+                <para>Install the <package>python-pywbem</package> package for your
+                        distribution, as follows:</para>
+                    <itemizedlist>
+                        <listitem>
+                            <para>On Ubuntu:</para>
+                            <screen><prompt>#</prompt> <userinput>apt-get install python-pywbem</userinput></screen>
+                        </listitem>
+                        <listitem>
+                            <para>On openSUSE:</para>
+                            <screen><prompt>#</prompt> <userinput>zypper install python-pywbem</userinput></screen>
+                        </listitem>
+                        <listitem>
+                            <para>On Fedora:</para>
+                            <screen><prompt>#</prompt> <userinput>yum install pywbem</userinput></screen>
+                        </listitem>
+                    </itemizedlist>
+            </step>
+            <step>
+                <title>Adjust the SMI-S settings for the ETERNUS DX</title>
+                <para>The SMI-S of the ETERNUS DX must be enabled in advance.
+                    Enable the SMI-S of the ETERNUS DX by using
+                     ETERNUS Web GUI or ETERNUS CLI. For more details
+                      on this procedure, refer to the ETERNUS Web
+                      GUI manuals or the ETERNUS CLI manuals.
+                </para>
+                <note>
+                    <para>The SMI-S is enabled after the ETERNUS
+                         DX is rebooted.
+                    </para>
+                </note>
+            </step>
+            <step>
+                <title>Create an account</title>
+                <para>To access the ETERNUS DX via SMI-S,
+                    a user account with <literal>Admin</literal>, <literal>Storage Admin</literal>,
+                     <literal>Maintainer</literal>, or <literal>Software</literal> as a user level
+                     is required. Use ETERNUS Web GUI or ETERNUS
+                     CLI to register the user account in the
+                     ETERNUS DX. For more details on the registration
+                     procedure, refer to the ETERNUS Web GUI
+                     manuals or the ETERNUS CLI manuals.
+                </para>
+            </step>
+            <step>
+                <title>Create the storage pool</title>
+                <para>Create a storage pool for creating volumes
+                     in advance. A RAID group or a Thin Provisioning
+                     Pool can be specified for the storage pool.
+                    Use ETERNUS Web GUI or ETERNUS CLI to create
+                     a RAID group or a Thin Provisioning Pool in
+                     the ETERNUS DX. For more details on the
+                     creation procedure, refer to the ETERNUS Web
+                     GUI manuals or the ETERNUS CLI manuals.
+                </para>
+            </step>
+            <step>
+                <title>ETERNUS ports settings</title>
+                <para>When the CA port is used, change the
+                     following host interface port parameters
+                     by using the relevant commands from the
+                     ETERNUS CLI.
+                </para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Change the port mode to "CA".
+                            Use the <command>set host-port-mode</command> command
+                             to change the port mode.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>Enable the host affinity setting.
+                            Use the <command>set fc-parameters</command> command
+                             to change the host affinity setting.
+                        </para>
+                    </listitem>
+                </itemizedlist>
+                <para>Example: For FC ports</para>
+                <screen><prompt>CLI&gt;</prompt> <userinput>set fc-parameters -port all -host-affinity enable</userinput></screen>
+                <para>Example: For iSCSI ports</para>
+                <screen><prompt>CLI&gt;</prompt> <userinput>set iscsi-parameters -port all -host-affinity enable</userinput></screen>
+            </step>
+            <step>
+                <title>Register licenses to the ETERNUS DX</title>
+                <para>An Advanced Copy Feature license is required
+                     to create snapshots or create volumes from snapshots.
+                    Purchase this license separately and register
+                     the license in the ETERNUS DX.
+                    Note that the Advanced Copy table size setting is
+                     also required. For details on registering and
+                     configuring the Advanced Copy function, refer to the
+                     ETERNUS Web GUI manuals.
+                </para>
+            </step>
+            <step>
+                <title>Enable the Snap Data Pool</title>
+                <para>SnapOPC is used for the SnapShot function
+                     of the ETERNUS OpenStack VolumeDriver.
+                    Since Snap Data Pool (SDP) is required for
+                     SnapOPC, create an SDPV and enable the SDP.
+                    For more details, refer to the ETERNUS Web
+                     GUI manuals or the ETERNUS CLI manuals.
+                </para>
+            </step>
+            <step>
+                <title>SAN connection</title>
+                <para>FC and iSCSI can be used as a host interface.
+                    The compute node of OpenStack and the ETERNUS
+                     DX must be connected to the SAN and be available
+                     for communication in advance.
+                    To use Fibre Channel switches, zoning settings
+                     for the Fibre Channel switches are also required.
+                    To use the iSCSI connections, logging in to the
+                     iSCSI target is required. The host affinity
+                     mode for all of the host interface ports of
+                     the ETERNUS DX must also be enabled in advance.
+                     For more details, refer to the ETERNUS Web
+                     GUI manuals or the ETERNUS CLI manuals.
+                </para>
+            </step>
+            <step>
+                <title>Update <filename>cinder.conf</filename> configuration
+                    file</title>
+                <para>Make the following changes in
+                        <filename>/etc/cinder/cinder.conf</filename>.</para>
+                <para>For iSCSI driver, add the following entries, where
+                        <literal>10.2.2.2</literal> is the IP address
+                    of the ETERNUS DX iSCSI target:</para>
+                <programlisting language="ini">iscsi_target_prefix = iqn.2000-09.com.fujitsu
+iscsi_ip_address = 10.2.2.2
+volume_driver = cinder.volume.drivers.fujitsu_eternus_dx_iscsi.FJDXISCSIDriver
+cinder_smis_config_file = /etc/cinder/cinder_fujitsu_eternus_dx.xml</programlisting>
+                <para>For FC driver, add the following entries:</para>
+                <programlisting language="ini">volume_driver = cinder.volume.drivers.fujitsu_eternus_dx_fc.FJDXFCDriver
+cinder_smis_config_file = /etc/cinder/cinder_fujitsu_eternus_dx.xml</programlisting>
+                <para>Restart the <systemitem class="service">cinder-volume</systemitem> service.</para>
+            </step>
+            <step>
+                <title>Create <filename>cinder_fujitsu_eternus_dx.xml</filename>
+                    configuration file</title>
+                <para>Create the <filename>/etc/cinder/cinder_fujitsu_eternus_dx.xml</filename> file. You do not
+                    need to restart the service for this change.</para>
+                <para>Add the following lines to the XML
+                    file:</para>
+                <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;FUJITSU&gt;
+&lt;StorageType&gt;xxxx&lt;/StorageType&gt;
+&lt;EcomServerIp&gt;x.x.x.x&lt;/EcomServerIp&gt;
+&lt;EcomServerPort&gt;xxxx&lt;/EcomServerPort&gt;
+&lt;EcomUserName&gt;xxxxxxx&lt;/EcomUserName&gt;
+&lt;EcomPassword&gt;xxxxxxx&lt;/EcomPassword&gt;
+&lt;SnapPool&gt;xxxxxxx&lt;/SnapPool&gt;
+&lt;Timeout&gt;xx&lt;/Timeout&gt;
+&lt;/FUJITSU&gt;</programlisting>
+                <para>Where:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para><systemitem>StorageType</systemitem> is the thin pool from which the user
+                            wants to create the volume.
+                            Thin pools can be created using ETERNUS WebGUI.
+                            If the <literal>StorageType</literal> tag is not defined,
+                            you have to define volume types and set the pool name in
+                            extra specs.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem>EcomServerIp</systemitem> is
+                            the IP address of the ETERNUS DX MNT port.</para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem>EcomServerPort</systemitem> is
+                            the port number of the ETERNUS DX SMI-S port number.</para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem>EcomUserName</systemitem> and
+                                <systemitem>EcomPassword</systemitem> are credentials
+                             for the ETERNUS DX.</para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem>SnapPool</systemitem> is
+                            the thick pool(RAID Group) for create the snapshot.
+                            Thick pools can be created using ETERNUS WebGUI.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><systemitem>Timeout</systemitem> specifies the maximum
+                            number of seconds you want to wait for an operation to
+                            finish.
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </step>
+            <step>
+                <title>Volume type support</title>
+                <para>Volume type support enables a single instance of
+                    <systemitem>cinder-volume</systemitem> to support multiple pools
+                    and thick/thin provisioning.</para>
+                <para>When the <literal>StorageType</literal> tag in
+                    <filename>cinder_fujitsu_eternus_dx.xml</filename> is used,
+                    the pool name is specified in the tag.
+                    Only thin provisioning is supported in this case.</para>
+                <para>When the <literal>StorageType</literal> tag is not used in
+                    <filename>cinder_fujitsu_eternus_dx.xml</filename>, the volume type
+                    needs to be used to define a pool name and a provisioning type.
+                    The pool name is the name of a pre-created pool.
+                    The provisioning type could be either <literal>thin</literal>
+                    or <literal>thick</literal>.</para>
+                <para>Here is an example of how to set up volume type.
+                    First create volume types. Then define extra specs for
+                    each volume type.</para>
+                <procedure>
+                    <step>
+                        <para>Create the volume types:</para>
+                        <screen><prompt>$</prompt> <userinput>cinder type-create "High Performance"</userinput>
+<prompt>$</prompt> <userinput>cinder type-create "Standard Performance"</userinput></screen>
+                    </step>
+                    <step>
+                        <para>Setup the volume type extra specs:</para>
+                        <screen><prompt>$</prompt> <userinput>cinder type-key "High Performance" set storagetype:pool=smis_pool</userinput>
+<prompt>$</prompt> <userinput>cinder type-key "High Performance" set storagetype:provisioning=thick</userinput>
+<prompt>$</prompt> <userinput>cinder type-key "Standard Performance" set storagetype:pool=smis_pool2</userinput>
+<prompt>$</prompt> <userinput>cinder type-key "Standard Performance" set storagetype:provisioning=thin</userinput></screen>
+                     </step>
+                 </procedure>
+                 <para>In the above example, two volume types are created.
+                     They are <literal>High Performance</literal> and <literal>
+                     Standard Performance</literal>. For <literal>High Performance
+                     </literal>, <literal>storagetype:pool</literal> is set to
+                     <literal>smis_pool</literal> and <literal>storagetype:provisioning
+                     </literal> is set to <literal>thick</literal>. Similarly
+                     for <literal>Standard Performance</literal>, <literal>
+                     storagetype:pool</literal>. is set to <literal>smis_pool2</literal>
+                     and <literal>storagetype:provisioning</literal> is set to
+                     <literal>thin</literal>. If <literal>storagetype:provisioning
+                     </literal> is not specified, it will default to <literal>
+                     thin</literal>.</para>
+                 <note><para>Volume type names <literal>High Performance</literal> and
+                     <literal>Standard Performance</literal> are user-defined and can
+                     be any names. Extra spec keys <literal>storagetype:pool</literal>
+                     and <literal>storagetype:provisioning</literal> have to be the
+                     exact names listed here. Extra spec value <literal>smis_pool
+                     </literal> is your pool name. The extra spec value for
+                     <literal>storagetype:provisioning</literal> has to be either
+                     <literal>thick</literal> or <literal>thin</literal>.
+                     The driver will look for a volume type first. If the volume type is
+                     specified when creating a volume, the driver will look for the volume
+                     type definition and find the matching pool and provisioning type.
+                     If the volume type is not specified, it will fall back to use the
+                     <literal>StorageType</literal> tag in <filename>
+                     cinder_fujitsu_eternus_dx.xml</filename>.</para></note>
+            </step>
+        </procedure>
+    </section>
+</section>
