@@ -85,8 +85,8 @@ environment file. The resource you provide in this manner must have an
 identifier, and references either other resources IDs or the URL of an existing
 template file.
 
-The following example maps the new ``OS::Networking::FloatingIP`` resource
-to the existing ``OS::Nova::FloatingIP`` resource:
+The following example maps the new :hotref:`OS::Networking::FloatingIP`
+resource to the existing :hotref:`OS::Nova::FloatingIP` resource:
 
 .. code-block:: yaml
 

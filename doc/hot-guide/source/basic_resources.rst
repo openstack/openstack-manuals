@@ -16,7 +16,7 @@ Manage instances
 Create an instance
 ------------------
 
-Use the ``OS::Nova::Server`` resource to create a Compute instance. The
+Use the :hotref:`OS::Nova::Server` resource to create a Compute instance. The
 ``flavor`` property is the only mandatory one, but you need to define a boot
 source using one of the ``image`` or ``block_device_mapping`` properties.
 
@@ -41,20 +41,20 @@ connecting to the ``private`` network:
 Connect an instance to a network
 --------------------------------
 
-Use the ``networks`` property of an ``OS::Nova::Server`` resource to define
-which networks an instance should connect to. Define each network as a YAML
-map, containing one of the following keys:
+Use the ``networks`` property of an :hotref:`OS::Nova::Server` resource to
+define which networks an instance should connect to. Define each network as a
+YAML map, containing one of the following keys:
 
 ``port``
     The ID of an existing Networking port. You usually create this port in the
-    same template using an ``OS::Neutron::Port`` resource. You will be able to
-    associate a floating IP to this port, and the port to your Compute
+    same template using an :hotref:`OS::Neutron::Port` resource. You will be
+    able to associate a floating IP to this port, and the port to your Compute
     instance.
 
 ``network``
     The name or ID of an existing network. You don't need to create an
-    ``OS::Neutron::Port`` resource if you use this property, but you will not
-    be able to associate a floating IP with the instance interface in the
+    :hotref:`OS::Neutron::Port` resource if you use this property, but you will
+    not be able to associate a floating IP with the instance interface in the
     template.
 
 The following example demonstrates the use of the ``port`` and ``network``
@@ -90,10 +90,12 @@ properties:
 Create and associate security groups to an instance
 ---------------------------------------------------
 
-Use the ``OS::Neutron::SecurityGroup`` resource to create security groups.
+Use the :hotref:`OS::Neutron::SecurityGroup` resource to create security
+groups.
 
-Define the ``security_groups`` property of the ``OS::Neutron::Port`` resource
-to associate security groups to a port, then associate the port to an instance.
+Define the ``security_groups`` property of the :hotref:`OS::Neutron::Port`
+resource to associate security groups to a port, then associate the port to an
+instance.
 
 The following example creates a security group allowing inbound connections on
 ports 80 and 443 (web server) and associates this security group to an instance
@@ -143,9 +145,9 @@ instances.
 OS::Nova resources
 ~~~~~~~~~~~~~~~~~~
 
-Use the ``OS::Nova::FloatingIP`` resource to create a floating IP, and the
-``OS::Nova::FloatingIPAssociation`` resource to associate the floating IP to an
-instance.
+Use the :hotref:`OS::Nova::FloatingIP` resource to create a floating IP, and
+the :hotref:`OS::Nova::FloatingIPAssociation` resource to associate the
+floating IP to an instance.
 
 The following example creates an instance and a floating IP, and associate the
 floating IP to the instance:
@@ -180,9 +182,9 @@ OS::Neutron resources
     The Networking service (neutron) must be enabled on your OpenStack
     deployment to use these resources.
 
-Use the ``OS::Neutron::FloatingIP`` resource to create a floating IP, and the
-``OS::Neutron::FloatingIPAssociation`` resource to associate the floating IP to
-a port:
+Use the :hotref:`OS::Neutron::FloatingIP` resource to create a floating IP, and
+the :hotref:`OS::Neutron::FloatingIPAssociation` resource to associate the
+floating IP to a port:
 
 .. code-block:: yaml
 
@@ -211,8 +213,8 @@ Enable remote access to an instance
 -----------------------------------
 
 
-The ``key_name`` attribute of the ``OS::Nova::Server`` resource defines the key
-pair to use to enable SSH remote access:
+The ``key_name`` attribute of the :hotref:`OS::Nova::Server` resource defines
+the key pair to use to enable SSH remote access:
 
 .. code-block:: yaml
 
@@ -233,8 +235,8 @@ pair to use to enable SSH remote access:
 Create a key pair
 -----------------
 
-You can create new key pairs with the ``OS::Nova::KeyPair`` resource. Key pairs
-can be imported or created during the stack creation.
+You can create new key pairs with the :hotref:`OS::Nova::KeyPair` resource. Key
+pairs can be imported or created during the stack creation.
 
 If the ``public_key`` property is not specified, the Orchestration module
 creates a new key pair. If the ``save_private_key`` property is set to
@@ -276,8 +278,8 @@ Create a network and a subnet
     deployment to create and manage networks and subnets. Networks and subnets
     cannot be created if your deployment uses legacy networking (nova-network).
 
-Use the ``OS::Neutron::Net`` resource to create a network, and the
-``OS::Neutron::Subnet`` resource to provide a subnet for this network:
+Use the :hotref:`OS::Neutron::Net` resource to create a network, and the
+:hotref:`OS::Neutron::Subnet` resource to provide a subnet for this network:
 
 .. code-block:: yaml
 
@@ -297,8 +299,8 @@ Use the ``OS::Neutron::Net`` resource to create a network, and the
 Create and manage a router
 --------------------------
 
-Use the ``OS::Neutron::Router`` resource to create a router. You can define its
-gateway with the ``external_gateway_info`` property:
+Use the :hotref:`OS::Neutron::Router` resource to create a router. You can
+define its gateway with the ``external_gateway_info`` property:
 
 .. code-block:: yaml
 
@@ -308,8 +310,8 @@ gateway with the ``external_gateway_info`` property:
         properties:
           external_gateway_info: { network: public }
 
-You can connect subnets to routers with the ``OS::Neutron::RouterInterface``
-resource:
+You can connect subnets to routers with the
+:hotref:`OS::Neutron::RouterInterface` resource:
 
 .. code-block:: yaml
 
@@ -364,7 +366,8 @@ Manage volumes
 Create a volume
 ---------------
 
-Use the ``OS::Cinder::Volume`` resource to create a new Block Storage volume.
+Use the :hotref:`OS::Cinder::Volume` resource to create a new Block Storage
+volume.
 
 For example:
 
@@ -410,8 +413,8 @@ service uses the size of the backup to define the size of the new volume.
 Attach a volume to an instance
 ------------------------------
 
-Use the ``OS::Cinder::VolumeAttachment`` resource to attach a volume to an
-instance.
+Use the :hotref:`OS::Cinder::VolumeAttachment` resource to attach a volume to
+an instance.
 
 The following example creates a volume and an instance, and attaches the volume
 to the instance:
@@ -439,9 +442,9 @@ to the instance:
 Boot an instance from a volume
 ------------------------------
 
-Use the ``block_device_mapping`` property of the ``OS::Nova::Server`` resource
-to define a volume used to boot the instance. This property is a list of
-volumes to attach to the instance before its boot.
+Use the ``block_device_mapping`` property of the :hotref:`OS::Nova::Server`
+resource to define a volume used to boot the instance. This property is a list
+of volumes to attach to the instance before its boot.
 
 The following example creates a bootable volume from an image, and uses it to
 boot an instance:
