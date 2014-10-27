@@ -7,87 +7,85 @@
   <?dbhtml stop-chunking?>
   <title>Database</title>
   <para>Most OpenStack services use an SQL database to store information.
-    The procedures in this guide use <application>MariaDB</application>
-    or <application>MySQL</application> depending on the distribution.
+    The database typically runs on the controller node. The procedures in
+    this guide use <application>MariaDB</application> or
+    <application>MySQL</application> depending on the distribution.
     OpenStack services also support other SQL databases including
     <link xlink:href="http://www.postgresql.org/">PostgreSQL</link>.</para>
-  <section xml:id="basics-database-controller-node">
-    <title>Controller node</title>
-    <procedure>
-      <title>To install and configure the database server</title>
-      <step>
-        <para>Install the packages:</para>
-        <note os="ubuntu;rhel;centos;fedora;opensuse">
-          <para>The Python MySQL library is compatible with MariaDB.</para>
-        </note>
-        <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install mariadb-server python-mysqldb</userinput></screen>
-        <screen os="debian"><prompt>#</prompt> <userinput>apt-get install mysql-server python-mysqldb</userinput></screen>
-        <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mariadb mariadb-server MySQL-python</userinput></screen>
-        <para os="sles;opensuse">On openSUSE:</para>
-        <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client mariadb python-mysql</userinput></screen>
-        <para os="sles;opensuse">On SLES:</para>
-        <screen os="sles"><prompt>#</prompt> <userinput>zypper install mysql-client mysql python-mysql</userinput></screen>
-      </step>
-      <step os="ubuntu;debian">
-        <para>Choose a suitable password for the database root account.</para>
-      </step>
-      <step>
-        <para os="ubuntu;debian">Edit the
-          <filename>/etc/mysql/my.cnf</filename> file and complete the
-          following actions:</para>
-        <para os="rhel;centos;fedora;sles;opensuse">Edit the
-          <filename>/etc/my.cnf</filename> file and complete the following
-          actions:</para>
-        <substeps>
-          <step>
-            <para>In the <literal>[mysqld]</literal> section, set the
-              <literal>bind-address</literal> key to the management IP
-              address of the controller node to enable access by other
-              nodes via the management network:</para>
-            <programlisting language="ini">[mysqld]
+  <procedure>
+    <title>To install and configure the database server</title>
+    <step>
+      <para>Install the packages:</para>
+      <note os="ubuntu;rhel;centos;fedora;opensuse">
+        <para>The Python MySQL library is compatible with MariaDB.</para>
+      </note>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install mariadb-server python-mysqldb</userinput></screen>
+      <screen os="debian"><prompt>#</prompt> <userinput>apt-get install mysql-server python-mysqldb</userinput></screen>
+      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mariadb mariadb-server MySQL-python</userinput></screen>
+      <para os="sles;opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client mariadb python-mysql</userinput></screen>
+      <para os="sles;opensuse">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>zypper install mysql-client mysql python-mysql</userinput></screen>
+    </step>
+    <step os="ubuntu;debian">
+      <para>Choose a suitable password for the database root account.</para>
+    </step>
+    <step>
+      <para os="ubuntu;debian">Edit the
+        <filename>/etc/mysql/my.cnf</filename> file and complete the
+        following actions:</para>
+      <para os="rhel;centos;fedora;sles;opensuse">Edit the
+        <filename>/etc/my.cnf</filename> file and complete the following
+        actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[mysqld]</literal> section, set the
+            <literal>bind-address</literal> key to the management IP
+            address of the controller node to enable access by other
+            nodes via the management network:</para>
+          <programlisting language="ini">[mysqld]
 ...
 bind-address = 10.0.0.11</programlisting>
-          </step>
-          <step>
-            <para>In the <literal>[mysqld]</literal> section, set the
-              following keys to enable useful options and the UTF-8
-              character set:</para>
-            <programlisting language="ini">[mysqld]
+        </step>
+        <step>
+          <para>In the <literal>[mysqld]</literal> section, set the
+            following keys to enable useful options and the UTF-8
+            character set:</para>
+          <programlisting language="ini">[mysqld]
 ...
 default-storage-engine = innodb
 innodb_file_per_table
 collation-server = utf8_general_ci
 init-connect = 'SET NAMES utf8'
 character-set-server = utf8</programlisting>
-          </step>
-        </substeps>
-      </step>
-    </procedure>
-    <procedure>
-      <title>To finalize installation</title>
-      <step os="ubuntu;debian">
-        <para>Restart the database service:</para>
-        <screen><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
-      </step>
-      <step os="rhel;centos;fedora;sles;opensuse">
-        <para>Start the database service and configure it to start when the
-          system boots:</para>
-        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable mariadb.service</userinput>
+        </step>
+      </substeps>
+    </step>
+  </procedure>
+  <procedure>
+    <title>To finalize installation</title>
+    <step os="ubuntu;debian">
+      <para>Restart the database service:</para>
+      <screen><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora;sles;opensuse">
+      <para>Start the database service and configure it to start when the
+        system boots:</para>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable mariadb.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start mariadb.service</userinput></screen>
-        <para os="sles;opensuse">On SLES:</para>
-        <screen os="sles"><prompt>#</prompt> <userinput>service mysql start</userinput>
+      <para os="sles;opensuse">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service mysql start</userinput>
 <prompt>#</prompt> <userinput>chkconfig mysql on</userinput></screen>
-        <para os="sles;opensuse">On openSUSE:</para>
-        <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start mysql.service</userinput>
+      <para os="sles;opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start mysql.service</userinput>
 <prompt>#</prompt> <userinput>systemctl enable mysql.service</userinput></screen>
-      </step>
-      <step>
-        <para os="ubuntu;debian">Secure the database service:</para>
-        <para os="rhel;centos;fedora;sles;opensuse">Secure the database
-          service including choosing a suitable password for the root
-          account:</para>
-        <screen><prompt>#</prompt> <userinput>mysql_secure_installation</userinput></screen>
-      </step>
-    </procedure>
-  </section>
+    </step>
+    <step>
+      <para os="ubuntu;debian">Secure the database service:</para>
+      <para os="rhel;centos;fedora;sles;opensuse">Secure the database
+        service including choosing a suitable password for the root
+        account:</para>
+      <screen><prompt>#</prompt> <userinput>mysql_secure_installation</userinput></screen>
+    </step>
+  </procedure>
 </section>
