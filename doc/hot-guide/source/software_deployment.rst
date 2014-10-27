@@ -140,7 +140,7 @@ script in a separate file:
 Choosing the user_data_format
 =============================
 
-The ``OS::Nova::Server`` user_data_format property determines how the
+The :hotref:`OS::Nova::Server` user_data_format property determines how the
 user_data should be formatted for the server. For the default value
 ``HEAT_CFNTOOLS``, the user_data is bundled as part of the heat-cfntools
 cloud-init boot configuration data. While ``HEAT_CFNTOOLS`` is the default
@@ -185,10 +185,10 @@ Often it is necessary to pause further creation of stack resources until the
 boot configuration script has notified that it has reached a certain state.
 This is usually either to notify that a service is now active, or to pass out
 some generated data which is needed by another resource. The resources
-``OS::Heat::WaitCondition`` and ``OS::Heat::SwiftSignal`` both perform this
-function using different techniques and tradeoffs.
+:hotref:`OS::Heat::WaitCondition` and :hotref:`OS::Heat::SwiftSignal` both perform
+this function using different techniques and tradeoffs.
 
-``OS::Heat::WaitCondition`` is implemented as a call to the
+:hotref:`OS::Heat::WaitCondition` is implemented as a call to the
 `Orchestration API`_ resource signal. The token is created using credentials
 for a user account which is scoped only to the wait condition handle
 resource. This user is created when the handle is created, and is associated
@@ -292,10 +292,10 @@ which builds a curl command with a valid token:
 
 ..
 
-``OS::Heat::SwiftSignal`` is implemented by creating an Object Storage API
-temporary URL which is populated with signal data with an HTTP PUT. The
-orchestration service will poll this object until the signal data is
-available. Object versioning is used to store multiple signals.
+:hotref:`OS::Heat::SwiftSignal` is implemented by creating an Object Storage
+API temporary URL which is populated with signal data with an HTTP PUT. The
+orchestration service will poll this object until the signal data is available.
+Object versioning is used to store multiple signals.
 
 Sending the signal is a simple HTTP request, as with this example using curl_:
 
@@ -319,14 +319,14 @@ swift signal resources:
         type: OS::Heat::SwiftSignalHandle
       # ...
 
-The decision to use ``OS::Heat::WaitCondition`` or ``OS::Heat::SwiftSignal``
-will depend on a few factors:
+The decision to use :hotref:`OS::Heat::WaitCondition` or
+:hotref:`OS::Heat::SwiftSignal` will depend on a few factors:
 
-* ``OS::Heat::SwiftSignal`` depends on the availability of an Object Storage
-  API
-* ``OS::Heat::WaitCondition`` depends on whether the orchestration service
-  has been configured with a dedicated stack domain (which may depend on the
-  availability of an Identity V3 API).
+* :hotref:`OS::Heat::SwiftSignal` depends on the availability of an Object
+  Storage API
+* :hotref:`OS::Heat::WaitCondition` depends on whether the orchestration
+  service has been configured with a dedicated stack domain (which may depend
+  on the availability of an Identity V3 API).
 * The preference to protect signal URLs with token authentication or a
   secret webhook URL.
 
@@ -342,7 +342,7 @@ existing software-config resource, so a stack-update which changes any
 existing software-config resource will result in API calls to create a new
 config and delete the old one.
 
-The resource ``OS::Heat::SoftwareConfig`` is used for storing configs
+The resource :hotref:`OS::Heat::SoftwareConfig` is used for storing configs
 represented by text scripts, for example:
 
 .. code-block:: yaml
@@ -364,8 +364,8 @@ represented by text scripts, for example:
           user_data_format: RAW
           user_data: {get_resource: boot_script}
 
-The resource ``OS::Heat::CloudConfig`` allows Cloud-init_ cloud-config to be
-represented as template YAML rather than a block string. This allows
+The resource :hotref:`OS::Heat::CloudConfig` allows Cloud-init_ cloud-config to
+be represented as template YAML rather than a block string. This allows
 intrinsic functions to be included when building the cloud-config. This also
 ensures that the cloud-config is valid YAML, although no further checks for
 valid cloud-config are done.
@@ -395,9 +395,9 @@ valid cloud-config are done.
 
 ..
 
-The resource ``OS::Heat::MultipartMime`` allows multiple
-``OS::Heat::SoftwareConfig`` and ``OS::Heat::CloudConfig`` resources to be
-combined into a single Cloud-init_ multi-part message:
+The resource :hotref:`OS::Heat::MultipartMime` allows multiple
+:hotref:`OS::Heat::SoftwareConfig` and :hotref:`OS::Heat::CloudConfig`
+resources to be combined into a single Cloud-init_ multi-part message:
 
 .. code-block:: yaml
 
