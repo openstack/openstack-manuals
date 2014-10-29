@@ -62,13 +62,13 @@
       <para>Run the following command to install the packages:</para>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install keystone python-keystoneclient</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-keystone python-keystoneclient</userinput></screen>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-keystone python-keystoneclient</userinput></screen>
+      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-keystone python-keystoneclient</userinput></screen>
     </step>
-    <step os="ubuntu;rhel;centos;fedora;sles;opensuse">
+    <step>
       <para>Edit the <filename>/etc/keystone/keystone.conf</filename> file and
         complete the following actions:</para>
       <substeps>
-        <step os="ubuntu;rhel;centos;fedora;sles;opensuse">
+        <step>
           <para>In the <literal>[DEFAULT]</literal> section, define the value
             of the initial administration token:</para>
           <programlisting language="ini">[DEFAULT]
@@ -77,7 +77,7 @@ admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
           <para>Replace <replaceable>ADMIN_TOKEN</replaceable> with the random
             value that you generated in a previous step.</para>
         </step>
-        <step os="ubuntu;rhel;centos;fedora;sles;opensuse">
+        <step>
           <para>In the <literal>[database]</literal> section, configure
             database access:</para>
           <programlisting language="ini">[database]
@@ -85,6 +85,14 @@ admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
 connection = mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replaceable>controller</replaceable>/keystone</programlisting>
           <para>Replace <replaceable>KEYSTONE_DBPASS</replaceable> with the
             password you chose for the database.</para>
+        </step>
+        <step>
+          <para>In the <literal>[token]</literal> section, configure the UUID
+            token provider and SQL driver:</para>
+          <programlisting language="ini">[token]
+...
+provider = keystone.token.providers.uuid.Provider
+driver = keystone.token.persistence.backends.sql.Token</programlisting>
         </step>
         <step>
           <para>(Optional) To assist with troubleshooting,

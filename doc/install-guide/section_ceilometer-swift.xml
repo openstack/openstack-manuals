@@ -49,9 +49,7 @@ pipeline = healthcheck cache authtoken keystoneauth ceilometer proxy-server</pro
       <para>Add the system user <literal>swift</literal> to the system group
       <literal>ceilometer</literal> to give Object Storage access to the
       <filename>ceilometer.conf</filename> file.</para>
-      <screen>
-        <prompt>#</prompt> <userinput>usermod -a -G ceilometer swift</userinput>
-      </screen>
+      <screen><prompt>#</prompt> <userinput>usermod -a -G ceilometer swift</userinput></screen>
     </step>
     <step>
       <para>Add <literal>ResellerAdmin</literal> to the
@@ -61,7 +59,11 @@ pipeline = healthcheck cache authtoken keystoneauth ceilometer proxy-server</pro
     <step>
       <para>Restart the service with its new settings:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service swift-proxy restart</userinput></screen>
-      <screen os="rhel;fedora;centos;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-swift-proxy restart</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart openstack-swift-proxy.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-swift-proxy restart</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-swift-proxy.service</userinput></screen>
     </step>
   </procedure>
 </section>

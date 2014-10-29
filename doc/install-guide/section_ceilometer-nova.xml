@@ -31,8 +31,12 @@ notification_driver = ceilometer.compute.nova_notifier</programlisting>
     </step>
     <step>
       <para>Restart the Compute service:</para>
-      <screen os="fedora;rhel;centos;opensuse;sles"><prompt>#</prompt> <userinput>service openstack-nova-compute restart</userinput></screen>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-compute restart</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-compute.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-nova-compute restart</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-compute.service</userinput></screen>
     </step>
   </procedure>
   <procedure>
@@ -100,13 +104,17 @@ log_dir = /var/log/ceilometer</programlisting>
       <para>Restart the service with its new settings:</para>
       <screen><prompt>#</prompt> <userinput>service ceilometer-agent-compute restart</userinput></screen>
     </step>
-    <step os="rhel;fedora;centos;opensuse;sles">
+    <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the service and configure it to start when the
         system boots:</para>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-agent-compute start</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-compute.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-compute.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-agent-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-compute on</userinput></screen>
-      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>service openstack-ceilometer-compute start</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-compute on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-compute.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-compute.service</userinput></screen>
     </step>
   </procedure>
 </section>

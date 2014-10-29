@@ -20,13 +20,21 @@ notification_driver = cinder.openstack.common.notifier.rpc_notifier</programlist
       <para>Restart the Block Storage services with their new
         settings.</para>
       <para>On the controller node:</para>
-        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service cinder-api restart</userinput>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service cinder-api restart</userinput>
 <prompt>#</prompt> <userinput>service cinder-scheduler restart</userinput></screen>
-        <screen os="rhel;fedora;centos;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-cinder-api restart</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart openstack-cinder-api.service openstack-cinder-scheduler.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-cinder-api restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-cinder-scheduler restart</userinput></screen>
-      <para>On the volume node:</para>
-      <screen os="rhel;fedora;centos;sles;opensuse"><prompt>#</prompt> <userinput>service openstack-cinder-volume restart</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-cinder-api.service openstack-cinder-scheduler.service</userinput></screen>
+      <para>On the storage node:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service cinder-volume restart</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart openstack-cinder-volume.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-cinder-volume restart</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-cinder-volume.service</userinput></screen>
     </step>
       <step>
        <para>If you want to collect OpenStack Block Storage notification on demand,

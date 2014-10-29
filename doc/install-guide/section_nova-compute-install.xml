@@ -22,8 +22,8 @@
     <title>To install and configure the Compute hypervisor components</title>
     <step>
       <para>Install the packages:</para>
-      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install nova-compute</userinput></screen>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute</userinput></screen>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install nova-compute sysfsutils</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-nova-compute sysfsutils</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-nova-compute genisoimage kvm</userinput></screen>
     </step>
     <step>
@@ -43,9 +43,13 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
             <application>RabbitMQ</application>.</para>
         </step>
         <step>
-          <para>In the <literal>[keystone_authtoken]</literal> section,
+          <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[keystone_authtoken]</literal> sections,
             configure Identity service access:</para>
-         <programlisting language="ini">
+         <programlisting language="ini">[DEFAULT]
+...
+auth_strategy = keystone
+
 [keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
@@ -188,9 +192,8 @@ virt_type = qemu</programlisting>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Compute service including its dependencies and configure
         them to start automatically when the system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable libvirtd.service</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable libvirtd.service openstack-nova-compute.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start libvirtd.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-nova-compute.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start openstack-nova-compute.service</userinput></screen>
       <para os="sles">On SLES:</para>
       <screen os="sles"><prompt>#</prompt> <userinput>service libvirtd start</userinput>
@@ -198,9 +201,8 @@ virt_type = qemu</programlisting>
 <prompt>#</prompt> <userinput>service openstack-nova-compute start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-nova-compute on</userinput></screen>
       <para os="opensuse">On openSUSE:</para>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable libvirtd.service</userinput>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable libvirtd.service openstack-nova-compute.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start libvirtd.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-nova-compute.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start openstack-nova-compute.service</userinput></screen>
     </step>
     <step os="ubuntu">

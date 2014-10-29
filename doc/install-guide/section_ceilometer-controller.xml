@@ -351,18 +351,12 @@ os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Telemetry services and configure them to start when the
         system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-notification start</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-central start</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-evaluator start</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-notifier start</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-api on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-notification on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-central on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-evaluator on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-notifier on</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-api.service openstack-ceilometer-notification.service \
+  openstack-ceilometer-central.service openstack-ceilometer-collector.service \
+  openstack-ceilometer-alarm-evaluator.service openstack-ceilometer-alarm-notifier.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-api.service openstack-ceilometer-notification.service \
+  openstack-ceilometer-central.service openstack-ceilometer-collector.service \
+  openstack-ceilometer-alarm-evaluator.service openstack-ceilometer-alarm-notifier.service</userinput></screen>
       <para os="sles">On SLES:</para>
       <screen os="sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-ceilometer-agent-notification start</userinput>

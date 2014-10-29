@@ -208,6 +208,14 @@ flavor = keystone</programlisting>
           </note>
         </step>
         <step>
+          <para>In the <literal>[glance_store]</literal> section, configure
+            the local file system store and location of image files:</para>
+          <programlisting language="ini">[glance_store]
+...
+default_store = file
+filesystem_store_datadir = /var/lib/glance/images/</programlisting>
+        </step>
+        <step>
           <para>In the <literal>[DEFAULT]</literal> section, we recommend
             enabling verbose logging to assist with potential
             troubleshooting:</para>
@@ -260,20 +268,16 @@ verbose = True</programlisting>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Image Service services and configure them to start when
         the system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-glance-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-glance-registry.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-glance-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-glance-registry.service</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-glance-api.service openstack-glance-registry.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-glance-api.service openstack-glance-registry.service</userinput></screen>
       <para os="sles">On SLES:</para>
       <screen os="sles"><prompt>#</prompt> <userinput>service openstack-glance-api start</userinput>
 <prompt>#</prompt> <userinput>service openstack-glance-registry start</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-glance-api on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-glance-registry on</userinput></screen>
       <para os="opensuse">On openSUSE:</para>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-glance-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-glance-registry.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-glance-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-glance-registry.service</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-glance-api.service openstack-glance-registry.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-glance-api.service openstack-glance-registry.service</userinput></screen>
     </step>
     <step os="ubuntu">
       <para>By default, the Ubuntu packages create an SQLite database.</para>
