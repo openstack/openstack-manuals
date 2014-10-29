@@ -10,30 +10,27 @@
         creation.</para>
     <section xml:id="oz">
         <title>Oz</title>
-        <para><link
-                xlink:href="https://github.com/clalancette/oz/wiki"
-                >Oz</link> is a command-line tool that automates the
-            process of creating a virtual machine image file. Oz is a
-            Python app that interacts with KVM to step through the
-            process of installing a virtual machine. It uses a
-            predefined set of kickstart (Red Hat-based systems) and
-            preseed files (Debian-based systems) for operating systems
-            that it supports, and it can also be used to create
-            Microsoft Windows images. On Fedora, install Oz with yum:<screen><prompt>#</prompt> <userinput>yum install oz</userinput></screen><note>
-                <para>As of this writing, there are no Oz packages for
-                    Ubuntu, so you will need to either install from
-                    source or build your own .deb file.</para>
+        <para><link xlink:href="https://github.com/clalancette/oz/wiki"
+                >Oz</link> is a command-line tool that automates the process of
+            creating a virtual machine image file. Oz is a Python app that
+            interacts with KVM to step through the process of installing a
+            virtual machine. It uses a predefined set of kickstart (Red
+            Hat-based systems) and preseed files (Debian-based systems) for
+            operating systems that it supports, and it can also be used to
+            create Microsoft Windows images. On Fedora, install Oz with yum:<screen><prompt>#</prompt> <userinput>yum install oz</userinput></screen><note>
+                <para>As of this writing, there are no Oz packages for Ubuntu,
+                    so you will need to either install from source or build your
+                    own .deb file.</para>
             </note></para>
-        <para>A full treatment of Oz is beyond the scope of this
-            document, but we will provide an example. You can find
-            additional examples of Oz template files on GitHub at
-                <link
+        <para>A full treatment of Oz is beyond the scope of this document, but
+            we will provide an example. You can find additional examples of Oz
+            template files on GitHub at <link
                 xlink:href="https://github.com/rackerjoe/oz-image-build/tree/master/templates"
-                >rackerjoe/oz-image-build/templates</link>. Here's how
-            you would create a CentOS 6.4 image with Oz.</para>
+                >rackerjoe/oz-image-build/templates</link>. Here's how you would
+            create a CentOS 6.4 image with Oz.</para>
         <para>Create a template file (we'll call it
-                <filename>centos64.tdl</filename>) with the following
-            contents. The only entry you will need to change is the
+                <filename>centos64.tdl</filename>) with the following contents.
+            The only entry you will need to change is the
                 <literal>&lt;rootpw></literal>
             contents.<programlisting language="xml">&lt;template>
   &lt;name>centos64&lt;/name>
@@ -68,53 +65,45 @@ echo -n > /lib/udev/rules.d/75-persistent-net-generator.rules
     &lt;/command>
   &lt;/commands>
 &lt;/template></programlisting>
-       </para>
-        <para>This Oz template specifies where to download the Centos
-            6.4 install ISO. Oz will use the version information to
-            identify which kickstart file to use. In this case, it
-            will be <link
+        </para>
+        <para>This Oz template specifies where to download the Centos 6.4
+            install ISO. Oz will use the version information to identify which
+            kickstart file to use. In this case, it will be <link
                 xlink:href="https://github.com/clalancette/oz/blob/master/oz/auto/RHEL6.auto"
-                >RHEL6.auto</link>. It adds EPEL as a repository and
-            installs the <literal>epel-release</literal>,
-                <literal>cloud-utils</literal>, and
-                <literal>cloud-init</literal> packages, as specified
-            in the <literal>packages</literal> section of the
-            file.</para>
-        <para>After Oz does the initial OS install using the kickstart
-            file, it customizes the image by doing an update. It also
-            removes any reference to the eth0 device that libvirt
-            creates while Oz does the customizing, as specified
-            in the <literal>command</literal> section of the XML
+                >RHEL6.auto</link>. It adds EPEL as a repository and install the
+                <literal>epel-release</literal>, <literal>cloud-utils</literal>,
+            and <literal>cloud-init</literal> packages, as specified in the
+                <literal>packages</literal> section of the file.</para>
+        <para>After Oz does the initial OS install using the kickstart file, it
+            updates the image's install packages with <command>yum
+                update</command>. It also removes any reference to the eth0
+            device that libvirt creates while Oz does the customizing, as
+            specified in the <literal>command</literal> section of the XML
             file.</para>
         <para>To run this, do, as root:</para>
         <para><screen><prompt>#</prompt> <userinput>oz-install -d3 -u centos64.tdl -x centos64-libvirt.xml</userinput></screen><itemizedlist>
                 <listitem>
-                    <para>The <literal>-d3</literal> flag tells Oz to
-                        show status information as it runs.</para>
+                    <para>The <literal>-d3</literal> flag tells Oz to show
+                        status information as it runs.</para>
                 </listitem>
                 <listitem>
                     <para>The <literal>-u</literal> tells Oz to do the
-                        customization (install extra packages, run the
-                        commands) once it does the initial
-                        install.</para>
+                        customization (install extra packages, run the commands)
+                        once it does the initial install.</para>
                 </listitem>
                 <listitem>
-                    <para>The <literal>-x &lt;filename></literal> flag
-                        tells Oz what filename to use to write out a
-                        libvirt XML file (otherwise it will default to
-                        something like
+                    <para>The <literal>-x &lt;filename></literal> flag tells Oz
+                        what filename to use to write out a libvirt XML file
+                        (otherwise it will default to something like
                             <filename>centos64Apr_03_2013-12:39:42</filename>).</para>
                 </listitem>
-            </itemizedlist>If you leave out the <literal>-u</literal>
-            flag, or you want to edit the file to do additional
-            customizations, you can use the
-                <command>oz-customize</command> command, using the
-            libvirt XML file that <command>oz-install</command>
-            creates. For example:
+            </itemizedlist>If you leave out the <literal>-u</literal> flag, or
+            you want to edit the file to do additional customizations, you can
+            use the <command>oz-customize</command> command, using the libvirt
+            XML file that <command>oz-install</command> creates. For example:
             <screen><prompt>#</prompt> <userinput>oz-customize -d3 centos64.tdl centos64-libvirt.xml</userinput></screen>
-            Oz will invoke libvirt to boot the image inside of KVM,
-            then Oz will ssh into the instance and perform the
-            customizations.</para>
+            Oz will invoke libvirt to boot the image inside of KVM, then Oz will
+            ssh into the instance and perform the customizations.</para>
     </section>
     <section xml:id="vmbuilder">
         <title>VMBuilder</title>
