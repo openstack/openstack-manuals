@@ -148,6 +148,8 @@ type
     are ``string``, ``number``, ``comma_delimited_list``, ``json`` and
     ``boolean``.
 
+    This attribute is required.
+
 label
     A human readable name for the parameter.
 
@@ -433,6 +435,8 @@ resource ID
 type
     The resource type, such as ``OS::Nova::Server`` or ``OS::Neutron::Port``.
 
+    This attribute is required.
+
 properties
     A list of resource-specific properties. The property value can be provided
     in place, or via a function (see :ref:`hot_spec_intrinsic_functions`).
@@ -551,10 +555,14 @@ parameter name
 description
     A short description of the output parameter.
 
+    This attribute is optional.
+
 parameter value
     The value of the output parameter. This value is usually resolved by means
     of a function. See :ref:`hot_spec_intrinsic_functions` for details about
     the functions.
+
+    This attribute is required.
 
 The example below shows how the IP address of a compute resource can
 be defined as an output parameter:
