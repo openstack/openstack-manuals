@@ -9,9 +9,10 @@
   <para>This section describes how to install and configure storage nodes
     for the Block Storage service. For simplicity, this configuration
     references one storage node with an empty local block storage device
-    <literal>/dev/sdb</literal>. The service provisions logical volumes
-    on this device using the <glossterm>LVM</glossterm> driver and provides
-    them to instances via
+    <literal>/dev/sdb</literal> that contains a suitable partition table with
+    one partition <literal>/dev/sdb1</literal> occupying the entire device.
+    The service provisions logical volumes on this device using the
+    <glossterm>LVM</glossterm> driver and provides them to instances via
     <glossterm baseform="Internet Small Computer Systems Interface (iSCSI)"
     >iSCSI</glossterm> transport. You can follow these instructions with
     minor modifications to horizontally scale your environment with
@@ -65,9 +66,9 @@
 <prompt>#</prompt> <userinput>systemctl start lvm2-lvmetad.service</userinput></screen>
     </step>
     <step>
-      <para>Create the LVM physical volume <literal>/dev/sdb</literal>:</para>
-      <screen><prompt>#</prompt> <userinput>pvcreate /dev/sdb</userinput>
-<computeroutput>  Physical volume "/dev/sdb" successfully created</computeroutput></screen>
+      <para>Create the LVM physical volume <literal>/dev/sdb1</literal>:</para>
+      <screen><prompt>#</prompt> <userinput>pvcreate /dev/sdb1</userinput>
+<computeroutput>  Physical volume "/dev/sdb1" successfully created</computeroutput></screen>
       <note>
         <para>If your system uses a different device name, adjust these
           steps accordingly.</para>
@@ -76,7 +77,7 @@
     <step>
       <para>Create the LVM volume group
         <literal>cinder-volumes</literal>:</para>
-      <screen><prompt>#</prompt> <userinput>vgcreate cinder-volumes /dev/sdb</userinput>
+      <screen><prompt>#</prompt> <userinput>vgcreate cinder-volumes /dev/sdb1</userinput>
 <computeroutput>  Volume group "cinder-volumes" successfully created</computeroutput></screen>
       <para>The Block Storage service creates logical volumes in this
         volume group.</para>

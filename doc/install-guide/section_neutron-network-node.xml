@@ -27,8 +27,8 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
     <title>To install the Networking components</title>
     <step>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install neutron-plugin-ml2 neutron-plugin-openvswitch-agent \
-  neutron-l3-agent neutron-dhcp-agent ipset</userinput></screen>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron openstack-neutron-ml2 openstack-neutron-openvswitch ipset</userinput></screen>
+  neutron-l3-agent neutron-dhcp-agent</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-neutron openstack-neutron-ml2 openstack-neutron-openvswitch</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install --no-recommends openstack-neutron-openvswitch-agent openstack-neutron-l3-agent \
   openstack-neutron-dhcp-agent openstack-neutron-metadata-agent ipset</userinput></screen>
       <note os="sles;opensuse">
@@ -493,15 +493,11 @@ metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></progr
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Networking services and configure them to start
         when the system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable neutron-openvswitch-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable neutron-l3-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable neutron-dhcp-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable neutron-metadata-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable neutron-ovs-cleanup.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start neutron-openvswitch-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start neutron-l3-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start neutron-dhcp-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start neutron-metadata-agent.service</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable neutron-openvswitch-agent.service neutron-l3-agent.service \
+  neutron-dhcp-agent.service neutron-metadata-agent.service \
+  neutron-ovs-cleanup.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start neutron-openvswitch-agent.service neutron-l3-agent.service \
+  neutron-dhcp-agent.service neutron-metadata-agent.service</userinput></screen>
       <note os="rhel;centos;fedora">
         <para>Do not explictly start the
           <systemitem class="service">neutron-ovs-cleanup</systemitem>
@@ -518,15 +514,11 @@ metadata_proxy_shared_secret = <replaceable>METADATA_SECRET</replaceable></progr
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron-metadata-agent on</userinput>
 <prompt>#</prompt> <userinput>chkconfig openstack-neutron-ovs-cleanup on</userinput></screen>
       <para os="opensuse">On openSUSE:</para>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-neutron-openvswitch-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-neutron-l3-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-neutron-dhcp-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-neutron-metadata-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-neutron-ovs-cleanup.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-neutron-openvswitch-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-neutron-l3-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-neutron-dhcp-agent.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-neutron-metadata-agent.service</userinput></screen>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-neutron-openvswitch-agent.service openstack-neutron-l3-agent.service \
+  openstack-neutron-dhcp-agent.service openstack-neutron-metadata-agent.service \
+  openstack-neutron-ovs-cleanup.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-neutron-openvswitch-agent.service openstack-neutron-l3-agent.service \
+  openstack-neutron-dhcp-agent.service openstack-neutron-metadata-agent.service</userinput></screen>
       <note os="sles;opensuse">
         <para>Do not explictly start the
           <systemitem class="service">openstack-neutron-ovs-cleanup</systemitem>
