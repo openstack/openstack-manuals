@@ -9,54 +9,49 @@ template into separate smaller templates. These can then be brought
 together using template resources. This is a mechanism to define a resource
 using a template, thus composing one logical stack with multiple templates.
 
+Template resources provide a feature similar to the
+:hotref:`AWS::CloudFormation::Stack` resource, but also provide a way to:
 
-How to use template resources for composition
----------------------------------------------
+* Define new resource types and build your own resource library.
+* Override the default behaviour of existing resource types.
 
-Template resources do a very similar job to
-AWS::CloudFormation::Stack, but they are more powerful as they allow a
-template to "stand in for" any resource type.
+To achieve this:
 
-Template resources can be used to do the following:
+* The Orchestration client gets the associated template files and passes them
+  along in the ``files`` section of the ``POST stacks/`` API request.
+* The environment in the Orchestration engine manages the mapping of resource
+  type to template creation.
+* The Orchestration engine translates template parameters into resource
+  properties.
 
- * Define new resource types (make your own resource library).
- * Override the default behaviour of existing resource types.
-
-The way this is achieved is:
-
- * The heat client gets the associated template files and passes them
-   along in the "files" section of the "POST stacks/".
- * The environment in Orchestration engine manages the mapping of resource type
-   to template creation.
- * Translation of the template parameters into resource properties.
-
-Let's go through some examples. In all examples assume the
-same resource template. This is a simple wrapper around a nova server
-(my_nova.yaml).
+The following examples illustrate how you can use a custom template to define
+new types of resources. These examples use a custom template stored in a
+:file:`my_nova.yml` file:
 
 .. code-block:: yaml
 
   heat_template_version: 2013-05-23
+
   parameters:
     key_name:
       type: string
       description: Name of a KeyPair
+
   resources:
     server:
       type: OS::Nova::Server
       properties:
         key_name: {get_param: key_name}
-        flavor: my.best
-        image: the_one_i_always_use
+        flavor: m1.small
+        image: ubuntu-trusty-x86_64
 
 
-Example 1
-~~~~~~~~~
 
-In this example you will not map a resource type name at all, but
-directly specify the template URL as the resource type.
+Use the template filename as type
+=================================
 
-Your main template (main.yaml) would look like this.
+The following template defines the :file:`my_nova.yaml` file as value for the
+``type`` property of a resource:
 
 .. code-block:: yaml
 
@@ -67,43 +62,48 @@ Your main template (main.yaml) would look like this.
       properties:
         key_name: my_key
 
-Some notes about URLs:
+The ``key_name`` argument of the ``my_nova.yaml`` template gets its value from
+the ``key_name`` property of the new template.
 
-The above reference to my_nova.yaml assumes it is in the same directory.
-You could use any of the following forms:
+.. note::
 
- * Relative path (type: my_nova.yaml)
- * Absolute path (type: file:///home/user/templates/my_nova.yaml)
- * Http URL (type: http://example.com/templates/my_nova.yaml)
- * Https URL (type: https://example.com/templates/my_nova.yaml)
+  The above reference to ``my_nova.yaml`` assumes it is in the same directory.
+  You can use any of the following forms:
 
-If you are providing a link to github.com make sure to get the "raw"
-link. For instance this::
+  * Relative path (``my_nova.yaml``)
+  * Absolute path (``file:///home/user/templates/my_nova.yaml``)
+  * Http URL (``http://example.com/templates/my_nova.yaml``)
+  * Https URL (``https://example.com/templates/my_nova.yaml``)
 
-  https://raw.githubusercontent.com/openstack/heat-templates/master/hot/autoscaling.yaml
+To create the stack run:
 
-but not this::
+.. code-block:: console
 
-  https://github.com/openstack/heat-templates/blob/master/hot/autoscaling.yaml
+  $ heat stack-create -f main.yaml stack1
 
-To create the stack, run::
 
-  $ heat stack-create -f main.yaml example-one
+Define a new resource type
+==========================
 
-Example 2
-~~~~~~~~~
+You can associate a name to the ``my_noya.yaml`` template in an environment
+file. If the name is already known by the Orchestration module then your new
+resource will override the default one.
 
-In this example you will use the environment (env.yaml) to override the
-OS::Nova::Server with my_nova to get the defaults you want.
+In the following example a new ``OS::Nova::Server`` resource overrides the
+default resource of the same name.
+
+An :file:`env.yaml` environment file holds the definition of the new resource:
 
 .. code-block:: yaml
 
   resource_registry:
     "OS::Nova::Server": my_nova.yaml
 
-A more detailed discussion on this can be found :ref:`environments`.
+.. note::
 
-Now you can use "OS::Nova::Server" in our top level template (main.yaml).
+   See :ref:`environments` for more detail about environment files.
+
+You can now use the new ``OS::Nova::Server`` in your new template:
 
 .. code-block:: yaml
 
@@ -113,6 +113,8 @@ Now you can use "OS::Nova::Server" in our top level template (main.yaml).
       properties:
         key_name: my_key
 
-To create the stack, run::
+To create the stack run:
+
+.. code-block:: console
 
   $ heat stack-create -f main.yaml -e env.yaml example-two
