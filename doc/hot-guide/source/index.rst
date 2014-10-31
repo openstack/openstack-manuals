@@ -10,5 +10,5 @@ HOT guide
    software_deployment
    environment
    composition
-   advanced_topics
-   functions
+   #advanced_topics
+   #functions
