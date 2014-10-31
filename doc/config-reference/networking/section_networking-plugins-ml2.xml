@@ -10,33 +10,28 @@
         components separately. This section describes these
         configuration options.</para>
     <note>
-        <title>MTU bug with VXLAN tunnelling</title>
-        <para>Due to a bug in Linux Bridge software maximum
-            transmission unit (MTU) handling, using VXLAN tunnels does
-            not work by default.</para>
+      <title>Configure MTU for VXLAN tunnelling</title>
+      <para>Specific MTU configuration is necessary for VXLAN to function
+        as expected:</para>
         <itemizedlist>
             <listitem>
-                <para>A simple workaround is to increase the MTU value
-                    of the physical interface and physical switch
-                    fabric by at least 50 bytes. For example, increase
-                    the MTU value to 1550. This value enables an
-                    automatic 50-byte MTU difference between the
-                    physical interface (1500) and the VXLAN interface
-                    (automatically 1500-50 = 1450). An MTU value of
-                    1450 causes issues when virtual machine taps are
-                    configured at an MTU value of 1500.</para>
+              <para>One option is to increase the MTU value of the physical
+                interface and physical switch fabric by at least 50 bytes.
+                For example, increase the MTU value to 1550. This value
+                enables an automatic 50-byte MTU difference between the
+                physical interface (1500) and the VXLAN interface
+                (automatically 1500-50 = 1450). An MTU value of 1450 causes
+                issues when virtual machine taps are configured at an MTU
+                value of 1500.</para>
             </listitem>
             <listitem>
-                <para>Another workaround is to decrease the virtual
-                    Ethernet devices' MTU. Set the
-                        <option>network_device_mtu</option> option to
-                    1450 in the <filename>neutron.conf</filename>
-                    file, and set all guest virtual machines' MTU to
-                    the same value by using a DHCP option. For
-                    information about how to use this option, see
-                        <link
-                        xlink:href="http://docs.openstack.org/admin-guide-cloud/content/ch_networking.html#openvswitch_plugin"
-                        >Configure OVS plug-in</link>.</para>
+              <para>Another option is to decrease the virtual ethernet
+                devices' MTU. Set the <option>network_device_mtu</option>
+                option to 1450 in the <filename>neutron.conf</filename> file,
+                and set all guest virtual machines' MTU to the same value by
+                using a DHCP option. For information about how to use this
+                option, see <link xlink:href="http://docs.openstack.org/admin-guide-cloud/content/ch_networking.html#openvswitch_plugin">
+                  Configure OVS plug-in</link>.</para>
             </listitem>
         </itemizedlist>
     </note>
