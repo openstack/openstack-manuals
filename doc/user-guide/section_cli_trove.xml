@@ -5,7 +5,6 @@
 ]>
 <section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="trove-manage-db">
-  <?dbhtml stop-chunking?>
   <title>Create and manage databases</title>
   <para>The Database service provides scalable and reliable cloud provisioning functionality for
     both relational and non-relational database engines. Users can quickly and easily use database
@@ -830,5 +829,145 @@
         <screen><prompt>$</prompt> <userinput>trove detach-replica <replaceable>INSTANCE_ID_OF_REPLICA</replaceable></userinput></screen>
       </step>
     </procedure>
+  </section>
+  <section xml:id="set_up_clustering">
+    <title>Set up database clustering</title>
+    <para>You can store data across multiple machines by setting up MongoDB sharded clusters.</para>
+    <para>Each cluster includes:</para>
+    <itemizedlist>
+      <listitem>
+        <para>One or more <emphasis>shards</emphasis>. Each shard consists of a three member replica set (three instances organized as a replica set).</para>
+      </listitem>
+      <listitem>
+        <para>One or more <emphasis>query routers</emphasis>. A query router is the machine that your application actually connects to. This machine is responsible for communicating with the config server to figure out where the requested data is stored. It then accesses and returns the data from the appropriate shard(s).</para>
+      </listitem>
+      <listitem>
+        <para>One or more <emphasis>config servers</emphasis>. Config servers store the metadata that links requested data with the shard that contains it.</para>
+      </listitem>
+    </itemizedlist>
+    <para>This example shows you how to set up a MongoDB sharded cluster.</para>
+    <note>
+      <formalpara>
+        <title>Before you begin</title>
+        <para>Make sure that:</para>
+      </formalpara>
+      <itemizedlist>
+        <listitem>
+          <para>The administrative user has registered a MongoDB datastore type and version.</para>
+        </listitem>
+        <listitem>
+          <para>The administrative user has created an appropriate <link linkend="create_db">flavor that meets the MongoDB minimum requirements</link>.</para>
+        </listitem>
+      </itemizedlist>
+    </note>
+    <procedure>
+      <title>To set up clustering</title>
+      <step>
+        <title>Create a cluster</title>
+        <para>Create a cluster by using the trove <command>cluster-create</command> command. This command creates a one-shard cluster. Pass in:</para>
+        <itemizedlist>
+          <listitem>
+            <para>The name of the cluster.</para>
+          </listitem>
+          <listitem>
+            <para>The name and version of the datastore you want to use.</para>
+          </listitem>
+          <listitem>
+            <para>The three instances you want to include in the replication set for the first shard. Specify each instance by using the <option>--instance</option> argument and the associated flavor ID and volume size. Use the same flavor ID and volume size for each instance. In this example, flavor <literal>7</literal> is a custom flavor that meets the MongoDB minimum requirements.</para>
+          </listitem>
+        </itemizedlist>
+        <screen><prompt>$</prompt> <userinput>trove cluster-create cluster1 mongodb "2.4" \
+  --instance flavor_id=7,volume=2 --instance flavor_id=7,volume=2 \
+  --instance flavor_id=7,volume=2</userinput>
+<computeroutput>+-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| created           | 2014-08-16T01:46:51                  |
+| datastore         | mongodb                              |
+| datastore_version | 2.4                                  |
+| id                | aa6ef0f5-dbef-48cd-8952-573ad881e717 |
+| name              | cluster1                             |
+| task_description  | Building the initial cluster.        |
+| task_name         | BUILDING                             |
+| updated           | 2014-08-16T01:46:51                  |
++-------------------+--------------------------------------+</computeroutput></screen>
+      </step>
+      <step>
+        <title>Display cluster information</title>
+        <para>Display information about a cluster by using the trove <command>cluster-show</command> command. Pass in the ID of the cluster.</para>
+        <para>The cluster ID display when you first create a cluster. (If you need to find it later on, use the trove <command>cluster-list</command> command to list the names and IDs of all the clusters in your system.)</para>
+        <screen><prompt>$</prompt> <userinput>trove cluster-show <replaceable>CLUSTER_ID</replaceable></userinput>
+<computeroutput>+-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| created           | 2014-08-16T01:46:51                  |
+| datastore         | mongodb                              |
+| datastore_version | 2.4                                  |
+| id                | aa6ef0f5-dbef-48cd-8952-573ad881e717 |
+| ip                | 10.0.0.2                             |
+| name              | cluster1                             |
+| task_description  | No tasks for the cluster.            |
+| task_name         | NONE                                 |
+| updated           | 2014-08-16T01:59:33                  |
++-------------------+--------------------------------------+</computeroutput>
+        </screen>
+        <note>
+          <formalpara>
+            <title>Your application connects to this IP address</title>
+            <para>The trove <command>cluster-show</command> command displays the IP address of the query router. This is the IP address your application uses to retrieve data from the database.</para>
+          </formalpara>
+        </note>
+      </step>
+      <step>
+        <title>List cluster instances</title>
+        <para>List the instances in a cluster by using the trove <command>cluster-instances</command> command.</para>
+        <screen><prompt>$</prompt> <userinput>trove cluster-instances <replaceable>CLUSTER_ID</replaceable></userinput>
+<computeroutput>+--------------------------------------+----------------+-----------+------+
+| ID                                   | Name           | Flavor ID | Size |
++--------------------------------------+----------------+-----------+------+
+| 45532fc4-661c-4030-8ca4-18f02aa2b337 | cluster1-rs1-1 | 7         |    2 |
+| 7458a98d-6f89-4dfd-bb61-5cf1dd65c121 | cluster1-rs1-2 | 7         |    2 |
+| b37634fb-e33c-4846-8fe8-cf2b2c95e731 | cluster1-rs1-3 | 7         |    2 |
++--------------------------------------+----------------+-----------+------+</computeroutput></screen>
+        <formalpara>
+          <title>Naming conventions for replication sets and instances</title>
+          <para>Note that the <literal>Name</literal> column displays an instance name that includes the replication set name. The replication set names and instance names are automatically generated, following these rules:</para>
+        </formalpara>
+        <itemizedlist>
+          <listitem>
+            <formalpara>
+              <title>Replication set name</title>
+              <para>This name consists of the cluster name, followed by the string -rs<replaceable>n</replaceable>, where <replaceable>n</replaceable> is 1 for the first replication set you create, 2 for the second replication set, and so on. In this example, the cluster name is <literal>cluster1</literal>, and there is only one replication set, so the replication set name is <literal>cluster1-rs1</literal>.</para>
+            </formalpara>
+          </listitem>
+          <listitem>
+            <formalpara>
+              <title>Instance name</title>
+              <para>This name consists of the replication set name followed by the string -<replaceable>n</replaceable>, where <replaceable>n</replaceable> is 1 for the first instance in a replication set, 2 for the the second instance, and so on. In this example, the instance names are <literal>cluster1-rs1-1</literal>, <literal>cluster1-rs1-2</literal>, and <literal>cluster1-rs1-3</literal>.</para>
+            </formalpara>
+          </listitem>
+        </itemizedlist>
+      </step>
+      <step>
+        <title>List clusters</title>
+        <para>List all the clusters in your system, using the trove <command>cluster-list</command> command.</para>
+        <screen><prompt>$</prompt> <userinput>trove cluster-list</userinput>
+<computeroutput>+--------------------------------------+----------+-----------+-------------------+-----------+
+| ID                                   | Name     | Datastore | Datastore Version | Task Name |
++--------------------------------------+----------+-----------+-------------------+-----------+
+| aa6ef0f5-dbef-48cd-8952-573ad881e717 | cluster1 | mongodb   | 2.4               | NONE      |
+| b8829c2a-b03a-49d3-a5b1-21ec974223ee | cluster2 | mongodb   | 2.4               | BUILDING  |
++--------------------------------------+----------+-----------+-------------------+-----------+</computeroutput></screen>
+      </step>
+      <step>
+        <title>Delete a cluster</title>
+        <para>Delete a cluster, using the trove <command>cluster-delete</command> command.</para>
+        <screen><prompt>$</prompt> <userinput>trove cluster-delete <replaceable>CLUSTER_ID</replaceable></userinput></screen>
+      </step>
+    </procedure>
+    <simplesect>
+      <title>Query routers and config servers</title>
+      <para>Each cluster includes at least one query router and one config server. Query routers and config servers count against your quota. When you delete a cluster, the system deletes the associated query router(s) and config server(s).</para>
+    </simplesect>
   </section>
 </section>
