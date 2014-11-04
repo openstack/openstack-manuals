@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-11-02 09:33+0000\n"
-"PO-Revision-Date: 2014-11-02 09:33+0000\n"
+"POT-Creation-Date: 2014-11-03 17:27+0000\n"
+"PO-Revision-Date: 2014-11-03 06:26+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -1026,6 +1026,147 @@ msgid ""
 "image.<placeholder-2/>"
 msgstr "VirtualBox を使用して VDI イメージを作成した場合、VirtualBox に同梱されている <placeholder-1/> コマンドラインツールを使用して、raw 形式に変換できます。Mac OS X の場合、VirtualBox はデフォルトで <filename>~/VirtualBox VMs/</filename> ディレクトリに保存します。以下の例は、VirtualBox VDI イメージから raw イメージをカレントディレクトリに作成します。<placeholder-2/>"
 
+#: ./doc/image-guide/section_fedora-example.xml8(title)
+msgid "Example: Fedora image"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml9(para)
+msgid ""
+"Download a Fedora image from <link href=\"http://fedoraproject.org/en/get-"
+"fedora#clouds\">Get Fedora</link>."
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml10(para)
+msgid "This procedure lets you create a Fedora 20 image."
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml12(para)
+msgid "Start the installation using <placeholder-1/> as shown below:"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml20(para)
+msgid "This will launch a VM and start the installation process."
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml41(para)
+msgid "Choose the VNC or text mode to set the installation options."
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml52(para)
+msgid ""
+"Set the timezone, network configuration, installation source, and the root "
+"password. Optionally, you can choose to create a user."
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml55(para)
+msgid "Set up the installation destination as shown below:"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml113(para)
+msgid ""
+"Run the following commands from the host to eject the disk and reboot using "
+"virsh, as root."
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml115(replaceable)
+msgid "fedora-20"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml118(para)
+msgid ""
+"You can also use the GUI to detach and reboot it by manually stopping and "
+"starting."
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml120(para)
+msgid ""
+"Log in as root user when you boot for the first time after installation."
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml122(para)
+msgid ""
+"Install and run the <literal>acpid</literal> service on the guest system to "
+"enable the virtual machine to reboot or shutdown an instance."
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml124(para)
+msgid ""
+"Run the following commands inside the Fedora guest to install the ACPI "
+"service and configure it to start when the system boots:"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml128(para)
+msgid ""
+"Install <literal>cloud-init</literal> package inside the Fedora guest by "
+"adding the EPEL repo:"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml130(para)
+msgid ""
+"The <literal>cloud-init</literal> package automatically fetches the public "
+"key from the metadata server and places the key in an account."
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml134(para)
+msgid ""
+"You can change the name of the account used by <literal>cloud-init</literal>"
+" by editing the <filename>/etc/cloud/cloud.cfg</filename> file and adding a "
+"line with a different user. For example, to configure <literal>cloud-"
+"init</literal> to put the key in an account named admin, add this line to "
+"the configuration file:"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml140(para)
+msgid ""
+"Disable the default <literal>zeroconf</literal> route for the instance to "
+"access the metadata service:"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml143(para)
+msgid ""
+"For the <placeholder-1/> command to work properly on Fedora 20, you might "
+"need to add the following lines to the "
+"<filename>/boot/grub/menu.lst</filename> file:"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml150(para)
+msgid "Shut down the instance from inside the instance as a root user:"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml152(para)
+msgid "Clean up and remove MAC address details."
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml153(para)
+#: ./doc/image-guide/section_centos-example.xml307(para)
+msgid ""
+"The operating system records the MAC address of the virtual Ethernet card in"
+" locations such as <filename>/etc/sysconfig/network-scripts/ifcfg-"
+"eth0</filename> and <filename>/etc/udev/rules.d/70-persistent-"
+"net.rules</filename> during the instance process. However, each time the "
+"image boots up, the virtual Ethernet card will have a different MAC address,"
+" so this information must be deleted from the configuration file."
+msgstr "オペレーティングシステムは、インストール中に仮想ネットワークカードの MAC アドレスを <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename> や <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> などの場所に記録します。しかしながら、イメージが起動するたびに、仮想ネットワークカードは別の MAC アドレスになります。そのため、この情報は設定ファイルから削除する必要があります。"
+
+#: ./doc/image-guide/section_fedora-example.xml159(para)
+msgid ""
+"Use the <literal>virt-sysprep</literal> utility. This performs various "
+"cleanup tasks such as removing the MAC address references. It will clean up "
+"a virtual machine image in place:"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml163(para)
+msgid ""
+"Undefine the domain since you no longer need to have this virtual machine "
+"image managed by libvirt:"
+msgstr ""
+
+#: ./doc/image-guide/section_fedora-example.xml167(para)
+msgid ""
+"The underlying image file that you created with qemu-img create is ready to "
+"be uploaded to the Image Service."
+msgstr ""
+
 #: ./doc/image-guide/ch_introduction.xml7(title)
 msgid "Introduction"
 msgstr "はじめに"
@@ -1690,16 +1831,6 @@ msgstr "インスタンス内で root として以下を実行します。"
 #: ./doc/image-guide/section_ubuntu-example.xml181(title)
 msgid "Clean up (remove MAC address details)"
 msgstr "クリーンアップ (MAC アドレスの詳細の削除)"
-
-#: ./doc/image-guide/section_centos-example.xml307(para)
-msgid ""
-"The operating system records the MAC address of the virtual Ethernet card in"
-" locations such as <filename>/etc/sysconfig/network-scripts/ifcfg-"
-"eth0</filename> and <filename>/etc/udev/rules.d/70-persistent-"
-"net.rules</filename> during the instance process. However, each time the "
-"image boots up, the virtual Ethernet card will have a different MAC address,"
-" so this information must be deleted from the configuration file."
-msgstr "オペレーティングシステムは、インストール中に仮想ネットワークカードの MAC アドレスを <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename> や <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> などの場所に記録します。しかしながら、イメージが起動するたびに、仮想ネットワークカードは別の MAC アドレスになります。そのため、この情報は設定ファイルから削除する必要があります。"
 
 #: ./doc/image-guide/section_centos-example.xml313(para)
 #: ./doc/image-guide/section_ubuntu-example.xml187(para)
