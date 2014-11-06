@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="swift-install-storage-node">
+  <title>Install and configure the storage nodes</title>
+  <para>This section describes how to install and configure storage nodes
+    for the Object Storage service. For simplicity, this configuration
+    references two storage nodes, each containing two empty local block
+    storage devices. Each of the devices, <literal>/dev/sdb</literal> and
+    <literal>/dev/sdc</literal>, must contain a suitable partition table
+    with one partition occupying the entire device. Although the Object
+    Storage service supports any file system with
+    <glossterm>extended attributes (xattr)</glossterm>, testing and
+    benchmarking indicates the best performance and reliability on
+    <glossterm>XFS</glossterm>. For more information on horizontally
+    scaling your environment, see the
+    <link xlink:href="http://docs.openstack.org/developer/swift/deployment_guide.html"
+    >Deployment Guide</link>.</para>
+  <procedure>
+    <title>To configure prerequisites</title>
+    <para>You must configure each storage node before you install and
+      configure the Object Storage service on it. Similar to the controller
+      node, each storage node contains one network interface on the
+      <glossterm>management network</glossterm>. Optionally, each storage
+      node can contain a second network interface on a separate network for
+      replication. For more information, see
+      <xref linkend="ch_basic_environment"/>.</para>
+    <step>
+      <para>Configure unique items on the first storage node:</para>
+      <substeps>
+        <step>
+          <para>Configure the management interface:</para>
+          <para>IP address: 10.0.0.51</para>
+          <para>Network mask: 255.255.255.0 (or /24)</para>
+          <para>Default gateway: 10.0.0.1</para>
+        </step>
+        <step>
+          <para>Set the hostname of the node to
+            <replaceable>object1</replaceable>.</para>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Configure unique items on the second storage node:</para>
+      <substeps>
+        <step>
+          <para>Configure the management interface:</para>
+          <para>IP address: 10.0.0.52</para>
+          <para>Network mask: 255.255.255.0 (or /24)</para>
+          <para>Default gateway: 10.0.0.1</para>
+        </step>
+        <step>
+          <para>Set the hostname of the node to
+            <replaceable>object2</replaceable>.</para>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Configure shared items on both storage nodes:</para>
+      <substeps>
+        <step>
+          <para>Copy the contents of the <filename>/etc/hosts</filename> file
+            from the controller node and add the following to it:</para>
+          <programlisting language="ini"># object1
+10.0.0.51        object1
+
+# object2
+10.0.0.52        object2</programlisting>
+          <para>Also add this content to the <filename>/etc/hosts</filename>
+            file on all other nodes in your environment.</para>
+        </step>
+        <step>
+          <para>Install and configure
+            <glossterm baseform="Network Time Protocol (NTP)">NTP</glossterm>
+            using the instructions in
+            <xref linkend="basics-ntp-other-nodes"/>.</para>
+        </step>
+        <step>
+          <para>Install the supporting utility packages:</para>
+          <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install xfsprogs rsync</userinput></screen>
+          <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install xfsprogs rsync</userinput></screen>
+          <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install xfsprogs rsync xinetd</userinput></screen>
+        </step>
+        <step>
+          <para>Format the <literal>/dev/sdb1</literal> and
+            <literal>/dev/sdc1</literal> partitions as XFS:</para>
+          <screen><prompt>#</prompt> <userinput>mkfs.xfs /dev/sdb1</userinput>
+<prompt>#</prompt> <userinput>mkfs.xfs /dev/sdc1</userinput></screen>
+        </step>
+        <step>
+          <para>Create the mount directory structure:</para>
+          <screen><prompt>#</prompt> <userinput>mkdir -p /srv/node/sdb1</userinput>
+<prompt>#</prompt> <userinput>mkdir -p /srv/node/sdc1</userinput></screen>
+        </step>
+        <step>
+          <para>Edit the <filename>/etc/fstab</filename> file and add the
+            following to it:</para>
+          <programlisting language="ini">/dev/sdb1 /srv/node/sdb1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 2
+/dev/sdc1 /srv/node/sdc1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 2</programlisting>
+        </step>
+        <step>
+          <para>Mount the devices:</para>
+          <screen><prompt>#</prompt> <userinput>mount /srv/node/sdb1</userinput>
+<prompt>#</prompt> <userinput>mount /srv/node/sdc1</userinput></screen>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/rsyncd.conf</filename> file and add the
+        following to it:</para>
+      <programlisting language="ini">uid = swift
+gid = swift
+log file = /var/log/rsyncd.log
+pid file = /var/run/rsyncd.pid
+address = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+
+[account]
+max connections = 2
+path = /srv/node/
+read only = false
+lock file = /var/lock/account.lock
+
+[container]
+max connections = 2
+path = /srv/node/
+read only = false
+lock file = /var/lock/container.lock
+
+[object]
+max connections = 2
+path = /srv/node/
+read only = false
+lock file = /var/lock/object.lock</programlisting>
+      <para>Replace <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+        with the IP address of the management network on the storage
+        node.</para>
+      <note>
+        <para>The <systemitem role="service">rsync</systemitem> service
+          requires no authentication, so consider running it on a private
+          network.</para>
+      </note>
+    </step>
+    <step os="ubuntu;debian">
+      <para>Edit the <filename>/etc/default/rsync</filename> file and enable
+        the <systemitem role="service">rsync</systemitem> service:</para>
+      <programlisting language="ini">RSYNC_ENABLE=true</programlisting>
+    </step>
+    <step os="sles;opensuse">
+      <para>Edit the <filename>/etc/xinetd.d/rsync</filename> file and enable
+       the <systemitem role="service">rsync</systemitem> service:</para>
+      <programlisting language="ini">disable = no</programlisting>
+    </step>
+    <step os="ubuntu;debian">
+      <para>Start the <systemitem class="service">rsync</systemitem>
+        service:</para>
+      <screen><prompt>#</prompt> <userinput>service rsync start</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora">
+      <para>Start the <systemitem class="service">rsyncd</systemitem> service
+        and configure it to start when the system boots:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl enable rsyncd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start rsyncd.service</userinput></screen>
+    </step>
+    <step os="sles;opensuse">
+      <para>Start the <systemitem class="service">xinetd</systemitem> service
+        and configure it to start when the system boots:</para>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service xinetd start</userinput>
+<prompt>#</prompt> <userinput>chkconfig xinetd on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable xinetd.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start xinetd.service</userinput></screen>
+    </step>
+  </procedure>
+  <procedure>
+    <title>Install and configure storage node components</title>
+    <note>
+      <para>Perform these steps on each storage node.</para>
+    </note>
+    <step>
+      <para>Install the packages:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install swift swift-account swift-container swift-object</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-account openstack-swift-container \
+  openstack-swift-object</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install openstack-swift-account openstack-swift-container \
+  openstack-swift-object python-xml</userinput></screen>
+    </step>
+    <step os="ubuntu;debian;rhel;centos;fedora">
+      <para>Obtain the accounting, container, and object service configuration
+        files from the Object Storage source repository:</para>
+      <screen><prompt>#</prompt> <userinput>curl -o /etc/swift/account-server.conf \
+  https://raw.githubusercontent.com/openstack/swift/stable/juno/etc/account-server.conf-sample</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>curl -o /etc/swift/container-server.conf \
+  https://raw.githubusercontent.com/openstack/swift/stable/juno/etc/container-server.conf-sample</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>curl -o /etc/swift/object-server.conf \
+  https://raw.githubusercontent.com/openstack/swift/stable/juno/etc/object-server.conf-sample</userinput></screen>
+    </step>
+    <step>
+      <para>Edit the
+        <filename>/etc/swift/account-server.conf</filename>,
+        <filename>/etc/swift/container-server.conf</filename>, and
+        <filename>/etc/swift/object-server.conf</filename> files and
+        complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            bind port, bind address, user, configuration directory, and
+            mount point directory:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+bind_ip = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+bind_port = 6002
+user = swift
+swift_dir = /etc/swift
+devices = /srv/node</programlisting>
+          <para>Replace
+            <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+            with the IP address of the management network on the storage
+            node.</para>
+        </step>
+        <step>
+          <para>In the <literal>[pipeline]</literal> section, enable
+            the appropriate modules:</para>
+          <programlisting language="ini">[pipeline]
+pipeline = healthcheck recon account-server</programlisting>
+          <note>
+            <para>For more information on other modules that enable
+             additional features, see the
+             <link xlink:href="http://docs.openstack.org/developer/swift/deployment_guide.html"
+             >Deployment Guide</link>.</para>
+          </note>
+        </step>
+        <step>
+          <para>In the <literal>[filter:recon]</literal> section, configure
+            the recon cache directory:</para>
+          <programlisting language="ini">[filter:recon]
+...
+recon_cache_path = /var/cache/swift</programlisting>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Ensure proper ownership of the mount point directory
+        structure:</para>
+      <screen><prompt>#</prompt> <userinput>chown -R swift:swift /srv/node</userinput></screen>
+    </step>
+    <step>
+      <para>Create the <literal>recon</literal> directory and ensure proper
+        ownership of it:</para>
+      <screen><prompt>#</prompt> <userinput>mkdir -p /var/cache/swift</userinput>
+<prompt>#</prompt> <userinput>chown -R swift:swift /var/cache/swift</userinput></screen>
+    </step>
+  </procedure>
+</section>
