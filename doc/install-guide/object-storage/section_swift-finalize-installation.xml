@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="swift-finalize-installation">
+  <title>Finalize installation</title>
+  <procedure>
+    <title>Configure hashes and default storage policy</title>
+    <step os="ubuntu;debian;rhel;centos;fedora">
+      <para>Obtain the <filename>/etc/swift/swift.conf</filename> file from
+        the Object Storage repository:</para>
+      <screen><prompt>#</prompt> <userinput>curl -o /etc/swift/swift.conf \
+  https://raw.githubusercontent.com/openstack/swift/stable/juno/etc/swift.conf-sample</userinput></screen>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/swift/swift.conf</filename> file and
+        complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[swift-hash]</literal> section, configure
+            the hash path prefix and suffix for your environment.</para>
+          <programlisting language="ini">[swift-hash]
+...
+swift_hash_path_suffix = <replaceable>HASH_PATH_PREFIX</replaceable>
+swift_hash_path_prefix = <replaceable>HASH_PATH_SUFFIX</replaceable></programlisting>
+          <para>Replace <replaceable>HASH_PATH_PREFIX</replaceable> and
+            <replaceable>HASH_PATH_SUFFIX</replaceable> with a unique values
+            that remain a secret.</para>
+          <warning>
+            <para>Do not change or lose these values!</para>
+          </warning>
+        </step>
+        <step>
+          <para>In the <literal>[storage-policy:0]</literal> section,
+            configure the default storage policy:</para>
+          <programlisting language="ini">[storage-policy:0]
+...
+name = Policy-0
+default = yes</programlisting>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Copy the <filename>swift.conf</filename> file to
+        the <literal>/etc/swift</literal> directory on each storage
+        and additional nodes running the proxy service.</para>
+    </step>
+    <step>
+      <para>On all nodes, ensure proper ownership of the configuration
+        directory:</para>
+      <screen><prompt>#</prompt> <userinput>chown -R swift:swift /etc/swift</userinput></screen>
+    </step>
+    <step os="ubuntu;debian">
+      <para>On the controller node and any other nodes running the proxy
+        service, restart the Object Storage proxy service including
+        its dependencies:</para>
+      <screen><prompt>#</prompt> <userinput>service memcached restart</userinput>
+<prompt>#</prompt> <userinput>service swift-proxy restart</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora;sles;opensuse">
+      <para>On the controller node and any other nodes running the proxy
+        service, start the Object Storage proxy service including its
+        dependencies and configure them to start when the system boots:</para>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-swift-proxy.service memcached.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-swift-proxy.service memcached.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service memcached start</userinput>
+<prompt>#</prompt> <userinput>service openstack-swift-proxy start</userinput>
+<prompt>#</prompt> <userinput>chkconfig memcached on</userinput>
+<prompt>#</prompt> <userinput>chkconfig openstack-swift-proxy on</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-swift-proxy.service memcached.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-swift-proxy.service memcached.service</userinput></screen>
+    </step>
+    <step os="ubuntu;debian">
+      <para>On the storage nodes, start the Object Storage services:</para>
+      <screen><prompt>#</prompt> <userinput>swift-init all start</userinput></screen>
+      <note>
+        <para>The storage node runs many Object Storage services and the
+          <command>swift-init</command> command makes them easier to
+          manage. You can ignore errors from services not running on the
+          storage node.</para>
+      </note>
+    </step>
+    <step os="rhel;centos;fedora">
+      <para>On the storage nodes, start the Object Storage services and
+        configure them to start when the system boots:</para>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-swift-account.service openstack-swift-account-auditor.service \
+  openstack-swift-account-reaper.service openstack-swift-account-replicator.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-swift-account.service openstack-swift-account-auditor.service \
+  openstack-swift-account-reaper.service openstack-swift-account-replicator.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-swift-container.service openstack-swift-container-auditor.service \
+  openstack-swift-container-replicator.service openstack-swift-container-updater.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-swift-container.service openstack-swift-container-auditor.service \
+  openstack-swift-container-replicator.service openstack-swift-container-updater.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-swift-object.service openstack-swift-object-auditor.service \
+  openstack-swift-object-replicator.service openstack-swift-object-updater.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-swift-object.service openstack-swift-object-auditor.service \
+  openstack-swift-object-replicator.service openstack-swift-object-updater.service</userinput></screen>
+    </step>
+    <step os="sles;opensuse">
+      <para>On the storage nodes, start the Object Storage services and
+        configure them to start when the system boots:</para>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>for service in \
+  openstack-swift-account openstack-swift-account-auditor \
+  openstack-swift-account-reaper openstack-swift-account-replicator; do \
+  service $service start; chkconfig $service on; done</userinput>
+<prompt>#</prompt> <userinput>for service in \
+  openstack-swift-container openstack-swift-container-auditor \
+  openstack-swift-container-replicator openstack-swift-container-updater; do \
+  service $service start; chkconfig $service on; done</userinput>
+<prompt>#</prompt> <userinput>for service in \
+  openstack-swift-object openstack-swift-object-auditor \
+  openstack-swift-object-replicator openstack-swift-object-updater; do \
+  service $service start; chkconfig $service on; done</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-swift-account.service openstack-swift-account-auditor.service \
+  openstack-swift-account-reaper.service openstack-swift-account-replicator.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-swift-account.service openstack-swift-account-auditor.service \
+  openstack-swift-account-reaper.service openstack-swift-account-replicator.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-swift-container.service openstack-swift-container-auditor.service \
+  openstack-swift-container-replicator.service openstack-swift-container-updater.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-swift-container.service openstack-swift-container-auditor.service \
+  openstack-swift-container-replicator.service openstack-swift-container-updater.service</userinput>
+<prompt>#</prompt> <userinput>systemctl enable openstack-swift-object.service openstack-swift-object-auditor.service \
+  openstack-swift-object-replicator.service openstack-swift-object-updater.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-swift-object.service openstack-swift-object-auditor.service \
+  openstack-swift-object-replicator.service openstack-swift-object-updater.service</userinput></screen>
+    </step>
+  </procedure>
+</section>

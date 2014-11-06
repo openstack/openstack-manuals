@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="swift-example-arch">
+  <title>Example architecture</title>
+  <para>In a production environment, the Object Storage service requires
+    at least two proxy nodes and five storage nodes. For simplicity, this
+    guide uses a minimal architecture with the proxy service running on
+    the existing OpenStack controller node and two storage nodes. However,
+    these concepts still apply.</para>
+  <itemizedlist>
+    <listitem>
+      <para>Node: A host machine that runs one or more OpenStack
+        Object Storage services.</para>
+    </listitem>
+    <listitem>
+      <para>Proxy node: Runs proxy services.</para>
+    </listitem>
+    <listitem>
+      <para>Storage node: Runs account, container, and object
+        services. Contains the SQLite databases.</para>
+    </listitem>
+    <listitem>
+      <para>Ring: A set of mappings between OpenStack Object
+        Storage data to physical devices.</para>
+    </listitem>
+    <listitem>
+      <para>Replica: A copy of an object. By default, three
+        copies are maintained in the cluster.</para>
+    </listitem>
+    <listitem>
+      <para>Zone (optional): A logically separate section of the cluster,
+        related to independent failure characteristics.</para>
+    </listitem>
+    <listitem>
+      <para>Region (optional): A logically separate section of
+        the cluster, representing distinct physical locations
+        such as cities or countries. Similar to zones but
+        representing physical locations of portions of the
+        cluster rather than logical segments.</para>
+    </listitem>
+  </itemizedlist>
+  <para>To increase reliability and performance, you can add
+    additional proxy servers.</para>
+  <para>The following diagram shows one possible architecture for a
+    minimal production environment:</para>
+  <para>
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata fileref="../figures/swift_install_arch.png"/>
+      </imageobject>
+    </inlinemediaobject>
+  </para>
+</section>
