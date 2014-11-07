@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="swift-install-controller-node">
+  <title>Install and configure the controller node</title>
+  <para>This section describes how to install and configure the proxy
+    service that handles requests for the account, container, and object
+    services that reside on the storage nodes. For simplicity, this
+    guide installs and configures the proxy service on the controller node.
+    However, you can run the proxy service on any node with network
+    connectivity to the storage nodes. Additionally, you can install and
+    configure the proxy service on multiple nodes to increase performance
+    and redundancy. For more information, see the
+    <link xlink:href="http://docs.openstack.org/developer/swift/deployment_guide.html"
+    >Deployment Guide</link>.</para>
+  <procedure>
+    <title>To configure prerequisites</title>
+    <para>The proxy service relies on an authentication and authorization
+      mechanism such as the Identity service. However, unlike other services,
+      it also offers an internal mechanism that allows it to operate without
+      any other OpenStack services. However, for simplicity, this guide
+      references the Identity service in <xref linkend="ch_keystone"/>. Before
+      you configure the Object Storage service, you must create Identity
+      service credentials including endpoints.</para>
+    <note>
+      <para>The Object Storage service does not use a SQL database on
+        the controller node.</para>
+    </note>
+    <step>
+      <para>To create the Identity service credentials, complete these
+        steps:</para>
+      <substeps>
+        <step>
+          <para>Create a <literal>swift</literal> user:</para>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name swift --pass <replaceable>SWIFT_PASS</replaceable></userinput>
+<computeroutput>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|  email   |                                  |
+| enabled  |               True               |
+|    id    | d535e5cbd2b74ac7bfb97db9cced3ed6 |
+|   name   |              swift               |
+| username |              swift               |
++----------+----------------------------------+</computeroutput></screen>
+          <para>Replace <replaceable>SWIFT_PASS</replaceable> with a suitable
+            password.</para>
+        </step>
+        <step>
+          <para>Link the <literal>swift</literal> user to the
+            <literal>service</literal> tenant and <literal>admin</literal>
+            role:</para>
+          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user swift --tenant service --role admin</userinput></screen>
+          <note>
+            <para>This command provides no output.</para>
+          </note>
+        </step>
+        <step>
+          <para>Create the <literal>swift</literal> service:</para>
+          <screen><prompt>$</prompt> <userinput>keystone service-create --name swift --type object-store \
+  --description "OpenStack Object Storage"</userinput>
+<computeroutput>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |     OpenStack Object Storage     |
+|   enabled   |              True                |
+|      id     | 75ef509da2c340499d454ae96a2c5c34 |
+|     name    |              swift               |
+|     type    |           object-store           |
++-------------+----------------------------------+</computeroutput></screen>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Create the Identity service endpoints:</para>
+      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
+  --service-id $(keystone service-list | awk '/ object-store / {print $2}') \
+  --publicurl 'http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
+  --internalurl 'http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
+  --adminurl http://<replaceable>controller</replaceable>:8080 \
+  --region regionOne</userinput>
+<computeroutput>+-------------+---------------------------------------------------+
+|   Property  |                       Value                       |
++-------------+---------------------------------------------------+
+|   adminurl  |            http://controller:8080/                |
+|      id     |          af534fb8b7ff40a6acf725437c586ebe         |
+| internalurl | http://controller:8080/v1/AUTH_%(tenant_id)s      |
+|  publicurl  | http://controller:8080/v1/AUTH_%(tenant_id)s      |
+|    region   |                     regionOne                     |
+|  service_id |          75ef509da2c340499d454ae96a2c5c34         |
++-------------+---------------------------------------------------+</computeroutput></screen>
+    </step>
+  </procedure>
+  <procedure>
+    <title>To install and configure the controller node components</title>
+    <step>
+      <para>Install the packages:</para>
+      <note>
+        <para>Complete OpenStack environments already include some of these
+          packages.</para>
+      </note>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install swift swift-proxy python-swiftclient python-keystoneclient memcached</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-swift-proxy python-swiftclient python-keystone-auth-token memcached</userinput></screen>
+      <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-swift-proxy python-swiftclient python-keystoneclient memcached python-xml</userinput></screen>
+    </step>
+    <step os="ubuntu;debian">
+      <para>Create the <literal>/etc/swift</literal> directory.</para>
+    </step>
+    <step os="ubuntu;debian;rhel;centos;fedora">
+      <para>Obtain the proxy service configuration file from the Object
+        Storage source repository:</para>
+      <screen><prompt>#</prompt> <userinput>curl -o /etc/swift/proxy-server.conf \
+  https://raw.githubusercontent.com/openstack/swift/stable/juno/etc/proxy-server.conf-sample</userinput></screen>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/swift/proxy-server.conf</filename>
+        file and complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure
+           the bind port, user, and configuration directory:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+bind_port = 8080
+user = swift
+swift_dir = /etc/swift</programlisting>
+        </step>
+        <step>
+          <para>In the <literal>[pipeline]</literal> section, enable
+            the appropriate modules:</para>
+          <programlisting language="ini">[pipeline]
+pipeline = authtoken cache healthcheck keystoneauth proxy-logging proxy-server</programlisting>
+          <note>
+            <para>For more information on other modules that enable
+             additional features, see the
+             <link xlink:href="http://docs.openstack.org/developer/swift/deployment_guide.html"
+             >Deployment Guide</link>.</para>
+          </note>
+        </step>
+        <step>
+          <para>In the <literal>[app:proxy-server]</literal> section, enable
+            account management:</para>
+          <programlisting language="ini">[app:proxy-server]
+...
+allow_account_management = true
+account_autocreate = true</programlisting>
+        </step>
+        <step>
+          <para>In the <literal>[filter:keystoneauth]</literal> section,
+            configure the operator roles:</para>
+          <programlisting language="ini">[filter:keystoneauth]
+use = egg:swift#keystoneauth
+...
+operator_roles = admin,_member_</programlisting>
+          <note os="ubuntu;debian;rhel;centos;fedora">
+            <para>You might need to uncomment this section.</para>
+          </note>
+        </step>
+        <step>
+          <para>In the <literal>[filter:authtoken]</literal> section,
+            configure Identity service access:</para>
+          <programlisting language="ini">[filter:authtoken]
+paste.filter_factory = keystonemiddleware.auth_token:filter_factory
+...
+auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+identity_url = http://<replaceable>controller</replaceable>:35357
+admin_tenant_name = service
+admin_user = swift
+admin_password = <replaceable>SWIFT_PASS</replaceable>
+delay_auth_decision = true</programlisting>
+          <para>Replace <replaceable>SWIFT_PASS</replaceable> with the
+            password you chose for the <literal>swift</literal> user in the
+            Identity service.</para>
+          <note os="ubuntu;debian;rhel;centos;fedora">
+            <para>You might need to uncomment this section.</para>
+          </note>
+          <note>
+            <para>Comment out any <literal>auth_host</literal>,
+              <literal>auth_port</literal>, and
+              <literal>auth_protocol</literal> options because the
+              <literal>identity_uri</literal> option replaces them.</para>
+          </note>
+        </step>
+        <step>
+          <para>In the <literal>[filter:cache]</literal> section, configure
+            the <application>memcached</application> location:</para>
+          <programlisting language="ini">[filter:cache]
+...
+memcache_servers = 127.0.0.1:11211</programlisting>
+        </step>
+      </substeps>
+    </step>
+  </procedure>
+</section>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="swift-initial-rings">
+  <title>Create initial rings</title>
+  <para>Before starting the Object Storage services, you must create
+    the initial account, container, and object rings. The ring builder
+    creates configuration files that each node uses to determine and
+    deploy the storage architecture. For simplicity, this guide uses one
+    region and zone with 2^10 (1024) maximum partitions, 3 replicas of each
+    object, and 1 hour minimum time between moving a partition more than
+    once. For Object Storage, a partition indicates a directory on a storage
+    device rather than a conventional partition table. For more information,
+    see the
+    <link xlink:href="http://docs.openstack.org/developer/swift/deployment_guide.html"
+    >Deployment Guide</link>.</para>
+  <section xml:id="swift-initial-rings-account">
+    <title>Account ring</title>
+    <para>The account server uses the account ring to maintain lists
+      of containers.</para>
+    <procedure>
+      <title>To create the ring</title>
+      <note>
+        <para>Perform these steps on the controller node.</para>
+      </note>
+      <step>
+        <para>Change to the <literal>/etc/swift</literal> directory.</para>
+      </step>
+      <step>
+        <para>Create the base <filename>account.builder</filename> file:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder create 10 3 1</userinput></screen>
+      </step>
+      <step>
+        <para>Add each storage node to the ring:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder \
+  add r1z1-<replaceable>STORAGE_NODE_MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>:6002/<replaceable>DEVICE_NAME</replaceable> <replaceable>DEVICE_WEIGHT</replaceable></userinput></screen>
+        <para>Replace
+          <replaceable>STORAGE_NODE_MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+          with the IP address of the management network on the storage node.
+          Replace <replaceable>DEVICE_NAME</replaceable> with a storage
+          device name on the same storage node. For example, using the first
+          storage node in
+          <xref linkend="swift-install-storage-node"/> with the
+          <literal>/dev/sdb1</literal> storage device and weight of 100:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder add r1z1-10.0.0.51:6002/sdb1 100</userinput></screen>
+        <para>Repeat this command for each storage device on each storage
+          node. The example architecture requires four variations of this
+          command.</para>
+      </step>
+      <step>
+        <para>Verify the ring contents:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder</userinput></screen>
+      </step>
+      <step>
+        <para>Rebalance the ring:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder rebalance</userinput></screen>
+        <note>
+          <para>This process can take a while.</para>
+        </note>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="swift-initial-rings-container">
+    <title>Container ring</title>
+    <para>The container server uses the container ring to maintain lists
+      of objects. However, it does not track object locations.</para>
+    <procedure>
+      <title>To create the ring</title>
+      <note>
+        <para>Perform these steps on the controller node.</para>
+      </note>
+      <step>
+        <para>Change to the <literal>/etc/swift</literal> directory.</para>
+      </step>
+      <step>
+        <para>Create the base <filename>container.builder</filename>
+          file:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder container.builder create 10 3 1</userinput></screen>
+      </step>
+      <step>
+        <para>Add each storage node to the ring:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder container.builder \
+  add r1z1-<replaceable>STORAGE_NODE_MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>:6001/<replaceable>DEVICE_NAME</replaceable> <replaceable>DEVICE_WEIGHT</replaceable></userinput></screen>
+        <para>Replace
+          <replaceable>STORAGE_NODE_MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+          with the IP address of the management network on the storage node.
+          Replace <replaceable>DEVICE_NAME</replaceable> with a storage
+          device name on the same storage node. For example, using the first
+          storage node in
+          <xref linkend="swift-install-storage-node"/> with the
+          <literal>/dev/sdb1</literal> storage device and weight of 100:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder container.builder add r1z1-10.0.0.51:6001/sdb1 100</userinput></screen>
+        <para>Repeat this command for each storage device on each storage
+          node. The example architecture requires four variations of this
+          command.</para>
+      </step>
+      <step>
+        <para>Verify the ring contents:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder container.builder</userinput></screen>
+      </step>
+      <step>
+        <para>Rebalance the ring:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder container.builder rebalance</userinput></screen>
+        <note>
+          <para>This process can take a while.</para>
+        </note>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="swift-initial-rings-object">
+    <title>Object ring</title>
+    <para>The object server uses the object ring to maintain lists
+      of object locations on local devices.</para>
+    <procedure>
+      <title>To create the ring</title>
+      <note>
+        <para>Perform these steps on the controller node.</para>
+      </note>
+      <step>
+        <para>Change to the <literal>/etc/swift</literal> directory.</para>
+      </step>
+      <step>
+        <para>Create the base <filename>object.builder</filename> file:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder object.builder create 10 3 1</userinput></screen>
+      </step>
+      <step>
+        <para>Add each storage node to the ring:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder object.builder \
+  add r1z1-<replaceable>STORAGE_NODE_MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>:6000/<replaceable>DEVICE_NAME</replaceable> <replaceable>DEVICE_WEIGHT</replaceable></userinput></screen>
+        <para>Replace
+          <replaceable>STORAGE_NODE_MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+          with the IP address of the management network on the storage node.
+          Replace <replaceable>DEVICE_NAME</replaceable> with a storage
+          device name on the same storage node. For example, using the first
+          storage node in
+          <xref linkend="swift-install-storage-node"/> with the
+          <literal>/dev/sdb1</literal> storage device and weight of 100:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder object.builder add r1z1-10.0.0.51:6000/sdb1 100</userinput></screen>
+        <para>Repeat this command for each storage device on each storage
+          node. The example architecture requires four variations of this
+          command.</para>
+      </step>
+      <step>
+        <para>Verify the ring contents:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder object.builder</userinput></screen>
+      </step>
+      <step>
+        <para>Rebalance the ring:</para>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder object.builder rebalance</userinput></screen>
+        <note>
+          <para>This process can take a while.</para>
+        </note>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="swift-initial-rings-distribute">
+    <title>Distribute ring configuration files</title>
+    <para>Copy the <filename>account.ring.gz</filename>,
+      <filename>container.ring.gz</filename>, and
+      <filename>object.ring.gz</filename> files to the
+      <literal>/etc/swift</literal> directory on each storage node and
+       any additional nodes running the proxy service.</para>
+  </section>
+</section>

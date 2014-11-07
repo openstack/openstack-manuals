@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="swift-verify">
+  <title>Verify operation</title>
+  <para>This section describes how to verify operation of the Object
+   Storage service.</para>
+  <procedure>
+    <note>
+      <para>Perform these steps on the controller node.</para>
+    </note>
+    <step>
+      <para>Source the <literal>demo</literal> tenant credentials:</para>
+      <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>Show the service status:</para>
+      <screen><prompt>$</prompt> <userinput>swift stat</userinput>
+<computeroutput>Account: AUTH_11b9758b7049476d9b48f7a91ea11493
+Containers: 0
+   Objects: 0
+     Bytes: 0
+Content-Type: text/plain; charset=utf-8
+X-Timestamp: 1381434243.83760
+X-Trans-Id: txdcdd594565214fb4a2d33-0052570383
+X-Put-Timestamp: 1381434243.83760</computeroutput></screen>
+    </step>
+    <step>
+      <para>Upload a test file:</para>
+      <screen><prompt>$</prompt> <userinput>swift upload demo-container1 <replaceable>FILE</replaceable></userinput></screen>
+      <para>Replace <replaceable>FILE</replaceable> with the name of a local
+        file to upload to the <literal>demo-container1</literal>
+        container.</para>
+    </step>
+    <step>
+      <para>List containers:</para>
+      <screen><prompt>$</prompt> <userinput>swift list</userinput>
+<computeroutput>demo-container1</computeroutput></screen>
+    </step>
+    <step>
+      <para>Download a test file:</para>
+      <screen><prompt>$</prompt> <userinput>swift download demo-container1 <replaceable>FILE</replaceable></userinput></screen>
+      <para>Replace <replaceable>FILE</replaceable> with the name of the
+        file uploaded to the <literal>demo-container1</literal>
+        container.</para>
+    </step>
+  </procedure>
+</section>
