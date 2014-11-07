@@ -158,7 +158,7 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
   DEFAULT rpc_backend qpid</userinput>
 <prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
-    DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
+  DEFAULT qpid_hostname <replaceable>controller</replaceable></userinput></screen>
     </step>
     <step os="sles;opensuse">
       <para>Configure Block Storage to use the RabbitMQ message
@@ -191,6 +191,21 @@ connection = mysql://cinder:<replaceable>CINDER_DBPASS</replaceable>@<replaceabl
           You must add this section header to the end of the file
           before you proceed.</para>
       </note>
+    </step>
+    <step>
+      <para>In the <literal>[DEFAULT]</literal> section, configure the
+        <literal>my_ip</literal> option:</para>
+      <programlisting os="ubuntu" language="ini">[DEFAULT]
+...
+my_ip = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable></programlisting>
+      <screen os="rhel;centos;fedora;sles;opensuse"><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+  DEFAULT my_ip <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable></userinput></screen>
+      <para>Replace
+        <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable> with
+        the IP address of the management network interface on your
+        storage node, typically 10.0.0.41 for the first node in the
+        <link linkend="architecture_example-architectures">example
+        architecture</link>.</para>
     </step>
     <step>
       <para>Configure Block Storage to use the Image Service. Block Storage
