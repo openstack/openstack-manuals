@@ -9,7 +9,7 @@
     <title>Configure hashes and default storage policy</title>
     <step os="ubuntu;debian;rhel;centos;fedora">
       <para>Obtain the <filename>/etc/swift/swift.conf</filename> file from
-        the Object Storage repository:</para>
+        the Object Storage source repository:</para>
       <screen><prompt>#</prompt> <userinput>curl -o /etc/swift/swift.conf \
   https://raw.githubusercontent.com/openstack/swift/stable/juno/etc/swift.conf-sample</userinput></screen>
     </step>
@@ -25,10 +25,11 @@
 swift_hash_path_suffix = <replaceable>HASH_PATH_PREFIX</replaceable>
 swift_hash_path_prefix = <replaceable>HASH_PATH_SUFFIX</replaceable></programlisting>
           <para>Replace <replaceable>HASH_PATH_PREFIX</replaceable> and
-            <replaceable>HASH_PATH_SUFFIX</replaceable> with a unique values
-            that remain a secret.</para>
+            <replaceable>HASH_PATH_SUFFIX</replaceable> with unique
+            values.</para>
           <warning>
-            <para>Do not change or lose these values!</para>
+            <para>Keep these values secret and do not change or lose
+              them.</para>
           </warning>
         </step>
         <step>
@@ -43,8 +44,8 @@ default = yes</programlisting>
     </step>
     <step>
       <para>Copy the <filename>swift.conf</filename> file to
-        the <literal>/etc/swift</literal> directory on each storage
-        and additional nodes running the proxy service.</para>
+        the <literal>/etc/swift</literal> directory on each storage node
+        and any additional nodes running the proxy service.</para>
     </step>
     <step>
       <para>On all nodes, ensure proper ownership of the configuration
