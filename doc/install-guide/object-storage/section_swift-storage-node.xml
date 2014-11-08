@@ -6,15 +6,15 @@
   xml:id="swift-install-storage-node">
   <title>Install and configure the storage nodes</title>
   <para>This section describes how to install and configure storage nodes
-    for the Object Storage service. For simplicity, this configuration
-    references two storage nodes, each containing two empty local block
-    storage devices. Each of the devices, <literal>/dev/sdb</literal> and
-    <literal>/dev/sdc</literal>, must contain a suitable partition table
-    with one partition occupying the entire device. Although the Object
-    Storage service supports any file system with
-    <glossterm>extended attributes (xattr)</glossterm>, testing and
-    benchmarking indicates the best performance and reliability on
-    <glossterm>XFS</glossterm>. For more information on horizontally
+    that operate the account, container, and object services. For
+    simplicity, this configuration references two storage nodes, each
+    containing two empty local block storage devices. Each of the
+    devices, <literal>/dev/sdb</literal> and <literal>/dev/sdc</literal>,
+    must contain a suitable partition table with one partition occupying
+    the entire device. Although the Object Storage service supports any
+    file system with <glossterm>extended attributes (xattr)</glossterm>,
+    testing and benchmarking indicate the best performance and reliability
+    on <glossterm>XFS</glossterm>. For more information on horizontally
     scaling your environment, see the
     <link xlink:href="http://docs.openstack.org/developer/swift/deployment_guide.html"
     >Deployment Guide</link>.</para>
@@ -90,7 +90,7 @@
 <prompt>#</prompt> <userinput>mkfs.xfs /dev/sdc1</userinput></screen>
         </step>
         <step>
-          <para>Create the mount directory structure:</para>
+          <para>Create the mount point directory structure:</para>
           <screen><prompt>#</prompt> <userinput>mkdir -p /srv/node/sdb1</userinput>
 <prompt>#</prompt> <userinput>mkdir -p /srv/node/sdc1</userinput></screen>
         </step>
@@ -206,7 +206,7 @@ lock file = /var/lock/object.lock</programlisting>
       <substeps>
         <step>
           <para>In the <literal>[DEFAULT]</literal> section, configure the
-            bind port, bind address, user, configuration directory, and
+            bind IP address, bind port, user, configuration directory, and
             mount point directory:</para>
           <programlisting language="ini">[DEFAULT]
 ...
@@ -234,7 +234,7 @@ pipeline = healthcheck recon account-server</programlisting>
         </step>
         <step>
           <para>In the <literal>[filter:recon]</literal> section, configure
-            the recon cache directory:</para>
+            the recon (metrics) cache directory:</para>
           <programlisting language="ini">[filter:recon]
 ...
 recon_cache_path = /var/cache/swift</programlisting>
