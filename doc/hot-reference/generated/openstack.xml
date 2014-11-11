@@ -72,7 +72,7 @@ under the License.-->
           <term role="Map">matching_metadata</term>
           <listitem>
             <para>Meter should match this resource metadata (key=value) additionally to the meter_name.</para>
-            <para>Updates cause replacement.</para>
+            <para>Can be updated without replacement.</para>
             <para>Optional property, defaults to "{}".</para>
           </listitem>
         </varlistentry>
@@ -98,6 +98,56 @@ under the License.-->
             <para>Period (seconds) to evaluate over.</para>
             <para>Can be updated without replacement.</para>
             <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">query</term>
+          <listitem>
+            <para>A list of query factors, each comparing a Sample attribute with a value. Implicitly combined with matching_metadata, if any.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+            <para>
+              <emphasis>List contents:</emphasis>
+            </para>
+            <variablelist role="definition_list">
+              <varlistentry>
+                <term role="Map">*</term>
+                <listitem>
+                  <para>Updates cause replacement.</para>
+                  <para>Optional property.</para>
+                  <para>
+                    <emphasis>Map properties:</emphasis>
+                  </para>
+                  <variablelist role="definition_list">
+                    <varlistentry>
+                      <term role="String">field</term>
+                      <listitem>
+                        <para>Name of attribute to compare. Names of the form metadata.user_metadata.X or metadata.metering.X are equivalent to what you can address through matching_metadata; the former for Nova meters, the latter for all others. To see the attributes of your Samples, use `ceilometer --debug sample-list`.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">op</term>
+                      <listitem>
+                        <para>Comparison operator</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                        <para>Allowed values: le, ge, eq, lt, gt, ne</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">value</term>
+                      <listitem>
+                        <para>String value with which to compare</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                      </listitem>
+                    </varlistentry>
+                  </variablelist>
+                </listitem>
+              </varlistentry>
+            </variablelist>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -146,6 +196,7 @@ resources:
       meter_name: String
       ok_actions: [Value, Value, ...]
       period: Integer
+      query: [{"field": String, "value": String, "op": String}, {"field": String, "value": String, "op": String}, ...]
       repeat_actions: Boolean
       statistic: String
       threshold: Number</programlisting>
@@ -169,6 +220,7 @@ Resources:
       meter_name: String
       ok_actions: [Value, Value, ...]
       period: Integer
+      query: [{"field": String, "value": String, "op": String}, {"field": String, "value": String, "op": String}, ...]
       repeat_actions: Boolean
       statistic: String
       threshold: Number</programlisting>
@@ -192,6 +244,7 @@ Resources:
         "meter_name": String,
         "ok_actions": [Value, Value, ...],
         "period": Integer,
+        "query": [{"field": String, "value": String, "op": String}, {"field": String, "value": String, "op": String}, ...],
         "repeat_actions": Boolean,
         "statistic": String,
         "threshold": Number
@@ -391,6 +444,14 @@ Resources:
           </listitem>
         </varlistentry>
         <varlistentry>
+          <term role="Map">scheduler_hints</term>
+          <listitem>
+            <para>Arbitrary key-value pairs specified by the client to help the Cinder scheduler creating a volume.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
           <term role="Integer">size</term>
           <listitem>
             <para>The size of the volume in GB. On update only increase in size is supported.</para>
@@ -540,6 +601,7 @@ resources:
       image: String
       metadata: {...}
       name: String
+      scheduler_hints: {...}
       size: Integer
       snapshot_id: String
       source_volid: String
@@ -560,6 +622,7 @@ Resources:
       image: String
       metadata: {...}
       name: String
+      scheduler_hints: {...}
       size: Integer
       snapshot_id: String
       source_volid: String
@@ -580,6 +643,7 @@ Resources:
         "image": String,
         "metadata": {...},
         "name": String,
+        "scheduler_hints": {...},
         "size": Integer,
         "snapshot_id": String,
         "source_volid": String,
@@ -1384,7 +1448,7 @@ Resources:
         <varlistentry>
           <term role="String">LaunchConfigurationName</term>
           <listitem>
-            <para>Name of LaunchConfiguration resource.</para>
+            <para>The reference to a LaunchConfiguration resource.</para>
             <para>Can be updated without replacement.</para>
             <para>Required property.</para>
           </listitem>
@@ -1873,6 +1937,40 @@ used for substitution can be customized by using the <citetitle>index_var</citet
           </listitem>
         </varlistentry>
         <varlistentry>
+          <term role="List">removal_policies</term>
+          <listitem>
+            <para>Policies for removal of resources on update</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "[]".</para>
+            <para>
+              <emphasis>List contents:</emphasis>
+            </para>
+            <variablelist role="definition_list">
+              <varlistentry>
+                <term role="Map">*</term>
+                <listitem>
+                  <para>Policy to be processed when doing an update which requires removal of specific resources.</para>
+                  <para>Updates cause replacement.</para>
+                  <para>Optional property.</para>
+                  <para>
+                    <emphasis>Map properties:</emphasis>
+                  </para>
+                  <variablelist role="definition_list">
+                    <varlistentry>
+                      <term role="List">resource_list</term>
+                      <listitem>
+                        <para>List of resources to be removed when doing an update which requires removal of specific resources. The resource may be specified several ways: (1) The resource name, as in the nested stack, (2) The resource reference returned from get_resource in a template, as available via the 'refs' attribute Note this is destructive on update when specified; even if the count is not being reduced, and once a resource name is removed, it's name is never reused in subsequent updates</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property, defaults to "[]".</para>
+                      </listitem>
+                    </varlistentry>
+                  </variablelist>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
           <term role="Map">resource_def</term>
           <listitem>
             <para>Resource definition for the resources in the group. The value of this property is the definition of a resource just as if it had been declared in the template itself.</para>
@@ -1931,6 +2029,7 @@ resources:
     properties:
       count: Integer
       index_var: String
+      removal_policies: [{"resource_list": [Value, Value, ...]}, {"resource_list": [Value, Value, ...]}, ...]
       resource_def: {"type": String, "properties": {...}}</programlisting>
     </section>
     <section xml:id="OS__Heat__ResourceGroup-yaml">
@@ -1944,6 +2043,7 @@ Resources:
     Properties:
       count: Integer
       index_var: String
+      removal_policies: [{"resource_list": [Value, Value, ...]}, {"resource_list": [Value, Value, ...]}, ...]
       resource_def: {"type": String, "properties": {...}}</programlisting>
     </section>
     <section xml:id="OS__Heat__ResourceGroup-json">
@@ -1957,6 +2057,7 @@ Resources:
       "Properties": {
         "count": Integer,
         "index_var": String,
+        "removal_policies": [{"resource_list": [Value, Value, ...]}, {"resource_list": [Value, Value, ...]}, ...],
         "resource_def": {"type": String, "properties": {...}}
       }
     }
@@ -2079,7 +2180,7 @@ DELETE) for a software component in one place.</para>
     <para>This resource is backed by the persistence layer and the API of the
 SoftwareConfig resource, and only adds handling for the additional
 'configs' property and attribute.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
+    <para>Available since 2014.2 (Juno).</para>
     <section xml:id="OS__Heat__SoftwareComponent-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -2714,7 +2815,7 @@ Resources:
   <section xml:id="OS__Heat__SoftwareDeployments">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::SoftwareDeployments</title>
-    <para>Available since 2014.1 (Icehouse).</para>
+    <para>Available since 2014.2 (Juno).</para>
     <section xml:id="OS__Heat__SoftwareDeployments-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -3220,7 +3321,7 @@ Resources:
   <section xml:id="OS__Heat__StructuredDeployments">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::StructuredDeployments</title>
-    <para>Available since 2014.1 (Icehouse).</para>
+    <para>Available since 2014.2 (Juno).</para>
     <section xml:id="OS__Heat__StructuredDeployments-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -6618,7 +6719,7 @@ Resources:
           <listitem>
             <para>Security group IDs to associate with this port.</para>
             <para>Can be updated without replacement.</para>
-            <para>Optional property, defaults to "[]".</para>
+            <para>Optional property.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -8586,7 +8687,7 @@ Resources:
         <varlistentry>
           <term role="List">policies</term>
           <listitem>
-            <para>A list of string policies to apply.Defaults to anti-affinity.</para>
+            <para>A list of string policies to apply. Defaults to anti-affinity.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property, defaults to "['anti-affinity']".</para>
             <para>Allowed values: anti-affinity, affinity</para>
