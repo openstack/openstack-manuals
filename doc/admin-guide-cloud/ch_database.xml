@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  version="5.0"
+  xml:id="ch_admin-openstack-database">
+  <title>Database</title>
+  <para>The Database service module provides database management features.</para>
+  <section xml:id="section_database-introduction">
+    <title>Introduction</title>
+    <para>The Database service provides scalable and reliable cloud provisioning functionality for both relational and non-relational database engines. Users can quickly and easily use database features without the burden of handling complex administrative tasks. Cloud users and database administrators can provision and manage multiple database instances as needed.</para>
+    <para>The Database service provides resource isolation at high performance levels, and automates complex administrative tasks such as deployment, configuration, patching, backups, restores, and monitoring.</para>
+  </section>
+  <section xml:id="section_create-datastore">
+    <title>Create a datastore</title>
+    <para>An administrative user can create datastores for a variety of databases.</para>
+    <para>This section assumes you do not yet have a MySQL datastore, and shows you how to create a MySQL datastore and populate it with a MySQL 5.5 datastore version.</para>
+    <procedure>
+      <title>To create a datastore</title>
+      <step>
+        <title>Create a trove image</title>
+        <para>Create an image for the type of database you want to use, for example, MySQL, MongoDB, Cassandra, and so on.</para>
+        <para>This image must have the trove guest agent installed, and it must have the <filename>trove-guestagent.conf</filename> file configured to connect to your OpenStack environment. To configure <filename>trove-guestagent.conf</filename>, add the following lines to <filename>trove-guestagent.conf</filename> on the guest instance you are using to build your image:</para>
+        <programlisting language="ini">rabbit_host = <replaceable>controller</replaceable>
+rabbit_password = <replaceable>RABBIT_PASS</replaceable>
+nova_proxy_admin_user = admin
+nova_proxy_admin_pass = <replaceable>ADMIN_PASS</replaceable>
+nova_proxy_admin_tenant_name = service
+trove_auth_url = http://<replaceable>controller</replaceable>:35357/v2.0</programlisting>
+        <para>This example assumes you have created a MySQL 5.5 image called <literal>mysql-5.5.qcow2</literal>.</para>
+      </step>
+      <step>
+        <title>Register image with Image Service</title>
+        <para>You need to register your guest image with the Image Service.</para>
+        <para>In is example, you use the glance <command>image-create</command> command to register a <literal>mysql-5.5.qcow2</literal> image.</para>
+        <screen>$<prompt></prompt> <userinput>glance image-create --name mysql-5.5 --disk-format qcow2 --container-format bare --is-public True &lt; mysql-5.5.qcow2</userinput>
+<computeroutput>+------------------+--------------------------------------+
+| Property         | Value                                |
++------------------+--------------------------------------+
+| checksum         | d41d8cd98f00b204e9800998ecf8427e     |
+| container_format | bare                                 |
+| created_at       | 2014-05-23T21:01:18                  |
+| deleted          | False                                |
+| deleted_at       | None                                 |
+| disk_format      | qcow2                                |
+| id               | bb75f870-0c33-4907-8467-1367f8cb15b6 |
+| is_public        | True                                 |
+| min_disk         | 0                                    |
+| min_ram          | 0                                    |
+| name             | mysql-5.5                            |
+| owner            | 1448da1223124bb291f5ae8e9af4270d     |
+| protected        | False                                |
+| size             | 0                                    |
+| status           | active                               |
+| updated_at       | 2014-05-23T21:01:22                  |
+| virtual_size     | None                                 |
++------------------+--------------------------------------+</computeroutput></screen>
+      </step>
+      <step>
+        <title>Create the datastore</title>
+        <para>Create the datastore that will house the new image. To do this, use the trove-manage <command>datastore_update</command> command.</para>
+        <para>This example uses the following arguments:</para>
+        <informaltable rules="all" width="80%">
+          <col width="20%"/>
+          <col width="40%"/>
+          <col width="40%"/>
+          <thead>
+            <tr>
+              <th>Argument</th>
+              <th>Description</th>
+              <th>In this example:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <para>config file</para>
+              </td>
+              <td>
+                <para>The configuration file to use.</para>
+              </td>
+              <td>
+                <para><option>--config-file=/etc/trove/trove.conf</option></para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>name</para>
+              </td>
+              <td>
+                <para>Name you want to use for this datastore.</para>
+              </td>
+              <td>
+                <para><option>mysql</option></para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>default version</para>
+              </td>
+              <td>
+                <para>You can attach multiple versions/images to a datastore. For example, you might have a MySQL 5.5 version and a MySQL 5.6 version. You can designate one version as the default, which the system uses if a user does not explicitly request a specific version.</para>
+              </td>
+              <td>
+                <para><option>""</option></para>
+                <para>At this point, you do not yet have a default version, so pass in an empty string.</para>
+              </td>
+            </tr>
+          </tbody>
+        </informaltable>
+        <para>Example:</para>
+        <screen><prompt>$</prompt> <userinput>trove-manage --config-file=/etc/trove/trove.conf datastore_update mysql ""</userinput></screen>
+      </step>
+      <step>
+        <title>Add a version to the new datastore</title>
+        <para>Now that you have a <literal>mysql</literal> datastore, you can add a version to it, using the trove-manage <command>datastore_version_update</command> command. The version indicates which guest image to use.</para>
+        <para>This example uses the following arguments:</para>
+        <informaltable rules="all" width="80%">
+          <col width="20%"/>
+          <col width="40%"/>
+          <col width="40%"/>
+          <thead>
+            <tr>
+              <th>Argument</th>
+              <th>Description</th>
+              <th>In this example:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <para>config file</para>
+              </td>
+              <td>
+                <para>The configuration file to use.</para>
+              </td>
+              <td>
+                <para><option>--config-file=/etc/trove/trove.conf</option></para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>datastore</para>
+              </td>
+              <td>
+                <para>The name of the datastore you just created via trove-manage <command>datastore_update</command>.</para>
+              </td>
+              <td>
+                <para><option>mysql</option></para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>version name</para>
+              </td>
+              <td>
+                <para>The name of the version you are adding to the datastore.</para>
+              </td>
+              <td>
+                <para><option>mysql-5.5</option></para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>datastore manager</para>
+              </td>
+              <td>
+                <para>Which datastore manager to use for this version. Typically, the datastore manager is identified by one of the following strings, depending on the database:</para>
+                <itemizedlist>
+                  <listitem>
+                    <para>mysql</para>
+                  </listitem>
+                  <listitem>
+                    <para>redis</para>
+                  </listitem>
+                  <listitem>
+                    <para>mongodb</para>
+                  </listitem>
+                  <listitem>
+                    <para>cassandra</para>
+                  </listitem>
+                  <listitem>
+                    <para>couchbase</para>
+                  </listitem>
+                  <listitem>
+                    <para>percona</para>
+                  </listitem>
+                </itemizedlist>
+              </td>
+              <td>
+                <para><option>mysql</option></para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>glance ID</para>
+              </td>
+              <td>
+                <para>The ID of the guest image you just added to the Identity Service. You can get this ID by using the glance <command>image-show</command> <replaceable>IMAGE_NAME</replaceable> command.</para>
+              </td>
+              <td>
+                <para><option>bb75f870-0c33-4907-8467-1367f8cb15b6</option></para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>packages</para>
+              </td>
+              <td>
+                <para>If you want to put additional packages on the each guest that you create with this datastore version, you can list the package names here.</para>
+              </td>
+              <td>
+                <para><option>""</option></para>
+                <para>In this example, the guest image already contains all the required packages, so leave this argument empty.</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>active</para>
+              </td>
+              <td>
+                <para>Set this to either 1 or 0:</para>
+                <itemizedlist>
+                  <listitem>
+                    <para><literal>1</literal> = active</para>
+                  </listitem>
+                  <listitem>
+                    <para><literal>0</literal> = disabled</para>
+                  </listitem>
+                </itemizedlist>
+              </td>
+              <td>
+                <para><option>1</option></para>
+              </td>
+            </tr>
+          </tbody>
+        </informaltable>
+        <para>Example:</para>
+        <screen><prompt>$</prompt> <userinput>trove-manage --config-file=/etc/trove/trove.conf datastore_version_update \
+  mysql mysql-5.5 mysql <replaceable>GLANCE_ID</replaceable> "" 1</userinput></screen>
+        <formalpara>
+          <title>Optional.</title>
+          <para>Set your new version as the default version. To do this, use the trove-manage <command>datastore_update</command> command again, this time specifying the version you just created.</para>
+        </formalpara>
+        <screen><prompt>$</prompt> <userinput>trove-manage --config-file=/etc/trove/trove.conf datastore_update mysql "mysql-5.5"</userinput></screen>
+      </step>
+      <step>
+        <title>Load validation rules for configuration groups</title>
+        <note>
+          <title>Applies only to MySQL and Percona datastores</title>
+          <itemizedlist>
+            <listitem>
+              <para>If you just created a MySQL or Percona datastore, then you need to load the appropriate validation rules, as described in this step.</para>
+            </listitem>
+            <listitem>
+              <para>If you just created a different datastore, skip this step.</para>
+            </listitem>
+          </itemizedlist>
+        </note>
+        <formalpara>
+          <title>Background.</title>
+          <para>You can manage database configuration tasks by using configuration groups. Configuration groups let you set configuration parameters, in bulk, on one or more databases.</para>
+        </formalpara>
+        <para>When you set up a configuration group using the trove <command>configuration-create</command> command, this command compares the configuration values you are setting against a list of valid configuration values that are stored in the <filename>validation-rules.json</filename> file.</para>
+        <informaltable rules="all" width="80%">
+          <col width="20%"/>
+          <col width="40%"/>
+          <col width="40%"/>
+          <thead>
+            <tr>
+              <th>Operating System</th>
+              <th>Location of <filename>validation-rules.json</filename></th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <para>Ubuntu 14.04</para>
+              </td>
+              <td>
+                <para><filename>/usr/lib/python2.7/dist-packages/trove/templates/<replaceable>DATASTORE_NAME</replaceable></filename></para>
+              </td>
+              <td>
+                <para><replaceable>DATASTORE_NAME</replaceable> is the name of either the MySQL datastore or the Percona datastore. This is typically either <literal>mysql</literal> or <literal>percona</literal>.</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para>RHEL 7, CentOS 7, Fedora 20</para>
+              </td>
+              <td>
+                <para><filename>/usr/lib/python2.7/site-packages/trove/templates/<replaceable>DATASTORE_NAME</replaceable></filename></para>
+              </td>
+              <td>
+                <para><replaceable>DATASTORE_NAME</replaceable> is the name of either the MySQL datastore or the Percona datastore. This is typically either <literal>mysql</literal> or <literal>percona</literal>.</para>
+              </td>
+            </tr>
+          </tbody>
+        </informaltable>
+        <para>Therefore, as part of creating a datastore, you need to load the <filename>validation-rules.json</filename> file, using the trove-manage <command>db_load_datastore_config_parameters</command> command. This command takes the following arguments:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Datastore name</para>
+          </listitem>
+          <listitem>
+            <para>Datastore version</para>
+          </listitem>
+          <listitem>
+            <para>Full path to the <filename>validation-rules.json</filename> file</para>
+          </listitem>
+        </itemizedlist>
+        <para>This example loads the <filename>validation-rules.json</filename> file for a MySQL database on Ubuntu 14.04:</para>
+        <screen><prompt>$</prompt> <userinput>trove-manage db_load_datastore_config_parameters mysql "mysql-5.5" \
+/usr/lib/python2.7/dist-packages/trove/templates/mysql/validation-rules.json</userinput></screen>
+      </step>
+      <step>
+        <title>Validate datastore</title>
+        <para>To validate your new datastore and version, start by listing the datastores on your system:</para>
+        <screen>$<prompt></prompt> <userinput>trove datastore-list</userinput>
+<computeroutput>+--------------------------------------+--------------+
+|                  id                  |     name     |
++--------------------------------------+--------------+
+| 10000000-0000-0000-0000-000000000001 | Legacy MySQL |
+| e5dc1da3-f080-4589-a4c2-eff7928f969a |    mysql     |
++--------------------------------------+--------------+</computeroutput></screen>
+        <para>Take the ID of the <literal>mysql</literal> datastore and pass it in with the <command>datastore-version-list</command> command:</para>
+        <screen>$<prompt></prompt> <userinput>trove datastore-version-list DATASTORE_ID</userinput>
+<computeroutput>+--------------------------------------+-----------+
+|                  id                  |    name   |
++--------------------------------------+-----------+
+| 36a6306b-efd8-4d83-9b75-8b30dd756381 | mysql-5.5 |
++--------------------------------------+-----------+</computeroutput></screen></step>
+    </procedure>
+  </section>
+</chapter>
