@@ -5,17 +5,35 @@
   version="5.0"
   xml:id="dashboard-custom-brand">
     <title>Customize the dashboard</title>
-    <para>Adapted from <link
-            xlink:href="http://www.prestonlee.com/2012/05/09/how-to-custom-brand-the-openstack-horizon-dashboard/"
-            >How To Custom Brand The OpenStack “Horizon”
-            Dashboard</link>.</para>
-    <para>You install the OpenStack dashboard through the
-            <literal>openstack-dashboard</literal> package. You can
-        customize the dashboard with your own colors, logo, and site
-        title through a CSS file.</para>
-    <para>Canonical also provides an
-            <literal>openstack-dashboard-ubuntu-theme</literal>
-        package that brands the Python-based Django interface.</para>
+    <para>Once you have the dashboard installed you can customize the way it looks and feels to suit your own needs.</para>
+    <note>
+        <para>The OpenStack dashboard by default on Ubuntu installs the <literal>openstack-dashboard-ubuntu-theme</literal> package.</para>
+        <para>If you do not want to use this theme you can remove it and its dependancies using the following command:</para>
+        <screen><prompt>#</prompt> <userinput>apt-get remove --auto-remove openstack-dashboard-ubuntu-theme</userinput></screen>
+    </note>
+    <note>
+        <para>This guide focuses on the <filename>local_settings.py</filename> file, stored in <filename>/openstack-dashboard/openstack_dashboard/local/</filename>.</para>
+    </note>
+    <para>This guide is adapated from <link xlink:href="http://www.prestonlee.com/2012/05/09/how-to-custom-brand-the-openstack-horizon-dashboard/">How To Custom Brand The OpenStack “Horizon” Dashboard</link>.</para>
+    <para>The following can easily be customized:
+        <itemizedlist>
+            <listitem>
+                <para>Site colors</para>
+            </listitem>
+            <listitem>
+                <para>Logo</para>
+            </listitem>
+            <listitem>
+                <para>HTML title</para>
+            </listitem>
+            <listitem>
+                <para>Site branding link</para>
+            </listitem>
+            <listitem>
+                <para>Help URL</para>
+            </listitem>
+        </itemizedlist>
+    </para>
     <!-- The following diagrams are sized incorrectly and will add back later -->
     <!--<para>The following example shows a customized dashboard with
         custom colors, logo, and site title:</para>
@@ -44,40 +62,35 @@
         </imageobject>
     </mediaobject>-->
     <procedure>
+        <title>Logo and site colors</title>
         <step>
-            <para>Create a graphical logo with a transparent
-                background. The text <literal>TGen Cloud</literal> in
-                this example is rendered through
-                    <filename>.png</filename> files of multiple sizes
-                created with a graphics program.</para>
-            <para>Use a 200×27 for the logged-in banner graphic, and
-                365×50 for the login screen graphic.</para>
+            <para>Create two logo files, png format, with transparent backgrounds using the following sizes:
+                <itemizedlist>
+                    <listitem>
+                        <para>Login screen: 365 x 50</para>
+                    </listitem>
+                    <listitem>
+                        <para>Logged in banner: 216 x 35</para>
+                    </listitem>
+            </itemizedlist>
+            </para>
         </step>
         <step>
-            <para>Set the HTML title, which appears at the top of the
-                browser window, by adding the following line to
-                    <filename>/etc/openstack-dashboard/local_settings.py</filename>:</para>
-            <para><code>SITE_BRANDING = "Example, Inc.
-                Cloud"</code></para>
+            <para>Upload your new images to the following location:
+                <filename>/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/img/</filename>
+            </para>
         </step>
         <step>
-            <para>Upload your new graphic files to the following
-                location:
-                <filename>/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/img/</filename></para>
+            <para>
+                Create a CSS style sheet in the following directory:
+                <filename>/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/css/</filename>
+            </para>
         </step>
         <step>
-            <para>Create a CSS style sheet in the following directory:
-                <filename>/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/css/</filename></para>
-        </step>
-        <step>
-            <para>Edit your CSS file to override the Ubuntu
-                customizations in the <filename>ubuntu.css</filename>
-                file.</para>
-            <para>Change the colors and image file names as
-                appropriate, though the relative directory paths
-                should be the same. The following example file shows
-                you how to customize your CSS
-                file:</para><programlisting><?db-font-size 65%?>/*
+            <para>
+                Change the colors and image file names as appropriate, though the relative directory paths should be the same. The following example file shows you how to customize your CSS file:
+            </para>
+            <programlisting><?db-font-size 65%?>/*
 * New theme colors for dashboard that override the defaults:
 *  dark blue: #355796 / rgb(53, 87, 150)
 *  light blue: #BAD3E1 / rgb(186, 211, 225)
@@ -112,34 +125,68 @@ text-decoration: none;
 }</programlisting>
         </step>
         <step>
-            <para>Open the following HTML template in an editor:
-                <filename>/usr/share/openstack-dashboard/openstack_dashboard/templates/_stylesheets.html</filename></para>
+            <para>Open the following HTML template in an editor of your choice:
+                <filename>/usr/share/openstack-dashboard/openstack_dashboard/templates/_stylesheets.html</filename>
+            </para>
         </step>
         <step>
-            <para>Add a line to include your
-                    <filename>custom.css</filename> file:</para>
-                <programlisting><?db-font-size 65%?>...
- &lt;link href='{{ STATIC_URL }}bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet' /&gt;
- &lt;link href='{{ STATIC_URL }}dashboard/css/{% choose_css %}' media='screen' rel='stylesheet' /&gt;
- <emphasis>&lt;link href='{{ STATIC_URL }}dashboard/css/custom.css' media='screen' rel='stylesheet' /&gt;</emphasis>
- ...</programlisting>
+        <para>Add a line to include your newly created style sheet. For example
+            <filename>custom.css</filename> file:</para>
+            <programlisting><?db-font-size 65%?>...
+    &lt;link href='{{ STATIC_URL }}bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet' /&gt;
+    &lt;link href='{{ STATIC_URL }}dashboard/css/{% choose_css %}' media='screen' rel='stylesheet' /&gt;
+    <emphasis>&lt;link href='{{ STATIC_URL }}dashboard/css/custom.css' media='screen' rel='stylesheet' /&gt;</emphasis>
+    ...</programlisting>
         </step>
         <step>
             <title>Restart Apache:</title>
             <para>On Ubuntu:
-            <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput></screen>
-           </para>
+                <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput></screen>
+            </para>
             <para>On Fedora, RHEL, CentOS:
-            <screen><prompt>#</prompt> <userinput>service httpd restart</userinput></screen>
-           </para>
+                <screen><prompt>#</prompt> <userinput>service httpd restart</userinput></screen>
+            </para>
             <para>On openSUSE:
-            <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput></screen>
-           </para>
+                <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput></screen>
+            </para>
         </step>
         <step>
-            <para>Reload the dashboard in your browser to view your
-                changes.</para>
-            <para>Modify your CSS file as appropriate.</para>
+            <para>To view your changes simply reload your dashboard. If necessary go back and modify your CSS file as appropriate.</para>
         </step>
-    </procedure>
+   </procedure>
+    <procedure>
+        <title>HTML title</title>
+        <step>
+    <para>Set the HTML title, which appears at the top of the browser window, by adding the following line to
+    <filename>local_settings.py</filename>:
+        <programlisting language="ini">
+            SITE_BRANDING = "Example, Inc. Cloud"
+        </programlisting>
+    </para>
+</step>
+<step>
+    <para>Restart Apache for this change to take effect.</para>
+</step>
+</procedure>
+  <procedure>
+        <title>HTML title</title>
+        <step>
+        <para>The logo also acts as a hyperlink. The default behavior is to redirect to <literal>horizon:user_home</literal>. To change this, add the following attribute to <filename>local_settings.py</filename></para>
+        <programlisting language="ini">SITE_BRANDING_LINK = "http://example.com"</programlisting>
+    </step>
+    <step>
+        <para>Restart Apache for this change to take effect.</para>
+    </step>
+</procedure>
+    <procedure>
+        <title>Help URL</title>
+        <step>
+    <para>By default the help URL points to <link xlink:href="http://docs.openstack.org">http://docs.openstack.org</link>. Change this by editing the following arritbute to the URL of your choice in <filename>local_settings.py</filename></para>
+    <programlisting language="ini">'help_url': "http://openstack.mycompany.org",</programlisting>
+</step>
+<step>
+    <para>Restart Apache for this change to take effect.</para>
+</step>
+</procedure>
 </section>
+
