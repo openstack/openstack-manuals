@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-11-05 07:13+0000\n"
-"PO-Revision-Date: 2014-11-05 06:17+0000\n"
+"POT-Creation-Date: 2014-11-11 16:08+0000\n"
+"PO-Revision-Date: 2014-11-11 16:22+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -1967,7 +1967,7 @@ msgstr "Il y a plusieurs outils qui sont conçus pour automatiser la création d
 msgid "Oz"
 msgstr "Oz"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml23(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml21(para)
 msgid ""
 "As of this writing, there are no Oz packages for Ubuntu, so you will need to"
 " either install from source or build your own .deb file."
@@ -1985,7 +1985,7 @@ msgid ""
 "yum:<placeholder-1/><placeholder-2/>"
 msgstr "<link href=\"https://github.com/clalancette/oz/wiki\">Oz</link> est un outil en ligne de commande qui automatise le processus de création de fichier image de machine virtuelle. Oz est une application Python qui interagit avec KVM pour passer à travers les étapes d'installation d'une machine virtuelle. Il utilise un jeu de fichiers kickstart (systèmes basés sur Red Hat) et preseed (systèmes basés sur Debian) prédéfinis pour les systèmes d'exploitation qui les supportent, et il peut aussi être utilisé pour créer des images Microsoft Windows. Sur Fedora, installez Oz avec yum:<placeholder-1/><placeholder-2/>"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml27(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml25(para)
 msgid ""
 "A full treatment of Oz is beyond the scope of this document, but we will "
 "provide an example. You can find additional examples of Oz template files on"
@@ -1994,57 +1994,58 @@ msgid ""
 "Here's how you would create a CentOS 6.4 image with Oz."
 msgstr "Un traitement complet de Oz dépasse la portée de ce document, mais nous allons fournir un exemple. Vous pouvez trouver des exemples supplémentaires des fichiers modèles Oz sur GitHub à at <link href=\"https://github.com/rackerjoe/oz-image-build/tree/master/templates\">rackerjoe/oz-image-build/templates</link>. Voici coment vous pourrez créer une image CentOs 6.4 avec Oz."
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml34(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml31(para)
 msgid ""
 "Create a template file (we'll call it <filename>centos64.tdl</filename>) "
 "with the following contents. The only entry you will need to change is the "
 "<literal>&lt;rootpw&gt;</literal> contents.<placeholder-1/>"
 msgstr "Créez un fichier modèle (que nous allons appeler <filename>centos64.tdl</filename>) avec le contenu suivant. La seule entrée que vous devrez changer est le contenu <literal>&lt;rootpw&gt;</literal>.<placeholder-1/>"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml72(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml69(para)
 msgid ""
 "This Oz template specifies where to download the Centos 6.4 install ISO. Oz "
 "will use the version information to identify which kickstart file to use. In"
 " this case, it will be <link "
 "href=\"https://github.com/clalancette/oz/blob/master/oz/auto/RHEL6.auto\">RHEL6.auto</link>."
-" It adds EPEL as a repository and installs the <literal>epel-"
+" It adds EPEL as a repository and install the <literal>epel-"
 "release</literal>, <literal>cloud-utils</literal>, and <literal>cloud-"
 "init</literal> packages, as specified in the <literal>packages</literal> "
 "section of the file."
+msgstr "Ce modèle Oz indique où télécharger l'ISO d'installation de CentOS 6.4. Oz utilisera les informations de version pour identifier quel fichier kickstart utiliser. Dans ce cas, il s'agira de <link href=\"https://github.com/clalancette/oz/blob/master/oz/auto/RHEL6.auto\">RHEL6.auto</link>. Cela ajoute EPEL en tant que dépôt et installe les packages <literal>epel-release</literal>, <literal>cloud-utils</literal>, et <literal>cloud-init</literal>, comme spécifié dans la section <literal>packages</literal> du fichier."
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml77(para)
+msgid ""
+"After Oz does the initial OS install using the kickstart file, it updates "
+"the image's install packages with <placeholder-1/>. It also removes any "
+"reference to the eth0 device that libvirt creates while Oz does the "
+"customizing, as specified in the <literal>command</literal> section of the "
+"XML file."
 msgstr ""
 
 #: ./doc/image-guide/ch_creating_images_automatically.xml83(para)
-msgid ""
-"After Oz does the initial OS install using the kickstart file, it customizes"
-" the image by doing an update. It also removes any reference to the eth0 "
-"device that libvirt creates while Oz does the customizing, as specified in "
-"the <literal>command</literal> section of the XML file."
-msgstr "Après que Oz ait réalisé l'installation du système d'exploitation initiale, il personnalise l'image en réalisant une mise à jour. Il enlève aussi toute référence au périphérique eth0 que libvirt crée pendant que Oz réalise la personnalisation, comme indiqué dans la section <literal>command</literal> du fichier XML."
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml89(para)
 msgid "To run this, do, as root:"
 msgstr "Pour lancer ça, faites, en tant que root:"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml92(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml86(para)
 msgid ""
 "The <literal>-d3</literal> flag tells Oz to show status information as it "
 "runs."
 msgstr "Le drapeau <literal>-d3</literal> indique à Oz de montrer les informations de status comme il fonctionne."
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml96(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml90(para)
 msgid ""
 "The <literal>-u</literal> tells Oz to do the customization (install extra "
 "packages, run the commands) once it does the initial install."
 msgstr "Le drapeau <literal>-u</literal> indique à Oz de réaliser la personnalisation (installation de packages supplémentaires, lancement de commandes) une fois qu'il a fait l'installation initiale."
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml102(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml95(para)
 msgid ""
 "The <literal>-x &lt;filename&gt;</literal> flag tells Oz what filename to "
 "use to write out a libvirt XML file (otherwise it will default to something "
 "like <filename>centos64Apr_03_2013-12:39:42</filename>)."
 msgstr "Le drapeau <literal>-x &lt;filename&gt;</literal> indique à Oz quel nom de fichier utiliser pour écrire un fichier XML libvirt (autrement le fichier par défaut serait sous la forme <filename>centos64Apr_03_2013-12:39:42</filename>)."
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml90(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml84(para)
 msgid ""
 "<placeholder-1/><placeholder-2/>If you leave out the <literal>-u</literal> "
 "flag, or you want to edit the file to do additional customizations, you can "
@@ -2054,11 +2055,11 @@ msgid ""
 "and perform the customizations."
 msgstr "<placeholder-1/><placeholder-2/>Si vous omettez le drapeau <literal>-u</literal>, ou si vous souhaitez éditer le fichier pour faire des personnalisations supplémentaires, vous pouvez utiliser la commande <placeholder-3/>, en utilisant le fichier XML libvirt que <placeholder-4/> génère. Par exemple: <placeholder-5/> Oz va invoquer libvirt pour booter l'image à l'intérieur de KVM, puis Oz va faire un ssh à l'intérieur de l'instance et réaliser les personnalisations."
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml120(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml109(title)
 msgid "VMBuilder"
 msgstr "VMBuilder"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml121(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml110(para)
 msgid ""
 "<link href=\"https://launchpad.net/vmbuilder\">VMBuilder</link> (Virtual "
 "Machine Builder) is a command-line tool that creates virtual machine images "
@@ -2067,18 +2068,18 @@ msgid ""
 " ships with Debian can create Ubuntu and Debian virtual machine guests."
 msgstr "<link href=\"https://launchpad.net/vmbuilder\">VMBuilder</link> (Constructeur de Machine Virtuelle) est un outil en ligne de commande qui génère des images de machine virtuelle pour différents hyperviseurs. La version de VMBuilder fournie avec Ubuntu peut seulement créer des invités de machine virtuelle Ubuntu. La version de VMBuilder fournie avec Debian peut créer des invités de machine virtuelle ubuntu et Debian."
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml128(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml117(para)
 msgid ""
 "The <link href=\"https://help.ubuntu.com/12.04/serverguide/jeos-and-"
 "vmbuilder.html\"><citetitle>Ubuntu Server Guide</citetitle></link> has "
 "documentation on how to use VMBuilder to create an Ubuntu image."
 msgstr "Le <link href=\"https://help.ubuntu.com/12.04/serverguide/jeos-and-vmbuilder.html\"><citetitle>Guide du Serveur Ubuntu</citetitle></link> comprend de la documentation sur la manière d'utiliser VMBuilder pour créer une image Ubuntu."
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml135(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml124(title)
 msgid "BoxGrinder"
 msgstr "BoxGrinder"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml136(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml125(para)
 msgid ""
 "<link href=\"http://boxgrinder.org/\">BoxGrinder</link> is another tool for "
 "creating virtual machine images, which it calls appliances. BoxGrinder can "
@@ -2086,32 +2087,32 @@ msgid ""
 "currently only supported on Fedora."
 msgstr "<link href=\"http://boxgrinder.org/\">BoxGrinder</link> est un autre outil pour créer des images de machine virtuelle, qu'il appelle appliances. BoxGrinder peut créer des images Fedora, Red Hat Enterprise Linux, ou CentOS. BoxGrinder est actuellement seulement supporté sur Fedora."
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml145(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml134(title)
 msgid "VeeWee"
 msgstr "VeeWee"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml146(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml135(para)
 msgid ""
 "<link href=\"https://github.com/jedi4ever/veewee\"> VeeWee</link> is often "
 "used to build <link href=\"http://vagrantup.com\">Vagrant</link> boxes, but "
 "it can also be used to build KVM images."
 msgstr "<link href=\"https://github.com/jedi4ever/veewee\"> VeeWee</link> est souvent utilisé pour construire des boites <link href=\"http://vagrantup.com\">Vagrant</link>, mais il peut aussi être utilisé pour construire des images KVM."
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml152(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml141(title)
 msgid "Packer"
 msgstr "Packer"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml153(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml142(para)
 msgid ""
 "<link href=\"http://www.packer.io/\"> Packer</link> is a tool for creating "
 "machine images for multiple platforms from a single source configuration."
 msgstr "<link href=\"http://www.packer.io/\"> Packer</link> est un outil pour créer des images de machine pour de multiples plateformes à partir d'une configuration source unique."
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml159(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml148(title)
 msgid "imagefactory"
 msgstr "imagefactory"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml160(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml149(para)
 msgid ""
 "<link href=\"http://imgfac.org/\">imagefactory</link> is a newer tool "
 "designed to automate the building, converting, and uploading images to "
@@ -2119,11 +2120,11 @@ msgid ""
 "for OpenStack-based clouds."
 msgstr "<link href=\"http://imgfac.org/\">imagefactory</link> est un nouvel outil conçu pour automatiser la construction, la conversion, et le téléchargement d'images à différents fournisseurs de cloud. Il utilise Oz en tant que backend et inclue le support pour les clouds basés sur OpenStack."
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml167(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml156(title)
 msgid "SUSE Studio"
 msgstr "SUSE Studio"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml168(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml157(para)
 msgid ""
 "<link href=\"http://susestudio.com\">SUSE Studio</link> is a web application"
 " for building and testing software applications in a web browser. It "

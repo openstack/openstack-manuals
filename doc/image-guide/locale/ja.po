@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-11-05 07:13+0000\n"
-"PO-Revision-Date: 2014-11-05 06:17+0000\n"
+"POT-Creation-Date: 2014-11-11 16:08+0000\n"
+"PO-Revision-Date: 2014-11-11 16:22+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -1967,7 +1967,7 @@ msgstr "イメージ作成を自動化するために設計されたツールが
 msgid "Oz"
 msgstr "Oz"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml23(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml21(para)
 msgid ""
 "As of this writing, there are no Oz packages for Ubuntu, so you will need to"
 " either install from source or build your own .deb file."
@@ -1985,7 +1985,7 @@ msgid ""
 "yum:<placeholder-1/><placeholder-2/>"
 msgstr "<link href=\"https://github.com/clalancette/oz/wiki\">Oz</link> は、仮想マシンイメージファイルの作成プロセスを自動化するコマンドラインツールです。仮想マシンのインストールプロセス全体を KVM とやりとりする Python アプリケーションです。サポートするオペレーティングシステムの kickstart (Red Hat 系システム)、preseed ファイル (Debian 系システム) の事前定義を使用します。Microsoft Windows イメージを作成するためにも使用できます。Fedora の場合、yum を用いて Oz をインストールします。<placeholder-1/><placeholder-2/>"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml27(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml25(para)
 msgid ""
 "A full treatment of Oz is beyond the scope of this document, but we will "
 "provide an example. You can find additional examples of Oz template files on"
@@ -1994,57 +1994,58 @@ msgid ""
 "Here's how you would create a CentOS 6.4 image with Oz."
 msgstr "Oz の詳細は、このドキュメントの範囲を超えていますが、例を示します。GitHub の <link href=\"https://github.com/rackerjoe/oz-image-build/tree/master/templates\">rackerjoe/oz-image-build/templates</link> に Oz テンプレートの別の例があります。これは、Oz を用いて CentOS 6.4 イメージを作成する方法です。"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml34(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml31(para)
 msgid ""
 "Create a template file (we'll call it <filename>centos64.tdl</filename>) "
 "with the following contents. The only entry you will need to change is the "
 "<literal>&lt;rootpw&gt;</literal> contents.<placeholder-1/>"
 msgstr "以下の内容のテンプレートファイルを作成します。<filename>centos64.tdl</filename> という名前にします。変更する必要がある項目は、<literal>&lt;rootpw&gt;</literal> の内容だけです。<placeholder-1/>"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml72(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml69(para)
 msgid ""
 "This Oz template specifies where to download the Centos 6.4 install ISO. Oz "
 "will use the version information to identify which kickstart file to use. In"
 " this case, it will be <link "
 "href=\"https://github.com/clalancette/oz/blob/master/oz/auto/RHEL6.auto\">RHEL6.auto</link>."
-" It adds EPEL as a repository and installs the <literal>epel-"
+" It adds EPEL as a repository and install the <literal>epel-"
 "release</literal>, <literal>cloud-utils</literal>, and <literal>cloud-"
 "init</literal> packages, as specified in the <literal>packages</literal> "
 "section of the file."
-msgstr "この Oz テンプレートは、CentOS 6.4 インストール ISO をダウンロードする場所を指定します。Oz は、使用するキックスタートファイルを識別するために、バージョン情報を使用します。今回の場合、<link href=\"https://github.com/clalancette/oz/blob/master/oz/auto/RHEL6.auto\">RHEL6.auto</link> になります。リポジトリーとして EPEL を追加し、このファイルの <literal>packages</literal> に指定されたとおり、<literal>epel-release</literal>、<literal>cloud-utils</literal>、<literal>cloud-init</literal> パッケージをインストールします。"
+msgstr "この Oz テンプレートは、Centos 6.4 インストール ISO のダウンロード場所を指定します。Oz は、使用する kickstart ファイルを識別するために、バージョン情報を使用します。この場合、<link href=\"https://github.com/clalancette/oz/blob/master/oz/auto/RHEL6.auto\">RHEL6.auto</link> になります。リポジトリーとして EPEL を追加します。そして、このファイルの <literal>packages</literal> セクションに指定されている、<literal>epel-release</literal>、<literal>cloud-utils</literal>、<literal>cloud-init</literal> パッケージをインストールします。"
+
+#: ./doc/image-guide/ch_creating_images_automatically.xml77(para)
+msgid ""
+"After Oz does the initial OS install using the kickstart file, it updates "
+"the image's install packages with <placeholder-1/>. It also removes any "
+"reference to the eth0 device that libvirt creates while Oz does the "
+"customizing, as specified in the <literal>command</literal> section of the "
+"XML file."
+msgstr ""
 
 #: ./doc/image-guide/ch_creating_images_automatically.xml83(para)
-msgid ""
-"After Oz does the initial OS install using the kickstart file, it customizes"
-" the image by doing an update. It also removes any reference to the eth0 "
-"device that libvirt creates while Oz does the customizing, as specified in "
-"the <literal>command</literal> section of the XML file."
-msgstr "Oz が kickstart ファイルを使用して OS の初期インストールを完了した後、更新を実行してイメージをカスタマイズします。Oz によるカスタマイズ中、XML ファイルの <literal>command</literal> セクションに指定されているとおり、libvirt が作成する eth0 デバイスへの参照をすべて削除します。"
-
-#: ./doc/image-guide/ch_creating_images_automatically.xml89(para)
 msgid "To run this, do, as root:"
 msgstr "root として、このとおり実行します。"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml92(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml86(para)
 msgid ""
 "The <literal>-d3</literal> flag tells Oz to show status information as it "
 "runs."
 msgstr "<literal>-d3</literal> フラグにより、Oz が実行中の状態を表示します。"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml96(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml90(para)
 msgid ""
 "The <literal>-u</literal> tells Oz to do the customization (install extra "
 "packages, run the commands) once it does the initial install."
 msgstr "<literal>-u</literal> により、Oz が初期インストール完了後、カスタマイズ (追加パッケージのインストール、コマンドの実行) をします。"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml102(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml95(para)
 msgid ""
 "The <literal>-x &lt;filename&gt;</literal> flag tells Oz what filename to "
 "use to write out a libvirt XML file (otherwise it will default to something "
 "like <filename>centos64Apr_03_2013-12:39:42</filename>)."
 msgstr "<literal>-x &lt;filename&gt;</literal> フラグにより、Oz が libvirt XML ファイル (指定しなければ、デフォルトで <filename>centos64Apr_03_2013-12:39:42</filename> のようなものになります) を書き込むために使用するファイル名を指定します。"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml90(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml84(para)
 msgid ""
 "<placeholder-1/><placeholder-2/>If you leave out the <literal>-u</literal> "
 "flag, or you want to edit the file to do additional customizations, you can "
@@ -2054,11 +2055,11 @@ msgid ""
 "and perform the customizations."
 msgstr "<placeholder-1/><placeholder-2/><literal>-u</literal> フラグを使用しない場合、またはファイルを編集して追加カスタマイズしたい場合、<placeholder-4/> が作成した libvirt XML ファイルを用いて、<placeholder-3/> コマンドを使用できます。例: <placeholder-5/> Oz は、KVM 内でイメージを起動するために、libvirt を呼び出します。次に、Oz はインスタンスに SSH し、カスタマイズを実行します。"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml120(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml109(title)
 msgid "VMBuilder"
 msgstr "VMBuilder"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml121(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml110(para)
 msgid ""
 "<link href=\"https://launchpad.net/vmbuilder\">VMBuilder</link> (Virtual "
 "Machine Builder) is a command-line tool that creates virtual machine images "
@@ -2067,18 +2068,18 @@ msgid ""
 " ships with Debian can create Ubuntu and Debian virtual machine guests."
 msgstr "<link href=\"https://launchpad.net/vmbuilder\">VMBuilder</link> (Virtual Machine Builder) は、さまざまなハイパーバイザー向けの仮想マシンイメージを作成するコマンドラインツールです。Ubuntu に同梱されている VMBuilder のバージョンは、Ubuntu 仮想マシンゲストのみを作成できます。Debian に同梱されている VMBuilder のバージョンは、Ubuntu と Debian の仮想マシンゲストを作成できます。"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml128(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml117(para)
 msgid ""
 "The <link href=\"https://help.ubuntu.com/12.04/serverguide/jeos-and-"
 "vmbuilder.html\"><citetitle>Ubuntu Server Guide</citetitle></link> has "
 "documentation on how to use VMBuilder to create an Ubuntu image."
 msgstr "<link href=\"https://help.ubuntu.com/12.04/serverguide/jeos-and-vmbuilder.html\"><citetitle>Ubuntu Server Guide</citetitle></link> は、Ubuntu イメージを作成するために、VMBuilder を使用する方法がドキュメント化されています。"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml135(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml124(title)
 msgid "BoxGrinder"
 msgstr "BoxGrinder"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml136(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml125(para)
 msgid ""
 "<link href=\"http://boxgrinder.org/\">BoxGrinder</link> is another tool for "
 "creating virtual machine images, which it calls appliances. BoxGrinder can "
@@ -2086,32 +2087,32 @@ msgid ""
 "currently only supported on Fedora."
 msgstr "<link href=\"http://boxgrinder.org/\">BoxGrinder</link> は、アプライアンスと呼ぶ仮想マシンイメージを作成するためのもう一つのツールです。BoxGrinder は Fedora、Red Hat Enterprise Linux、CentOS イメージを作成できます。BoxGrinder は現在 Fedora のみにおいてサポートされます。"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml145(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml134(title)
 msgid "VeeWee"
 msgstr "VeeWee"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml146(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml135(para)
 msgid ""
 "<link href=\"https://github.com/jedi4ever/veewee\"> VeeWee</link> is often "
 "used to build <link href=\"http://vagrantup.com\">Vagrant</link> boxes, but "
 "it can also be used to build KVM images."
 msgstr "<link href=\"https://github.com/jedi4ever/veewee\"> VeeWee</link> は、よく <link href=\"http://vagrantup.com\">Vagrant</link> ボックスを構築するために使用されますが、KVM イメージを構築するためにも使用されます。"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml152(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml141(title)
 msgid "Packer"
 msgstr "Packer"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml153(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml142(para)
 msgid ""
 "<link href=\"http://www.packer.io/\"> Packer</link> is a tool for creating "
 "machine images for multiple platforms from a single source configuration."
 msgstr "<link href=\"http://www.packer.io/\">Packer</link> は、単一のソース設定から複数のプラットフォームに対して、マシンイメージを作成するためのツールです。"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml159(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml148(title)
 msgid "imagefactory"
 msgstr "imagefactory"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml160(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml149(para)
 msgid ""
 "<link href=\"http://imgfac.org/\">imagefactory</link> is a newer tool "
 "designed to automate the building, converting, and uploading images to "
@@ -2119,11 +2120,11 @@ msgid ""
 "for OpenStack-based clouds."
 msgstr "<link href=\"http://imgfac.org/\">imagefactory</link> は、さまざまなクラウドプロバイダーへのイメージの構築、変換、アップロードを自動化するために設計された、比較的新しいツールです。バックエンドとして Oz を使用し、OpenStack ベースのクラウドを"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml167(title)
+#: ./doc/image-guide/ch_creating_images_automatically.xml156(title)
 msgid "SUSE Studio"
 msgstr "SUSE Studio"
 
-#: ./doc/image-guide/ch_creating_images_automatically.xml168(para)
+#: ./doc/image-guide/ch_creating_images_automatically.xml157(para)
 msgid ""
 "<link href=\"http://susestudio.com\">SUSE Studio</link> is a web application"
 " for building and testing software applications in a web browser. It "
