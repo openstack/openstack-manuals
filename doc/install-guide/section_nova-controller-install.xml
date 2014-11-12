@@ -5,18 +5,20 @@
   version="5.0"
   xml:id="nova-controller-install">
   <title>Install and configure controller node</title>
-  <para>This section describes how to install and configure the Compute
-    service, code-named nova, on the controller node.</para>
+  <para>This section describes how to install and configure the
+    Compute service, code-named nova, on the controller node.</para>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure prerequisites</title>
-    <para>Before you install and configure Compute, you must create a database
-      and Identity service credentials including endpoints.</para>
+    <para>Before you install and configure Compute, you must
+      create a database and Identity service credentials
+      including endpoints.</para>
     <step>
       <para>To create the database, complete these steps:</para>
       <substeps>
         <step>
-          <para>Use the database access client to connect to the database
-            server as the <literal>root</literal> user:</para>
+          <para>Use the database access client to connect to
+           the database server as the
+           <literal>root</literal> user:</para>
           <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen>
         </step>
         <step>
@@ -30,8 +32,9 @@
   IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput>
 <userinput>GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
   IDENTIFIED BY '<replaceable>NOVA_DBPASS</replaceable>';</userinput></screen>
-          <para>Replace <replaceable>NOVA_DBPASS</replaceable> with a suitable
-        password.</para>
+          <para>Replace
+           <replaceable>NOVA_DBPASS</replaceable> with a suitable
+           password.</para>
         </step>
         <step>
           <para>Exit the database access client.</para>
@@ -49,7 +52,7 @@
       <substeps>
         <step>
           <para>Create the <literal>nova</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name nova --pass <replaceable>NOVA_PASS</replaceable></userinput>
+<screen><prompt>$</prompt> <userinput>keystone user-create --name nova --pass <replaceable>NOVA_PASS</replaceable></userinput>
 <computeroutput>+----------+----------------------------------+
 | Property |              Value               |
 +----------+----------------------------------+
@@ -58,22 +61,23 @@
 |    id    | 387dd4f7e46d4f72965ee99c76ae748c |
 |   name   |               nova               |
 | username |               nova               |
-+----------+----------------------------------+</computeroutput></screen>
-          <para>Replace <replaceable>NOVA_PASS</replaceable> with a suitable
-            password.</para>
++----------+----------------------------------+
+</computeroutput></screen>
+          <para>Replace <replaceable>NOVA_PASS</replaceable> with
+           a suitable password.</para>
         </step>
         <step>
           <para>Link the <literal>nova</literal> user to the
             <literal>service</literal> tenant and <literal>admin</literal>
             role:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user nova --tenant service --role admin</userinput></screen>
+<screen><prompt>$</prompt> <userinput>keystone user-role-add --user nova --tenant service --role admin</userinput></screen>
           <note>
             <para>This command provides no output.</para>
           </note>
         </step>
         <step>
           <para>Create the <literal>nova</literal> service:</para>
-          <screen><prompt>$</prompt> <userinput>keystone service-create --name nova --type compute \
+<screen><prompt>$</prompt> <userinput>keystone service-create --name nova --type compute \
   --description "OpenStack Compute"</userinput>
 <computeroutput>+-------------+----------------------------------+
 |   Property  |              Value               |
@@ -83,7 +87,8 @@
 |      id     | 6c7854f52ce84db795557ebc0373f6b9 |
 |     name    |               nova               |
 |     type    |             compute              |
-+-------------+----------------------------------+</computeroutput></screen>
++-------------+----------------------------------+
+</computeroutput></screen>
         </step>
       </substeps>
     </step>
