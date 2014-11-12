@@ -265,40 +265,21 @@ router_id = 1064ad16-36b7-4c2f-86f0-daa2bcbd6b2a</programlisting>
             </section>
             <section xml:id="adv_cfg_l3_agent_multi_floatip">
                 <title>Multiple floating IP pools</title>
-                <para>The L3 API in OpenStack Networking supports multiple floating IP pools. In
-                    OpenStack Networking, a floating IP pool is represented as an external network
-                    and a floating IP is allocated from a subnet associated with the external
-                    network. Because you can associate each L3 agent with, at most, one external
-                    network, you must invoke multiple L3 agents to define multiple floating IP
-                    pools. Use the <option>gateway_external_network_id</option> option in the L3
-                    agent configuration file to define the external network that the L3 agent
-                    handles. You can run multiple L3 agent instances on one host.</para>
-                <para>In addition, when you run multiple L3 agents, set the
-                        <option>handle_internal_only_routers</option> option to
-                        <literal>True</literal> for only one L3 agent in an OpenStack Networking
-                    deployment and set this option to <literal>False</literal> for all other L3
-                    agents. Because the default value of this parameter is <literal>True</literal>,
-                    you must configure it carefully.</para>
-                <para>Before starting L3 agents, you must create routers and external networks,
-                    update the configuration files with UUID of external networks, and start L3
-                    agents.</para>
-                <para>For the first agent, invoke it with the following
-                        <filename>l3_agent.ini</filename>, where the
-                        <option>handle_internal_only_routers</option> option is set to
-                        <literal>True</literal>.</para>
+                <para>The L3 API in OpenStack Networking supports multiple
+                  floating IP pools. In OpenStack Networking, a floating
+                  IP pool is represented as an external network, and a
+                  floating IP is allocated from a subnet associated with
+                  the external network. You can associate a L3 agent
+                  with multiple external networks.</para>
+                <para>Before starting a L3 agent, you must update the
+                  configuration files with the UUID of the external network.</para>
+                <para>To enable the L3 agent to support multiple external
+                  networks, edit the <filename>l3_agent.ini</filename> file
+                  and leave the <option>gateway_external_network_id</option>
+                  and <option>external_network_bridge</option> parameters unset:</para>
                 <programlisting language="ini">handle_internal_only_routers = True
-gateway_external_network_id = 2118b11c-011e-4fa5-a6f1-2ca34d372c35
-external_network_bridge = br-ex</programlisting>
-                <screen><prompt>$</prompt> <userinput>python /opt/stack/neutron/bin/neutron-l3-agent
- --config-file /etc/neutron/neutron.conf
- --config-file /etc/neutron/l3_agent.ini</userinput></screen>
-                <para>For the second (or later) agent, invoke it with the following
-                        <filename>l3_agent.ini</filename> where the
-                        <option>handle_internal_only_routers</option> option is set to
-                        <literal>False</literal>.</para>
-                <programlisting language="ini">handle_internal_only_routers = False
-gateway_external_network_id = e828e54c-850a-4e74-80a8-8b79c6a285d8
-external_network_bridge = br-ex-2</programlisting>
+gateway_external_network_id =
+external_network_bridge = </programlisting>
             </section>
         </section>
     </section>
