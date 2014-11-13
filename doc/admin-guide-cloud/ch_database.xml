@@ -333,4 +333,47 @@ trove_auth_url = http://<replaceable>controller</replaceable>:35357/v2.0</progra
 +--------------------------------------+-----------+</computeroutput></screen></step>
     </procedure>
   </section>
+  <section xml:id="section_configure-cluster">
+    <title>Configure a cluster</title>
+    <para>An administrative user can configure various characteristics of a MongoDB cluster.</para>
+    <simplesect>
+      <title>Query routers and config servers</title>
+      <formalpara>
+        <title>Background.</title>
+        <para>Each cluster includes at least one query router and one config server. Query routers and config servers count against your quota. When you delete a cluster, the system deletes the associated query router(s) and config server(s).</para>
+      </formalpara>
+      <formalpara>
+        <title>Configuration.</title>
+        <para>By default, the system creates one query router and one config server per cluster. You can change this by editing the <filename>/etc/trove/trove.conf</filename> file. These settings are in the <literal>[mongodb]</literal> section of the file:</para>
+      </formalpara>
+      <informaltable rules="all" width="60%">
+        <col width="50%"/>
+        <col width="50%"/>
+        <thead>
+          <tr>
+            <th>Setting</th>
+            <th>Valid values are:</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <para><option>num_config_servers_per_cluster</option></para>
+            </td>
+            <td>
+              <para>1 or 3</para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para><option>num_query_routers_per_cluster</option></para>
+            </td>
+            <td>
+              <para>1 or 3</para>
+            </td>
+          </tr>
+        </tbody>
+      </informaltable>
+    </simplesect>
+   </section>
 </chapter>
