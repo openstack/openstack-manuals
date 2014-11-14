@@ -71,11 +71,12 @@
 >>> partitions = len(ring._replica2part2dev_id[0])
 >>> replicas = len(ring._replica2part2dev_id)
 
->>> builder = RingBuilder(int(Math.log(partitions, 2)), replicas, 1)
+>>> builder = RingBuilder(int(math.log(partitions, 2)), replicas, 1)
 >>> builder.devs = ring.devs
->>> builder._replica2part2dev = ring.replica2part2dev_id
+>>> builder._replica2part2dev = ring._replica2part2dev_id
 >>> builder._last_part_moves_epoch = 0
->>> builder._last_part_moves = array('B', (0 for _ in xrange(self.parts)))
+>>> from array import array
+>>> builder._last_part_moves = array('B', (0 for _ in xrange(partitions)))
 >>> builder._set_parts_wanted()
 >>> for d in builder._iter_devs():
             d['parts'] = 0
@@ -85,15 +86,17 @@
         <para>This is the extent of the recoverable fields. For
             <literal>min_part_hours</literal>  you'll either have to remember what the
             value you used was, or just make up a new one.</para>
-        <programlisting language="python">
+<programlisting language="python">
 >>> builder.change_min_part_hours(24) # or whatever you want it to be</programlisting>
-        <para>Try some validation: if this doesn't raise an exception, you may feel some
-            hope. Not too much, though.</para>
+    <para>Next, validate the builder. If this raises an exception, check
+      your previous code. When it validates, you're ready to save the
+      builder and create a new account.builder.</para>
         <programlisting language="python">>>> builder.validate()</programlisting>
         <para>Save the builder.</para>
         <programlisting language="python">
 >>> import pickle
->>> pickle.dump(builder.to_dict(), open('account.builder', 'wb'), protocol=2)</programlisting>
+>>> pickle.dump(builder.to_dict(), open('account.builder', 'wb'), protocol=2)
+>>> exit ()</programlisting>
         <para>You should now have a file called 'account.builder' in the current working
             directory. Next, run <literal>swift-ring-builder account.builder write_ring</literal>
             and compare the new account.ring.gz to the account.ring.gz that you started
