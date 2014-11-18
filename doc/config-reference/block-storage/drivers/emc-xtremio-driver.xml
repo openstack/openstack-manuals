@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="XtremIO-cinder-driver">
+  <title>EMC XtremIO OpenStack Block Storage driver guide</title>
+  <?dbhtml stop-chunking?>
+  <para>The high performance XtremIO All Flash Array (<acronym>AFA</acronym>) offers Block Storage services to OpenStack.
+    Using the driver, OpenStack Block Storage hosts can connect to an XtermIO Storage cluster.</para>
+  <para>This section explains how to configure and connect an OpenStack Block Storage host to an XtremIO Storage Cluster</para>
+  <section xml:id="support-matrix">
+    <title>Support matrix</title>
+    <itemizedlist>
+      <listitem>
+        <para>Xtremapp: Version 3.0 and above</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="supported-operations">
+    <title>Supported operations</title>
+    <itemizedlist>
+      <listitem>
+        <para>Create, delete, clone, attach, and detach volumes</para>
+      </listitem>
+      <listitem>
+        <para>Create and delete volume snapshots</para>
+      </listitem>
+      <listitem>
+        <para>Create a volume from a snapshot</para>
+      </listitem>
+      <listitem>
+        <para>Copy an image to a volume</para>
+      </listitem>
+      <listitem>
+        <para>Copy a volume to an image</para>
+      </listitem>
+      <listitem>
+        <para>Extend a volume</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="driver-installation-and-configuration">
+    <title>Driver installation and configuration</title>
+    <para>The following sections describe the installation and configuration of the EMC XtremIO OpenStack Block Storage driver.</para>
+    <para>The driver should be installed on the Block Storage host that has the cinder-volume component.</para>
+  </section>
+  <section xml:id="installation">
+    <title>Installation</title>
+    <procedure>
+      <title>To install the EMC XtremIO Block Storage driver</title>
+      <step>
+        <para>Configure the XtremIO Block Storage driver.</para>
+      </step>
+      <step>
+        <para>Restart cinder.</para>
+      </step>
+      <step>
+        <para>When CHAP initiator authentication is required, set the Cluster CHAP authentication mode to initiator.</para>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="configuring-the-xtremio-cinder-driver">
+    <title>Configuring the XtremIO Block Storage driver</title>
+    <para>Edit the <filename>cinder.conf</filename> file by adding the configuration below under the
+      <literal>[DEFAULT]</literal> section of the file in case of a single back end or under a separate section in case
+      of multiple back ends (for example [<acronym>XTREMIO</acronym>]). The configuration file is usually located under the
+      following path <filename>/etc/cinder/cinder.conf</filename>.</para>
+    <para>For a configuration example, refer to the configuration <link linkend="emc-xtremio-configuration-example">example</link>.</para>
+  </section>
+  <section xml:id="xtremio-driver-name">
+    <title>XtremIO driver name</title>
+    <para>Configure the driver name by adding the following parameter:</para>
+    <itemizedlist>
+      <listitem>
+        <para>For iSCSI <command>volume_driver = cinder.volume.drivers.emc.xtremio.XtremIOIscsiDriver</command></para>
+      </listitem>
+      <listitem>
+        <para>For Fibre Channel <command>volume_driver = cinder.volume.drivers.emc.xtremio.XtremIOFibreChannelDriver</command></para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="xtremio-management-ip">
+    <title>XtremIO management IP</title>
+    <para>To retrieve the management IP, use the<command>show-xms</command>CLI command.</para>
+    <para>Configure the management IP by adding the following parameter
+      <command>san_ip = <replaceable>XMS Management IP</replaceable></command></para>
+  </section>
+  <section xml:id="xtremio-user-credentials">
+    <title>XtremIO user credentials</title>
+    <para>OpenStack Block Storage requires an XtremIO XMS user with administrative privileges. XtremIO recommends
+      creating a dedicated OpenStack user account that holds an administrative user role.</para>
+    <para>Refer to the <citetitle>XtremIO User Guide</citetitle> for details on user account management</para>
+    <para>Create an XMS account using either the XMS GUI or the <command>add-user-account</command>CLI command.</para>
+    <para>Configure the user credentials by adding the following parameters:</para>
+    <para><code>san_login = <replaceable>XMS username</replaceable></code></para>
+    <para><code>san_password = <replaceable>XMS username password</replaceable></code></para>
+  </section>
+  <section xml:id="multiple-back-ends">
+    <title>Multiple back ends</title>
+    <para>Configuring multiple storage back ends enables you to create several back-end storage solutions that serve the same OpenStack Compute resources.</para>
+    <para>When a volume is created, the scheduler selects the appropriate back end to handle
+      the request, according to the specified volume type.</para>
+    <procedure>
+      <title>To enable multiple storage back ends:</title>
+      <step>
+        <para>Add the back end name to the XtremIO configuration group section as follows:</para>
+        <para><code>volume_backend_name = <replaceable>XtremIO back end name</replaceable></code></para>
+      </step>
+      <step>
+        <para>Add the configuration group name to the <code>enabled_backends</code>flag in the
+          <literal>[DEFAULT]</literal> section of the <filename>cinder.conf</filename>file. This flag defines the names
+          (separated by commas) of the configuration groups for different back ends. Each name is associated
+          to one configuration group for a back end:</para>
+        <para><code>enabled_backends = <replaceable>back end name1, back end name2</replaceable>...</code></para>
+      </step>
+      <step>
+        <para>Define a volume type (for example<code>gold</code>) as Block Storage by running the following command:</para>
+         <screen><prompt>$</prompt> <userinput>cinder type-create gold</userinput></screen>
+      </step>
+      <step>
+        <para>Create an extra-specification (for example XtremIOAFA) to link the volume type you defined to a
+          back end name, by running the following command:</para>
+        <screen><prompt>$</prompt> <userinput>cinder type-key gold set</userinput></screen>
+        <para><code>volume_backend_name = <replaceable>XtremIOAFA</replaceable></code></para>
+      </step>
+      <step>
+        <para>When you create a volume (for example Vol1), specify the volume type. The volume type
+          extra-specifications are used to determine the relevant back end.</para>
+        <screen><prompt>$</prompt> <userinput>cinder create --volume_type gold -display name Vol1 1</userinput></screen>
+      </step>
+    </procedure>
+  </section>
+  <section xml:id="setting-thin-provisioning-and-multipathing-parameters">
+    <title>Setting thin provisioning and multipathing parameters</title>
+    <para>To support thin provisioning and multipathing in the XtremIO Array, the following
+      parameters from the Nova and Cinder configuration files should be modified as follows:</para>
+    <itemizedlist>
+      <listitem><para>Thin Provisioning</para>
+        <para>The <code>use_cow_images</code> parameter in the<filename>nova.conf</filename>file should be
+          set to False as follows:</para>
+        <para><code>use_cow_images = false</code></para>
+      </listitem>
+      <listitem><para>Multipathing</para>
+        <para>The <code>use_multipath_for_image_xfer</code> parameter in the<filename>cinder.conf</filename>
+          file should be set to True as follows:</para>
+        <para><code>use_multipath_for_image_xfer = true</code></para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="restarting-cinder">
+    <title>Restarting OpenStack Block Storage</title>
+    <para>Save the<filename>cinder.conf</filename>file and restart cinder by running the following command:</para>
+    <screen><prompt>$</prompt> <userinput>openstack-service restart cinder-volume</userinput></screen>
+  </section>
+  <section xml:id="configuring-chap">
+    <title>Configuring CHAP</title>
+    <para>The XtremIO Block Storage driver supports CHAP initiator authentication. If CHAP initiator authentication
+      is required, set the CHAP Authentication mode to initiator.</para>
+    <para>To set the CHAP initiator mode using CLI, run the following CLI command:</para>
+    <screen><prompt>$</prompt> <userinput>modify-chap chap-authentication-mode=initiator</userinput></screen>
+    <para>The CHAP initiator mode can also be set via the XMS GUI</para>
+    <para>Refer to <citetitle>XtremIO User Guide</citetitle> for details on CHAP configuration via GUI and CLI.</para>
+    <para>The CHAP initiator authentication credentials (username and password) are generated
+      automatically by the Block Storage driver. Therefore, there is no need to configure the initial CHAP
+      credentials manually in XMS.</para>
+  </section>
+  <section xml:id="emc-xtremio-configuration-example">
+    <title>Configuration example</title>
+    <subtitle>cinder.conf example file</subtitle>
+    <para>You can update the<filename>cinder.conf</filename>file by editing the necessary parameters as follows:</para>
+    <programlisting language="ini"><literal>[Default]</literal>
+enabled_backends = XtremIO
+[XtremIO]
+volume_driver = cinder.volume.drivers.emc.xtremio XtremIOFibreChannelDriver
+san_ip = <replaceable>10.10.10.20</replaceable>
+san_login = <replaceable>admin</replaceable>
+san_password = <replaceable>223344</replaceable>
+volume_backend_name = <replaceable>XtremIOAFA</replaceable></programlisting>
+  </section>
+</section>
