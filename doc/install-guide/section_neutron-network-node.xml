@@ -171,7 +171,7 @@ mechanism_drivers = openvswitch</programlisting>
         </step>
         <step>
           <para>In the <literal>[ml2_type_flat]</literal> section,
-           configure the external network:</para>
+           configure the external flat provider network:</para>
           <programlisting language="ini">[ml2_type_flat]
 ...
 flat_networks = external</programlisting>
@@ -196,18 +196,26 @@ enable_ipset = True
 firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver</programlisting>
         </step>
         <step>
-          <para>In the <literal>[ovs]</literal> section, configure the
-            <glossterm>Open vSwitch (OVS) agent</glossterm>:</para>
+          <para>In the <literal>[ovs]</literal> section, enable tunnels,
+            configure the local tunnel endpoint, and map the external flat
+            provider network to the <literal>br-ex</literal> external
+            network bridge:</para>
           <programlisting language="ini">[ovs]
 ...
 local_ip = <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
-tunnel_type = gre
 enable_tunneling = True
 bridge_mappings = external:br-ex</programlisting>
           <para>Replace
             <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
             with the IP address of the instance
             tunnels network interface on your network node.</para>
+        </step>
+        <step>
+          <para>In the <literal>[agent]</literal> section, enable GRE
+            tunnels:</para>
+          <programlisting language="ini">[agent]
+...
+tunnel_types = gre</programlisting>
         </step>
       </substeps>
     </step>
