@@ -219,6 +219,12 @@ my_ip = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable></programlisti
 ...
 glance_host = <replaceable>controller</replaceable></programlisting>
     </step>
+    <step os="rhel;centos;fedora;sles;opensuse">
+      <para>Configure Block Storage to use the <command>tgtadm</command>
+        iSCSI service:</para>
+      <screen><prompt>#</prompt> <userinput>openstack-config --set /etc/cinder/cinder.conf \
+  DEFAULT iscsi_helper tgtadm</userinput></screen>
+    </step>
     <step os="ubuntu">
       <para>Restart the Block Storage services with the new
         settings:</para>
