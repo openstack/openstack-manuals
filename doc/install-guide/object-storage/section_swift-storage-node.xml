@@ -199,9 +199,7 @@ lock file = /var/lock/object.lock</programlisting>
     </step>
     <step>
       <para>Edit the
-        <filename>/etc/swift/account-server.conf</filename>,
-        <filename>/etc/swift/container-server.conf</filename>, and
-        <filename>/etc/swift/object-server.conf</filename> files and
+        <filename>/etc/swift/account-server.conf</filename> file and
         complete the following actions:</para>
       <substeps>
         <step>
@@ -212,6 +210,90 @@ lock file = /var/lock/object.lock</programlisting>
 ...
 bind_ip = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
 bind_port = 6002
+user = swift
+swift_dir = /etc/swift
+devices = /srv/node</programlisting>
+          <para>Replace
+            <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+            with the IP address of the management network on the storage
+            node.</para>
+        </step>
+        <step>
+          <para>In the <literal>[pipeline:main]</literal> section, enable
+            the appropriate modules:</para>
+          <programlisting language="ini">[pipeline:main]
+pipeline = healthcheck recon account-server</programlisting>
+          <note>
+            <para>For more information on other modules that enable
+             additional features, see the
+             <link xlink:href="http://docs.openstack.org/developer/swift/deployment_guide.html"
+             >Deployment Guide</link>.</para>
+          </note>
+        </step>
+        <step>
+          <para>In the <literal>[filter:recon]</literal> section, configure
+            the recon (metrics) cache directory:</para>
+          <programlisting language="ini">[filter:recon]
+...
+recon_cache_path = /var/cache/swift</programlisting>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Edit the
+        <filename>/etc/swift/container-server.conf</filename> file and
+        complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            bind IP address, bind port, user, configuration directory, and
+            mount point directory:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+bind_ip = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+bind_port = 6001
+user = swift
+swift_dir = /etc/swift
+devices = /srv/node</programlisting>
+          <para>Replace
+            <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+            with the IP address of the management network on the storage
+            node.</para>
+        </step>
+        <step>
+          <para>In the <literal>[pipeline:main]</literal> section, enable
+            the appropriate modules:</para>
+          <programlisting language="ini">[pipeline:main]
+pipeline = healthcheck recon account-server</programlisting>
+          <note>
+            <para>For more information on other modules that enable
+             additional features, see the
+             <link xlink:href="http://docs.openstack.org/developer/swift/deployment_guide.html"
+             >Deployment Guide</link>.</para>
+          </note>
+        </step>
+        <step>
+          <para>In the <literal>[filter:recon]</literal> section, configure
+            the recon (metrics) cache directory:</para>
+          <programlisting language="ini">[filter:recon]
+...
+recon_cache_path = /var/cache/swift</programlisting>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Edit the
+        <filename>/etc/swift/object-server.conf</filename> file and
+        complete the following actions:</para>
+      <substeps>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            bind IP address, bind port, user, configuration directory, and
+            mount point directory:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+bind_ip = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable>
+bind_port = 6000
 user = swift
 swift_dir = /etc/swift
 devices = /srv/node</programlisting>
