@@ -56,30 +56,12 @@
             <para>To support DHCP agent, rpc_notifier driver must be
                 set. To set up the notification, edit notification
                 options in <filename>neutron.conf</filename>:</para>
-            <programlisting language="ini"># ============ Notification System Options =====================
+            <programlisting language="ini"># Driver or drivers to handle sending notifications. (multi
+# valued)
+#notification_driver=
 
-# Notifications can be sent when network/subnet/port are create, updated or deleted.
-# There are three methods of sending notifications: logging (via the
-# log_file directive), rpc (via a message queue) and
-# noop (no notifications sent, the default)
-
-# Notification_driver can be defined multiple times
-# Do nothing driver
-# notification_driver = neutron.openstack.common.notifier.no_op_notifier
-# Logging driver
-# notification_driver = neutron.openstack.common.notifier.log_notifier
-# RPC driver
-notification_driver = neutron.openstack.common.notifier.rpc_notifier
-
-# default_notification_level is used to form actual topic names or to set logging level
-# default_notification_level = INFO
-
-# default_publisher_id is a part of the notification payload
-# host = myhost.com
-# default_publisher_id = $host
-
-# Defined in rpc_notifier for rpc way, can be comma-separated values.
-# The actual topic names will be %s.%(default_notification_level)s
+# AMQP topic used for OpenStack notifications. (list value)
+# Deprecated group/name - [rpc_notifier2]/topics
 notification_topics = notifications</programlisting>
         </section>
         <section xml:id="section_adv_notification_cases">
