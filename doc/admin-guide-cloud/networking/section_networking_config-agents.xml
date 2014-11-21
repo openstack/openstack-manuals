@@ -150,58 +150,6 @@
                 </step>
             </procedure>
         </section>
-        <section xml:id="install_neutron_agent_ryu">
-            <title>Node set up: Ryu plug-in</title>
-            <warning>
-                <para>
-                    The Ryu plug-in is deprecated as of the Juno release and might be removed in Kilo
-                    or a subsequent release.
-                </para>
-            </warning>
-            <para>If you use the Ryu plug-in, you must install Open vSwitch, Ryu, and the Ryu agent package.</para>
-            <procedure>
-                <title>To set up each node for the Ryu
-                    plug-in</title>
-                <step>
-                    <para>Install Ryu:</para>
-                    <screen><prompt>#</prompt> <userinput>pip install ryu</userinput></screen>
-                    <para>Currently, no Ryu package exists for
-                        Ubuntu.</para>
-                </step>
-                <step>
-                    <para>Install the Ryu agent and Open vSwitch
-                        packages:</para>
-                    <screen><prompt>#</prompt> <userinput>apt-get install neutron-plugin-ryu-agent openvswitch-switch python-openvswitch openvswitch-datapath-dkms</userinput></screen>
-                </step>
-                <step>
-                    <para>Replicate the
-                            <filename>ovs_ryu_plugin.ini</filename>
-                        and <filename>neutron.conf</filename>
-                        files created in the above step on all
-                        nodes running
-                        <systemitem class="service">neutron-plugin-ryu-agent</systemitem>.</para>
-                </step>
-                <step>
-                    <para>Restart Open vSwitch to properly load
-                        the kernel module:</para>
-                    <screen><prompt>#</prompt> <userinput>service openvswitch-switch restart</userinput></screen>
-                </step>
-                <step>
-                    <para>Restart the agent:</para>
-                    <screen><prompt>#</prompt> <userinput>service neutron-plugin-ryu-agent restart</userinput> </screen>
-                </step>
-                <step>
-                    <para>All nodes that run
-                        <systemitem class="service">neutron-plugin-ryu-agent</systemitem>
-                        must also have an OVS bridge named
-                            <literal>br-int</literal> on each
-                        node.</para>
-                    <para>To create the bridge, run this
-                        command:</para>
-                    <screen><prompt>#</prompt> <userinput>ovs-vsctl add-br br-int</userinput></screen>
-                </step>
-            </procedure>
-        </section>
     </section>
     <section xml:id="install_neutron_dhcp">
         <title>Configure DHCP agent</title>
@@ -267,15 +215,6 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
 enable_metadata_network = True
 enable_isolated_metadata = True
 use_namespaces = True
-interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
-        </section>
-        <section xml:id="dhcp_agent_ryu">
-            <title>DHCP agent setup: Ryu plug-in</title>
-            <para>These DHCP agent options are required in the
-                    <filename>/etc/neutron/dhcp_agent.ini</filename>
-                file for the Ryu plug-in:</para>
-            <programlisting language="bash">[DEFAULT]
-use_namespace = True
 interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
         </section>
     </section>
@@ -421,7 +360,7 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                 <itemizedlist>
                     <listitem>
                         <para>An OVS-based plug-in such as OVS,
-                            NSX, Ryu, NEC,
+                            NSX, NEC,
                             BigSwitch/Floodlight:</para>
                         <programlisting language="ini">interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlisting>
                     </listitem>
@@ -457,7 +396,7 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
             the Open vSwitch or Linux Bridge plug-in. The Open
             vSwitch LBaaS driver is required when enabling LBaaS
             for OVS-based plug-ins, including BigSwitch,
-            Floodlight, NEC, NSX, and Ryu.</para>
+            Floodlight, NEC, and NSX.</para>
         <procedure>
             <title>To configure LBaas with Open vSwitch or Linux
                 Bridge plug-in</title>
