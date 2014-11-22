@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter [
+<!ENTITY % openstack SYSTEM "../common/entities/openstack.ent">
+%openstack;
+]>
 <chapter xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -43,118 +47,192 @@
     <title>Example architectures</title>
     <para>OpenStack is highly configurable to meet different needs with various
       compute, networking, and storage options. This guide enables you to
-      choose your own OpenStack adventure using a combination of basic and
+      choose your own OpenStack adventure using a combination of core and
       optional services. This guide uses the following example
       architectures:</para>
     <itemizedlist>
       <listitem>
-        <para>Three-node architecture with OpenStack Networking (neutron). See <xref linkend="example-architecture-with-neutron-networking"/>.</para>
+        <para>Three-node architecture with OpenStack Networking
+          (neutron) and optional nodes for Block Storage and Object
+          Storage services.</para>
         <itemizedlist>
           <listitem>
-            <para>The basic controller node runs the Identity service, Image
+            <para>The
+              <glossterm baseform="cloud controller node"
+              >controller node</glossterm> runs the Identity service, Image
               Service, management portions of Compute and Networking,
               Networking plug-in, and the dashboard. It also includes
-              supporting services such as a database,
-              <glossterm>message broker</glossterm>, and
-              <glossterm>Network Time Protocol (NTP)</glossterm>.
-            </para>
+              supporting services such as a SQL database,
+              <glossterm>message queue</glossterm>, and
+              <glossterm>Network Time Protocol (NTP)</glossterm>.</para>
             <para>Optionally, the controller node also runs portions of
-              Block Storage, Object Storage, Database Service, Orchestration,
-              and Telemetry. These components provide additional features for
-              your environment.</para>
+              Block Storage, Object Storage, Orchestration, Telemetry,
+              Database, and Data Processing services. These
+              components provide additional features for your
+              environment.</para>
           </listitem>
           <listitem>
-            <para>The network node runs the Networking plug-in, layer-2 agent,
-              and several layer-3 agents that provision and operate tenant
-              networks. Layer-2 services include provisioning of virtual
-              networks and tunnels. Layer-3 services include routing,
-              <glossterm baseform="Network Address Translation (NAT)">NAT</glossterm>,
-              and <glossterm>DHCP</glossterm>. This node also handles
-              external (Internet) connectivity for tenant virtual machines
-              or instances.</para>
+            <para>The network node runs the Networking plug-in and
+              several agents that provision tenant networks and provide
+              switching, routing,
+              <glossterm baseform="Network Address Translation (NAT)"
+              >NAT</glossterm>, and <glossterm>DHCP</glossterm> services.
+              This node also handles external (Internet) connectivity for
+              tenant virtual machine instances.</para>
           </listitem>
           <listitem>
-            <para>The compute node runs the hypervisor portion of Compute,
-              which operates tenant virtual machines or instances. By default
-              Compute uses KVM as the hypervisor. The compute node also runs
-              the Networking plug-in and layer-2 agent which operate tenant
-              networks and implement security groups. You can run more than
-              one compute node.</para>
-            <para>Optionally, the compute node also runs the Telemetry
-              agent. This component provides additional features for
-              your environment.</para>
+            <para>The <glossterm>compute node</glossterm> runs the
+              <glossterm>hypervisor</glossterm> portion of Compute
+              that operates <glossterm>tenant</glossterm>
+              <glossterm baseform="virtual machine (VM)">virtual machines</glossterm>
+              or instances. By default, Compute uses
+              <glossterm baseform="kernel-based VM (KVM)">KVM</glossterm>
+              as the <glossterm>hypervisor</glossterm>. The compute node
+              also runs the Networking plug-in and an agent that connect
+              tenant networks to instances and provide firewalling
+              (<glossterm baseform="security group"
+              >security groups</glossterm>) services. You can run more
+              than one compute node.</para>
+            <para>Optionally, the compute node also runs a Telemetry
+              agent to collect metrics.</para>
           </listitem>
           <listitem>
-            <para>The optional storage node contains the disks that the Block
-              Storage service uses to serve volumes. You can run more than one
-              storage node.</para>
-            <para>Optionally, the storage node also runs the Telemetry
-              agent. This component provides additional features for
-              your environment.</para>
+            <para>The optional Block Storage node contains the disks that
+              the Block Storage service provisions for tenant virtual machine
+              instances. You can run more than one of these nodes.</para>
+            <para>Optionally, the Block Storage node also runs a Telemetry
+              agent to collect metrics.</para>
+          </listitem>
+          <listitem>
+            <para>The optional Object Storage nodes contain the disks that
+              the Object Storage service uses for storing accounts,
+              containers, and objects. You can run more than two of these
+              nodes. However, the minimal architecture example requires
+              two nodes.</para>
           </listitem>
         </itemizedlist>
         <note>
           <para>When you implement this architecture, skip
             <xref linkend="section_nova-networking" /> in
-            <xref linkend="ch_networking" />. To use optional services, you
-            might need to install additional nodes, as described in
-            subsequent chapters.</para>
+            <xref linkend="ch_networking" />. Optional services might
+            require additional nodes or additional resources on existing
+            nodes.</para>
         </note>
-        <figure xml:id="example-architecture-with-neutron-networking">
-          <title>Three-node architecture with OpenStack Networking (neutron)</title>
+        <figure xml:id="example-architecture-with-neutron-networking-hw">
+          <title>Minimal architecture example with OpenStack Networking
+            (neutron)&mdash;Hardware requirements</title>
           <mediaobject>
             <imageobject>
               <imagedata contentwidth="6in"
-                fileref="figures/installguide_arch-neutron.png"/>
+                fileref="../common/figures/installguidearch-neutron-hw.png"/>
             </imageobject>
           </mediaobject>
         </figure>
+        <figure xml:id="example-architecture-with-neutron-networking-networks">
+          <title>Minimal architecture example with OpenStack Networking
+            (neutron)&mdash;Network layout</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata contentwidth="6in"
+                fileref="../common/figures/installguidearch-neutron-networks.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+        <figure xml:id="example-architecture-with-neutron-networking-services">
+          <title>Minimal architecture example with OpenStack Networking
+            (neutron)&mdash;Service layout</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata contentwidth="6in"
+                fileref="../common/figures/installguidearch-neutron-services.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+
       </listitem>
       <listitem>
-        <para>Two-node architecture with legacy networking (nova-network). See
-          <xref linkend="example-architecture-with-legacy-networking"/>.</para>
+        <para>Two-node architecture with legacy networking
+          (nova-network) and optional nodes for Block Storage and
+          Object Storage services.</para>
         <itemizedlist>
           <listitem>
-            <para>The basic
-              <glossterm baseform="cloud controller node">controller node</glossterm>
-              runs the Identity service, Image Service, management portion of
-              Compute, and the dashboard necessary to launch a simple instance.
-              It also includes supporting services such as a database, message
-              broker, and NTP.</para>
+            <para>The
+              <glossterm baseform="cloud controller node"
+              >controller node</glossterm> runs the Identity service,
+              Image Service, management portion of Compute, and the
+              dashboard. It also includes supporting services such as
+              a SQL database, <glossterm>message queue</glossterm>, and
+              <glossterm>Network Time Protocol (NTP)</glossterm>.</para>
             <para>Optionally, the controller node also runs portions of
-              Block Storage, Object Storage, Database Service, Orchestration,
-              and Telemetry. These components provide additional features for
-              your environment.</para>
+              Block Storage, Object Storage, Orchestration, Telemetry,
+              Database, and Data Processing services. These
+              components provide additional features for your
+              environment.</para>
           </listitem>
           <listitem>
-            <para>The basic <glossterm>compute node</glossterm> runs the
-              <glossterm>hypervisor</glossterm> portion of Compute,
-              which operates <glossterm>tenant</glossterm>
+            <para>The <glossterm>compute node</glossterm> runs the
+              <glossterm>hypervisor</glossterm> portion of Compute
+              that operates <glossterm>tenant</glossterm>
               <glossterm baseform="virtual machine (VM)">virtual machines</glossterm>
               or instances. By default, Compute uses
               <glossterm baseform="kernel-based VM (KVM)">KVM</glossterm>
               as the <glossterm>hypervisor</glossterm>. Compute also
-              provisions and operates tenant networks and implements
-              <glossterm baseform="security group">security groups</glossterm>.
-              You can run more than one compute node.</para>
-            <para>Optionally, the compute node also runs the Telemetry
-              agent. This component provides additional features for
-              your environment.</para>
+              provisions tenant networks and provides firewalling
+              (<glossterm baseform="security group"
+              >security groups</glossterm>) services. You can run more
+              than one compute node.</para>
+            <para>Optionally, the compute node also runs a Telemetry
+              agent to collect metrics.</para>
+          </listitem>
+          <listitem>
+            <para>The optional Block Storage node contains the disks that
+              the Block Storage service provisions for tenant virtual machine
+              instances. You can run more than one of these nodes.</para>
+            <para>Optionally, the Block Storage node also runs a Telemetry
+              agent to collect metrics.</para>
+          </listitem>
+          <listitem>
+            <para>The optional Object Storage nodes contain the disks that
+              the Object Storage service uses for storing accounts,
+              containers, and objects. You can run more than two of these
+              nodes. However, the minimal architecture example requires
+              two nodes.</para>
           </listitem>
         </itemizedlist>
         <note>
           <para>When you implement this architecture, skip
             <xref linkend="section_neutron-networking" /> in
             <xref linkend="ch_networking" />. To use optional services, you
-            might need to install additional nodes, as described in
+            might need to build additional nodes, as described in
             subsequent chapters.</para>
         </note>
-        <figure xml:id="example-architecture-with-legacy-networking">
-          <title>Two-node architecture with legacy networking (nova-network)</title>
+        <figure xml:id="example-architecture-with-legacy-networking-hw">
+          <title>Minimal architecture example with legacy networking
+            (nova-network)&mdash;Hardware requirements</title>
           <mediaobject>
             <imageobject>
               <imagedata contentwidth="6in"
-                fileref="figures/installguide_arch-nova.png"/>
+                fileref="../common/figures/installguidearch-nova-hw.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+        <figure xml:id="example-architecture-with-legacy-networking-networks">
+          <title>Minimal architecture example with legacy networking
+            (nova-network)&mdash;Network layout</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata contentwidth="6in"
+                fileref="../common/figures/installguidearch-nova-networks.png"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
+        <figure xml:id="example-architecture-with-legacy-networking-services">
+          <title>Minimal architecture example with legacy networking
+            (nova-network)&mdash;Service layout</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata contentwidth="6in"
+                fileref="../common/figures/installguidearch-nova-services.png"/>
             </imageobject>
           </mediaobject>
         </figure>
