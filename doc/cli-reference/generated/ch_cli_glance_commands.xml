@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Image Service API and its extensions.
 
        This chapter documents <command>glance</command> version
-        <literal>0.14.1</literal>.
+        <literal>0.14.2</literal>.
     </para>
 
     <para>For help on a specific <command>glance</command>
@@ -27,11 +27,11 @@
        <title>glance usage</title>
         <screen><computeroutput>usage: glance [--version] [-d] [-v] [--get-schema] [--timeout TIMEOUT]
               [--no-ssl-compression] [-f] [--os-image-url OS_IMAGE_URL]
-              [--os-image-api-version OS_IMAGE_API_VERSION] [-k]
-              [--os-cert OS_CERT] [--cert-file OS_CERT] [--os-key OS_KEY]
-              [--key-file OS_KEY] [--os-cacert &lt;ca-certificate-file&gt;]
-              [--ca-file OS_CACERT] [--os-username OS_USERNAME]
-              [--os-user-id OS_USER_ID]
+              [--os-image-api-version OS_IMAGE_API_VERSION]
+              [--profile HMAC_KEY] [-k] [--os-cert OS_CERT]
+              [--cert-file OS_CERT] [--os-key OS_KEY] [--key-file OS_KEY]
+              [--os-cacert &lt;ca-certificate-file&gt;] [--ca-file OS_CACERT]
+              [--os-username OS_USERNAME] [--os-user-id OS_USER_ID]
               [--os-user-domain-id OS_USER_DOMAIN_ID]
               [--os-user-domain-name OS_USER_DOMAIN_NAME]
               [--os-project-id OS_PROJECT_ID]
@@ -205,6 +205,21 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_IMAGE_API_VERSION]</code> or 1.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--profile HMAC_KEY HMAC</command></term>
+    <listitem>
+      <para>
+        key to use for encrypting context data for
+      performance profiling of operation. This key should be
+      the value of HMAC key configured in osprofiler
+      middleware in glance, it is specified in paste
+      configuration file at /etc/glance/api-paste.ini and
+      /etc/glance/registry-paste.ini. Without key the
+      profiling will not be triggered even if osprofiler is
+      enabled on server side.
       </para>
     </listitem>
   </varlistentry>
