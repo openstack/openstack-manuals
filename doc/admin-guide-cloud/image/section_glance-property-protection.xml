@@ -36,10 +36,14 @@
       completes these steps:</para>
     <step>
       <para>Define roles or policies in the
-          <filename>policy.json</filename> file. To view a sample
-        configuration file, see <link
-          xlink:href="http://docs.openstack.org/trunk/config-reference/content/section_glance-policy.json.html"
-          >policy.json</link>.</para>
+        <filename>policy.json</filename> file:</para>
+<programlisting language="json"><xi:include parse="text"
+href="http://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=stable/juno"/></programlisting>
+      <para>For each parameter, use <literal>"rule:restricted"</literal> to
+        restrict access to all users or <literal>"role:admin"</literal>
+        to limit access to administrator roles. For example:</para>
+<programlisting>"download_image": <replaceable>"rule:restricted"</replaceable>
+"upload_image": <replaceable>"role:admin"</replaceable></programlisting>
     </step>
     <step>
       <para>Define which roles or policies can manage which properties
