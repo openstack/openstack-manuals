@@ -98,6 +98,8 @@ rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
     </step>
 
     <step os="opensuse;sles;fedora;rhel;centos;ubuntu">
+      <para os="fedora;rhel;centos">Get the <filename>api-paste.ini</filename> file and save it to <filename>/etc/trove</filename>. You can get the file from this location:</para>
+      <para os="fedora;rhel;centos"><link xlink:href="http://git.openstack.org/cgit/openstack/trove/plain/etc/trove/api-paste.ini?h=stable/juno">http://git.openstack.org/cgit/openstack/trove/plain/etc/trove/api-paste.ini?h=stable/juno</link></para>
       <para>Edit the <literal>[filter:authtoken]</literal> section
       of the <filename>api-paste.ini</filename> file so it matches the
       listing shown below:</para>
@@ -111,15 +113,16 @@ signing_dir = /var/cache/trove</programlisting>
     </step>
 
     <step><para>Edit the <filename>trove.conf</filename> file so it includes
-    appropriate values for the default datastore and network label
-    regex as shown below:</para>
+    appropriate values for the default datastore, network label
+    regex, and API information as shown below:</para>
     <programlisting language="ini">[DEFAULT]
 default_datastore = mysql
 ....
 # Config option for showing the IP address that nova doles out
 add_addresses = True
 network_label_regex = ^NETWORK_LABEL$
-....</programlisting>
+....
+api_paste_config = /etc/trove/api-paste.ini</programlisting>
     </step>
 
     <step>
