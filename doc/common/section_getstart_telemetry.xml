@@ -39,13 +39,19 @@
           <listitem><para>Runs on each compute node and polls for resource
           utilization statistics. There may be other types of agents in the
           future, but for now our focus is creating the compute agent.</para>
-        </listitem>
+          </listitem>
         </varlistentry>
         <varlistentry><term>A central agent (<systemitem class="service"
            >ceilometer-agent-central</systemitem>)</term>
           <listitem><para>Runs on a central management server to poll for
            resource utilization statistics for resources not tied to instances
            or compute nodes.</para></listitem>
+        </varlistentry>
+        <varlistentry><term>A notification agent (<systemitem class="service"
+           >ceilometer-agent-notification</systemitem>)</term>
+          <listitem><para>Runs on a central management server to initiate
+          alarm actions, such as calling out to a webhook with a description
+          of the alarm state transition.</para></listitem>
         </varlistentry>
         <varlistentry><term>A collector (<systemitem class="service"
            >ceilometer-collector</systemitem>)</term>
@@ -55,26 +61,32 @@
            metering messages, which are sent to the message bus using the
            appropriate topic. Telemetry messages are written to the data store
            without modification.</para>
-        </listitem>
+          </listitem>
+        </varlistentry>
+        <varlistentry><term>An alarm evaluator (<systemitem class="service"
+            >ceilometer-alarm-evaluator</systemitem>)</term>
+          <listitem><para>Runs on one or more central management servers to
+          determine when alarms fire due to the associated statistic
+          trend crossing a threshold over a sliding time window.</para></listitem>
         </varlistentry>
         <varlistentry><term>An alarm notifier (<systemitem class="service"
             >ceilometer-alarm-notifier</systemitem>)</term>
           <listitem><para>Runs on one or more central management servers to
             allow alarms to be set based on the threshold evaluation for a
             collection of samples.</para></listitem>
-     </varlistentry>
+        </varlistentry>
         <varlistentry>
           <term>A data store</term>
           <listitem><para>A database capable of handling
             concurrent writes (from one or more collector instances)
             and reads (from the API server).</para></listitem>
         </varlistentry>
-          <varlistentry>
+        <varlistentry>
           <term>An API server (<systemitem
            class="service">ceilometer-api</systemitem>)</term>
           <listitem><para>Runs on one or more central management servers to
            provide data access from the data store.</para></listitem>
-      </varlistentry>
+        </varlistentry>
       </variablelist>
       <para>These services communicate by using the OpenStack messaging bus.
         Only the collector and API server have access
