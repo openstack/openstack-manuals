@@ -194,7 +194,7 @@
       architecture to fulfill the requirements against the data collection.</para>
     <para>There are two agents supporting the polling mechanism, namely the compute
       agent and the central agent. The following subsections give further information
-      regarding to the archticetural and configuration details of these components.
+      regarding to the architectural and configuration details of these components.
     </para>
     <section xml:id="section_telemetry-central-agent">
       <title>Central agent</title>
@@ -224,7 +224,7 @@
       </itemizedlist>
       <para>To install and configure this service use the <link xlink:href=
         "http://docs.openstack.org/trunk/install-guide/install/apt/content/ceilometer-install.html">
-        Install the Telemtery module</link> section in the <citetitle>OpenStack
+        Install the Telemetry module</link> section in the <citetitle>OpenStack
         Installation Guide</citetitle>.</para>
       <para>The central agent does not need direct database connection. The
         samples collected by this agent are sent via message queue to the collector
@@ -254,7 +254,7 @@
         back end, as these tools provide different set of metrics.</para>
       <para>The list of collected meters can be found in the <link xlink:href=
         "http://docs.openstack.org/developer/ceilometer/measurements.html#compute-nova">
-        Compute section</link> in the <citetitle>Telemetery Measurements Reference</citetitle>.
+        Compute section</link> in the <citetitle>Telemetry Measurements Reference</citetitle>.
         The support column provides the information that which meter is available for
         each hypervisor supported by the Telemetry module.</para>
       <note>
@@ -342,7 +342,7 @@
       </para>
       <para>The list of collected meters can be found in the <link xlink:href=
         "http://docs.openstack.org/developer/ceilometer/measurements.html#ironic-hardware-ipmi-sensor-data">
-        Ironic Hardware IPMI Sensor Data section</link> in the <citetitle>Telemetery Measurements Reference</citetitle>.</para>
+        Ironic Hardware IPMI Sensor Data section</link> in the <citetitle>Telemetry Measurements Reference</citetitle>.</para>
       <note>
         <para>Do not deploy both IPMI agent and Bare metal module for OpenStack on
           one compute node. If <option>conductor.send_sensor_data</option> set, this
@@ -353,12 +353,12 @@
   </section>
   <section xml:id="section_telemetry-post-api">
     <title>Send samples to Telemetry</title>
-    <para>Most parts of the data collections in the Telemtery module are automated.
+    <para>Most parts of the data collections in the Telemetry module are automated.
       Telemetry provides the possibility to submit samples via the REST API to allow
       users to send custom samples into this module.</para>
     <para>This option makes it possible to send any kind of samples without the need
       of writing extra code lines or making configuration changes.</para>
-    <para>The samples that can be sent to Telemetry are not limited to the actually
+    <para>The samples that can be sent to Telemetry are not limited to the actual
       existing meters. There is a possibility to provide data for any new, customer
       defined counter by filling out all the required fields of the POST request.
     </para>
@@ -397,7 +397,7 @@
       </itemizedlist>
     </para>
     <para>The <literal>memory.usage</literal> meter is not supported when Libvirt is used in an
-      Openstack deployment. There is still a possibility to provide samples for
+      OpenStack deployment. There is still a possibility to provide samples for
       this meter based on any custom measurements. To send samples to Telemetry
       using the command line client, the following command should be invoked:
     <screen><prompt>$</prompt> <userinput>ceilometer sample-create -r 37128ad6-daaa-4d22-9509-b7e1c6b08697 \
@@ -421,11 +421,11 @@
   </section>
   <section xml:id="section_telemetry-data-collection-processing">
     <title>Data collection and processing</title>
-    <para>The mechanism via the data is collected and processed is called
-      pipeline. Pipelines on configuration level describe a coupling between
+    <para>The mechanism via the data is collected and processed and is called
+      pipeline. Pipelines, at the configuration level, describe a coupling between
       sources of samples and the corresponding sinks for transformation and
-      publication of these data.</para>
-    <para>A source is a producer of samples, in effect a set of pollsters
+      publication of data.</para>
+    <para>A source is a producer of samples, in effect, a set of pollsters
       and/or notification handlers emitting samples for a set of matching meters.
     </para>
     <para>Each source configuration encapsulates meter name matching, polling
@@ -595,7 +595,7 @@ sinks:
               unit: "%"
               type: "gauge"
               scale: "100.0 / (10**9 * (resource_metadata.cpu_number or 1))"</programlisting>
-          <para>The rate of change transformer generates the <literal>cpu_util</literal>meter
+          <para>The rate of change the transformer generates is the <literal>cpu_util</literal>meter
             from the sample values of the <literal>cpu</literal> counter, which represents
             cumulative CPU time in nanoseconds. The transformer definition above defines a
             scale factor (for nanoseconds, multiple CPUs, etc.), which is applied before the
@@ -816,8 +816,8 @@ sinks:
         </tr>
         <tr>
           <td>DB2</td>
-          <td>Same as in case of MongoDB.</td>
-          <td>Same as in case of MongoDB.</td>
+          <td>Same case as MongoDB.</td>
+          <td>Same case as MongoDB.</td>
         </tr>
       </tbody>
     </table>
