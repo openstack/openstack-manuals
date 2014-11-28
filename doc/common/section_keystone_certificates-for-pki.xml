@@ -11,7 +11,7 @@
         In order to work correctly token generation requires a
         public/private key pair. The public key must be signed in an
         X509 certificate, and the certificate used to sign it must be
-        available as Certificate Authority (CA) certificate. These
+        available as a Certificate Authority (CA) certificate. These
         files can be generated either using the
             <command>keystone-manage</command> utility, or externally
         generated. The files need to be in the locations specified by
@@ -64,8 +64,15 @@
         </listitem>
         <listitem>
             <para>
+                <literal>ca_key</literal> - Location of the private key
+                used by the CA. Default is
+                <literal>/etc/keystone/ssl/private/cakey.pem</literal>.
+                </para>
+        </listitem>
+        <listitem>
+            <para>
                 <literal>key_size</literal> - Default is
-                    <literal>1024</literal>.</para>
+                    <literal>2048</literal>.</para>
         </listitem>
         <listitem>
             <para>
@@ -79,6 +86,15 @@
                     <literal>None</literal>.</para>
         </listitem>
     </itemizedlist>
+    <para>When generating certificates with the
+        <command>keystone-manage pki_setup</command> command, the
+        <literal>ca_key</literal>, <literal>key_size</literal>, and
+        <literal>valid_days</literal> configuration options are used.
+    </para>
+    <para>If the <command>keystone-manage pki_setup</command> command
+        is not used to generate certificates, or you are providing
+        your own certificates, these values do not need
+        to be set.</para>
     <para>If <literal>token_format=UUID</literal>, a typical token
         looks like
         <literal>53f7f6ef0cc344b5be706bcc8b1479e1</literal>. If
@@ -128,8 +144,9 @@ SrWY8lF3HrTcJT23sZIleg==</screen>
                     password</para>
             </listitem>
         </itemizedlist>
-        <para>When using signing certificate issued by an external CA,
-            you do not need to specify <literal>key_size</literal>,
+        <para>When using a signing certificate issued by an
+            external CA, you do not need to specify
+            <literal>key_size</literal>,
                 <literal>valid_days</literal>, and
                 <literal>ca_password</literal> as they will be
             ignored.</para>
@@ -224,12 +241,15 @@ emailAddress            = keystone@openstack.org
                 accessible by root.</para>
         </note>
         <note>
-            <para>The copying of the key and cert files may be better done
-                after first running <command>keystone-manage pki_setup</command>
-                since this command also creates other needed files, such
-                as the <filename>index.txt</filename> and <filename>serial</filename> files.</para>
-            <para>Also, when copying the necessary files to a different server
-                for replicating the functionality, the entire directory of
+            <para>The procedure of copying the key and cert files
+                may be improved if done after first running
+                <command>keystone-manage pki_setup</command>
+                since this command also creates other needed files,
+                such as the <filename>index.txt</filename>
+                and <filename>serial</filename> files.</para>
+            <para>Also, when copying the necessary files
+                to a different server for replicating the
+                functionality, the entire directory of
                 files is needed, not just the key and cert files.</para>
         </note>
         <para>If your certificate directory path is different from the
