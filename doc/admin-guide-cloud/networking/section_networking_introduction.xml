@@ -500,18 +500,23 @@ enabled = True</programlisting>
             tools. Because Networking supports a large number of
             plug-ins, the cloud administrator must determine the right
             networking technology for the deployment.</para>
-        <para>In the Havana release, OpenStack Networking introduces
-            the <glossterm
-                baseform="Modular Layer 2 (ML2) neutron plug-in"
-                >Modular Layer 2 (ML2) plug-in</glossterm> that
-            enables the use of multiple concurrent mechanism drivers.
-            This capability aligns with the complex requirements
-            typically found in large heterogeneous environments. It
-            currently works with the existing Open vSwitch, Linux
-            Bridge, and Hyper-v L2 agents. The ML2 framework
-            simplifies the addition of support for new L2 technologies
-            and reduces the effort that is required to add and
-            maintain them compared to earlier large plug-ins.</para>
+        <para>The <glossterm baseform="Modular Layer 2 (ML2) neutron plug-in"
+                >Modular Layer 2 (ML2) plug-in</glossterm> was introduced
+          in the Havana release, enabling a variety of layer 2 networking
+          technologies to be created and managed with less effort compared
+          to earlier plug-ins. It currently works with Open vSwitch, Linux
+          Bridge, and Hyper-v L2 agents.</para>
+        <para>The ML2 framework contains two types of drivers, Type Drivers
+          which maintain any needed type-specific network state,
+          perform provider network validation and tenant network allocation;
+          and Mechanism Drivers which ensure the information established
+          by the TypeDriver is properly applied. Multiple Mechanism
+          Drivers can simultaneously access the same network, which
+          address complex requirements in large heterogeneous environments.</para>
+        <para>You can enable the ML2 plug-in by editing the <literal>core-plugin</literal>
+          parameter in the <filename>/etc/neutron/neutron.conf</filename>
+          file:</para>
+            <programlisting language = "ini">core_plugin = <replaceable>neutron.plugins.ml2.plugin.Ml2Plugin</replaceable></programlisting>
         <note>
             <title>Plug-in deprecation notice</title>
             <para>The Open vSwitch and Linux Bridge plug-ins are
