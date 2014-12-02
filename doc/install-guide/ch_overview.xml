@@ -26,6 +26,8 @@
       xpointer="element(table1)"/>
     <para>This guide describes how to deploy these services in a functional
       test environment and, by example, teaches you how to build a production
+      environment. Realistically, you would use automation tools such as
+      Ansible, Chef, and Puppet to deploy and manage a production
       environment.</para>
   </section>
   <section xml:id="architecture_conceptual-architecture">
@@ -65,7 +67,7 @@
               supporting services such as a SQL database,
               <glossterm>message queue</glossterm>, and
               <glossterm>Network Time Protocol (NTP)</glossterm>.</para>
-            <para>Optionally, the controller node also runs portions of
+            <para>Optionally, the controller node runs portions of
               Block Storage, Object Storage, Orchestration, Telemetry,
               Database, and Data Processing services. These
               components provide additional features for your
@@ -93,15 +95,19 @@
               (<glossterm baseform="security group"
               >security groups</glossterm>) services. You can run more
               than one compute node.</para>
-            <para>Optionally, the compute node also runs a Telemetry
-              agent to collect metrics.</para>
+            <para>Optionally, the compute node runs a Telemetry
+              agent to collect metrics. Also, it can contain a third
+              network interface on a separate storage network to improve
+              performance of storage services.</para>
           </listitem>
           <listitem>
             <para>The optional Block Storage node contains the disks that
               the Block Storage service provisions for tenant virtual machine
               instances. You can run more than one of these nodes.</para>
-            <para>Optionally, the Block Storage node also runs a Telemetry
-              agent to collect metrics.</para>
+            <para>Optionally, the Block Storage node runs a Telemetry
+              agent to collect metrics. Also, it can contain a second
+              network interface on a separate storage network to improve
+              performance of storage services.</para>
           </listitem>
           <listitem>
             <para>The optional Object Storage nodes contain the disks that
@@ -109,6 +115,9 @@
               containers, and objects. You can run more than two of these
               nodes. However, the minimal architecture example requires
               two nodes.</para>
+            <para>Optionally, these nodes can contain a second network
+              interface on a separate storage network to improve
+              performance of storage services.</para>
           </listitem>
         </itemizedlist>
         <note>
@@ -163,7 +172,7 @@
               dashboard. It also includes supporting services such as
               a SQL database, <glossterm>message queue</glossterm>, and
               <glossterm>Network Time Protocol (NTP)</glossterm>.</para>
-            <para>Optionally, the controller node also runs portions of
+            <para>Optionally, the controller node runs portions of
               Block Storage, Object Storage, Orchestration, Telemetry,
               Database, and Data Processing services. These
               components provide additional features for your
@@ -181,15 +190,19 @@
               (<glossterm baseform="security group"
               >security groups</glossterm>) services. You can run more
               than one compute node.</para>
-            <para>Optionally, the compute node also runs a Telemetry
-              agent to collect metrics.</para>
+            <para>Optionally, the compute node runs a Telemetry
+              agent to collect metrics. Also, it can contain a third
+              network interface on a separate storage network to improve
+              performance of storage services.</para>
           </listitem>
           <listitem>
             <para>The optional Block Storage node contains the disks that
               the Block Storage service provisions for tenant virtual machine
               instances. You can run more than one of these nodes.</para>
-            <para>Optionally, the Block Storage node also runs a Telemetry
-              agent to collect metrics.</para>
+            <para>Optionally, the Block Storage node runs a Telemetry
+              agent to collect metrics. Also, it can contain a second
+              network interface on a separate storage network to improve
+              performance of storage services.</para>
           </listitem>
           <listitem>
             <para>The optional Object Storage nodes contain the disks that
@@ -197,6 +210,9 @@
               containers, and objects. You can run more than two of these
               nodes. However, the minimal architecture example requires
               two nodes.</para>
+            <para>Optionally, these nodes can contain a second network
+              interface on a separate storage network to improve
+              performance of storage services.</para>
           </listitem>
         </itemizedlist>
         <note>
