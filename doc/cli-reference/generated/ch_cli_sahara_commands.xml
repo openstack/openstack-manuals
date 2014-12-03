@@ -15,7 +15,7 @@
         interface (CLI) for the Data processing API and its extensions.
 
        This chapter documents <command>sahara</command> version
-        <literal>0.7.5</literal>.
+        <literal>0.7.6</literal>.
     </para>
 
     <para>For help on a specific <command>sahara</command>
@@ -26,14 +26,25 @@
     <section xml:id="saharaclient_command_usage">
        <title>sahara usage</title>
         <screen><computeroutput>usage: sahara [--version] [--debug] [--os-cache]
-              [--os-tenant-id &lt;auth-tenant-id&gt;]
               [--service-type &lt;service-type&gt;]
               [--endpoint-type &lt;endpoint-type&gt;]
               [--sahara-api-version &lt;sahara-api-ver&gt;]
-              [--os-cacert &lt;ca-certificate&gt;] [--bypass-url &lt;bypass-url&gt;]
-              [--os-auth-system &lt;auth-system&gt;] [--os-username &lt;username&gt;]
-              [--os-password &lt;password&gt;] [--os-tenant-name &lt;tenant-name&gt;]
-              [--os-token &lt;token&gt;] [--os-auth-url &lt;auth-url&gt;]
+              [--bypass-url &lt;bypass-url&gt;] [--os-tenant-name OS_TENANT_NAME]
+              [--os-tenant-id OS_TENANT_ID] [--os-auth-system OS_AUTH_SYSTEM]
+              [--os-auth-token OS_AUTH_TOKEN] [--insecure]
+              [--os-cacert &lt;ca-certificate&gt;] [--os-cert &lt;certificate&gt;]
+              [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;]
+              [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
+              [--os-domain-name OS_DOMAIN_NAME]
+              [--os-project-id OS_PROJECT_ID]
+              [--os-project-name OS_PROJECT_NAME]
+              [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
+              [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
+              [--os-trust-id OS_TRUST_ID] [--os-user-id OS_USER_ID]
+              [--os-user-name OS_USERNAME]
+              [--os-user-domain-id OS_USER_DOMAIN_ID]
+              [--os-user-domain-name OS_USER_DOMAIN_NAME]
+              [--os-password OS_PASSWORD]
               &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
@@ -403,18 +414,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-tenant-id &lt;auth-tenant-id&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_TENANT_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--service-type &lt;service-type&gt;</command></term>
     <listitem>
       <para>
-      Defaults to data_processing for all actions.
+      Defaults to data-processing for all actions.
       </para>
     </listitem>
   </varlistentry>
@@ -435,6 +438,57 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--bypass-url &lt;bypass-url&gt;</command></term>
+    <listitem>
+      <para>
+      Use this API endpoint instead of the Service Catalog.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-tenant-name OS_TENANT_NAME</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_TENANT_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-tenant-id OS_TENANT_ID</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_TENANT_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-system OS_AUTH_SYSTEM</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_AUTH_SYSTEM]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-token OS_AUTH_TOKEN</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_AUTH_TOKEN]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--insecure</command></term>
+    <listitem>
+      <para>
+        Explicitly allow client to perform "insecure" TLS
+      (https) requests. The server's certificate will not be
+      verified against any certificate authorities. This
+      option should be used with caution.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
     <listitem>
       <para>
@@ -445,63 +499,130 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--bypass-url &lt;bypass-url&gt;</command></term>
+    <term><command>--os-cert &lt;certificate&gt;</command></term>
     <listitem>
       <para>
-      Use this API endpoint instead of the Service Catalog.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="saharaclient_command_common_auth">
-        <title>sahara common authentication arguments</title>
-  <variablelist wordsize="10">
-  <varlistentry>
-    <term><command>--os-auth-system &lt;auth-system&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_AUTH_SYSTEM]</code>.
+      Defaults to <code>env[OS_CERT]</code>.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-username &lt;username&gt;</command></term>
+    <term><command>--os-key &lt;key&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_USERNAME]</code>.
+        Defaults to <code>env[OS_KEY]</code>.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-password &lt;password&gt;</command></term>
+    <term><command>--timeout &lt;seconds&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_PASSWORD]</code>.
+        Set request timeout (in seconds).
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-tenant-name &lt;tenant-name&gt;</command></term>
+    <term><command>--os-auth-url OS_AUTH_URL</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_TENANT_NAME]</code>.
+      Authentication URL
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-token &lt;token&gt;</command></term>
+    <term><command>--os-domain-id OS_DOMAIN_ID</command></term>
     <listitem>
       <para>
-        Defaults to <code>env[OS_TOKEN]</code>.
+      Domain ID to scope to
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-auth-url &lt;auth-url&gt;</command></term>
+    <term><command>--os-domain-name OS_DOMAIN_NAME</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_AUTH_URL]</code>.
+      Domain name to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id OS_PROJECT_ID</command></term>
+    <listitem>
+      <para>
+      Project ID to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-name OS_PROJECT_NAME</command></term>
+    <listitem>
+      <para>
+      Project name to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-id OS_PROJECT_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Domain ID containing project
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-name OS_PROJECT_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Domain name containing project
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-trust-id OS_TRUST_ID</command></term>
+    <listitem>
+      <para>
+      Trust ID
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-id OS_USER_ID</command></term>
+    <listitem>
+      <para>
+      User ID
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-name OS_USERNAME, --os-username OS_USERNAME</command></term>
+    <listitem>
+      <para>
+      Username
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id OS_USER_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      User's domain id
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name OS_USER_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      User's domain name
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-password OS_PASSWORD</command></term>
+    <listitem>
+      <para>
+      User's password
       </para>
     </listitem>
   </varlistentry>
