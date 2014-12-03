@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-11-28 06:13+0000\n"
+"POT-Creation-Date: 2014-12-03 06:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -378,7 +378,7 @@ msgstr ""
 msgid "This image must have the trove guest agent installed, and it must have the <filename>trove-guestagent.conf</filename> file configured to connect to your OpenStack environment. To configure <filename>trove-guestagent.conf</filename>, add the following lines to <filename>trove-guestagent.conf</filename> on the guest instance you are using to build your image:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_database.xml:24(replaceable) ./doc/admin-guide-cloud/ch_database.xml:29(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:90(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:91(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:205(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:206(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:226(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:227(replaceable)
+#: ./doc/admin-guide-cloud/ch_database.xml:24(replaceable) ./doc/admin-guide-cloud/ch_database.xml:29(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:90(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:91(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:202(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:203(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:223(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:224(replaceable)
 msgid "controller"
 msgstr ""
 
@@ -926,7 +926,7 @@ msgstr ""
 msgid "Middleware parameters in paste config take priority. You must remove them to use values in the <literal>[keystone_authtoken]</literal> section."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:101(para) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:216(para) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:237(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:101(para) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:213(para) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:234(para)
 msgid "Comment out any <literal>auth_host</literal>, <literal>auth_port</literal>, and <literal>auth_protocol</literal> options because the <literal>identity_uri</literal> option replaces them."
 msgstr ""
 
@@ -979,114 +979,118 @@ msgid "Authentication middleware with user name and password"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:181(para)
-msgid "You can also configure Identity authentication middleware using the <option>admin_user</option> and <option>admin_password</option> options. When using the <option>admin_user</option> and <option>admin_password</option> options the <option>admin_token</option> parameter is optional. If <option>admin_token</option> is specified, it is used only if the specified token is still valid."
+msgid "You can also configure Identity authentication middleware using the <option>admin_user</option> and <option>admin_password</option> options."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:189(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:184(para)
+msgid "The <option>admin_token</option> parameter is deprecated, and no longer used for configuring auth_token middleware."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:186(para)
 msgid "For services that have a separate paste-deploy .ini file, you can configure the authentication middleware in the <literal>[keystone_authtoken]</literal> section of the main configuration file, such as <filename>nova.conf</filename>. In Compute, for example, you can remove the middleware parameters from <filename>api-paste.ini</filename>, as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:198(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:195(para)
 msgid "And set the following values in <filename>nova.conf</filename> as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:211(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:208(para)
 msgid "The middleware parameters in the paste config take priority. You must remove them to use the values in the [keystone_authtoken] section."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:221(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:218(para)
 msgid "This sample paste config filter makes use of the <option>admin_user</option> and <option>admin_password</option> options:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:232(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:229(para)
 msgid "Using this option requires an admin tenant/role relationship. The admin user is granted access to the admin role on the admin tenant."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:244(title)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:241(title)
 msgid "Identity API protection with role-based access control (RBAC)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:246(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:243(para)
 msgid "Like most OpenStack projects, Identity supports the protection of its APIs by defining policy rules based on an RBAC approach. Identity stores a reference to a policy JSON file in the main Identity configuration file, <filename>keystone.conf</filename>. Typically this file is named <filename>policy.json</filename>, and it contains the rules for which roles have access to certain actions in defined services."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:252(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:249(para)
 msgid "Each Identity API v3 call has a line in the policy file that dictates which level of governance of access applies."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:254(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:251(replaceable)
 msgid "API_NAME"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:254(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:251(replaceable)
 msgid "RULE_STATEMENT"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:254(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:251(replaceable)
 msgid "MATCH_STATEMENT"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:255(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:56(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:106(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:54(para) ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:81(para) ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:164(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:252(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:56(para) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:106(para) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:54(para) ./doc/admin-guide-cloud/compute/section_trusted-compute-pools.xml:81(para) ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:164(para)
 msgid "Where:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:256(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:253(para)
 msgid "<code><replaceable>RULE_STATEMENT</replaceable></code> can contain <code><replaceable>RULE_STATEMENT</replaceable></code> or <code><replaceable>MATCH_STATEMENT</replaceable></code>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:257(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:254(para)
 msgid "<code><replaceable>MATCH_STATEMENT</replaceable></code> is a set of identifiers that must match between the token provided by the caller of the API and the parameters or target entities of the API call in question. For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:261(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:258(para)
 msgid "Indicates that to create a user, you must have the admin role in your token and the <literal>domain_id</literal> in your token (which implies this must be a domain-scoped token) must match the <literal>domain_id</literal> in the user object that you are trying to create. In other words, you must have the admin role on the domain in which you are creating the user, and the token that you use must be scoped to that domain."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:267(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:264(para)
 msgid "Each component of a match statement uses this format:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:268(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:265(replaceable)
 msgid "ATTRIB_FROM_TOKEN"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:268(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:265(replaceable)
 msgid "CONSTANT"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:268(replaceable)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:265(replaceable)
 msgid "ATTRIB_RELATED_TO_API_CALL"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:269(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:266(para)
 msgid "The Identity service expects these attributes:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:270(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:267(para)
 msgid "Attributes from token: <literal>user_id</literal>, the <literal>domain_id</literal> or <literal>project_id</literal> depending on the scope, and the list of roles you have within that scope."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:272(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:269(para)
 msgid "Attributes related to API call: Any parameters passed into the API call are available, along with any filters specified in the query string. You reference attributes of objects passed with an object.attribute syntax (such as, <literal>user.domain_id</literal>). The target objects of an API are also available using a target.object.attribute syntax. For instance:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:279(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:276(para)
 msgid "would ensure that Identity only deletes the user object in the same domain as the provided token."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:281(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:278(para)
 msgid "Every target object has an `id` and a `name` available as `target.<replaceable>OBJECT</replaceable>.id` and `target.<replaceable>OBJECT</replaceable>.name`. Identity retrieves other attributes from the database, and the attributes vary between object types. The Identity service filters out some database fields, such as user passwords."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:286(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:283(para)
 msgid "List of object attributes:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:316(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:313(para)
 msgid "The default <filename>policy.json</filename> file supplied provides a somewhat basic example of API protection, and does not assume any particular use of domains. Refer to <filename>policy.v3cloudsample.json</filename> as an example of multi-domain configuration installations where a cloud provider wants to delegate administration of the contents of a domain to a particular admin domain. This example policy file also shows the use of an admin_domain to allow a cloud provider to enable cloud administrators to have wider access across the APIs."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:325(para)
+#: ./doc/admin-guide-cloud/ch_identity_mgmt.xml:322(para)
 msgid "A clean installation could start with the standard policy file, to allow creation of the admin_domain with the first users within it. You could then obtain the domain_id of the admin domain, paste the ID into a modified version of <filename>policy.v3cloudsample.json</filename>, and then enable it as the main policy file."
 msgstr ""
 
