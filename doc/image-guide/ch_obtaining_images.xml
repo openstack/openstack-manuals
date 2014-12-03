@@ -92,6 +92,34 @@
               <link xlink:href="http://susestudio.com/a/YRUrwO/testing-instance-for-openstack-opensuse-12-3">
               a test openSUSE 12.3 image</link>.</para>
     </section>
+    <section xml:id="debian-images">
+        <title>Official Debian images</title>
+        <para>Debian does not (yet) provide images for direct download.
+        Instead, a package named <package>openstack-debian-images</package>
+        provides a simple script for building them. This package is available
+        in Debian Unstable, Debian Jessie, and through the wheezy-backports
+        repositories. To produce a Wheezy image, simply run:
+        <screen><prompt>#</prompt> <userinput>build-openstack-debian-image -r wheezy</userinput></screen></para>
+        <para>If building the image for Wheezy, packages like
+        <package>cloud-init</package>, <package>cloud-utils</package> or
+        <package>cloud-initramfs-growroot</package> will be pulled from
+        wheezy-backports. Also, the current version of
+        <package>bootlogd</package> in Wheezy doesn't support logging to
+        multiple consoles, which is needed so that both the OpenStack
+        Dashboard console and the <command>nova console-log</command>
+        console works. However, a <link
+        xlink:href="http://archive.gplhost.com/debian/pool/juno-backports/main/s/sysvinit/bootlogd_2.88dsf-41+deb7u2_amd64.deb">
+        fixed version is available from the non-official GPLHost
+        repository</link>. To install it on top of the image, it is possible
+        to use the <option>--hook-script</option> option of the
+        <command>build-openstack-debian-image</command> script, with this
+        kind of script as parameter:
+<programlisting language="bash">#!/bin/sh
+
+cp bootlogd_2.88dsf-41+deb7u2_amd64.deb ${BODI_CHROOT_PATH}
+chroot ${BODI_CHROOT_PATH} dpkg -i bootlogd_2.88dsf-41+deb7u2_amd64.deb
+rm ${BODI_CHROOT_PATH}/bootlogd_2.88dsf-41+deb7u2_amd64.deb</programlisting></para>
+    </section>
     <section xml:id="other-distros">
         <title>Official images from other Linux distributions</title>
         <para>As of this writing, we are not aware of other distributions that provide images for download.</para>
