@@ -15,7 +15,7 @@
         interface (CLI) for the Database API and its extensions.
 
        This chapter documents <command>trove</command> version
-        <literal>1.0.7</literal>.
+        <literal>1.0.8</literal>.
     </para>
 
     <para>For help on a specific <command>trove</command>
@@ -25,16 +25,27 @@
 
     <section xml:id="troveclient_command_usage">
        <title>trove usage</title>
-        <screen><computeroutput>usage: trove [--version] [--debug] [--os-username &lt;auth-user-name&gt;]
-             [--os-password &lt;auth-password&gt;]
-             [--os-tenant-name &lt;auth-tenant-name&gt;]
-             [--os-tenant-id &lt;auth-tenant-id&gt;] [--os-auth-url &lt;auth-url&gt;]
-             [--os-region-name &lt;region-name&gt;] [--service-type &lt;service-type&gt;]
-             [--service-name &lt;service-name&gt;] [--bypass-url &lt;bypass-url&gt;]
+        <screen><computeroutput>usage: trove [--version] [--debug] [--os-auth-system &lt;auth-system&gt;]
+             [--service-type &lt;service-type&gt;] [--service-name &lt;service-name&gt;]
+             [--bypass-url &lt;bypass-url&gt;]
              [--database-service-name &lt;database-service-name&gt;]
              [--endpoint-type &lt;endpoint-type&gt;]
              [--os-database-api-version &lt;database-api-ver&gt;]
-             [--os-cacert &lt;ca-certificate&gt;] [--retries &lt;retries&gt;] [--json]
+             [--retries &lt;retries&gt;] [--json] [--insecure]
+             [--os-cacert &lt;ca-certificate&gt;] [--os-cert &lt;certificate&gt;]
+             [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;]
+             [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
+             [--os-domain-name OS_DOMAIN_NAME] [--os-project-id OS_PROJECT_ID]
+             [--os-project-name OS_PROJECT_NAME]
+             [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
+             [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
+             [--os-trust-id OS_TRUST_ID] [--os-user-id OS_USER_ID]
+             [--os-user-name OS_USERNAME]
+             [--os-user-domain-id OS_USER_DOMAIN_ID]
+             [--os-user-domain-name OS_USER_DOMAIN_NAME]
+             [--os-password OS_PASSWORD] [--os-tenant-name &lt;auth-tenant-name&gt;]
+             [--os-tenant-id &lt;tenant-id&gt;] [--os-auth-token OS_AUTH_TOKEN]
+             [--os-region-name &lt;region-name&gt;]
              &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
@@ -603,50 +614,9 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-username &lt;auth-user-name&gt;</command></term>
+    <term><command>--os-auth-system &lt;auth-system&gt;</command></term>
     <listitem>
       <para>
-        Defaults to <code>env[OS_USERNAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-password &lt;auth-password&gt;</command></term>
-    <listitem>
-      <para>
-        Defaults to <code>env[OS_PASSWORD]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-tenant-name &lt;auth-tenant-name&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_TENANT_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-tenant-id &lt;auth-tenant-id&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_TENANT_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-auth-url &lt;auth-url&gt;</command></term>
-    <listitem>
-      <para>
-        Defaults to <code>env[OS_AUTH_URL]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-region-name &lt;region-name&gt;</command></term>
-    <listitem>
-      <para>
-        Defaults to <code>env[OS_REGION_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -702,16 +672,6 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
-    <listitem>
-      <para>
-        Specify a CA bundle file to use in verifying
-      a TLS (https) server certificate. Defaults
-      to <code>env[OS_CACERT]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--retries &lt;retries&gt;</command></term>
     <listitem>
       <para>
@@ -725,6 +685,191 @@
       <para>
         Output JSON instead of prettyprint. Defaults
       to <code>env[OS_JSON_OUTPUT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--insecure</command></term>
+    <listitem>
+      <para>
+        Explicitly allow client to perform
+      "insecure" TLS (https) requests. The
+      server's certificate will not be verified
+      against any certificate authorities. This
+      option should be used with caution.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
+    <listitem>
+      <para>
+        Specify a CA bundle file to use in verifying
+      a TLS (https) server certificate. Defaults
+      to <code>env[OS_CACERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cert &lt;certificate&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_CERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-key &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_KEY]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--timeout &lt;seconds&gt;</command></term>
+    <listitem>
+      <para>
+        Set request timeout (in seconds).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-url OS_AUTH_URL</command></term>
+    <listitem>
+      <para>
+        Authentication URL
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-id OS_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+        Domain ID to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-name OS_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Domain name to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id OS_PROJECT_ID</command></term>
+    <listitem>
+      <para>
+        Project ID to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-name OS_PROJECT_NAME</command></term>
+    <listitem>
+      <para>
+      Project name to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-id OS_PROJECT_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Domain ID containing project
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-name OS_PROJECT_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Domain name containing project
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-trust-id OS_TRUST_ID</command></term>
+    <listitem>
+      <para>
+        Trust ID
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-id OS_USER_ID</command></term>
+    <listitem>
+      <para>
+        User ID
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-name OS_USERNAME, --os-username OS_USERNAME</command></term>
+    <listitem>
+      <para>
+      Username
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id OS_USER_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      User's domain id
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name OS_USER_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      User's domain name
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-password OS_PASSWORD</command></term>
+    <listitem>
+      <para>
+        User's password
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-tenant-name &lt;auth-tenant-name&gt;</command></term>
+    <listitem>
+      <para>
+      Tenant to request authorization on. Defaults
+      to <code>env[OS_TENANT_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-tenant-id &lt;tenant-id&gt;</command></term>
+    <listitem>
+      <para>
+        Tenant to request authorization on. Defaults
+      to <code>env[OS_TENANT_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-token OS_AUTH_TOKEN</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_AUTH_TOKEN]</code>
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-region-name &lt;region-name&gt;</command></term>
+    <listitem>
+      <para>
+        Specify the region to use. Defaults to
+      <code>env[OS_REGION_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
