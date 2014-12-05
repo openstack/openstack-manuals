@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!-- Useful for describing APIs -->
+<!ENTITY GET '<command xmlns="http://docbook.org/ns/docbook">GET</command>'>
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="serialized-response-formats">
+    <title>Serialized response formats</title>
+    <para>By default, the Object Storage API uses a
+            <literal>text/plain</literal> response format. In
+        addition, both JSON and XML data serialization response
+        formats are supported.</para>
+    <note>
+        <para>To run the cURL command examples, you must export <link
+                linkend="env-vars">environment
+            variables</link>.</para>
+    </note>
+    <para>To define the response format, use one of these
+        methods:</para>
+    <informaltable rules="all">
+        <thead>
+            <tr>
+                <th>Method</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><para><code>format=<replaceable>format</replaceable></code>
+                        query parameter</para></td>
+                <td>
+                    <para>Append this parameter to the URL for a &GET;
+                        request, where
+                            <replaceable>format</replaceable> is
+                            <code>json</code> or
+                        <code>xml</code>.</para>
+                </td>
+            </tr>
+            <tr>
+                <td><para><literal>Accept</literal> request
+                        header</para></td>
+                <td>
+                    <para>Include this header in the &GET; request.
+                        The valid header values are:</para>
+                    <variablelist>
+                        <varlistentry>
+                            <term><code>text/plain</code></term>
+                            <listitem>
+                                <para>Plain text response format. The
+                                   default.</para>
+                            </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                            <term><code>application/jsontext</code></term>
+                            <listitem>
+                                <para>JSON data serialization response
+                                   format.</para>
+                            </listitem>
+                        </varlistentry>
+                        <varlistentry>
+                            <term><code>application/xml</code>or
+                                   <code>text/xml</code></term>
+                            <listitem>
+                                <para>XML data serialization response
+                                   format.</para>
+                            </listitem>
+                        </varlistentry>
+                    </variablelist>
+                </td>
+            </tr>
+        </tbody>
+    </informaltable>
+    <example>
+        <title>JSON example with format query parameter</title>
+        <para>For example, this request uses the
+                <parameter>format</parameter> query parameter to ask
+            for a JSON response:</para>
+        <screen><prompt>#</prompt> <userinput>curl -i $publicURL?format=json -X GET -H "X-Auth-Token: $token"</userinput></screen>
+        <screen><computeroutput>HTTP/1.1 200 OK
+Content-Length: 96
+X-Account-Object-Count: 1
+X-Timestamp: 1389453423.35964
+X-Account-Meta-Subject: Literature
+X-Account-Bytes-Used: 14
+X-Account-Container-Count: 2
+Content-Type: application/json; charset=utf-8
+Accept-Ranges: bytes
+X-Trans-Id: tx274a77a8975c4a66aeb24-0052d95365
+Date: Fri, 17 Jan 2014 15:59:33 GMT</computeroutput></screen>
+        <para>Object Storage lists container names with additional
+            information in JSON format:</para>
+        <programlisting language="json">[
+   {
+      "count":0,
+      "bytes":0,
+      "name":"janeausten"
+   },
+   {
+      "count":1,
+      "bytes":14,
+      "name":"marktwain"
+   }
+]</programlisting>
+    </example>
+    <example>
+        <title>XML example with Accept header</title>
+        <para>This request uses the <literal>Accept</literal> request
+            header to ask for an XML response:</para>
+        <screen><prompt>#</prompt> <userinput>curl -i $publicURL -X GET -H "X-Auth-Token: $token" -H "Accept: application/xml; charset=utf-8"</userinput></screen>
+        <screen><computeroutput>HTTP/1.1 200 OK
+Content-Length: 263
+X-Account-Object-Count: 3
+X-Account-Meta-Book: MobyDick
+X-Timestamp: 1389453423.35964
+X-Account-Bytes-Used: 47
+X-Account-Container-Count: 2
+Content-Type: application/xml; charset=utf-8
+Accept-Ranges: bytes
+X-Trans-Id: txf0b4c9727c3e491694019-0052e03420
+Date: Wed, 22 Jan 2014 21:12:00 GMT</computeroutput></screen>
+        <para>Object Storage lists container names with additional
+            information in XML format:</para>
+        <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;account name="AUTH_73f0aa26640f4971864919d0eb0f0880">
+    &lt;container>
+        &lt;name>janeausten&lt;/name>
+        &lt;count>2&lt;/count>
+        &lt;bytes>33&lt;/bytes>
+    &lt;/container>
+    &lt;container>
+        &lt;name>marktwain&lt;/name>
+        &lt;count>1&lt;/count>
+        &lt;bytes>14&lt;/bytes>
+    &lt;/container>
+&lt;/account></programlisting>
+        <para>The remainder of the examples in this guide use
+            standard, non-serialized responses. However, all &GET;
+            requests that perform list operations accept the
+                <parameter>format</parameter> query parameter or
+                <literal>Accept</literal> request header.</para>
+    </example>
+</section>

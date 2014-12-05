@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  version="5.0"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
   xml:id="managing-openstack-object-storage-with-swift-cli">
-    <title>Manage objects and containers</title>
-    <?dbhtml stop-chunking?>
-    <para>The OpenStack Object Storage service provides the
-      <command>swift</command> client, which is a command-line interface (CLI).
-    Use this client to list objects and containers, upload objects to
-    containers, and download or delete objects from containers. You can also
-    gather statistics and update metadata for accounts, containers, and
-    objects.</para>
-    <para>This client is based on the native swift client library,
-            <literal>client.py</literal>, which seamlessly
-        re-authenticates if the current token expires during
-        processing, retries operations multiple times, and provides a
-        processing concurrency of 10.</para>
-    <section xml:id="cli_create_containers">
-      <title>Create and manage containers</title>
-      <itemizedlist>
+  <title>Manage objects and containers</title>
+  <?dbhtml stop-chunking?>
+  <para>The OpenStack Object Storage service provides the
+      <command>swift</command> client, which is a command-line
+    interface (CLI). Use this client to list objects and containers,
+    upload objects to containers, and download or delete objects from
+    containers. You can also gather statistics and update metadata for
+    accounts, containers, and objects.</para>
+  <para>This client is based on the native swift client library,
+      <literal>client.py</literal>, which seamlessly re-authenticates
+    if the current token expires during processing, retries operations
+    multiple times, and provides a processing concurrency of
+    10.</para>
+  <section xml:id="cli_create_containers">
+    <title>Create and manage containers</title>
+    <itemizedlist>
       <listitem>
         <para>To create a container, run the following command and replace
             <replaceable>CONTAINER</replaceable> with the name of your
@@ -33,18 +32,19 @@
         <para>To check the status of containers, run the following
           command:</para>
         <screen><prompt>$</prompt> <userinput>swift stat</userinput></screen>
-<screen><computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
+        <screen><computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
 Containers: 2
 Objects: 3
 Bytes: 268826
 Accept-Ranges: bytes
 X-Timestamp: 1392683866.17952
 Content-Type: text/plain; charset=utf-8</computeroutput></screen>
-        <para>You can also use the <command>swift stat</command> command with the
-        <replaceable>ACCOUNT</replaceable> or <replaceable>CONTAINER</replaceable>
-        names as parameters.</para>
+        <para>You can also use the <command>swift stat</command>
+          command with the <replaceable>ACCOUNT</replaceable> or
+            <replaceable>CONTAINER</replaceable> names as
+          parameters.</para>
         <screen><prompt>$</prompt> <userinput>swift stat <replaceable>CONTAINER</replaceable></userinput></screen>
-<screen><computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
+        <screen><computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
 Container: storage1
 Objects: 2
 Bytes: 240221
@@ -56,51 +56,56 @@ Accept-Ranges: bytes
 X-Timestamp: 1392683866.20180
 Content-Type: text/plain; charset=utf-8</computeroutput></screen>
       </listitem>
-      </itemizedlist>
-    </section>
+    </itemizedlist>
+  </section>
   <section xml:id="cli_manage_access_swift">
     <title>Manage access</title>
     <itemizedlist>
       <listitem>
-        <para>Users have roles on accounts. For example, a user with the admin
-          role has full access to all containers and objects in an account. You
-          can set access control lists (ACLs) at the container level and support
-          lists for read and write access, which you set with the
+        <para>Users have roles on accounts. For example, a user with
+          the admin role has full access to all containers and objects
+          in an account. You can set access control lists (ACLs) at
+          the container level and support lists for read and write
+          access, which you set with the
             <literal>X-Container-Read</literal> and
             <literal>X-Container-Write</literal> headers.</para>
-        <para>To give a user read access, use the <command>swift post</command>
-          command with the <parameter>-r</parameter> parameter. To give a user
-          write access, use the <parameter>-w</parameter> parameter.</para>
-        <para>The following example enables the <literal>testuser</literal> user
-          to read objects in the container:</para>
+        <para>To give a user read access, use the <command>swift
+            post</command> command with the <parameter>-r</parameter>
+          parameter. To give a user write access, use the
+            <parameter>-w</parameter> parameter.</para>
+        <para>The following example enables the
+            <literal>testuser</literal> user to read objects in the
+          container:</para>
         <screen><prompt>$</prompt> <userinput>swift post -r 'testuser'</userinput></screen>
-        <para>You can also use this command with a list of users.</para>
+        <para>You can also use this command with a list of
+          users.</para>
       </listitem>
       <listitem>
-        <para>If you use StaticWeb middleware to enable Object Storage to serve
-          public web content, use <literal>.r:</literal>, followed by a list of
-          allowed referrers.</para>
-        <para>The following command gives object access to all referring
-          domains:</para>
+        <para>If you use StaticWeb middleware to enable Object Storage
+          to serve public web content, use <literal>.r:</literal>,
+          followed by a list of allowed referrers.</para>
+        <para>The following command gives object access to all
+          referring domains:</para>
         <screen><prompt>$</prompt> <userinput>swift post -r '.r:*'</userinput></screen>
       </listitem>
     </itemizedlist>
   </section>
-    <section xml:id="cli_manage_objects">
-      <title>Manage objects</title>
-      <itemizedlist>
-        <listitem>
+  <section xml:id="cli_manage_objects">
+    <title>Manage objects</title>
+    <itemizedlist>
+      <listitem>
         <para>To upload an object to a container, run the following
           command:</para>
-      <screen><prompt>$</prompt> <userinput>swift upload <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput></screen>
-        <para>To upload in chunks, for large files, run the following command:</para>
-      <screen><prompt>$</prompt> <userinput>swift upload -S <replaceable>CHUNK_SIZE</replaceable> <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput></screen>
+        <screen><prompt>$</prompt> <userinput>swift upload <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput></screen>
+        <para>To upload in chunks, for large files, run the following
+          command:</para>
+        <screen><prompt>$</prompt> <userinput>swift upload -S <replaceable>CHUNK_SIZE</replaceable> <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput></screen>
       </listitem>
       <listitem>
         <para>To check the status of the object, run the following
           command:</para>
-      <screen><prompt>$</prompt> <userinput>swift stat <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput></screen>
-<screen><computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
+        <screen><prompt>$</prompt> <userinput>swift stat <replaceable>CONTAINER</replaceable> <replaceable>OBJECT_FILENAME</replaceable></userinput></screen>
+        <screen><computeroutput>Account: AUTH_7b5970fbe7724bf9b74c245e77c03bcg
 Container: storage1
 Object: images
 Content Type: application/octet-stream
@@ -110,11 +115,12 @@ ETag: 82169623d55158f70a0d720f238ec3ef
 Meta Orig-Filename: images.jpg
 Accept-Ranges: bytes
 X-Timestamp: 1392684036.33306</computeroutput></screen>
-    </listitem>
+      </listitem>
       <listitem>
-        <para>To list the objects in a container, run the following command:</para>
+        <para>To list the objects in a container, run the following
+          command:</para>
         <screen><prompt>$</prompt> <userinput>swift list <replaceable>CONTAINER</replaceable></userinput></screen>
-        </listitem>
+      </listitem>
       <listitem>
         <para>To download an object from a container, run the
           following command:</para>
@@ -122,6 +128,8 @@ X-Timestamp: 1392684036.33306</computeroutput></screen>
       </listitem>
     </itemizedlist>
   </section>
-  <xi:include href="section_object-api-versioning.xml"/>
+  <xi:include href="section_object-api-env-vars.xml"/>
+  <xi:include href="section_object-api-response-formats.xml"/>
   <xi:include href="section_object-api-create-large-objects.xml"/>
+  <xi:include href="section_object-api-versioning.xml"/>
 </section>
