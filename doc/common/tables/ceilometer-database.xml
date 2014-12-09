@@ -45,6 +45,10 @@
         <td>(BoolOpt) Add Python stack traces to SQL as comment strings.</td>
       </tr>
       <tr>
+        <td>db2nosql_resource_id_maxlen = 512</td>
+        <td>(IntOpt) The max length of resources id in DB2 nosql, the value should be larger than len(hostname) * 2 as compute node's resource id is &lt;hostname&gt;_&lt;nodename&gt;.</td>
+      </tr>
+      <tr>
         <td>db_inc_retry_interval = True</td>
         <td>(BoolOpt) If True, increases the interval between database connection retries up to db_max_retry_interval.</td>
       </tr>
@@ -78,11 +82,11 @@
       </tr>
       <tr>
         <td>max_retries = 10</td>
-        <td>(IntOpt) Maximum db connection retries during startup. Set to -1 to specify an infinite retry count.</td>
+        <td>(IntOpt) Maximum number of database connection retries during startup. Set to -1 to specify an infinite retry count.</td>
       </tr>
       <tr>
         <td>metering_connection = None</td>
-        <td>(StrOpt) The connection string used to connect to the meteting database. (if unset, connection is used)</td>
+        <td>(StrOpt) The connection string used to connect to the metering database. (if unset, connection is used)</td>
       </tr>
       <tr>
         <td>min_pool_size = 1</td>
@@ -90,7 +94,7 @@
       </tr>
       <tr>
         <td>mongodb_replica_set = </td>
-        <td>(StrOpt) The connection string used to connect to mongo database, if mongodb replica set was chosen.</td>
+        <td>(StrOpt) The name of the replica set which is used to connect to MongoDB database. If it is set, MongoReplicaSetClient will be used instead of MongoClient.</td>
       </tr>
       <tr>
         <td>mysql_sql_mode = TRADITIONAL</td>
