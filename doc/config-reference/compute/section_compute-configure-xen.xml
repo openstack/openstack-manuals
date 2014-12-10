@@ -5,95 +5,77 @@
   xml:id="section_compute-configure-xen">
     <title>Xen configuration reference</title>
     <para>
-        The following section discusses some commonly changed options in
-        XenServer.  The table below provides a complete reference of all
-        configuration options available for configuring Xen with OpenStack.
+        The following section discusses some commonly changed options when
+        using the XenAPI driver. The table below provides a complete reference
+        of all configuration options available for configuring XAPI with
+        OpenStack.
     </para>
     <para>
-        The recommended way to use Xen with OpenStack is through the XenAPI
+        The recommended way to use XAPI with OpenStack is through the XenAPI
         driver. To enable the XenAPI driver, add the following configuration
-        options <filename>/etc/nova/nova.conf</filename> and restart the
-        <systemitem class="service">nova-compute</systemitem> service:
+        options to <filename>/etc/nova/nova.conf</filename> and restart
+        <systemitem class="service">OpenStack Compute</systemitem>:
     </para>
     <programlisting language="ini">compute_driver = xenapi.XenAPIDriver
-xenapi_connection_url = http://your_xenapi_management_ip_address
-xenapi_connection_username = root
-xenapi_connection_password = your_password</programlisting>
+[xenserver]
+connection_url = http://<replaceable>your_xenapi_management_ip_address</replaceable>
+connection_username = root
+connection_password = <replaceable>your_password</replaceable></programlisting>
     <para>
-        These connection details are used by the OpenStack Compute service to
+        These connection details are used by OpenStack Compute service to
         contact your hypervisor and are the same details you use to connect
-        XenCenter, the XenServer management console, to your XenServer or XCP
-        box.
+        XenCenter, the XenServer management console, to your XenServer node.
     </para>
     <note>
         <para>
-            The <literal>xenapi_connection_url</literal> is generally the
-            management network IP address of the XenServer. Though it is
-            possible to use the internal network IP Address (169.250.0.1) to
-            contact XenAPI, this does not allow live migration between hosts.
-            Other functionalities such as host aggregates, do not work.
+            The <literal>connection_url</literal> is generally the
+            management network IP address of the XenServer.
         </para>
     </note>
-    <para>
-        It is possible to manage Xen using libvirt, though this is not
-        well-tested or supported. To experiment using Xen through libvirt add
-        the following configuration options
-        <filename>/etc/nova/nova.conf</filename>:
-        <programlisting language="ini">compute_driver = libvirt.LibvirtDriver
-
-[libvirt]
-virt_type = xen</programlisting>
-    </para>
     <section xml:id="xen-agent">
         <title>Agent</title>
         <para>
-            If you don't have the guest agent on your VMs, it takes a long time
-            for nova to decide the VM has successfully started.  Generally a
-            large timeout is required for Windows instances, but you may want
-            to tweak <literal>agent_version_timeout</literal>.
+            The agent is a piece of software that runs on the instances, and
+            communicates with OpenStack. In case of the XenAPI driver, the
+            agent communicates with OpenStack through XenStore (see
+            <link xlink:href="http://wiki.xen.org/wiki/XenStore">the Xen Wiki</link>
+            for more information on XenStore).
         </para>
-    </section>
-    <section xml:id="xen-firewall">
-        <title>Firewall</title>
         <para>
-            If using nova-network, iptables is supported:
-            <programlisting language="ini">firewall_driver = nova.virt.firewall.IptablesFirewallDriver</programlisting>
-            Alternately, doing the isolation in Dom0:
-            <programlisting language="ini">firewall_driver = nova.virt.xenapi.firewall.Dom0IptablesFirewallDriver</programlisting>
+            If you don't have the guest agent on your VMs, it takes a long time
+            for OpenStack Compute to detect that the VM has successfully
+            started.  Generally a large timeout is required for Windows
+            instances, but you may want to adjust:
+            <literal>agent_version_timeout</literal> within the
+            <literal>[xenserver]</literal> section.
         </para>
     </section>
     <section xml:id="xen-vnc">
         <title>VNC proxy address</title>
         <para>
-            Assuming you are talking to XenAPI through the host local
-            management network, and XenServer is on the address: 169.254.0.1,
-            you can use the following:
-            <literal>vncserver_proxyclient_address=169.254.0.1</literal>
+            Assuming you are talking to XAPI through a management network, and
+            XenServer is on the address: 10.10.1.34 specify the same address
+            for the vnc proxy address:
+            <literal>vncserver_proxyclient_address=<replaceable>10.10.1.34</replaceable></literal>
         </para>
     </section>
     <section xml:id="xen-storage">
         <title>Storage</title>
         <para>
             You can specify which Storage Repository to use with nova by
-            looking at the following flag.  The default is to use the
-            local-storage setup by the default installer:
+            editing the following flag. To use the local-storage setup by the
+            default installer:
             <programlisting language="ini">sr_matching_filter = "other-config:i18n-key=local-storage"</programlisting>
-            Another good alternative is to use the "default" storage (for
-            example if you have attached NFS or any other shared storage):
+            Another alternative is to use the "default" storage (for example if
+            you have attached NFS or any other shared storage):
             <programlisting language="ini">sr_matching_filter = "default-sr:true"</programlisting>
-            <note>
-                <para>
-                    To use a XenServer pool, you must create the pool by using
-                    the Host Aggregates feature.
-                </para>
-            </note>
         </para>
     </section>
     <section xml:id="xen-config-reference-table">
-        <title>Xen configuration reference</title>
+        <title>XenAPI configuration reference</title>
         <para>
-            To customize the Xen driver, use the configuration option settings
-            documented in <xref linkend="config_table_nova_xen"/>.
+            To customize the XenAPI driver, use the configuration option
+            settings documented in <xref linkend="config_table_nova_xen"/>.
         </para>
     </section>
 </section>
