@@ -6,17 +6,20 @@
   xml:id="xapi-ami-setup">
     <?dbhtml stop-chunking?>
     <title>Prepare for AMI type images</title>
-    <para>To support AMI type images in your OpenStack installation,
-        you must create a <filename>/boot/guest</filename> directory
-        inside Dom0. The OpenStack VM extracts the kernel and ramdisk
-        from the AKI and ARI images puts them in this location.</para>
-    <para>OpenStack maintains the contents of this directory and its
-        size should not increase during normal operation. However, in
-        case of power failures or accidental shutdowns, some files
-        might be left over. To prevent these files from filling the
-        Dom0 disk, set up this directory as a symlink that points to a
-        subdirectory of the local SR.</para>
-    <para>Run these commands in Dom0 to achieve this setup:</para>
+    <para>
+        To support AMI type images in your OpenStack installation, you must
+        create the <filename>/boot/guest</filename> directory on dom0. One of
+        the OpenStack XAPI plugins will extract the kernel and ramdisk from
+        AKI and ARI images and put them to that directory.
+    </para>
+    <para>
+        OpenStack maintains the contents of this directory and its size should
+        not increase during normal operation. However, in case of power
+        failures or accidental shutdowns, some files might be left over. To
+        prevent these files from filling up dom0's filesystem, set up this
+        directory as a symlink that points to a subdirectory of the local SR.
+    </para>
+    <para>Run these commands in dom0 to achieve this setup:</para>
     <screen><prompt>#</prompt> <userinput>LOCAL_SR=$(xe sr-list name-label="Local storage" --minimal)</userinput>
 <prompt>#</prompt> <userinput>LOCALPATH="/var/run/sr-mount/$LOCAL_SR/os-guest-kernels"</userinput>
 <prompt>#</prompt> <userinput>mkdir -p "$LOCALPATH"</userinput>
