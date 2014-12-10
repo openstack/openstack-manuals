@@ -74,11 +74,18 @@
         network.</para>
     <para>A new empty disk, labeled <literal>vdb</literal> is also created. This is an empty
         ephemeral disk, which is destroyed when you delete the instance.</para>
-    <para>The compute node is attached to the <systemitem class="service">cinder-volume</systemitem>
-        using iSCSI, and maps to the third disk, <literal>vdc</literal>. The vCPU and memory
-        resources are provisioned and the instance is booted from <literal>vda</literal>. The
-        instance runs and changes data on the disks as indicated in red in the diagram.
-        <!--This isn't very accessible, need to consider rewording to explain more fully. LKB  --></para>
+    <para>The compute node connects to the attached
+        <systemitem class="service">cinder-volume</systemitem> using
+        ISCSI. The <systemitem class="service">cinder-volume</systemitem>
+        is mapped to the third disk, <literal>vdc</literal>. After the
+        compute node provisions the vCPU and memory resources, the
+        instance boots up from root volume <literal>vda</literal>.
+        The instance runs, and changes data on the disks (highlighted in
+        red on the diagram). If the volume store is located
+        on a separate network, the <literal>my_block_storage_ip</literal>
+        option specified in the storage node configuration file directs
+        image traffic toward the compute node.
+    </para>
     <note>
         <para>Some details in this example scenario might be different in your environment.
             For example, you might use a different type of back-end storage or different network
