@@ -15,7 +15,7 @@
         interface (CLI) for the Bare metal and its extensions.
 
        This chapter documents <command>ironic</command> version
-        <literal>0.3.1</literal>.
+        <literal>0.3.2</literal>.
     </para>
 
     <para>For help on a specific <command>ironic</command>
@@ -25,15 +25,23 @@
 
     <section xml:id="ironicclient_command_usage">
        <title>ironic usage</title>
-        <screen><computeroutput>usage: ironic [--version] [--debug] [-v] [-k] [--cert-file CERT_FILE]
-              [--key-file KEY_FILE] [--ca-file CA_FILE] [--timeout TIMEOUT]
+        <screen><computeroutput>usage: ironic [--version] [--debug] [-v] [--cert-file OS_CERT]
+              [--key-file OS_KEY] [--ca-file OS_CACERT]
               [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
               [--os-tenant-id OS_TENANT_ID] [--os-tenant-name OS_TENANT_NAME]
               [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
               [--os-auth-token OS_AUTH_TOKEN] [--ironic-url IRONIC_URL]
               [--ironic-api-version IRONIC_API_VERSION]
               [--os-service-type OS_SERVICE_TYPE]
-              [--os-endpoint-type OS_ENDPOINT_TYPE]
+              [--os-endpoint-type OS_ENDPOINT_TYPE] [--insecure]
+              [--os-cacert &lt;ca-certificate&gt;] [--os-cert &lt;certificate&gt;]
+              [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;]
+              [--os-user-domain-id OS_USER_DOMAIN_ID]
+              [--os-user-domain-name OS_USER_DOMAIN_NAME]
+              [--os-project-id OS_PROJECT_ID]
+              [--os-project-name OS_PROJECT_NAME]
+              [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
+              [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
               &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
@@ -160,10 +168,18 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>node-set-maintenance</command></term>
+    <listitem>
+      <para>
+      Set maintenance mode on or off.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>node-set-power-state</command></term>
     <listitem>
       <para>
-      Power the node on or off.
+      Power the node on or off or reboot.
       </para>
     </listitem>
   </varlistentry>
@@ -171,8 +187,7 @@
     <term><command>node-set-provision-state</command></term>
     <listitem>
       <para>
-      Provision an instance on, or delete an instance from a
-      node.
+      Provision, rebuild or delete an instance.
       </para>
     </listitem>
   </varlistentry>
@@ -328,52 +343,26 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-k, --insecure</command></term>
+    <term><command>--cert-file OS_CERT</command></term>
     <listitem>
       <para>
-        Explicitly allow ironicclient to perform "insecure"
-      SSL (https) requests. The server's certificate will
-      not be verified against any certificate authorities.
-      This option should be used with caution
+        <emphasis>DEPRECATED!</emphasis> Use --os-cert.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--cert-file CERT_FILE</command></term>
+    <term><command>--key-file OS_KEY</command></term>
     <listitem>
       <para>
-      Path of certificate file to use in SSL connection.
-      This file can optionally be prepended with the private
-      key
+        <emphasis>DEPRECATED!</emphasis> Use --os-key.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--key-file KEY_FILE</command></term>
+    <term><command>--ca-file OS_CACERT</command></term>
     <listitem>
       <para>
-        Path of client key to use in SSL connection. This
-      option is not necessary if your key is prepended to
-      your cert file
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--ca-file CA_FILE</command></term>
-    <listitem>
-      <para>
-        Path of CA SSL certificate(s) used to verify the
-      remote server certificate. Without this option ironic
-      looks for the default system CA certificates
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--timeout TIMEOUT</command></term>
-    <listitem>
-      <para>
-        Number of seconds to wait for a response; defaults to
-      600
+        <emphasis>DEPRECATED!</emphasis> Use --os-cacert.
       </para>
     </listitem>
   </varlistentry>
@@ -462,6 +451,103 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_ENDPOINT_TYPE]</code> or "publicURL"
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--insecure</command></term>
+    <listitem>
+      <para>
+        Explicitly allow client to perform "insecure" TLS
+      (https) requests. The server's certificate will not be
+      verified against any certificate authorities. This
+      option should be used with caution.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Specify a CA bundle file to use in verifying a TLS
+      (https) server certificate. Defaults to
+      <code>env[OS_CACERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cert &lt;certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_CERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-key &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_KEY]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--timeout &lt;seconds&gt;</command></term>
+    <listitem>
+      <para>
+        Set request timeout (in seconds).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id OS_USER_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_USER_DOMAIN_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name OS_USER_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_USER_DOMAIN_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id OS_PROJECT_ID</command></term>
+    <listitem>
+      <para>
+      Another way to specify tenant ID. This option is
+      mutually exclusive with --os-tenant-id. Defaults to
+      <code>env[OS_PROJECT_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-name OS_PROJECT_NAME</command></term>
+    <listitem>
+      <para>
+      Another way to specify tenant name. This option is
+      mutually exclusive with --os-tenant-name. Defaults to
+      <code>env[OS_PROJECT_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-id OS_PROJECT_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_PROJECT_DOMAIN_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-name OS_PROJECT_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_PROJECT_DOMAIN_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -725,7 +811,8 @@ Show a driver.
     </section>
     <section xml:id="ironicclient_subcommand_driver-vendor-passthru">
         <title>ironic driver-vendor-passthru</title>
-        <screen><computeroutput>usage: ironic driver-vendor-passthru &lt;driver_name&gt; &lt;method&gt;
+        <screen><computeroutput>usage: ironic driver-vendor-passthru [--http_method &lt;http_method&gt;]
+                                     &lt;driver_name&gt; &lt;method&gt;
                                      [&lt;arg=value&gt; [&lt;arg=value&gt; ...]]</computeroutput></screen>
         <para>
 Call a vendor-passthru extension for a driver.
@@ -756,11 +843,24 @@ Call a vendor-passthru extension for a driver.
     </listitem>
   </varlistentry>
  </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--http_method &lt;http_method&gt;</command></term>
+    <listitem>
+      <para>
+      The HTTP method to use in the request. Valid HTTP
+      methods are: 'POST', 'PUT', 'GET', 'DELETE', 'PATCH'.
+      Defaults to 'POST'.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="ironicclient_subcommand_node-create">
         <title>ironic node-create</title>
         <screen><computeroutput>usage: ironic node-create [-c &lt;chassis uuid&gt;] [-d &lt;driver&gt;] [-i &lt;key=value&gt;]
-                          [-p &lt;key=value&gt;] [-e &lt;key=value&gt;]</computeroutput></screen>
+                          [-p &lt;key=value&gt;] [-e &lt;key=value&gt;] [-u &lt;uuid&gt;]</computeroutput></screen>
         <para>
 Register a new node with the Ironic service.
         </para>  <variablelist wordsize="10">
@@ -808,6 +908,14 @@ Register a new node with the Ironic service.
       <para>
       Record arbitrary key/value metadata. Can be specified
       multiple times
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-u &lt;uuid&gt;, --uuid &lt;uuid&gt;</command></term>
+    <listitem>
+      <para>
+      Unique UUID for the node
       </para>
     </listitem>
   </varlistentry>
@@ -1082,11 +1190,49 @@ Enable or disable serial console access for this node.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="ironicclient_subcommand_node-set-maintenance">
+        <title>ironic node-set-maintenance</title>
+        <screen><computeroutput>usage: ironic node-set-maintenance [--reason &lt;reason&gt;]
+                                   &lt;node id&gt; &lt;maintenance mode&gt;</computeroutput></screen>
+        <para>
+Set maintenance mode on or off.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;node id&gt;</command></term>
+    <listitem>
+      <para>
+        UUID of node
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;maintenance mode&gt;</command></term>
+    <listitem>
+      <para>
+        Supported states: 'on' or 'off'
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--reason &lt;reason&gt;</command></term>
+    <listitem>
+      <para>
+        The reason for setting maintenance mode to "on"; not
+      valid when setting to "off".
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="ironicclient_subcommand_node-set-power-state">
         <title>ironic node-set-power-state</title>
         <screen><computeroutput>usage: ironic node-set-power-state &lt;node id&gt; &lt;power state&gt;</computeroutput></screen>
         <para>
-Power the node on or off.
+Power the node on or off or reboot.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1111,7 +1257,7 @@ Power the node on or off.
         <title>ironic node-set-provision-state</title>
         <screen><computeroutput>usage: ironic node-set-provision-state &lt;node id&gt; &lt;provision state&gt;</computeroutput></screen>
         <para>
-Provision an instance on, or delete an instance from a node.
+Provision, rebuild or delete an instance.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1213,7 +1359,8 @@ Validate the node driver interfaces.
     </section>
     <section xml:id="ironicclient_subcommand_node-vendor-passthru">
         <title>ironic node-vendor-passthru</title>
-        <screen><computeroutput>usage: ironic node-vendor-passthru &lt;node id&gt; &lt;method&gt;
+        <screen><computeroutput>usage: ironic node-vendor-passthru [--http_method &lt;http_method&gt;]
+                                   &lt;node id&gt; &lt;method&gt;
                                    [&lt;arg=value&gt; [&lt;arg=value&gt; ...]]</computeroutput></screen>
         <para>
 Call a vendor-passthru extension for a node.
@@ -1240,6 +1387,19 @@ Call a vendor-passthru extension for a node.
     <listitem>
       <para>
         arguments to be passed to vendor-passthru method
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--http_method &lt;http_method&gt;</command></term>
+    <listitem>
+      <para>
+      The HTTP method to use in the request. Valid HTTP
+      methods are: 'POST', 'PUT', 'GET', 'DELETE', 'PATCH'.
+      Defaults to 'POST'.
       </para>
     </listitem>
   </varlistentry>
