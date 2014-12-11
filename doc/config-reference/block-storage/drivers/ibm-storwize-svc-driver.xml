@@ -610,6 +610,36 @@
                 </listitem>
             </itemizedlist>
         </simplesect>
+        <simplesect>
+          <title>QOS</title>
+          <para>The Storwize driver provides QOS support for storage
+            volumes by controlling the I/O amount. QOS is enabled by
+            editing the <filename>etc/cinder/cinder.conf</filename> file and setting the
+            <literal>storwize_svc_allow_tenant_qos</literal> to
+            <replaceable>True</replaceable>.</para>
+          <para>There are three ways to set the Storwize <literal>IOThrotting</literal>
+            parameter for storage volumes:</para>
+          <itemizedlist>
+            <listitem>
+              <para>Add the <literal>qos:IOThrottling</literal> key
+                into a QOS specification and associate it with a volume
+                type.</para>
+            </listitem>
+            <listitem>
+              <para>Add the <literal>qos:IOThrottling</literal> key into
+                an extra specification with a volume type.</para>
+            </listitem>
+            <listitem>
+              <para>Add the <literal>qos:IOThrottling</literal> key to
+                the storage volume metadata.</para>
+            </listitem>
+          </itemizedlist>
+          <note>
+            <para>If you are changing a volume type with QOS to a new
+              volume type without QOS, the QOS configuration settings will
+              be removed.</para>
+          </note>
+        </simplesect>
     </section>
     <section xml:id="ibm-storwize-svc-driver3">
         <title>Operational notes for the Storwize family and SVC
