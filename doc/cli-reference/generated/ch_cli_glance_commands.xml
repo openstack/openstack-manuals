@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Image Service API and its extensions.
 
        This chapter documents <command>glance</command> version
-        <literal>0.14.2</literal>.
+        <literal>0.15.0</literal>.
     </para>
 
     <para>For help on a specific <command>glance</command>
@@ -27,11 +27,11 @@
        <title>glance usage</title>
         <screen><computeroutput>usage: glance [--version] [-d] [-v] [--get-schema] [--timeout TIMEOUT]
               [--no-ssl-compression] [-f] [--os-image-url OS_IMAGE_URL]
-              [--os-image-api-version OS_IMAGE_API_VERSION]
-              [--profile HMAC_KEY] [-k] [--os-cert OS_CERT]
-              [--cert-file OS_CERT] [--os-key OS_KEY] [--key-file OS_KEY]
-              [--os-cacert &lt;ca-certificate-file&gt;] [--ca-file OS_CACERT]
-              [--os-username OS_USERNAME] [--os-user-id OS_USER_ID]
+              [--os-image-api-version OS_IMAGE_API_VERSION] [-k]
+              [--os-cert OS_CERT] [--cert-file OS_CERT] [--os-key OS_KEY]
+              [--key-file OS_KEY] [--os-cacert &lt;ca-certificate-file&gt;]
+              [--ca-file OS_CACERT] [--os-username OS_USERNAME]
+              [--os-user-id OS_USER_ID]
               [--os-user-domain-id OS_USER_DOMAIN_ID]
               [--os-user-domain-name OS_USER_DOMAIN_NAME]
               [--os-project-id OS_PROJECT_ID]
@@ -120,6 +120,15 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>bash-completion</command></term>
+    <listitem>
+      <para>
+        Prints all of the commands and options to stdout so
+      that the
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>help</command></term>
     <listitem>
       <para>
@@ -196,7 +205,10 @@
     <term><command>--os-image-url OS_IMAGE_URL</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_IMAGE_URL]</code>.
+      Defaults to <code>env[OS_IMAGE_URL]</code>. If the provided image
+      url contains a a version number and `--os-image-api-
+      version` is omitted the version of the URL will be
+      picked as the image api version to use.
       </para>
     </listitem>
   </varlistentry>
@@ -205,21 +217,6 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_IMAGE_API_VERSION]</code> or 1.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--profile HMAC_KEY HMAC</command></term>
-    <listitem>
-      <para>
-        key to use for encrypting context data for
-      performance profiling of operation. This key should be
-      the value of HMAC key configured in osprofiler
-      middleware in glance, it is specified in paste
-      configuration file at /etc/glance/api-paste.ini and
-      /etc/glance/registry-paste.ini. Without key the
-      profiling will not be triggered even if osprofiler is
-      enabled on server side.
       </para>
     </listitem>
   </varlistentry>
@@ -1094,7 +1091,9 @@ Describe a specific model.
     </section>
     <section xml:id="glanceclient_subcommand_image-create_v2">
         <title>glance image-create (v2)</title>
-        <screen><computeroutput>usage: glance --os-image-api-version 2 image-create [--property &lt;key=value&gt;] &lt;unavailable&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-create [--property &lt;key=value&gt;] [--file &lt;FILE&gt;]
+                           [--progress]
+                           &lt;unavailable&gt;</computeroutput></screen>
         <para>
 Create a new image.
         </para>  <variablelist wordsize="10">
@@ -1117,6 +1116,24 @@ Create a new image.
       <para>
       Arbitrary property to associate with image. May be
       used multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--file &lt;FILE&gt;</command></term>
+    <listitem>
+      <para>
+        Local file to save downloaded image data to. If this
+      is not specified the image data will be written to
+      stdout.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--progress</command></term>
+    <listitem>
+      <para>
+        Show upload progress bar.
       </para>
     </listitem>
   </varlistentry>
@@ -1180,6 +1197,7 @@ Download a specific image.
         <title>glance image-list (v2)</title>
         <screen><computeroutput>usage: glance --os-image-api-version 2 image-list [--page-size &lt;SIZE&gt;] [--visibility &lt;VISIBILITY&gt;]
                          [--member-status &lt;MEMBER_STATUS&gt;] [--owner &lt;OWNER&gt;]
+                         [--property-filter &lt;KEY=VALUE&gt;]
                          [--checksum &lt;CHECKSUM&gt;] [--tag &lt;TAG&gt;]</computeroutput></screen>
         <para>
 List images you can access.
@@ -1214,6 +1232,14 @@ List images you can access.
     <listitem>
       <para>
         Display images owned by &lt;OWNER&gt;.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property-filter &lt;KEY=VALUE&gt;</command></term>
+    <listitem>
+      <para>
+      Filter images by a user-defined image property.
       </para>
     </listitem>
   </varlistentry>
