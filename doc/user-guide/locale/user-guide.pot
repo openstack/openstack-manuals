@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-11-27 06:12+0000\n"
+"POT-Creation-Date: 2014-12-12 06:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -351,6 +351,266 @@ msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_baremetal.xml:133(para)
 msgid "Use the <placeholder-1/> command to view the details for a bare-metal node."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:7(title)
+msgid "Large objects"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:8(para)
+msgid "By default, the content of an object cannot be greater than 5GB. However, you can use a number of smaller objects to construct a large object. The large object is comprised of two types of objects:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:14(para)
+msgid "<emphasis role=\"bold\">Segment objects</emphasis> store the object content. You can divide your content into segments, and upload each segment into its own segment object. Segment objects do not have any special features. You create, update, download, and delete segment objects just as you would normal objects."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:23(para)
+msgid "A <emphasis role=\"bold\">manifest object</emphasis> links the segment objects into one logical large object. When you download a manifest object, Object Storage concatenates and returns the contents of the segment objects in the response body of the request. This behavior extends to the response headers returned by and requests. The Content-Length response header value is the total size of all segment objects. Object Storage calculates the ETag response header value by taking the ETag value of each segment, concatenating them together, and returning the MD5 checksum of the result. The manifest object types are:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:40(emphasis) ./doc/user-guide/section_object-api-create-large-objects.xml:82(title)
+msgid "Static large objects"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:43(para)
+msgid "The manifest object content is an ordered list of the names of the segment objects in JSON format. See <xref linkend=\"static-large-objects\"/>."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:51(emphasis) ./doc/user-guide/section_object-api-create-large-objects.xml:180(title)
+msgid "Dynamic large objects"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:54(para)
+msgid "The manifest object has no content but it has a <literal>X-Object-Manifest</literal> metadata header. The value of this header is <literal>{container}/{prefix}</literal>, where <literal>{container}</literal> is the name of the container where the segment objects are stored, and <literal>{prefix}</literal> is a string that all segment objects have in common. See <xref linkend=\"dynamic-large-object-creation\"/>."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:74(para)
+msgid "If you make a request by using a manifest object as the source, the new object is a normal, and not a segment, object. If the total size of the source segment objects exceeds 5GB, the request fails. However, you can make a duplicate of the manifest object and this new object can be larger than 5GB."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:83(para)
+msgid "To create a static large object, divide your content into pieces and create (upload) a segment object to contain each piece."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:86(para)
+msgid "You must record the <literal>ETag</literal> response header that the operation returns. Alternatively, you can calculate the MD5 checksum of the segment prior to uploading and include this in the ETag request header. This ensures that the upload cannot corrupt your data."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:92(para)
+msgid "List the name of each segment object along with its size and MD5 checksum in order."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:94(para)
+msgid "Create a manifest object. Include the <parameter>?multipart-manifest=put</parameter> query string at the end of the manifest object name to indicate that this is a manifest object."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:98(para)
+msgid "The body of the request on the manifest object comprises a json list, where each element contains the following attributes:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:103(code)
+msgid "path"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:105(para)
+msgid "The container and object name in the format: <code>{container-name}/{object-name}</code>."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:110(code)
+msgid "etag"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:112(para)
+msgid "The MD5 checksum of the content of the segment object. This value must match the <literal>ETag</literal> of that object."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:119(code)
+msgid "size_bytes"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:121(para)
+msgid "The size of the segment object. This value must match the <literal>Content-Length</literal> of that object."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:129(title)
+msgid "Static large object manifest list"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:130(para)
+msgid "This example shows three segment objects. You can use several containers and the object names do not have to conform to a specific pattern, in contrast to dynamic large objects."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:136(para)
+msgid "The <literal>Content-Length</literal> request header must contain the length of the json contentnot the length of the segment objects. However, after the operation completes, the Content-Length metadata is set to the total length of all the object segments. A similar situation applies to the ETag. If used in the operation, it must contain the MD5 checksum of the json content. The ETag metadata value is then set to be the MD5 checksum of the concatenated ETag values of the object segments. You can also set the Content-Type request header and custom object metadata."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:149(para)
+msgid "When the operation sees the ?multipart-manifest=put query parameter, it reads the request body and verifies that each segment object exists and that the sizes and ETags match. If there is a mismatch, the operation fails."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:155(para)
+msgid "If everything matches, the manifest object is created. The <literal>X-Static-Large-Object</literal> metadata is set to <literal>true</literal> indicating that this is a static object manifest."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:159(para)
+msgid "Normally when you perform a operation on the manifest object, the response body contains the concatenated content of the segment objects. To download the manifest list, use the ?multipart-manifest=get query parameter. The resulting list is not formatted the same as the manifest you originally used in the operation."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:167(para)
+msgid "If you use the operation on a manifest object, the manifest object is deleted. The segment objects are not affected. However, if you add the ?multipart-manifest=delete query parameter, the segment objects are deleted and if all are successfully deleted, the manifest object is also deleted."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:174(para)
+msgid "To change the manifest, use a operation with the ?multipart-manifest=put query parameter. This request creates a manifest object. You can also update the object metadata in the usual way."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:181(para)
+msgid "You must segment objects that are larger than 5GB before you can upload them. You then upload the segment objects like you would any other object and create a dynamic large manifest object. The manifest object tells Object Storage how to find the segment objects that comprise the large object. The segments remain individually addressable, but retrieving the manifest object streams all the segments concatenated. There is no limit to the number of segments that can be a part of a single large object."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:191(para)
+msgid "To ensure the download works correctly, you must upload all the object segments to the same container and ensure that each object name is prefixed in such a way that it sorts in the order in which it should be concatenated. You also create and upload a manifest file. The manifest file is a zero-byte file with the extra <literal>X-Object-Manifest</literal><code>{container}/{prefix}</code> header, where <code>{container}</code> is the container the object segments are in and <code>{prefix}</code> is the common prefix for all the segments. You must UTF-8-encode and then URL-encode the container and common prefix in the <literal>X-Object-Manifest</literal> header."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:204(para)
+msgid "It is best to upload all the segments first and then create or update the manifest. With this method, the full object is not available for downloading until the upload is complete. Also, you can upload a new set of segments to a second location and update the manifest to point to this new location. During the upload of the new segments, the original manifest is still available to download the first set of segments."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:213(title)
+msgid "Upload segment of large object request: HTTP"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:217(para)
+msgid "No response body is returned. A status code of <returnvalue>2<replaceable>nn</replaceable></returnvalue> (between 200 and 299, inclusive) indicates a successful write; status <errorcode>411</errorcode><errortext>Length Required</errortext> denotes a missing <literal>Content-Length</literal> or <literal>Content-Type</literal> header in the request. If the MD5 checksum of the data written to the storage system does NOT match the (optionally) supplied ETag value, a <errorcode>422</errorcode><errortext>Unprocessable Entity</errortext> response is returned."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:229(para)
+msgid "You can continue uploading segments, like this example shows, prior to uploading the manifest."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:232(title)
+msgid "Upload next segment of large object request: HTTP"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:236(para)
+msgid "Next, upload the manifest you created that indicates the container where the object segments reside. Note that uploading additional segments after the manifest is created causes the concatenated object to be that much larger but you do not need to recreate the manifest file for subsequent additional segments."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:243(title)
+msgid "Upload manifest request: HTTP"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:247(title)
+msgid "Upload manifest response: HTTP"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:250(para)
+msgid "The <literal>Content-Type</literal> in the response for a or on the manifest is the same as the Content-Type set during the request that created the manifest. You can change the Content-Type by reissuing the request."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:258(title)
+msgid "Comparison of static and dynamic large objects"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:259(para)
+msgid "While static and dynamic objects have similar behavior, this table describes their differences:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:262(caption)
+msgid "Static and dynamic large objects"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:269(th)
+msgid "Static large object"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:270(th)
+msgid "Dynamic large object"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:275(th)
+msgid "End-to-end integrity"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:276(para)
+msgid "Assured. The list of segments includes the MD5 checksum (<literal>ETag</literal>) of each segment. You cannot upload the manifest object if the <literal>ETag</literal> in the list differs from the uploaded segment object. If a segment is somehow lost, an attempt to download the manifest object results in an error."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:285(para)
+msgid "Not guaranteed. The eventual consistency model means that although you have uploaded a segment object, it might not appear in the container listing until later. If you download the manifest before it appears in the container, it does not form part of the content returned in response to a request."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:295(th)
+msgid "Upload order"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:296(para)
+msgid "You must upload the segment objects before you upload the manifest object."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:299(para)
+msgid "You can upload manifest and segment objects in any order. You are recommended to upload the manifest object after the segments in case a premature download of the manifest occurs. However, this is not enforced."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:307(th)
+msgid "Removal or addition of segment objects"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:308(para)
+msgid "You cannot add or remove segment objects from the manifest. However, you can create a completely new manifest object of the same name with a different manifest list."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:313(para)
+msgid "You can upload new segment objects or remove existing segments. The names must simply match the <literal>{prefix}</literal> supplied in <literal>X-Object-Manifest</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:321(th)
+msgid "Segment object size and number"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:322(para)
+msgid "Segment objects must be at least 1MB in size (by default). The final segment object can be any size. At most, 1000 segments are supported (by default)."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:327(para)
+msgid "Segment objects can be any size."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:331(th)
+msgid "Segment object container name"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:332(para)
+msgid "The manifest list includes the container name of each object. Segment objects can be in different containers."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:335(para)
+msgid "All segment objects must be in the same container."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:339(th)
+msgid "Manifest object metadata"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:340(para)
+msgid "The object has <literal>X-Static-Large-Object</literal> set to <literal>true</literal>. You do not set this metadata directly. Instead the system sets it when you a static manifest object."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:346(para)
+msgid "The <literal>X-Object-Manifest</literal> value is the <literal>{container}/{prefix}</literal>, which indicates where the segment objects are located. You supply this request header in the operation."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:354(th)
+msgid "Copying the manifest object"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:355(para)
+msgid "Include the <parameter>?multipart-manifest=get</parameter> query string in the request. The new object contains the same manifest as the original. The segment objects are not copied. Instead, both the original and new manifest objects share the same set of segment objects."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:364(para)
+msgid "The operation does not create a manifest object. To duplicate a manifest object, use the operation to read the value of X-Object-Manifest and use this value in the X-Object-Manifest request header in a operation. This creates a new manifest object that shares the same set of segment objects as the original manifest object."
 msgstr ""
 
 #: ./doc/user-guide/section_cli_heat.xml:8(title)
@@ -2385,7 +2645,7 @@ msgstr ""
 msgid "To create a security group with a specified name and description, enter the following command:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:123(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:128(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:148(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:158(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:165(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:178(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:185(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:203(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:215(replaceable)
+#: ./doc/user-guide/section_cli_nova_configure_instances.xml:123(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:128(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:148(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:158(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:165(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:177(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:184(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:202(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:214(replaceable)
 msgid "SECURITY_GROUP_NAME"
 msgstr ""
 
@@ -2425,7 +2685,7 @@ msgstr ""
 msgid "Allow access only from IP addresses from other security groups (source groups) to access the specified port:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:165(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:185(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:203(replaceable)
+#: ./doc/user-guide/section_cli_nova_configure_instances.xml:165(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:184(replaceable) ./doc/user-guide/section_cli_nova_configure_instances.xml:202(replaceable)
 msgid "SOURCE_GROUP_NAME"
 msgstr ""
 
@@ -2441,31 +2701,31 @@ msgstr ""
 msgid "This allows access to all codes and all types of ICMP traffic."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:182(para)
+#: ./doc/user-guide/section_cli_nova_configure_instances.xml:181(para)
 msgid "Allow only members of other security groups (source groups) to ping instances:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:190(para)
+#: ./doc/user-guide/section_cli_nova_configure_instances.xml:189(para)
 msgid "To allow access through a UDP port, such as allowing access to a DNS server that runs on a VM, choose one of the following options:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:195(para)
+#: ./doc/user-guide/section_cli_nova_configure_instances.xml:194(para)
 msgid "Allow UDP access from IP addresses, specified as IP subnet <filename>0.0.0.0/0</filename> in CIDR notation:<placeholder-1/>"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:200(para)
+#: ./doc/user-guide/section_cli_nova_configure_instances.xml:199(para)
 msgid "Allow only IP addresses from other security groups (source groups) to access the specified port:"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:209(title)
+#: ./doc/user-guide/section_cli_nova_configure_instances.xml:208(title)
 msgid "Delete a security group rule"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:210(para)
+#: ./doc/user-guide/section_cli_nova_configure_instances.xml:209(para)
 msgid "To delete a security group rule, specify the same arguments that you used to create the rule."
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_configure_instances.xml:213(para)
+#: ./doc/user-guide/section_cli_nova_configure_instances.xml:212(para)
 msgid "For example, to delete the security group rule that permits SSH access from all IP addresses, run the following command."
 msgstr ""
 
@@ -3873,6 +4133,90 @@ msgstr ""
 msgid "Each cluster includes at least one query router and one config server. Query routers and config servers count against your quota. When you delete a cluster, the system deletes the associated query router(s) and config server(s)."
 msgstr ""
 
+#: ./doc/user-guide/section_object-api-versioning.xml:10(title)
+msgid "Object versioning"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:11(para)
+msgid "You can store multiple versions of your content so that you can recover from unintended overwrites. Object versioning is an easy way to implement version control, which you can use with any type of content."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:16(para)
+msgid "You cannot version a large-object manifest file, but the large-object manifest file can point to versioned segments."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:20(para)
+msgid "We strongly recommended that you put non-current objects in a different container than the container where current object versions reside."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:24(title)
+msgid "To enable and use object versioning"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:26(para)
+msgid "To enable object versioning, ask your cloud provider to set the <option>allow_versions</option> option to <literal>TRUE</literal> in the container configuration file."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:32(para)
+msgid "Create an <literal>archive</literal> container to store older versions of objects:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:42(para)
+msgid "Create a <literal>current</literal> container to store current versions of objects."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:44(para)
+msgid "Include the <literal>X-Versions-Location</literal> header. This header defines the container that holds the non-current versions of your objects. You must UTF-8-encode and then URL-encode the container name before you include it in the <code>X-Versions-Location</code> header. This header enables object versioning for all objects in the <literal>current</literal> container. Changes to objects in the <literal>current</literal> container automatically create non-current versions in the <literal>archive</literal> container."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:63(para)
+msgid "Create the first version of an object in the <literal>current</literal> container:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:73(para)
+msgid "Nothing is written to the non-current version container when you initially an object in the current container. However, subsequent requests that edit an object trigger the creation of a version of that object in the archive container."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:79(para)
+msgid "These non-current versions are named as follows:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:82(para)
+msgid "Where <literal>length</literal> is the 3-character, zero-padded hexadecimal character length of the object, <literal>&lt;object_name&gt;</literal> is the object name, and <literal>&lt;timestamp&gt;</literal> is the time when the object was initially created as a current version."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:89(para)
+msgid "Create a second version of the object in the <literal>current</literal> container:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:101(para)
+msgid "Issue a request to a versioned object to get the current version of the object. You do not have to do any request redirects or metadata lookups."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:104(para)
+msgid "List older versions of the object in the <literal>archive</literal> container:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:119(para)
+msgid "A request to a versioned object updates only the metadata for the object and does not create a new version of the object. New versions are created only when the content of the object changes."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:127(para)
+msgid "Issue a request to a versioned object to remove the current version of the object and replace it with the next-most current version in the non-current container."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:137(para)
+msgid "List objects in the <literal>archive</literal> container to show that the archived object was moved back to the <literal>current</literal> container:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:151(para)
+msgid "This next-most current version carries with it any metadata last set on it. If you want to completely remove an object and you have five versions of it, you must it five times."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-versioning.xml:157(para)
+msgid "To disable object versioning for the <literal>current</literal> container, remove its <literal>X-Versions-Location</literal> metadata header by sending an empty key value."
+msgstr ""
+
 #: ./doc/user-guide/section_dashboard_launch_instances.xml:7(title)
 msgid "Launch and manage instances"
 msgstr ""
@@ -4930,7 +5274,7 @@ msgid "To create a container, run the following command and replace <replaceable
 msgstr ""
 
 #: ./doc/user-guide/section_cli_swift_howto.xml:29(para)
-msgid "To list all containers: run the following command:"
+msgid "To list all containers, run the following command:"
 msgstr ""
 
 #: ./doc/user-guide/section_cli_swift_howto.xml:33(para)
@@ -4998,7 +5342,7 @@ msgid "To list the objects in a container, run the following command:"
 msgstr ""
 
 #: ./doc/user-guide/section_cli_swift_howto.xml:119(para)
-msgid "To download an object from a container:, run the following command:"
+msgid "To download an object from a container, run the following command:"
 msgstr ""
 
 #: ./doc/user-guide/section_dashboard_manage_volumes.xml:7(title)
