@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-12-10 06:12+0000\n"
+"POT-Creation-Date: 2014-12-13 06:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11602,7 +11602,7 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:96(None)
+#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:103(None)
 msgid "@@image: '../../common/figures/instance-life-3.png'; md5=e25d1bd617373f95e1b8a12605a65ac6"
 msgstr ""
 
@@ -11663,30 +11663,30 @@ msgid "A new empty disk, labeled <literal>vdb</literal> is also created. This is
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:77(para)
-msgid "The compute node is attached to the <systemitem class=\"service\">cinder-volume</systemitem> using iSCSI, and maps to the third disk, <literal>vdc</literal>. The vCPU and memory resources are provisioned and the instance is booted from <literal>vda</literal>. The instance runs and changes data on the disks as indicated in red in the diagram."
+msgid "The compute node connects to the attached <systemitem class=\"service\">cinder-volume</systemitem> using ISCSI. The <systemitem class=\"service\">cinder-volume</systemitem> is mapped to the third disk, <literal>vdc</literal>. After the compute node provisions the vCPU and memory resources, the instance boots up from root volume <literal>vda</literal>. The instance runs, and changes data on the disks (highlighted in red on the diagram). If the volume store is located on a separate network, the <literal>my_block_storage_ip</literal> option specified in the storage node configuration file directs image traffic toward the compute node."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:83(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:90(para)
 msgid "Some details in this example scenario might be different in your environment. For example, you might use a different type of back-end storage or different network protocols. One common variant is that the ephemeral storage used for volumes <literal>vda</literal> and <literal>vdb</literal> could be backed by network storage rather than a local disk."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:89(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:96(para)
 msgid "When the instance is deleted, the state is reclaimed with the exception of the persistent volume. The ephemeral storage is purged; memory and vCPU resources are released. The image remains unchanged throughout."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:93(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:100(title)
 msgid "End state of image and volume after instance exits"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:106(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:113(title)
 msgid "Control where instances run"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:107(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:114(para)
 msgid "The <link href=\"http://docs.openstack.org/trunk/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link> provides detailed information on controlling where your instances run, including ensuring a set of instances run on different compute nodes for service resiliency or on the same node for high performance inter-instance communications."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:112(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-images-instances.xml:119(para)
 msgid "Administrative users can specify on which compute node to run instances. To do so, specify the <parameter>--availability-zone <replaceable>AVAILABILITY_ZONE</replaceable>:<replaceable>COMPUTE_HOST</replaceable></parameter> parameter."
 msgstr ""
 
@@ -12575,10 +12575,14 @@ msgid "Typically, the Compute service will use the image identifier passed to it
 msgstr ""
 
 #: ./doc/admin-guide-cloud/image/section_glance-nova-image-download.xml:28(para)
+msgid "It is possible to set up the Object Storage node on a separate network, and still allow image traffic to flow between the Compute and Object Storage nodes. Configure the <literal>my_block_storage_ip</literal> option in the storage node configuration to allow block storage traffic to reach the Compute node."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/image/section_glance-nova-image-download.xml:35(para)
 msgid "Certain back ends support a more direct method, where on request the Image Service will return a URL that can be used to download the image directly from the back-end store. Currently the only store to support the direct download approach is the filesystem store. It can be configured using the <option>filesystems</option> option in the <literal>image_file_url</literal> section of the <filename>nova.conf</filename> file on compute nodes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/image/section_glance-nova-image-download.xml:38(para)
+#: ./doc/admin-guide-cloud/image/section_glance-nova-image-download.xml:45(para)
 msgid "Compute nodes also implement caching of images, meaning that if an image has been used before it won't necessarily be downloaded every time. Information on the configuration options for caching on compute nodes can be found in the <link href=\"http://docs.openstack.org/trunk/config-reference/content/\"><citetitle>Configuration Reference</citetitle></link>."
 msgstr ""
 
