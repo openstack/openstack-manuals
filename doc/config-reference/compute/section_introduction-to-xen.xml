@@ -5,8 +5,7 @@
   version="5.0"
   xml:id="introduction-to-xen">
     <?dbhtml stop-chunking?>
-    <title xml:id="introduction-to-xen.title">Xen, XenAPI, XenServer,
-        and XCP</title>
+    <title xml:id="introduction-to-xen.title">Xen, XenAPI, XenServer</title>
     <warning><title>This section needs help</title>
     <para>This section is low quality, and contains out of date information.
     The Documentation Team is currently looking for individuals with
@@ -14,113 +13,97 @@
     <link xlink:href="https://blueprints.launchpad.net/openstack-manuals/+spec/redocument-xen">Re-document
      Xen integration with OpenStack</link>.</para>
     </warning>
-    <para>This section describes Xen, XenAPI, XenServer, and XCP,
-        their differences, and how to use them with OpenStack. After
-        you understand how the Xen and KVM architectures differ, you
-        can determine when to use each architecture in your OpenStack
-        cloud.</para>
+    <para>
+        This section describes XenAPI managed hypervisors, and how to
+        use them with OpenStack.
+    </para>
     <section xml:id="basic-terminology">
-        <title>Xen terminology</title>
-        <para><emphasis role="bold">Xen</emphasis>. A hypervisor that
-            provides the fundamental isolation between virtual
-            machines. Xen is open source (GPLv2) and is managed by
-            Xen.org, an cross-industry organization.</para>
-        <para>Xen is a component of many different products and
-            projects. The hypervisor itself is very similar across all
-            these projects, but the way that it is managed can be
-            different, which can cause confusion if you're not clear
-            which tool stack you are using. Make sure you know what
-            tool stack you want before you get started.</para>
-        <para><emphasis role="bold">Xen Cloud Platform
-                (XCP)</emphasis>. An open source (GPLv2) tool stack
-            for Xen. It is designed specifically as a platform for
-            enterprise and cloud computing, and is well integrated
-            with OpenStack. XCP is available both as a binary
-            distribution, installed from an iso, and from Linux
-            distributions, such as <link
-                xlink:href="http://packages.ubuntu.com/precise/xcp-xapi"
-                >xcp-xapi</link> in Ubuntu. The current versions of
-            XCP available in Linux distributions do not yet include
-            all the features available in the binary distribution of
-            XCP.</para>
-        <para><emphasis role="bold">Citrix XenServer</emphasis>. A
-            commercial product. It is based on XCP, and exposes the
-            same tool stack and management API. As an analogy, think
-            of XenServer being based on XCP in the way that Red Hat
-            Enterprise Linux is based on Fedora. XenServer has a free
-            version (which is very similar to XCP) and paid-for
-            versions with additional features enabled. Citrix provides
-            support for XenServer, but as of July 2012, they do not
-            provide any support for XCP. For a comparison between
-            these products see the <link
-                xlink:href="http://wiki.xen.org/wiki/XCP/XenServer_Feature_Matrix"
-                > XCP Feature Matrix</link>.</para>
-        <para>Both XenServer and XCP include Xen, Linux, and the
-            primary control daemon known as <emphasis role="bold"
-                >xapi</emphasis>.</para>
-        <para>The API shared between XCP and XenServer is called
-                <emphasis role="bold">XenAPI</emphasis>. OpenStack
-            usually refers to XenAPI, to indicate that the integration
-            works equally well on XCP and XenServer. Sometimes, a
-            careless person will refer to XenServer specifically, but
-            you can be reasonably confident that anything that works
-            on XenServer will also work on the latest version of XCP.
-            Read the <link
-                xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/sdk.html#object_model_overview"
-                > XenAPI Object Model Overview</link> for definitions
-            of XenAPI specific terms such as SR, VDI, VIF and
-            PIF.</para>
+        <title>Terminology</title>
+        <section xml:id="terminology-xen">
+            <title>Xen</title>
+            <para>
+                A hypervisor that provides the fundamental isolation between
+                virtual machines. Xen is open source (GPLv2) and is managed by
+                Xen.org, an cross-industry organization and a Linux
+                Foundation Collaborative project.
+            </para>
+            <para>
+                Xen is a component of many different products and projects. The
+                hypervisor itself is very similar across all these projects,
+                but the way that it is managed can be different, which can
+                cause confusion if you're not clear which toolstack you are
+                using. Make sure you know what toolstack you want before you
+                get started.
+            </para>
+        </section>
+        <section xml:id="terminology-xenapi">
+            <title>XenAPI</title>
+            <para>
+                XenAPI is one of the toolstacks that could control a Xen based
+                hypervisor. XenAPI's role is similar to libvirt's in the KVM
+                world. To learn more about XenAPI, visit the
+                <link
+                    xlink:href="http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/sdk.html#object_model_overview" >
+                    XenAPI Object Model Overview
+                </link>
+                for definitions of XenAPI specific terms such as SR, VDI, VIF
+                and PIF.
+            </para>
+            <para>
+                OpenStack has a compute driver which talks to XenAPI, therefore
+                all XenAPI managed servers could be used with OpenStack.
+            </para>
+        </section>
+        <section xml:id="terminology-xenserver">
+            <title>XenServer</title>
+            <para>
+                An Open Source virtualization software which includes the Xen
+                hypervisor and XenAPI for the management. For more information
+                and product downloads, visit
+                <link
+                    xlink:href="http://xenserver.org/">
+                    xenserver.org
+                </link>.
+            </para>
+        </section>
         <section xml:id="privileged-and-unprivileged-domains">
             <title>Privileged and unprivileged domains</title>
-            <para>A Xen host runs a number of virtual machines, VMs,
-                or domains (the terms are synonymous on Xen). One of
-                these is in charge of running the rest of the system,
-                and is known as "domain 0," or "dom0." It is the first
-                domain to boot after Xen, and owns the storage and
-                networking hardware, the device drivers, and the
-                primary control software. Any other VM is
-                unprivileged, and are known as a "domU" or "guest".
-                All customer VMs are unprivileged of course, but you
-                should note that on Xen the OpenStack control software
-                    (<systemitem class="service"
-                    >nova-compute</systemitem>) also runs in a domU.
-                This gives a level of security isolation between the
-                privileged system software and the OpenStack software
-                (much of which is customer-facing). This architecture
-                is described in more detail later.</para>
-            <para>There is an ongoing project to split domain 0 into
-                multiple privileged domains known as <emphasis
-                    role="bold">driver domains</emphasis> and
-                    <emphasis role="bold">stub domains</emphasis>.
-                This would give even better separation between
-                critical components. This technology is what powers
-                Citrix XenClient RT, and is likely to be added into
-                XCP in the next few years. However, the current
-                architecture just has three levels of separation:
-                dom0, the OpenStack domU, and the completely
-                unprivileged customer VMs.</para>
+            <para>
+                A Xen host runs a number of virtual machines, VMs, or domains
+                (the terms are synonymous on Xen). One of these is in charge of
+                running the rest of the system, and is known as domain 0, or
+                dom0. It is the first domain to boot after Xen, and owns the
+                storage and networking hardware, the device drivers, and the
+                primary control software. Any other VM is unprivileged, and are
+                known as a domU or guest.  All customer VMs are unprivileged,
+                but you should note that on Xen, the OpenStack Compute service
+                (<systemitem class="service">nova-compute</systemitem>)
+                also runs in a domU.  This gives a level of security isolation
+                between the privileged system software and the OpenStack
+                software (much of which is customer-facing). This architecture
+                is described in more detail later.
+            </para>
         </section>
         <section xml:id="paravirtualized-vs-hvm-domains">
-            <title>Paravirtualized versus hardware virtualized
-                domains</title>
-            <para>A Xen virtual machine can be <emphasis role="bold"
-                    >paravirtualized (PV)</emphasis> or <emphasis
-                    role="bold">hardware virtualized (HVM)</emphasis>.
-                This refers to the interaction between Xen, domain 0,
-                and the guest VM's kernel. PV guests are aware of the
-                fact that they are virtualized and will co-operate
-                with Xen and domain 0; this gives them better
-                performance characteristics. HVM guests are not aware
-                of their environment, and the hardware has to pretend
-                that they are running on an unvirtualized machine. HVM
-                guests do not need to
-                modify the guest operating system, which is essential
-                when running Windows.</para>
-            <para>In OpenStack, customer VMs may run in either PV or
-                HVM mode. However, the OpenStack domU (that's the one
-                running <systemitem class="service"
-                    >nova-compute</systemitem>) <emphasis role="bold"
-                    >must</emphasis> be running in PV mode.</para>
+            <title>Paravirtualized versus hardware virtualized domains</title>
+            <para>
+                A Xen virtual machine can be paravirtualized (PV) or hardware
+                virtualized (HVM). This refers to the interaction between Xen,
+                domain 0, and the guest VM's kernel.  PV guests are aware of
+                the fact that they are virtualized and will co-operate with Xen
+                and domain 0; this gives them better performance
+                characteristics. HVM guests are not aware of their environment,
+                and the hardware has to pretend that they are running on an
+                unvirtualized machine. HVM guests do not need to modify the
+                guest operating system, which is essential when running
+                Windows.
+            </para>
+            <para>
+                In OpenStack, customer VMs may run in either PV or HVM mode.
+                However, the OpenStack domU (that's the one running
+                <systemitem class="service">nova-compute</systemitem>) must be
+                running in PV mode.
+            </para>
         </section>
     </section>
     <section xml:id="xenapi-deployment-architecture">
