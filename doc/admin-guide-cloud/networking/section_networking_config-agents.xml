@@ -316,6 +316,21 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                 <screen><prompt>#</prompt> <userinput>ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping <replaceable>FIXED_IP</replaceable></userinput></screen>
             </step>
         </procedure>
+        <note>
+            <para>By default, networking namespaces are configured
+                to not be deleted. This behavior can be changed
+                for both DHCP and L3 agents. The configuration files
+                are <filename>/etc/neutron/dhcp_agent.ini</filename> and
+                <filename>/etc/neutron/l3_agent.ini</filename> respectively.</para>
+            <para>For DHCP namespace the configuration key is:
+                    <literal>dhcp_delete_namespaces</literal>. This parameter
+                should be set to <replaceable>True</replaceable> to change the
+                default behaviour.</para>
+            <para>For L3 namespace, the configuration key is:
+                    <literal>router_delete_namespaces</literal>. This parameter
+                should be set to <replaceable>True</replaceable> to change the
+                default behaviour.</para>
+        </note>
         <important>
             <para>If you reboot a node that runs the L3 agent, you
                 must run the
