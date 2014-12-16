@@ -72,11 +72,20 @@
           </note>
         </step>
         <step>
-          <para>Create the <literal>heat_stack_user</literal> and <literal>heat_stack_owner</literal> roles:</para>
+          <para>Create the <literal>heat_stack_user</literal> and
+            <literal>heat_stack_owner</literal> roles:</para>
           <screen><prompt>$</prompt> <userinput>keystone role-create --name heat_stack_user</userinput>
 <prompt>$</prompt> <userinput>keystone role-create --name heat_stack_owner</userinput></screen>
           <para>By default, users created by Orchestration use the
             <literal>heat_stack_user</literal> role.</para>
+          <para>The <literal>heat_stack_user</literal> role is for users
+            created by heat, and is restricted to specific API actions.
+            The <literal>heat_stack_owner</literal> role is assigned to
+            users who create heat stacks.</para>
+          <warning><para>Because the <literal>heat_stack_owner</literal>
+              role has limited operational access to heat, you must never
+              assign this role to a user with a <literal>heat_stack_user</literal>
+              role.</para></warning>
         </step>
         <step>
           <para>Create the <literal>heat</literal> and
