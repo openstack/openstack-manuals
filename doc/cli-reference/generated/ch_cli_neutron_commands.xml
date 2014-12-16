@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Networking API and its extensions.
 
        This chapter documents <command>neutron</command> version
-        <literal>2.3.9</literal>.
+        <literal>2.3.10</literal>.
     </para>
 
     <para>For help on a specific <command>neutron</command>
@@ -341,7 +341,7 @@
     <term><command>agent-update</command></term>
     <listitem>
       <para>
-        Update a given agent.
+        Updates the admin status and description for a specified agent.
       </para>
     </listitem>
   </varlistentry>
@@ -805,7 +805,7 @@
     <term><command>lb-healthmonitor-create</command></term>
     <listitem>
       <para>
-        Create a healthmonitor.
+        Create a health monitor.
       </para>
     </listitem>
   </varlistentry>
@@ -813,7 +813,7 @@
     <term><command>lb-healthmonitor-delete</command></term>
     <listitem>
       <para>
-        Delete a given healthmonitor.
+        Delete a given health monitor.
       </para>
     </listitem>
   </varlistentry>
@@ -829,7 +829,7 @@
     <term><command>lb-healthmonitor-list</command></term>
     <listitem>
       <para>
-        List healthmonitors that belong to a given tenant.
+        List health monitors that belong to a given tenant.
       </para>
     </listitem>
   </varlistentry>
@@ -837,7 +837,7 @@
     <term><command>lb-healthmonitor-show</command></term>
     <listitem>
       <para>
-        Show information of a given healthmonitor.
+        Show information of a given health monitor.
       </para>
     </listitem>
   </varlistentry>
@@ -845,7 +845,7 @@
     <term><command>lb-healthmonitor-update</command></term>
     <listitem>
       <para>
-        Update a given healthmonitor.
+        Update a given health monitor.
       </para>
     </listitem>
   </varlistentry>
@@ -1605,7 +1605,7 @@
     <term><command>vpn-ipsecpolicy-list</command></term>
     <listitem>
       <para>
-        List ipsecpolicies that belongs to a given tenant connection.
+        List IPsec policies that belong to a given tenant connection.
       </para>
     </listitem>
   </varlistentry>
@@ -1773,9 +1773,8 @@ List agents.
     <section xml:id="neutronclient_subcommand_agent-show">
         <title>neutron agent-show</title>
         <screen><computeroutput>usage: neutron agent-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                          [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                          [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                          [-F FIELD]
+                          [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                          [--request-format {json,xml}] [-D] [-F FIELD]
                           AGENT</computeroutput></screen>
         <para>
 Show information of a given agent.
@@ -1829,9 +1828,11 @@ Show information of a given agent.
     </section>
     <section xml:id="neutronclient_subcommand_agent-update">
         <title>neutron agent-update</title>
-        <screen><computeroutput>usage: neutron agent-update [-h] [--request-format {json,xml}] AGENT</computeroutput></screen>
+        <screen><computeroutput>usage: neutron agent-update [-h] [--request-format {json,xml}]
+                            [--admin-state-down] [--description DESCRIPTION]
+                            AGENT</computeroutput></screen>
         <para>
-Update a given agent.
+Updates the admin status and description for a specified agent.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1861,13 +1862,29 @@ Update a given agent.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--admin-state-down</command></term>
+    <listitem>
+      <para>
+        Set admin state up of the agent to false.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description DESCRIPTION</command></term>
+    <listitem>
+      <para>
+      Description for the agent.
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="neutronclient_subcommand_cisco-credential-create">
         <title>neutron cisco-credential-create</title>
         <screen><computeroutput>usage: neutron cisco-credential-create [-h] [-f {shell,table,value}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
-                                       [--variable VARIABLE] [--prefix PREFIX]
+                                       [--prefix PREFIX]
                                        [--request-format {json,xml}]
                                        [--tenant-id TENANT_ID]
                                        [--username USERNAME]
@@ -2024,8 +2041,7 @@ List credentials that belong to a given tenant.
     <section xml:id="neutronclient_subcommand_cisco-credential-show">
         <title>neutron cisco-credential-show</title>
         <screen><computeroutput>usage: neutron cisco-credential-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                     [--max-width &lt;integer&gt;]
-                                     [--variable VARIABLE] [--prefix PREFIX]
+                                     [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                      [--request-format {json,xml}] [-D]
                                      [-F FIELD]
                                      CREDENTIAL</computeroutput></screen>
@@ -2084,7 +2100,6 @@ Show information of a given credential.
         <screen><computeroutput>usage: neutron cisco-network-profile-create [-h] [-f {shell,table,value}]
                                             [-c COLUMN]
                                             [--max-width &lt;integer&gt;]
-                                            [--variable VARIABLE]
                                             [--prefix PREFIX]
                                             [--request-format {json,xml}]
                                             [--tenant-id TENANT_ID]
@@ -2274,7 +2289,6 @@ List network profiles that belong to a given tenant.
         <title>neutron cisco-network-profile-show</title>
         <screen><computeroutput>usage: neutron cisco-network-profile-show [-h] [-f {shell,table,value}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
-                                          [--variable VARIABLE]
                                           [--prefix PREFIX]
                                           [--request-format {json,xml}] [-D]
                                           [-F FIELD]
@@ -2436,7 +2450,6 @@ List policy profiles that belong to a given tenant.
         <title>neutron cisco-policy-profile-show</title>
         <screen><computeroutput>usage: neutron cisco-policy-profile-show [-h] [-f {shell,table,value}]
                                          [-c COLUMN] [--max-width &lt;integer&gt;]
-                                         [--variable VARIABLE]
                                          [--prefix PREFIX]
                                          [--request-format {json,xml}] [-D]
                                          [-F FIELD]
@@ -2724,9 +2737,8 @@ List all extensions.
     <section xml:id="neutronclient_subcommand_ext-show">
         <title>neutron ext-show</title>
         <screen><computeroutput>usage: neutron ext-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                        [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                        [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                        [-F FIELD]
+                        [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                        [--request-format {json,xml}] [-D] [-F FIELD]
                         EXTENSION</computeroutput></screen>
         <para>
 Show information of a given resource.
@@ -2781,8 +2793,8 @@ Show information of a given resource.
     <section xml:id="neutronclient_subcommand_firewall-create">
         <title>neutron firewall-create</title>
         <screen><computeroutput>usage: neutron firewall-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                               [--prefix PREFIX] [--request-format {json,xml}]
+                               [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                               [--request-format {json,xml}]
                                [--tenant-id TENANT_ID] [--name NAME]
                                [--description DESCRIPTION] [--shared]
                                [--admin-state-down]
@@ -2977,7 +2989,7 @@ List firewalls that belong to a given tenant.
         <title>neutron firewall-policy-create</title>
         <screen><computeroutput>usage: neutron firewall-policy-create [-h] [-f {shell,table,value}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
-                                      [--variable VARIABLE] [--prefix PREFIX]
+                                      [--prefix PREFIX]
                                       [--request-format {json,xml}]
                                       [--tenant-id TENANT_ID]
                                       [--description DESCRIPTION] [--shared]
@@ -3283,8 +3295,7 @@ Remove a rule from a given firewall policy.
     <section xml:id="neutronclient_subcommand_firewall-policy-show">
         <title>neutron firewall-policy-show</title>
         <screen><computeroutput>usage: neutron firewall-policy-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                    [--max-width &lt;integer&gt;]
-                                    [--variable VARIABLE] [--prefix PREFIX]
+                                    [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                     [--request-format {json,xml}] [-D]
                                     [-F FIELD]
                                     FIREWALL_POLICY</computeroutput></screen>
@@ -3378,8 +3389,7 @@ Update a given firewall policy.
     <section xml:id="neutronclient_subcommand_firewall-rule-create">
         <title>neutron firewall-rule-create</title>
         <screen><computeroutput>usage: neutron firewall-rule-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                    [--max-width &lt;integer&gt;]
-                                    [--variable VARIABLE] [--prefix PREFIX]
+                                    [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                     [--request-format {json,xml}]
                                     [--tenant-id TENANT_ID] [--name NAME]
                                     [--description DESCRIPTION] [--shared]
@@ -3617,8 +3627,7 @@ List firewall rules that belong to a given tenant.
     <section xml:id="neutronclient_subcommand_firewall-rule-show">
         <title>neutron firewall-rule-show</title>
         <screen><computeroutput>usage: neutron firewall-rule-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;]
-                                  [--variable VARIABLE] [--prefix PREFIX]
+                                  [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                   [--request-format {json,xml}] [-D]
                                   [-F FIELD]
                                   FIREWALL_RULE</computeroutput></screen>
@@ -3721,9 +3730,8 @@ Update a given firewall rule.
     <section xml:id="neutronclient_subcommand_firewall-show">
         <title>neutron firewall-show</title>
         <screen><computeroutput>usage: neutron firewall-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                             [--prefix PREFIX] [--request-format {json,xml}]
-                             [-D] [-F FIELD]
+                             [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                             [--request-format {json,xml}] [-D] [-F FIELD]
                              FIREWALL</computeroutput></screen>
         <para>
 Show information of a given firewall.
@@ -3880,8 +3888,7 @@ Create a mapping between a floating IP and a fixed IP.
     <section xml:id="neutronclient_subcommand_floatingip-create">
         <title>neutron floatingip-create</title>
         <screen><computeroutput>usage: neutron floatingip-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                 [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                                 [--prefix PREFIX]
+                                 [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                  [--request-format {json,xml}]
                                  [--tenant-id TENANT_ID] [--port-id PORT_ID]
                                  [--fixed-ip-address FIXED_IP_ADDRESS]
@@ -4097,9 +4104,8 @@ List floating IPs that belong to a given tenant.
     <section xml:id="neutronclient_subcommand_floatingip-show">
         <title>neutron floatingip-show</title>
         <screen><computeroutput>usage: neutron floatingip-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                               [--prefix PREFIX] [--request-format {json,xml}]
-                               [-D] [-F FIELD]
+                               [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                               [--request-format {json,xml}] [-D] [-F FIELD]
                                FLOATINGIP</computeroutput></screen>
         <para>
 Show information of a given floating IP.
@@ -4154,8 +4160,7 @@ Show information of a given floating IP.
     <section xml:id="neutronclient_subcommand_gateway-device-create">
         <title>neutron gateway-device-create</title>
         <screen><computeroutput>usage: neutron gateway-device-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                     [--max-width &lt;integer&gt;]
-                                     [--variable VARIABLE] [--prefix PREFIX]
+                                     [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                      [--request-format {json,xml}]
                                      [--tenant-id TENANT_ID]
                                      [--connector-type {stt,gre,ipsecgre,ipsecstt,bridge}]
@@ -4328,8 +4333,7 @@ List network gateway devices for a given tenant.
     <section xml:id="neutronclient_subcommand_gateway-device-show">
         <title>neutron gateway-device-show</title>
         <screen><computeroutput>usage: neutron gateway-device-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                   [--max-width &lt;integer&gt;]
-                                   [--variable VARIABLE] [--prefix PREFIX]
+                                   [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                    [--request-format {json,xml}] [-D]
                                    [-F FIELD]
                                    GATEWAY_DEVICE</computeroutput></screen>
@@ -4476,7 +4480,6 @@ Update a network gateway device.
         <screen><computeroutput>usage: neutron ipsec-site-connection-create [-h] [-f {shell,table,value}]
                                             [-c COLUMN]
                                             [--max-width &lt;integer&gt;]
-                                            [--variable VARIABLE]
                                             [--prefix PREFIX]
                                             [--request-format {json,xml}]
                                             [--tenant-id TENANT_ID]
@@ -4752,7 +4755,6 @@ List IPsec site connections that belong to a given tenant.
         <title>neutron ipsec-site-connection-show</title>
         <screen><computeroutput>usage: neutron ipsec-site-connection-show [-h] [-f {shell,table,value}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
-                                          [--variable VARIABLE]
                                           [--prefix PREFIX]
                                           [--request-format {json,xml}] [-D]
                                           [-F FIELD]
@@ -5117,7 +5119,7 @@ Create a mapping between a health monitor and a pool.
         <title>neutron lb-healthmonitor-create</title>
         <screen><computeroutput>usage: neutron lb-healthmonitor-create [-h] [-f {shell,table,value}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
-                                       [--variable VARIABLE] [--prefix PREFIX]
+                                       [--prefix PREFIX]
                                        [--request-format {json,xml}]
                                        [--tenant-id TENANT_ID]
                                        [--admin-state-down]
@@ -5127,7 +5129,7 @@ Create a mapping between a health monitor and a pool.
                                        --max-retries MAX_RETRIES --timeout
                                        TIMEOUT --type {PING,TCP,HTTP,HTTPS}</computeroutput></screen>
         <para>
-Create a healthmonitor.
+Create a health monitor.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -5235,14 +5237,14 @@ Create a healthmonitor.
         <screen><computeroutput>usage: neutron lb-healthmonitor-delete [-h] [--request-format {json,xml}]
                                        HEALTH_MONITOR</computeroutput></screen>
         <para>
-Delete a given healthmonitor.
+Delete a given health monitor.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>HEALTH_MONITOR</command></term>
     <listitem>
       <para>
-        ID or name of health_monitor to delete.
+        ID of health_monitor to delete.
       </para>
     </listitem>
   </varlistentry>
@@ -5323,7 +5325,7 @@ Remove a mapping from a health monitor to a pool.
                                      [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                      [--sort-dir {asc,desc}]</computeroutput></screen>
         <para>
-List healthmonitors that belong to a given tenant.
+List health monitors that belong to a given tenant.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -5394,20 +5396,19 @@ List healthmonitors that belong to a given tenant.
     <section xml:id="neutronclient_subcommand_lb-healthmonitor-show">
         <title>neutron lb-healthmonitor-show</title>
         <screen><computeroutput>usage: neutron lb-healthmonitor-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                     [--max-width &lt;integer&gt;]
-                                     [--variable VARIABLE] [--prefix PREFIX]
+                                     [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                      [--request-format {json,xml}] [-D]
                                      [-F FIELD]
                                      HEALTH_MONITOR</computeroutput></screen>
         <para>
-Show information of a given healthmonitor.
+Show information of a given health monitor.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>HEALTH_MONITOR</command></term>
     <listitem>
       <para>
-        ID or name of health_monitor to look up.
+        ID of health_monitor to look up.
       </para>
     </listitem>
   </varlistentry>
@@ -5454,7 +5455,7 @@ Show information of a given healthmonitor.
         <screen><computeroutput>usage: neutron lb-healthmonitor-update [-h] [--request-format {json,xml}]
                                        HEALTH_MONITOR</computeroutput></screen>
         <para>
-Update a given healthmonitor.
+Update a given health monitor.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -5489,8 +5490,7 @@ Update a given healthmonitor.
     <section xml:id="neutronclient_subcommand_lb-member-create">
         <title>neutron lb-member-create</title>
         <screen><computeroutput>usage: neutron lb-member-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                                [--prefix PREFIX]
+                                [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                 [--request-format {json,xml}]
                                 [--tenant-id TENANT_ID] [--admin-state-down]
                                 [--weight WEIGHT] --address ADDRESS
@@ -5687,9 +5687,8 @@ List members that belong to a given tenant.
     <section xml:id="neutronclient_subcommand_lb-member-show">
         <title>neutron lb-member-show</title>
         <screen><computeroutput>usage: neutron lb-member-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                              [--prefix PREFIX] [--request-format {json,xml}]
-                              [-D] [-F FIELD]
+                              [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                              [--request-format {json,xml}] [-D] [-F FIELD]
                               MEMBER</computeroutput></screen>
         <para>
 Show information of a given member.
@@ -5699,7 +5698,7 @@ Show information of a given member.
     <term><command>MEMBER</command></term>
     <listitem>
       <para>
-        ID or name of member to look up.
+        ID of member to look up.
       </para>
     </listitem>
   </varlistentry>
@@ -5780,8 +5779,8 @@ Update a given member.
     <section xml:id="neutronclient_subcommand_lb-pool-create">
         <title>neutron lb-pool-create</title>
         <screen><computeroutput>usage: neutron lb-pool-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                              [--prefix PREFIX] [--request-format {json,xml}]
+                              [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                              [--request-format {json,xml}]
                               [--tenant-id TENANT_ID] [--admin-state-down]
                               [--description DESCRIPTION] --lb-method
                               {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP} --name
@@ -6049,9 +6048,8 @@ List the pools on a loadbalancer agent.
     <section xml:id="neutronclient_subcommand_lb-pool-show">
         <title>neutron lb-pool-show</title>
         <screen><computeroutput>usage: neutron lb-pool-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                            [--prefix PREFIX] [--request-format {json,xml}]
-                            [-D] [-F FIELD]
+                            [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                            [--request-format {json,xml}] [-D] [-F FIELD]
                             POOL</computeroutput></screen>
         <para>
 Show information of a given pool.
@@ -6106,9 +6104,8 @@ Show information of a given pool.
     <section xml:id="neutronclient_subcommand_lb-pool-stats">
         <title>neutron lb-pool-stats</title>
         <screen><computeroutput>usage: neutron lb-pool-stats [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                             [--prefix PREFIX] [--request-format {json,xml}]
-                             [-D] [-F FIELD]
+                             [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                             [--request-format {json,xml}] [-D] [-F FIELD]
                              POOL</computeroutput></screen>
         <para>
 Retrieve stats for a given pool.
@@ -6199,8 +6196,8 @@ Update a given pool.
     <section xml:id="neutronclient_subcommand_lb-vip-create">
         <title>neutron lb-vip-create</title>
         <screen><computeroutput>usage: neutron lb-vip-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                             [--prefix PREFIX] [--request-format {json,xml}]
+                             [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                             [--request-format {json,xml}]
                              [--tenant-id TENANT_ID] [--address ADDRESS]
                              [--admin-state-down]
                              [--connection-limit CONNECTION_LIMIT]
@@ -6432,9 +6429,8 @@ List vips that belong to a given tenant.
     <section xml:id="neutronclient_subcommand_lb-vip-show">
         <title>neutron lb-vip-show</title>
         <screen><computeroutput>usage: neutron lb-vip-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                           [--prefix PREFIX] [--request-format {json,xml}]
-                           [-D] [-F FIELD]
+                           [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                           [--request-format {json,xml}] [-D] [-F FIELD]
                            VIP</computeroutput></screen>
         <para>
 Show information of a given vip.
@@ -6525,8 +6521,7 @@ Update a given vip.
     <section xml:id="neutronclient_subcommand_meter-label-create">
         <title>neutron meter-label-create</title>
         <screen><computeroutput>usage: neutron meter-label-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;]
-                                  [--variable VARIABLE] [--prefix PREFIX]
+                                  [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                   [--request-format {json,xml}]
                                   [--tenant-id TENANT_ID]
                                   [--description DESCRIPTION] [--shared]
@@ -6706,7 +6701,7 @@ List metering labels that belong to a given tenant.
         <title>neutron meter-label-rule-create</title>
         <screen><computeroutput>usage: neutron meter-label-rule-create [-h] [-f {shell,table,value}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
-                                       [--variable VARIABLE] [--prefix PREFIX]
+                                       [--prefix PREFIX]
                                        [--request-format {json,xml}]
                                        [--tenant-id TENANT_ID]
                                        [--direction {ingress,egress}]
@@ -6895,8 +6890,7 @@ List metering labels that belong to a given label.
     <section xml:id="neutronclient_subcommand_meter-label-rule-show">
         <title>neutron meter-label-rule-show</title>
         <screen><computeroutput>usage: neutron meter-label-rule-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                     [--max-width &lt;integer&gt;]
-                                     [--variable VARIABLE] [--prefix PREFIX]
+                                     [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                      [--request-format {json,xml}] [-D]
                                      [-F FIELD]
                                      METERING_LABEL_RULE</computeroutput></screen>
@@ -6953,8 +6947,7 @@ Show information of a given metering label rule.
     <section xml:id="neutronclient_subcommand_meter-label-show">
         <title>neutron meter-label-show</title>
         <screen><computeroutput>usage: neutron meter-label-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                                [--prefix PREFIX]
+                                [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                 [--request-format {json,xml}] [-D] [-F FIELD]
                                 METERING_LABEL</computeroutput></screen>
         <para>
@@ -7011,7 +7004,6 @@ Show information of a given metering label.
         <title>neutron nec-packet-filter-create</title>
         <screen><computeroutput>usage: neutron nec-packet-filter-create [-h] [-f {shell,table,value}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
-                                        [--variable VARIABLE]
                                         [--prefix PREFIX]
                                         [--request-format {json,xml}]
                                         [--tenant-id TENANT_ID]
@@ -7294,7 +7286,7 @@ List packet filters that belong to a given tenant.
         <title>neutron nec-packet-filter-show</title>
         <screen><computeroutput>usage: neutron nec-packet-filter-show [-h] [-f {shell,table,value}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
-                                      [--variable VARIABLE] [--prefix PREFIX]
+                                      [--prefix PREFIX]
                                       [--request-format {json,xml}] [-D]
                                       [-F FIELD]
                                       PACKET_FILTER</computeroutput></screen>
@@ -7498,8 +7490,8 @@ Update packet filter's information.
     <section xml:id="neutronclient_subcommand_net-create">
         <title>neutron net-create</title>
         <screen><computeroutput>usage: neutron net-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                          [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                          [--prefix PREFIX] [--request-format {json,xml}]
+                          [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                          [--request-format {json,xml}]
                           [--tenant-id TENANT_ID] [--admin-state-down]
                           [--shared]
                           NAME</computeroutput></screen>
@@ -7741,8 +7733,7 @@ Add an internal network interface to a router.
     <section xml:id="neutronclient_subcommand_net-gateway-create">
         <title>neutron net-gateway-create</title>
         <screen><computeroutput>usage: neutron net-gateway-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;]
-                                  [--variable VARIABLE] [--prefix PREFIX]
+                                  [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                   [--request-format {json,xml}]
                                   [--tenant-id TENANT_ID]
                                   [--device id=ID,interface_name=NAME_OR_ID]
@@ -7948,8 +7939,7 @@ List network gateways for a given tenant.
     <section xml:id="neutronclient_subcommand_net-gateway-show">
         <title>neutron net-gateway-show</title>
         <screen><computeroutput>usage: neutron net-gateway-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                                [--prefix PREFIX]
+                                [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                 [--request-format {json,xml}] [-D] [-F FIELD]
                                 NETWORK_GATEWAY</computeroutput></screen>
         <para>
@@ -8207,9 +8197,8 @@ List the networks on a DHCP agent.
     <section xml:id="neutronclient_subcommand_net-show">
         <title>neutron net-show</title>
         <screen><computeroutput>usage: neutron net-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                        [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                        [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                        [-F FIELD]
+                        [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                        [--request-format {json,xml}] [-D] [-F FIELD]
                         NETWORK</computeroutput></screen>
         <para>
 Show information of a given network.
@@ -8301,7 +8290,6 @@ Update network's information.
         <title>neutron nuage-netpartition-create</title>
         <screen><computeroutput>usage: neutron nuage-netpartition-create [-h] [-f {shell,table,value}]
                                          [-c COLUMN] [--max-width &lt;integer&gt;]
-                                         [--variable VARIABLE]
                                          [--prefix PREFIX]
                                          [--request-format {json,xml}]
                                          [--tenant-id TENANT_ID]
@@ -8434,7 +8422,7 @@ List netpartitions that belong to a given tenant.
         <title>neutron nuage-netpartition-show</title>
         <screen><computeroutput>usage: neutron nuage-netpartition-show [-h] [-f {shell,table,value}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
-                                       [--variable VARIABLE] [--prefix PREFIX]
+                                       [--prefix PREFIX]
                                        [--request-format {json,xml}] [-D]
                                        [-F FIELD]
                                        NET_PARTITION</computeroutput></screen>
@@ -8491,8 +8479,8 @@ Show information of a given netpartition.
     <section xml:id="neutronclient_subcommand_port-create">
         <title>neutron port-create</title>
         <screen><computeroutput>usage: neutron port-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                           [--prefix PREFIX] [--request-format {json,xml}]
+                           [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                           [--request-format {json,xml}]
                            [--tenant-id TENANT_ID] [--name NAME]
                            [--admin-state-down] [--mac-address MAC_ADDRESS]
                            [--device-id DEVICE_ID]
@@ -8726,9 +8714,8 @@ List ports that belong to a given tenant.
     <section xml:id="neutronclient_subcommand_port-show">
         <title>neutron port-show</title>
         <screen><computeroutput>usage: neutron port-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                         [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                         [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                         [-F FIELD]
+                         [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                         [--request-format {json,xml}] [-D] [-F FIELD]
                          PORT</computeroutput></screen>
         <para>
 Show information of a given port.
@@ -8849,8 +8836,8 @@ Update port's information.
     <section xml:id="neutronclient_subcommand_queue-create">
         <title>neutron queue-create</title>
         <screen><computeroutput>usage: neutron queue-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                            [--prefix PREFIX] [--request-format {json,xml}]
+                            [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                            [--request-format {json,xml}]
                             [--tenant-id TENANT_ID] [--min MIN] [--max MAX]
                             [--qos-marking QOS_MARKING] [--default DEFAULT]
                             [--dscp DSCP]
@@ -9021,9 +9008,8 @@ List queues that belong to a given tenant.
     <section xml:id="neutronclient_subcommand_queue-show">
         <title>neutron queue-show</title>
         <screen><computeroutput>usage: neutron queue-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                          [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                          [--prefix PREFIX] [--request-format {json,xml}] [-D]
-                          [-F FIELD]
+                          [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                          [--request-format {json,xml}] [-D] [-F FIELD]
                           QOS_QUEUE</computeroutput></screen>
         <para>
 Show information of a given queue.
@@ -9141,8 +9127,8 @@ List quotas of all tenants who have non-default quota values.
     <section xml:id="neutronclient_subcommand_quota-show">
         <title>neutron quota-show</title>
         <screen><computeroutput>usage: neutron quota-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                          [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                          [--prefix PREFIX] [--request-format {json,xml}]
+                          [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                          [--request-format {json,xml}]
                           [--tenant-id tenant-id]</computeroutput></screen>
         <para>
 Show quotas of a given tenant.
@@ -9178,8 +9164,8 @@ Show quotas of a given tenant.
     <section xml:id="neutronclient_subcommand_quota-update">
         <title>neutron quota-update</title>
         <screen><computeroutput>usage: neutron quota-update [-h] [-f {shell,table,value}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                            [--prefix PREFIX] [--request-format {json,xml}]
+                            [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                            [--request-format {json,xml}]
                             [--tenant-id tenant-id] [--network networks]
                             [--subnet subnets] [--port ports]
                             [--router routers] [--floatingip floatingips]
@@ -9313,8 +9299,8 @@ Define tenant's quotas not to use defaults.
     <section xml:id="neutronclient_subcommand_router-create">
         <title>neutron router-create</title>
         <screen><computeroutput>usage: neutron router-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                             [--prefix PREFIX] [--request-format {json,xml}]
+                             [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                             [--request-format {json,xml}]
                              [--tenant-id TENANT_ID] [--admin-state-down]
                              [--distributed {True,False}] [--ha {True,False}]
                              NAME</computeroutput></screen>
@@ -9833,9 +9819,8 @@ List ports that belong to a given tenant, with specified router.
     <section xml:id="neutronclient_subcommand_router-show">
         <title>neutron router-show</title>
         <screen><computeroutput>usage: neutron router-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                           [--prefix PREFIX] [--request-format {json,xml}]
-                           [-D] [-F FIELD]
+                           [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                           [--request-format {json,xml}] [-D] [-F FIELD]
                            ROUTER</computeroutput></screen>
         <para>
 Show information of a given router.
@@ -9926,8 +9911,7 @@ Update router's information.
     <section xml:id="neutronclient_subcommand_security-group-create">
         <title>neutron security-group-create</title>
         <screen><computeroutput>usage: neutron security-group-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                     [--max-width &lt;integer&gt;]
-                                     [--variable VARIABLE] [--prefix PREFIX]
+                                     [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                      [--request-format {json,xml}]
                                      [--tenant-id TENANT_ID]
                                      [--description DESCRIPTION]
@@ -10099,7 +10083,6 @@ List security groups that belong to a given tenant.
         <title>neutron security-group-rule-create</title>
         <screen><computeroutput>usage: neutron security-group-rule-create [-h] [-f {shell,table,value}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
-                                          [--variable VARIABLE]
                                           [--prefix PREFIX]
                                           [--request-format {json,xml}]
                                           [--tenant-id TENANT_ID]
@@ -10336,7 +10319,6 @@ List security group rules that belong to a given tenant.
         <title>neutron security-group-rule-show</title>
         <screen><computeroutput>usage: neutron security-group-rule-show [-h] [-f {shell,table,value}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
-                                        [--variable VARIABLE]
                                         [--prefix PREFIX]
                                         [--request-format {json,xml}] [-D]
                                         [-F FIELD]
@@ -10394,8 +10376,7 @@ Show information of a given security group rule.
     <section xml:id="neutronclient_subcommand_security-group-show">
         <title>neutron security-group-show</title>
         <screen><computeroutput>usage: neutron security-group-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                   [--max-width &lt;integer&gt;]
-                                   [--variable VARIABLE] [--prefix PREFIX]
+                                   [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                    [--request-format {json,xml}] [-D]
                                    [-F FIELD]
                                    SECURITY_GROUP</computeroutput></screen>
@@ -10583,17 +10564,17 @@ List service providers.
     <section xml:id="neutronclient_subcommand_subnet-create">
         <title>neutron subnet-create</title>
         <screen><computeroutput>usage: neutron subnet-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                             [--prefix PREFIX] [--request-format {json,xml}]
+                             [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                             [--request-format {json,xml}]
                              [--tenant-id TENANT_ID] [--name NAME]
                              [--gateway GATEWAY_IP] [--no-gateway]
                              [--allocation-pool start=IP_ADDR,end=IP_ADDR]
                              [--host-route destination=CIDR,nexthop=IP_ADDR]
                              [--dns-nameserver DNS_NAMESERVER]
                              [--disable-dhcp] [--enable-dhcp]
+                             [--ip-version {4,6}]
                              [--ipv6-ra-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
                              [--ipv6-address-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
-                             [--ip-version {4,6}]
                              NETWORK CIDR</computeroutput></screen>
         <para>
 Create a subnet for a given tenant.
@@ -10711,6 +10692,14 @@ Create a subnet for a given tenant.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--ip-version {4,6} IP</command></term>
+    <listitem>
+      <para>
+        version to use, default is 4.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--ipv6-ra-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}</command></term>
     <listitem>
       <para>
@@ -10723,14 +10712,6 @@ Create a subnet for a given tenant.
     <listitem>
       <para>
       IPv6 address mode.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--ip-version {4,6} IP</command></term>
-    <listitem>
-      <para>
-        version to use, default is 4.
       </para>
     </listitem>
   </varlistentry>
@@ -10852,9 +10833,8 @@ List subnets that belong to a given tenant.
     <section xml:id="neutronclient_subcommand_subnet-show">
         <title>neutron subnet-show</title>
         <screen><computeroutput>usage: neutron subnet-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                           [--prefix PREFIX] [--request-format {json,xml}]
-                           [-D] [-F FIELD]
+                           [--max-width &lt;integer&gt;] [--prefix PREFIX]
+                           [--request-format {json,xml}] [-D] [-F FIELD]
                            SUBNET</computeroutput></screen>
         <para>
 Show information of a given subnet.
@@ -10914,8 +10894,6 @@ Show information of a given subnet.
                              [--host-route destination=CIDR,nexthop=IP_ADDR]
                              [--dns-nameserver DNS_NAMESERVER]
                              [--disable-dhcp] [--enable-dhcp]
-                             [--ipv6-ra-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
-                             [--ipv6-address-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
                              SUBNET</computeroutput></screen>
         <para>
 Update subnet's information.
@@ -11016,29 +10994,12 @@ Update subnet's information.
       </para>
     </listitem>
   </varlistentry>
-  <varlistentry>
-    <term><command>--ipv6-ra-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}</command></term>
-    <listitem>
-      <para>
-      IPv6 RA (Router Advertisement) mode.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--ipv6-address-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}</command></term>
-    <listitem>
-      <para>
-      IPv6 address mode.
-      </para>
-    </listitem>
-  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="neutronclient_subcommand_vpn-ikepolicy-create">
         <title>neutron vpn-ikepolicy-create</title>
         <screen><computeroutput>usage: neutron vpn-ikepolicy-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                    [--max-width &lt;integer&gt;]
-                                    [--variable VARIABLE] [--prefix PREFIX]
+                                    [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                     [--request-format {json,xml}]
                                     [--tenant-id TENANT_ID]
                                     [--description DESCRIPTION]
@@ -11266,8 +11227,7 @@ List IKE policies that belong to a tenant.
     <section xml:id="neutronclient_subcommand_vpn-ikepolicy-show">
         <title>neutron vpn-ikepolicy-show</title>
         <screen><computeroutput>usage: neutron vpn-ikepolicy-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;]
-                                  [--variable VARIABLE] [--prefix PREFIX]
+                                  [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                   [--request-format {json,xml}] [-D]
                                   [-F FIELD]
                                   IKEPOLICY</computeroutput></screen>
@@ -11374,7 +11334,7 @@ Update a given IKE policy.
         <title>neutron vpn-ipsecpolicy-create</title>
         <screen><computeroutput>usage: neutron vpn-ipsecpolicy-create [-h] [-f {shell,table,value}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
-                                      [--variable VARIABLE] [--prefix PREFIX]
+                                      [--prefix PREFIX]
                                       [--request-format {json,xml}]
                                       [--tenant-id TENANT_ID]
                                       [--description DESCRIPTION]
@@ -11531,7 +11491,7 @@ Delete a given IPsec policy.
                                     [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                     [--sort-dir {asc,desc}]</computeroutput></screen>
         <para>
-List ipsecpolicies that belongs to a given tenant connection.
+List IPsec policies that belong to a given tenant connection.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -11602,8 +11562,7 @@ List ipsecpolicies that belongs to a given tenant connection.
     <section xml:id="neutronclient_subcommand_vpn-ipsecpolicy-show">
         <title>neutron vpn-ipsecpolicy-show</title>
         <screen><computeroutput>usage: neutron vpn-ipsecpolicy-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                    [--max-width &lt;integer&gt;]
-                                    [--variable VARIABLE] [--prefix PREFIX]
+                                    [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                     [--request-format {json,xml}] [-D]
                                     [-F FIELD]
                                     IPSECPOLICY</computeroutput></screen>
@@ -11709,8 +11668,7 @@ Update a given IPsec policy.
     <section xml:id="neutronclient_subcommand_vpn-service-create">
         <title>neutron vpn-service-create</title>
         <screen><computeroutput>usage: neutron vpn-service-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;]
-                                  [--variable VARIABLE] [--prefix PREFIX]
+                                  [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                   [--request-format {json,xml}]
                                   [--tenant-id TENANT_ID] [--admin-state-down]
                                   [--name NAME] [--description DESCRIPTION]
@@ -11906,8 +11864,7 @@ List VPN service configurations that belong to a given tenant.
     <section xml:id="neutronclient_subcommand_vpn-service-show">
         <title>neutron vpn-service-show</title>
         <screen><computeroutput>usage: neutron vpn-service-show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                                [--prefix PREFIX]
+                                [--max-width &lt;integer&gt;] [--prefix PREFIX]
                                 [--request-format {json,xml}] [-D] [-F FIELD]
                                 VPNSERVICE</computeroutput></screen>
         <para>
