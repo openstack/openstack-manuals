@@ -747,82 +747,116 @@ sinks:
   <section xml:id="section_telemetry-storing-data">
     <title>Storing samples</title>
     <para>The Telemetry module has a separate service that is responsible for persisting the data
-      that is coming from the pollsters or received as notifications. The data is stored in
-      a database back end, the list of supported databases can be found in
-      <xref linkend="section_telemetry-supported-dbs"/>.
+      that is coming from the pollsters or received as notifications. The data can be stored in
+      a file or a database back end, for which the list of supported databases can be found in
+      <xref linkend="section_telemetry-supported-dbs"/>. The data can also be sent to an external
+      data store by using an HTTP dispatcher.
     </para>
     <para>The <systemitem class="service">ceilometer-collector</systemitem> service receives the
       samples as metering messages from the message bus of the configured AMQP service. It stores
-      these samples without any modification in the configured back end. The service has to run on
-      a host machine from which it has access to the database.</para>
+      these samples without any modification in the configured file or database back end, or in
+      the external data store as dispatched by the HTTP dispatcher. The service has to run on a
+      host machine from which it has access to the configured dispatcher.</para>
+    <note>
+      <para>Multiple dispatchers can be configured for Telemetry at one time.</para>
+    </note>
     <para>Multiple <systemitem class="service">ceilometer-collector</systemitem> process can be
       run at a time. It is also supported to start multiple worker threads per collector process.
       The <parameter>collector_workers</parameter> configuration option has to be modified in the
       <link xlink:href=
       "http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html">
-      collector section</link> of the <filename>ceilometer.conf</filename> configuration file.</para>
+      collector section</link> of the <filename>ceilometer.conf</filename>
+      configuration file.</para>
     <note>
       <para>Using multiple workers per collector process is not recommended to be used with
         PostgreSQL as database back end.</para>
     </note>
-    <para>By default the time to live value (ttl) for samples is set to -1, which means that they
-      are kept in the database forever. This can be changed by modifying the <parameter>time_to_live
-      </parameter> parameter in <filename>ceilometer.conf</filename>. The value has to be specified
-      in seconds and it means that every sample that based on its timestamp is older, than the
-      specified value will be deleted from the database.</para>
-    <para>When the samples are deleted, there are cases, when users and resources remain in the
-      database without any corresponding sample. There is a command line script, that deletes
-      these useless entries, which is called <systemitem class="service">ceilometer-expirer</systemitem>.
-      This script should be run periodically, for instance in a cron job, to ensure that the
-      database is cleaned up properly.</para>
-    <para>The level of support differs in case of the configured back end:</para>
-    <table rules="all">
-      <caption>Time-to-live support for database back ends</caption>
-      <col width="24%"/>
-      <col width="38%"/>
-      <col width="38%"/>
-      <thead>
-        <tr>
-          <td>Database</td>
-          <td>ttl value support</td>
-          <td><systemitem class="service">ceilometer-expirer</systemitem>
-            capabilities</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>MongoDB</td>
-          <td>MongoDB has a built-in mechanism for deleting samples that are older
-            than the configured ttl value.</td>
-          <td>In case of this database, only the lingering dead resource,
-            user and project entries will be deleted by
-            <systemitem class="service">ceilometer-expirer</systemitem>.
-          </td>
-        </tr>
-        <tr>
-          <td>SQL-based back ends</td>
-          <td>The library (SQLAlchemy) that is used for accessing SQL-based back ends does
-            not support using the ttl value.</td>
-          <td><systemitem class="service">ceilometer-expirer</systemitem> has to be
-            used for deleting both the samples and the remaining entires in other
-            database tables. The script will delete samples based on the
-            <parameter>time_to_live</parameter> value that is set in the
-            configuration file.</td>
-        </tr>
-        <tr>
-          <td>HBase</td>
-          <td>HBase does not support this functionality currently, therefore the ttl value
-            in the configuration file is ignored.</td>
-          <td>The samples are not deleted by using
-            <systemitem class="service">ceilometer-expirer</systemitem>,
-            this functionality is not supported.</td>
-        </tr>
-        <tr>
-          <td>DB2</td>
-          <td>Same case as MongoDB.</td>
-          <td>Same case as MongoDB.</td>
-        </tr>
-      </tbody>
-    </table>
+    <simplesect>
+      <title>Database dispatcher</title>
+      <para>When the database dispatcher is configured as data store, you have the option to set
+        a <parameter>time_to_live</parameter> parameter (ttl) for samples. By default the time to
+        live value for samples is set to -1, which means that they are kept in the database forever.
+      </para>
+      <para>The time to live value is specified in seconds. Each sample has a time stamp, and the
+        <literal>ttl</literal> value indicates that a sample is deleted from the database when
+        the number of seconds has elapsed since that sample reading was stamped. For example,
+        if the sampling occurs every 60 seconds, and the time to live is set to 600, only ten
+        samples are stored in the database.</para>
+      <para>During the deletion of samples <literal>resources</literal> and <literal>users</literal>
+        can remain in the database without a corresponding sample when the time to live has expired,
+        you may need to delete the entries related to the expired samples. The command-line script,
+        which you can use for this purpose is
+        <systemitem class="service">ceilometer-expirer</systemitem>. You can run it in a cron job,
+        which helps keeping your database in a consistent state.</para>
+      <para>The level of support differs in case of the configured back end:</para>
+      <table rules="all">
+        <caption>Time-to-live support for database back ends</caption>
+        <col width="24%"/>
+        <col width="38%"/>
+        <col width="38%"/>
+        <thead>
+          <tr>
+            <td>Database</td>
+            <td>ttl value support</td>
+            <td><systemitem class="service">ceilometer-expirer</systemitem>
+              capabilities</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MongoDB</td>
+            <td>MongoDB has a built-in mechanism for deleting samples that are older
+              than the configured ttl value.</td>
+            <td>In case of this database, only the lingering dead resource,
+              user and project entries will be deleted by
+              <systemitem class="service">ceilometer-expirer</systemitem>.
+            </td>
+          </tr>
+          <tr>
+            <td>SQL-based back ends</td>
+            <td>The library (SQLAlchemy) that is used for accessing SQL-based back ends does
+              not support using the ttl value.</td>
+            <td><systemitem class="service">ceilometer-expirer</systemitem> has to be
+              used for deleting both the samples and the remaining entires in other
+              database tables. The script will delete samples based on the
+              <parameter>time_to_live</parameter> value that is set in the
+              configuration file.</td>
+          </tr>
+          <tr>
+            <td>HBase</td>
+            <td>HBase does not support this functionality currently, therefore the ttl value
+              in the configuration file is ignored.</td>
+            <td>The samples are not deleted by using
+              <systemitem class="service">ceilometer-expirer</systemitem>,
+              this functionality is not supported.</td>
+          </tr>
+          <tr>
+            <td>DB2</td>
+            <td>Same case as MongoDB.</td>
+            <td>Same case as MongoDB.</td>
+          </tr>
+        </tbody>
+      </table>
+    </simplesect>
+    <simplesect>
+      <title>HTTP dispatcher</title>
+      <para>The Telemetry module supports sending samples to an external HTTP target. The
+        samples are sent without any modification. To set this option as data storage, the
+        <option>dispatcher</option> has to be changed to <literal>http</literal> in the
+        <filename>ceilometer.conf</filename> configuration file. For the list
+        of options that you need to set, see the see the
+        <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html">
+        <literal>dispatcher_http</literal> section</link>
+        in the <citetitle>OpenStack Configuration Reference</citetitle>.</para>
+    </simplesect>
+    <simplesect>
+      <title>File dispatcher</title>
+      <para>You can store samples in a file by setting the <option>dispatcher</option>
+        option in <filename>ceilometer.conf</filename> o <literal>file</literal>. For the list
+        of configuration options, see the
+        <link xlink:href="http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html">
+        <literal>dispatcher_file</literal> section</link>
+        in the <citetitle>OpenStack Configuration Reference</citetitle>.</para>
+    </simplesect>
   </section>
 </section>
