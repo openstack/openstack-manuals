@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-12-18 06:12+0000\n"
+"POT-Creation-Date: 2014-12-19 06:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -334,7 +334,7 @@ msgstr ""
 msgid "You can retrieve the collected samples three different ways: with the REST API, with the command line interface, or with the Metering tab on an OpenStack dashboard."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_database.xml:7(title) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:786(td)
+#: ./doc/admin-guide-cloud/ch_database.xml:7(title) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:799(td)
 msgid "Database"
 msgstr ""
 
@@ -7210,7 +7210,7 @@ msgstr ""
 msgid "The list of supported database back ends:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:91(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:794(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:91(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:807(td)
 msgid "MongoDB"
 msgstr ""
 
@@ -7222,11 +7222,11 @@ msgstr ""
 msgid "PostgreSQL"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:100(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:813(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:100(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:826(td)
 msgid "HBase"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:103(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:821(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:103(link) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:834(td)
 msgid "DB2"
 msgstr ""
 
@@ -8207,83 +8207,111 @@ msgid "Storing samples"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:749(para)
-msgid "The Telemetry module has a separate service that is responsible for persisting the data that is coming from the pollsters or received as notifications. The data is stored in a database back end, the list of supported databases can be found in <xref linkend=\"section_telemetry-supported-dbs\"/>."
+msgid "The Telemetry module has a separate service that is responsible for persisting the data that is coming from the pollsters or received as notifications. The data can be stored in a file or a database back end, for which the list of supported databases can be found in <xref linkend=\"section_telemetry-supported-dbs\"/>. The data can also be sent to an external data store by using an HTTP dispatcher."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:754(para)
-msgid "The <systemitem class=\"service\">ceilometer-collector</systemitem> service receives the samples as metering messages from the message bus of the configured AMQP service. It stores these samples without any modification in the configured back end. The service has to run on a host machine from which it has access to the database."
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:755(para)
+msgid "The <systemitem class=\"service\">ceilometer-collector</systemitem> service receives the samples as metering messages from the message bus of the configured AMQP service. It stores these samples without any modification in the configured file or database back end, or in the external data store as dispatched by the HTTP dispatcher. The service has to run on a host machine from which it has access to the configured dispatcher."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:758(para)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:761(para)
+msgid "Multiple dispatchers can be configured for Telemetry at one time."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:763(para)
 msgid "Multiple <systemitem class=\"service\">ceilometer-collector</systemitem> process can be run at a time. It is also supported to start multiple worker threads per collector process. The <parameter>collector_workers</parameter> configuration option has to be modified in the <link href=\"http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html\"> collector section</link> of the <filename>ceilometer.conf</filename> configuration file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:765(para)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:771(para)
 msgid "Using multiple workers per collector process is not recommended to be used with PostgreSQL as database back end."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:768(para)
-msgid "By default the time to live value (ttl) for samples is set to -1, which means that they are kept in the database forever. This can be changed by modifying the <parameter>time_to_live </parameter> parameter in <filename>ceilometer.conf</filename>. The value has to be specified in seconds and it means that every sample that based on its timestamp is older, than the specified value will be deleted from the database."
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:775(title)
+msgid "Database dispatcher"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:773(para)
-msgid "When the samples are deleted, there are cases, when users and resources remain in the database without any corresponding sample. There is a command line script, that deletes these useless entries, which is called <systemitem class=\"service\">ceilometer-expirer</systemitem>. This script should be run periodically, for instance in a cron job, to ensure that the database is cleaned up properly."
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:776(para)
+msgid "When the database dispatcher is configured as data store, you have the option to set a <parameter>time_to_live</parameter> parameter (ttl) for samples. By default the time to live value for samples is set to -1, which means that they are kept in the database forever."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:778(para)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:780(para)
+msgid "The time to live value is specified in seconds. Each sample has a time stamp, and the <literal>ttl</literal> value indicates that a sample is deleted from the database when the number of seconds has elapsed since that sample reading was stamped. For example, if the sampling occurs every 60 seconds, and the time to live is set to 600, only ten samples are stored in the database."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:785(para)
+msgid "During the deletion of samples <literal>resources</literal> and <literal>users</literal> can remain in the database without a corresponding sample when the time to live has expired, you may need to delete the entries related to the expired samples. The command-line script, which you can use for this purpose is <systemitem class=\"service\">ceilometer-expirer</systemitem>. You can run it in a cron job, which helps keeping your database in a consistent state."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:791(para)
 msgid "The level of support differs in case of the configured back end:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:780(caption)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:793(caption)
 msgid "Time-to-live support for database back ends"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:787(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:800(td)
 msgid "ttl value support"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:788(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:799(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:806(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:817(systemitem)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:801(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:812(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:819(systemitem) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:830(systemitem)
 msgid "ceilometer-expirer"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:788(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:801(td)
 msgid "<placeholder-1/> capabilities"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:795(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:808(td)
 msgid "MongoDB has a built-in mechanism for deleting samples that are older than the configured ttl value."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:797(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:810(td)
 msgid "In case of this database, only the lingering dead resource, user and project entries will be deleted by <placeholder-1/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:803(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:816(td)
 msgid "SQL-based back ends"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:804(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:817(td)
 msgid "The library (SQLAlchemy) that is used for accessing SQL-based back ends does not support using the ttl value."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:809(parameter)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:822(parameter)
 msgid "time_to_live"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:806(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:819(td)
 msgid "<placeholder-1/> has to be used for deleting both the samples and the remaining entires in other database tables. The script will delete samples based on the <placeholder-2/> value that is set in the configuration file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:814(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:827(td)
 msgid "HBase does not support this functionality currently, therefore the ttl value in the configuration file is ignored."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:816(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:829(td)
 msgid "The samples are not deleted by using <placeholder-1/>, this functionality is not supported."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:822(td) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:823(td)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:835(td) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:836(td)
 msgid "Same case as MongoDB."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:842(title)
+msgid "HTTP dispatcher"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:843(para)
+msgid "The Telemetry module supports sending samples to an external HTTP target. The samples are sent without any modification. To set this option as data storage, the <option>dispatcher</option> has to be changed to <literal>http</literal> in the <filename>ceilometer.conf</filename> configuration file. For the list of options that you need to set, see the see the <link href=\"http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html\"><literal>dispatcher_http</literal> section</link> in the <citetitle>OpenStack Configuration Reference</citetitle>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:853(title)
+msgid "File dispatcher"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:854(para)
+msgid "You can store samples in a file by setting the <option>dispatcher</option> option in <filename>ceilometer.conf</filename> o <literal>file</literal>. For the list of configuration options, see the <link href=\"http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-telemetry.html\"><literal>dispatcher_file</literal> section</link> in the <citetitle>OpenStack Configuration Reference</citetitle>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-retrieval.xml:7(title)
