@@ -57,13 +57,14 @@
 |     name    |              admin               |
 +-------------+----------------------------------+</computeroutput></screen>
           <note>
-            <para>Because OpenStack generates IDs dynamically, you will see
-              different values from this example command output.</para>
+            <para>OpenStack generates IDs dynamically, so you will see
+              different values from the example command output.</para>
           </note>
         </step>
         <step>
-          <para>Create the <literal>admin</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name admin --pass <replaceable>ADMIN_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput>
+          <para>Create the <literal>admin</literal> user under the
+            <literal>admin</literal> tenant:</para>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name admin --tenant admin --pass <replaceable>ADMIN_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput>
 <computeroutput>+----------+----------------------------------+
 | Property |              Value               |
 +----------+----------------------------------+
@@ -71,6 +72,7 @@
 | enabled  |               True               |
 |    id    | ea8c352d253443118041c9c8b8416040 |
 |   name   |              admin               |
+| tenantId | 6f4c1e4cbfef4d5a8a1345882fbca110 |
 | username |              admin               |
 +----------+----------------------------------+</computeroutput></screen>
           <para>Replace <replaceable>ADMIN_PASS</replaceable> with a
@@ -88,29 +90,9 @@
 +----------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
-          <para>Add the <literal>admin</literal> tenant and user to the
-            <literal>admin</literal> role:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --tenant admin --user admin --role admin</userinput></screen>
-          <note>
-            <para>This command provides no output.</para>
-          </note>
-        </step>
-        <step>
-          <para>By default, the dashboard limits access to users with the
-            <literal>_member_</literal> role.</para>
-          <para>Create the <literal>_member_</literal> role:</para>
-          <screen><prompt>$</prompt> <userinput>keystone role-create --name _member_</userinput>
-<computeroutput>+----------+----------------------------------+
-| Property |              Value               |
-+----------+----------------------------------+
-|    id    | 0f198e94ffce416cbcbe344e1843eac8 |
-|   name   |             _member_             |
-+----------+----------------------------------+</computeroutput></screen>
-        </step>
-        <step>
-          <para>Add the <literal>admin</literal> tenant and user to the
-            <literal>_member_</literal> role:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --tenant admin --user admin --role _member_</userinput></screen>
+          <para>Add the <literal>admin</literal> role to the
+            <literal>admin</literal> tenant and user:</para>
+          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user admin --tenant admin --role admin</userinput></screen>
           <note>
             <para>This command provides no output.</para>
           </note>
@@ -146,8 +128,9 @@
           </note>
         </step>
         <step>
-          <para>Create the <literal>demo</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name demo --pass <replaceable>DEMO_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput>
+          <para>Create the <literal>demo</literal> user under the
+            <literal>demo</literal> tenant:</para>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name demo --tenant demo --pass <replaceable>DEMO_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput>
 <computeroutput>+----------+----------------------------------+
 | Property |              Value               |
 +----------+----------------------------------+
@@ -155,19 +138,12 @@
 | enabled  |               True               |
 |    id    | 7004dfa0dda84d63aef81cf7f100af01 |
 |   name   |               demo               |
+| tenantId | 4aa51bb942be4dd0ac0555d7591f80a6 |
 | username |               demo               |
 +----------+----------------------------------+</computeroutput></screen>
           <para>Replace <replaceable>DEMO_PASS</replaceable> with a suitable
             password and <replaceable>EMAIL_ADDRESS</replaceable> with a
             suitable e-mail address.</para>
-        </step>
-        <step>
-          <para>Add the <literal>demo</literal> tenant and user to the
-            <literal>_member_</literal> role:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --tenant demo --user demo --role _member_</userinput></screen>
-          <note>
-            <para>This command provides no output.</para>
-          </note>
         </step>
       </substeps>
       <note>
@@ -177,9 +153,9 @@
     </step>
     <step>
       <para>OpenStack services also require a tenant, user, and role to
-        interact with other services. You will create a user in the
-        <literal>service</literal> tenant for each service that you
-        install.</para>
+        interact with other services. Each service typically requires
+        creating one or more unique users with the <literal>admin</literal>
+        role under the <literal>service</literal> tenant.</para>
       <substeps>
         <step>
           <para>Create the <literal>service</literal> tenant:</para>
