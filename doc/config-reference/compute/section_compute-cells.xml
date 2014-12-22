@@ -110,31 +110,28 @@
     </section>
     <section xml:id="config-API-cell">
         <title>Configure the API (top-level) cell</title>
-        <para>The compute API class must be changed in the API cell so
+        <para>The cell type must be changed in the API cell so
             that requests can be proxied through nova-cells down to
-            the correct cell properly. Add the following line to
-                <filename>nova.conf</filename> in the API
-            cell:<programlisting language="ini">[DEFAULT]
+            the correct cell properly. Edit the <filename>nova.conf</filename>
+            file in the API cell, and specify <literal>api</literal>
+            in the <option>cell_type</option> key:<programlisting language="ini">[DEFAULT]
 compute_api_class=nova.compute.cells_api.ComputeCellsAPI
 ...
 
 [cells]
-enable=True
-name=api</programlisting></para>
+cell_type= api</programlisting>
+        </para>
     </section>
     <section xml:id="config-child-cell">
         <title>Configure the child cells</title>
-        <para>Add the following lines to
-                <filename>nova.conf</filename> in the child cells,
-            replacing <replaceable>cell1</replaceable> with the name
-            of each
-            cell:<programlisting language="ini">[DEFAULT]
+        <para>Edit the <filename>nova.conf</filename> file in the child
+          cells, and specify <literal>compute</literal> in the
+          <option>cell_type</option> key:<programlisting language="ini">[DEFAULT]
 # Disable quota checking in child cells. Let API cell do it exclusively.
 quota_driver=nova.quota.NoopQuotaDriver
 
 [cells]
-enable=True
-name=<replaceable>cell1</replaceable></programlisting></para>
+cell_type = compute</programlisting></para>
     </section>
     <section xml:id="config-cell-db">
         <title>Configure the database in each cell</title>
