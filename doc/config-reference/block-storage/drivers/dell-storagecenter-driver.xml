@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<section xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xml:id="dell-storagecenter-driver" version="5.0">
+  <title>Dell Storage Center Fibre Channel and iSCSI drivers</title>
+  <para>The Dell Storage Center volume driver interacts with configured
+    Storage Center arrays.</para>
+  <para>The Dell Storage Center driver manages Storage Center arrays through
+    Enterprise Manager. Enterprise Manager connection settings and Storage
+    Center options are defined in the <filename>cinder.conf</filename> file.
+  </para>
+    <simplesect>
+      <title>Supported operations</title>
+      <para>The Dell Storage Center volume driver provides the following
+        Cinder volume operations:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Create, delete, attach (map), and detach (unmap) volumes.</para>
+        </listitem>
+        <listitem>
+          <para>Create, list, and delete volume snapshots.</para>
+        </listitem>
+        <listitem>
+          <para>Create a volume from a snapshot.</para>
+        </listitem>
+        <listitem>
+          <para>Copy an image to a volume.</para>
+        </listitem>
+        <listitem>
+          <para>Copy a volume to an image.</para>
+        </listitem>
+        <listitem>
+          <para>Clone a volume.</para>
+        </listitem>
+        <listitem>
+          <para>Extend a volume.</para>
+        </listitem>
+    </itemizedlist>
+  </simplesect>
+  <simplesect>
+    <title>iSCSI Configuration</title>
+    <para>Use the following instructions to update the configuration
+      file for iSCSI:
+    <example><title>Sample iSCSI Configuration</title>
+      <programlisting language="ini">
+      default_volume_type = delliscsi
+      enabled_backends = delliscsi
+
+      [delliscsi]
+      # Name to give this storage backend
+      volume_backend_name = delliscsi
+      # The iSCSI driver to load
+      volume_driver = cinder.volume.drivers.dell.dell_storagecenter_iscsi.DellStorageCenterISCSIDriver
+      # IP address of Enterprise Manager
+      san_ip = 172.23.8.101
+      # Enterprise Manager user name
+      san_login = Admin
+      # Enterprise Manager password
+      san_password = mmmm
+      # The Storage Center iSCSI IP address
+      iscsi_ip_address = 192.168.0.20
+      # The Storage Center serial number to use
+      dell_sc_ssn = 64702
+
+      # ==Optional settings==
+      # The Enterprise Manager API port
+      dell_sc_api_port = 3033
+      # Server folder to place new server definitions
+      dell_sc_server_folder = devstacksrv
+      # Volume folder to place created volumes
+      dell_sc_volume_folder = devstackvol/Cinder
+      # The iSCSI IP port
+      iscsi_port = 3260</programlisting>
+    </example>
+    </para>
+  </simplesect>
+  <simplesect>
+    <title>Fibre Channel Configuration</title>
+    <para>Use the following instructions to update the configuration
+      file for fibre channel:
+    <example><title>Sample FC Configuration</title>
+      <programlisting language="ini">
+      default_volume_type = dellfc
+      enabled_backends = dellfc
+
+      [dellfc]
+      # Name to give this storage backend
+      volume_backend_name = delliscsi
+      # The FC driver to load
+      volume_driver = cinder.volume.drivers.dell.dell_storagecenter_fc.DellStorageCenterFCDriver
+      # IP address of Enterprise Manager
+      san_ip = 172.23.8.101
+      # Enterprise Manager user name
+      san_login = Admin
+      # Enterprise Manager password
+      san_password = mmmm
+      # The Storage Center serial number to use
+      dell_sc_ssn = 64702
+
+      # Optional settings
+
+      # The Enterprise Manager API port
+      dell_sc_api_port = 3033
+      # Server folder to place new server definitions
+      dell_sc_server_folder = devstacksrv
+      # Volume folder to place created volumes
+      dell_sc_volume_folder = devstackvol/Cinder</programlisting>
+    </example>
+    </para>
+  </simplesect>
+  <simplesect>
+    <title>Driver options</title>
+    <para>The following table contains the configation options specific to the
+      Dell Storage Center volume driver.</para>
+    <xi:include href="../../../common/tables/cinder-dellsc.xml"/>
+  </simplesect>
+</section>
