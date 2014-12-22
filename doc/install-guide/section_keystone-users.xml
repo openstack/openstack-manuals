@@ -62,9 +62,8 @@
           </note>
         </step>
         <step>
-          <para>Create the <literal>admin</literal> user under the
-            <literal>admin</literal> tenant:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name admin --tenant admin --pass <replaceable>ADMIN_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput>
+          <para>Create the <literal>admin</literal> user:</para>
+          <screen><prompt>$</prompt> <userinput>keystone user-create --name admin --pass <replaceable>ADMIN_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput>
 <computeroutput>+----------+----------------------------------+
 | Property |              Value               |
 +----------+----------------------------------+
@@ -72,7 +71,6 @@
 | enabled  |               True               |
 |    id    | ea8c352d253443118041c9c8b8416040 |
 |   name   |              admin               |
-| tenantId | 6f4c1e4cbfef4d5a8a1345882fbca110 |
 | username |              admin               |
 +----------+----------------------------------+</computeroutput></screen>
           <para>Replace <replaceable>ADMIN_PASS</replaceable> with a
@@ -144,6 +142,12 @@
           <para>Replace <replaceable>DEMO_PASS</replaceable> with a suitable
             password and <replaceable>EMAIL_ADDRESS</replaceable> with a
             suitable e-mail address.</para>
+          <note>
+            <para>Using the <literal>--tenant</literal> option
+              automatically assigns the <literal>_member_</literal> role
+              to a user. This option will also create the
+              <literal>_member_</literal> role if it does not exist.</para>
+          </note>
         </step>
       </substeps>
       <note>
