@@ -72,20 +72,29 @@
           </note>
         </step>
         <step>
-          <para>Create the <literal>heat_stack_user</literal> and
-            <literal>heat_stack_owner</literal> roles:</para>
-          <screen><prompt>$</prompt> <userinput>keystone role-create --name heat_stack_user</userinput>
-<prompt>$</prompt> <userinput>keystone role-create --name heat_stack_owner</userinput></screen>
-          <para>By default, users created by Orchestration use the
-            <literal>heat_stack_user</literal> role.</para>
-          <para>The <literal>heat_stack_user</literal> role is for users
-            created by heat, and is restricted to specific API actions.
-            The <literal>heat_stack_owner</literal> role is assigned to
-            users who create heat stacks.</para>
-          <warning><para>Because the <literal>heat_stack_owner</literal>
-              role has limited operational access to heat, you must never
-              assign this role to a user with a <literal>heat_stack_user</literal>
-              role.</para></warning>
+          <para>Create the <literal>heat_stack_owner</literal> role:</para>
+          <screen><prompt>$</prompt> <userinput>keystone role-create --name heat_stack_owner</userinput></screen>
+        </step>
+        <step>
+          <para>Add the <literal>heat_stack_owner</literal> role to the
+            <literal>demo</literal> tenant and user:</para>
+          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user demo --tenant demo --role heat_stack_owner</userinput></screen>
+          <note>
+            <para>You must add the <literal>heat_stack_owner</literal>
+              role to users that manage stacks.</para>
+          </note>
+        </step>
+        <step>
+          <para>Create the <literal>heat_stack_user</literal> role:</para>
+          <screen><prompt>$</prompt> <userinput>keystone role-create --name heat_stack_user</userinput></screen>
+          <note>
+            <para>The Orchestration service automatically assigns the
+              <literal>heat_stack_user</literal> role to users that it
+              creates during stack deployment. By default, this role
+              restricts <glossterm>API</glossterm> operations. To avoid
+              conflicts, do not add this role to users with the
+              <literal>heat_stack_owner</literal> role.</para>
+          </note>
         </step>
         <step>
           <para>Create the <literal>heat</literal> and
