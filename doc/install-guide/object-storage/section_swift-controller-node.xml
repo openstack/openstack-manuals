@@ -22,8 +22,8 @@
       it also offers an internal mechanism that allows it to operate without
       any other OpenStack services. However, for simplicity, this guide
       references the Identity service in <xref linkend="ch_keystone"/>. Before
-      you configure the Object Storage service, you must create Identity
-      service credentials including endpoints.</para>
+      you configure the Object Storage service, you must create service
+      credentials and API endpoints.</para>
     <note>
       <para>The Object Storage service does not use a SQL database on
         the controller node.</para>
@@ -33,7 +33,7 @@
         steps:</para>
       <substeps>
         <step>
-          <para>Create a <literal>swift</literal> user:</para>
+          <para>Create the <literal>swift</literal> user:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-create --name swift --pass <replaceable>SWIFT_PASS</replaceable></userinput>
 <computeroutput>+----------+----------------------------------+
 | Property |              Value               |
@@ -48,16 +48,15 @@
             password.</para>
         </step>
         <step>
-          <para>Link the <literal>swift</literal> user to the
-            <literal>service</literal> tenant and <literal>admin</literal>
-            role:</para>
+          <para>Add the <literal>admin</literal> role to the
+            <literal>swift</literal> user:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --user swift --tenant service --role admin</userinput></screen>
           <note>
             <para>This command provides no output.</para>
           </note>
         </step>
         <step>
-          <para>Create the <literal>swift</literal> service:</para>
+          <para>Create the <literal>swift</literal> service entity:</para>
           <screen><prompt>$</prompt> <userinput>keystone service-create --name swift --type object-store \
   --description "OpenStack Object Storage"</userinput>
 <computeroutput>+-------------+----------------------------------+
@@ -73,7 +72,7 @@
       </substeps>
     </step>
     <step>
-      <para>Create the Identity service endpoints:</para>
+      <para>Create the Object Storage service API endpoints:</para>
       <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ object-store / {print $2}') \
   --publicurl 'http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \

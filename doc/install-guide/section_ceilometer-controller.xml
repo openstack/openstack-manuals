@@ -16,11 +16,11 @@
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure prerequisites</title>
     <para>Before you install and configure Telemetry, you must install
-      <application>MongoDB</application>, create a MongoDB database, and
-      create Identity service credentials including endpoints.</para>
+      <application>MongoDB</application>, create a MongoDB database,
+      service credentials, and API endpoints.</para>
     <step os="opensuse;sles">
       <para>Enable the Open Build Service repositories for MongoDB based on
-        your openSUSE  or SLES version:</para>
+        your openSUSE or SLES version:</para>
       <para>On openSUSE:</para>
       <screen><prompt>#</prompt> <userinput>zypper addrepo -f obs://server:database/openSUSE_13.1 Database</userinput></screen>
       <para>On SLES:</para>
@@ -104,7 +104,7 @@ Key Expires: Sat Dec 20 20:08:39 2014</programlisting>
       <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
     </step>
     <step>
-      <para>To create the Identity service credentials:</para>
+      <para>To create the service credentials, complete these steps:</para>
       <substeps>
         <step>
           <para>Create the <literal>ceilometer</literal> user:</para>
@@ -113,26 +113,26 @@ Key Expires: Sat Dec 20 20:08:39 2014</programlisting>
             suitable password.</para>
         </step>
         <step>
-          <para>Link the <literal>ceilometer</literal> user to the
-            <literal>service</literal> tenant and <literal>admin</literal>
-            role:</para>
+          <para>Add the <literal>admin</literal> role to the
+            <literal>ceilometer</literal> user.</para>
          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user ceilometer --tenant service --role admin</userinput></screen>
         </step>
         <step>
-          <para>Create the <literal>ceilometer</literal> service:</para>
+          <para>Create the <literal>ceilometer</literal> service
+            entity:</para>
           <screen><prompt>$</prompt> <userinput>keystone service-create --name ceilometer --type metering \
   --description "Telemetry"</userinput></screen>
         </step>
-        <step>
-          <para>Create the Identity service endpoints:</para>
-          <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
+      </substeps>
+    </step>
+    <step>
+      <para>Create the Telemetry service API endpoints:</para>
+      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ metering / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:8777 \
   --internalurl http://<replaceable>controller</replaceable>:8777 \
   --adminurl http://<replaceable>controller</replaceable>:8777</userinput> \
   --region regionOne</screen>
-        </step>
-      </substeps>
     </step>
   </procedure>
   <procedure os="debian">
