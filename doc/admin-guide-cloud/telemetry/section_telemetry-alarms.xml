@@ -207,13 +207,13 @@
     <section xml:id="section_telemetry-alarm-usage-update">
       <title>Alarm update</title>
       <para>Once the state of the alarm has settled down, we might decide that we set that bar too low with 70%, in which case the threshold (or most any other alarm attribute) can be updated thusly:</para>
-      <screen><prompt>$</prompt> <userinput>ceilometer alarm-update --threshold 75 -a <replaceable>ALARM_ID</replaceable></userinput></screen>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-update --threshold 75 <replaceable>ALARM_ID</replaceable></userinput></screen>
       <para>The change will take effect from the next evaluation cycle, which by default occurs every minute.</para>
       <para>Most alarm attributes can be changed in this way, but there is also a convenient short-cut for getting and setting the alarm state:</para>
-      <screen><prompt>$</prompt> <userinput>ceilometer alarm-state-get -a <replaceable>ALARM_ID</replaceable></userinput>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-state-get <replaceable>ALARM_ID</replaceable></userinput>
 <prompt>$</prompt> <userinput>ceilometer alarm-state-set --state ok -a <replaceable>ALARM_ID</replaceable></userinput></screen>
       <para>Over time the state of the alarm may change often, especially if the threshold is chosen to be close to the trending value of the statistic. You can follow the history of an alarm over its lifecycle via the audit API:</para>
-      <screen><prompt>$</prompt> <userinput>ceilometer alarm-history -a <replaceable>ALARM_ID</replaceable></userinput>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-history <replaceable>ALARM_ID</replaceable></userinput>
 <computeroutput>+------------------+-----------+---------------------------------------+
 | Type             | Timestamp | Detail                                |
 +------------------+-----------+---------------------------------------+
@@ -230,7 +230,7 @@
       <para>An alarm that's no longer required can be disabled so that it is no longer actively evaluated:</para>
       <screen><prompt>$</prompt> <userinput>ceilometer alarm-update --enabled False -a <replaceable>ALARM_ID</replaceable></userinput></screen>
       <para>or even deleted permanently (an irreversible step):</para>
-      <screen><prompt>$</prompt> <userinput>ceilometer alarm-delete -a <replaceable>ALARM_ID</replaceable></userinput></screen>
+      <screen><prompt>$</prompt> <userinput>ceilometer alarm-delete <replaceable>ALARM_ID</replaceable></userinput></screen>
       <note>
         <para>By default, alarm history is retained for deleted alarms.</para>
       </note>
