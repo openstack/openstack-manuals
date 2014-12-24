@@ -9,9 +9,8 @@
     Compute service, code-named nova, on the controller node.</para>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure prerequisites</title>
-    <para>Before you install and configure Compute, you must
-      create a database and Identity service credentials
-      including endpoints.</para>
+    <para>Before you install and configure the Compute service, you must
+      create a database, service credentials, and API endpoints.</para>
     <step>
       <para>To create the database, complete these steps:</para>
       <substeps>
@@ -47,8 +46,7 @@
       <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
     </step>
     <step>
-      <para>To create the Identity service credentials, complete these
-        steps:</para>
+      <para>To create the service credentials, complete these steps:</para>
       <substeps>
         <step>
           <para>Create the <literal>nova</literal> user:</para>
@@ -67,16 +65,15 @@
            a suitable password.</para>
         </step>
         <step>
-          <para>Link the <literal>nova</literal> user to the
-            <literal>service</literal> tenant and <literal>admin</literal>
-            role:</para>
+          <para>Add the <literal>admin</literal> role to the
+            <literal>nova</literal> user:</para>
 <screen><prompt>$</prompt> <userinput>keystone user-role-add --user nova --tenant service --role admin</userinput></screen>
           <note>
             <para>This command provides no output.</para>
           </note>
         </step>
         <step>
-          <para>Create the <literal>nova</literal> service:</para>
+          <para>Create the <literal>nova</literal> service entity:</para>
 <screen><prompt>$</prompt> <userinput>keystone service-create --name nova --type compute \
   --description "OpenStack Compute"</userinput>
 <computeroutput>+-------------+----------------------------------+
@@ -93,7 +90,7 @@
       </substeps>
     </step>
     <step>
-      <para>Create the Compute service endpoints:</para>
+      <para>Create the Compute service API endpoints:</para>
       <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ compute / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:8774/v2/%\(tenant_id\)s \
