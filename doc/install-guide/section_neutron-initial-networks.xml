@@ -38,8 +38,7 @@
       using a <glossterm>floating IP address</glossterm> and suitable
       <glossterm>security group</glossterm> rules. The <literal>admin</literal>
       tenant owns this network because it provides external network
-      access for multiple tenants. You must also enable sharing to allow
-      access by those tenants.</para>
+      access for multiple tenants.</para>
     <note>
       <para>Perform these commands on the controller node.</para>
     </note>
@@ -52,7 +51,7 @@
       </step>
       <step>
         <para>Create the network:</para>
-        <screen><prompt>$</prompt> <userinput>neutron net-create ext-net --shared --router:external True \
+        <screen><prompt>$</prompt> <userinput>neutron net-create ext-net --router:external True \
   --provider:physical_network external --provider:network_type flat</userinput>
 <computeroutput>Created a new network:
 +---------------------------+--------------------------------------+
@@ -65,7 +64,7 @@
 | provider:physical_network | external                             |
 | provider:segmentation_id  |                                      |
 | router:external           | True                                 |
-| shared                    | True                                 |
+| shared                    | False                                 |
 | status                    | ACTIVE                               |
 | subnets                   |                                      |
 | tenant_id                 | 54cd044c64d5408b83f843d63624e0d8     |
