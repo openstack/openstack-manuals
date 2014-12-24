@@ -28,6 +28,26 @@
     <link os="sles;opensuse"
     xlink:href="http://activedoc.opensuse.org/book/opensuse-reference/chapter-13-basic-networking"
     >openSUSE documentation.</link></para>
+    <para>All nodes require Internet access for administrative purposes
+      such as package installation, security updates,
+      <glossterm>DNS</glossterm>, and
+      <glossterm baseform="Network Time Protocol (NTP)"
+      >NTP</glossterm>. In most cases, nodes should obtain Internet
+      access through the management network interface. To highlight
+      the importance of network separation, the example architectures
+      use <link xlink:href="https://tools.ietf.org/html/rfc1918"
+      >private address space</link> for the management network and assume
+      that network infrastructure provides Internet access via
+      <glossterm baseform="Network Address Translation (NAT)"
+      >NAT</glossterm>. To illustrate the flexibility of
+      <glossterm>IaaS</glossterm>, the example architectures use public
+      IP address space for the external network and assume that network
+      infrastructure provides direct Internet access to instances in
+      your OpenStack environment. In environments with only one block
+      of public IP address space, both the management and external networks
+      must ultimately obtain Internet access using it. For simplicity, the
+      diagrams in this guide only show Internet access for OpenStack
+      services.</para>
   <procedure os="sles;opensuse">
     <title>To disable Network Manager</title>
     <step>
@@ -41,34 +61,24 @@
       </para>
     </step>
   </procedure>
-  <para os="rhel;centos">RHEL and CentOS enable a restrictive
-    <glossterm>firewall</glossterm> by default. During the installation
-    process, certain steps will fail unless you alter or disable the
-    firewall. For more information about securing your environment, refer
-    to the <link xlink:href="http://docs.openstack.org/sec/">OpenStack
-    Security Guide</link>.</para>
-  <para os="opensuse;sles">openSUSE and SLES enable a restrictive
-    <glossterm>firewall</glossterm> by default. During the installation
-    process, certain steps will fail unless you alter or disable the
-    firewall. For more information about securing your environment, refer
-    to the <link xlink:href="http://docs.openstack.org/sec/">OpenStack
-    Security Guide</link>.</para>
-  <para os="ubuntu;debian">Your distribution does not enable a
-    restrictive <glossterm>firewall</glossterm> by default. For more
-    information about securing your environment, refer to the
-    <link xlink:href="http://docs.openstack.org/sec/">OpenStack
-    Security Guide</link>.</para>
+  <note>
+    <para os="rhel;centos;fedora;sles;opensuse">Your distribution enables
+      a restrictive <glossterm>firewall</glossterm> by default. During the
+      installation process, certain steps will fail unless you alter or
+      disable the firewall. For more information about securing your
+      environment, refer to the
+      <link xlink:href="http://docs.openstack.org/sec/">OpenStack
+      Security Guide</link>.</para>
+    <para os="ubuntu;debian">Your distribution does not enable a
+      restrictive <glossterm>firewall</glossterm> by default. For more
+      information about securing your environment, refer to the
+      <link xlink:href="http://docs.openstack.org/sec/">OpenStack
+      Security Guide</link>.</para>
+  </note>
   <para>Proceed to network configuration for the example
     <link linkend="basics-networking-neutron">OpenStack Networking (neutron)
     </link> or <link linkend="basics-networking-nova">legacy
     networking (nova-network)</link> architecture.</para>
-  <note>
-    <para>All nodes require Internet access to install OpenStack packages
-      and perform maintenance tasks such as periodic updates. In most
-      cases, nodes should obtain Internet access through the management
-      network interface. For simplicity, the network diagrams in this guide
-      only show Internet access for OpenStack network services.</para>
-  </note>
   <xi:include href="section_basics-networking-neutron.xml"/>
   <xi:include href="section_basics-networking-nova.xml"/>
 </section>
