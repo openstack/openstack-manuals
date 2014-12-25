@@ -19,6 +19,37 @@
     <glossterm>external network</glossterm>. The compute node contains
     one network interface on the management network and one on the
     instance tunnels network.</para>
+  <para>The example architecture assumes use of the following networks:</para>
+  <itemizedlist>
+    <listitem>
+      <para>Management on 10.0.0.0/24 with gateway 10.0.0.1</para>
+      <note>
+        <para>This network requires a gateway to provide Internet
+          access to all nodes for administrative purposes such as
+          package installation, security updates,
+          <glossterm>DNS</glossterm>, and
+          <glossterm baseform="Network Time Protocol (NTP)"
+          >NTP</glossterm>.</para>
+      </note>
+    </listitem>
+    <listitem>
+      <para>Instance tunnels on 10.0.1.0/24 without a gateway</para>
+      <note>
+        <para>This network does not require a gateway because communication
+          only occurs among network and compute nodes in your OpenStack
+          environment.</para>
+      </note>
+    </listitem>
+    <listitem>
+      <para>External on 203.0.113.0/24 with gateway 203.0.113.1</para>
+      <note>
+        <para>This network requires a gateway to provide Internet
+          access to instances in your OpenStack environment.</para>
+      </note>
+    </listitem>
+  </itemizedlist>
+  <para>You can modify these ranges and gateways to work with your
+    particular network infrastructure.</para>
   <note>
     <para>Network interface names vary by distribution. Traditionally,
       interfaces use "eth" followed by a sequential number. To cover all
