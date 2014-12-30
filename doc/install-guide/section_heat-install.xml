@@ -10,7 +10,7 @@
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure prerequisites</title>
     <para>Before you install and configure Orchestration, you must create a
-      database and Identity service credentials including endpoints.</para>
+      database, service credentials, and API endpoints.</para>
     <step>
       <para>To create the database, complete these steps:</para>
       <substeps>
@@ -44,8 +44,7 @@
       <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
     </step>
     <step>
-      <para>To create the Identity service credentials, complete these
-        steps:</para>
+      <para>To create the service credentials, complete these steps:</para>
       <substeps>
         <step>
           <para>Create the <literal>heat</literal> user:</para>
@@ -63,9 +62,8 @@
             password.</para>
         </step>
         <step>
-          <para>Link the <literal>heat</literal> user to the
-            <literal>service</literal> tenant and <literal>admin</literal>
-            role:</para>
+          <para>Add the <literal>admin</literal> role to the
+            <literal>heat</literal> user:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --user heat --tenant service --role admin</userinput></screen>
           <note>
             <para>This command provides no output.</para>
@@ -98,7 +96,7 @@
         </step>
         <step>
           <para>Create the <literal>heat</literal> and
-            <literal>heat-cfn</literal> services:</para>
+            <literal>heat-cfn</literal> service entities:</para>
           <screen><prompt>$</prompt> <userinput>keystone service-create --name heat --type orchestration \
   --description "Orchestration"</userinput>
 <computeroutput>+-------------+----------------------------------+
@@ -122,9 +120,11 @@
 |     type    |          cloudformation          |
 +-------------+----------------------------------+</computeroutput></screen>
         </step>
-        <step>
-          <para>Create the Identity service endpoints:</para>
-          <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
+      </substeps>
+    </step>
+    <step>
+      <para>Create the Orchestration service API endpoints:</para>
+      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ orchestration / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
   --internalurl http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
@@ -156,8 +156,6 @@
 |    region   |            regionOne             |
 |  service_id | 297740d74c0a446bbff867acdccb33fa |
 +-------------+----------------------------------+</computeroutput></screen>
-        </step>
-      </substeps>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">

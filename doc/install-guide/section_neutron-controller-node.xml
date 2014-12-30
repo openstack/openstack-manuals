@@ -7,8 +7,9 @@
   <title>Install and configure controller node</title>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure prerequisites</title>
-    <para>Before you configure OpenStack Networking (neutron), you must create
-      a database and Identity service credentials including endpoints.</para>
+    <para>Before you configure the OpenStack Networking (neutron) service,
+      you must create a database, service credentials, and API
+      endpoints.</para>
     <step>
       <para>To create the database, complete these steps:</para>
       <substeps>
@@ -42,8 +43,7 @@
       <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
     </step>
     <step>
-      <para>To create the Identity service credentials, complete these
-        steps:</para>
+      <para>To create the service credentials, complete these steps:</para>
       <substeps>
         <step>
           <para>Create the <literal>neutron</literal> user:</para>
@@ -61,16 +61,15 @@
             password.</para>
         </step>
         <step>
-          <para>Link the <literal>neutron</literal> user to the
-            <literal>service</literal> tenant and <literal>admin</literal>
-            role:</para>
+          <para>Add the <literal>admin</literal> role to the
+            <literal>neutron</literal> user:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --user neutron --tenant service --role admin</userinput></screen>
           <note>
             <para>This command provides no output.</para>
           </note>
         </step>
         <step>
-          <para>Create the <literal>neutron</literal> service:</para>
+          <para>Create the <literal>neutron</literal> service entity:</para>
           <screen><prompt>$</prompt> <userinput>keystone service-create --name neutron --type network \
   --description "OpenStack Networking"</userinput>
 <computeroutput>+-------------+----------------------------------+
@@ -83,9 +82,11 @@
 |     type    |             network              |
 +-------------+----------------------------------+</computeroutput></screen>
         </step>
-        <step>
-          <para>Create the Identity service endpoints:</para>
-          <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
+      </substeps>
+    </step>
+    <step>
+      <para>Create the Networking service API endpoints:</para>
+      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ network / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:9696 \
   --adminurl http://<replaceable>controller</replaceable>:9696 \
@@ -101,8 +102,6 @@
 |    region   |           regionOne              |
 |  service_id | 6369ddaf99a447f3a0d41dac5e342161 |
 +-------------+----------------------------------+</computeroutput></screen>
-        </step>
-      </substeps>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
