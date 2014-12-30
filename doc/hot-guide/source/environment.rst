@@ -93,7 +93,7 @@ resource to the existing :hotref:`OS::Nova::FloatingIP` resource:
   resource_registry:
     "OS::Networking::FloatingIP": "OS::Nova::FloatingIP"
 
-You can use wilcards to map multiple resources:
+You can use wildcards to map multiple resources:
 
 .. code-block:: yaml
 
