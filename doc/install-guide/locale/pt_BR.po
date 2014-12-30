@@ -11,8 +11,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2014-12-26 07:24+0000\n"
-"PO-Revision-Date: 2014-12-26 23:10+0000\n"
+"POT-Creation-Date: 2014-12-29 16:49+0000\n"
+"PO-Revision-Date: 2014-12-29 20:51+0000\n"
 "Last-Translator: Fernando Pimenta <fernando.c.pimenta@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -4958,7 +4958,7 @@ msgid ""
 "size accordingly. However, some operating systems and networks block or "
 "otherwise lack support for PMTUD causing performance degradation or "
 "connectivity failure."
-msgstr ""
+msgstr "Protocolos de tunelamento como o GRE incluem cabeçalhos de pacote adicionais que aumentam a sobrecarga e diminuem o espaço disponível para o payload e dados de usuário. Sem o conhecimento da infraestrutura virtual de rede, as instâncias tentam enviar pacotes utilizando a padrão Ethernet de glossterm>maximum transmission unit (MTU)</glossterm> de 1500 bytes. As redes <glossterm>Internet protocol (IP)</glossterm> contém o mecanismo <glossterm>path MTU discovery (PMTUD)</glossterm> para detectar o MTU fim-a-fim e ajustar o tamanho dos pacotes adequadamente. Contudo, alguns sistemas operacionais e redes, bloqueiam ou, ao contrário, não possuem suporte para o PMTUD causando degradação de desempenho ou falha de conectividade."
 
 #: ./doc/install-guide/section_neutron-network-node.xml295(para)
 msgid ""
@@ -4973,7 +4973,7 @@ msgid ""
 "proper MTU value often takes experimentation, but 1454 bytes works in most "
 "environments. You can configure the DHCP server that assigns IP addresses to"
 " your instances to also adjust the MTU."
-msgstr ""
+msgstr "Idealmente, você pode evitar estes problemas habilitando os <glossterm baseform=\"jumbo frame\">jumbo frames</glossterm> na rede física que contém suas redes de tenants virtuais. Os Jumbo frames suportam MTUs de até aproximadamente 9000 bytes, que anula o impacto da sobrecarga do GRE nas redes virtuais. Contudo, muitos dispositivos de rede não possuem suporte para Jumbo frames e os administradores de OpenStack frequentemente perdem o controle sobre a infraestrutura de rede. Dadas as últimas complicações, você pode também evitar problemas de MTU reduzindo o MTU da instância para acomodar a sobrecarga do GRE. Determinar o valor adequado de MTU geralmente exige experimentação, mas 1454 bytes funciona na maioria dos ambientes."
 
 #: ./doc/install-guide/section_neutron-network-node.xml309(para)
 msgid ""
@@ -5086,7 +5086,7 @@ msgid ""
 "external bridge requires a port on the physical external network interface "
 "to provide instances with external network access. In essence, this port "
 "connects the virtual and physical external networks in your environment."
-msgstr ""
+msgstr "O serviço OVS fornece a estrutura virtual de rede subjacente para as instâncias. A bridge de integração <literal>br-int</literal> manipula o tráfego dentro do OVS. A bridge externa <literal>br-ex</literal> manipula o tráfego externo de rede da instância dentro do OVS. A bridge externa requer uma porta na interface física da rede externa para fornecer instâncias com acesso à rede externa. Essencialmente, esta porta conecta as redes virtual e física em seu ambiente."
 
 #: ./doc/install-guide/section_neutron-network-node.xml452(para)
 msgid "Add the external bridge:"
@@ -5173,7 +5173,7 @@ msgid ""
 "options. For more information, see the <link "
 "href=\"http://docs.openstack.org/user-"
 "guide/content/cli_openrc.html\">OpenStack User Guide</link>."
-msgstr ""
+msgstr "A seção anterior usou uma combinação de variáveis de ambiente e opções de comandos para interagir com o Serviço de Identidade, através do <placeholder-1/> cliente. Para aumentar a eficiência das operações de cliente, o OpenStack suporta scripts de ambiente simples de cliente, também conhecidos como arquivos OpenRC. Estes scripts tipicamente contém opções comuns para todos os clientes, mas também suporta opções únicas. Para mais informações consulte o <link href=\"http://docs.openstack.org/user-guide/content/cli_openrc.html\">OpenStack User Guide</link>."
 
 #: ./doc/install-guide/section_keystone-openrc.xml16(title)
 msgid "To create the scripts"
@@ -5968,7 +5968,7 @@ msgid ""
 "IP address of the management network interface on your compute node, "
 "typically 10.0.0.31 for the first node in the <link linkend"
 "=\"architecture_example-architectures\">example architecture</link>."
-msgstr ""
+msgstr "Substitua <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable> com o endereço IP da interface de gerenciamento de rede no seu nodo de Computação, tipicamente 10.0.0.31 para o primeiro nodo na <link linkend=\"architecture_example-architectures\">arquitetura de exemplo</link>."
 
 #: ./doc/install-guide/section_nova-compute-install.xml102(para)
 msgid ""
@@ -5982,7 +5982,7 @@ msgid ""
 "only listens on the management interface IP address of the compute node. The"
 " base URL indicates the location where you can use a web browser to access "
 "remote consoles of instances on this compute node."
-msgstr ""
+msgstr "O componente servidor escuta em todos os endereços IP e o componente de proxy somente escuta no endereço IP da interface de gerenciamento no nodo de Computação. A URL base indica a localização onde você pode utilizar um navegador web para acessar consoles remotos de instâncias nesse nodo de Computação."
 
 #: ./doc/install-guide/section_nova-compute-install.xml122(para)
 msgid ""
@@ -5990,7 +5990,7 @@ msgid ""
 "resolve the <replaceable>controller</replaceable> hostname, you must replace"
 " <replaceable>controller</replaceable> with the management interface IP "
 "address of the controller node."
-msgstr ""
+msgstr "Se o navegador web para acessar consoles remotos está em um host que não pode resolver o hostname do <replaceable>controlador</replaceable>, você deve substituir o <replaceable>controlador</replaceable> pelo endereço IP da interface de gerenciamento do nodo controlador."
 
 #: ./doc/install-guide/section_nova-compute-install.xml148(para)
 msgid "Ensure the kernel module <literal>nbd</literal> is loaded."
@@ -6059,7 +6059,7 @@ msgid ""
 "machine images made available through the Image Service in a variety of "
 "locations, from simple file systems to object-storage systems like OpenStack"
 " Object Storage."
-msgstr ""
+msgstr "O Serviço de Imagem do OpenStack (glance) habilita os usuários a descobrirem, registrarem, e recuperarem imagens de máquinas virtuais. Ele oferece uma API <glossterm baseform=\"RESTful\">REST</glossterm> que habilita você a consultar o metadado da máquina virtual e recuperar uma imagem real. Você pode armazenar imagens de máquinas virtuais disponibilizadas através do Serviço de Imagem em várias localizações, a partir de um simples arquivo até sistemas de armazenamento de objetos como o OpenStack Object Storage."
 
 #: ./doc/install-guide/ch_glance.xml16(para)
 msgid ""
@@ -6067,13 +6067,13 @@ msgid ""
 "the <literal>file</literal> back end, which uploads and stores in a "
 "directory on the controller node hosting the Image Service. By default, this"
 " directory is <filename>/var/lib/glance/images/</filename>."
-msgstr ""
+msgstr "Para simplificar, este guia descreve a configuração do Serviço de Imagem para utilizar o back end de <literal>arquivo</literal>, que carrega e armazena em um diretório no nodo controlador que hospeda o Serviço de Imagem. Por padrão, este diretório é  <filename>/var/lib/glance/images/</filename>."
 
 #: ./doc/install-guide/ch_glance.xml21(para)
 msgid ""
 "Before you proceed, ensure that the controller node has at least several "
 "gigabytes of space available in this directory."
-msgstr ""
+msgstr "Antes de prosseguir, certifique-se de que o nodo controlador tem pelo menos vários gigabytes de espaço disponível neste diretório."
 
 #: ./doc/install-guide/ch_glance.xml23(para)
 msgid ""
@@ -6081,7 +6081,7 @@ msgid ""
 "href=\"http://docs.openstack.org/trunk/config-reference/content"
 "/ch_configuring-openstack-image-service.html\"><citetitle>Configuration "
 "Reference</citetitle></link>."
-msgstr ""
+msgstr "Para informações sobre os requerimentos para outros back ends, consulte a <link href=\"http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-image-service.html\"><citetitle>Referência de Configuração</citetitle></link>."
 
 #: ./doc/install-guide/section_basics-prerequisites.xml8(title)
 msgid "Before you begin"
@@ -6096,7 +6096,7 @@ msgid ""
 "amount of resources and the following minimum requirements should support a "
 "proof-of-concept environment with core services and several "
 "<glossterm>CirrOS</glossterm> instances:"
-msgstr ""
+msgstr "Para melhor desempenho, recomendamos que seu ambiente atenda ou exceda os requerimentos de hardware em <xref linkend=\"example-architecture-with-neutron-networking-hw\"/> ou <xref linkend=\"example-architecture-with-legacy-networking-hw\"/>. Contudo, o OpenStack não requer um tanto significativo de recursos e os seguintes requerimentos mínimos devem suportar um ambiente de prova de conceito com serviços principais e várias instâncias <glossterm>CirrOS</glossterm>."
 
 #: ./doc/install-guide/section_basics-prerequisites.xml19(para)
 msgid "Controller Node: 1 processor, 2 GB memory, and 5 GB storage"
@@ -6159,7 +6159,7 @@ msgid ""
 "If you choose to install on VMs, make sure your hypervisor permits "
 "<glossterm>promiscuous mode</glossterm> and disables MAC address filtering "
 "on the <glossterm>external network</glossterm>."
-msgstr ""
+msgstr "Se você escolher instalar em VMs, certifique-se que seu hypervisor permita <glossterm>modo promíscuo</glossterm> e desabilite a filtragem de endereços MAC na <glossterm>rede externa</glossterm>."
 
 #: ./doc/install-guide/section_basics-prerequisites.xml67(para)
 msgid ""
@@ -6177,7 +6177,7 @@ msgid ""
 "OpenStack reserves certain user IDs to run specific services and own "
 "specific files. These user IDs are set up according to the distribution "
 "packages. The following table gives an overview."
-msgstr ""
+msgstr "O OpenStack reserva certos IDs de usuário para executar serviços específicos e deter arquivos específicos. Estes IDs de usuário são configurados de acordo com os pacotes da distribuição. A tabela seguinte dá uma visão geral."
 
 #: ./doc/install-guide/app_reserved_uids.xml16(para)
 msgid ""
@@ -6378,23 +6378,23 @@ msgstr "Ligue o usuário <literal>heat</literal> ao tenant de <literal>serviço<
 
 #: ./doc/install-guide/section_heat-install.xml75(para)
 msgid "Create the <literal>heat_stack_owner</literal> role:"
-msgstr ""
+msgstr "Crie o papel <literal>heat_stack_owner</literal>:"
 
 #: ./doc/install-guide/section_heat-install.xml79(para)
 msgid ""
 "Add the <literal>heat_stack_owner</literal> role to the "
 "<literal>demo</literal> tenant and user:"
-msgstr ""
+msgstr "Adicione o papel <literal>heat_stack_owner</literal> ao tenant e usuário <literal>demo</literal>:"
 
 #: ./doc/install-guide/section_heat-install.xml83(para)
 msgid ""
 "You must add the <literal>heat_stack_owner</literal> role to users that "
 "manage stacks."
-msgstr ""
+msgstr "Você deve adicionar o papel <literal>heat_stack_owner</literal> para usuários que gerenciam pilhas."
 
 #: ./doc/install-guide/section_heat-install.xml88(para)
 msgid "Create the <literal>heat_stack_user</literal> role:"
-msgstr ""
+msgstr "Crie o papel  <literal>heat_stack_user</literal>:"
 
 #: ./doc/install-guide/section_heat-install.xml91(para)
 msgid ""
@@ -6403,7 +6403,7 @@ msgid ""
 "stack deployment. By default, this role restricts <glossterm>API</glossterm>"
 " operations. To avoid conflicts, do not add this role to users with the "
 "<literal>heat_stack_owner</literal> role."
-msgstr ""
+msgstr "O serviço de Orquestração atribui automaticamente o papel <literal>heat_stack_user</literal> a usuários que ele cria durante a implantação da pilha ou stack. Por padrão, este papel restringe as operações de <glossterm>API</glossterm>. Para evitar conflitos, não adicione este papel para usuários com o papel <literal>heat_stack_owner</literal>."
 
 #: ./doc/install-guide/section_heat-install.xml100(para)
 msgid ""
@@ -6922,7 +6922,7 @@ msgstr ""
 msgid ""
 "If you change the journaling configuration, stop the MongoDB service, remove"
 " the initial journal files, and start the service:"
-msgstr ""
+msgstr "Se você alterar a configuração de journaling, pare o serviço MongoDB, remova os arquivos iniciais de journal e inicie o serviço:"
 
 #: ./doc/install-guide/section_ceilometer-controller.xml67(para)
 #: ./doc/install-guide/section_ceilometer-controller.xml168(para)
@@ -7076,7 +7076,7 @@ msgid ""
 "The Identity service manages a catalog of services in your OpenStack "
 "environment. Services use this catalog to locate other services in your "
 "environment."
-msgstr ""
+msgstr "O Serviço de Identidade gerencia um catálogo de serviços em seu ambiente OpenStack. Os serviços utilizam este catálogo para localizar outros serviços em seu ambiente."
 
 #: ./doc/install-guide/section_keystone-services.xml26(para)
 msgid "Create the service entity for the Identity service:"
@@ -7480,19 +7480,19 @@ msgid ""
 "networking\"/> in <xref linkend=\"ch_networking\"/>. To use optional "
 "services, you might need to build additional nodes, as described in "
 "subsequent chapters."
-msgstr ""
+msgstr "Quando você implementa esta arquitetura, salte a seção <xref linkend=\"section_neutron-networking\"/> em <xref linkend=\"ch_networking\"/>. Para utilizar serviços opcionais, você precisaria construir nodos adicionais, como descrito nos capítulos subsequentes."
 
 #: ./doc/install-guide/ch_overview.xml226(title)
 msgid ""
 "Minimal architecture example with legacy networking (nova-network)Hardware "
 "requirements"
-msgstr ""
+msgstr "Requerimentos de hardware para exemplo de arquitetura mínima com rede legada (nova-network)"
 
 #: ./doc/install-guide/ch_overview.xml246(title)
 msgid ""
 "Minimal architecture example with legacy networking (nova-network)Service "
 "layout"
-msgstr ""
+msgstr "Layout de serviço para exemplo de arquitetura mínima com rede legada (nova-network)"
 
 #: ./doc/install-guide/section_trove-verify.xml7(title)
 msgid "Verify the Database service installation"
@@ -7502,11 +7502,11 @@ msgstr "Verifique a instalação do serviço de Banco de Dados"
 msgid ""
 "To verify that the Database service is installed and configured correctly, "
 "try executing a Trove command:"
-msgstr ""
+msgstr "Para verificar que o serviço de Banco de Dados está instalado e configurado corretamente, tente executar um comando Trove:"
 
 #: ./doc/install-guide/section_trove-verify.xml12(para)
 msgid "Source the <filename>demo-openrc.sh</filename> file."
-msgstr ""
+msgstr "Obtenha o arquivo <filename>demo-openrc.sh</filename>."
 
 #: ./doc/install-guide/section_trove-verify.xml16(para)
 msgid "Retrieve the Trove instances list:"
@@ -7517,7 +7517,7 @@ msgid ""
 "Assuming you have created an image for the type of database you want, and "
 "have updated the datastore to use that image, you can now create a Trove "
 "instance (database). To do this, use the trove <placeholder-1/> command."
-msgstr ""
+msgstr "Supondo que você criou uma imagem para o tipo de banco de dados que você quer, e atualizou o datastore para utilizar esta imagem, você pode criar uma instância Trove (banco de dados). Para fazer isto, utilize o comando <placeholder-1/> trove."
 
 #: ./doc/install-guide/section_trove-verify.xml32(para)
 msgid "This example shows you how to create a MySQL 5.5 database:"
@@ -7559,13 +7559,13 @@ msgid ""
 "minimal architecture with the proxy service running on the existing "
 "OpenStack controller node and two storage nodes. However, these concepts "
 "still apply."
-msgstr ""
+msgstr "Em um ambiente de produção, o serviço Object Storage requer pelo menos dois nodos de proxy e cinco nodos de armazenamento. Para simplificar, este guia utiliza uma arquitetura mínima com o serviço de proxy rodando no nodo controlador OpenStack existente e dois nodos de armazenamento. Contudo, estes conceitos ainda se aplicam."
 
 #: ./doc/install-guide/object-storage/section_swift-example-arch.xml15(para)
 msgid ""
 "Node: A host machine that runs one or more OpenStack Object Storage "
 "services."
-msgstr ""
+msgstr "Nodo: Uma máquina host que executa um ou mais serviços OpenStack Object Storage."
 
 #: ./doc/install-guide/object-storage/section_swift-example-arch.xml19(para)
 msgid "Proxy node: Runs proxy services."
@@ -7575,25 +7575,25 @@ msgstr "Nodo de Proxy: Executa os serviços de proxy"
 msgid ""
 "Storage node: Runs account, container, and object services. Contains the "
 "SQLite databases."
-msgstr ""
+msgstr "Nodo de armazenamento: Executa serviços de conta, contêiner e de objeto. Contém bases de dados SQLite. "
 
 #: ./doc/install-guide/object-storage/section_swift-example-arch.xml26(para)
 msgid ""
 "Ring: A set of mappings between OpenStack Object Storage data to physical "
 "devices."
-msgstr ""
+msgstr "Anel: Um conjunto de mapeamentos entre dados do OpenStack Object Storage para dispositivos físicos."
 
 #: ./doc/install-guide/object-storage/section_swift-example-arch.xml30(para)
 msgid ""
 "Replica: A copy of an object. By default, three copies are maintained in the"
 " cluster."
-msgstr ""
+msgstr "Réplica: Uma cópia de um objeto. Por padrão, três cópias são mantidas no cluster."
 
 #: ./doc/install-guide/object-storage/section_swift-example-arch.xml34(para)
 msgid ""
 "Zone (optional): A logically separate section of the cluster, related to "
 "independent failure characteristics."
-msgstr ""
+msgstr "Zona (opcional): Uma seção logicamente separada do cluster, relacionada com características de falha independentes."
 
 #: ./doc/install-guide/object-storage/section_swift-example-arch.xml38(para)
 msgid ""
@@ -7601,7 +7601,7 @@ msgid ""
 " distinct physical locations such as cities or countries. Similar to zones, "
 "but representing physical locations of portions of the cluster rather than "
 "logical segments."
-msgstr ""
+msgstr "Região (opcional): Uma seção logicamente separada do cluster, representando localizações físicas distintas como cidades ou países. Similar à zonas, mas representando localizações físicas de porções do cluster em vez de segmentos lógicos."
 
 #: ./doc/install-guide/object-storage/section_swift-example-arch.xml45(para)
 msgid ""
@@ -7613,99 +7613,99 @@ msgstr "Para aumentar a confiabilidade e o desempenho, você pode adicionar serv
 msgid ""
 "The following diagram shows one possible architecture for a minimal "
 "production environment:"
-msgstr ""
+msgstr "O diagrama seguinte mostra uma possível arquitetura para um ambiente de produção mínimo:"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml7(title)
 msgid "Finalize installation"
-msgstr ""
+msgstr "Finalizar a instalação"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml9(title)
 msgid "Configure hashes and default storage policy"
-msgstr ""
+msgstr "Configure hashes e a política padrão de armazenamento"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml11(para)
 msgid ""
 "Obtain the <filename>/etc/swift/swift.conf</filename> file from the Object "
 "Storage source repository:"
-msgstr ""
+msgstr "Obtenha o arquivo <filename>/etc/swift/swift.conf</filename> do repositório fonte do Object Storage:"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml17(para)
 msgid ""
 "Edit the <filename>/etc/swift/swift.conf</filename> file and complete the "
 "following actions:"
-msgstr ""
+msgstr "Edite o arquivo <filename>/etc/swift/swift.conf</filename> e complete as seguintes ações:"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml21(para)
 msgid ""
 "In the <literal>[swift-hash]</literal> section, configure the hash path "
 "prefix and suffix for your environment."
-msgstr ""
+msgstr "Na seção <literal>[swift-hash]</literal>, configure o caminho do prefixo e sufixo do hash para seu ambiente."
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml25(replaceable)
 msgid "HASH_PATH_PREFIX"
-msgstr ""
+msgstr "HASH_PATH_PREFIX"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml26(replaceable)
 msgid "HASH_PATH_SUFFIX"
-msgstr ""
+msgstr "HASH_PATH_SUFFIX"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml27(para)
 msgid ""
 "Replace <replaceable>HASH_PATH_PREFIX</replaceable> and "
 "<replaceable>HASH_PATH_SUFFIX</replaceable> with unique values."
-msgstr ""
+msgstr "Substitua <replaceable>HASH_PATH_PREFIX</replaceable> e <replaceable>HASH_PATH_SUFFIX</replaceable> com valores únicos."
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml31(para)
 msgid "Keep these values secret and do not change or lose them."
-msgstr ""
+msgstr "Mantenha estes valores em segurança e não os altere ou os perca."
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml36(para)
 msgid ""
 "In the <literal>[storage-policy:0]</literal> section, configure the default "
 "storage policy:"
-msgstr ""
+msgstr "Na seção <literal>[storage-policy:0]</literal>, configure a política padrão de armazenamento:"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml46(para)
 msgid ""
 "Copy the <filename>swift.conf</filename> file to the "
 "<literal>/etc/swift</literal> directory on each storage node and any "
 "additional nodes running the proxy service."
-msgstr ""
+msgstr "Copie o arquivo <filename>swift.conf</filename> para o diretório <literal>/etc/swift</literal> em cada nodo de armazenamento e quaisquer nodos adicionais que estejam executando o serviço de proxy."
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml51(para)
 msgid "On all nodes, ensure proper ownership of the configuration directory:"
-msgstr ""
+msgstr "Em todos os nodos, assegure a propriedade adequada do diretório de configuração:"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml56(para)
 msgid ""
 "On the controller node and any other nodes running the proxy service, "
 "restart the Object Storage proxy service including its dependencies:"
-msgstr ""
+msgstr "No nodo controlador e em quaisquer outros nodos executando o serviço de proxy, reinicie o serviço de proxy do Object Storage, incluindo suas dependências:"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml63(para)
 msgid ""
 "On the controller node and any other nodes running the proxy service, start "
 "the Object Storage proxy service including its dependencies and configure "
 "them to start when the system boots:"
-msgstr ""
+msgstr "No nodo controlador e em quaisquer outros nodos executando o serviço de proxy, inicie o serviço de proxy do Object Storage, incluindo suas dependências e configure-o para iniciar quando o sistema inicializar:"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml78(para)
 msgid "On the storage nodes, start the Object Storage services:"
-msgstr ""
+msgstr "Nos nodos de armazenamento, inicie os serviços de Object Storage:"
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml81(para)
 msgid ""
 "The storage node runs many Object Storage services and the <placeholder-1/> "
 "command makes them easier to manage. You can ignore errors from services not"
 " running on the storage node."
-msgstr ""
+msgstr "O nodo de armazenamento executa muitos serviços de Object Storage e o comando <placeholder-1/> torna-os fáceis de se gerenciar. Você pode ignorar erros de serviços que não estejam rodando no nodo de armazenamento."
 
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml88(para)
 #: ./doc/install-guide/object-storage/section_swift-finalize-installation.xml104(para)
 msgid ""
 "On the storage nodes, start the Object Storage services and configure them "
 "to start when the system boots:"
-msgstr ""
+msgstr "Nos nodos de armazenamento, inicie os serviços de Object Storage e configure-os para iniciar quando o sistema inicializar:"
 
 #: ./doc/install-guide/object-storage/section_swift-system-reqs.xml13(para)
 msgid ""
@@ -7748,7 +7748,7 @@ msgstr "Processador: dual quad core"
 #: ./doc/install-guide/object-storage/section_swift-system-reqs.xml38(para)
 #: ./doc/install-guide/object-storage/section_swift-system-reqs.xml67(para)
 msgid "Memory: 8 or 12GB RAM"
-msgstr ""
+msgstr "Memória: 8 ou 12GB de RAM"
 
 #: ./doc/install-guide/object-storage/section_swift-system-reqs.xml39(para)
 msgid "Disk space: optimized for cost per GB"
@@ -7757,7 +7757,7 @@ msgstr "Espaço em disco: Otimizado para custo por GB"
 #: ./doc/install-guide/object-storage/section_swift-system-reqs.xml40(para)
 #: ./doc/install-guide/object-storage/section_swift-system-reqs.xml68(para)
 msgid "Network: one 1GB Network Interface Card (NIC)"
-msgstr ""
+msgstr "Rede: uma Interface de Rede (NIC) de 1GB"
 
 #: ./doc/install-guide/object-storage/section_swift-system-reqs.xml42(para)
 msgid ""
@@ -7839,7 +7839,7 @@ msgstr "<emphasis role=\"bold\">Permissões</emphasis>: Você pode instalar o Op
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml7(title)
 msgid "Install and configure the storage nodes"
-msgstr ""
+msgstr "Instalar e configurar os nodos de armazenamento"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml8(para)
 msgid ""
@@ -7869,66 +7869,66 @@ msgstr ""
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml31(para)
 msgid "Configure unique items on the first storage node:"
-msgstr ""
+msgstr "Configurar itens únicos no primeiro nodo de armazenamento:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml35(para)
 msgid "IP address: 10.0.0.51"
-msgstr ""
+msgstr "Endereço IP: 10.0.0.51"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml40(para)
 msgid "Set the hostname of the node to <replaceable>object1</replaceable>."
-msgstr ""
+msgstr "Defina o hostname do nodo para <replaceable>object1</replaceable>."
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml46(para)
 msgid "Configure unique items on the second storage node:"
-msgstr ""
+msgstr "Configurar itens únicos no segundo nodo de armazenamento:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml50(para)
 msgid "IP address: 10.0.0.52"
-msgstr ""
+msgstr "Endereço IP: 10.0.0.52"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml55(para)
 msgid "Set the hostname of the node to <replaceable>object2</replaceable>."
-msgstr ""
+msgstr "Defina o hostname do nodo para  <replaceable>object2</replaceable>."
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml61(para)
 msgid "Configure shared items on both storage nodes:"
-msgstr ""
+msgstr "Configure itens compartilhados em ambos os nodos de armazenamento:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml64(para)
 msgid ""
 "Copy the contents of the <filename>/etc/hosts</filename> file from the "
 "controller node and add the following to it:"
-msgstr ""
+msgstr "Copie o conteúdo do arquivo <filename>/etc/hosts</filename> do nodo controlador e adicione o seguinte a ele:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml81(para)
 msgid "Install the supporting utility packages:"
-msgstr ""
+msgstr "Instalar os pacotes de utilitários de suporte:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml87(para)
 msgid ""
 "Format the <literal>/dev/sdb1</literal> and <literal>/dev/sdc1</literal> "
 "partitions as XFS:"
-msgstr ""
+msgstr "Formatar as partições <literal>/dev/sdb1</literal> e <literal>/dev/sdc1</literal> como XFS:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml93(para)
 msgid "Create the mount point directory structure:"
-msgstr ""
+msgstr "Criar a estrutura de diretório de ponto de montagem:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml98(para)
 msgid ""
 "Edit the <filename>/etc/fstab</filename> file and add the following to it:"
-msgstr ""
+msgstr "Edite o arquivo <filename>/etc/fstab</filename> e adicione o seguinte a ele:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml104(para)
 msgid "Mount the devices:"
-msgstr ""
+msgstr "Montar os dispositivos:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml111(para)
 msgid ""
 "Edit the <filename>/etc/rsyncd.conf</filename> file and add the following to"
 " it:"
-msgstr ""
+msgstr "Edite o arquivo <filename>/etc/rsyncd.conf</filename> e adicione o seguinte a ele:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml136(para)
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml216(para)
@@ -7937,25 +7937,25 @@ msgstr ""
 msgid ""
 "Replace <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable> with the "
 "IP address of the management network on the storage node."
-msgstr ""
+msgstr "Substitua <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable> com o endereço IP da rede de gerenciamento no nodo de armazenamento."
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml140(para)
 msgid ""
 "The <systemitem role=\"service\">rsync</systemitem> service requires no "
 "authentication, so consider running it on a private network."
-msgstr ""
+msgstr "O serviço <systemitem role=\"service\">rsync</systemitem> não requer autenticação, portanto, considere executá-lo em uma rede privada."
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml146(para)
 msgid ""
 "Edit the <filename>/etc/default/rsync</filename> file and enable the "
 "<systemitem role=\"service\">rsync</systemitem> service:"
-msgstr ""
+msgstr "Edite o arquivo <filename>/etc/default/rsync</filename> e habilite o serviço <systemitem role=\"service\">rsync</systemitem>:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml151(para)
 msgid ""
 "Edit the <filename>/etc/xinetd.d/rsync</filename> file and enable the "
 "<systemitem role=\"service\">rsync</systemitem> service:"
-msgstr ""
+msgstr "Edite o arquivo <filename>/etc/xinetd.d/rsync</filename> e habilite o serviço <systemitem role=\"service\">rsync</systemitem>:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml156(para)
 msgid "Start the <systemitem class=\"service\">rsync</systemitem> service:"
@@ -7965,7 +7965,7 @@ msgstr "Inicie o serviço <systemitem class=\"service\">rsync</systemitem>:"
 msgid ""
 "Start the <systemitem class=\"service\">rsyncd</systemitem> service and "
 "configure it to start when the system boots:"
-msgstr ""
+msgstr "Inicie o serviço <systemitem class=\"service\">rsyncd</systemitem> e configure-o para iniciar quando o sistema inicializar:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml167(para)
 msgid ""
@@ -7975,23 +7975,23 @@ msgstr "Inicie o serviço <systemitem class=\"service\">xinetd</systemitem> e co
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml178(title)
 msgid "Install and configure storage node components"
-msgstr ""
+msgstr "Instalar e configurar componentes do nodo de armazenamento"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml180(para)
 msgid "Perform these steps on each storage node."
-msgstr ""
+msgstr "Realize estes passos em cada nodo de armazenamento."
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml191(para)
 msgid ""
 "Obtain the accounting, container, and object service configuration files "
 "from the Object Storage source repository:"
-msgstr ""
+msgstr "Obtenha os arquivos de configuração da contabilidade, contêiner e do serviço de objeto, a partir do repositório fonte do Object Storage:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml201(para)
 msgid ""
 "Edit the <filename>/etc/swift/account-server.conf</filename> file and "
 "complete the following actions:"
-msgstr ""
+msgstr "Edite o arquivo <filename>/etc/swift/account-server.conf</filename> e complete as seguintes ações:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml206(para)
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml248(para)
@@ -7999,7 +7999,7 @@ msgstr ""
 msgid ""
 "In the <literal>[DEFAULT]</literal> section, configure the bind IP address, "
 "bind port, user, configuration directory, and mount point directory:"
-msgstr ""
+msgstr "Na seção <literal>[DEFAULT]</literal>, configure o endereço IP de vinculação, a porta de vinculação, usuário, diretório de configuração, e diretório de ponto de montagem:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml222(para)
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml264(para)
@@ -8008,7 +8008,7 @@ msgstr ""
 msgid ""
 "In the <literal>[pipeline:main]</literal> section, enable the appropriate "
 "modules:"
-msgstr ""
+msgstr "Na seção <literal>[pipeline:main]</literal>, habilite os módulos apropriados:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml227(para)
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml269(para)
@@ -8019,7 +8019,7 @@ msgid ""
 "the <link "
 "href=\"http://docs.openstack.org/developer/swift/deployment_guide.html\">Deployment"
 " Guide</link>."
-msgstr ""
+msgstr "Para mais informações sobre outros módulos que habilitam características adicionais, consulte o <link href=\"http://docs.openstack.org/developer/swift/deployment_guide.html\">Deployment Guide</link>."
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml234(para)
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml276(para)
@@ -8027,33 +8027,33 @@ msgstr ""
 msgid ""
 "In the <literal>[filter:recon]</literal> section, configure the recon "
 "(metrics) cache directory:"
-msgstr ""
+msgstr "Na seção  <literal>[filter:recon]</literal>, configure o diretório de cache recon (métricas):"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml243(para)
 msgid ""
 "Edit the <filename>/etc/swift/container-server.conf</filename> file and "
 "complete the following actions:"
-msgstr ""
+msgstr "Edite o arquivo <filename>/etc/swift/container-server.conf</filename> e complete as seguintes ações:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml285(para)
 msgid ""
 "Edit the <filename>/etc/swift/object-server.conf</filename> file and "
 "complete the following actions:"
-msgstr ""
+msgstr "Edite o arquivo <filename>/etc/swift/object-server.conf</filename> e complete as seguintes ações:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml327(para)
 msgid "Ensure proper ownership of the mount point directory structure:"
-msgstr ""
+msgstr "Garanta a propriedade adequada da estrutura de diretórios do ponto de montagem:"
 
 #: ./doc/install-guide/object-storage/section_swift-storage-node.xml332(para)
 msgid ""
 "Create the <literal>recon</literal> directory and ensure proper ownership of"
 " it:"
-msgstr ""
+msgstr "Crie o diretório <literal>recon</literal> e garanta a propriedade adequada dele:"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml7(title)
 msgid "Create initial rings"
-msgstr ""
+msgstr "Criar anéis iniciais"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml8(para)
 msgid ""
@@ -8071,59 +8071,59 @@ msgstr ""
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml20(title)
 msgid "Account ring"
-msgstr ""
+msgstr "Anel de conta"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml21(para)
 msgid ""
 "The account server uses the account ring to maintain lists of containers."
-msgstr ""
+msgstr "O servidor de conta utiliza o anel de conta para manter listas de contêineres."
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml24(title)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml78(title)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml133(title)
 msgid "To create the ring"
-msgstr ""
+msgstr "Para criar o anel"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml26(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml80(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml135(para)
 #: ./doc/install-guide/object-storage/section_swift-verify.xml12(para)
 msgid "Perform these steps on the controller node."
-msgstr ""
+msgstr "Realize estes passos no nodo controlador."
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml29(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml83(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml138(para)
 msgid "Change to the <literal>/etc/swift</literal> directory."
-msgstr ""
+msgstr "Mude para o diretório <literal>/etc/swift</literal>."
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml32(para)
 msgid "Create the base <filename>account.builder</filename> file:"
-msgstr ""
+msgstr "Crie o arquivo base <filename>account.builder</filename>:"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml36(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml91(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml145(para)
 msgid "Add each storage node to the ring:"
-msgstr ""
+msgstr "Adicione cada nodo de armazenamento ao anel:"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml38(replaceable)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml93(replaceable)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml147(replaceable)
 msgid "STORAGE_NODE_MANAGEMENT_INTERFACE_IP_ADDRESS"
-msgstr ""
+msgstr "STORAGE_NODE_MANAGEMENT_INTERFACE_IP_ADDRESS"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml38(replaceable)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml93(replaceable)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml147(replaceable)
 msgid "DEVICE_NAME"
-msgstr ""
+msgstr "DEVICE_NAME"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml38(replaceable)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml93(replaceable)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml147(replaceable)
 msgid "DEVICE_WEIGHT"
-msgstr ""
+msgstr "DEVICE_WEIGHT"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml39(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml94(para)
@@ -8150,51 +8150,51 @@ msgstr ""
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml108(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml162(para)
 msgid "Verify the ring contents:"
-msgstr ""
+msgstr "Verifique o conteúdo do anel:"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml65(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml120(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml174(para)
 msgid "Rebalance the ring:"
-msgstr ""
+msgstr "Reequilibre o anel:"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml68(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml123(para)
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml177(para)
 msgid "This process can take a while."
-msgstr ""
+msgstr "Este processo pode demorar um pouco."
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml74(title)
 msgid "Container ring"
-msgstr ""
+msgstr "Anel contêiner"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml75(para)
 msgid ""
 "The container server uses the container ring to maintain lists of objects. "
 "However, it does not track object locations."
-msgstr ""
+msgstr "O servidor de contêiner utiliza o anel contêiner para manter listas de objetos. Contudo, ele não rastreia localizações de objeto."
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml86(para)
 msgid "Create the base <filename>container.builder</filename> file:"
-msgstr ""
+msgstr "Crie o arquivo base <filename>container.builder</filename>:"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml129(title)
 msgid "Object ring"
-msgstr ""
+msgstr "Anel Objeto"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml130(para)
 msgid ""
 "The object server uses the object ring to maintain lists of object locations"
 " on local devices."
-msgstr ""
+msgstr "O servidor de objeto utiliza o anel objeto para manter listas de localizações de objeto nos dispositivos locais."
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml141(para)
 msgid "Create the base <filename>object.builder</filename> file:"
-msgstr ""
+msgstr "Crie o arquivo base <filename>object.builder</filename>:"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml183(title)
 msgid "Distribute ring configuration files"
-msgstr ""
+msgstr "Distribua os arquivos de configuração de anel"
 
 #: ./doc/install-guide/object-storage/section_swift-initial-rings.xml184(para)
 msgid ""
@@ -8231,16 +8231,16 @@ msgstr ""
 
 #: ./doc/install-guide/object-storage/section_swift-verify.xml19(para)
 msgid "Show the service status:"
-msgstr ""
+msgstr "Exibir o status do serviço:"
 
 #: ./doc/install-guide/object-storage/section_swift-verify.xml31(para)
 msgid "Upload a test file:"
-msgstr ""
+msgstr "Carregar um arquivo de teste:"
 
 #: ./doc/install-guide/object-storage/section_swift-verify.xml32(replaceable)
 #: ./doc/install-guide/object-storage/section_swift-verify.xml44(replaceable)
 msgid "FILE"
-msgstr ""
+msgstr "FILE"
 
 #: ./doc/install-guide/object-storage/section_swift-verify.xml33(para)
 msgid ""
@@ -8250,11 +8250,11 @@ msgstr ""
 
 #: ./doc/install-guide/object-storage/section_swift-verify.xml38(para)
 msgid "List containers:"
-msgstr ""
+msgstr "Listar contêineres:"
 
 #: ./doc/install-guide/object-storage/section_swift-verify.xml43(para)
 msgid "Download a test file:"
-msgstr ""
+msgstr "Baixar um arquivo de teste:"
 
 #: ./doc/install-guide/object-storage/section_swift-verify.xml45(para)
 msgid ""
@@ -8264,7 +8264,7 @@ msgstr ""
 
 #: ./doc/install-guide/object-storage/section_swift-controller-node.xml7(title)
 msgid "Install and configure the controller node"
-msgstr ""
+msgstr "Instalar e configurar o nodo controlador"
 
 #: ./doc/install-guide/object-storage/section_swift-controller-node.xml8(para)
 msgid ""
@@ -8299,7 +8299,7 @@ msgstr ""
 
 #: ./doc/install-guide/object-storage/section_swift-controller-node.xml36(para)
 msgid "Create a <literal>swift</literal> user:"
-msgstr ""
+msgstr "Crie o usuário <literal>swift</literal>:"
 
 #: ./doc/install-guide/object-storage/section_swift-controller-node.xml37(replaceable)
 #: ./doc/install-guide/object-storage/section_swift-controller-node.xml173(replaceable)
@@ -8309,7 +8309,7 @@ msgstr "SWIFT_PASS"
 #: ./doc/install-guide/object-storage/section_swift-controller-node.xml47(para)
 msgid ""
 "Replace <replaceable>SWIFT_PASS</replaceable> with a suitable password."
-msgstr ""
+msgstr "Substitua <replaceable>SWIFT_PASS</replaceable> com uma senha adequada."
 
 #: ./doc/install-guide/object-storage/section_swift-controller-node.xml51(para)
 msgid ""
@@ -8319,11 +8319,11 @@ msgstr ""
 
 #: ./doc/install-guide/object-storage/section_swift-controller-node.xml60(para)
 msgid "Create the <literal>swift</literal> service:"
-msgstr ""
+msgstr "Crie o serviço <literal>swift</literal>:"
 
 #: ./doc/install-guide/object-storage/section_swift-controller-node.xml96(title)
 msgid "To install and configure the controller node components"
-msgstr ""
+msgstr "Para instalar e configurar os componentes do nodo controlador"
 
 #: ./doc/install-guide/object-storage/section_swift-controller-node.xml100(para)
 msgid ""
