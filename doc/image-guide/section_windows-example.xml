@@ -28,8 +28,8 @@
                   website</link>.</para>
         </step>
         <step>
-          <para>Create a 10&nbsp;GB qcow2 image:</para>
-          <screen><prompt>$</prompt> <userinput>qemu-img create -f qcow2 ws2012.qcow2 10G</userinput></screen>
+          <para>Create a 15&nbsp;GB qcow2 image:</para>
+          <screen><prompt>$</prompt> <userinput>qemu-img create -f qcow2 ws2012.qcow2 15G</userinput></screen>
         </step>
       </substeps>
     </step>
@@ -39,7 +39,7 @@
       <screen><prompt>#</prompt> <userinput>virt-install --connect qemu:///system \
   --name ws2012 --ram 2048 --vcpus 2 \
   --network network=default,model=virtio \
-  --disk path=ws2012.qcow2,device=disk,bus=virtio \
+  --disk path=ws2012.qcow2,format=qcow2,device=disk,bus=virtio \
   --cdrom /path/to/en_windows_server_2012_x64_dvd.iso \
   --disk path=/path/to/virtio-win-0.1-XX.iso,device=cdrom \
   --vnc --os-type windows --os-variant win2k8</userinput></screen>
