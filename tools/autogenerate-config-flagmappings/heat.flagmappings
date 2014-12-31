@@ -10,12 +10,12 @@ default_log_levels logging
 default_notification_level amqp
 default_publisher_id amqp
 deferred_auth_method common
-disable_process_locking debug
 enable_cloud_watch_lite cloudwatch_api
 enable_stack_abandon api
 enable_stack_adopt api
 engine_life_check_timeout rpc
 environment_dir common
+error_wait_time common
 event_purge_batch_size common
 fake_rabbit testing
 fatal_deprecations logging
@@ -38,7 +38,6 @@ kombu_ssl_keyfile rabbitmq
 kombu_ssl_version rabbitmq
 list_notifier_drivers amqp
 loadbalancer_template loadbalancer
-lock_path common
 log_config_append logging
 log_date_format logging
 log_dir logging
@@ -64,6 +63,7 @@ onready notification
 periodic_interval common
 plugin_dirs common
 policy_default_rule api
+policy_dirs api
 policy_file api
 publish_errors logging
 qpid_heartbeat qpid
@@ -247,9 +247,19 @@ matchmaker_redis/host redis
 matchmaker_redis/password redis
 matchmaker_redis/port redis
 matchmaker_ring/ringfile redis
+oslo_messaging_amqp/allow_insecure_clients rpc
+oslo_messaging_amqp/broadcast_prefix rpc
+oslo_messaging_amqp/container_name rpc
+oslo_messaging_amqp/group_request_prefix rpc
+oslo_messaging_amqp/idle_timeout rpc
+oslo_messaging_amqp/server_request_prefix rpc
+oslo_messaging_amqp/ssl_ca_file rpc
+oslo_messaging_amqp/ssl_cert_file rpc
+oslo_messaging_amqp/ssl_key_file rpc
+oslo_messaging_amqp/ssl_key_password rpc
+oslo_messaging_amqp/trace rpc
 paste_deploy/api_paste_config api
 paste_deploy/flavor api
+profiler/profiler_enabled testing
+profiler/trace_sqlalchemy testing
 revision/heat_revision common
-ssl/ca_file api cfn_api cloudwatch_api
-ssl/cert_file api cfn_api cloudwatch_api
-ssl/key_file api cfn_api cloudwatch_api

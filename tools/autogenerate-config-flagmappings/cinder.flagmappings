@@ -20,9 +20,11 @@ backup_driver backups
 backup_manager backups
 backup_metadata_version backups
 backup_name_template backups
+backup_object_number_per_notification backups
 backup_swift_auth backups_swift
 backup_swift_auth_version swift
 backup_swift_container backups_swift
+backup_swift_enable_progress_timer backups_swift
 backup_swift_key backups_swift
 backup_swift_object_size backups_swift
 backup_swift_retry_attempts backups_swift
@@ -30,6 +32,7 @@ backup_swift_retry_backoff backups_swift
 backup_swift_tenant swift
 backup_swift_url backups_swift
 backup_swift_user backups_swift
+backup_timer_interval backups
 backup_topic backups
 backup_tsm_compression backups_tsm
 backup_tsm_password backups_tsm
@@ -37,11 +40,14 @@ backup_tsm_volume_prefix backups_tsm
 capacity_weight_multiplier storage
 cinder_emc_config_file emc
 cinder_huawei_conf_file huawei
+cinder_huawei_sds_conf_file huawei
 cinder_smis_config_file fujitsu_eternus_dx
+client_socket_timeout common
 cloned_volume_same_az zones
 compute_api_class common
 consistencygroup_api_class common
 control_exchange amqp
+coraid_default_repository coraid
 coraid_esm_address coraid
 coraid_group coraid
 coraid_password coraid
@@ -63,11 +69,11 @@ dell_sc_server_folder dellsc
 dell_sc_ssn dellsc
 dell_sc_volume_folder dellsc
 destroy_empty_storage_group emc
-disable_process_locking debug
 dpl_pool prophetstor_dpl
 dpl_port prophetstor_dpl
 driver_client_cert datera
 driver_client_cert_key datera
+driver_use_ssl xio
 enable_new_services common
 enable_v1_api api
 enable_v2_api api
@@ -84,9 +90,14 @@ extra_capabilities api
 fake_rabbit testing
 fatal_deprecations logging
 fatal_exception_format_errors logging
+flashsystem_connection_protocol flashsystem
+flashsystem_multihostmap_enabled flashsystem
+flashsystem_multipath_enabled flashsystem
 fusionio_iocontrol_retry fusionio
 fusionio_iocontrol_targetdelay fusionio
 fusionio_iocontrol_verify_cert fusionio
+gateway_mga violin
+gateway_mgb violin
 glance_api_insecure images
 glance_api_servers images
 glance_api_ssl_compression images
@@ -162,6 +173,11 @@ iscsi_num_targets storage
 iscsi_port storage prophetstor_dpl
 iscsi_target_prefix storage
 iscsi_write_cache storage
+ise_completion_retries xio
+ise_connection_retries xio
+ise_raid xio
+ise_retry_interval xio
+ise_storage_pool xio
 iser_helper storage
 iser_ip_address storage
 iser_num_targets storage
@@ -173,7 +189,6 @@ kombu_ssl_certfile rabbitmq
 kombu_ssl_keyfile rabbitmq
 kombu_ssl_version rabbitmq
 lio_initiator_iqns common
-lock_path common
 log_config_append logging
 log_date_format logging
 log_dir logging
@@ -201,12 +216,15 @@ nas_ip nas
 nas_login nas
 nas_password nas
 nas_private_key nas
+nas_secure_file_operations nas
+nas_secure_file_permissions nas
 nas_ssh_port nas
 naviseccli_path emc
 netapp_controller_ips netapp_eseries_iscsi
 netapp_copyoffload_tool_path netapp_cdot_nfs
 netapp_eseries_host_type netapp_eseries_iscsi
 netapp_login netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
+netapp_partner_backend_name netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_password netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_sa_password netapp_eseries_iscsi
 netapp_server_hostname netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
@@ -239,6 +257,7 @@ nexenta_target_prefix nexenta_iscsi
 nexenta_user nexenta_iscsi
 nexenta_volume nexenta_iscsi
 nexenta_volume_compression nexenta_nfs
+nfs_mount_attempts storage_nfs
 nfs_mount_options storage_nfs
 nfs_mount_point_base storage_nfs
 nfs_oversub_ratio storage_nfs
@@ -259,6 +278,9 @@ nova_endpoint_template compute
 num_iser_scan_tries storage
 num_shell_tries common
 num_volume_device_scan_tries storage
+os_privileged_user_name common
+os_privileged_user_password common
+os_privileged_user_tenant common
 os_region_name compute
 osapi_max_limit api
 osapi_max_request_body_size api
@@ -271,6 +293,7 @@ osapi_volume_workers api
 periodic_fuzzy_delay common
 periodic_interval common
 policy_default_rule common
+policy_dirs common
 policy_file common
 publish_errors logging
 pure_api_token pure
@@ -285,6 +308,11 @@ qpid_sasl_mechanisms qpid
 qpid_tcp_nodelay qpid
 qpid_topology_version qpid
 qpid_username qpid
+quobyte_client_cfg quobyte
+quobyte_mount_point_base quobyte
+quobyte_qcow2_volumes quobyte
+quobyte_sparsed_volumes quobyte
+quobyte_volume_url quobyte
 quota_backup_gigabytes quota
 quota_backups quota
 quota_consistencygroups quota
@@ -314,6 +342,7 @@ rbd_store_chunk_size storage_ceph
 rbd_user storage_ceph
 replication_api_class common
 report_interval common
+request_timeout common
 reservation_expire quota
 reserved_percentage common
 restore_discard_excess_bytes backups_ceph
@@ -366,6 +395,7 @@ smbfs_sparsed_volumes smbfs
 smbfs_used_ratio smbfs
 snapshot_name_template backups
 snapshot_same_host backups
+srb_base_urls srb
 ssh_conn_timeout san
 ssh_hosts_key_file common
 ssh_max_pool_conn san
@@ -378,6 +408,8 @@ storage_availability_zone common
 storage_vnx_authentication_type emc
 storage_vnx_pool_name emc
 storage_vnx_security_file_dir emc
+storpool_replication storpool
+storpool_template storpool
 storwize_svc_allow_tenant_qos storwize
 storwize_svc_connection_protocol storwize
 storwize_svc_flashcopy_timeout storwize
@@ -408,6 +440,7 @@ transport_url amqp
 until_refresh common
 use_default_quota_class quota
 use_forwarded_for common
+use_igroups violin
 use_multipath_for_image_xfer images
 use_stderr logging
 use_syslog logging
@@ -445,6 +478,7 @@ volume_transfer_salt_length api
 volume_usage_audit_period storage
 volumes_dir storage
 windows_iscsi_lun_path windows
+wsgi_keep_alive common
 xiv_chap xiv
 xiv_ds8k_connection_type xiv
 xiv_ds8k_proxy xiv
@@ -459,7 +493,10 @@ zadara_vpsa_ip zadara
 zadara_vpsa_poolname zadara
 zadara_vpsa_port zadara
 zadara_vpsa_use_ssl zadara
+zfssa_data_ip zfssa
+zfssa_https_port zfssa
 zfssa_initiator zfssa
+zfssa_initiator_config zfssa
 zfssa_initiator_group zfssa
 zfssa_initiator_password zfssa
 zfssa_initiator_user zfssa
@@ -467,6 +504,12 @@ zfssa_lun_compression zfssa
 zfssa_lun_logbias zfssa
 zfssa_lun_sparse zfssa
 zfssa_lun_volblocksize zfssa
+zfssa_nfs_mount_options zfssa
+zfssa_nfs_pool zfssa
+zfssa_nfs_project zfssa
+zfssa_nfs_share zfssa
+zfssa_nfs_share_compression zfssa
+zfssa_nfs_share_logbias zfssa
 zfssa_pool zfssa
 zfssa_project zfssa
 zfssa_rest_timeout zfssa
@@ -556,8 +599,16 @@ matchmaker_redis/host redis
 matchmaker_redis/password redis
 matchmaker_redis/port redis
 matchmaker_ring/ringfile redis
+oslo_messaging_amqp/allow_insecure_clients rpc
+oslo_messaging_amqp/broadcast_prefix rpc
+oslo_messaging_amqp/container_name rpc
+oslo_messaging_amqp/group_request_prefix rpc
+oslo_messaging_amqp/idle_timeout rpc
+oslo_messaging_amqp/server_request_prefix rpc
+oslo_messaging_amqp/ssl_ca_file rpc
+oslo_messaging_amqp/ssl_cert_file rpc
+oslo_messaging_amqp/ssl_key_file rpc
+oslo_messaging_amqp/ssl_key_password rpc
+oslo_messaging_amqp/trace rpc
 profiler/profiler_enabled profiler
 profiler/trace_sqlalchemy profiler
-ssl/ca_file ca
-ssl/cert_file ca
-ssl/key_file ca
