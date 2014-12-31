@@ -107,10 +107,13 @@
         </section>
     </section>
     <section xml:id="xenapi-deployment-architecture">
-        <title xml:id="xenapi-deployment-architecture.title">XenAPI
-            Deployment Architecture</title>
-        <para>When you deploy OpenStack on XCP or XenServer, you get
-            something similar to this: <informalfigure>
+        <title xml:id="xenapi-deployment-architecture.title">
+            XenAPI deployment architecture
+        </title>
+        <para>
+            A basic OpenStack deployment on a XAPI-managed server, assuming
+            that the network provider is nova-network, looks like this:
+            <informalfigure>
                 <mediaobject>
                     <imageobject>
                         <imagedata
@@ -118,126 +121,151 @@
                             contentwidth="140mm"/>
                     </imageobject>
                 </mediaobject>
-            </informalfigure></para>
-        <para>Key things to note: <itemizedlist>
+            </informalfigure>
+        </para>
+        <para>
+            Key things to note:
+            <itemizedlist>
                 <listitem>
-                    <para>The hypervisor: Xen</para>
+                    <para>
+                        The hypervisor: Xen
+                    </para>
                 </listitem>
                 <listitem>
-                    <para>Domain 0: runs xapi and some small pieces
-                        from OpenStack (some xapi plug-ins and network
-                        isolation rules). The majority of this is
-                        provided by XenServer or XCP (or yourself
-                        using Kronos).</para>
+                    <para>
+                        Domain 0: runs XAPI and some small pieces from
+                        OpenStack, the XAPI plug-ins.
+                    </para>
                 </listitem>
                 <listitem>
-                    <para>OpenStack VM: The <systemitem
-                            class="service">nova-compute</systemitem>
-                        code runs in a paravirtualized virtual
-                        machine, running on the host under management.
-                        Each host runs a local instance of <systemitem
-                            class="service">nova-compute</systemitem>.
-                        It will often also be running nova-network
-                        (depending on your network mode). In this
-                        case, nova-network is managing the addresses
-                        given to the tenant VMs through DHCP.</para>
+                    <para>
+                        OpenStack VM: The
+                        <systemitem class="service">Compute</systemitem>
+                        service runs in a paravirtualized virtual machine, on
+                        the host under management. Each host runs a local
+                        instance of
+                        <systemitem class="service">Compute</systemitem>.
+                        It is also running an instance of nova-network.
+                    </para>
                 </listitem>
                 <listitem>
-                    <para>Nova uses the XenAPI Python library to talk
-                        to xapi, and it uses the Management Network to
-                        reach from the domU to dom0 without leaving
-                        the host.</para>
+                    <para>
+                        OpenStack Compute uses the XenAPI Python library to
+                        talk to XAPI, and it uses the Management Network to
+                        reach from the OpenStack VM to Domain 0.
+                    </para>
                 </listitem>
-            </itemizedlist></para>
-        <para>Some notes on the networking: <itemizedlist>
+            </itemizedlist>
+        </para>
+        <para>
+            Some notes on the networking:
+            <itemizedlist>
                 <listitem>
-                    <para>The above diagram assumes FlatDHCP
-                        networking (the DevStack default).</para>
+                    <para>
+                        The above diagram assumes FlatDHCP networking.
+                    </para>
                 </listitem>
                 <listitem>
-                    <para>There are three main OpenStack Networks:<itemizedlist>
+                    <para>
+                        There are three main OpenStack networks:
+                        <itemizedlist>
                             <listitem>
-                                <para>Management network - RabbitMQ,
-                                   MySQL, and other services. Please note that
-                                   the VM images are downloaded by the XenAPI
-                                   plug-ins, so make sure that the
-                                   images can be downloaded through
-                                   the management network. It usually
-                                   means binding those services to the
-                                   management interface.</para>
+                                <para>
+                                    Management network: RabbitMQ, MySQL,
+                                    inter-host communication, and compute-XAPI
+                                    communication.  Please note that the VM
+                                    images are downloaded by the XenAPI
+                                    plug-ins, so make sure that the OpenStack
+                                    Image Service is accessible through this
+                                    network. It usually means binding those
+                                    services to the management interface.
+                                </para>
                             </listitem>
                             <listitem>
-                                <para>Tenant network - controlled by
-                                   nova-network. The parameters of
-                                   this network depend on the
-                                   networking model selected (Flat,
-                                   Flat DHCP, VLAN).</para>
+                                <para>
+                                    Tenant network: controlled by
+                                    nova-network, this is used for tenant
+                                    traffic.
+                                </para>
                             </listitem>
                             <listitem>
-                                <para>Public network - floating IPs,
-                                   public API endpoints.</para>
+                                <para>
+                                    Public network: floating IPs, public API
+                                    endpoints.
+                                </para>
                             </listitem>
-                        </itemizedlist></para>
+                        </itemizedlist>
+                    </para>
                 </listitem>
                 <listitem>
-                    <para>The networks shown here must be connected
-                        to the corresponding physical networks within
-                        the data center. In the simplest case, three
-                        individual physical network cards could be
-                        used. It is also possible to use VLANs to
-                        separate these networks. Please note, that the
-                        selected configuration must be in line with
-                        the networking model selected for the cloud.
-                        (In case of VLAN networking, the physical
-                        channels have to be able to forward the tagged
-                        traffic.)</para>
+                    <para>
+                        The networks shown here must be connected to the
+                        corresponding physical networks within the data center.
+                        In the simplest case, three individual physical network
+                        cards could be used. It is also possible to use VLANs
+                        to separate these networks. Please note, that the
+                        selected configuration must be in line with the
+                        networking model selected for the cloud.  (In case of
+                        VLAN networking, the physical channels have to be able
+                        to forward the tagged traffic.)
+                    </para>
                 </listitem>
-            </itemizedlist></para>
-    </section>
-    <section xml:id="pools">
-        <title>XenAPI pools</title>
-        <para>The host-aggregates feature enables you to create pools
-            of XenServer hosts to enable live migration when using
-            shared storage. However, you cannot configure shared
-            storage.</para>
+            </itemizedlist>
+        </para>
     </section>
     <section xml:id="further-reading">
         <title>Further reading</title>
-        <para>Here are some of the resources available to learn more
-            about Xen: <itemizedlist>
+        <para>
+            Here are some of the resources available to learn more
+            about Xen:
+            <itemizedlist>
                 <listitem>
-                    <para>Citrix XenServer official
-                            documentation:<link
-                            xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/"
-                            >
-                            http://docs.vmd.citrix.com/XenServer</link>.</para>
+                    <para>
+                        Citrix XenServer official documentation:
+                        <link
+                            xlink:href="http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/">
+                            http://docs.vmd.citrix.com/XenServer
+                        </link>
+                    </para>
                 </listitem>
                 <listitem>
-                    <para>What is Xen? by Xen.org: <link
-                            xlink:href="http://xen.org/files/Marketing/WhatisXen.pdf"
-                            >
-                            http://xen.org/files/Marketing/WhatisXen.pdf</link>.</para>
+                    <para>
+                        What is Xen? by Xen.org:
+                        <link
+                            xlink:href="http://xen.org/files/Marketing/WhatisXen.pdf">
+                            http://xen.org/files/Marketing/WhatisXen.pdf
+                        </link>
+                    </para>
                 </listitem>
                 <listitem>
-                    <para>Xen Hypervisor project: <link
-                            xlink:href="http://xen.org/products/xenhyp.html"
-                            >
-                            http://xen.org/products/xenhyp.html</link>.</para>
+                    <para>
+                        Xen Hypervisor project:
+                        <link
+                            xlink:href="http://www.xenproject.org/developers/teams/hypervisor.html">
+                            http://www.xenproject.org/developers/teams/hypervisor.html
+                        </link>
+                    </para>
                 </listitem>
                 <listitem>
-                    <para>XCP project: <link
-                            xlink:href="http://xen.org/products/cloudxen.html"
-                            >
-                            http://xen.org/products/cloudxen.html</link>.</para>
+                    <para>
+                        Xapi project:
+                        <link
+                            xlink:href="http://www.xenproject.org/developers/teams/xapi.html">
+                            http://www.xenproject.org/developers/teams/xapi.html
+                        </link>
+                    </para>
                 </listitem>
                 <listitem>
-                    <para>Further XenServer and OpenStack information:
-                            <link
-                            xlink:href="http://wiki.openstack.org/XenServer"
-                            >
-                            http://wiki.openstack.org/XenServer</link>.</para>
+                    <para>
+                        Further XenServer and OpenStack information:
+                        <link
+                            xlink:href="http://wiki.openstack.org/XenServer">
+                            http://wiki.openstack.org/XenServer
+                        </link>
+                    </para>
                 </listitem>
-            </itemizedlist></para>
+            </itemizedlist>
+        </para>
     </section>
     <xi:include href="section_xen-install.xml"/>
     <xi:include href="section_compute-configure-xen.xml"/>
