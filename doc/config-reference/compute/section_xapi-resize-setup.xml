@@ -5,32 +5,37 @@
   version="5.0"
   xml:id="xapi-resize-setup">
     <?dbhtml stop-chunking?>
-    <title>Modify Dom0 for resize/migration support</title>
-    <para>To resize servers with XenServer and XCP, you must:</para>
+    <title>Modify dom0 for resize/migration support</title>
+    <para>To resize servers with XenServer you must:</para>
     <itemizedlist>
         <listitem>
-            <para>Establish a root trust between all hypervisor nodes
-                of your deployment:</para>
-            <para>To do so, generate an ssh key-pair with the
-                    <command>ssh-keygen</command> command. Ensure that
-                each of your dom0's
-                    <filename>authorized_keys</filename> file (located
-                in <filename>/root/.ssh/authorized_keys</filename>)
-                contains the public key fingerprint (located in
-                    <filename>/root/.ssh/id_rsa.pub</filename>).</para>
+            <para>
+                Establish a root trust between all hypervisor nodes
+                of your deployment:
+            </para>
+            <para>
+                To do so, generate an ssh key-pair with the
+                <command>ssh-keygen</command> command. Ensure that each of your
+                dom0's <filename>authorized_keys</filename> file (located in
+                <filename>/root/.ssh/authorized_keys</filename>) contains the
+                public key fingerprint (located in
+                <filename>/root/.ssh/id_rsa.pub</filename>).
+            </para>
         </listitem>
         <listitem>
-            <para>Provide an <filename>/images</filename> mount point
-                to the dom0 for your hypervisor:</para>
-            <para>Dom0 space is at a premium so creating a directory
-                in dom0 is potentially dangerous and likely to fail
-                especially when you resize large servers. The least
-                you can do is to symlink <filename>/images</filename>
-                to your local storage SR. The following instructions
-                work for an English-based installation of XenServer
-                (and XCP) and in the case of ext3-based SR (with which
-                the resize functionality is known to work
-                correctly).</para>
+            <para>
+                Provide a <filename>/images</filename> mount point to the dom0
+                for your hypervisor:
+            </para>
+            <para>
+                dom0 space is at a premium so creating a directory in dom0 is
+                potentially dangerous and likely to fail especially when you
+                resize large servers. The least you can do is to symlink
+                <filename>/images</filename> to your local storage SR. The
+                following instructions work for an English-based installation
+                of XenServer and in the case of ext3-based SR (with which the
+                resize functionality is known to work correctly).
+            </para>
             <screen><prompt>#</prompt> <userinput>LOCAL_SR=$(xe sr-list name-label="Local storage" --minimal)</userinput>
 <prompt>#</prompt> <userinput>IMG_DIR="/var/run/sr-mount/$LOCAL_SR/images"</userinput>
 <prompt>#</prompt> <userinput>mkdir -p "$IMG_DIR"</userinput>

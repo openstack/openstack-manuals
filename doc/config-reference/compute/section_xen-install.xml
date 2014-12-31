@@ -4,173 +4,114 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
   xml:id="xenapi-install">
-    <title xml:id="xenapi-install.title">Install XenServer and
-        XCP</title>
-    <para>Before you can run OpenStack with XCP or XenServer, you must
-        install the software on <link
-            xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/installation.html#sys_requirements"
-            >an appropriate server</link>.</para>
+    <title xml:id="xenapi-install.title">Install XenServer</title>
+    <para>
+        Before you can run OpenStack with XenServer, you must install the
+        hypervisor on
+        <link
+            xlink:href="http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/installation.html#sys_requirements">
+            an appropriate server
+        </link>
+        .
+    </para>
     <note>
-        <para>Xen is a type 1 hypervisor: When your server starts, Xen
-            is the first software that runs. Consequently, you must
-            install XenServer or XCP before you install the operating
-            system where you want to run OpenStack code. The OpenStack
-            services then run in a virtual machine that you install on
-            top of XenServer.</para>
+        <para>
+            Xen is a type 1 hypervisor: When your server starts, Xen is the
+            first software that runs. Consequently, you must install XenServer
+            before you install the operating system where you want to run
+            OpenStack code. You then install
+            <systemitem class="service">nova-compute</systemitem> into a
+            dedicated virtual machine on the host.
+        </para>
     </note>
-    <para>Before you can install your system, decide whether to
-        install a free or paid edition of Citrix XenServer or Xen
-        Cloud Platform from Xen.org. Download the software from these
-        locations:</para>
-    <itemizedlist>
-        <listitem>
-            <para><link
-                    xlink:href="http://www.citrix.com/XenServer/download"
-                    >http://www.citrix.com/XenServer/download</link></para>
-        </listitem>
-        <listitem>
-            <para><link
-                    xlink:href="http://www.xen.org/download/xcp/index.html"
-                    >http://www.xen.org/download/xcp/index.html</link></para>
-        </listitem>
-    </itemizedlist>
-    <para>When you install many servers, you might find it easier to
-        perform <link
-            xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/installation.html#pxe_boot_install"
-            >PXE boot installations of XenServer or XCP</link>. You
-        can also package any post-installation changes that you want
-        to make to your XenServer by <link
-            xlink:href="http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/supplemental_pack_ddk.html"
-            >creating your own XenServer supplemental
-        pack</link>.</para>
-
-    <para>You can also install the <package>xcp-xenapi</package>
-        package on Debian-based distributions to get XCP. However,
-        this is not as mature or feature complete as above
-        distributions. This modifies your boot loader to first boot
-        Xen and boot your existing OS on top of Xen as Dom0. The xapi
-        daemon runs in Dom0. Find more details at <link
-            xlink:href="http://wiki.xen.org/wiki/Project_Kronos"
-            >http://wiki.xen.org/wiki/Project_Kronos</link>.</para>
+    <para>
+        Use the following link to download XenServer's installation media:
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <link
+                        xlink:href="http://xenserver.org/open-source-virtualization-download.html">
+                        http://xenserver.org/open-source-virtualization-download.html
+                    </link>
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>
+        When you install many servers, you might find it easier to perform
+        <link
+            xlink:href="http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/installation.html#pxe_boot_install">
+            PXE boot installations
+        </link>
+        . You can also package any post-installation changes that you want to
+        make to your XenServer by following the instructions of
+        <link
+            xlink:href="http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/supplemental_pack_ddk.html">
+            creating your own XenServer supplemental pack
+        </link>
+        .
+    </para>
     <important>
-        <para>Make sure you use the EXT type of storage repository
-            (SR). Features that require access to VHD files (such as
-            copy on write, snapshot and migration) do not work when
-            you use the LVM SR. Storage repository (SR) is a
-            XenAPI-specific term relating to the physical storage
-            where virtual disks are stored.</para>
-        <para>On the XenServer/XCP installation screen, choose the
-                <guilabel>XenDesktop Optimized</guilabel> option. If
-            you use an answer file, make sure you use
-                <literal>srtype="ext"</literal> in the
-                <option>installation</option> tag of the answer
-            file.</para>
+        <para>
+            Make sure you use the EXT type of storage repository (SR). Features
+            that require access to VHD files (such as copy on write, snapshot
+            and migration) do not work when you use the LVM SR. Storage
+            repository (SR) is a XAPI-specific term relating to the physical
+            storage where virtual disks are stored.
+        </para>
+        <para>
+            On the XenServer installation screen, choose the
+            <guilabel>XenDesktop Optimized</guilabel>
+            option. If you use an answer file, make sure you use
+            <literal>srtype="ext"</literal>
+            in the
+            <literal>installation</literal>
+            tag of the answer file.
+        </para>
     </important>
     <section xml:id="xenapi-post-install">
         <title>Post-installation steps</title>
-        <para>Complete these steps to install OpenStack in your
-            XenServer system:</para>
+        <para>
+            The following steps need to be completed after the hypervisor's
+            installation:
+        </para>
         <procedure>
             <step>
-                <para>For resize and migrate functionality, complete
-                    the changes described in the <citetitle>Configure
-                        resize</citetitle> section in the <link
-                        xlink:href="http://docs.openstack.org/trunk/config-reference/content/"
-                            ><citetitle>OpenStack Configuration
-                            Reference</citetitle></link>.</para>
+                <para>
+                    For resize and migrate functionality, enable password-less
+                    SSH authentication and set up the
+                    <literal>/images</literal>
+                    directory on dom0.
+                </para>
             </step>
             <step>
-                <para>Install the VIF isolation rules to help prevent
-                    mac and IP address spoofing.</para>
+                <para>
+                    Install the XAPI plug-ins.
+                </para>
             </step>
             <step>
-                <para>Install the XenAPI plug-ins. See the following
-                    section.</para>
+                <para>
+                    To support AMI type images, you must set up
+                    <literal>/boot/guest</literal>
+                    symlink/directory in dom0.
+                </para>
             </step>
             <step>
-                <para>To support AMI type images, you must set up
-                        <literal>/boot/guest</literal>
-                    symlink/directory in Dom0. For detailed
-                    instructions, see next section.</para>
+                <para>
+                    Create a Paravirtualized virtual machine that can run
+                    <systemitem class="service">nova-compute</systemitem>.
+                </para>
             </step>
             <step>
-                <para>To support resize/migration, set up an ssh trust
-                    relation between your XenServer hosts, and ensure
-                        <literal>/images</literal> is properly set up.
-                    See next section for more details.</para>
-            </step>
-            <step>
-                <para>Create a Paravirtualized virtual machine that
-                    can run the OpenStack compute code.</para>
-            </step>
-            <step>
-                <para>Install and configure the <systemitem
-                        class="service">nova-compute</systemitem> in
-                    the above virtual machine.</para>
+                <para>
+                    Install and configure
+                    <systemitem class="service">nova-compute</systemitem>
+                    in the above virtual machine.
+                </para>
             </step>
         </procedure>
-        <para>For more information, see how DevStack performs the last
-            three steps for developer deployments. For more
-            information about DevStack, see <citetitle>Getting Started
-                With XenServer and Devstack</citetitle> (<link
-                xlink:href="https://github.com/openstack-dev/devstack/blob/master/tools/xen/README.md"
-                >https://github.com/openstack-dev/devstack/blob/master/tools/xen/README.md</link>).
-            Find more information about the first step, see
-                <citetitle>Multi Tenancy Networking Protections in
-                XenServer</citetitle> (<link
-                xlink:href="https://github.com/openstack/nova/blob/master/plugins/xenserver/doc/networking.rst"
-                >https://github.com/openstack/nova/blob/master/plugins/xenserver/doc/networking.rst</link>).
-            For information about how to install the XenAPI plug-ins,
-            see <citetitle>XenAPI README</citetitle> (<link
-                xlink:href="https://github.com/openstack/nova/blob/master/plugins/xenserver/xenapi/README"
-                >https://github.com/openstack/nova/blob/master/plugins/xenserver/xenapi/README</link>).</para>
         <xi:include href="section_xapi-install-plugins.xml"/>
         <xi:include href="section_xapi-ami-setup.xml"/>
         <xi:include href="section_xapi-resize-setup.xml"/>
-    </section>
-    <section xml:id="xenapi-boot-from-iso">
-        <title>Xen boot from ISO</title>
-        <para>XenServer, through the XenAPI integration with
-            OpenStack, provides a feature to boot instances from an
-            ISO file. To activate the Boot From ISO feature, you must
-            configure the SR elements on XenServer host, as
-            follows:</para>
-        <procedure>
-            <step>
-                <para>Create an ISO-typed SR, such as an NFS ISO
-                    library, for instance. For this, using XenCenter
-                    is a simple method. You must export an NFS volume
-                    from a remote NFS server. Make sure it is exported
-                    in read-write mode.</para>
-            </step>
-            <step>
-                <para>On the compute host, find and record the UUID of
-                    this ISO SR:</para>
-                <screen><prompt>#</prompt> <userinput>xe host-list</userinput></screen>
-            </step>
-            <step>
-                <para>Locate the UUID of the NFS ISO library:</para>
-                <screen><prompt>#</prompt> <userinput>xe sr-list content-type=iso</userinput></screen>
-            </step>
-            <step>
-                <para>Set the UUID and configuration. Even if an NFS
-                    mount point is not local, you must specify
-                        <literal>local-storage-iso</literal>.</para>
-                <screen><prompt>#</prompt> <userinput>xe sr-param-set uuid=[iso sr uuid] other-config:i18n-key=local-storage-iso</userinput></screen>
-            </step>
-            <step>
-                <para>Make sure the host-UUID from <literal>xe
-                        pbd-list</literal> equals the UUID of the host
-                    you found previously:</para>
-                <screen><prompt>#</prompt> <userinput>xe sr-uuid=[iso sr uuid]</userinput></screen>
-            </step>
-            <step>
-                <para>You can now add images through the OpenStack
-                    Image Service with
-                        <literal>disk-format=iso</literal>, and boot
-                    them in OpenStack Compute:</para>
-                <screen><prompt>$</prompt> <userinput>glance image-create --name fedora_iso --disk-format iso --container-format bare &lt; Fedora-16-x86_64-netinst.iso</userinput></screen>
-            </step>
-        </procedure>
     </section>
 </section>
