@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2014-12-23 06:13+0000\n"
+"POT-Creation-Date: 2015-01-01 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -294,11 +294,11 @@ msgstr ""
 msgid "Once configured, you can use the <placeholder-1/> command to manage the volumes. This command enables you to create, delete, and verify volumes and determine targets and add iSCSI initiators to the system."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:154(title)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:155(title)
 msgid "Troubleshoot your installation"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_blockstorage.xml:155(para)
+#: ./doc/admin-guide-cloud/ch_blockstorage.xml:156(para)
 msgid "This section provides useful tips to help you troubleshoot your Block Storage installation."
 msgstr ""
 
@@ -9628,6 +9628,174 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:215(para)
 msgid "This command also makes the Boolean persistent across reboots. Run this command on all client hosts that require access to GlusterFS volumes on an instance. This includes all compute nodes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:7(title)
+msgid "Consistency Groups"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:8(para)
+msgid "Consistency group support is available in OpenStack Block Storage. The support is added for creating snapshots of consistency groups. This feature leverages the storage level consistency technology. It allows snapshots of multiple volumes in the same consistency group to be taken at the same point-in-time to ensure data consistency. The consistency group operations can be performed using the Block Storage command line."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:15(para)
+msgid "Only Block Storage V2 API supports consistency groups. You can specify <literal>--os-volume-api-version 2</literal> when using Block Storage command line for consistency group operations."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:18(para)
+msgid "Before using consistency groups, make sure the Block Storage driver that you are running has consistency group support by reading the Block Storage manual or consulting the driver maintainer. There are a small number of drivers that have implemented this feature. The default LVM driver does not support consistency groups yet because the consistency technology is not available at the storage level."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:24(para)
+msgid "Before using consistency groups, you must change policies for the consistency group APIs in the <filename>/etc/cinder/policy.json </filename> file. By default, the consistency group APIs are disabled. Enable them before running consistency group operations."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:28(para)
+msgid "Here are existing policy entries for consistency groups:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:37(para)
+msgid "Change them to the following by removing <literal>group:nobody </literal> to enable these APIs:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:48(para)
+msgid "Restart Block Storage API service after changing policies."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:49(para)
+msgid "The following consistency group operations are supported:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:52(para)
+msgid "Create a consistency group, given volume types."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:53(para)
+msgid "A consistency group can support more than one volume type. The scheduler is responsible for finding a back end that can support all given volume types."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:57(para)
+msgid "A consistency group can only contain volumes hosted by the same back end."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:59(para)
+msgid "A consistency group is empty upon its creation. Volumes need to be created and added to it later."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:64(para)
+msgid "Show a consistency group."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:67(para)
+msgid "List consistency groups."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:70(para)
+msgid "Create a volume and add it to a consistency group, given volume type and consistency group id."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:74(para)
+msgid "Create a snapshot for a consistency group."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:77(para)
+msgid "Show a snapshot of a consistency group."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:80(para)
+msgid "List consistency group snapshots."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:83(para)
+msgid "Delete a snapshot of a consistency group."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:86(para)
+msgid "Delete a consistency group."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:89(para)
+msgid "The following operations are not allowed if a volume is in a consistency group:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:93(para)
+msgid "Volume migration."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:96(para)
+msgid "Volume retype."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:99(para)
+msgid "Volume deletion."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:100(para)
+msgid "A consistency group has to be deleted as a whole with all the volumes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:105(para)
+msgid "The following operations are not allowed if a volume snapshot is in a consistency group snapshot:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:110(para)
+msgid "Volume snapshot deletion."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:111(para)
+msgid "A consistency group snapshot has to be deleted as a whole with all the volume snapshots."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:116(para)
+msgid "The details of consistency group operations are shown in the following."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:118(para)
+msgid "Create a consistency group:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:124(para)
+msgid "The parameter <literal>volume-types</literal> is required. It can be a list of names or UUIDs of volume types separated by commas without spaces in between. For example, <literal> volumetype1,volumetype2,volumetype3.</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:140(para)
+msgid "Show a consistency group:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:152(para)
+msgid "List consistency groups:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:160(para)
+msgid "Create a volume and add it to a consistency group:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:161(para)
+msgid "When creating a volume and adding it to a consistency group, a volume type and a consistency group id must be provided. This is because a consistency group can support more than one volume type."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:193(para)
+msgid "Create a snapshot for a consistency group:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:205(para)
+msgid "Show a snapshot of a consistency group:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:207(para)
+msgid "List consistency group snapshots:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:217(para)
+msgid "Delete a snapshot of a consistency group:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:219(para)
+msgid "Delete a consistency group:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_consistency_groups.xml:220(para)
+msgid "The force flag is needed when there are volumes in the consistency group."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_increase-api-throughput.xml:7(title)
