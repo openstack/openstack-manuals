@@ -18,56 +18,68 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>host = localhost</td>
+        <td><option>host</option> = <replaceable>localhost</replaceable></td>
         <td>(StrOpt) Name of this node, which must be valid in an AMQP key. Can be an opaque identifier. For ZeroMQ only, must be a valid host name, FQDN, or IP address.</td>
       </tr>
       <tr>
-        <td>http_timeout = 600</td>
+        <td><option>http_timeout</option> = <replaceable>600</replaceable></td>
         <td>(IntOpt) Timeout seconds for HTTP requests. Set it to None to disable timeout.</td>
       </tr>
       <tr>
-        <td>memcached_servers = None</td>
+        <td><option>memcached_servers</option> = <replaceable>None</replaceable></td>
         <td>(ListOpt) Memcached servers or None for in process cache.</td>
       </tr>
       <tr>
-        <td>notification_workers = 1</td>
+        <td><option>notification_workers</option> = <replaceable>1</replaceable></td>
         <td>(IntOpt) Number of workers for notification service. A single notification agent is enabled by default.</td>
       </tr>
       <tr>
-        <td>rootwrap_config = /etc/ceilometer/rootwrap.conf</td>
+        <td><option>polling_namespaces</option> = <replaceable>['compute', 'central']</replaceable></td>
+        <td>(MultiChoicesOpt) Polling namespace(s) to be used while resource polling</td>
+      </tr>
+      <tr>
+        <td><option>pollster_list</option> = <replaceable>[]</replaceable></td>
+        <td>(MultiChoicesOpt) List of pollsters (or wildcard templates) to be used while polling</td>
+      </tr>
+      <tr>
+        <td><option>rootwrap_config</option> = <replaceable>/etc/ceilometer/rootwrap.conf</replaceable></td>
         <td>(StrOpt) Path to the rootwrap configuration file touse for running commands as root</td>
-      </tr>
-      <tr>
-        <th colspan="2">[central]</th>
-      </tr>
-      <tr>
-        <td>partitioning_group_prefix = None</td>
-        <td>(StrOpt) Work-load partitioning group prefix. Use only if you want to run multiple central agents with different config files. For each sub-group of the central agent pool with the same partitioning_group_prefix a disjoint subset of pollsters should be loaded.</td>
       </tr>
       <tr>
         <th colspan="2">[compute]</th>
       </tr>
       <tr>
-        <td>workload_partitioning = False</td>
+        <td><option>workload_partitioning</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Enable work-load partitioning, allowing multiple compute agents to be run simultaneously.</td>
       </tr>
       <tr>
         <th colspan="2">[coordination]</th>
       </tr>
       <tr>
-        <td>backend_url = None</td>
+        <td><option>backend_url</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) The backend URL to use for distributed coordination. If left empty, per-deployment central agent and per-host compute agent won't do workload partitioning and will only function correctly if a single instance of that service is running.</td>
       </tr>
       <tr>
-        <td>heartbeat = 1.0</td>
+        <td><option>check_watchers</option> = <replaceable>10.0</replaceable></td>
+        <td>(FloatOpt) Number of seconds between checks to see if group membership has changed</td>
+      </tr>
+      <tr>
+        <td><option>heartbeat</option> = <replaceable>1.0</replaceable></td>
         <td>(FloatOpt) Number of seconds between heartbeats for distributed coordination.</td>
       </tr>
       <tr>
         <th colspan="2">[keystone_authtoken]</th>
       </tr>
       <tr>
-        <td>memcached_servers = None</td>
+        <td><option>memcached_servers</option> = <replaceable>None</replaceable></td>
         <td>(ListOpt) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[polling]</th>
+      </tr>
+      <tr>
+        <td><option>partitioning_group_prefix</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Work-load partitioning group prefix. Use only if you want to run multiple polling agents with different config files. For each sub-group of the agent pool with the same partitioning_group_prefix a disjoint subset of pollsters should be loaded.</td>
       </tr>
     </tbody>
   </table>

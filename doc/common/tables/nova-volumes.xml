@@ -18,134 +18,143 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>block_device_allocate_retries = 60</td>
+        <td><option>block_device_allocate_retries</option> = <replaceable>60</replaceable></td>
         <td>(IntOpt) Number of times to retry block device allocation on failures</td>
       </tr>
       <tr>
-        <td>block_device_allocate_retries_interval = 3</td>
+        <td><option>block_device_allocate_retries_interval</option> = <replaceable>3</replaceable></td>
         <td>(IntOpt) Waiting time interval (seconds) between block device allocation retries on failures</td>
       </tr>
       <tr>
-        <td>volume_api_class = nova.volume.cinder.API</td>
+        <td><option>my_block_storage_ip</option> = <replaceable>$my_ip</replaceable></td>
+        <td>(StrOpt) Block storage IP address of this host</td>
+      </tr>
+      <tr>
+        <td><option>volume_api_class</option> = <replaceable>nova.volume.cinder.API</replaceable></td>
         <td>(StrOpt) The full class name of the volume API class to use</td>
       </tr>
       <tr>
-        <td>volume_usage_poll_interval = 0</td>
+        <td><option>volume_usage_poll_interval</option> = <replaceable>0</replaceable></td>
         <td>(IntOpt) Interval in seconds for gathering volume usages</td>
-      </tr>
-      <tr>
-        <th colspan="2">[baremetal]</th>
-      </tr>
-      <tr>
-        <td>iscsi_iqn_prefix = iqn.2010-10.org.openstack.baremetal</td>
-        <td>(StrOpt) The iSCSI IQN prefix used in baremetal volume connections.</td>
-      </tr>
-      <tr>
-        <td>volume_driver = nova.virt.baremetal.volume_driver.LibvirtVolumeDriver</td>
-        <td>(StrOpt) Baremetal volume driver.</td>
       </tr>
       <tr>
         <th colspan="2">[cinder]</th>
       </tr>
       <tr>
-        <td>api_insecure = False</td>
-        <td>(BoolOpt) Allow to perform insecure SSL requests to cinder</td>
+        <td><option>cafile</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.</td>
       </tr>
       <tr>
-        <td>ca_certificates_file = None</td>
-        <td>(StrOpt) Location of ca certificates file to use for cinder client requests.</td>
-      </tr>
-      <tr>
-        <td>catalog_info = volume:cinder:publicURL</td>
+        <td><option>catalog_info</option> = <replaceable>volumev2:cinderv2:publicURL</replaceable></td>
         <td>(StrOpt) Info to match when looking for cinder in the service catalog. Format is: separated values of the form: &lt;service_type&gt;:&lt;service_name&gt;:&lt;endpoint_type&gt;</td>
       </tr>
       <tr>
-        <td>cross_az_attach = True</td>
+        <td><option>certfile</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) PEM encoded client certificate cert file</td>
+      </tr>
+      <tr>
+        <td><option>cross_az_attach</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Allow attach between instance and volume in different availability zones.</td>
       </tr>
       <tr>
-        <td>endpoint_template = None</td>
+        <td><option>endpoint_template</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Override service catalog lookup with template for cinder endpoint e.g. http://localhost:8776/v1/%(project_id)s</td>
       </tr>
       <tr>
-        <td>http_retries = 3</td>
+        <td><option>http_retries</option> = <replaceable>3</replaceable></td>
         <td>(IntOpt) Number of cinderclient retries on failed http calls</td>
       </tr>
       <tr>
-        <td>http_timeout = None</td>
-        <td>(IntOpt) HTTP inactivity timeout (in seconds)</td>
+        <td><option>insecure</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Verify HTTPS connections.</td>
       </tr>
       <tr>
-        <td>os_region_name = None</td>
+        <td><option>keyfile</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) PEM encoded client certificate key file</td>
+      </tr>
+      <tr>
+        <td><option>os_region_name</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Region name of this node</td>
+      </tr>
+      <tr>
+        <td><option>timeout</option> = <replaceable>None</replaceable></td>
+        <td>(IntOpt) Timeout value for http requests</td>
       </tr>
       <tr>
         <th colspan="2">[hyperv]</th>
       </tr>
       <tr>
-        <td>force_volumeutils_v1 = False</td>
+        <td><option>force_volumeutils_v1</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Force V1 volume utility class</td>
       </tr>
       <tr>
-        <td>volume_attach_retry_count = 10</td>
+        <td><option>volume_attach_retry_count</option> = <replaceable>10</replaceable></td>
         <td>(IntOpt) The number of times to retry to attach a volume</td>
       </tr>
       <tr>
-        <td>volume_attach_retry_interval = 5</td>
+        <td><option>volume_attach_retry_interval</option> = <replaceable>5</replaceable></td>
         <td>(IntOpt) Interval between volume attachment attempts, in seconds</td>
       </tr>
       <tr>
         <th colspan="2">[libvirt]</th>
       </tr>
       <tr>
-        <td>glusterfs_mount_point_base = $state_path/mnt</td>
+        <td><option>glusterfs_mount_point_base</option> = <replaceable>$state_path/mnt</replaceable></td>
         <td>(StrOpt) Directory where the glusterfs volume is mounted on the compute node</td>
       </tr>
       <tr>
-        <td>nfs_mount_options = None</td>
+        <td><option>nfs_mount_options</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Mount options passedf to the NFS client. See section of the nfs man page for details</td>
       </tr>
       <tr>
-        <td>nfs_mount_point_base = $state_path/mnt</td>
+        <td><option>nfs_mount_point_base</option> = <replaceable>$state_path/mnt</replaceable></td>
         <td>(StrOpt) Directory where the NFS volume is mounted on the compute node</td>
       </tr>
       <tr>
-        <td>num_aoe_discover_tries = 3</td>
+        <td><option>num_aoe_discover_tries</option> = <replaceable>3</replaceable></td>
         <td>(IntOpt) Number of times to rediscover AoE target to find volume</td>
       </tr>
       <tr>
-        <td>num_iscsi_scan_tries = 5</td>
+        <td><option>num_iscsi_scan_tries</option> = <replaceable>5</replaceable></td>
         <td>(IntOpt) Number of times to rescan iSCSI target to find volume</td>
       </tr>
       <tr>
-        <td>num_iser_scan_tries = 5</td>
+        <td><option>num_iser_scan_tries</option> = <replaceable>5</replaceable></td>
         <td>(IntOpt) Number of times to rescan iSER target to find volume</td>
       </tr>
       <tr>
-        <td>qemu_allowed_storage_drivers = </td>
+        <td><option>qemu_allowed_storage_drivers</option> = <replaceable></replaceable></td>
         <td>(ListOpt) Protocols listed here will be accessed directly from QEMU. Currently supported protocols: [gluster]</td>
       </tr>
       <tr>
-        <td>rbd_secret_uuid = None</td>
+        <td><option>rbd_secret_uuid</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) The libvirt UUID of the secret for the rbd_uservolumes</td>
       </tr>
       <tr>
-        <td>rbd_user = None</td>
+        <td><option>rbd_user</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) The RADOS client name for accessing rbd volumes</td>
       </tr>
       <tr>
-        <td>scality_sofs_config = None</td>
+        <td><option>scality_sofs_config</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Path or URL to Scality SOFS configuration file</td>
       </tr>
       <tr>
-        <td>scality_sofs_mount_point = $state_path/scality</td>
+        <td><option>scality_sofs_mount_point</option> = <replaceable>$state_path/scality</replaceable></td>
         <td>(StrOpt) Base dir where Scality SOFS shall be mounted</td>
+      </tr>
+      <tr>
+        <td><option>smbfs_mount_options</option> = <replaceable></replaceable></td>
+        <td>(StrOpt) Mount options passed to the SMBFS client. See mount.cifs man page for details. Note that the libvirt-qemu uid and gid must be specified.</td>
+      </tr>
+      <tr>
+        <td><option>smbfs_mount_point_base</option> = <replaceable>$state_path/mnt</replaceable></td>
+        <td>(StrOpt) Directory where the SMBFS shares are mounted on the compute node</td>
       </tr>
       <tr>
         <th colspan="2">[xenserver]</th>
       </tr>
       <tr>
-        <td>block_device_creation_timeout = 10</td>
+        <td><option>block_device_creation_timeout</option> = <replaceable>10</replaceable></td>
         <td>(IntOpt) Time to wait for a block device to be created</td>
       </tr>
     </tbody>

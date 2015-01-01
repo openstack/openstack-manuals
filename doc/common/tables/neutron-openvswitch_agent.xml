@@ -18,112 +18,92 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>ovs_integration_bridge = br-int</td>
+        <td><option>ovs_integration_bridge</option> = <replaceable>br-int</replaceable></td>
         <td>(StrOpt) Name of Open vSwitch bridge to use</td>
       </tr>
       <tr>
-        <td>ovs_use_veth = False</td>
+        <td><option>ovs_use_veth</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Uses veth for an interface or not</td>
       </tr>
       <tr>
-        <td>ovs_vsctl_timeout = 10</td>
+        <td><option>ovs_vsctl_timeout</option> = <replaceable>10</replaceable></td>
         <td>(IntOpt) Timeout in seconds for ovs-vsctl commands</td>
       </tr>
       <tr>
         <th colspan="2">[AGENT]</th>
       </tr>
       <tr>
-        <td>arp_responder = False</td>
+        <td><option>arp_responder</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Enable local ARP responder if it is supported. Requires OVS 2.1 and ML2 l2population driver. Allows the switch (when supporting an overlay) to respond to an ARP request locally without performing a costly ARP broadcast into the overlay.</td>
       </tr>
       <tr>
-        <td>dont_fragment = True</td>
+        <td><option>dont_fragment</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Set or un-set the don't fragment (DF) bit on outgoing IP packet carrying GRE/VXLAN tunnel.</td>
       </tr>
       <tr>
-        <td>enable_distributed_routing = False</td>
+        <td><option>enable_distributed_routing</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Make the l2 agent run in DVR mode.</td>
       </tr>
       <tr>
-        <td>l2_population = False</td>
+        <td><option>l2_population</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Use ML2 l2population mechanism driver to learn remote MAC and IPs and improve tunnel scalability.</td>
       </tr>
       <tr>
-        <td>minimize_polling = True</td>
+        <td><option>minimize_polling</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Minimize polling by monitoring ovsdb for interface changes.</td>
       </tr>
       <tr>
-        <td>ovsdb_monitor_respawn_interval = 30</td>
+        <td><option>ovsdb_monitor_respawn_interval</option> = <replaceable>30</replaceable></td>
         <td>(IntOpt) The number of seconds to wait before respawning the ovsdb monitor after losing communication with it.</td>
       </tr>
       <tr>
-        <td>tunnel_types = </td>
+        <td><option>tunnel_types</option> = <replaceable></replaceable></td>
         <td>(ListOpt) Network types supported by the agent (gre and/or vxlan).</td>
       </tr>
       <tr>
-        <td>veth_mtu = None</td>
+        <td><option>veth_mtu</option> = <replaceable>None</replaceable></td>
         <td>(IntOpt) MTU size of veth interfaces</td>
       </tr>
       <tr>
-        <td>vxlan_udp_port = 4789</td>
+        <td><option>vxlan_udp_port</option> = <replaceable>4789</replaceable></td>
         <td>(IntOpt) The UDP port to use for VXLAN tunnels.</td>
       </tr>
       <tr>
         <th colspan="2">[CISCO_N1K]</th>
       </tr>
       <tr>
-        <td>local_ip = 10.0.0.3</td>
+        <td><option>local_ip</option> = <replaceable>10.0.0.3</replaceable></td>
         <td>(StrOpt) N1K Local IP</td>
       </tr>
       <tr>
         <th colspan="2">[OVS]</th>
       </tr>
       <tr>
-        <td>bridge_mappings = </td>
+        <td><option>bridge_mappings</option> = <replaceable></replaceable></td>
         <td>(ListOpt) List of &lt;physical_network&gt;:&lt;bridge&gt;. Deprecated for ofagent.</td>
       </tr>
       <tr>
-        <td>enable_tunneling = False</td>
-        <td>(BoolOpt) Enable tunneling support.</td>
-      </tr>
-      <tr>
-        <td>int_peer_patch_port = patch-tun</td>
+        <td><option>int_peer_patch_port</option> = <replaceable>patch-tun</replaceable></td>
         <td>(StrOpt) Peer patch port in integration bridge for tunnel bridge.</td>
       </tr>
       <tr>
-        <td>integration_bridge = br-int</td>
+        <td><option>integration_bridge</option> = <replaceable>br-int</replaceable></td>
         <td>(StrOpt) Integration bridge to use.</td>
       </tr>
       <tr>
-        <td>local_ip = </td>
-        <td>(StrOpt) Local IP address of GRE tunnel endpoints.</td>
+        <td><option>local_ip</option> = <replaceable>None</replaceable></td>
+        <td>(IPOpt) Local IP address of tunnel endpoint.</td>
       </tr>
       <tr>
-        <td>network_vlan_ranges = </td>
-        <td>(ListOpt) List of &lt;physical_network&gt;:&lt;vlan_min&gt;:&lt;vlan_max&gt; or &lt;physical_network&gt;.</td>
-      </tr>
-      <tr>
-        <td>tenant_network_type = local</td>
-        <td>(StrOpt) Network type for tenant networks (local, vlan, gre, vxlan, or none).</td>
-      </tr>
-      <tr>
-        <td>tun_peer_patch_port = patch-int</td>
+        <td><option>tun_peer_patch_port</option> = <replaceable>patch-int</replaceable></td>
         <td>(StrOpt) Peer patch port in tunnel bridge for integration bridge.</td>
       </tr>
       <tr>
-        <td>tunnel_bridge = br-tun</td>
+        <td><option>tunnel_bridge</option> = <replaceable>br-tun</replaceable></td>
         <td>(StrOpt) Tunnel bridge to use.</td>
       </tr>
       <tr>
-        <td>tunnel_id_ranges = </td>
-        <td>(ListOpt) List of &lt;tun_min&gt;:&lt;tun_max&gt;.</td>
-      </tr>
-      <tr>
-        <td>tunnel_type = </td>
-        <td>(StrOpt) The type of tunnels to use when utilizing tunnels, either 'gre' or 'vxlan'.</td>
-      </tr>
-      <tr>
-        <td>use_veth_interconnection = False</td>
+        <td><option>use_veth_interconnection</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Use veths instead of patch ports to interconnect the integration bridge to physical bridges.</td>
       </tr>
     </tbody>

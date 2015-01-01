@@ -18,45 +18,92 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>matchmaker_heartbeat_freq = 300</td>
+        <td><option>matchmaker_heartbeat_freq</option> = <replaceable>300</replaceable></td>
         <td>(IntOpt) Heartbeat frequency.</td>
       </tr>
       <tr>
-        <td>matchmaker_heartbeat_ttl = 600</td>
+        <td><option>matchmaker_heartbeat_ttl</option> = <replaceable>600</replaceable></td>
         <td>(IntOpt) Heartbeat time-to-live.</td>
       </tr>
       <tr>
-        <td>rpc_backend = rabbit</td>
+        <td><option>rpc_backend</option> = <replaceable>rabbit</replaceable></td>
         <td>(StrOpt) The messaging driver to use, defaults to rabbit. Other drivers include qpid and zmq.</td>
       </tr>
       <tr>
-        <td>rpc_cast_timeout = 30</td>
+        <td><option>rpc_cast_timeout</option> = <replaceable>30</replaceable></td>
         <td>(IntOpt) Seconds to wait before a cast expires (TTL). Only supported by impl_zmq.</td>
       </tr>
       <tr>
-        <td>rpc_conn_pool_size = 30</td>
+        <td><option>rpc_conn_pool_size</option> = <replaceable>30</replaceable></td>
         <td>(IntOpt) Size of RPC connection pool.</td>
       </tr>
       <tr>
-        <td>rpc_response_timeout = 60</td>
+        <td><option>rpc_response_timeout</option> = <replaceable>60</replaceable></td>
         <td>(IntOpt) Seconds to wait for a response from a call.</td>
       </tr>
       <tr>
-        <td>rpc_thread_pool_size = 64</td>
+        <td><option>rpc_thread_pool_size</option> = <replaceable>64</replaceable></td>
         <td>(IntOpt) Size of RPC greenthread pool.</td>
       </tr>
       <tr>
         <th colspan="2">[cells]</th>
       </tr>
       <tr>
-        <td>rpc_driver_queue_base = cells.intercell</td>
+        <td><option>rpc_driver_queue_base</option> = <replaceable>cells.intercell</replaceable></td>
         <td>(StrOpt) Base queue name to use when communicating between cells.  Various topics by message type will be appended to this.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[oslo_messaging_amqp]</th>
+      </tr>
+      <tr>
+        <td><option>allow_insecure_clients</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Accept clients using either SSL or plain TCP</td>
+      </tr>
+      <tr>
+        <td><option>broadcast_prefix</option> = <replaceable>broadcast</replaceable></td>
+        <td>(StrOpt) address prefix used when broadcasting to all servers</td>
+      </tr>
+      <tr>
+        <td><option>container_name</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Name for the AMQP container</td>
+      </tr>
+      <tr>
+        <td><option>group_request_prefix</option> = <replaceable>unicast</replaceable></td>
+        <td>(StrOpt) address prefix when sending to any server in group</td>
+      </tr>
+      <tr>
+        <td><option>idle_timeout</option> = <replaceable>0</replaceable></td>
+        <td>(IntOpt) Timeout for inactive connections (in seconds)</td>
+      </tr>
+      <tr>
+        <td><option>server_request_prefix</option> = <replaceable>exclusive</replaceable></td>
+        <td>(StrOpt) address prefix used when sending to a specific server</td>
+      </tr>
+      <tr>
+        <td><option>ssl_ca_file</option> = <replaceable></replaceable></td>
+        <td>(StrOpt) CA certificate PEM file for verifing server certificate</td>
+      </tr>
+      <tr>
+        <td><option>ssl_cert_file</option> = <replaceable></replaceable></td>
+        <td>(StrOpt) Identifying certificate PEM file to present to clients</td>
+      </tr>
+      <tr>
+        <td><option>ssl_key_file</option> = <replaceable></replaceable></td>
+        <td>(StrOpt) Private key PEM file used to sign cert_file certificate</td>
+      </tr>
+      <tr>
+        <td><option>ssl_key_password</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Password for decrypting ssl_key_file (if encrypted)</td>
+      </tr>
+      <tr>
+        <td><option>trace</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Debug: dump AMQP frames to stdout</td>
       </tr>
       <tr>
         <th colspan="2">[upgrade_levels]</th>
       </tr>
       <tr>
-        <td>baseapi = None</td>
+        <td><option>baseapi</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Set a version cap for messages sent to the base api in any service</td>
       </tr>
     </tbody>

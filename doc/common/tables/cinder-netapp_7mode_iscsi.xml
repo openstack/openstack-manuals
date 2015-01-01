@@ -18,44 +18,48 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>netapp_login = None</td>
+        <td><option>netapp_login</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Administrative user account name used to access the storage system or proxy server.</td>
       </tr>
       <tr>
-        <td>netapp_password = None</td>
+        <td><option>netapp_partner_backend_name</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) The name of the config.conf stanza for a Data ONTAP (7-mode) HA partner.  This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode, and it is required if the storage protocol selected is FC.</td>
+      </tr>
+      <tr>
+        <td><option>netapp_password</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Password for the administrative user account specified in the netapp_login option.</td>
       </tr>
       <tr>
-        <td>netapp_server_hostname = None</td>
+        <td><option>netapp_server_hostname</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) The hostname (or IP address) for the storage system or proxy server.</td>
       </tr>
       <tr>
-        <td>netapp_server_port = None</td>
+        <td><option>netapp_server_port</option> = <replaceable>None</replaceable></td>
         <td>(IntOpt) The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.</td>
       </tr>
       <tr>
-        <td>netapp_size_multiplier = 1.2</td>
+        <td><option>netapp_size_multiplier</option> = <replaceable>1.2</replaceable></td>
         <td>(FloatOpt) The quantity to be multiplied by the requested volume size to ensure enough space is available on the virtual storage server (Vserver) to fulfill the volume creation request.</td>
       </tr>
       <tr>
-        <td>netapp_storage_family = ontap_cluster</td>
+        <td><option>netapp_storage_family</option> = <replaceable>ontap_cluster</replaceable></td>
         <td>(StrOpt) The storage family type used on the storage system; valid values are ontap_7mode for using Data ONTAP operating in 7-Mode, ontap_cluster for using clustered Data ONTAP, or eseries for using E-Series.</td>
       </tr>
       <tr>
-        <td>netapp_storage_protocol = None</td>
-        <td>(StrOpt) The storage protocol to be used on the data path with the storage system; valid values are iscsi or nfs.</td>
+        <td><option>netapp_storage_protocol</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) The storage protocol to be used on the data path with the storage system; valid values are iscsi, fc, or nfs.</td>
       </tr>
       <tr>
-        <td>netapp_transport_type = http</td>
+        <td><option>netapp_transport_type</option> = <replaceable>http</replaceable></td>
         <td>(StrOpt) The transport protocol used when communicating with the storage system or proxy server. Valid values are http or https.</td>
       </tr>
       <tr>
-        <td>netapp_vfiler = None</td>
-        <td>(StrOpt) The vFiler unit on which provisioning of block storage volumes will be done. This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode and the storage protocol selected is iSCSI. Only use this option when utilizing the MultiStore feature on the NetApp storage system.</td>
+        <td><option>netapp_vfiler</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) The vFiler unit on which provisioning of block storage volumes will be done. This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode. Only use this option when utilizing the MultiStore feature on the NetApp storage system.</td>
       </tr>
       <tr>
-        <td>netapp_volume_list = None</td>
-        <td>(StrOpt) This option is only utilized when the storage protocol is configured to use iSCSI. This option is used to restrict provisioning to the specified controller volumes. Specify the value of this option to be a comma separated list of NetApp controller volume names to be used for provisioning.</td>
+        <td><option>netapp_volume_list</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) This option is only utilized when the storage protocol is configured to use iSCSI or FC. This option is used to restrict provisioning to the specified controller volumes. Specify the value of this option to be a comma separated list of NetApp controller volume names to be used for provisioning.</td>
       </tr>
     </tbody>
   </table>
