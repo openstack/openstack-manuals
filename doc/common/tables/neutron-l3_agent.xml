@@ -18,68 +18,83 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>agent_mode = legacy</td>
+        <td><option>agent_mode</option> = <replaceable>legacy</replaceable></td>
         <td>(StrOpt) The working mode for the agent. Allowed modes are: 'legacy' - this preserves the existing behavior where the L3 agent is deployed on a centralized networking node to provide L3 services like DNAT, and SNAT. Use this mode if you do not want to adopt DVR. 'dvr' - this mode enables DVR functionality and must be used for an L3 agent that runs on a compute host. 'dvr_snat' - this enables centralized SNAT support in conjunction with DVR.  This mode must be used for an L3 agent running on a centralized node (or in single-host deployments, e.g. devstack)</td>
       </tr>
       <tr>
-        <td>allow_automatic_l3agent_failover = False</td>
+        <td><option>allow_automatic_l3agent_failover</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Automatically reschedule routers from offline L3 agents to online L3 agents.</td>
       </tr>
       <tr>
-        <td>enable_metadata_proxy = True</td>
+        <td><option>enable_metadata_proxy</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Allow running metadata proxy.</td>
       </tr>
       <tr>
-        <td>external_network_bridge = br-ex</td>
+        <td><option>external_network_bridge</option> = <replaceable>br-ex</replaceable></td>
         <td>(StrOpt) Name of bridge used for external network traffic.</td>
       </tr>
       <tr>
-        <td>gateway_external_network_id = </td>
+        <td><option>gateway_external_network_id</option> = <replaceable></replaceable></td>
         <td>(StrOpt) UUID of external network for routers implemented by the agents.</td>
       </tr>
       <tr>
-        <td>ha_confs_path = $state_path/ha_confs</td>
+        <td><option>ha_confs_path</option> = <replaceable>$state_path/ha_confs</replaceable></td>
         <td>(StrOpt) Location to store keepalived/conntrackd config files</td>
       </tr>
       <tr>
-        <td>ha_vrrp_advert_int = 2</td>
+        <td><option>ha_vrrp_advert_int</option> = <replaceable>2</replaceable></td>
         <td>(IntOpt) The advertisement interval in seconds</td>
       </tr>
       <tr>
-        <td>ha_vrrp_auth_password = None</td>
+        <td><option>ha_vrrp_auth_password</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) VRRP authentication password</td>
       </tr>
       <tr>
-        <td>ha_vrrp_auth_type = PASS</td>
+        <td><option>ha_vrrp_auth_type</option> = <replaceable>PASS</replaceable></td>
         <td>(StrOpt) VRRP authentication type AH/PASS</td>
       </tr>
       <tr>
-        <td>handle_internal_only_routers = True</td>
+        <td><option>handle_internal_only_routers</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Agent should implement routers with no gateway</td>
       </tr>
       <tr>
-        <td>l3_ha = False</td>
+        <td><option>l3_ha</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Enable HA mode for virtual routers.</td>
       </tr>
       <tr>
-        <td>l3_ha_net_cidr = 169.254.192.0/18</td>
+        <td><option>l3_ha_net_cidr</option> = <replaceable>169.254.192.0/18</replaceable></td>
         <td>(StrOpt) Subnet used for the l3 HA admin network.</td>
       </tr>
       <tr>
-        <td>max_l3_agents_per_router = 3</td>
+        <td><option>max_l3_agents_per_router</option> = <replaceable>3</replaceable></td>
         <td>(IntOpt) Maximum number of agents on which a router will be scheduled.</td>
       </tr>
       <tr>
-        <td>min_l3_agents_per_router = 2</td>
+        <td><option>min_l3_agents_per_router</option> = <replaceable>2</replaceable></td>
         <td>(IntOpt) Minimum number of agents on which a router will be scheduled.</td>
       </tr>
       <tr>
-        <td>router_id = </td>
+        <td><option>router_id</option> = <replaceable></replaceable></td>
         <td>(StrOpt) If namespaces is disabled, the l3 agent can only configure a router that has the matching router ID.</td>
       </tr>
       <tr>
-        <td>send_arp_for_ha = 3</td>
+        <td><option>send_arp_for_ha</option> = <replaceable>3</replaceable></td>
         <td>(IntOpt) Send this many gratuitous ARPs for HA setup, if less than or equal to 0, the feature is disabled</td>
+      </tr>
+      <tr>
+        <td><option>use_helper_for_ns_read</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) Use the root helper to read the namespaces from the operating system.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[AGENT]</th>
+      </tr>
+      <tr>
+        <td><option>comment_iptables_rules</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) Add comments to iptables rules.</td>
+      </tr>
+      <tr>
+        <td><option>use_helper_for_ns_read</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) Use the root helper to read the namespaces from the operating system.</td>
       </tr>
     </tbody>
   </table>

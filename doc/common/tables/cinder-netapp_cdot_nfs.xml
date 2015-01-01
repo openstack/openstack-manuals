@@ -18,51 +18,55 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>expiry_thres_minutes = 720</td>
+        <td><option>expiry_thres_minutes</option> = <replaceable>720</replaceable></td>
         <td>(IntOpt) This option specifies the threshold for last access time for images in the NFS image cache. When a cache cleaning cycle begins, images in the cache that have not been accessed in the last M minutes, where M is the value of this parameter, will be deleted from the cache to create free space on the NFS share.</td>
       </tr>
       <tr>
-        <td>netapp_copyoffload_tool_path = None</td>
+        <td><option>netapp_copyoffload_tool_path</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) This option specifies the path of the NetApp copy offload tool binary. Ensure that the binary has execute permissions set which allow the effective user of the cinder-volume process to execute the file.</td>
       </tr>
       <tr>
-        <td>netapp_login = None</td>
+        <td><option>netapp_login</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Administrative user account name used to access the storage system or proxy server.</td>
       </tr>
       <tr>
-        <td>netapp_password = None</td>
+        <td><option>netapp_partner_backend_name</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) The name of the config.conf stanza for a Data ONTAP (7-mode) HA partner.  This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode, and it is required if the storage protocol selected is FC.</td>
+      </tr>
+      <tr>
+        <td><option>netapp_password</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Password for the administrative user account specified in the netapp_login option.</td>
       </tr>
       <tr>
-        <td>netapp_server_hostname = None</td>
+        <td><option>netapp_server_hostname</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) The hostname (or IP address) for the storage system or proxy server.</td>
       </tr>
       <tr>
-        <td>netapp_server_port = None</td>
+        <td><option>netapp_server_port</option> = <replaceable>None</replaceable></td>
         <td>(IntOpt) The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.</td>
       </tr>
       <tr>
-        <td>netapp_storage_family = ontap_cluster</td>
+        <td><option>netapp_storage_family</option> = <replaceable>ontap_cluster</replaceable></td>
         <td>(StrOpt) The storage family type used on the storage system; valid values are ontap_7mode for using Data ONTAP operating in 7-Mode, ontap_cluster for using clustered Data ONTAP, or eseries for using E-Series.</td>
       </tr>
       <tr>
-        <td>netapp_storage_protocol = None</td>
-        <td>(StrOpt) The storage protocol to be used on the data path with the storage system; valid values are iscsi or nfs.</td>
+        <td><option>netapp_storage_protocol</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) The storage protocol to be used on the data path with the storage system; valid values are iscsi, fc, or nfs.</td>
       </tr>
       <tr>
-        <td>netapp_transport_type = http</td>
+        <td><option>netapp_transport_type</option> = <replaceable>http</replaceable></td>
         <td>(StrOpt) The transport protocol used when communicating with the storage system or proxy server. Valid values are http or https.</td>
       </tr>
       <tr>
-        <td>netapp_vserver = None</td>
-        <td>(StrOpt) This option specifies the virtual storage server (Vserver) name on the storage cluster on which provisioning of block storage volumes should occur. If using the NFS storage protocol, this parameter is mandatory for storage service catalog support (utilized by Cinder volume type extra_specs support). If this option is specified, the exports belonging to the Vserver will only be used for provisioning in the future. Block storage volumes on exports not belonging to the Vserver specified by this option will continue to function normally.</td>
+        <td><option>netapp_vserver</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) This option specifies the virtual storage server (Vserver) name on the storage cluster on which provisioning of block storage volumes should occur.</td>
       </tr>
       <tr>
-        <td>thres_avl_size_perc_start = 20</td>
+        <td><option>thres_avl_size_perc_start</option> = <replaceable>20</replaceable></td>
         <td>(IntOpt) If the percentage of available space for an NFS share has dropped below the value specified by this option, the NFS image cache will be cleaned.</td>
       </tr>
       <tr>
-        <td>thres_avl_size_perc_stop = 60</td>
+        <td><option>thres_avl_size_perc_stop</option> = <replaceable>60</replaceable></td>
         <td>(IntOpt) When the percentage of available space on an NFS share has reached the percentage specified by this option, the driver will stop clearing files from the NFS image cache that have not been accessed in the last M minutes, where M is the value of the expiry_thres_minutes configuration option.</td>
       </tr>
     </tbody>

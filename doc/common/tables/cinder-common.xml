@@ -18,150 +18,174 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>compute_api_class = cinder.compute.nova.API</td>
+        <td><option>client_socket_timeout</option> = <replaceable>900</replaceable></td>
+        <td>(IntOpt) Timeout for client connections' socket operations. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.</td>
+      </tr>
+      <tr>
+        <td><option>compute_api_class</option> = <replaceable>cinder.compute.nova.API</replaceable></td>
         <td>(StrOpt) The full class name of the compute API class to use</td>
       </tr>
       <tr>
-        <td>consistencygroup_api_class = cinder.consistencygroup.api.API</td>
+        <td><option>consistencygroup_api_class</option> = <replaceable>cinder.consistencygroup.api.API</replaceable></td>
         <td>(StrOpt) The full class name of the consistencygroup API class</td>
       </tr>
       <tr>
-        <td>default_availability_zone = None</td>
+        <td><option>default_availability_zone</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Default availability zone for new volumes. If not set, the storage_availability_zone option value is used as the default for new volumes.</td>
       </tr>
       <tr>
-        <td>default_volume_type = None</td>
+        <td><option>default_volume_type</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Default volume type to use</td>
       </tr>
       <tr>
-        <td>enable_new_services = True</td>
+        <td><option>enable_new_services</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Services to be added to the available pool on create</td>
       </tr>
       <tr>
-        <td>host = localhost</td>
+        <td><option>host</option> = <replaceable>localhost</replaceable></td>
         <td>(StrOpt) Name of this node.  This can be an opaque identifier. It is not necessarily a host name, FQDN, or IP address.</td>
       </tr>
       <tr>
-        <td>iet_conf = /etc/iet/ietd.conf</td>
+        <td><option>iet_conf</option> = <replaceable>/etc/iet/ietd.conf</replaceable></td>
         <td>(StrOpt) IET configuration file</td>
       </tr>
       <tr>
-        <td>lio_initiator_iqns = </td>
-        <td>(StrOpt) Comma-separated list of initiator IQNs allowed to connect to the iSCSI target. (From Nova compute nodes.)</td>
+        <td><option>lio_initiator_iqns</option> = <replaceable></replaceable></td>
+        <td>(StrOpt) This option is deprecated and unused. It will be removed in the next release.</td>
       </tr>
       <tr>
-        <td>lock_path = None</td>
-        <td>(StrOpt) Directory to use for lock files. Default to a temp directory</td>
-      </tr>
-      <tr>
-        <td>memcached_servers = None</td>
+        <td><option>memcached_servers</option> = <replaceable>None</replaceable></td>
         <td>(ListOpt) Memcached servers or None for in process cache.</td>
       </tr>
       <tr>
-        <td>monkey_patch = False</td>
+        <td><option>monkey_patch</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Enable monkey patching</td>
       </tr>
       <tr>
-        <td>monkey_patch_modules = </td>
+        <td><option>monkey_patch_modules</option> = <replaceable></replaceable></td>
         <td>(ListOpt) List of modules/decorators to monkey patch</td>
       </tr>
       <tr>
-        <td>my_ip = 10.0.0.1</td>
+        <td><option>my_ip</option> = <replaceable>10.0.0.1</replaceable></td>
         <td>(StrOpt) IP address of this host</td>
       </tr>
       <tr>
-        <td>no_snapshot_gb_quota = False</td>
+        <td><option>no_snapshot_gb_quota</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Whether snapshots count against GigaByte quota</td>
       </tr>
       <tr>
-        <td>num_shell_tries = 3</td>
+        <td><option>num_shell_tries</option> = <replaceable>3</replaceable></td>
         <td>(IntOpt) Number of times to attempt to run flakey shell commands</td>
       </tr>
       <tr>
-        <td>periodic_fuzzy_delay = 60</td>
+        <td><option>os_privileged_user_name</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) OpenStack privileged account username. Used for requests to other services (such as Nova) that require an account with special rights.</td>
+      </tr>
+      <tr>
+        <td><option>os_privileged_user_password</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Password associated with the OpenStack privileged account.</td>
+      </tr>
+      <tr>
+        <td><option>os_privileged_user_tenant</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Tenant name associated with the OpenStack privileged account.</td>
+      </tr>
+      <tr>
+        <td><option>periodic_fuzzy_delay</option> = <replaceable>60</replaceable></td>
         <td>(IntOpt) Range, in seconds, to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)</td>
       </tr>
       <tr>
-        <td>periodic_interval = 60</td>
+        <td><option>periodic_interval</option> = <replaceable>60</replaceable></td>
         <td>(IntOpt) Interval, in seconds, between running periodic tasks</td>
       </tr>
       <tr>
-        <td>policy_default_rule = default</td>
+        <td><option>policy_default_rule</option> = <replaceable>default</replaceable></td>
         <td>(StrOpt) Default rule. Enforced when a requested rule is not found.</td>
       </tr>
       <tr>
-        <td>policy_file = policy.json</td>
+        <td><option>policy_dirs</option> = <replaceable>['policy.d']</replaceable></td>
+        <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.</td>
+      </tr>
+      <tr>
+        <td><option>policy_file</option> = <replaceable>policy.json</replaceable></td>
         <td>(StrOpt) The JSON file that defines policies.</td>
       </tr>
       <tr>
-        <td>replication_api_class = cinder.replication.api.API</td>
+        <td><option>replication_api_class</option> = <replaceable>cinder.replication.api.API</replaceable></td>
         <td>(StrOpt) The full class name of the volume replication API class</td>
       </tr>
       <tr>
-        <td>report_interval = 10</td>
+        <td><option>report_interval</option> = <replaceable>10</replaceable></td>
         <td>(IntOpt) Interval, in seconds, between nodes reporting state to datastore</td>
       </tr>
       <tr>
-        <td>reserved_percentage = 0</td>
+        <td><option>request_timeout</option> = <replaceable>300</replaceable></td>
+        <td>(IntOpt) Global backend request timeout, in seconds</td>
+      </tr>
+      <tr>
+        <td><option>reserved_percentage</option> = <replaceable>0</replaceable></td>
         <td>(IntOpt) The percentage of backend capacity is reserved</td>
       </tr>
       <tr>
-        <td>rootwrap_config = /etc/cinder/rootwrap.conf</td>
+        <td><option>rootwrap_config</option> = <replaceable>/etc/cinder/rootwrap.conf</replaceable></td>
         <td>(StrOpt) Path to the rootwrap configuration file to use for running commands as root</td>
       </tr>
       <tr>
-        <td>run_external_periodic_tasks = True</td>
+        <td><option>run_external_periodic_tasks</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Some periodic tasks can be run in a separate process. Should we run them here?</td>
       </tr>
       <tr>
-        <td>service_down_time = 60</td>
+        <td><option>service_down_time</option> = <replaceable>60</replaceable></td>
         <td>(IntOpt) Maximum time since last check-in for a service to be considered up</td>
       </tr>
       <tr>
-        <td>ssh_hosts_key_file = $state_path/ssh_known_hosts</td>
+        <td><option>ssh_hosts_key_file</option> = <replaceable>$state_path/ssh_known_hosts</replaceable></td>
         <td>(StrOpt) File containing SSH host keys for the systems with which Cinder needs to communicate.  OPTIONAL: Default=$state_path/ssh_known_hosts</td>
       </tr>
       <tr>
-        <td>state_path = /var/lib/cinder</td>
+        <td><option>state_path</option> = <replaceable>/var/lib/cinder</replaceable></td>
         <td>(StrOpt) Top-level directory for maintaining cinder's state</td>
       </tr>
       <tr>
-        <td>storage_availability_zone = nova</td>
+        <td><option>storage_availability_zone</option> = <replaceable>nova</replaceable></td>
         <td>(StrOpt) Availability zone of this node</td>
       </tr>
       <tr>
-        <td>strict_ssh_host_key_policy = False</td>
+        <td><option>strict_ssh_host_key_policy</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Option to enable strict host key checking.  When set to "True" Cinder will only connect to systems with a host key present in the configured "ssh_hosts_key_file".  When set to "False" the host key will be saved upon first connection and used for subsequent connections.  Default=False</td>
       </tr>
       <tr>
-        <td>tcp_keepalive = True</td>
+        <td><option>tcp_keepalive</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Sets the value of TCP_KEEPALIVE (True/False) for each server socket.</td>
       </tr>
       <tr>
-        <td>tcp_keepalive_count = None</td>
+        <td><option>tcp_keepalive_count</option> = <replaceable>None</replaceable></td>
         <td>(IntOpt) Sets the value of TCP_KEEPCNT for each server socket. Not supported on OS X.</td>
       </tr>
       <tr>
-        <td>tcp_keepalive_interval = None</td>
+        <td><option>tcp_keepalive_interval</option> = <replaceable>None</replaceable></td>
         <td>(IntOpt) Sets the value of TCP_KEEPINTVL in seconds for each server socket. Not supported on OS X.</td>
       </tr>
       <tr>
-        <td>tcp_keepidle = 600</td>
+        <td><option>tcp_keepidle</option> = <replaceable>600</replaceable></td>
         <td>(IntOpt) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Not supported on OS X.</td>
       </tr>
       <tr>
-        <td>until_refresh = 0</td>
+        <td><option>until_refresh</option> = <replaceable>0</replaceable></td>
         <td>(IntOpt) Count of reservations until usage is refreshed</td>
       </tr>
       <tr>
-        <td>use_forwarded_for = False</td>
+        <td><option>use_forwarded_for</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Treat X-Forwarded-For as the canonical remote address. Only enable this if you have a sanitizing proxy.</td>
+      </tr>
+      <tr>
+        <td><option>wsgi_keep_alive</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) If False, closes the client socket connection explicitly. Setting it to True to maintain backward compatibility. Recommended setting is set it to False.</td>
       </tr>
       <tr>
         <th colspan="2">[keystone_authtoken]</th>
       </tr>
       <tr>
-        <td>memcached_servers = None</td>
+        <td><option>memcached_servers</option> = <replaceable>None</replaceable></td>
         <td>(ListOpt) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.</td>
       </tr>
     </tbody>

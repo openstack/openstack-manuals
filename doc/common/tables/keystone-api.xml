@@ -18,108 +18,112 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>admin_bind_host = 0.0.0.0</td>
+        <td><option>admin_bind_host</option> = <replaceable>0.0.0.0</replaceable></td>
         <td>(StrOpt) The IP address of the network interface for the admin service to listen on.</td>
       </tr>
       <tr>
-        <td>admin_endpoint = None</td>
-        <td>(StrOpt) The base admin endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. E.g. a request to http://server:35357/v2.0/users will default to http://server:35357. You should only need to set this value if the base URL contains a path (e.g. /prefix/v2.0) or the endpoint should be found on a different server.</td>
+        <td><option>admin_endpoint</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) The base admin endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. E.g. a request to http://server:35357/v3/users will default to http://server:35357. You should only need to set this value if the base URL contains a path (e.g. /prefix/v3) or the endpoint should be found on a different server.</td>
       </tr>
       <tr>
-        <td>admin_port = 35357</td>
+        <td><option>admin_port</option> = <replaceable>35357</replaceable></td>
         <td>(IntOpt) The port number which the admin service listens on.</td>
       </tr>
       <tr>
-        <td>admin_token = ADMIN</td>
+        <td><option>admin_token</option> = <replaceable>ADMIN</replaceable></td>
         <td>(StrOpt) A "shared secret" that can be used to bootstrap Keystone. This "token" does not represent a user, and carries no explicit authorization. To disable in production (highly recommended), remove AdminTokenAuthMiddleware from your paste application pipelines (for example, in keystone-paste.ini).</td>
       </tr>
       <tr>
-        <td>admin_workers = None</td>
+        <td><option>admin_workers</option> = <replaceable>None</replaceable></td>
         <td>(IntOpt) The number of worker processes to serve the admin WSGI application. Defaults to number of CPUs (minimum of 2).</td>
       </tr>
       <tr>
-        <td>compute_port = 8774</td>
+        <td><option>compute_port</option> = <replaceable>8774</replaceable></td>
         <td>(IntOpt) (Deprecated) The port which the OpenStack Compute service listens on. This option was only used for string replacement in the templated catalog backend. Templated catalogs should replace the "$(compute_port)s" substitution with the static port of the compute service. As of Juno, this option is deprecated and will be removed in the L release.</td>
       </tr>
       <tr>
-        <td>domain_id_immutable = True</td>
+        <td><option>domain_id_immutable</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Set this to false if you want to enable the ability for user, group and project entities to be moved between domains by updating their domain_id. Allowing such movement is not recommended if the scope of a domain admin is being restricted by use of an appropriate policy file (see policy.v3cloudsample as an example).</td>
       </tr>
       <tr>
-        <td>list_limit = None</td>
+        <td><option>list_limit</option> = <replaceable>None</replaceable></td>
         <td>(IntOpt) The maximum number of entities that will be returned in a collection, with no limit set by default. This global limit may be then overridden for a specific driver, by specifying a list_limit in the appropriate section (e.g. [assignment]).</td>
       </tr>
       <tr>
-        <td>max_param_size = 64</td>
+        <td><option>max_param_size</option> = <replaceable>64</replaceable></td>
         <td>(IntOpt) Limit the sizes of user &amp; project ID/names.</td>
       </tr>
       <tr>
-        <td>max_request_body_size = 114688</td>
+        <td><option>max_project_tree_depth</option> = <replaceable>5</replaceable></td>
+        <td>(IntOpt) Maximum depth of the project hierarchy. WARNING: setting it to a large value may adversely impact performance.</td>
+      </tr>
+      <tr>
+        <td><option>max_request_body_size</option> = <replaceable>114688</replaceable></td>
         <td>(IntOpt) Enforced by optional sizelimit middleware (keystone.middleware:RequestBodySizeLimiter).</td>
       </tr>
       <tr>
-        <td>max_token_size = 8192</td>
+        <td><option>max_token_size</option> = <replaceable>8192</replaceable></td>
         <td>(IntOpt) Similar to max_param_size, but provides an exception for token values.</td>
       </tr>
       <tr>
-        <td>member_role_id = 9fe2ff9ee4384b1894a90878d3e92bab</td>
-        <td>(StrOpt) During a SQL upgrade member_role_id will be used to create a new role that will replace records in the assignment table with explicit role grants. After migration, the member_role_id will be used in the API add_user_to_project.</td>
+        <td><option>member_role_id</option> = <replaceable>9fe2ff9ee4384b1894a90878d3e92bab</replaceable></td>
+        <td>(StrOpt) Similar to the member_role_name option, this represents the default role ID used to associate users with their default projects in the v2 API. This will be used as the explicit role where one is not specified by the v2 API.</td>
       </tr>
       <tr>
-        <td>member_role_name = _member_</td>
-        <td>(StrOpt) During a SQL upgrade member_role_name will be used to create a new role that will replace records in the assignment table with explicit role grants. After migration, member_role_name will be ignored.</td>
+        <td><option>member_role_name</option> = <replaceable>_member_</replaceable></td>
+        <td>(StrOpt) This is the role name used in combination with the member_role_id option; see that option for more detail.</td>
       </tr>
       <tr>
-        <td>public_bind_host = 0.0.0.0</td>
+        <td><option>public_bind_host</option> = <replaceable>0.0.0.0</replaceable></td>
         <td>(StrOpt) The IP address of the network interface for the public service to listen on.</td>
       </tr>
       <tr>
-        <td>public_endpoint = None</td>
-        <td>(StrOpt) The base public endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. E.g. a request to http://server:5000/v2.0/users will default to http://server:5000. You should only need to set this value if the base URL contains a path (e.g. /prefix/v2.0) or the endpoint should be found on a different server.</td>
+        <td><option>public_endpoint</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) The base public endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. E.g. a request to http://server:5000/v3/users will default to http://server:5000. You should only need to set this value if the base URL contains a path (e.g. /prefix/v3) or the endpoint should be found on a different server.</td>
       </tr>
       <tr>
-        <td>public_port = 5000</td>
+        <td><option>public_port</option> = <replaceable>5000</replaceable></td>
         <td>(IntOpt) The port number which the public service listens on.</td>
       </tr>
       <tr>
-        <td>public_workers = None</td>
+        <td><option>public_workers</option> = <replaceable>None</replaceable></td>
         <td>(IntOpt) The number of worker processes to serve the public WSGI application. Defaults to number of CPUs (minimum of 2).</td>
       </tr>
       <tr>
-        <td>strict_password_check = False</td>
+        <td><option>strict_password_check</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) If set to true, strict password length checking is performed for password manipulation. If a password exceeds the maximum length, the operation will fail with an HTTP 403 Forbidden error. If set to false, passwords are automatically truncated to the maximum length.</td>
       </tr>
       <tr>
-        <td>tcp_keepalive = False</td>
+        <td><option>tcp_keepalive</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Set this to true if you want to enable TCP_KEEPALIVE on server sockets, i.e. sockets used by the Keystone wsgi server for client connections.</td>
       </tr>
       <tr>
-        <td>tcp_keepidle = 600</td>
-        <td>(IntOpt) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Only applies if tcp_keepalive is true. Not supported on OS X.</td>
+        <td><option>tcp_keepidle</option> = <replaceable>600</replaceable></td>
+        <td>(IntOpt) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Only applies if tcp_keepalive is true.</td>
       </tr>
       <tr>
         <th colspan="2">[endpoint_filter]</th>
       </tr>
       <tr>
-        <td>driver = keystone.contrib.endpoint_filter.backends.sql.EndpointFilter</td>
+        <td><option>driver</option> = <replaceable>keystone.contrib.endpoint_filter.backends.sql.EndpointFilter</replaceable></td>
         <td>(StrOpt) Endpoint Filter backend driver</td>
       </tr>
       <tr>
-        <td>return_all_endpoints_if_no_filter = True</td>
+        <td><option>return_all_endpoints_if_no_filter</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Toggle to return all active endpoints if no filter exists.</td>
       </tr>
       <tr>
         <th colspan="2">[endpoint_policy]</th>
       </tr>
       <tr>
-        <td>driver = keystone.contrib.endpoint_policy.backends.sql.EndpointPolicy</td>
+        <td><option>driver</option> = <replaceable>keystone.contrib.endpoint_policy.backends.sql.EndpointPolicy</replaceable></td>
         <td>(StrOpt) Endpoint policy backend driver</td>
       </tr>
       <tr>
         <th colspan="2">[paste_deploy]</th>
       </tr>
       <tr>
-        <td>config_file = keystone-paste.ini</td>
+        <td><option>config_file</option> = <replaceable>keystone-paste.ini</replaceable></td>
         <td>(StrOpt) Name of the paste configuration file that defines the available pipelines.</td>
       </tr>
     </tbody>
