@@ -5,8 +5,8 @@
     xml:id="huawei-storage-driver">
     <title>Huawei storage driver</title>
     <para>The Huawei driver supports the iSCSI and Fibre Channel connections and enables OceanStor T
-        series unified storage, OceanStor Dorado high-performance storage, and OceanStor HVS
-        high-end storage to provide block storage services for OpenStack.</para>
+        series unified storage and OceanStor 18000 high-end storage to provide block storage
+        services for OpenStack.</para>
     <simplesect>
         <title>Supported operations</title>
         <para>OceanStor T series unified storage supports these
@@ -32,42 +32,8 @@
             <para>Clone a volume.</para>
           </listitem>
         </itemizedlist>
-        <para>
-          OceanStor Dorado5100 supports these operations:
-        </para>
-        <itemizedlist>
-          <listitem>
-            <para>Create, delete, attach, and detach volumes.</para>
-          </listitem>
-          <listitem>
-            <para>Create, list, and delete volume snapshots.</para>
-          </listitem>
-          <listitem>
-            <para>Copy an image to a volume.</para>
-          </listitem>
-          <listitem>
-            <para>Copy a volume to an image.</para>
-          </listitem>
-        </itemizedlist>
-        <para>
-          OceanStor Dorado2100 G2 supports these
-          operations:
-        </para>
-        <itemizedlist>
-          <listitem>
-            <para>Create, delete, attach, and detach volumes.</para>
-          </listitem>
-          <listitem>
-            <para>Copy an image to a volume.</para>
-          </listitem>
-          <listitem>
-            <para>Copy a volume to an image.</para>
-          </listitem>
-        </itemizedlist>
-        <para>
-          OceanStor HVS supports these operations:
-        </para>
-        <itemizedlist>
+    <para>OceanStor 18000 supports these operations:</para>
+    <itemizedlist>
           <listitem>
             <para>Create, delete, attach, and detach volumes.</para>
           </listitem>
@@ -89,7 +55,7 @@
         </itemizedlist>
     </simplesect>
     <simplesect>
-        <title>Configure Cinder nodes</title>
+        <title>Configure Block Storage nodes</title>
         <para>In <filename>/etc/cinder</filename>, create the driver
             configuration file named
                 <filename>cinder_huawei_conf.xml</filename>.</para>
@@ -122,67 +88,16 @@
         &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
         &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
     &lt;/iSCSI>
-    &lt;Host OSType=”Linux” HostIP=”x.x.x.x, x.x.x.x”/>
+    &lt;Host OSType="Linux" HostIP="x.x.x.x, x.x.x.x"/>
 &lt;/config></programlisting>
-        <para>The driver configuration file of OceanStor Dorado5100 is
-            shown as follows:</para>
-        <programlisting>&lt;?xml version='1.0' encoding='UTF-8'?>
-&lt;config>
-    &lt;Storage>
-        &lt;Product>Dorado&lt;/Product>
-        &lt;Protocol>iSCSI&lt;/Protocol>
-        &lt;ControllerIP0>x.x.x.x&lt;/ControllerIP0>
-        &lt;ControllerIP1>x.x.x.x&lt;/ControllerIP1>
-        &lt;UserName>xxxxxxxx&lt;/UserName>
-        &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
-    &lt;/Storage>
-    &lt;LUN>
-        &lt;StripUnitSize>64&lt;/StripUnitSize>
-        &lt;WriteType>1&lt;/WriteType>
-        &lt;MirrorSwitch>1&lt;/MirrorSwitch>
-        &lt;StoragePool Name="xxxxxxxx"/>
-        &lt;StoragePool Name="xxxxxxxx"/>
-    &lt;/LUN>
-    &lt;iSCSI>
-        &lt;DefaultTargetIP>x.x.x.x&lt;/DefaultTargetIP>
-        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
-        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
-    &lt;/iSCSI>
-    &lt;Host OSType=”Linux” HostIP=”x.x.x.x, x.x.x.x”/>
-&lt;/config></programlisting>
-        <para>The driver configuration file of OceanStor Dorado2100 G2
-            is shown as follows:</para>
-        <programlisting>&lt;?xml version='1.0' encoding='UTF-8'?>
-&lt;config>
-    &lt;Storage>
-        &lt;Product>Dorado&lt;/Product>
-        &lt;Protocol>iSCSI&lt;/Protocol>
-        &lt;ControllerIP0>x.x.x.x&lt;/ControllerIP0>
-        &lt;ControllerIP1>x.x.x.x&lt;/ControllerIP1>
-        &lt;UserName>xxxxxxxx&lt;/UserName>
-        &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
-    &lt;/Storage>
-    &lt;LUN>
-        &lt;LUNType>Thick&lt;/LUNType>
-        &lt;WriteType>1&lt;/WriteType>
-        &lt;MirrorSwitch>1&lt;/MirrorSwitch>
-    &lt;/LUN>
-    &lt;iSCSI>
-        &lt;DefaultTargetIP>x.x.x.x&lt;/DefaultTargetIP>
-        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
-        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
-    &lt;/iSCSI>
-    &lt;Host OSType=”Linux” HostIP=”x.x.x.x, x.x.x.x”/>
-&lt;/config></programlisting>
-        <para>The driver configuration file of OceanStor HVS is shown
-            as follows:</para>
+        <para>The driver configuration file of OceanStor 18000 is shown as follows:</para>
         <para>
             <programlisting>&lt;?xml version='1.0' encoding='UTF-8'?>
 &lt;config>
     &lt;Storage>
-        &lt;Product>HVS&lt;/Product>
+        &lt;Product>18000&lt;/Product>
         &lt;Protocol>iSCSI&lt;/Protocol>
-        &lt;HVSURL>https://x.x.x.x:8088/deviceManager/rest/&lt;/HVSURL>
+        &lt;RestURL>https://x.x.x.x:8088/deviceManager/rest/&lt;/RestURL>
         &lt;UserName>xxxxxxxx&lt;/UserName>
         &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
     &lt;/Storage>
@@ -197,9 +112,10 @@
         &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
         &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
     &lt;/iSCSI>
-    &lt;Host OSType=”Linux” HostIP=”x.x.x.x, x.x.x.x”/>
+    &lt;Host OSType="Linux" HostIP="x.x.x.x, x.x.x.x"/>
 &lt;/config></programlisting>
             <note>
+            <title>Note for Fibre Channel driver configuration</title>
                 <para>You do not need to configure the iSCSI target IP
                     address for the Fibre Channel driver. In the prior
                     example, delete the iSCSI configuration:</para>
@@ -218,45 +134,15 @@
 cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
         <para>You can configure multiple Huawei back-end storages as
             follows:</para>
-        <programlisting>enabled_backends = t_iscsi, dorado5100_iscsi
+        <programlisting>enabled_backends = t_iscsi, 18000_iscsi
 [t_iscsi]
 volume_driver = cinder.volume.drivers.huawei.HuaweiVolumeDriver
 cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_t_iscsi.xml
 volume_backend_name = HuaweiTISCSIDriver
-[dorado5100_iscsi]
+[18000_iscsi]
 volume_driver = cinder.volume.drivers.huawei.HuaweiVolumeDriver
-cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_dorado5100_iscsi.xml
-volume_backend_name = HuaweiDorado5100ISCSIDriver</programlisting>
-        <para>OceanStor HVS storage system supports the QoS function.
-            You must create a QoS policy for the HVS storage system
-            and create the volume type to enable QoS as
-            follows:</para>
-        <programlisting>Create volume type: QoS_high
-cinder type-create QoS_high
-Configure extra_specs for QoS_high:
-cinder type-key QoS_high set capabilities:QoS_support="&lt;is> True" drivers:flow_strategy=OpenStack_QoS_high drivers:io_priority=high</programlisting>
-        <note>
-            <para><option>OpenStack_QoS_high</option> is a QoS policy
-                created by a user for the HVS storage system.
-                    <option>QoS_high</option> is the self-defined
-                volume type. Set the <option>io_priority</option>
-                option to <literal>high</literal>,
-                    <literal>normal</literal>, or
-                    <literal>low</literal>.</para>
-        </note>
-        <para>OceanStor HVS storage system supports the SmartTier
-            function. SmartTier has three tiers. You can create the
-            volume type to enable SmartTier as follows:</para>
-        <programlisting>Create volume type: Tier_high
-cinder type-create Tier_high
-Configure extra_specs for Tier_high:
-cinder type-key Tier_high set capabilities:Tier_support="&lt;is> True" drivers:distribute_policy=high drivers:transfer_strategy=high</programlisting>
-        <note>
-            <para><option>distribute_policy</option> and
-                    <option>transfer_strategy</option> can only be set
-                to <literal>high</literal>, <literal>normal</literal>,
-                or <literal>low</literal>.</para>
-        </note>
+cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_18000_iscsi.xml
+volume_backend_name = Huawei18000ISCSIDriver</programlisting>
     </simplesect>
     <simplesect>
         <title>Configuration file details</title>
@@ -290,10 +176,8 @@ cinder type-key Tier_high set capabilities:Tier_support="&lt;is> True" drivers:d
                         <para/>
                     </td>
                     <td>
-                        <para>Type of a storage product. Valid values
-                            are <literal>T</literal>,
-                                <literal>Dorado</literal>, or
-                                <literal>HVS</literal>.</para>
+                        <para>Type of a storage product. Valid values are <literal>T</literal>or
+                                <literal>18000</literal>.</para>
                     </td>
                 </tr>
                 <tr>
@@ -314,7 +198,7 @@ cinder type-key Tier_high set capabilities:Tier_support="&lt;is> True" drivers:d
                         <para/>
                     </td>
                     <td>IP address of the primary controller (not
-                        required for the HVS)</td>
+                        required for the 18000)</td>
                 </tr>
                 <tr>
                     <td>
@@ -328,17 +212,17 @@ cinder type-key Tier_high set capabilities:Tier_support="&lt;is> True" drivers:d
                     </td>
                     <td>
                         <para>IP address of the secondary controller
-                            (not required for the HVS)</para>
+                            (not required for the 18000)</para>
                     </td>
                 </tr>
                 <tr>
-                    <td><option>HVSURL</option></td>
+                    <td><option>RestURL</option></td>
                     <td>Required</td>
                     <td>
                         <para/>
                     </td>
                     <td>Access address of the Rest port (required only
-                        for the HVS)</td>
+                for the 18000)</td>
                 </tr>
                 <tr>
                     <td>
@@ -450,7 +334,7 @@ cinder type-key Tier_high set capabilities:Tier_support="&lt;is> True" drivers:d
                             prefetch, or intelligent prefetch. Default
                             value is <literal>3</literal>, which
                             indicates intelligent prefetch and is not
-                            required for the HVS.</para>
+                            required for the 18000.</para>
                     </td>
                 </tr>
                 <tr>
@@ -470,9 +354,7 @@ cinder type-key Tier_high set capabilities:Tier_support="&lt;is> True" drivers:d
                         <para/>
                     </td>
                     <td>
-                        <para>Name of a storage pool that you want to
-                            use. Not required for the Dorado2100
-                            G2.</para>
+                        <para>Name of a storage pool that you want to use.</para>
                     </td>
                 </tr>
                 <tr>
@@ -526,6 +408,7 @@ cinder type-key Tier_high set capabilities:Tier_support="&lt;is> True" drivers:d
             </tbody>
         </table>
         <note>
+        <title>Note for the configuration</title>
             <orderedlist>
                 <listitem>
                     <para>You can configure one iSCSI target port for
@@ -538,8 +421,8 @@ cinder type-key Tier_high set capabilities:Tier_support="&lt;is> True" drivers:d
                     <para>You can configure multiple storage pools in
                         one configuration file, which supports the use
                         of multiple storage pools in a storage system.
-                        (HVS allows configuration of only one storage
-                        pool.)</para>
+                        (The 18000 driver allows configuration of only
+                        one storage pool.)</para>
                 </listitem>
                 <listitem>
                     <para>For details about LUN configuration
@@ -557,6 +440,10 @@ cinder type-key Tier_high set capabilities:Tier_support="&lt;is> True" drivers:d
                         need to restart the <systemitem
                             class="service">cinder-volume</systemitem>
                         service.</para>
+                </listitem>
+                <listitem>
+                    <para>The driver does not support the
+                        iSCSI multipath scenarios.</para>
                 </listitem>
             </orderedlist>
         </note>
