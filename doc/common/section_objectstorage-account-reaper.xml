@@ -6,7 +6,7 @@
   xml:id="section_objectstorage-account-reaper">
     <title>Account reaper</title>
     <para>In the background, the account reaper removes data from the deleted accounts.</para>
-    <para>A reseller marks an account for deletion by issuing a <code>DELETE</code> request on the account’s
+    <para>A reseller marks an account for deletion by issuing a <code>DELETE</code> request on the account's
         storage URL. This action sets the <code>status</code> column of the account_stat table in the account
         database and replicas to <code>DELETED</code>, marking the account's data for deletion.</para>
     <para>Typically, a specific retention time or undelete are not provided. However, you can set a
@@ -19,10 +19,10 @@
     </para>
     <para>The account reaper runs on each account server and scans the server occasionally for
         account databases marked for deletion. It only fires up on the accounts for which the server
-        is the primary node, so that multiple account servers aren’t trying to do it simultaneously.
+        is the primary node, so that multiple account servers aren't trying to do it simultaneously.
         Using multiple servers to delete one account might improve the deletion speed but requires
         coordination to avoid duplication. Speed really is not a big concern with data deletion, and
-        large accounts aren’t deleted often.</para>
+        large accounts aren't deleted often.</para>
     <para>Deleting an account is simple. For each account container, all objects are deleted and
         then the container is deleted. Deletion requests that fail will not stop the overall process
         but will cause the overall process to fail eventually (for example, if an object delete
