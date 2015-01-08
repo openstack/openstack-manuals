@@ -208,7 +208,7 @@ Parameter constraints
 The ``constraints`` block of a parameter definition defines
 additional validation constraints that apply to the value of the
 parameter. The parameter values provided by a user are validated against the
-contrainsts at instantiation time. The contrainsts are defined as a list with
+constraints at instantiation time. The constraints are defined as a list with
 the following syntax:
 
 .. code-block:: yaml
@@ -228,7 +228,7 @@ constraint definition
 description
     A description of the constraint. The text
     is presented to the user when the value he defines violates the constraint.
-    If ommitted, a default validation message is presented to the user.
+    If omitted, a default validation message is presented to the user.
 
     This attribute is optional.
 
@@ -659,9 +659,9 @@ The syntax of ``the get_file`` function is:
 The ``content key`` is used to look up the ``files`` dictionary that is
 provided in the REST API call. The Orchestration client command
 (:command:`heat`) is ``get_file`` aware and will populate the ``files``
-dictionnary with the actual content of fetched paths and URLs. The
+dictionary with the actual content of fetched paths and URLs. The
 Orchestration client command supports relative paths and will transform these
-to the absolute URLs required by the Orcestration API.
+to the absolute URLs required by the Orchestration API.
 
 .. note::
     The ``get_file`` argument must be a static path or URL and not rely on
@@ -811,7 +811,7 @@ resource_facade
 
 The ``resource_facade`` function retrieves data in a parent provider template.
 
-A provider template provdes a custom definition of a resource, called its
+A provider template provides a custom definition of a resource, called its
 facade. For more information about custom templates, see :ref:`composition`.
 The syntax of the ``resource_facade`` function is:
 
