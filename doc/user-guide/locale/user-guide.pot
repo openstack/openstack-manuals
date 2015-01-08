@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-01-05 06:11+0000\n"
+"POT-Creation-Date: 2015-01-08 06:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2610,7 +2610,7 @@ msgid "MY_KEY"
 msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_configure_instances.xml:78(para)
-msgid "The command generates a key pair with the name that you specify fir <replaceable>KEY_NAME</replaceable>, writes the private key to the <filename>.pem</filename> file that you specify, and registers the public key at the Nova database."
+msgid "The command generates a key pair with the name that you specify for <replaceable>KEY_NAME</replaceable>, writes the private key to the <filename>.pem</filename> file that you specify, and registers the public key at the Nova database."
 msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_configure_instances.xml:85(para)
@@ -4739,6 +4739,78 @@ msgstr ""
 
 #: ./doc/user-guide/section_object-api-response-formats.xml:138(para)
 msgid "The remainder of the examples in this guide use standard, non-serialized responses. However, all <command xmlns=\"http://docbook.org/ns/docbook\">GET</command> requests that perform list operations accept the <parameter>format</parameter> query parameter or <literal>Accept</literal> request header."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:7(title)
+msgid "Page through large lists of containers or objects"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:8(para)
+msgid "If you have a large number of containers or objects, you can use the <parameter>marker</parameter>, <parameter>limit</parameter>, and <parameter>end_marker</parameter> parameters to control how many items are returned in a list and where the list starts or ends."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:16(parameter)
+msgid "marker"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:18(para)
+msgid "When you request a list of containers or objects, Object Storage returns a maximum of 10,000 names for each request. To get subsequent names, you must make another request with the <parameter>marker</parameter> parameter. Set the <literal>marker</literal> parameter to the name of the last item returned in the previous list. You must URL-encode the <parameter>marker</parameter> value before you send the HTTP request. Object Storage returns a maximum of 10,000 names starting after the last item returned."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:33(parameter)
+msgid "limit"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:35(para)
+msgid "To return fewer than 10,000 names, use the <parameter>limit</parameter> parameter. If the number of names returned equals the specified <parameter>limit</parameter> (or 10,000 if you omit the <parameter>limit</parameter> parameter), you can assume there are more names to list. If the number of names in the list is exactly divisible by the <parameter>limit</parameter> value, the last request has no content."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:47(parameter)
+msgid "end_marker"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:49(para)
+msgid "Limits the result set to names that are less than the <parameter>end_marker</parameter> parameter value. You must URL-encode the <parameter>end_marker</parameter> value before you send the HTTP request."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:58(title)
+msgid "To page through a large list of containers"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:59(para)
+msgid "Assume the following list of container names:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:66(para)
+msgid "Use a <parameter>limit</parameter> of two:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:70(para)
+msgid "Because two container names are returned, there are more names to list."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:74(para)
+msgid "Make another request with a <parameter>marker</parameter> parameter set to the name of the last item returned:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:80(para)
+msgid "Again, two items are returned, and there might be more."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:84(para)
+msgid "Make another request with a <parameter>marker</parameter> of the last item returned:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:89(para)
+msgid "You receive a one-item response, which is fewer than the <parameter>limit</parameter> number of names. This indicates that this is the end of the list."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:94(para)
+msgid "Use the <parameter>end_marker</parameter> parameter to limit the result set to object names that are less than the <parameter>end_marker</parameter> parameter value:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-large-lists.xml:102(para)
+msgid "You receive a result set of all container names before the <parameter>end-marker</parameter> value."
 msgstr ""
 
 #: ./doc/user-guide/section_sdk_auth_nova.xml:7(title)
