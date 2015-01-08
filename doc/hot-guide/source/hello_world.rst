@@ -144,7 +144,7 @@ following example defines a default value ``m1.small`` for the
    If a template doesn't define a default value for a parameter, then the user
    must define the value, otherwise the stack creation will fail.
 
-Hidding parameters values
+Hiding parameters values
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The values that a user provides when deploying a stack are available in the
@@ -181,7 +181,7 @@ possible values:
           description: Value must be one of m1.medium, m1.large or m1.xlarge.
 
 
-The following example defines multiple contraints for a password definition:
+The following example defines multiple constraints for a password definition:
 
 .. code-block:: yaml
 
