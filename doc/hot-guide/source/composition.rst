@@ -85,7 +85,7 @@ To create the stack run:
 Define a new resource type
 ==========================
 
-You can associate a name to the ``my_noya.yaml`` template in an environment
+You can associate a name to the ``my_nova.yaml`` template in an environment
 file. If the name is already known by the Orchestration module then your new
 resource will override the default one.
 
@@ -118,3 +118,22 @@ To create the stack run:
 .. code-block:: console
 
   $ heat stack-create -f main.yaml -e env.yaml example-two
+
+Making your template resource more "transparent"
+================================================
+If you wish to be able to return the ID of one of the inner resources
+instead of the nested stack's identifier, you can add the special reserved
+output "OS::stack_id" to your template resource.
+
+.. code-block:: yaml
+
+  resources:
+    server:
+      type: OS::Nova::Server
+
+  outputs:
+    OS::stack_id:
+      value: {get_resource: server}
+
+Now when you use "get_resource" from the outer template heat
+will use the nova server id and not the template resource identifier.
