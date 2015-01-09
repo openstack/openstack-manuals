@@ -1,0 +1,31 @@
+<section xml:id="StorPool-driver"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>StorPool driver</title>
+    <para>StorPool is distributed data storage software running on standard x86
+        servers. StorPool aggregates the performance and capacity of all drives
+        into a shared pool of storage distributed among the servers. Within
+        this storage pool the user creates thin-provisioned volumes that are
+        exposed to the clients as block devices. StorPool consists of two parts
+        wrapped in one package - a server and a client. The StorPool server
+        allows a hypervisor to act as a storage node, while the StorPool client
+        allows a hypervisor node to access the storage pool and act as a compute
+        node. In OpenStack terms the StorPool solution allows each hypervisor
+        node to be both a storage and a compute node simultaneously. More
+        information can be found on <link
+            xlink:href="https://storpool.com/">StorPool's homepage</link>.</para>
+    <note>
+        <para>To make full use of StorPool's native network communication protocol,
+        the Nova compute nodes will need to use the StorPool libvirt volume
+        attachment driver, nova.virt.libvirt.storpool.LibvirtStorPoolVolumeDriver.</para>
+    </note>
+    <para>To use Block Storage with StorPool, first set the
+            <literal>volume_driver</literal> in
+            <filename>cinder.conf</filename>:</para>
+    <programlisting>volume_driver=cinder.volume.drivers.storpool.StorPoolDriver</programlisting>
+    <para>The following table contains the configuration options
+    supported by the StorPool driver.</para>
+    <xi:include href="../../../common/tables/cinder-storpool.xml" />
+</section>
