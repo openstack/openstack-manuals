@@ -30,7 +30,7 @@ new types of resources. These examples use a custom template stored in a
 
 .. code-block:: yaml
 
-  heat_template_version: 2013-05-23
+  heat_template_version: 2014-10-16
 
   parameters:
     key_name:
@@ -55,7 +55,8 @@ The following template defines the :file:`my_nova.yaml` file as value for the
 
 .. code-block:: yaml
 
-  heat_template_version: 2013-05-23
+  heat_template_version: 2014-10-16
+
   resources:
     my_server:
       type: my_nova.yaml
@@ -107,6 +108,8 @@ You can now use the new ``OS::Nova::Server`` in your new template:
 
 .. code-block:: yaml
 
+  heat_template_version: 2014-10-16
+
   resources:
     my_server:
       type: OS::Nova::Server
@@ -119,6 +122,25 @@ To create the stack run:
 
   $ heat stack-create -f main.yaml -e env.yaml example-two
 
+
+Get access to nested attributes
+===============================
+There are implicit attributes of a template resource. These are
+accessible as follows:
+
+.. code-block:: yaml
+
+  heat_template_version: 2014-10-16
+
+  resources:
+    my_server:
+      type: my_nova.yaml
+
+  outputs:
+    test_out:
+      value: {get_attr: my_server, resource.server, first_address}
+
+
 Making your template resource more "transparent"
 ================================================
 If you wish to be able to return the ID of one of the inner resources
@@ -126,6 +148,8 @@ instead of the nested stack's identifier, you can add the special reserved
 output "OS::stack_id" to your template resource.
 
 .. code-block:: yaml
+
+  heat_template_version: 2014-10-16
 
   resources:
     server:
