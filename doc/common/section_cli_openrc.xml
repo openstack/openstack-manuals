@@ -90,7 +90,8 @@ export OS_TENANT_NAME=<replaceable>projectName</replaceable>
 export OS_AUTH_URL=<replaceable>https://identityHost:portNumber/v2.0</replaceable>
 # The following lines can be omitted
 export OS_TENANT_ID=<replaceable>tenantIDString</replaceable>
-export OS_REGION_NAME=<replaceable>regionName</replaceable></programlisting>
+export OS_REGION_NAME=<replaceable>regionName</replaceable>
+export OS_CACERT=<replaceable>/path/to/cacertFile</replaceable></programlisting>
             </step>
             <step>
                 <para>On any shell from which you want to run
@@ -114,6 +115,13 @@ export OS_REGION_NAME=<replaceable>regionName</replaceable></programlisting>
                 file, and use the <parameter>--password</parameter>
                 parameter with OpenStack client commands
                 instead.</para>
+        </note>
+        <note audience="enduser">
+            <para>You must set the OS_CACERT environment variable when
+                  using the https protocol in the OS_AUTH_URL environment setting because
+                  the verification process for the TLS (HTTPS) server certificate uses
+                  the one indicated in the environment. This certificate will be used when
+                  verifying the TLS (HTTPS) server certificate.</para>
         </note>
     </section>
     <section xml:id="override-variables">
