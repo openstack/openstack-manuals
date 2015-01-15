@@ -5,30 +5,40 @@
   version="5.0"
   xml:id="ceilometer-verify">
   <title>Verify the Telemetry installation</title>
-  <para>To test the Telemetry installation, download an image from the
-    Image Service, and use the <command>ceilometer</command> command to display usage statistics.</para>
-
+  <para>This section describes how to verify operation of the Telemetry
+    module.</para>
   <procedure>
+    <note>
+      <para>Perform these commands on the controller node.</para>
+    </note>
     <step>
-      <para>Use the <literal>ceilometer meter-list</literal> command to test
-        the access to Telemetry:</para>
-      <screen><prompt>$</prompt> <userinput>ceilometer meter-list</userinput></screen>
-      <screen><computeroutput>+------------+-------+-------+--------------------------------------+---------+----------------------------------+
+      <para>Source the <literal>admin</literal> credentials to gain access to
+        admin-only CLI commands:</para>
+      <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+    </step>
+    <step>
+      <para>List available meters:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer meter-list</userinput>
+<computeroutput>+------------+-------+-------+--------------------------------------+---------+----------------------------------+
 | Name       | Type  | Unit  | Resource ID                          | User ID | Project ID                       |
 +------------+-------+-------+--------------------------------------+---------+----------------------------------+
 | image      | gauge | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | efa984b0a914450e9a47788ad330699d |
 | image.size | gauge | B     | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | efa984b0a914450e9a47788ad330699d |
 +------------+-------+-------+--------------------------------------+---------+----------------------------------+</computeroutput></screen>
+      <note>
+        <para>Some meters might not appear until after you successfully launch
+          at least one instance.</para>
+      </note>
     </step>
     <step>
       <para>Download an image from the Image Service:</para>
       <screen><prompt>$</prompt> <userinput>glance image-download "cirros-0.3.3-x86_64" > cirros.img</userinput></screen>
     </step>
     <step>
-      <para>Call the <literal>ceilometer meter-list</literal> command again to
-        validate that the download has been detected and stored by the Telemetry:</para>
-      <screen><prompt>$</prompt> <userinput>ceilometer meter-list</userinput></screen>
-      <screen><computeroutput>+----------------+-------+-------+--------------------------------------+---------+----------------------------------+
+      <para>List available meters again to validate detection of the image
+        download:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer meter-list</userinput>
+<computeroutput>+----------------+-------+-------+--------------------------------------+---------+----------------------------------+
 | Name           | Type  | Unit  | Resource ID                          | User ID | Project ID                       |
 +----------------+-------+-------+--------------------------------------+---------+----------------------------------+
 | image          | gauge | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | efa984b0a914450e9a47788ad330699d |
@@ -38,9 +48,10 @@
 +----------------+-------+-------+--------------------------------------+---------+----------------------------------+</computeroutput></screen>
     </step>
     <step>
-      <para>You can now get usage statistics for the various meters:</para>
-      <screen><prompt>$</prompt> <userinput>ceilometer statistics -m image.download -p 60</userinput></screen>
-      <screen><computeroutput>+--------+---------------------+---------------------+-------+------------+------------+------------+------------+----------+----------------------------+----------------------------+
+      <para>Retrieve usage statistics from the <literal>image.download</literal>
+        meter:</para>
+      <screen><prompt>$</prompt> <userinput>ceilometer statistics -m image.download -p 60</userinput>
+<computeroutput>+--------+---------------------+---------------------+-------+------------+------------+------------+------------+----------+----------------------------+----------------------------+
 | Period | Period Start        | Period End          | Count | Min        | Max        | Sum        | Avg        | Duration | Duration Start             | Duration End               |
 +--------+---------------------+---------------------+-------+------------+------------+------------+------------+----------+----------------------------+----------------------------+
 | 60     | 2013-11-18T18:08:50 | 2013-11-18T18:09:50 | 1     | 13167616.0 | 13167616.0 | 13167616.0 | 13167616.0 | 0.0      | 2013-11-18T18:09:05.334000 | 2013-11-18T18:09:05.334000 |
