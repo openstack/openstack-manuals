@@ -6,28 +6,35 @@
   xml:id="ceilometer-agent-glance">
   <title>Configure the Image Service for Telemetry</title>
   <procedure>
+    <title>To configure prerequisites</title>
+    <para>To retrieve image samples, you must configure the Image
+      Service to send notifications to the message broker. Edit the
+      <filename>/etc/glance/glance-api.conf</filename> and
+      <filename>/etc/glance/glance-registry.conf</filename> files and
+      complete the following actions:</para>
     <step>
-      <para>To retrieve image samples, you must configure the Image
-        Service to send notifications to the bus.</para>
-        <para>Edit
-        <filename>/etc/glance/glance-api.conf</filename> and modify the
-        <literal>[DEFAULT]</literal> section:</para>
-        <programlisting language="ini">notification_driver = messaging
+      <para>In the <literal>[DEFAULT]</literal> section, configure
+      notifications and RabbitMQ message broker access:</para>
+      <programlisting language="ini">[DEFAULT]
+...
+notification_driver = messaging
 rpc_backend = rabbit
 rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
+      <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
+        password you chose for the <literal>guest</literal> account in
+        <application>RabbitMQ</application>.</para>
     </step>
     <step>
-        <para>Restart the Image Services with their new
-          settings:</para>
-        <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
+      <para>Restart the Image Service:</para>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
 <prompt>#</prompt> <userinput>service glance-api restart</userinput></screen>
-        <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart openstack-glance-api.service openstack-glance-registry.service</userinput></screen>
-        <para os="sles">On SLES:</para>
-        <screen os="sles"><prompt>#</prompt> <userinput>service openstack-glance-api restart</userinput>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart openstack-glance-api.service openstack-glance-registry.service</userinput></screen>
+      <para os="sles">On SLES:</para>
+      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-glance-api restart</userinput>
 <prompt>#</prompt> <userinput>service openstack-glance-registry restart</userinput></screen>
-        <para os="opensuse">On openSUSE:</para>
-        <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-glance-api.service openstack-glance-registry.service</userinput></screen>
+      <para os="opensuse">On openSUSE:</para>
+      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-glance-api.service openstack-glance-registry.service</userinput></screen>
     </step>
   </procedure>
 </section>
