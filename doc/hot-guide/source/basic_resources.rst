@@ -174,7 +174,6 @@ floating IP to the instance:
           - floating_ip: { get_resource: floating_ip }
           - server_id: { get_resource: instance }
 
-
 OS::Neutron resources
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -185,6 +184,39 @@ OS::Neutron resources
 Use the :hotref:`OS::Neutron::FloatingIP` resource to create a floating IP, and
 the :hotref:`OS::Neutron::FloatingIPAssociation` resource to associate the
 floating IP to a port:
+
+.. code-block:: yaml
+
+    parameters:
+      net:
+        description: name of network used to launch instance.
+        type: string
+        default: private
+
+    resources:
+      inst1:
+        type: OS::Nova::Server
+        properties:
+          flavor: m1.small
+          image: ubuntu-trusty-x86_64
+          networks:
+            - network: {get_param: net}
+
+      floating_ip:
+        type: OS::Neutron::FloatingIP
+        properties:
+          floating_network: public
+
+      association:
+        type: OS::Neutron::FloatingIPAssociation
+        properties:
+          floatingip_id: { get_resource: floating_ip }
+          port_id: {get_attr: [inst1, addresses, {get_param: net}, 0, port]}
+
+
+You can also create an OS::Neutron::Port and associate that with the server and
+the floating IP. However the approach mentioned above will work better
+with stack updates.
 
 .. code-block:: yaml
 
@@ -200,7 +232,6 @@ floating IP to a port:
         type: OS::Neutron::FloatingIP
         properties:
           floating_network: public
-          port_id: { get_resource: instance_port }
 
       association:
         type: OS::Neutron::FloatingIPAssociation
