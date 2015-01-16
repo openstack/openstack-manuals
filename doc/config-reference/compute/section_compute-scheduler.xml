@@ -370,6 +370,27 @@ aggregate_image_properties_isolation_separator = .</programlisting>
                     scheduler.</para>
             </note>
         </section>
+        <section xml:id="numatopologyfilter">
+            <title>NUMATopologyFilter</title>
+            <para>Filters hosts based on the NUMA topology that was specified
+                for the instance through the use of flavor <literal>extra_specs</literal>in
+                combination with the image properties, as described in detail
+                in the related nova-spec document: <link
+            xlink:href="http://specs.openstack.org/openstack/nova-specs/specs/juno/implemented/virt-driver-numa-placement.html">
+                </link>
+                Filter will try to match
+                the exact NUMA cells of the instance to those of the host.
+                It will consider the standard over-subscription limits each cell,
+                and provide limits to the compute host accordingly.
+            </para>
+            <note>
+                <para>If instance has no topology defined, it will
+                be considered for any host. If instance has a topology
+                defined, it will be considered only for NUMA capable
+                hosts.
+                </para>
+            </note>
+        </section>
         <section xml:id="differenthostfilter">
             <title>DifferentHostFilter</title>
             <para>Schedules the instance on a different host from a
