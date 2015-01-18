@@ -76,14 +76,31 @@ identity_uri = http://<replaceable>controller</replaceable>:35357</programlistin
         </para></step>
       </substeps>
     </step>
-    <step><para>If you use the Data processing service with a MySQL database,
-      then for storing big job binaries in the sahara internal database you must
-      configure the size of max allowed packets. Edit the <filename>my.cnf</filename>
-      file and change parameter:
-      <programlisting language="ini">[mysqld]
+    <step>
+      <para>If you use the Data processing service with a MySQL or MariaDB
+        database, you must configure the maximum number of allowed packets for
+        storing big job binaries in the service internal database.</para>
+      <substeps>
+        <step>
+          <para>Edit the
+            <filename os="ubuntu;debian">/etc/mysql/my.cnf</filename>
+            <filename os="rhel;centos;fedora;sles;opensuse">/etc/my.cnf</filename>
+            file and change the <literal>max_allowed_packet</literal>
+            option:</para>
+          <programlisting language="ini">[mysqld]
 max_allowed_packet = 256M</programlisting>
-      and restart MySQL server.
-    </para></step>
+        </step>
+        <step>
+          <para>Restart the database service:</para>
+          <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
+          <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart mariadb.service</userinput></screen>
+          <para os="sles;opensuse">On SLES:</para>
+          <screen os="sles"><prompt>#</prompt> <userinput>service mysql restart</userinput></screen>
+          <para os="sles;opensuse">On openSUSE:</para>
+          <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart mysql.service</userinput></screen>
+        </step>
+      </substeps>
+    </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu"><para>Create database schema:
       <screen><prompt>#</prompt> <userinput>sahara-db-manage --config-file /etc/sahara/sahara.conf upgrade head</userinput></screen>
     </para></step>
