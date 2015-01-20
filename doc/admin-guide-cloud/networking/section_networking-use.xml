@@ -511,11 +511,8 @@
                         <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>IMAGE</replaceable> --flavor <replaceable>FLAVOR</replaceable> --nic net-id=<replaceable>NET1-ID</replaceable> --nic net-id=<replaceable>NET2-ID</replaceable> <replaceable>VM_NAME</replaceable></userinput></screen></td>
                     </tr>
                     <tr>
-                        <td>Boots a VM with a specific IP address. First, create an Networking port
-                            with a specific IP address. Then, boot a VM specifying a
-                                <option>port-id</option> rather than a <option>net-id</option>.</td>
-                        <td><screen><prompt>$</prompt> <userinput>neutron port-create --fixed-ip subnet_id=<replaceable>SUBNET_ID</replaceable>,ip_address=<replaceable>IP_ADDRESS</replaceable> <replaceable>NET_ID</replaceable></userinput>
-<prompt>$</prompt> <userinput>nova boot --image <replaceable>IMAGE</replaceable> --flavor <replaceable>FLAVOR</replaceable> --nic port-id=<replaceable>PORT_ID</replaceable> <replaceable>VM_NAME</replaceable></userinput></screen></td>
+                        <td>Boots a VM with a specific IP address. Note that you cannot use the <parameter>--num-instances</parameter> parameter in this case.</td>
+                        <td><screen><prompt>$</prompt> <userinput>nova boot --image <replaceable>IMAGE</replaceable> --flavor <replaceable>FLAVOR</replaceable> --nic net-id=<replaceable>NET-ID</replaceable>,v4-fix-ip=<replaceable>IP-ADDR</replaceable> <replaceable>VM_NAME</replaceable></userinput></screen></td>
                     </tr>
                     <tr>
                         <td>Boots a VM that connects to all networks that are accessible to the
@@ -525,11 +522,6 @@
                     </tr>
                 </tbody>
             </table>
-            <note>
-                <para>Networking does not currently support the <parameter>v4-fixed-ip</parameter>
-                    parameter of the <parameter>--nic</parameter> option for the
-                        <command>nova</command> command.</para>
-            </note>
             <note>
                 <para>Cloud images that distribution vendors offer usually have only one active NIC
                     configured. When you boot with multiple NICs, you must configure additional
