@@ -18,144 +18,153 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td>cluster_remote_threshold = 70</td>
+        <td><option>cluster_remote_threshold</option> = <replaceable>70</replaceable></td>
         <td>(IntOpt) The same as global_remote_threshold, but for a single cluster.</td>
       </tr>
       <tr>
-        <td>compute_topology_file = etc/sahara/compute.topology</td>
-        <td>(StrOpt) File with nova compute topology.
-                It should contain mapping between nova computes and racks.
-                File format:
-                compute1 /rack1
-                compute2 /rack2
-                compute3 /rack2</td>
+        <td><option>compute_topology_file</option> = <replaceable>etc/sahara/compute.topology</replaceable></td>
+        <td>(StrOpt) File with nova compute topology. It should contain mapping between nova computes and racks.</td>
       </tr>
       <tr>
-        <td>detach_volume_timeout = 300</td>
+        <td><option>detach_volume_timeout</option> = <replaceable>300</replaceable></td>
         <td>(IntOpt) Timeout for detaching volumes from instance (in seconds).</td>
       </tr>
       <tr>
-        <td>enable_data_locality = False</td>
-        <td>(BoolOpt) Enables data locality for hadoop cluster.
-                 Also enables data locality for Swift used by hadoop.
-                 If enabled, 'compute_topology' and 'swift_topology'
-                 configuration parameters should point to OpenStack and Swift
-                 topology correspondingly.</td>
+        <td><option>enable_data_locality</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Enables data locality for hadoop cluster. Also enables data locality for Swift used by hadoop. If enabled, 'compute_topology' and 'swift_topology' configuration parameters should point to OpenStack and Swift topology correspondingly.</td>
       </tr>
       <tr>
-        <td>enable_hypervisor_awareness = True</td>
-        <td>(BoolOpt) Enables four-level topology for data locality.
-                Works only if corresponding plugin supports such mode.</td>
+        <td><option>enable_hypervisor_awareness</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) Enables four-level topology for data locality. Works only if corresponding plugin supports such mode.</td>
       </tr>
       <tr>
-        <td>enable_notifications = False</td>
+        <td><option>enable_notifications</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Enables sending notifications to Ceilometer</td>
       </tr>
       <tr>
-        <td>global_remote_threshold = 100</td>
+        <td><option>global_remote_threshold</option> = <replaceable>100</replaceable></td>
         <td>(IntOpt) Maximum number of remote operations that will be running at the same time. Note that each remote operation requires its own process to run.</td>
       </tr>
       <tr>
-        <td>host = </td>
+        <td><option>host</option> = <replaceable></replaceable></td>
         <td>(StrOpt) Hostname or IP address that will be used to listen on.</td>
       </tr>
       <tr>
-        <td>infrastructure_engine = direct</td>
+        <td><option>infrastructure_engine</option> = <replaceable>direct</replaceable></td>
         <td>(StrOpt) An engine which will be used to provision infrastructure for Hadoop cluster.</td>
       </tr>
       <tr>
-        <td>job_binary_max_KB = 5120</td>
+        <td><option>job_binary_max_KB</option> = <replaceable>5120</replaceable></td>
         <td>(IntOpt) Maximum length of job binary data in kilobytes that may be stored or retrieved in a single operation.</td>
       </tr>
       <tr>
-        <td>job_workflow_postfix = </td>
+        <td><option>job_canceling_timeout</option> = <replaceable>300</replaceable></td>
+        <td>(IntOpt) Timeout for canceling job execution (in seconds). Sahara will try to cancel job execution during this time.</td>
+      </tr>
+      <tr>
+        <td><option>job_workflow_postfix</option> = <replaceable></replaceable></td>
         <td>(StrOpt) Postfix for storing jobs in hdfs. Will be added to '/user/&lt;hdfs user&gt;/' path.</td>
       </tr>
       <tr>
-        <td>lock_path = None</td>
-        <td>(StrOpt) Directory to use for lock files.</td>
-      </tr>
-      <tr>
-        <td>memcached_servers = None</td>
+        <td><option>memcached_servers</option> = <replaceable>None</replaceable></td>
         <td>(ListOpt) Memcached servers or None for in process cache.</td>
       </tr>
       <tr>
-        <td>min_transient_cluster_active_time = 30</td>
+        <td><option>min_transient_cluster_active_time</option> = <replaceable>30</replaceable></td>
         <td>(IntOpt) Minimal "lifetime" in seconds for a transient cluster. Cluster is guaranteed to be "alive" within this time period.</td>
       </tr>
       <tr>
-        <td>node_domain = novalocal</td>
+        <td><option>node_domain</option> = <replaceable>novalocal</replaceable></td>
         <td>(StrOpt) The suffix of the node's FQDN. In nova-network that is the dhcp_domain config parameter.</td>
       </tr>
       <tr>
-        <td>os_region_name = None</td>
+        <td><option>os_region_name</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Region name used to get services endpoints.</td>
       </tr>
       <tr>
-        <td>periodic_enable = True</td>
+        <td><option>periodic_enable</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Enable periodic tasks.</td>
       </tr>
       <tr>
-        <td>periodic_fuzzy_delay = 60</td>
+        <td><option>periodic_fuzzy_delay</option> = <replaceable>60</replaceable></td>
         <td>(IntOpt) Range in seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0).</td>
       </tr>
       <tr>
-        <td>periodic_interval_max = 60</td>
+        <td><option>periodic_interval_max</option> = <replaceable>60</replaceable></td>
         <td>(IntOpt) Max interval size between periodic tasks execution in seconds.</td>
       </tr>
       <tr>
-        <td>plugins = vanilla, hdp, spark</td>
+        <td><option>plugins</option> = <replaceable>vanilla, hdp, spark</replaceable></td>
         <td>(ListOpt) List of plugins to be loaded. Sahara preserves the order of the list when returning it.</td>
       </tr>
       <tr>
-        <td>port = 8386</td>
+        <td><option>policy_default_rule</option> = <replaceable>default</replaceable></td>
+        <td>(StrOpt) Default rule. Enforced when a requested rule is not found.</td>
+      </tr>
+      <tr>
+        <td><option>policy_dirs</option> = <replaceable>['policy.d']</replaceable></td>
+        <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.</td>
+      </tr>
+      <tr>
+        <td><option>policy_file</option> = <replaceable>policy.json</replaceable></td>
+        <td>(StrOpt) The JSON file that defines policies.</td>
+      </tr>
+      <tr>
+        <td><option>port</option> = <replaceable>8386</replaceable></td>
         <td>(IntOpt) Port that will be used to listen on.</td>
       </tr>
       <tr>
-        <td>remote = ssh</td>
+        <td><option>proxy_command</option> = <replaceable></replaceable></td>
+        <td>(StrOpt) Proxy command used to connect to instances. If set, this command should open a netcat socket, that Sahara will use for SSH and HTTP connections. Use {host} and {port} to describe the destination. Other available keywords: {tenant_id}, {network_id}, {router_id}.</td>
+      </tr>
+      <tr>
+        <td><option>remote</option> = <replaceable>ssh</replaceable></td>
         <td>(StrOpt) A method for Sahara to execute commands on VMs.</td>
       </tr>
       <tr>
-        <td>run_external_periodic_tasks = True</td>
+        <td><option>rootwrap_command</option> = <replaceable>sudo sahara-rootwrap /etc/sahara/rootwrap.conf</replaceable></td>
+        <td>(StrOpt) Rootwrap command to leverage.  Use in conjunction with use_rootwrap=True</td>
+      </tr>
+      <tr>
+        <td><option>run_external_periodic_tasks</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Some periodic tasks can be run in a separate process. Should we run them here?</td>
       </tr>
       <tr>
-        <td>swift_topology_file = etc/sahara/swift.topology</td>
-        <td>(StrOpt) File with Swift topology.
-                It should contain mapping between Swift nodes and racks.
-                File format:
-                node1 /rack1
-                node2 /rack2
-                node3 /rack2</td>
+        <td><option>swift_topology_file</option> = <replaceable>etc/sahara/swift.topology</replaceable></td>
+        <td>(StrOpt) File with Swift topology.It should contain mapping between Swift nodes and racks.</td>
       </tr>
       <tr>
-        <td>use_floating_ips = True</td>
+        <td><option>use_floating_ips</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) If set to True, Sahara will use floating IPs to communicate with instances. To make sure that all instances have floating IPs assigned in Nova Network set "auto_assign_floating_ip=True" in nova.conf. If Neutron is used for networking, make sure that all Node Groups have "floating_ip_pool" parameter defined.</td>
       </tr>
       <tr>
-        <td>use_identity_api_v3 = True</td>
+        <td><option>use_identity_api_v3</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Enables Sahara to use Keystone API v3. If that flag is disabled, per-job clusters will not be terminated automatically.</td>
       </tr>
       <tr>
-        <td>use_namespaces = False</td>
+        <td><option>use_namespaces</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Use network namespaces for communication (only valid to use in conjunction with use_neutron=True).</td>
       </tr>
       <tr>
-        <td>use_neutron = False</td>
+        <td><option>use_neutron</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Use Neutron Networking (False indicates the use of Nova networking).</td>
+      </tr>
+      <tr>
+        <td><option>use_rootwrap</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Use rootwrap facility to allow non-root users to run the sahara-all server instance and access private network IPs (only valid to use in conjunction with use_namespaces=True)</td>
       </tr>
       <tr>
         <th colspan="2">[conductor]</th>
       </tr>
       <tr>
-        <td>use_local = True</td>
+        <td><option>use_local</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Perform sahara-conductor operations locally.</td>
       </tr>
       <tr>
         <th colspan="2">[keystone_authtoken]</th>
       </tr>
       <tr>
-        <td>memcached_servers = None</td>
+        <td><option>memcached_servers</option> = <replaceable>None</replaceable></td>
         <td>(ListOpt) Optionally specify a list of memcached server(s) to use for caching. If left undefined, tokens will instead be cached in-process.</td>
       </tr>
     </tbody>
