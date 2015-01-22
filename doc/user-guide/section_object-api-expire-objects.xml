@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [ <!ENTITY % openstack SYSTEM "../common/entities/openstack.ent"> %openstack; ]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="expire-objects">
+    <title>Schedule objects for deletion</title>
+    <para>Scheduling an object for deletion is helpful for managing
+        objects that you do not want to permanently store, such as log
+        files, recurring full backups of a dataset, or documents or
+        images that become outdated at a specified future time.</para>
+    <para>To schedule an object for deletion, include one of these
+        headers with the &PUT; or &POST; request on the object:</para>
+    <variablelist>
+        <varlistentry>
+            <term>X-Delete-At</term>
+            <listitem>
+                <para>A UNIX epoch timestamp, in integer form. For
+                    example, <literal>1348691905</literal> represents
+                        <literal>Wed, 26 Sept 2012 20:38:25
+                        GMT</literal>. Specifies the time when you
+                    want the object to expire, no longer be served,
+                    and be deleted completely from the object
+                    store.</para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>X-Delete-After</term>
+            <listitem>
+                <para>An integer value. Specifies the number of
+                    seconds from the time of the request to when you
+                    want to delete the object.</para>
+                <para>This header is converted to an
+                        <literal>X-Delete-At</literal> header that is
+                    set to the sum of the
+                        <literal>X-Delete-After</literal> value plus
+                    the current time, in seconds.</para>
+            </listitem>
+        </varlistentry>
+    </variablelist>
+    <note>
+        <para>Use <link xlink:href="http://www.epochconverter.com/"
+                >http://www.epochconverter.com/</link> to convert
+            dates to and from epoch timestamps and for batch
+            conversions.</para>
+    </note>
+    <para>Use the &POST; method to assign expiration headers to
+        existing objects that you want to expire.</para>
+    <simplesect>
+        <title>Delete object at specified time request</title>
+        <para>In this example, the <literal>X-Delete-At</literal>
+            header is assigned a UNIX epoch timestamp in integer form
+            for <literal>Mon, 11 Jun 2012 15:38:25 GMT</literal>.</para>
+        <screen><prompt>$</prompt> <userinput>curl -i <replaceable>publicURL</replaceable>/marktwain/goodbye -X PUT -H "X-Auth-Token: <replaceable>token</replaceable>" \
+-H "X-Delete-At: 1390581073" -H "Content-Length: 14" -H \
+"Content-Type: application/octet-stream"</userinput></screen>
+    </simplesect>
+    <simplesect>
+        <title>Delete object after specified interval request</title>
+        <para>In this example, the <code>X-Delete-After</code> header
+            is set to 864000 seconds. After this time, the object
+            expires.</para>
+        <screen><computeroutput>PUT /&lt;api version>/&lt;account>/&lt;container>/&lt;object> HTTP/1.1
+Host: storage.example.com
+X-Auth-Token: eaaafd18-0fed-4b3a-81b4-663c99ec1cbb
+Content-Type: image/jpeg
+X-Delete-After: 864000</computeroutput></screen>
+    </simplesect>
+</section>
