@@ -143,7 +143,7 @@
              <para>For tenants, you can use quota controls to limit the:</para>
              <itemizedlist>
                  <listitem>
-                     <para>Number of volumes that may be launched.</para>
+                     <para>Number of volumes that can be launched.</para>
                  </listitem>
                  <listitem>
                      <para>Number of processor cores and the amount of RAM that can be allocated.</para>
@@ -220,14 +220,17 @@
                  only one instance at a time, although you can detach and
                  reattach volumes to as many different instances as you
                  like.</para>
-             <para>You can configure persistent volumes as bootable and use them to provide a persistent
-                 virtual instance similar to traditional non-cloud-based virtualization systems.
-                 Typically, the resulting instance can also still have ephemeral storage depending on the
-                 flavor selected, but the root file system can be on the persistent volume and its state
-                 maintained even if the instance is shut down. For more information about this type of
-                 configuration, see the <link
-                     xlink:href="http://docs.openstack.org/juno/config-reference/content/">
-                     <citetitle>OpenStack Configuration Reference</citetitle></link>.
+             <para>You can configure persistent volumes as bootable and use
+                 them to provide a persistent virtual instance similar to
+                 traditional non-cloud-based virtualization systems.
+                 It is still possible for the resulting instance to also have
+                 ephemeral storage, depending on the flavor selected. In this
+                 case, the root file system can be on the persistent volume
+                 and its state maintained even if the instance is shut down.
+                 For more information about this type of configuration, see
+                 the <link
+                 xlink:href="http://docs.openstack.org/juno/config-reference/content/">
+                 <citetitle>OpenStack Configuration Reference</citetitle></link>.
              </para>
              <note>
                  <para>Persistent volumes do not provide concurrent access
@@ -241,13 +244,13 @@
          </section>
          <section xml:id="instance-mgmt-ec2compat">
              <title>EC2 compatibility API</title>
-             <para>In addition to the native compute API, OpenStack provides an EC2-compatible API. This
-                 API allows EC2 legacy workflows built for EC2 to work with OpenStack. The
-                 <link
-                     xlink:href="http://docs.openstack.org/juno/config-reference/content/">
-                     <citetitle>OpenStack Configuration Reference</citetitle></link>
-                 lists configuration options
-                 for customizing this compatibility API on your OpenStack cloud.</para>
+             <para>In addition to the native compute API, OpenStack provides
+               an EC2-compatible API. This API allows EC2 legacy workflows
+               built for EC2 to work with OpenStack. For more information and
+               configuration options about this compatibility API, see the <link
+               xlink:href="http://docs.openstack.org/juno/config-reference/content/">
+               <citetitle>OpenStack Configuration Reference</citetitle></link>.
+             </para>
              <para>Numerous third-party tools and language-specific SDKs
                  can be used to interact with OpenStack clouds, using both
                  native and compatibility APIs. Some of the more popular
@@ -392,13 +395,13 @@
          </section>
          <section xml:id="section_compute-service-arch">
              <title>Compute service architecture</title>
-             <para>The following basic categories describe the service architecture and what's going
-                 on within the cloud controller.</para>
+             <para>These basic categories describe the service
+               architecture and information about the cloud controller.</para>
              <simplesect>
                  <title>API server</title>
-                 <para>At the heart of the cloud framework is an API server. This API server makes
-                     command and control of the hypervisor, storage, and networking programmatically
-                     available to users.</para>
+                 <para>At the heart of the cloud framework is an API server,
+                   which makes command and control of the hypervisor, storage,
+                   and networking programmatically available to users.</para>
                  <para>The API endpoints are basic HTTP web services
                      which handle authentication, authorization, and
                      basic command and control functions using various
@@ -417,19 +420,23 @@
                      infrastructure), API endpoints, the scheduler
                      (determines which physical hardware to allocate to
                      a virtual resource), and similar components.
-                     Communication to and from the cloud controller is
+                     Communication to and from the cloud controller is handled
                      by HTTP requests through multiple API
                      endpoints.</para>
-                 <para>A typical message passing event begins with the API server receiving a request
-                     from a user. The API server authenticates the user and ensures that the user is
-                     permitted to issue the subject command. The availability of objects implicated in
-                     the request is evaluated and, if available, the request is routed to the queuing
-                     engine for the relevant workers. Workers continually listen to the queue based on
-                     their role, and occasionally their type host name. When an applicable work request
-                     arrives on the queue, the worker takes assignment of the task and begins its
-                     execution. Upon completion, a response is dispatched to the queue which is received
-                     by the API server and relayed to the originating user. Database entries are queried,
-                     added, or removed as necessary throughout the process.</para>
+                 <para>A typical message passing event begins with the API
+                   server receiving a request from a user. The API server
+                   authenticates the user and ensures that they are permitted
+                   to issue the subject command. The availability of objects
+                   implicated in the request is evaluated and, if available,
+                   the request is routed to the queuing engine for the
+                   relevant workers. Workers continually listen to the queue
+                   based on their role, and occasionally their type host name.
+                   When an applicable work request arrives on the queue, the
+                   worker takes assignment of the task and begins executing it.
+                   Upon completion, a response is dispatched to the queue
+                   which is received by the API server and relayed to the
+                   originating user. Database entries are queried, added, or
+                   removed as necessary during the process.</para>
              </simplesect>
              <simplesect>
                  <title>Compute worker</title>
