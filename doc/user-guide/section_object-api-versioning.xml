@@ -31,7 +31,7 @@
         <step>
             <para>Create an <literal>archive</literal> container to
                 store older versions of objects:</para>
-            <screen><prompt>#</prompt> <userinput>curl -i $publicURL/archive -X PUT -H "Content-Length: 0" -H "X-Auth-Token: $token"</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>curl -i $publicURL/archive -X PUT -H "Content-Length: 0" -H "X-Auth-Token: $token"</userinput></screen>
             <screen><computeroutput>HTTP/1.1 201 Created
 Content-Length: 0
 Content-Type: text/html; charset=UTF-8
@@ -52,7 +52,7 @@ Date: Thu, 23 Jan 2014 21:11:57 GMT</computeroutput></screen>
                 objects in the <literal>current</literal> container
                 automatically create non-current versions in the
                     <literal>archive</literal> container.</para>
-            <screen><prompt>#</prompt> <userinput>curl -i $publicURL/current -X PUT -H "Content-Length: 0" -H "X-Auth-Token: $token" -H "X-Versions-Location: archive"</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>curl -i $publicURL/current -X PUT -H "Content-Length: 0" -H "X-Auth-Token: $token" -H "X-Versions-Location: archive"</userinput></screen>
             <screen><computeroutput>HTTP/1.1 201 Created
 Content-Length: 0
 Content-Type: text/html; charset=UTF-8
@@ -62,7 +62,7 @@ Date: Thu, 23 Jan 2014 21:28:55 GMT</computeroutput></screen>
         <step>
             <para>Create the first version of an object in the
                     <literal>current</literal> container:</para>
-            <screen><prompt>#</prompt> <userinput>curl -i $publicURL/current/my_object --data-binary 1 -X PUT -H "Content-Length: 0" -H "X-Auth-Token: $token"</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>curl -i $publicURL/current/my_object --data-binary 1 -X PUT -H "Content-Length: 0" -H "X-Auth-Token: $token"</userinput></screen>
             <screen><computeroutput>HTTP/1.1 201 Created
 Last-Modified: Thu, 23 Jan 2014 21:31:22 GMT
 Content-Length: 0
@@ -88,7 +88,7 @@ Date: Thu, 23 Jan 2014 21:31:22 GMT</computeroutput></screen>
         <step>
             <para>Create a second version of the object in the
                     <literal>current</literal> container:</para>
-            <screen><prompt>#</prompt> <userinput>curl -i $publicURL/current/my_object --data-binary 2 -X PUT -H "Content-Length: 0" -H "X-Auth-Token: $token"</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>curl -i $publicURL/current/my_object --data-binary 2 -X PUT -H "Content-Length: 0" -H "X-Auth-Token: $token"</userinput></screen>
             <screen><computeroutput>HTTP/1.1 201 Created
 Last-Modified: Thu, 23 Jan 2014 21:41:32 GMT
 Content-Length: 0
@@ -103,7 +103,7 @@ Date: Thu, 23 Jan 2014 21:41:32 GMT</computeroutput></screen>
                 do any request redirects or metadata lookups.</para>
             <para>List older versions of the object in the
                     <literal>archive</literal> container:</para>
-            <screen><prompt>#</prompt> <userinput>curl -i $publicURL/archive?prefix=009my_object -X GET -H "X-Auth-Token: $token"</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>curl -i $publicURL/archive?prefix=009my_object -X GET -H "X-Auth-Token: $token"</userinput></screen>
             <screen><computeroutput>HTTP/1.1 200 OK
 Content-Length: 30
 X-Container-Object-Count: 1
@@ -128,7 +128,7 @@ Date: Thu, 23 Jan 2014 21:45:50 GMT
                 remove the current version of the object and replace
                 it with the next-most current version in the
                 non-current container.</para>
-            <screen><prompt>#</prompt> <userinput>curl -i $publicURL/current/my_object -X DELETE -H "X-Auth-Token: $token"</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>curl -i $publicURL/current/my_object -X DELETE -H "X-Auth-Token: $token"</userinput></screen>
             <screen><computeroutput>HTTP/1.1 204 No Content
 Content-Length: 0
 Content-Type: text/html; charset=UTF-8
@@ -138,7 +138,7 @@ Date: Thu, 23 Jan 2014 21:51:25 GMT</computeroutput></screen>
                 container to show that the archived object was moved
                 back to the <literal>current</literal>
                 container:</para>
-            <screen><prompt>#</prompt> <userinput>curl -i $publicURL/archive?prefix=009my_object -X GET -H "X-Auth-Token: $token"</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>curl -i $publicURL/archive?prefix=009my_object -X GET -H "X-Auth-Token: $token"</userinput></screen>
             <screen><computeroutput>HTTP/1.1 204 No Content
 Content-Length: 0
 X-Container-Object-Count: 0
@@ -158,7 +158,7 @@ Date: Thu, 23 Jan 2014 21:51:41 GMT</computeroutput></screen>
                     <literal>current</literal> container, remove its
                     <literal>X-Versions-Location</literal> metadata
                 header by sending an empty key value.</para>
-            <screen><prompt>#</prompt> <userinput>curl -i $publicURL/current -X PUT -H "Content-Length: 0" -H "X-Auth-Token: $token" -H "X-Versions-Location: "</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>curl -i $publicURL/current -X PUT -H "Content-Length: 0" -H "X-Auth-Token: $token" -H "X-Versions-Location: "</userinput></screen>
             <screen><computeroutput>HTTP/1.1 202 Accepted
 Content-Length: 76
 Content-Type: text/html; charset=UTF-8
