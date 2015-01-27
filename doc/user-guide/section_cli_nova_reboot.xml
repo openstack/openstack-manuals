@@ -5,10 +5,46 @@
   version="5.0"
   xml:id="reboot">
     <title>Reboot an instance</title>
+
 <para>You can soft or hard reboot a running instance. A soft reboot
         attempts a graceful shut down and restart of the instance. A
         hard reboot power cycles the instance.</para>
-   <procedure> <step><para>By default, when you reboot a server, it is a soft reboot.</para>
+
+<procedure> <step><para>By default, when you reboot an instance, it is a soft reboot.</para>
 <screen><prompt>$</prompt> <userinput>nova reboot <replaceable>SERVER</replaceable></userinput></screen></step></procedure>
-<para>To perform a hard reboot, pass the <parameter>--hard</parameter>
-    parameter, as follows:</para><screen><prompt>$</prompt> <userinput>nova reboot --hard <replaceable>SERVER</replaceable></userinput></screen></section>
+
+<procedure> <step><para>To perform a hard reboot, pass the <parameter>--hard</parameter> parameter, as follows:</para>
+<screen><prompt>$</prompt> <userinput>nova reboot --hard <replaceable>SERVER</replaceable></userinput></screen></step></procedure>
+
+<para>It is also possible to reboot a running instance into
+ rescue mode. This operation may be required, if a filesystem
+ of an instance becomes corrupted with a prolonged usage,
+ for example.</para>
+
+<note>
+<para>Pause, suspend, and stop operations are not allowed
+ when an instance is running in rescue mode, as triggering
+ these actions causes the loss of the original instance
+ state and makes it impossible to unrescue the instance.</para>
+</note>
+
+<para>Rescue mode provides a mechanism for access, even
+ if an image renders the instance inaccessible. By default,
+ it starts an instance from the initial image attaching
+ the current boot disk as a secondary one.</para>
+
+<procedure> <step><para>To perform an instance reboot into rescue
+ mode, run the following command:</para>
+<screen><prompt>$</prompt> <userinput>nova rescue <replaceable>SERVER</replaceable></userinput></screen></step></procedure>
+
+<procedure> <step><para>To restart the instance from the normal
+ boot disk, run the following command:</para>
+<screen><prompt>$</prompt> <userinput>nova unrescue <replaceable>SERVER</replaceable></userinput></screen></step></procedure>
+
+<procedure> <step><para>If you want to rescue an instance with a specific
+ image, rather than the default one, use the
+ <parameter>--rescue_image_ref</parameter> parameter, as follows:</para>
+
+<screen><prompt>$</prompt> <userinput>nova rescue --rescue_image_ref <replaceable>IMAGE_ID</replaceable><replaceable> SERVER</replaceable></userinput></screen></step></procedure>
+
+</section>
