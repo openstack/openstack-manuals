@@ -35,11 +35,6 @@ case "$PROJECT_DIR" in
         ENT_DIR="security-guide"
         CHECK_MARK_DIR="static"
         ;;
-    training-guides)
-        GLOSSARY_SUB_DIR="doc/glossary"
-        ENT_DIR="training-guides"
-        CHECK_MARK_DIR="figures"
-        ;;
     *)
         echo "$PROJECT_DIR not handled"
         exit 1
