@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<section xmlns="http://docbook.org/ns/docbook"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xml:id="scality-sfused-driver" version="5.0">
+  <title>Scality SOFS driver</title>
+  <para>The Scality SOFS volume driver interacts with configured
+    sfused mounts.</para>
+  <para>The Scality SOFS driver manages volumes as sparse files stored on
+    a Scality Ring through sfused. Ring connection settings and sfused options
+    are defined in the <filename>cinder.conf</filename> file and the
+    configuration file pointed to by the <option>scality_sofs_config</option>
+    option, typically <filename>/etc/sfused.conf</filename>.
+  </para>
+    <simplesect>
+      <title>Supported operations</title>
+      <para>The Scality SOFS volume driver provides the following
+        Block Storage volume operations:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Create, delete, attach (map), and detach (unmap) volumes.</para>
+        </listitem>
+        <listitem>
+          <para>Create, list, and delete volume snapshots.</para>
+        </listitem>
+        <listitem>
+          <para>Create a volume from a snapshot.</para>
+        </listitem>
+        <listitem>
+          <para>Copy an image to a volume.</para>
+        </listitem>
+        <listitem>
+          <para>Copy a volume to an image.</para>
+        </listitem>
+        <listitem>
+          <para>Clone a volume.</para>
+        </listitem>
+        <listitem>
+          <para>Extend a volume.</para>
+        </listitem>
+        <listitem>
+          <para>Backup a volume.</para>
+        </listitem>
+        <listitem>
+          <para>Restore backup to new or existing volume.</para>
+        </listitem>
+    </itemizedlist>
+  </simplesect>
+  <simplesect>
+    <title>Configuration</title>
+    <para>Use the following instructions to update the
+      <filename>cinder.conf</filename> configuration file:
+    <example><title>Sample Block Storage Configuration</title>
+            <programlisting language="ini">[DEFAULT]
+enabled_backends = scality-1
+
+[scality-1]
+volume_driver=cinder.volume.drivers.scality.ScalityDriver
+volume_backend_name = scality-1
+
+scality_sofs_config=/etc/sfused.conf
+scality_sofs_mount_point=/cinder
+scality_sofs_volume_dir=cinder/volumes</programlisting>
+    </example>
+    </para>
+    <para>Use the following instructions to update the
+      <filename>nova.conf</filename> configuration file:
+    <example><title>Sample Compute Configuration</title>
+      <programlisting language="ini">[libvirt]
+scality_sofs_mount_point = /cinder
+scality_sofs_config = /etc/sfused.conf</programlisting>
+    </example>
+    </para>
+    <xi:include href="../../../common/tables/cinder-scality.xml"/>
+  </simplesect>
+</section>
