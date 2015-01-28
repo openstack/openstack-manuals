@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-01-26 23:17+0000\n"
-"PO-Revision-Date: 2015-01-27 03:40+0000\n"
+"POT-Creation-Date: 2015-01-27 14:07+0000\n"
+"PO-Revision-Date: 2015-01-28 04:21+0000\n"
 "Last-Translator: johnwoo_lee <lijiangsheng1@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -6957,7 +6957,7 @@ msgid ""
 "manufacturers. This may cause issues for organizations that have preferred "
 "vendor policies or concerns with support and hardware warranties of non-tier"
 " 1 vendors."
-msgstr ""
+msgstr "1U机架式服务器(服务器仅占用一个机架单元)要比刀片服务解决方案提供更大的服务器密度。它可以在一个机柜中安放40台服务器，相当于在一个机柜中置放32台“全宽”或“全高”的刀片服务器加上顶部空间[ToR]的交换机)。但是会有双CPU插槽、多核CPU配置的限制，记住这点，就在IceHouse版本发布时，无论是HP，IBM还是Dell都无法提供多于2个CPU插槽的1U机架式服务器。要想使1U的服务器支持超过2个插槽，用户需要通过原始设计制造商(ODM)或二线制造商来购买。这会给企业带来额外的问题：重新评估供应商的政策，支持的力度是否够，非一线供应商的硬件质量保证等。"
 
 #: ./doc/arch-design/compute_focus/section_architecture_compute_focus.xml103(para)
 msgid ""
@@ -7028,7 +7028,7 @@ msgid ""
 "solution, smaller number of larger hosts, or a larger number of smaller "
 "hosts depends on a combination of factors: cost, power, cooling, physical "
 "rack and floor space, support-warranty, and manageability."
-msgstr ""
+msgstr "计算型OpenStack架构设计的服务器硬件选择只有两种结果可决定：纵向扩展抑或横向扩展。在少而大的服务器主机和多而小的服务器主机选择更好的解决方案，取决于多种因素：预算、电力、制冷、物理机架和地板的空间、售后服务力度、以及可管理性。"
 
 #: ./doc/arch-design/compute_focus/section_architecture_compute_focus.xml167(title)
 msgid "Storage hardware selection"
@@ -7040,7 +7040,7 @@ msgid ""
 "storage hardware is not critical as it is not primary criteria, however it "
 "is still important. There are a number of different factors that a cloud "
 "architect must consider:"
-msgstr ""
+msgstr "对于计算型OpenStack架构设计来说，选择存储硬件不是关键，因为它并非主要标准，虽然如此，但还是比较重要的。云架构师必须考虑如下几种不同的因素："
 
 #: ./doc/arch-design/compute_focus/section_architecture_compute_focus.xml176(para)
 msgid ""
@@ -7108,7 +7108,7 @@ msgid ""
 "The following lists some of the potential impacts that may affect a "
 "particular storage architecture, and the corresponding storage hardware, of "
 "a compute-focused OpenStack cloud:"
-msgstr ""
+msgstr "下面列出在一个计算型OpenStack云中可能影响到特定的存储架构及其对应的存储硬件的因素："
 
 #: ./doc/arch-design/compute_focus/section_architecture_compute_focus.xml244(para)
 msgid ""
@@ -7435,7 +7435,7 @@ msgid ""
 "can also provide automation and issue notification by providing a mechanism "
 "to both alert and automatically attempt to remediate some of the more "
 "commonly known issues."
-msgstr ""
+msgstr "对日志、监测以及报警的需求是由运维考虑决定的。它们的每个子类别都包含了大量的属性。举例，在日志子类别中，某些情况考虑使用Logstash,Splunk，instanceware Log Insight等，或者其他的日志聚合-合并工具。日志需要存放在中心地带，使分析数据变得更为简单。日志数据分析引擎亦得提供自动化和问题通知，通过提供一致的预警和自动修复某些常见的已知问题。"
 
 #: ./doc/arch-design/compute_focus/section_architecture_compute_focus.xml572(para)
 #: ./doc/arch-design/storage_focus/section_architecture_storage_focus.xml613(para)
@@ -7839,7 +7839,7 @@ msgid ""
 "domains should be mapped out against specific OpenStack deployment topology."
 " The domains and their trust requirements depend upon whether the cloud "
 "instance is public, private, or hybrid."
-msgstr ""
+msgstr "这些安全域可以映射给分开的OpenStack部署，也可以是合并的。例如，一些部署的拓扑合并了客户机和数据域在同一物理网络，其他一些情况的网络是物理分离的。无论那种情况，云运维人员必须意识到适当的安全问题。安全域须制定出针对特定的OpenStack部署拓扑。所谓的域和其信任的需求取决于云的实例是公有的，私有的，还是混合的。"
 
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml302(para)
 msgid ""
@@ -7847,7 +7847,7 @@ msgid ""
 "infrastructure. It can refer to the Internet as a whole or simply to "
 "networks over which the user has no authority. This domain should always be "
 "considered untrusted."
-msgstr ""
+msgstr "公有安全域对于云基础设施是完全不可信任的区域。正如将内部暴露给整个互联网，或者是没有认证的简单网络。此域一定不可以\n被信任。"
 
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml307(para)
 msgid ""
@@ -7860,7 +7860,7 @@ msgid ""
 "providers may want to consider this network as internal and therefore "
 "trusted only if they have controls in place to assert that they trust "
 "instances and all their tenants."
-msgstr ""
+msgstr "典型的用户计算服务中的实例对实际的互联互通，客户安全域，在云中掌握着由实例生成的计算机数据，但是不可以通过云来访问，包括应用程序接口调用。公有云或私有云提供商不会严格的控制实例的使用，以及谁受限访问互联网，所以应指定此域是不可信任的。或许私有云提供商可以稍宽松点，因为是内部网络，还有就是它可以控制所有的实例和租户。"
 
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml323(para)
 msgid ""
@@ -7871,7 +7871,7 @@ msgid ""
 "requirements. The trust level of this network is heavily dependent on "
 "deployment decisions and as such we do not assign this any default level of "
 "trust."
-msgstr ""
+msgstr "数据安全域主要关心的是OpenStack存储服务相关的信息。多数通过此网络的数据具有高度机密的要求，甚至在某些类型的部署中>，还有高可用的需求。此网络的信任级别高度依赖于其他部署的决定。"
 
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml331(para)
 msgid ""
@@ -7886,7 +7886,7 @@ msgid ""
 "hostile entities wanting to gain unauthorized access or prevent access to "
 "services. This can result in loss of reputation and must be protected "
 "against through auditing and appropriate filtering."
-msgstr ""
+msgstr "在一个企业部署OpenStack为私有云，通常是安置在防火墙之后，和原来的系统一并认为是可信任网络。云的用户即是原来的员工，由公司本来的安全需求所约束。这导致推动大部分的安全域趋向信任模式。但是，当部署OpenStack为面向公用的角色时，不要心存侥幸，它被攻击的几率大大增加。例如，应用程序接口端点，以及其背后的软件，很容易成为一些坏人下手的地方，获得未经授权的访问服务或者阻止其他人访问正常的服务，这可能会导致丢失数据、程序失效，乃至名声。这些服务必须被保护，通过审计以及适当的过滤来实现。"
 
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml345(para)
 msgid ""
@@ -7895,7 +7895,7 @@ msgid ""
 " for LDAP to be part of the authentication process, and includes such "
 "systems as an OpenStack deployment that may ease user management if "
 "integrated into existing systems."
-msgstr ""
+msgstr "无论是公有云还是私有云，管理用户的系统必须认真的考虑。身份认证服务允许LDAP作为认证流程的一部分。包括将LDAP在部署时整合用户原有系统的话，可减少管理用户的压力。"
 
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml351(para)
 msgid ""
@@ -7903,7 +7903,7 @@ msgid ""
 "that performs SSL termination. API services transmit user names, passwords, "
 "and generated tokens between client machines and API endpoints and therefore"
 " must be secured."
-msgstr ""
+msgstr "理解用户的认证需要一些敏感信息如用户名、密码和认证令牌是非常重要的。基于这个原因，强烈建议将认证的API服务隐藏在基>于硬件的SSL终端之后。"
 
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml356(para)
 msgid ""
@@ -7949,7 +7949,7 @@ msgid ""
 "Orchestration will be highly beneficial in this case. Deploying a batch of "
 "instances and running an automated set of tests can be scripted, however it "
 "makes sense to use the Orchestration module to handle all these actions."
-msgstr ""
+msgstr "可以很安全的假定，在此场景中给定应用的性质，这些将是非常高度自动化的部署。在此类用例中Orchestration可以大显身手。批量部署实例、自动化运行测试单元脚本化，都可以使用Orchestration来掌控。"
 
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml392(para)
 msgid "Telemetry module (ceilometer)"
@@ -7962,7 +7962,7 @@ msgid ""
 "module do not need to deploy the Telemetry module and may choose to use "
 "other external solutions to fulfill their metering and monitoring "
 "requirements."
-msgstr ""
+msgstr "使用Orchestration支持自动扩展实例离不开Telemetry和预警系统。用户不部署Telemetry模块就无法使用Orchestration模块，也许选择使用其他的解决方案来满足计费和监测的需求。"
 
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml401(para)
 msgid ""
@@ -7984,7 +7984,7 @@ msgid ""
 " a likely requirement. This does not mean that OpenStack Block Storage "
 "(cinder) will not be used in the infrastructure, but typically it will not "
 "be used as a central component."
-msgstr ""
+msgstr "在计算型云中主要使用的是内存和CPU，因为其面向批处理等服务，其负载、应用、实例都是围绕此而存在，所以为每个实例增加存储并非是强制的。但这并不意味着OpenStack 块存储(cinder)不会在基础设施中使用，只是不会当作核心组件罢了。"
 
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml420(para)
 msgid ""
@@ -7992,7 +7992,7 @@ msgid ""
 "desired hypervisor and container technologies and their OpenStack drivers, "
 "or includes an implementation of an ML2 mechanism driver. Networking "
 "platforms that provide ML2 mechanisms drivers can be mixed."
-msgstr ""
+msgstr "当选择网络平台时，要确保其可正常工作在所有的hypervisor和容器技术下，以及OpenStack的driver,后者ML2机制driver的实现。网络平台可以提供ML2机制driver的混合。"
 
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
