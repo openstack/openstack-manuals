@@ -384,7 +384,7 @@ local0.error    @@172.20.1.43:1024</programlisting>
                 <para>In this example, vm1 is running on HostB.</para>
             </step>
             <step>
-                <para>Select the server to which instances will be migrated:</para>
+                <para>Select the compute node to which instances will be migrated to:</para>
                 <screen><prompt>#</prompt> <userinput>nova service-list</userinput>
 <computeroutput>+------------------+------------+----------+---------+-------+----------------------------+-----------------+
 | Binary           | Host       | Zone     | Status  | State | Updated_at                 | Disabled Reason |
@@ -444,7 +444,7 @@ local0.error    @@172.20.1.43:1024</programlisting>
             <step>
                 <para>Use the <command>nova live-migration</command> command to migrate the
                     instances:<screen><prompt>$</prompt> <userinput>nova live-migration <replaceable>SERVER</replaceable> <replaceable>HOST_NAME</replaceable></userinput></screen></para>
-                <para>Where <replaceable>SERVER</replaceable> can be the ID or name of the server.
+                <para>Where <replaceable>SERVER</replaceable> can be the ID or name of the instance.
                     For example:</para>
                 <screen><prompt>$</prompt> <userinput>nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC</userinput><computeroutput>
 <![CDATA[Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.]]></computeroutput></screen>
@@ -455,7 +455,7 @@ local0.error    @@172.20.1.43:1024</programlisting>
                 <note>
                     <para>Although the <command>nova</command> command is called
                             <command>live-migration</command>, under the default Compute
-                        configuration options the instances are suspended before migration.</para>
+                        configuration options, the instances are suspended before migration.</para>
                     <para>For more details, see <link
                         xlink:href="http://docs.openstack.org/juno/config-reference/content/list-of-compute-config-options.html"
                             >Configure migrations</link> in <citetitle>OpenStack Configuration
