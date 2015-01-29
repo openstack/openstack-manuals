@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="static-website">
+    <title>Create static website</title>
+    <para>You can use your Object Storage account to create a static
+        website. This static website is created with staticweb
+        middleware and serves container data with a specified index
+        file, error file resolution, and optional file listings. This
+        mode is normally active only for anonymous requests, which
+        provide no authentication token. To use it with authenticated
+        requests, set the header <literal>X-Web-Mode</literal> to
+            <literal>TRUE</literal> on the request.</para>
+    <para>The staticweb filter must be added to the pipeline in your
+            <filename>/etc/swift/proxy-server.conf</filename> file
+        below any authentication middleware. You must also add a
+        staticweb middleware configuration section.</para>
+    <para>For an example of the staticweb configuration syntax see the
+            <link
+            xlink:href="http://docs.openstack.org/juno/config-reference/content/object-storage-static-web.html"
+            >Cloud Administrator Guide</link>.</para>
+    <para>For a complete example of the
+            <filename>/etc/swift/proxy-server.conf</filename> file
+        (including staticweb), see the <link
+            xlink:href="http://docs.openstack.org/juno/config-reference/content/proxy-server-conf.html"
+            >Cloud Administrator Guide</link>.</para>
+    <para>Your publicly readable containers are checked for two
+        headers, <literal>X-Container-Meta-Web-Index</literal> and
+            <literal>X-Container-Meta-Web-Error</literal>. The
+            <literal>X-Container-Meta-Web-Error</literal> header is
+        discussed below, in <xref
+            linkend="Set_Error_Pages_for_Static_Website-dle4005"
+        />.</para>
+    <para>Use <literal>X-Container-Meta-Web-Index</literal> to
+        determine the index file (or default page served, such as
+            <filename>index.html</filename>) for your website. When
+        someone initially enters your site, the
+            <filename>index.html</filename> file displays
+        automatically. If you create sub-directories for your site by
+        creating pseudo-directories in your container, the index page
+        for each sub-directory is displayed by default. If your
+        pseudo-directory does not have a file with the same name as
+        your index file, visits to the sub-directory return a 404
+        error.</para>
+    <para>You also have the option of displaying a list of files in
+        your pseudo-directory instead of a web page. To do this, set
+        the <literal>X-Container-Meta-Web-Listings</literal> header to
+            <literal>TRUE</literal>. You may add styles to your file
+        listing by setting
+            <literal>X-Container-Meta-Web-Listings-CSS:</literal> to a
+        style sheet (for example,
+        <literal>lists.css</literal>).</para>
+    <section xml:id="Examples_for_static_web-dle4025">
+        <title>Static web middleware through Object Storage</title>
+        <example>
+            <title>Make container publicly readable</title>
+            <para>Make the container publicly readable. Once the
+                container is publicly readable, you can access your
+                objects directly, but you must set the index file to
+                browse the main site URL and its
+                sub-directories.</para>
+            <screen><prompt>$</prompt> <userinput>swift post -r '.r:*' container</userinput></screen>
+        </example>
+        <example>
+            <title>Set site index file</title>
+            <para>Set the index file. In this case,
+                    <filename>index.html</filename> is the default
+                file displayed when the site appears.</para>
+            <screen><prompt>$</prompt> <userinput>swift post -m 'web-index:index.html' container</userinput></screen>
+        </example>
+        <example>
+            <title>Enable file listing</title>
+            <para>Turn on file listing. If you do not set the index
+                file, the URL displays a list of the objects in the
+                container. Instructions on styling the list with a CSS
+                follow.</para>
+            <screen><prompt>$</prompt> <userinput>swift post -m 'web-listings: true' container</userinput></screen>
+        </example>
+        <example>
+            <title>Enable CSS for file listing</title>
+            <para>Style the file listing using a CSS.</para>
+            <screen><prompt>$</prompt> <userinput>swift post -m 'web-listings-css:listings.css' container</userinput></screen>
+        </example>
+    </section>
+    <section xml:id="Set_Error_Pages_for_Static_Website-dle4005">
+        <title>Set error pages for static website</title>
+        <para>You can create and set custom error pages for visitors
+            to your website; currently, only 401 (Unauthorized) and
+            404 (Not Found) errors are supported. To do this, set the
+            metadata header,
+                <literal>X-Container-Meta-Web-Error</literal>.</para>
+        <para>Error pages are served with the &lt;status&gt; code
+            pre-pended to the name of the error page you set. For
+            instance, if you set
+                <literal>X-Container-Meta-Web-Error</literal> to
+                <filename>error.html</filename>, 401 errors will
+            display the page <filename>401error.html</filename>.
+            Similarly, 404 errors will display
+                <filename>404error.html</filename>. You must have both
+            of these pages created in your container when you set the
+                <literal>X-Container-Meta-Web-Error</literal>
+            metadata, or your site will display generic error
+            pages.</para>
+        <para>You only have to set the
+                <literal>X-Container-Meta-Web-Error</literal> metadata
+            once for your entire static website.</para>
+        <example>
+            <title>Set error pages for static website request</title>
+            <screen><prompt>$</prompt> <userinput>swift post -m 'web-error:error.html' container</userinput></screen>
+        </example>
+        <para>Any 2<varname>nn</varname> response indicates
+            success.</para>
+    </section>
+</section>
