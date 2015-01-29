@@ -18,23 +18,24 @@
       <para>Storage</para>
     </listitem>
   </itemizedlist>
-  <para>In a compute-focused OpenStack cloud the hardware selection must
-    reflect the workloads being compute intensive. Compute-focused is
-    defined as having extreme demands on processor and memory resources.
-    The hardware selection for a compute-focused OpenStack architecture
-    design must reflect this preference for compute-intensive workloads, as
-    these workloads are not storage intensive, nor are they consistently
-    network intensive. The network and storage may be heavily utilized
-    while loading a data set into the computational cluster, but they are
-    not otherwise intensive.</para>
-  <para>Compute (server) hardware must be evaluated against four opposing
-    dimensions:</para>
+  <para>
+    An OpenStack cloud with extreme demands on processor and memory
+    resources is considered to be compute-focused, and requires hardware that
+    can handle these demands. This can mean choosing hardware which might
+    not perform as well on storage or network capabilities. In a compute-
+    focused architecture, storage and networking are required while loading a
+    data set into the computational cluster, but are not otherwise in heavy
+    demand.
+  </para>
+  <para>
+    Compute (server) hardware must be evaluated against four dimensions:
+  </para>
   <variablelist>
     <varlistentry>
       <term>Server density</term>
     <listitem>
       <para>A measure of how many servers can fit into a
-        given measure of physical space, such as a rack unit [U].</para>
+        given amount of physical space, such as a rack unit (U).</para>
     </listitem>
     </varlistentry>
     <varlistentry>
@@ -59,45 +60,41 @@
     </listitem>
     </varlistentry>
   </variablelist>
-  <para>The dimensions need to be weighted against each other to determine the
+  <para>The dimensions need to be weighed against each other to determine the
     best design for the desired purpose. For example, increasing server density
     means sacrificing resource capacity or expandability. Increasing resource
     capacity and expandability can increase cost but decreases server density.
     Decreasing cost can mean decreasing supportability, server density,
     resource capacity, and expandability.</para>
-  <para>Selection of hardware for a compute-focused cloud should have an
-    emphasis on server hardware that can offer more CPU sockets, more CPU
-    cores, and more RAM; network connectivity and storage capacity are less
-    critical. The hardware will need to be configured to provide enough network
-    connectivity and storage capacity to meet minimum user requirements, but
-    they are not the primary consideration.</para>
-  <para>Some server hardware form factors are better suited than others, as CPU
-    and RAM capacity have the highest priority.</para>
+  <para>A compute-focused cloud should have an emphasis on server hardware
+    that can offer more CPU sockets, more CPU cores, and more RAM. Network
+    connectivity and storage capacity are less critical. The hardware will
+    need to be configured to provide enough network connectivity and storage
+    capacity to meet minimum user requirements, but they are not the primary
+    consideration.</para>
+  <para>Some server hardware form factors are better suited than others, as
+    CPU and RAM capacity have the highest priority. Some considerations for
+    selecting hardware:</para>
   <itemizedlist>
     <listitem>
       <para>Most blade servers can support dual-socket multi-core CPUs. To
-        avoid the limit means selecting "full width" or "full height" blades,
-        which consequently loses server density. As an example, using high
-        density blade servers including HP BladeSystem and Dell PowerEdge
-        M1000e) which support up to 16 servers in only 10 rack units using
-        half-height blades, suddenly decreases the density by 50% by selecting
-        full-height blades resulting in only 8 servers per 10 rack
-        units.</para>
+        avoid this CPU limit, select "full width" or "full height" blades,
+        however this will also decrease the server density. For example,
+        high density blade servers (like HP BladeSystem or Dell PowerEdge
+        M1000e) which support up to 16 servers in only ten rack units. Using
+        half-height blades is twice as dense as using full-height blades,
+        which results in only eight servers per ten rack units.</para>
     </listitem>
     <listitem>
       <para>1U rack-mounted servers (servers that occupy only a single rack
         unit) may be able to offer greater server density than a blade server
-        solution. It is possible to place 40 servers in a rack, providing
-        space for the top of rack [ToR] switches, versus 32 "full width" or
-        "full height" blade servers in a rack), but often are limited to
-        dual-socket, multi-core CPU configurations. Note that, as of the
-        Icehouse release, neither HP, IBM, nor Dell offered 1U rack servers
-        with more than 2 CPU sockets. To obtain greater than dual-socket
-        support in a 1U rack-mount form factor, customers need to buy their
-        systems from Original Design Manufacturers (ODMs) or second-tier
-        manufacturers. This may cause issues for organizations that have
-        preferred vendor policies or concerns with support and hardware
-        warranties of non-tier 1 vendors.</para>
+        solution. It is possible to place forty 1U servers in a rack, providing
+        space for the top of rack (ToR) switches, compared to 32 full width
+        blade servers. However, as of the Icehouse release, 1U servers from
+        the major vendors are limited to dual-socket, multi-core CPU
+        configurations. To obtain greater than dual-socket support in a 1U
+        rack-mount form factor, you will need to buy systems from original
+        design (ODMs) or second-tier manufacturers.</para>
     </listitem>
     <listitem>
       <para>2U rack-mounted servers provide quad-socket, multi-core CPU
@@ -108,28 +105,26 @@
       <para>Larger rack-mounted servers, such as 4U servers, often provide
         even greater CPU capacity, commonly supporting four or even eight CPU
         sockets. These servers have greater expandability, but such servers
-        have much lower server density and usually greater hardware
-        cost.</para>
+        have much lower server density and are often more expensive.</para>
     </listitem>
     <listitem>
       <para>"Sled servers" (rack-mounted servers that support multiple
         independent servers in a single 2U or 3U enclosure) deliver increased
         density as compared to typical 1U or 2U rack-mounted servers. For
         example, many sled servers offer four independent dual-socket
-        nodes in 2U for a total of 8 CPU sockets in 2U. However, the
+        nodes in 2U for a total of eight CPU sockets in 2U. However, the
         dual-socket limitation on individual nodes may not be sufficient to
         offset their additional cost and configuration complexity.</para>
     </listitem>
   </itemizedlist>
-  <para>The following facts will strongly influence server hardware
-    selection for a compute-focused OpenStack design
-    architecture:</para>
+  <para>Consider these facts when choosing server hardware for a compute-
+    focused OpenStack design architecture:</para>
   <variablelist>
     <varlistentry>
       <term>Instance density</term>
     <listitem>
-      <para>In this architecture instance density is
-        considered lower; therefore CPU and RAM over-subscription ratios are
+      <para>In a compute-focused architecture, instance density is
+        lower, which means CPU and RAM over-subscription ratios are
         also lower. More hosts will be required to support the anticipated
         scale due to instance density being lower, especially if the
         design uses dual-socket hardware designs.</para>
