@@ -10,5 +10,6 @@ sizes of server instances.
 .. toctree::
    :maxdepth: 2
 
+   log_in_dashboard.rst
    launching_instances_using_dashboard.rst
    dashboard_manage_containers.rst
