@@ -158,6 +158,20 @@ Load-Balancer-as-a-Service related settings.</para>
 <para>Use the following options in the configuration file
 for your driver to change security group settings.</para>
     <xi:include href="../../common/tables/neutron-securitygroups.xml"/>
+<note>
+<para>Now Networking uses iptables to achieve security group functions.
+ In L2 agent with <option>enable_ipset</option> option enabled, it makes use
+ of IPset to improve security group's performance, as it represents a hash set
+ which is insensitive to the number of elements.</para>
+<para>When a port is created, L2 agent will add an additional IPset chain to
+ it's iptables chain, if the security group that this port belongs to has rules
+ between other security group, the member of that security group will be added
+ to the ipset chain.</para>
+<para>If a member of a security group is changed, it used to reload iptables
+ rules which is expensive. However, when IPset option is enabled on L2 agent,
+ it does not need to reload iptables if only members of security group were
+ changed, it should just update an IPset.</para>
+</note>
 </section>
 
 <section xml:id="networking-options-ssl">
