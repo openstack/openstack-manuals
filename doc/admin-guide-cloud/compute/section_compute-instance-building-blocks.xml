@@ -5,14 +5,15 @@
   version="5.0"
   xml:id="section_compute-instance-building-blocks">
     <title>Instance building blocks</title>
-    <para>In OpenStack, the base operating system is usually copied from an image stored in the
-        OpenStack Image Service. This is the most common case and results in an ephemeral instance
-        that starts from a known template state and loses all accumulated states on shutdown.</para>
-    <para>You can also put an operating system on a persistent volume in Compute or the Block
-        Storage volume system. This gives a more traditional, persistent system that accumulates
-        states, which are preserved across restarts. To get a list of available images on your
-        system, run:
-        <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
+    <para>In OpenStack, the base operating system is usually copied from an
+      image stored in the OpenStack Image Service. This results in an
+      ephemeral instance that starts from a known template state and loses all
+      accumulated states on shutdown.</para>
+    <para>You can also put an operating system on a persistent volume in
+      Compute or the Block Storage volume system. This gives a more traditional,
+      persistent system that accumulates states that are preserved across
+      restarts. To get a list of available images on your system, run:</para>
+      <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
 <?db-font-size 50%?><computeroutput>+--------------------------------------+-------------------------------+--------+--------------------------------------+
 | ID                                   | Name                          | Status | Server                               |
 +--------------------------------------+-------------------------------+--------+--------------------------------------+
@@ -20,7 +21,7 @@
 | 0b27baa1-0ca6-49a7-b3f4-48388e440245 | Ubuntu 14.10 cloudimg amd64   | ACTIVE |                                      |
 | df8d56fc-9cea-4dfd-a8d3-28764de3cb08 | jenkins                       | ACTIVE |                                      |
 +--------------------------------------+-------------------------------+--------+--------------------------------------+</computeroutput></screen>
-    </para>
+
         <para>The displayed image attributes are:</para>
         <variablelist>
             <varlistentry>
@@ -32,7 +33,7 @@
             <varlistentry>
                 <term><literal>Name</literal></term>
                 <listitem>
-                    <para>Free form, human-readable name for image.</para>
+                    <para>Free form, human-readable name for the image.</para>
                 </listitem>
             </varlistentry>
             <varlistentry>
@@ -53,12 +54,8 @@
                 </listitem>
             </varlistentry>
         </variablelist>
-        <para>Virtual hardware templates are called <literal>flavors</literal>. The default
-        installation provides five flavors. By default, these are configurable by administrative
-        users. However, you can change this behavior by redefining the access controls for
-            <parameter>compute_extension:flavormanage</parameter> in
-            <filename>/etc/nova/policy.json</filename> on the <filename>compute-api</filename>
-        server.</para>
+        <para>Virtual hardware templates are called <literal>flavors</literal>.
+          The default installation provides five predefined flavors.</para>
         <para>For a list of flavors that are available on your system, run:</para>
         <screen><prompt>$</prompt> <userinput>nova flavor-list</userinput>
 <computeroutput>+-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
@@ -70,4 +67,9 @@
 | 4   | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
 | 5   | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True      |
 +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
+        <para>By default, administrative users can configure the flavors. You
+          can change this behavior by redefining the access controls for
+          <parameter>compute_extension:flavormanage</parameter> in
+          <filename>/etc/nova/policy.json</filename> on the
+          <filename>compute-api</filename> server.</para>
     </section>

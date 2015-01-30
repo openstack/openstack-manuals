@@ -3,50 +3,54 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="section_compute-images-and-instances">
     <title>Images and instances</title>
-    <para>Disk images provide templates for virtual machine file systems. The Image Service manages
-        storage and management of images.</para>
-    <para>Instances are the individual virtual machines that run on physical compute nodes. Users
-        can launch any number of instances from the same image. Each launched instance runs from a
-        copy of the base image so that any changes made to the instance do not affect the base
-        image. You can take snapshots of running instances to create an image based on the current
-        disk state of a particular instance. The Compute services manages instances.</para>
-    <para>When you launch an instance, you must choose a <literal>flavor</literal>, which represents
-        a set of virtual resources. Flavors define how many virtual CPUs an instance has and the
-        amount of RAM and size of its ephemeral disks. OpenStack provides a number of predefined
-        flavors that you can edit or add to. Users must select from the set of available flavors
-        defined on their cloud.</para>
+    <para>Disk images provide templates for virtual machine file systems. The
+      Image Service controls storage and management of images.</para>
+    <para>Instances are the individual virtual machines that run on physical
+      compute nodes. Users can launch any number of instances from the same
+      image. Each launched instance runs from a copy of the base image so that
+      any changes made to the instance do not affect the base image. You can
+      take snapshots of running instances to create an image based on the
+      current disk state of a particular instance. The Compute service manages
+      instances.</para>
+    <para>When you launch an instance, you must choose a <literal>flavor</literal>,
+      which represents a set of virtual resources. Flavors define how many
+      virtual CPUs an instance has, the amount of RAM available to it, and the
+      size of its ephemeral disks. Users must select from the set of available
+      flavors defined on their cloud. OpenStack provides a number of predefined
+      flavors that you can edit or add to.</para>
     <note>
         <itemizedlist>
             <listitem>
-                <para>For more information about creating and troubleshooting images, see the <link
-                        xlink:href="http://docs.openstack.org/image-guide/content/"
-                            ><citetitle>OpenStack Virtual Machine Image Guide</citetitle></link>.</para>
+                <para>For more information about creating and troubleshooting
+                  images, see the <link xlink:href="http://docs.openstack.org/image-guide/content/">
+                  <citetitle>OpenStack Virtual Machine Image Guide</citetitle></link>.</para>
             </listitem>
             <listitem>
-                <para>For more information about image configuration options, see the <link
-                        xlink:href="http://docs.openstack.org/juno/config-reference/content/ch_configuring-openstack-image-service.html"
-                        >Image Services</link> section of the <citetitle>OpenStack Configuration
-                        Reference</citetitle>.</para>
+                <para>For more information about image configuration options,
+                  see the <link xlink:href="http://docs.openstack.org/juno/config-reference/content/ch_configuring-openstack-image-service.html">
+                  Image Services</link> section of the <citetitle>OpenStack
+                  Configuration Reference</citetitle>.</para>
             </listitem>
             <listitem>
-                <para>For more information about flavors, see <xref linkend="customize-flavors"/> or
-                        <link
-                        xlink:href="http://docs.openstack.org/openstack-ops/content/flavors.html"
-                        >Flavors</link> in the <citetitle>OpenStack Operations
-                    Guide</citetitle>.</para>
+                <para>For more information about flavors, see  <xref linkend="customize-flavors"/>
+                  or <link xlink:href="http://docs.openstack.org/openstack-ops/content/flavors.html">
+                  Flavors</link> in the <citetitle>OpenStack Operations
+                  Guide</citetitle>.</para>
             </listitem>
         </itemizedlist>
     </note>
-    <para>You can add and remove additional resources from running instances, such as persistent
-        volume storage, or public IP addresses. The example used in this chapter is of a typical
-        virtual system within an OpenStack cloud. It uses the <systemitem class="service"
-            >cinder-volume</systemitem> service, which provides persistent block storage, instead of
-        the ephemeral storage provided by the selected instance flavor.</para>
-    <para>This diagram shows the system state prior to launching an instance. The image store,
-        fronted by the Image Service (glance) has a number of predefined images. Inside the cloud, a
-        compute node contains the available vCPU, memory, and local disk resources. Additionally,
-        the <systemitem class="service">cinder-volume</systemitem> service provides a number of
-        predefined volumes.</para>
+    <para>You can add and remove additional resources from running instances,
+      such as persistent volume storage, or public IP addresses. The example
+      used in this chapter is of a typical virtual system within an OpenStack
+      cloud. It uses the <systemitem class="service">cinder-volume</systemitem>
+      service, which provides persistent block storage, instead of the
+      ephemeral storage provided by the selected instance flavor.</para>
+    <para>This diagram shows the system state prior to launching an instance.
+      The image store, fronted by the Image Service (glance) has a number of
+      predefined images. Inside the cloud, a compute node contains the
+      available vCPU, memory, and local disk resources. Additionally, the
+      <systemitem class="service">cinder-volume</systemitem> service provides
+      a number of predefined volumes.</para>
     <figure xml:id="initial-instance-state-figure">
         <title>Base image state with no running instances</title>
         <mediaobject>
@@ -55,11 +59,12 @@
             </imageobject>
         </mediaobject>
     </figure>
-    <para>To launch an instance, select an image, a flavor, and other optional attributes. The
-        selected flavor provides a root volume, labeled <literal>vda</literal> in this diagram, and
-        additional ephemeral storage, labeled <literal>vdb</literal>. In this example, the
-            <systemitem class="service">cinder-volume</systemitem> store is mapped to the third
-        virtual disk on this instance, <literal>vdc</literal>.</para>
+    <para>To launch an instance select an image, flavor, and any optional
+      attributes. The selected flavor provides a root volume, labeled
+      <literal>vda</literal> in this diagram, and additional ephemeral storage,
+      labeled <literal>vdb</literal>. In this example, the
+      <systemitem class="service">cinder-volume</systemitem> store is mapped
+      to the third virtual disk on this instance, <literal>vdc</literal>.</para>
     <figure xml:id="run-instance-state-figure">
         <title>Instance creation from image and runtime state</title>
         <mediaobject>
@@ -68,34 +73,37 @@
             </imageobject>
         </mediaobject>
     </figure>
-    <para>The base image is copied from the image store to the local disk. The local disk is the
-        first disk that the instance accesses, and is labeled <literal>vda</literal>. By using
-        smaller images, your instances start up faster as less data needs to be copied across the
-        network.</para>
-    <para>A new empty disk, labeled <literal>vdb</literal> is also created. This is an empty
-        ephemeral disk, which is destroyed when you delete the instance.</para>
+    <para>The base image is copied from the image store to the local disk. The
+      local disk is the first disk that the instance accesses, labeled
+      <literal>vda</literal> in this diagram. Your instances will start up
+      faster if you use smaller images, as less data needs to be copied across
+      the network.</para>
+    <para>A new empty ephemeral disk is also created, labeled
+      <literal>vdb</literal> in this diagram. This disk is destroyed when you
+      delete the instance.</para>
     <para>The compute node connects to the attached
         <systemitem class="service">cinder-volume</systemitem> using
         ISCSI. The <systemitem class="service">cinder-volume</systemitem>
-        is mapped to the third disk, <literal>vdc</literal>. After the
-        compute node provisions the vCPU and memory resources, the
-        instance boots up from root volume <literal>vda</literal>.
-        The instance runs, and changes data on the disks (highlighted in
-        red on the diagram). If the volume store is located
-        on a separate network, the <literal>my_block_storage_ip</literal>
-        option specified in the storage node configuration file directs
-        image traffic toward the compute node.
-    </para>
+        is mapped to the third disk, labeled <literal>vdc</literal> in this
+        diagram. After the compute node provisions the vCPU and memory
+        resources, the instance boots up from root volume <literal>vda</literal>.
+        The instance runs, and changes data on the disks (highlighted in red
+        on the diagram). If the volume store is located on a separate network,
+        the <literal>my_block_storage_ip</literal> option specified in the
+        storage node configuration file directs image traffic to the compute
+        node.</para>
     <note>
-        <para>Some details in this example scenario might be different in your environment.
-            For example, you might use a different type of back-end storage or different network
-            protocols. One common variant is that the ephemeral storage used for volumes
-                <literal>vda</literal> and <literal>vdb</literal> could be backed by network storage
-            rather than a local disk.</para>
+        <para>Some details in this example scenario might be different in your
+          environment. For example, you might use a different type of back-end
+          storage, or different network protocols. One common variant is that
+          the ephemeral storage used for volumes <literal>vda</literal> and
+          <literal>vdb</literal> could be backed by network storage rather
+          than a local disk.</para>
     </note>
-    <para>When the instance is deleted, the state is reclaimed with the exception of the persistent
-        volume. The ephemeral storage is purged; memory and vCPU resources are released. The image
-        remains unchanged throughout.</para>
+    <para>When the instance is deleted, the state is reclaimed with the
+      exception of the persistent volume. The ephemeral storage is purged;
+      memory and vCPU resources are released. The image remains unchanged
+      throughout this process.</para>
     <figure xml:id="end-instance-state-figure">
         <title>End state of image and volume after instance exits</title>
         <mediaobject>
@@ -112,13 +120,14 @@
     <section xml:id="section_instance-scheduling-constraints">
         <title>Control where instances run</title>
         <para>The <link xlink:href="http://docs.openstack.org/juno/config-reference/content/">
-                <citetitle>OpenStack Configuration Reference</citetitle></link> provides detailed
-            information on controlling where your instances run, including ensuring a set of
-            instances run on different compute nodes for service resiliency or on the same node for
-            high performance inter-instance communications.</para>
-        <para>Administrative users can specify on which compute node to run instances. To do so,
-            specify the <parameter>--availability-zone
-                    <replaceable>AVAILABILITY_ZONE</replaceable>:<replaceable>COMPUTE_HOST</replaceable></parameter>
-            parameter.</para>
+          <citetitle>OpenStack Configuration Reference</citetitle></link>
+          provides detailed information on controlling where your instances
+          run, including ensuring a set of instances run on different compute
+          nodes for service resiliency or on the same node for high performance
+          inter-instance communications.</para>
+        <para>Administrative users can specify which compute node their
+          instances run on. To do this, specify the
+          <parameter>--availability-zone <replaceable>AVAILABILITY_ZONE</replaceable>:<replaceable>COMPUTE_HOST</replaceable></parameter>
+          parameter.</para>
     </section>
 </section>
