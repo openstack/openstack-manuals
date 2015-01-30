@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [ <!ENTITY % openstack SYSTEM "../common/entities/openstack.ent"> %openstack; ]>
+<section xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
+    xml:id="discoverability">
+    <title>Discoverability</title>
+    <para>Your Object Storage system might not enable all features
+        that this document describes. These features are:</para>
+    <itemizedlist role="compact">
+        <listitem>
+            <para><xref linkend="large-object-creation"/></para>
+        </listitem>
+        <listitem>
+            <para><xref linkend="archive-auto-extract"/></para>
+        </listitem>
+        <listitem>
+            <para><xref linkend="static-website"/></para>
+        </listitem>
+    </itemizedlist>
+    <para>To discover which features are enabled in your Object
+        Storage system, use the <literal>/info</literal> request.</para>
+    <para>To use the <literal>/info</literal> request, send a &GET;
+        request using the <literal>/info</literal> path to the Object
+        Store endpoint as shown in this example:</para>
+    <screen><prompt>$</prompt> <userinput>curl https://storage.example.com/info</userinput></screen>
+    <para>This example shows a truncated response body:</para>
+    <programlisting language="json">{
+   "swift":{
+      "version":"1.11.0"
+   },
+   "staticweb":{
+
+   },
+   "tempurl":{
+
+   }
+}</programlisting>
+    <para>This output shows that the Object Storage system has enabled
+        the static website and temporary URL features.</para>
+    <?sbr?>
+    <note>
+        <para>In some cases, the <literal>/info</literal> request will
+            return an error. This could be because your service
+            provider has disabled the <literal>/info</literal> request
+            function, or because you are using an older version that
+            does not support it.</para>
+    </note>
+</section>
