@@ -11,8 +11,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-01-23 18:23+0000\n"
-"PO-Revision-Date: 2015-01-23 07:11+0000\n"
+"POT-Creation-Date: 2015-01-30 04:51+0000\n"
+"PO-Revision-Date: 2015-01-30 04:52+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -356,6 +356,156 @@ msgid ""
 "If you did not provide a key pair, security groups, or rules, you can access"
 " the instance only from inside the cloud through VNC. Even pinging the "
 "instance is not possible."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml6(title)
+msgid "Create static website"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml7(para)
+msgid ""
+"You can use your Object Storage account to create a static website. This "
+"static website is created with staticweb middleware and serves container "
+"data with a specified index file, error file resolution, and optional file "
+"listings. This mode is normally active only for anonymous requests, which "
+"provide no authentication token. To use it with authenticated requests, set "
+"the header <literal>X-Web-Mode</literal> to <literal>TRUE</literal> on the "
+"request."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml15(para)
+msgid ""
+"The staticweb filter must be added to the pipeline in your "
+"<filename>/etc/swift/proxy-server.conf</filename> file below any "
+"authentication middleware. You must also add a staticweb middleware "
+"configuration section."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml19(para)
+msgid ""
+"For an example of the staticweb configuration syntax see the <link "
+"href=\"http://docs.openstack.org/juno/config-reference/content/object-"
+"storage-static-web.html\">Cloud Administrator Guide</link>."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml23(para)
+msgid ""
+"For a complete example of the <filename>/etc/swift/proxy-"
+"server.conf</filename> file (including staticweb), see the <link "
+"href=\"http://docs.openstack.org/juno/config-reference/content/proxy-server-"
+"conf.html\">Cloud Administrator Guide</link>."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml28(para)
+msgid ""
+"Your publicly readable containers are checked for two headers, <literal>X"
+"-Container-Meta-Web-Index</literal> and <literal>X-Container-Meta-Web-"
+"Error</literal>. The <literal>X-Container-Meta-Web-Error</literal> header is"
+" discussed below, in <xref linkend=\"Set_Error_Pages_for_Static_Website-"
+"dle4005\"/>."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml35(para)
+msgid ""
+"Use <literal>X-Container-Meta-Web-Index</literal> to determine the index "
+"file (or default page served, such as <filename>index.html</filename>) for "
+"your website. When someone initially enters your site, the "
+"<filename>index.html</filename> file displays automatically. If you create "
+"sub-directories for your site by creating pseudo-directories in your "
+"container, the index page for each sub-directory is displayed by default. If"
+" your pseudo-directory does not have a file with the same name as your index"
+" file, visits to the sub-directory return a 404 error."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml46(para)
+msgid ""
+"You also have the option of displaying a list of files in your pseudo-"
+"directory instead of a web page. To do this, set the <literal>X-Container-"
+"Meta-Web-Listings</literal> header to <literal>TRUE</literal>. You may add "
+"styles to your file listing by setting <literal>X-Container-Meta-Web-"
+"Listings-CSS:</literal> to a style sheet (for example, "
+"<literal>lists.css</literal>)."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml55(title)
+msgid "Static web middleware through Object Storage"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml57(title)
+msgid "Make container publicly readable"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml58(para)
+msgid ""
+"Make the container publicly readable. Once the container is publicly "
+"readable, you can access your objects directly, but you must set the index "
+"file to browse the main site URL and its sub-directories."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml66(title)
+msgid "Set site index file"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml67(para)
+msgid ""
+"Set the index file. In this case, <filename>index.html</filename> is the "
+"default file displayed when the site appears."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml73(title)
+msgid "Enable file listing"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml74(para)
+msgid ""
+"Turn on file listing. If you do not set the index file, the URL displays a "
+"list of the objects in the container. Instructions on styling the list with "
+"a CSS follow."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml81(title)
+msgid "Enable CSS for file listing"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml82(para)
+msgid "Style the file listing using a CSS."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml87(title)
+msgid "Set error pages for static website"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml88(para)
+msgid ""
+"You can create and set custom error pages for visitors to your website; "
+"currently, only 401 (Unauthorized) and 404 (Not Found) errors are supported."
+" To do this, set the metadata header, <literal>X-Container-Meta-Web-"
+"Error</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml93(para)
+msgid ""
+"Error pages are served with the &lt;status&gt; code pre-pended to the name "
+"of the error page you set. For instance, if you set <literal>X-Container-"
+"Meta-Web-Error</literal> to <filename>error.html</filename>, 401 errors will"
+" display the page <filename>401error.html</filename>. Similarly, 404 errors "
+"will display <filename>404error.html</filename>. You must have both of these"
+" pages created in your container when you set the <literal>X-Container-Meta-"
+"Web-Error</literal> metadata, or your site will display generic error pages."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml105(para)
+msgid ""
+"You only have to set the <literal>X-Container-Meta-Web-Error</literal> "
+"metadata once for your entire static website."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml109(title)
+msgid "Set error pages for static website request"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml112(para)
+msgid "Any 2<varname>nn</varname> response indicates success."
 msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_baremetal.xml7(title)
@@ -6221,6 +6371,46 @@ msgid ""
 " current state of the instance, you can pause, resume, suspend, soft or hard"
 " reboot, or terminate it."
 msgstr "Vous pouvez redimensionner ou reconstruire une instance. Vous pouvez aussi choisir d'afficher le journal de la console de l'instance. Suivant l'état courant de l'instance, vous pouvez faire une pause, reprendre, suspendre, faire un redémarrage soft ou hard ou mettre fin à l'instance. "
+
+#: ./doc/user-guide/section_object-api-discoverability.xml7(title)
+msgid "Discoverability"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-discoverability.xml8(para)
+msgid ""
+"Your Object Storage system might not enable all features that this document "
+"describes. These features are:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-discoverability.xml21(para)
+msgid ""
+"To discover which features are enabled in your Object Storage system, use "
+"the <literal>/info</literal> request."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-discoverability.xml23(para)
+msgid ""
+"To use the <literal>/info</literal> request, send a request using the /info "
+"path to the Object Store endpoint as shown in this example:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-discoverability.xml27(para)
+msgid "This example shows a truncated response body:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-discoverability.xml39(para)
+msgid ""
+"This output shows that the Object Storage system has enabled the static "
+"website and temporary URL features."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-discoverability.xml43(para)
+msgid ""
+"In some cases, the <literal>/info</literal> request will return an error. "
+"This could be because your service provider has disabled the "
+"<literal>/info</literal> request function, or because you are using an older"
+" version that does not support it."
+msgstr ""
 
 #: ./doc/user-guide/section_cli_nova_userdata.xml7(title)
 msgid "Provide user data to instances"
