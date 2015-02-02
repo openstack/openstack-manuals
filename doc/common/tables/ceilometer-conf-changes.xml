@@ -13,12 +13,40 @@
       </tr>
     </thead>
     <tr>
+      <td>[DEFAULT] event_pipeline_cfg_file = event_pipeline.yaml</td>
+      <td>(StrOpt) Configuration file for event pipeline definition.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] magnetodb_control_exchange = magnetodb</td>
+      <td>(StrOpt) Exchange name for Magnetodb notifications.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] policy_dirs = ['policy.d']</td>
       <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] polling_namespaces = ['compute', 'central']</td>
+      <td>(MultiChoicesOpt) Polling namespace(s) to be used while resource polling</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] pollster_list = []</td>
+      <td>(MultiChoicesOpt) List of pollsters (or wildcard templates) to be used while polling</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] reserved_metadata_keys = </td>
+      <td>(ListOpt) List of metadata keys reserved for metering use. And these keys are additional to the ones included in the namespace.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] zaqar_control_exchange = zaqar</td>
+      <td>(StrOpt) Exchange name for Messaging service notifications.</td>
+    </tr>
+    <tr>
       <td>[alarm] evaluation_service = default</td>
       <td>(StrOpt) Driver to use for alarm evaluation service. DEPRECATED: "singleton" and "partitioned" alarm evaluator services will be removed in Kilo in favour of the default alarm evaluation service using tooz for partitioning.</td>
+    </tr>
+    <tr>
+      <td>[coordination] check_watchers = 10.0</td>
+      <td>(FloatOpt) Number of seconds between checks to see if group membership has changed</td>
     </tr>
     <tr>
       <td>[database] db2nosql_resource_id_maxlen = 512</td>
@@ -45,8 +73,42 @@
       <td>(IntOpt) The max time in second to wait for a request to timeout.</td>
     </tr>
     <tr>
+      <td>[notification] workload_partitioning = False</td>
+      <td>(BoolOpt) Enable workload partitioning, allowing multiple notification agents to be run simultaneously.</td>
+    </tr>
+    <tr>
+      <td>[oslo_concurrency] disable_process_locking = False</td>
+      <td>(BoolOpt) Enables or disables inter-process locks.</td>
+    </tr>
+    <tr>
+      <td>[oslo_concurrency] lock_path = None</td>
+      <td>(StrOpt) Directory to use for lock files.  For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.</td>
+    </tr>
+    <tr>
+      <td>[polling] partitioning_group_prefix = None</td>
+      <td>(StrOpt) Work-load partitioning group prefix. Use only if you want to run multiple polling agents with different config files. For each sub-group of the agent pool with the same partitioning_group_prefix a disjoint subset of pollsters should be loaded.</td>
+    </tr>
+    <tr>
       <td>[vmware] host_port = 443</td>
       <td>(IntOpt) Port of the VMware Vsphere host.</td>
+    </tr>
+  </table>
+  <table>
+    <caption>New default values</caption>
+    <col width="33%"/>
+    <col width="33%"/>
+    <col width="33%"/>
+    <thead>
+      <tr>
+        <td>Option</td>
+        <td>Previous default value</td>
+        <td>New default value</td>
+      </tr>
+    </thead>
+    <tr>
+      <td>[DEFAULT] rpc_zmq_matchmaker</td>
+      <td>oslo.messaging._drivers.matchmaker.MatchMakerLocalhost</td>
+      <td>oslo_messaging._drivers.matchmaker.MatchMakerLocalhost</td>
     </tr>
   </table>
 </section>
