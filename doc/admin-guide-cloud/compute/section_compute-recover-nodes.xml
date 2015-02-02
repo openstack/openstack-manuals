@@ -2,302 +2,279 @@
 <section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="section_nova-compute-node-down">
     <title>Recover from a failed compute node</title>
-    <para>If you deployed Compute with a shared file system, you can quickly recover from a failed
-        compute node. Of the two methods covered in these sections, evacuating is the preferred
-        method even in the absence of shared storage. Evacuating provides many benefits over manual
-        recovery, such as re-attachment of volumes and floating IPs.</para>
+    <para>If Compute is deployed with a shared file system, and a node fails,
+      there are several methods to quickly recover from the failure. This
+      section discusses manual recovery.</para>
     <xi:include href="../../common/section_cli_nova_evacuate.xml"/>
     <section xml:id="nova-compute-node-down-manual-recovery">
         <title>Manual recovery</title>
-        <para>To recover a KVM/libvirt compute node, see the previous section. Use the following
-            procedure for all other hypervisors.</para>
+        <para>To recover a KVM or libvirt compute node, see
+          <xref linkend="nova-compute-node-down-manual-recovery" />. For all
+          other hypervisors, use this procedure:</para>
         <procedure>
-            <title>Review host information</title>
-            <step>
-                <para>Identify the VMs on the affected hosts, using tools such as a combination of
-                        <literal>nova list</literal> and <literal>nova show</literal> or
-                        <literal>euca-describe-instances</literal>. For example, the following
-                    output displays information about instance <systemitem>i-000015b9</systemitem>
-                    that is running on node <systemitem>np-rcc54</systemitem>:</para>
-                <screen><prompt>$</prompt> <userinput>euca-describe-instances</userinput>
+          <step>
+            <para>Identify the VMs on the affected hosts. To do this, you can
+              use a combination of <command>nova list</command> and
+              <command>nova show</command> or <command>euca-describe-instances</command>.
+              For example, this command displays information about instance
+              <systemitem>i-000015b9</systemitem> that is running on node
+              <systemitem>np-rcc54</systemitem>:</para>
+<screen><prompt>$</prompt> <userinput>euca-describe-instances</userinput>
 <computeroutput>i-000015b9 at3-ui02 running nectarkey (376, np-rcc54) 0 m1.xxlarge 2012-06-19T00:48:11.000Z 115.146.93.60</computeroutput></screen>
-            </step>
-            <step>
-                <para>Review the status of the host by querying the Compute database. Some of the
-                    important information is highlighted below. The following example converts an
-                    EC2 API instance ID into an OpenStack ID; if you used the
-                        <literal>nova</literal> commands, you can substitute the ID directly. You
-                    can find the credentials for your database in
-                        <filename>/etc/nova.conf</filename>.</para>
-                <screen><prompt>mysql></prompt> <userinput>SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;</userinput>
+          </step>
+          <step>
+            <para>Query the Compute database to check the status of the host.
+              This example converts an EC2 API instance ID into an OpenStack
+              ID. If you use the <command>nova</command> commands, you can
+              substitute the ID directly (the output in this example has been
+              truncated):</para>
+<screen><prompt>mysql></prompt> <userinput>SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;</userinput>
 <computeroutput>*************************** 1. row ***************************
-              created_at: 2012-06-19 00:48:11
-              updated_at: 2012-07-03 00:35:11
-              deleted_at: NULL
+created_at: 2012-06-19 00:48:11
+updated_at: 2012-07-03 00:35:11
+deleted_at: NULL
 ...
-                      id: 5561
+id: 5561
 ...
-             power_state: 5
-                vm_state: shutoff
+power_state: 5
+vm_state: shutoff
 ...
-                hostname: at3-ui02
-                    host: np-rcc54
+hostname: at3-ui02
+host: np-rcc54
 ...
-                    uuid: 3f57699a-e773-4650-a443-b4b37eed5a06
+uuid: 3f57699a-e773-4650-a443-b4b37eed5a06
 ...
-              task_state: NULL
+task_state: NULL
 ...</computeroutput></screen>
-            </step>
+            <note>
+              <para>The credentials for your database can be found in
+                <filename>/etc/nova.conf</filename>.</para>
+            </note>
+          </step>
+          <step>
+            <para>Decide which compute host the affected VM should be moved
+              to, and run this database command to move the VM to the new
+              host:</para>
+<screen><prompt>mysql></prompt> <userinput>UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06';</userinput></screen>
+          </step>
+          <step performance="optional">
+            <para>If you are using a hypervisor that relies on libvirt (such
+              as KVM), update the <literal>libvirt.xml</literal> file (found
+              in <literal>/var/lib/nova/instances/[instance ID]</literal>) with
+              these changes:</para>
+            <itemizedlist>
+              <listitem>
+                <para>Change the <literal>DHCPSERVER</literal> value to the
+                  host IP address of the new compute host.</para>
+              </listitem>
+              <listitem>
+                <para>Update the VNC IP to <uri>0.0.0.0</uri>.</para>
+              </listitem>
+            </itemizedlist>
+          </step>
+          <step>
+            <para>Reboot the VM:</para>
+<screen><prompt>$</prompt> <userinput>nova reboot 3f57699a-e773-4650-a443-b4b37eed5a06</userinput></screen>
+          </step>
         </procedure>
-        <procedure>
-            <title>Recover the VM</title>
-            <step>
-                <para>After you have determined the status of the VM on the failed host, decide to
-                    which compute host the affected VM should be moved. For example, run the
-                    following database command to move the VM to
-                    <systemitem>np-rcc46</systemitem>:</para>
-                <screen><prompt>mysql></prompt> <userinput>UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06';</userinput></screen>
-            </step>
-            <step>
-                <para>If using a hypervisor that relies on libvirt (such as KVM), it is a good idea
-                    to update the <literal>libvirt.xml</literal> file (found in
-                        <literal>/var/lib/nova/instances/[instance ID]</literal>). The important
-                    changes to make are:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para>Change the <literal>DHCPSERVER</literal> value to the host IP address
-                            of the compute host that is now the VM's new home.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Update the VNC IP, if it isn't already updated, to:
-                                <literal>0.0.0.0</literal>.</para>
-                    </listitem>
-                </itemizedlist>
-            </step>
-            <step>
-                <para>Reboot the VM:</para>
-                <screen><prompt>$</prompt> <userinput>nova reboot --hard 3f57699a-e773-4650-a443-b4b37eed5a06</userinput></screen>
-            </step>
-        </procedure>
-        <para>In theory, the above database update and <literal>nova reboot</literal> command are
-            all that is required to recover a VM from a failed host. However, if further problems
-            occur, consider looking at recreating the network filter configuration using
-                <literal>virsh</literal>, restarting the Compute services or updating the
-                <literal>vm_state</literal> and <literal>power_state</literal> in the Compute
-            database.</para>
+        <para>The database update and <command>nova reboot</command> command
+          should be all that is required to recover a VM from a failed host.
+          However, if you continue to have problems try recreating the network
+          filter configuration using <command>virsh</command>, restarting the
+          Compute services, or updating the <literal>vm_state</literal> and
+          <literal>power_state</literal> in the Compute database.</para>
     </section>
+
     <section xml:id="section_nova-uid-mismatch">
         <title>Recover from a UID/GID mismatch</title>
-        <para>When running OpenStack Compute, using a shared file system or an automated
-            configuration tool, you could encounter a situation where some files on your compute
-            node are using the wrong UID or GID. This causes a number of errors, such as being
-            unable to do live migration or start virtual machines.</para>
-        <para>The following procedure runs on <systemitem class="service">nova-compute</systemitem>
-            hosts, based on the KVM hypervisor, and could help to restore the situation:</para>
+        <para>In some cases, files on your compute node can end up using the
+          wrong UID or GID. This can happen when running OpenStack Compute,
+          using a shared file system, or with an automated configuration tool.
+          This can cause a number of problems, such as inability to perform
+          live migrations, or start virtual machines.</para>
+        <para>This procedure runs on <systemitem class="service">nova-compute</systemitem>
+          hosts, based on the KVM hypervisor:</para>
         <procedure>
-            <title>To recover from a UID/GID mismatch</title>
-            <step>
-                <para>Ensure you do not use numbers that are already used for some other
-                    user/group.</para>
-            </step>
-            <step>
-                <para>Set the nova uid in <filename>/etc/passwd</filename> to the same number in all
-                    hosts (for example, 112).</para>
-            </step>
-            <step>
-                <para>Set the libvirt-qemu uid in <filename>/etc/passwd</filename> to the same
-                    number in all hosts (for example, 119).</para>
-            </step>
-            <step>
-                <para>Set the nova group in <filename>/etc/group</filename> file to the same number
-                    in all hosts (for example, 120).</para>
-            </step>
-            <step>
-                <para>Set the libvirtd group in <filename>/etc/group</filename> file to the same
-                    number in all hosts (for example, 119).</para>
-            </step>
-            <step>
-                <para>Stop the services on the compute node.</para>
-            </step>
-            <step>
-                <para>Change all the files owned by user <systemitem>nova</systemitem> or by group
-                        <systemitem>nova</systemitem>. For example:</para>
-                <screen><prompt>#</prompt> <userinput>find / -uid 108 -exec chown nova {} \; </userinput># note the 108 here is the old nova uid before the change
+          <title>Recovering from a UID/GID mismatch</title>
+          <step>
+            <para>Set the nova UID in <filename>/etc/passwd</filename> to the
+              same number on all hosts (for example, 112).</para>
+            <note>
+              <para>Make sure you choose UIDs or GIDs that are not in use for
+                other users or groups.</para>
+            </note>
+          </step>
+          <step>
+            <para>Set the <parameter>libvirt-qemu</parameter> UID in
+              <filename>/etc/passwd</filename> to the same number on all hosts
+              (for example, 119).</para>
+          </step>
+          <step>
+            <para>Set the <parameter>nova group</parameter> in
+              <filename>/etc/group</filename> file to the same number on all
+              hosts (for example, 120).</para>
+          </step>
+          <step>
+            <para>Set the <parameter>libvirtd</parameter> group in
+              <filename>/etc/group</filename> file to the same number on all
+              hosts (for example, 119).</para>
+          </step>
+          <step>
+            <para>Stop the services on the compute node.</para>
+          </step>
+          <step>
+            <para>Change all the files owned by user or group
+              <systemitem>nova</systemitem>. For example:</para>
+<screen><prompt>#</prompt> <userinput>find / -uid 108 -exec chown nova {} \; </userinput># note the 108 here is the old nova UID before the change
 <prompt>#</prompt> <userinput>find / -gid 120 -exec chgrp nova {} \;</userinput></screen>
-            </step>
-            <step>
-                <para>Repeat the steps for the libvirt-qemu owned files if those needed to
-                    change.</para>
-            </step>
-            <step>
-                <para>Restart the services.</para>
-            </step>
-            <step>
-                <para>Now you can run the <command>find</command> command to verify that all files
-                    using the correct identifiers.</para>
-            </step>
+          </step>
+          <step performance="optional">
+            <para>Repeat all steps for the <parameter>libvirt-qemu</parameter>
+              files, if required.</para>
+          </step>
+          <step>
+            <para>Restart the services.</para>
+          </step>
+          <step>
+            <para>Run the <command>find</command> command to verify that all
+              files use the correct identifiers.</para>
+          </step>
         </procedure>
     </section>
+
     <section xml:id="section_nova-disaster-recovery-process">
-        <title>Recover cloud after disaster</title>
-        <para>Use the following procedures to manage your cloud after a disaster, and to easily back
-            up its persistent storage volumes. Backups <emphasis role="bold">are</emphasis>
-            mandatory, even outside of disaster scenarios.</para>
-        <para>For a DRP definition, see <link
-                xlink:href="http://en.wikipedia.org/wiki/Disaster_Recovery_Plan"
-                >http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>.</para>
-        <simplesect>
-            <title>Disaster recovery example</title>
-            <para>A disaster could happen to several components of your architecture (for example, a
-                disk crash, a network loss, or a power cut). In this example, the following
-                components are configured:</para>
-            <orderedlist>
-                <listitem>
-                    <para>A cloud controller (<systemitem>nova-api</systemitem>,
-                            <systemitem>nova-objectstore</systemitem>,
-                            <systemitem>nova-network</systemitem>)</para>
-                </listitem>
-                <listitem>
-                    <para>A compute node (<systemitem class="service"
-                        >nova-compute</systemitem>)</para>
-                </listitem>
-                <listitem>
-                    <para>A Storage Area Network (SAN) used by OpenStack Block Storage (<systemitem
-                            class="service">cinder-volumes</systemitem>)</para>
-                </listitem>
-            </orderedlist>
-            <para>The worst disaster for a cloud is a power loss, which applies to all three
-                components. Before a power loss:</para>
-            <itemizedlist>
-                <listitem>
-                    <para>From the SAN to the cloud controller, we have an active iSCSI session
-                        (used for the "cinder-volumes" LVM's VG).</para>
-                </listitem>
-                <listitem>
-                    <para>From the cloud controller to the compute node, we also have active iSCSI
-                        sessions (managed by <systemitem class="service"
-                        >cinder-volume</systemitem>).</para>
-                </listitem>
-                <listitem>
-                    <para>For every volume, an iSCSI session is made (so 14 ebs volumes equals 14
-                        sessions).</para>
-                </listitem>
-                <listitem>
-                    <para>From the cloud controller to the compute node, we also have iptables/
-                        ebtables rules, which allow access from the cloud controller to the running
-                        instance.</para>
-                </listitem>
-                <listitem>
-                    <para>And at least, from the cloud controller to the compute node; saved into
-                        database, the current state of the instances (in that case "running" ), and
-                        their volumes attachment (mount point, volume ID, volume status, and so
-                        on.)</para>
-                </listitem>
-            </itemizedlist>
-            <para>After the power loss occurs and all hardware components restart:</para>
-            <itemizedlist>
-                <listitem>
-                    <para>From the SAN to the cloud, the iSCSI session no longer exists.</para>
-                </listitem>
-                <listitem>
-                    <para>From the cloud controller to the compute node, the iSCSI sessions no
-                        longer exist.</para>
-                </listitem>
-                <listitem>
-                    <para>From the cloud controller to the compute node, the iptables and ebtables
-                        are recreated, since at boot, <systemitem>nova-network</systemitem>
-                        reapplies configurations.</para>
-                </listitem>
-                <listitem>
-                    <para>From the cloud controller, instances are in a shutdown state (because they
-                        are no longer running).</para>
-                </listitem>
-                <listitem>
-                    <para>In the database, data was not updated at all, since Compute could not have
-                        anticipated the crash.</para>
-                </listitem>
-            </itemizedlist>
-            <para>Before going further, and to prevent the administrator from making fatal
-                    mistakes,<emphasis role="bold"> instances won't be lost</emphasis>, because no
-                    "<command>destroy</command>" or "<command>terminate</command>" command was
-                invoked, so the files for the instances remain on the compute node.</para>
-            <para>Perform these tasks in the following order.</para>
-            <warning>
-                <para>Do not add any extra steps at this stage.</para>
-            </warning>
-            <orderedlist>
-                <listitem>
-                    <para>Get the current relation from a volume to its instance, so that you can
-                        recreate the attachment.</para>
-                </listitem>
-                <listitem>
-                    <para>Update the database to clean the stalled state. (After that, you cannot
-                        perform the first step).</para>
-                </listitem>
-                <listitem>
-                    <para>Restart the instances. In other words, go from a shutdown to running
-                        state.</para>
-                </listitem>
-                <listitem>
-                    <para>After the restart, reattach the volumes to their respective instances
-                        (optional).</para>
-                </listitem>
-                <listitem>
-                    <para>SSH into the instances to reboot them.</para>
-                </listitem>
-            </orderedlist>
-        </simplesect>
-        <simplesect>
-            <title>Recover after a disaster</title>
-            <procedure>
-                <title>To perform disaster recovery</title>
-                <step>
-                    <title>Get the instance-to-volume relationship</title>
-                    <para>You must determine the current relationship from a volume to its instance,
-                        because you will re-create the attachment.</para>
-                    <para>You can find this relationship by running <command>nova
-                            volume-list</command>. Note that the <command>nova</command> client
-                        includes the ability to get volume information from OpenStack Block
-                        Storage.</para>
-                </step>
-                <step>
-                    <title>Update the database</title>
-                    <para>Update the database to clean the stalled state. You must restore for every
-                        volume, using these queries to clean up the database:</para>
-                    <screen><prompt>mysql></prompt> <userinput>use cinder;</userinput>
+      <title>Recover cloud after disaster</title>
+      <para>This section covers procedures for managing your cloud after a
+        disaster, and backing up persistent storage volumes. Backups are
+        mandatory, even outside of disaster scenarios.</para>
+      <para>For a definition of a disaster recovery plan (DRP), see <link
+          xlink:href="http://en.wikipedia.org/wiki/Disaster_Recovery_Plan">
+          http://en.wikipedia.org/wiki/Disaster_Recovery_Plan</link>.</para>
+        <para>A disaster could happen to several components of your
+          architecture (for example, a disk crash, network loss, or a power
+          failure). In this example, the following components are configured:</para>
+        <itemizedlist>
+          <listitem>
+            <para>A cloud controller (<systemitem>nova-api</systemitem>,
+              <systemitem>nova-objectstore</systemitem>,
+              <systemitem>nova-network</systemitem>)</para>
+          </listitem>
+          <listitem>
+            <para>A compute node (<systemitem class="service">nova-compute</systemitem>)</para>
+          </listitem>
+          <listitem>
+            <para>A storage area network (SAN) used by OpenStack Block Storage
+              (<systemitem class="service">cinder-volumes</systemitem>)</para>
+          </listitem>
+        </itemizedlist>
+        <para>The worst disaster for a cloud is power loss, which applies to
+          all three components. Before a power loss:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Create an active iSCSI session from the SAN to the cloud
+              controller (used for the <parameter>cinder-volumes</parameter>
+              LVM's VG).</para>
+          </listitem>
+          <listitem>
+            <para>Create an active iSCSI session from the cloud controller to
+              the compute node (managed by
+              <systemitem class="service">cinder-volume</systemitem>).</para>
+          </listitem>
+          <listitem>
+            <para>Create an iSCSI session for every volume (so 14 EBS volumes
+              requires 14 iSCSI sessions).</para>
+          </listitem>
+          <listitem>
+            <para>Create iptables or ebtables rules from the cloud controller
+              to the compute node. This allows access from the cloud controller
+              to the running instance.</para>
+          </listitem>
+          <listitem>
+            <para>Save the current state of the database, the current state of
+              the running instances, and the attached volumes (mount point,
+              volume ID, volume status, etc), at least from the cloud
+              controller to the compute node.</para>
+          </listitem>
+        </itemizedlist>
+        <para>After power is recovered and all hardware components have
+          restarted:</para>
+        <itemizedlist>
+          <listitem>
+            <para>The iSCSI session from the SAN to the cloud no longer
+              exists.</para>
+          </listitem>
+          <listitem>
+            <para>The iSCSI session from the cloud controller to the compute
+              node no longer exists.</para>
+          </listitem>
+          <listitem>
+            <para>The iptables and ebtables from the cloud controller to the
+              compute node are recreated. This is because
+              <systemitem>nova-network</systemitem> reapplies configurations
+              on boot.</para>
+          </listitem>
+          <listitem>
+            <para>Instances are no longer running.</para>
+            <para>Note that instances will not be lost, because neither
+              <command>destroy</command> nor <command>terminate</command> was
+              invoked. The files for the instances will remain on
+              the compute node.</para>
+          </listitem>
+          <listitem>
+            <para>The database has not been updated.</para>
+          </listitem>
+        </itemizedlist>
+        <procedure>
+          <title>Begin recovery</title>
+          <warning>
+            <para>Do not add any extra steps to this procedure, or perform
+              the steps out of order.</para>
+          </warning>
+          <step>
+            <para>Check the current relationship between the volume and its
+              instance, so that you can recreate the attachment.</para>
+             <para>This information can be found using the
+               <command>nova volume-list</command>. Note that the
+               <command>nova</command> client also includes the ability to get
+               volume information from OpenStack Block Storage.</para>
+          </step>
+          <step>
+            <para>Update the database to clean the stalled state. Do this for
+              every volume, using these queries:</para>
+<screen><prompt>mysql></prompt> <userinput>use cinder;</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set mountpoint=NULL;</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set status="available" where status &lt;&gt;"error_deleting";</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set attach_status="detached";</userinput>
 <prompt>mysql></prompt> <userinput>update volumes set instance_id=0;</userinput></screen>
-                    <para>You can then run <command>nova volume-list</command> commands to list all
-                        volumes.</para>
-                </step>
-                <step>
-                    <title>Restart instances</title>
-                    <para>Restart the instances using the <command>nova reboot
-                                <replaceable>INSTANCE</replaceable></command> command.</para>
-                    <para>At this stage, depending on your image, some instances completely reboot
-                        and become reachable, while others stop on the "plymouth" stage.</para>
-                </step>
-                <step>
-                    <title>DO NOT reboot a second time</title>
-                    <para>Do not reboot instances that are stopped at this point. Instance state
-                        depends on whether you added an <filename>/etc/fstab</filename> entry for
-                        that volume. Images built with the <package>cloud-init</package> package
-                        remain in a pending state, while others skip the missing volume and start.
-                        The idea of that stage is only to ask Compute to reboot every instance, so
-                        the stored state is preserved. For more information about
-                            <package>cloud-init</package>, see <link
-                            xlink:href="https://help.ubuntu.com/community/CloudInit"
-                            >help.ubuntu.com/community/CloudInit</link>.</para>
-                </step>
-                <step>
-                    <title>Reattach volumes</title>
-                    <para>After the restart, and Compute has restored the right status, you can
-                        reattach the volumes to their respective instances using the <command>nova
-                            volume-attach</command> command. The following snippet uses a file of
-                        listed volumes to reattach them:</para>
-                    <programlisting language="bash">#!/bin/bash
+            <para>Use <command>nova volume-list</command> commands to list all
+              volumes.</para>
+          </step>
+          <step>
+            <para>Restart the instances using the <command>nova reboot
+              <replaceable>INSTANCE</replaceable></command> command.</para>
+            <important>
+              <para>Some instances will completely reboot and become reachable,
+                while some might stop at the <application>plymouth</application>
+                stage. This is expected behavior, DO NOT reboot a second time.</para>
+              <para>Instance state at this stage depends on whether you added
+                an <filename>/etc/fstab</filename> entry for that volume.
+                Images built with the <package>cloud-init</package> package
+                remain in a <parameter>pending</parameter> state, while others
+                skip the missing volume and start. This step is performed in
+                order to ask Compute to reboot every instance, so that the
+                stored state is preserved. It does not matter if not all
+                instances come up successfully. For more information about
+                <package>cloud-init</package>, see
+                <link xlink:href="https://help.ubuntu.com/community/CloudInit">
+                help.ubuntu.com/community/CloudInit</link>.</para>
+            </important>
+          </step>
+          <step performance="optional">
+            <para>Reattach the volumes to their respective instances, if
+              required, using the <command>nova volume-attach</command>
+              command. This example uses a file of listed volumes to reattach
+              them:</para>
+<programlisting language="bash">#!/bin/bash
 
 while read line; do
     volume=`echo $line | $CUT -f 1 -d " "`
@@ -307,89 +284,89 @@ while read line; do
     nova volume-attach $instance $volume $mount_point
     sleep 2
 done &lt; $volumes_tmp_file</programlisting>
-                    <para>At this stage, instances that were pending on the boot sequence
-                            (<application>plymouth</application>) automatically continue their boot,
-                        and restart normally, while the ones that booted see the volume.</para>
-                </step>
-                <step>
-                    <title>SSH into instances</title>
-                    <para>If some services depend on the volume, or if a volume has an entry into
-                            <systemitem>fstab</systemitem>, you should now simply restart the
-                        instance. This restart needs to be made from the instance itself, not
-                        through <command>nova</command>.</para>
-                    <para>SSH into the instance and perform a reboot:</para>
-                    <screen><prompt>#</prompt> <userinput>shutdown -r now</userinput></screen>
-                </step>
-            </procedure>
-            <para>By completing this procedure, you can successfully recover your cloud.</para>
-            <note>
-                <para>Follow these guidelines:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para>Use the <parameter> errors=remount</parameter> parameter in the
-                                <filename>fstab</filename> file, which prevents data
-                            corruption.</para>
-                        <para>The system locks any write to the disk if it detects an I/O error.
-                            This configuration option should be added into the <systemitem
-                                class="service">cinder-volume</systemitem> server (the one which
-                            performs the iSCSI connection to the SAN), but also into the instances'
-                                <filename>fstab</filename> file.</para>
-                    </listitem>
-                    <listitem>
-                        <para>Do not add the entry for the SAN's disks to the <systemitem
-                                class="service">cinder-volume</systemitem>'s
-                                <filename>fstab</filename> file.</para>
-                        <para>Some systems hang on that step, which means you could lose access to
-                            your cloud-controller. To re-run the session manually, run the following
-                            command before performing the mount:
-                            <screen><prompt>#</prompt> <userinput>iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l</userinput></screen></para>
-                    </listitem>
-                    <listitem>
-                        <para>For your instances, if you have the whole <filename>/home/</filename>
-                            directory on the disk, leave a user's directory with the user's bash
-                            files and the <filename>authorized_keys</filename> file (instead of
-                            emptying the <filename>/home</filename> directory and mapping the disk
-                            on it).</para>
-                        <para>This enables you to connect to the instance, even without the volume
-                            attached, if you allow only connections through public keys.</para>
-                    </listitem>
-                </itemizedlist>
-            </note>
-        </simplesect>
-        <simplesect>
-            <title>Script the DRP</title>
-            <para>You can download from <link
-                    xlink:href="https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5006_V00_NUAC-OPENSTACK-DRP-OpenStack.sh"
-                    >here</link> a bash script which performs the following steps:</para>
-            <orderedlist>
-                <listitem>
-                    <para>An array is created for instances and their attached volumes.</para>
-                </listitem>
-                <listitem>
-                    <para>The MySQL database is updated.</para>
-                </listitem>
-                <listitem>
-                    <para>Using <systemitem>euca2ools</systemitem>, all instances are
-                        restarted.</para>
-                </listitem>
-                <listitem>
-                    <para>The volume attachment is made.</para>
-                </listitem>
-                <listitem>
-                    <para>An SSH connection is performed into every instance using Compute
-                        credentials.</para>
-                </listitem>
-            </orderedlist>
-            <para>The "test mode" allows you to perform that whole sequence for only one
-                instance.</para>
-            <para>To reproduce the power loss, connect to the compute node which runs that same
-                instance and close the iSCSI session. Do not detach the volume using the
-                    <command>nova volume-detach</command> command; instead, manually close the iSCSI
-                session. For the following example command uses an iSCSI session with the number
-                15:</para>
-            <screen><prompt>#</prompt> <userinput>iscsiadm -m session -u -r 15</userinput></screen>
-            <para>Do not forget the <literal>-r</literal> flag. Otherwise, you close ALL
-                sessions.</para>
-        </simplesect>
-    </section>
+            <para>Instances that were stopped at the
+              <application>plymouth</application> stage will now automatically
+              continue booting and start normally. Instances that previously
+              started successfully will now be able to see the volume.</para>
+          </step>
+          <step>
+            <para>SSH into the instances and reboot them.</para>
+            <para>If some services depend on the volume, or if a volume has an
+              entry in <systemitem>fstab</systemitem>, you should now be able
+              to restart the instance. Restart directly from the instance
+              itself, not through <command>nova</command>:</para>
+<screen><prompt>#</prompt> <userinput>shutdown -r now</userinput></screen>
+          </step>
+        </procedure>
+        <para>When you are planning for and performing a disaster recovery,
+          follow these tips:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Use the <parameter>errors=remount</parameter> parameter in
+              the <filename>fstab</filename> file to prevent data
+              corruption.</para>
+            <para>This parameter will cause the system to disable the ability
+              to write to the disk if it detects an I/O error. This
+              configuration option should be added into the
+              <systemitem class="service">cinder-volume</systemitem> server
+              (the one which performs the iSCSI connection to the SAN), and
+              into the instances' <filename>fstab</filename> files.</para>
+            </listitem>
+            <listitem>
+              <para>Do not add the entry for the SAN's disks to the
+                <systemitem class="service">cinder-volume</systemitem>'s
+                <filename>fstab</filename> file.</para>
+              <para>Some systems hang on that step, which means you could lose
+                access to your cloud-controller. To re-run the session
+                manually, run this command before performing the mount:
+<screen><prompt>#</prompt> <userinput>iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l</userinput></screen></para>
+            </listitem>
+            <listitem>
+              <para>On your instances, if you have the whole
+                <filename>/home/</filename> directory on the disk, leave a
+                user's directory with the user's bash files and the
+                <filename>authorized_keys</filename> file (instead of emptying
+                the <filename>/home</filename> directory and mapping the disk
+                on it).</para>
+              <para>This allows you to connect to the instance even without
+                the volume attached, if you allow only connections through
+                public keys.</para>
+            </listitem>
+          </itemizedlist>
+          <para>
+            If you want to script the disaster recovery plan (DRP), a bash
+            script is available from <link xlink:href="https://github.com/Razique/BashStuff/blob/master/SYSTEMS/OpenStack/SCR_5006_V00_NUAC-OPENSTACK-DRP-OpenStack.sh">
+            https://github.com/Razique</link> which performs the following
+            steps:</para>
+          <orderedlist>
+            <listitem>
+              <para>An array is created for instances and their attached
+                volumes.</para>
+            </listitem>
+            <listitem>
+              <para>The MySQL database is updated.</para>
+            </listitem>
+            <listitem>
+              <para>All instances are restarted with
+                <systemitem>euca2ools</systemitem>.</para>
+            </listitem>
+            <listitem>
+              <para>The volumes are reattached.</para>
+            </listitem>
+            <listitem>
+              <para>An SSH connection is performed into every instance using
+                Compute credentials.</para>
+            </listitem>
+          </orderedlist>
+          <para>The script includes a <command>test mode</command>, which
+            allows you to perform that whole sequence for only one instance.</para>
+          <para>To reproduce the power loss, connect to the compute node which
+            runs that instance and close the iSCSI session. Do not detach the
+            volume using the <command>nova volume-detach</command> command,
+            manually close the iSCSI session. This example closes an iSCSI
+            session with the number 15:</para>
+<screen><prompt>#</prompt> <userinput>iscsiadm -m session -u -r 15</userinput></screen>
+          <para>Do not forget the <literal>-r</literal> flag. Otherwise, you
+            will close all sessions.</para>
+        </section>
 </section>
