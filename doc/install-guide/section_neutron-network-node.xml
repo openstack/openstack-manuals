@@ -232,13 +232,21 @@ tunnel_types = gre</programlisting>
           <para>In the <literal>[DEFAULT]</literal> section, configure
             the driver, enable
             <glossterm baseform="network namespace">network
-            namespaces</glossterm>, and configure the external
-            network bridge:</para>
+            namespaces</glossterm>, configure the external network bridge
+            and enable deletion of defunct router namespaces:</para>
           <programlisting language="ini">[DEFAULT]
 ...
 interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 use_namespaces = True
-external_network_bridge = br-ex</programlisting>
+external_network_bridge = br-ex
+router_delete_namespaces = True</programlisting>
+          <note os="sles">
+            <para>Due to an issue with old versions of the
+              <application>iproute2</application> utility, we recommend
+              that you do not configure the
+              <option>router_delete_namespaces</option> option on SLES 11
+              SP3.</para>
+            </note>
         </step>
         <step>
           <para>(Optional) To assist with troubleshooting,
@@ -262,12 +270,21 @@ verbose = True</programlisting>
       <substeps>
         <step>
           <para>In the <literal>[DEFAULT]</literal> section, configure
-            the drivers and enable namespaces:</para>
+            the drivers, enable namespaces and enable deletion of defunct
+            DHCP namespaces:</para>
           <programlisting language="ini">[DEFAULT]
 ...
 interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
-use_namespaces = True</programlisting>
+use_namespaces = True
+dhcp_delete_namespaces = True</programlisting>
+          <note os="sles">
+            <para>Due to an issue with old versions of the
+              <application>iproute2</application> utility, we recommend
+              that you do not configure the
+              <option>dhcp_delete_namespaces</option> option on SLES 11
+              SP3.</para>
+            </note>
         </step>
         <step>
           <para>(Optional) To assist with troubleshooting,
