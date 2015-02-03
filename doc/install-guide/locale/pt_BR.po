@@ -12,9 +12,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-01-31 17:09+0000\n"
-"PO-Revision-Date: 2015-01-31 17:10+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-02-03 04:45+0000\n"
+"PO-Revision-Date: 2015-02-03 01:20+0000\n"
+"Last-Translator: Fernando Pimenta <fernando.c.pimenta@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -235,9 +235,9 @@ msgstr "Na seção <literal>[database]</literal>, configure o acesso ao banco de
 #: ./doc/install-guide/section_sahara-install.xml45(replaceable)
 #: ./doc/install-guide/section_sahara-install.xml51(replaceable)
 #: ./doc/install-guide/section_sahara-install.xml52(replaceable)
-#: ./doc/install-guide/section_sahara-install.xml97(replaceable)
-#: ./doc/install-guide/section_sahara-install.xml98(replaceable)
-#: ./doc/install-guide/section_sahara-install.xml99(replaceable)
+#: ./doc/install-guide/section_sahara-install.xml114(replaceable)
+#: ./doc/install-guide/section_sahara-install.xml115(replaceable)
+#: ./doc/install-guide/section_sahara-install.xml116(replaceable)
 #: ./doc/install-guide/section_basics-networking-neutron.xml319(replaceable)
 #: ./doc/install-guide/section_basics-networking-neutron.xml363(replaceable)
 #: ./doc/install-guide/section_cinder-storage-node.xml147(replaceable)
@@ -370,7 +370,7 @@ msgstr "Na seção <literal>[token]</literal>, configure o provedor do token UUI
 msgid ""
 "In the <literal>[revoke]</literal> section, configure the SQL revocation "
 "driver:"
-msgstr ""
+msgstr "Na seção <literal>[revoke]</literal>, configure o controlador de revogação SQL:"
 
 #: ./doc/install-guide/section_keystone-install.xml105(para)
 #: ./doc/install-guide/section_cinder-storage-node.xml217(para)
@@ -454,6 +454,7 @@ msgstr "Inicie o serviço de Identidade e configure-o para iniciar quando o sist
 #: ./doc/install-guide/section_ceilometer-swift.xml63(para)
 #: ./doc/install-guide/section_ceilometer-nova.xml36(para)
 #: ./doc/install-guide/section_ceilometer-nova.xml112(para)
+#: ./doc/install-guide/section_sahara-install.xml97(para)
 #: ./doc/install-guide/section_ceilometer-cinder.xml26(para)
 #: ./doc/install-guide/section_ceilometer-cinder.xml34(para)
 #: ./doc/install-guide/section_cinder-storage-node.xml264(para)
@@ -494,6 +495,7 @@ msgstr "No SLES:"
 #: ./doc/install-guide/section_ceilometer-swift.xml65(para)
 #: ./doc/install-guide/section_ceilometer-nova.xml38(para)
 #: ./doc/install-guide/section_ceilometer-nova.xml115(para)
+#: ./doc/install-guide/section_sahara-install.xml99(para)
 #: ./doc/install-guide/section_ceilometer-cinder.xml29(para)
 #: ./doc/install-guide/section_ceilometer-cinder.xml36(para)
 #: ./doc/install-guide/section_cinder-storage-node.xml269(para)
@@ -631,6 +633,7 @@ msgid ""
 msgstr "Na seção <literal>[mysqld]</literal>, defina as seguintes chaves para habilitar opções úteis e o conjunto de caracteres UTH-8:"
 
 #: ./doc/install-guide/section_basics-database.xml68(para)
+#: ./doc/install-guide/section_sahara-install.xml94(para)
 msgid "Restart the database service:"
 msgstr "Reinicie o serviço de banco de dados:"
 
@@ -1335,30 +1338,37 @@ msgid ""
 "<literal>DEBUG</literal> ones."
 msgstr "Isso deveria ser suficiente para a primeira execução. Se você quiser aumentar o nível de log para solução de problemas, existem dois parâmetros na configuração: <literal>verbose</literal> e  <literal>debug</literal>. Se o primeiro está definido para <literal>true</literal>, o sahara irá iniciar a escrever logs de nível <literal>INFO</literal> e acima. Se <literal>debug</literal> está definido para <literal>true</literal>, o sahara irá escrever todos os logs, incluindo aqueles de <literal>DEBUG</literal>."
 
-#: ./doc/install-guide/section_sahara-install.xml79(para)
+#: ./doc/install-guide/section_sahara-install.xml80(para)
 msgid ""
-"If you use the Data processing service with a MySQL database, then for "
-"storing big job binaries in the sahara internal database you must configure "
-"the size of max allowed packets. Edit the <filename>my.cnf</filename> file "
-"and change parameter: <placeholder-1/> and restart MySQL server."
-msgstr "Se você utiliza o serviço de processamento de Dados com o banco de dados MySQL, então para armazenar grandes tarefas binárias na base de dados interna do sahara você deve configurar o tamanho máximos de pacotes permitido. Edite o arquivo <filename>my.cnf</filename> e altere o parâmetro: <placeholder-1/> e reinicie o servidor MySQL."
+"If you use the Data processing service with a MySQL or MariaDB database, you"
+" must configure the maximum number of allowed packets for storing big job "
+"binaries in the service internal database."
+msgstr "Se você utiliza o serviço de Processamento de Dados com os bancos de dados MySQL ou MariaDB, você deve configurar o número máximo de pacotes permitidos para armazenar grandes binários de trabalho no banco de dados interno de serviços."
 
-#: ./doc/install-guide/section_sahara-install.xml87(para)
+#: ./doc/install-guide/section_sahara-install.xml85(para)
+msgid ""
+"Edit the <filename "
+"os=\"ubuntu;debian\">/etc/mysql/my.cnf</filename><filename "
+"os=\"rhel;centos;fedora;sles;opensuse\">/etc/my.cnf</filename> file and "
+"change the <literal>max_allowed_packet</literal> option:"
+msgstr "Edite o arquivo <filename os=\"ubuntu;debian\">/etc/mysql/my.cnf</filename><filename os=\"rhel;centos;fedora;sles;opensuse\">/etc/my.cnf</filename> e altere a opção <literal>max_allowed_packet</literal>:"
+
+#: ./doc/install-guide/section_sahara-install.xml104(para)
 msgid "Create database schema: <placeholder-1/>"
 msgstr "Crie o esquema da base de dados: <placeholder-1/>"
 
-#: ./doc/install-guide/section_sahara-install.xml90(para)
+#: ./doc/install-guide/section_sahara-install.xml107(para)
 msgid ""
 "You must register the Data processing service with the Identity service so "
 "that other OpenStack services can locate it. Register the service and "
 "specify the endpoint: <placeholder-1/>"
 msgstr "Você deve registrar o serviço de processamento de Dados com o serviço de Identidade para que outros serviços OpenStack possam localizá-lo. Registre o serviço e especifique o endpoint: <placeholder-1/>"
 
-#: ./doc/install-guide/section_sahara-install.xml102(para)
+#: ./doc/install-guide/section_sahara-install.xml119(para)
 msgid "Start the sahara service: <placeholder-1/><placeholder-2/>"
 msgstr "Inicie o serviço sahara: <placeholder-1/><placeholder-2/>"
 
-#: ./doc/install-guide/section_sahara-install.xml106(para)
+#: ./doc/install-guide/section_sahara-install.xml123(para)
 msgid ""
 "(Optional) Enable the Data processing service to start on boot "
 "<placeholder-1/><placeholder-2/>"
@@ -4100,14 +4110,14 @@ msgid ""
 "In the <literal>[DEFAULT]</literal> section, configure the "
 "<literal>noop</literal> notification driver to disable notifications because"
 " they only pertain to the optional Telemetry service:"
-msgstr ""
+msgstr "Na seção  <literal>[DEFAULT]</literal>, configure o driver de notificação <literal>noop</literal> para desabilitar notificações porque elas só dizem respeito ao serviço de telemetria opcional:"
 
 #: ./doc/install-guide/section_glance-install.xml177(para)
 #: ./doc/install-guide/section_glance-install.xml236(para)
 msgid ""
 "The Telemetry chapter provides a glance configuration that enables "
 "notifications."
-msgstr ""
+msgstr "O capítulo de Telemetria fornece uma configuração resumida que habilita as notificações."
 
 #: ./doc/install-guide/section_glance-install.xml191(para)
 msgid ""

@@ -1,12 +1,13 @@
 # 
 # Translators:
+# blkart <blkart.org@gmail.com>, 2015
 # johnwoo_lee <lijiangsheng1@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-01-31 02:01+0000\n"
-"PO-Revision-Date: 2015-01-30 08:00+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-02-03 04:45+0000\n"
+"PO-Revision-Date: 2015-02-03 06:11+0000\n"
+"Last-Translator: 秋林 <chenqioulin_1983@163.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2743,7 +2744,7 @@ msgid ""
 "flavor of m1.small. The resulting virtual machine instance has, by default, "
 "a primary disk size of 10GB. When the disk for an instance is resized up, "
 "zeros are just added to the end."
-msgstr ""
+msgstr "镜像磁盘的大小在最开始创建磁盘的时候就已经决定了的，然而，OpenStack 通过指定不同的硬件配置规格让你启动磁盘大小不同的虚拟机。例如，如果你的镜像是5GB，你创建的虚拟机指定的虚拟机规格是 m1.small 。最终创建的虚拟机的系统磁盘是10GB。当虚拟机的磁盘扩充的时候，在磁盘的后面以0填充。"
 
 #: ./doc/image-guide/ch_openstack_images.xml66(para)
 msgid ""
@@ -2752,109 +2753,109 @@ msgid ""
 "manually resize the partitions to access the additional storage to which you"
 " have access when the disk size associated with the flavor exceeds the disk "
 "size with which your image was created."
-msgstr ""
+msgstr "你的镜像必须能在启动的时候重新伸缩大小以便匹配最终用户的需求。否则，在虚拟机启动后，你需要手工改变分区的容量才能使用虚拟机指定的硬件配置规格的磁盘分容量大于你镜像原有容量的那部分容量。"
 
 #: ./doc/image-guide/ch_openstack_images.xml74(title)
 msgid "Xen: 1 ext3/ext4 partition (no LVM, no /boot, no swap)"
-msgstr ""
+msgstr "Xen: 单一 ext3/ext4 分区 ( 无LVM , 无 /boot ,无swap分区区 )"
 
 #: ./doc/image-guide/ch_openstack_images.xml76(para)
 msgid ""
 "If you use the OpenStack XenAPI driver, the Compute service automatically "
 "adjusts the partition and file system for your instance on boot. Automatic "
 "resize occurs if the following conditions are all true:"
-msgstr ""
+msgstr "如果你使用 OpenStack  XenAPI 驱动，那么计算服务在虚拟机启动时会自动调整分区和文件系统大小。在满足以下条件的时候会自动调整容量需："
 
 #: ./doc/image-guide/ch_openstack_images.xml83(para)
 msgid ""
 "<literal>auto_disk_config=True</literal> is set as a property on the image "
 "in the image registry."
-msgstr ""
+msgstr "在镜像的属性设置了 <literal>auto_disk_config=True</literal> 。"
 
 #: ./doc/image-guide/ch_openstack_images.xml88(para)
 msgid "The disk on the image has only one partition."
-msgstr ""
+msgstr "镜像的磁盘只有一个分区。"
 
 #: ./doc/image-guide/ch_openstack_images.xml92(para)
 msgid "The file system on the one partition is ext3 or ext4."
-msgstr ""
+msgstr "仅有的分区文件系统是 ext3 或者　ext4 ."
 
 #: ./doc/image-guide/ch_openstack_images.xml96(para)
 msgid ""
 "Therefore, if you use Xen, we recommend that when you create your images, "
 "you create a single ext3 or ext4 partition (not managed by LVM). Otherwise, "
 "read on."
-msgstr ""
+msgstr "因此，如果你使用 Xen ，我们推荐当你创建镜像时，只建立一个 ext3 或者 ext4 分区（而且没有LVM管理）。否则，继续往下看。"
 
 #: ./doc/image-guide/ch_openstack_images.xml102(title)
 msgid ""
 "Non-Xen with cloud-init/cloud-tools: One ext3/ext4 partition (no LVM, no "
 "/boot, no swap)"
-msgstr ""
+msgstr "非 Xen 平台安装 cloud-init/cloud-tools ：单 ext3/ext4 分区（无 LVM ,无 /boot , 无 SWAP）"
 
 #: ./doc/image-guide/ch_openstack_images.xml104(para)
 msgid "You must configure these items for your image:"
-msgstr ""
+msgstr "你的镜像必须满足以下配置："
 
 #: ./doc/image-guide/ch_openstack_images.xml108(para)
 msgid ""
 "The partition table for the image describes the original size of the image"
-msgstr ""
+msgstr "镜像的分区表描述的是镜像的原始大小。"
 
 #: ./doc/image-guide/ch_openstack_images.xml112(para)
 msgid "The file system for the image fills the original size of the image"
-msgstr ""
+msgstr "镜像的文件系统填充满镜像的原始大小。"
 
 #: ./doc/image-guide/ch_openstack_images.xml116(para)
 msgid "Then, during the boot process, you must:"
-msgstr ""
+msgstr "然后，在启动过程中，你必须："
 
 #: ./doc/image-guide/ch_openstack_images.xml119(para)
 msgid "Modify the partition table to make it aware of the additional space:"
-msgstr ""
+msgstr "修改分区表识别磁盘额外的空间。"
 
 #: ./doc/image-guide/ch_openstack_images.xml123(para)
 msgid ""
 "If you do not use LVM, you must modify the table to extend the existing root"
 " partition to encompass this additional space."
-msgstr ""
+msgstr "如果你没使用 LVM,你需要修改分区表扩充已经存在的根分区包纳磁盘额外的空间。"
 
 #: ./doc/image-guide/ch_openstack_images.xml129(para)
 msgid ""
 "If you use LVM, you can add a new LVM entry to the partition table, create a"
 " new LVM physical volume, add it to the volume group, and extend the logical"
 " partition with the root volume."
-msgstr ""
+msgstr "如果你使用了LVM，你可以添加新 LVM 条目到分区表，创建新 LVM 物理卷，然后添加 LVM 物理卷到 卷组，然后扩充 root 卷的容量。"
 
 #: ./doc/image-guide/ch_openstack_images.xml139(para)
 msgid "Resize the root volume file system."
-msgstr ""
+msgstr "重改变 root 卷文件系统。"
 
 #: ./doc/image-guide/ch_openstack_images.xml142(para)
 msgid "The simplest way to support this is to install in your image the:"
-msgstr ""
+msgstr "实现以上操作最简单的方法是安装以下软件到镜像内："
 
 #: ./doc/image-guide/ch_openstack_images.xml146(para)
 msgid ""
 "<link href=\"https://launchpad.net/cloud-utils\">cloud-utils</link> package,"
 " which contains the <placeholder-1/> tool for extending partitions."
-msgstr ""
+msgstr "<link href=\"https://launchpad.net/cloud-utils\">cloud-utils</link> 包，包含了 <placeholder-1/> 工具来扩展分区。"
 
 #: ./doc/image-guide/ch_openstack_images.xml151(para)
 msgid ""
 "<link href=\"https://launchpad.net/cloud-initramfs-tools\">cloud-initramfs-"
 "growroot</link> package for Ubuntu, Debian and Fedora, which supports "
 "resizing root partition on the first boot."
-msgstr ""
+msgstr "<link href=\"https://launchpad.net/cloud-initramfs-tools\">cloud-initramfs-growroot</link> 包在 Ubuntu ， Ubuntu 和 Fedora 上支持系统首次启动时改变根分区大小。"
 
 #: ./doc/image-guide/ch_openstack_images.xml156(para)
 msgid ""
 "<package>cloud-initramfs-growroot</package> package for Centos and RHEL."
-msgstr ""
+msgstr "Centos 和 RHEL 上使用<package>cloud-initramfs-growroot</package>"
 
 #: ./doc/image-guide/ch_openstack_images.xml160(para)
 msgid "<link href=\"https://launchpad.net/cloud-init\">cloud-init</link> package."
-msgstr ""
+msgstr "<link href=\"https://launchpad.net/cloud-init\">cloud-init</link> 软件包。"
 
 #: ./doc/image-guide/ch_openstack_images.xml164(para)
 msgid ""
@@ -2862,7 +2863,7 @@ msgid ""
 "on boot. For example, in the <filename>/etc/rc.local</filename> file. These "
 "packages are in the Ubuntu and Debian package repository, as well as the "
 "EPEL repository (for Fedora/RHEL/CentOS/Scientific Linux guests)."
-msgstr ""
+msgstr "通过安装这些包，镜像在启动时完成root分区改变大小。例如，通过设置<filename>/etc/rc.local</filename> 文件，这些包包在Ubuntu 和 Debian 包管理库内以及 EPEL 库（ Fedora/RHEL/CentOS/Scientific 系列 Linux）"
 
 #: ./doc/image-guide/ch_openstack_images.xml171(para)
 msgid ""
@@ -2871,20 +2872,20 @@ msgid ""
 "href=\"https://github.com/flegmatik/linux-rootfs-resize\">linux-rootfs-"
 "resize</link> that contains scripts that update a ramdisk by using "
 "<placeholder-1/> so that the image resizes properly on boot."
-msgstr ""
+msgstr "如果你不能安装 <literal>cloud-initramfs-tools</literal> 软件包，Robert Plestenjak 在 GitHub 上有个项目叫 <link href=\"https://github.com/flegmatik/linux-rootfs-resize\">linux-rootfs-resize</link> ，包含了脚本更新ramdisk，在ramdisk内使用 <placeholder-1/> 命令改变根分区大小."
 
 #: ./doc/image-guide/ch_openstack_images.xml179(para)
 msgid ""
 "If you can install the cloud-utils and <package>cloud-init</package> "
 "packages, we recommend that when you create your images, you create a single"
 " ext3 or ext4 partition (not managed by LVM)."
-msgstr ""
+msgstr "如果你能安装  cloud-utils 和  <package>cloud-init</package>包，我们推荐你创建镜像时，只创建一个 ext3 和 ext4 分区（且不使用LVM管理）"
 
 #: ./doc/image-guide/ch_openstack_images.xml186(title)
 msgid ""
 "Non-Xen without <package>cloud-init</package>/<package>cloud-"
 "tools</package>: LVM"
-msgstr ""
+msgstr "非 Xen 环境且无 <package>cloud-init</package>/<package>cloud-tools</package>软件包：使用 LVM"
 
 #: ./doc/image-guide/ch_openstack_images.xml189(para)
 msgid ""
@@ -2895,65 +2896,65 @@ msgid ""
 "to a limitation in the Linux kernel (as of this writing), you cannot modify "
 "a partition table of a raw disk that has partitions currently mounted, but "
 "you can do this for LVM."
-msgstr ""
+msgstr "如果你不能安装  <package>cloud-init</package> 和 <package>cloud-tools</package> 软件包到镜像内但你还想镜像支持伸缩大小，你必须编写脚本让你的镜像在启动的时候修改分区表。在这种情况下，我们推荐使用 LVM 来管理你的磁盘分区。由于 Linux 内核限制（本文档编写时），当磁盘有分区被挂载的时候你不能修改磁盘分区表，但是你可以使用 LVM 。"
 
 #: ./doc/image-guide/ch_openstack_images.xml200(para)
 msgid ""
 "Detect if any additional space is available on the disk. For example, parse "
 "the output of <placeholder-1/>."
-msgstr ""
+msgstr "检查磁盘额外可用空间。例如，解析 <placeholder-1/> 的输出。"
 
 #: ./doc/image-guide/ch_openstack_images.xml207(para)
 msgid ""
 "Create a new LVM partition with the additional space. For example, "
 "<placeholder-1/>."
-msgstr ""
+msgstr "在额外的空间上创建 LVM 分区。例如：<placeholder-1/> 。"
 
 #: ./doc/image-guide/ch_openstack_images.xml215(replaceable)
 #: ./doc/image-guide/ch_openstack_images.xml222(replaceable)
 #: ./doc/image-guide/ch_openstack_images.xml229(replaceable)
 msgid "sda6"
-msgstr ""
+msgstr "sda6"
 
 #: ./doc/image-guide/ch_openstack_images.xml213(para)
 msgid "Create a new physical volume. For example, <placeholder-1/>."
-msgstr ""
+msgstr "创建新的物理卷(PV)。例如： <placeholder-1/> 。"
 
 #: ./doc/image-guide/ch_openstack_images.xml221(replaceable)
 msgid "vg00"
-msgstr ""
+msgstr "vg00"
 
 #: ./doc/image-guide/ch_openstack_images.xml218(para)
 msgid ""
 "Extend the volume group with this physical partition. For example, "
 "<placeholder-1/>."
-msgstr ""
+msgstr "使用这个屋里分区扩展卷组（VG）。例如： <placeholder-1/> 。"
 
 #: ./doc/image-guide/ch_openstack_images.xml228(replaceable)
 #: ./doc/image-guide/ch_openstack_images.xml234(replaceable)
 msgid "node-root"
-msgstr ""
+msgstr "node-root"
 
 #: ./doc/image-guide/ch_openstack_images.xml225(para)
 msgid ""
 "Extend the logical volume contained the root partition by the amount of "
 "space. For example, <placeholder-1/>."
-msgstr ""
+msgstr "使用分区所有空间扩展包含根分区的逻辑卷（LV）。例如，<placeholder-1/>。"
 
 #: ./doc/image-guide/ch_openstack_images.xml232(para)
 msgid "Resize the root file system. For example, <placeholder-1/>."
-msgstr ""
+msgstr "重新改变根文件系统大小。例如，<placeholder-1/>。"
 
 #: ./doc/image-guide/ch_openstack_images.xml198(para)
 msgid "Your script must do something like the following:<placeholder-1/>"
-msgstr ""
+msgstr "你的脚本需要完成以下功能：<placeholder-1/>"
 
 #: ./doc/image-guide/ch_openstack_images.xml237(para)
 msgid ""
 "You do not need a <filename>/boot</filename> partition unless your image is "
 "an older Linux distribution that requires that <filename>/boot</filename> is"
 " not managed by LVM."
-msgstr ""
+msgstr "你无须 <filename>/boot</filename>分区，除非你的镜像使用的是较老的 Linux 发行版，那些发行版要求 <filename>/boot</filename> 目录不能被 LVM管理。"
 
 #: ./doc/image-guide/ch_openstack_images.xml246(para)
 msgid ""
@@ -2963,37 +2964,37 @@ msgid ""
 "the network interface card when it was first installed, and this MAC address"
 " is different each time that the instance boots. You should alter the "
 "following files:"
-msgstr ""
+msgstr "你必须删除镜像内网络规则文件，因为它这会导致新创建虚拟机启动时网卡不是eth0。这是由于你创建的镜像第一次安装时会记录网卡的MAC地址。并且MAC地址在每次创建虚拟机时不同。你应该修改以下文件："
 
 #: ./doc/image-guide/ch_openstack_images.xml256(para)
 msgid ""
 "Replace <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> with "
 "an empty file (contains network persistence rules, including MAC address)"
-msgstr ""
+msgstr "使用空文件替换 <filename>/etc/udev/rules.d/70-persistent-net.rules</filename> 文件（包含网络持久规则，包括MAC地址）。"
 
 #: ./doc/image-guide/ch_openstack_images.xml262(para)
 msgid ""
 "Replace <filename>/lib/udev/rules.d/75-persistent-net-"
 "generator.rules</filename> with an empty file (this generates the file "
 "above)"
-msgstr ""
+msgstr "使用空文件替换  <filename>/lib/udev/rules.d/75-persistent-net-generator.rules</filename> 文件（它将生成上面所说的文件）。"
 
 #: ./doc/image-guide/ch_openstack_images.xml268(para)
 msgid ""
 "Remove the HWADDR line from <filename>/etc/sysconfig/network-scripts/ifcfg-"
 "eth0</filename> on Fedora-based images"
-msgstr ""
+msgstr "在 Fedora系的镜像上从  <filename>/etc/sysconfig/network-scripts/ifcfg-eth0</filename> 文件删除 HWADDR 一行。"
 
 #: ./doc/image-guide/ch_openstack_images.xml274(para)
 msgid ""
 "If you delete the network persistent rules files, you may get a udev kernel "
 "warning at boot time, which is why we recommend replacing them with empty "
 "files instead."
-msgstr ""
+msgstr "如果你删除网络持久规则文件，系统启动时你会看到内核警告信息，这是为什么我们推荐使用空文件替代的原因。"
 
 #: ./doc/image-guide/ch_openstack_images.xml281(title)
 msgid "Ensure ssh server runs"
-msgstr ""
+msgstr "确保 ssh 服务在运行"
 
 #: ./doc/image-guide/ch_openstack_images.xml282(para)
 msgid ""
@@ -3001,7 +3002,7 @@ msgid ""
 "on boot, or you cannot connect to your instance by using ssh when it boots "
 "inside of OpenStack. This package is typically called <literal>openssh-"
 "server</literal>."
-msgstr ""
+msgstr "在镜像内你必须安装 SSH 服务并且确保它在启动时自动启动，否则你不能通过 ssh 连接到你在 OpenStack 内的虚拟机。ssh 服务包名通常叫做 <literal>openssh-server</literal> 。"
 
 #: ./doc/image-guide/ch_openstack_images.xml290(para)
 msgid ""
@@ -3010,11 +3011,11 @@ msgid ""
 "reason is that having a firewall installed on your instance can make it more"
 " difficult to troubleshoot networking issues if you cannot connect to your "
 "instance."
-msgstr ""
+msgstr "通常，我们推荐你关闭掉镜像内所有的防火墙，使用 OpenStack 安全组来限制访问你的虚拟机。因为在镜像内开启防火墙会增加在不能访问虚拟机的时候诊断问题时的难度。"
 
 #: ./doc/image-guide/ch_openstack_images.xml298(title)
 msgid "Access instance by using ssh public key (cloud-init)"
-msgstr ""
+msgstr "使用 SSH 公钥（cloud-init）访问虚拟机"
 
 #: ./doc/image-guide/ch_openstack_images.xml300(para)
 msgid ""
@@ -3022,11 +3023,11 @@ msgid ""
 "to ssh using public key authentication. For this to work, your virtual "
 "machine image must be configured to download the ssh public key from the "
 "OpenStack metadata service or config drive, at boot time."
-msgstr ""
+msgstr "访问在 OpenStack 内运行的虚拟机典型的办法是通过 ssh 使用公钥认证。为了实现这个，你的虚拟机镜像必须被配置为在虚拟机启动时能从 OpenStack 元数据服务获取ssh 公钥或者使用config 磁盘。"
 
 #: ./doc/image-guide/ch_openstack_images.xml307(title)
 msgid "Use <package>cloud-init</package> to fetch the public key"
-msgstr ""
+msgstr "使用 <package>cloud-init</package> 获取公钥"
 
 #: ./doc/image-guide/ch_openstack_images.xml309(para)
 msgid ""
@@ -3035,7 +3036,7 @@ msgid ""
 "varies by distribution. On Ubuntu-based virtual machines, the account is "
 "called <literal>ubuntu</literal>. On Fedora-based virtual machines, the "
 "account is called <literal>ec2-user</literal>."
-msgstr ""
+msgstr "<package>cloud-init</package> 软件从元数据服务自动获取公钥并存放在账户内。不同发行版的账户不一样。基于 Ubuntu 系的虚拟机，账户是  <literal>ubuntu</literal> 。Fedora 系的虚拟机，账户是 <literal>ec2-user</literal>。"
 
 #: ./doc/image-guide/ch_openstack_images.xml317(para)
 msgid ""
@@ -3044,18 +3045,18 @@ msgid ""
 "line with a different user. For example, to configure <package>cloud-"
 "init</package> to put the key in an account named <literal>admin</literal>, "
 "edit the configuration file so it has the line:"
-msgstr ""
+msgstr "你可以编辑 <filename>/etc/cloud/cloud.cfg</filename> 文件添加一行修改 <literal>cloud-init</literal> 使用的账户名，例如，添加以下这行到配置文件，来配置 <literal>cloud-init</literal> 存放公钥到admin账户："
 
 #: ./doc/image-guide/ch_openstack_images.xml327(title)
 msgid "Write a custom script to fetch the public key"
-msgstr ""
+msgstr "编写脚本获取公钥"
 
 #: ./doc/image-guide/ch_openstack_images.xml329(para)
 msgid ""
 "If you are unable or unwilling to install <package>cloud-init</package> "
 "inside the guest, you can write a custom script to fetch the public key and "
 "add it to a user account."
-msgstr ""
+msgstr "如果你没有或者不希望安装  <package>cloud-init</package>包到虚拟机里，你可以自己编写脚本来获取公钥并存放到用户账户内。"
 
 #: ./doc/image-guide/ch_openstack_images.xml333(para)
 msgid ""
@@ -3065,18 +3066,18 @@ msgid ""
 "the <link href=\"https://github.com/rackerjoe/oz-image-"
 "build/blob/master/templates/centos60_x86_64.tdl\">rackerjoe oz-image-build "
 "CentOS 6 template</link>."
-msgstr ""
+msgstr "要获取 ssh 公钥并存放到 root 账户。编辑  <filename>/etc/rc.local</filename> 文件并添加以下内容到 \"touch /var/lock/subsys/local\" 这行之前。下面的脚本来自  <link href=\"https://github.com/rackerjoe/oz-image-build/blob/master/templates/centos60_x86_64.tdl\">rackerjoe oz-image-build CentOS 6 template</link> 。"
 
 #: ./doc/image-guide/ch_openstack_images.xml373(para)
 msgid ""
 "Some VNC clients replace : (colon) with ; (semicolon) and _ (underscore) "
 "with - (hyphen). If editing a file over a VNC session, make sure it's http: "
 "not http; and authorized_keys not authorized-keys."
-msgstr ""
+msgstr "有些 VNC 客户会使用分号 (<literal>;</literal>)替换冒号(<literal>:</literal>) 以及用中划线 (<literal>-</literal>)替换下划线(<literal>_</literal>) ，确认你输入的是 <literal>http:</literal> 而不是 <literal>http;</literal> ， <literal>authorized_keys</literal> 而不是 <literal>authorized-keys</literal>。"
 
 #: ./doc/image-guide/ch_openstack_images.xml385(title)
 msgid "Process user data and other metadata (cloud-init)"
-msgstr ""
+msgstr "处理用户数据以及其他元数据（cloud-init）"
 
 #: ./doc/image-guide/ch_openstack_images.xml387(para)
 msgid ""
@@ -3087,7 +3088,7 @@ msgid ""
 "example, you might want to set the host name of the instance when it is "
 "booted. Or, you might wish to configure your image so that it executes user "
 "data content as a script on boot."
-msgstr ""
+msgstr "除了 ssh 公钥，镜像可能还需要从 OpenStack 获取其他信息，例如 link href=\"http://docs.openstack.org/user-guide/content/inserting_userdata.html\">传递用户数据到虚拟机</link> ，是当用户使用镜像的时候提交的。例如，你可能在虚拟机启动时设置主机名，或者希望执行用户数据内的脚本。"
 
 #: ./doc/image-guide/ch_openstack_images.xml395(para)
 msgid ""
@@ -3099,7 +3100,7 @@ msgid ""
 "href=\"http://docs.amazonwebservices.com/AWSEC2/2009-04-04/UserGuide/AESDG-"
 "chapter-instancedata.html\">Using Instance Metadata</link> for details on "
 "how to retrieve user data."
-msgstr ""
+msgstr "你可以通过元数据服务或者参考 <link href=\"http://docs.openstack.org/user-guide/content/config-drive.html\">存储元数据到用户配置磁盘</link> 来访问这些信息。OpenStack 的元数据服务兼容 Amazon EC2 元数据服务 2009-04-04 版本，查阅  Amazon EC2 文档 <link href=\"http://docs.amazonwebservices.com/AWSEC2/2009-04-04/UserGuide/AESDG-chapter-instancedata.html\">使用虚拟机元数据</link> 获取如何获取用户数据的详细细节。"
 
 #: ./doc/image-guide/ch_openstack_images.xml406(para)
 msgid ""
@@ -3107,11 +3108,11 @@ msgid ""
 "<package>cloud-init</package> package into your image, which is configured "
 "by default to treat user data as an executable script, and sets the host "
 "name."
-msgstr ""
+msgstr "支持这个功能的最简单的办法是安装 <package>cloud-init</package> 软件包到你的镜像，它默认配置为将用户数据视为可执行脚本并且设置主机名。"
 
 #: ./doc/image-guide/ch_openstack_images.xml413(title)
 msgid "Ensure image writes boot log to console"
-msgstr ""
+msgstr "确认镜像输出启动日志到控制台"
 
 #: ./doc/image-guide/ch_openstack_images.xml414(para)
 msgid ""
@@ -3119,14 +3120,14 @@ msgid ""
 "<literal>ttyS0</literal> device. In particular, the "
 "<literal>console=ttyS0</literal> argument must be passed to the kernel on "
 "boot."
-msgstr ""
+msgstr "你必须配置镜像以便镜像内核输出启动日志到 <literal>ttyS0</literal> 设备，尤其是  <literal>console=ttyS0</literal>参数必须在启动时传递给内核。"
 
 #: ./doc/image-guide/ch_openstack_images.xml418(para)
 msgid ""
 "If your image uses grub2 as the boot loader, there should be a line in the "
 "grub configuration file. For example, "
 "<filename>/boot/grub/grub.cfg</filename>, which looks something like this:"
-msgstr ""
+msgstr "如果你的镜像使用 grub2 做为引导程序，在配置文件内应该有一行配置内容。例如， <filename>/boot/grub/grub.cfg</filename>，看起来应该如下："
 
 #: ./doc/image-guide/ch_openstack_images.xml423(para)
 msgid ""
@@ -3136,23 +3137,23 @@ msgid ""
 " Instead, you should edit <filename>/etc/default/grub</filename> and modify "
 "the value of the <literal>GRUB_CMDLINE_LINUX_DEFAULT</literal> variable: "
 "<placeholder-1/>"
-msgstr ""
+msgstr "如果 <literal>console=ttyS0</literal> 不存在，你需要修改 grub 配置，通常，你不应该直接更新  <filename>grub.cfg</filename>  文件，因为它是程序自动生成的。作为替代的，你应该编辑  <filename>/etc/default/grub</filename> 文件并修改  <literal>GRUB_CMDLINE_LINUX_DEFAULT</literal> 的值： <placeholder-1/>"
 
 #: ./doc/image-guide/ch_openstack_images.xml432(para)
 msgid ""
 "Next, update the grub configuration. On Debian-based operating-systems such "
 "as Ubuntu, run this command:"
-msgstr ""
+msgstr "然后，更新 grub 配置，在 Debian 系列的系统如 Ubuntu，运行以下命令："
 
 #: ./doc/image-guide/ch_openstack_images.xml435(para)
 msgid ""
 "On Fedora-based systems, such as RHEL and CentOS, and on openSUSE, run this "
 "command:"
-msgstr ""
+msgstr "在 Fedora 系列的系统，如 RHEL 和 CentOS，以及 openSUSE，运行以下命令："
 
 #: ./doc/image-guide/ch_openstack_images.xml440(title)
 msgid "Paravirtualized Xen support in the kernel (Xen hypervisor only)"
-msgstr ""
+msgstr "内核内对半虚拟化的 Xen 支持（仅Xen 虚拟化）"
 
 #: ./doc/image-guide/ch_openstack_images.xml442(para)
 msgid ""
@@ -3162,7 +3163,7 @@ msgid ""
 "paravirtualization, and you want to create an image for an older Linux "
 "distribution that has a pre 3.0 kernel, you must ensure that the image boots"
 " a kernel that has been compiled with Xen support."
-msgstr ""
+msgstr "在 Linux 内核 3.0以前，内核的主线分支不支持 Xen 半虚拟化虚拟机（即 Xen DomU 虚拟机）。如果你运行 Xen 半虚拟化，并且你想创建内核在3.0版本之前的虚拟机镜像，你不许确保镜像启动内核已经编译了 Xen 支持。"
 
 #: ./doc/image-guide/ch_openstack_images.xml452(title)
 msgid "Manage the image cache"
@@ -3175,18 +3176,18 @@ msgid ""
 "<filename>/var/lib/nova/instances/_base/</filename>. If you have configured "
 "live migration of instances, all your compute nodes share one common "
 "<filename>/var/lib/nova/instances/</filename> directory."
-msgstr ""
+msgstr "使用  <filename>nova.conf</filename>的选项来控制在 <filename>/var/lib/nova/instances/_base/</filename> 目录中是否保存或者多长时间，未使用的基础镜像。如果你配置了虚拟机活迁移。所有的计算节点还需要共享同一个 <filename>/var/lib/nova/instances/</filename> 目录"
 
 #: ./doc/image-guide/ch_openstack_images.xml460(para)
 msgid ""
 "For information about libvirt images in OpenStack, see <link "
 "href=\"http://www.pixelbeat.org/docs/openstack_libvirt_images/\">The life of"
 " an OpenStack libvirt image from Pádraig Brady</link>."
-msgstr ""
+msgstr "关于虚拟机活迁移相关信息，请参考 <link href=\"http://www.pixelbeat.org/docs/openstack_libvirt_images/\">The life of an OpenStack libvirt image from Pádraig Brady</link>。"
 
 #: ./doc/image-guide/ch_openstack_images.xml466(caption)
 msgid "Image cache management configuration options"
-msgstr ""
+msgstr "镜像缓存管理配置选项"
 
 #: ./doc/image-guide/ch_openstack_images.xml472(td)
 msgid "Configuration option=Default value"
@@ -3198,15 +3199,15 @@ msgstr "(类型) 描述"
 
 #: ./doc/image-guide/ch_openstack_images.xml478(td)
 msgid "preallocate_images=none"
-msgstr ""
+msgstr "preallocate_images=none"
 
 #: ./doc/image-guide/ch_openstack_images.xml479(para)
 msgid "(StrOpt) VM image preallocation mode:"
-msgstr ""
+msgstr "（字符串）虚拟机镜像预分配模式："
 
 #: ./doc/image-guide/ch_openstack_images.xml482(para)
 msgid "<literal>none</literal>. No storage provisioning occurs up front."
-msgstr ""
+msgstr "<literal>none</literal>。不分配存储。"
 
 #: ./doc/image-guide/ch_openstack_images.xml487(para)
 msgid ""
@@ -3217,11 +3218,11 @@ msgid ""
 "determine if enough space is available, and to possibly improve VM I/O "
 "performance due to ongoing allocation avoidance, and better locality of "
 "block allocations."
-msgstr ""
+msgstr "<literal>space</literal>。虚拟机启动时存储完全分配。<literal>$instance_dir/</literal>目录镜像 在空间足够的情况下立即 <link href=\"http://www.kernel.org/doc/man-pages/online/pages/man2/fallocate.2.html\">fallocate</link>分配。并且为了增加虚拟机 I/O 性能，会分配更好的块设备。"
 
 #: ./doc/image-guide/ch_openstack_images.xml504(td)
 msgid "remove_unused_base_images=True"
-msgstr ""
+msgstr "remove_unused_base_images=True"
 
 #: ./doc/image-guide/ch_openstack_images.xml505(td)
 msgid ""
