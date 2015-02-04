@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-02-03 04:45+0000\n"
-"PO-Revision-Date: 2015-02-03 04:00+0000\n"
+"POT-Creation-Date: 2015-02-03 21:15+0000\n"
+"PO-Revision-Date: 2015-02-03 12:52+0000\n"
 "Last-Translator: johnwoo_lee <lijiangsheng1@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -1236,7 +1236,7 @@ msgid ""
 "The OpenStack dashboard, OpenStack Identity, and OpenStack Object Storage "
 "services are components that can each be deployed centrally in order to "
 "serve multiple regions."
-msgstr ""
+msgstr "OpenStack GUI，OpenStack认证，以及OpenStack对象存储等服务为了服务于多区域，这些组件需要部署在中心化位置。"
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml53(title)
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml155(para)
@@ -1255,7 +1255,7 @@ msgid ""
 "Object Storage service is visible to all regions, it can be used by "
 "applications or workloads in any or all of the regions. This simplifies high"
 " availability failover and disaster recovery rollback."
-msgstr ""
+msgstr "在多个OpenStack region，实现单一的OpenStack对象存储服务端点的话，就需要实现所有的region共享文件存储。对象存储服务内部复制文件到多个节点。这样有一个优点，那就是如果一个文件存放在对象存储服务对于所有region都可见，那么它就可以在任何的或全部的region里的应用和负载所使用。这是简单的高可用失效恢复和灾难恢复回滚。"
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml62(para)
 msgid ""
@@ -1267,7 +1267,7 @@ msgid ""
 "modules themselves, reducing the actual load on the storage network. In "
 "addition to an HTTP caching layer, use a caching layer like Memcache to "
 "cache objects between the proxy and storage nodes."
-msgstr ""
+msgstr "为满足多region的负载理应扩展对象存储服务，那么多个代理运行，且拥有负载均衡，在每个region都安装存储节点，对象存储服务的入口前端配置HTTP缓存层都是必要的。这样的话，客户端请求对象时会访问缓存而不是直接到存储模块，可有效较少存储网络的负载。另外在HTTP缓存层，在代理和存储节点之间使用诸如Memcache可缓存对象。"
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml71(para)
 msgid ""
@@ -1279,7 +1279,7 @@ msgid ""
 "Storage Service endpoints located in the same region as the application may "
 "be desirable due to reduced latency, cross region bandwidth, and ease of "
 "deployment."
-msgstr ""
+msgstr "如果在多个region的云被设计为不是单一的对象存储服务端点，而是在每个region中都有独立的对象存储服务端点的话，应用就需要掌控同步(如果必要)而且管理操作须确保跨节点的一致性。对于一些应用，在同样的region里访问多个对象存储服务端点意味着希望能够减少延迟，跨region带宽利用以及轻松的部署。"
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml80(para)
 msgid ""
@@ -1287,7 +1287,7 @@ msgid ""
 "selection of the storage technology and whether or not a dedicated network "
 "is used to carry storage traffic from the storage service to the compute "
 "nodes."
-msgstr ""
+msgstr "对于块存储服务来说，最重要的决定就是选择存储技术和是否使用专用网络用于从存储服务到计算节点的存储流量传输。"
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml86(title)
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml417(para)
@@ -1354,7 +1354,7 @@ msgid ""
 "considerations, therefore it is important to make sure when contemplating "
 "the design such an architecture that it meets the user and business "
 "requirements."
-msgstr ""
+msgstr "一个多区域架构是复杂的而且尤其自身的风险和考虑，因此确保考虑此架构的设计应满足用户和业务的需求显得异常重要。"
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml13(para)
 #: ./doc/arch-design/network_focus/section_user_requirements_network_focus.xml42(para)
@@ -4574,7 +4574,7 @@ msgid ""
 "extreme demands on network bandwidth and services that require specialized "
 "consideration and planning. For guidance on designing for this type of "
 "cloud, please refer to <xref linkend=\"network_focus\"/>."
-msgstr ""
+msgstr "在网络型OpenStack云中，一些设计选择能够改进这些类型负载的性能。网络型OpenStack的负载对于网络带宽和服务有着苛刻的需求，所以需要特别的考量和规划。关于此类型云的设计指南，请参考 <xref linkend=\"network_focus\"/>。"
 
 #: ./doc/arch-design/generalpurpose/section_architecture_general_purpose.xml813(title)
 msgid "Storage-focused workloads"
@@ -4779,7 +4779,7 @@ msgid ""
 "include the operation's function. Operational factors affect the design "
 "choices for a general purpose cloud, and operations staff are often tasked "
 "with the maintenance of cloud environments for larger installations."
-msgstr ""
+msgstr "在构建过程中的规划和设计阶段，能够考虑到运维的内容显得异常的重要。对通用型云来说，运维因素影响着设计的选择，而且运维人员担任着维护云环境的任务，以及最初大规模的安装、部署。"
 
 #: ./doc/arch-design/generalpurpose/section_operational_considerations_general_purpose.xml14(para)
 msgid ""
@@ -4828,7 +4828,7 @@ msgid ""
 "managed by a specially trained, dedicated operations organization. Smaller "
 "implementations are more likely to rely on support staff that need to take "
 "on combined engineering, design and operations functions."
-msgstr ""
+msgstr "为了能够在安装之后能够支持和维护，OpenStack云管理需要运维人员理解设计架构内容。运维人员和工程师人员的技能级别，以及他们之间的界限，依赖于安装的规模大小和目的。大型的云服务提供商或者电信运营商，会有针对性的培训，专门的运维部门，小型的实现的话，支持人员通常是工程师、设计师、和运维人员的合体。"
 
 #: ./doc/arch-design/generalpurpose/section_operational_considerations_general_purpose.xml48(para)
 msgid ""
@@ -4951,7 +4951,7 @@ msgid ""
 " ratio can have a detrimental effect and cause a potential increase in a "
 "noisy neighbor. The additional risk of increasing the overcommit ratio is "
 "more instances failing when a compute host fails."
-msgstr ""
+msgstr "通过评估平均负载，在计算环境中调整超分配比例来增加运行实例的数量是另外一个办法。重要的是记住，改变CPU超分配比例有负面影响以及引起其它实例故障。加大超分配的比例另外的风险是当计算节点失效后会引发更多的实例失效。"
 
 #: ./doc/arch-design/generalpurpose/section_operational_considerations_general_purpose.xml143(para)
 msgid ""
@@ -5153,7 +5153,7 @@ msgid ""
 "independent node's resources will be allocated in a way that makes the most "
 "efficient use of available hardware. This is commonly referred to as bin "
 "packing."
-msgstr ""
+msgstr "要为运行在云中的应用设计最佳可用资源，我们建议用户设计多个计算资源池，每个独立的资源池须设计为可以提供特定类型的实例或一组类型。在本书中,\"实例“一词的意思是一个虚拟机和在此虚拟机中运行的操作系统。设计多个资源池的好处是实例被调度到合适的计算hypervisor中，每个对立的节点资源被分配最大化的利用硬件资源。这就是常见的打包。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml55(para)
 msgid ""
@@ -5211,7 +5211,7 @@ msgid ""
 "processor cores and threads has a direct correlation to the number of worker"
 " threads which can be run on a resource node. It is important to ensure "
 "sufficient compute capacity and memory is planned on resource nodes."
-msgstr ""
+msgstr "另外实际会影响计算服务的是计算需要的资源节点，考虑这点很重要。资源节点也就是非hypervisor的节点，提供控制器、对象存储，块存储或网络服务的节点。处理器核数和线程数直接决定了资源节点可以运行多少个任务线程。确保在资源节点拥有充足的计算容量和内存规划非常重要。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml102(para)
 msgid ""
@@ -5255,7 +5255,7 @@ msgid ""
 "and OpenStack Networking (neutron), has tremendous implications and will "
 "have a huge impact on the architecture and design of the cloud network "
 "infrastructure."
-msgstr ""
+msgstr "基于在云中实例被服务的需求，接下来的设计选择将会影响到用户的网络服务选择，而这又用于在云中服务于实例。选择在遗留网络(nova-network)和OpenStack网络(neutron)之间进行，前者隶属于OpenStack计算，不同的选择都会都巨大的影响，且会严重影响到云网络基础设施的架构和设计。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml138(para)
 msgid ""
@@ -9605,7 +9605,7 @@ msgstr "管理网络"
 
 #: ./doc/arch-design/hybrid/section_tech_considerations_hybrid.xml65(para)
 msgid "Treats applications"
-msgstr ""
+msgstr "Treats 应用"
 
 #: ./doc/arch-design/hybrid/section_tech_considerations_hybrid.xml68(para)
 msgid "Implements services"
@@ -9617,7 +9617,7 @@ msgid ""
 "is to increase capacity without having to make large capital investments. "
 "However, capacity planning is still necessary when designing an OpenStack "
 "installation even if it is augmented with external clouds."
-msgstr ""
+msgstr "许多组织切换到混合云系统的一个主要原因是为了扩容但是又不想投入太多钱。尽管如此，容量计划在设计一个OpenStack安装时仍然有必要，即使是已经有了外部的云。"
 
 #: ./doc/arch-design/hybrid/section_tech_considerations_hybrid.xml78(para)
 msgid ""
