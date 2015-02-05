@@ -21,7 +21,36 @@
         documentation</link>.</para>
       <para>Create a test template in the <filename>test-stack.yml</filename>
         file with the following content:</para>
-      <programlisting language="yml"><xi:include parse="text" href="samples/test-stack.yml"/></programlisting>
+      <programlisting language="yml">heat_template_version: 2014-10-16
+description: A simple server.
+
+parameters:
+  ImageID:
+    type: string
+    description: Image use to boot a server
+  NetID:
+    type: string
+    description: Network ID for the server
+
+resources:
+  ImageID:
+    type: string
+    description: Image use to boot a server
+  NetID:
+    type: string
+    description: Network ID for the server
+  server:
+    type: OS::Nova::Server
+    properties:
+      image: { get_param: ImageID }
+      flavor: m1.tiny
+      networks:
+      - network: { get_param: NetID }
+
+outputs:
+  private_ip:
+    description: IP address of the server in the private network
+    value: { get_attr: [ server, first_address ] }</programlisting>
     </step>
     <step>
       <para>Use the <command>heat stack-create</command> command to create a
