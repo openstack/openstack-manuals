@@ -11,4 +11,4 @@ sizes of server instances.
    :maxdepth: 2
 
    section_dashboard_access_and_security.rst
-
+   dashboard_manage_containers.rst
