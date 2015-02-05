@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-02-03 04:45+0000\n"
-"PO-Revision-Date: 2015-02-03 06:11+0000\n"
+"POT-Creation-Date: 2015-02-04 21:17+0000\n"
+"PO-Revision-Date: 2015-02-05 03:21+0000\n"
 "Last-Translator: 秋林 <chenqioulin_1983@163.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -1765,7 +1765,7 @@ msgid ""
 " it to the root account, edit the <filename>/etc/rc.d/rc.local</filename> "
 "file and add the following lines before the line <literal>touch "
 "/var/lock/subsys/local</literal>:"
-msgstr ""
+msgstr "如果你不能在镜像中安装<systemitem class=\"service\">cloud-init</systemitem>软件包，就获取ssh公钥并添加到root帐号中，编辑<filename>/etc/rc.d/rc.local</filename>文件，在<literal>touch /var/lock/subsys/local</literal>之前添加以下内容："
 
 #: ./doc/image-guide/section_centos-example.xml266(para)
 msgid ""
@@ -3203,7 +3203,7 @@ msgstr "preallocate_images=none"
 
 #: ./doc/image-guide/ch_openstack_images.xml479(para)
 msgid "(StrOpt) VM image preallocation mode:"
-msgstr "（字符串）虚拟机镜像预分配模式："
+msgstr "（字符串型）虚拟机镜像预分配模式："
 
 #: ./doc/image-guide/ch_openstack_images.xml482(para)
 msgid "<literal>none</literal>. No storage provisioning occurs up front."
@@ -3218,7 +3218,7 @@ msgid ""
 "determine if enough space is available, and to possibly improve VM I/O "
 "performance due to ongoing allocation avoidance, and better locality of "
 "block allocations."
-msgstr "<literal>space</literal>。虚拟机启动时存储完全分配。<literal>$instance_dir/</literal>目录镜像 在空间足够的情况下立即 <link href=\"http://www.kernel.org/doc/man-pages/online/pages/man2/fallocate.2.html\">fallocate</link>分配。并且为了增加虚拟机 I/O 性能，会分配更好的块设备。"
+msgstr "<literal>space</literal>。虚拟机启动时存储完全分配。<literal>$instance_dir/</literal>目录在空间足够的情况下立即 <link href=\"http://www.kernel.org/doc/man-pages/online/pages/man2/fallocate.2.html\">fallocate</link>分配。并且为了增加虚拟机 I/O 性能，会选择更适合的的块设备。"
 
 #: ./doc/image-guide/ch_openstack_images.xml504(td)
 msgid "remove_unused_base_images=True"
@@ -3229,39 +3229,39 @@ msgid ""
 "(BoolOpt) Should unused base images be removed? When set to True, the "
 "interval at which base images are removed are set with the following two "
 "settings. If set to False base images are never removed by Compute."
-msgstr ""
+msgstr "（布尔型）未使用的基础镜像是否被删除？ 当设置为 True 的时候，删除未使用的基础镜像的时间间隔在下面两个参数设置。如果设置为 False，基础镜像将一直不被删除。"
 
 #: ./doc/image-guide/ch_openstack_images.xml512(td)
 msgid "remove_unused_original_minimum_age_seconds=86400"
-msgstr ""
+msgstr "remove_unused_original_minimum_age_seconds=86400"
 
 #: ./doc/image-guide/ch_openstack_images.xml513(td)
 msgid ""
 "(IntOpt) Unused unresized base images younger than this are not removed. "
 "Default is 86400 seconds, or 24 hours."
-msgstr ""
+msgstr "（整数型），未使用以及未修改大小的镜像，低于这个值，不删除。默认是86400秒，或24小时。"
 
 #: ./doc/image-guide/ch_openstack_images.xml518(td)
 msgid "remove_unused_resized_minimum_age_seconds=3600"
-msgstr ""
+msgstr "remove_unused_resized_minimum_age_seconds=3600"
 
 #: ./doc/image-guide/ch_openstack_images.xml519(td)
 msgid ""
 "(IntOpt) Unused resized base images younger than this are not removed. "
 "Default is 3600 seconds, or one hour."
-msgstr ""
+msgstr "（整数型）未使用且大小改变了的基础镜像镜像文件，低于这个值的不删除。默认是3600秒，或1小时。"
 
 #: ./doc/image-guide/ch_openstack_images.xml525(para)
 msgid ""
 "To see how the settings affect the deletion of a running instance, check the"
 " directory where the images are stored:"
-msgstr ""
+msgstr "查看以上设置对被删除的虚拟机镜像文件的影响，查看以下目录："
 
 #: ./doc/image-guide/ch_openstack_images.xml529(para)
 msgid ""
 "In the <filename>/var/log/compute/compute.log</filename> file, look for the "
 "identifier:"
-msgstr ""
+msgstr "在  <filename>/var/log/compute/compute.log</filename> 文件，查看以下部分日志。"
 
 #: ./doc/image-guide/ch_openstack_images.xml536(para)
 msgid ""
@@ -3271,7 +3271,7 @@ msgid ""
 " value to a shorter time period in <filename>nova.conf</filename>. Restart "
 "all nova services after changing a setting in "
 "<filename>nova.conf</filename>."
-msgstr ""
+msgstr "由于 <literal>remove_unused_original_minimum_age_seconds</literal> 的值默认是86400秒（24小时），你可以等待这个时间间隔来查看基础镜像是否被删除，或者在  <filename>nova.conf</filename> 内设置更短的时间间隔。修改  <filename>nova.conf</filename> 后，重启所有的 nova 服务。"
 
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
@@ -3291,7 +3291,7 @@ msgid ""
 "Creating a new image is a step done outside of your OpenStack installation. "
 "You create the new image manually on your own system and then upload the "
 "image to your cloud."
-msgstr ""
+msgstr "创建新的虚拟机镜像是安装完 OpenStack 意外的事情。你在你的系统上手工创建新虚拟机镜像并且上传到云。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml16(para)
 msgid ""
@@ -3300,7 +3300,7 @@ msgid ""
 "tool. You can use KVM for this. Or, if you have a GUI desktop virtualization"
 " tool (such as, VMware Fusion and VirtualBox), you can use that instead and "
 "just convert the file to raw once you're done."
-msgstr ""
+msgstr "要创建新的虚拟机镜像，你需要虚拟机系统的安装 CD 或 DVD ISO 文件。你还需要虚拟化工具，你可以使用KVM。或者如果你有图形的桌面虚拟化工具（例如， VMware Fusion 或者 VirtualBox），你可以使用它替代KVM，只是在你完成后需要转换镜像格式为裸格式。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml22(para)
 msgid ""
@@ -3314,11 +3314,11 @@ msgid ""
 "space.org\">SPICE</link> protocol. We'll use the VNC protocol here, since "
 "you're more likely to be able to find a VNC client that works on your local "
 "desktop."
-msgstr ""
+msgstr "当你创建虚拟机镜像的时候，你需要连接到虚拟化层的图形控制台，图形控制台作为虚拟机的显示器并且使你能使用键盘和鼠标和虚拟机操作系统安装程序进行交互。KVM 通过<link href=\"https://en.wikipedia.org/wiki/Virtual_Network_Computing\">VNC</link>（虚拟网络计算）协议或者更新的 <link href=\"http://spice-space.org\">SPICE</link> 协议来完成图形控制台的显示。这里我们使用VNC，因此你将在你的本地桌面更加可能使用 VNC 客户端。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml35(title)
 msgid "Verify the libvirt default network is running"
-msgstr ""
+msgstr "检查 libvirt 默认网络是否运行"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml36(para)
 msgid ""
@@ -3328,21 +3328,21 @@ msgid ""
 "network will create a Linux bridge (usually called "
 "<literal>virbr0</literal>), iptables rules, and a dnsmasq process that will "
 "serve as a DHCP server."
-msgstr ""
+msgstr "在使用 libvirt 启动虚拟机前，检查它的  \"default\" 默认网络是否启动。虚拟机要连接到外网，它的默认网络必须激活。启动 libvirt 默认网络将创建 linux 网桥( 通常名称是<literal>virbr0</literal> )，iptables 规则，以及dhcp服务器进程 dnsmasq 。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml43(para)
 msgid ""
 "To verify that the libvirt \"default\" network is enabled, use the "
 "<placeholder-1/> command and verify that the \"default\" network is active:"
-msgstr ""
+msgstr "检查  \"default\"  默认网络是否激活，使用 <placeholder-1/> 命令并查看 \"default\" 网络是否是启用状态。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml50(para)
 msgid "If the network is not active, start it by doing:"
-msgstr ""
+msgstr "如果网络未激活，输入以下命令："
 
 #: ./doc/image-guide/ch_creating_images_manually.xml54(title)
 msgid "Use the virt-manager X11 GUI"
-msgstr ""
+msgstr "使用  virt-manager X11 图形界面"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml55(para)
 msgid ""
@@ -3352,7 +3352,7 @@ msgid ""
 "Fedora-based and Debian-based systems. This GUI has an embedded VNC client "
 "in it that will let you view and interact with the guest's graphical "
 "console."
-msgstr ""
+msgstr "如果你计划创建虚拟机镜像的机器能运行 X11 程序，最简单的方法是使用  <placeholder-1/> 图形界面，可以在 Fedora 系列和 Debian 系列系统上安装 <literal>virt-manager</literal> 软件包。它的图形界面内含 VNC 客户端使你能和虚拟机图形界面进行交互。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml63(para)
 msgid ""
@@ -3362,38 +3362,38 @@ msgid ""
 "libvirt, you typically need to be root to access it. If you can ssh directly"
 " in as root (or with a user that has permissions to interact with libvirt), "
 "do:<placeholder-2/>"
-msgstr ""
+msgstr "如果你在无图形的服务器上创建虚拟机镜像，但在你本地机器有 X server启动，你可以用  <placeholder-1/> ，通过使用ssh X11 转发访问图形界面。因为 virt-manager 和 libvirt 直接交互，你通常需要 root 权限来访问。如果你能直接以 root 用户（或者有权限和livbirt交互的用户） ssh 访问服务器，使用以下命令：<placeholder-2/>"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml74(para)
 msgid ""
 "The <literal>-X</literal> flag passed to ssh will enable X11 forwarding over"
 " ssh. If this does not work, try replacing it with the <literal>-Y</literal>"
 " flag."
-msgstr ""
+msgstr " <literal>-X</literal>  参数传递给 ssh 将启用 ssh  X11转发。如果不能工作，尝试用 -Y 参数。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml71(para)
 msgid ""
 "If the account you use to ssh into your server does not have permissions to "
 "run libvirt, but has sudo privileges, do:<placeholder-1/><placeholder-2/>"
-msgstr ""
+msgstr "如果你的账户没有权限和libirt交互，但是有 sudo 权限，运行：<placeholder-1/><placeholder-2/>"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml79(para)
 msgid ""
 "Click the \"New\" button at the top-left and step through the instructions. "
 "<placeholder-1/>You will be shown a series of dialog boxes that will allow "
 "you to specify information about the virtual machine."
-msgstr ""
+msgstr "点击 左上方的   \"New\" 按钮并跟随接下来的向导。<placeholder-1/>，你将看到一系列允许你指定虚拟机的详细信息的的对话框。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml88(para)
 msgid ""
 "When using qcow2 format images you should check the option 'customize before"
 " install', go to disk properties and explicitly select the qcow2 format. "
 "This ensures the virtual machine disk size will be correct."
-msgstr ""
+msgstr "使用 qcow2 格式镜像你应该勾选  'customize before install'，然后跳转到磁盘属性并且确保明确选择了qcow2格式。这将保证虚拟机磁盘大小正确。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml96(title)
 msgid "Use virt-install and connect by using a local VNC client"
-msgstr ""
+msgstr "使用 virt-install 且使用本地 VNC 客户端连接"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml98(para)
 msgid ""
@@ -3403,7 +3403,7 @@ msgid ""
 "<placeholder-1/> tool to boot the virtual machine through libvirt and "
 "connect to the graphical console from a VNC client installed on your local "
 "machine."
-msgstr ""
+msgstr "如果你不想使用  virt-manager （例如，你不想安装依赖包到你的服务器，你本地机器没有 X server 或者 X11 转发工作不正常），你可以使用 <placeholder-1/> 工具通过 Libvirt 启动虚拟机，然后使用本地 VNC 客户端连接到虚拟机的图形控制台。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml106(para)
 msgid ""
@@ -3416,14 +3416,14 @@ msgid ""
 "href=\"http://sourceforge.net/projects/chicken/\">Chicken</link> (Mac OS X),"
 " <link href=\"http://userbase.kde.org/Krdc\">Krde</link> (KDE), and <link "
 "href=\"http://projects.gnome.org/vinagre/\">Vinagre</link> (GNOME)."
-msgstr ""
+msgstr "因为 VNC 是一个标准协议，目前有好几个客户端实现了 VNC 规范，包括<link href=\"http://sourceforge.net/apps/mediawiki/tigervnc/index.php?title=Welcome_to_TigerVNC\">TigerVNC</link> (多平台支持), <link href=\"http://tightvnc.com/\">TightVNC</link> (多平台支持), <link href=\"http://realvnc.com/\">RealVNC</link> (多平台支持), <link href=\"http://sourceforge.net/projects/chicken/\">Chicken</link> (Mac OS X), <link href=\"http://userbase.kde.org/Krdc\">Krde</link> (KDE), and <link href=\"http://projects.gnome.org/vinagre/\">Vinagre</link> (GNOME)."
 
 #: ./doc/image-guide/ch_creating_images_manually.xml121(para)
 msgid ""
 "The following example shows how to use the <placeholder-1/> command to "
 "create an empty image file <placeholder-2/> command to start up a virtual "
 "machine using that image file. As root:"
-msgstr ""
+msgstr "以下示例展示了额如何使用 <placeholder-1/> 命令创建空镜像文件 <placeholder-2/> 命令使用创建的空镜像文件启动虚拟机。以 root 用户执行："
 
 #: ./doc/image-guide/ch_creating_images_manually.xml155(para)
 msgid ""
@@ -3432,7 +3432,7 @@ msgid ""
 "<literal>virbr0</literal>. There is a dnsmasq process managed by libvirt "
 "that will hand out an IP address on the 192.168.122.0/24 subnet, and libvirt"
 " has iptables rules for doing NAT for IP addresses on this subnet."
-msgstr ""
+msgstr "当使用 libvirt  <literal>default</literal> 默认网络时，libvirt 将连接虚拟机到  <literal>virbr0</literal> 网桥。libvirt管理下的 dnsmasq 进程将处理  192.168.122.0/24 子网上的 IP地址。且 libvirt 有 iptables 规则负责这个子网 NAT 转发。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml138(para)
 msgid ""
@@ -3446,21 +3446,21 @@ msgid ""
 "launch a VNC client automatically nor try to display the text console (--no-"
 "autoconsole). Finally, libvirt will attempt to optimize the configuration "
 "for a Linux guest running a RHEL 6.x distribution."
-msgstr ""
+msgstr "KVM 虚拟化使用 <literal>centos-6.4</literal> 名称，1024MB内存启动虚拟机。虚拟机还有一个关联文件/data/CentOS-6.4-x86_64-netinstall.iso 的虚拟的 CD-ROM，并拥有 10GB 的qcow2格式的硬盘，硬盘文件位置在 /data/centos-6.4.qcow2。虚拟机配置了网络使用 libvirt 的默认网络。且 VNC 服务监听所有的网卡，并且 libvirt 不会自动启动 VNC 客户端也不会显示字符界面控制台（--no-autoconsole）。最后，libvirt 将尝试以RHEL 6.x 发行版来优化虚拟机配置。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml164(para)
 msgid ""
 "Run the <placeholder-1/> command to see a range of allowed <literal>--os-"
 "variant</literal> options."
-msgstr ""
+msgstr "运行  <placeholder-1/>命令查看 <literal>--os-variant</literal> 允许的选项范围。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml168(replaceable)
 msgid "vm-name"
-msgstr ""
+msgstr "vm-name"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml167(para)
 msgid "Use the <placeholder-1/> command to get the VNC port number."
-msgstr ""
+msgstr "使用 <placeholder-1/> 命令获取 VNC 端口号。"
 
 #: ./doc/image-guide/ch_creating_images_manually.xml172(para)
 msgid ""
@@ -3469,7 +3469,7 @@ msgid ""
 "<literal>5901</literal>. You should be able to connect a VNC client running "
 "on your local machine to display :1 on the remote machine and step through "
 "the installation process."
-msgstr ""
+msgstr "在上面的示例中，虚拟机 <literal>centos-6.4</literal> 使用 VNC 显示器 <literal>:1</literal>，对应的 TCP 端口是  <literal>5901</literal>。你应该使用本地 VNC 客户端连接到远程服务器的 ：1 显示器并且完成安装步骤。"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: ./doc/image-guide/ch_creating_images_manually.xml0(None)
