@@ -12,8 +12,6 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-# author: Christian Berendt <berendt@b1-systems.de>
-
 import argparse
 import logging
 import os
