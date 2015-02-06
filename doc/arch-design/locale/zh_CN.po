@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-02-04 21:16+0000\n"
-"PO-Revision-Date: 2015-02-05 03:00+0000\n"
+"POT-Creation-Date: 2015-02-05 14:22+0000\n"
+"PO-Revision-Date: 2015-02-05 15:04+0000\n"
 "Last-Translator: johnwoo_lee <lijiangsheng1@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -1167,7 +1167,7 @@ msgid ""
 "automatically build new instances in another. Documenting specific examples "
 "will help users understand how to operate the cloud, thereby reducing calls "
 "and tickets filed with the help desk."
-msgstr ""
+msgstr "用户必须自行去操作云基础设施以及在环境中部署新的资源。用户查阅用户文档来操作云，这样的话能够给出准确的文档就很重要。举例来说，默认情况下OpenStack自动的调度实例到某个计算节点，但是，当多个region均可用时，就得用户自行决定在哪个region中调度新的实例。GUI界面显示的是用户配置的第一个region，而API和CLI工具若不指定合法的region就不会执行。因此提供文档很重要，文档中要描述region的层次以及特定region的配额等，如果用户在一个region中达到了配额的上限，OpenStack是不会自动到另外的region中构建新的实例的。文档中描述特别的例子将会帮助用户理解如何操作云，因此而减少电话呼救和现场维修。"
 
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
@@ -1198,7 +1198,7 @@ msgid ""
 " important design decision is how to configure the storage. It can be "
 "configured as a single shared pool or separate pools, depending on the user "
 "and technical requirements."
-msgstr ""
+msgstr "此图一个多区域OpenStack架构的高度抽象示意图。每个站点都是一个OpenStack云，但是根据架构的需要可能是不同的版本。例如，如果第二个站点的使命就是替代第一个站点，他们就可以不同。另为通用的设计是一个私有的OpenStack云是完全复制的站点将用来做高可用或灾难恢复。最重要的设计决定是如何配置存储，既可以配置为单个共享池也可以是分离的池，这取决于用户和技术的需求。"
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml25(title)
 msgid "OpenStack services architecture"
@@ -1215,7 +1215,7 @@ msgid ""
 " smaller in scope, where a region is a single rack within a data center or "
 "even a single blade chassis, with multiple regions existing in adjacent "
 "racks in the same data center."
-msgstr ""
+msgstr "OpenStack认证服务，用于所有其他OpenStack组件的验证，服务端点的目录，支持所有region。一个region是用于一组OpenStack彼此接近的服务的逻辑构造。region的概念颇为灵活，它可以包含地理位置很远的OpenStack服务端点，也可以是很小的范围，region甚至可以是一个数据中心的机柜，或是一个刀片中心，甚至在同一个数据相邻的机柜都拥有多个region。"
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml36(para)
 msgid ""
@@ -1229,7 +1229,7 @@ msgid ""
 "resources residing on the same storage network. Like the OpenStack Compute "
 "service, the OpenStack Block Storage service also supports the availability "
 "zone construct which can be used to subdivide storage resources."
-msgstr ""
+msgstr "多数的OpenStack组件被设计为运行在单个region上下文中。OpenStack计算服务被设计为在一个region中管理计算资源，支持使用可用区域和单元来往下拆分。OpenStack网络服务可用于在同一广播域中或者说相互连接的交换机来管理网路资源。OpenStack块存储服务控制单一region中的存储资源，且这些资源须在统一存储网络中。和OpenStack计算服务一样，OpenStack块存储服务同样支持可用区域的构造，用于往下拆分存储资源。"
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml48(para)
 msgid ""
@@ -1308,7 +1308,7 @@ msgid ""
 "technology for an application that transmits a large amount of small packets"
 " could add excessive latency or overhead to each packet if not configured "
 "properly."
-msgstr ""
+msgstr "当连接多个region到一起时需要考虑很多设计因素。覆盖网络技术的选择决定了网络包如何在region之间传输，以及如何给应用赋予逻辑网络和地址。如果有安全或监管需求，还得使用加密技术实现region之间的安全传输。在region内部网络，租户网络的覆盖网络技术亦同等重要，网络覆盖技术和应用生成或接受的网络流量可以是互补的或者交叉目的。例如，使用覆盖技术为一个应用，而中间传输使用了大量的小网络包，如果配置不当会引起大量的延迟或增大每个包的开销。"
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml102(title)
 #: ./doc/arch-design/introduction/section_methodology.xml166(term)
@@ -1327,14 +1327,14 @@ msgid ""
 "(RTO). How quickly can the recovery from a fault be completed, will "
 "determine how often the replication of data be required. Ensure that enough "
 "storage is allocated to support the data protection strategy."
-msgstr ""
+msgstr "对于一个多区域OpenStack安装架构来说，依赖于很多的因素，其中一个主要的依赖需要考虑的就是存储。当设计存储系统时，存储的机制需要决定。一旦存储的类型决定了，如何访问就成了重点。例如，我们建议存储使用专用网络。另外一个需要考虑的是如果配置存储来保护数据。例如恢复点目标(RPO)和恢复时间目标(RTO),如何快速的从完全失效中恢复，将决定复制数据如何频繁的需求。确保有足够的存储来分配，以支持数据保护策略。"
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml115(para)
 msgid ""
 "Networking decisions include the encapsulation mechanism that will be used "
 "for the tenant networks, how large the broadcast domains should be, and the "
 "contracted SLAs for the interconnects."
-msgstr ""
+msgstr "网络决定包括用于租户网络的封装机制，广播域有多大，以及内部联通的服务水平协议。"
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml8(title)
 #: ./doc/arch-design/network_focus/section_user_requirements_network_focus.xml8(title)
@@ -1434,14 +1434,14 @@ msgid ""
 "need to run in multiple cloud environments. Often in a multi-site deployment"
 " the same workload will need to work identically in more than one physical "
 "location."
-msgstr ""
+msgstr "预期的工作负荷是需要被捕获到指导决策的关键要求。理解负载在预想的多区域环境和用例上下文很重要。另外一个考虑负载的路径是想它怎么使用系统。一个负载可以是单个的应用或一组共同工作的应用。它也可以是在多个region中运行的多份应用的复制。通常在多区域部署的相同负载需要在多个不同物理地点运行相同的工作。"
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml59(para)
 msgid ""
 "This multi-site scenario likely includes one or more of the other scenarios "
 "in this book with the additional requirement of having the workloads in two "
 "or more locations. The following are some possible scenarios:"
-msgstr ""
+msgstr "此多区域场景在本书中有一个或多个其他类似的场景，另外在两个或多个地点的额外负载需求。下面是可能一样的场景："
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml63(para)
 msgid ""
@@ -1611,14 +1611,14 @@ msgid ""
 "Outages can cause loss of partial or full functionality of a site. "
 "Strategies should be implemented to understand and plan for recovery "
 "scenarios."
-msgstr ""
+msgstr "中断会引起站点的部分或全部功能的尚失。理解并实现恢复策略，且要规划恢复方案。"
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml171(para)
 msgid ""
 "The deployed applications need to continue to function and, more "
 "importantly, consideration should be taken of the impact on the performance "
 "and reliability of the application when a site is unavailable."
-msgstr ""
+msgstr "已经部署的应用需要持续的服务，且更加重要的，需要考虑由于站点的不可用带来的性能冲击和应用的可靠性。"
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml178(para)
 msgid ""
@@ -1626,14 +1626,14 @@ msgid ""
 " and data between the sites when a site goes down. If this causes queues to "
 "start building up, consider how long these queues can safely exist until "
 "something explodes."
-msgstr ""
+msgstr "当一个站点失效时，理解在站点之间的对象和数据复制会发生什么很重要。如果这导致队列开始建立，要考虑到多长时间这些队列到什么事情爆炸发生之前可安全完成。"
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml185(para)
 msgid ""
 "Ensure determination of the method for resuming proper operations of a site "
 "when it comes back online after a disaster. We recommend you architect the "
 "recovery to avoid race conditions."
-msgstr ""
+msgstr "确保在灾难发生之后，当业务恢复正常之前的这段时间内，恢复站点的正确操作的几种办法要决定下来。我们建议用户恢复的架构要避免竞争状态。"
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml192(title)
 msgid "Compliance and geo-location"
@@ -1669,7 +1669,7 @@ msgid ""
 "A common requirement is to define different roles for the different cloud "
 "administration functions. An example would be a requirement to segregate the"
 " duties and permissions by site."
-msgstr ""
+msgstr "一个常见的需求是为不同的云管理功能定义不同的角色。此例即是站点需要合并职责和权限的需求。"
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml212(title)
 msgid "Authentication between sites"
@@ -1933,7 +1933,7 @@ msgid ""
 "An external load balancing service was used and not the LBaaS in OpenStack "
 "because the solution in OpenStack is not redundant and does not have any "
 "awareness of geo location."
-msgstr ""
+msgstr "一个额外的负载均衡服务将被使用，而不是OpenStack的LBaaS,因为OpenStack的LBaaS在OpenStack中不是冗余的解决方案而且不具有地理位置的任何特征。"
 
 #: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml193(title)
 msgid "Location-local service"
