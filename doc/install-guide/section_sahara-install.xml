@@ -101,6 +101,28 @@ max_allowed_packet = 256M</programlisting>
         </step>
       </substeps>
     </step>
+   <step>
+    <para>To create the database, complete these steps:</para>
+      <substeps>
+        <step>
+          <para>Use the database access client to connect to the database server as the <literal>root</literal> user:</para>
+          <screen><prompt>$</prompt> <userinput>mysql -u root -p</userinput></screen>
+        </step>
+        <step>
+          <para>Create the <literal>sahara</literal> database:</para>
+          <screen><userinput>CREATE DATABASE sahara;</userinput></screen>
+        </step>
+        <step>
+          <para>Grant proper access to the <literal>sahara</literal> database:</para>
+          <screen><userinput>GRANT ALL PRIVILEGES ON sahara.* TO 'sahara'@'localhost' \ IDENTIFIED BY ' <replaceable>SAHARA_DBPASS</replaceable>';</userinput>
+          <userinput>GRANT ALL PRIVILEGES ON sahara.* TO 'sahara'@'%' \ IDENTIFIED BY '<replaceable>SAHARA_DBPASS</replaceable>';</userinput></screen>
+          <para>Replace <replaceable>SAHARA_DBPASS</replaceable> with a suitable password.</para>
+        </step>
+        <step>
+          <para>Exit the database access client.</para>
+        </step>
+      </substeps>
+    </step>
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu"><para>Create database schema:
       <screen><prompt>#</prompt> <userinput>sahara-db-manage --config-file /etc/sahara/sahara.conf upgrade head</userinput></screen>
     </para></step>
