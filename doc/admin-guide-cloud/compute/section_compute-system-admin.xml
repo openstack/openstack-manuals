@@ -341,6 +341,107 @@ local0.error    @@172.20.1.43:1024</programlisting>
                 daemon. Error-level log messages on the compute hosts should now be sent to your log
                 server.</para>
         </simplesect>
+        <simplesect>
+            <title>Serial console</title>
+            <para>The serial console provides a useful way to examine kernel
+                output and other system messages during troubleshooting in cases
+                where an instance lacks network connectivity.</para>
+            <para>Releases prior to Juno only support read-only access via the
+                serial console using the <command>os-GetSerialOutput</command>
+                server action. Most cloud images enable this feature by
+                default. For more information, see
+                <link linkend="section_compute-empty-log-output">Troubleshoot
+                Compute</link>.</para>
+            <para>Juno and later releases support read-write access via the
+                serial console using the <command>os-GetSerialConsole</command>
+                server action. This feature also requires Python websocket to
+                access the serial console.</para>
+            <procedure>
+                <title>To configure read-write serial console access</title>
+                <para>On a compute node, edit the
+                    <filename>/etc/nova/nova.conf</filename> file and complete
+                    the following actions:</para>
+                <step>
+                    <para>In the <parameter>[serial_console]</parameter> section,
+                        enable the serial console:</para>
+                    <programlisting language="ini">[serial_console]
+...
+enabled = true</programlisting>
+                </step>
+                <step>
+                    <para>In the same section, configure the serial console proxy
+                        similar to graphical console proxies:</para>
+                    <programlisting language="ini">[serial_console]
+...
+base_url = ws://<replaceable>controller</replaceable>:6083/
+listen = 0.0.0.0
+proxyclient_address = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable></programlisting>
+                    <para>The <option>base_url</option> option specifies the base
+                        URL that clients receive from the API upon requesting a
+                        serial console. Typically, this refers to the hostname of
+                        the controller node.</para>
+                    <para>The <option>listen</option> option specifies on
+                        which network interface the
+                        <systemitem class="service">nova-compute</systemitem>
+                        listens for virtual console connections. Typically, this
+                        uses 0.0.0.0 to enable listening on all interfaces.</para>
+                    <para>The <option>proxyclient_address</option> specifies
+                        to which network interface the proxy should connect.
+                        Typically, this refers to the IP address of the
+                        management interface.</para>
+                </step>
+            </procedure>
+            <para>Enabling read-write serial console access causes Compute
+                to add serial console information to the Libvirt XML file for
+                the instance. For example:</para>
+            <programlisting language="xml">&lt;console type='tcp'>
+  &lt;source mode='bind' host='127.0.0.1' service='10000'/>
+  &lt;protocol type='raw'/>
+  &lt;target type='serial' port='0'/>
+  &lt;alias name='serial0'/>
+&lt;/console></programlisting>
+            <procedure>
+                <title>To access the serial console on an instance</title>
+                <step>
+                    <para>Use the <command>nova get-serial-proxy</command>
+                        command to retrieve the websocket URL for the
+                        instance serial console:</para>
+                    <screen><prompt>$</prompt> <userinput>nova get-serial-proxy <replaceable>INSTANCE_NAME</replaceable></userinput>
+<computeroutput>+--------+-----------------------------------------------------------------+
+| Type   | Url                                                             |
++--------+-----------------------------------------------------------------+
+| serial | ws://127.0.0.1:6083/?token=18510769-71ad-4e5a-8348-4218b5613b3d |
++--------+-----------------------------------------------------------------+</computeroutput></screen>
+                    <para>Alternatively, use the API directly:</para>
+                    <screen><prompt>$</prompt> <userinput>curl -i 'http://&lt;controller&gt;:8774/v2/&lt;tenant_uuid>/servers/&lt;instance_uuid>/action' \
+  -X POST \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json" \
+  -H "X-Auth-Project-Id: &lt;project_id>" \
+  -H "X-Auth-Token: &lt;auth_token>" \
+  -d '{"os-getSerialConsole": {"type": "serial"}}'</userinput></screen>
+                </step>
+                <step>
+                    <para>Use Python websocket with the URL to generate
+                        <literal>.send</literal>, <literal>.recv</literal>,
+                        and <literal>.fileno</literal> methods for serial
+                        console access. For example:</para>
+                    <programlisting language="python">import websocket
+ws = websocket.create_connection(
+    'ws://127.0.0.1:6083/?token=18510769-71ad-4e5a-8348-4218b5613b3d',
+    subprotocols=['binary', 'base64'])</programlisting>
+                    <para>Alternatively, use a Python websocket client such as
+                        <link xlink:href="https://github.com/larsks/novaconsole/"
+                        />.</para>
+                </step>
+            </procedure>
+            <note>
+                <para>Enabling the serial console disables typical instance logging
+                    via the <command>nova console-log</command> command.
+                    Kernel output and other system messages become invisible
+                    unless actively viewing the serial console.</para>
+            </note>
+        </simplesect>
     </section>
     <xi:include href="section_compute-rootwrap.xml"/>
     <xi:include href="section_compute-configure-migrations.xml"/>
