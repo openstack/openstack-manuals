@@ -10,48 +10,71 @@
   xml:id="technical-considerations-general-purpose">
     <?dbhtml stop-chunking?>
     <title>Technical considerations</title>
-    <para>When designing a general purpose cloud, there is an implied
-        requirement to design for all of the base services generally
-        associated with providing Infrastructure-as-a-Service:
-        compute, network and storage. Each of these services have
-        different resource requirements. As a result, it is important
-        to make design decisions relating directly to the service
-        currently under design, while providing a balanced
-        infrastructure that provides for all services.</para>
-    <para>When designing an OpenStack cloud as a general purpose
-        cloud, the hardware selection process can be lengthy and
-        involved due to the sheer mass of services which need to be
-        designed and the unique characteristics and requirements of
-        each service within the cloud. Hardware designs need to be
-        generated for each type of resource pool; specifically,
-        compute, network, and storage. In addition to the hardware
-        designs, which affect the resource nodes themselves, there are
-        also a number of additional hardware decisions to be made
-        related to network architecture and facilities planning. These
-        factors play heavily into the overall architecture of an
-        OpenStack cloud.</para>
+    <para>General purpose clouds are often expected to
+      include these base services:</para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Compute
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Network
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Storage
+          </para>
+        </listitem>
+      </itemizedlist>
+    <para>Each of these services has different resource requirements.
+        As a result, you must make design decisions relating directly
+        to the service, as well as provide a balanced infrastructure for all services.</para>
+    <para>Consider the unique aspects of each service that requires design since
+        individual characteristics and service mass can impact the hardware selection
+         process. Hardware designs are generated for each type of the
+        following resource pools:</para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Compute
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Network
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Storage
+          </para>
+        </listitem>
+      </itemizedlist>
+    <para>Hardware decisions are also made in relation to network architecture
+        and facilities planning. These factors play heavily into
+        the overall architecture of an OpenStack cloud.</para>
+
     <section xml:id="designing-compute-resources-tech-considerations">
-        <title>Designing compute resources</title>
-    <para>We recommend you design compute resources as pools of
-        resources which will be addressed on-demand. When designing
-        compute resource pools, a number of factors impact your design
-        decisions. For example, decisions related to processors,
-        memory, and storage within each hypervisor are just one
-        element of designing compute resources. In addition, it is
-        necessary to decide whether compute resources will be provided
-        in a single pool or in multiple pools.</para>
-    <para>To design for the best use of available resources by
-        applications running in the cloud, we recommend you design
-        more than one compute resource pool. Each independent resource
-        pool should be designed to provide service for specific
-        flavors of instances or groupings of flavors. For the purpose
-        of this book, "instance" refers to a virtual machine and the
-        operating system running on the virtual machine. Designing
-        multiple resource pools helps to ensure that, as instances are
+      <title>Designing compute resources</title>
+      <para>When designing compute resource pools, a number of factors
+        can impact your design decisions.
+        For example, decisions related to processors, memory, and
+        storage within each hypervisor are just one element of designing
+        compute resources. In addition, decide whether to provide compute
+        resources in a single pool or in multiple pools.
+        We recommend the compute design allocates multiple pools of resources to
+        be addressed on-demand.</para>
+    <para>A compute design that allocates multiple pools of resources makes best
+        use of application resources running in the cloud.
+        Each independent resource pool should be designed to provide service for specific
+        flavors of instances or groupings of flavors.
+        Designing multiple resource pools helps to ensure that, as instances are
         scheduled onto compute hypervisors, each independent node's
-        resources will be allocated in a way that makes the most
-        efficient use of available hardware. This is commonly referred
-        to as bin packing.</para>
+        resources will be allocated to make the most efficient use of available
+        hardware. This is commonly referred to as bin packing.</para>
     <para>Using a consistent hardware design among the nodes that are
         placed within a resource pool also helps support bin packing.
         Hardware nodes selected for being a part of a compute resource
@@ -59,15 +82,14 @@
         layout. By choosing a common hardware design, it becomes
         easier to deploy, support and maintain those nodes throughout
         their life cycle in the cloud.</para>
-    <para>OpenStack provides the ability to configure overcommit
-        ratio&mdash;the ratio of virtual resources available for allocation
-        to physical resources present&mdash;for both CPU and memory. The
-        default CPU overcommit ratio is 16:1 and the default memory
-        overcommit ratio is 1.5:1. Determine the tuning of the
-        overcommit ratios for both of these options during the design
-        phase, as this has a direct impact on the hardware layout of
-        your compute nodes.</para>
-    <para>As an example, consider that a m1.small instance uses 1
+    <para>An <firstterm>overcommit ratio</firstterm> is the ratio of available
+        virtual resources, compared to the available physical resources.
+        OpenStack is able to configure the overcommit ratio for CPU and memory.
+        The default CPU overcommit ratio is 16:1 and the default memory
+        overcommit ratio is 1.5:1. Determining the tuning of the overcommit
+        ratios for both of these options during the design phase is important
+        as it has a direct impact on the hardware layout of your compute nodes.</para>
+    <para>For example, consider a m1.small instance uses 1
         vCPU, 20&nbsp;GB of ephemeral storage and 2,048&nbsp;MB of RAM. When
         designing a hardware node as a compute resource pool to
         service instances, take into consideration the number of
@@ -83,77 +105,97 @@
         required to service operating system and service needs.</para>
     <para>Processor selection is an extremely important consideration
         in hardware design, especially when comparing the features and
-        performance characteristics of different processors. Some
-        newly released processors include features specific to
-        virtualized compute hosts including hardware assisted
-        virtualization and technology related to memory paging (also
-        known as EPT shadowing). These features have a tremendous
-        positive impact on the performance of virtual machines running
-        in the cloud.</para>
-    <para>In addition to the impact on actual compute services, it is
-        also important to consider the compute requirements of
+        performance characteristics of different processors. Processors
+        can include features specific to virtualized compute hosts including
+        hardware assisted virtualization and technology related to memory paging (also
+        known as EPT shadowing). These types of features can have a significant impact on the
+        performance of your virtual machine running in the cloud.</para>
+    <para>It is also important to consider the compute requirements of
         resource nodes within the cloud. Resource nodes refer to
-        non-hypervisor nodes providing controller, object storage,
-        block storage, or networking services in the cloud. The number
-        of processor cores and threads has a direct correlation to the
+        non-hypervisor nodes providing the following in the cloud:</para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Controller
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Object storage
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Block storage
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Networking services
+          </para>
+        </listitem>
+      </itemizedlist>
+    <para>The number of processor cores and threads has a direct correlation to the
         number of worker threads which can be run on a resource node.
-        It is important to ensure sufficient compute capacity and
-        memory is planned on resource nodes.</para>
+        As a result, you must make design decisions relating directly to
+        the service, as well as provide a balanced infrastructure for all services.</para>
     <para>Workload profiles are unpredictable in a general purpose
-        cloud, so it may be difficult to design for every specific use
-        case in mind. Additional compute resource pools can be added
-        to the cloud at a later time, so this unpredictability should
-        not be a problem. In some cases, the demand on certain
-        instance types or flavors may not justify an individual
-        hardware design. In either of these cases, start by providing
-        hardware designs which will be capable of servicing the most
-        common instance requests first, looking to add additional
-        hardware designs to the overall architecture in the form of
-        new hardware node designs and resource pools as they become
-        justified at a later time.</para></section>
+        cloud. Additional compute resource pools can be added to the cloud
+        later, reducing the stress of unpredictability. In some cases, the demand on certain
+        instance types or flavors may not justify individual
+        hardware design. In either of these cases, initiate the design by
+        allocating hardware designs that are capable of servicing the most
+        common instances requests. If you are looking to add additional
+        hardware designs to the overall architecture, this can be done at
+        a later time.</para>
+    </section>
+
     <section xml:id="designing-network-resources-tech-considerations">
-        <title>Designing network resources</title>
-    <para>An OpenStack cloud traditionally has multiple network
+      <title>Designing network resources</title>
+      <para>OpenStack clouds traditionally have multiple network
         segments, each of which provides access to resources within
-        the cloud to both operators and tenants. In addition, the
-        network services themselves also require network communication
-        paths which should also be separated from the other networks.
-        When designing network services for a general purpose cloud,
-        it is recommended to plan for either a physical or logical
-        separation of network segments which will be used by operators
-        and tenants. It is further suggested to create an additional
-        network segment for access to internal services such as the
-        message bus and database used by the various cloud services.
-        Segregating these services onto separate networks helps to
-        protect sensitive data and also protects against unauthorized
-        access to services.</para>
-    <para>Based on the requirements of instances being serviced in the
-        cloud, the next design choice, which will affect your design is
-        the choice of network service which will be used to service
-        instances in the cloud. The choice between legacy networking (nova-network), as a
+        the cloud to both operators and tenants. The network services
+        themselves also require network communication paths which should
+        be separated from the other networks. When designing network services
+        for a general purpose cloud, we recommend planning for a physical or
+        logical separation of network segments that will be used by operators
+        and tenants. We further suggest the creation of an additional network
+        segment for access to internal services such as the message bus and
+        databse used by the various cloud services.
+        Segregating these services onto separate networks helps to protect
+        sensitive data and protects against unauthorized access to services.</para>
+    <para>Based on the requirements of instances being serviced in the cloud,
+        the choice of network service will be the next decision that affects
+        your design architecture.</para>
+    <para>The choice between legacy networking (nova-network), as a
         part of OpenStack Compute, and OpenStack Networking
-        (neutron), has tremendous implications and will have
-        a huge impact on the architecture and design of the cloud
+        (neutron), has a huge impact on the architecture and design of the cloud
         network infrastructure.</para>
-    <para>
-      The legacy networking (nova-network) service is primarily a
-      layer-2 networking service that functions in two modes. In
-      legacy networking, the two modes differ in their use of VLANs.
-      When using legacy networking in a flat network mode, all network
-      hardware nodes and devices throughout the cloud are connected to
-      a single layer-2 network segment that provides access to
-      application data.</para>
-    <para>When the network devices in the cloud support segmentation
-        using VLANs, legacy networking can operate in the second mode. In
-        this design model, each tenant within the cloud is assigned a
-        network subnet which is mapped to a VLAN on the physical
-        network. It is especially important to remember the maximum
-        number of 4096 VLANs which can be used within a spanning tree
-        domain. These limitations place hard limits on the amount of
-        growth possible within the data center. When designing a
-        general purpose cloud intended to support multiple tenants, it
-        is especially recommended to use legacy networking with VLANs, and
-        not in flat network mode.</para>
+      <variablelist>
+        <varlistentry>
+          <term>Legacy networking (nova-network)</term>
+            <listitem>
+              <para>The legacy networking (nova-network) service is primarily a
+                  layer-2 networking service that functions in two modes. In
+                  legacy networking, the two modes differ in their use of VLANs.
+                  When using legacy networking in a flat network mode, all network
+                  hardware nodes and devices throughout the cloud are connected to
+                  a single layer-2 network segment that provides access to
+                  application data.</para>
+              <para>When the network devices in the cloud support segmentation
+                  using VLANs, legacy networking can operate in the second mode. In
+                  this design model, each tenant within the cloud is assigned a
+                  network subnet which is mapped to a VLAN on the physical
+                  network. It is especially important to remember the maximum
+                  number of 4096 VLANs which can be used within a spanning tree
+                  domain. These limitations place hard limits on the amount of
+                  growth possible within the data center. When designing a
+                  general purpose cloud intended to support multiple tenants, we
+                  recommend the use of legacy networking with VLANs, and
+                  not in flat network mode.</para>
+            </listitem>
+        </varlistentry>
+      </variablelist>
     <para>Another consideration regarding network is the fact that
         legacy networking is entirely managed by the cloud operator;
         tenants do not have control over network resources. If tenants
@@ -161,18 +203,25 @@
         such as network segments and subnets, it will be necessary to
         install the OpenStack Networking service to provide network
         access to instances.</para>
-    <para>OpenStack Networking is a first class networking
-        service that gives full control over creation of virtual
-        network resources to tenants. This is often accomplished in
-        the form of tunneling protocols which will establish
-        encapsulated communication paths over existing network
-        infrastructure in order to segment tenant traffic. These
-        methods vary depending on the specific implementation, but
-        some of the more common methods include tunneling over GRE,
-        encapsulating with VXLAN, and VLAN tags.</para>
+      <variablelist>
+        <varlistentry>
+          <term>OpenStack Networking (neutron)</term>
+            <listitem>
+              <para>OpenStack Networking (neutron) is a first class networking
+                  service that gives full control over creation of virtual
+                  network resources to tenants. This is often accomplished in
+                  the form of tunneling protocols which will establish
+                  encapsulated communication paths over existing network
+                  infrastructure in order to segment tenant traffic. These
+                  methods vary depending on the specific implementation, but
+                  some of the more common methods include tunneling over GRE,
+                  encapsulating with VXLAN, and VLAN tags.</para>
+            </listitem>
+        </varlistentry>
+      </variablelist>
     <para>Initially, it is suggested to design at least three network
         segments, the first of which will be used for access to the
-        cloud's REST APIs by tenants and operators. This is generally
+        cloud's REST APIs by tenants and operators. This is
         referred to as a public network. In most cases, the controller
         nodes and swift proxies within the cloud will be the only
         devices necessary to connect to this network segment. In some
@@ -197,15 +246,19 @@
         resource nodes will need to communicate on this network
         segment, as will any network gateway services which allow
         application data to access the physical network outside of the
-        cloud.</para></section>
+        cloud.</para>
+    </section>
+
     <section xml:id="designing-storage-resources-tech-considerations">
       <title>Designing storage resources</title>
-    <para>OpenStack has two independent storage services to consider,
+      <para>OpenStack has two independent storage services to consider,
         each with its own specific design requirements and goals. In
         addition to services which provide storage as their primary
         function, there are additional design considerations with
         regard to compute and controller nodes which will affect the
-        overall cloud architecture.</para></section>
+        overall cloud architecture.</para> <!--Could there be room for more tech content here? A.S-->
+    </section>
+
     <section xml:id="designing-openstack-object-storage-tech-considerations">
         <title>Designing OpenStack Object Storage</title>
     <para>When designing hardware resources for OpenStack Object
@@ -217,30 +270,28 @@
         attached storage or an external chassis that holds a larger
         number of drives, the main goal is to maximize the storage
         available in each node.</para>
-    <para>It is not recommended to invest in enterprise class drives
+    <para>We do not recommended investing in enterprise class drives
         for an OpenStack Object Storage cluster. The consistency and
         partition tolerance characteristics of OpenStack Object
         Storage will ensure that data stays up to date and survives
         hardware faults without the use of any specialized data
         replication devices.</para>
-    <para>A great benefit of OpenStack Object Storage is the ability
-        to mix and match drives by utilizing weighting within the
-        swift ring. When designing your swift storage cluster, it is
-        recommended to make use of the most cost effective storage
+    <para>One of the benefits of OpenStack Object Storage is the ability
+        to mix and match drives by making use of weighting within the
+        swift ring. When designing your swift storage cluster, we
+        recommend making use of the most cost effective storage
         solution available at the time. Many server chassis on the
         market can hold 60 or more drives in 4U of rack space,
-        therefore it is recommended to maximize the amount of storage
-        per rack unit at the best cost per terabyte. Furthermore, the
-        use of RAID controllers is not recommended in an object
-        storage node.</para>
-    <para>In order to achieve this durability and availability of data
-        stored as objects, it is important to design object storage
-        resource pools in a way that provides the suggested
-        availability that the service can provide. Beyond designing at
-        the hardware node level, it is important to consider
-        rack-level and zone-level designs to accommodate the number of
-        replicas configured to be stored in the Object Storage service
-        (the default number of replicas is three). Each replica of
+        therefore we recommend maximizing the amount of storage
+        per rack unit at the best cost per terabyte. Furthermore, we
+        do not recommend the use of RAID controllers in an object storage
+        node.</para>
+    <para>To achieve durability and availability of data stored as objects
+        it is important to design object storage resource pools to ensure they can
+        provide the suggested availability. Considering rack-level and zone-level
+        designs to accommodate the number of replicas configured to be stored in the
+        Object Storage service (the defult number of replicas is three) is important
+        when designing beyond the hardware node level. Each replica of
         data should exist in its own availability zone with its own
         power, cooling, and network resources available to service
         that specific zone.</para>
@@ -248,79 +299,116 @@
         of requests does not hinder the performance of the cluster.
         The object storage service is a chatty protocol, therefore
         making use of multiple processors that have higher core counts
-        will ensure the IO requests do not inundate the server.</para></section>
+        will ensure the IO requests do not inundate the server.</para>
+    </section>
+
     <section xml:id="designing-openstack-block-storage">
       <title>Designing OpenStack Block Storage</title>
     <para>When designing OpenStack Block Storage resource nodes, it is
         helpful to understand the workloads and requirements that will
-        drive the use of block storage in the cloud. In a general
-        purpose cloud these use patterns are often unknown. It is
-        recommended to design block storage pools so that tenants can
-        choose the appropriate storage solution for their
-        applications. By creating multiple storage pools of different
+        drive the use of block storage in the cloud. We recommend designing
+        block storage pools so that tenants can choose appropriate storage
+        solutions for their applications. By creating multiple storage pools of different
         types, in conjunction with configuring an advanced storage
         scheduler for the block storage service, it is possible to
         provide tenants with a large catalog of storage services with
         a variety of performance levels and redundancy options.</para>
-    <para>In addition to directly attached storage populated in
-        servers, block storage can also take advantage of a number of
-        enterprise storage solutions. These are addressed via a plug-in
-        driver developed by the hardware vendor. A large number of
+    <para>Block storage also takes advantage of a number of enterprise storage
+        solutions. These are addressed via a plug-in driver developed by the
+        hardware vendor. A large number of
         enterprise storage plug-in drivers ship out-of-the-box with
         OpenStack Block Storage (and many more available via third
-        party channels). While a general purpose cloud would likely
-        use directly attached storage in the majority of block storage
-        nodes, it may also be necessary to provide additional levels
-        of service to tenants which can only be provided by enterprise
-        class storage solutions.</para>
-    <para>The determination to use a RAID controller card in block
-        storage nodes is impacted primarily by the redundancy and
-        availability requirements of the application. Applications
-        which have a higher demand on input-output per second (IOPS)
-        will influence both the choice to use a RAID controller and
-        the level of RAID configured on the volume. Where performance
-        is a consideration, it is suggested to make use of higher
-        performing RAID volumes. In contrast, where redundancy of
-        block storage volumes is more important it is recommended to
-        make use of a redundant RAID configuration such as RAID 5 or
+        party channels). General purpose clouds are more likely to use
+        directly attached storage in the majority of block storage nodes,
+        deeming it necessary to provide additional levels of service to tenants
+        which can only be provided by enterprise class storage solutions.</para>
+    <para>Redundancy and availability requirements impact the decision to use
+        a RAID controller card in block storage nodes. The input-output per second (IOPS)
+        demand of your application will influence whether or not you should use a RAID
+        controller, and which level of RAID is required.
+        Making use of higher performing RAID volumes is suggested when
+        considering performance. However, where redundancy of
+        block storage volumes is more important we recommend
+        making use of a redundant RAID configuration such as RAID 5 or
         RAID 6. Some specialized features, such as automated
         replication of block storage volumes, may require the use of
         third-party plug-ins and enterprise block storage solutions in
         order to provide the high demand on storage. Furthermore,
         where extreme performance is a requirement it may also be
         necessary to make use of high speed SSD disk drives' high
-        performing flash storage solutions.</para></section>
+        performing flash storage solutions.</para>
+    </section>
+
     <section xml:id="software-selection-tech-considerations">
         <title>Software selection</title>
-    <para>The software selection process can play a large role in the
-        architecture of a general purpose cloud. Choice of operating
-        system, selection of OpenStack software components, choice of
-        hypervisor and selection of supplemental software will have a
-        large impact on the design of the cloud.</para>
+    <para>The software selection process plays a large role in the
+        architecture of a general purpose cloud. The following have
+        a large impact on the design of the cloud:</para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Choice of operating system
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Selection of OpenStack software components
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Choice of hypervisor
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Selection of supplemental software
+          </para>
+        </listitem>
+      </itemizedlist>
     <para>Operating system (OS) selection plays a large role in the
         design and architecture of a cloud. There are a number of OSes
-        which have native support for OpenStack including Ubuntu, Red
-        Hat Enterprise Linux (RHEL), CentOS, and SUSE Linux Enterprise
-        Server (SLES). "Native support" in this context means that the
-        distribution provides distribution-native packages by which to
-        install OpenStack in their repositories. Note that "native
-        support" is not a constraint on the choice of OS; users are
+        which have native support for OpenStack including:</para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            Ubuntu
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Red Hat Enterprise Linux (RHEL)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            CentOS
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            SUSE Linux Enterprise Server (SLES)
+          </para>
+        </listitem>
+      </itemizedlist>
+      <note>
+        <para>Native support is not a constraint on the choice of OS; users are
         free to choose just about any Linux distribution (or even
         Microsoft Windows) and install OpenStack directly from source
-        (or compile their own packages). However, the reality is that
-        many organizations will prefer to install OpenStack from
-        distribution-supplied packages or repositories (although using
-        the distribution vendor's OpenStack packages might be a
-        requirement for support).</para>
+        (or compile their own packages). However, many organizations will
+        prefer to install OpenStack from distribution-supplied packages or
+        repositories (although using the distribution vendor's OpenStack
+        packages might be a requirement for support).
+        </para>
+      </note>
     <para>OS selection also directly influences hypervisor selection.
         A cloud architect who selects Ubuntu, RHEL, or SLES has some
         flexibility in hypervisor; KVM, Xen, and LXC are supported
         virtualization methods available under OpenStack Compute
-        (nova) on these Linux distributions. A cloud architect who
-        selects Hyper-V, on the other hand, is limited to Windows
-        Server. Similarly, a cloud architect who selects XenServer is
-        limited to the CentOS-based dom0 operating system provided
-        with XenServer.</para>
+        (nova) on these Linux distributions. However, a cloud architect
+        who selects Hyper-V is limited to Windows Servers. Similarly, a
+        cloud architect who selects XenServer is limited to the CentOS-based
+        dom0 operating system provided with XenServer.</para>
     <para>The primary factors that play into OS-hypervisor selection
         include:</para>
     <variablelist>
@@ -350,6 +438,7 @@
         </varlistentry>
     </variablelist>
     </section>
+
     <section xml:id="hypervisor-tech-considerations">
       <title>Hypervisor</title>
     <para>OpenStack supports a wide variety of hypervisors, one or
@@ -380,13 +469,13 @@
     </itemizedlist>
     <para>A complete list of supported hypervisors and their
         capabilities can be found at
-        <link xlink:href="https://wiki.openstack.org/wiki/HypervisorSupportMatrix">https://wiki.openstack.org/wiki/HypervisorSupportMatrix</link>.
+        <link xlink:href="https://wiki.openstack.org/wiki/HypervisorSupportMatrix">OpenStack Hypervisor Support Matrix</link>.
     </para>
-    <para>General purpose clouds should make use of hypervisors that
+    <para>We recommend general purpose clouds use hypervisors that
         support the most general purpose use cases, such as KVM and
-        Xen. More specific hypervisors should then be chosen to
-        account for specific functionality or a supported feature
-        requirement. In some cases, there may also be a mandated
+        Xen. More specific hypervisors should be chosen to account
+        for specific functionality or a supported feature requirement.
+        In some cases, there may also be a mandated
         requirement to run software on a certified hypervisor
         including solutions from VMware, Microsoft, and Citrix.</para>
     <para>The features offered through the OpenStack cloud platform
@@ -394,7 +483,7 @@
         a general purpose cloud that predominantly supports a
         Microsoft-based migration, or is managed by staff that has a
         particular skill for managing certain hypervisors and
-        operating systems, Hyper-V might be the best available choice.
+        operating systems, Hyper-V would be the best available choice.
         While the decision to use Hyper-V does not limit the ability
         to run alternative operating systems, be mindful of those that
         are deemed supported. Each different hypervisor also has their
@@ -409,7 +498,9 @@
         workloads to utilize software and hardware specific to their
         particular requirements. This functionality can be exposed
         explicitly to the end user, or accessed through defined
-        metadata within a particular flavor of an instance.</para></section>
+        metadata within a particular flavor of an instance.</para>
+    </section>
+
     <section xml:id="openstack-components-tech-considerations">
       <title>OpenStack components</title>
     <para>A general purpose OpenStack cloud design should incorporate
@@ -445,11 +536,15 @@
     <para>A general purpose cloud may also include OpenStack
         <glossterm>Object Storage</glossterm> (<glossterm>swift</glossterm>).
         OpenStack <glossterm>Block Storage</glossterm>
-        (<glossterm>cinder</glossterm>) may be
-        selected to provide persistent storage to applications and
-        instances although, depending on the use case, this could be
+        (<glossterm>cinder</glossterm>). These may be
+        selected to provide storage to applications and
+        instances.</para>
+      <note>
+        <para>However, depending on the use case, these could be
         optional.</para>
+      </note>
     </section>
+
     <section xml:id="supplemental-software-tech-considerations">
       <title>Supplemental software</title>
     <para>A general purpose OpenStack deployment consists of more than
@@ -471,7 +566,7 @@
         balancers to provide highly available API access and SSL
         termination, software solutions, for example HAProxy, can also
         be considered. It is vital to ensure that such software
-        implementations are also made highly available. This high
+        implementations are also made highly available. High
         availability can be achieved by using software such as
         Keepalived or Pacemaker with Corosync. Pacemaker and Corosync
         can provide active-active or active-passive highly available
@@ -481,39 +576,43 @@
         infrastructure where one of those nodes may be running certain
         services in standby mode.</para>
     <para>Memcached is a distributed memory object caching system, and
-        Redis is a key-value store. Both are usually deployed on
+        Redis is a key-value store. Both are deployed on
         general purpose clouds to assist in alleviating load to the
         Identity service. The memcached service caches tokens, and due
         to its distributed nature it can help alleviate some
         bottlenecks to the underlying authentication system. Using
         memcached or Redis does not affect the overall design of your
         architecture as they tend to be deployed onto the
-        infrastructure nodes providing the OpenStack services.</para></section>
+        infrastructure nodes providing the OpenStack services.</para>
+    </section>
+
     <section xml:id="performance-tech-considerations">
       <title>Performance</title>
     <para>Performance of an OpenStack deployment is dependent on a
         number of factors related to the infrastructure and controller
         services. The user requirements can be split into general
         network performance, performance of compute resources, and
-        performance of storage systems.</para></section>
+        performance of storage systems.</para>
+    </section>
+
     <section xml:id="controller-infrastructure-tech-considerations">
         <title>Controller infrastructure</title>
     <para>The Controller infrastructure nodes provide management
         services to the end-user as well as providing services
         internally for the operating of the cloud. The Controllers
-        typically run message queuing services that carry system
+        run message queuing services that carry system
         messages between each service. Performance issues related to
         the message bus would lead to delays in sending that message
         to where it needs to go. The result of this condition would be
         delays in operation functions such as spinning up and deleting
         instances, provisioning new storage volumes and managing
         network resources. Such delays could adversely affect an
-        application's ability to react to certain conditions,
+        application’s ability to react to certain conditions,
         especially when using auto-scaling features. It is important
         to properly design the hardware used to run the controller
         infrastructure as outlined above in the Hardware Selection
         section.</para>
-    <para>Performance of the controller services is not just limited
+    <para>Performance of the controller services is not limited
         to processing power, but restrictions may emerge in serving
         concurrent users. Ensure that the APIs and Horizon services
         are load tested to ensure that you are able to serve your
@@ -522,11 +621,13 @@
         authentication and authorization for all services, both
         internally to OpenStack itself and to end-users. This service
         can lead to a degradation of overall performance if this is
-        not sized appropriately.</para></section>
+        not sized appropriately.</para>
+    </section>
+
     <section xml:id="network-performance-tech-considerations">
       <title>Network performance</title>
     <para>In a general purpose OpenStack cloud, the requirements of
-        the network help determine its performance capabilities. For
+        the network help determine performance capabilities. For
         example, small deployments may employ 1 Gigabit Ethernet (GbE)
         networking, whereas larger installations serving multiple
         departments or many users would be better architected with
@@ -535,7 +636,8 @@
         environments that run a mix of networking capabilities. By
         utilizing the different interface speeds, the users of the
         OpenStack environment can choose networks that are fit for
-        their purpose. For example, web application instances may run
+        their purpose.</para>
+    <para>For example, web application instances may run
         on a public network presented through OpenStack Networking
         that has 1 GbE capability, whereas the back-end database uses
         an OpenStack Networking network that has 10&nbsp;GbE capability to
@@ -547,7 +649,9 @@
         perform SSL termination if that is a requirement of your
         environment. When implementing SSL offloading, it is important
         to understand the SSL offloading capabilities of the devices
-        selected.</para></section>
+        selected.</para>
+    </section>
+
     <section xml:id="compute-host-tech-considerations">
       <title>Compute host</title>
     <para>The choice of hardware specifications used in compute nodes
@@ -562,12 +666,14 @@
         Compute environment to avoid this scenario. For running
         general purpose OpenStack environments it is possible to keep
         to the defaults, but make sure to monitor your environment as
-        usage increases.</para></section>
+        usage increases.</para>
+    </section>
+
     <section xml:id="storage-performance-tech-considerations">
       <title>Storage performance</title>
-    <para>When considering the performance of OpenStack Block Storage,
-        hardware and architecture choices are important. Block Storage
-        can use enterprise back-end systems such as NetApp or EMC, use
+    <para>When considering performance of OpenStack Block Storage,
+        hardware and architecture choice is important. Block Storage
+        can use enterprise back-end systems such as NetApp or EMC,
         scale out storage such as GlusterFS and Ceph, or simply use
         the capabilities of directly attached storage in the nodes
         themselves. Block Storage may be deployed so that traffic
@@ -577,13 +683,15 @@
         dedicated interfaces on the Controller and Compute
         hosts.</para>
     <para>When considering performance of OpenStack Object Storage, a
-        number of design choices will affect performance. A user's
+        number of design choices will affect performance. A user’s
         access to the Object Storage is through the proxy services,
-        which typically sit behind hardware load balancers. By the
+        which sit behind hardware load balancers. By the
         very nature of a highly resilient storage system, replication
         of the data would affect performance of the overall system. In
         this case, 10 GbE (or better) networking is recommended
-        throughout the storage network architecture.</para></section>
+        throughout the storage network architecture.</para>
+    </section>
+
     <section xml:id="availability-tech-considerations">
       <title>Availability</title>
     <para>In OpenStack, the infrastructure is integral to providing
@@ -611,16 +719,16 @@
         your systems, will help determine scale out decisions.</para>
     <para>Care must be taken when deciding network functionality.
         Currently, OpenStack supports both the legacy networking (nova-network)
-        system and the newer, extensible OpenStack Networking. Both
+        system and the newer, extensible OpenStack Networking (neutron). Both
         have their pros and cons when it comes to providing highly
         available access. Legacy networking, which provides networking
         access maintained in the OpenStack Compute code, provides a
         feature that removes a single point of failure when it comes
         to routing, and this feature is currently missing in OpenStack
-        Networking. The effect of legacy networking's multi-host
+        Networking. The effect of legacy networking’s multi-host
         functionality restricts failure domains to the host running
         that instance.</para>
-    <para>On the other hand, when using OpenStack Networking, the
+    <para>When using OpenStack Networking, the
         OpenStack controller servers or separate Networking
         hosts handle routing. For a deployment that requires features
         available in only Networking, it is possible to
@@ -632,9 +740,8 @@
         Networking, and instead rely on hardware routing capabilities.
         In this case, the switching infrastructure must support L3
         routing.</para>
-     <para>
-       OpenStack Networking (neutron) and legacy networking
-       (nova-network) both have their advantages and
+     <para>OpenStack Networking and legacy networking
+       both have their advantages and
        disadvantages. They are both valid and supported options that
        fit different network deployment models described in the
        <citetitle><link
@@ -661,12 +768,12 @@
         may include utilizing shared file systems on enterprise
         storage or OpenStack Block storage to provide a level of
         guarantee to match service features.</para>
-    <para>
-      For more information on high availability in OpenStack, see the <link
+    <para>For more information on high availability in OpenStack, see the <link
       xlink:href="http://docs.openstack.org/high-availability-guide"><citetitle>OpenStack
       High Availability Guide</citetitle></link>.
         </para>
-      </section>
+    </section>
+
     <section xml:id="security-tech-considerations">
       <title>Security</title>
     <para>A security domain comprises users, applications, servers or
@@ -751,7 +858,7 @@
         the API services behind hardware that performs SSL termination
         is strongly recommended.</para>
     <para>
-      For more information on OpenStack Security, see the <link
+      For more information OpenStack Security, see the <link
       xlink:href="http://docs.openstack.org/security-guide/"><citetitle>OpenStack
       Security Guide</citetitle></link>
     </para>
