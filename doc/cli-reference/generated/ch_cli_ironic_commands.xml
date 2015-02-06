@@ -15,7 +15,7 @@
         interface (CLI) for the Bare metal and its extensions.
 
        This chapter documents <command>ironic</command> version
-        <literal>0.3.3</literal>.
+        <literal>0.4.0</literal>.
     </para>
 
     <para>For help on a specific <command>ironic</command>
@@ -171,7 +171,7 @@
     <term><command>node-set-maintenance</command></term>
     <listitem>
       <para>
-      Set maintenance mode on or off.
+      Enable or disable maintenance mode for this node.
       </para>
     </listitem>
   </varlistentry>
@@ -1195,7 +1195,7 @@ Enable or disable serial console access for this node.
         <screen><computeroutput>usage: ironic node-set-maintenance [--reason &lt;reason&gt;]
                                    &lt;node id&gt; &lt;maintenance mode&gt;</computeroutput></screen>
         <para>
-Set maintenance mode on or off.
+Enable or disable maintenance mode for this node.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1210,7 +1210,7 @@ Set maintenance mode on or off.
     <term><command>&lt;maintenance mode&gt;</command></term>
     <listitem>
       <para>
-        Supported states: 'on' or 'off'
+        Supported states: 'true' or 'false'; 'on' or 'off'
       </para>
     </listitem>
   </varlistentry>
@@ -1221,8 +1221,8 @@ Set maintenance mode on or off.
     <term><command>--reason &lt;reason&gt;</command></term>
     <listitem>
       <para>
-        The reason for setting maintenance mode to "on"; not
-      valid when setting to "off".
+        The reason for setting maintenance mode to "true" or
+      "on"; not valid when setting to "false" or "off".
       </para>
     </listitem>
   </varlistentry>
@@ -1255,7 +1255,8 @@ Power the node on or off or reboot.
     </section>
     <section xml:id="ironicclient_subcommand_node-set-provision-state">
         <title>ironic node-set-provision-state</title>
-        <screen><computeroutput>usage: ironic node-set-provision-state &lt;node id&gt; &lt;provision state&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-set-provision-state [--config-drive &lt;config_drive&gt;]
+                                       &lt;node id&gt; &lt;provision state&gt;</computeroutput></screen>
         <para>
 Provision, rebuild or delete an instance.
         </para>  <variablelist wordsize="10">
@@ -1273,6 +1274,19 @@ Provision, rebuild or delete an instance.
     <listitem>
       <para>
         Supported states: 'active' or 'deleted' or 'rebuild'
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--config-drive &lt;config_drive&gt;</command></term>
+    <listitem>
+      <para>
+      A gzipped base64 encoded config drive string or the
+      path to the config drive file; Only valid when setting
+      provision state to "active".
       </para>
     </listitem>
   </varlistentry>
