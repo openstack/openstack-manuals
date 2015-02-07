@@ -48,14 +48,6 @@
       <screen os="sles;opensuse"><prompt>$</prompt> <userinput>openssl rand 10 | hexdump -e '1/1 "%.2x"'</userinput></screen>
     </step>
   </procedure>
-  <procedure os="debian">
-    <title>To configure prerequisites</title>
-    <step>
-      <para>Generate a random value to use as the administration token during
-        initial configuration:</para>
-      <screen><prompt>$</prompt> <userinput>openssl rand -hex 10</userinput></screen>
-    </step>
-  </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To install and configure the components</title>
     <step>
@@ -127,12 +119,25 @@ verbose = True</programlisting>
     <title>To install and configure the components</title>
     <step>
       <para>Run the following command to install the packages:</para>
-      <screen><prompt>#</prompt> <userinput>apt-get install keystone python-keystoneclient</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>apt-get install keystone</userinput></screen>
+      <note><para><package>python-keystoneclient</package> will automatically be installed as
+      it is a dependency of the <package>keystone</package> package.</para></note>
     </step>
     <step>
-      <para>Respond to prompts for <xref linkend="debconf-dbconfig-common"/>.</para>
+      <para>Respond to prompts for <xref linkend="debconf-dbconfig-common"/>, which
+      will fill the below database access directive.</para>
+      <programlisting language="ini">[database]
+...
+connection = mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replaceable>controller</replaceable>/keystone</programlisting>
+      <para>If you decide to not use <command>dbconfig-common</command>, then you will have to
+      create the database and manage its access rights yourself, and run the
+      following by hand.</para>
+      <screen><prompt>#</prompt> <userinput>keystone-manage db_sync</userinput></screen>
     </step>
     <step>
+      <para>Generate a random value to use as the administration token during
+        initial configuration:</para>
+      <screen><prompt>$</prompt> <userinput>openssl rand -hex 10</userinput></screen>
       <para>Configure the initial administration token:</para>
       <informalfigure>
         <mediaobject>
@@ -144,9 +149,22 @@ verbose = True</programlisting>
       <para>Use the random value that you generated in a previous step. If you
         install using non-interactive mode or you do not specify this token,
         the configuration tool generates a random value.</para>
+      <para>Later on, the package will configure the below directive with the
+        value you entered:</para>
+      <programlisting language="ini">[DEFAULT]
+...
+admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
     </step>
     <step>
       <para>Create the <literal>admin</literal> tenant and user:</para>
+      <para>During the final stage of the package installation, it is possible
+        to automatically create an admin tenant and an admin user. This can
+        later be used for other OpenStack services to contact the Identity
+        service. This is the equivalent of running the below commands:</para>
+      <screen><prompt>#</prompt> <userinput>keystone tenant-create --name admin --description "Admin Tenant"</userinput>
+<prompt>#</prompt> <userinput>keystone user-create --name admin --pass <replaceable>ADMIN_PASS</replaceable> --email root@localhost</userinput>
+<prompt>#</prompt> <userinput>keystone role-create --name admin</userinput>
+<prompt>#</prompt> <userinput>keystone user-role-add user-role-add --user admin --role admin --tenant admin</userinput></screen>
       <informalfigure>
         <mediaobject>
           <imageobject>
@@ -193,7 +211,16 @@ verbose = True</programlisting>
       </informalfigure>
     </step>
     <step>
-      <para>Create the Identity service endpoints:</para>
+      <title>Create the Identity service endpoints</title>
+      <para>In Debian, the Keystone package offers automatic registration of Keystone
+        in the service catalogue. This is equivalent of running the below commands:</para>
+      <screen><prompt>#</prompt> <userinput>keystone service-create --name keystone --type identity --description "OpenStack Identity"</userinput>
+<prompt>#</prompt> <userinput>keystone endpoint-create \
+  --service-id $(keystone service-list | awk '/ identity / {print $2}') \
+  --publicurl http://<replaceable>controller</replaceable>:5000/v2.0 \
+  --internalurl http://<replaceable>controller</replaceable>:5000/v2.0 \
+  --adminurl http://<replaceable>controller</replaceable>:35357/v2.0 \
+  --region regionOne</userinput></screen>
       <informalfigure>
         <mediaobject>
           <imageobject>
@@ -206,7 +233,7 @@ verbose = True</programlisting>
   </procedure>
   <procedure>
     <title>To finalize installation</title>
-    <step os="ubuntu;debian">
+    <step os="ubuntu">
       <para>Restart the Identity service:</para>
       <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
     </step>
@@ -229,14 +256,19 @@ verbose = True</programlisting>
       <screen><prompt>#</prompt> <userinput>rm -f /var/lib/keystone/keystone.db</userinput></screen>
     </step>
     <step>
-      <para>By default, the Identity service stores expired tokens in the
+      <para os="ubuntu;rhel;centos;fedora;opensuse;sles">By default, the Identity service stores expired tokens in the
         database indefinitely. The accumulation of expired tokens considerably
         increases the database size and might degrade service performance,
         particularly in environments with limited resources.</para>
-      <para>We recommend that you use
+      <para os="debian">The Keystone package already contains a cron job
+        under <filename>/etc/cron.hourly/keystone</filename>, so it is not
+        necessary to manually configure a periodic task that purges expired tokens
+        hourly. You can however have a look at (and eventually customize) the already
+        configured script.</para>
+      <para os="ubuntu;rhel;centos;fedora;opensuse;sles">We recommend that you use
         <systemitem class="service">cron</systemitem> to configure a periodic
         task that purges expired tokens hourly:</para>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
   echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
   >> /var/spool/cron/crontabs/keystone</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
