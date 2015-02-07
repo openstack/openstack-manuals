@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-02-04 06:11+0000\n"
+"POT-Creation-Date: 2015-02-07 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -378,7 +378,7 @@ msgstr ""
 msgid "This image must have the trove guest agent installed, and it must have the <filename>trove-guestagent.conf</filename> file configured to connect to your OpenStack environment. To configure <filename>trove-guestagent.conf</filename>, add the following lines to <filename>trove-guestagent.conf</filename> on the guest instance you are using to build your image:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_database.xml:24(replaceable) ./doc/admin-guide-cloud/ch_database.xml:29(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:90(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:91(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:202(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:203(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:223(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:224(replaceable)
+#: ./doc/admin-guide-cloud/ch_database.xml:24(replaceable) ./doc/admin-guide-cloud/ch_database.xml:29(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:90(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:91(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:202(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:203(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:223(replaceable) ./doc/admin-guide-cloud/ch_identity_mgmt.xml:224(replaceable) ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:376(replaceable)
 msgid "controller"
 msgstr ""
 
@@ -11073,11 +11073,11 @@ msgid "You can also apply the changes by restarting the network service:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:501(para)
-msgid "On Ubuntu:"
+msgid "on Ubuntu, Debian:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:505(para)
-msgid "On RHEL/Fedora/CentOS:"
+msgid "on RHEL, Fedora, CentOS, openSUSE and SLES:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:512(title)
@@ -11673,99 +11673,179 @@ msgstr ""
 msgid "Once you have created this file, restart your <systemitem>rsyslog</systemitem> daemon. Error-level log messages on the compute hosts should now be sent to your log server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:348(title)
-msgid "Migrate instances"
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:345(title)
+msgid "Serial console"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:346(para)
+msgid "The serial console provides a useful way to examine kernel output and other system messages during troubleshooting in cases where an instance lacks network connectivity."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:349(para)
-msgid "Before starting migrations, review the <link linkend=\"section_configuring-compute-migrations\">Configure migrations section</link>."
+msgid "Releases prior to Juno only support read-only access via the serial console using the <placeholder-1/> server action. Most cloud images enable this feature by default. For more information, see <link linkend=\"section_compute-empty-log-output\">Troubleshoot Compute</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:352(para)
-msgid "Migration provides a scheme to migrate running instances from one OpenStack Compute server to another OpenStack Compute server."
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:355(para)
+msgid "Juno and later releases support read-write access via the serial console using the <placeholder-1/> server action. This feature also requires a websocket client to access the serial console."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:355(title)
-msgid "To migrate instances"
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:360(title)
+msgid "To configure read-write serial console access"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:357(para)
-msgid "Look at the running instances, to get the ID of the instance you wish to migrate."
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:361(para)
+msgid "On a compute node, edit the <filename>/etc/nova/nova.conf</filename> file and complete the following actions:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:368(para)
-msgid "Look at information associated with that instance. This example uses 'vm1' from above."
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:365(para)
+msgid "In the <parameter>[serial_console]</parameter> section, enable the serial console:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:384(para)
-msgid "In this example, vm1 is running on HostB."
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:372(para)
+msgid "In the same section, configure the serial console proxy similar to graphical console proxies:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:387(para)
-msgid "Select the compute node to which instances will be migrated to:"
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:378(replaceable)
+msgid "MANAGEMENT_INTERFACE_IP_ADDRESS"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:399(para)
-msgid "In this example, HostC can be picked up because <systemitem class=\"service\">nova-compute</systemitem> is running on it."
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:379(para)
+msgid "The <placeholder-1/> option specifies the base URL that clients receive from the API upon requesting a serial console. Typically, this refers to the hostname of the controller node."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:403(para)
-msgid "Ensure that HostC has enough resources for migration."
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:383(para)
+msgid "The <placeholder-1/> option specifies on which network interface the <systemitem class=\"service\">nova-compute</systemitem> listens for virtual console connections. Typically, this uses 0.0.0.0 to enable listening on all interfaces."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:416(para)
-msgid "<emphasis role=\"bold\">cpu:</emphasis>the number of cpu"
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:388(para)
+msgid "The <placeholder-1/> specifies to which network interface the proxy should connect. Typically, this refers to the IP address of the management interface."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:419(para)
-msgid "<emphasis role=\"bold\">memory_mb:</emphasis>total amount of memory (in MB)"
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:394(para)
+msgid "Enabling read-write serial console access causes Compute to add serial console information to the Libvirt XML file for the instance. For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:423(para)
-msgid "<emphasis role=\"bold\">disk_gb:</emphasis>total amount of space for NOVA-INST-DIR/instances (in GB)"
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:404(title)
+msgid "To access the serial console on an instance"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:427(para)
-msgid "<emphasis role=\"bold\">1st line shows </emphasis>total amount of resources for the physical server."
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:406(para)
+msgid "Use the <placeholder-1/> command to retrieve the websocket URL for the instance serial console:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:431(para)
-msgid "<emphasis role=\"bold\">2nd line shows </emphasis>currently used resources."
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:409(replaceable)
+msgid "INSTANCE_NAME"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:435(para)
-msgid "<emphasis role=\"bold\">3rd line shows </emphasis>maximum used resources."
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:415(para)
+msgid "Alternatively, use the API directly:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:425(para)
+msgid "Use Python websocket with the URL to generate <literal>.send</literal>, <literal>.recv</literal>, and <literal>.fileno</literal> methods for serial console access. For example:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:433(para)
+msgid "Alternatively, use a Python websocket client such as <link href=\"https://github.com/larsks/novaconsole/\"/>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:439(para)
+msgid "Enabling the serial console disables typical instance logging via the <placeholder-1/> command. Kernel output and other system messages become invisible unless actively viewing the serial console."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:449(title)
+msgid "Migrate instances"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:450(para)
+msgid "Before starting migrations, review the <link linkend=\"section_configuring-compute-migrations\">Configure migrations section</link>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:453(para)
+msgid "Migration provides a scheme to migrate running instances from one OpenStack Compute server to another OpenStack Compute server."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:456(title)
+msgid "To migrate instances"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:458(para)
+msgid "Look at the running instances, to get the ID of the instance you wish to migrate."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:469(para)
+msgid "Look at information associated with that instance. This example uses 'vm1' from above."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:485(para)
+msgid "In this example, vm1 is running on HostB."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:488(para)
+msgid "Select the compute node to which instances will be migrated to:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:500(para)
+msgid "In this example, HostC can be picked up because <systemitem class=\"service\">nova-compute</systemitem> is running on it."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:504(para)
+msgid "Ensure that HostC has enough resources for migration."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:517(para)
+msgid "<emphasis role=\"bold\">cpu:</emphasis>the number of cpu"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:520(para)
+msgid "<emphasis role=\"bold\">memory_mb:</emphasis>total amount of memory (in MB)"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:524(para)
+msgid "<emphasis role=\"bold\">disk_gb:</emphasis>total amount of space for NOVA-INST-DIR/instances (in GB)"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:528(para)
+msgid "<emphasis role=\"bold\">1st line shows </emphasis>total amount of resources for the physical server."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:532(para)
+msgid "<emphasis role=\"bold\">2nd line shows </emphasis>currently used resources."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:536(para)
+msgid "<emphasis role=\"bold\">3rd line shows </emphasis>maximum used resources."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:540(para)
 msgid "<emphasis role=\"bold\">4th line and under</emphasis> shows the resource for each project."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:446(replaceable)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:547(replaceable)
 msgid "SERVER"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:446(replaceable)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:547(replaceable)
 msgid "HOST_NAME"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:445(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:546(para)
 msgid "Use the <placeholder-1/> command to migrate the instances:<placeholder-2/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:447(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:548(para)
 msgid "Where <replaceable>SERVER</replaceable> can be the ID or name of the instance. For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:451(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:552(para)
 msgid "Ensure instances are migrated successfully with <placeholder-1/>. If instances are still running on HostB, check log files (src/dest <systemitem class=\"service\">nova-compute</systemitem> and <systemitem class=\"service\">nova-scheduler</systemitem>) to determine why."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:456(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:557(para)
 msgid "Although the <placeholder-1/> command is called <placeholder-2/>, under the default Compute configuration options, the instances are suspended before migration."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:459(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-system-admin.xml:560(para)
 msgid "For more details, see <link href=\"http://docs.openstack.org/juno/config-reference/content/list-of-compute-config-options.html\">Configure migrations</link> in <citetitle>OpenStack Configuration Reference</citetitle>."
 msgstr ""
 
