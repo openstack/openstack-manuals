@@ -98,6 +98,8 @@ rpc_zmq_port zeromq
 rpc_zmq_topic_backlog zeromq
 sahara_control_exchange exchange
 sample_source exchange
+shuffle_time_before_polling_task common
+swift_control_exchange exchange
 syslog_log_facility logging
 transport_url amqp
 trove_control_exchange exchange
@@ -121,6 +123,7 @@ api/enable_reverse_dns_lookup api
 api/host api
 api/pecan_debug api
 api/port api
+collector/requeue_event_on_dispatcher_error collector
 collector/requeue_sample_on_dispatcher_error collector
 collector/udp_address collector
 collector/udp_port collector
@@ -139,11 +142,13 @@ database/db_max_retries database
 database/db_max_retry_interval database
 database/db_retry_interval database
 database/event_connection database
+database/event_time_to_live database
 database/idle_timeout database
 database/max_overflow database
 database/max_pool_size database
 database/max_retries database
 database/metering_connection database
+database/metering_time_to_live database
 database/min_pool_size database
 database/mongodb_replica_set database
 database/mysql_sql_mode database
@@ -152,7 +157,6 @@ database/retry_interval database
 database/slave_connection database
 database/sqlite_db database
 database/sqlite_synchronous database
-database/time_to_live database
 database/use_db_reconnect database
 dispatcher_file/backup_count collector
 dispatcher_file/file_path collector
@@ -225,9 +229,10 @@ oslo_messaging_amqp/ssl_key_file rpc
 oslo_messaging_amqp/ssl_key_password rpc
 oslo_messaging_amqp/trace rpc
 polling/partitioning_group_prefix common
-publisher/metering_secret rpc
-publisher_notifier/metering_driver rpc
+publisher/telemetry_secret rpc
+publisher_notifier/event_topic rpc
 publisher_notifier/metering_topic rpc
+publisher_notifier/telemetry_driver rpc
 publisher_rpc/metering_topic rpc
 service_credentials/insecure auth
 service_credentials/os_auth_url auth
