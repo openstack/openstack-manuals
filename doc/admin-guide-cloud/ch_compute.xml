@@ -182,66 +182,86 @@
          </section>
          <section xml:id="section_storage-and-openstack-compute">
              <title>Block storage</title>
-             <para>OpenStack provides two classes of block storage:
-                 ephemeral storage and persistent volumes. Volumes are
-                 persistent virtualized block devices independent of any
-                 particular instance.</para>
-             <para>Ephemeral storage is associated with a single unique
-                 instance, and it exists only for the life of that
-                 instance. The amount of ephemeral storage is defined by
-                 the flavor of the instance. Generally, the root file
-                 system for an instance will be stored on ephemeral
-                 storage. It persists across reboots of the guest operating
-                 system, but when the instance is deleted, the ephemeral
-                 storage is also removed.</para>
-             <para>In addition to the ephemeral root volume, all flavors
-                 except the smallest, <filename>m1.tiny</filename>, also
-                 provide an additional ephemeral block device of between 20
-                 and 160&nbsp;GB. These sizes can be configured to suit your
-                 environment. This is presented as a raw block device with
-                 no partition table or file system. Cloud-aware operating
-                 system images can discover, format, and mount these
-                 storage devices. For example, the <systemitem
-                     class="service">cloud-init</systemitem> package
-                 included in Ubuntu's stock cloud images format this space
-                 as an <filename>ext3</filename> file system and mount it
-                 on <filename>/mnt</filename>. This is a feature of the
-                 guest operating system you are using, and is not an
-                 OpenStack mechanism. OpenStack only provisions the raw
-                 storage.</para>
-             <para>Persistent volumes are created by users and their size
-                 is limited only by the user's quota and availability
-                 limits. Upon initial creation, volumes are raw block
-                 devices without a partition table or a file system. To
-                 partition or format volumes, you must attach them to an
-                 instance. Once they are attached to an instance, you can
-                 use persistent volumes in much the same way as you would
-                 use external hard disk drive. You can attach volumes to
-                 only one instance at a time, although you can detach and
-                 reattach volumes to as many different instances as you
-                 like.</para>
-             <para>You can configure persistent volumes as bootable and use
-                 them to provide a persistent virtual instance similar to
-                 traditional non-cloud-based virtualization systems.
-                 It is still possible for the resulting instance to also have
+             <para>OpenStack provides two classes of the block storage:
+                 ephemeral storage and persistent volume.</para>
+
+             <simplesect>
+             <title>Ephemeral storage</title>
+             <para>An ephemeral storage includes a root ephemeral volume
+                 and an additional ephemeral volume.</para>
+
+             <para>The root disk is associated with an instance,
+                 and exists only for the life of this very
+                 instance. Generally, it is used
+                 to store an instance`s root file system, persists across
+                 the guest operating system reboots, and is removed
+                 on an instance deletion. The amount of the root ephemeral
+                 volume is defined by the flavor of an instance.</para>
+
+             <para>In addition to the ephemeral root volume, all default types of flavors,
+                 except <literal>m1.tiny</literal>, which is
+                 the smallest one, provide an additional ephemeral block
+                 device sized between 20 and 160&nbsp;GB (a configurable
+                 value to suit an environment).
+                 It is represented as a raw block device with
+                 no partition table or file system. A cloud-aware operating
+                 system can discover, format, and mount such a
+                 storage device. OpenStack Compute defines the default file system for
+                 different operating systems as Ext4 for Linux distributions,
+                 VFAT for non-Linux and non-Windows operating systems, and
+                 NTFS for Windows. However, it is possible to specify
+                 any other filesystem type by using <parameter>virt_mkfs</parameter> or
+                 <parameter>default_ephemeral_format</parameter> configuration options.</para>
+             <note>
+                 <para>For example, the <systemitem class="service">cloud-init</systemitem> package
+                 included into an Ubuntu's stock cloud image, by default,
+                 formats this space as an Ext4 file system and mounts
+                 it on <filename>/mnt</filename>.
+                 This is a cloud-init feature, and is not an OpenStack mechanism.
+                 OpenStack only provisions the raw storage.</para>
+             </note>
+             </simplesect>
+
+             <simplesect>
+             <title>Persistent volume</title>
+             <para>A persistent volume is represented by a persistent virtualized block device
+                 independent of any particular instance, and provided by OpenStack Block Storage.</para>
+
+             <para>A persistent volume is created by a user, and its size
+                 is limited only by a user's quota and availability
+                 limits. Upon initial creation, a volume is a raw block
+                 device without a partition table or a file system. To
+                 partition or format a volume, you must attach it to an
+                 instance. Once it is attached, it can be used
+                 the same way as an external hard disk drive.
+                 A single volume can be attached to one instance at a time,
+                 though you can detach and reattach it to other instances
+                 as many times as required.</para>
+
+             <para>You can configure a persistent volume as bootable and use
+                 it to provide a persistent virtual instance similar to
+                 the traditional non-cloud-based virtualization system.
+                 It is still possible for the resulting instance to keep
                  ephemeral storage, depending on the flavor selected. In this
-                 case, the root file system can be on the persistent volume
-                 and its state maintained even if the instance is shut down.
+                 case, the root file system can be on the persistent volume,
+                 and its state is maintained, even if the instance is shut down.
                  For more information about this type of configuration, see
                  the <link
                  xlink:href="http://docs.openstack.org/juno/config-reference/content/">
                  <citetitle>OpenStack Configuration Reference</citetitle></link>.
              </para>
              <note>
-                 <para>Persistent volumes do not provide concurrent access
+                 <para>A persistent volume does not provide concurrent access
                      from multiple instances. That type of configuration
-                     requires a traditional network file system like NFS or
+                     requires a traditional network file system like NFS, or
                      CIFS, or a cluster file system such as GlusterFS.
-                     These systems can be built within an OpenStack cluster
+                     These systems can be built within an OpenStack cluster,
                      or provisioned outside of it, but OpenStack software
                      does not provide these features.</para>
              </note>
+             </simplesect>
          </section>
+
          <section xml:id="instance-mgmt-ec2compat">
              <title>EC2 compatibility API</title>
              <para>In addition to the native compute API, OpenStack provides
