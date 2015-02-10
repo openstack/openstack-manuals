@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-02-09 06:10+0000\n"
+"POT-Creation-Date: 2015-02-10 06:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1219,214 +1219,234 @@ msgid "Block storage"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:185(para)
-msgid "OpenStack provides two classes of block storage: ephemeral storage and persistent volumes. Volumes are persistent virtualized block devices independent of any particular instance."
+msgid "OpenStack provides two classes of the block storage: ephemeral storage and persistent volume."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:189(para)
-msgid "Ephemeral storage is associated with a single unique instance, and it exists only for the life of that instance. The amount of ephemeral storage is defined by the flavor of the instance. Generally, the root file system for an instance will be stored on ephemeral storage. It persists across reboots of the guest operating system, but when the instance is deleted, the ephemeral storage is also removed."
+#: ./doc/admin-guide-cloud/ch_compute.xml:189(title)
+msgid "Ephemeral storage"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:197(para)
-msgid "In addition to the ephemeral root volume, all flavors except the smallest, <filename>m1.tiny</filename>, also provide an additional ephemeral block device of between 20 and 160GB. These sizes can be configured to suit your environment. This is presented as a raw block device with no partition table or file system. Cloud-aware operating system images can discover, format, and mount these storage devices. For example, the cloud-init package included in Ubuntu's stock cloud images format this space as an ext3 file system and mount it on /mnt. This is a feature of the guest operating system you are using, and is not an OpenStack mechanism. OpenStack only provisions the raw storage."
+#: ./doc/admin-guide-cloud/ch_compute.xml:190(para)
+msgid "An ephemeral storage includes a root ephemeral volume and an additional ephemeral volume."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:212(para)
-msgid "Persistent volumes are created by users and their size is limited only by the user's quota and availability limits. Upon initial creation, volumes are raw block devices without a partition table or a file system. To partition or format volumes, you must attach them to an instance. Once they are attached to an instance, you can use persistent volumes in much the same way as you would use external hard disk drive. You can attach volumes to only one instance at a time, although you can detach and reattach volumes to as many different instances as you like."
+#: ./doc/admin-guide-cloud/ch_compute.xml:193(para)
+msgid "The root disk is associated with an instance, and exists only for the life of this very instance. Generally, it is used to store an instance`s root file system, persists across the guest operating system reboots, and is removed on an instance deletion. The amount of the root ephemeral volume is defined by the flavor of an instance."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:223(para)
-msgid "You can configure persistent volumes as bootable and use them to provide a persistent virtual instance similar to traditional non-cloud-based virtualization systems. It is still possible for the resulting instance to also have ephemeral storage, depending on the flavor selected. In this case, the root file system can be on the persistent volume and its state maintained even if the instance is shut down. For more information about this type of configuration, see the <link href=\"http://docs.openstack.org/juno/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link>."
+#: ./doc/admin-guide-cloud/ch_compute.xml:201(para)
+msgid "In addition to the ephemeral root volume, all default types of flavors, except <literal>m1.tiny</literal>, which is the smallest one, provide an additional ephemeral block device sized between 20 and 160GB (a configurable value to suit an environment). It is represented as a raw block device with no partition table or file system. A cloud-aware operating system can discover, format, and mount such a storage device. OpenStack Compute defines the default file system for different operating systems as Ext4 for Linux distributions, VFAT for non-Linux and non-Windows operating systems, and NTFS for Windows. However, it is possible to specify any other filesystem type by using virt_mkfs or default_ephemeral_format configuration options."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:236(para)
-msgid "Persistent volumes do not provide concurrent access from multiple instances. That type of configuration requires a traditional network file system like NFS or CIFS, or a cluster file system such as GlusterFS. These systems can be built within an OpenStack cluster or provisioned outside of it, but OpenStack software does not provide these features."
+#: ./doc/admin-guide-cloud/ch_compute.xml:216(para)
+msgid "For example, the <systemitem class=\"service\">cloud-init</systemitem> package included into an Ubuntu's stock cloud image, by default, formats this space as an Ext4 file system and mounts it on <filename>/mnt</filename>. This is a cloud-init feature, and is not an OpenStack mechanism. OpenStack only provisions the raw storage."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:246(title)
-msgid "EC2 compatibility API"
+#: ./doc/admin-guide-cloud/ch_compute.xml:226(title)
+msgid "Persistent volume"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:247(para)
-msgid "In addition to the native compute API, OpenStack provides an EC2-compatible API. This API allows EC2 legacy workflows built for EC2 to work with OpenStack. For more information and configuration options about this compatibility API, see the <link href=\"http://docs.openstack.org/juno/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link>."
+#: ./doc/admin-guide-cloud/ch_compute.xml:227(para)
+msgid "A persistent volume is represented by a persistent virtualized block device independent of any particular instance, and provided by OpenStack Block Storage."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:230(para)
+msgid "A persistent volume is created by a user, and its size is limited only by a user's quota and availability limits. Upon initial creation, a volume is a raw block device without a partition table or a file system. To partition or format a volume, you must attach it to an instance. Once it is attached, it can be used the same way as an external hard disk drive. A single volume can be attached to one instance at a time, though you can detach and reattach it to other instances as many times as required."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:241(para)
+msgid "You can configure a persistent volume as bootable and use it to provide a persistent virtual instance similar to the traditional non-cloud-based virtualization system. It is still possible for the resulting instance to keep ephemeral storage, depending on the flavor selected. In this case, the root file system can be on the persistent volume, and its state is maintained, even if the instance is shut down. For more information about this type of configuration, see the <link href=\"http://docs.openstack.org/juno/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:254(para)
+msgid "A persistent volume does not provide concurrent access from multiple instances. That type of configuration requires a traditional network file system like NFS, or CIFS, or a cluster file system such as GlusterFS. These systems can be built within an OpenStack cluster, or provisioned outside of it, but OpenStack software does not provide these features."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:266(title)
+msgid "EC2 compatibility API"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:267(para)
+msgid "In addition to the native compute API, OpenStack provides an EC2-compatible API. This API allows EC2 legacy workflows built for EC2 to work with OpenStack. For more information and configuration options about this compatibility API, see the <link href=\"http://docs.openstack.org/juno/config-reference/content/\"><citetitle>OpenStack Configuration Reference</citetitle></link>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_compute.xml:274(para)
 msgid "Numerous third-party tools and language-specific SDKs can be used to interact with OpenStack clouds, using both native and compatibility APIs. Some of the more popular third-party tools are:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:260(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:280(term)
 msgid "Euca2ools"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:262(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:282(para)
 msgid "A popular open source command-line tool for interacting with the EC2 API. This is convenient for multi-cloud environments where EC2 is the common API, or for transitioning from EC2-based clouds to OpenStack. For more information, see the <link href=\"http://open.eucalyptus.com/wiki/Euca2oolsGuide\">euca2ools site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:273(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:293(term)
 msgid "Hybridfox"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:275(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:295(para)
 msgid "A Firefox browser add-on that provides a graphical interface to many popular public and private cloud technologies, including OpenStack. For more information, see the <link href=\"http://code.google.com/p/hybridfox/\"> hybridfox site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:284(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:304(term)
 msgid "boto"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:286(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:306(para)
 msgid "A Python library for interacting with Amazon Web Services. It can be used to access OpenStack through the EC2 compatibility API. For more information, see the <link href=\"https://github.com/boto/boto\"> boto project page on GitHub</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:295(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:315(term)
 msgid "fog"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:297(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:317(para)
 msgid "A Ruby cloud services library. It provides methods for interacting with a large number of cloud and virtualization platforms, including OpenStack. For more information, see the <link href=\"https://rubygems.org/gems/fog\"> fog site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:306(term)
+#: ./doc/admin-guide-cloud/ch_compute.xml:326(term)
 msgid "php-opencloud"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:308(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:328(para)
 msgid "A PHP SDK designed to work with most OpenStack- based cloud deployments, as well as Rackspace public cloud. For more information, see the <link href=\"http://www.php-opencloud.com\"> php-opencloud site</link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:319(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:339(title)
 msgid "Building blocks"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:320(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:340(para)
 msgid "In OpenStack the base operating system is usually copied from an image stored in the OpenStack Image Service. This is the most common case and results in an ephemeral instance that starts from a known template state and loses all accumulated states on virtual machine deletion. It is also possible to put an operating system on a persistent volume in the Cinder volume system. This gives a more traditional persistent system that accumulates states, which are preserved on the Cinder volume across the deletion and re-creation of the virtual machine. To get a list of available images on your system run: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:340(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:25(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:360(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:25(para)
 msgid "The displayed image attributes are:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:343(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:28(literal) ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:572(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:363(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:28(literal) ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:572(replaceable)
 msgid "ID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:345(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:365(para)
 msgid "Automatically generated UUID of the image"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:350(literal) ./doc/admin-guide-cloud/blockstorage/section_ts_eql_volume_size.xml:111(entry) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:34(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:370(literal) ./doc/admin-guide-cloud/blockstorage/section_ts_eql_volume_size.xml:111(entry) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:34(literal)
 msgid "Name"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:352(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:372(para)
 msgid "Free form, human-readable name for image"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:357(literal) ./doc/admin-guide-cloud/blockstorage/section_ts_eql_volume_size.xml:112(entry) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:40(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:377(literal) ./doc/admin-guide-cloud/blockstorage/section_ts_eql_volume_size.xml:112(entry) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:40(literal)
 msgid "Status"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:359(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:42(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:379(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:42(para)
 msgid "The status of the image. Images marked <literal>ACTIVE</literal> are available for use."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:365(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:48(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:385(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:48(literal)
 msgid "Server"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:367(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:50(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:387(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:50(para)
 msgid "For images that are created as snapshots of running instances, this is the UUID of the instance the snapshot derives from. For uploaded images, this field is blank."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:374(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:394(para)
 msgid "Virtual hardware templates are called <literal>flavors</literal>. The default installation provides five flavors. By default, these are configurable by admin users, however that behavior can be changed by redefining the access controls for <parameter>compute_extension:flavormanage</parameter> in <filename>/etc/nova/policy.json</filename> on the <filename>compute-api</filename> server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:382(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:402(para)
 msgid "For a list of flavors that are available on your system:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:396(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:416(title)
 msgid "Compute service architecture"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:397(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:417(para)
 msgid "These basic categories describe the service architecture and information about the cloud controller."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:400(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:420(title)
 msgid "API server"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:401(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:421(para)
 msgid "At the heart of the cloud framework is an API server, which makes command and control of the hypervisor, storage, and networking programmatically available to users."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:404(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:424(para)
 msgid "The API endpoints are basic HTTP web services which handle authentication, authorization, and basic command and control functions using various API interfaces under the Amazon, Rackspace, and related models. This enables API compatibility with multiple existing tool sets created for interaction with offerings from other vendors. This broad compatibility prevents vendor lock-in."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:415(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:435(title)
 msgid "Message queue"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:416(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:436(para)
 msgid "A messaging queue brokers the interaction between compute nodes (processing), the networking controllers (software which controls network infrastructure), API endpoints, the scheduler (determines which physical hardware to allocate to a virtual resource), and similar components. Communication to and from the cloud controller is handled by HTTP requests through multiple API endpoints."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:425(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:445(para)
 msgid "A typical message passing event begins with the API server receiving a request from a user. The API server authenticates the user and ensures that they are permitted to issue the subject command. The availability of objects implicated in the request is evaluated and, if available, the request is routed to the queuing engine for the relevant workers. Workers continually listen to the queue based on their role, and occasionally their type host name. When an applicable work request arrives on the queue, the worker takes assignment of the task and begins executing it. Upon completion, a response is dispatched to the queue which is received by the API server and relayed to the originating user. Database entries are queried, added, or removed as necessary during the process."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:441(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:461(title)
 msgid "Compute worker"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:442(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:462(para)
 msgid "Compute workers manage computing instances on host machines. The API dispatches commands to compute workers to complete these tasks:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:447(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:467(para)
 msgid "Run instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:450(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:470(para)
 msgid "Terminate instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:453(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:473(para)
 msgid "Reboot instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:456(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:476(para)
 msgid "Attach volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:459(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:479(para)
 msgid "Detach volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:462(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:482(para)
 msgid "Get console output"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:467(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:487(title)
 msgid "Network Controller"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:468(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:488(para)
 msgid "The Network Controller manages the networking resources on host machines. The API server dispatches commands through the message queue, which are subsequently processed by Network Controllers. Specific operations include:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:475(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:495(para)
 msgid "Allocate fixed IP addresses"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:478(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:498(para)
 msgid "Configuring VLANs for projects"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:481(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:501(para)
 msgid "Configuring networks for compute nodes"
 msgstr ""
 
