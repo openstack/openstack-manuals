@@ -265,7 +265,12 @@ admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
         necessary to manually configure a periodic task that purges expired tokens
         hourly. You can however have a look at (and eventually customize) the already
         configured script.</para>
-      <para os="ubuntu;rhel;centos;fedora;opensuse;sles">We recommend that you use
+      <para os="opensuse;sles">The Keystone package already contains a cron job
+        under <filename>/etc/cron.hourly/openstack-keystone</filename>, so it is not
+        necessary to manually configure a periodic task that purges expired tokens
+        hourly. You can however have a look at (and eventually customize) the already
+        configured script.</para>
+      <para os="ubuntu;rhel;centos;fedora">We recommend that you use
         <systemitem class="service">cron</systemitem> to configure a periodic
         task that purges expired tokens hourly:</para>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
@@ -274,9 +279,6 @@ admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
   echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
   >> /var/spool/cron/keystone</userinput></screen>
-      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
-  echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
-  >> /var/spool/cron/tabs/keystone</userinput></screen>
     </step>
   </procedure>
 </section>
