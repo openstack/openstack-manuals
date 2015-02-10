@@ -40,7 +40,7 @@ Key Expires: Sat Dec 20 20:08:39 2014</programlisting>
       <para>Install the MongoDB package:</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install mongodb-server mongodb</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mongodb</userinput></screen>
-      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install mongodb-server</userinput></screen>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install mongodb-server mongodb-clients python-pymongo</userinput></screen>
     </step>
     <step>
       <para>Edit the <filename>/etc/mongodb.conf</filename> file and
@@ -83,8 +83,8 @@ Key Expires: Sat Dec 20 20:08:39 2014</programlisting>
 <prompt>#</prompt> <userinput>systemctl start mongodb.service</userinput></screen>
       <!-- NB: The use of mongod, and not mongodb, in the below screen is
       intentional. -->
-          <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>service mongod start</userinput>
-<prompt>#</prompt> <userinput>chkconfig mongod on</userinput></screen>
+          <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>systemctl enable mongod.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start mongod.service</userinput></screen>
         </step>
       </substeps>
     </step>
@@ -94,7 +94,19 @@ Key Expires: Sat Dec 20 20:08:39 2014</programlisting>
   db = db.getSiblingDB("ceilometer");
   db.addUser({user: "ceilometer",
   pwd: "<replaceable>CEILOMETER_DBPASS</replaceable>",
-  roles: [ "readWrite", "dbAdmin" ]})'</userinput></screen>
+  roles: [ "readWrite", "dbAdmin" ]})'</userinput>
+
+<computeroutput>MongoDB shell version: X.Y.Z
+connecting to: controller:27017/test
+{
+ "user" : "ceilometer",
+ "pwd" : "72f25aeee7ad4be52437d7cd3fc60f6f",
+ "roles" : [
+  "readWrite",
+  "dbAdmin"
+ ],
+ "_id" : ObjectId("5489c22270d7fad1ba631dc3")
+}</computeroutput></screen>
       <para>Replace <replaceable>CEILOMETER_DBPASS</replaceable> with a
         suitable password.</para>
     </step>
@@ -126,7 +138,7 @@ Key Expires: Sat Dec 20 20:08:39 2014</programlisting>
       </substeps>
     </step>
     <step>
-      <para>Create the Telemetry service API endpoints:</para>
+      <para>Create the Telemetry module API endpoints:</para>
       <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ metering / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:8777 \
@@ -206,7 +218,9 @@ Key Expires: Sat Dec 20 20:08:39 2014</programlisting>
 ...
 connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<replaceable>controller</replaceable>:27017/ceilometer</programlisting>
           <para>Replace <replaceable>CEILOMETER_DBPASS</replaceable> with
-            the password you chose for the Telemetry module database.</para>
+            the password you chose for the Telemetry module database. MongoDB
+            connection string requires escaping special characters as per
+            RFC2396.</para>
         </step>
         <step>
           <para>In the <literal>[DEFAULT]</literal> section, configure
@@ -267,13 +281,6 @@ metering_secret = <replaceable>METERING_SECRET</replaceable></programlisting>
           <para>Replace <replaceable>METERING_SECRET</replaceable> with the
             random value that you generated in a previous step.</para>
         </step>
-        <step os="ubuntu">
-          <para>In the <literal>[DEFAULT]</literal> section, configure the log
-            directory:</para>
-          <programlisting language="ini">[DEFAULT]
-...
-log_dir = /var/log/ceilometer</programlisting>
-        </step>
         <step os="opensuse;sles">
           <para>In the <literal>[collector]</literal> section, configure the
             dispatcher:</para>
@@ -281,6 +288,14 @@ log_dir = /var/log/ceilometer</programlisting>
           <programlisting language="ini">[collector]
 ...
 dispatcher = database</programlisting>
+        </step>
+        <step>
+          <para>(Optional) To assist with troubleshooting,
+            enable verbose logging in the <literal>[DEFAULT]</literal>
+            section:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+verbose = True</programlisting>
         </step>
       </substeps>
     </step>
