@@ -63,6 +63,20 @@
         </tr>
       </tbody>
     </table>
+    <para>If the root wrapper is not performing correctly, you can
+      add a workaround option into the <filename>nova.conf</filename>
+      configuration file. This workaround re-configures the
+      root wrapper configuration to fall back to running commands as
+      sudo, and is a Kilo release feature.</para>
+    <para>Including this workaround in your configuration file
+      safeguards your environment from issues that can impair root
+      wrapper performance. Tool changes that have impacted
+      <link xlink:href="https://git.openstack.org/cgit/openstack-dev/pbr/">Python Build Reasonableness (PBR)</link>,
+      for example, are a known issue that affects
+      root wrapper performance.</para>
+    <para>To set up this workaround, configure the <parameter>disable_rootwrap</parameter>
+      option in the <option>[workaround]</option> section
+      of the <filename>nova.conf</filename> configuration file.</para>
     <para>The filters definition files contain lists of filters that rootwrap
       will use to allow or deny a specific command. They are generally
       suffixed by <literal>.filters</literal>. Since they are in the trusted
