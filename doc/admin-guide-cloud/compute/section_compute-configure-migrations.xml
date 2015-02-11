@@ -56,160 +56,161 @@
   </para>
   <section xml:id="configuring-migrations-kvm-libvirt">
     <title>KVM-Libvirt</title>
-    <itemizedlist>
-      <title>Prerequisites</title>
-      <listitem>
-        <para><emphasis role="bold">Hypervisor:</emphasis> KVM with libvirt</para>
-      </listitem>
-      <listitem>
-        <para><emphasis role="bold">Shared storage:</emphasis>
+    <section xml:id="configuring-migrations-kvm-shared-storage">
+      <title>Shared storage</title>
+      <itemizedlist>
+        <title>Prerequisites</title>
+        <listitem>
+          <para><emphasis role="bold">Hypervisor:</emphasis> KVM with libvirt</para>
+        </listitem>
+        <listitem>
+          <para><emphasis role="bold">Shared storage:</emphasis>
           <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename>
           (for example, <filename>/var/lib/nova/instances</filename>) has to
           be mounted by shared storage. This guide uses NFS but other options,
           including the <link
           xlink:href="http://gluster.org/community/documentation//index.php/OSConnect">
           OpenStack Gluster Connector</link> are available.
-        </para>
-      </listitem>
-      <listitem>
-        <para><emphasis role="bold">Instances:</emphasis> Instance can be
-          migrated with iSCSI-based volumes.
-        </para>
-      </listitem>
-    </itemizedlist>
-    <note>
-      <itemizedlist>
+          </para>
+        </listitem>
         <listitem>
-          <para>Because the Compute service does not use the libvirt live
+          <para><emphasis role="bold">Instances:</emphasis> Instance can be
+          migrated with iSCSI-based volumes.
+          </para>
+        </listitem>
+      </itemizedlist>
+      <note>
+        <itemizedlist>
+          <listitem>
+            <para>Because the Compute service does not use the libvirt live
             migration functionality by default, guests are suspended before
             migration and might experience several minutes of downtime. For
             details, see <xref linkend="true-live-migration-kvm-libvirt"/>.
             </para>
-        </listitem>
-        <listitem>
-          <para>This guide assumes the default value for
+          </listitem>
+          <listitem>
+            <para>This guide assumes the default value for
             <option>instances_path</option> in your <filename>nova.conf</filename> file
             (<filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>).
             If you have changed the <literal>state_path</literal> or
             <literal>instances_path</literal> variables, modify the commands
             accordingly.</para>
-        </listitem>
-        <listitem>
-          <para>You must specify <literal>vncserver_listen=0.0.0.0</literal>
+          </listitem>
+          <listitem>
+            <para>You must specify <literal>vncserver_listen=0.0.0.0</literal>
             or live migration will not work correctly.
-          </para>
-        </listitem>
-      </itemizedlist>
-    </note>
-    <section xml:id="section_example-compute-install">
-      <title>Example Compute installation environment</title>
-      <itemizedlist>
-        <listitem>
-          <para>Prepare at least three servers. In this example, we refer to
+            </para>
+          </listitem>
+        </itemizedlist>
+      </note>
+      <section xml:id="section_example-compute-install">
+        <title>Example Compute installation environment</title>
+        <itemizedlist>
+          <listitem>
+            <para>Prepare at least three servers. In this example, we refer to
             the servers as <literal>HostA</literal>, <literal>HostB</literal>,
             and <literal>HostC</literal>:</para>
-          <itemizedlist>
-            <listitem>
-              <para><literal>HostA</literal> is the
+            <itemizedlist>
+              <listitem>
+                <para><literal>HostA</literal> is the
                 <firstterm baseform="cloud controller">Cloud Controller</firstterm>,
                 and should run these services: <systemitem class="service">
                 nova-api</systemitem>, <systemitem class="service">nova-scheduler</systemitem>,
                 <literal>nova-network</literal>, <systemitem class="service">
                 cinder-volume</systemitem>, and <literal>nova-objectstore</literal>.
-              </para>
-            </listitem>
-            <listitem>
-              <para><literal>HostB</literal> and <literal>HostC</literal> are
+                </para>
+              </listitem>
+              <listitem>
+                <para><literal>HostB</literal> and <literal>HostC</literal> are
                 the <firstterm baseform="compute node">compute nodes</firstterm>
                 that run <systemitem class="service">nova-compute</systemitem>.
-              </para>
-            </listitem>
-          </itemizedlist>
-          <para>Ensure that <literal><replaceable>NOVA-INST-DIR</replaceable></literal>
+                </para>
+              </listitem>
+            </itemizedlist>
+            <para>Ensure that <literal><replaceable>NOVA-INST-DIR</replaceable></literal>
             (set with <literal>state_path</literal> in the <filename>nova.conf</filename>
             file) is the same on all hosts.
-          </para>
-        </listitem>
-        <listitem>
-          <para>In this example, <literal>HostA</literal> is the NFSv4 server
+            </para>
+          </listitem>
+          <listitem>
+            <para>In this example, <literal>HostA</literal> is the NFSv4 server
             that exports <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>
             directory. <literal>HostB</literal> and <literal>HostC</literal>
             are NFSv4 clients that mount <literal>HostA</literal>.</para>
-        </listitem>
-      </itemizedlist>
-      <procedure>
-        <title>Configuring your system</title>
-        <step>
-          <para>Configure your DNS or <filename>/etc/hosts</filename> and
+          </listitem>
+        </itemizedlist>
+        <procedure>
+          <title>Configuring your system</title>
+          <step>
+            <para>Configure your DNS or <filename>/etc/hosts</filename> and
             ensure it is consistent across all hosts. Make sure that the three
             hosts can perform name resolution with each other. As a test, use
             the <command>ping</command> command to ping each host from one
             another.
-          </para>
-          <screen><prompt>$</prompt> <userinput>ping HostA</userinput>
-                  <prompt>$</prompt> <userinput>ping HostB</userinput>
-                  <prompt>$</prompt> <userinput>ping HostC</userinput>
-          </screen>
-        </step>
-        <step>
-          <para>Ensure that the UID and GID of your Compute and libvirt users
+            </para>
+            <screen><prompt>$</prompt> <userinput>ping HostA</userinput>
+<prompt>$</prompt> <userinput>ping HostB</userinput>
+<prompt>$</prompt> <userinput>ping HostC</userinput></screen>
+          </step>
+          <step>
+            <para>Ensure that the UID and GID of your Compute and libvirt users
             are identical between each of your servers. This ensures that the
             permissions on the NFS mount works correctly.
-          </para>
-        </step>
-        <step>
-          <para>Export <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>
+            </para>
+          </step>
+          <step>
+            <para>Export <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>
             from <literal>HostA</literal>, and ensure it is readable and
             writable by the Compute user on <literal>HostB</literal> and
             <literal>HostC</literal>.
-          </para>
-          <para>For more information, see: <link
-              xlink:href="https://help.ubuntu.com/community/SettingUpNFSHowTo"
-              >SettingUpNFSHowTo</link> or <link
-              xlink:href="http://www.cyberciti.biz/faq/centos-fedora-rhel-nfs-v4-configuration/"
-              >CentOS/Red Hat: Setup NFS v4.0 File Server</link></para>
-        </step>
-        <step>
-          <para>Configure the NFS server at <literal>HostA</literal> by adding
+            </para>
+            <para>For more information, see: <link
+            xlink:href="https://help.ubuntu.com/community/SettingUpNFSHowTo"
+            >SettingUpNFSHowTo</link> or <link
+            xlink:href="http://www.cyberciti.biz/faq/centos-fedora-rhel-nfs-v4-configuration/"
+            >CentOS/Red Hat: Setup NFS v4.0 File Server</link></para>
+          </step>
+          <step>
+            <para>Configure the NFS server at <literal>HostA</literal> by adding
             the following line to the <filename>/etc/exports</filename> file:
-          </para>
-          <programlisting><replaceable>NOVA-INST-DIR</replaceable>/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</programlisting>
-          <para>Change the subnet mask (<literal>255.255.0.0</literal>) to the
+            </para>
+            <programlisting><replaceable>NOVA-INST-DIR</replaceable>/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)</programlisting>
+            <para>Change the subnet mask (<literal>255.255.0.0</literal>) to the
             appropriate value to include the IP addresses of <literal>HostB</literal>
             and <literal>HostC</literal>. Then restart the NFS server:
-          </para>
-          <screen><prompt>#</prompt> <userinput>/etc/init.d/nfs-kernel-server restart</userinput>
+            </para>
+            <screen><prompt>#</prompt> <userinput>/etc/init.d/nfs-kernel-server restart</userinput>
 <prompt>#</prompt> <userinput>/etc/init.d/idmapd restart</userinput></screen>
-        </step>
-        <step>
-          <para>On both compute nodes, enable the 'execute/search' bit on your
+          </step>
+          <step>
+            <para>On both compute nodes, enable the 'execute/search' bit on your
             shared directory to allow qemu to be able to use the images within
             the directories. On all hosts, run the following command:
-          </para>
-          <screen><prompt>$</prompt> <userinput>chmod o+x <replaceable>NOVA-INST-DIR</replaceable>/instances</userinput> </screen>
-        </step>
-        <step>
-          <para>Configure NFS on <literal>HostB</literal> and <literal>HostC</literal>
+            </para>
+            <screen><prompt>$</prompt> <userinput>chmod o+x <replaceable>NOVA-INST-DIR</replaceable>/instances</userinput> </screen>
+          </step>
+          <step>
+            <para>Configure NFS on <literal>HostB</literal> and <literal>HostC</literal>
             by adding the following line to the <filename>/etc/fstab</filename>
             file:
-          </para>
-          <programlisting>HostA:/ /<replaceable>NOVA-INST-DIR</replaceable>/instances nfs4 defaults 0 0</programlisting>
-          <para>Ensure that you can mount the exported directory:
-          </para>
-          <screen><prompt>$</prompt> <userinput>mount -a -v</userinput></screen>
-          <para>Check that <literal>HostA</literal> can see the
+            </para>
+            <programlisting>HostA:/ /<replaceable>NOVA-INST-DIR</replaceable>/instances nfs4 defaults 0 0</programlisting>
+            <para>Ensure that you can mount the exported directory:
+            </para>
+            <screen><prompt>$</prompt> <userinput>mount -a -v</userinput></screen>
+            <para>Check that <literal>HostA</literal> can see the
             <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename>"
             directory:
-          </para>
-          <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput>
+            </para>
+            <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput>
 <computeroutput>drwxr-xr-x 2 nova nova 4096 2012-05-19 14:34 nova-install-dir/instances/</computeroutput></screen>
-          <para>Perform the same check on <literal>HostB</literal>
+            <para>Perform the same check on <literal>HostB</literal>
             and <literal>HostC</literal>, paying special attention to the
             permissions (Compute should be able to write):
-          </para>
-          <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput>
+            </para>
+            <screen><prompt>$</prompt> <userinput>ls -ld <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename></userinput>
 <computeroutput>drwxr-xr-x 2 nova nova 4096 2012-05-07 14:34 nova-install-dir/instances/</computeroutput></screen>
-          <screen><prompt>$</prompt> <userinput>df -k</userinput>
+            <screen><prompt>$</prompt> <userinput>df -k</userinput>
 <computeroutput>Filesystem           1K-blocks      Used Available Use% Mounted on
 /dev/sda1            921514972   4180880 870523828   1% /
 none                  16498340      1228  16497112   1% /dev
@@ -217,74 +218,107 @@ none                  16502856         0  16502856   0% /dev/shm
 none                  16502856       368  16502488   1% /var/run
 none                  16502856         0  16502856   0% /var/lock
 none                  16502856         0  16502856   0% /lib/init/rw
-HostA:        921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;--- this line is important.)</computeroutput></screen>
-        </step>
-        <step>
-          <para>Update the libvirt configurations so that the calls can be
+HostA:               921515008 101921792 772783104  12% /var/lib/nova/instances  ( &lt;--- this line is important.)</computeroutput></screen>
+          </step>
+          <step>
+            <para>Update the libvirt configurations so that the calls can be
             made securely. These methods enable remote access over TCP and are
             not documented here.
-          </para>
-          <itemizedlist>
-            <listitem>
-              <para>SSH tunnel to libvirtd's UNIX socket</para>
-            </listitem>
-            <listitem>
-              <para>libvirtd TCP socket, with GSSAPI/Kerberos for auth+data
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>SSH tunnel to libvirtd's UNIX socket</para>
+              </listitem>
+              <listitem>
+                <para>libvirtd TCP socket, with GSSAPI/Kerberos for auth+data
                 encryption
-              </para>
-            </listitem>
-            <listitem>
-              <para>libvirtd TCP socket, with TLS for encryption and x509
+                </para>
+              </listitem>
+              <listitem>
+                <para>libvirtd TCP socket, with TLS for encryption and x509
                 client certs for authentication
-              </para>
-            </listitem>
-            <listitem>
-              <para>libvirtd TCP socket, with TLS for encryption and Kerberos
+                </para>
+              </listitem>
+              <listitem>
+                <para>libvirtd TCP socket, with TLS for encryption and Kerberos
                 for authentication
-              </para>
-            </listitem>
-          </itemizedlist>
-          <para>Restart libvirt. After you run the command, ensure that
+                </para>
+              </listitem>
+            </itemizedlist>
+            <para>Restart libvirt. After you run the command, ensure that
             libvirt is successfully restarted:
-          </para>
-          <screen><prompt>#</prompt> <userinput>stop libvirt-bin &amp;&amp; start libvirt-bin</userinput>
+            </para>
+            <screen><prompt>#</prompt> <userinput>stop libvirt-bin &amp;&amp; start libvirt-bin</userinput>
 <prompt>$</prompt> <userinput>ps -ef | grep libvirt</userinput>
 <computeroutput>root 1145 1 0 Nov27 ? 00:00:03 /usr/sbin/libvirtd -d -l</computeroutput></screen>
-        </step>
-        <step>
-          <para>Configure your firewall to allow libvirt to communicate
+          </step>
+          <step>
+            <para>Configure your firewall to allow libvirt to communicate
             between nodes.
-          </para>
-          <para>By default, libvirt listens on TCP port 16509, and an
+            </para>
+            <para>By default, libvirt listens on TCP port 16509, and an
             ephemeral TCP range from 49152 to 49261 is used for the KVM
             communications. Based on the secure remote access TCP configuration
             you chose, be careful which ports you open, and always understand
             who has access. For information about ports that are used with
             libvirt, see <link xlink:href="http://libvirt.org/remote.html#Remote_libvirtd_configuration">
             the libvirt documentation</link>.
-          </para>
-        </step>
-        <step>
-          <para>You can now configure options for live migration. In most
+            </para>
+          </step>
+          <step>
+            <para>You can now configure options for live migration. In most
             cases, you will not need to configure any options. The following
             chart is for advanced users only.
-          </para>
-        </step>
-      </procedure>
-      <xi:include href="../../common/tables/nova-livemigration.xml"/>
-    </section>
-    <section xml:id="true-live-migration-kvm-libvirt">
-      <title>Enabling true live migration</title>
-      <para>By default, the Compute service does not use the libvirt live
+            </para>
+          </step>
+        </procedure>
+        <xi:include href="../../common/tables/nova-livemigration.xml"/>
+      </section>
+      <section xml:id="true-live-migration-kvm-libvirt">
+        <title>Enabling true live migration</title>
+        <para>By default, the Compute service does not use the libvirt live
         migration function. To enable this function, add the following line to
         the <filename>nova.conf</filename> file:
-      </para>
-      <programlisting>live_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE, VIR_MIGRATE_TUNNELLED</programlisting>
-      <para>The Compute service does not use libvirt's live migration by
+        </para>
+        <programlisting>live_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE, VIR_MIGRATE_TUNNELLED</programlisting>
+        <para>The Compute service does not use libvirt's live migration by
         default because there is a risk that the migration process will never
         end. This can happen if the guest operating system uses blocks on the
         disk faster than they can be migrated.
-      </para>
+        </para>
+      </section>
+    </section>
+    <section xml:id="configuring-migrations-kvm-block-migration">
+      <title>Block Migration</title>
+      <para>Configuring KVM for block migration is exactly the same as
+      the above configuration in <xref
+      linkend="configuring-migrations-kvm-shared-storage" />, except
+      that
+      <literal><replaceable>NOVA-INST-DIR</replaceable>/instances</literal>
+      is local to each host rather than shared. No NFS client or
+      server configuration is required.</para>
+      <note>
+        <itemizedlist>
+          <listitem>
+            <para>To use block migration, you must use the
+            <parameter>--block-migrate</parameter> parameter with the live migration
+            command.</para>
+          </listitem>
+        <listitem>
+          <para>Block migration is incompatible with read-only devices
+          such as CD-ROMs and <link
+          xlink:href="http://docs.openstack.org/user-guide/content/config-drive.html"
+          >Configuration Drive (config_drive)</link>.
+            </para>
+        </listitem>
+          <listitem>
+            <para>Since the ephemeral drives are copied over the network in
+              block migration, migrations of instances with heavy I/O loads may
+              never complete if the drives are writing faster than the data can
+              be copied over the network.</para>
+          </listitem>
+        </itemizedlist>
+      </note>
     </section>
   </section>
   <!--status: good, right place-->
