@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-02-10 01:51+0000\n"
-"PO-Revision-Date: 2015-02-10 02:23+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-02-10 08:44+0000\n"
+"PO-Revision-Date: 2015-02-11 04:20+0000\n"
+"Last-Translator: johnwoo_lee <lijiangsheng1@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2019,7 +2019,7 @@ msgid ""
 "to build a dedicated set of tenant private networks across the secondary "
 "link using overlay networks with a third party mapping the site overlays to "
 "each other."
-msgstr ""
+msgstr "站点间的链接能力描述的是在不同的OpenStack站点之间连通性的能力。这里包含的参数有带宽、延迟，线路是否是专用、以及任何连接的业务规则认可。站点之间连接的能力和数量将决定部署时何种属性可用。例如，如果在两个站点之间有一组高带宽的连接可用，也许就想配置一个在两个站点之间分离的存储复制网络，以支持单一的Swift端点和共享的对象存储。 (此技术的一个更好的例子，详细的配置，请参阅 <link href=\"http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network\">http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network</link>)。此场景的另外一个属性是构建专用的一组租户私有网络，在第二条线路使用覆盖网络，一个第三方的映射在彼此的站点覆盖。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml38(para)
 msgid ""
@@ -2030,7 +2030,7 @@ msgid ""
 "properly. Additionally, OpenStack may encounter similar types of issues. To "
 "mitigate this, tuning of the Identity service call timeouts may be necessary"
 " to prevent issues authenticating against a central Identity service."
-msgstr ""
+msgstr "应用的行为驱动着站点之间线路能力的需求，如果线路的延迟太高，某些应用使用大量的小包，比如RPC调用，就会遭遇彼此之间的通信问题和正确操作的问题。另外，OpenStack会遇到类似的问题，为了降低这些问题的发生几率，优化认证服务调用的超时时间就非常的有必要，这样可以防止认证在中心化身份服务的冲突。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml47(para)
 msgid ""
@@ -2043,7 +2043,7 @@ msgid ""
 "OpenStack Networking was not capable of managing tunnel IDs across "
 "installations. This means that if one site runs out of IDs, but other does "
 "not, that tenant's network will be unable to reach the other site."
-msgstr ""
+msgstr "另外关于容量的考虑因素，当它涉及到多站点部署网络的可用量时，以及对于租户网络的负载网络的性能。如果使用了跨zone的共享租户网络，那么将外部覆盖管理或控制器映射到一起就很迫切。非常有必要确保zone之间的ID量一致。记住，在Icehouse版本发布时，OpenStack网络还没有在安装时拥有管理隧道ID的能力，这意味着如果其中一个站点用完了ID，但是另外一个站点没有用完，租户网络将无法达到其它站点。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml58(para)
 msgid ""
@@ -2053,7 +2053,7 @@ msgid ""
 "However, it should be noted that cells may be necessary to grow an "
 "individual region beyond a certain point. This point depends on the size of "
 "your cluster and the ratio of virtual machines per hypervisor."
-msgstr ""
+msgstr "容量还有其它形式的表现，region增长的能力依赖于横向扩展更多可用的计算节点。此话题在章节计算型中会谈到更多的细节。总之，务必记得也许需要为各个region增加cell以超过一定的点，此点又依赖于集群的大小和每hypervisor对虚拟机的比例。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml66(para)
 msgid ""
@@ -2068,7 +2068,7 @@ msgid ""
 "with a caching HTTP proxy and load balancer. Since swift objects are "
 "returned to the requester via HTTP, this load balancer would alleviate the "
 "load required on the swift proxies."
-msgstr ""
+msgstr "第三种形式的容量表现在multi-region-capable 的OpenStack组件，中心化的对象存储在跨多region通过单一的命名空间能够服务对象。此工作方式由swift代理来访问对象信息，因此是有可能代理过度负载。有两种方法可减低此问题，第一，部署大量的swift代理，此方法的缺陷在于代理没有负载均衡，大量的文件请求会访问同一个proxy。第二种降低负载的办法是在代理的前端使用HTTP代理缓存和负载均衡器。因此swift对象会通过HTTP来响应请求，此负载均衡器能缓和swift代理的负载请求。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml79(title)
 #: ./doc/arch-design/compute_focus/section_tech_considerations_compute_focus.xml215(title)
@@ -2141,7 +2141,7 @@ msgid ""
 "considerations that do not come into play in a single-site deployment. Being"
 " a distributed deployment, multi-site deployments incur a few extra "
 "penalties to performance in certain situations."
-msgstr ""
+msgstr "决定多区域安装的性能所包含的考虑因素和在单站点部署是不一样的，作为分布式部署，多区域部署在一些场景中会遭遇一些额外的性能瓶颈。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml120(para)
 msgid ""
@@ -2152,7 +2152,7 @@ msgid ""
 "centralized Identity implementation. It can also affect certain applications"
 " which rely on remote procedure call (RPC) for normal operation. An example "
 "of this can be seen in High Performance Computing workloads."
-msgstr ""
+msgstr "尽管多区域系统可以基于地理位置分离，它们会在跨region通信时遭遇糟糕的延迟和抖动。这种情况尤其影响系统的如OpenStack身份服务从region做认证尝试时没有实现中心化的身份服务。它也会影响到一些应用如远程过程调用(RPC)的正常操作，在高性能计算负载型中此类问题很常见。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml129(para)
 msgid ""
@@ -2263,7 +2263,7 @@ msgid ""
 " For instance, if an application requires an equally balanced number of "
 "nodes across sites, the same heat template can be used to cover each site "
 "with small alterations to only the region name."
-msgstr ""
+msgstr "另外一个管理多区域安装的工具是Orchestration(heat)。Orchestration模块允许使用模板来定义一组实例，来一起启动或者是扩展已有的实例。它也可用于基于region的匹配设置或比较各组的不同。对于实例来说，如果一个应用要求在跨站点平均负载到多个节点，相同的heat模板可用于覆盖到每个站点，改动很小仅仅是一个region的名称。"
 
 #: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml9(para)
 msgid ""
