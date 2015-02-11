@@ -15,7 +15,7 @@
         interface (CLI) for the Bare metal and its extensions.
 
        This chapter documents <command>ironic</command> version
-        <literal>0.4.0</literal>.
+        <literal>0.4.1</literal>.
     </para>
 
     <para>For help on a specific <command>ironic</command>
@@ -32,7 +32,7 @@
               [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
               [--os-auth-token OS_AUTH_TOKEN] [--ironic-url IRONIC_URL]
               [--ironic-api-version IRONIC_API_VERSION]
-              [--os-service-type OS_SERVICE_TYPE]
+              [--os-service-type OS_SERVICE_TYPE] [--os-endpoint OS_ENDPOINT]
               [--os-endpoint-type OS_ENDPOINT_TYPE] [--insecure]
               [--os-cacert &lt;ca-certificate&gt;] [--os-cert &lt;certificate&gt;]
               [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;]
@@ -443,6 +443,16 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_SERVICE_TYPE]</code> or "baremetal"
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-endpoint OS_ENDPOINT</command></term>
+    <listitem>
+      <para>
+      Specify an endpoint to use instead of retrieving one
+      from the service catalog (via authentication).
+      Defaults to <code>env[OS_SERVICE_ENDPOINT]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -1255,7 +1265,7 @@ Power the node on or off or reboot.
     </section>
     <section xml:id="ironicclient_subcommand_node-set-provision-state">
         <title>ironic node-set-provision-state</title>
-        <screen><computeroutput>usage: ironic node-set-provision-state [--config-drive &lt;config_drive&gt;]
+        <screen><computeroutput>usage: ironic node-set-provision-state [--config-drive &lt;config drive&gt;]
                                        &lt;node id&gt; &lt;provision state&gt;</computeroutput></screen>
         <para>
 Provision, rebuild or delete an instance.
@@ -1281,7 +1291,7 @@ Provision, rebuild or delete an instance.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--config-drive &lt;config_drive&gt;</command></term>
+    <term><command>--config-drive &lt;config drive&gt;</command></term>
     <listitem>
       <para>
       A gzipped base64 encoded config drive string or the
@@ -1472,8 +1482,9 @@ Delete a port.
     </section>
     <section xml:id="ironicclient_subcommand_port-list">
         <title>ironic port-list</title>
-        <screen><computeroutput>usage: ironic port-list [--detail] [--limit &lt;limit&gt;] [--marker &lt;marker&gt;]
-                        [--sort-key &lt;sort_key&gt;] [--sort-dir &lt;sort_dir&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: ironic port-list [--detail] [--address &lt;macaddress&gt;] [--limit &lt;limit&gt;]
+                        [--marker &lt;marker&gt;] [--sort-key &lt;sort_key&gt;]
+                        [--sort-dir &lt;sort_dir&gt;]</computeroutput></screen>
         <para>
 List ports.
         </para>  <variablelist wordsize="10">
@@ -1483,6 +1494,15 @@ List ports.
     <listitem>
       <para>
         Show detailed information about ports.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--address &lt;macaddress&gt;</command></term>
+    <listitem>
+      <para>
+      MAC address of port, to get the port which has this
+      address.
       </para>
     </listitem>
   </varlistentry>
