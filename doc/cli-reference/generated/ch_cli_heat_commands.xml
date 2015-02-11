@@ -15,7 +15,7 @@
         interface (CLI) for the Orchestration API and its extensions.
 
        This chapter documents <command>heat</command> version
-        <literal>0.2.12</literal>.
+        <literal>0.3.0</literal>.
     </para>
 
     <para>For help on a specific <command>heat</command>
@@ -78,6 +78,30 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>config-create</command></term>
+    <listitem>
+      <para>
+        Create a software configuration.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>config-delete</command></term>
+    <listitem>
+      <para>
+        Delete software configurations.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>config-show</command></term>
+    <listitem>
+      <para>
+        View details of a software configuration.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>create</command></term>
     <listitem>
       <para>
@@ -90,6 +114,31 @@
     <listitem>
       <para>
         <emphasis>DEPRECATED!</emphasis> Use stack-delete instead.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>deployment-delete</command></term>
+    <listitem>
+      <para>
+        Delete software deployments.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>deployment-metadata-show</command></term>
+    <listitem>
+      <para>
+      Get deployment configuration metadata for the
+      specified server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>deployment-show</command></term>
+    <listitem>
+      <para>
+        Show the details of a software deployment.
       </para>
     </listitem>
   </varlistentry>
@@ -230,6 +279,38 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>service-list</command></term>
+    <listitem>
+      <para>
+        List the Heat engines.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>snapshot-delete</command></term>
+    <listitem>
+      <para>
+        Delete a snapshot of a stack.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>snapshot-list</command></term>
+    <listitem>
+      <para>
+        List the snapshots of a stack.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>snapshot-show</command></term>
+    <listitem>
+      <para>
+        Show a snapshot of a stack.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>stack-abandon</command></term>
     <listitem>
       <para>
@@ -286,10 +367,26 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>stack-restore</command></term>
+    <listitem>
+      <para>
+        Restore a snapshot of a stack.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>stack-show</command></term>
     <listitem>
       <para>
         Describe the stack.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>stack-snapshot</command></term>
+    <listitem>
+      <para>
+        Make a snapshot of a stack.
       </para>
     </listitem>
   </varlistentry>
@@ -678,6 +775,150 @@ Suspend the stack.
 Retrieve build information.
         </para>
     </section>
+    <section xml:id="heatclient_subcommand_config-create">
+        <title>heat config-create</title>
+        <screen><computeroutput>usage: heat config-create [-f &lt;FILE or URL&gt;] [-c &lt;FILE or URL&gt;]
+                          [-g &lt;GROUP_NAME&gt;]
+                          &lt;CONFIG_NAME&gt;</computeroutput></screen>
+        <para>
+Create a software configuration.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;CONFIG_NAME&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the configuration to create.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-f &lt;FILE or URL&gt;, --definition-file &lt;FILE or URL&gt;</command></term>
+    <listitem>
+      <para>
+      Path to JSON/YAML containing map defining &lt;inputs&gt;,
+      &lt;outputs&gt;, and &lt;options&gt;.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-c &lt;FILE or URL&gt;, --config-file &lt;FILE or URL&gt;</command></term>
+    <listitem>
+      <para>
+      Path to configuration script/data.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-g &lt;GROUP_NAME&gt;, --group &lt;GROUP_NAME&gt;</command></term>
+    <listitem>
+      <para>
+      Group name of configuration tool expected by the
+      config.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_config-delete">
+        <title>heat config-delete</title>
+        <screen><computeroutput>usage: heat config-delete &lt;ID&gt; [&lt;ID&gt; ...]</computeroutput></screen>
+        <para>
+Delete software configurations.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        IDs of the configurations to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_config-show">
+        <title>heat config-show</title>
+        <screen><computeroutput>usage: heat config-show [-c] &lt;ID&gt;</computeroutput></screen>
+        <para>
+View details of a software configuration.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the config.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-c, --config-only</command></term>
+    <listitem>
+      <para>
+        Only display the value of the &lt;config&gt; property.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_deployment-delete">
+        <title>heat deployment-delete</title>
+        <screen><computeroutput>usage: heat deployment-delete &lt;ID&gt; [&lt;ID&gt; ...]</computeroutput></screen>
+        <para>
+Delete software deployments.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        IDs of the deployments to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_deployment-metadata-show">
+        <title>heat deployment-metadata-show</title>
+        <screen><computeroutput>usage: heat deployment-metadata-show &lt;ID&gt;</computeroutput></screen>
+        <para>
+Get deployment configuration metadata for the specified server.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the server to fetch deployments for.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_deployment-show">
+        <title>heat deployment-show</title>
+        <screen><computeroutput>usage: heat deployment-show &lt;ID&gt;</computeroutput></screen>
+        <para>
+Show the details of a software deployment.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the deployment.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="heatclient_subcommand_event-list">
         <title>heat event-list</title>
         <screen><computeroutput>usage: heat event-list [-r &lt;RESOURCE&gt;] [-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
@@ -787,7 +1028,7 @@ Show available outputs.
     </section>
     <section xml:id="heatclient_subcommand_output-show">
         <title>heat output-show</title>
-        <screen><computeroutput>usage: heat output-show &lt;NAME or ID&gt; &lt;OUTPUT NAME&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: heat output-show [-a] [-F &lt;FORMAT&gt;] &lt;NAME or ID&gt; [&lt;OUTPUT NAME&gt;]</computeroutput></screen>
         <para>
 Show a specific stack output.
         </para>  <variablelist wordsize="10">
@@ -805,6 +1046,25 @@ Show a specific stack output.
     <listitem>
       <para>
         Name of an output to display.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-a, --all</command></term>
+    <listitem>
+      <para>
+        Display all stack outputs.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-F &lt;FORMAT&gt;, --format &lt;FORMAT&gt;</command></term>
+    <listitem>
+      <para>
+      The output value format, one of: json, raw
       </para>
     </listitem>
   </varlistentry>
@@ -1009,6 +1269,80 @@ Generate a template based on a resource type.
     <listitem>
       <para>
       The template output format, one of: yaml, json.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_service-list">
+        <title>heat service-list</title>
+        <screen><computeroutput>usage: heat service-list</computeroutput></screen>
+        <para>
+List the Heat engines.
+        </para>
+    </section>
+    <section xml:id="heatclient_subcommand_snapshot-delete">
+        <title>heat snapshot-delete</title>
+        <screen><computeroutput>usage: heat snapshot-delete &lt;NAME or ID&gt; &lt;SNAPSHOT&gt;</computeroutput></screen>
+        <para>
+Delete a snapshot of a stack.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAME or ID&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the stack containing the snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;SNAPSHOT&gt;</command></term>
+    <listitem>
+      <para>
+        The ID of the snapshot to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_snapshot-list">
+        <title>heat snapshot-list</title>
+        <screen><computeroutput>usage: heat snapshot-list &lt;NAME or ID&gt;</computeroutput></screen>
+        <para>
+List the snapshots of a stack.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAME or ID&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the stack containing the snapshots.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_snapshot-show">
+        <title>heat snapshot-show</title>
+        <screen><computeroutput>usage: heat snapshot-show &lt;NAME or ID&gt; &lt;SNAPSHOT&gt;</computeroutput></screen>
+        <para>
+Show a snapshot of a stack.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAME or ID&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the stack containing the snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;SNAPSHOT&gt;</command></term>
+    <listitem>
+      <para>
+        The ID of the snapshot to show.
       </para>
     </listitem>
   </varlistentry>
@@ -1402,6 +1736,31 @@ Preview the stack.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="heatclient_subcommand_stack-restore">
+        <title>heat stack-restore</title>
+        <screen><computeroutput>usage: heat stack-restore &lt;NAME or ID&gt; &lt;SNAPSHOT&gt;</computeroutput></screen>
+        <para>
+Restore a snapshot of a stack.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAME or ID&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the stack containing the snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;SNAPSHOT&gt;</command></term>
+    <listitem>
+      <para>
+        The ID of the snapshot to restore.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="heatclient_subcommand_stack-show">
         <title>heat stack-show</title>
         <screen><computeroutput>usage: heat stack-show &lt;NAME or ID&gt;</computeroutput></screen>
@@ -1414,6 +1773,34 @@ Describe the stack.
     <listitem>
       <para>
         Name or ID of stack to describe.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_stack-snapshot">
+        <title>heat stack-snapshot</title>
+        <screen><computeroutput>usage: heat stack-snapshot [-n &lt;NAME&gt;] &lt;NAME or ID&gt;</computeroutput></screen>
+        <para>
+Make a snapshot of a stack.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAME or ID&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of stack to snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-n &lt;NAME&gt;, --name &lt;NAME&gt;</command></term>
+    <listitem>
+      <para>
+      If specified, the name given to the snapshot.
       </para>
     </listitem>
   </varlistentry>
