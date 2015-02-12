@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-02-08 06:11+0000\n"
+"POT-Creation-Date: 2015-02-12 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2765,6 +2765,70 @@ msgstr ""
 msgid "To authenticate against an Image Service endpoint, instantiate a <link href=\"http://docs.openstack.org/developer/python-glanceclient/api/glanceclient.v2.client.html#glanceclient.v2.client.Client\"> glanceclient.v2.client.Client</link> object:"
 msgstr ""
 
+#: ./doc/user-guide/section_object-api-expire-objects.xml:7(title)
+msgid "Schedule objects for deletion"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:8(para)
+msgid "Scheduling an object for deletion is helpful for managing objects that you do not want to permanently store, such as log files, recurring full backups of a dataset, or documents or images that become outdated at a specified future time."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:12(para)
+msgid "To schedule an object for deletion, include one of these headers with the or request on the object:"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:16(term)
+msgid "X-Delete-At"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:18(para)
+msgid "A UNIX epoch timestamp, in integer form. For example, <literal>1348691905</literal> represents <literal>Wed, 26 Sept 2012 20:38:25 GMT</literal>. Specifies the time when you want the object to expire, no longer be served, and be deleted completely from the object store."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:28(term)
+msgid "X-Delete-After"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:30(para)
+msgid "An integer value. Specifies the number of seconds from the time of the request to when you want to delete the object."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:33(para)
+msgid "This header is converted to an <literal>X-Delete-At</literal> header that is set to the sum of the <literal>X-Delete-After</literal> value plus the current time, in seconds."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:42(para)
+msgid "Use <link href=\"http://www.epochconverter.com/\">http://www.epochconverter.com/</link> to convert dates to and from epoch timestamps and for batch conversions."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:47(para)
+msgid "Use the method to assign expiration headers to existing objects that you want to expire."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:50(title)
+msgid "Delete object at specified time request"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:51(para)
+msgid "In this example, the <literal>X-Delete-At</literal> header is assigned a UNIX epoch timestamp in integer form for <literal>Mon, 11 Jun 2012 15:38:25 GMT</literal>."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:54(replaceable) ./doc/user-guide/section_object-api-env-vars.xml:11(literal)
+msgid "publicURL"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:54(replaceable) ./doc/user-guide/section_object-api-env-vars.xml:21(literal)
+msgid "token"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:59(title)
+msgid "Delete object after specified interval request"
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-expire-objects.xml:60(para)
+msgid "In this example, the <code>X-Delete-After</code> header is set to 864000 seconds. After this time, the object expires."
+msgstr ""
+
 #: ./doc/user-guide/ch_dashboard.xml:10(title)
 msgid "OpenStack dashboard"
 msgstr ""
@@ -3069,7 +3133,7 @@ msgstr ""
 msgid "FLOATING_IP_ADDRESS"
 msgstr ""
 
-#: ./doc/user-guide/section_cli_nova_floating_ips.xml:102(para) ./doc/user-guide/hot/section_hot_spec.xml:311(para) ./doc/user-guide/hot/section_hot_spec.xml:330(para) ./doc/user-guide/hot/section_hot_spec.xml:351(para) ./doc/user-guide/hot/section_hot_spec.xml:702(para) ./doc/user-guide/hot/section_basic_resources.xml:320(para)
+#: ./doc/user-guide/section_cli_nova_floating_ips.xml:102(para) ./doc/user-guide/hot/section_hot_spec.xml:311(para) ./doc/user-guide/hot/section_hot_spec.xml:330(para) ./doc/user-guide/hot/section_hot_spec.xml:351(para) ./doc/user-guide/hot/section_hot_spec.xml:682(para) ./doc/user-guide/hot/section_hot_spec.xml:702(para) ./doc/user-guide/hot/section_basic_resources.xml:320(para)
 msgid "For example:"
 msgstr ""
 
@@ -3721,16 +3785,8 @@ msgstr ""
 msgid "To run the cURL command examples for the Object Storage API requests, set these environment variables:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-env-vars.xml:11(literal)
-msgid "publicURL"
-msgstr ""
-
 #: ./doc/user-guide/section_object-api-env-vars.xml:13(para)
 msgid "The public URL that is the HTTP endpoint from where you can access Object Storage. It includes the Object Storage API version number and your account name. For example, <code>https://23.253.72.207/v1/my_account</code>."
-msgstr ""
-
-#: ./doc/user-guide/section_object-api-env-vars.xml:21(literal)
-msgid "token"
 msgstr ""
 
 #: ./doc/user-guide/section_object-api-env-vars.xml:23(para)
@@ -6926,7 +6982,7 @@ msgid "A list of constraints to apply. The constraints are validated by the Orch
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hot_spec.xml:206(para)
-msgid "The following example shows a minimalistic definition of two parameters:"
+msgid "The following example shows a minimalist definition of two parameters:"
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hot_spec.xml:217(para)
@@ -6938,7 +6994,7 @@ msgid "Parameter constraints"
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hot_spec.xml:223(para)
-msgid "The <literal>constraints</literal> block of a parameter definition defines additional validation constraints that apply to the value of the parameter. The parameter values provided by a user are validated against the contrainsts at instantiation time. The contrainsts are defined as a list with the following syntax:"
+msgid "The <literal>constraints</literal> block of a parameter definition defines additional validation constraints that apply to the value of the parameter. The parameter values provided by a user are validated against the constraints at instantiation time. The constraints are defined as a list with the following syntax:"
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hot_spec.xml:233(term)
@@ -6958,7 +7014,7 @@ msgid "The actual constraint, depending on the constraint type. The concrete syn
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hot_spec.xml:249(para)
-msgid "A description of the constraint. The text is presented to the user when the value he defines violates the constraint. If ommitted, a default validation message is presented to the user."
+msgid "A description of the constraint. The text is presented to the user when the value he defines violates the constraint. If omitted, a default validation message is presented to the user."
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hot_spec.xml:256(para)
@@ -7250,7 +7306,7 @@ msgid "The syntax of <literal>the get_file</literal> function is:"
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hot_spec.xml:593(para)
-msgid "The <literal>content key</literal> is used to look up the <literal>files</literal> dictionary that is provided in the REST API call. The Orchestration client command (<placeholder-1/>) is <literal>get_file</literal> aware and will populate the <literal>files</literal> dictionnary with the actual content of fetched paths and URLs. The Orchestration client command supports relative paths and will transform these to the absolute URLs required by the Orcestration API."
+msgid "The <literal>content key</literal> is used to look up the <literal>files</literal> dictionary that is provided in the REST API call. The Orchestration client command (<placeholder-1/>) is <literal>get_file</literal> aware and will populate the <literal>files</literal> dictionary with the actual content of fetched paths and URLs. The Orchestration client command supports relative paths and will transform these to the absolute URLs required by the Orchestration API."
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hot_spec.xml:600(para)
@@ -7297,10 +7353,6 @@ msgstr ""
 msgid "The resource ID of the referenced resource is given as single parameter to the get_resource function."
 msgstr ""
 
-#: ./doc/user-guide/hot/section_hot_spec.xml:682(para)
-msgid "For exemple:"
-msgstr ""
-
 #: ./doc/user-guide/hot/section_hot_spec.xml:697(para)
 msgid "The <literal>list_join</literal> function joins a list of strings with the given delimiter."
 msgstr ""
@@ -7322,7 +7374,7 @@ msgid "The <literal>resource_facade</literal> function retrieves data in a paren
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hot_spec.xml:709(para)
-msgid "A provider template provdes a custom definition of a resource, called its facade. For more information about custom templates, see <xref linkend=\"composition\"/>. The syntax of the <literal>resource_facade</literal> function is:"
+msgid "A provider template provides a custom definition of a resource, called its facade. For more information about custom templates, see <xref linkend=\"composition\"/>. The syntax of the <literal>resource_facade</literal> function is:"
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hot_spec.xml:713(para)
@@ -7427,7 +7479,7 @@ msgid "If a template doesn't define a default value for a parameter, then the us
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hello_world.xml:117(title)
-msgid "Hidding parameters values"
+msgid "Hiding parameters values"
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hello_world.xml:118(para)
@@ -7443,7 +7495,7 @@ msgid "You can restrict the values of an input parameter to make sure that the u
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hello_world.xml:143(para)
-msgid "The following example defines multiple contraints for a password definition:"
+msgid "The following example defines multiple constraints for a password definition:"
 msgstr ""
 
 #: ./doc/user-guide/hot/section_hello_world.xml:157(para)

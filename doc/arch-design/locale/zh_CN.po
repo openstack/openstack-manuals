@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-02-10 08:44+0000\n"
-"PO-Revision-Date: 2015-02-11 04:20+0000\n"
+"POT-Creation-Date: 2015-02-11 13:59+0000\n"
+"PO-Revision-Date: 2015-02-11 17:41+0000\n"
 "Last-Translator: johnwoo_lee <lijiangsheng1@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -462,7 +462,7 @@ msgid ""
 "group of sites as a single cloud. With careful planning in the design phase,"
 " OpenStack can act as an excellent multi-site cloud solution for a multitude"
 " of needs."
-msgstr ""
+msgstr "一个多区域openstack环境是指它的服务分布在多个数据中心来提供整体的服务.不同的多区域云可能在使用要求上区别会很大,然而它们还是有一些共同点的.openstack可以运行在多区域环境下,允许某部分服务有效地像管理一个单区域的云一样来管理着由多个区域组成的群组.通过在设计阶段仔细计划,面对不同的需求,openstack可以是一个多区域云的完美解决方案"
 
 #: ./doc/arch-design/ch_multi_site.xml19(para)
 msgid ""
@@ -5112,14 +5112,14 @@ msgstr "OpenStack网络可以通过使用插件和网络的应用程序接口控
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml13(para)
 msgid ""
 "General purpose clouds are often expected to include these base services:"
-msgstr ""
+msgstr "通用型云通常实现所包括的基本服务："
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml32(para)
 msgid ""
 "Each of these services has different resource requirements. As a result, you"
 " must make design decisions relating directly to the service, as well as "
 "provide a balanced infrastructure for all services."
-msgstr ""
+msgstr "这些服务中的每一个都有不同的资源需求。所以，提供所有服务意味着提供平衡的基础设施，直接关系到最终的服务，依据这些作出设计决定是非常重要的。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml35(para)
 msgid ""
@@ -5127,14 +5127,14 @@ msgid ""
 "individual characteristics and service mass can impact the hardware "
 "selection process. Hardware designs are generated for each type of the "
 "following resource pools:"
-msgstr ""
+msgstr "考虑到每个服务的不一致方面，需要设计为分离的因素，服务的复杂性，都会影响到硬件的选择流程。硬件的设计需要根据下列不同的资源池生成不同的配置，"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml56(para)
 msgid ""
 "Hardware decisions are also made in relation to network architecture and "
 "facilities planning. These factors play heavily into the overall "
 "architecture of an OpenStack cloud."
-msgstr ""
+msgstr "许多额外的硬件决策会影响到网络的架构和设施的规划。这些问题在OpenStack云的整个架构中扮演非常重要的角色。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml61(title)
 msgid "Designing compute resources"
@@ -5148,7 +5148,7 @@ msgid ""
 "resources. In addition, decide whether to provide compute resources in a "
 "single pool or in multiple pools. We recommend the compute design allocates "
 "multiple pools of resources to be addressed on-demand."
-msgstr ""
+msgstr "当设计计算资源池时，有很多情形会影响到用户的设计决策。例如，和每种hypervisor相关的处理器、内存和存储仅仅是设计计算资源时考虑的一个因素。另外，将计算资源用户单一的池还是用户多个池也是有必要考虑的，我们建议用户设计将计算资源设计为资源池，实现按需使用。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml70(para)
 msgid ""
@@ -5159,7 +5159,7 @@ msgid ""
 "that, as instances are scheduled onto compute hypervisors, each independent "
 "node's resources will be allocated to make the most efficient use of "
 "available hardware. This is commonly referred to as bin packing."
-msgstr ""
+msgstr "一个计算设计在多个池中分配资源，会使云中运行的应用资源利用的最为充分。每个独立的资源池应该被设计为特定的类型的实例或一组实例提供服务，设计多个资源池可帮助确保这样，当实例被调度到hypervisor节点，每个独立的节点资源将会被分配到最合适的可用的硬件。这就是常见的集装箱模式。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml78(para)
 msgid ""
@@ -5180,7 +5180,7 @@ msgid ""
 "Determining the tuning of the overcommit ratios for both of these options "
 "during the design phase is important as it has a direct impact on the "
 "hardware layout of your compute nodes."
-msgstr ""
+msgstr "OpenStack支持配置<firstterm>资源超分配比例</firstterm>，即虚拟资源比实际的物理资源，目前支持CPU和内存。默认的CPU超分配比例是16：1，默认的内存超分配比例是1.5：1。在设计阶段就要想要是否决定调整此超分配比例，因为这会直接影响到用户计算节点的硬件布局。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml92(para)
 msgid ""
@@ -5195,7 +5195,7 @@ msgid ""
 "can determine that the server will need at least 853GB (640 2,048MB / 1.5) "
 "of RAM. When sizing nodes for memory, it is also important to consider the "
 "additional memory required to service operating system and service needs."
-msgstr ""
+msgstr "举例说明，想像一下，现在有一个m1.small类型的实例，使用的是1 vCPU,20GB的临时存储，2048MB的内存。当设计为此类实例提供计算资源池的硬件节点时，考虑节点需要多少个处理器、多大的磁盘、内存大小才可以满足容量需求。对于一个有2颗10个核的CPU，并开启超线程的服务器，基于默认的CPU超分配比例16：1来计算的话，它总共能运行640(2x10x2x16)个m1.small类型的实例。同样，基于默认的内存超分配比例1.5：1来计算的话，用户则需要至少853GB(640x2048/1.5x1048)内存。当基于内存来丈量服务器节点时，考虑操作系统本身和其服务所需要使用的内存也是非常重要的。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml106(para)
 msgid ""
@@ -5206,14 +5206,14 @@ msgid ""
 "virtualization and technology related to memory paging (also known as EPT "
 "shadowing). These types of features can have a significant impact on the "
 "performance of your virtual machine running in the cloud."
-msgstr ""
+msgstr "处理器的选择对于硬件设计来讲实在是太过重要了，尤其是对比不同处理器之间的特性和性能。一些近来发布的处理器，拥有针对虚拟化的特性，如硬件增强虚拟化，或者是内存分页技术(著名的EPT影子页表)。这些特性对于在云中运行的虚拟机来说，有着非常关键的影响。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml113(para)
 msgid ""
 "It is also important to consider the compute requirements of resource nodes "
 "within the cloud. Resource nodes refer to non-hypervisor nodes providing the"
 " following in the cloud:"
-msgstr ""
+msgstr "考虑到云中计算需求的资源节点也是很重要的，资源节点即非hypervisor节点，在云中提供下列服务："
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml118(para)
 msgid "Controller"
@@ -5225,11 +5225,11 @@ msgstr "对象存储"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml128(para)
 msgid "Block storage"
-msgstr ""
+msgstr "块存储"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml133(para)
 msgid "Networking services"
-msgstr ""
+msgstr "联网服务"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml138(para)
 msgid ""
@@ -5237,7 +5237,7 @@ msgid ""
 "number of worker threads which can be run on a resource node. As a result, "
 "you must make design decisions relating directly to the service, as well as "
 "provide a balanced infrastructure for all services."
-msgstr ""
+msgstr "处理器核数和线程数和在资源节点可以运行多少任务线程是有直接关联的。结果就是，用户必须作出设计决定，直接关联的服务，以及为所有服务提供平衡的基础设施。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml142(para)
 msgid ""
@@ -5249,7 +5249,7 @@ msgid ""
 "of servicing the most common instances requests. If you are looking to add "
 "additional hardware designs to the overall architecture, this can be done at"
 " a later time."
-msgstr ""
+msgstr "在通用型云中负载是不可预测的，所以能将每个特别的用例都做到胸有成竹是非常困难的。在未来给云增加计算资源池，这种不可预测是不会带来任何问题的。在某些情况下，在确定了实例类型的需求可能不足以需要单独的硬件设计。综合来看，硬件设计方案是先满足大多数通用的实例来启动的，至于以后，寻求增加额外的硬件设计将贯穿整个多样的硬件节点设计和资源池的架构。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml154(title)
 msgid "Designing network resources"
@@ -5268,21 +5268,21 @@ msgid ""
 "databse used by the various cloud services. Segregating these services onto "
 "separate networks helps to protect sensitive data and protects against "
 "unauthorized access to services."
-msgstr ""
+msgstr "传统的OpenStack云是有多个网段的，每个网段都提供在云中访问不仅是操作人员还可以是租户的资源。此外，网络服务本身也需要网络通讯路径以和其他网络隔离。当为通用型云设计网络服务时，强烈建议规划不论是物理的还是逻辑的都要将操作人员和租户隔离为不同的网段。进一步的建议，划分出另外一个网段，专门用于访问内部资源，诸如消息队列、数据库等各种云服务。利用不同网段隔离这些服务对于保护敏感数据以及对付没有认证的访问很有帮助。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml167(para)
 msgid ""
 "Based on the requirements of instances being serviced in the cloud, the "
 "choice of network service will be the next decision that affects your design"
 " architecture."
-msgstr ""
+msgstr "基于云中实例提供的服务的需求，网络服务的选择将会是影响用户设计架构的下一个决定。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml170(para)
 msgid ""
 "The choice between legacy networking (nova-network), as a part of OpenStack "
 "Compute, and OpenStack Networking (neutron), has a huge impact on the "
 "architecture and design of the cloud network infrastructure."
-msgstr ""
+msgstr "在作为OpenStack计算组件的部分遗留网络(nova-network)和OpenStack网络(neutron)之间作出选择，会极大的影响到云网络基础设施的架构和设计。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml178(para)
 msgid ""
@@ -5305,7 +5305,7 @@ msgid ""
 " within the data center. When designing a general purpose cloud intended to "
 "support multiple tenants, we recommend the use of legacy networking with "
 "VLANs, and not in flat network mode."
-msgstr ""
+msgstr "当云中的网络设备可通过VLANs支持分段时，遗留网络的第二种模式就可操作了。此模式中，云中的每个组户都被分配一个网络子网，其是映射到物理网络的VLAN中的。尤其重要的一点，要记得在一个生成树域里VLANs的最大数量是4096.在数据中心此限制成为了可能成长的一个硬性限制。当设计一个支持多租户的通用型云时，特别要记住使用和VLANs一起使用遗留网络，而且不使用浮动网络模式。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml199(para)
 msgid ""
@@ -5330,7 +5330,7 @@ msgid ""
 "infrastructure in order to segment tenant traffic. These methods vary "
 "depending on the specific implementation, but some of the more common "
 "methods include tunneling over GRE, encapsulating with VXLAN, and VLAN tags."
-msgstr ""
+msgstr "OpenStack网络 (neutron) 是第一次实现为租户提供全部的控制权来建立虚拟网络资源的网络服务。为了实现给租户流量分段，通常是基于已有的网络基础设施来封装通信路径，即以隧道协议的方式。这些方法严重依赖与特殊的实现方式，大多数通用的方式包括GRE隧道，VXLAN封\n装以及VLAN标签。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml222(para)
 msgid ""
@@ -5340,7 +5340,7 @@ msgid ""
 "controller nodes and swift proxies within the cloud will be the only devices"
 " necessary to connect to this network segment. In some cases, this network "
 "might also be serviced by hardware load balancers and other network devices."
-msgstr ""
+msgstr "首先建议的设计是至少划分三个网段，第一个是给租户和运维人员用于访问云的REST 应用程序接口。这也是通常说的公有网络。在多数的用例中，控制节点和swift代理是唯一的需要连接到此网段的设备。也有一些用例中，此网段也许服务于硬件的负载均衡或其他网络设备。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml230(para)
 msgid ""
@@ -5401,7 +5401,7 @@ msgid ""
 "characteristics of OpenStack Object Storage will ensure that data stays up "
 "to date and survives hardware faults without the use of any specialized data"
 " replication devices."
-msgstr ""
+msgstr "我们并不建议为OpenStack对象存储投资企业级的设备。OpenStack对象存储的一致性和分区容错保证的数据的更新，即使是在硬件损坏的情况下仍能保证数据可用，而这都无须特别的数据复制设备。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml279(para)
 msgid ""
@@ -5413,7 +5413,7 @@ msgid ""
 "recommend maximizing the amount of storage per rack unit at the best cost "
 "per terabyte. Furthermore, we do not recommend the use of RAID controllers "
 "in an object storage node."
-msgstr ""
+msgstr "OpenStack对象存储一个亮点就是有混搭设备的能力，基于swift环的加权机制。当用户设计一个swift存储集群时，建议将大部分>的成本花在存储上，保证永久可用。市场上多数的服务器使用4U，可容纳60块甚至更多的磁盘驱动器，因此建议在1U空间内置放最多的驱动器，就是最好的每TB花费。进一步的建议，在对象存储节点上没必要使用RAID控制器。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml289(para)
 msgid ""
@@ -5425,7 +5425,7 @@ msgid ""
 "designing beyond the hardware node level. Each replica of data should exist "
 "in its own availability zone with its own power, cooling, and network "
 "resources available to service that specific zone."
-msgstr ""
+msgstr "为了实现数据存储和对象一样的持久和可用，设计对象存储资源池显得非常的重要，在硬件节点这层之外的设计，考虑机柜层或区域层是非常重要的，在对象存储服务中配置数据复制多少份保存(默认情况是3份)。每份复制的数据最好独立的可用区域中，有独立的电源、冷却设备以及网络资源。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml298(para)
 msgid ""
@@ -5449,7 +5449,7 @@ msgid ""
 "configuring an advanced storage scheduler for the block storage service, it "
 "is possible to provide tenants with a large catalog of storage services with"
 " a variety of performance levels and redundancy options."
-msgstr ""
+msgstr "当设计OpenStack块存储资源节点时，有助于理解负载和需求，即在云中使用块存储。由于通用型云的使用模式经常是未知的。在>此建议设计块存储池做到租户可以根据他们的应用来选择不同的存储。创建多个不同类型的存储池，得与块存储服务配置高级的存储调度相结合，才可能为租户提供基于多种不同性能级别和冗余属性的大型目录存储服务。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml316(para)
 msgid ""
@@ -5461,7 +5461,7 @@ msgid ""
 "directly attached storage in the majority of block storage nodes, deeming it"
 " necessary to provide additional levels of service to tenants which can only"
 " be provided by enterprise class storage solutions."
-msgstr ""
+msgstr "块存储还可以利用一些企业级存储解决方案的优势。由硬件厂商开发的插件驱动得以实现。基于OpenStack块存储有大量的企业存储写了它们带外的插件驱动(也有很大一部分是通过第三方渠道来实现的)。作为通用型云使用的是直接挂载存储到块存储节点，如果未来需要为租户提供额外级别的块存储，只须增加企业级的存储解决方案即可。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml325(para)
 msgid ""
@@ -5478,45 +5478,45 @@ msgid ""
 "Furthermore, where extreme performance is a requirement it may also be "
 "necessary to make use of high speed SSD disk drives' high performing flash "
 "storage solutions."
-msgstr ""
+msgstr "决定在块存储节点中使用RAID控制卡主要取决于应用程序对冗余和可用性的需求。应用如果对每秒输入输出(IOPS)有很高的要求，不仅得使用RAID控制器，还得配置RAID的级别值，当性能是重要因素时，建议使用高级别的RAID值，相对比的情况是，如果冗余的因素考虑更多谢，那么就使用冗余RAID配置，比如RAID5或RAID6。一些特殊的特性，例如自动复制块存储卷，需要使用第三方插件和企业级的块存储解决方案，以满足此高级需求。进一步讲，如果有对性能有极致的要求，可以考虑使用告诉的SSD磁盘，即高性能的flash存储解决方案。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml344(para)
 msgid ""
 "The software selection process plays a large role in the architecture of a "
 "general purpose cloud. The following have a large impact on the design of "
 "the cloud:"
-msgstr ""
+msgstr "软件筛选的过程在通用型云架构中扮演了重要角色。下列的选择都会在设计云时产生重大的影响。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml349(para)
 msgid "Choice of operating system"
-msgstr ""
+msgstr "选择操作系统"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml354(para)
 msgid "Selection of OpenStack software components"
-msgstr ""
+msgstr "选择OpenStack软件组件"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml359(para)
 msgid "Choice of hypervisor"
-msgstr ""
+msgstr "选择Hypervisor"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml364(para)
 msgid "Selection of supplemental software"
-msgstr ""
+msgstr "选择支撑软件"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml369(para)
 msgid ""
 "Operating system (OS) selection plays a large role in the design and "
 "architecture of a cloud. There are a number of OSes which have native "
 "support for OpenStack including:"
-msgstr ""
+msgstr "操作系统(OS)的选择在云的设计和架构中扮演着重要的角色。有许多操作系统是原生就支持OpenStack的，它们是："
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml374(para)
 msgid "Ubuntu"
-msgstr ""
+msgstr "Ubuntu"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml379(para)
 msgid "Red Hat Enterprise Linux (RHEL)"
-msgstr ""
+msgstr "红帽企业Linux(RHEL)"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml384(para)
 msgid "CentOS"
@@ -5535,7 +5535,7 @@ msgid ""
 "distribution-supplied packages or repositories (although using the "
 "distribution vendor's OpenStack packages might be a requirement for "
 "support)."
-msgstr ""
+msgstr "原生并非是限制到某些操作系统，用户仍然可以自己选择Linux的任何发行版(甚至是微软的Windows),然后从源码安装OpenStack(或者编译为某个发行版的包)。尽管如此，事实上多数组织还是会从发行版支持的包或仓库去安装OpenStack(使用分发商的OpenStack软件包也许需要他们的支持)。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml404(para)
 msgid ""
@@ -5546,7 +5546,7 @@ msgid ""
 "cloud architect who selects Hyper-V is limited to Windows Servers. "
 "Similarly, a cloud architect who selects XenServer is limited to the CentOS-"
 "based dom0 operating system provided with XenServer."
-msgstr ""
+msgstr "操作系统的选择会直接影响到hypervisor的选择。一个云架构会选择Ubuntu,RHEL,或SLES等，它们都拥有灵活的hypervisor可供选择，同时也被OpenStack 计算(nova)所支持，如KVM,Xen,LXC等虚拟化。一个云架构若选择了Hyper-V,那么只能使用Windows服务器版本。同样的，一个云架构若选择了XenServer,也限制到基于CenOS dom0操作系统。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml412(para)
 msgid "The primary factors that play into OS-hypervisor selection include:"
@@ -5618,7 +5618,7 @@ msgid ""
 " at <link "
 "href=\"https://wiki.openstack.org/wiki/HypervisorSupportMatrix\">OpenStack "
 "Hypervisor Support Matrix</link>."
-msgstr ""
+msgstr "支持hypervisor和它们的兼容性的完整列表可以从<link href=\\\"https://wiki.openstack.org/wiki/HypervisorSupportMatrix\\\">https://wiki.openstack.org/wiki/HypervisorSupportMatrix</link>页面找到。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml474(para)
 msgid ""
@@ -5628,7 +5628,7 @@ msgid ""
 "feature requirement. In some cases, there may also be a mandated requirement"
 " to run software on a certified hypervisor including solutions from VMware, "
 "Microsoft, and Citrix."
-msgstr ""
+msgstr "通用型云须确保使用的hypervisor可以支持多数通用目的的用例，例如KVM或Xen。更多特定的hypervisor需要根据特定的功能和支持特性需求来做出选择。在一些情况下，也许是授权所需，需要运行的软件必须是在认证的hpervisor中，比如来自VMware，微软和思杰的产品。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml481(para)
 msgid ""
@@ -5644,7 +5644,7 @@ msgid ""
 "migration feature of VMware, vMotion, this requires an installation of "
 "vCenter/vSphere and the use of the ESXi hypervisor, which increases the "
 "infrastructure requirements."
-msgstr ""
+msgstr "通过OpenStack云平台提供的特性决定了选择最佳的hyperviosr。举个例子，要使通用型云主要支持基于微软的迁移，或工作人员>所管理的是需要特定技能的去管理hypervisor或操作系统，Hyper-V也许是最好的选择。即使是决定了使用Hyper-V，这也并不意味着不可以去管理相关的操作系统，要记得OpenStack是支持多种hypervisor的。在设计通用型用时需要考虑到不同的hypervisor有他们特定的硬件需>求。例如欲整合VMware的特性：活迁移，那么就需要安装安装vMotion,给ESXi hypervisor所使用的VCenter/vSphere，这即是增加的基础设施需求。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml496(para)
 msgid ""
@@ -5698,11 +5698,11 @@ msgid ""
 "Storage</glossterm> (<glossterm>swift</glossterm>). OpenStack "
 "<glossterm>Block Storage</glossterm> (<glossterm>cinder</glossterm>). These "
 "may be selected to provide storage to applications and instances."
-msgstr ""
+msgstr "通用型云还包括OpenStack <glossterm>对象存储</glossterm> (<glossterm>swift</glossterm>).。选择OpenStack <glossterm>块存储</glossterm> (<glossterm>cinder</glossterm>) 是为应用和实例提供持久性的存储，"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml543(para)
 msgid "However, depending on the use case, these could be optional."
-msgstr ""
+msgstr "尽管如此，依赖于用例，这些是可选。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml550(para)
 msgid ""
@@ -5732,7 +5732,7 @@ msgid ""
 "service in the OpenStack environment. Using this software can affect the "
 "design as it assumes at least a 2-node controller infrastructure where one "
 "of those nodes may be running certain services in standby mode."
-msgstr ""
+msgstr "多数的通用型部署使用硬件的负载均衡来提供API访问高可用和SSL终端，但是软件的解决方案也要考虑到，比如HAProxy。至关重要的是软件实现的高可用也很靠谱。这些高可用的软件Keepalived或基于Corosync的Pacemaker。Pacemaker和Corosync配合起来可以提供双活或者单活的高可用配置，至于是否双活取决于OpenStack环境中特别的服务。使用Pacemaker会影响到设计，假定有至少2台控制器基础设施，其中一个节点可在待机模式下运行的某些服务。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml578(para)
 msgid ""
@@ -5744,7 +5744,7 @@ msgid ""
 "Redis does not affect the overall design of your architecture as they tend "
 "to be deployed onto the infrastructure nodes providing the OpenStack "
 "services."
-msgstr ""
+msgstr "Memcached是一个分布式的内存对象缓存系统，Redia是一个key-value存储系统。在通用型云中使用这两个系统来减轻认证服务的负载。memcached服务缓存令牌，基于它天生的分布式特性可以缓减授权系统的瓶颈。使用memcached或Redis不会影响到用户的架构设计，虽然它们会部署到基础设施节点中为OpenStack提供服务。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml591(para)
 msgid ""
@@ -5772,7 +5772,7 @@ msgid ""
 "auto-scaling features. It is important to properly design the hardware used "
 "to run the controller infrastructure as outlined above in the Hardware "
 "Selection section."
-msgstr ""
+msgstr "控制器基础设施节点为最终用户提供的管理服务，以及在云内部为运维提供服务。控制器较典型的现象，就是运行消息队列服务，在每个服务之间携带传递系统消息。性能问题常和消息总线有关，它会延迟发送的消息到应该去的地方。这种情况的结果就是延迟了实际操作的功能，如启动或删除实例、分配一个新的存储卷、管理网络资源。类似的延迟会严重影响到应用的反应能力，尤其是使用了自动扩展这样的特性。所以运行控制器基础设施的硬件设计是头等重要的，具体参考上述硬件选择一节。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml615(para)
 msgid ""
@@ -5784,7 +5784,7 @@ msgid ""
 "authorization for all services, both internally to OpenStack itself and to "
 "end-users. This service can lead to a degradation of overall performance if "
 "this is not sized appropriately."
-msgstr ""
+msgstr "控制器服务的性能不仅仅限于处理器的强大能力，也受限于所服务的并发用户。确认应用程序接口和Horizon服务的负载测试可以>承受来自用户客户的压力。要特别关注OpenStack认证服务(Keystone)的负载，Keystone为所有服务提供认证和授权，无论是最终用户还是OpenStack的内部服务。如果此控制器服务没有正确的被设计，会导致整个环境的性能低下。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml628(title)
 msgid "Network performance"
@@ -5801,7 +5801,7 @@ msgid ""
 "mix of networking capabilities. By utilizing the different interface speeds,"
 " the users of the OpenStack environment can choose networks that are fit for"
 " their purpose."
-msgstr ""
+msgstr "通用型OpenStack云，网络的需求其实帮助决定了其本身的性能能力。例如，小的部署环境使用千兆以太网(GbE)，大型的部署环境或者许多用户就要求使用10 GbE。运行着的实例性能收到了它们的速度限制。设计OpenStack环境，让它拥有可以运行混合网络的能力是可能的。通过利用不同速度的网卡，OpenStack环境的用户可以选择不同的网络去满足不同的目的。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml640(para)
 msgid ""
@@ -5810,7 +5810,7 @@ msgid ""
 "end database uses an OpenStack Networking network that has 10GbE capability "
 "to replicate its data or, in some cases, the design may incorporate link "
 "aggregation for greater throughput."
-msgstr ""
+msgstr "例如，web应用的实例在公网上运行的是OpenStack网络中的1 GbE，但是其后端的数据库使用的是OpenStack网络的10 GbE以复制数据，在某些情况下，为了更大的吞吐量使用聚合链接这\n样的设计。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml646(para)
 msgid ""
@@ -5853,7 +5853,7 @@ msgid ""
 " network, which could affect, and be adversely affected by, the front-side "
 "API traffic performance. As such, consider using a dedicated data storage "
 "network with dedicated interfaces on the Controller and Compute hosts."
-msgstr ""
+msgstr "当考虑OpenStack块设备的性能时，硬件和架构的选择就显得非常重要。块存储可以使用企业级后端系统如NetApp或EMC的产品，也可以使用横向扩展存储如GlusterFS和Ceph，更可以是简单的在节点上直接附加的存储。块存储或许是云所关注的贯穿主机网络的部署，又或许是前端应用程序接口所关注的流量性能。无论怎么，都得在控制器和计算主机上考虑使用专用的数据存储网络和专用的接口。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml685(para)
 msgid ""
@@ -5864,7 +5864,7 @@ msgid ""
 "would affect performance of the overall system. In this case, 10 GbE (or "
 "better) networking is recommended throughout the storage network "
 "architecture."
-msgstr ""
+msgstr "当考虑OpenStack对象存储的性能时，有几样设计选择会影响到性能。用户访问对象存储是通过代理服务，它通常是在硬件负载均衡之后。由于高弹性是此存储系统的天生特性，所以复制数据将会影响到整个系统的性能。在此例中，存储网络使用10 GbE(或更高)网络是我们所建议的。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml697(para)
 msgid ""
@@ -5908,7 +5908,7 @@ msgid ""
 "routing, and this feature is currently missing in OpenStack Networking. The "
 "effect of legacy networking’s multi-host functionality restricts failure "
 "domains to the host running that instance."
-msgstr ""
+msgstr "当决定网络功能的时候务必小心谨慎。当前的OpenStack不仅支持遗留网络(nova-network)系统还支持新的，可扩展的OpenStack网络(neutron)。二者在提供高可用访问时有各自的优缺点。遗留网络提供的网络服务的代码是由OpenStack计算来维护的，它可提供移除来自路由的单点故障特性，但是此特性在当前的Openstack网络中不被支持。遗留网络的多主机功能受限于仅在运行实例的主机，一旦失效，此实例将无法被访问。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml731(para)
 msgid ""
@@ -5921,7 +5921,7 @@ msgid ""
 "manner. It is also possible to completely remove routing from Networking, "
 "and instead rely on hardware routing capabilities. In this case, the "
 "switching infrastructure must support L3 routing."
-msgstr ""
+msgstr "另一方面，当使用OpenStack网络时，OpenStack控制器服务器或者是分离的网络主机掌控路由。对于部署来说，需要在网络中满足此特性，有可能使用第三方软件来协助维护高可用的3层路由。这么做允许通常的应用程序接口来控制网络硬件，或者基于安全的行为提供复杂多层的web应用。从OpenStack网络中完全移除路由是可以的，取而代之的是硬件的路由能力。在此情况下，交换基础设施必须支持3层路由。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml743(para)
 msgid ""
@@ -5931,7 +5931,7 @@ msgid ""
 "href=\"http://docs.openstack.org/openstack-"
 "ops/content/network_design.html#network_deployment_options\">OpenStack "
 "Operations Guide</link></citetitle>."
-msgstr ""
+msgstr "OpenStack网络和遗留网络各有各的优点和缺点。它们有效的和支持的属性适合不同的网络部署模式，详细描述见<citetitle><link href=\\\"http://docs.openstack.org/openstack-ops/content/network_design.html#network_deployment_options\\\">OpenStack 运维指南</link></citetitle>。"
 
 #: ./doc/arch-design/generalpurpose/section_tech_considerations_general_purpose.xml750(para)
 msgid ""
