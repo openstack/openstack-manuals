@@ -5,11 +5,11 @@
   version="5.0"
   xml:id="configuring-keystone-for-ldap-backend">
     <title>Integrate Identity with LDAP</title>
-    <para>Identity Service supports integration with an existing LDAP
-        directory for authentication and authorization
+    <para>Identity Service supports integration with existing LDAP
+        directories for authentication and authorization
         services.</para>
     <important os="rhel;fedora;centos">
-        <para>For OpenStack Identity to access an LDAP back end, you must
+        <para>For OpenStack Identity to access LDAP servers, you must
             enable the <option>authlogin_nsswitch_use_ldap</option> boolean
             value for SELinux on the Identity server. To enable and
             make the option persistent across reboots:</para>
@@ -17,23 +17,20 @@
     </important>
     <note>
         <para>You can integrate Identity with a single LDAP
-            server.</para>
+            server, or multiple back ends using domain-specific configuration files.</para>
     </note>
-    <para>To configure Identity, set options in the
-            <filename>/etc/keystone/keystone.conf</filename> file.
-        Modify these examples as needed.</para>
     <procedure>
-        <title>To integrate Identity with LDAP</title>
+        <title>To integrate Identity with a LDAP server</title>
         <step>
             <para>Enable the LDAP driver in the
-                    <filename>keystone.conf</filename> file:</para>
+                    <filename>/etc/keystone/keystone.conf</filename> file:</para>
             <programlisting language="ini">[identity]
 #driver = keystone.identity.backends.sql.Identity
 driver = keystone.identity.backends.ldap.Identity</programlisting>
         </step>
         <step>
             <para>Define the destination LDAP server in the
-                    <filename>keystone.conf</filename> file:</para>
+                    <filename>/etc/keystone/keystone.conf</filename> file:</para>
             <programlisting language="ini">[ldap]
 url = ldap://localhost
 user = dc=Manager,dc=example,dc=org
@@ -89,10 +86,114 @@ role_allow_delete = False</programlisting>
             authorization are unavailable.</para></warning>
         </step>
     </procedure>
+    <procedure>
+      <title>To integrate Identity with multiple back ends</title>
+      <step>
+        <para>Set the following options in the
+          <filename>/etc/keystone/keystone.conf</filename> file:</para>
+        <substeps>
+          <step>
+            <para>Enable the LDAP driver:</para>
+            <programlisting language="ini">[identity]
+#driver = keystone.identity.backends.sql.Identity
+driver = keystone.identity.backends.ldap.Identity</programlisting>
+          </step>
+          <step>
+            <para>Enable domain-specific drivers:</para>
+            <programlisting language="ini">[identity]
+domain_specific_drivers_enabled = True
+domain_config_dir = /etc/keystone/domains</programlisting>
+          </step>
+        </substeps>
+      </step>
+      <step>
+        <para>Restart the service:</para>
+        <screen><prompt>#</prompt> service keystone restart</screen>
+      </step>
+      <step>
+        <para>List the domains using the dashboard, or the OpenStackClient
+          CLI. Refer to the <link xlink:href="http://docs.openstack.org/developer/python-openstackclient/command-list.html">Command List</link>
+          for a list of OpenStackClient commands.</para>
+      </step>
+      <step>
+        <para>Create domains using OpenStack dashboard, or the
+          OpenStackClient CLI.</para>
+      </step>
+      <step>
+        <para>For each domain, create a domain-specific configuration
+          file in the <filename>/etc/keystone/domains</filename> directory.
+          Use the file naming convention <filename>keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>,
+          where <replaceable>DOMAIN_NAME</replaceable>
+          is the domain name assigned in the previous step.</para>
+        <note><para>The options set in the
+            <filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>
+            file will override options in the <filename>/etc/keystone/keystone.conf</filename>
+            file.</para></note>
+      </step>
+      <step>
+        <para>Define the destination LDAP server in the
+          <filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename> file. For example:</para>
+        <programlisting language="ini">[ldap]
+url = ldap://localhost
+user = dc=Manager,dc=example,dc=org
+password = samplepassword
+suffix = dc=example,dc=org
+use_dumb_member = False
+allow_subtree_delete = False</programlisting>
+      </step>
+      <step>
+        <para>Create the organizational units (OU) in the LDAP
+          directory, and define their corresponding location in
+          the <filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>
+          file. For example:</para>
+        <programlisting language="ini">[ldap]
+user_tree_dn = ou=Users,dc=example,dc=org
+user_objectclass = inetOrgPerson
+
+tenant_tree_dn = ou=Groups,dc=example,dc=org
+tenant_objectclass = groupOfNames
+
+role_tree_dn = ou=Roles,dc=example,dc=org
+role_objectclass = organizationalRole</programlisting>
+        <note>
+          <para>These schema attributes are extensible for
+            compatibility with various schemas. For example,
+            this entry maps to the <systemitem>person</systemitem>
+            attribute in Active Directory:</para>
+          <programlisting language="ini">user_objectclass = person</programlisting>
+        </note>
+      </step>
+      <step>
+        <para>A read-only implementation is recommended for LDAP
+          integration. These permissions are applied to object
+          types in the <filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>
+          file:</para>
+        <programlisting language="ini">[ldap]
+user_allow_create = False
+user_allow_update = False
+user_allow_delete = False
+
+tenant_allow_create = False
+tenant_allow_update = False
+tenant_allow_delete = False
+
+role_allow_create = False
+role_allow_update = False
+role_allow_delete = False</programlisting>
+      </step>
+      <step>
+        <para>Restart the Identity service:</para>
+        <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
+        <warning><para>During service restart, authentication and
+            authorization are unavailable.</para></warning>
+      </step>
+    </procedure>
     <formalpara>
         <title>Additional LDAP integration settings</title>
         <para>Set these options in the
-                <filename>keystone.conf</filename> file.</para>
+          <filename>/etc/keystone/keystone.conf</filename> file for a single LDAP server, or
+          <filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename> files for
+          multiple back ends.</para>
     </formalpara>
     <variablelist>
         <varlistentry>
