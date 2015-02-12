@@ -82,13 +82,6 @@ $('a').click(function(){
     return false;
 });
 
-// Change character image on refresh
-// Add file names and captions to doc-characters.json
-$.getJSON('common/js/doc-characters.json', function(data) {
-  var item = data.images[Math.floor(Math.random()*data.images.length)];
-  $('<img src="common/images/docs/' + item.image + '">').appendTo('#superuser-img');
-  $('<p>' + item.caption + '<strong>OpenStack Operator</strong></p>').appendTo('#superuser-img');
-});
 
 
 

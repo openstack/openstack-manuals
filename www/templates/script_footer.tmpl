@@ -14,3 +14,12 @@
     <script type="text/javascript" src="{{ scriptdir }}webui-popover.js"></script>
 
     <!-- Javascript for page -->
+    <script type="text/javascript">
+      // Change character image on refresh
+      // Add file names and captions to doc-characters.json
+      $.getJSON("{{ scriptdir }}/doc-characters.json", function(data) {
+        var item = data.images[Math.floor(Math.random()*data.images.length)];
+        $('<img src="{{ scriptdir }}../images/docs/' + item.image + '">').appendTo('#superuser-img');
+        $('<p>' + item.caption + '<strong>OpenStack Operator</strong></p>').appendTo('#superuser-img');
+      });
+    </script>
