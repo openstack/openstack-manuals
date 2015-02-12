@@ -76,24 +76,24 @@ Create a router
 #. In the :guilabel:`External Network` field, specify the network to which the
    router will connect, and then click :guilabel:`Set Gateway`.
 
-Connect a router
-~~~~~~~~~~~~~~~~
+#. To connect a private network to the newly created router, perform the
+   following steps:
 
-#. To connect a private network to the newly created router, on the
-   :guilabel:`Routers` tab, click the name of the router.
+   A) On the :guilabel:`Routers` tab, click the name of the router.
 
-#. On the :guilabel:`Router Details` page, click :guilabel:`Add Interface`.
+   B) On the :guilabel:`Router Details` page, click :guilabel:`Add Interface`.
 
-#. In the :guilabel:`Add Interface` dialog box, select a :guilabel:`Subnet`.
+   C) In the :guilabel:`Add Interface` dialog box, select a :guilabel:`Subnet`.
 
-#. Optionally, in the :guilabel:`Add Interface` dialog box, set an
-   :guilabel:`IP Address` for the router interface for the selected subnet.
+      Optionally, in the :guilabel:`Add Interface` dialog box, set an
+      :guilabel:`IP Address` for the router interface for the selected subnet.
 
-   If you choose not to set the the :guilabel:`IP Address` value, then by
-   default OpenStack Networking uses the first host IP address in the subnet.
+      If you choose not to set the :guilabel:`IP Address` value, then by
+      default OpenStack Networking uses the first host IP address in the
+      subnet.
 
-   The :guilabel:`Router Name` and :guilabel:`Router ID` fields are
-   automatically updated.
+      The :guilabel:`Router Name` and :guilabel:`Router ID` fields are
+      automatically updated.
 
 #. Click :guilabel:`Add Interface`.
 
