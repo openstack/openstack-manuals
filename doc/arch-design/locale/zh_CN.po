@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-02-11 13:59+0000\n"
-"PO-Revision-Date: 2015-02-11 17:41+0000\n"
+"POT-Creation-Date: 2015-02-12 20:25+0000\n"
+"PO-Revision-Date: 2015-02-12 10:36+0000\n"
 "Last-Translator: johnwoo_lee <lijiangsheng1@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -2164,7 +2164,7 @@ msgid ""
 "across multiple regions, so applications that depend on available block "
 "storage will need to manually cope with this limitation by creating "
 "duplicate block storage entries in each region."
-msgstr ""
+msgstr "在一个多区域部署中，存储可用性也会影响到架构。一个中心化的对象存储服务需要在region中为实例本地存取对象中频繁的使用，在对象没有建立的地方。一些应用也许为此而需要作出相应的调整。块存储目前还没有跨多个region的复制数据的方法，所以应用若依赖可用的块存储的话，需要手动的复制，由于这种限制导致在每个region都要创建重复的块存储。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml139(title)
 #: ./doc/arch-design/network_focus/section_user_requirements_network_focus.xml163(title)
@@ -2190,7 +2190,7 @@ msgid ""
 "in cases where an application requires security, this issue will require "
 "mitigation. Installing a VPN or encrypted connection between sites is "
 "recommended in such instances."
-msgstr ""
+msgstr "多区域OpenStack安装的安全会来带额外的挑战，租户会为了安全会建立一个租户创建的网络。在多区域站点安装中也许没有需求去使用非私有网络来连接站点，这意味着流量对于第三方来说是可见的，假如应用对安全有需求，这就是个问题需要去解决，安全一VPN或者将连接加密在站点之间，在此情形下就非常有必要。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml148(para)
 msgid ""
@@ -2201,7 +2201,7 @@ msgid ""
 "create, read, update and delete operations. Centralized authentication is "
 "also useful for auditing purposes because all authentication tokens "
 "originate from the same source."
-msgstr ""
+msgstr "另外的多区域部署安全需要考虑的是身份，在多区域云中认证服务需要中心化，所谓的中心化就是在部署中为用户提供单一的认证点，以及管理这个点的创建、读取、更新和删除的原有操作。中心化的认证也对审计目的有用，因为所有的认证令牌都来自同一个源。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml157(para)
 msgid ""
@@ -2214,7 +2214,7 @@ msgid ""
 "information requiring that this mapping be accurate and consistent to ensure"
 " that a tenant in one site does not connect to a different tenant in another"
 " site."
-msgstr ""
+msgstr "就像在单站点部署的租户需要彼此隔离，在多区域安装中的租户也一样，在多区域设计的额外挑战是围绕着如何确保跨region的租户网络功能，不幸的是，OpenStack网络所提供的功能还不支持此种机制，因为需要外部的系统来管理这些映射，租户网络包含的敏感信息需要这种映射的精准和一致，以确保在一个站点的租户不会联系到另外一个站点的不同租户。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml169(title)
 #: ./doc/arch-design/generalpurpose/section_architecture_general_purpose.xml560(para)
@@ -2252,7 +2252,7 @@ msgid ""
 "populated zone full of resource records for each instance. This facilitates "
 "using DNS as a mechanism for determining which region would be selected for "
 "certain applications."
-msgstr ""
+msgstr "一些额外的选项安装会帮助改进一些场景，对于实例来说，安装Designate为每个region自动生成DNS域，为每个实例自动记录zone所有的资源信息，这种使用DNS机制会改进决策，为确定的应用选择那个region。"
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml191(para)
 msgid ""
@@ -9155,7 +9155,7 @@ msgid ""
 "not NoSQL databases in production. To either move from or run alongside AWS,"
 " a NoSQL workload must use an automation tool, such as the Orchestration "
 "module (heat), to recreate the NoSQL database on top of OpenStack."
-msgstr ""
+msgstr "创建跨所有云平台所实现上层服务的基准，对于平台来说不支持给定的服务，在平台的顶部创建一个这样的服务，且关注他们在云中所承载的负载。举例来说，OpenStack的<glossterm>数据库服务</glossterm>是 (<glossterm>trove</glossterm>)，OpenStack支持MySQL为服务，而在生产环境不支持NoSQL数据库，无论从AWS迁移过来还是在AWS时运行，一个NoSQL的应用必须使用自动化的工具，诸如Orchestration模块(heat)，在OpenStack的顶部重新创建NoSQL数据库。"
 
 #: ./doc/arch-design/hybrid/section_architecture_hybrid.xml95(para)
 msgid ""
@@ -9166,7 +9166,7 @@ msgid ""
 "consumes the base infrastructure services of the cloud platform. The "
 "downside to this approach is that the PaaS itself then potentially becomes a"
 " source of lock-in."
-msgstr ""
+msgstr "部署诸如Cloud Foundry或OpenShift<glossterm>平台即服务 (PaaS)</glossterm>技术，是从底层云平台抽象上层服务。应用部署和迁移的单位是PaaS和利用了的PaaS的服务，并只消耗了云平台的基础设施服务。这样做的缺点的方法是，将PAAS本身则潜在地变成锁定的来源。"
 
 #: ./doc/arch-design/hybrid/section_architecture_hybrid.xml107(para)
 msgid ""
@@ -9176,7 +9176,7 @@ msgid ""
 " any database services that are inherent in the cloud platforms, launch "
 "cloud instances and deploy the databases on to those instances using scripts"
 " or various configuration and application deployment tools."
-msgstr ""
+msgstr "跨越所有云平台仅仅使用最基本的基础设施服务很平常，使用自动化工具来创建需要的可跨所有云平台移植的上层服务，举例来说，替代继承云平台内部的使用任何数据库服务的是，使用脚本或各种配置和应用部署工具来启动云实例以及将数据库部署到这些实例中。"
 
 #: ./doc/arch-design/hybrid/section_architecture_hybrid.xml119(title)
 msgid "Network services"
@@ -9190,7 +9190,7 @@ msgid ""
 "scalability and <glossterm>high availability (HA)</glossterm>. Verification "
 "and ongoing testing of the critical features of the cloud endpoint used by "
 "the architecture are important tasks."
-msgstr ""
+msgstr "网络服务功能在多云架构中是有巨大障碍的，当选择CMP和云提供商时此因素非常的重要，考虑因素：功能、安全、扩展以及<glossterm>高可用 (HA)</glossterm>。验证和不断的测试云端点的一些临界特性，用于架构设计是非常重要的任务。"
 
 #: ./doc/arch-design/hybrid/section_architecture_hybrid.xml130(para)
 msgid ""
@@ -9226,7 +9226,7 @@ msgid ""
 "(DoS)\">DoS</glossterm> activities must be addressed. Business and "
 "regulatory requirements dictate the security approach that needs to be "
 "taken."
-msgstr ""
+msgstr "安全考虑，诸如数据如何在客户端和端点之间保证安全，以及任何的流量在多个云之间的传送，从窃听到 <glossterm baseform=\"denial of service (DoS)\">拒绝服务攻击</glossterm>行为等都得考虑到，业务和监管需要采取安全的方法。"
 
 #: ./doc/arch-design/hybrid/section_architecture_hybrid.xml167(para)
 msgid ""
@@ -9386,7 +9386,7 @@ msgid ""
 " change the cloud provider. Primarily due to excessive overhead with network"
 " firewall rules that needed to be created and corporate financial procedures"
 " that required entering into an agreement with a new provider."
-msgstr ""
+msgstr "公司A在此场景下有另外的需求，开发者已经在使用AWS来完成他们的一些工作而且不打算切换云提供商。主要的原因，创建新的网络防火墙规则，需要和新的供应商达成新的企业财务程序，会增加过多的开销。"
 
 #: ./doc/arch-design/hybrid/section_prescriptive_examples_hybrid.xml94(para)
 msgid ""
@@ -9433,7 +9433,7 @@ msgid ""
 "least one block storage volume and one object storage volume so that the "
 "data is available to the users at all times. The details of the method for "
 "protecting each of these sources of data differs."
-msgstr ""
+msgstr "此例子包含了由一个云管理平台(CMP)连接的两个私有OpenStack云，来源的云，即1号OpenStack云，包括一个控制器和至少一个实例运行MySQL,也包括至少一个块存储卷和一个对象存储卷，以为用户在所有时间的数据都可用，该方法的用于保护每个数据不同的这些来源的细节。"
 
 #: ./doc/arch-design/hybrid/section_prescriptive_examples_hybrid.xml138(para)
 msgid ""
@@ -9554,7 +9554,7 @@ msgid ""
 "minimize disruption by making incremental changes and providing a facility "
 "to either rollback or continue to roll forward when using a continuous "
 "delivery model."
-msgstr ""
+msgstr "同样的，当更新私有云部署时，务必小心谨慎，采用增量的变化最小化失误，同时提供回滚或继续往前的能力，当使用持续交付模式时。"
 
 #: ./doc/arch-design/hybrid/section_operational_considerations_hybrid.xml67(para)
 msgid ""
@@ -9624,7 +9624,7 @@ msgid ""
 "be an issue is when working with clouds that are based on the same version "
 "and the same distribution of OpenStack. Otherwise incompatibilities are "
 "virtually inevitable."
-msgstr ""
+msgstr "基于同个版本或者同个发行版的OpenStack不会因为云平台的兼容性而引发问题，这是唯一的情况，否则不兼容的情形必然会发生。"
 
 #: ./doc/arch-design/hybrid/section_tech_considerations_hybrid.xml28(para)
 msgid ""
@@ -9808,7 +9808,7 @@ msgid ""
 "Due to the process of passing user names, passwords, and generated tokens "
 "between client machines and API endpoints, placing API services behind "
 "hardware that performs SSL termination is strongly recommended."
-msgstr ""
+msgstr "介于在客户机器和API端点之间传输的是用户名称、密码以及生成的令牌，强烈建议在API服务后端放置SSL硬件终端。"
 
 #: ./doc/arch-design/hybrid/section_tech_considerations_hybrid.xml191(para)
 msgid ""

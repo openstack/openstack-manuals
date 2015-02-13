@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-02-03 06:11+0000\n"
+"POT-Creation-Date: 2015-02-13 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1948,78 +1948,122 @@ msgid "Integrate Identity with LDAP"
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap.xml:8(para)
-msgid "Identity Service supports integration with an existing LDAP directory for authentication and authorization services."
+msgid "Identity Service supports integration with existing LDAP directories for authentication and authorization services."
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap.xml:12(para)
-msgid "For OpenStack Identity to access an LDAP back end, you must enable the <placeholder-1/> boolean value for SELinux on the Identity server. To enable and make the option persistent across reboots:"
+msgid "For OpenStack Identity to access LDAP servers, you must enable the <placeholder-1/> boolean value for SELinux on the Identity server. To enable and make the option persistent across reboots:"
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap.xml:19(para)
-msgid "You can integrate Identity with a single LDAP server."
+msgid "You can integrate Identity with a single LDAP server, or multiple back ends using domain-specific configuration files."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:22(para)
-msgid "To configure Identity, set options in the <filename>/etc/keystone/keystone.conf</filename> file. Modify these examples as needed."
+#: ./doc/common/section_keystone_config_ldap.xml:23(title)
+msgid "To integrate Identity with a LDAP server"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:26(title)
-msgid "To integrate Identity with LDAP"
+#: ./doc/common/section_keystone_config_ldap.xml:25(para)
+msgid "Enable the LDAP driver in the <filename>/etc/keystone/keystone.conf</filename> file:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:28(para)
-msgid "Enable the LDAP driver in the <filename>keystone.conf</filename> file:"
+#: ./doc/common/section_keystone_config_ldap.xml:32(para)
+msgid "Define the destination LDAP server in the <filename>/etc/keystone/keystone.conf</filename> file:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:35(para)
-msgid "Define the destination LDAP server in the <filename>keystone.conf</filename> file:"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml:46(para)
+#: ./doc/common/section_keystone_config_ldap.xml:43(para)
 msgid "Create the organizational units (OU) in the LDAP directory, and define their corresponding location in the <filename>keystone.conf</filename> file:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:59(para)
+#: ./doc/common/section_keystone_config_ldap.xml:56(para) ./doc/common/section_keystone_config_ldap.xml:159(para)
 msgid "These schema attributes are extensible for compatibility with various schemas. For example, this entry maps to the <systemitem>person</systemitem> attribute in Active Directory:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:68(para)
+#: ./doc/common/section_keystone_config_ldap.xml:65(para)
 msgid "A read-only implementation is recommended for LDAP integration. These permissions are applied to object types in the <filename>keystone.conf</filename> file:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:86(para)
+#: ./doc/common/section_keystone_config_ldap.xml:83(para) ./doc/common/section_keystone_config_ldap.xml:185(para)
 msgid "Restart the Identity service:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:88(para)
+#: ./doc/common/section_keystone_config_ldap.xml:85(para) ./doc/common/section_keystone_config_ldap.xml:187(para)
 msgid "During service restart, authentication and authorization are unavailable."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:93(title)
+#: ./doc/common/section_keystone_config_ldap.xml:90(title)
+msgid "To integrate Identity with multiple back ends"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:92(para)
+msgid "Set the following options in the <filename>/etc/keystone/keystone.conf</filename> file:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:96(para)
+msgid "Enable the LDAP driver:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:102(para)
+msgid "Enable domain-specific drivers:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:110(para)
+msgid "Restart the service:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:114(para)
+msgid "List the domains using the dashboard, or the OpenStackClient CLI. Refer to the <link href=\"http://docs.openstack.org/developer/python-openstackclient/command-list.html\">Command List</link> for a list of OpenStackClient commands."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:119(para)
+msgid "Create domains using OpenStack dashboard, or the OpenStackClient CLI."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:123(para)
+msgid "For each domain, create a domain-specific configuration file in the <filename>/etc/keystone/domains</filename> directory. Use the file naming convention <filename>keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>, where <replaceable>DOMAIN_NAME</replaceable> is the domain name assigned in the previous step."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:128(para)
+msgid "The options set in the <filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename> file will override options in the <filename>/etc/keystone/keystone.conf</filename> file."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:134(para)
+msgid "Define the destination LDAP server in the <filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename> file. For example:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:145(para)
+msgid "Create the organizational units (OU) in the LDAP directory, and define their corresponding location in the <filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename> file. For example:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:167(para)
+msgid "A read-only implementation is recommended for LDAP integration. These permissions are applied to object types in the <filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename> file:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml:192(title)
 msgid "Additional LDAP integration settings"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:94(para)
-msgid "Set these options in the <filename>keystone.conf</filename> file."
+#: ./doc/common/section_keystone_config_ldap.xml:193(para)
+msgid "Set these options in the <filename>/etc/keystone/keystone.conf</filename> file for a single LDAP server, or <filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename> files for multiple back ends."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:99(term)
+#: ./doc/common/section_keystone_config_ldap.xml:200(term)
 msgid "Filters"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:101(para)
+#: ./doc/common/section_keystone_config_ldap.xml:202(para)
 msgid "Use filters to control the scope of data presented through LDAP."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:110(term)
+#: ./doc/common/section_keystone_config_ldap.xml:211(term)
 msgid "LDAP Account Status"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:112(para)
+#: ./doc/common/section_keystone_config_ldap.xml:213(para)
 msgid "Mask account status values for compatibility with various directory services. Superfluous accounts are filtered with <systemitem>user_filter</systemitem>."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml:116(para)
+#: ./doc/common/section_keystone_config_ldap.xml:217(para)
 msgid "For example, you can mask Active Directory account status attributes in the <filename>keystone.conf</filename> file:"
 msgstr ""
 
@@ -4200,7 +4244,7 @@ msgstr ""
 msgid "When using the XenAPI-based hypervisor, the Compute service uses host aggregates to manage XenServer Resource pools, which are used in supporting live migration."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-replication.xml:7(title) ./doc/common/section_objectstorage-components.xml:192(title)
+#: ./doc/common/section_objectstorage-replication.xml:7(title) ./doc/common/section_objectstorage-components.xml:195(title)
 msgid "Replication"
 msgstr ""
 
@@ -5660,37 +5704,37 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/common/section_objectstorage-components.xml:86(None)
+#: ./doc/common/section_objectstorage-components.xml:89(None)
 msgid "@@image: '../common/figures/objectstorage-ring.png'; md5=a94e26734cec6980c3684d9e824eac2d"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/common/section_objectstorage-components.xml:126(None)
+#: ./doc/common/section_objectstorage-components.xml:129(None)
 msgid "@@image: '../common/figures/objectstorage-zones.png'; md5=1b1dc0abe6ea0c516f22ce399deb75ed"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/common/section_objectstorage-components.xml:144(None)
+#: ./doc/common/section_objectstorage-components.xml:147(None)
 msgid "@@image: '../common/figures/objectstorage-accountscontainers.png'; md5=4b15e5a202db5bde53c9b369058aeab8"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/common/section_objectstorage-components.xml:169(None)
+#: ./doc/common/section_objectstorage-components.xml:172(None)
 msgid "@@image: '../common/figures/objectstorage-partitions.png'; md5=2c161c2e92d6fefc8140ec86e79e9492"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/common/section_objectstorage-components.xml:195(None)
+#: ./doc/common/section_objectstorage-components.xml:198(None)
 msgid "@@image: '../common/figures/objectstorage-replication.png'; md5=9d55594d7f445764569ab04d8d4373b2"
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/common/section_objectstorage-components.xml:222(None)
+#: ./doc/common/section_objectstorage-components.xml:225(None)
 msgid "@@image: '../common/figures/objectstorage-usecase.png'; md5=07480e7175b383171173775fb96d70d7"
 msgstr ""
 
@@ -5742,159 +5786,163 @@ msgstr ""
 msgid "Proxy servers use a shared-nothing architecture and can be scaled as needed based on projected workloads. A minimum of two proxy servers should be deployed for redundancy. If one proxy server fails, the others take over."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:59(title)
+#: ./doc/common/section_objectstorage-components.xml:57(para)
+msgid "For more information concerning proxy server configuration, please see the <link href=\"http://docs.openstack.org/trunk/config-reference/content/proxy-server-configuration.html\">Configuration Reference</link>."
+msgstr ""
+
+#: ./doc/common/section_objectstorage-components.xml:62(title)
 msgid "Rings"
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:60(para)
+#: ./doc/common/section_objectstorage-components.xml:63(para)
 msgid "A ring represents a mapping between the names of entities stored on disk and their physical locations. There are separate rings for accounts, containers, and objects. When other components need to perform any operation on an object, container, or account, they need to interact with the appropriate ring to determine their location in the cluster."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:65(para)
+#: ./doc/common/section_objectstorage-components.xml:68(para)
 msgid "The ring maintains this mapping using zones, devices, partitions, and replicas. Each partition in the ring is replicated, by default, three times across the cluster, and partition locations are stored in the mapping maintained by the ring. The ring is also responsible for determining which devices are used for handoff in failure scenarios."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:70(para)
+#: ./doc/common/section_objectstorage-components.xml:73(para)
 msgid "Data can be isolated into zones in the ring. Each partition replica is guaranteed to reside in a different zone. A zone could represent a drive, a server, a cabinet, a switch, or even a data center."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:73(para)
+#: ./doc/common/section_objectstorage-components.xml:76(para)
 msgid "The partitions of the ring are equally divided among all of the devices in the Object Storage installation. When partitions need to be moved around (for example, if a device is added to the cluster), the ring ensures that a minimum number of partitions are moved at a time, and only one replica of a partition is moved at a time."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:77(para)
+#: ./doc/common/section_objectstorage-components.xml:80(para)
 msgid "You can use weights to balance the distribution of partitions on drives across the cluster. This can be useful, for example, when differently sized drives are used in a cluster."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:80(para)
+#: ./doc/common/section_objectstorage-components.xml:83(para)
 msgid "The ring is used by the proxy server and several background processes (like replication)."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:83(title)
+#: ./doc/common/section_objectstorage-components.xml:86(title)
 msgid "The <emphasis role=\"bold\">ring</emphasis>"
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:90(para)
+#: ./doc/common/section_objectstorage-components.xml:93(para)
 msgid "These rings are externally managed, in that the server processes themselves do not modify the rings, they are instead given new rings modified by other tools."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:92(para)
+#: ./doc/common/section_objectstorage-components.xml:95(para)
 msgid "The ring uses a configurable number of bits from an MD5 hash for a path as a partition index that designates a device. The number of bits kept from the hash is known as the partition power, and 2 to the partition power indicates the partition count. Partitioning the full MD5 hash ring allows other parts of the cluster to work in batches of items at once which ends up either more efficient or at least less complex than working with each item separately or the entire cluster all at once."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:101(para)
+#: ./doc/common/section_objectstorage-components.xml:104(para)
 msgid "Another configurable value is the replica count, which indicates how many of the partition-device assignments make up a single ring. For a given partition number, each replica's device will not be in the same zone as any other replica's device. Zones can be used to group devices based on physical locations, power separations, network separations, or any other attribute that would improve the availability of multiple replicas at the same time."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:109(title) ./doc/common/section_objectstorage-components.xml:123(title)
+#: ./doc/common/section_objectstorage-components.xml:112(title) ./doc/common/section_objectstorage-components.xml:126(title)
 msgid "Zones"
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:110(para)
+#: ./doc/common/section_objectstorage-components.xml:113(para)
 msgid "Object Storage allows configuring zones in order to isolate failure boundaries. Each data replica resides in a separate zone, if possible. At the smallest level, a zone could be a single drive or a grouping of a few drives. If there were five object storage servers, then each server would represent its own zone. Larger deployments would have an entire rack (or multiple racks) of object servers, each representing a zone. The goal of zones is to allow the cluster to tolerate significant outages of storage servers without losing all replicas of the data."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:117(para)
+#: ./doc/common/section_objectstorage-components.xml:120(para)
 msgid "As mentioned earlier, everything in Object Storage is stored, by default, three times. Swift will place each replica \"as-uniquely-as-possible\" to ensure both high availability and high durability. This means that when chosing a replica location, Object Storage chooses a server in an unused zone before an unused server in a zone that already has a replica of the data."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:130(para)
+#: ./doc/common/section_objectstorage-components.xml:133(para)
 msgid "When a disk fails, replica data is automatically distributed to the other zones to ensure there are three copies of the data."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:134(title) ./doc/common/section_objectstorage-components.xml:141(title)
+#: ./doc/common/section_objectstorage-components.xml:137(title) ./doc/common/section_objectstorage-components.xml:144(title)
 msgid "Accounts and containers"
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:135(para)
+#: ./doc/common/section_objectstorage-components.xml:138(para)
 msgid "Each account and container is an individual SQLite database that is distributed across the cluster. An account database contains the list of containers in that account. A container database contains the list of objects in that container."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:148(para)
+#: ./doc/common/section_objectstorage-components.xml:151(para)
 msgid "To keep track of object data locations, each account in the system has a database that references all of its containers, and each container database references each object."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:153(title) ./doc/common/section_objectstorage-components.xml:166(title)
+#: ./doc/common/section_objectstorage-components.xml:156(title) ./doc/common/section_objectstorage-components.xml:169(title)
 msgid "Partitions"
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:154(para)
+#: ./doc/common/section_objectstorage-components.xml:157(para)
 msgid "A partition is a collection of stored data, including account databases, container databases, and objects. Partitions are core to the replication system."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:156(para)
+#: ./doc/common/section_objectstorage-components.xml:159(para)
 msgid "Think of a partition as a bin moving throughout a fulfillment center warehouse. Individual orders get thrown into the bin. The system treats that bin as a cohesive entity as it moves throughout the system. A bin is easier to deal with than many little things. It makes for fewer moving parts throughout the system."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:160(para)
+#: ./doc/common/section_objectstorage-components.xml:163(para)
 msgid "System replicators and object uploads/downloads operate on partitions. As the system scales up, its behavior continues to be predictable because the number of partitions is a fixed number."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:163(para)
+#: ./doc/common/section_objectstorage-components.xml:166(para)
 msgid "Implementing a partition is conceptually simple, a partition is just a directory sitting on a disk with a corresponding hash table of what it contains."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:175(title)
+#: ./doc/common/section_objectstorage-components.xml:178(title)
 msgid "Replicators"
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:176(para)
+#: ./doc/common/section_objectstorage-components.xml:179(para)
 msgid "In order to ensure that there are three copies of the data everywhere, replicators continuously examine each partition. For each local partition, the replicator compares it against the replicated copies in the other zones to see if there are any differences."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:180(para)
+#: ./doc/common/section_objectstorage-components.xml:183(para)
 msgid "The replicator knows if replication needs to take place by examining hashes. A hash file is created for each partition, which contains hashes of each directory in the partition. Each of the three hash files is compared. For a given partition, the hash files for each of the partition's copies are compared. If the hashes are different, then it is time to replicate, and the directory that needs to be replicated is copied over."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:186(para)
+#: ./doc/common/section_objectstorage-components.xml:189(para)
 msgid "This is where partitions come in handy. With fewer things in the system, larger chunks of data are transferred around (rather than lots of little TCP connections, which is inefficient) and there is a consistent number of hashes to compare."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:189(para)
+#: ./doc/common/section_objectstorage-components.xml:192(para)
 msgid "The cluster eventually has a consistent behavior where the newest data has a priority."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:199(para)
+#: ./doc/common/section_objectstorage-components.xml:202(para)
 msgid "If a zone goes down, one of the nodes containing a replica notices and proactively copies data to a handoff location."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:203(title)
+#: ./doc/common/section_objectstorage-components.xml:206(title)
 msgid "Use cases"
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:204(para)
+#: ./doc/common/section_objectstorage-components.xml:207(para)
 msgid "The following sections show use cases for object uploads and downloads and introduce the components."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:206(title)
+#: ./doc/common/section_objectstorage-components.xml:209(title)
 msgid "Upload"
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:207(para)
+#: ./doc/common/section_objectstorage-components.xml:210(para)
 msgid "A client uses the REST API to make a HTTP request to PUT an object into an existing container. The cluster receives the request. First, the system must figure out where the data is going to go. To do this, the account name, container name, and object name are all used to determine the partition where this object should live."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:211(para)
+#: ./doc/common/section_objectstorage-components.xml:214(para)
 msgid "Then a lookup in the ring figures out which storage nodes contain the partitions in question."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:213(para)
+#: ./doc/common/section_objectstorage-components.xml:216(para)
 msgid "The data is then sent to each storage node where it is placed in the appropriate partition. At least two of the three writes must be successful before the client is notified that the upload was successful."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:216(para)
+#: ./doc/common/section_objectstorage-components.xml:219(para)
 msgid "Next, the container database is updated asynchronously to reflect that there is a new object in it."
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:219(title)
+#: ./doc/common/section_objectstorage-components.xml:222(title)
 msgid "Object Storage in use"
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:228(title)
+#: ./doc/common/section_objectstorage-components.xml:231(title)
 msgid "Download"
 msgstr ""
 
-#: ./doc/common/section_objectstorage-components.xml:229(para)
+#: ./doc/common/section_objectstorage-components.xml:232(para)
 msgid "A request comes in for an account/container/object. Using the same consistent hashing, the partition name is generated. A lookup in the ring reveals which storage nodes contain that partition. A request is made to one of the storage nodes to fetch the object and, if that fails, requests are made to the other nodes."
 msgstr ""
 
@@ -6521,11 +6569,11 @@ msgid "Separate role authorization and user authentication"
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap-assignments.xml:8(para)
-msgid "When you configure the Identity service to use an LDAP back end, you can split authentication and authorization using the <emphasis>Assignments</emphasis> feature."
+msgid "When you configure the Identity service to use LDAP back ends, you can split authentication and authorization using the <emphasis>Assignments</emphasis> feature."
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap-assignments.xml:11(para)
-msgid "The Assignments feature enables administrators to manage project role authorization using the Identity service's own SQL database, while still providing user authentication through the LDAP directory."
+msgid "The Assignments feature enables administrators to manage project role authorization using the Identity service SQL database, while still providing user authentication through the LDAP directory."
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap-assignments.xml:15(para)
@@ -6536,16 +6584,32 @@ msgstr ""
 msgid "Separating role authorization and user authentication through Assignments"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-assignments.xml:20(para)
-msgid "Configure the Identity service to authenticate users through the LDAP driver. To do so, first find the <literal>[identity]</literal> section in the <filename>/etc/keystone/keystone.conf</filename> configuration file. Then, set the <literal>driver</literal> configuration key in that section to <literal>keystone.identity.backends.ldap.Identity</literal>:"
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:19(para)
+msgid "Modify the <filename>/etc/keystone/keystone.conf</filename> configuration file for a single LDAP server, or <filename>etc/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename> files for multiple LDAP back ends, performing the following actions:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-assignments.xml:31(para)
-msgid "Next, enable the Assignment driver. To do so, find the <literal>[assignment]</literal> section in the <filename>/etc/keystone/keystone.conf</filename> configuration file. Then, set the <literal>driver</literal> configuration key in that section to <literal>keystone.assignment.backends.sql.Assignment</literal>:"
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:24(para)
+msgid "Configure the Identity service to authenticate users through the LDAP driver. In the <literal>[identity]</literal> section, set the <literal>driver</literal> configuration key to <literal>keystone.identity.backends.ldap.Identity</literal>:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-assignments.xml:42(para)
-msgid "On distributions that include <application>openstack-config</application>, you can configure both drivers by running the following commands instead:"
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:32(para)
+msgid "Enable the Assignment driver. In the <literal>[assignment]</literal> section, set the <literal>driver</literal> configuration key to <literal>keystone.assignment.backends.sql.Assignment</literal>:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:40(para)
+msgid "On distributions that include <application>openstack-config</application>, you can configure both drivers by running the following commands."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:46(para)
+msgid "For a single LDAP server:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:53(para)
+msgid "For multiple LDAP back ends:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml:56(replaceable)
+msgid "DOMAIN_NAME"
 msgstr ""
 
 #: ./doc/common/section_cli_install.xml:8(title)
