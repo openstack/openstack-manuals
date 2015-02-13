@@ -60,9 +60,9 @@ fixed_key = 0000000000000000000000000000000000000000000000000000000000000000</pr
     </section>
     <section xml:id="section_create-encrypted-volume-type">
     <title>Create encrypted volume type</title>
-        <para>Block Storage volume type assignment provides a mechanism to provide scheduling to a specific back-end,
-            and also can be used to specify specific information for a back-end storage device to act upon.</para>
-        <para>In this case we are creating a volume type called LUKS and providing configuration information that will tell the storage system to
+        <para>Block Storage volume type assignment provides scheduling to a specific back-end,
+            and can be used to specify actionable information for a back-end storage device.</para>
+        <para>This example creates a volume type called LUKS and provides configuration information for the storage system to
             encrypt or decrypt the volume.</para>
         <procedure>
           <step>
@@ -79,7 +79,9 @@ fixed_key = 0000000000000000000000000000000000000000000000000000000000000000</pr
 +--------------------------------------+-------+</computeroutput></screen>
         </step>
         <step>
-            <para>Mark the volume type as encrypted and provide the necessary details:</para>
+            <para>Mark the volume type as encrypted and provide the necessary details. Use
+            <parameter>--control_location</parameter> to specify where encryption is
+            performed: <literal>front-end</literal> (default) or <literal>back-end</literal>.</para>
             <screen><prompt>$</prompt> <userinput>cinder encryption-type-create --cipher aes-xts-plain64 --key_size 512 \
   --control_location front-end LUKS nova.volume.encryptors.luks.LuksEncryptor</userinput>
 <computeroutput>+--------------------------------------+-------------------------------------------+-----------------+----------+------------------+
