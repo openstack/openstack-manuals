@@ -137,12 +137,12 @@
         <td>Entry point of paste.deploy in the server</td>
       </tr>
       <tr>
-        <td>write_affinity = r1, r2</td>
-        <td>No help text available for this option.</td>
+        <td>write_affinity = </td>
+        <td>This setting lets you trade data distribution for throughput. It makes the proxy server prefer local back-end servers for object PUT requests over non-local ones. Note that only object PUT requests are affected by the write_affinity setting; POST, GET, HEAD, DELETE, OPTIONS, and account/container PUT requests are not affected. The format is r&lt;N&gt; for region N or r&lt;N&gt;z&lt;M&gt; for region N, zone M. If this is set, then when handling an object PUT request, some number (see the write_affinity_node_count setting) of local backend servers will be tried before any nonlocal ones. Example: try to write to regions 1 and 2 before writing to any other nodes: write_affinity = r1, r2</td>
       </tr>
       <tr>
-        <td>write_affinity_node_count = 2 * replicas</td>
-        <td>No help text available for this option.</td>
+        <td>write_affinity_node_count = </td>
+        <td>This setting is only useful in conjunction with write_affinity; it governs how many local object servers will be tried before falling back to non-local ones. You can use '* replicas' at the end to have it use the number given times the number of replicas for the ring being used for the request: write_affinity_node_count = 2 * replicas</td>
       </tr>
     </tbody>
   </table>
