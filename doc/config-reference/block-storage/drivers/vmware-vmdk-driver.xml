@@ -130,11 +130,12 @@
         </table>
         <para>If you do not specify the clone type, the default is
                 <literal>full</literal>.</para>
-        <para>The following example shows linked cloning from another
-            source volume:</para>
+        <para>The following example shows linked cloning from a
+            source volume, which is created from an image:</para>
         <screen><prompt>$</prompt> <userinput>cinder type-create fast_clone</userinput>
 <prompt>$</prompt> <userinput>cinder type-key fast_clone set vmware:clone_type=linked</userinput>
-<prompt>$</prompt> <userinput>cinder create --volume-type fast_clone --source-volid 25743b9d-3605-462b-b9eb-71459fe2bb35 --display-name volume1 1</userinput></screen>
+<prompt>$</prompt> <userinput>cinder create --image-id 9cb87f4f-a046-47f5-9b7c-d9487b3c7cd4 --volume-type fast_clone --display-name source-vol 1</userinput>
+<prompt>$</prompt> <userinput>cinder create --source-volid 25743b9d-3605-462b-b9eb-71459fe2bb35 --display-name dest-vol 1</userinput></screen>
         <note>
             <para>The VMware ESX VMDK driver ignores the extra spec
                 entry and always creates a <literal>full</literal>
