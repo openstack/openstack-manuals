@@ -2,21 +2,57 @@
 {% set cssdir = '../common/css/' %}
 {% extends "templates/base.tmpl" %}
 {% block pagetitle %}Japanese{% endblock %}
-{% block title %}ドキュメント{% endblock %}
+{% block title %}{% endblock %}
+{% block header %}
+{% endblock header %}
 {% block content %}
-   <!-- Begin Page Content -->
+    <!-- Begin Page Content -->
     <div class="top-docs-wrapper">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8">
-                <h1>日本語版のドキュメント</h1>
+                <h1>OpenStack ドキュメントへようこそ</h1>
                 <p>
-      本ページでは、日本語版のドキュメントを掲載しています。
-     <a href="http://docs.openstack.org/">
-      英語版
-     </a>
-     ドキュメントもご覧ください。
+                    <strong>OpenStack とは?</strong> OpenStack はクラウドオペレーティングシステムです。データセンター全体のコンピュートリソース、ストレージリソース、ネットワークリソースの大規模なプールを制御します。これらすべては、ダッシュボードの Web インターフェースから管理されます。管理者はリソースを制御でき、利用者はリソースを配備できます。
                 </p>
+                <hr>
+                <h3>次に何をしますか?</h3>
+                <a href="#docs-main-body" class="overview-btn docs-btn">ドキュメントの参照 <i class="fa fa-arrow-circle-o-down"></i></a>
+                <a href="http://www.openstack.org/software/start/" class="overview-btn docs-btn">OpenStack の取得 <i class="fa fa-arrow-circle-o-right"></i></a>
+                <a href="http://www.openstack.org/marketplace/training" class="overview-btn docs-btn">トレーニングの受講 <i class="fa fa-arrow-circle-o-right"></i></a>
+                <form class="docs-main-search-form">
+      <script type="text/javascript">
+        (function() {
+        var cx = '000108871792296872333:noj9nikm74i';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = (document.location.protocol == 'https:' ? 'https:' :
+'http:') +
+            '//www.google.com/cse/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+       </script>
+       <gcse:search gname="standard" as_sitesearch="docs.openstack.org">
+       </gcse:search>
+       </form>
+       </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 superuser-wrapper">
+            <div id="superuser-img"></div>
+        </div>
+    </div>
+</div>
+<div class="mid-docs-wrapper" id="docs-main-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-9">
+                <h2>日本語ドキュメント</h2>
+                <p>日本語ドキュメントは、最新リリースのみを提供しています。以前のリリースの英語ドキュメントや他の言語のドキュメントを次のメニューから参照できます。</p>
+            </div>
+            {% include 'templates/dropdown_releases_and_languages.tmpl' %}
+        </div>
+    </div>
 </div>
         <div class="container">
             <div class="row">
@@ -26,68 +62,57 @@
             <div class="row docs-toc">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="docs-link-sections">
-                        <h3><i class="fa fa-cogs"></i> OpenStack のインストール</h3>
-     <a href="http://docs.openstack.org/ja/trunk/install-guide/install/apt-debian/content/">
-       インストールガイド Debian 7.0 (Wheezy) 版 (ドラフト版)
-      </a>
-      <a href="http://docs.openstack.org/ja/trunk/install-guide/install/zypper/content/">
-       インストールガイド openSUSE、SUSE Linux Enterprise Server 版 (ドラフト版)
-      </a>
-      <a href="http://docs.openstack.org/ja/trunk/install-guide/install/yum/content/">
-       インストールガイド Red Hat Enterprise Linux、CentOS、Fedora 版 (ドラフト版)
-      </a>
-      <a href="http://docs.openstack.org/ja/trunk/install-guide/install/apt/content/">
-       インストールガイド Ubuntu 14.04 (LTS) 版 (ドラフト版)
-      </a>
+                        <h3><a name="install-guides"><i class="fa fa-cogs"></i> インストールガイド</a></h3>
+                        <a href="/ja/trunk/install-guide/install/apt-debian/content/">インストールガイド Debian 7.0 版 (日本語ドラフト版)</a>
+                        <a href="/ja/trunk/install-guide/install/zypper/content/">インストールガイド openSUSE 13.1、SUSE Linux Enterprise Server 11 版 (日本語ドラフト版)</a>
+                        <a href="/ja/trunk/install-guide/install/yum/content/">インストールガイド Red Hat Enterprise Linux 7、CentOS 7、Fedora 20 版 (日本語ドラフト版)</a>
+                        <a href="/ja/trunk/install-guide/install/apt/content/">インストールガイド Ubuntu 14.04 (LTS) 版 (日本語ドラフト版)</a>
                     </div>
                     <div class="docs-link-sections">
-                        <h3><i class="fa fa-book"></i> OpenStack の API</h3>
-      <a href="http://docs.openstack.org/ja/api/quick-start/content/">
-       API クイックスタート (ドラフト版)
-      </a>
+                        <h3 id="api-guides"><i class="fa fa-book"></i> API ガイド (英語)</h3>
+                        <a href="http://developer.openstack.org/api-ref.html">API Complete Reference (HTML)</a>
+                        <a href="http://developer.openstack.org/api-ref-guides/bk-api-ref.pdf">API Complete Reference (PDF)</a>
+                        <a href="http://developer.openstack.org/api-ref-blockstorage-v2.html">Block Storage API v2.0 Reference</a>
+                        <a href="http://developer.openstack.org/api-ref-blockstorage-v1.html">Block Storage API v1.0 Reference</a>
+                        <a href="http://developer.openstack.org/api-ref-compute-v2.html">Compute API v2 Reference</a>
+                        <a href="http://developer.openstack.org/api-ref-identity-v2.html">Identity API v2.0 Reference</a>
+                        <a href="http://developer.openstack.org/api-ref-networking-v2.html">Networking API v2.0 Reference</a>
+                        <a href="http://developer.openstack.org/api-ref-image-v2.html">Image Service API v2 Reference</a>
+                        <a href="http://developer.openstack.org/api-ref-image-v1.html">Image Service API v1 Reference</a>
+                        <a href="http://developer.openstack.org/api-ref-objectstorage-v1.html">Object Storage API v1 Reference</a>
                     </div>
                     <div class="docs-link-sections">
-                        <h3><i class="fa fa-wrench"></i> 他の日本語ドキュメント </h3>
-    <a href="http://openstack.jp/documents.html">
-       日本 OpenStack ユーザ会のドキュメント
-      </a>
-      ユーザ会主催のイベント、勉強会でのプレゼンテーションなど
+                        <h3 id="configuration-guides"><i class="fa fa-wrench"></i> 設定ガイド</h3>
+                        <a href="/arch-design/content/">Architecture Design Guide (英語)</a>
+                        <a href="/juno/config-reference/content/">Configuration Reference (英語)</a>
+                        <a href="/admin-guide-cloud/content/">Cloud Administrator Guide (英語)</a>
+                        <a href="/ja/high-availability-guide/content/">高可用性ガイド (日本語ドラフト版)</a>
+                        <a href="http://openstack-ja.github.io/openstack-manuals/openstack-ops/content/">運用ガイド</a>
+                        <a href="/ja/security-guide/content/">セキュリティガイド (日本語ドラフト版)</a>
+                        <a href="/ja/image-guide/content/">仮想マシンイメージガイド (日本語ドラフト版)</a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="docs-link-sections">
-                        <h3><i class="fa fa-users"></i> OpenStack の設定と運用</h3>
-<a href="http://openstack-ja.github.io/openstack-manuals/openstack-ops/content/">
-       運用ガイド
-      </a>
-      <a href="http://docs.openstack.org/ja/security-guide/content/">
-       セキュリティガイド (ドラフト版)
-      </a>
-      <a href="http://docs.openstack.org/ja/high-availability-guide/content/">
-       高可用性ガイド (ドラフト版)
-      </a>
-      <a href="http://docs.openstack.org/ja/image-guide/content/">
-       仮想マシンイメージガイド (ドラフト版)
-      </a>
+                        <h3 id="ops-and-admin-guides"><i class="fa fa-users"></i> 運用管理ガイド</h3>
+                        <a href="/admin-guide-cloud/content/">Cloud Administrator Guide (日本語ドラフト版)</a>
+                        <a href="/ja/high-availability-guide/content/">高可用性ガイド (日本語ドラフト版)</a>
+                        <a href="http://openstack-ja.github.io/openstack-manuals/openstack-ops/content/">運用ガイド</a>
+                        <a href="/ja/security-guide/content/">セキュリティガイド (日本語ドラフト版)</a>
+                        <a href="/ja/image-guide/content/">仮想マシンイメージガイド (日本語ドラフト版)</a>
+                        <a href="/arch-design/content/">Architecture Design Guide (英語)</a>
+                        <a href="http://openstack.jp/documents.html">日本 OpenStack ユーザ会のドキュメント</a>
                     </div>
                     <div class="docs-link-sections">
-                        <h3><i class="fa fa-cloud"></i> OpenStack の利用</h3>
-      <a href="http://docs.openstack.org/ja/api/quick-start/content/">
-       API クイックスタート (ドラフト版)
-      </a>
-     </dd>
-     <dd>
-      <a href="http://docs.openstack.org/ja/user-guide/content/">
-       エンドユーザーガイド (ドラフト版)
-      </a>
-     </dd>
-     <dd>
-      <a href="http://docs.openstack.org/ja/user-guide-admin/content/">
-       管理ユーザーガイド (ドラフト版)
-      </a>
+                        <h3><i class="fa fa-cloud"></i> ユーザーガイド</h3>
+                        <a href="/ja/api/quick-start/content/">API クイックスタート (日本語ドラフト版)</a>
+                        <a href="/ja/user-guide/content/">エンドユーザーガイド (Python SDK 付)(日本語ドラフト版)</a>
+                        <a href="/ja/user-guide-admin/content/">管理ユーザーガイド (日本語ドラフト版)</a>
+                        <a href="/cli-reference/content/">Command-Line Interface Reference (英語)</a>
+                        <a href="http://developer.openstack.org">Open source software for application development</a>
                     </div>
-                    <!--<div class="docs-link-sections">
-                        <h3><i class="fa fa-pencil"></i> Contributor Guides</h3>
+                    <div class="docs-link-sections">
+                        <h3 id="contributor-guides"><i class="fa fa-pencil"></i> コントリビューターガイド (英語)</h3>
                         <a href="http://wiki.openstack.org/Documentation/HowTo">OpenStack Documentation</a>
                         <a href="/developer/openstack-projects.html">Python Developer Documentation</a>
                         <a href="/developer/language-bindings.html">Language Bindings and Python Clients</a>
@@ -96,32 +121,21 @@
                         <a href="/developer/tempest">Tempest Test Suite for OpenStack</a>
                         <a href="https://www.openstack.org/join/">Join the OpenStack Foundation</a>
                         <a href="https://www.openstack.org/user-survey/">Take the Deployment Survey</a>
-                    </div>-->
+                    </div>
                 </div>
             </div>
-         </div>
             <div class="row docs-contribute-wrapper">
                 <div class="col-lg-12">
-                    <p>日本語版の作成・翻訳について</p>
-      OpenStack ドキュメントの翻訳は、
-      <a href="https://wiki.openstack.org/wiki/I18nTeam/ja">
-       OpenStack I18N team
-      </a>
-      が担当しています。
-     </dd>
-     <dd>
-      日本語への翻訳は、
-      <a href="https://wiki.openstack.org/wiki/OpenStack_User_Groups#Japan">
-       日本 OpenStack ユーザ会
-      </a>
-      のメンバーが中心となって、翻訳・レビューを行っています。
-     </dd>
-     <dd>
-      どなたでも参加できますので、是非ご参加ください。
+                    <p>ドキュメントは、コードのように取り扱われ、コミュニティにより作成されています。興味がありますか?</p>
+                    <a href="https://wiki.openstack.org/wiki/Documentation/HowTo" class="overview-btn contribute-btn">How To Contribute <i class="fa fa-chevron-right"></i></a>
+                </div>
+                <div class="col-lg-12">
+                    <p>OpenStack ドキュメントの翻訳は、<a href="https://wiki.openstack.org/wiki/I18nTeam/ja">OpenStack I18N team</a> が担当しています。</p>
+                    <p>日本語翻訳は、<a href="https://wiki.openstack.org/wiki/OpenStack_User_Groups#Japan">日本 OpenStack ユーザ会</a>が中心となり、翻訳・レビューを行っています。</p>
+                    <p>どなたでも参加できますので、是非ご参加ください。</p>
                 </div>
             </div>
         </div>
 </div>
     <!-- End Page Content -->
-
 {% endblock content %}
