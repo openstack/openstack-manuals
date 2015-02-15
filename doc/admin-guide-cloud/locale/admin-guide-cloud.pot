@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-02-12 06:10+0000\n"
+"POT-Creation-Date: 2015-02-15 06:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2028,7 +2028,7 @@ msgstr ""
 msgid "Libvirt (KVM/QEMU)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:530(th) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:292(title)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:530(th) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:326(title)
 msgid "XenServer"
 msgstr ""
 
@@ -11130,7 +11130,7 @@ msgstr ""
 msgid "Lists the floating IP addresses in the pool."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:526(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:344(replaceable)
+#: ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:526(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:378(replaceable)
 msgid "POOL_NAME"
 msgstr ""
 
@@ -12229,247 +12229,267 @@ msgstr ""
 msgid "KVM-Libvirt"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:60(title) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:296(title) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:370(title)
-msgid "Prerequisites"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:62(para)
-msgid "<emphasis role=\"bold\">Hypervisor:</emphasis> KVM with libvirt"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:65(para)
-msgid "<emphasis role=\"bold\">Shared storage:</emphasis><filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename> (for example, <filename>/var/lib/nova/instances</filename>) has to be mounted by shared storage. This guide uses NFS but other options, including the <link href=\"http://gluster.org/community/documentation//index.php/OSConnect\"> OpenStack Gluster Connector</link> are available."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:75(para)
-msgid "<emphasis role=\"bold\">Instances:</emphasis> Instance can be migrated with iSCSI-based volumes."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:83(para)
-msgid "Because the Compute service does not use the libvirt live migration functionality by default, guests are suspended before migration and might experience several minutes of downtime. For details, see <xref linkend=\"true-live-migration-kvm-libvirt\"/>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:90(para)
-msgid "This guide assumes the default value for <placeholder-1/> in your <filename>nova.conf</filename> file (<filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>). If you have changed the <literal>state_path</literal> or <literal>instances_path</literal> variables, modify the commands accordingly."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:98(para)
-msgid "You must specify <literal>vncserver_listen=0.0.0.0</literal> or live migration will not work correctly."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:105(title)
-msgid "Example Compute installation environment"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:108(para)
-msgid "Prepare at least three servers. In this example, we refer to the servers as <literal>HostA</literal>, <literal>HostB</literal>, and <literal>HostC</literal>:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:113(para)
-msgid "<literal>HostA</literal> is the <firstterm baseform=\"cloud controller\">Cloud Controller</firstterm>, and should run these services: <systemitem class=\"service\"> nova-api</systemitem>, <systemitem class=\"service\">nova-scheduler</systemitem>, <literal>nova-network</literal>, <systemitem class=\"service\"> cinder-volume</systemitem>, and <literal>nova-objectstore</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:122(para)
-msgid "<literal>HostB</literal> and <literal>HostC</literal> are the <firstterm baseform=\"compute node\">compute nodes</firstterm> that run <systemitem class=\"service\">nova-compute</systemitem>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:128(para)
-msgid "Ensure that <literal><replaceable>NOVA-INST-DIR</replaceable></literal> (set with <literal>state_path</literal> in the <filename>nova.conf</filename> file) is the same on all hosts."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:134(para)
-msgid "In this example, <literal>HostA</literal> is the NFSv4 server that exports <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename> directory. <literal>HostB</literal> and <literal>HostC</literal> are NFSv4 clients that mount <literal>HostA</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:141(title)
-msgid "Configuring your system"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:143(para)
-msgid "Configure your DNS or <filename>/etc/hosts</filename> and ensure it is consistent across all hosts. Make sure that the three hosts can perform name resolution with each other. As a test, use the <placeholder-1/> command to ping each host from one another."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:155(para)
-msgid "Ensure that the UID and GID of your Compute and libvirt users are identical between each of your servers. This ensures that the permissions on the NFS mount works correctly."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:161(para)
-msgid "Export <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename> from <literal>HostA</literal>, and ensure it is readable and writable by the Compute user on <literal>HostB</literal> and <literal>HostC</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:166(para)
-msgid "For more information, see: <link href=\"https://help.ubuntu.com/community/SettingUpNFSHowTo\">SettingUpNFSHowTo</link> or <link href=\"http://www.cyberciti.biz/faq/centos-fedora-rhel-nfs-v4-configuration/\">CentOS/Red Hat: Setup NFS v4.0 File Server</link>"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:173(para)
-msgid "Configure the NFS server at <literal>HostA</literal> by adding the following line to the <filename>/etc/exports</filename> file:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:176(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:189(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:196(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:204(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:210(replaceable)
-msgid "NOVA-INST-DIR"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:177(para)
-msgid "Change the subnet mask (<literal>255.255.0.0</literal>) to the appropriate value to include the IP addresses of <literal>HostB</literal> and <literal>HostC</literal>. Then restart the NFS server:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:185(para)
-msgid "On both compute nodes, enable the 'execute/search' bit on your shared directory to allow qemu to be able to use the images within the directories. On all hosts, run the following command:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:192(para)
-msgid "Configure NFS on <literal>HostB</literal> and <literal>HostC</literal> by adding the following line to the <filename>/etc/fstab</filename> file:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:197(para)
-msgid "Ensure that you can mount the exported directory:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:200(para)
-msgid "Check that <literal>HostA</literal> can see the <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename>\" directory:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:204(filename) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:210(filename)
-msgid "<placeholder-1/>/instances/"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:206(para)
-msgid "Perform the same check on <literal>HostB</literal> and <literal>HostC</literal>, paying special attention to the permissions (Compute should be able to write):"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:223(para)
-msgid "Update the libvirt configurations so that the calls can be made securely. These methods enable remote access over TCP and are not documented here."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:229(para)
-msgid "SSH tunnel to libvirtd's UNIX socket"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:232(para)
-msgid "libvirtd TCP socket, with GSSAPI/Kerberos for auth+data encryption"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:237(para)
-msgid "libvirtd TCP socket, with TLS for encryption and x509 client certs for authentication"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:242(para)
-msgid "libvirtd TCP socket, with TLS for encryption and Kerberos for authentication"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:247(para)
-msgid "Restart libvirt. After you run the command, ensure that libvirt is successfully restarted:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:255(para)
-msgid "Configure your firewall to allow libvirt to communicate between nodes."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:258(para)
-msgid "By default, libvirt listens on TCP port 16509, and an ephemeral TCP range from 49152 to 49261 is used for the KVM communications. Based on the secure remote access TCP configuration you chose, be careful which ports you open, and always understand who has access. For information about ports that are used with libvirt, see <link href=\"http://libvirt.org/remote.html#Remote_libvirtd_configuration\"> the libvirt documentation</link>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:268(para)
-msgid "You can now configure options for live migration. In most cases, you will not need to configure any options. The following chart is for advanced users only."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:277(title)
-msgid "Enabling true live migration"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:278(para)
-msgid "By default, the Compute service does not use the libvirt live migration function. To enable this function, add the following line to the <filename>nova.conf</filename> file:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:283(para)
-msgid "The Compute service does not use libvirt's live migration by default because there is a risk that the migration process will never end. This can happen if the guest operating system uses blocks on the disk faster than they can be migrated."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:294(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:60(title) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:328(title)
 msgid "Shared storage"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:298(para)
-msgid "<emphasis role=\"bold\">Compatible XenServer hypervisors</emphasis>. For more information, see the <link href=\"http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/reference.html#pooling_homogeneity_requirements\">Requirements for Creating Resource Pools</link> section of the <citetitle>XenServer Administrator's Guide</citetitle>."
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:62(title) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:330(title) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:404(title)
+msgid "Prerequisites"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:306(para)
-msgid "<emphasis role=\"bold\">Shared storage</emphasis>. An NFS export, visible to all XenServer hosts."
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:64(para)
+msgid "<emphasis role=\"bold\">Hypervisor:</emphasis> KVM with libvirt"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:310(para)
-msgid "For the supported NFS versions, see the <link href=\"http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/reference.html#id1002701\">NFS VHD</link> section of the <citetitle>XenServer Administrator's Guide</citetitle>."
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:67(para)
+msgid "<emphasis role=\"bold\">Shared storage:</emphasis><filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename> (for example, <filename>/var/lib/nova/instances</filename>) has to be mounted by shared storage. This guide uses NFS but other options, including the <link href=\"http://gluster.org/community/documentation//index.php/OSConnect\"> OpenStack Gluster Connector</link> are available."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:318(para)
-msgid "To use shared storage live migration with XenServer hypervisors, the hosts must be joined to a XenServer pool. To create that pool, a host aggregate must be created with specific metadata. This metadata is used by the XAPI plugins to establish the pool."
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:77(para)
+msgid "<emphasis role=\"bold\">Instances:</emphasis> Instance can be migrated with iSCSI-based volumes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:324(title)
-msgid "Using shared storage live migration with XenServer hypervisors"
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:85(para)
+msgid "Because the Compute service does not use the libvirt live migration functionality by default, guests are suspended before migration and might experience several minutes of downtime. For details, see <xref linkend=\"true-live-migration-kvm-libvirt\"/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:326(para)
-msgid "Add an NFS VHD storage to your master XenServer, and set it as the default storage repository. For more information, see NFS VHD in the <citetitle>XenServer Administrator's Guide</citetitle>."
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:92(para)
+msgid "This guide assumes the default value for <placeholder-1/> in your <filename>nova.conf</filename> file (<filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename>). If you have changed the <literal>state_path</literal> or <literal>instances_path</literal> variables, modify the commands accordingly."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:100(para)
+msgid "You must specify <literal>vncserver_listen=0.0.0.0</literal> or live migration will not work correctly."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:107(title)
+msgid "Example Compute installation environment"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:110(para)
+msgid "Prepare at least three servers. In this example, we refer to the servers as <literal>HostA</literal>, <literal>HostB</literal>, and <literal>HostC</literal>:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:115(para)
+msgid "<literal>HostA</literal> is the <firstterm baseform=\"cloud controller\">Cloud Controller</firstterm>, and should run these services: <systemitem class=\"service\"> nova-api</systemitem>, <systemitem class=\"service\">nova-scheduler</systemitem>, <literal>nova-network</literal>, <systemitem class=\"service\"> cinder-volume</systemitem>, and <literal>nova-objectstore</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:124(para)
+msgid "<literal>HostB</literal> and <literal>HostC</literal> are the <firstterm baseform=\"compute node\">compute nodes</firstterm> that run <systemitem class=\"service\">nova-compute</systemitem>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:130(para)
+msgid "Ensure that <literal><replaceable>NOVA-INST-DIR</replaceable></literal> (set with <literal>state_path</literal> in the <filename>nova.conf</filename> file) is the same on all hosts."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:136(para)
+msgid "In this example, <literal>HostA</literal> is the NFSv4 server that exports <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename> directory. <literal>HostB</literal> and <literal>HostC</literal> are NFSv4 clients that mount <literal>HostA</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:143(title)
+msgid "Configuring your system"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:145(para)
+msgid "Configure your DNS or <filename>/etc/hosts</filename> and ensure it is consistent across all hosts. Make sure that the three hosts can perform name resolution with each other. As a test, use the <placeholder-1/> command to ping each host from one another."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:156(para)
+msgid "Ensure that the UID and GID of your Compute and libvirt users are identical between each of your servers. This ensures that the permissions on the NFS mount works correctly."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:162(para)
+msgid "Export <filename><replaceable>NOVA-INST-DIR</replaceable>/instances</filename> from <literal>HostA</literal>, and ensure it is readable and writable by the Compute user on <literal>HostB</literal> and <literal>HostC</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:167(para)
+msgid "For more information, see: <link href=\"https://help.ubuntu.com/community/SettingUpNFSHowTo\">SettingUpNFSHowTo</link> or <link href=\"http://www.cyberciti.biz/faq/centos-fedora-rhel-nfs-v4-configuration/\">CentOS/Red Hat: Setup NFS v4.0 File Server</link>"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:174(para)
+msgid "Configure the NFS server at <literal>HostA</literal> by adding the following line to the <filename>/etc/exports</filename> file:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:177(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:190(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:197(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:205(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:211(replaceable)
+msgid "NOVA-INST-DIR"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:178(para)
+msgid "Change the subnet mask (<literal>255.255.0.0</literal>) to the appropriate value to include the IP addresses of <literal>HostB</literal> and <literal>HostC</literal>. Then restart the NFS server:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:186(para)
+msgid "On both compute nodes, enable the 'execute/search' bit on your shared directory to allow qemu to be able to use the images within the directories. On all hosts, run the following command:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:193(para)
+msgid "Configure NFS on <literal>HostB</literal> and <literal>HostC</literal> by adding the following line to the <filename>/etc/fstab</filename> file:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:198(para)
+msgid "Ensure that you can mount the exported directory:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:201(para)
+msgid "Check that <literal>HostA</literal> can see the <filename><replaceable>NOVA-INST-DIR</replaceable>/instances/</filename>\" directory:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:205(filename) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:211(filename)
+msgid "<placeholder-1/>/instances/"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:207(para)
+msgid "Perform the same check on <literal>HostB</literal> and <literal>HostC</literal>, paying special attention to the permissions (Compute should be able to write):"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:224(para)
+msgid "Update the libvirt configurations so that the calls can be made securely. These methods enable remote access over TCP and are not documented here."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:230(para)
+msgid "SSH tunnel to libvirtd's UNIX socket"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:233(para)
+msgid "libvirtd TCP socket, with GSSAPI/Kerberos for auth+data encryption"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:238(para)
+msgid "libvirtd TCP socket, with TLS for encryption and x509 client certs for authentication"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:243(para)
+msgid "libvirtd TCP socket, with TLS for encryption and Kerberos for authentication"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:248(para)
+msgid "Restart libvirt. After you run the command, ensure that libvirt is successfully restarted:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:256(para)
+msgid "Configure your firewall to allow libvirt to communicate between nodes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:259(para)
+msgid "By default, libvirt listens on TCP port 16509, and an ephemeral TCP range from 49152 to 49261 is used for the KVM communications. Based on the secure remote access TCP configuration you chose, be careful which ports you open, and always understand who has access. For information about ports that are used with libvirt, see <link href=\"http://libvirt.org/remote.html#Remote_libvirtd_configuration\"> the libvirt documentation</link>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:269(para)
+msgid "You can now configure options for live migration. In most cases, you will not need to configure any options. The following chart is for advanced users only."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:278(title)
+msgid "Enabling true live migration"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:279(para)
+msgid "By default, the Compute service does not use the libvirt live migration function. To enable this function, add the following line to the <filename>nova.conf</filename> file:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:284(para)
+msgid "The Compute service does not use libvirt's live migration by default because there is a risk that the migration process will never end. This can happen if the guest operating system uses blocks on the disk faster than they can be migrated."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:292(title)
+msgid "Block Migration"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:293(para)
+msgid "Configuring KVM for block migration is exactly the same as the above configuration in <xref linkend=\"configuring-migrations-kvm-shared-storage\"/>, except that <literal><replaceable>NOVA-INST-DIR</replaceable>/instances</literal> is local to each host rather than shared. No NFS client or server configuration is required."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:303(para)
+msgid "To use block migration, you must use the <parameter>--block-migrate</parameter> parameter with the live migration command."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:308(para)
+msgid "Block migration is incompatible with read-only devices such as CD-ROMs and <link href=\"http://docs.openstack.org/user-guide/content/config-drive.html\">Configuration Drive (config_drive)</link>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:315(para)
+msgid "Since the ephemeral drives are copied over the network in block migration, migrations of instances with heavy I/O loads may never complete if the drives are writing faster than the data can be copied over the network."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:332(para)
-msgid "Configure all compute nodes to use the default storage repository (<literal>sr</literal>) for pool operations. Add this line to your <filename>nova.conf</filename> configuration files on all compute nodes:"
+msgid "<emphasis role=\"bold\">Compatible XenServer hypervisors</emphasis>. For more information, see the <link href=\"http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/reference.html#pooling_homogeneity_requirements\">Requirements for Creating Resource Pools</link> section of the <citetitle>XenServer Administrator's Guide</citetitle>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:340(para)
-msgid "Create a host aggregate. This command creates the aggregate, and then displays a table that contains the ID of the new aggregate:"
+msgid "<emphasis role=\"bold\">Shared storage</emphasis>. An NFS export, visible to all XenServer hosts."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:344(replaceable)
-msgid "AVAILABILITY_ZONE"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:345(para)
-msgid "Add metadata to the aggregate, to mark it as a hypervisor pool:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:348(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:349(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:351(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:356(replaceable)
-msgid "AGGREGATE_ID"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:350(para)
-msgid "Make the first compute node part of that aggregate:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:351(replaceable)
-msgid "MASTER_COMPUTE_NAME"
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:344(para)
+msgid "For the supported NFS versions, see the <link href=\"http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/reference.html#id1002701\">NFS VHD</link> section of the <citetitle>XenServer Administrator's Guide</citetitle>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:352(para)
+msgid "To use shared storage live migration with XenServer hypervisors, the hosts must be joined to a XenServer pool. To create that pool, a host aggregate must be created with specific metadata. This metadata is used by the XAPI plugins to establish the pool."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:358(title)
+msgid "Using shared storage live migration with XenServer hypervisors"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:360(para)
+msgid "Add an NFS VHD storage to your master XenServer, and set it as the default storage repository. For more information, see NFS VHD in the <citetitle>XenServer Administrator's Guide</citetitle>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:366(para)
+msgid "Configure all compute nodes to use the default storage repository (<literal>sr</literal>) for pool operations. Add this line to your <filename>nova.conf</filename> configuration files on all compute nodes:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:374(para)
+msgid "Create a host aggregate. This command creates the aggregate, and then displays a table that contains the ID of the new aggregate:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:378(replaceable)
+msgid "AVAILABILITY_ZONE"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:379(para)
+msgid "Add metadata to the aggregate, to mark it as a hypervisor pool:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:382(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:383(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:385(replaceable) ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:390(replaceable)
+msgid "AGGREGATE_ID"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:384(para)
+msgid "Make the first compute node part of that aggregate:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:385(replaceable)
+msgid "MASTER_COMPUTE_NAME"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:386(para)
 msgid "The host is now part of a XenServer pool."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:355(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:389(para)
 msgid "Add hosts to the pool:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:356(replaceable)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:390(replaceable)
 msgid "COMPUTE_HOST_NAME"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:358(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:392(para)
 msgid "The added compute node and the host will shut down to join the host to the XenServer pool. The operation will fail if any server other than the compute node is running or suspended on the host."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:368(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:402(title)
 msgid "Block migration"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:372(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:406(para)
 msgid "<emphasis role=\"bold\">Compatible XenServer hypervisors</emphasis>. The hypervisors must support the Storage XenMotion feature. See your XenServer manual to make sure your edition has this feature."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:381(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:415(para)
 msgid "To use block migration, you must use the <parameter>==block-migrate</parameter> parameter with the live migration command."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:387(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-configure-migrations.xml:421(para)
 msgid "Block migration works only with EXT local storage storage repositories, and the server must not have any volumes attached."
 msgstr ""
 
