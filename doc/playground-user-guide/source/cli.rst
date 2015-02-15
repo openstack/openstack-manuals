@@ -35,6 +35,7 @@ TODO(ajaeger): Add table with command-line clients.
 
    cli_launch_instances.rst
    cli_cheat_sheet.rst
+   trove-manage-db.rst
 
 .. TODO(ajaeger): Add further sections
 
