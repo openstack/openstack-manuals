@@ -61,11 +61,20 @@ under the License.-->
           </listitem>
         </varlistentry>
         <varlistentry>
+          <term role="String">InstanceId</term>
+          <listitem>
+            <para>The ID of an existing instance to use to create the Auto Scaling group. If specify this property, will create the group use an existing instance instead of a launch configuration.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+            <para>Value must be of type nova.server</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
           <term role="String">LaunchConfigurationName</term>
           <listitem>
             <para>The reference to a LaunchConfiguration resource.</para>
             <para>Can be updated without replacement.</para>
-            <para>Required property.</para>
+            <para>Optional property.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -177,6 +186,7 @@ resources:
       AvailabilityZones: [Value, Value, ...]
       Cooldown: Number
       DesiredCapacity: Integer
+      InstanceId: String
       LaunchConfigurationName: String
       LoadBalancerNames: [Value, Value, ...]
       MaxSize: Integer
@@ -196,6 +206,7 @@ Resources:
       AvailabilityZones: [Value, Value, ...]
       Cooldown: Number
       DesiredCapacity: Integer
+      InstanceId: String
       LaunchConfigurationName: String
       LoadBalancerNames: [Value, Value, ...]
       MaxSize: Integer
@@ -215,6 +226,7 @@ Resources:
         "AvailabilityZones": [Value, Value, ...],
         "Cooldown": Number,
         "DesiredCapacity": Integer,
+        "InstanceId": String,
         "LaunchConfigurationName": String,
         "LoadBalancerNames": [Value, Value, ...],
         "MaxSize": Integer,
@@ -341,8 +353,17 @@ Resources:
           <listitem>
             <para>Glance image ID or name.</para>
             <para>Updates cause replacement.</para>
-            <para>Required property.</para>
+            <para>Optional property.</para>
             <para>Value must be of type glance.image</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">InstanceId</term>
+          <listitem>
+            <para>The ID of an existing instance you want to use to create the launch configuration. All properties are derived from the instance with the exception of BlockDeviceMapping.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+            <para>Value must be of type nova.server</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -350,7 +371,7 @@ Resources:
           <listitem>
             <para>Nova instance type (flavor).</para>
             <para>Updates cause replacement.</para>
-            <para>Required property.</para>
+            <para>Optional property.</para>
             <para>Value must be of type nova.flavor</para>
           </listitem>
         </varlistentry>
@@ -447,6 +468,7 @@ resources:
     properties:
       BlockDeviceMappings: [{"DeviceName": String, "Ebs": {"DeleteOnTermination": Boolean, "VolumeSize": String, "SnapshotId": String}}, {"DeviceName": String, "Ebs": {"DeleteOnTermination": Boolean, "VolumeSize": String, "SnapshotId": String}}, ...]
       ImageId: String
+      InstanceId: String
       InstanceType: String
       KeyName: String
       NovaSchedulerHints: [{"Value": String, "Key": String}, {"Value": String, "Key": String}, ...]
@@ -464,6 +486,7 @@ Resources:
     Properties:
       BlockDeviceMappings: [{"DeviceName": String, "Ebs": {"DeleteOnTermination": Boolean, "VolumeSize": String, "SnapshotId": String}}, {"DeviceName": String, "Ebs": {"DeleteOnTermination": Boolean, "VolumeSize": String, "SnapshotId": String}}, ...]
       ImageId: String
+      InstanceId: String
       InstanceType: String
       KeyName: String
       NovaSchedulerHints: [{"Value": String, "Key": String}, {"Value": String, "Key": String}, ...]
@@ -481,6 +504,7 @@ Resources:
       "Properties": {
         "BlockDeviceMappings": [{"DeviceName": String, "Ebs": {"DeleteOnTermination": Boolean, "VolumeSize": String, "SnapshotId": String}}, {"DeviceName": String, "Ebs": {"DeleteOnTermination": Boolean, "VolumeSize": String, "SnapshotId": String}}, ...],
         "ImageId": String,
+        "InstanceId": String,
         "InstanceType": String,
         "KeyName": String,
         "NovaSchedulerHints": [{"Value": String, "Key": String}, {"Value": String, "Key": String}, ...],
@@ -2646,6 +2670,19 @@ Resources:
   <section xml:id="AWS__ElasticLoadBalancing__LoadBalancer">
     <?dbhtml stop-chunking?>
     <title>AWS::ElasticLoadBalancing::LoadBalancer</title>
+    <para>Implements a HAProxy-bearing instance as a nested stack.</para>
+    <para>The template for the nested stack can be redefined with
+<literal>loadbalancer_template</literal> option in <literal>heat.conf</literal>.</para>
+    <para>Generally the image used for the instance must have the following
+packages installed or available for installation at runtime:</para>
+    <programlisting>- heat-cfntools and its dependencies like python-psutil
+- cronie
+- socat
+- haproxy</programlisting>
+    <para>Current default builtin template uses Fedora 21 x86_64 base cloud image
+(<link xlink:href="https://getfedora.org/cloud/download/">https://getfedora.org/cloud/download/</link>)
+and apart from installing packages goes through some hoops
+around SELinux due to pecularities of heat-cfntools.</para>
     <section xml:id="AWS__ElasticLoadBalancing__LoadBalancer-props">
       <title>Properties</title>
       <variablelist role="definition_list">

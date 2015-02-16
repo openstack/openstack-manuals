@@ -680,6 +680,384 @@ Resources:
 }</programlisting>
     </section>
   </section>
+  <section xml:id="OS__Ceilometer__GnocchiMetricslarm">
+    <?dbhtml stop-chunking?>
+    <title>OS::Ceilometer::GnocchiMetricslarm</title>
+    <para>Available since 2015.1 (Kilo).</para>
+    <section xml:id="OS__Ceilometer__GnocchiMetricslarm-props">
+      <title>Properties</title>
+      <variablelist role="definition_list">
+        <varlistentry>
+          <term role="String">aggregation_method</term>
+          <listitem>
+            <para>The aggregation method to compare to the threshold</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+            <para>Allowed values: mean, sum, last, max, min, std, median, first, count</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">alarm_actions</term>
+          <listitem>
+            <para>A list of URLs (webhooks) to invoke when state transitions to alarm.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">comparison_operator</term>
+          <listitem>
+            <para>Operator used to compare specified statistic with threshold.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+            <para>Allowed values: ge, gt, eq, ne, lt, le</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">description</term>
+          <listitem>
+            <para>Description for the alarm.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Boolean">enabled</term>
+          <listitem>
+            <para>True if alarm evaluation/actioning is enabled.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "true".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Integer">evaluation_periods</term>
+          <listitem>
+            <para>Number of periods to evaluate over.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Integer">granularity</term>
+          <listitem>
+            <para>The time range in seconds.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">insufficient_data_actions</term>
+          <listitem>
+            <para>A list of URLs (webhooks) to invoke when state transitions to insufficient-data.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">metrics</term>
+          <listitem>
+            <para>A list of metric ids.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">ok_actions</term>
+          <listitem>
+            <para>A list of URLs (webhooks) to invoke when state transitions to ok.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Boolean">repeat_actions</term>
+          <listitem>
+            <para>False to trigger actions when the threshold is reached AND the alarm's state has changed. By default, actions are called each time the threshold is reached.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "true".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Number">threshold</term>
+          <listitem>
+            <para>Threshold to evaluate against.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section xml:id="OS__Ceilometer__GnocchiMetricslarm-hot">
+      <title>HOT Syntax</title>
+      <programlisting language="hot">heat_template_version: 2013-05-23
+...
+resources:
+  ...
+  the_resource:
+    type: OS::Ceilometer::GnocchiMetricslarm
+    properties:
+      aggregation_method: String
+      alarm_actions: [Value, Value, ...]
+      comparison_operator: String
+      description: String
+      enabled: Boolean
+      evaluation_periods: Integer
+      granularity: Integer
+      insufficient_data_actions: [Value, Value, ...]
+      metrics: [Value, Value, ...]
+      ok_actions: [Value, Value, ...]
+      repeat_actions: Boolean
+      threshold: Number</programlisting>
+    </section>
+    <section xml:id="OS__Ceilometer__GnocchiMetricslarm-yaml">
+      <title>YAML Syntax</title>
+      <programlisting language="yaml">HeatTemplateFormatVersion: '2012-12-12'
+...
+Resources:
+  ...
+  TheResource:
+    Type: OS::Ceilometer::GnocchiMetricslarm
+    Properties:
+      aggregation_method: String
+      alarm_actions: [Value, Value, ...]
+      comparison_operator: String
+      description: String
+      enabled: Boolean
+      evaluation_periods: Integer
+      granularity: Integer
+      insufficient_data_actions: [Value, Value, ...]
+      metrics: [Value, Value, ...]
+      ok_actions: [Value, Value, ...]
+      repeat_actions: Boolean
+      threshold: Number</programlisting>
+    </section>
+    <section xml:id="OS__Ceilometer__GnocchiMetricslarm-json">
+      <title>JSON Syntax</title>
+      <programlisting language="json">{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  ...
+  "Resources" : {
+    "TheResource": {
+      "Type": "OS::Ceilometer::GnocchiMetricslarm",
+      "Properties": {
+        "aggregation_method": String,
+        "alarm_actions": [Value, Value, ...],
+        "comparison_operator": String,
+        "description": String,
+        "enabled": Boolean,
+        "evaluation_periods": Integer,
+        "granularity": Integer,
+        "insufficient_data_actions": [Value, Value, ...],
+        "metrics": [Value, Value, ...],
+        "ok_actions": [Value, Value, ...],
+        "repeat_actions": Boolean,
+        "threshold": Number
+      }
+    }
+  }
+}</programlisting>
+    </section>
+  </section>
+  <section xml:id="OS__Ceilometer__GnocchiResourcesAlarm">
+    <?dbhtml stop-chunking?>
+    <title>OS::Ceilometer::GnocchiResourcesAlarm</title>
+    <para>Available since 2015.1 (Kilo).</para>
+    <section xml:id="OS__Ceilometer__GnocchiResourcesAlarm-props">
+      <title>Properties</title>
+      <variablelist role="definition_list">
+        <varlistentry>
+          <term role="String">aggregation_method</term>
+          <listitem>
+            <para>The aggregation method to compare to the threshold</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+            <para>Allowed values: mean, sum, last, max, min, std, median, first, count</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">alarm_actions</term>
+          <listitem>
+            <para>A list of URLs (webhooks) to invoke when state transitions to alarm.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">comparison_operator</term>
+          <listitem>
+            <para>Operator used to compare specified statistic with threshold.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+            <para>Allowed values: ge, gt, eq, ne, lt, le</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">description</term>
+          <listitem>
+            <para>Description for the alarm.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Boolean">enabled</term>
+          <listitem>
+            <para>True if alarm evaluation/actioning is enabled.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "true".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Integer">evaluation_periods</term>
+          <listitem>
+            <para>Number of periods to evaluate over.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Integer">granularity</term>
+          <listitem>
+            <para>The time range in seconds.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">insufficient_data_actions</term>
+          <listitem>
+            <para>A list of URLs (webhooks) to invoke when state transitions to insufficient-data.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">metric</term>
+          <listitem>
+            <para>Metric name watched by the alarm.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">ok_actions</term>
+          <listitem>
+            <para>A list of URLs (webhooks) to invoke when state transitions to ok.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Boolean">repeat_actions</term>
+          <listitem>
+            <para>False to trigger actions when the threshold is reached AND the alarm's state has changed. By default, actions are called each time the threshold is reached.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "true".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">resource_constraint</term>
+          <listitem>
+            <para>Id of a resource or expression to select multiple resources</para>
+            <para>Can be updated without replacement.</para>
+            <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">resource_type</term>
+          <listitem>
+            <para>Resource type</para>
+            <para>Can be updated without replacement.</para>
+            <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Number">threshold</term>
+          <listitem>
+            <para>Threshold to evaluate against.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section xml:id="OS__Ceilometer__GnocchiResourcesAlarm-hot">
+      <title>HOT Syntax</title>
+      <programlisting language="hot">heat_template_version: 2013-05-23
+...
+resources:
+  ...
+  the_resource:
+    type: OS::Ceilometer::GnocchiResourcesAlarm
+    properties:
+      aggregation_method: String
+      alarm_actions: [Value, Value, ...]
+      comparison_operator: String
+      description: String
+      enabled: Boolean
+      evaluation_periods: Integer
+      granularity: Integer
+      insufficient_data_actions: [Value, Value, ...]
+      metric: String
+      ok_actions: [Value, Value, ...]
+      repeat_actions: Boolean
+      resource_constraint: String
+      resource_type: String
+      threshold: Number</programlisting>
+    </section>
+    <section xml:id="OS__Ceilometer__GnocchiResourcesAlarm-yaml">
+      <title>YAML Syntax</title>
+      <programlisting language="yaml">HeatTemplateFormatVersion: '2012-12-12'
+...
+Resources:
+  ...
+  TheResource:
+    Type: OS::Ceilometer::GnocchiResourcesAlarm
+    Properties:
+      aggregation_method: String
+      alarm_actions: [Value, Value, ...]
+      comparison_operator: String
+      description: String
+      enabled: Boolean
+      evaluation_periods: Integer
+      granularity: Integer
+      insufficient_data_actions: [Value, Value, ...]
+      metric: String
+      ok_actions: [Value, Value, ...]
+      repeat_actions: Boolean
+      resource_constraint: String
+      resource_type: String
+      threshold: Number</programlisting>
+    </section>
+    <section xml:id="OS__Ceilometer__GnocchiResourcesAlarm-json">
+      <title>JSON Syntax</title>
+      <programlisting language="json">{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  ...
+  "Resources" : {
+    "TheResource": {
+      "Type": "OS::Ceilometer::GnocchiResourcesAlarm",
+      "Properties": {
+        "aggregation_method": String,
+        "alarm_actions": [Value, Value, ...],
+        "comparison_operator": String,
+        "description": String,
+        "enabled": Boolean,
+        "evaluation_periods": Integer,
+        "granularity": Integer,
+        "insufficient_data_actions": [Value, Value, ...],
+        "metric": String,
+        "ok_actions": [Value, Value, ...],
+        "repeat_actions": Boolean,
+        "resource_constraint": String,
+        "resource_type": String,
+        "threshold": Number
+      }
+    }
+  }
+}</programlisting>
+    </section>
+  </section>
   <section xml:id="OS__Cinder__Volume">
     <?dbhtml stop-chunking?>
     <title>OS::Cinder::Volume</title>
@@ -3042,7 +3420,7 @@ is to be deployed to that server.</para>
 schema defined in the config resource. These input values are interpreted
 by the configuration tool in a tool-specific manner.</para>
     <para>Whenever this resource goes to an IN_PROGRESS state, it creates an
-ephemeral config that includes the input values plus a number of extra
+ephemeral config that includes the inputs values plus a number of extra
 inputs which have names prefixed with deploy_. The extra inputs relate
 to the current state of the stack, along with the information and
 credentials required to signal back the deployment results.</para>
@@ -4975,6 +5353,7 @@ Resources:
             <para>Network to allocate floating IP from.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.network</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -5001,6 +5380,7 @@ Resources:
             </note>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.network</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -6235,6 +6615,17 @@ Resources:
             <para>Optional property.</para>
           </listitem>
         </varlistentry>
+        <varlistentry>
+          <term role="Boolean">shared</term>
+          <listitem>
+            <note>
+              <para>Available since 2015.1 (Kilo).</para>
+            </note>
+            <para>Whether the metering label should be shared across all tenants.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property, defaults to "False".</para>
+          </listitem>
+        </varlistentry>
       </variablelist>
     </section>
     <section xml:id="OS__Neutron__MeteringLabel-attrs">
@@ -6252,6 +6643,12 @@ Resources:
             <para>Name of the metering label.</para>
           </listitem>
         </varlistentry>
+        <varlistentry>
+          <term>shared</term>
+          <listitem>
+            <para>Shared status of the metering label.</para>
+          </listitem>
+        </varlistentry>
       </variablelist>
     </section>
     <section xml:id="OS__Neutron__MeteringLabel-hot">
@@ -6264,7 +6661,8 @@ resources:
     type: OS::Neutron::MeteringLabel
     properties:
       description: String
-      name: String</programlisting>
+      name: String
+      shared: Boolean</programlisting>
     </section>
     <section xml:id="OS__Neutron__MeteringLabel-yaml">
       <title>YAML Syntax</title>
@@ -6276,7 +6674,8 @@ Resources:
     Type: OS::Neutron::MeteringLabel
     Properties:
       description: String
-      name: String</programlisting>
+      name: String
+      shared: Boolean</programlisting>
     </section>
     <section xml:id="OS__Neutron__MeteringLabel-json">
       <title>JSON Syntax</title>
@@ -6288,7 +6687,8 @@ Resources:
       "Type": "OS::Neutron::MeteringLabel",
       "Properties": {
         "description": String,
-        "name": String
+        "name": String,
+        "shared": Boolean
       }
     }
   }
@@ -6600,6 +7000,7 @@ Resources:
                         <para>The internal network to connect on the network gateway.</para>
                         <para>Updates cause replacement.</para>
                         <para>Optional property.</para>
+                        <para>Value must be of type neutron.network</para>
                       </listitem>
                     </varlistentry>
                     <varlistentry>
@@ -6628,6 +7029,7 @@ Resources:
                         </note>
                         <para>Updates cause replacement.</para>
                         <para>Optional property.</para>
+                        <para>Value must be of type neutron.network</para>
                       </listitem>
                     </varlistentry>
                   </variablelist>
@@ -7348,6 +7750,7 @@ Resources:
             <para>Network this port belongs to.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.network</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -7383,6 +7786,7 @@ Resources:
             </note>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.network</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -7730,11 +8134,37 @@ Resources:
           </listitem>
         </varlistentry>
         <varlistentry>
-          <term role="String">l3_agent_id</term>
+          <term role="Boolean">ha</term>
           <listitem>
-            <para>ID of the L3 agent. NOTE: The default policy setting in Neutron restricts usage of this property to administrative users only.</para>
+            <note>
+              <para>Available since 2015.1 (Kilo).</para>
+            </note>
+            <para>Indicates whether or not to create a highly available router. NOTE: The default policy setting in Neutron restricts usage of this property to administrative users only. And now neutron do not support distributed and ha at the same time.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">l3_agent_ids</term>
+          <listitem>
+            <note>
+              <para>Available since 2015.1 (Kilo).</para>
+            </note>
+            <para>ID list of the L3 agent. User can specify multi-agents for highly available router. NOTE: The default policy setting in Neutron restricts usage of this property to administrative users only.</para>
             <para>Can be updated without replacement.</para>
             <para>Optional property.</para>
+            <para>
+              <emphasis>List contents:</emphasis>
+            </para>
+            <variablelist role="definition_list">
+              <varlistentry>
+                <term role="String">*</term>
+                <listitem>
+                  <para>Updates cause replacement.</para>
+                  <para>Optional property.</para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -7751,6 +8181,17 @@ Resources:
             <para>Extra parameters to include in the creation request.</para>
             <para>Can be updated without replacement.</para>
             <para>Optional property, defaults to "{}".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">l3_agent_id</term>
+          <listitem>
+            <note>
+              <para>DEPRECATED - Deprecated in Kilo. Use property l3_agent_ids.</para>
+            </note>
+            <para>ID of the L3 agent. NOTE: The default policy setting in Neutron restricts usage of this property to administrative users only.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -7808,7 +8249,8 @@ resources:
       admin_state_up: Boolean
       distributed: Boolean
       external_gateway_info: {"enable_snat": Boolean, "network": String}
-      l3_agent_id: String
+      ha: Boolean
+      l3_agent_ids: [String, String, ...]
       name: String
       value_specs: {...}</programlisting>
     </section>
@@ -7824,7 +8266,8 @@ Resources:
       admin_state_up: Boolean
       distributed: Boolean
       external_gateway_info: {"enable_snat": Boolean, "network": String}
-      l3_agent_id: String
+      ha: Boolean
+      l3_agent_ids: [String, String, ...]
       name: String
       value_specs: {...}</programlisting>
     </section>
@@ -7840,7 +8283,8 @@ Resources:
         "admin_state_up": Boolean,
         "distributed": Boolean,
         "external_gateway_info": {"enable_snat": Boolean, "network": String},
-        "l3_agent_id": String,
+        "ha": Boolean,
+        "l3_agent_ids": [String, String, ...],
         "name": String,
         "value_specs": {...}
       }
@@ -7864,6 +8308,7 @@ Resources:
             <para>external network for the gateway.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.network</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -7882,6 +8327,7 @@ Resources:
             </note>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.network</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -7934,9 +8380,12 @@ Resources:
       <title>Properties</title>
       <variablelist role="definition_list">
         <varlistentry>
-          <term role="String">port_id</term>
+          <term role="String">port</term>
           <listitem>
-            <para>The port id, either subnet or port_id should be specified.</para>
+            <note>
+              <para>Available since 2015.1 (Kilo).</para>
+            </note>
+            <para>The port, either subnet or port should be specified.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
           </listitem>
@@ -7952,7 +8401,17 @@ Resources:
         <varlistentry>
           <term role="String">subnet</term>
           <listitem>
-            <para>The subnet, either subnet or port_id should be specified.</para>
+            <para>The subnet, either subnet or port should be specified.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">port_id</term>
+          <listitem>
+            <note>
+              <para>DEPRECATED - Deprecated in Kilo. Use property port.</para>
+            </note>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
           </listitem>
@@ -7989,7 +8448,7 @@ resources:
   the_resource:
     type: OS::Neutron::RouterInterface
     properties:
-      port_id: String
+      port: String
       router: String
       subnet: String</programlisting>
     </section>
@@ -8002,7 +8461,7 @@ Resources:
   TheResource:
     Type: OS::Neutron::RouterInterface
     Properties:
-      port_id: String
+      port: String
       router: String
       subnet: String</programlisting>
     </section>
@@ -8015,7 +8474,7 @@ Resources:
     "TheResource": {
       "Type": "OS::Neutron::RouterInterface",
       "Properties": {
-        "port_id": String,
+        "port": String,
         "router": String,
         "subnet": String
       }
@@ -8310,6 +8769,30 @@ Resources:
           </listitem>
         </varlistentry>
         <varlistentry>
+          <term role="String">ipv6_address_mode</term>
+          <listitem>
+            <note>
+              <para>Available since 2015.1 (Kilo).</para>
+            </note>
+            <para>IPv6 address mode. dhcpv6-stateful, dhcpv6-stateless, or slaac.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+            <para>Allowed values: dhcpv6-stateful, dhcpv6-stateless, slaac</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">ipv6_ra_mode</term>
+          <listitem>
+            <note>
+              <para>Available since 2015.1 (Kilo).</para>
+            </note>
+            <para>IPv6 RA (Router Advertisement) mode. dhcpv6-stateful, dhcpv6-stateless, or slaac.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+            <para>Allowed values: dhcpv6-stateful, dhcpv6-stateless, slaac</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
           <term role="String">name</term>
           <listitem>
             <para>The name of the subnet.</para>
@@ -8323,6 +8806,7 @@ Resources:
             <para>The ID of the attached network.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.network</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -8349,6 +8833,7 @@ Resources:
             </note>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.network</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -8440,6 +8925,8 @@ resources:
       gateway_ip: String
       host_routes: [{"nexthop": String, "destination": String}, {"nexthop": String, "destination": String}, ...]
       ip_version: Integer
+      ipv6_address_mode: String
+      ipv6_ra_mode: String
       name: String
       network: String
       tenant_id: String
@@ -8461,6 +8948,8 @@ Resources:
       gateway_ip: String
       host_routes: [{"nexthop": String, "destination": String}, {"nexthop": String, "destination": String}, ...]
       ip_version: Integer
+      ipv6_address_mode: String
+      ipv6_ra_mode: String
       name: String
       network: String
       tenant_id: String
@@ -8482,6 +8971,8 @@ Resources:
         "gateway_ip": String,
         "host_routes": [{"nexthop": String, "destination": String}, {"nexthop": String, "destination": String}, ...],
         "ip_version": Integer,
+        "ipv6_address_mode": String,
+        "ipv6_ra_mode": String,
         "name": String,
         "network": String,
         "tenant_id": String,
@@ -9238,6 +9729,7 @@ Resources:
                         <para>Name or ID of network to create a port on.</para>
                         <para>Updates cause replacement.</para>
                         <para>Optional property.</para>
+                        <para>Value must be of type neutron.network</para>
                       </listitem>
                     </varlistentry>
                     <varlistentry>
@@ -9257,6 +9749,7 @@ Resources:
                         <para>ID of network to create a port on.</para>
                         <para>Updates cause replacement.</para>
                         <para>Optional property.</para>
+                        <para>Value must be of type neutron.network</para>
                       </listitem>
                     </varlistentry>
                   </variablelist>
@@ -9354,7 +9847,7 @@ Resources:
         <varlistentry>
           <term>addresses</term>
           <listitem>
-            <para>A dict of all network addresses with corresponding port_id.</para>
+            <para>A dict of all network addresses with corresponding port_id. The port ID may be obtained through the following expression: "{get_attr: [&lt;server&gt;, addresses, &lt;network name&gt;, 0, port]}".</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -9588,20 +10081,20 @@ Resources:
           </listitem>
         </varlistentry>
         <varlistentry>
+          <term role="String">default_image_id</term>
+          <listitem>
+            <para>Default name or UUID of the image used to boot Hadoop nodes.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+            <para>Value must be of type glance.image</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
           <term role="String">hadoop_version</term>
           <listitem>
             <para>Version of Hadoop running on instances.</para>
             <para>Updates cause replacement.</para>
             <para>Required property.</para>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-          <term role="String">image</term>
-          <listitem>
-            <para>Name or UUID of the image used to boot Hadoop nodes.</para>
-            <para>Updates cause replacement.</para>
-            <para>Optional property.</para>
-            <para>Value must be of type glance.image</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -9624,7 +10117,7 @@ Resources:
         <varlistentry>
           <term role="String">neutron_management_network</term>
           <listitem>
-            <para>Name or UUID of Neutron network.</para>
+            <para>Name or UUID of network.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
             <para>Value must be of type neutron.network</para>
@@ -9636,6 +10129,18 @@ Resources:
             <para>Plugin name.</para>
             <para>Updates cause replacement.</para>
             <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">image</term>
+          <listitem>
+            <note>
+              <para>DEPRECATED - Property was deprecated in Kilo release. Use property default_image_id.</para>
+            </note>
+            <para>Name or UUID of the image used to boot Hadoop nodes.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+            <para>Value must be of type glance.image</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -9667,8 +10172,8 @@ resources:
     type: OS::Sahara::Cluster
     properties:
       cluster_template_id: String
+      default_image_id: String
       hadoop_version: String
-      image: String
       key_name: String
       name: String
       neutron_management_network: String
@@ -9684,8 +10189,8 @@ Resources:
     Type: OS::Sahara::Cluster
     Properties:
       cluster_template_id: String
+      default_image_id: String
       hadoop_version: String
-      image: String
       key_name: String
       name: String
       neutron_management_network: String
@@ -9701,8 +10206,8 @@ Resources:
       "Type": "OS::Sahara::Cluster",
       "Properties": {
         "cluster_template_id": String,
+        "default_image_id": String,
         "hadoop_version": String,
-        "image": String,
         "key_name": String,
         "name": String,
         "neutron_management_network": String,
@@ -9786,7 +10291,7 @@ Resources:
         <varlistentry>
           <term role="String">neutron_management_network</term>
           <listitem>
-            <para>Name or UUID of Neutron network.</para>
+            <para>Name or UUID of network.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
             <para>Value must be of type neutron.network</para>
@@ -9957,10 +10462,9 @@ Resources:
         <varlistentry>
           <term role="String">floating_ip_pool</term>
           <listitem>
-            <para>Name or UUID of the Neutron floating IP network to use.</para>
+            <para>Name or UUID of the Neutron floating IP network or name of the Nova floating ip pool to use. Should not be provided when used with Nova-network that auto-assign floating IPs.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
-            <para>Value must be of type neutron.network</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -10443,6 +10947,7 @@ Resources:
                         <para>Name or UUID of the network to attach this NIC to. Either port or network must be specified.</para>
                         <para>Updates cause replacement.</para>
                         <para>Optional property.</para>
+                        <para>Value must be of type neutron.network</para>
                       </listitem>
                     </varlistentry>
                     <varlistentry>
