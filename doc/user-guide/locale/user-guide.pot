@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-02-12 06:11+0000\n"
+"POT-Creation-Date: 2015-02-16 06:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -265,91 +265,95 @@ msgstr ""
 msgid "Create static website"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:7(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:7(para) ./doc/user-guide/section_object-api-create-large-objects.xml:8(para) ./doc/user-guide/section_object-api-expire-objects.xml:8(para) ./doc/user-guide/section_object-api-archive-auto-extract.xml:9(para) ./doc/user-guide/section_object-api-bulk-delete.xml:9(para)
+msgid "To discover whether your Object Storage system supports this feature, see <xref linkend=\"discoverability\"/>. Alternatively, check with your service provider."
+msgstr ""
+
+#: ./doc/user-guide/section_object-api-create-website.xml:10(para)
 msgid "You can use your Object Storage account to create a static website. This static website is created with staticweb middleware and serves container data with a specified index file, error file resolution, and optional file listings. This mode is normally active only for anonymous requests, which provide no authentication token. To use it with authenticated requests, set the header <literal>X-Web-Mode</literal> to <literal>TRUE</literal> on the request."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:15(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:18(para)
 msgid "The staticweb filter must be added to the pipeline in your <filename>/etc/swift/proxy-server.conf</filename> file below any authentication middleware. You must also add a staticweb middleware configuration section."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:19(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:22(para)
 msgid "For an example of the staticweb configuration syntax see the <link href=\"http://docs.openstack.org/juno/config-reference/content/object-storage-static-web.html\">Cloud Administrator Guide</link>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:23(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:26(para)
 msgid "For a complete example of the <filename>/etc/swift/proxy-server.conf</filename> file (including staticweb), see the <link href=\"http://docs.openstack.org/juno/config-reference/content/proxy-server-conf.html\">Cloud Administrator Guide</link>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:28(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:31(para)
 msgid "Your publicly readable containers are checked for two headers, <literal>X-Container-Meta-Web-Index</literal> and <literal>X-Container-Meta-Web-Error</literal>. The <literal>X-Container-Meta-Web-Error</literal> header is discussed below, in <xref linkend=\"Set_Error_Pages_for_Static_Website-dle4005\"/>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:35(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:38(para)
 msgid "Use <literal>X-Container-Meta-Web-Index</literal> to determine the index file (or default page served, such as <filename>index.html</filename>) for your website. When someone initially enters your site, the <filename>index.html</filename> file displays automatically. If you create sub-directories for your site by creating pseudo-directories in your container, the index page for each sub-directory is displayed by default. If your pseudo-directory does not have a file with the same name as your index file, visits to the sub-directory return a 404 error."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:46(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:49(para)
 msgid "You also have the option of displaying a list of files in your pseudo-directory instead of a web page. To do this, set the <literal>X-Container-Meta-Web-Listings</literal> header to <literal>TRUE</literal>. You may add styles to your file listing by setting <literal>X-Container-Meta-Web-Listings-CSS:</literal> to a style sheet (for example, <literal>lists.css</literal>)."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:55(title)
+#: ./doc/user-guide/section_object-api-create-website.xml:58(title)
 msgid "Static web middleware through Object Storage"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:57(title)
+#: ./doc/user-guide/section_object-api-create-website.xml:60(title)
 msgid "Make container publicly readable"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:58(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:61(para)
 msgid "Make the container publicly readable. Once the container is publicly readable, you can access your objects directly, but you must set the index file to browse the main site URL and its sub-directories."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:66(title)
+#: ./doc/user-guide/section_object-api-create-website.xml:69(title)
 msgid "Set site index file"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:67(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:70(para)
 msgid "Set the index file. In this case, <filename>index.html</filename> is the default file displayed when the site appears."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:73(title)
+#: ./doc/user-guide/section_object-api-create-website.xml:76(title)
 msgid "Enable file listing"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:74(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:77(para)
 msgid "Turn on file listing. If you do not set the index file, the URL displays a list of the objects in the container. Instructions on styling the list with a CSS follow."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:81(title)
+#: ./doc/user-guide/section_object-api-create-website.xml:84(title)
 msgid "Enable CSS for file listing"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:82(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:85(para)
 msgid "Style the file listing using a CSS."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:87(title)
+#: ./doc/user-guide/section_object-api-create-website.xml:90(title)
 msgid "Set error pages for static website"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:88(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:91(para)
 msgid "You can create and set custom error pages for visitors to your website; currently, only 401 (Unauthorized) and 404 (Not Found) errors are supported. To do this, set the metadata header, <literal>X-Container-Meta-Web-Error</literal>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:93(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:96(para)
 msgid "Error pages are served with the &lt;status&gt; code pre-pended to the name of the error page you set. For instance, if you set <literal>X-Container-Meta-Web-Error</literal> to <filename>error.html</filename>, 401 errors will display the page <filename>401error.html</filename>. Similarly, 404 errors will display <filename>404error.html</filename>. You must have both of these pages created in your container when you set the <literal>X-Container-Meta-Web-Error</literal> metadata, or your site will display generic error pages."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:105(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:108(para)
 msgid "You only have to set the <literal>X-Container-Meta-Web-Error</literal> metadata once for your entire static website."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:109(title)
+#: ./doc/user-guide/section_object-api-create-website.xml:112(title)
 msgid "Set error pages for static website request"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-website.xml:112(para)
+#: ./doc/user-guide/section_object-api-create-website.xml:115(para)
 msgid "Any 2<varname>nn</varname> response indicates success."
 msgstr ""
 
@@ -573,259 +577,259 @@ msgstr ""
 msgid "Large objects"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:8(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:11(para)
 msgid "By default, the content of an object cannot be greater than 5GB. However, you can use a number of smaller objects to construct a large object. The large object is comprised of two types of objects:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:14(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:17(para)
 msgid "<emphasis role=\"bold\">Segment objects</emphasis> store the object content. You can divide your content into segments, and upload each segment into its own segment object. Segment objects do not have any special features. You create, update, download, and delete segment objects just as you would normal objects."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:23(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:26(para)
 msgid "A <emphasis role=\"bold\">manifest object</emphasis> links the segment objects into one logical large object. When you download a manifest object, Object Storage concatenates and returns the contents of the segment objects in the response body of the request. This behavior extends to the response headers returned by and requests. The Content-Length response header value is the total size of all segment objects. Object Storage calculates the ETag response header value by taking the ETag value of each segment, concatenating them together, and returning the MD5 checksum of the result. The manifest object types are:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:40(emphasis) ./doc/user-guide/section_object-api-create-large-objects.xml:82(title)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:43(emphasis) ./doc/user-guide/section_object-api-create-large-objects.xml:85(title)
 msgid "Static large objects"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:43(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:46(para)
 msgid "The manifest object content is an ordered list of the names of the segment objects in JSON format. See <xref linkend=\"static-large-objects\"/>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:51(emphasis) ./doc/user-guide/section_object-api-create-large-objects.xml:180(title)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:54(emphasis) ./doc/user-guide/section_object-api-create-large-objects.xml:183(title)
 msgid "Dynamic large objects"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:54(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:57(para)
 msgid "The manifest object has no content but it has a <literal>X-Object-Manifest</literal> metadata header. The value of this header is <literal>{container}/{prefix}</literal>, where <literal>{container}</literal> is the name of the container where the segment objects are stored, and <literal>{prefix}</literal> is a string that all segment objects have in common. See <xref linkend=\"dynamic-large-object-creation\"/>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:74(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:77(para)
 msgid "If you make a request by using a manifest object as the source, the new object is a normal, and not a segment, object. If the total size of the source segment objects exceeds 5GB, the request fails. However, you can make a duplicate of the manifest object and this new object can be larger than 5GB."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:83(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:86(para)
 msgid "To create a static large object, divide your content into pieces and create (upload) a segment object to contain each piece."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:86(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:89(para)
 msgid "You must record the <literal>ETag</literal> response header that the operation returns. Alternatively, you can calculate the MD5 checksum of the segment prior to uploading and include this in the ETag request header. This ensures that the upload cannot corrupt your data."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:92(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:95(para)
 msgid "List the name of each segment object along with its size and MD5 checksum in order."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:94(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:97(para)
 msgid "Create a manifest object. Include the <parameter>?multipart-manifest=put</parameter> query string at the end of the manifest object name to indicate that this is a manifest object."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:98(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:101(para)
 msgid "The body of the request on the manifest object comprises a json list, where each element contains the following attributes:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:103(code)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:106(code)
 msgid "path"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:105(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:108(para)
 msgid "The container and object name in the format: <code>{container-name}/{object-name}</code>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:110(code)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:113(code)
 msgid "etag"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:112(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:115(para)
 msgid "The MD5 checksum of the content of the segment object. This value must match the <literal>ETag</literal> of that object."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:119(code)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:122(code)
 msgid "size_bytes"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:121(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:124(para)
 msgid "The size of the segment object. This value must match the <literal>Content-Length</literal> of that object."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:129(title)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:132(title)
 msgid "Static large object manifest list"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:130(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:133(para)
 msgid "This example shows three segment objects. You can use several containers and the object names do not have to conform to a specific pattern, in contrast to dynamic large objects."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:136(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:139(para)
 msgid "The <literal>Content-Length</literal> request header must contain the length of the json contentnot the length of the segment objects. However, after the operation completes, the Content-Length metadata is set to the total length of all the object segments. A similar situation applies to the ETag. If used in the operation, it must contain the MD5 checksum of the json content. The ETag metadata value is then set to be the MD5 checksum of the concatenated ETag values of the object segments. You can also set the Content-Type request header and custom object metadata."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:149(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:152(para)
 msgid "When the operation sees the ?multipart-manifest=put query parameter, it reads the request body and verifies that each segment object exists and that the sizes and ETags match. If there is a mismatch, the operation fails."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:155(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:158(para)
 msgid "If everything matches, the manifest object is created. The <literal>X-Static-Large-Object</literal> metadata is set to <literal>true</literal> indicating that this is a static object manifest."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:159(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:162(para)
 msgid "Normally when you perform a operation on the manifest object, the response body contains the concatenated content of the segment objects. To download the manifest list, use the ?multipart-manifest=get query parameter. The resulting list is not formatted the same as the manifest you originally used in the operation."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:167(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:170(para)
 msgid "If you use the operation on a manifest object, the manifest object is deleted. The segment objects are not affected. However, if you add the ?multipart-manifest=delete query parameter, the segment objects are deleted and if all are successfully deleted, the manifest object is also deleted."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:174(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:177(para)
 msgid "To change the manifest, use a operation with the ?multipart-manifest=put query parameter. This request creates a manifest object. You can also update the object metadata in the usual way."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:181(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:184(para)
 msgid "You must segment objects that are larger than 5GB before you can upload them. You then upload the segment objects like you would any other object and create a dynamic large manifest object. The manifest object tells Object Storage how to find the segment objects that comprise the large object. The segments remain individually addressable, but retrieving the manifest object streams all the segments concatenated. There is no limit to the number of segments that can be a part of a single large object."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:191(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:194(para)
 msgid "To ensure the download works correctly, you must upload all the object segments to the same container and ensure that each object name is prefixed in such a way that it sorts in the order in which it should be concatenated. You also create and upload a manifest file. The manifest file is a zero-byte file with the extra <literal>X-Object-Manifest</literal><code>{container}/{prefix}</code> header, where <code>{container}</code> is the container the object segments are in and <code>{prefix}</code> is the common prefix for all the segments. You must UTF-8-encode and then URL-encode the container and common prefix in the <literal>X-Object-Manifest</literal> header."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:204(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:207(para)
 msgid "It is best to upload all the segments first and then create or update the manifest. With this method, the full object is not available for downloading until the upload is complete. Also, you can upload a new set of segments to a second location and update the manifest to point to this new location. During the upload of the new segments, the original manifest is still available to download the first set of segments."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:213(title)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:216(title)
 msgid "Upload segment of large object request: HTTP"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:217(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:220(para)
 msgid "No response body is returned. A status code of <returnvalue>2<replaceable>nn</replaceable></returnvalue> (between 200 and 299, inclusive) indicates a successful write; status <errorcode>411</errorcode><errortext>Length Required</errortext> denotes a missing <literal>Content-Length</literal> or <literal>Content-Type</literal> header in the request. If the MD5 checksum of the data written to the storage system does NOT match the (optionally) supplied ETag value, a <errorcode>422</errorcode><errortext>Unprocessable Entity</errortext> response is returned."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:229(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:232(para)
 msgid "You can continue uploading segments, like this example shows, prior to uploading the manifest."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:232(title)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:235(title)
 msgid "Upload next segment of large object request: HTTP"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:236(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:239(para)
 msgid "Next, upload the manifest you created that indicates the container where the object segments reside. Note that uploading additional segments after the manifest is created causes the concatenated object to be that much larger but you do not need to recreate the manifest file for subsequent additional segments."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:243(title)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:246(title)
 msgid "Upload manifest request: HTTP"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:247(title)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:250(title)
 msgid "Upload manifest response: HTTP"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:250(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:253(para)
 msgid "The <literal>Content-Type</literal> in the response for a or on the manifest is the same as the Content-Type set during the request that created the manifest. You can change the Content-Type by reissuing the request."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:258(title)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:261(title)
 msgid "Comparison of static and dynamic large objects"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:259(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:262(para)
 msgid "While static and dynamic objects have similar behavior, this table describes their differences:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:262(caption)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:265(caption)
 msgid "Static and dynamic large objects"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:269(th)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:272(th)
 msgid "Static large object"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:270(th)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:273(th)
 msgid "Dynamic large object"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:275(th)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:278(th)
 msgid "End-to-end integrity"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:276(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:279(para)
 msgid "Assured. The list of segments includes the MD5 checksum (<literal>ETag</literal>) of each segment. You cannot upload the manifest object if the <literal>ETag</literal> in the list differs from the uploaded segment object. If a segment is somehow lost, an attempt to download the manifest object results in an error."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:285(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:288(para)
 msgid "Not guaranteed. The eventual consistency model means that although you have uploaded a segment object, it might not appear in the container listing until later. If you download the manifest before it appears in the container, it does not form part of the content returned in response to a request."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:295(th)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:298(th)
 msgid "Upload order"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:296(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:299(para)
 msgid "You must upload the segment objects before you upload the manifest object."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:299(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:302(para)
 msgid "You can upload manifest and segment objects in any order. You are recommended to upload the manifest object after the segments in case a premature download of the manifest occurs. However, this is not enforced."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:307(th)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:310(th)
 msgid "Removal or addition of segment objects"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:308(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:311(para)
 msgid "You cannot add or remove segment objects from the manifest. However, you can create a completely new manifest object of the same name with a different manifest list."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:313(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:316(para)
 msgid "You can upload new segment objects or remove existing segments. The names must simply match the <literal>{prefix}</literal> supplied in <literal>X-Object-Manifest</literal>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:321(th)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:324(th)
 msgid "Segment object size and number"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:322(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:325(para)
 msgid "Segment objects must be at least 1MB in size (by default). The final segment object can be any size. At most, 1000 segments are supported (by default)."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:327(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:330(para)
 msgid "Segment objects can be any size."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:331(th)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:334(th)
 msgid "Segment object container name"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:332(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:335(para)
 msgid "The manifest list includes the container name of each object. Segment objects can be in different containers."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:335(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:338(para)
 msgid "All segment objects must be in the same container."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:339(th)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:342(th)
 msgid "Manifest object metadata"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:340(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:343(para)
 msgid "The object has <literal>X-Static-Large-Object</literal> set to <literal>true</literal>. You do not set this metadata directly. Instead the system sets it when you a static manifest object."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:346(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:349(para)
 msgid "The <literal>X-Object-Manifest</literal> value is the <literal>{container}/{prefix}</literal>, which indicates where the segment objects are located. You supply this request header in the operation."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:354(th)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:357(th)
 msgid "Copying the manifest object"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:355(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:358(para)
 msgid "Include the <parameter>?multipart-manifest=get</parameter> query string in the request. The new object contains the same manifest as the original. The segment objects are not copied. Instead, both the original and new manifest objects share the same set of segment objects."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-create-large-objects.xml:364(para)
+#: ./doc/user-guide/section_object-api-create-large-objects.xml:367(para)
 msgid "The operation does not create a manifest object. To duplicate a manifest object, use the operation to read the value of X-Object-Manifest and use this value in the X-Object-Manifest request header in a operation. This creates a new manifest object that shares the same set of segment objects as the original manifest object."
 msgstr ""
 
@@ -2769,63 +2773,63 @@ msgstr ""
 msgid "Schedule objects for deletion"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:8(para)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:11(para)
 msgid "Scheduling an object for deletion is helpful for managing objects that you do not want to permanently store, such as log files, recurring full backups of a dataset, or documents or images that become outdated at a specified future time."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:12(para)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:15(para)
 msgid "To schedule an object for deletion, include one of these headers with the or request on the object:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:16(term)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:19(term)
 msgid "X-Delete-At"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:18(para)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:21(para)
 msgid "A UNIX epoch timestamp, in integer form. For example, <literal>1348691905</literal> represents <literal>Wed, 26 Sept 2012 20:38:25 GMT</literal>. Specifies the time when you want the object to expire, no longer be served, and be deleted completely from the object store."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:28(term)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:31(term)
 msgid "X-Delete-After"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:30(para)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:33(para)
 msgid "An integer value. Specifies the number of seconds from the time of the request to when you want to delete the object."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:33(para)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:36(para)
 msgid "This header is converted to an <literal>X-Delete-At</literal> header that is set to the sum of the <literal>X-Delete-After</literal> value plus the current time, in seconds."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:42(para)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:45(para)
 msgid "Use <link href=\"http://www.epochconverter.com/\">http://www.epochconverter.com/</link> to convert dates to and from epoch timestamps and for batch conversions."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:47(para)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:50(para)
 msgid "Use the method to assign expiration headers to existing objects that you want to expire."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:50(title)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:53(title)
 msgid "Delete object at specified time request"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:51(para)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:54(para)
 msgid "In this example, the <literal>X-Delete-At</literal> header is assigned a UNIX epoch timestamp in integer form for <literal>Mon, 11 Jun 2012 15:38:25 GMT</literal>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:54(replaceable) ./doc/user-guide/section_object-api-env-vars.xml:11(literal)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:57(replaceable) ./doc/user-guide/section_object-api-env-vars.xml:11(literal)
 msgid "publicURL"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:54(replaceable) ./doc/user-guide/section_object-api-env-vars.xml:21(literal)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:57(replaceable) ./doc/user-guide/section_object-api-env-vars.xml:21(literal)
 msgid "token"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:59(title)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:62(title)
 msgid "Delete object after specified interval request"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-expire-objects.xml:60(para)
+#: ./doc/user-guide/section_object-api-expire-objects.xml:63(para)
 msgid "In this example, the <code>X-Delete-After</code> header is set to 864000 seconds. After this time, the object expires."
 msgstr ""
 
@@ -3257,139 +3261,139 @@ msgstr ""
 msgid "Auto-extract archive files"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:9(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:12(para)
 msgid "Use the auto-extract archive feature to upload a tar archive file."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:11(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:14(para)
 msgid "The Object Storage system extracts files from the archive file and creates an object."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:14(title)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:17(title)
 msgid "Auto-extract archive request"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:15(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:18(para)
 msgid "To upload an archive file, make a request. Add the extract-archive=format query parameter to indicate that you are uploading a tar archive file instead of normal content."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:19(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:22(para)
 msgid "Valid values for the <replaceable>format</replaceable> variable are <literal>tar</literal>, <literal>tar.gz</literal>, or <literal>tar.bz2</literal>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:23(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:26(para)
 msgid "The path you specify in the request is used for the location of the object and the prefix for the resulting object names."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:26(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:29(para)
 msgid "In the request, you can specify the path for:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:30(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:33(para)
 msgid "An account"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:33(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:36(para)
 msgid "Optionally, a specific container"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:36(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:39(para)
 msgid "Optionally, a specific object prefix"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:39(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:42(para)
 msgid "For example, if the first object in the tar archive is <filename>/home/file1.txt</filename> and you specify the <filename>/v1/12345678912345/mybackup/castor/</filename> path, the operation creates the <filename>castor/home/file1.txt</filename> object in the <literal>mybackup</literal> container in the <literal>12345678912345</literal> account."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:49(title)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:52(title)
 msgid "Create an archive for auto-extract"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:50(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:53(para)
 msgid "You must use the tar utility to create the tar archive file."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:52(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:55(para)
 msgid "You can upload regular files but you cannot upload other items (for example, empty directories or symbolic links)."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:55(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:58(para)
 msgid "You must UTF-8-encode the member names."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:56(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:59(para)
 msgid "The archive auto-extract feature supports these formats:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:60(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:63(para)
 msgid "The POSIX.1-1988 Ustar format."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:63(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:66(para)
 msgid "The GNU tar format. Includes the long name, long link, and sparse extensions."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:67(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:70(para)
 msgid "The POSIX.1-2001 pax format."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:68(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:71(para)
 msgid "Use gzip or bzip2 to compress the archive."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:70(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:73(para)
 msgid "Use the <parameter>extract-archive</parameter> query parameter to specify the format. Valid values for this parameter are <literal>tar</literal>, <literal>tar.gz</literal>, or <literal>tar.bz2</literal>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:80(title)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:83(title)
 msgid "Auto-extract archive response"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:81(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:84(para)
 msgid "When Object Storage processes the request, it performs multiple sub-operations. Even if all sub-operations fail, the operation returns a <returnvalue>201</returnvalue><literal>Created</literal> status. Some sub-operations might succeed while others fail: Examine the response body to determine the results of each auto-extract archive sub-operation."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:88(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:91(para)
 msgid "You can set the <literal>Accept</literal> request header to one of these values to define the response format:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:93(literal) ./doc/user-guide/section_object-api-response-formats.xml:49(code)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:96(literal) ./doc/user-guide/section_object-api-response-formats.xml:49(code)
 msgid "text/plain"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:95(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:98(para)
 msgid "Formats response as plain text. If you omit the <literal>Accept</literal> header, <literal>text/plain</literal> is the default."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:104(literal)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:107(literal)
 msgid "application/json"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:106(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:109(para)
 msgid "Formats response as JSON."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:110(literal)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:113(literal)
 msgid "application/xml"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:112(para) ./doc/user-guide/section_object-api-archive-auto-extract.xml:120(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:115(para) ./doc/user-guide/section_object-api-archive-auto-extract.xml:123(para)
 msgid "Formats response as XML."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:118(literal)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:121(literal)
 msgid "text/xml"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:124(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:127(para)
 msgid "The following auto-extract archive files example shows a <literal>text/plain</literal> response body where no failures occurred:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:129(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:132(para)
 msgid "The following auto-extract archive files example shows a <literal>text/plain</literal> response where some failures occurred. In this example, the Object Storage system is configured to reject certain character strings so that the <errorcode>400</errorcode><errortext>Bad Request</errortext> error occurs for any objects that use the restricted strings."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:140(para)
+#: ./doc/user-guide/section_object-api-archive-auto-extract.xml:143(para)
 msgid "The following example shows the failure response in <literal>application/json</literal> format."
 msgstr ""
 
@@ -4817,23 +4821,23 @@ msgstr ""
 msgid "Your Object Storage system might not enable all features that this document describes. These features are:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-discoverability.xml:21(para)
+#: ./doc/user-guide/section_object-api-discoverability.xml:27(para)
 msgid "To discover which features are enabled in your Object Storage system, use the <literal>/info</literal> request."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-discoverability.xml:23(para)
+#: ./doc/user-guide/section_object-api-discoverability.xml:29(para)
 msgid "To use the <literal>/info</literal> request, send a request using the /info path to the Object Store endpoint as shown in this example:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-discoverability.xml:27(para)
+#: ./doc/user-guide/section_object-api-discoverability.xml:33(para)
 msgid "This example shows a truncated response body:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-discoverability.xml:39(para)
+#: ./doc/user-guide/section_object-api-discoverability.xml:45(para)
 msgid "This output shows that the Object Storage system has enabled the static website and temporary URL features."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-discoverability.xml:43(para)
+#: ./doc/user-guide/section_object-api-discoverability.xml:49(para)
 msgid "In some cases, the <literal>/info</literal> request will return an error. This could be because your service provider has disabled the <literal>/info</literal> request function, or because you are using an older version that does not support it."
 msgstr ""
 
@@ -5321,91 +5325,91 @@ msgstr ""
 msgid "Bulk delete"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:9(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:12(para)
 msgid "With bulk delete, you can delete up to 10,000 objects or containers (configurable) in one request."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:12(title)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:15(title)
 msgid "Bulk delete request"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:13(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:16(para)
 msgid "To perform a bulk delete operation, add the <parameter>bulk-delete</parameter> query parameter to the path of a or operation."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:17(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:20(para)
 msgid "The operation is supported for backwards compatibility."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:20(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:23(para)
 msgid "The path is the account, such as <literal>/v1/12345678912345</literal>, that contains the objects and containers."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:23(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:26(para)
 msgid "In the request body of the or operation, list the objects or containers to be deleted. Separate each name with a newline character. You can include a maximum of 10,000 items (configurable) in the list."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:27(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:30(para)
 msgid "In addition, you must:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:30(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:33(para)
 msgid "UTF-8-encode and then URL-encode the names."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:34(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:37(para)
 msgid "To indicate an object, specify the container and object name as: <literal><replaceable>CONTAINER_NAME</replaceable>/<replaceable>OBJECT_NAME</replaceable></literal>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:39(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:42(para)
 msgid "To indicate a container, specify the container name as: <literal><replaceable>CONTAINER_NAME</replaceable></literal>. Make sure that the container is empty. If it contains objects, Object Storage cannot delete the container."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:47(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:50(para)
 msgid "Set the <literal>Content-Type</literal> request header to <literal>text/plain</literal>."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:53(title)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:56(title)
 msgid "Bulk delete response"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:54(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:57(para)
 msgid "When Object Storage processes the request, it performs multiple sub-operations. Even if all sub-operations fail, the operation returns a <returnvalue>200</returnvalue> status. The bulk operation returns a response body that contains details that indicate which sub-operations have succeeded and failed. Some sub-operations might succeed while others fail. Examine the response body to determine the results of each delete sub-operation."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:62(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:65(para)
 msgid "You can set the <literal>Accept</literal> request header to one of the following values to define the response format:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:67(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:70(para)
 msgid "<literal>text/plain</literal>. Formats response as plain text. If you omit the <literal>Accept</literal> header, <literal>text/plain</literal> is the default."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:74(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:77(para)
 msgid "<literal>application/json</literal>. Formats response as JSON."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:78(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:81(para)
 msgid "<literal>application/xml</literal> or <literal>text/xml</literal>. Formats response as XML."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:83(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:86(para)
 msgid "The response body contains the following information:"
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:87(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:90(para)
 msgid "The number of files actually deleted."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:90(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:93(para)
 msgid "The number of not found objects."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:93(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:96(para)
 msgid "Errors. A list of object names and associated error statuses for the objects that failed to delete. The format depends on the value that you set in the <literal>Accept</literal> header."
 msgstr ""
 
-#: ./doc/user-guide/section_object-api-bulk-delete.xml:100(para)
+#: ./doc/user-guide/section_object-api-bulk-delete.xml:103(para)
 msgid "The following bulk delete response is in <literal>application/xml</literal> format. In this example, the <literal>mycontainer</literal> container is not empty, so it cannot be deleted."
 msgstr ""
 
