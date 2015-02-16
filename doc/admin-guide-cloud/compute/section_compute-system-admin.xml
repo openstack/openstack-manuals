@@ -2,188 +2,182 @@
 <section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="section_compute-system-admin">
     <title>System administration</title>
-    <para>By understanding how the different installed nodes interact with each other, you can
-        administer the Compute installation. Compute offers many ways to install using multiple
-        servers but the general idea is that you can have multiple compute nodes that control the
-        virtual servers and a cloud controller node that contains the remaining Compute
-        services.</para>
-    <para>The Compute cloud works through the interaction of a series of daemon processes named
-            <systemitem>nova-*</systemitem> that reside persistently on the host machine or
-        machines. These binaries can all run on the same machine or be spread out on multiple boxes
-        in a large deployment. The responsibilities of services and drivers are:</para>
-    <para>
-        <itemizedlist>
-            <listitem>
-                <para>Services:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para><systemitem class="service">nova-api</systemitem>. Receives XML
-                            requests and sends them to the rest of the system. It is a WSGI app that
-                            routes and authenticate requests. It supports the EC2 and OpenStack
-                            APIs. There is a <filename>nova-api.conf</filename> file created when
-                            you install Compute.</para>
-                    </listitem>
-                    <listitem>
-                        <para><systemitem>nova-cert</systemitem>. Provides the certificate
-                            manager.</para>
-                    </listitem>
-                    <listitem>
-                        <para><systemitem class="service">nova-compute</systemitem>. Responsible for
-                            managing virtual machines. It loads a Service object, which exposes the
-                            public methods on ComputeManager through Remote Procedure Call
-                            (RPC).</para>
-                    </listitem>
-                    <listitem>
-                        <para><systemitem>nova-conductor</systemitem>. Provides database-access
-                            support for Compute nodes (thereby reducing security risks).</para>
-                    </listitem>
-                    <listitem>
-                        <para><systemitem>nova-consoleauth</systemitem>. Handles console
-                            authentication.</para>
-                    </listitem>
-                    <listitem>
-                        <para><systemitem class="service">nova-objectstore</systemitem>: The
-                                <systemitem class="service">nova-objectstore</systemitem> service is
-                            an ultra simple file-based storage system for images that replicates
-                            most of the S3 API. It can be replaced with OpenStack Image Service and
-                            a simple image manager or use OpenStack Object Storage as the virtual
-                            machine image storage facility. It must reside on the same node as
-                                <systemitem class="service">nova-compute</systemitem>.</para>
-                    </listitem>
-                    <listitem>
-                        <para><systemitem class="service">nova-network</systemitem>. Responsible for
-                            managing floating and fixed IPs, DHCP, bridging and VLANs. It loads a
-                            Service object which exposes the public methods on one of the subclasses
-                            of NetworkManager. Different networking strategies are available to the
-                            service by changing the network_manager configuration option to
-                            FlatManager, FlatDHCPManager, or VlanManager (default is VLAN if no
-                            other is specified).</para>
-                    </listitem>
-                    <listitem>
-                        <para><systemitem>nova-scheduler</systemitem>. Dispatches requests for new
-                            virtual machines to the correct node.</para>
-                    </listitem>
-                    <listitem>
-                        <para><systemitem>nova-novncproxy</systemitem>. Provides a VNC proxy for
-                            browsers (enabling VNC consoles to access virtual machines).</para>
-                    </listitem>
-                </itemizedlist>
-            </listitem>
-            <listitem>
-                <para>Some services have drivers that change how the service implements the core of
-                    its functionality. For example, the <systemitem>nova-compute</systemitem>
-                    service supports drivers that let you choose with which hypervisor type it will
-                    talk. <systemitem>nova-network</systemitem> and
-                        <systemitem>nova-scheduler</systemitem> also have drivers.</para>
-            </listitem>
-        </itemizedlist>
-    </para>
-    <section xml:id="section_manage-compute-users">
-        <title>Manage Compute users</title>
-        <para>Access to the Euca2ools (ec2) API is controlled by an access and secret key. The
-            user's access key needs to be included in the request, and the request must be signed
-            with the secret key. Upon receipt of API requests, Compute verifies the signature and
-            runs commands on behalf of the user.</para>
-        <para>To begin using Compute, you must create a user with the Identity Service.</para>
-    </section>
-    <xi:include href="../../common/section_cli_nova_volumes.xml"/>
-    <xi:include href="../../common/section_cli_nova_customize_flavors.xml"/>
-    <xi:include href="section_compute_config-firewalls.xml"/>
-    <section xml:id="admin-password-injection">
-        <?dbhtml stop-chunking?>
-        <title>Inject administrator password</title>
-        <para>You can configure Compute to generate a random administrator (root) password and
-            inject that password into the instance. If this feature is enabled, a user can
-                <command>ssh</command> to an instance without an <command>ssh</command> keypair. The
-            random password appears in the output of the <command>nova boot</command> command. You
-            can also view and set the <literal>admin</literal> password from the dashboard.</para>
-        <simplesect>
-            <title>Dashboard</title>
-            <para>The dashboard is configured by default to display the <literal>admin</literal>
-                password and allow the user to modify it.</para>
-            <para>If you do not want to support password injection, we recommend disabling the
-                password fields by editing your Dashboard <filename>local_settings</filename> file
-                (file location will vary by Linux distribution, on Fedora/RHEL/CentOS: <filename>
-                    /etc/openstack-dashboard/local_settings</filename>, on Ubuntu and Debian:
-                    <filename>/etc/openstack-dashboard/local_settings.py</filename> and on openSUSE
-                and SUSE Linux Enterprise Server:
-                    <filename>/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename>)
-                <programlisting language="ini">OPENSTACK_HYPERVISOR_FEATURE = {
+    <para>To effectively administer Compute, you must understand how the
+      different installed nodes interact with each other. Compute can be
+      installed in many different ways using multiple servers, but generally
+      multiple compute nodes control the virtual servers and a cloud
+      controller node contains the remaining Compute services.</para>
+    <para>The Compute cloud works using a series of daemon processes named
+      <systemitem>nova-*</systemitem> that exist persistently on the host
+      machine. These binaries can all run on the same machine or be spread out
+      on multiple boxes in a large deployment. The responsibilities of
+      services and drivers are:</para>
+      <itemizedlist>
+        <title>Services</title>
+        <listitem>
+          <para><systemitem class="service">nova-api</systemitem>: receives
+            XML requests and sends them to the rest of the system. A WSGI app
+            routes and authenticates requests. Supports the EC2 and
+            OpenStack APIs. A <filename>nova.conf</filename> configuration
+            file is created when Compute is installed.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem>nova-cert</systemitem>: manages certificates.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service">nova-compute</systemitem>: manages
+            virtual machines. Loads a Service object, and exposes the public
+            methods on ComputeManager through a Remote Procedure Call (RPC).</para>
+        </listitem>
+        <listitem>
+          <para><systemitem>nova-conductor</systemitem>: provides
+            database-access support for Compute nodes (thereby reducing
+            security risks).</para>
+        </listitem>
+        <listitem>
+          <para><systemitem>nova-consoleauth</systemitem>: manages console
+            authentication.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service">nova-objectstore</systemitem>: a
+            simple file-based storage system for images that replicates most
+            of the S3 API. It can be replaced with OpenStack Image Service and
+            either a simple image manager or OpenStack Object Storage as the
+            virtual machine image storage facility. It must exist on the same
+            node as <systemitem class="service">nova-compute</systemitem>.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service">nova-network</systemitem>: manages
+            floating and fixed IPs, DHCP, bridging and VLANs. Loads a Service
+            object which exposes the public methods on one of the subclasses
+            of <systemitem class="service">NetworkManager</systemitem>.
+            Different networking strategies are available by changing the
+            <literal>network_manager</literal> configuration option to
+            <literal>FlatManager</literal>,
+            <literal>FlatDHCPManager</literal>, or
+            <literal>VLANManager</literal> (defaults to
+            <literal>VLANManager</literal> if nothing is specified).</para>
+        </listitem>
+        <listitem>
+          <para><systemitem>nova-scheduler</systemitem>: dispatches requests
+            for new virtual machines to the correct node.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem>nova-novncproxy</systemitem>: provides a VNC proxy
+            for browsers, allowing VNC consoles to access virtual machines.</para>
+        </listitem>
+      </itemizedlist>
+      <note><para>Some services have drivers that change how the service
+          implements its core functionality. For example, the
+          <systemitem>nova-compute</systemitem> service supports drivers that
+          let you choose which hypervisor type it can use.
+          <systemitem>nova-network</systemitem> and
+          <systemitem>nova-scheduler</systemitem> also have drivers.</para>
+      </note>
+
+  <section xml:id="section_manage-compute-users">
+    <title>Manage Compute users</title>
+    <para>Access to the Euca2ools (ec2) API is controlled by an access key and
+      a secret key. The user's access key needs to be included in the request,
+      and the request must be signed with the secret key. Upon receipt of API
+      requests, Compute verifies the signature and runs commands on behalf of
+      the user.</para>
+    <para>To begin using Compute, you must create a user with the Identity
+      Service.</para>
+  </section>
+
+  <xi:include href="../../common/section_cli_nova_volumes.xml"/>
+  <xi:include href="../../common/section_cli_nova_customize_flavors.xml"/>
+  <xi:include href="section_compute_config-firewalls.xml"/>
+
+  <section xml:id="admin-password-injection">
+    <title>Injecting the administrator password</title>
+    <para>Compute can generate a random administrator (root) password and
+      inject that password into an instance. If this feature is enabled, users
+      can <command>ssh</command> to an instance without an <command>ssh</command>
+      keypair. The random password appears in the output of the
+      <command>nova boot</command> command. You can also view and set the
+      admin password from the dashboard.</para>
+    <simplesect>
+      <title>Password injection using the dashboard</title>
+      <para>By default, the dashboard will display the <literal>admin</literal>
+        password and allow the user to modify it.</para>
+      <para>If you do not want to support password injection, disable the
+        password fields by editing the dashboard's
+        <filename>local_settings</filename> file. On Fedora/RHEL/CentOS, the
+        file location is <filename>/etc/openstack-dashboard/local_settings</filename>.
+        On Ubuntu and Debian, it is <filename>/etc/openstack-dashboard/local_settings.py</filename>.
+        On openSUSE and SUSE Linux Enterprise Server, it is
+        <filename>/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename></para>
+<programlisting language="ini">OPENSTACK_HYPERVISOR_FEATURE = {
 ...
     'can_set_password': False,
-}</programlisting></para>
-        </simplesect>
-        <simplesect>
-            <title>Libvirt-based hypervisors (KVM, QEMU, LXC)</title>
-            <para>For hypervisors such as KVM that use the libvirt backend, <literal>admin</literal>
-                password injection is disabled by default. To enable it, set the following option in
-                    <filename>/etc/nova/nova.conf</filename>:</para>
-            <para>
-                <programlisting language="ini">[libvirt]
+}</programlisting>
+    </simplesect>
+
+    <simplesect>
+      <title>Password injection on libvirt-based hypervisors</title>
+      <para>For hypervisors that use the libvirt backend (such as KVM, QEMU,
+        and LXC), admin password injection is disabled by default. To enable
+        it, set this option in <filename>/etc/nova/nova.conf</filename>:</para>
+<programlisting language="ini">[libvirt]
 inject_password=true</programlisting>
-            </para>
-            <para>When enabled, Compute will modify the password of the root account by editing the
-                    <filename>/etc/shadow</filename> file inside of the virtual machine
-                instance.</para>
-            <note>
-                <para>Users can only ssh to the instance by using the admin password if:</para>
-                <itemizedlist>
-                    <listitem>
-                        <para>The virtual machine image is a Linux distribution</para>
-                    </listitem>
-                    <listitem>
-                        <para>The virtual machine has been configured to allow users to
-                                <command>ssh</command> as the root user. This is not the case for
-                                <link xlink:href="http://cloud-images.ubuntu.com/">Ubuntu cloud
-                                images</link>, which disallow <command>ssh</command> to the root
-                            account by default.</para>
-                    </listitem>
-                </itemizedlist>
-            </note>
-        </simplesect>
-        <simplesect>
-            <title>XenAPI (XenServer/XCP)</title>
-            <para>Compute uses the XenAPI agent to inject passwords into guests when using the
-                XenAPI hypervisor backend. The virtual-machine image must be configured with the
-                agent for password injection to work.</para>
-        </simplesect>
-        <simplesect>
-            <title>Windows images (all hypervisors)</title>
-            <para>To support the <literal>admin</literal> password for Windows virtual machines, you
-                must configure the Windows image to retrieve the <literal>admin</literal> password
-                on boot by installing an agent such as <link
-                    xlink:href="https://github.com/cloudbase/cloudbase-init"
-                >cloudbase-init</link>.</para>
-        </simplesect>
-    </section>
-    <section xml:id="section_manage-the-cloud">
-        <title>Manage the cloud</title>
-        <para>A system administrator can use the <command>nova</command> client and the
-                <command>Euca2ools</command> commands to manage the cloud.</para>
-        <para>Both nova client and euca2ools can be used by all users, though specific commands
-            might be restricted by Role Based Access Control in the Identity Service.</para>
-        <procedure>
-            <title>To use the nova client</title>
-            <step>
-                <para>Installing the <package>python-novaclient</package> package gives you a
-                        <code>nova</code> shell command that enables Compute API interactions from
-                    the command line. Install the client, and then provide your user name and
-                    password (typically set as environment variables for convenience), and then you
-                    have the ability to send commands to your cloud on the command line.</para>
-                <para>To install <package>python-novaclient</package>, download the tarball from
-                        <link
-                        xlink:href="http://pypi.python.org/pypi/python-novaclient/#downloads"
-                        >http://pypi.python.org/pypi/python-novaclient/#downloads</link> and
-                    then install it in your favorite python environment.</para>
-                <screen><prompt>$</prompt> <userinput>curl -O http://pypi.python.org/packages/source/p/python-novaclient/python-novaclient-2.6.3.tar.gz</userinput>
+      <para>When enabled, Compute will modify the password of the admin
+        account by editing the <filename>/etc/shadow</filename> file inside
+        the virtual machine instance.</para>
+      <note>
+        <para>Users can only <command>ssh</command> to the instance by using
+          the admin password if the virtual machine image is a Linux
+          distribution, and it has been configured to allow users to
+          <command>ssh</command> as the root user. This is not the case for
+          <link xlink:href="http://cloud-images.ubuntu.com/">Ubuntu cloud
+          images</link> which, by default, do not allow users to
+          <command>ssh</command> to the root account.</para>
+      </note>
+    </simplesect>
+    <simplesect>
+      <title>Password injection and XenAPI (XenServer/XCP)</title>
+      <para>when using the XenAPI hypervisor backend, Compute uses the XenAPI
+        agent to inject passwords into guests. The virtual machine image must
+        be configured with the agent for password injection to work.</para>
+    </simplesect>
+    <simplesect>
+      <title>Password injection and Windows images (all hypervisors)</title>
+      <para>For Windows virtual machines, configure the Windows image to
+        retrieve the admin password on boot by installing an agent such as
+        <link xlink:href="https://github.com/cloudbase/cloudbase-init">
+        cloudbase-init</link>.</para>
+    </simplesect>
+  </section>
+
+  <section xml:id="section_manage-the-cloud">
+    <title>Manage the cloud</title>
+    <para>System administrators can use <command>nova</command> client and
+    <command>Euca2ools</command> commands to manage their clouds.</para>
+    <para><command>nova</command> client and <command>euca2ools</command> can
+      be used by all users, though specific commands might be restricted by
+      Role Based Access Control in the Identity Service.</para>
+    <procedure>
+      <title>Managing the cloud with nova client</title>
+      <step>
+        <para>The <package>python-novaclient</package> package provides a
+          <code>nova</code> shell that enables Compute API interactions from
+          the command line. Install the client, and provide your user name and
+          password (which can be set as environment variables for convenience),
+          for the ability to administer the cloud from the command line.</para>
+        <para>To install <package>python-novaclient</package>, download the
+          tarball from <link xlink:href="http://pypi.python.org/pypi/python-novaclient/#downloads">
+          http://pypi.python.org/pypi/python-novaclient/#downloads</link> and
+          then install it in your favorite Python environment.</para>
+<screen><prompt>$</prompt> <userinput>curl -O http://pypi.python.org/packages/source/p/python-novaclient/python-novaclient-2.6.3.tar.gz</userinput>
 <prompt>$</prompt> <userinput>tar -zxvf python-novaclient-2.6.3.tar.gz</userinput>
 <prompt>$</prompt> <userinput>cd python-novaclient-2.6.3</userinput></screen>
-                <para>As <systemitem class="username">root</systemitem>, run:</para>
-                <screen><prompt>#</prompt> <userinput>python setup.py install</userinput></screen>
-            </step>
-            <step>
-                <para>Confirm the installation:</para>
-                <screen><prompt>$</prompt> <userinput>nova help</userinput>
+        <para>As root, run:</para>
+<screen><prompt>#</prompt> <userinput>python setup.py install</userinput></screen>
+      </step>
+      <step>
+        <para>Confirm the installation was successful:</para>
+<screen><prompt>$</prompt> <userinput>nova help</userinput>
 <computeroutput>usage: nova [--version] [--debug] [--os-cache] [--timings]
             [--timeout <replaceable>SECONDS</replaceable>] [--os-username <replaceable>AUTH_USER_NAME</replaceable>]
             [--os-password <replaceable>AUTH_PASSWORD</replaceable>]
@@ -197,278 +191,293 @@ inject_password=true</programlisting>
             [--os-cacert <replaceable>CA_CERTIFICATE</replaceable>] [--insecure]
             [--bypass-url <replaceable>BYPASS_URL</replaceable>]
             <replaceable>SUBCOMMAND</replaceable> ...</computeroutput></screen>
-                <note>
-                    <para>This command returns a list of <command>nova</command> commands and
-                        parameters. To obtain help for a subcommand, run:</para>
-                    <screen><prompt>$</prompt> <userinput>nova help <replaceable>SUBCOMMAND</replaceable></userinput></screen>
-                    <para>You can also refer to the <link
-                            xlink:href="http://docs.openstack.org/cli-reference/content/">
-                            <citetitle>OpenStack Command-Line Reference</citetitle></link> for a
-                        complete listing of <command>nova</command> commands and parameters.</para>
-                </note>
-            </step>
-            <step>
-                <para>Set the required parameters as environment variables to make running commands
-                    easier. For example, you can add <parameter>--os-username</parameter> as a
-                        <command>nova</command> option, or set it as an environment variable. To set
-                    the user name, password, and tenant as environment variables, use:</para>
-                <screen><prompt>$</prompt> <userinput>export OS_USERNAME=joecool</userinput>
+        <para>This command returns a list of <command>nova</command> commands
+          and parameters. To get help for a subcommand, run:</para>
+<screen><prompt>$</prompt> <userinput>nova help <replaceable>SUBCOMMAND</replaceable></userinput></screen>
+        <para>For a complete list of <command>nova</command> commands and
+          parameters, see the <link xlink:href="http://docs.openstack.org/cli-reference/content/">
+          <citetitle>OpenStack Command-Line Reference</citetitle></link>.</para>
+      </step>
+      <step>
+        <para>Set the required parameters as environment variables to make
+          running commands easier. For example, you can add
+          <parameter>--os-username</parameter> as a <command>nova</command>
+          option, or set it as an environment variable. To set the user name,
+          password, and tenant as environment variables, use:</para>
+<screen><prompt>$</prompt> <userinput>export OS_USERNAME=joecool</userinput>
 <prompt>$</prompt> <userinput>export OS_PASSWORD=coolword</userinput>
 <prompt>$</prompt> <userinput>export OS_TENANT_NAME=coolu</userinput>  </screen>
-            </step>
-            <step>
-                <para>Using the Identity Service, you are supplied with an authentication endpoint,
-                    which Compute recognizes as the <literal>OS_AUTH_URL</literal>.</para>
-                <screen><prompt>$</prompt> <userinput>export OS_AUTH_URL=http://hostname:5000/v2.0</userinput>
+      </step>
+      <step>
+        <para>The Identity Service will give you an authentication endpoint,
+          which Compute recognizes as <literal>OS_AUTH_URL</literal>.</para>
+<screen><prompt>$</prompt> <userinput>export OS_AUTH_URL=http://hostname:5000/v2.0</userinput>
 <prompt>$</prompt> <userinput>export NOVA_VERSION=1.1</userinput></screen>
-            </step>
-        </procedure>
-        <section xml:id="section_euca2ools">
-            <title>Use the euca2ools commands</title>
-            <para>For a command-line interface to EC2 API calls, use the
-                    <command>euca2ools</command> command-line tool. See <link
-                    xlink:href="http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3"
-                    >http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3</link></para>
-        </section>
-        <xi:include href="../../common/section_cli_nova_usage_statistics.xml"/>
+      </step>
+    </procedure>
+
+    <section xml:id="section_euca2ools">
+      <title>Managing the cloud with euca2ools</title>
+      <para>The <command>euca2ools</command> command-line tool provides a
+        command line interface to EC2 API calls. For more information about
+        <command>euca2ools</command>, see
+        <link xlink:href="http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3">
+        http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3</link></para>
     </section>
+
+    <xi:include href="../../common/section_cli_nova_usage_statistics.xml"/>
+
+    </section>
+
     <section xml:id="section_manage-logs">
-        <title>Manage logs</title>
-        <simplesect>
-            <title>Logging module</title>
-            <para>To specify a configuration file to change the logging behavior, add this line to
-                the <filename>/etc/nova/nova.conf</filename> file . To change the logging level,
-                such as (<literal>DEBUG</literal>, <literal>INFO</literal>,
-                    <literal>WARNING</literal>, <literal>ERROR</literal>), use:
-                <programlisting language="ini">log-config=/etc/nova/logging.conf</programlisting></para>
-            <para>The logging configuration file is an ini-style configuration file, which must
-                contain a section called <literal>logger_nova</literal>, which controls the behavior
-                of the logging facility in the <literal>nova-*</literal> services. For
-                example:<programlisting language="ini">[logger_nova]
+      <title>Logging</title>
+      <simplesect>
+        <title>Logging module</title>
+        <para>Logging behavior can be changed by creating a configuration file.
+          To specify the configuration file, add this line to the
+          <filename>/etc/nova/nova.conf</filename> file:</para>
+<programlisting language="ini">log-config=/etc/nova/logging.conf</programlisting>
+        <para>
+          To change the logging level, add <parameter>DEBUG</parameter>,
+          <parameter>INFO</parameter>, <parameter>WARNING</parameter>, or
+          <parameter>ERROR</parameter> as a parameter.
+        </para>
+        <para>The logging configuration file is an INI-style configuration
+          file, which must contain a section called
+          <parameter>logger_nova</parameter>. This controls the behavior of
+          the logging facility in the <literal>nova-*</literal> services. For
+          example:</para>
+<programlisting language="ini">[logger_nova]
 level = INFO
 handlers = stderr
-qualname = nova</programlisting></para>
-            <para>This example sets the debugging level to <literal>INFO</literal> (which is less
-                verbose than the default <literal>DEBUG</literal> setting). <itemizedlist>
-                    <listitem>
-                        <para>For more details on the logging configuration syntax, including the
-                            meaning of the <literal>handlers</literal> and
-                                <literal>quaname</literal> variables, see the <link
-                                xlink:href="http://docs.python.org/release/2.7/library/logging.html#configuration-file-format"
-                                >Python documentation on logging configuration file format
-                            </link>f.</para>
-                    </listitem>
-                    <listitem>
-                        <para>For an example <filename>logging.conf</filename> file with various
-                            defined handlers, see the <link
-                                xlink:href="http://docs.openstack.org/juno/config-reference/content/">
-                                <citetitle>OpenStack Configuration
-                            Reference</citetitle></link>.</para>
-                    </listitem>
-                </itemizedlist>
-            </para>
-        </simplesect>
-        <simplesect>
-            <title>Syslog</title>
-            <para>You can configure OpenStack Compute services to send logging information to
-                    <systemitem>syslog</systemitem>. This is useful if you want to use
-                    <systemitem>rsyslog</systemitem>, which forwards the logs to a remote machine.
-                You need to separately configure the Compute service (nova), the Identity service
-                (keystone), the Image Service (glance), and, if you are using it, the Block Storage
-                service (cinder) to send log messages to <systemitem>syslog</systemitem>. To do so,
-                add the following lines to:</para>
-            <itemizedlist>
-                <listitem>
-                    <para><filename>/etc/nova/nova.conf</filename></para>
-                </listitem>
-                <listitem>
-                    <para><filename>/etc/keystone/keystone.conf</filename></para>
-                </listitem>
-                <listitem>
-                    <para><filename>/etc/glance/glance-api.conf</filename></para>
-                </listitem>
-                <listitem>
-                    <para><filename>/etc/glance/glance-registry.conf</filename></para>
-                </listitem>
-                <listitem>
-                    <para><filename>/etc/cinder/cinder.conf</filename></para>
-                </listitem>
-            </itemizedlist>
-            <programlisting language="ini">verbose = False
+qualname = nova</programlisting>
+        <para>This example sets the debugging level to <literal>INFO</literal>
+          (which is less verbose than the default <literal>DEBUG</literal>
+          setting).</para>
+        <para>For more about the logging configuration syntax, including the
+          <parameter>handlers</parameter> and <parameter>quaname</parameter>
+          variables, see the
+          <link xlink:href="http://docs.python.org/release/2.7/library/logging.html#configuration-file-format">
+          Python documentation</link> on logging configuration files.</para>
+        <para>For an example <filename>logging.conf</filename> file with
+          various defined handlers, see the
+          <link xlink:href="http://docs.openstack.org/juno/config-reference/content/">
+          <citetitle>OpenStack Configuration Reference</citetitle></link>.
+        </para>
+      </simplesect>
+      <simplesect>
+        <title>Syslog</title>
+        <para>OpenStack Compute services can send logging information to
+          <systemitem>syslog</systemitem>. This is useful if you want to use
+          <systemitem>rsyslog</systemitem> to forward logs to a remote machine.
+          Separately configure the Compute service (nova), the Identity
+          service (keystone), the Image Service (glance), and, if you are
+          using it, the Block Storage service (cinder) to send log messages to
+          <systemitem>syslog</systemitem>. Open these configuration files:</para>
+        <itemizedlist>
+          <listitem>
+            <para><filename>/etc/nova/nova.conf</filename></para>
+          </listitem>
+          <listitem>
+            <para><filename>/etc/keystone/keystone.conf</filename></para>
+          </listitem>
+          <listitem>
+            <para><filename>/etc/glance/glance-api.conf</filename></para>
+          </listitem>
+          <listitem>
+            <para><filename>/etc/glance/glance-registry.conf</filename></para>
+          </listitem>
+          <listitem>
+            <para><filename>/etc/cinder/cinder.conf</filename></para>
+          </listitem>
+        </itemizedlist>
+        <para>In each configuration file, add these lines:</para>
+<programlisting language="ini">verbose = False
 debug = False
 use_syslog = True
 syslog_log_facility = LOG_LOCAL0</programlisting>
-            <para>In addition to enabling <systemitem>syslog</systemitem>, these settings also turn
-                off more verbose output and debugging output from the log.<note>
-                    <para>Although the example above uses the same local facility for each service
-                            (<literal>LOG_LOCAL0</literal>, which corresponds to
-                            <systemitem>syslog</systemitem> facility <literal>LOCAL0</literal>), we
-                        recommend that you configure a separate local facility for each service, as
-                        this provides better isolation and more flexibility. For example, you may
-                        want to capture logging information at different severity levels for
-                        different services. <systemitem>syslog</systemitem> allows you to define up
-                        to eight local facilities, <literal>LOCAL0, LOCAL1, ..., LOCAL7</literal>.
-                        For more details, see the <systemitem>syslog</systemitem>
-                        documentation.</para>
-                </note></para>
+        <para>In addition to enabling <systemitem>syslog</systemitem>, these
+          settings also turn off verbose and debugging output from the log.</para>
+        <note>
+          <para>Although this example uses the same local facility for each
+            service (<literal>LOG_LOCAL0</literal>, which corresponds to
+            <systemitem>syslog</systemitem> facility <literal>LOCAL0</literal>),
+            we recommend that you configure a separate local facility for each
+            service, as this provides better isolation and more flexibility.
+            For example, you can capture logging information at different
+            severity levels for different services.
+            <systemitem>syslog</systemitem> allows you to define up to eight
+            local facilities, <literal>LOCAL0, LOCAL1, ..., LOCAL7</literal>.
+            For more information, see the <systemitem>syslog</systemitem>
+            documentation.</para>
+        </note>
         </simplesect>
         <simplesect>
-            <title>Rsyslog</title>
-            <para><systemitem>rsyslog</systemitem> is a useful tool for setting up a centralized log
-                server across multiple machines. We briefly describe the configuration to set up an
-                    <systemitem>rsyslog</systemitem> server; a full treatment of
-                    <systemitem>rsyslog</systemitem> is beyond the scope of this document. We assume
-                    <systemitem>rsyslog</systemitem> has already been installed on your hosts
-                (default for most Linux distributions).</para>
-            <para>This example provides a minimal configuration for
-                    <filename>/etc/rsyslog.conf</filename> on the log server host, which receives
-                the log files:</para>
-            <programlisting language="bash"># provides TCP syslog reception
+          <title>Rsyslog</title>
+          <para><systemitem>rsyslog</systemitem> is useful for setting up a
+            centralized log server across multiple machines. This section
+            briefly describe the configuration to set up an
+            <systemitem>rsyslog</systemitem> server. A full treatment of
+            <systemitem>rsyslog</systemitem> is beyond the scope of this book.
+            This section assumes <systemitem>rsyslog</systemitem> has already
+            been installed on your hosts (it is installed by default on most
+            Linux distributions).</para>
+          <para>This example provides a minimal configuration for
+            <filename>/etc/rsyslog.conf</filename> on the log server host,
+            which receives the log files:</para>
+<programlisting># provides TCP syslog reception
 $ModLoad imtcp
 $InputTCPServerRun 1024</programlisting>
-            <para>Add a filter rule to <filename>/etc/rsyslog.conf</filename> which looks for a host
-                name. The example below uses <replaceable>COMPUTE_01</replaceable> as an example of
-                a compute host name:</para>
-            <programlisting language="bash">:hostname, isequal, "<replaceable>COMPUTE_01</replaceable>" /mnt/rsyslog/logs/compute-01.log</programlisting>
-            <para>On each compute host, create a file named
-                    <filename>/etc/rsyslog.d/60-nova.conf</filename>, with the following
-                content:</para>
-            <programlisting language="bash"># prevent debug from dnsmasq with the daemon.none parameter
+          <para>Add a filter rule to <filename>/etc/rsyslog.conf</filename>
+            which looks for a host name. This example uses
+            <replaceable>COMPUTE_01</replaceable> as the compute host name:</para>
+<programlisting>:hostname, isequal, "<replaceable>COMPUTE_01</replaceable>" /mnt/rsyslog/logs/compute-01.log</programlisting>
+          <para>On each compute host, create a file named
+            <filename>/etc/rsyslog.d/60-nova.conf</filename>, with the
+            following content:</para>
+<programlisting># prevent debug from dnsmasq with the daemon.none parameter
 *.*;auth,authpriv.none,daemon.none,local0.none -/var/log/syslog
 # Specify a log level of ERROR
 local0.error    @@172.20.1.43:1024</programlisting>
-            <para>Once you have created this file, restart your <systemitem>rsyslog</systemitem>
-                daemon. Error-level log messages on the compute hosts should now be sent to your log
-                server.</para>
+          <para>Once you have created the file, restart the
+            <systemitem>rsyslog</systemitem> service. Error-level log messages
+            on the compute hosts should now be sent to the log server.</para>
         </simplesect>
         <simplesect>
-            <title>Serial console</title>
-            <para>The serial console provides a useful way to examine kernel
-                output and other system messages during troubleshooting in cases
-                where an instance lacks network connectivity.</para>
-            <para>Releases prior to Juno only support read-only access via the
-                serial console using the <command>os-GetSerialOutput</command>
-                server action. Most cloud images enable this feature by
-                default. For more information, see
-                <link linkend="section_compute-empty-log-output">Troubleshoot
-                Compute</link>.</para>
-            <para>Juno and later releases support read-write access via the
-                serial console using the <command>os-GetSerialConsole</command>
-                server action. This feature also requires a websocket client to
-                access the serial console.</para>
-            <procedure>
-                <title>To configure read-write serial console access</title>
-                <para>On a compute node, edit the
-                    <filename>/etc/nova/nova.conf</filename> file and complete
-                    the following actions:</para>
-                <step>
-                    <para>In the <parameter>[serial_console]</parameter> section,
-                        enable the serial console:</para>
-                    <programlisting language="ini">[serial_console]
+          <title>Serial console</title>
+          <para>The serial console provides a way to examine kernel output and
+            other system messages during troubleshooting if the instance lacks
+            network connectivity.</para>
+          <para>OpenStack Icehouse and earlier supports read-only access using
+            the serial console using the <command>os-GetSerialOutput</command>
+            server action. Most cloud images enable this feature by default.
+            For more information, see <link linkend="section_compute-empty-log-output">
+            Troubleshoot Compute</link>.</para>
+          <para>OpenStack Juno and later supports read-write access using the
+            serial console using the <command>os-GetSerialConsole</command>
+            server action. This feature also requires a websocket client to
+            access the serial console.</para>
+          <procedure>
+            <title>Configuring read-write serial console access</title>
+            <para>On a compute node, edit the
+              <filename>/etc/nova/nova.conf</filename> file:</para>
+            <step>
+              <para>In the <parameter>[serial_console]</parameter> section,
+                enable the serial console:</para>
+<programlisting language="ini">[serial_console]
 ...
 enabled = true</programlisting>
-                </step>
-                <step>
-                    <para>In the same section, configure the serial console proxy
-                        similar to graphical console proxies:</para>
-                    <programlisting language="ini">[serial_console]
+            </step>
+            <step>
+              <para>In the <parameter>[serial_console]</parameter> section,
+                configure the serial console proxy similar to graphical
+                console proxies:</para>
+<programlisting language="ini">[serial_console]
 ...
 base_url = ws://<replaceable>controller</replaceable>:6083/
 listen = 0.0.0.0
 proxyclient_address = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable></programlisting>
-                    <para>The <option>base_url</option> option specifies the base
-                        URL that clients receive from the API upon requesting a
-                        serial console. Typically, this refers to the hostname of
-                        the controller node.</para>
-                    <para>The <option>listen</option> option specifies on
-                        which network interface the
-                        <systemitem class="service">nova-compute</systemitem>
-                        listens for virtual console connections. Typically, this
-                        uses 0.0.0.0 to enable listening on all interfaces.</para>
-                    <para>The <option>proxyclient_address</option> specifies
-                        to which network interface the proxy should connect.
-                        Typically, this refers to the IP address of the
-                        management interface.</para>
-                </step>
-            </procedure>
-            <para>Enabling read-write serial console access causes Compute
-                to add serial console information to the Libvirt XML file for
-                the instance. For example:</para>
-            <programlisting language="xml">&lt;console type='tcp'>
+              <para>The <option>base_url</option> option specifies the base
+                URL that clients receive from the API upon requesting a serial
+                console. Typically, this refers to the host name of the
+                controller node.</para>
+              <para>The <option>listen</option> option specifies the network
+                interface <systemitem class="service">nova-compute</systemitem>
+                should listen on for virtual console connections. Typically,
+                0.0.0.0 will enable listening on all interfaces.</para>
+              <para>The <option>proxyclient_address</option> option specifies
+                which network interface the proxy should connect to. Typically,
+                this refers to the IP address of the management interface.</para>
+            </step>
+          </procedure>
+          <para>When you enable read-write serial console access, Compute
+            will add serial console information to the Libvirt XML file for
+            the instance. For example:</para>
+<programlisting language="xml">&lt;console type='tcp'>
   &lt;source mode='bind' host='127.0.0.1' service='10000'/>
   &lt;protocol type='raw'/>
   &lt;target type='serial' port='0'/>
   &lt;alias name='serial0'/>
 &lt;/console></programlisting>
-            <procedure>
-                <title>To access the serial console on an instance</title>
-                <step>
-                    <para>Use the <command>nova get-serial-proxy</command>
-                        command to retrieve the websocket URL for the
-                        instance serial console:</para>
-                    <screen><prompt>$</prompt> <userinput>nova get-serial-proxy <replaceable>INSTANCE_NAME</replaceable></userinput>
+          <procedure>
+            <title>Accessing the serial console on an instance</title>
+            <step>
+              <para>Use the <command>nova get-serial-proxy</command> command
+                to retrieve the websocket URL for the serial console on the
+                instance:</para>
+<screen><prompt>$</prompt> <userinput>nova get-serial-proxy <replaceable>INSTANCE_NAME</replaceable></userinput>
 <computeroutput>+--------+-----------------------------------------------------------------+
 | Type   | Url                                                             |
 +--------+-----------------------------------------------------------------+
 | serial | ws://127.0.0.1:6083/?token=18510769-71ad-4e5a-8348-4218b5613b3d |
 +--------+-----------------------------------------------------------------+</computeroutput></screen>
-                    <para>Alternatively, use the API directly:</para>
-                    <screen><prompt>$</prompt> <userinput>curl -i 'http://&lt;controller&gt;:8774/v2/&lt;tenant_uuid>/servers/&lt;instance_uuid>/action' \
+            <para>Alternatively, use the API directly:</para>
+<screen><prompt>$</prompt> <userinput>curl -i 'http://&lt;controller&gt;:8774/v2/&lt;tenant_uuid>/servers/&lt;instance_uuid>/action' \
   -X POST \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
   -H "X-Auth-Project-Id: &lt;project_id>" \
   -H "X-Auth-Token: &lt;auth_token>" \
   -d '{"os-getSerialConsole": {"type": "serial"}}'</userinput></screen>
-                </step>
-                <step>
-                    <para>Use Python websocket with the URL to generate
-                        <literal>.send</literal>, <literal>.recv</literal>,
-                        and <literal>.fileno</literal> methods for serial
-                        console access. For example:</para>
-                    <programlisting language="python">import websocket
+            </step>
+            <step>
+              <para>Use Python websocket with the URL to generate
+                <literal>.send</literal>, <literal>.recv</literal>, and
+                <literal>.fileno</literal> methods for serial console access.
+                For example:</para>
+<programlisting language="python">import websocket
 ws = websocket.create_connection(
     'ws://127.0.0.1:6083/?token=18510769-71ad-4e5a-8348-4218b5613b3d',
     subprotocols=['binary', 'base64'])</programlisting>
-                    <para>Alternatively, use a Python websocket client such as
-                        <link xlink:href="https://github.com/larsks/novaconsole/"
-                        />.</para>
-                </step>
-            </procedure>
-            <note>
-                <para>Enabling the serial console disables typical instance logging
-                    via the <command>nova console-log</command> command.
-                    Kernel output and other system messages become invisible
-                    unless actively viewing the serial console.</para>
-            </note>
-        </simplesect>
+              <para>Alternatively, use a Python websocket client such as
+                <link xlink:href="https://github.com/larsks/novaconsole/"/>.</para>
+            </step>
+          </procedure>
+        <note>
+          <para>When you enable the serial console, typical instance logging
+            using the <command>nova console-log</command> command is disabled.
+            Kernel output and other system messages will not be visible
+            unless you are actively viewing the serial console.</para>
+        </note>
+      </simplesect>
     </section>
+
+
     <xi:include href="section_compute-rootwrap.xml"/>
     <xi:include href="section_compute-configure-migrations.xml"/>
+
     <section xml:id="section_live-migration-usage">
-        <title>Migrate instances</title>
-        <para>Before starting migrations, review the <link
-                linkend="section_configuring-compute-migrations">Configure migrations
-            section</link>.</para>
-        <para>Migration provides a scheme to migrate running instances from one OpenStack Compute
-            server to another OpenStack Compute server.</para>
-        <procedure>
-            <title>To migrate instances</title>
-            <step>
-                <para>Look at the running instances, to get the ID of the instance you wish to
-                    migrate.</para>
-                <screen><prompt>$</prompt> <userinput>nova list</userinput>
+      <title>Migrate instances</title>
+      <para>This section discusses how to migrate running instances from one
+        OpenStack Compute server to another OpenStack Compute server.</para>
+      <para>Before starting a migration, review the
+        <link linkend="section_configuring-compute-migrations">Configure
+          migrations section</link>.</para>
+      <note>
+        <para>Although the <command>nova</command> command is called
+          <command>live-migration</command>, under the default Compute
+          configuration options, the instances are suspended before migration.
+          For more information, see <link xlink:href="http://docs.openstack.org/juno/config-reference/content/list-of-compute-config-options.html">
+          Configure migrations</link> in the <citetitle>OpenStack
+          Configuration Reference</citetitle>.</para>
+      </note>
+      <procedure>
+        <title>Migrating instances</title>
+        <step>
+          <para>Check the ID of the instance to be migrated:</para>
+<screen><prompt>$</prompt> <userinput>nova list</userinput>
 <computeroutput><![CDATA[+--------------------------------------+------+--------+-----------------+
 |                  ID                  | Name | Status |Networks         |
 +--------------------------------------+------+--------+-----------------+
 | d1df1b5a-70c4-4fed-98b7-423362f2c47c | vm1  | ACTIVE | private=a.b.c.d |
 | d693db9e-a7cf-45ef-a7c9-b3ecb5f22645 | vm2  | ACTIVE | private=e.f.g.h |
 +--------------------------------------+------+--------+-----------------+]]></computeroutput></screen>
-            </step>
-            <step>
-                <para>Look at information associated with that instance. This example uses 'vm1'
-                    from above.</para>
-                <screen><prompt>$</prompt> <userinput>nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c</userinput>
+        </step>
+        <step>
+          <para>Check the information associated with the instance. In this
+            example, <literal>vm1</literal> is running on
+            <literal>HostB</literal>:</para>
+<screen><prompt>$</prompt> <userinput>nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c</userinput>
 <computeroutput><![CDATA[+-------------------------------------+----------------------------------------------------------+
 |               Property              |                          Value                           |
 +-------------------------------------+----------------------------------------------------------+
@@ -482,11 +491,14 @@ ws = websocket.create_connection(
 | status                              | ACTIVE                                                   |
 ...
 +-------------------------------------+----------------------------------------------------------+]]></computeroutput></screen>
-                <para>In this example, vm1 is running on HostB.</para>
-            </step>
-            <step>
-                <para>Select the compute node to which instances will be migrated to:</para>
-                <screen><prompt>#</prompt> <userinput>nova service-list</userinput>
+        </step>
+        <step>
+          <para>Select the compute node the instance will be migrated to. In
+            this example, we will migrate the instance to
+            <literal>HostC</literal>, because
+            <systemitem class="service">nova-compute</systemitem> is running
+            on it.:</para>
+<screen><prompt>#</prompt> <userinput>nova service-list</userinput>
 <computeroutput>+------------------+------------+----------+---------+-------+----------------------------+-----------------+
 | Binary           | Host       | Zone     | Status  | State | Updated_at                 | Disabled Reason |
 +------------------+------------+----------+---------+-------+----------------------------+-----------------+
@@ -497,12 +509,11 @@ ws = websocket.create_connection(
 | nova-compute     | HostC      | nova     | enabled | up    | 2014-03-25T10:33:31.000000 | -               |
 | nova-cert        | HostA      | internal | enabled | up    | 2014-03-25T10:33:31.000000 | -               |
 +------------------+------------+----------+---------+-------+----------------------------+-----------------+</computeroutput></screen>
-                <para>In this example, HostC can be picked up because <systemitem class="service"
-                        >nova-compute</systemitem> is running on it.</para>
-            </step>
-            <step>
-                <para>Ensure that HostC has enough resources for migration.</para>
-                <screen><prompt>#</prompt> <userinput>nova host-describe HostC</userinput>
+        </step>
+        <step>
+          <para>Check that <literal>HostC</literal> has enough resources for
+            migration:</para>
+<screen><prompt>#</prompt> <userinput>nova host-describe HostC</userinput>
 <computeroutput>+-----------+------------+-----+-----------+---------+
 | HOST      | PROJECT    | cpu | memory_mb | disk_gb |
 +-----------+------------+-----+-----------+---------+
@@ -512,59 +523,45 @@ ws = websocket.create_connection(
 | HostC     | p1         | 13   | 21284    | 442     |
 | HostC     | p2         | 13   | 21284    | 442     |
 +-----------+------------+-----+-----------+---------+</computeroutput></screen>
-                <itemizedlist>
-                    <listitem>
-                        <para><emphasis role="bold">cpu:</emphasis>the number of cpu</para>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">memory_mb:</emphasis>total amount of memory (in
-                            MB)</para>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">disk_gb:</emphasis>total amount of space for
-                            NOVA-INST-DIR/instances (in GB)</para>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">1st line shows </emphasis>total amount of
-                            resources for the physical server.</para>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">2nd line shows </emphasis>currently used
-                            resources.</para>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">3rd line shows </emphasis>maximum used
-                            resources.</para>
-                    </listitem>
-                    <listitem>
-                        <para><emphasis role="bold">4th line and under</emphasis> shows the resource
-                            for each project.</para>
-                    </listitem>
-                </itemizedlist>
-            </step>
-            <step>
-                <para>Use the <command>nova live-migration</command> command to migrate the
-                    instances:<screen><prompt>$</prompt> <userinput>nova live-migration <replaceable>SERVER</replaceable> <replaceable>HOST_NAME</replaceable></userinput></screen></para>
-                <para>Where <replaceable>SERVER</replaceable> can be the ID or name of the instance.
-                    For example:</para>
-                <screen><prompt>$</prompt> <userinput>nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC</userinput><computeroutput>
+          <itemizedlist>
+            <listitem>
+              <para><parameter>cpu:</parameter> Number of CPUs</para>
+            </listitem>
+            <listitem>
+              <para><parameter>memory_mb:</parameter> Total amount of memory,
+                in MB</para>
+            </listitem>
+            <listitem>
+              <para><parameter>disk_gb:</parameter> Total amount of space for
+                NOVA-INST-DIR/instances, in GB</para>
+            </listitem>
+          </itemizedlist>
+          <para>In this table, the first row shows the total amount of
+            resources available on the physical server. The second line shows
+            the currently used resources. The third line shows the maximum
+            used resources. The fourth line and below shows the resources
+            available for each project.</para>
+        </step>
+        <step>
+          <para>Migrate the instances using the
+            <command>nova live-migration</command> command:</para>
+<screen><prompt>$</prompt> <userinput>nova live-migration <replaceable>SERVER</replaceable> <replaceable>HOST_NAME</replaceable></userinput></screen>
+          <para>In this example, <replaceable>SERVER</replaceable> can be the
+            ID or name of the instance. Another example:</para>
+<screen><prompt>$</prompt> <userinput>nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC</userinput><computeroutput>
 <![CDATA[Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.]]></computeroutput></screen>
-                <para>Ensure instances are migrated successfully with <command>nova list</command>.
-                    If instances are still running on HostB, check log files (src/dest <systemitem
-                        class="service">nova-compute</systemitem> and <systemitem class="service"
-                        >nova-scheduler</systemitem>) to determine why.</para>
-                <note>
-                    <para>Although the <command>nova</command> command is called
-                            <command>live-migration</command>, under the default Compute
-                        configuration options, the instances are suspended before migration.</para>
-                    <para>For more details, see <link
-                        xlink:href="http://docs.openstack.org/juno/config-reference/content/list-of-compute-config-options.html"
-                            >Configure migrations</link> in <citetitle>OpenStack Configuration
-                            Reference</citetitle>.</para>
-                </note>
-            </step>
-        </procedure>
+        </step>
+        <step>
+          <para>Check the instances have been migrated successfully, using
+            <command>nova list</command>. If instances are still running on
+            <literal>HostB</literal>, check the log files at src/dest for
+            <systemitem class="service">nova-compute</systemitem> and
+            <systemitem class="service">nova-scheduler</systemitem>) to
+            determine why.</para>
+        </step>
+      </procedure>
     </section>
+
     <xi:include href="../../common/section_compute-configure-console.xml"/>
     <xi:include href="section_compute-configure-service-groups.xml"/>
     <xi:include href="section_compute-security.xml"/>
