@@ -164,6 +164,34 @@ deployment to use these resources.</para>
         <para>Use the <literal><link xlink:href="http://docs.openstack.org/hot-reference/content/OS__Neutron__FloatingIP.html">OS::Neutron::FloatingIP</link></literal> resource to create a floating IP, and
 the <literal><link xlink:href="http://docs.openstack.org/hot-reference/content/OS__Neutron__FloatingIPAssociation.html">OS::Neutron::FloatingIPAssociation</link></literal> resource to associate the
 floating IP to a port:</para>
+        <programlisting language="yaml">parameters:
+  net:
+    description: name of network used to launch instance.
+    type: string
+    default: private
+
+resources:
+  inst1:
+    type: OS::Nova::Server
+    properties:
+      flavor: m1.small
+      image: ubuntu-trusty-x86_64
+      networks:
+        - network: {get_param: net}
+
+  floating_ip:
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: public
+
+  association:
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: floating_ip }
+      port_id: {get_attr: [inst1, addresses, {get_param: net}, 0, port]}</programlisting>
+        <para>You can also create an OS::Neutron::Port and associate that with the server and
+the floating IP. However the approach mentioned above will work better
+with stack updates.</para>
         <programlisting language="yaml">resources:
   instance_port:
     type: OS::Neutron::Port
@@ -176,7 +204,6 @@ floating IP to a port:</para>
     type: OS::Neutron::FloatingIP
     properties:
       floating_network: public
-      port_id: { get_resource: instance_port }
 
   association:
     type: OS::Neutron::FloatingIPAssociation

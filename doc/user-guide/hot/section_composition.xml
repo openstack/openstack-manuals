@@ -34,7 +34,7 @@ properties.</para>
   <para>The following examples illustrate how you can use a custom template to define
 new types of resources. These examples use a custom template stored in a
 <literal>my_nova.yml</literal> file:</para>
-  <programlisting language="yaml">heat_template_version: 2013-05-23
+  <programlisting language="yaml">heat_template_version: 2014-10-16
 
 parameters:
   key_name:
@@ -53,7 +53,8 @@ resources:
     <title>Use the template filename as type</title>
     <para>The following template defines the <literal>my_nova.yaml</literal> file as value for the
 <literal>type</literal> property of a resource:</para>
-    <programlisting language="yaml">heat_template_version: 2013-05-23
+    <programlisting language="yaml">heat_template_version: 2014-10-16
+
 resources:
   my_server:
     type: my_nova.yaml
@@ -85,7 +86,7 @@ You can use any of the following forms:</para>
   <section xml:id="define-a-new-resource-type">
     <?dbhtml stop-chunking?>
     <title>Define a new resource type</title>
-    <para>You can associate a name to the <literal>my_noya.yaml</literal> template in an environment
+    <para>You can associate a name to the <literal>my_nova.yaml</literal> template in an environment
 file. If the name is already known by the Orchestration module then your new
 resource will override the default one.</para>
     <para>In the following example a new <literal>OS::Nova::Server</literal> resource overrides the
@@ -97,12 +98,47 @@ default resource of the same name.</para>
       <para>See <xref linkend="environments"/> for more detail about environment files.</para>
     </note>
     <para>You can now use the new <literal>OS::Nova::Server</literal> in your new template:</para>
-    <programlisting language="yaml">resources:
+    <programlisting language="yaml">heat_template_version: 2014-10-16
+
+resources:
   my_server:
     type: OS::Nova::Server
     properties:
       key_name: my_key</programlisting>
     <para>To create the stack run:</para>
     <programlisting language="console">$ heat stack-create -f main.yaml -e env.yaml example-two</programlisting>
+  </section>
+  <section xml:id="get-access-to-nested-attributes">
+    <?dbhtml stop-chunking?>
+    <title>Get access to nested attributes</title>
+    <para>There are implicit attributes of a template resource. These are
+accessible as follows:</para>
+    <programlisting language="yaml">heat_template_version: 2014-10-16
+
+resources:
+  my_server:
+    type: my_nova.yaml
+
+outputs:
+  test_out:
+    value: {get_attr: my_server, resource.server, first_address}</programlisting>
+  </section>
+  <section xml:id="making-your-template-resource-more-transparent">
+    <?dbhtml stop-chunking?>
+    <title>Making your template resource more "transparent"</title>
+    <para>If you wish to be able to return the ID of one of the inner resources
+instead of the nested stack's identifier, you can add the special reserved
+output "OS::stack_id" to your template resource.</para>
+    <programlisting language="yaml">heat_template_version: 2014-10-16
+
+resources:
+  server:
+    type: OS::Nova::Server
+
+outputs:
+  OS::stack_id:
+    value: {get_resource: server}</programlisting>
+    <para>Now when you use "get_resource" from the outer template heat
+will use the nova server id and not the template resource identifier.</para>
   </section>
 </section>
