@@ -7,9 +7,9 @@
     <title>Converting between image formats</title>
     <para>Converting images from one format to another is generally straightforward.</para>
     <simplesect>
-        <title>qemu-img convert: raw, qcow2, VDI, VMDK</title>
+        <title>qemu-img convert: raw, qcow2, QED, VDI, VMDK, VHD</title>
         <para>The <command>qemu-img convert</command> command can do conversion between multiple
-            formats, including raw, qcow2, VDI (VirtualBox), VMDK (VMware) and VHD (Hyper-V).</para>
+            formats, including qcow2, QED, raw, VDI (VirtualBox), VHD (Hyper-V), and VMDK (VMware).</para>
 <table
                 rules="all">
                 <caption>qemu-img format strings</caption>
@@ -22,37 +22,45 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>raw</td>
-                            <td><literal>raw</literal></td>
+                            <td>qcow2 (KVM, Xen)</td>
+                            <td><literal>qcow2</literal></td>
                         </tr>
                         <tr>
-                            <td>qcow2</td>
-                            <td><literal>qcow2</literal></td>
+                            <td>QED (KVM)</td>
+                            <td><literal>qed</literal></td>
+                        </tr>
+                        <tr>
+                            <td>raw</td>
+                            <td><literal>raw</literal></td>
                         </tr>
                         <tr>
                             <td>VDI (VirtualBox)</td>
                             <td><literal>vdi</literal></td>
                         </tr>
                         <tr>
-                            <td>VMDK (VMware)</td>
-                            <td><literal>vmdk</literal></td>
-                        </tr>
-                        <tr>
                             <td>VHD (Hyper-V)</td>
                             <td><literal>vpc</literal></td>
                         </tr>
+                        <tr>
+                            <td>VMDK (VMware)</td>
+                            <td><literal>vmdk</literal></td>
+                        </tr>
                     </tbody>
             </table>
-        <para>This example will convert a raw image file named centos63.dsk to a qcow2 image file.</para>
+        <para>This example will convert a raw image file named <filename>centos7.img</filename> to a qcow2 image file.</para>
         <para>
-            <screen><prompt>$</prompt> <userinput>qemu-img convert -f raw -O qcow2 centos64.dsk centos64.qcow2</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>qemu-img convert -f raw -O qcow2 centos7.img centos7.qcow2</userinput></screen>
         </para>
-        <para>To convert from vmdk to raw, you would do:
-            <screen><prompt>$</prompt> <userinput>qemu-img convert -f vmdk -O raw centos64.vmdk centos64.img</userinput></screen></para>
+        <para>Run the following command to convert a VMDK image file to a raw image file.
+            <screen><prompt>$</prompt> <userinput>qemu-img convert -f vmdk -O raw centos7.vmdk centos7.img</userinput></screen>
+        </para>
+        <para>Run the following command to convert a VMDK image file to a qcow2 image file.
+            <screen><prompt>$</prompt> <userinput>qemu-img convert -f vmdk -O raw centos7.vmdk centos7.qcow2</userinput></screen>
+        </para>
         <para>
             <note>
                 <para>The <literal>-f <replaceable>format</replaceable></literal> flag is optional.
-                    If omitted, qemu-img will try to infer the image format.</para>
+                    If omitted, <command>qemu-img</command> will try to infer the image format.</para>
             </note>
         </para>
     </simplesect>
@@ -60,9 +68,9 @@
         <title>VBoxManage: VDI (VirtualBox) to raw</title>
         <para>If you've created a VDI image using VirtualBox, you can convert it to raw format using
             the <command>VBoxManage</command> command-line tool that ships with VirtualBox. On Mac
-            OS X, VirtualBox stores images by default in the <filename>~/VirtualBox VMs/</filename>
+            OS X, and Linux, VirtualBox stores images by default in the <filename>~/VirtualBox VMs/</filename>
             directory. The following example creates a raw image in the current directory from a
-            VirtualBox VDI
-            image.<screen><prompt>$</prompt> <userinput>VBoxManage clonehd ~/VirtualBox\ VMs/fedora18.vdi fedora18.img --format raw</userinput></screen></para>
+            VirtualBox VDI image.</para>
+        <screen><prompt>$</prompt> <userinput>VBoxManage clonehd ~/VirtualBox\ VMs/fedora21.vdi fedora21.img --format raw</userinput></screen>
     </simplesect>
 </chapter>
