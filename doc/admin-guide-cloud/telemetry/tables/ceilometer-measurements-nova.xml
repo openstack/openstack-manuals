@@ -1,0 +1,531 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<para xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <table rules="all" xml:id="ceilometer_measurements_table_nova">
+    <caption>OpenStack Compute metrics</caption>
+    <col width="27%"/>
+    <col width="11%"/>
+    <col width="9%"/>
+    <col width="12%"/>
+    <col width="12%"/>
+    <col width="8%"/>
+    <col width="21%"/>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Unit</td>
+        <td>Resource</td>
+        <td>Origin</td>
+        <td>Support</td>
+        <td>Note</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th colspan="7">Meters added in the Icehouse release or earlier</th>
+      </tr>
+      <tr>
+        <td>instance</td>
+        <td>Gauge</td>
+        <td>instance</td>
+        <td>instance ID</td>
+        <td>Notification, Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Existence of instance.</td>
+      </tr>
+      <tr>
+        <td>instance:&lt;type&gt;</td>
+        <td>Gauge</td>
+        <td>instance</td>
+        <td>instance ID</td>
+        <td>Notification, Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Existence of instance &lt;type&gt; (OpenStack types).</td>
+      </tr>
+      <tr>
+        <td>memory</td>
+        <td>Gauge</td>
+        <td>MB</td>
+        <td>instance ID</td>
+        <td>Notification</td>
+        <td>Libvirt, HyperV</td>
+        <td>Volume of RAM allocated to the instance.</td>
+      </tr>
+      <tr>
+        <td>memory.usage</td>
+        <td>Gauge</td>
+        <td>MB</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>vSphere</td>
+        <td>Volume of RAM used by the instance from the amount
+          of its allocated memory.</td>
+      </tr>
+      <tr>
+        <td>cpu</td>
+        <td>Cumulative</td>
+        <td>ns</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>CPU time used.</td>
+      </tr>
+      <tr>
+        <td>cpu_util</td>
+        <td>Gauge</td>
+        <td>%</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average CPU utilisation.</td>
+      </tr>
+      <tr>
+        <td>vcpus</td>
+        <td>Gauge</td>
+        <td>vcpu</td>
+        <td>instance ID</td>
+        <td>Notification</td>
+        <td>Libvirt, HyperV</td>
+        <td>Number of virtual CPUs allocated to the instance.</td>
+      </tr>
+      <tr>
+        <td>disk.read.requests</td>
+        <td>Cumulative</td>
+        <td>request</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Number of read requests.</td>
+      </tr>
+      <tr>
+        <td>disk.read.requests.rate</td>
+        <td>Gauge</td>
+        <td>request/s</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of read requests.</td>
+      </tr>
+      <tr>
+        <td>disk.write.requests</td>
+        <td>Cumulative</td>
+        <td>request</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Number of write requests.</td>
+      </tr>
+      <tr>
+        <td>disk.write.requests.rate</td>
+        <td>Gauge</td>
+        <td>request/s</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of write requests.</td>
+      </tr>
+      <tr>
+        <td>disk.read.bytes</td>
+        <td>Cumulative</td>
+        <td>B</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Volume of reads.</td>
+      </tr>
+      <tr>
+        <td>disk.read.bytes.rate</td>
+        <td>Gauge</td>
+        <td>B/s</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of reads.</td>
+      </tr>
+      <tr>
+        <td>disk.write.bytes</td>
+        <td>Cumulative</td>
+        <td>B</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Volume of writes.</td>
+      </tr>
+      <tr>
+        <td>disk.write.bytes.rate</td>
+        <td>Gauge</td>
+        <td>B/s</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of writes.</td>
+      </tr>
+      <tr>
+        <td>disk.root.size</td>
+        <td>Gauge</td>
+        <td>GB</td>
+        <td>instance ID</td>
+        <td>Notification</td>
+        <td>Libvirt, HyperV</td>
+        <td>Size of root disk.</td>
+      </tr>
+      <tr>
+        <td>disk.ephemeral.size</td>
+        <td>Gauge</td>
+        <td>GB</td>
+        <td>instance ID</td>
+        <td>Notification</td>
+        <td>Libvirt, HyperV</td>
+        <td>Size of ephemeral disk.</td>
+      </tr>
+      <tr>
+        <td>network.incoming.bytes</td>
+        <td>Cumulative</td>
+        <td>B</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Number of incoming bytes.</td>
+      </tr>
+      <tr>
+        <td>network.incoming.bytes.rate</td>
+        <td>Gauge</td>
+        <td>B/s</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of incoming bytes.</td>
+      </tr>
+      <tr>
+        <td>network.outpoing.bytes</td>
+        <td>Cumulative</td>
+        <td>B</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Number of outgoing bytes.</td>
+      </tr>
+      <tr>
+        <td>network.outgoing.bytes.rate</td>
+        <td>Gauge</td>
+        <td>B/s</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of outgoing bytes.</td>
+      </tr>
+      <tr>
+        <td>network.incoming.packets</td>
+        <td>Cumulative</td>
+        <td>packet</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Number of incoming packets.</td>
+      </tr>
+      <tr>
+        <td>network.incoming.packets.rate</td>
+        <td>Gauge</td>
+        <td>packet/s</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of incoming packets.</td>
+      </tr>
+      <tr>
+        <td>network.outpoing.packets</td>
+        <td>Cumulative</td>
+        <td>packet</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Number of outgoing packets.</td>
+      </tr>
+      <tr>
+        <td>network.outgoing.packets.rate</td>
+        <td>Gauge</td>
+        <td>packet/s</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of outgoing packets.</td>
+      </tr>
+      <tr>
+        <th colspan="7">Meters added or hypervisor support changed
+          in the Juno release</th>
+      </tr>
+      <tr>
+        <td>instance</td>
+        <td>Gauge</td>
+        <td>instance</td>
+        <td>instance ID</td>
+        <td>Notification, Pollster</td>
+        <td>Libvirt, HyperV, vSphere, XenAPI</td>
+        <td>Existence of instance.</td>
+      </tr>
+      <tr>
+        <td>instance:&lt;type&gt;</td>
+        <td>Gauge</td>
+        <td>instance</td>
+        <td>instance ID</td>
+        <td>Notification, Pollster</td>
+        <td>Libvirt, HyperV, vSphere, XenAPI</td>
+        <td>Existence of instance &lt;type&gt; (OpenStack types).</td>
+      </tr>
+      <tr>
+        <td>memory.usage</td>
+        <td>Gauge</td>
+        <td>MB</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>vSphere, XenAPI</td>
+        <td>Volume of RAM used by the instance from the amount
+          of its allocated memory.</td>
+      </tr>
+      <tr>
+        <td>cpu_util</td>
+        <td>Gauge</td>
+        <td>%</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere, XenAPI</td>
+        <td>Average CPU utilisation.</td>
+      </tr>
+      <tr>
+        <td>disk.read.bytes.rate</td>
+        <td>Gauge</td>
+        <td>B/s</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere, XenAPI</td>
+        <td>Average rate of reads.</td>
+      </tr>
+      <tr>
+        <td>disk.write.bytes.rate</td>
+        <td>Gauge</td>
+        <td>B/s</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere, XenAPI</td>
+        <td>Average rate of writes.</td>
+      </tr>
+      <tr>
+        <td>disk.device.read.requests</td>
+        <td>Cumulative</td>
+        <td>request</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Number of read requests.</td>
+      </tr>
+      <tr>
+        <td>disk.device.read.requests.rate</td>
+        <td>Gauge</td>
+        <td>request/s</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of read requests.</td>
+      </tr>
+      <tr>
+        <td>disk.device.write.requests</td>
+        <td>Cumulative</td>
+        <td>request</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Number of write requests.</td>
+      </tr>
+      <tr>
+        <td>disk.device.write.requests.rate</td>
+        <td>Gauge</td>
+        <td>request/s</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of write requests.</td>
+      </tr>
+      <tr>
+        <td>disk.device.read.bytes</td>
+        <td>Cumulative</td>
+        <td>B</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Volume of reads.</td>
+      </tr>
+      <tr>
+        <td>disk.device.read.bytes.rate</td>
+        <td>Gauge</td>
+        <td>B/s</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of reads.</td>
+      </tr>
+      <tr>
+        <td>disk.device.write.bytes</td>
+        <td>Cumulative</td>
+        <td>B</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV</td>
+        <td>Volume of writes.</td>
+      </tr>
+      <tr>
+        <td>disk.device.write.bytes.rate</td>
+        <td>Gauge</td>
+        <td>B/s</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere</td>
+        <td>Average rate of writes.</td>
+      </tr>
+      <tr>
+        <td>network.incoming.bytes.rate</td>
+        <td>Gauge</td>
+        <td>B/s</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere, XenAPI</td>
+        <td>Average rate of incoming bytes.</td>
+      </tr>
+      <tr>
+        <td>network.outgoing.bytes.rate</td>
+        <td>Gauge</td>
+        <td>B/s</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere, XenAPI</td>
+        <td>Average rate of outgoing bytes.</td>
+      </tr>
+      <tr>
+        <td>network.incoming.packets.rate</td>
+        <td>Gauge</td>
+        <td>packet/s</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere, XenAPI</td>
+        <td>Average rate of incoming packets.</td>
+      </tr>
+      <tr>
+        <td>network.outgoing.packets.rate</td>
+        <td>Gauge</td>
+        <td>packet/s</td>
+        <td>interface ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere, XenAPI</td>
+        <td>Average rate of outgoing packets.</td>
+      </tr>
+      <tr>
+        <th colspan="7">Meters added or hypervisor support changed
+          in the Kilo release</th>
+      </tr>
+      <tr>
+        <td>memory.usage</td>
+        <td>Gauge</td>
+        <td>MB</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt, HyperV, vSphere, XenAPI</td>
+        <td>Volume of RAM used by the instance from the amount
+          of its allocated memory.</td>
+      </tr>
+      <tr>
+        <td>disk.latency</td>
+        <td>Gauge</td>
+        <td>ms</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>HyperV</td>
+        <td>Average disk latency.</td>
+      </tr>
+      <tr>
+        <td>disk.iops</td>
+        <td>Gauge</td>
+        <td>count/s</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>HyperV</td>
+        <td>Average disk iops.</td>
+      </tr>
+      <tr>
+        <td>disk.device.latency</td>
+        <td>Gauge</td>
+        <td>ms</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>HyperV</td>
+        <td>Average disk latency per device.</td>
+      </tr>
+      <tr>
+        <td>disk.device.iops</td>
+        <td>Gauge</td>
+        <td>count/s</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>HyperV</td>
+        <td>Average disk iops per device.</td>
+      </tr>
+      <tr>
+        <td>disk.capacity</td>
+        <td>Gauge</td>
+        <td>B</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt</td>
+        <td>The amount of disk that the instance can see.</td>
+      </tr>
+      <tr>
+        <td>disk.allocation</td>
+        <td>Gauge</td>
+        <td>B</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt</td>
+        <td>The amount of disk occupied by the instance
+          on the host machine.</td>
+      </tr>
+      <tr>
+        <td>disk.usage</td>
+        <td>Gauge</td>
+        <td>B</td>
+        <td>instance ID</td>
+        <td>Pollster</td>
+        <td>Libvirt</td>
+        <td>The physical size in bytes of the image container
+          on the host.</td>
+      </tr>
+      <tr>
+        <td>disk.device.capacity</td>
+        <td>Gauge</td>
+        <td>B</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>Libvirt</td>
+        <td>The amount of disk per device that the instance
+          can see.</td>
+      </tr>
+      <tr>
+        <td>disk.device.allocation</td>
+        <td>Gauge</td>
+        <td>B</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>Libvirt</td>
+        <td>The amount of disk per device occupied by the instance
+          on the host machine.</td>
+      </tr>
+      <tr>
+        <td>disk.device.usage</td>
+        <td>Gauge</td>
+        <td>B</td>
+        <td>disk ID</td>
+        <td>Pollster</td>
+        <td>Libvirt</td>
+        <td>The physical size in bytes of the image container
+          on the host per device.</td>
+      </tr>
+    </tbody>
+  </table>
+</para>
