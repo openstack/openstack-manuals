@@ -6,7 +6,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   ch_dashboard.rst
+   cli.rst
+   dashboard.rst
 
 
 Indices and tables
