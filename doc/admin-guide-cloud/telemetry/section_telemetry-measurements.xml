@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="section_telemetry-measurements">
+  <title>Measurements</title>
+  <para>The Telemetry module collects metrics within an OpenStack
+    deployment. This section provides a brief summary about metrics
+    format and origin and also contains the list of available
+    meters.</para>
+  <para>Telemetry collects metrics by polling the infrastructure
+    elements and also by consuming the notifications emitted
+    by other OpenStack services. For more information about the
+    polling mechanism and notifications see
+    <xref linkend="section_telemetry-data-collection"/>. There are
+    several meters which are collected by polling and by consuming.
+    The origin for each meter is listed in the tables below.</para>
+  <note>
+    <para>You may need to configure Telemetry or other OpenStack
+      services in order to be able to collect all the samples you need.
+      For further information about configuration requirements see the
+      <link xlink:href=
+      "http://docs.openstack.org/juno/install-guide/install/apt/content/ch_ceilometer.html">
+      Telemetry chapter</link> in the <citetitle>OpenStack Installation
+      Guide</citetitle>. Also check the <link xlink:href=
+      "http://docs.openstack.org/developer/ceilometer/install/manual.html">
+      Telemetry manual installation</link> description.</para>
+  </note>
+  <para>Telemetry uses the following metric types:</para>
+  <table rules="all">
+    <caption>Telemetry metric types</caption>
+    <col width="25%"/>
+    <col width="75%"/>
+    <thead>
+      <tr>
+        <td>Type</td>
+        <td>Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Cumulative</td>
+        <td>Increasing over time (instance hours)</td>
+      </tr>
+      <tr>
+        <td>Delta</td>
+        <td>Changing over time (bandwidth)</td>
+      </tr>
+      <tr>
+        <td>Gauge</td>
+        <td>Discrete items (floating IPs, image uploads) and
+          fluctuating values (disk I/O)</td>
+      </tr>
+    </tbody>
+  </table>
+  <para>Telemetry provides the possibility to store metadata for
+    samples. This metadata can be extended for OpenStack Compute and
+    OpenStack Object Storage.</para>
+  <para>In order to add additional metadata information to OpenStack
+    Compute you have two options to choose from. The first one is to
+    specify them when you boot up a new instance. The additional
+    information will be stored with the sample in the form of
+    <literal>resource_metadata.user_metadata.*</literal>. The new
+    field should be defined by using the prefix <literal>metering.</literal>.
+    The modified boot command look like the following:
+    <screen><prompt>$</prompt> <userinput>nova boot --meta metering.custom_metadata=a_value my_vm</userinput></screen></para>
+  <para>The other option is to set the <option>reserved_metadata_keys</option>
+    to the list of metadata keys that you would like to be included
+    in <literal>resource_metadata</literal> of the instance related
+    samples that are collected for OpenStack Compute. This option is
+    included in the <literal>DEFAULT</literal> section of the
+    <filename>ceilometer.conf</filename> configuration file.</para>
+  <para>You might also specify headers whose values will be stored along with
+    the sample data of OpenStack Object Storage. The additional
+    information is also stored under <literal>resource_metadata</literal>.
+    The format of the new field is <literal>
+    resource_metadata.http_header_$name</literal>, where <literal>
+    $name</literal> is the name of the header with <literal>-</literal>
+    replaced by <literal>_</literal>.</para>
+  <para>For specifying the new header, you need to set <option>
+    metadata_headers</option> option under the <literal>[filter:ceilometer]</literal>
+    section in <filename>proxy-server.conf</filename> under the
+    <literal>swift</literal> folder. You can use this additional data
+    for instance to distinguish external and internal users.</para>
+  <para>The list of measurements is grouped by services which
+    are polled by Telemetry or emits notifications that this module
+    consumes.</para>
+  <note>
+    <para>The Telemetry module supports storing notifications as
+      events. This functionality was added later, therefore the list
+      of meters still contains existence type and other event related
+      items. The proper way of using Telemetry is to configure it to
+      use the event store and turn off the collection of the event
+      related metrics. For further information about events see <link xlink:href=
+      "http://docs.openstack.org/developer/ceilometer/events.html">Events
+      section</link> in the Telemetry documentation. For further
+      information about how to turn on and off meters see
+      <xref linkend="section_telemetry-pipeline-configuration"/>. Please
+      also note that currently no migration is available to move the already
+      existing event type samples to the event store.</para>
+  </note>
+</section>
