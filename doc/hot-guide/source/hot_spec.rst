@@ -767,7 +767,7 @@ of the ``get_resource`` function is:
 The resource ID of the referenced resource is given as single parameter to the
 get_resource function.
 
-For exemple:
+For example:
 
 .. code-block:: yaml
 
