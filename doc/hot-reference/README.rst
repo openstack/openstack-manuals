@@ -16,12 +16,12 @@ How to generate the content
 
     git clone git://git.openstack.org/openstack/heat
 
-* Run the ``tools/generate-reference.sh`` script:
+* Run the ``tools/generate-hot-reference.sh`` script:
 
 ::
 
     pip install 'openstack-doc-tools>=0.18'
-    tools/generate-reference.sh path/to/heat/clone
+    tools/generate-hot-reference.sh path/to/heat/clone
 
 * Check the build:
 
