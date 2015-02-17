@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-02-15 06:10+0000\n"
+"POT-Creation-Date: 2015-02-17 06:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10665,42 +10665,42 @@ msgid "Security hardening"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-security.xml:5(para)
-msgid "You can integrate OpenStack Compute with various third-party technologies to increase security. For information, see the <link href=\"http://docs.openstack.org/sec/\"><citetitle>OpenStack Security Guide</citetitle></link>."
+msgid "OpenStack Compute can be integrated with various third-party technologies to increase security. For more information, see the <link href=\"http://docs.openstack.org/sec/\"><citetitle>OpenStack Security Guide</citetitle></link>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:10(title)
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:13(title)
 msgid "Encrypt Compute metadata traffic"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:11(para)
-msgid "OpenStack Juno supports encrypting Compute metadata traffic with HTTPS. You enable SSL encryption in the <filename>metadata_agent.ini</filename> file."
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:14(para)
+msgid "OpenStack supports encrypting Compute metadata traffic with HTTPS. Enable SSL encryption in the <filename>metadata_agent.ini</filename> file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:14(title)
-msgid "To enable SSL encryption"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:16(para)
-msgid "Enable the HTTPS protocol:"
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:18(title)
+msgid "Enabling SSL encryption"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-security.xml:20(para)
+msgid "Enable the HTTPS protocol:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:24(para)
 msgid "Determine whether insecure SSL connections are accepted for Compute metadata server requests. The default value is <placeholder-1/>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:25(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:30(para)
 msgid "Specify the path to the client certificate:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:26(replaceable)
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:31(replaceable)
 msgid "PATH_TO_CERT"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:29(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:34(para)
 msgid "Specify the path to the private key:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:30(replaceable)
+#: ./doc/admin-guide-cloud/compute/section_compute-security.xml:35(replaceable)
 msgid "PATH_TO_KEY"
 msgstr ""
 
@@ -12054,95 +12054,87 @@ msgid "Stores images using MongoDB."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:7(title)
-msgid "Secure with root wrappers"
+msgid "Secure with rootwrap"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:8(para)
-msgid "The root wrapper enables an unprivileged user to run a number of Compute actions as the root user in the safest manner possible. Historically, Compute used a specific <filename>sudoers</filename> file that listed every command that the Compute user was allowed to run, and used <placeholder-1/> to run that command as <literal>root</literal>. However this was difficult to maintain (the <filename>sudoers</filename> file was in packaging), and did not enable complex filtering of parameters (advanced filters). The rootwrap was designed to solve those issues."
+msgid "Rootwrap allows unprivileged users to safely run Compute actions as the root user. Compute previously used <placeholder-1/> for this purpose, but this was difficult to maintain, and did not allow advanced filters. The <placeholder-2/> command replaces <placeholder-3/> for Compute."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:17(title)
-msgid "How rootwrap works"
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:13(para)
+msgid "To use rootwrap, prefix the Compute command with <placeholder-1/>. For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:18(para)
-msgid "Instead of calling <placeholder-1/>, Compute services start with a <placeholder-2/> call; for example, <placeholder-3/>. A generic sudoers entry lets the Compute user run <placeholder-4/> as root. The <placeholder-5/> code looks for filter definition directories in its configuration file, and loads command filters from them. Then it checks if the command requested by Compute matches one of those filters, in which case it executes the command (as root). If no filter matches, it denies the request."
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:15(replaceable)
+msgid "command"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:26(para)
-msgid "To use <placeholder-1/>, you must be aware of the issues with using NFS and root-owned files. The NFS share must be configured with the <placeholder-2/> option enabled."
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:16(para)
+msgid "A generic <filename>sudoers</filename> entry lets the Compute user run <placeholder-1/> as root. The <placeholder-2/> code looks for filter definition directories in its configuration file, and loads command filters from them. It then checks if the command requested by Compute matches one of those filters and, if so, executes the command (as root). If no filter matches, it denies the request."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:32(title)
-msgid "Security model"
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:24(para)
+msgid "Be aware of issues with using NFS and root-owned files. The NFS share must be configured with the <placeholder-1/> option enabled, in order for rootwrap to work correctly."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:33(para)
-msgid "The escalation path is fully controlled by the root user. A sudoers entry (owned by root) allows Compute to run (as root) a specific rootwrap executable, and only with a specific configuration file (which should be owned by root). <placeholder-1/> imports the Python modules it needs from a cleaned (and system-default) <replaceable>PYTHONPATH</replaceable>. The configuration file (also root-owned) points to root-owned filter definition directories, which contain root-owned filters definition files. This chain ensures that the Compute user itself is not in control of the configuration or modules used by the <placeholder-2/> executable."
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:28(para)
+msgid "Rootwrap is fully controlled by the root user. The root user owns the sudoers entry which allows Compute to run a specific rootwrap executable as root, and only with a specific configuration file (which should also be owned by root). The <placeholder-1/> command imports the Python modules it needs from a cleaned, system-default <replaceable>PYTHONPATH</replaceable>. The root-owned configuration file points to root-owned filter definition directories, which contain root-owned filters definition files. This chain ensures that the Compute user itself is not in control of the configuration or modules used by the <placeholder-2/> executable."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:44(title)
-msgid "Details of rootwrap.conf"
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:38(para)
+msgid "Rootwrap is configured using the <filename>rootwrap.conf</filename> file. Because it's in the trusted security path, it must be owned and writable by only the root user. The file's location is specified in both the sudoers entry and in the <filename>nova.conf</filename> configuration file with the <parameter>rootwrap_config=entry</parameter> parameter."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:45(para)
-msgid "You configure <placeholder-1/> in the <filename>rootwrap.conf</filename> file. Because it's in the trusted security path, it must be owned and writable by only the root user. The file's location is specified both in the sudoers entry and in the <filename>nova.conf</filename> configuration file with the <code>rootwrap_config=entry</code>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:50(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:43(para)
 msgid "The <filename>rootwrap.conf</filename> file uses an INI file format with these sections and parameters:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:54(caption)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:46(caption)
 msgid "rootwrap.conf configuration options"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:59(para) ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:97(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:51(para) ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:82(para)
 msgid "Configuration option=Default value"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:61(para) ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:99(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:52(para) ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:83(para)
 msgid "(Type) Description"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:66(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:57(para)
 msgid "[DEFAULT]"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:67(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:58(para)
 msgid "filters_path=/etc/nova/rootwrap.d,/usr/share/nova/rootwrap"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:69(para)
-msgid "(ListOpt) Comma-separated list of directories containing filter definition files. Defines where filters for root wrap are stored. Directories defined on this line should all exist, be owned and writable only by the root user."
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:59(para)
+msgid "(ListOpt) Comma-separated list of directories containing filter definition files. Defines where rootwrap filters are stored. Directories defined on this line should all exist, and be owned and writable only by the root user."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:81(title)
-msgid "Details of .filters files"
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:66(para)
+msgid "The filters definition files contain lists of filters that rootwrap will use to allow or deny a specific command. They are generally suffixed by <literal>.filters</literal>. Since they are in the trusted security path, they need to be owned and writable only by the root user. Their location is specified in the <filename>rootwrap.conf</filename> file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:82(para)
-msgid "Filters definition files contain lists of filters that <placeholder-1/> will use to allow or deny a specific command. They are generally suffixed by .filters. Since they are in the trusted security path, they need to be owned and writable only by the root user. Their location is specified in the <filename>rootwrap.conf</filename> file."
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:72(para)
+msgid "Filter definition files use an INI file format with a <parameter>[Filters]</parameter> section and several lines, each with a unique parameter name, which should be different for each filter you define:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:87(para)
-msgid "Filter definition files use an INI file format with a [Filters] section and several lines, each with a unique parameter name (different for each filter that you define):"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:92(caption)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:77(caption)
 msgid ".filters configuration options"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:104(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:88(para)
 msgid "[Filters]"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:105(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:89(para)
 msgid "filter_name=kpartx: CommandFilter, /sbin/kpartx, root"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:107(para)
-msgid "(ListOpt) Comma-separated list containing first the Filter class to use, followed by that Filter arguments (which vary depending on the Filter class selected)."
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:90(para)
+msgid "(ListOpt) Comma-separated list containing the filter class to use, followed by the Filter arguments (which vary depending on the Filter class selected)."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute_config-firewalls.xml:7(title)
