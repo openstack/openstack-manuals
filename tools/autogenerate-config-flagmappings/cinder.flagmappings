@@ -45,9 +45,11 @@ cb_confirm_volume_create_retries cloudbyte
 cb_confirm_volume_create_retry_interval cloudbyte
 cb_create_volume cloudbyte
 cb_tsm_name cloudbyte
-cinder_emc_config_file emc
+chap_password common
+chap_username common
+check_max_pool_luns_threshold emc
+chiscsi_conf common
 cinder_huawei_conf_file huawei
-cinder_huawei_sds_conf_file huawei
 cinder_smis_config_file fujitsu_eternus_dx
 client_socket_timeout common
 cloned_volume_same_az zones
@@ -64,7 +66,6 @@ datera_api_port datera
 datera_api_token datera
 datera_api_version datera
 datera_num_replicas datera
-db_backend database
 db_driver database
 debug logging
 default_availability_zone common
@@ -86,6 +87,7 @@ enable_new_services common
 enable_v1_api api
 enable_v2_api api
 enabled_backends storage
+enforce_multipath_for_image_xfer common
 eqlx_chap_login eqlx
 eqlx_chap_password eqlx
 eqlx_cli_max_retries eqlx
@@ -101,6 +103,7 @@ fatal_exception_format_errors logging
 flashsystem_connection_protocol flashsystem
 flashsystem_multihostmap_enabled flashsystem
 flashsystem_multipath_enabled flashsystem
+force_delete_lun_in_storagegroup emc
 fusionio_iocontrol_retry fusionio
 fusionio_iocontrol_targetdelay fusionio
 fusionio_iocontrol_verify_cert fusionio
@@ -170,6 +173,7 @@ hplefthand_username hplefthand
 ibmnas_platform_type ibmnas
 iet_conf common
 image_conversion_dir images
+initiator_auto_deregistration emc
 initiator_auto_registration emc
 instance_format logging
 instance_uuid_format logging
@@ -179,6 +183,8 @@ iscsi_iotype storage
 iscsi_ip_address storage
 iscsi_num_targets storage
 iscsi_port storage prophetstor_dpl
+iscsi_protocol storage
+iscsi_secondary_ip_addresses common
 iscsi_target_prefix storage
 iscsi_write_cache storage
 ise_completion_retries xio
@@ -206,6 +212,7 @@ logging_context_format_string logging
 logging_debug_format_suffix logging
 logging_default_format_string logging
 logging_exception_prefix logging
+lvm_conf_file lvm
 lvm_mirrors lvm
 lvm_type lvm
 matchmaker_heartbeat_freq rpc
@@ -214,6 +221,7 @@ max_age quota
 max_gigabytes storage
 max_header_line api
 max_luns_per_storage_group emc
+max_over_subscription_ratio common
 memcached_servers common
 migration_create_volume_timeout_secs storage
 monkey_patch common
@@ -222,10 +230,12 @@ msa_vdisk hpmsa
 my_ip common
 nas_ip nas
 nas_login nas
+nas_mount_options nas
 nas_password nas
 nas_private_key nas
 nas_secure_file_operations nas
 nas_secure_file_permissions nas
+nas_share_path nas
 nas_ssh_port nas
 naviseccli_path emc
 netapp_controller_ips netapp_eseries_iscsi
@@ -377,7 +387,6 @@ san_private_key san
 san_secondary_ip san
 san_ssh_port san
 san_thin_provision san prophetstor_dpl
-san_zfs_volume_base san-solaris
 scality_sofs_config scality
 scality_sofs_mount_point scality
 scality_sofs_volume_dir scality
@@ -389,6 +398,8 @@ scheduler_json_config_location scheduler
 scheduler_manager scheduler
 scheduler_max_attempts scheduler
 scheduler_topic scheduler
+scst_target_driver scst
+scst_target_iqn_name scst
 service_down_time common
 sf_account_prefix solidfire
 sf_allow_template_caching solidfire
@@ -487,6 +498,7 @@ volume_transfer_key_length api
 volume_transfer_salt_length api
 volume_usage_audit_period storage
 volumes_dir storage
+vpool_name openvstorage
 windows_iscsi_lun_path windows
 wsgi_keep_alive common
 xiv_chap xiv
@@ -582,8 +594,10 @@ keystone_authtoken/admin_token auth_token
 keystone_authtoken/admin_user auth_token
 keystone_authtoken/auth_admin_prefix auth_token
 keystone_authtoken/auth_host auth_token
+keystone_authtoken/auth_plugin auth_token
 keystone_authtoken/auth_port auth_token
 keystone_authtoken/auth_protocol auth_token
+keystone_authtoken/auth_section auth_token
 keystone_authtoken/auth_uri auth_token
 keystone_authtoken/auth_version auth_token
 keystone_authtoken/cache auth_token
@@ -599,8 +613,14 @@ keystone_authtoken/identity_uri auth_token
 keystone_authtoken/include_service_catalog auth_token
 keystone_authtoken/insecure auth_token
 keystone_authtoken/keyfile auth_token
+keystone_authtoken/memcache_pool_conn_get_timeout auth_token
+keystone_authtoken/memcache_pool_dead_retry auth_token
+keystone_authtoken/memcache_pool_maxsize auth_token
+keystone_authtoken/memcache_pool_socket_timeout auth_token
+keystone_authtoken/memcache_pool_unused_timeout auth_token
 keystone_authtoken/memcache_secret_key auth_token
 keystone_authtoken/memcache_security_strategy auth_token
+keystone_authtoken/memcache_use_advanced_pool auth_token
 keystone_authtoken/memcached_servers common
 keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
@@ -609,6 +629,8 @@ matchmaker_redis/host redis
 matchmaker_redis/password redis
 matchmaker_redis/port redis
 matchmaker_ring/ringfile redis
+oslo_concurrency/disable_process_locking rpc
+oslo_concurrency/lock_path rpc
 oslo_messaging_amqp/allow_insecure_clients rpc
 oslo_messaging_amqp/broadcast_prefix rpc
 oslo_messaging_amqp/container_name rpc
