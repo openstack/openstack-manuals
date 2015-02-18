@@ -4,45 +4,35 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
   xml:id="default_ports">
-    <title>Compute service node firewall requirements</title>
-    <para>Console connections for virtual machines, whether direct or through a proxy, are received
-        on ports <literal>5900</literal> to <literal>5999</literal>. You must configure the firewall
-        on each Compute service node to enable network traffic on these ports.</para>
-    <procedure>
-        <title>Configure the service-node firewall</title>
-        <step><para>On the server that hosts the Compute service, log in as <systemitem>root</systemitem>.</para></step>
-        <step>
-            <para>
-                Edit the <filename>/etc/sysconfig/iptables</filename>
-                file.
-            </para>
-        </step>
-        <step>
-            <para>
-                Add an INPUT rule that allows TCP traffic on ports
-                that range from <literal>5900</literal> to
-                <literal>5999</literal>:
-            </para>
-            <programlisting language="ini">-A INPUT -p tcp -m multiport --dports 5900:5999 -j ACCEPT</programlisting>
-            <para>
-                The new rule must appear before any INPUT rules that
-                REJECT traffic.
-            </para>
-        </step>
-        <step>
-            <para>
-                Save the changes to the
-                <filename>/etc/sysconfig/iptables</filename> file.
-            </para>
-        </step>
-        <step>
-            <para>
-                Restart the <systemitem>iptables</systemitem> service
-                to ensure that the change takes effect.
-            </para>
+
+  <title>Compute service node firewall requirements</title>
+  <para>Console connections for virtual machines, whether direct or through a
+    proxy, are received on ports <literal>5900</literal> to
+    <literal>5999</literal>. The firewall on each Compute service node must
+    allow network traffic on these ports.</para>
+  <para>This procedure modifies the <systemitem>iptables</systemitem> firewall
+    to allow incoming connections to the Compute services.</para>
+  <procedure>
+    <title>Configuring the service-node firewall</title>
+    <step>
+      <para>Log in to the server that hosts the Compute service, as
+        <systemitem>root</systemitem>.</para>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/sysconfig/iptables</filename> file, to add an
+        INPUT rule that allows TCP traffic on ports from
+        <literal>5900</literal> to <literal>5999</literal>. Make sure the new
+        rule appears before any INPUT rules that REJECT traffic:</para>
+<programlisting language="ini">-A INPUT -p tcp -m multiport --dports 5900:5999 -j ACCEPT</programlisting>
+    </step>
+    <step>
+      <para>Save the changes to <filename>/etc/sysconfig/iptables</filename>,
+        and restart the <systemitem>iptables</systemitem> service to pick up
+        the changes:</para>
 <screen><prompt>$</prompt> <userinput>service iptables restart</userinput></screen>
-        </step>
-    </procedure>
-    <para>The <systemitem>iptables</systemitem> firewall now enables incoming connections to the
-        Compute services. Repeat this process for each Compute service node.</para>
-    </section>
+    </step>
+    <step>
+      <para>Repeat this process for each Compute service node.</para>
+    </step>
+  </procedure>
+</section>
