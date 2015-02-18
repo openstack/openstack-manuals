@@ -43,7 +43,7 @@
       </tr>
       <tr>
         <td><option>rpc_thread_pool_size</option> = <replaceable>64</replaceable></td>
-        <td>(IntOpt) Size of RPC greenthread pool.</td>
+        <td>(IntOpt) Size of RPC thread pool.</td>
       </tr>
       <tr>
         <th colspan="2">[cells]</th>
@@ -51,6 +51,17 @@
       <tr>
         <td><option>rpc_driver_queue_base</option> = <replaceable>cells.intercell</replaceable></td>
         <td>(StrOpt) Base queue name to use when communicating between cells.  Various topics by message type will be appended to this.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[oslo_concurrency]</th>
+      </tr>
+      <tr>
+        <td><option>disable_process_locking</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Enables or disables inter-process locks.</td>
+      </tr>
+      <tr>
+        <td><option>lock_path</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Directory to use for lock files.  For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.</td>
       </tr>
       <tr>
         <th colspan="2">[oslo_messaging_amqp]</th>

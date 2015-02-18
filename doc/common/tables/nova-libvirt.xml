@@ -105,6 +105,10 @@
         <td>(BoolOpt) Inject the admin password at boot time, without an agent.</td>
       </tr>
       <tr>
+        <td><option>iscsi_iface</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) The iSCSI transport iface to use to connect to target in case offload support is desired. Supported transports are be2iscsi, bnx2i, cxgb3i, cxgb4i, qla4xxx and ocs. Default format is transport_name.hwaddress and can be generated manually or via iscsiadm -m iface</td>
+      </tr>
+      <tr>
         <td><option>iscsi_use_multipath</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Use multipath connection of the iSCSI volume</td>
       </tr>
@@ -174,7 +178,7 @@
       </tr>
       <tr>
         <td><option>virt_type</option> = <replaceable>kvm</replaceable></td>
-        <td>(StrOpt) Libvirt domain type (valid options are: kvm, lxc, qemu, uml, xen)</td>
+        <td>(StrOpt) Libvirt domain type (valid options are: kvm, lxc, qemu, uml, xen and parallels)</td>
       </tr>
       <tr>
         <td><option>volume_clear</option> = <replaceable>zero</replaceable></td>
@@ -185,7 +189,7 @@
         <td>(IntOpt) Size in MiB to wipe at start of old volumes. 0 =&gt; all</td>
       </tr>
       <tr>
-        <td><option>volume_drivers</option> = <replaceable>iscsi=nova.virt.libvirt.volume.LibvirtISCSIVolumeDriver, iser=nova.virt.libvirt.volume.LibvirtISERVolumeDriver, local=nova.virt.libvirt.volume.LibvirtVolumeDriver, fake=nova.virt.libvirt.volume.LibvirtFakeVolumeDriver, rbd=nova.virt.libvirt.volume.LibvirtNetVolumeDriver, sheepdog=nova.virt.libvirt.volume.LibvirtNetVolumeDriver, nfs=nova.virt.libvirt.volume.LibvirtNFSVolumeDriver, smbfs=nova.virt.libvirt.volume.LibvirtSMBFSVolumeDriver, aoe=nova.virt.libvirt.volume.LibvirtAOEVolumeDriver, glusterfs=nova.virt.libvirt.volume.LibvirtGlusterfsVolumeDriver, fibre_channel=nova.virt.libvirt.volume.LibvirtFibreChannelVolumeDriver, scality=nova.virt.libvirt.volume.LibvirtScalityVolumeDriver, gpfs=nova.virt.libvirt.volume.LibvirtGPFSVolumeDriver</replaceable></td>
+        <td><option>volume_drivers</option> = <replaceable>iscsi=nova.virt.libvirt.volume.LibvirtISCSIVolumeDriver, iser=nova.virt.libvirt.volume.LibvirtISERVolumeDriver, local=nova.virt.libvirt.volume.LibvirtVolumeDriver, fake=nova.virt.libvirt.volume.LibvirtFakeVolumeDriver, rbd=nova.virt.libvirt.volume.LibvirtNetVolumeDriver, sheepdog=nova.virt.libvirt.volume.LibvirtNetVolumeDriver, nfs=nova.virt.libvirt.volume.LibvirtNFSVolumeDriver, smbfs=nova.virt.libvirt.volume.LibvirtSMBFSVolumeDriver, aoe=nova.virt.libvirt.volume.LibvirtAOEVolumeDriver, glusterfs=nova.virt.libvirt.volume.LibvirtGlusterfsVolumeDriver, fibre_channel=nova.virt.libvirt.volume.LibvirtFibreChannelVolumeDriver, scality=nova.virt.libvirt.volume.LibvirtScalityVolumeDriver, gpfs=nova.virt.libvirt.volume.LibvirtGPFSVolumeDriver, quobyte=nova.virt.libvirt.volume.LibvirtQuobyteVolumeDriver</replaceable></td>
         <td>(ListOpt) DEPRECATED. Libvirt handlers for remote volumes. This option is deprecated and will be removed in the Kilo release.</td>
       </tr>
       <tr>
