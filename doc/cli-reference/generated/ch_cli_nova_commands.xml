@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Compute API and its extensions.
 
        This chapter documents <command>nova</command> version
-        <literal>2.20.0</literal>.
+        <literal>2.21.0</literal>.
     </para>
 
     <para>For help on a specific <command>nova</command>
@@ -26,18 +26,27 @@
     <section xml:id="novaclient_command_usage">
        <title>nova usage</title>
         <screen><computeroutput>usage: nova [--version] [--debug] [--os-cache] [--timings]
-            [--timeout &lt;seconds&gt;] [--os-auth-token OS_AUTH_TOKEN]
-            [--os-username &lt;auth-user-name&gt;] [--os-user-id &lt;auth-user-id&gt;]
-            [--os-password &lt;auth-password&gt;]
+            [--os-auth-token OS_AUTH_TOKEN]
             [--os-tenant-name &lt;auth-tenant-name&gt;]
-            [--os-tenant-id &lt;auth-tenant-id&gt;] [--os-auth-url &lt;auth-url&gt;]
-            [--os-region-name &lt;region-name&gt;] [--os-auth-system &lt;auth-system&gt;]
-            [--service-type &lt;service-type&gt;] [--service-name &lt;service-name&gt;]
+            [--os-tenant-id &lt;auth-tenant-id&gt;] [--os-region-name &lt;region-name&gt;]
+            [--os-auth-system &lt;auth-system&gt;] [--service-type &lt;service-type&gt;]
+            [--service-name &lt;service-name&gt;]
             [--volume-service-name &lt;volume-service-name&gt;]
-            [--endpoint-type &lt;endpoint-type&gt;]
+            [--os-endpoint-type &lt;endpoint-type&gt;]
             [--os-compute-api-version &lt;compute-api-ver&gt;]
-            [--os-cacert &lt;ca-certificate&gt;] [--insecure]
-            [--bypass-url &lt;bypass-url&gt;]
+            [--bypass-url &lt;bypass-url&gt;] [--insecure]
+            [--os-cacert &lt;ca-certificate&gt;] [--os-cert &lt;certificate&gt;]
+            [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;] [--os-auth-url OS_AUTH_URL]
+            [--os-domain-id OS_DOMAIN_ID] [--os-domain-name OS_DOMAIN_NAME]
+            [--os-project-id OS_PROJECT_ID]
+            [--os-project-name OS_PROJECT_NAME]
+            [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
+            [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
+            [--os-trust-id OS_TRUST_ID] [--os-user-id OS_USER_ID]
+            [--os-user-name OS_USERNAME]
+            [--os-user-domain-id OS_USER_DOMAIN_ID]
+            [--os-user-domain-name OS_USER_DOMAIN_NAME]
+            [--os-password OS_PASSWORD]
             &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
@@ -202,7 +211,7 @@
     <term><command>clear-password</command></term>
     <listitem>
       <para>
-        Clear password for a server.
+        Clear the admin password for a server.
       </para>
     </listitem>
   </varlistentry>
@@ -269,7 +278,7 @@
     <term><command>dns-create</command></term>
     <listitem>
       <para>
-        Create a DNS entry for domain, name and ip.
+        Create a DNS entry for domain, name and IP.
       </para>
     </listitem>
   </varlistentry>
@@ -317,7 +326,7 @@
     <term><command>dns-list</command></term>
     <listitem>
       <para>
-        List current DNS entries for domain and ip or
+        List current DNS entries for domain and IP or
       domain and name.
       </para>
     </listitem>
@@ -343,7 +352,7 @@
     <term><command>fixed-ip-get</command></term>
     <listitem>
       <para>
-        Retrieve info on a fixed ip.
+        Retrieve info on a fixed IP.
       </para>
     </listitem>
   </varlistentry>
@@ -441,7 +450,7 @@
     <term><command>floating-ip-bulk-create</command></term>
     <listitem>
       <para>
-        Bulk create floating ips by range.
+        Bulk create floating IPs by range.
       </para>
     </listitem>
   </varlistentry>
@@ -449,7 +458,7 @@
     <term><command>floating-ip-bulk-delete</command></term>
     <listitem>
       <para>
-        Bulk delete floating ips by range.
+        Bulk delete floating IPs by range.
       </para>
     </listitem>
   </varlistentry>
@@ -457,7 +466,7 @@
     <term><command>floating-ip-bulk-list</command></term>
     <listitem>
       <para>
-        List all floating ips.
+        List all floating IPs.
       </para>
     </listitem>
   </varlistentry>
@@ -490,7 +499,7 @@
     <term><command>floating-ip-list</command></term>
     <listitem>
       <para>
-        List floating ips.
+        List floating IPs.
       </para>
     </listitem>
   </varlistentry>
@@ -498,7 +507,7 @@
     <term><command>floating-ip-pool-list</command></term>
     <listitem>
       <para>
-        List all floating ip pools.
+        List all floating IP pools.
       </para>
     </listitem>
   </varlistentry>
@@ -506,7 +515,7 @@
     <term><command>get-password</command></term>
     <listitem>
       <para>
-        Get password for a server.
+        Get the admin password for a server.
       </para>
     </listitem>
   </varlistentry>
@@ -743,7 +752,9 @@
     <term><command>lock</command></term>
     <listitem>
       <para>
-        Lock a server.
+        Lock a server. A normal (non-admin) user will
+      not be able to execute actions on a locked
+      server.
       </para>
     </listitem>
   </varlistentry>
@@ -948,8 +959,9 @@
     <listitem>
       <para>
         Reboots a server into rescue mode, which
-      starts the machine from the initial image,
-      attaching the current boot disk as secondary.
+      starts the machine from either the initial
+      image or a specified image, attaching the
+      current boot disk as secondary.
       </para>
     </listitem>
   </varlistentry>
@@ -1006,7 +1018,7 @@
     <term><command>root-password</command></term>
     <listitem>
       <para>
-        Change the root password for a server.
+        Change the admin password for a server.
       </para>
     </listitem>
   </varlistentry>
@@ -1014,7 +1026,8 @@
     <term><command>scrub</command></term>
     <listitem>
       <para>
-        Delete data associated with the project.
+        Delete networks and security groups associated
+      with a project.
       </para>
     </listitem>
   </varlistentry>
@@ -1217,7 +1230,7 @@
     <term><command>start</command></term>
     <listitem>
       <para>
-        Start a server.
+        Start the server(s).
       </para>
     </listitem>
   </varlistentry>
@@ -1225,7 +1238,7 @@
     <term><command>stop</command></term>
     <listitem>
       <para>
-        Stop a server.
+        Stop the server(s).
       </para>
     </listitem>
   </varlistentry>
@@ -1442,18 +1455,11 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>force-delete</command></term>
+    <term><command>host-servers-migrate</command></term>
     <listitem>
       <para>
-        Force delete a server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>restore</command></term>
-    <listitem>
-      <para>
-        Restore a soft-deleted server.
+        Migrate all instances of the specified host to
+      other available hosts.
       </para>
     </listitem>
   </varlistentry>
@@ -1461,7 +1467,7 @@
     <term><command>net</command></term>
     <listitem>
       <para>
-        Show a network
+        <emphasis>DEPRECATED</emphasis>, Use tenant-network-show instead.
       </para>
     </listitem>
   </varlistentry>
@@ -1469,7 +1475,7 @@
     <term><command>net-create</command></term>
     <listitem>
       <para>
-        Create a network
+        <emphasis>DEPRECATED</emphasis>, use tenant-network-create instead.
       </para>
     </listitem>
   </varlistentry>
@@ -1477,7 +1483,7 @@
     <term><command>net-delete</command></term>
     <listitem>
       <para>
-        Delete a network
+        <emphasis>DEPRECATED</emphasis>, use tenant-network-delete instead.
       </para>
     </listitem>
   </varlistentry>
@@ -1485,7 +1491,98 @@
     <term><command>net-list</command></term>
     <listitem>
       <para>
-        List networks
+        <emphasis>DEPRECATED</emphasis>, use tenant-network-list instead.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>tenant-network-create</command></term>
+    <listitem>
+      <para>
+        Create a tenant network.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>tenant-network-delete</command></term>
+    <listitem>
+      <para>
+        Delete a tenant network.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>tenant-network-list</command></term>
+    <listitem>
+      <para>
+        List tenant networks.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>tenant-network-show</command></term>
+    <listitem>
+      <para>
+        Show a tenant network.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-evacuate</command></term>
+    <listitem>
+      <para>
+        Evacuate all instances from failed host.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cell-capacities</command></term>
+    <listitem>
+      <para>
+        Get cell capacities for all cells or a given
+      cell.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cell-show</command></term>
+    <listitem>
+      <para>
+        Show details of a given cell.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-meta</command></term>
+    <listitem>
+      <para>
+        Set or Delete metadata on all instances of a
+      host.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-evacuate-live</command></term>
+    <listitem>
+      <para>
+        Live migrate all instances of the specified
+      host to other available hosts.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action</command></term>
+    <listitem>
+      <para>
+        Show an action.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action-list</command></term>
+    <listitem>
+      <para>
+        List actions on a server.
       </para>
     </listitem>
   </varlistentry>
@@ -1549,30 +1646,6 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-evacuate</command></term>
-    <listitem>
-      <para>
-        Evacuate all instances from failed host.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action</command></term>
-    <listitem>
-      <para>
-        Show an action.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action-list</command></term>
-    <listitem>
-      <para>
-        List actions on a server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>migration-list</command></term>
     <listitem>
       <para>
@@ -1581,37 +1654,18 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-servers-migrate</command></term>
+    <term><command>force-delete</command></term>
     <listitem>
       <para>
-        Migrate all instances of the specified host to
-      other available hosts.
+        Force delete a server.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>cell-capacities</command></term>
+    <term><command>restore</command></term>
     <listitem>
       <para>
-        Get cell capacities for all cells or a given
-      cell.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>cell-show</command></term>
-    <listitem>
-      <para>
-        Show details of a given cell.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-meta</command></term>
-    <listitem>
-      <para>
-        Set or Delete metadata on all instances of a
-      host.
+        Restore a soft-deleted server.
       </para>
     </listitem>
   </varlistentry>
@@ -1663,42 +1717,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--timeout &lt;seconds&gt;</command></term>
-    <listitem>
-      <para>
-        Set HTTP call timeout (in seconds)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--os-auth-token OS_AUTH_TOKEN</command></term>
     <listitem>
       <para>
       Defaults to <code>env[OS_AUTH_TOKEN]</code>
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-username &lt;auth-user-name&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_USERNAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-user-id &lt;auth-user-id&gt;</command></term>
-    <listitem>
-      <para>
-        Defaults to <code>env[OS_USER_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-password &lt;auth-password&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_PASSWORD]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -1715,14 +1737,6 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_TENANT_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-auth-url &lt;auth-url&gt;</command></term>
-    <listitem>
-      <para>
-        Defaults to <code>env[OS_AUTH_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -1767,11 +1781,11 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--endpoint-type &lt;endpoint-type&gt;</command></term>
+    <term><command>--os-endpoint-type &lt;endpoint-type&gt;</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[NOVA_ENDPOINT_TYPE]</code> or
-      publicURL.
+      Defaults to <code>env[NOVA_ENDPOINT_TYPE]</code>,
+      <code>env[OS_ENDPOINT_TYPE]</code> or publicURL.
       </para>
     </listitem>
   </varlistentry>
@@ -1785,12 +1799,12 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
+    <term><command>--bypass-url &lt;bypass-url&gt;</command></term>
     <listitem>
       <para>
-        Specify a CA bundle file to use in verifying a
-      TLS (https) server certificate. Defaults to
-      <code>env[OS_CACERT]</code>
+        Use this API endpoint instead of the Service
+      Catalog. Defaults to
+      <code>env[NOVACLIENT_BYPASS_URL]</code>
       </para>
     </listitem>
   </varlistentry>
@@ -1798,21 +1812,149 @@
     <term><command>--insecure</command></term>
     <listitem>
       <para>
-        Explicitly allow novaclient to perform
-      "insecure" SSL (https) requests. The server's
-      certificate will not be verified against any
-      certificate authorities. This option should be
-      used with caution.
+        Explicitly allow client to perform "insecure"
+      TLS (https) requests. The server's certificate
+      will not be verified against any certificate
+      authorities. This option should be used with
+      caution.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--bypass-url &lt;bypass-url&gt;</command></term>
+    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
     <listitem>
       <para>
-        Use this API endpoint instead of the Service
-      Catalog. Defaults to
-      <code>env[NOVACLIENT_BYPASS_URL]</code>
+        Specify a CA bundle file to use in verifying a
+      TLS (https) server certificate. Defaults to
+      <code>env[OS_CACERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cert &lt;certificate&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_CERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-key &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_KEY]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--timeout &lt;seconds&gt;</command></term>
+    <listitem>
+      <para>
+        Set request timeout (in seconds).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-url OS_AUTH_URL</command></term>
+    <listitem>
+      <para>
+        Authentication URL
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-id OS_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+        Domain ID to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-name OS_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Domain name to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id OS_PROJECT_ID</command></term>
+    <listitem>
+      <para>
+      Project ID to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-name OS_PROJECT_NAME</command></term>
+    <listitem>
+      <para>
+      Project name to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-id OS_PROJECT_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Domain ID containing project
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-name OS_PROJECT_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Domain name containing project
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-trust-id OS_TRUST_ID</command></term>
+    <listitem>
+      <para>
+        Trust ID
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-id OS_USER_ID</command></term>
+    <listitem>
+      <para>
+        User ID
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-name OS_USERNAME, --os-username OS_USERNAME</command></term>
+    <listitem>
+      <para>
+      Username
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id OS_USER_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      User's domain id
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name OS_USER_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      User's domain name
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-password OS_PASSWORD</command></term>
+    <listitem>
+      <para>
+        User's password
       </para>
     </listitem>
   </varlistentry>
@@ -2566,8 +2708,8 @@ Boot a new server.
     <listitem>
       <para>
         Record arbitrary key/value metadata to
-      /meta.js on the new server. Can be specified
-      multiple times.
+      /meta_data.json on the metadata server. Can be
+      specified multiple times.
       </para>
     </listitem>
   </varlistentry>
@@ -2757,7 +2899,7 @@ Show details of a given cell.
         <title>nova clear-password</title>
         <screen><computeroutput>usage: nova clear-password &lt;server&gt;</computeroutput></screen>
         <para>
-Clear password for a server.
+Clear the admin password for a server.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -2902,14 +3044,14 @@ Retrieve server diagnostics.
         <title>nova dns-create</title>
         <screen><computeroutput>usage: nova dns-create [--type &lt;type&gt;] &lt;ip&gt; &lt;name&gt; &lt;domain&gt;</computeroutput></screen>
         <para>
-Create a DNS entry for domain, name and ip.
+Create a DNS entry for domain, name and IP.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;ip&gt;</command></term>
     <listitem>
       <para>
-        ip address
+        IP address
       </para>
     </listitem>
   </varlistentry>
@@ -3055,7 +3197,7 @@ Print a list of available dns domains.
         <title>nova dns-list</title>
         <screen><computeroutput>usage: nova dns-list [--ip &lt;ip&gt;] [--name &lt;name&gt;] &lt;domain&gt;</computeroutput></screen>
         <para>
-List current DNS entries for domain and ip or domain and name.
+List current DNS entries for domain and IP or domain and name.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -3070,10 +3212,10 @@ List current DNS entries for domain and ip or domain and name.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--ip &lt;ip&gt;</command></term>
+    <term><command>--ip &lt;ip&gt; IP</command></term>
     <listitem>
       <para>
-        ip address
+        address
       </para>
     </listitem>
   </varlistentry>
@@ -3126,8 +3268,8 @@ Evacuate server from failed host.
     <term><command>--password &lt;password&gt;</command></term>
     <listitem>
       <para>
-        Set the provided password on the evacuated server.
-      Not applicable with on-shared-storage flag
+        Set the provided admin password on the evacuated
+      server. Not applicable with on-shared-storage flag
       </para>
     </listitem>
   </varlistentry>
@@ -3146,7 +3288,7 @@ Evacuate server from failed host.
         <title>nova fixed-ip-get</title>
         <screen><computeroutput>usage: nova fixed-ip-get &lt;fixed_ip&gt;</computeroutput></screen>
         <para>
-Retrieve info on a fixed ip.
+Retrieve info on a fixed IP.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -3489,7 +3631,7 @@ Associate a floating IP address to a server.
         <screen><computeroutput>usage: nova floating-ip-bulk-create [--pool &lt;pool&gt;] [--interface &lt;interface&gt;]
                                     &lt;range&gt;</computeroutput></screen>
         <para>
-Bulk create floating ips by range.
+Bulk create floating IPs by range.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -3525,7 +3667,7 @@ Bulk create floating ips by range.
         <title>nova floating-ip-bulk-delete</title>
         <screen><computeroutput>usage: nova floating-ip-bulk-delete &lt;range&gt;</computeroutput></screen>
         <para>
-Bulk delete floating ips by range.
+Bulk delete floating IPs by range.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -3542,7 +3684,7 @@ Bulk delete floating ips by range.
         <title>nova floating-ip-bulk-list</title>
         <screen><computeroutput>usage: nova floating-ip-bulk-list [--host &lt;host&gt;]</computeroutput></screen>
         <para>
-List all floating ips.
+List all floating IPs.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -3583,7 +3725,7 @@ De-allocate a floating IP.
     <term><command>&lt;address&gt;</command></term>
     <listitem>
       <para>
-        IP of Floating Ip.
+        IP of Floating IP.
       </para>
     </listitem>
   </varlistentry>
@@ -3618,7 +3760,7 @@ Disassociate a floating IP address from a server.
         <title>nova floating-ip-list</title>
         <screen><computeroutput>usage: nova floating-ip-list [--all-tenants]</computeroutput></screen>
         <para>
-List floating ips.
+List floating IPs.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -3635,7 +3777,7 @@ List floating ips.
         <title>nova floating-ip-pool-list</title>
         <screen><computeroutput>usage: nova floating-ip-pool-list</computeroutput></screen>
         <para>
-List all floating ip pools.
+List all floating IP pools.
         </para>
     </section>
     <section xml:id="novaclient_subcommand_force-delete">
@@ -3659,7 +3801,7 @@ Force delete a server.
         <title>nova get-password</title>
         <screen><computeroutput>usage: nova get-password &lt;server&gt; [&lt;private-key&gt;]</computeroutput></screen>
         <para>
-Get password for a server.
+Get the admin password for a server.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -3865,6 +4007,52 @@ Evacuate all instances from failed host.
       <para>
         Specifies whether all instances files are on
       shared storage
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="novaclient_subcommand_host-evacuate-live">
+        <title>nova host-evacuate-live</title>
+        <screen><computeroutput>usage: nova host-evacuate-live [--target-host &lt;target_host&gt;] [--block-migrate]
+                               [--disk-over-commit]
+                               &lt;host&gt;</computeroutput></screen>
+        <para>
+Live migrate all instances of the specified host to other available hosts.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;host&gt;</command></term>
+    <listitem>
+      <para>
+        Name of host.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--target-host &lt;target_host&gt;</command></term>
+    <listitem>
+      <para>
+        Name of target host.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--block-migrate</command></term>
+    <listitem>
+      <para>
+        Enable block migration.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--disk-over-commit</command></term>
+    <listitem>
+      <para>
+        Enable disk overcommit.
       </para>
     </listitem>
   </varlistentry>
@@ -4386,8 +4574,9 @@ Show details about the given keypair.
                  [--ip6 &lt;ip6-regexp&gt;] [--name &lt;name-regexp&gt;]
                  [--instance-name &lt;name-regexp&gt;] [--status &lt;status&gt;]
                  [--flavor &lt;flavor&gt;] [--image &lt;image&gt;] [--host &lt;hostname&gt;]
-                 [--all-tenants [&lt;0|1&gt;]] [--tenant [&lt;tenant&gt;]] [--deleted]
-                 [--fields &lt;fields&gt;] [--minimal]</computeroutput></screen>
+                 [--all-tenants [&lt;0|1&gt;]] [--tenant [&lt;tenant&gt;]]
+                 [--user [&lt;user&gt;]] [--deleted] [--fields &lt;fields&gt;] [--minimal]
+                 [--sort &lt;key&gt;[:&lt;direction&gt;]]</computeroutput></screen>
         <para>
 List active servers.
         </para>  <variablelist wordsize="10">
@@ -4482,6 +4671,16 @@ List active servers.
     <listitem>
       <para>
         Display information from single tenant (Admin
+      only). The --all-tenants option must also be
+      provided.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--user [&lt;user&gt;]</command></term>
+    <listitem>
+      <para>
+        Display information from single user (Admin
       only).
       </para>
     </listitem>
@@ -4509,6 +4708,17 @@ List active servers.
     <listitem>
       <para>
         Get only uuid and name.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort &lt;key&gt;[:&lt;direction&gt;]</command></term>
+    <listitem>
+      <para>
+        Comma-separated list of sort keys and
+      directions in the form of &lt;key&gt;[:&lt;asc|desc&gt;].
+      The direction defaults to descending if not
+      specified.
       </para>
     </listitem>
   </varlistentry>
@@ -4588,7 +4798,8 @@ Migrate running server to a new machine.
         <title>nova lock</title>
         <screen><computeroutput>usage: nova lock &lt;server&gt;</computeroutput></screen>
         <para>
-Lock a server.
+Lock a server. A normal (non-admin) user will not be able to execute actions
+on a locked server.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -4700,7 +4911,7 @@ Print a list of migrations.
         <title>nova net</title>
         <screen><computeroutput>usage: nova net &lt;network_id&gt;</computeroutput></screen>
         <para>
-Show a network
+<emphasis>DEPRECATED</emphasis>, Use tenant-network-show instead.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -4717,7 +4928,7 @@ Show a network
         <title>nova net-create</title>
         <screen><computeroutput>usage: nova net-create &lt;network_label&gt; &lt;cidr&gt;</computeroutput></screen>
         <para>
-Create a network
+<emphasis>DEPRECATED</emphasis>, use tenant-network-create instead.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -4743,7 +4954,7 @@ Create a network
         <title>nova net-delete</title>
         <screen><computeroutput>usage: nova net-delete &lt;network_id&gt;</computeroutput></screen>
         <para>
-Delete a network
+<emphasis>DEPRECATED</emphasis>, use tenant-network-delete instead.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -4760,7 +4971,7 @@ Delete a network
         <title>nova net-list</title>
         <screen><computeroutput>usage: nova net-list</computeroutput></screen>
         <para>
-List networks
+<emphasis>DEPRECATED</emphasis>, use tenant-network-list instead.
         </para>
     </section>
     <section xml:id="novaclient_subcommand_network-associate-host">
@@ -5600,7 +5811,7 @@ Shutdown, re-image, and re-boot a server.
     <term><command>--rebuild-password &lt;rebuild-password&gt;</command></term>
     <listitem>
       <para>
-      Set the provided password on the rebuild
+      Set the provided admin password on the rebuilt
       server.
       </para>
     </listitem>
@@ -5645,8 +5856,8 @@ Shutdown, re-image, and re-boot a server.
     <listitem>
       <para>
         Record arbitrary key/value metadata to
-      /meta.js on the new server. Can be specified
-      multiple times.
+      /meta_data.json on the metadata server. Can be
+      specified multiple times.
       </para>
     </listitem>
   </varlistentry>
@@ -5757,10 +5968,11 @@ Rename a server.
     </section>
     <section xml:id="novaclient_subcommand_rescue">
         <title>nova rescue</title>
-        <screen><computeroutput>usage: nova rescue &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: nova rescue [--password &lt;password&gt;] [--image &lt;image&gt;] &lt;server&gt;</computeroutput></screen>
         <para>
-Reboots a server into rescue mode, which starts the machine from the initial
-image, attaching the current boot disk as secondary.
+Reboots a server into rescue mode, which starts the machine from either the
+initial image or a specified image, attaching the current boot disk as
+secondary.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -5768,6 +5980,26 @@ image, attaching the current boot disk as secondary.
     <listitem>
       <para>
         Name or ID of server.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--password &lt;password&gt;</command></term>
+    <listitem>
+      <para>
+        The admin password to be set in the rescue
+      environment.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--image &lt;image&gt;</command></term>
+    <listitem>
+      <para>
+        The image to rescue with.
       </para>
     </listitem>
   </varlistentry>
@@ -5927,7 +6159,7 @@ Resume a server.
         <title>nova root-password</title>
         <screen><computeroutput>usage: nova root-password &lt;server&gt;</computeroutput></screen>
         <para>
-Change the root password for a server.
+Change the admin password for a server.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -5944,7 +6176,7 @@ Change the root password for a server.
         <title>nova scrub</title>
         <screen><computeroutput>usage: nova scrub &lt;project_id&gt;</computeroutput></screen>
         <para>
-Delete data associated with the project.
+Delete networks and security groups associated with a project.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -6674,16 +6906,16 @@ SSH into a server.
     </section>
     <section xml:id="novaclient_subcommand_start">
         <title>nova start</title>
-        <screen><computeroutput>usage: nova start &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: nova start &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
         <para>
-Start a server.
+Start the server(s).
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of server.
+        Name or ID of server(s).
       </para>
     </listitem>
   </varlistentry>
@@ -6691,16 +6923,16 @@ Start a server.
     </section>
     <section xml:id="novaclient_subcommand_stop">
         <title>nova stop</title>
-        <screen><computeroutput>usage: nova stop &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: nova stop &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
         <para>
-Stop a server.
+Stop the server(s).
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of server.
+        Name or ID of server(s).
       </para>
     </listitem>
   </varlistentry>
@@ -6718,6 +6950,73 @@ Suspend a server.
     <listitem>
       <para>
         Name or ID of server.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="novaclient_subcommand_tenant-network-create">
+        <title>nova tenant-network-create</title>
+        <screen><computeroutput>usage: nova tenant-network-create &lt;network_label&gt; &lt;cidr&gt;</computeroutput></screen>
+        <para>
+Create a tenant network.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;network_label&gt;</command></term>
+    <listitem>
+      <para>
+        Network label (ex. my_new_network)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;cidr&gt;</command></term>
+    <listitem>
+      <para>
+        IP block to allocate from (ex. 172.16.0.0/24 or
+      2001:DB8::/64)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="novaclient_subcommand_tenant-network-delete">
+        <title>nova tenant-network-delete</title>
+        <screen><computeroutput>usage: nova tenant-network-delete &lt;network_id&gt;</computeroutput></screen>
+        <para>
+Delete a tenant network.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;network_id&gt;</command></term>
+    <listitem>
+      <para>
+        ID of network
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="novaclient_subcommand_tenant-network-list">
+        <title>nova tenant-network-list</title>
+        <screen><computeroutput>usage: nova tenant-network-list</computeroutput></screen>
+        <para>
+List tenant networks.
+        </para>
+    </section>
+    <section xml:id="novaclient_subcommand_tenant-network-show">
+        <title>nova tenant-network-show</title>
+        <screen><computeroutput>usage: nova tenant-network-show &lt;network_id&gt;</computeroutput></screen>
+        <para>
+Show a tenant network.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;network_id&gt;</command></term>
+    <listitem>
+      <para>
+        ID of network
       </para>
     </listitem>
   </varlistentry>
@@ -6820,7 +7119,7 @@ Show usage data for a single tenant.
     <term><command>--tenant &lt;tenant-id&gt; UUID</command></term>
     <listitem>
       <para>
-        or name of tenant to get usage for.
+        of tenant to get usage for.
       </para>
     </listitem>
   </varlistentry>
