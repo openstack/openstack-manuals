@@ -84,10 +84,15 @@
         <para>
           If you are running RabbitMQ version 3.3.0 or higher, you
           need to allow remote connection of the guest user as well.
-          Edit <filename>/etc/rabbitmq/rabbitmq.config</filename> and
-          add or uncomment this line:
+          Edit the <filename>/etc/rabbitmq/rabbitmq.config</filename> file
+          and add or uncomment this line:
           <programlisting>{loopback_users, []}</programlisting>
         </para>
+        <para>Restart the message broker service:</para>
+        <para os="sles">On SLES:</para>
+        <screen os="sles"><prompt>#</prompt> <userinput>service rabbitmq-server restart</userinput></screen>
+        <para os="opensuse">On openSUSE:</para>
+        <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart rabbitmq-server.service</userinput></screen>
     </step>
   </procedure>
   <para>Congratulations, you are now ready to install OpenStack
