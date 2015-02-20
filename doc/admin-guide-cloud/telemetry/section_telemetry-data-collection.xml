@@ -439,6 +439,16 @@
     <para>Each source configuration encapsulates name matching, polling
       interval determination, optional resource enumeration or discovery, and
       mapping to one or more sinks for publication.</para>
+   <para>Data gathered can be used for different purposes, which can impact how frequently
+      it needs to be published. Typically, a meter published for billing purposes
+      needs to be updated every 30 minutes while the same meter may be needed for
+      performance tuning every minute.</para>
+    <warning>
+      <para>Rapid polling cadences should be avoided, as it results in a huge
+        amount of data in a short time frame, which may negatively affect the performance
+        of both Telemetry and the underlying database back end. We therefore strongly
+        recommend you do not use small granularity values like 10 seconds.</para>
+    </warning>
     <para>A sink on the other hand is a consumer of data, providing logic
       for the transformation and publication of data emitted from related
       sources</para>
