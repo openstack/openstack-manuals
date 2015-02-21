@@ -100,4 +100,78 @@
       also note that currently no migration is available to move the already
       existing event type samples to the event store.</para>
   </note>
+  <section xml:id="section_telemetry-compute-metrics">
+    <title>OpenStack Compute</title>
+    <para>The following meters are collected for OpenStack Compute:</para>
+    <xi:include href="tables/ceilometer-measurements-nova.xml"/>
+    <para>The Telemetry module supports to create new meters by using
+      transformers. For more details about transformers see
+      <xref linkend="section_telemetry-pipeline-transformers"/>. Among the metrics
+      gathered from Libvirt and HyperV there are a few ones, which are generated from
+      other meters.  The list of meters that are created by using the
+      <literal>rate_of_change</literal> transformer from the above table is
+      the following:</para>
+      <itemizedlist>
+        <listitem>
+          <para>cpu_util</para>
+        </listitem>
+        <listitem>
+          <para>disk.read.requests.rate</para>
+        </listitem>
+        <listitem>
+          <para>disk.write.requests.rate</para>
+        </listitem>
+        <listitem>
+          <para>disk.read.bytes.rate</para>
+        </listitem>
+        <listitem>
+          <para>disk.write.bytes.rate</para>
+        </listitem>
+        <listitem>
+          <para>disk.device.read.requests.rate</para>
+        </listitem>
+        <listitem>
+          <para>disk.device.write.requests.rate</para>
+        </listitem>
+        <listitem>
+          <para>disk.device.read.bytes.rate</para>
+        </listitem>
+        <listitem>
+          <para>disk.device.write.bytes.rate</para>
+        </listitem>
+        <listitem>
+          <para>network.incoming.bytes.rate</para>
+        </listitem>
+        <listitem>
+          <para>network.outgoing.bytes.rate</para>
+        </listitem>
+        <listitem>
+          <para>network.incoming.packets.rate</para>
+        </listitem>
+        <listitem>
+          <para>network.outgoing.packets.rate</para>
+        </listitem>
+      </itemizedlist>
+    <note>
+      <para>To enable the libvirt <literal>memory.usage</literal> support,
+      you need to install Libvirt version 1.1.1+, Qemu version 1.5+, and
+      you also need to prepare suitable balloon driver in the image. It is
+      applicable particularly for Windows guests, most modern Linux
+      distributions already have it built in. Telemetry is not able to
+      fetch the <literal>memory.usage</literal> samples without
+      the image balloon driver.</para>
+    </note>
+    <para>OpenStack Compute is capable of collecting <literal>CPU</literal>
+      related metrics from the compute host machines. In order to use that
+      you need to set the <option>compute_monitors</option> option to
+      <literal>ComputeDriverCPUMonitor</literal> in the <filename>nova.conf</filename>
+      configuration file. For further information see the Compute configuration
+      section in the <link xlink:href=
+      "http://docs.openstack.org/trunk/config-reference/content/list-of-compute-config-options.html">
+      Compute chapter</link> of the <citetitle>OpenStack Configuration
+      Reference</citetitle>.</para>
+    <para>The following host machine related meters are collected
+      for OpenStack Compute:</para>
+    <xi:include href="tables/ceilometer-measurements-nova-host.xml"/>
+  </section>
 </section>
