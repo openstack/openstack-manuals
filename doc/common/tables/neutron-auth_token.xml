@@ -42,12 +42,20 @@
         <td>(StrOpt) Host providing the admin Identity API endpoint. Deprecated, use identity_uri.</td>
       </tr>
       <tr>
+        <td><option>auth_plugin</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Name of the plugin to load</td>
+      </tr>
+      <tr>
         <td><option>auth_port</option> = <replaceable>35357</replaceable></td>
         <td>(IntOpt) Port of the admin Identity API endpoint. Deprecated, use identity_uri.</td>
       </tr>
       <tr>
         <td><option>auth_protocol</option> = <replaceable>https</replaceable></td>
         <td>(StrOpt) Protocol of the admin Identity API endpoint (http or https). Deprecated, use identity_uri.</td>
+      </tr>
+      <tr>
+        <td><option>auth_section</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Config Section from which to load plugin specific options</td>
       </tr>
       <tr>
         <td><option>auth_uri</option> = <replaceable>None</replaceable></td>
@@ -110,12 +118,36 @@
         <td>(StrOpt) Required if identity server requires client certificate</td>
       </tr>
       <tr>
+        <td><option>memcache_pool_conn_get_timeout</option> = <replaceable>10</replaceable></td>
+        <td>(IntOpt) (Optional) Number of seconds that an operation will wait to get a memcache client connection from the pool.</td>
+      </tr>
+      <tr>
+        <td><option>memcache_pool_dead_retry</option> = <replaceable>300</replaceable></td>
+        <td>(IntOpt) (Optional) Number of seconds memcached server is considered dead before it is tried again.</td>
+      </tr>
+      <tr>
+        <td><option>memcache_pool_maxsize</option> = <replaceable>10</replaceable></td>
+        <td>(IntOpt) (Optional) Maximum total number of open connections to every memcached server.</td>
+      </tr>
+      <tr>
+        <td><option>memcache_pool_socket_timeout</option> = <replaceable>3</replaceable></td>
+        <td>(IntOpt) (Optional) Socket timeout in seconds for communicating with a memcache server.</td>
+      </tr>
+      <tr>
+        <td><option>memcache_pool_unused_timeout</option> = <replaceable>60</replaceable></td>
+        <td>(IntOpt) (Optional) Number of seconds a connection to memcached is held unused in the pool before it is closed.</td>
+      </tr>
+      <tr>
         <td><option>memcache_secret_key</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) (Optional, mandatory if memcache_security_strategy is defined) This string is used for key derivation.</td>
       </tr>
       <tr>
         <td><option>memcache_security_strategy</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) (Optional) If defined, indicate whether token data should be authenticated or authenticated and encrypted. Acceptable values are MAC or ENCRYPT.  If MAC, token data is authenticated (with HMAC) in the cache. If ENCRYPT, token data is encrypted and authenticated in the cache. If the value is not one of these options or empty, auth_token will raise an exception on initialization.</td>
+      </tr>
+      <tr>
+        <td><option>memcache_use_advanced_pool</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) (Optional) Use the advanced (eventlet safe) memcache client pool. The advanced pool will only work under python 2.x.</td>
       </tr>
       <tr>
         <td><option>revocation_cache_time</option> = <replaceable>10</replaceable></td>
