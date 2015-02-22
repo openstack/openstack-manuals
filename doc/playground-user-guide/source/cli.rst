@@ -34,5 +34,7 @@ TODO(ajaeger): Add table with command-line clients.
    :maxdepth: 2
 
    cli_launch_instances.rst
+   cli_cheat_sheet.rst
+
 .. TODO(ajaeger): Add further sections
 
