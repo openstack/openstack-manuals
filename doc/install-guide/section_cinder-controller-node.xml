@@ -73,18 +73,7 @@
         </step>
         <step>
           <para>Create the <literal>cinder</literal> service entities:</para>
-          <screen><prompt>$</prompt> <userinput>keystone service-create --name cinder --type volume \
-  --description "OpenStack Block Storage"</userinput>
-<computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
-+-------------+----------------------------------+
-| description |     OpenStack Block Storage      |
-|   enabled   |               True               |
-|      id     | 1e494c3e22a24baaafcaf777d4d467eb |
-|     name    |              cinder              |
-|     type    |              volume              |
-+-------------+----------------------------------+</computeroutput>
-<prompt>$</prompt> <userinput>keystone service-create --name cinderv2 --type volumev2 \
+          <screen><prompt>$</prompt> <userinput>keystone service-create --name cinderv2 --type volumev2 \
   --description "OpenStack Block Storage"</userinput>
 <computeroutput>+-------------+----------------------------------+
 |   Property  |              Value               |
@@ -95,32 +84,12 @@
 |     name    |             cinderv2             |
 |     type    |             volumev2             |
 +-------------+----------------------------------+</computeroutput></screen>
-          <note>
-            <para>The Block Storage service requires two different service
-              entities to support API versions 1 and 2.</para>
-          </note>
         </step>
       </substeps>
     </step>
     <step>
       <para>Create the Block Storage service API endpoints:</para>
       <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ volume / {print $2}') \
-  --publicurl http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
-  --internalurl http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
-  --adminurl http://<replaceable>controller</replaceable>:8776/v1/%\(tenant_id\)s \
-  --region regionOne</userinput>
-<computeroutput>+-------------+-----------------------------------------+
-|   Property  |                  Value                  |
-+-------------+-----------------------------------------+
-|   adminurl  | http://controller:8776/v1/%(tenant_id)s |
-|      id     |    d1b7291a2d794e26963b322c7f2a55a4     |
-| internalurl | http://controller:8776/v1/%(tenant_id)s |
-|  publicurl  | http://controller:8776/v1/%(tenant_id)s |
-|    region   |                regionOne                |
-|  service_id |    1e494c3e22a24baaafcaf777d4d467eb     |
-+-------------+-----------------------------------------+</computeroutput>
-<prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ volumev2 / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
   --internalurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
@@ -136,10 +105,6 @@
 |    region   |                regionOne                |
 |  service_id |    16e038e449c94b40868277f1d801edb5     |
 +-------------+-----------------------------------------+</computeroutput></screen>
-      <note>
-        <para>The Block Storage service requires two different endpoints
-          to support API versions 1 and 2.</para>
-      </note>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
