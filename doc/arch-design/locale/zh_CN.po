@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-02-17 10:06+0000\n"
-"PO-Revision-Date: 2015-02-18 04:01+0000\n"
+"POT-Creation-Date: 2015-02-21 14:00+0000\n"
+"PO-Revision-Date: 2015-02-21 13:01+0000\n"
 "Last-Translator: johnwoo_lee <lijiangsheng1@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -9256,7 +9256,7 @@ msgid ""
 "pool. Pools can be created with replicas or erasure code. Replica based "
 "pools can also have a rule set defined to have data written to a \"local\" "
 "set of hardware which would be the primary access and modification point."
-msgstr ""
+msgstr "复制跨不同的机架，不同的数据中心，甚至是不同地理位置的region，目的是增加确定和确保数据局部性。保证从最近或最快的存储获取数据的能力对于应用的性能表现良好是有必要的，举例来说Hadoop运行在云中，用户不仅运行着HDFS，还使用了并行文件系统，类似的提供商有日立和IBM。一个需要特别考虑的情况是，当运行嵌入式的对象存储方法毋须额外的数据复制，那样的话会带来不必要的性能问题。另外一个确保数据局部性的例子是使用Ceph,Ceph拥有一个数据容器抽象，叫做池，池可以被复制的创建，基于复制的池有些规则，用来定义数据写入本地硬件集合，那可能是主要的访问和修改点。"
 
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
@@ -9399,7 +9399,7 @@ msgid ""
 " create a new instance and assign an Elastic IP. That IP can then be added "
 "to HAProxy in the private cloud, just as it was before. The CMP can also "
 "reference AWS-specific tools such as CloudWatch and CloudFormation."
-msgstr ""
+msgstr "只要CMP能够使用合适的API连接到外部云提供商，工作流流程仍然和以前的场景没有多大差别。CMP的一些列诸如监测负载，创建新的实例等动作都是一样的，但是它们必须使用合适的API调用来访问公有云。例如，如果公有云提供商是亚马逊Web服务，CMP须使用EC2 API来创建新的实例以及分配一个弹性IP，而在以前在私有云中IP要添加到HAProxy中。CMP也需要参考AWS特有的工具，如CloudWatch和CloudFormation。"
 
 #: ./doc/arch-design/hybrid/section_prescriptive_examples_hybrid.xml105(para)
 msgid ""
@@ -9423,7 +9423,7 @@ msgid ""
 "based on standard best practice DR policies. To achieve the objectives, data"
 " is replicated to a second cloud, in a geographically distant location. The "
 "logical diagram of the system is described in the figure below:"
-msgstr ""
+msgstr "某公司A有着当他们本地的数据中心发生灾难性的事故后能够恢复的需求，一些应用当前运行在他们的私有OpenStack云中，需要保护的数据相关有块存储、对象存储以及数据库，架构的设计支持系统大量组件失效后，仍然能够确保系统继续交付服务。当服务仍然为用户可用时，系统在后台通过标准的最佳实践的灾难恢复规则来恢复失效的组件。为了实现这些目标，数据复制到第二个云中，且是远距离的不同地理位置。关于此系统描述的逻辑图见下面示意图："
 
 #: ./doc/arch-design/hybrid/section_prescriptive_examples_hybrid.xml130(para)
 msgid ""
@@ -9444,7 +9444,7 @@ msgid ""
 "make this work a single array spanning both clouds is configured with "
 "OpenStack Identity that uses Federated Identity and talks to both clouds, "
 "communicating with OpenStack Object Storage through the Swift proxy."
-msgstr ""
+msgstr "对象存储是否有复制能力要看对象存储具体的提供商。OpenStack对象存储内嵌此特性，可以创建基于地理位置不同的复制，在每个云中至少要配置一份复制，为了能够在单个磁盘可以工作，云需要被配置使用OpenStack身份且是联合的身份，且和通过Swift代理将多个云的OpenStack对象存储彼此通信。"
 
 #: ./doc/arch-design/hybrid/section_prescriptive_examples_hybrid.xml147(para)
 msgid ""
@@ -9461,7 +9461,7 @@ msgid ""
 "/cinder-backup-volume-metadata-"
 "support\">https://blueprints.launchpad.net/cinder/+spec/cinder-backup-"
 "volume-metadata-support</link>."
-msgstr ""
+msgstr "对于块存储来说，复制多少有一些困难，且OpenStack本身不提供这样的工具。OpenStack块存储卷并非是驱动器本身而是指向后端物理设备的一个逻辑对象，为块存储配置灾难恢复就得同步备份，就得是高级别的数据保护，但是异步备份只能是为延迟敏感的替代方案，对于一步备份来说，块存储API须能够做到导出数据以及特别卷的元数据，所以它可以迁移和复制到任何地方。关于此方面更多信息请参考 <link href=\"https://blueprints.launchpad.net/cinder/+spec/cinder-backup-volume-metadata-support\">https://blueprints.launchpad.net/cinder/+spec/cinder-backup-volume-metadata-support</link>。"
 
 #: ./doc/arch-design/hybrid/section_prescriptive_examples_hybrid.xml161(para)
 msgid ""
@@ -9470,7 +9470,7 @@ msgid ""
 " This was done by creating volumes through the CMP, because the CMP knows to"
 " create identical volumes in both clouds. Once this is configured, a "
 "solution, involving DRDB, is used to synchronize the actual physical drives."
-msgstr ""
+msgstr "同步备份，同时在云中创建相同的卷，且选择合适的类型，这样每个云都有相同的后端。这可以通过CMP来完成创建卷，因为CMP知道两个云创建相同的卷。一旦这被配置，一个解决方案包括DRDB就可以被用户同步真实的物理设备。"
 
 #: ./doc/arch-design/hybrid/section_prescriptive_examples_hybrid.xml168(para)
 msgid ""
@@ -9483,7 +9483,7 @@ msgid ""
 "another layer of protection. Another option would have been to store the "
 "database on an OpenStack Block Storage volume and backing it up just as any "
 "other block storage."
-msgstr ""
+msgstr "数据库组件的备份使用同步备份。MySQL不支持跨地区的复制，所以灾难恢复是由复制文件本身来提供的。在类似MySQL数据库后端使用对象存储是不可能的，所以Swift的复制在这里就没有用武之地。它也不能被决定使用另外其他的地理分层的存储系统来存储数据，诸如Ceph作为块存储。它必须使用另外层次的保护，其中的一个选择就是使用OpenStack块存储卷来存储数据库，而且和块存储的备份一样来备份数据库。"
 
 #: ./doc/arch-design/hybrid/section_operational_considerations_hybrid.xml9(para)
 msgid ""
@@ -9494,7 +9494,7 @@ msgid ""
 " incompatible interactions with workloads or a specific Cloud Management "
 "Platform (CMP). Different cloud providers may also offer different levels of"
 " integration with competing cloud offerings."
-msgstr ""
+msgstr "混合云的部署有着复杂操作的挑战。有好多种因素会影响到每个云部署的方法需要被考虑，以及用户和运维人员在每个云中的互操作性。不是所有的云提供商提供一样的实现基础设施组件，这就会导致互操作性的兼容性，无论是负载还是一个特别的云管理平台(CMP)。不同的云提供商提供不同级别的集成，且相互竞争。"
 
 #: ./doc/arch-design/hybrid/section_operational_considerations_hybrid.xml18(para)
 msgid ""
@@ -9506,7 +9506,7 @@ msgid ""
 "information, is vital. Once all the information about each cloud can be "
 "gathered and stored in a searchable database, proper actions can be taken on"
 " that data offline so workloads will not be impacted."
-msgstr ""
+msgstr "当选择一个云管理平台时，其中一个最重要的因素考虑就是监测。 获得有价值的洞察每个云是获得所有云整体视图的关键。在现有的CMP中选择的话，决策的条件有，它是否支持监测所有的云平台，是否有兼容的API可用于查询必要的信息。一旦所有的关于云的信息能够被收集和存储在一个可搜索的数据库中，数据可以被离线操作，负载就不会受到特别的影响。"
 
 #: ./doc/arch-design/hybrid/section_operational_considerations_hybrid.xml28(title)
 msgid "Agility"
@@ -9520,7 +9520,7 @@ msgid ""
 "environment. Each cloud should provide the means to quickly spin up new "
 "instances in the case of capacity issues or complete unavailability of a "
 "single cloud installation."
-msgstr ""
+msgstr "实现一个混合云解决方案须提供应用跨不同的云环境和技术的可用性。这种可用性是激活在任何一个单一的云环境中发生灾难时仍然可用。每个云都得提供在发生容量问题或在某单个云中完全失效的情况下能够快速的创建新的实例。"
 
 #: ./doc/arch-design/hybrid/section_operational_considerations_hybrid.xml38(para)
 msgid ""
@@ -9562,7 +9562,7 @@ msgid ""
 "in coordination with any of the hybrid cloud upgrades. This may be necessary"
 " whenever API changes are made in one of the cloud solutions in use to "
 "support the new functionality."
-msgstr ""
+msgstr "另外一个需要考虑的是，升级CMP需要完成任何混合云升级的协同，这对于当任何时候API变动时是必要的，用于支持新的功能的一个云的解决方案。"
 
 #: ./doc/arch-design/hybrid/section_operational_considerations_hybrid.xml73(title)
 msgid "Network Operation Center"
@@ -9884,7 +9884,7 @@ msgid ""
 "NoSQL back end for Ceilometer, such as MongoDB. Second, when connecting to a"
 " non-OpenStack cloud, there will need to be a way to monitor that usage and "
 "to provide that monitoring data back to the CMP."
-msgstr ""
+msgstr "Telemetry模块(ceilometer)被设计为提供多个OpenStack组件的使用信息。有两个局限性因素需要考虑：第一，如果使用的是非常大的数据(例如，监测一个巨型的云，或者是非常活跃的),Ceilometer需要在后端使用NoSQL数据库，例如MongoDB。第二，当连接到非OpenStack云时，Ceilometer有必要监测它的使用，且要为CMP的后端提供监测数据。"
 
 #: ./doc/arch-design/hybrid/section_tech_considerations_hybrid.xml254(para)
 msgid ""
