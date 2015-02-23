@@ -196,6 +196,27 @@
                     >neutron-dhcp-agent</systemitem> service
                 starts.</para>
         </important>
+        <para>Networking dhcp-agent can use
+         <link xlink:href="http://www.thekelleys.org.uk/dnsmasq/doc.html">dnsmasq</link>
+         driver which supports stateful and stateless DHCPv6 for
+         subnets created with <parameter>--ipv6_address_mode</parameter>
+         set to <option>dhcpv6-stateful</option> or
+         <option>dhcpv6-stateless</option>.
+        </para>
+        <para>For example:</para>
+        <screen><prompt>$</prompt> <userinput>neutron subnet-create --ip-version 6 --ipv6_ra_mode dhcpv6-stateful --ipv6_address_mode dhcpv6-stateful NETWORK CIDR</userinput></screen>
+        <screen><prompt>$</prompt> <userinput>neutron subnet-create --ip-version 6 --ipv6_ra_mode dhcpv6-stateless --ipv6_address_mode dhcpv6-stateless NETWORK CIDR</userinput></screen>
+        <para>If no dnsmasq process for subnet's network is
+         launched, Networking will launch a new one on
+         subnet's dhcp port in <literal>qdhcp-XXX</literal>
+         namespace. If previous dnsmasq process is already
+         launched, restart dnsmasq with a new configuration.
+        </para>
+        <para>Networking will update dnsmasq process and
+         restart it when subnet gets updated.</para>
+               <note>
+               <para>For dhcp-agent to operate in IPv6 mode use at least dnsmasq v2.63.</para>
+               </note>
         <section xml:id="dhcp_agent_ovs">
             <title>DHCP agent setup: OVS plug-in</title>
             <para>These DHCP agent options are required in the
