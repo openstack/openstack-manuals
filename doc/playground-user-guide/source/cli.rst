@@ -33,5 +33,6 @@ TODO(ajaeger): Add table with command-line clients.
 .. toctree::
    :maxdepth: 2
 
+   cli_launch_instances.rst
 .. TODO(ajaeger): Add further sections
 
