@@ -3,6 +3,7 @@ admin_tenant_name common
 admin_user common
 agent_down_time common
 agent_mode l3_agent
+allow_automatic_dhcp_failover l3_agent
 allow_automatic_l3agent_failover l3_agent
 allow_bulk api
 allow_overlapping_ips policy
@@ -25,8 +26,6 @@ base_mac common
 bind_host common
 bind_port common
 ca_certs common
-check_child_processes_action common
-check_child_processes_interval common
 client_socket_timeout api
 conn_idle_timeout api
 control_exchange amqp
@@ -103,6 +102,7 @@ max_subnet_host_routes common
 measure_interval metering_agent
 memcached_servers common
 meta_flavor_driver_mappings metadata
+metadata_access_mark metadata
 metadata_backlog metadata
 metadata_port metadata
 metadata_proxy_group metadata
@@ -179,7 +179,6 @@ report_interval common
 resync_interval dhcp_agent
 retries vmware
 retry_until_window api
-root_helper common
 router_auto_schedule scheduler
 router_delete_namespaces scheduler
 router_distributed dvr
@@ -209,7 +208,6 @@ state_path common
 syslog_log_facility logging
 tcp_keepidle api
 transport_url amqp
-use_helper_for_ns_read l3_agent
 use_namespaces dhcp_agent
 use_ssl logging
 use_stderr logging
@@ -220,6 +218,8 @@ wsapi_host ryu
 wsapi_port ryu
 wsgi_keep_alive api
 AGENT/arp_responder openvswitch_agent
+AGENT/check_child_processes_action common
+AGENT/check_child_processes_interval common
 AGENT/comment_iptables_rules l3_agent
 AGENT/dont_fragment openvswitch_agent ml2_ofa
 AGENT/enable_distributed_routing openvswitch_agent
@@ -234,6 +234,7 @@ AGENT/ovsdb_monitor_respawn_interval openvswitch_agent
 AGENT/physical_interface_mappings ml2_ofa
 AGENT/physical_network_vswitch_mappings hyperv_agent
 AGENT/polling_interval hyperv_agent
+AGENT/quitting_rpc_timeout openvswitch_agent
 AGENT/report_interval metering_agent
 AGENT/root_helper common
 AGENT/rpc_support_old_agents rpc
@@ -266,11 +267,6 @@ CISCO_N1K/tunnel_bridge cisco
 CISCO_N1K/vxlan_id_ranges cisco
 CONTRAIL/api_server_ip opencontrail
 CONTRAIL/api_server_port opencontrail
-ESWITCH/backoff_rate mlnx
-ESWITCH/daemon_endpoint mlnx
-ESWITCH/physical_interface_mappings mlnx
-ESWITCH/request_timeout mlnx
-ESWITCH/retries vmware
 ESWITCH/vnic_type ml2_mlnx
 HYPERV/network_vlan_ranges hyperv_agent
 HYPERV/tenant_network_type hyperv_agent
@@ -335,6 +331,7 @@ OVS/bridge_mappings openvswitch_agent
 OVS/int_peer_patch_port openvswitch_agent
 OVS/integration_bridge openvswitch_agent
 OVS/local_ip openvswitch_agent
+OVS/ovsdb_interface openvswitch_agent
 OVS/tun_peer_patch_port openvswitch_agent
 OVS/tunnel_bridge openvswitch_agent
 OVS/use_veth_interconnection openvswitch_agent
@@ -349,26 +346,16 @@ PROXY/auth_strategy common
 PROXY/auth_url common
 QUOTAS/default_quota quotas
 QUOTAS/quota_driver quotas
-QUOTAS/quota_firewall quotas
-QUOTAS/quota_firewall_policy quotas
-QUOTAS/quota_firewall_rule quotas
 QUOTAS/quota_floatingip quotas
-QUOTAS/quota_health_monitor quotas
-QUOTAS/quota_healthmonitor quotas
 QUOTAS/quota_items quotas
-QUOTAS/quota_listener quotas
-QUOTAS/quota_loadbalancer quotas
-QUOTAS/quota_member quotas
 QUOTAS/quota_network quotas
 QUOTAS/quota_network_gateway quotas
 QUOTAS/quota_packet_filter quotas
-QUOTAS/quota_pool quotas
 QUOTAS/quota_port quotas
 QUOTAS/quota_router quotas
 QUOTAS/quota_security_group quotas
 QUOTAS/quota_security_group_rule quotas
 QUOTAS/quota_subnet quotas
-QUOTAS/quota_vip quotas
 RESTPROXY/add_meta_server_route bigswitch ml2_bigswitch
 RESTPROXY/auth_resource nuage
 RESTPROXY/auto_sync_on_failure bigswitch ml2_bigswitch
@@ -412,7 +399,6 @@ SDNVE/reset_bridge sdnve
 SDNVE/use_fake_controller sdnve
 SDNVE/userid sdnve
 SDNVE_AGENT/polling_interval sdnve
-SDNVE_AGENT/root_helper sdnve
 SDNVE_AGENT/rpc sdnve
 SECURITYGROUP/enable_ipset securitygroups
 SECURITYGROUP/enable_security_group securitygroups
@@ -493,8 +479,10 @@ keystone_authtoken/admin_token auth_token
 keystone_authtoken/admin_user auth_token
 keystone_authtoken/auth_admin_prefix auth_token
 keystone_authtoken/auth_host auth_token
+keystone_authtoken/auth_plugin auth_token
 keystone_authtoken/auth_port auth_token
 keystone_authtoken/auth_protocol auth_token
+keystone_authtoken/auth_section auth_token
 keystone_authtoken/auth_uri auth_token
 keystone_authtoken/auth_version auth_token
 keystone_authtoken/cache auth_token
@@ -510,8 +498,14 @@ keystone_authtoken/identity_uri auth_token
 keystone_authtoken/include_service_catalog auth_token
 keystone_authtoken/insecure auth_token
 keystone_authtoken/keyfile auth_token
+keystone_authtoken/memcache_pool_conn_get_timeout auth_token
+keystone_authtoken/memcache_pool_dead_retry auth_token
+keystone_authtoken/memcache_pool_maxsize auth_token
+keystone_authtoken/memcache_pool_socket_timeout auth_token
+keystone_authtoken/memcache_pool_unused_timeout auth_token
 keystone_authtoken/memcache_secret_key auth_token
 keystone_authtoken/memcache_security_strategy auth_token
+keystone_authtoken/memcache_use_advanced_pool auth_token
 keystone_authtoken/memcached_servers common
 keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
@@ -545,9 +539,6 @@ ml2_brocade/password ml2_brocade
 ml2_brocade/physical_networks ml2_brocade
 ml2_brocade/rbridge_id ml2_brocade
 ml2_brocade/username ml2_brocade
-ml2_cisco/managed_physical_network ml2_cisco
-ml2_cisco/svi_round_robin cisco
-ml2_cisco/vlan_name_prefix cisco
 ml2_cisco_apic/apic_agent_poll_interval ml2_cisco
 ml2_cisco_apic/apic_agent_report_interval ml2_cisco
 ml2_cisco_apic/apic_app_profile_name ml2_cisco
@@ -566,7 +557,6 @@ ml2_cisco_apic/apic_username ml2_cisco
 ml2_cisco_apic/apic_vlan_ns_name ml2_cisco
 ml2_cisco_apic/apic_vlan_range ml2_cisco
 ml2_cisco_apic/apic_vpc_pairs ml2_cisco
-ml2_cisco_apic/root_helper ml2_cisco
 ml2_fslsdn/crd_api_insecure ml2_fslsdn
 ml2_fslsdn/crd_auth_strategy ml2_fslsdn
 ml2_fslsdn/crd_auth_url ml2_fslsdn
@@ -599,6 +589,8 @@ nvsd/nvsd_port nvsd
 nvsd/nvsd_retries nvsd
 nvsd/nvsd_user nvsd
 nvsd/request_timeout nvsd
+oslo_concurrency/disable_process_locking rpc
+oslo_concurrency/lock_path rpc
 oslo_messaging_amqp/allow_insecure_clients rpc
 oslo_messaging_amqp/broadcast_prefix rpc
 oslo_messaging_amqp/container_name rpc
