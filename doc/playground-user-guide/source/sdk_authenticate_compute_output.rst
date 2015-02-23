@@ -9,7 +9,7 @@ Set environment variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To set up environmental variables and authenticate against Compute API
-endpoints, see :role:`Authenticate <sdk_authenticate.rst>`.
+endpoints, see :ref:`Authenticate <sdk_authenticate.rst>`.
 
 .. _get-openstack-credentials:
 
