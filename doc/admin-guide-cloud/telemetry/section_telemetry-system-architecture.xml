@@ -53,7 +53,7 @@
         <term><systemitem class="service">ceilometer-collector</systemitem></term>
           <listitem>
             <para>Consumes AMQP notifications from the agents, then dispatches
-              these data to the metering store.</para>
+              these data to the appropriate data store.</para>
           </listitem>
       </varlistentry>
       <varlistentry>
@@ -78,15 +78,19 @@
     notifications coming from OpenStack services and internal communication.</para>
   <section xml:id="section_telemetry-supported-dbs">
     <title>Supported databases</title>
-    <para>The other key external component of Telemetry is the database, where the samples, alarm
+    <para>The other key external component of Telemetry is the database, where events, samples, alarm
       definitions and alarms are stored.</para>
     <note>
-      <para>Multiple database back ends can be configured in order to store samples and alarms
+      <para>Multiple database back ends can be configured in order to store events, samples and alarms
         separately.</para>
     </note>
     <para>The list of supported database back ends:</para>
     <para>
       <itemizedlist>
+        <listitem>
+          <para><link xlink:href="http://www.elasticsearch.org/">ElasticSearch (events only)</link>
+          </para>
+        </listitem>
         <listitem>
           <para><link xlink:href="http://www.mongodb.org/">MongoDB</link></para>
         </listitem>
@@ -135,11 +139,6 @@
             </listitem>
             <listitem>
               <para>
-                <link xlink:href="http://www.xenproject.org/help/documentation.html">XEN</link>
-              </para>
-            </listitem>
-            <listitem>
-              <para>
                 <link xlink:href="http://user-mode-linux.sourceforge.net/">
                 User-mode Linux (UML)</link>
               </para>
@@ -156,6 +155,11 @@
           <para><link
             xlink:href="http://www.microsoft.com/en-us/server-cloud/hyper-v-server/default.aspx"
             >Hyper-V</link>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <link xlink:href="http://www.xenproject.org/help/documentation.html">XEN</link>
           </para>
         </listitem>
         <listitem>
