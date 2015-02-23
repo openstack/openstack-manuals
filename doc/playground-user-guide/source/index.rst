@@ -8,7 +8,7 @@ Contents:
 
    cli.rst
    dashboard.rst
-
+   sdk.rst
 
 Indices and tables
 ==================
