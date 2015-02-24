@@ -18,12 +18,12 @@
         <th colspan="2">[ipmi]</th>
       </tr>
       <tr>
-        <td>min_command_interval = 5</td>
+        <td><option>min_command_interval</option> = <replaceable>5</replaceable></td>
         <td>(IntOpt) Minimum time, in seconds, between IPMI operations sent to a server. There is a risk with some hardware that setting this too low may cause the BMC to crash. Recommended setting is 5 seconds.</td>
       </tr>
       <tr>
-        <td>retry_timeout = 60</td>
-        <td>(IntOpt) Maximum time in seconds to retry IPMI operations.</td>
+        <td><option>retry_timeout</option> = <replaceable>60</replaceable></td>
+        <td>(IntOpt) Maximum time in seconds to retry IPMI operations. There is a tradeoff when setting this value. Setting this too low may cause older BMCs to crash and require a hard reset. However, setting too high can cause the sync power state periodic task to hang when there are slow or unresponsive BMCs.</td>
       </tr>
     </tbody>
   </table>
