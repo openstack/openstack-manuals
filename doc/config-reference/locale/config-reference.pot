@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-02-22 06:12+0000\n"
+"POT-Creation-Date: 2015-02-24 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1889,196 +1889,200 @@ msgstr ""
 msgid "With GET Temporary URLs, a <literal>Content-Disposition</literal> header is set on the response so that browsers interpret this as a file attachment to be saved. The file name chosen is based on the object name, but you can override this with a <literal>filename</literal> query parameter. The following example specifies a filename of <filename>My Test File.pdf</filename>:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:315(emphasis)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:305(para)
+msgid "If you do not want the object to be downloaded, you can cause <literal>Content-Disposition: inline</literal> to be set on the response by adding the <literal>inline</literal> parameter to the query string, as follows:"
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:324(emphasis)
 msgid "tempurl"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:304(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:313(para)
 msgid "To enable Temporary URL functionality, edit <filename>/etc/swift/proxy-server.conf</filename> to add <literal>tempurl</literal> to the <literal>pipeline</literal> variable defined in the <literal>[pipeline:main]</literal> section. The <literal>tempurl</literal> entry should appear immediately before the authentication filters in the pipeline, such as <literal>authtoken</literal>, <literal>tempauth</literal> or <literal>keystoneauth</literal>. For example:<placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:322(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:331(title)
 msgid "Name check filter"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:323(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:332(para)
 msgid "Name Check is a filter that disallows any paths that contain defined forbidden characters or that exceed a defined length."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:331(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:340(title)
 msgid "Constraints"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:332(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:341(para)
 msgid "To change the OpenStack Object Storage internal limits, update the values in the <literal>swift-constraints</literal> section in the <filename>swift.conf</filename> file. Use caution when you update these values because they affect the performance in the entire cluster."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:343(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:352(title)
 msgid "Cluster health"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:344(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:353(para)
 msgid "Use the <placeholder-1/> tool to measure overall cluster health. This tool checks if a set of deliberately distributed containers and objects are currently in their proper places within the cluster. For instance, a common deployment has three replicas of each object. The health of that object can be measured by checking if each replica is in its proper place. If only 2 of the 3 is in place the object's health can be said to be at 66.66%, where 100% would be perfect. A single object's health, especially an older object, usually reflects the health of that entire partition the object is in. If you make enough objects on a distinct percentage of the partitions in the cluster,you get a good estimate of the overall cluster health. In practice, about 1% partition coverage seems to balance well between accuracy and the amount of time it takes to gather results. The first thing that needs to be done to provide this health value is create a new account solely for this usage. Next, you need to place the containers and objects throughout the system so that they are on distinct partitions. The <placeholder-2/> tool does this by making up random container and object names until they fall on distinct partitions. Last, and repeatedly for the life of the cluster, you must run the <placeholder-3/> tool to check the health of each of these containers and objects. These tools need direct access to the entire cluster and to the ring files (installing them on a proxy server suffices). The <placeholder-4/> and <placeholder-5/> commands both use the same configuration file, <filename>/etc/swift/dispersion.conf</filename>. Example <filename>dispersion.conf</filename> file:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:385(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:394(para)
 msgid "There are also configuration options for specifying the dispersion coverage, which defaults to 1%, retries, concurrency, and so on. However, the defaults are usually fine. Once the configuration is in place, run <placeholder-1/> to populate the containers and objects throughout the cluster. Now that those containers and objects are in place, you can run <placeholder-2/> to get a dispersion report, or the overall health of the cluster. Here is an example of a cluster in perfect health:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:405(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:414(para)
 msgid "Now, deliberately double the weight of a device in the object ring (with replication turned off) and re-run the dispersion report to show what impact that has:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:421(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:430(para)
 msgid "You can see the health of the objects in the cluster has gone down significantly. Of course, this test environment has just four devices, in a production environment with many devices the impact of one device change is much less. Next, run the replicators to get everything put back into place and then rerun the dispersion report:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:438(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:447(para)
 msgid "Alternatively, the dispersion report can also be output in JSON format. This allows it to be more easily consumed by third-party utilities:"
 msgstr ""
 
 #. Usage documented in http://docs.openstack.org/developer/swift/overview_large_objects.html
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:452(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:461(title)
 msgid "Static Large Object (SLO) support"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:453(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:462(para)
 msgid "This feature is very similar to Dynamic Large Object (DLO) support in that it enables the user to upload many objects concurrently and afterwards download them as a single object. It is different in that it does not rely on eventually consistent container listings to do so. Instead, a user-defined manifest of the object segments is used."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:465(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:474(title)
 msgid "Container quotas"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:466(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:475(para)
 msgid "The <code>container_quotas</code> middleware implements simple quotas that can be imposed on Object Storage containers by a user with the ability to set container metadata, most likely the account administrator. This can be useful for limiting the scope of containers that are delegated to non-admin users, exposed to formpost uploads, or just as a self-imposed sanity check."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:471(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:480(para)
 msgid "Any object PUT operations that exceed these quotas return a 403 response (forbidden)."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:473(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:482(para)
 msgid "Quotas are subject to several limitations: eventual consistency, the timeliness of the cached container_info (60 second TTL by default), and it is unable to reject chunked transfer uploads that exceed the quota (though once the quota is exceeded, new chunked transfers are refused)."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:479(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:488(para)
 msgid "Set quotas by adding meta values to the container. These values are validated when you set them:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:483(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:492(para)
 msgid "X-Container-Meta-Quota-Bytes: Maximum size of the container, in bytes."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:487(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:496(para)
 msgid "X-Container-Meta-Quota-Count: Maximum object count of the container."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:496(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:505(title)
 msgid "Account quotas"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:497(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:506(para)
 msgid "The <parameter>x-account-meta-quota-bytes</parameter> metadata entry must be requests (PUT, POST) if a given account quota (in bytes) is exceeded while DELETE requests are still allowed."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:501(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:510(para)
 msgid "The <parameter>x-account-meta-quota-bytes</parameter> metadata entry must be set to store and enable the quota. Write requests to this metadata entry are only permitted for resellers. There is no account quota limitation on a reseller account even if <parameter>x-account-meta-quota-bytes</parameter> is set."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:508(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:517(para)
 msgid "Any object PUT operations that exceed the quota return a 413 response (request entity too large) with a descriptive body."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:511(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:520(para)
 msgid "The following command uses an admin account that own the Reseller role to set a quota on the test account:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:515(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:524(para)
 msgid "Here is the stat listing of an account where quota has been set:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:525(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:534(para)
 msgid "This command removes the account quota:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:529(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:538(title)
 msgid "Bulk delete"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:530(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:539(para)
 msgid "Use <code>bulk-delete</code> to delete multiple files from an account with a single request. Responds to DELETE requests with a header 'X-Bulk-Delete: true_value'. The body of the DELETE request is a new line-separated list of files to delete. The files listed must be URL encoded and in the form:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:540(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:549(para)
 msgid "If all files are successfully deleted (or did not exist), the operation returns <code>HTTPOk</code>. If any files failed to delete, the operation returns <code>HTTPBadGateway</code>. In both cases, the response body is a JSON dictionary that shows the number of files that were successfully deleted or not found. The files that failed are listed."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:553(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:562(title)
 msgid "Drive audit"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:554(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:563(para)
 msgid "The <placeholder-1/> configuration items reference a script that can be run by using <placeholder-2/> to watch for bad drives. If errors are detected, it unmounts the bad drive, so that OpenStack Object Storage can work around it. It takes the following options:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:565(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:574(title)
 msgid "Form post"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:566(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:575(para)
 msgid "Middleware that provides the ability to upload objects to a cluster using an HTML form POST. The format of the form is:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:581(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:590(para)
 msgid "The <literal>swift-url</literal> is the URL to the Object Storage destination, such as: <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri> The name of each file uploaded is appended to the specified <literal>swift-url</literal>. So, you can upload directly to the root of container with a URL like: <uri>https://swift-cluster.example.com/v1/AUTH_account/container/</uri> Optionally, you can include an object prefix to better separate different users' uploads, such as: <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:591(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:600(para)
 msgid "The form method must be POST and the enctype must be set as <literal>multipart/form-data</literal>."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:594(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:603(para)
 msgid "The redirect attribute is the URL to redirect the browser to after the upload completes. The URL has status and message query parameters added to it, indicating the HTTP status code for the upload (2xx is success) and a possible message for further information if there was an error (such as <literal>\"max_file_size exceeded\"</literal>)."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:601(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:610(para)
 msgid "The <literal>max_file_size</literal> attribute must be included and indicates the largest single file upload that can be done, in bytes."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:604(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:613(para)
 msgid "The <literal>max_file_count</literal> attribute must be included and indicates the maximum number of files that can be uploaded with the form. Include additional <code>&lt;![CDATA[&lt;input type=\"file\" name=\"filexx\"/&gt;]]&gt;</code> attributes if desired."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:610(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:619(para)
 msgid "The expires attribute is the Unix timestamp before which the form must be submitted before it is invalidated."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:613(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:622(para)
 msgid "The signature attribute is the HMAC-SHA1 signature of the form. This sample Python code shows how to compute the signature:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:630(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:639(para)
 msgid "The key is the value of the <literal>X-Account-Meta-Temp-URL-Key</literal> header on the account."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:633(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:642(para)
 msgid "Be certain to use the full path, from the <literal>/v1/</literal> onward."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:635(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:644(para)
 msgid "The command-line tool <placeholder-1/> may be used (mostly just when testing) to compute expires and signature."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:639(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:648(para)
 msgid "The file attributes must appear after the other attributes to be processed correctly. If attributes come after the file, they are not sent with the sub-request because on the server side, all attributes in the file cannot be parsed unless the whole file is read into memory and the server does not have enough memory to service these requests. So, attributes that follow the file are ignored."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:652(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:661(title)
 msgid "Static web sites"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:653(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:662(para)
 msgid "When configured, this middleware serves container data as a static web site with index file and error file resolution and optional file listings. This mode is normally only active for anonymous requests."
 msgstr ""
 
