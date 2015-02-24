@@ -89,9 +89,10 @@ scheduler_default_filters = RetryFilter, AvailabilityZoneFilter, RamFilter, Comp
     <para>The scheduler chooses a new host when an instance is
         migrated.</para>
     <para>When evacuating instances from a host, the scheduler service
-        does not pick the next host. Instances are evacuated to the
-        host explicitly defined by the administrator. For information
-        about instance evacuation, see <link
+        honors the target host defined by the administrator on the evacuate
+        command. If a target is not defined by the administrator, the
+        scheduler determines the target host. For information about
+        instance evacuation, see <link
             xlink:href="http://docs.openstack.org/admin-guide-cloud/content/nova_cli_evacuate.html"
             >Evacuate instances</link> section of the
             <citetitle>OpenStack Cloud Administrator
