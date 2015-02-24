@@ -9,25 +9,19 @@
       <para>
         <itemizedlist>
           <listitem>
-            <para>Efficiently collects the metering data about the CPU
-          and network costs.</para>
+            <para>Efficiently polls metering data related to OpenStack
+              services.</para>
           </listitem>
           <listitem>
-            <para>Collects data by monitoring notifications sent from
-          services or by polling the infrastructure.</para>
+            <para>Collects event and metering data by monitoring notifications
+              sent from services.</para>
           </listitem>
           <listitem>
-            <para>Configures the type of collected data to meet
-          various operating requirements. It accesses and inserts the
-          metering data through the REST API.</para>
+            <para>Publishes collected data to various targets including data
+              stores and message queues.</para>
           </listitem>
           <listitem>
-            <para>Expands the framework to collect custom usage data
-          by additional plug-ins.</para>
-          </listitem>
-          <listitem>
-            <para>Produces signed metering messages that cannot be
-          repudiated.</para>
+            <para>Creates alarms when collected data breaks defined rules.</para>
           </listitem>
         </itemizedlist>
      </para>
@@ -45,22 +39,20 @@
            >ceilometer-agent-central</systemitem>)</term>
           <listitem><para>Runs on a central management server to poll for
            resource utilization statistics for resources not tied to instances
-           or compute nodes.</para></listitem>
+           or compute nodes. Multiple agents can be started to scale service
+           horizontally.</para></listitem>
         </varlistentry>
         <varlistentry><term>A notification agent (<systemitem class="service"
            >ceilometer-agent-notification</systemitem>)</term>
-          <listitem><para>Runs on a central management server to initiate
-          alarm actions, such as calling out to a webhook with a description
-          of the alarm state transition.</para></listitem>
+          <listitem><para>Runs on a central management server(s) and consumes
+            messages from the message queue(s) to build event and metering data.
+          </para></listitem>
         </varlistentry>
         <varlistentry><term>A collector (<systemitem class="service"
            >ceilometer-collector</systemitem>)</term>
-          <listitem><para>Runs on central management server(s) to monitor the
-           message queues (for notifications and for metering data coming from
-           the agent). Notification messages are processed and turned into
-           metering messages, which are sent to the message bus using the
-           appropriate topic. Telemetry messages are written to the data store
-           without modification.</para>
+          <listitem><para>Runs on central management server(s) and dispatches
+            collected telemetry data to a data store or external consumer
+            without modification.</para>
           </listitem>
         </varlistentry>
         <varlistentry><term>An alarm evaluator (<systemitem class="service"
@@ -74,12 +66,6 @@
           <listitem><para>Runs on one or more central management servers to
             allow alarms to be set based on the threshold evaluation for a
             collection of samples.</para></listitem>
-        </varlistentry>
-        <varlistentry>
-          <term>A data store</term>
-          <listitem><para>A database capable of handling
-            concurrent writes (from one or more collector instances)
-            and reads (from the API server).</para></listitem>
         </varlistentry>
         <varlistentry>
           <term>An API server (<systemitem
