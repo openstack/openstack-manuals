@@ -839,6 +839,7 @@ trusty-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
         the OpenStack Image Service to a data store that is visible to
         the hypervisor. To optimize this process, the first time a
         VMDK file is used, it gets cached in the data store.
+        A cached image is stored in a folder named after the image ID.
         Subsequent virtual machines that need the VMDK use the cached
         version and don't have to copy the file again from the
         OpenStack Image Service.</para>
@@ -850,6 +851,15 @@ trusty-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
         the <code>vmware_linked_clone</code> property in the OpenStack
         Image Service to
         override the linked_clone mode on a per-image basis.</para></note>
+
+<para>If multiple compute nodes are running on the same host,
+ or have a shared file system, you can enable them to use the
+ same cache folder on the back-end data store. To configure
+ this action, set the <parameter>cache_prefix</parameter> option
+ in the <filename>nova.conf</filename> file. Its value stands for
+ the name prefix of the folder where cached images are stored.</para>
+<note><para>This can take effect only if compute nodes are running
+ on the same host, or have a shared file system.</para></note>
       <para>You can automatically purge unused images after a
         specified period of time. To configure this action, set these
         options in the <literal>DEFAULT</literal> section in the
@@ -869,8 +879,8 @@ trusty-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
             <userinput>86400</userinput> (24 hours).</para></listitem>
         </varlistentry>
       </variablelist>
-    </section>
-  </section>
+</section>
+</section>
   <section xml:id="VMware_networking">
     <title>Networking with VMware vSphere</title>
     <para>The VMware driver supports networking with the <systemitem class="service">nova-network</systemitem> service or the
