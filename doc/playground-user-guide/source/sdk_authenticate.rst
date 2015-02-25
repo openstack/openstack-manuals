@@ -17,3 +17,11 @@ sensitive information, do not include them in your scripts. This guide
 assumes that users source the PROJECT-openrc.sh file and access the
 credentials by using the environment variables in the Python scripts.
 
+.. toctree::
+   :maxdepth: 2
+
+   sdk_authenticate_against_identity_endpoint.rst
+   sdk_authenticate_against_image_service_endpoint.rst
+   sdk_authenticate_against_compute_endpoint.rst
+   sdk_authenticate_against_networking_endpoint.rst
+
