@@ -174,6 +174,51 @@
       for OpenStack Compute:</para>
     <xi:include href="tables/ceilometer-measurements-nova-host.xml"/>
   </section>
+  <section xml:id="section_telemetry-ironic-metrics">
+    <title>Bare metal module for OpenStack</title>
+    <para>Telemetry captures notifications that are emitted by the
+      Bare metal module for OpenStack. The source of the notifications
+      are IPMI sensors that collect data from the host machine.</para>
+    <note>
+      <para>The sensor data is not available in the Bare metal module
+        by default. To enable the meters and configure this module to
+        emit notifications about the measured values see the <link xlink:href=
+        "http://docs.openstack.org/developer/ironic/deploy/install-guide.html">
+        Installation Guide</link> for the Bare metal service.</para>
+    </note>
+    <para>The following meters are recorded for the Bare metal module:</para>
+    <xi:include href="tables/ceilometer-measurements-ironic.xml"/>
+  </section>
+  <section xml:id="section_telemetry-ipmi-metrics">
+    <title>IPMI based meters</title>
+    <para>Another way of gathering IPMI based data is to use IPMI
+      sensors independently from the Bare metal module's components.
+    </para>
+    <para>You need to deploy the
+      <systemitem class="service">ceilometer-agent-ipmi</systemitem>
+      on each IPMI-capable node in order to poll local sensor data. For
+      further information about the IPMI agent see <xref linkend=
+      "section_telemetry-IPMI-agent"/>.</para>
+    <warning>
+      <para>To avoid duplication of metering data and unnecessary load
+        on the IPMI interface, do not deploy the IPMI agent
+        on nodes that are managed by the Bare metal module and keep
+        the <option>conductor.send_sensor_data</option> option set to
+        <literal>False</literal> in the <filename>heat.conf</filename>
+        configuration file.</para>
+    </warning>
+    <para>The following meters are recorded from host based IPMI sensors:</para>
+    <xi:include href="tables/ceilometer-measurements-ipmi.xml"/>
+  </section>
+  <section xml:id="section_telemetry-snmp-metrics">
+    <title>SNMP based meters</title>
+    <para>Telemetry supports gathering SNMP based generic host metrics.
+      In order to be able to collect this data you need to run
+      <systemitem class="service">smpd</systemitem> on each target host.</para>
+    <para>The following meters are available about the host machines
+      by using SNMP:</para>
+    <xi:include href="tables/ceilometer-measurements-snmp.xml"/>
+  </section>
   <section xml:id="section_telemetry-network-metrics">
     <title>OpenStack Networking</title>
     <para>The following meters are collected for OpenStack Networking:</para>
