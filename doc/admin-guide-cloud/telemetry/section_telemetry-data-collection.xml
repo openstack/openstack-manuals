@@ -6,8 +6,8 @@
   xml:id="section_telemetry-data-collection">
   <title>Data collection</title>
   <para>The main responsibility of Telemetry in OpenStack is to collect
-    information about the system that can be used by billing systems or any
-    kinds of analytic tools for instance. The original focus, regarding to
+    information about the system that can be used by billing systems or
+    interpreted by analytic tooling. The original focus, regarding to
     the collected data, was on the counters that can be used for billing,
     but the range is getting wider continuously.</para>
   <para>Collected data can be stored in the form of samples or events in the
@@ -46,15 +46,16 @@
     <title>Notifications</title>
     <para>All the services send notifications about the executed operations or system
       state in OpenStack. Several notifications carry information that can be metered,
-      like when a new VM instance was created by OpenStack Compute service.</para>
+      like the CPU time of a VM instance created by OpenStack Compute service.</para>
     <para>The Telemetry module has a separate agent that is responsible for consuming
       notifications, namely the notification agent. This component is responsible for
-      consuming from the message bus and transforming notifications into new samples.
+      consuming from the message bus and transforming notifications into events and
+      measurement samples.
     </para>
     <para>The different OpenStack services emit several notifications about the various
       types of events that happen in the system during normal operation. Not all these
       notifications are consumed by the Telemetry module, as the intention is only to
-      capture the billable events and all those notifications that can be used for
+      capture the billable events and notifications that can be used for
       monitoring or profiling purposes. The notification agent filters by the event
       type, that is contained by each notification message. The following table
       contains the event types by each OpenStack service that are transformed to samples
@@ -163,7 +164,7 @@
       <title>Middleware for OpenStack Object Storage service</title>
       <para>A subset of Object Store statistics requires an additional middleware to be installed
         behind the proxy of Object Store. This additional component emits notifications containing
-        the data-flow-oriented meters, namely the storage.objects.(incoming|outgoing).bytes values.
+        data-flow-oriented meters, namely the storage.objects.(incoming|outgoing).bytes values.
         The list of these meters are listed in the <link xlink:href=
         "http://docs.openstack.org/developer/ceilometer/measurements.html#object-storage-swift">
         Swift</link> table section in the <citetitle>Telemetry Measurements Reference</citetitle>,
@@ -178,9 +179,12 @@
       <title>Telemetry middleware</title>
       <para>Telemetry provides the capability of counting the HTTP requests and responses
         for each API endpoint in OpenStack. This is achieved by storing a sample for each
-        event marked as <literal>http.request</literal> or <literal>http.response</literal>.</para>
-      <para>Telemetry can consume these events if the services are configured to emit
-        notifications with these two event types.</para>
+        event marked as <literal>audit.http.request</literal>, <literal>audit.http.response</literal>,
+        <literal>http.request</literal> or <literal>http.response</literal>.</para>
+      <para>It is recommended that these notifications be consumed as Events rather than samples
+        to better index the appropriate values and avoid massive load on the Metering database.
+        If preferred, Telemetry can consume these events as samples if the services are configured
+        to emit <literal>http.*</literal> notifications.</para>
     </section>
   </section>
   <section xml:id="section_telemetry-polling">
@@ -230,9 +234,9 @@
         Install the Telemetry module</link> section in the <citetitle>OpenStack
         Installation Guide</citetitle>.</para>
       <para>The central agent does not need direct database connection. The
-        samples collected by this agent are sent via message queue to the collector
-        service, which is responsible for persisting the data into the configured
-        database back end.</para>
+        samples collected by this agent are sent via AMQP to the collector
+        service or any external service, which is responsible for persisting the data
+        into the configured database back end.</para>
     </section>
     <section xml:id="section_telemetry-compute-agent">
       <title>Compute agent</title>
@@ -240,7 +244,7 @@
         instances on individual compute nodes within an OpenStack deployment. This
         mechanism requires a closer interaction with the hypervisor, therefore a
         separate agent type fulfills the collection of the related meters, which
-        placed on the host machines to locally retrieve this information.</para>
+        is placed on the host machines to locally retrieve this information.</para>
       <para>A compute agent instance has to be installed on each and every compute node,
         installation instructions can be found in the <link xlink:href=
         "http://docs.openstack.org/juno/config-reference/content/ch_configuring-openstack-telemetry.html">
@@ -248,13 +252,13 @@
         <citetitle>OpenStack Installation Guide</citetitle>.
       </para>
       <para>Just like the central agent, this component also does not need a direct database
-        access. The samples are sent via AMQP to the collector.
+        connection. The samples are sent via AMQP to the collector.
       </para>
       <para>The list of supported hypervisors can be found in
         <xref linkend="section_telemetry-supported-hypervisors"/>.
         The compute agent uses the API of the hypervisor installed on the compute hosts.
-        Therefore the supported meters can be different in case of each virtualization
-        back end, as these tools provide different set of metrics.</para>
+        Therefore the supported meters may be different in case of each virtualization
+        back end, as each inspection tool provides a different set of metrics.</para>
       <para>The list of collected meters can be found in the <link xlink:href=
         "http://docs.openstack.org/developer/ceilometer/measurements.html#compute-nova">
         Compute section</link> in the <citetitle>Telemetry Measurements Reference</citetitle>.
@@ -273,17 +277,23 @@
         library provides the coordination within the groups of service instances. It
         provides an API above several back ends that can be used for building
         distributed applications.</para>
-      <para>Tooz supports the following back-end solutions:
+      <para>Tooz supports <link xlink:href="http://docs.openstack.org/developer/tooz/drivers.html">
+        various drivers</link> including the following back end solutions:
         <itemizedlist>
           <listitem>
             <para><link xlink:href="http://zookeeper.apache.org/">Zookeeper</link>.
               Recommended solution by the Tooz project.</para>
           </listitem>
           <listitem>
-            <para><link xlink:href="http://memcached.org/">Memcached</link></para>
+            <para><link xlink:href="http://redis.io/">Redis</link>.
+              Recommended solution by the Tooz project.</para>
+          </listitem>
+          <listitem>
+            <para><link xlink:href="http://memcached.org/">Memcached</link>
+              Recommended for testing.</para>
           </listitem>
         </itemizedlist>
-        You must configure these back ends to use either of them for the HA deployment
+        You must configure a supported Tooz driver for the HA deployment
         of the Telemetry services.</para>
       <para>For information about the required configuration options that have to be set in the
         <filename>ceilometer.conf</filename> configuration file for both the central and compute
@@ -330,10 +340,10 @@
       <title>IPMI agent</title>
       <para>This agent is responsible for collecting IPMI sensor data and Intel Node Manager
         data on individual compute nodes within an OpenStack deployment. This
-        agent requires IPMI capable node with <application>ipmitool</application> installed, which
+        agent requires an IPMI capable node with <application>ipmitool</application> installed, which
         is a common utility for IPMI control on various Linux distributions.</para>
       <para>An IPMI agent instance could be installed on each and every compute node
-        with IPMI support, except that the node is managed by Bare metal module for OpenStack
+        with IPMI support, except when the node is managed by Bare metal module for OpenStack
         and the <option>conductor.send_sensor_data</option> option is set to <literal>true</literal>
         in the Bare metal module for OpenStack.
         It is no harm to install this agent on compute node without IPMI or Intel Node
@@ -356,7 +366,7 @@
   </section>
   <section xml:id="section_telemetry-post-api">
     <title>Send samples to Telemetry</title>
-    <para>Most parts of the data collections in the Telemetry module are automated.
+    <para>While most parts of the data collection in the Telemetry module are automated,
       Telemetry provides the possibility to submit samples via the REST API to allow
       users to send custom samples into this module.</para>
     <para>This option makes it possible to send any kind of samples without the need
@@ -399,9 +409,7 @@
         </listitem>
       </itemizedlist>
     </para>
-    <para>The <literal>memory.usage</literal> meter is not supported when Libvirt is used in an
-      OpenStack deployment. There is still a possibility to provide samples for
-      this meter based on any custom measurements. To send samples to Telemetry
+    <para>To send samples to Telemetry
       using the command line client, the following command should be invoked:
     <screen><prompt>$</prompt> <userinput>ceilometer sample-create -r 37128ad6-daaa-4d22-9509-b7e1c6b08697 \
   -m memory.usage --meter-type gauge --meter-unit MB --sample-volume 48</userinput>
@@ -424,25 +432,24 @@
   </section>
   <section xml:id="section_telemetry-data-collection-processing">
     <title>Data collection and processing</title>
-    <para>The mechanism via the data is collected and processed and is called
+    <para>The mechanism by which data is collected and processed and is called a
       pipeline. Pipelines, at the configuration level, describe a coupling between
-      sources of samples and the corresponding sinks for transformation and
+      sources of data and the corresponding sinks for transformation and
       publication of data.</para>
-    <para>A source is a producer of samples, in effect, a set of pollsters
-      and/or notification handlers emitting samples for a set of matching meters.
+    <para>A source is a producer of data: samples or events. In effect, it is a set of pollsters
+      or notification handlers emitting datapoints for a set of matching meters and event types.
     </para>
-    <para>Each source configuration encapsulates meter name matching, polling
+    <para>Each source configuration encapsulates name matching, polling
       interval determination, optional resource enumeration or discovery, and
       mapping to one or more sinks for publication.</para>
-    <para>A sink on the other hand is a consumer of samples, providing logic
-      for the transformation and publication of samples emitted from related
-      sources. Each sink configuration is concerned only with the
-      transformation rules and publication conduits for samples.</para>
+    <para>A sink on the other hand is a consumer of data, providing logic
+      for the transformation and publication of data emitted from related
+      sources</para>
     <para>In effect, a sink describes a chain of handlers. The chain starts
       with zero or more transformers and ends with one or more publishers.
-      The first transformer in the chain is passed samples from the corresponding
+      The first transformer in the chain is passed data from the corresponding
       source, takes some action such as deriving rate of change, performing unit
-      conversion, or aggregating, before passing the modified sample to the
+      conversion, or aggregating, before passing the modified data to the
       next step that is described in
       <xref linkend="section_telemetry-publishers"/>.</para>
     <section xml:id="section_telemetry-pipeline-configuration">
@@ -473,9 +480,8 @@ sinks:
     publishers:
       - 'list of publishers'</programlisting>
       <para>The interval parameter in the sources section should be defined in seconds.
-        It determines the cadence of sample injection into the pipeline, where samples
-        are produced under the direct control of an agent, for instance via a polling
-        cycle as opposed to incoming notifications.</para>
+        It determines the polling cadence of sample injection into the pipeline, where samples
+        are produced under the direct control of an agent.</para>
       <para>There are several ways to define the list of meters for a pipeline source.
         The list of valid meters can be found in the <link xlink:href=
         "http://docs.openstack.org/developer/ceilometer/measurements.html"> Telemetry
@@ -484,7 +490,9 @@ sinks:
         operate:</para>
       <itemizedlist>
         <listitem>
-          <para>To include all meters, use the <literal>*</literal> wildcard symbol.</para>
+          <para>To include all meters, use the <literal>*</literal> wildcard symbol.
+            It is highly advisable to select only the meters that you intend on using
+            to avoid flooding the metering database with unused data.</para>
         </listitem>
         <listitem>
           <para>To define the list of meters, use either of the following:</para>
@@ -508,7 +516,7 @@ sinks:
       <note>
         <para>Please be aware that we do not have any duplication check
             between pipelines and if you add a meter to multiple pipelines
-            then it will be polled in each one and will be also stored
+            then it is assumed the duplication is intentional and may be stored
             multiple times according to the specified sinks.</para>
       </note>
       <para>The above definition methods can be used in the following combinations:</para>
@@ -742,10 +750,11 @@ sinks:
       <screen><prompt>$</prompt> <userinput>cinder-volume-usage-audit \
   --start_time='YYYY-MM-DD HH:MM:SS' --end_time='YYYY-MM-DD HH:MM:SS' --send_actions</userinput></screen>
       <para>This script outputs what volumes or snapshots were
-            created or deleted or existed in a given period of time and some
+            created, deleted, or exists in a given period of time and some
             information about these volumes or snapshots. Information about the
             existence and size of volumes and snapshots is store in the Telemetry
-            module.</para>
+            module. This data is also stored as an event which is the recommended usage as it
+            provides better indexing of data.</para>
       <para>Using this script via cron you can get notifications periodically,
       for example, every 5 minutes.</para>
       <programlisting>*/5 * * * * /path/to/cinder-volume-usage-audit --send_actions</programlisting>
@@ -753,16 +762,15 @@ sinks:
   <section xml:id="section_telemetry-storing-data">
     <title>Storing samples</title>
     <para>The Telemetry module has a separate service that is responsible for persisting the data
-      that is coming from the pollsters or received as notifications. The data can be stored in
+      that comes from the pollsters or is received as notifications. The data can be stored in
       a file or a database back end, for which the list of supported databases can be found in
       <xref linkend="section_telemetry-supported-dbs"/>. The data can also be sent to an external
       data store by using an HTTP dispatcher.
     </para>
     <para>The <systemitem class="service">ceilometer-collector</systemitem> service receives the
-      samples as metering messages from the message bus of the configured AMQP service. It stores
-      these samples without any modification in the configured file or database back end, or in
-      the external data store as dispatched by the HTTP dispatcher. The service has to run on a
-      host machine from which it has access to the configured dispatcher.</para>
+      data as messages from the message bus of the configured AMQP service. It
+      sends these datapoints without any modification to the configured target.
+      The service has to run on a host machine from which it has access to the configured dispatcher.</para>
     <note>
       <para>Multiple dispatchers can be configured for Telemetry at one time.</para>
     </note>
@@ -774,8 +782,8 @@ sinks:
       collector section</link> of the <filename>ceilometer.conf</filename>
       configuration file.</para>
     <note>
-      <para>Using multiple workers per collector process is not recommended to be used with
-        PostgreSQL as database back end.</para>
+      <para>Prior to the Juno release, it is not recommended to use multiple workers per collector
+        process when using PostgreSQL as the database back end.</para>
     </note>
     <simplesect>
       <title>Database dispatcher</title>
@@ -784,62 +792,51 @@ sinks:
         live value for samples is set to -1, which means that they are kept in the database forever.
       </para>
       <para>The time to live value is specified in seconds. Each sample has a time stamp, and the
-        <literal>ttl</literal> value indicates that a sample is deleted from the database when
+        <literal>ttl</literal> value indicates that a sample will be deleted from the database when
         the number of seconds has elapsed since that sample reading was stamped. For example,
-        if the sampling occurs every 60 seconds, and the time to live is set to 600, only ten
-        samples are stored in the database.</para>
-      <para>During the deletion of samples <literal>resources</literal> and <literal>users</literal>
-        can remain in the database without a corresponding sample when the time to live has expired,
-        you may need to delete the entries related to the expired samples. The command-line script,
-        which you can use for this purpose is
+        if the time to live is set to 600, all samples older than 600 seconds will be purged from
+        the database.</para>
+      <para>Certain databases support native TTL expiration. In cases where this is not possible,
+        a command-line script, which you can use for this purpose is
         <systemitem class="service">ceilometer-expirer</systemitem>. You can run it in a cron job,
-        which helps keeping your database in a consistent state.</para>
+        which helps to keep your database in a consistent state.</para>
       <para>The level of support differs in case of the configured back end:</para>
       <table rules="all">
         <caption>Time-to-live support for database back ends</caption>
         <col width="24%"/>
-        <col width="38%"/>
-        <col width="38%"/>
+        <col width="18%"/>
+        <col width="58%"/>
         <thead>
           <tr>
             <td>Database</td>
-            <td>ttl value support</td>
-            <td><systemitem class="service">ceilometer-expirer</systemitem>
-              capabilities</td>
+            <td>TTL value support</td>
+            <td>Note</td>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>MongoDB</td>
-            <td>MongoDB has a built-in mechanism for deleting samples that are older
+            <td>Yes</td>
+            <td>MongoDB has native TTL support for deleting samples that are older
               than the configured ttl value.</td>
-            <td>In case of this database, only the lingering dead resource,
-              user and project entries will be deleted by
-              <systemitem class="service">ceilometer-expirer</systemitem>.
-            </td>
           </tr>
           <tr>
             <td>SQL-based back ends</td>
-            <td>The library (SQLAlchemy) that is used for accessing SQL-based back ends does
-              not support using the ttl value.</td>
+            <td>Yes</td>
             <td><systemitem class="service">ceilometer-expirer</systemitem> has to be
-              used for deleting both the samples and the remaining entires in other
-              database tables. The script will delete samples based on the
-              <parameter>time_to_live</parameter> value that is set in the
-              configuration file.</td>
+              used for deleting samples and its related data from the database.</td>
           </tr>
           <tr>
             <td>HBase</td>
-            <td>HBase does not support this functionality currently, therefore the ttl value
-              in the configuration file is ignored.</td>
-            <td>The samples are not deleted by using
-              <systemitem class="service">ceilometer-expirer</systemitem>,
-              this functionality is not supported.</td>
+            <td>No</td>
+            <td>Telemetry's HBase support does not include native TTL nor
+              <systemitem class="service">ceilometer-expirer</systemitem> support.</td>
           </tr>
           <tr>
-            <td>DB2</td>
-            <td>Same case as MongoDB.</td>
-            <td>Same case as MongoDB.</td>
+            <td>DB2 NoSQL</td>
+            <td>No</td>
+            <td>DB2 NoSQL does not have native TTL nor
+              <systemitem class="service">ceilometer-expirer</systemitem> support.</td>
           </tr>
         </tbody>
       </table>
@@ -847,7 +844,7 @@ sinks:
     <simplesect>
       <title>HTTP dispatcher</title>
       <para>The Telemetry module supports sending samples to an external HTTP target. The
-        samples are sent without any modification. To set this option as data storage, the
+        samples are sent without any modification. To set this option as the collector's target, the
         <option>dispatcher</option> has to be changed to <literal>http</literal> in the
         <filename>ceilometer.conf</filename> configuration file. For the list
         of options that you need to set, see the see the
