@@ -2,8 +2,18 @@
 <section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="nova_manage_images">
     <title>Create an image (nova)</title>
-    <para>You can use the <command>nova</command> client to take a snapshot of a running instance to
-        create an image.</para>
+
+    <para>You can use the <command>nova</command> client to create an image
+        of a running instance.</para>
+
+    <para>Use <command>nova image-create</command>
+        to create a snapshot, and <command>nova backup</command>
+        to backup an instance. Both commands result in a snapshot creation,
+        though the backuping operation provides a mechanism for the
+        automatic rotation of the snapshots.</para>
+
+    <simplesect>
+    <title>Create a snapshot</title>
     <para>To minimize the potential for data loss and ensure that you create an accurate image, you
         should shut down the instance before you take a snapshot.</para>
     <procedure>
@@ -14,6 +24,7 @@
                     >Taking Snapshots</link> in the <citetitle>OpenStack Operations
                     Guide</citetitle>.</para>
         </step>
+
         <step>
             <para>List instances to get the server name:</para>
             <screen><prompt>$</prompt> <userinput>nova list</userinput>
@@ -22,13 +33,16 @@
 +--------------------------------------+----------------------+--------+------------+-------------+------------------+
 | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
 +--------------------------------------+----------------------+--------+------------+-------------+------------------+</computeroutput></screen>
+
             <para>In this example, the instance is named <literal>myCirrosServer</literal>.</para>
         </step>
+
         <step>
             <para>Use this instance to create a snapshot:</para>
             <screen><prompt>$</prompt> <userinput>nova image-create myCirrosServer myCirrosImage</userinput></screen>
             <para>The command creates a snapshot and automatically uploads the image to your
                 repository.</para>
+
             <note>
                 <para>For snapshots that you create from an instance that was booted from a
                     volume:</para>
@@ -46,7 +60,9 @@
                     </listitem>
                 </itemizedlist>
             </note>
+
         </step>
+
         <step>
             <para>Get details for your image to check its status:</para>
             <screen><prompt>$</prompt> <userinput>nova image-show myCirrosImage</userinput>
@@ -83,15 +99,17 @@
 | metadata kernel_id                  | df430cc2-3406-4061-b635-a51c16e488ac |
 | metadata instance_type_ephemeral_gb | 0                                    |
 +-------------------------------------+--------------------------------------+</computeroutput></screen>
+
             <para>The image status changes from <literal>SAVING</literal> to
-                    <literal>ACTIVE</literal>. Only the tenant who creates the image has access to
-                it.</para>
+                  <literal>ACTIVE</literal>. Only the tenant who creates the image has access to
+                  it.</para>
         </step>
     </procedure>
+
     <para>To launch an instance from your image, include the image ID and flavor ID, as in the
         following example:</para>
     <screen><prompt>$</prompt> <userinput>nova boot newServer --image 7e5142af-1253-4634-bcc6-89482c5f2e8a \
-   --flavor 3</userinput>
+ --flavor 3</userinput>
 <?db-font-size 50%?><computeroutput>+-------------------------------------+--------------------------------------+
 | Property                            | Value                                |
 +-------------------------------------+--------------------------------------+
@@ -122,4 +140,64 @@
 | created                             | 2013-07-22T19:58:33Z                 |
 | metadata                            | {}                                   |
 +-------------------------------------+--------------------------------------+</computeroutput></screen>
+</simplesect>
+
+<simplesect>
+  <title>Create a backup</title>
+
+  <para>The <command>nova backup</command> command creates a backup of
+  an instance. It takes several positional arguments.  Apart from the
+  name or ID of a source instance, and the name of the resulting
+  back-up image, it requires the <literal>backup-type</literal>
+  argument with the possible values <literal>daily</literal> or
+  <literal>weekly</literal>, and the <parameter>rotation</parameter>
+  argument. The rotation number is an integer standing for the number
+  of back-up images (associated with a single instance) to keep
+  around. If this number exceeds the rotation threshold, the excess
+  backups are deleted automatically.</para>
+
+  <procedure>
+    <step>
+      <para>To create a back-up type snapshot of the
+      <literal>myCirrosServer</literal> instance, pass the following
+      command:</para>
+      <screen><prompt>$</prompt> <userinput>nova backup myCirrosServer myCirrosServer_backup daily 1</userinput></screen>
+
+      <para>On the execution of the command above, OpenStack Compute
+      sorts all the images of a daily back-up type by the
+      <literal>created_at</literal> attribute, leaves the latest one,
+      and discards other back-up images form the list, thereby
+      ensuring automatic rotation of the backups.</para>
+      <note>
+        <para>As well as a snapshot, a back-up type image is
+        accessible only for the tenant it is created under.
+        </para>
+      </note>
+    </step>
+
+    <step>
+      <para>Ensure that the back-up image is created:</para>
+<screen><prompt>$</prompt> <userinput>nova image-list</userinput>
+<?db-font-size 50%?><computeroutput>+--------------------------------------+-----------------------+--------+---------------------------------------+
+| ID                                   | Name                  | Status | Server                                |
++--------------------------------------+-----------------------+--------+---------------------------------------+
+| e4a0105d-b4d9-44f5-95ff-89d789f251cd | myCirrosServer_backup | ACTIVE | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5  |
++--------------------------------------+-----------------------+--------+---------------------------------------+</computeroutput></screen>
+    </step>
+
+    <step>
+      <para>Get details for your image by passing the command:</para>
+<screen><prompt>$</prompt> <userinput>nova image-show myCirrosServer_backup</userinput></screen>
+    </step>
+
+    <step>
+      <para>Use the <command>nova boot</command> command to launch an
+      instance from the backup image:</para>
+<screen><prompt>$</prompt> <userinput>nova boot newServer_from_backup --image e4a0105d-b4d9-44f5-95ff-89d789f251cd \
+ --flavor 3</userinput></screen>
+    </step>
+  </procedure>
+
+</simplesect>
+
 </section>
