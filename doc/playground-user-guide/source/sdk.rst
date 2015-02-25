@@ -24,4 +24,4 @@ You should also be familiar with:
    sdk_configure_access_security_instances.rst
    sdk_authenticate_networking_endpoint.rst
    sdk_authenticate_compute_output.rst
-.. add sdk_assign_cors_headers.rst when migrated TODO(DC)
+   sdk_assign_cors_headers.rst

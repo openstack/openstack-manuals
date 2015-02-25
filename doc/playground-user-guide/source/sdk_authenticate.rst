@@ -1,3 +1,5 @@
+.. _sdk_authenticate:
+
 ============
 Authenticate
 ============
