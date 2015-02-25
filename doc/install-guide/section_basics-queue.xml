@@ -80,21 +80,38 @@
           of each OpenStack service that uses the message broker.</para>
       </note>
     </step>
-    <step os="opensuse;sles">
-        <para>
-          If you are running RabbitMQ version 3.3.0 or higher, you
-          need to allow remote connection of the guest user as well.
-          Edit the <filename>/etc/rabbitmq/rabbitmq.config</filename> file
-          and add or uncomment this line:
-          <programlisting>{loopback_users, []}</programlisting>
-        </para>
-        <para>Restart the message broker service:</para>
-        <para os="sles">On SLES:</para>
-        <screen os="sles"><prompt>#</prompt> <userinput>service rabbitmq-server restart</userinput></screen>
-        <para os="opensuse">On openSUSE:</para>
-        <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart rabbitmq-server.service</userinput></screen>
+    <step>
+      <para>For RabbitMQ version 3.3.0 or newer, you must enable remote
+        access for the <literal>guest</literal> account.</para>
+      <substeps>
+        <step>
+          <para>Check the RabbitMQ version:</para>
+          <screen><prompt>#</prompt> <userinput>rabbitmqctl status | grep rabbit</userinput>
+<computeroutput>Status of node 'rabbit@controller' ...
+ {running_applications,[{rabbit,"RabbitMQ","3.4.2"},</computeroutput></screen>
+        </step>
+        <step>
+          <para>If necessary, edit the
+            <filename>/etc/rabbitmq/rabbitmq.config</filename>
+            file and configure <literal>loopback_users</literal> to
+            reference an empty list:</para>
+          <programlisting>[{rabbit, [{loopback_users, []}]}].</programlisting>
+          <note>
+            <para>Contents of the original file might vary depending on the
+              source of the RabbitMQ package. In some cases, you might need
+              to create this file.</para>
+          </note>
+        </step>
+        <step>
+          <para>Restart the message broker service:</para>
+          <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service rabbitmq-server restart</userinput></screen>
+          <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart rabbitmq-server.service</userinput></screen>
+          <para os="sles">On SLES:</para>
+          <screen os="sles"><prompt>#</prompt> <userinput>service rabbitmq-server restart</userinput></screen>
+          <para os="opensuse">On openSUSE:</para>
+          <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart rabbitmq-server.service</userinput></screen>
+        </step>
+      </substeps>
     </step>
   </procedure>
-  <para>Congratulations, you are now ready to install OpenStack
-    services!</para>
 </section>
