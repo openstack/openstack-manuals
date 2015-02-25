@@ -187,6 +187,15 @@
                 <screen><prompt>$</prompt> <userinput>nova boot --flavor <replaceable>FLAVOR_ID</replaceable> --image <replaceable>IMAGE_ID</replaceable> --key-name <replaceable>KEY_NAME</replaceable> \
   --user-data <replaceable>USER_DATA_FILE</replaceable> --security-groups <replaceable>SEC_GROUP_NAME</replaceable> --meta <replaceable>KEY=VALUE</replaceable> \
   <replaceable>INSTANCE_NAME</replaceable></userinput></screen>
+
+            <important>
+                <para>If you boot an instance with an <replaceable>INSTANCE_NAME</replaceable>
+                      greater than 63 characters, Compute truncates it automatically
+                      when turning it into a hostname to ensure the correct work of
+                      <literal>dnsmasq</literal>. The corresponding warning is
+                      written into the <filename>nova-network.log</filename> file.</para>
+            </important>
+
                 <para>The following command launches the
                         <literal>MyCirrosServer</literal> instance
                     with the <literal>m1.small</literal> flavor (ID of
