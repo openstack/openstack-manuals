@@ -8,24 +8,39 @@
     <title>Prescriptive examples</title>
     <para>Storage-focused architectures are highly dependent on the
         specific use case. Three specific example use cases are
-        discussed in this section: an object store with a RESTful
-        interface, compute analytics with parallel file systems, and a
-        high performance database.</para>
-    <para>This example describes a REST interface without a high
-        performance requirement, so the presented REST interface does
-        not require a high performance caching tier, and is presented
-        as a traditional Object store running on traditional
-        spindles.</para>
+        discussed in this section:</para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            An object store with a RESTful interface
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Compute analytics with parallel file systems
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            High performance database
+          </para>
+        </listitem>
+      </itemizedlist>
+    <para>The example below shows a REST interface without a high
+       performance requirement.</para>
     <para>Swift is a highly scalable object store that is part of the
-        OpenStack project. This is a diagram to explain the example
+        OpenStack project. This diagram explains the example
         architecture:
-    <mediaobject>
-        <imageobject>
-            <imagedata contentwidth="4in"
-                fileref="../figures/Storage_Object.png"
-            />
-        </imageobject>
-    </mediaobject></para>
+      <mediaobject>
+          <imageobject>
+              <imagedata contentwidth="4in"
+                  fileref="../figures/Storage_Object.png"/>
+          </imageobject>
+      </mediaobject>
+    </para>
+    <para>The presented REST interface does not require a high performance
+        caching tier, and is presented as a traditional Object store running
+        on traditional spindles.</para>
     <para>This example uses the following components:</para>
     <para>Network:</para>
     <itemizedlist>
@@ -37,8 +52,8 @@
     <para>Storage hardware:</para>
     <itemizedlist>
         <listitem>
-            <para>10 storage servers each with 12x4 TB disks which
-                equals 480 TB total space with approximately 160 Tb of
+            <para>10 storage servers each with 12x4 TB disks equalling
+                480 TB total space with approximately 160 Tb of
                 usable space after replicas.</para>
         </listitem>
     </itemizedlist>
@@ -58,77 +73,80 @@
                 back end storage cluster</para>
         </listitem>
     </itemizedlist>
-    <note><para>For some applications, it may be necessary to
-        implement a 3rd-party caching layer to achieve suitable
-        performance.</para></note>
-    <section xml:id="compute-analytics-with-sahara">
-      <title>Compute analytics with Data processing service for
-      OpenStack</title>
-    <para>Analytics of large data sets can be highly dependent on the
-        performance of the storage system. Some clouds using storage
-        systems such as HDFS have inefficiencies which can cause
-        performance issues. A potential solution to this is to
-        implement a storage system designed with performance in mind.
-        Traditionally, parallel file systems have filled this need in
-        the HPC space and could be a consideration, when applicable,
-        for large scale performance-oriented systems.</para>
-    <para>This example discusses an OpenStack Object Store with a high
-        performance requirement. OpenStack has integration with Hadoop
-        through the Data processing project (Sahara), which is leveraged
-        to manage the Hadoop cluster within the cloud.
+      <note>
+        <para>It may be necessary to implement a 3rd-party caching layer
+          for some applications to achieve suitable performance.</para>
+      </note>
+
+  <section xml:id="compute-analytics-with-sahara">
+    <title>Compute analytics with Data processing service</title>
+  <para>Analytics of large data sets are highly dependent on the performance
+      of the storage system. Clouds using storage systems such as
+      Hadoop Distributed File System (HDFS) have inefficiencies which can
+      cause performance issues.
+  </para>
+  <para>One potential solution to this problem is the implentation of storage
+      systems designed for performance. Parallel file systems have previously
+      filled this need in the HPC space and as a result could be considered
+      for large scale performance-orientated systems.</para>
+  <para>OpenStack has integration with Hadoop to manage the Hadoop cluster
+      within the cloud. This diagram shows an OpenStack store with a high
+      performance requirement:
     <mediaobject>
         <imageobject>
             <imagedata contentwidth="4in"
-                fileref="../figures/Storage_Hadoop3.png"
-            />
+                fileref="../figures/Storage_Hadoop3.png"/>
         </imageobject>
-    </mediaobject></para>
-    <para>The actual hardware requirements and configuration are
-        similar to those of the High Performance Database example
-        below. In this case, the architecture uses Ceph's
-        Swift-compatible REST interface, features that allow for
-        connecting a caching pool to allow for acceleration of the
-        presented pool.</para></section>
-    <section xml:id="high-performance-database-with-trove">
-        <title>High performance database with Database service for OpenStack</title>
-    <para>Databases are a common workload that can greatly benefit
-        from a high performance storage back end. Although enterprise
-        storage is not a requirement, many environments have existing
-        storage that can be used as back ends for an OpenStack cloud.
-        As shown in the following diagram, a storage pool can be
-        carved up to provide block devices with OpenStack Block
-        Storage to instances as well as an object interface. In this
-        example the database I-O requirements were high and demanded
-        storage presented from a fast SSD pool.</para>
-    <para>A storage system is used to present a LUN that is backed by
-        a set of SSDs using a traditional storage array with OpenStack
-        Block Storage integration or a storage platform such as Ceph
-        or Gluster.</para>
-    <para>This kind of system can also provide additional performance
-        in other situations. For example, in the database example
-        below, a portion of the SSD pool can act as a block device to
-        the Database server. In the high performance analytics
-        example, the REST interface would be accelerated by the inline
-        SSD cache layer.</para>
+    </mediaobject>
+  </para>
+  <para>The hardware requirements and configuration are
+      similar to those of the High Performance Database example
+      below. In this case, the architecture uses Ceph's
+      Swift-compatible REST interface, features that allow for
+      connecting a caching pool to allow for acceleration of the
+      presented pool.
+  </para>
+  </section>
+
+  <section xml:id="high-performance-database-with-trove">
+    <title>High performance database with Database service</title>
+  <para>Databases are a common workload that benefit from high performance
+      storage back ends. Although enterprise storage is not a requirement,
+      many environments have existing storage that can be used as back ends for
+      OpenStack cloud. A storage pool can be created to provide block devices
+      with OpenStack Block Storage for instances as well as object interfaces.
+      In this example, the database I-O requirements were high and demanded
+      storage presented from a fast SSD pool.</para>
+  <para>A storage system is used to present a LUN that is backed by
+      a set of SSDs using a traditional storage array with OpenStack
+      Block Storage integration or a storage platform such as Ceph
+      or Gluster.</para>
+  <para>This system can provide additional performance. For example,
+      in the database example below, a portion of the SSD pool can act
+      as a block device to the Database server. In the high performance analytics
+      example, the REST interface would be accelerated by the inline
+      SSD cache layer.</para>
     <mediaobject>
         <imageobject>
             <imagedata contentwidth="4in"
-                fileref="../figures/Storage_Database_+_Object5.png"
-            />
+                fileref="../figures/Storage_Database_+_Object5.png"/>
         </imageobject>
     </mediaobject>
     <para>Ceph was selected to present a Swift-compatible REST
         interface, as well as a block level storage from a distributed
         storage cluster. It is highly flexible and has features that
         allow to reduce cost of operations such as self healing and
-        auto balancing. Erasure coded pools are used to maximize the
-        amount of usable space. Note that there are special
-        considerations around erasure coded pools, for example, higher
-        computational requirements and limitations on the operations
-        allowed on an object. For example, partial writes are not
-        supported in an erasure coded pool.</para>
-    <para>A potential architecture for Ceph, as it relates to the
-        examples above, would entail the following:</para>
+        auto balancing. Using erasure coded pools are a suitable way of
+        maximizing the amount of usable space.</para>
+      <note>
+        <para>There are special considerations around erasure coded pools.
+        For example, higher computational requirements and limitations on
+        the operations allowed on an object; partial writes are not
+        supported in an erasure coded pool.
+        </para>
+      </note>
+    <para>Using Ceph as an applicable example, a potential architecture
+        would have the following requirements:</para>
     <para>Network:</para>
     <itemizedlist>
         <listitem>
@@ -164,8 +182,9 @@
                 back end storage cluster</para>
         </listitem>
     </itemizedlist>
-    <para>The SSD cache layer is used to present block devices
+    <para>Using an SSD cache layer, you can present block devices
         directly to Hypervisors or instances. The SSD cache systems
         can also be used as an inline cache for the REST interface.
-  </para></section>
+    </para>
+  </section>
 </section>
