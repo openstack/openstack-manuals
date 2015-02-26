@@ -11,7 +11,7 @@
       storage protocol.</para>
     <para>This driver is compatible with Purity FlashArrays that support the REST API (Purity
       3.4.0 and newer) and that are capable of iSCSI connectivity. This release supports
-      installation with OpenStack clusters running the Juno version that use the KVM or QEMU
+      installation with OpenStack clusters running the Kilo version that use the KVM or QEMU
       hypervisors together with OpenStack Compute service's libvirt driver.</para>
     <section xml:id="pure-storage-driver-limitations">
       <title>Limitations and known issues</title>
@@ -20,23 +20,33 @@
         significantly limiting the available bandwidth, this means you do not have the
         high-availability and non-disruptive upgrade benefits provided by FlashArray.</para>
       <para>Workaround: You must set up multipathing on your hosts.</para>
-      <para>In the default configuration, OpenStack Block Storage does not provision volumes on a backend whose
-        available raw space is less than the logical size of the new volume. Due to Purity's data
-        reduction technology, such a volume could actually fit in the backend, and thus OpenStack Block Storage
-        default configuration does not take advantage of all available space.</para>
-      <para>Workaround: Turn off the CapacityFilter.</para>
     </section>
   <section xml:id="pure-storage-driver-supported-operations">
     <title>Supported operations</title>
     <itemizedlist>
       <listitem>
-      <para>Create, delete, attach, detach, clone and extend volumes.</para>
+      <para>Create, delete, attach, detach, retype, clone, and extend volumes.</para>
     </listitem>
     <listitem>
       <para>Create a volume from snapshot.</para>
     </listitem>
     <listitem>
-      <para>Create and delete volume snapshots.</para>
+      <para>Create, list, and delete volume snapshots.</para>
+    </listitem>
+    <listitem>
+      <para>Create, list, update, and delete consistency groups.</para>
+    </listitem>
+    <listitem>
+      <para>Create, list, and delete consistency group snapshots.</para>
+    </listitem>
+    <listitem>
+      <para>Manage and unmanage a volume.</para>
+    </listitem>
+    <listitem>
+      <para>Get volume statistics.</para>
+    </listitem>
+    <listitem>
+      <para>Create a thin provisioned volume.</para>
     </listitem>
     </itemizedlist>
   </section>
@@ -128,44 +138,13 @@ use_multipath_for_image_xfer = True</programlisting>
           </step>
         </substeps>
       </step>
-      <step>
-        <title>Create Purity host objects</title>
-        <para>Before using the volume driver, follow these steps to create a host in Purity for each OpenStack
-          iSCSI initiator IQN that will connect to the FlashArray.</para>
-        <para>For every node that the driver runs on and every compute node that will connect to
-          the FlashArray:</para>
-        <substeps>
-          <step>
-            <para>check the file <filename>/etc/iscsi/initiatorname.iscsi</filename>.</para>
-            <para>For each IQN in that file:</para>
-            <substeps>
-              <step>
-                <para>copy the IQN string and run the following command to create a Purity host for an IQN:</para>
-                <screen><prompt>$</prompt> <userinput>purehost create --iqnlist <replaceable>IQN</replaceable> <replaceable>HOST</replaceable></userinput></screen>
-                <para>Replace the following variables accordingly:</para>
-                <variablelist>
-                  <varlistentry>
-                    <term>IQN</term>
-                    <listitem>
-                      <para>The IQN retrieved from the <filename>/etc/iscsi/initiatorname.iscsi</filename> file</para>
-                    </listitem>
-                  </varlistentry>
-                  <varlistentry>
-                    <term>HOST</term>
-                    <listitem>
-                      <para>An unique friendly name for this entry.</para>
-                    </listitem>
-                  </varlistentry>
-                </variablelist>
-                <note>
-                  <para>Do not specify multiple IQNs with the <option>--iqnlist</option> option. Each FlashArray
-                    host must be configured to a single OpenStack IQN.</para>
-                </note>
-              </step>
-            </substeps>
-          </step>
-        </substeps>
-      </step>
     </procedure>
+    <note>
+     <para>The volume driver automatically creates purity host objects for initiators as needed. If
+       CHAP authentication is enabled via the <option>use_chap_auth</option> settting, you must ensure
+       there are no manually created host objects with IQN's that will be used by the OpenStack Block
+       Storage. The driver will only modify credentials on hosts that it manages.
+     </para>
+    </note>
   </section>
 </section>
