@@ -15,7 +15,7 @@
        OpenStack command-line interface (CLI).
 
        This chapter documents <command>openstack</command> version
-        <literal>0.4.1</literal>.
+        <literal>1.0.2</literal>.
     </para>
 
     <para>For help on a specific <command>openstack</command>
@@ -26,27 +26,29 @@
     <section xml:id="openstackclient_command_usage">
        <title>openstack usage</title>
         <screen><computeroutput>usage: openstack [--version] [-v] [--log-file LOG_FILE] [-q] [--debug]
-                 [--os-auth-url &lt;auth-url&gt;]
-                 [--os-domain-name &lt;auth-domain-name&gt;]
-                 [--os-domain-id &lt;auth-domain-id&gt;]
-                 [--os-project-name &lt;auth-project-name&gt;]
-                 [--os-project-id &lt;auth-project-id&gt;]
-                 [--os-username &lt;auth-username&gt;]
-                 [--os-password &lt;auth-password&gt;]
-                 [--os-user-domain-name &lt;auth-user-domain-name&gt;]
-                 [--os-user-domain-id &lt;auth-user-domain-id&gt;]
-                 [--os-project-domain-name &lt;auth-project-domain-name&gt;]
-                 [--os-project-domain-id &lt;auth-project-domain-id&gt;]
-                 [--os-region-name &lt;auth-region-name&gt;]
+                 [--os-url &lt;url&gt;] [--os-region-name &lt;auth-region-name&gt;]
                  [--os-cacert &lt;ca-bundle-file&gt;] [--verify | --insecure]
-                 [--os-default-domain &lt;auth-domain&gt;] [--os-token &lt;token&gt;]
-                 [--os-url &lt;url&gt;] [--timing]
+                 [--os-default-domain &lt;auth-domain&gt;] [--timing]
                  [--os-compute-api-version &lt;compute-api-version&gt;]
                  [--os-network-api-version &lt;network-api-version&gt;]
                  [--os-image-api-version &lt;image-api-version&gt;]
                  [--os-volume-api-version &lt;volume-api-version&gt;]
                  [--os-identity-api-version &lt;identity-api-version&gt;]
-                 [--os-trust-id &lt;trust-id&gt;]
+                 [--os-auth-type &lt;auth-type&gt;] [--os-username &lt;auth-username&gt;]
+                 [--os-identity-provider &lt;auth-identity-provider&gt;]
+                 [--os-project-domain-name &lt;auth-project-domain-name&gt;]
+                 [--os-project-domain-id &lt;auth-project-domain-id&gt;]
+                 [--os-project-name &lt;auth-project-name&gt;]
+                 [--os-auth-url &lt;auth-auth-url&gt;]
+                 [--os-trust-id &lt;auth-trust-id&gt;]
+                 [--os-service-provider-endpoint &lt;auth-service-provider-endpoint&gt;]
+                 [--os-user-domain-id &lt;auth-user-domain-id&gt;]
+                 [--os-domain-name &lt;auth-domain-name&gt;]
+                 [--os-identity-provider-url &lt;auth-identity-provider-url&gt;]
+                 [--os-token &lt;auth-token&gt;] [--os-domain-id &lt;auth-domain-id&gt;]
+                 [--os-user-domain-name &lt;auth-user-domain-name&gt;]
+                 [--os-user-id &lt;auth-user-id&gt;] [--os-password &lt;auth-password&gt;]
+                 [--os-project-id &lt;auth-project-id&gt;]
                  [--os-object-api-version &lt;object-api-version&gt;] [-h]</computeroutput></screen>
     </section>
     <section xml:id="openstackclient_command_optional">
@@ -101,98 +103,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-auth-url &lt;auth-url&gt;</command></term>
+    <term><command>--os-url &lt;url&gt;</command></term>
     <listitem>
       <para>
-      Authentication URL (Env: OS_AUTH_URL)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-domain-name &lt;auth-domain-name&gt;</command></term>
-    <listitem>
-      <para>
-      Domain name of the requested domain-level
-      authorization scope (Env: OS_DOMAIN_NAME)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-domain-id &lt;auth-domain-id&gt;</command></term>
-    <listitem>
-      <para>
-      Domain ID of the requested domain-level authorization
-      scope (Env: OS_DOMAIN_ID)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-name &lt;auth-project-name&gt;</command></term>
-    <listitem>
-      <para>
-      Project name of the requested project-level
-      authorization scope (Env: OS_PROJECT_NAME)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-id &lt;auth-project-id&gt;</command></term>
-    <listitem>
-      <para>
-      Project ID of the requested project-level
-      authorization scope (Env: OS_PROJECT_ID)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-username &lt;auth-username&gt;</command></term>
-    <listitem>
-      <para>
-      Authentication username (Env: OS_USERNAME)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-password &lt;auth-password&gt;</command></term>
-    <listitem>
-      <para>
-      Authentication password (Env: OS_PASSWORD)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-user-domain-name &lt;auth-user-domain-name&gt;</command></term>
-    <listitem>
-      <para>
-      Domain name of the user (Env: OS_USER_DOMAIN_NAME)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-user-domain-id &lt;auth-user-domain-id&gt;</command></term>
-    <listitem>
-      <para>
-      Domain ID of the user (Env: OS_USER_DOMAIN_ID)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-domain-name &lt;auth-project-domain-name&gt;</command></term>
-    <listitem>
-      <para>
-      Domain name of the project which is the requested
-      project-level authorization scope (Env:
-      OS_PROJECT_DOMAIN_NAME)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-domain-id &lt;auth-project-domain-id&gt;</command></term>
-    <listitem>
-      <para>
-      Domain ID of the project which is the requested
-      project-level authorization scope (Env:
-      OS_PROJECT_DOMAIN_ID)
+        Defaults to <code>env[OS_URL]</code>
       </para>
     </listitem>
   </varlistentry>
@@ -234,22 +148,6 @@
       <para>
       Default domain ID, default=default (Env:
       OS_DEFAULT_DOMAIN)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-token &lt;token&gt;</command></term>
-    <listitem>
-      <para>
-        Defaults to <code>env[OS_TOKEN]</code>
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-url &lt;url&gt;</command></term>
-    <listitem>
-      <para>
-        Defaults to <code>env[OS_URL]</code>
       </para>
     </listitem>
   </varlistentry>
@@ -301,17 +199,220 @@
     <term><command>--os-identity-api-version &lt;identity-api-version&gt;</command></term>
     <listitem>
       <para>
-      Identity API version, default=2.0 (Env:
+      Identity API version, default=2 (Env:
       OS_IDENTITY_API_VERSION)
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-trust-id &lt;trust-id&gt;</command></term>
+    <term><command>--os-auth-type &lt;auth-type&gt;</command></term>
     <listitem>
       <para>
-      Trust ID to use when authenticating. This can only be
-      used with Keystone v3 API (Env: OS_TRUST_ID)
+      Select an auhentication type. Available types:
+      v2token, v2password, v3password, v3scopedsaml,
+      v3unscopedadfs, token, v3token, password,
+      v3unscopedsaml. Default: selected based on --os-
+      username/--os-token (Env: OS_AUTH_TYPE)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-username &lt;auth-username&gt;</command></term>
+    <listitem>
+      <para>
+      With v2password: Username to login with With
+      v3password: Username With v3unscopedadfs: Username
+      With password: Username With v3unscopedsaml: Username
+      (Env: OS_USERNAME)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-identity-provider &lt;auth-identity-provider&gt;</command></term>
+    <listitem>
+      <para>
+      With v3unscopedadfs: Identity Provider's name With
+      v3unscopedsaml: Identity Provider's name (Env:
+      OS_IDENTITY_PROVIDER)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-name &lt;auth-project-domain-name&gt;</command></term>
+    <listitem>
+      <para>
+      With v3password: Domain name containing project With
+      v3scopedsaml: Domain name containing project With
+      v3unscopedadfs: Domain name containing project With
+      token: Domain name containing project With v3token:
+      Domain name containing project With password: Domain
+      name containing project With v3unscopedsaml: Domain
+      name containing project (Env: OS_PROJECT_DOMAIN_NAME)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-id &lt;auth-project-domain-id&gt;</command></term>
+    <listitem>
+      <para>
+      With v3password: Domain ID containing project With
+      v3scopedsaml: Domain ID containing project With
+      v3unscopedadfs: Domain ID containing project With
+      token: Domain ID containing project With v3token:
+      Domain ID containing project With password: Domain ID
+      containing project With v3unscopedsaml: Domain ID
+      containing project (Env: OS_PROJECT_DOMAIN_ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-name &lt;auth-project-name&gt;</command></term>
+    <listitem>
+      <para>
+      With v3password: Project name to scope to With
+      v3scopedsaml: Project name to scope to With
+      v3unscopedadfs: Project name to scope to With token:
+      Project name to scope to With v3token: Project name to
+      scope to With password: Project name to scope to With
+      v3unscopedsaml: Project name to scope to (Env:
+      OS_PROJECT_NAME)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-url &lt;auth-auth-url&gt;</command></term>
+    <listitem>
+      <para>
+      With v2token: Authentication URL With v2password:
+      Authentication URL With v3password: Authentication URL
+      With v3scopedsaml: Authentication URL With
+      v3unscopedadfs: Authentication URL With token:
+      Authentication URL With v3token: Authentication URL
+      With password: Authentication URL With v3unscopedsaml:
+      Authentication URL (Env: OS_AUTH_URL)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-trust-id &lt;auth-trust-id&gt;</command></term>
+    <listitem>
+      <para>
+      With v2token: Trust ID With v2password: Trust ID With
+      v3password: Trust ID With v3scopedsaml: Trust ID With
+      v3unscopedadfs: Trust ID With token: Trust ID With
+      v3token: Trust ID With password: Trust ID With
+      v3unscopedsaml: Trust ID (Env: OS_TRUST_ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-service-provider-endpoint &lt;auth-service-provider-endpoint&gt;</command></term>
+    <listitem>
+      <para>
+      With v3unscopedadfs: Service Provider's Endpoint (Env:
+      OS_SERVICE_PROVIDER_ENDPOINT)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id &lt;auth-user-domain-id&gt;</command></term>
+    <listitem>
+      <para>
+      With v3password: User's domain id With password:
+      User's domain id (Env: OS_USER_DOMAIN_ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-name &lt;auth-domain-name&gt;</command></term>
+    <listitem>
+      <para>
+      With v3password: Domain name to scope to With
+      v3scopedsaml: Domain name to scope to With
+      v3unscopedadfs: Domain name to scope to With token:
+      Domain name to scope to With v3token: Domain name to
+      scope to With password: Domain name to scope to With
+      v3unscopedsaml: Domain name to scope to (Env:
+      OS_DOMAIN_NAME)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-identity-provider-url &lt;auth-identity-provider-url&gt;</command></term>
+    <listitem>
+      <para>
+      With v3unscopedadfs: Identity Provider's URL With
+      v3unscopedsaml: Identity Provider's URL (Env:
+      OS_IDENTITY_PROVIDER_URL)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-token &lt;auth-token&gt;</command></term>
+    <listitem>
+      <para>
+      With v2token: Token With v3scopedsaml: Token to
+      authenticate with With token: Token to authenticate
+      with With v3token: Token to authenticate with (Env:
+      OS_TOKEN)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-id &lt;auth-domain-id&gt;</command></term>
+    <listitem>
+      <para>
+      With v3password: Domain ID to scope to With
+      v3scopedsaml: Domain ID to scope to With
+      v3unscopedadfs: Domain ID to scope to With token:
+      Domain ID to scope to With v3token: Domain ID to scope
+      to With password: Domain ID to scope to With
+      v3unscopedsaml: Domain ID to scope to (Env:
+      OS_DOMAIN_ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name &lt;auth-user-domain-name&gt;</command></term>
+    <listitem>
+      <para>
+      With v3password: User's domain name With password:
+      User's domain name (Env: OS_USER_DOMAIN_NAME)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-id &lt;auth-user-id&gt;</command></term>
+    <listitem>
+      <para>
+      With v2password: User ID to longin with With
+      v3password: User ID With password: User id (Env:
+      OS_USER_ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-password &lt;auth-password&gt;</command></term>
+    <listitem>
+      <para>
+      With v2password: Password to use With v3password:
+      User's password With v3unscopedadfs: Password With
+      password: User's password With v3unscopedsaml:
+      Password (Env: OS_PASSWORD)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id &lt;auth-project-id&gt;</command></term>
+    <listitem>
+      <para>
+      With v3password: Project ID to scope to With
+      v3scopedsaml: Project ID to scope to With
+      v3unscopedadfs: Project ID to scope to With token:
+      Project ID to scope to With v3token: Project ID to
+      scope to With password: Project ID to scope to With
+      v3unscopedsaml: Project ID to scope to (Env:
+      OS_PROJECT_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -336,9 +437,10 @@
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_add_host">
         <title>openstack aggregate add host</title>
-        <screen><computeroutput>usage: openstack aggregate add host [-h] [-f {shell,table,value}] [-c COLUMN]
-                                    [--max-width &lt;integer&gt;]
-                                    [--variable VARIABLE] [--prefix PREFIX]
+        <screen><computeroutput>usage: openstack --os-auth-type token aggregate add host [-h]
+                                    [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width &lt;integer&gt;]
+                                    [--prefix PREFIX]
                                     &lt;aggregate&gt; &lt;host&gt;</computeroutput></screen>
         <para>
 Add host to aggregate
@@ -348,7 +450,7 @@ Add host to aggregate
     <term><command>&lt;aggregate&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of aggregate
+        Aggregate (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -356,7 +458,7 @@ Add host to aggregate
     <term><command>&lt;host&gt;</command></term>
     <listitem>
       <para>
-        Host to add to aggregate
+        Host to add to &lt;aggregate&gt;
       </para>
     </listitem>
   </varlistentry>
@@ -375,9 +477,9 @@ Add host to aggregate
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_create">
         <title>openstack aggregate create</title>
-        <screen><computeroutput>usage: openstack aggregate create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;]
-                                  [--variable VARIABLE] [--prefix PREFIX]
+        <screen><computeroutput>usage: openstack --os-auth-type token aggregate create [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width &lt;integer&gt;]
+                                  [--prefix PREFIX]
                                   [--zone &lt;availability-zone&gt;]
                                   [--property &lt;key=value&gt;]
                                   &lt;name&gt;</computeroutput></screen>
@@ -425,7 +527,7 @@ Create a new aggregate
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_delete">
         <title>openstack aggregate delete</title>
-        <screen><computeroutput>usage: openstack aggregate delete [-h] &lt;aggregate&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token aggregate delete [-h] &lt;aggregate&gt;</computeroutput></screen>
         <para>
 Delete an existing aggregate
         </para>  <variablelist wordsize="10">
@@ -434,7 +536,7 @@ Delete an existing aggregate
     <term><command>&lt;aggregate&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of aggregate to delete
+        Aggregate to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -453,8 +555,8 @@ Delete an existing aggregate
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_list">
         <title>openstack aggregate list</title>
-        <screen><computeroutput>usage: openstack aggregate list [-h] [-f {csv,table}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token aggregate list [-h] [-f {csv,html,json,table,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--long]</computeroutput></screen>
         <para>
@@ -481,9 +583,10 @@ List all aggregates
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_remove_host">
         <title>openstack aggregate remove host</title>
-        <screen><computeroutput>usage: openstack aggregate remove host [-h] [-f {shell,table,value}]
+        <screen><computeroutput>usage: openstack --os-auth-type token aggregate remove host [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
-                                       [--variable VARIABLE] [--prefix PREFIX]
+                                       [--prefix PREFIX]
                                        &lt;aggregate&gt; &lt;host&gt;</computeroutput></screen>
         <para>
 Remove host from aggregate
@@ -493,7 +596,7 @@ Remove host from aggregate
     <term><command>&lt;aggregate&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of aggregate
+        Aggregate (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -501,7 +604,7 @@ Remove host from aggregate
     <term><command>&lt;host&gt;</command></term>
     <listitem>
       <para>
-        Host to remove from aggregate
+        Host to remove from &lt;aggregate&gt;
       </para>
     </listitem>
   </varlistentry>
@@ -520,9 +623,9 @@ Remove host from aggregate
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_set">
         <title>openstack aggregate set</title>
-        <screen><computeroutput>usage: openstack aggregate set [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                               [--prefix PREFIX] [--name &lt;new-name&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token aggregate set [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--prefix PREFIX] [--name &lt;name&gt;]
                                [--zone &lt;availability-zone&gt;]
                                [--property &lt;key=value&gt;]
                                &lt;aggregate&gt;</computeroutput></screen>
@@ -534,7 +637,7 @@ Set aggregate properties
     <term><command>&lt;aggregate&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of aggregate to display
+        Aggregate to modify (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -550,10 +653,10 @@ Set aggregate properties
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--name &lt;new-name&gt;</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-        New aggregate name
+        Set aggregate name
       </para>
     </listitem>
   </varlistentry>
@@ -561,7 +664,7 @@ Set aggregate properties
     <term><command>--zone &lt;availability-zone&gt;</command></term>
     <listitem>
       <para>
-      Availability zone name
+      Set availability zone name
       </para>
     </listitem>
   </varlistentry>
@@ -569,8 +672,8 @@ Set aggregate properties
     <term><command>--property &lt;key=value&gt;</command></term>
     <listitem>
       <para>
-      Property to add/change for this aggregate (repeat
-      option to set multiple properties)
+      Property to set on &lt;aggregate&gt; (repeat option to set
+      multiple properties)
       </para>
     </listitem>
   </varlistentry>
@@ -578,19 +681,19 @@ Set aggregate properties
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_show">
         <title>openstack aggregate show</title>
-        <screen><computeroutput>usage: openstack aggregate show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token aggregate show [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--prefix PREFIX]
                                 &lt;aggregate&gt;</computeroutput></screen>
         <para>
-Show a specific aggregate
+Display aggregate details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;aggregate&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of aggregate to display
+        Aggregate to display (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -607,22 +710,50 @@ Show a specific aggregate
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_availability_zone_list">
+        <title>openstack availability zone list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token availability zone list [-h] [-f {csv,html,json,table,yaml}]
+                                        [-c COLUMN] [--max-width &lt;integer&gt;]
+                                        [--quote {all,minimal,none,nonnumeric}]
+                                        [--long]</computeroutput></screen>
+        <para>
+List availability zones and their status
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--long</command></term>
+    <listitem>
+      <para>
+        List additional fields in output
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_backup_create">
         <title>openstack backup create</title>
-        <screen><computeroutput>usage: openstack backup create [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token backup create [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--prefix PREFIX] [--container &lt;container&gt;]
                                [--name &lt;name&gt;] [--description &lt;description&gt;]
                                &lt;volume&gt;</computeroutput></screen>
         <para>
-Create backup command
+Create new backup
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        The name or ID of the volume to backup
+        Volume to backup (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -641,7 +772,7 @@ Create backup command
     <term><command>--container &lt;container&gt;</command></term>
     <listitem>
       <para>
-      Optional backup container name.
+      Optional backup container name
       </para>
     </listitem>
   </varlistentry>
@@ -665,16 +796,16 @@ Create backup command
     </section>
     <section xml:id="openstackclient_subcommand_backup_delete">
         <title>openstack backup delete</title>
-        <screen><computeroutput>usage: openstack backup delete [-h] &lt;backup&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token backup delete [-h] &lt;backup&gt; [&lt;backup&gt; ...]</computeroutput></screen>
         <para>
-Delete backup command
+Delete backup(s)
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;backup&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of backup to delete
+        Backup(s) to delete (ID only)
       </para>
     </listitem>
   </varlistentry>
@@ -693,11 +824,11 @@ Delete backup command
     </section>
     <section xml:id="openstackclient_subcommand_backup_list">
         <title>openstack backup list</title>
-        <screen><computeroutput>usage: openstack backup list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token backup list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
-                             [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
+                             [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
         <para>
-List backup command
+List backups
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -708,28 +839,36 @@ List backup command
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--long</command></term>
+    <listitem>
+      <para>
+        List additional fields in output
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_backup_restore">
         <title>openstack backup restore</title>
-        <screen><computeroutput>usage: openstack backup restore [-h] &lt;backup&gt; &lt;dest-volume&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token backup restore [-h] &lt;backup&gt; &lt;volume&gt;</computeroutput></screen>
         <para>
-Restore backup command
+Restore backup
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;backup&gt;</command></term>
     <listitem>
       <para>
-        ID of backup to restore
+        Backup to restore (ID only)
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>&lt;dest-volume&gt;</command></term>
+    <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        ID of volume to restore to
+        Volume to restore to (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -748,19 +887,19 @@ Restore backup command
     </section>
     <section xml:id="openstackclient_subcommand_backup_show">
         <title>openstack backup show</title>
-        <screen><computeroutput>usage: openstack backup show [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token backup show [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--prefix PREFIX]
                              &lt;backup&gt;</computeroutput></screen>
         <para>
-Show backup command
+Display backup details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;backup&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of backup to display
+        Backup to display (ID only)
       </para>
     </listitem>
   </varlistentry>
@@ -777,11 +916,81 @@ Show backup command
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_catalog_list">
+        <title>openstack catalog list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token catalog list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
+                              [--max-width &lt;integer&gt;]
+                              [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
+        <para>
+List services in the service catalog
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_catalog_show">
+        <title>openstack catalog show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token catalog show [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
+                              [--prefix PREFIX]
+                              &lt;service&gt;</computeroutput></screen>
+        <para>
+Display service catalog details
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;service&gt;</command></term>
+    <listitem>
+      <para>
+        Service to display (type or name)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_command_list">
+        <title>openstack command list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token command list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
+                              [--max-width &lt;integer&gt;]
+                              [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
+        <para>
+List recognized commands by group
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_compute_agent_create">
         <title>openstack compute agent create</title>
-        <screen><computeroutput>usage: openstack compute agent create [-h] [-f {shell,table,value}]
+        <screen><computeroutput>usage: openstack --os-auth-type token compute agent create [-h]
+                                      [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
-                                      [--variable VARIABLE] [--prefix PREFIX]
+                                      [--prefix PREFIX]
                                       &lt;os&gt; &lt;architecture&gt; &lt;version&gt; &lt;url&gt;
                                       &lt;md5hash&gt; &lt;hypervisor&gt;</computeroutput></screen>
         <para>
@@ -851,7 +1060,7 @@ Create compute agent command
     </section>
     <section xml:id="openstackclient_subcommand_compute_agent_delete">
         <title>openstack compute agent delete</title>
-        <screen><computeroutput>usage: openstack compute agent delete [-h] &lt;id&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token compute agent delete [-h] &lt;id&gt;</computeroutput></screen>
         <para>
 Delete compute agent command
         </para>  <variablelist wordsize="10">
@@ -879,8 +1088,8 @@ Delete compute agent command
     </section>
     <section xml:id="openstackclient_subcommand_compute_agent_list">
         <title>openstack compute agent list</title>
-        <screen><computeroutput>usage: openstack compute agent list [-h] [-f {csv,table}] [-c COLUMN]
-                                    [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token compute agent list [-h] [-f {csv,html,json,table,yaml}]
+                                    [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--quote {all,minimal,none,nonnumeric}]
                                     [--hypervisor &lt;hypervisor&gt;]</computeroutput></screen>
         <para>
@@ -907,9 +1116,10 @@ List compute agent command
     </section>
     <section xml:id="openstackclient_subcommand_compute_agent_set">
         <title>openstack compute agent set</title>
-        <screen><computeroutput>usage: openstack compute agent set [-h] [-f {shell,table,value}] [-c COLUMN]
-                                   [--max-width &lt;integer&gt;]
-                                   [--variable VARIABLE] [--prefix PREFIX]
+        <screen><computeroutput>usage: openstack --os-auth-type token compute agent set [-h]
+                                   [-f {html,json,shell,table,value,yaml}]
+                                   [-c COLUMN] [--max-width &lt;integer&gt;]
+                                   [--prefix PREFIX]
                                    &lt;id&gt; &lt;version&gt; &lt;url&gt; &lt;md5hash&gt;</computeroutput></screen>
         <para>
 Set compute agent command
@@ -962,8 +1172,8 @@ Set compute agent command
     </section>
     <section xml:id="openstackclient_subcommand_compute_service_list">
         <title>openstack compute service list</title>
-        <screen><computeroutput>usage: openstack compute service list [-h] [-f {csv,table}] [-c COLUMN]
-                                      [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token compute service list [-h] [-f {csv,html,json,table,yaml}]
+                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--quote {all,minimal,none,nonnumeric}]
                                       [--host &lt;host&gt;] [--service &lt;service&gt;]</computeroutput></screen>
         <para>
@@ -998,8 +1208,8 @@ List service command
     </section>
     <section xml:id="openstackclient_subcommand_compute_service_set">
         <title>openstack compute service set</title>
-        <screen><computeroutput>usage: openstack compute service set [-h] [-f {csv,table}] [-c COLUMN]
-                                     [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token compute service set [-h] [-f {csv,html,json,table,yaml}]
+                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--enable | --disable]
                                      &lt;host&gt; &lt;service&gt;</computeroutput></screen>
@@ -1054,7 +1264,7 @@ Set service command
     </section>
     <section xml:id="openstackclient_subcommand_console_log_show">
         <title>openstack console log show</title>
-        <screen><computeroutput>usage: openstack console log show [-h] [--lines &lt;num-lines&gt;] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token console log show [-h] [--lines &lt;num-lines&gt;] &lt;server&gt;</computeroutput></screen>
         <para>
 Show server's console output
         </para>  <variablelist wordsize="10">
@@ -1063,7 +1273,7 @@ Show server's console output
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Server (name or ID)
+        Server to show console log (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -1091,9 +1301,9 @@ Show server's console output
     </section>
     <section xml:id="openstackclient_subcommand_console_url_show">
         <title>openstack console url show</title>
-        <screen><computeroutput>usage: openstack console url show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;]
-                                  [--variable VARIABLE] [--prefix PREFIX]
+        <screen><computeroutput>usage: openstack --os-auth-type token console url show [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width &lt;integer&gt;]
+                                  [--prefix PREFIX]
                                   [--novnc | --xvpvnc | --spice]
                                   &lt;server&gt;</computeroutput></screen>
         <para>
@@ -1104,7 +1314,7 @@ Show server's remote console URL
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Server (name or ID)
+        Server to show URL (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -1147,19 +1357,19 @@ Show server's remote console URL
     </section>
     <section xml:id="openstackclient_subcommand_container_create">
         <title>openstack container create</title>
-        <screen><computeroutput>usage: openstack container create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;]
-                                  [--variable VARIABLE] [--prefix PREFIX]
-                                  &lt;container&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token container create [-h] [-f {csv,html,json,table,yaml}]
+                                  [-c COLUMN] [--max-width &lt;integer&gt;]
+                                  [--quote {all,minimal,none,nonnumeric}]
+                                  &lt;container-name&gt; [&lt;container-name&gt; ...]</computeroutput></screen>
         <para>
-Create a container
+Create new container
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;container&gt;</command></term>
+    <term><command>&lt;container-name&gt;</command></term>
     <listitem>
       <para>
-        New container name
+        New container name(s)
       </para>
     </listitem>
   </varlistentry>
@@ -1178,16 +1388,16 @@ Create a container
     </section>
     <section xml:id="openstackclient_subcommand_container_delete">
         <title>openstack container delete</title>
-        <screen><computeroutput>usage: openstack container delete [-h] &lt;container&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token container delete [-h] &lt;container&gt; [&lt;container&gt; ...]</computeroutput></screen>
         <para>
-Delete a container
+Delete container
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;container&gt;</command></term>
     <listitem>
       <para>
-        Container name to delete
+        Container(s) to delete
       </para>
     </listitem>
   </varlistentry>
@@ -1206,8 +1416,8 @@ Delete a container
     </section>
     <section xml:id="openstackclient_subcommand_container_list">
         <title>openstack container list</title>
-        <screen><computeroutput>usage: openstack container list [-h] [-f {csv,table}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token container list [-h] [-f {csv,html,json,table,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--prefix &lt;prefix&gt;] [--marker &lt;marker&gt;]
                                 [--end-marker &lt;end-marker&gt;] [--limit &lt;limit&gt;]
@@ -1274,21 +1484,49 @@ List containers
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="openstackclient_subcommand_container_show">
-        <title>openstack container show</title>
-        <screen><computeroutput>usage: openstack container show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                                [--prefix PREFIX]
-                                &lt;container&gt;</computeroutput></screen>
+    <section xml:id="openstackclient_subcommand_container_save">
+        <title>openstack container save</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token container save [-h] &lt;container&gt;</computeroutput></screen>
         <para>
-Show container information
+Save container contents locally
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;container&gt;</command></term>
     <listitem>
       <para>
-        Container name to display
+        Container to save
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_container_show">
+        <title>openstack container show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token container show [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
+                                [--prefix PREFIX]
+                                &lt;container&gt;</computeroutput></screen>
+        <para>
+Display container details
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Container to display
       </para>
     </listitem>
   </varlistentry>
@@ -1307,9 +1545,9 @@ Show container information
     </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_create">
         <title>openstack ec2 credentials create</title>
-        <screen><computeroutput>usage: openstack ec2 credentials create [-h] [-f {shell,table,value}]
+        <screen><computeroutput>usage: openstack --os-auth-type token ec2 credentials create [-h]
+                                        [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
-                                        [--variable VARIABLE]
                                         [--prefix PREFIX]
                                         [--project &lt;project&gt;] [--user &lt;user&gt;]</computeroutput></screen>
         <para>
@@ -1328,7 +1566,8 @@ Create EC2 credentials
     <term><command>--project &lt;project&gt;</command></term>
     <listitem>
       <para>
-        Specify a project [admin only]
+        Specify an alternate project (default: current
+      authenticated project)
       </para>
     </listitem>
   </varlistentry>
@@ -1336,7 +1575,8 @@ Create EC2 credentials
     <term><command>--user &lt;user&gt;</command></term>
     <listitem>
       <para>
-        Specify a user [admin only]
+        Specify an alternate user (default: current
+      authenticated user)
       </para>
     </listitem>
   </varlistentry>
@@ -1344,7 +1584,7 @@ Create EC2 credentials
     </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_delete">
         <title>openstack ec2 credentials delete</title>
-        <screen><computeroutput>usage: openstack ec2 credentials delete [-h] [--user &lt;user&gt;] &lt;access-key&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token ec2 credentials delete [-h] [--user &lt;user&gt;] &lt;access-key&gt;</computeroutput></screen>
         <para>
 Delete EC2 credentials
         </para>  <variablelist wordsize="10">
@@ -1372,7 +1612,7 @@ Delete EC2 credentials
     <term><command>--user &lt;user&gt;</command></term>
     <listitem>
       <para>
-        Specify a user [admin only]
+        Specify a user
       </para>
     </listitem>
   </varlistentry>
@@ -1380,8 +1620,8 @@ Delete EC2 credentials
     </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_list">
         <title>openstack ec2 credentials list</title>
-        <screen><computeroutput>usage: openstack ec2 credentials list [-h] [-f {csv,table}] [-c COLUMN]
-                                      [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token ec2 credentials list [-h] [-f {csv,html,json,table,yaml}]
+                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--quote {all,minimal,none,nonnumeric}]
                                       [--user &lt;user&gt;]</computeroutput></screen>
         <para>
@@ -1400,7 +1640,7 @@ List EC2 credentials
     <term><command>--user &lt;user&gt;</command></term>
     <listitem>
       <para>
-        Specify a user [admin only]
+        Specify a user
       </para>
     </listitem>
   </varlistentry>
@@ -1408,13 +1648,13 @@ List EC2 credentials
     </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_show">
         <title>openstack ec2 credentials show</title>
-        <screen><computeroutput>usage: openstack ec2 credentials show [-h] [-f {shell,table,value}]
+        <screen><computeroutput>usage: openstack --os-auth-type token ec2 credentials show [-h]
+                                      [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
-                                      [--variable VARIABLE] [--prefix PREFIX]
-                                      [--user &lt;user&gt;]
+                                      [--prefix PREFIX] [--user &lt;user&gt;]
                                       &lt;access-key&gt;</computeroutput></screen>
         <para>
-Show EC2 credentials
+Display EC2 credentials details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1440,7 +1680,7 @@ Show EC2 credentials
     <term><command>--user &lt;user&gt;</command></term>
     <listitem>
       <para>
-        Specify a user [admin only]
+        Specify a user
       </para>
     </listitem>
   </varlistentry>
@@ -1448,22 +1688,21 @@ Show EC2 credentials
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_create">
         <title>openstack endpoint create</title>
-        <screen><computeroutput>usage: openstack endpoint create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                 [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                                 [--prefix PREFIX] [--region &lt;region&gt;]
-                                 --publicurl &lt;public-url&gt;
-                                 [--adminurl &lt;admin-url&gt;]
-                                 [--internalurl &lt;internal-url&gt;]
-                                 &lt;endpoint-service&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token endpoint create [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width &lt;integer&gt;]
+                                 [--prefix PREFIX] --publicurl &lt;url&gt;
+                                 [--adminurl &lt;url&gt;] [--internalurl &lt;url&gt;]
+                                 [--region &lt;region-id&gt;]
+                                 &lt;service&gt;</computeroutput></screen>
         <para>
-Create endpoint command
+Create new endpoint
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;endpoint-service&gt;</command></term>
+    <term><command>&lt;service&gt;</command></term>
     <listitem>
       <para>
-        New endpoint service
+        New endpoint service (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -1479,34 +1718,34 @@ Create endpoint command
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--region &lt;region&gt;</command></term>
+    <term><command>--publicurl &lt;url&gt;</command></term>
     <listitem>
       <para>
-        New endpoint region
+        New endpoint public URL (required)
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--publicurl &lt;public-url&gt;</command></term>
+    <term><command>--adminurl &lt;url&gt;</command></term>
     <listitem>
       <para>
-      New endpoint public URL
+        New endpoint admin URL
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--adminurl &lt;admin-url&gt;</command></term>
+    <term><command>--internalurl &lt;url&gt;</command></term>
     <listitem>
       <para>
-      New endpoint admin URL
+        New endpoint internal URL
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--internalurl &lt;internal-url&gt;</command></term>
+    <term><command>--region &lt;region-id&gt;</command></term>
     <listitem>
       <para>
-      New endpoint internal URL
+        New endpoint region ID
       </para>
     </listitem>
   </varlistentry>
@@ -1514,16 +1753,16 @@ Create endpoint command
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_delete">
         <title>openstack endpoint delete</title>
-        <screen><computeroutput>usage: openstack endpoint delete [-h] &lt;endpoint-id&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token endpoint delete [-h] &lt;endpoint-id&gt;</computeroutput></screen>
         <para>
-Delete endpoint command
+Delete endpoint
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;endpoint-id&gt;</command></term>
     <listitem>
       <para>
-        ID of endpoint to delete
+        Endpoint ID to delete
       </para>
     </listitem>
   </varlistentry>
@@ -1542,12 +1781,12 @@ Delete endpoint command
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_list">
         <title>openstack endpoint list</title>
-        <screen><computeroutput>usage: openstack endpoint list [-h] [-f {csv,table}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token endpoint list [-h] [-f {csv,html,json,table,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--quote {all,minimal,none,nonnumeric}]
                                [--long]</computeroutput></screen>
         <para>
-List endpoint command
+List endpoints
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -1570,19 +1809,19 @@ List endpoint command
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_show">
         <title>openstack endpoint show</title>
-        <screen><computeroutput>usage: openstack endpoint show [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token endpoint show [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--prefix PREFIX]
-                               &lt;endpoint_or_service&gt;</computeroutput></screen>
+                               &lt;endpoint-id&gt;</computeroutput></screen>
         <para>
-Show endpoint command
+Display endpoint details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;endpoint_or_service&gt;</command></term>
+    <term><command>&lt;endpoint-id&gt;</command></term>
     <listitem>
       <para>
-      Endpoint ID or name, type or ID of service to display
+        Endpoint ID to display
       </para>
     </listitem>
   </varlistentry>
@@ -1601,12 +1840,13 @@ Show endpoint command
     </section>
     <section xml:id="openstackclient_subcommand_extension_list">
         <title>openstack extension list</title>
-        <screen><computeroutput>usage: openstack extension list [-h] [-f {csv,table}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token extension list [-h] [-f {csv,html,json,table,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
-                                [--long] [--identity] [--compute] [--volume]</computeroutput></screen>
+                                [--compute] [--identity] [--network]
+                                [--volume] [--long]</computeroutput></screen>
         <para>
-List extension command
+List API extensions
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -1614,22 +1854,6 @@ List extension command
     <listitem>
       <para>
         show this help message and exit
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--long</command></term>
-    <listitem>
-      <para>
-        List additional fields in output
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--identity</command></term>
-    <listitem>
-      <para>
-        List extensions for the Identity API
       </para>
     </listitem>
   </varlistentry>
@@ -1642,6 +1866,22 @@ List extension command
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--identity</command></term>
+    <listitem>
+      <para>
+        List extensions for the Identity API
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--network</command></term>
+    <listitem>
+      <para>
+        List extensions for the Network API
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--volume</command></term>
     <listitem>
       <para>
@@ -1649,23 +1889,31 @@ List extension command
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--long</command></term>
+    <listitem>
+      <para>
+        List additional fields in output
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_flavor_create">
         <title>openstack flavor create</title>
-        <screen><computeroutput>usage: openstack flavor create [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token flavor create [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--prefix PREFIX] [--id &lt;id&gt;] [--ram &lt;size-mb&gt;]
                                [--disk &lt;size-gb&gt;] [--ephemeral &lt;size-gb&gt;]
                                [--swap &lt;size-gb&gt;] [--vcpus &lt;vcpus&gt;]
                                [--rxtx-factor &lt;factor&gt;] [--public | --private]
-                               &lt;name&gt;</computeroutput></screen>
+                               &lt;flavor-name&gt;</computeroutput></screen>
         <para>
 Create new flavor
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;name&gt;</command></term>
+    <term><command>&lt;flavor-name&gt;</command></term>
     <listitem>
       <para>
         New flavor name
@@ -1687,7 +1935,7 @@ Create new flavor
     <term><command>--id &lt;id&gt;</command></term>
     <listitem>
       <para>
-        Unique flavor ID; 'auto' will create a UUID (default:
+        Unique flavor ID; 'auto' creates a UUID (default:
       auto)
       </para>
     </listitem>
@@ -1744,7 +1992,7 @@ Create new flavor
     <term><command>--public</command></term>
     <listitem>
       <para>
-        Flavor is accessible to other projects (default)
+        Flavor is available to other projects (default)
       </para>
     </listitem>
   </varlistentry>
@@ -1752,7 +2000,7 @@ Create new flavor
     <term><command>--private</command></term>
     <listitem>
       <para>
-        Flavor is inaccessible to other projects
+        Flavor is not available to other projects
       </para>
     </listitem>
   </varlistentry>
@@ -1760,9 +2008,9 @@ Create new flavor
     </section>
     <section xml:id="openstackclient_subcommand_flavor_delete">
         <title>openstack flavor delete</title>
-        <screen><computeroutput>usage: openstack flavor delete [-h] &lt;flavor&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token flavor delete [-h] &lt;flavor&gt;</computeroutput></screen>
         <para>
-Delete a flavor
+Delete flavor
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1788,7 +2036,7 @@ Delete a flavor
     </section>
     <section xml:id="openstackclient_subcommand_flavor_list">
         <title>openstack flavor list</title>
-        <screen><computeroutput>usage: openstack flavor list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token flavor list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
@@ -1807,12 +2055,12 @@ List flavors
     </section>
     <section xml:id="openstackclient_subcommand_flavor_show">
         <title>openstack flavor show</title>
-        <screen><computeroutput>usage: openstack flavor show [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token flavor show [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--prefix PREFIX]
                              &lt;flavor&gt;</computeroutput></screen>
         <para>
-Show flavor details
+Display flavor details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1838,7 +2086,7 @@ Show flavor details
     </section>
     <section xml:id="openstackclient_subcommand_host_list">
         <title>openstack host list</title>
-        <screen><computeroutput>usage: openstack host list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token host list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                            [--max-width &lt;integer&gt;]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--zone &lt;zone&gt;]</computeroutput></screen>
@@ -1866,7 +2114,7 @@ List host command
     </section>
     <section xml:id="openstackclient_subcommand_host_show">
         <title>openstack host show</title>
-        <screen><computeroutput>usage: openstack host show [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token host show [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                            [--max-width &lt;integer&gt;]
                            [--quote {all,minimal,none,nonnumeric}]
                            &lt;host&gt;</computeroutput></screen>
@@ -1897,8 +2145,8 @@ Show host command
     </section>
     <section xml:id="openstackclient_subcommand_hypervisor_list">
         <title>openstack hypervisor list</title>
-        <screen><computeroutput>usage: openstack hypervisor list [-h] [-f {csv,table}] [-c COLUMN]
-                                 [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token hypervisor list [-h] [-f {csv,html,json,table,yaml}]
+                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--matching &lt;hostname-str&gt;]</computeroutput></screen>
         <para>
@@ -1925,8 +2173,8 @@ List hypervisors
     </section>
     <section xml:id="openstackclient_subcommand_hypervisor_show">
         <title>openstack hypervisor show</title>
-        <screen><computeroutput>usage: openstack hypervisor show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                 [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token hypervisor show [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--prefix PREFIX]
                                  &lt;id&gt;</computeroutput></screen>
         <para>
@@ -1956,8 +2204,8 @@ Show hypervisor details
     </section>
     <section xml:id="openstackclient_subcommand_image_create">
         <title>openstack image create</title>
-        <screen><computeroutput>usage: openstack image create [-h] [-f {shell,table,value}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token image create [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--prefix PREFIX] [--id &lt;id&gt;] [--store &lt;store&gt;]
                               [--container-format &lt;container-format&gt;]
                               [--disk-format &lt;disk-format&gt;]
@@ -1969,13 +2217,13 @@ Show hypervisor details
                               [--checksum &lt;checksum&gt;]
                               [--protected | --unprotected]
                               [--public | --private] [--property &lt;key=value&gt;]
-                              &lt;name&gt;</computeroutput></screen>
+                              &lt;image-name&gt;</computeroutput></screen>
         <para>
 Create/upload an image
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;name&gt;</command></term>
+    <term><command>&lt;image-name&gt;</command></term>
     <listitem>
       <para>
         New image name
@@ -2143,8 +2391,8 @@ Create/upload an image
     <term><command>--property &lt;key=value&gt;</command></term>
     <listitem>
       <para>
-      Set an image property (repeat option to set multiple
-      properties)
+      Set a property on this image (repeat option to set
+      multiple properties)
       </para>
     </listitem>
   </varlistentry>
@@ -2152,16 +2400,16 @@ Create/upload an image
     </section>
     <section xml:id="openstackclient_subcommand_image_delete">
         <title>openstack image delete</title>
-        <screen><computeroutput>usage: openstack image delete [-h] &lt;image&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token image delete [-h] &lt;image&gt; [&lt;image&gt; ...]</computeroutput></screen>
         <para>
-Delete an image
+Delete image(s)
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;image&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of image to delete
+        Image(s) to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -2180,7 +2428,7 @@ Delete an image
     </section>
     <section xml:id="openstackclient_subcommand_image_list">
         <title>openstack image list</title>
-        <screen><computeroutput>usage: openstack image list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token image list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                             [--max-width &lt;integer&gt;]
                             [--quote {all,minimal,none,nonnumeric}]
                             [--page-size &lt;size&gt;] [--long]</computeroutput></screen>
@@ -2216,7 +2464,7 @@ List available images
     </section>
     <section xml:id="openstackclient_subcommand_image_save">
         <title>openstack image save</title>
-        <screen><computeroutput>usage: openstack image save [-h] [--file &lt;filename&gt;] &lt;image&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token image save [-h] [--file &lt;filename&gt;] &lt;image&gt;</computeroutput></screen>
         <para>
 Save an image locally
         </para>  <variablelist wordsize="10">
@@ -2225,7 +2473,7 @@ Save an image locally
     <term><command>&lt;image&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of image to delete
+        Image to save (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -2244,7 +2492,7 @@ Save an image locally
     <term><command>--file &lt;filename&gt;</command></term>
     <listitem>
       <para>
-        Downloaded image save filename [default: stdout]
+        Downloaded image save filename (default: stdout)
       </para>
     </listitem>
   </varlistentry>
@@ -2252,8 +2500,8 @@ Save an image locally
     </section>
     <section xml:id="openstackclient_subcommand_image_set">
         <title>openstack image set</title>
-        <screen><computeroutput>usage: openstack image set [-h] [-f {shell,table,value}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token image set [-h] [-f {html,json,shell,table,value,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;]
                            [--prefix PREFIX] [--name &lt;name&gt;]
                            [--owner &lt;project&gt;] [--min-disk &lt;disk-gb&gt;]
                            [--min-ram &lt;disk-ram&gt;]
@@ -2261,14 +2509,14 @@ Save an image locally
                            [--public | --private] [--property &lt;key=value&gt;]
                            &lt;image&gt;</computeroutput></screen>
         <para>
-Change image properties
+Set image properties
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;image&gt;</command></term>
     <listitem>
       <para>
-        Image name or ID to change
+        Image to modify (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -2295,7 +2543,7 @@ Change image properties
     <term><command>--owner &lt;project&gt;</command></term>
     <listitem>
       <para>
-        New image owner project name or ID
+        New image owner project (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -2351,8 +2599,8 @@ Change image properties
     <term><command>--property &lt;key=value&gt;</command></term>
     <listitem>
       <para>
-      Set an image property (repeat option to set multiple
-      properties)
+      Set a property on this image (repeat option to set
+      multiple properties)
       </para>
     </listitem>
   </varlistentry>
@@ -2360,19 +2608,19 @@ Change image properties
     </section>
     <section xml:id="openstackclient_subcommand_image_show">
         <title>openstack image show</title>
-        <screen><computeroutput>usage: openstack image show [-h] [-f {shell,table,value}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token image show [-h] [-f {html,json,shell,table,value,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;]
                             [--prefix PREFIX]
                             &lt;image&gt;</computeroutput></screen>
         <para>
-Show image details
+Display image details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;image&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of image to display
+        Image to display (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -2391,7 +2639,7 @@ Show image details
     </section>
     <section xml:id="openstackclient_subcommand_ip_fixed_add">
         <title>openstack ip fixed add</title>
-        <screen><computeroutput>usage: openstack ip fixed add [-h] &lt;network&gt; &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token ip fixed add [-h] &lt;network&gt; &lt;server&gt;</computeroutput></screen>
         <para>
 Add fixed-ip command
         </para>  <variablelist wordsize="10">
@@ -2427,7 +2675,7 @@ Add fixed-ip command
     </section>
     <section xml:id="openstackclient_subcommand_ip_fixed_remove">
         <title>openstack ip fixed remove</title>
-        <screen><computeroutput>usage: openstack ip fixed remove [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token ip fixed remove [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
         <para>
 Remove fixed-ip command
         </para>  <variablelist wordsize="10">
@@ -2463,7 +2711,7 @@ Remove fixed-ip command
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_add">
         <title>openstack ip floating add</title>
-        <screen><computeroutput>usage: openstack ip floating add [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token ip floating add [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
         <para>
 Add floating-ip to server
         </para>  <variablelist wordsize="10">
@@ -2499,9 +2747,10 @@ Add floating-ip to server
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_create">
         <title>openstack ip floating create</title>
-        <screen><computeroutput>usage: openstack ip floating create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                    [--max-width &lt;integer&gt;]
-                                    [--variable VARIABLE] [--prefix PREFIX]
+        <screen><computeroutput>usage: openstack --os-auth-type token ip floating create [-h]
+                                    [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width &lt;integer&gt;]
+                                    [--prefix PREFIX]
                                     &lt;pool&gt;</computeroutput></screen>
         <para>
 Create new floating-ip
@@ -2530,7 +2779,7 @@ Create new floating-ip
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_delete">
         <title>openstack ip floating delete</title>
-        <screen><computeroutput>usage: openstack ip floating delete [-h] &lt;ip-address&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token ip floating delete [-h] &lt;ip-address&gt;</computeroutput></screen>
         <para>
 Delete a floating-ip
         </para>  <variablelist wordsize="10">
@@ -2558,8 +2807,8 @@ Delete a floating-ip
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_list">
         <title>openstack ip floating list</title>
-        <screen><computeroutput>usage: openstack ip floating list [-h] [-f {csv,table}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token ip floating list [-h] [-f {csv,html,json,table,yaml}]
+                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List floating-ips
@@ -2577,8 +2826,8 @@ List floating-ips
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_pool_list">
         <title>openstack ip floating pool list</title>
-        <screen><computeroutput>usage: openstack ip floating pool list [-h] [-f {csv,table}] [-c COLUMN]
-                                       [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token ip floating pool list [-h] [-f {csv,html,json,table,yaml}]
+                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                        [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List floating-ip-pools
@@ -2596,7 +2845,7 @@ List floating-ip-pools
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_remove">
         <title>openstack ip floating remove</title>
-        <screen><computeroutput>usage: openstack ip floating remove [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token ip floating remove [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
         <para>
 Remove floating-ip from server
         </para>  <variablelist wordsize="10">
@@ -2632,19 +2881,19 @@ Remove floating-ip from server
     </section>
     <section xml:id="openstackclient_subcommand_keypair_create">
         <title>openstack keypair create</title>
-        <screen><computeroutput>usage: openstack keypair create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token keypair create [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--prefix PREFIX] [--public-key &lt;file&gt;]
                                 &lt;name&gt;</computeroutput></screen>
         <para>
-Create new keypair
+Create new public key
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;name&gt;</command></term>
     <listitem>
       <para>
-        New keypair name
+        New public key name
       </para>
     </listitem>
   </varlistentry>
@@ -2671,16 +2920,16 @@ Create new keypair
     </section>
     <section xml:id="openstackclient_subcommand_keypair_delete">
         <title>openstack keypair delete</title>
-        <screen><computeroutput>usage: openstack keypair delete [-h] &lt;name&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token keypair delete [-h] &lt;key&gt;</computeroutput></screen>
         <para>
-Delete a keypair
+Delete public key
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;name&gt;</command></term>
+    <term><command>&lt;key&gt;</command></term>
     <listitem>
       <para>
-        Name of keypair to delete
+        Public key to delete
       </para>
     </listitem>
   </varlistentry>
@@ -2699,11 +2948,11 @@ Delete a keypair
     </section>
     <section xml:id="openstackclient_subcommand_keypair_list">
         <title>openstack keypair list</title>
-        <screen><computeroutput>usage: openstack keypair list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token keypair list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                               [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
-List keypairs
+List public key fingerprints
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -2718,19 +2967,19 @@ List keypairs
     </section>
     <section xml:id="openstackclient_subcommand_keypair_show">
         <title>openstack keypair show</title>
-        <screen><computeroutput>usage: openstack keypair show [-h] [-f {shell,table,value}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token keypair show [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--prefix PREFIX] [--public-key]
-                              &lt;name&gt;</computeroutput></screen>
+                              &lt;key&gt;</computeroutput></screen>
         <para>
-Show keypair details
+Display public key details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;name&gt;</command></term>
+    <term><command>&lt;key&gt;</command></term>
     <listitem>
       <para>
-        Name of keypair to display
+        Public key to display
       </para>
     </listitem>
   </varlistentry>
@@ -2749,7 +2998,7 @@ Show keypair details
     <term><command>--public-key</command></term>
     <listitem>
       <para>
-        Include public key in output
+        Show only bare public key
       </para>
     </listitem>
   </varlistentry>
@@ -2757,7 +3006,7 @@ Show keypair details
     </section>
     <section xml:id="openstackclient_subcommand_limits_show">
         <title>openstack limits show</title>
-        <screen><computeroutput>usage: openstack limits show [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token limits show [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--absolute | --rate] [--reserved]</computeroutput></screen>
@@ -2802,8 +3051,8 @@ Show compute and volume limits
     </section>
     <section xml:id="openstackclient_subcommand_module_list">
         <title>openstack module list</title>
-        <screen><computeroutput>usage: openstack module list [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token module list [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--prefix PREFIX] [--all]</computeroutput></screen>
         <para>
 List module versions
@@ -2829,8 +3078,8 @@ List module versions
     </section>
     <section xml:id="openstackclient_subcommand_network_create">
         <title>openstack network create</title>
-        <screen><computeroutput>usage: openstack network create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token network create [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--prefix PREFIX] [--enable | --disable]
                                 [--share | --no-share]
                                 &lt;network_name&gt;</computeroutput></screen>
@@ -2893,16 +3142,16 @@ Create a network
     </section>
     <section xml:id="openstackclient_subcommand_network_delete">
         <title>openstack network delete</title>
-        <screen><computeroutput>usage: openstack network delete [-h] &lt;network&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token network delete [-h] &lt;network&gt; [&lt;network&gt; ...]</computeroutput></screen>
         <para>
-Delete a network
+Delete network(s)
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;network&gt;</command></term>
     <listitem>
       <para>
-        Name or identifier of network to delete
+        Network(s) to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -2921,7 +3170,7 @@ Delete a network
     </section>
     <section xml:id="openstackclient_subcommand_network_list">
         <title>openstack network list</title>
-        <screen><computeroutput>usage: openstack network list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token network list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                               [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--external] [--dhcp DHCP] [--long]</computeroutput></screen>
@@ -2965,7 +3214,7 @@ List networks
     </section>
     <section xml:id="openstackclient_subcommand_network_set">
         <title>openstack network set</title>
-        <screen><computeroutput>usage: openstack network set [-h] [--enable | --disable]
+        <screen><computeroutput>usage: openstack --os-auth-type token network set [-h] [--enable | --disable]
                              [--name &lt;network_name&gt;] [--share | --no-share]
                              &lt;network&gt;</computeroutput></screen>
         <para>
@@ -3035,8 +3284,8 @@ Set network properties
     </section>
     <section xml:id="openstackclient_subcommand_network_show">
         <title>openstack network show</title>
-        <screen><computeroutput>usage: openstack network show [-h] [-f {shell,table,value}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token network show [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--prefix PREFIX]
                               &lt;network&gt;</computeroutput></screen>
         <para>
@@ -3066,27 +3315,27 @@ Show network details
     </section>
     <section xml:id="openstackclient_subcommand_object_create">
         <title>openstack object create</title>
-        <screen><computeroutput>usage: openstack object create [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                               [--prefix PREFIX]
-                               &lt;container&gt; &lt;object-name&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token object create [-h] [-f {csv,html,json,table,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--quote {all,minimal,none,nonnumeric}]
+                               &lt;container&gt; &lt;filename&gt; [&lt;filename&gt; ...]</computeroutput></screen>
         <para>
-Upload an object to a container
+Upload object to container
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;container&gt;</command></term>
     <listitem>
       <para>
-        Container to store new object
+        Container for new object
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>&lt;object-name&gt;</command></term>
+    <term><command>&lt;filename&gt;</command></term>
     <listitem>
       <para>
-        Local path of object to upload
+        Local filename(s) to upload
       </para>
     </listitem>
   </varlistentry>
@@ -3105,24 +3354,24 @@ Upload an object to a container
     </section>
     <section xml:id="openstackclient_subcommand_object_delete">
         <title>openstack object delete</title>
-        <screen><computeroutput>usage: openstack object delete [-h] &lt;container&gt; &lt;object-name&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token object delete [-h] &lt;container&gt; &lt;object&gt; [&lt;object&gt; ...]</computeroutput></screen>
         <para>
-Delete an object within a container
+Delete object from container
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;container&gt;</command></term>
     <listitem>
       <para>
-        Container that stores the object to delete
+        Delete object(s) from &lt;container&gt;
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>&lt;object-name&gt;</command></term>
+    <term><command>&lt;object&gt;</command></term>
     <listitem>
       <para>
-        Object to delete
+        Object(s) to delete
       </para>
     </listitem>
   </varlistentry>
@@ -3141,22 +3390,22 @@ Delete an object within a container
     </section>
     <section xml:id="openstackclient_subcommand_object_list">
         <title>openstack object list</title>
-        <screen><computeroutput>usage: openstack object list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token object list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--prefix &lt;prefix&gt;] [--delimiter &lt;delimiter&gt;]
                              [--marker &lt;marker&gt;] [--end-marker &lt;end-marker&gt;]
                              [--limit &lt;limit&gt;] [--long] [--all]
-                             &lt;container-name&gt;</computeroutput></screen>
+                             &lt;container&gt;</computeroutput></screen>
         <para>
 List objects
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;container-name&gt;</command></term>
+    <term><command>&lt;container&gt;</command></term>
     <listitem>
       <para>
-        List contents of container-name
+        Container to list
       </para>
     </listitem>
   </varlistentry>
@@ -3229,21 +3478,18 @@ List objects
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="openstackclient_subcommand_object_show">
-        <title>openstack object show</title>
-        <screen><computeroutput>usage: openstack object show [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                             [--prefix PREFIX]
-                             &lt;container&gt; &lt;object&gt;</computeroutput></screen>
+    <section xml:id="openstackclient_subcommand_object_save">
+        <title>openstack object save</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token object save [-h] [--file &lt;filename&gt;] &lt;container&gt; &lt;object&gt;</computeroutput></screen>
         <para>
-Show object information
+Save object locally
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;container&gt;</command></term>
     <listitem>
       <para>
-        Container name for object to display
+        Download &lt;object&gt; from &lt;container&gt;
       </para>
     </listitem>
   </varlistentry>
@@ -3251,7 +3497,54 @@ Show object information
     <term><command>&lt;object&gt;</command></term>
     <listitem>
       <para>
-        Object name to display
+        Object to save
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--file &lt;filename&gt;</command></term>
+    <listitem>
+      <para>
+        Destination filename (defaults to object name)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_object_show">
+        <title>openstack object show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token object show [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
+                             [--prefix PREFIX]
+                             &lt;container&gt; &lt;object&gt;</computeroutput></screen>
+        <para>
+Display object details
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Display &lt;object&gt; from &lt;container&gt;
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;object&gt;</command></term>
+    <listitem>
+      <para>
+        Object to display
       </para>
     </listitem>
   </varlistentry>
@@ -3270,12 +3563,12 @@ Show object information
     </section>
     <section xml:id="openstackclient_subcommand_project_create">
         <title>openstack project create</title>
-        <screen><computeroutput>usage: openstack project create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token project create [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--prefix PREFIX]
-                                [--description &lt;project-description&gt;]
+                                [--description &lt;description&gt;]
                                 [--enable | --disable]
-                                [--property &lt;key=value&gt;]
+                                [--property &lt;key=value&gt;] [--or-show]
                                 &lt;project-name&gt;</computeroutput></screen>
         <para>
 Create new project
@@ -3301,10 +3594,10 @@ Create new project
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--description &lt;project-description&gt;</command></term>
+    <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
-      New project description
+      Project description
       </para>
     </listitem>
   </varlistentry>
@@ -3328,8 +3621,16 @@ Create new project
     <term><command>--property &lt;key=value&gt;</command></term>
     <listitem>
       <para>
-      Property to add for this project (repeat option to set
+      Add a property to &lt;name&gt; (repeat option to set
       multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--or-show</command></term>
+    <listitem>
+      <para>
+        Return existing project
       </para>
     </listitem>
   </varlistentry>
@@ -3337,16 +3638,16 @@ Create new project
     </section>
     <section xml:id="openstackclient_subcommand_project_delete">
         <title>openstack project delete</title>
-        <screen><computeroutput>usage: openstack project delete [-h] &lt;project&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token project delete [-h] &lt;project&gt; [&lt;project&gt; ...]</computeroutput></screen>
         <para>
-Delete project
+Delete project(s)
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;project&gt;</command></term>
     <listitem>
       <para>
-        Project to delete (name or ID)
+        Project(s) to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -3365,7 +3666,7 @@ Delete project
     </section>
     <section xml:id="openstackclient_subcommand_project_list">
         <title>openstack project list</title>
-        <screen><computeroutput>usage: openstack project list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token project list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                               [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
         <para>
@@ -3392,8 +3693,8 @@ List projects
     </section>
     <section xml:id="openstackclient_subcommand_project_set">
         <title>openstack project set</title>
-        <screen><computeroutput>usage: openstack project set [-h] [--name &lt;new-project-name&gt;]
-                             [--description &lt;project-description&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token project set [-h] [--name &lt;name&gt;]
+                             [--description &lt;description&gt;]
                              [--enable | --disable] [--property &lt;key=value&gt;]
                              &lt;project&gt;</computeroutput></screen>
         <para>
@@ -3404,7 +3705,7 @@ Set project properties
     <term><command>&lt;project&gt;</command></term>
     <listitem>
       <para>
-        Project to change (name or ID)
+        Project to modify (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -3420,18 +3721,18 @@ Set project properties
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--name &lt;new-project-name&gt;</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-      New project name
+        Set project name
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--description &lt;project-description&gt;</command></term>
+    <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
-      New project description
+      Set project description
       </para>
     </listitem>
   </varlistentry>
@@ -3455,8 +3756,8 @@ Set project properties
     <term><command>--property &lt;key=value&gt;</command></term>
     <listitem>
       <para>
-      Property to add for this project (repeat option to set
-      multiple properties)
+      Set a project property (repeat option to set multiple
+      properties)
       </para>
     </listitem>
   </varlistentry>
@@ -3464,12 +3765,12 @@ Set project properties
     </section>
     <section xml:id="openstackclient_subcommand_project_show">
         <title>openstack project show</title>
-        <screen><computeroutput>usage: openstack project show [-h] [-f {shell,table,value}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token project show [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--prefix PREFIX]
                               &lt;project&gt;</computeroutput></screen>
         <para>
-Show project details
+Display project details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -3495,12 +3796,12 @@ Show project details
     </section>
     <section xml:id="openstackclient_subcommand_project_usage_list">
         <title>openstack project usage list</title>
-        <screen><computeroutput>usage: openstack project usage list [-h] [-f {csv,table}] [-c COLUMN]
-                                    [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token project usage list [-h] [-f {csv,html,json,table,yaml}]
+                                    [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--quote {all,minimal,none,nonnumeric}]
                                     [--start &lt;start&gt;] [--end &lt;end&gt;]</computeroutput></screen>
         <para>
-List resource usage per project.
+List resource usage per project
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -3516,7 +3817,7 @@ List resource usage per project.
     <listitem>
       <para>
         Usage range start date, ex 2012-01-20 (default: 4
-      weeks ago).
+      weeks ago)
       </para>
     </listitem>
   </varlistentry>
@@ -3533,21 +3834,17 @@ List resource usage per project.
     </section>
     <section xml:id="openstackclient_subcommand_quota_set">
         <title>openstack quota set</title>
-        <screen><computeroutput>usage: openstack quota set [-h] [--class] [--properties &lt;new-properties&gt;]
-                           [--ram &lt;new-ram&gt;]
-                           [--secgroup-rules &lt;new-secgroup-rules&gt;]
-                           [--instances &lt;new-instances&gt;]
-                           [--key-pairs &lt;new-key-pairs&gt;]
-                           [--fixed-ips &lt;new-fixed-ips&gt;]
-                           [--secgroups &lt;new-secgroups&gt;]
-                           [--injected-file-size &lt;new-injected-file-size&gt;]
-                           [--floating-ips &lt;new-floating-ips&gt;]
-                           [--injected-files &lt;new-injected-files&gt;]
-                           [--cores &lt;new-cores&gt;]
-                           [--injected-path-size &lt;new-injected-path-size&gt;]
-                           [--gigabytes &lt;new-gigabytes&gt;]
-                           [--volumes &lt;new-volumes&gt;]
-                           [--snapshots &lt;new-snapshots&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token quota set [-h] [--class] [--properties &lt;properties&gt;]
+                           [--ram &lt;ram&gt;] [--secgroup-rules &lt;secgroup-rules&gt;]
+                           [--instances &lt;instances&gt;] [--key-pairs &lt;key-pairs&gt;]
+                           [--fixed-ips &lt;fixed-ips&gt;] [--secgroups &lt;secgroups&gt;]
+                           [--injected-file-size &lt;injected-file-size&gt;]
+                           [--floating-ips &lt;floating-ips&gt;]
+                           [--injected-files &lt;injected-files&gt;]
+                           [--cores &lt;cores&gt;]
+                           [--injected-path-size &lt;injected-path-size&gt;]
+                           [--gigabytes &lt;gigabytes&gt;] [--volumes &lt;volumes&gt;]
+                           [--snapshots &lt;snapshots&gt;]
                            &lt;project/class&gt;</computeroutput></screen>
         <para>
 Set quotas for project or class
@@ -3581,7 +3878,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--properties &lt;new-properties&gt;</command></term>
+    <term><command>--properties &lt;properties&gt;</command></term>
     <listitem>
       <para>
       New value for the properties quota
@@ -3589,7 +3886,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--ram &lt;new-ram&gt;</command></term>
+    <term><command>--ram &lt;ram&gt;</command></term>
     <listitem>
       <para>
         New value for the ram quota
@@ -3597,7 +3894,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--secgroup-rules &lt;new-secgroup-rules&gt;</command></term>
+    <term><command>--secgroup-rules &lt;secgroup-rules&gt;</command></term>
     <listitem>
       <para>
       New value for the secgroup-rules quota
@@ -3605,7 +3902,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--instances &lt;new-instances&gt;</command></term>
+    <term><command>--instances &lt;instances&gt;</command></term>
     <listitem>
       <para>
       New value for the instances quota
@@ -3613,7 +3910,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--key-pairs &lt;new-key-pairs&gt;</command></term>
+    <term><command>--key-pairs &lt;key-pairs&gt;</command></term>
     <listitem>
       <para>
       New value for the key-pairs quota
@@ -3621,7 +3918,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--fixed-ips &lt;new-fixed-ips&gt;</command></term>
+    <term><command>--fixed-ips &lt;fixed-ips&gt;</command></term>
     <listitem>
       <para>
       New value for the fixed-ips quota
@@ -3629,7 +3926,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--secgroups &lt;new-secgroups&gt;</command></term>
+    <term><command>--secgroups &lt;secgroups&gt;</command></term>
     <listitem>
       <para>
       New value for the secgroups quota
@@ -3637,7 +3934,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--injected-file-size &lt;new-injected-file-size&gt;</command></term>
+    <term><command>--injected-file-size &lt;injected-file-size&gt;</command></term>
     <listitem>
       <para>
       New value for the injected-file-size quota
@@ -3645,7 +3942,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--floating-ips &lt;new-floating-ips&gt;</command></term>
+    <term><command>--floating-ips &lt;floating-ips&gt;</command></term>
     <listitem>
       <para>
       New value for the floating-ips quota
@@ -3653,7 +3950,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--injected-files &lt;new-injected-files&gt;</command></term>
+    <term><command>--injected-files &lt;injected-files&gt;</command></term>
     <listitem>
       <para>
       New value for the injected-files quota
@@ -3661,7 +3958,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--cores &lt;new-cores&gt;</command></term>
+    <term><command>--cores &lt;cores&gt;</command></term>
     <listitem>
       <para>
         New value for the cores quota
@@ -3669,7 +3966,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--injected-path-size &lt;new-injected-path-size&gt;</command></term>
+    <term><command>--injected-path-size &lt;injected-path-size&gt;</command></term>
     <listitem>
       <para>
       New value for the injected-path-size quota
@@ -3677,7 +3974,7 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--gigabytes &lt;new-gigabytes&gt;</command></term>
+    <term><command>--gigabytes &lt;gigabytes&gt;</command></term>
     <listitem>
       <para>
       New value for the gigabytes quota
@@ -3685,15 +3982,15 @@ Set quotas for project or class
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--volumes &lt;new-volumes&gt;</command></term>
+    <term><command>--volumes &lt;volumes&gt;</command></term>
     <listitem>
       <para>
-      New value for the volumes quota
+        New value for the volumes quota
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--snapshots &lt;new-snapshots&gt;</command></term>
+    <term><command>--snapshots &lt;snapshots&gt;</command></term>
     <listitem>
       <para>
       New value for the snapshots quota
@@ -3704,8 +4001,8 @@ Set quotas for project or class
     </section>
     <section xml:id="openstackclient_subcommand_quota_show">
         <title>openstack quota show</title>
-        <screen><computeroutput>usage: openstack quota show [-h] [-f {shell,table,value}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token quota show [-h] [-f {html,json,shell,table,value,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;]
                             [--prefix PREFIX] [--class | --default]
                             &lt;project/class&gt;</computeroutput></screen>
         <para>
@@ -3751,8 +4048,8 @@ Show quotas for project or class
     </section>
     <section xml:id="openstackclient_subcommand_role_add">
         <title>openstack role add</title>
-        <screen><computeroutput>usage: openstack role add [-h] [-f {shell,table,value}] [-c COLUMN]
-                          [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token role add [-h] [-f {html,json,shell,table,value,yaml}]
+                          [-c COLUMN] [--max-width &lt;integer&gt;]
                           [--prefix PREFIX] --project &lt;project&gt; --user &lt;user&gt;
                           &lt;role&gt;</computeroutput></screen>
         <para>
@@ -3763,7 +4060,7 @@ Add role to project:user
     <term><command>&lt;role&gt;</command></term>
     <listitem>
       <para>
-        Role name or ID to add to user
+        Role to add to &lt;project&gt;:&lt;user&gt; (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -3782,7 +4079,7 @@ Add role to project:user
     <term><command>--project &lt;project&gt;</command></term>
     <listitem>
       <para>
-        Include project (name or ID)
+        Include &lt;project&gt; (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -3790,7 +4087,7 @@ Add role to project:user
     <term><command>--user &lt;user&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of user to include
+        Include &lt;user&gt; (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -3798,16 +4095,16 @@ Add role to project:user
     </section>
     <section xml:id="openstackclient_subcommand_role_create">
         <title>openstack role create</title>
-        <screen><computeroutput>usage: openstack role create [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                             [--prefix PREFIX]
-                             &lt;role-name&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token role create [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
+                             [--prefix PREFIX] [--or-show]
+                             &lt;name&gt;</computeroutput></screen>
         <para>
 Create new role
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;role-name&gt;</command></term>
+    <term><command>&lt;name&gt;</command></term>
     <listitem>
       <para>
         New role name
@@ -3825,20 +4122,28 @@ Create new role
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--or-show</command></term>
+    <listitem>
+      <para>
+        Return existing role
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_role_delete">
         <title>openstack role delete</title>
-        <screen><computeroutput>usage: openstack role delete [-h] &lt;role&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token role delete [-h] &lt;role&gt; [&lt;role&gt; ...]</computeroutput></screen>
         <para>
-Delete existing role
+Delete role(s)
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;role&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of role to delete
+        Role(s) to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -3857,9 +4162,10 @@ Delete existing role
     </section>
     <section xml:id="openstackclient_subcommand_role_list">
         <title>openstack role list</title>
-        <screen><computeroutput>usage: openstack role list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token role list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                            [--max-width &lt;integer&gt;]
-                           [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
+                           [--quote {all,minimal,none,nonnumeric}]
+                           [--project &lt;project&gt;] [--user &lt;user&gt;]</computeroutput></screen>
         <para>
 List roles
         </para>  <variablelist wordsize="10">
@@ -3872,20 +4178,36 @@ List roles
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--project &lt;project&gt;</command></term>
+    <listitem>
+      <para>
+        Filter roles by &lt;project&gt; (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--user &lt;user&gt;</command></term>
+    <listitem>
+      <para>
+        Filter roles by &lt;user&gt; (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_role_remove">
         <title>openstack role remove</title>
-        <screen><computeroutput>usage: openstack role remove [-h] --project &lt;project&gt; --user &lt;user&gt; &lt;role&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token role remove [-h] --project &lt;project&gt; --user &lt;user&gt; &lt;role&gt;</computeroutput></screen>
         <para>
-Remove role from project:user
+Remove role from project : user
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;role&gt;</command></term>
     <listitem>
       <para>
-        Role name or ID to remove from user
+        Role to remove (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -3904,7 +4226,7 @@ Remove role from project:user
     <term><command>--project &lt;project&gt;</command></term>
     <listitem>
       <para>
-        Project to include (name or ID)
+        Include &lt;project&gt; (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -3912,7 +4234,7 @@ Remove role from project:user
     <term><command>--user &lt;user&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of user
+        Include &lt;user&gt; (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -3920,19 +4242,19 @@ Remove role from project:user
     </section>
     <section xml:id="openstackclient_subcommand_role_show">
         <title>openstack role show</title>
-        <screen><computeroutput>usage: openstack role show [-h] [-f {shell,table,value}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token role show [-h] [-f {html,json,shell,table,value,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;]
                            [--prefix PREFIX]
                            &lt;role&gt;</computeroutput></screen>
         <para>
-Show single role
+Display role details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;role&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of role to display
+        Role to display (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -3951,9 +4273,10 @@ Show single role
     </section>
     <section xml:id="openstackclient_subcommand_security_group_create">
         <title>openstack security group create</title>
-        <screen><computeroutput>usage: openstack security group create [-h] [-f {shell,table,value}]
+        <screen><computeroutput>usage: openstack --os-auth-type token security group create [-h]
+                                       [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
-                                       [--variable VARIABLE] [--prefix PREFIX]
+                                       [--prefix PREFIX]
                                        [--description &lt;description&gt;]
                                        &lt;name&gt;</computeroutput></screen>
         <para>
@@ -3991,7 +4314,7 @@ Create a new security group
     </section>
     <section xml:id="openstackclient_subcommand_security_group_delete">
         <title>openstack security group delete</title>
-        <screen><computeroutput>usage: openstack security group delete [-h] &lt;group&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token security group delete [-h] &lt;group&gt;</computeroutput></screen>
         <para>
 Delete a security group
         </para>  <variablelist wordsize="10">
@@ -4019,8 +4342,8 @@ Delete a security group
     </section>
     <section xml:id="openstackclient_subcommand_security_group_list">
         <title>openstack security group list</title>
-        <screen><computeroutput>usage: openstack security group list [-h] [-f {csv,table}] [-c COLUMN]
-                                     [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token security group list [-h] [-f {csv,html,json,table,yaml}]
+                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--all-projects]</computeroutput></screen>
         <para>
@@ -4047,10 +4370,10 @@ List all security groups
     </section>
     <section xml:id="openstackclient_subcommand_security_group_rule_create">
         <title>openstack security group rule create</title>
-        <screen><computeroutput>usage: openstack security group rule create [-h] [-f {shell,table,value}]
+        <screen><computeroutput>usage: openstack --os-auth-type token security group rule create [-h]
+                                            [-f {html,json,shell,table,value,yaml}]
                                             [-c COLUMN]
                                             [--max-width &lt;integer&gt;]
-                                            [--variable VARIABLE]
                                             [--prefix PREFIX]
                                             [--proto &lt;proto&gt;]
                                             [--src-ip &lt;ip-address&gt;]
@@ -4108,7 +4431,7 @@ Create a new security group rule
     </section>
     <section xml:id="openstackclient_subcommand_security_group_rule_delete">
         <title>openstack security group rule delete</title>
-        <screen><computeroutput>usage: openstack security group rule delete [-h] [--proto &lt;proto&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token security group rule delete [-h] [--proto &lt;proto&gt;]
                                             [--src-ip &lt;ip-address&gt;]
                                             [--dst-port &lt;port-range&gt;]
                                             &lt;group&gt;</computeroutput></screen>
@@ -4164,8 +4487,8 @@ Delete a security group rule
     </section>
     <section xml:id="openstackclient_subcommand_security_group_rule_list">
         <title>openstack security group rule list</title>
-        <screen><computeroutput>usage: openstack security group rule list [-h] [-f {csv,table}] [-c COLUMN]
-                                          [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token security group rule list [-h] [-f {csv,html,json,table,yaml}]
+                                          [-c COLUMN] [--max-width &lt;integer&gt;]
                                           [--quote {all,minimal,none,nonnumeric}]
                                           &lt;group&gt;</computeroutput></screen>
         <para>
@@ -4195,10 +4518,10 @@ List all security group rules
     </section>
     <section xml:id="openstackclient_subcommand_security_group_set">
         <title>openstack security group set</title>
-        <screen><computeroutput>usage: openstack security group set [-h] [-f {shell,table,value}] [-c COLUMN]
-                                    [--max-width &lt;integer&gt;]
-                                    [--variable VARIABLE] [--prefix PREFIX]
-                                    [--name &lt;new-name&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token security group set [-h]
+                                    [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width &lt;integer&gt;]
+                                    [--prefix PREFIX] [--name &lt;new-name&gt;]
                                     [--description &lt;description&gt;]
                                     &lt;group&gt;</computeroutput></screen>
         <para>
@@ -4244,9 +4567,10 @@ Set security group properties
     </section>
     <section xml:id="openstackclient_subcommand_security_group_show">
         <title>openstack security group show</title>
-        <screen><computeroutput>usage: openstack security group show [-h] [-f {shell,table,value}] [-c COLUMN]
-                                     [--max-width &lt;integer&gt;]
-                                     [--variable VARIABLE] [--prefix PREFIX]
+        <screen><computeroutput>usage: openstack --os-auth-type token security group show [-h]
+                                     [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width &lt;integer&gt;]
+                                     [--prefix PREFIX]
                                      &lt;group&gt;</computeroutput></screen>
         <para>
 Show a specific security group
@@ -4275,7 +4599,7 @@ Show a specific security group
     </section>
     <section xml:id="openstackclient_subcommand_server_add_security_group">
         <title>openstack server add security group</title>
-        <screen><computeroutput>usage: openstack server add security group [-h] &lt;server&gt; &lt;group&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server add security group [-h] &lt;server&gt; &lt;group&gt;</computeroutput></screen>
         <para>
 Add security group to server
         </para>  <variablelist wordsize="10">
@@ -4284,7 +4608,7 @@ Add security group to server
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of server to use
+        Server (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -4292,7 +4616,7 @@ Add security group to server
     <term><command>&lt;group&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of security group to add to server
+        Security group to add (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -4311,7 +4635,7 @@ Add security group to server
     </section>
     <section xml:id="openstackclient_subcommand_server_add_volume">
         <title>openstack server add volume</title>
-        <screen><computeroutput>usage: openstack server add volume [-h] [--device &lt;device&gt;] &lt;server&gt; &lt;volume&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server add volume [-h] [--device &lt;device&gt;] &lt;server&gt; &lt;volume&gt;</computeroutput></screen>
         <para>
 Add volume to server
         </para>  <variablelist wordsize="10">
@@ -4355,9 +4679,10 @@ Add volume to server
     </section>
     <section xml:id="openstackclient_subcommand_server_create">
         <title>openstack server create</title>
-        <screen><computeroutput>usage: openstack server create [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                               [--prefix PREFIX] --image &lt;image&gt; --flavor
+        <screen><computeroutput>usage: openstack --os-auth-type token server create [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--prefix PREFIX]
+                               (--image &lt;image&gt; | --volume &lt;volume&gt;) --flavor
                                &lt;flavor&gt;
                                [--security-group &lt;security-group-name&gt;]
                                [--key-name &lt;key-name&gt;]
@@ -4399,6 +4724,14 @@ Create a new server
     <listitem>
       <para>
         Create server from this image
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--volume &lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Create server from this volume
       </para>
     </listitem>
   </varlistentry>
@@ -4525,16 +4858,16 @@ Create a new server
     </section>
     <section xml:id="openstackclient_subcommand_server_delete">
         <title>openstack server delete</title>
-        <screen><computeroutput>usage: openstack server delete [-h] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server delete [-h] &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
         <para>
-Delete server command
+Delete server(s)
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of server to delete
+        Server(s) to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -4553,10 +4886,11 @@ Delete server command
     </section>
     <section xml:id="openstackclient_subcommand_server_image_create">
         <title>openstack server image create</title>
-        <screen><computeroutput>usage: openstack server image create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                     [--max-width &lt;integer&gt;]
-                                     [--variable VARIABLE] [--prefix PREFIX]
-                                     [--name &lt;image-name&gt;] [--wait]
+        <screen><computeroutput>usage: openstack --os-auth-type token server image create [-h]
+                                     [-f {html,json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width &lt;integer&gt;]
+                                     [--prefix PREFIX] [--name &lt;image-name&gt;]
+                                     [--wait]
                                      &lt;server&gt;</computeroutput></screen>
         <para>
 Create a new disk image from a running server
@@ -4601,16 +4935,16 @@ Create a new disk image from a running server
     </section>
     <section xml:id="openstackclient_subcommand_server_list">
         <title>openstack server list</title>
-        <screen><computeroutput>usage: openstack server list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token server list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--reservation-id &lt;reservation-id&gt;]
                              [--ip &lt;ip-address-regex&gt;]
-                             [--ip6 &lt;ip-address-regex&gt;] [--name &lt;name&gt;]
+                             [--ip6 &lt;ip-address-regex&gt;] [--name &lt;name-regex&gt;]
+                             [--instance-name &lt;server-name&gt;]
                              [--status &lt;status&gt;] [--flavor &lt;flavor&gt;]
                              [--image &lt;image&gt;] [--host &lt;hostname&gt;]
-                             [--instance-name &lt;server-name&gt;] [--all-projects]
-                             [--long]</computeroutput></screen>
+                             [--all-projects] [--long]</computeroutput></screen>
         <para>
 List servers
         </para>  <variablelist wordsize="10">
@@ -4648,10 +4982,18 @@ List servers
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--name &lt;name&gt;</command></term>
+    <term><command>--name &lt;name-regex&gt;</command></term>
     <listitem>
       <para>
         Regular expression to match names
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--instance-name &lt;server-name&gt;</command></term>
+    <listitem>
+      <para>
+      Regular expression to match instance name (admin only)
       </para>
     </listitem>
   </varlistentry>
@@ -4667,7 +5009,7 @@ List servers
     <term><command>--flavor &lt;flavor&gt;</command></term>
     <listitem>
       <para>
-        Search by flavor ID
+        Search by flavor
       </para>
     </listitem>
   </varlistentry>
@@ -4675,7 +5017,7 @@ List servers
     <term><command>--image &lt;image&gt;</command></term>
     <listitem>
       <para>
-        Search by image ID
+        Search by image
       </para>
     </listitem>
   </varlistentry>
@@ -4684,14 +5026,6 @@ List servers
     <listitem>
       <para>
         Search by hostname
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--instance-name &lt;server-name&gt;</command></term>
-    <listitem>
-      <para>
-      Regular expression to match instance name (admin only)
       </para>
     </listitem>
   </varlistentry>
@@ -4715,7 +5049,7 @@ List servers
     </section>
     <section xml:id="openstackclient_subcommand_server_lock">
         <title>openstack server lock</title>
-        <screen><computeroutput>usage: openstack server lock [-h] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server lock [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Lock server
         </para>  <variablelist wordsize="10">
@@ -4743,9 +5077,10 @@ Lock server
     </section>
     <section xml:id="openstackclient_subcommand_server_migrate">
         <title>openstack server migrate</title>
-        <screen><computeroutput>usage: openstack server migrate [-h] [--wait] [--live &lt;hostname&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token server migrate [-h] [--live &lt;hostname&gt;]
                                 [--shared-migration | --block-migration]
-                                [--no-disk-overcommit | --disk-overcommit]
+                                [--disk-overcommit | --no-disk-overcommit]
+                                [--wait]
                                 &lt;server&gt;</computeroutput></screen>
         <para>
 Migrate server to different host
@@ -4755,7 +5090,7 @@ Migrate server to different host
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Server to migrate (name or ID)
+        Server (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -4767,14 +5102,6 @@ Migrate server to different host
     <listitem>
       <para>
         show this help message and exit
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--wait</command></term>
-    <listitem>
-      <para>
-        Wait for resize to complete
       </para>
     </listitem>
   </varlistentry>
@@ -4803,6 +5130,14 @@ Migrate server to different host
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--disk-overcommit</command></term>
+    <listitem>
+      <para>
+        Allow disk over-commit on the destination host
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--no-disk-overcommit</command></term>
     <listitem>
       <para>
@@ -4812,10 +5147,10 @@ Migrate server to different host
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--disk-overcommit</command></term>
+    <term><command>--wait</command></term>
     <listitem>
       <para>
-        Allow disk over-commit on the destination host
+        Wait for resize to complete
       </para>
     </listitem>
   </varlistentry>
@@ -4823,7 +5158,7 @@ Migrate server to different host
     </section>
     <section xml:id="openstackclient_subcommand_server_pause">
         <title>openstack server pause</title>
-        <screen><computeroutput>usage: openstack server pause [-h] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server pause [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Pause server
         </para>  <variablelist wordsize="10">
@@ -4851,7 +5186,7 @@ Pause server
     </section>
     <section xml:id="openstackclient_subcommand_server_reboot">
         <title>openstack server reboot</title>
-        <screen><computeroutput>usage: openstack server reboot [-h] [--hard | --soft] [--wait] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server reboot [-h] [--hard | --soft] [--wait] &lt;server&gt;</computeroutput></screen>
         <para>
 Perform a hard or soft server reboot
         </para>  <variablelist wordsize="10">
@@ -4903,8 +5238,8 @@ Perform a hard or soft server reboot
     </section>
     <section xml:id="openstackclient_subcommand_server_rebuild">
         <title>openstack server rebuild</title>
-        <screen><computeroutput>usage: openstack server rebuild [-h] [-f {shell,table,value}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token server rebuild [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--prefix PREFIX] --image &lt;image&gt;
                                 [--password &lt;password&gt;] [--wait]
                                 &lt;server&gt;</computeroutput></screen>
@@ -4959,7 +5294,7 @@ Rebuild server
     </section>
     <section xml:id="openstackclient_subcommand_server_remove_security_group">
         <title>openstack server remove security group</title>
-        <screen><computeroutput>usage: openstack server remove security group [-h] &lt;server&gt; &lt;group&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server remove security group [-h] &lt;server&gt; &lt;group&gt;</computeroutput></screen>
         <para>
 Remove security group from server
         </para>  <variablelist wordsize="10">
@@ -4995,7 +5330,7 @@ Remove security group from server
     </section>
     <section xml:id="openstackclient_subcommand_server_remove_volume">
         <title>openstack server remove volume</title>
-        <screen><computeroutput>usage: openstack server remove volume [-h] &lt;server&gt; &lt;volume&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server remove volume [-h] &lt;server&gt; &lt;volume&gt;</computeroutput></screen>
         <para>
 Remove volume from server
         </para>  <variablelist wordsize="10">
@@ -5031,8 +5366,8 @@ Remove volume from server
     </section>
     <section xml:id="openstackclient_subcommand_server_rescue">
         <title>openstack server rescue</title>
-        <screen><computeroutput>usage: openstack server rescue [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token server rescue [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--prefix PREFIX]
                                &lt;server&gt;</computeroutput></screen>
         <para>
@@ -5062,7 +5397,7 @@ Put server in rescue mode
     </section>
     <section xml:id="openstackclient_subcommand_server_resize">
         <title>openstack server resize</title>
-        <screen><computeroutput>usage: openstack server resize [-h] [--flavor &lt;flavor&gt; | --verify | --revert]
+        <screen><computeroutput>usage: openstack --os-auth-type token server resize [-h] [--flavor &lt;flavor&gt; | --verify | --revert]
                                [--wait]
                                &lt;server&gt;</computeroutput></screen>
         <para>
@@ -5124,7 +5459,7 @@ Scale server to a new flavor
     </section>
     <section xml:id="openstackclient_subcommand_server_resume">
         <title>openstack server resume</title>
-        <screen><computeroutput>usage: openstack server resume [-h] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server resume [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Resume server
         </para>  <variablelist wordsize="10">
@@ -5152,7 +5487,7 @@ Resume server
     </section>
     <section xml:id="openstackclient_subcommand_server_set">
         <title>openstack server set</title>
-        <screen><computeroutput>usage: openstack server set [-h] [--name &lt;new-name&gt;] [--root-password]
+        <screen><computeroutput>usage: openstack --os-auth-type token server set [-h] [--name &lt;new-name&gt;] [--root-password]
                             [--property &lt;key=value&gt;]
                             &lt;server&gt;</computeroutput></screen>
         <para>
@@ -5207,8 +5542,8 @@ Set server properties
     </section>
     <section xml:id="openstackclient_subcommand_server_show">
         <title>openstack server show</title>
-        <screen><computeroutput>usage: openstack server show [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token server show [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--prefix PREFIX] [--diagnostics]
                              &lt;server&gt;</computeroutput></screen>
         <para>
@@ -5219,7 +5554,7 @@ Show server details
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Server to show (name or ID)
+        Server (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -5238,7 +5573,7 @@ Show server details
     <term><command>--diagnostics</command></term>
     <listitem>
       <para>
-        Display diagnostics information for a given server
+        Display server diagnostics information
       </para>
     </listitem>
   </varlistentry>
@@ -5246,7 +5581,7 @@ Show server details
     </section>
     <section xml:id="openstackclient_subcommand_server_ssh">
         <title>openstack server ssh</title>
-        <screen><computeroutput>usage: openstack server ssh [-h] [--login &lt;login-name&gt;] [--port &lt;port&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token server ssh [-h] [--login &lt;login-name&gt;] [--port &lt;port&gt;]
                             [--identity &lt;keyfile&gt;] [--option &lt;config-options&gt;]
                             [-4 | -6]
                             [--public | --private | --address-type &lt;address-type&gt;]
@@ -5350,7 +5685,7 @@ Ssh to server
     </section>
     <section xml:id="openstackclient_subcommand_server_suspend">
         <title>openstack server suspend</title>
-        <screen><computeroutput>usage: openstack server suspend [-h] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server suspend [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Suspend server
         </para>  <variablelist wordsize="10">
@@ -5378,7 +5713,7 @@ Suspend server
     </section>
     <section xml:id="openstackclient_subcommand_server_unlock">
         <title>openstack server unlock</title>
-        <screen><computeroutput>usage: openstack server unlock [-h] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server unlock [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Unlock server
         </para>  <variablelist wordsize="10">
@@ -5406,7 +5741,7 @@ Unlock server
     </section>
     <section xml:id="openstackclient_subcommand_server_unpause">
         <title>openstack server unpause</title>
-        <screen><computeroutput>usage: openstack server unpause [-h] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server unpause [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Unpause server
         </para>  <variablelist wordsize="10">
@@ -5434,7 +5769,7 @@ Unpause server
     </section>
     <section xml:id="openstackclient_subcommand_server_unrescue">
         <title>openstack server unrescue</title>
-        <screen><computeroutput>usage: openstack server unrescue [-h] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server unrescue [-h] &lt;server&gt;</computeroutput></screen>
         <para>
 Restore server from rescue mode
         </para>  <variablelist wordsize="10">
@@ -5462,7 +5797,7 @@ Restore server from rescue mode
     </section>
     <section xml:id="openstackclient_subcommand_server_unset">
         <title>openstack server unset</title>
-        <screen><computeroutput>usage: openstack server unset [-h] [--property &lt;key&gt;] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server unset [-h] [--property &lt;key&gt;] &lt;server&gt;</computeroutput></screen>
         <para>
 Unset server properties
         </para>  <variablelist wordsize="10">
@@ -5490,8 +5825,8 @@ Unset server properties
     <term><command>--property &lt;key&gt;</command></term>
     <listitem>
       <para>
-        Property key to remove from server (repeat to set multiple
-      values)
+        Property key to remove from server (repeat to unset
+      multiple values)
       </para>
     </listitem>
   </varlistentry>
@@ -5499,20 +5834,21 @@ Unset server properties
     </section>
     <section xml:id="openstackclient_subcommand_service_create">
         <title>openstack service create</title>
-        <screen><computeroutput>usage: openstack service create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                                [--prefix PREFIX] --type &lt;service-type&gt;
-                                [--description &lt;service-description&gt;]
-                                &lt;service-name&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token service create [-h] [-f {html,json,shell,table,value,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
+                                [--prefix PREFIX] [--name &lt;name&gt;]
+                                [--description &lt;description&gt;]
+                                &lt;type&gt;</computeroutput></screen>
         <para>
 Create new service
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;service-name&gt;</command></term>
+    <term><command>&lt;type&gt;</command></term>
     <listitem>
       <para>
-        New service name
+        New service type (compute, image, identity, volume,
+      etc)
       </para>
     </listitem>
   </varlistentry>
@@ -5528,16 +5864,15 @@ Create new service
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--type &lt;service-type&gt;</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-      New service type (compute, image, identity, volume,
-      etc)
+        New service name
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--description &lt;service-description&gt;</command></term>
+    <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
       New service description
@@ -5548,7 +5883,7 @@ Create new service
     </section>
     <section xml:id="openstackclient_subcommand_service_delete">
         <title>openstack service delete</title>
-        <screen><computeroutput>usage: openstack service delete [-h] &lt;service&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token service delete [-h] &lt;service&gt;</computeroutput></screen>
         <para>
 Delete service
         </para>  <variablelist wordsize="10">
@@ -5576,7 +5911,7 @@ Delete service
     </section>
     <section xml:id="openstackclient_subcommand_service_list">
         <title>openstack service list</title>
-        <screen><computeroutput>usage: openstack service list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token service list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                               [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
         <para>
@@ -5603,12 +5938,12 @@ List services
     </section>
     <section xml:id="openstackclient_subcommand_service_show">
         <title>openstack service show</title>
-        <screen><computeroutput>usage: openstack service show [-h] [-f {shell,table,value}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token service show [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--prefix PREFIX] [--catalog]
                               &lt;service&gt;</computeroutput></screen>
         <para>
-Show service details
+Display service details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -5642,20 +5977,20 @@ Show service details
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_create">
         <title>openstack snapshot create</title>
-        <screen><computeroutput>usage: openstack snapshot create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                 [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token snapshot create [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--prefix PREFIX] --name &lt;name&gt;
                                  [--description &lt;description&gt;] [--force]
                                  &lt;volume&gt;</computeroutput></screen>
         <para>
-Create snapshot command
+Create new snapshot
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        The name or ID of the volume to snapshot
+        Volume to snapshot (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -5699,16 +6034,16 @@ Create snapshot command
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_delete">
         <title>openstack snapshot delete</title>
-        <screen><computeroutput>usage: openstack snapshot delete [-h] &lt;snapshot&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token snapshot delete [-h] &lt;snapshot&gt; [&lt;snapshot&gt; ...]</computeroutput></screen>
         <para>
-Delete snapshot command
+Delete snapshot(s)
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;snapshot&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of snapshot to delete
+        Snapshot(s) to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -5727,11 +6062,12 @@ Delete snapshot command
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_list">
         <title>openstack snapshot list</title>
-        <screen><computeroutput>usage: openstack snapshot list [-h] [-f {csv,table}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;]
-                               [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token snapshot list [-h] [-f {csv,html,json,table,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--quote {all,minimal,none,nonnumeric}]
+                               [--long]</computeroutput></screen>
         <para>
-List snapshot command
+List snapshots
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -5739,6 +6075,14 @@ List snapshot command
     <listitem>
       <para>
         show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--long</command></term>
+    <listitem>
+      <para>
+        List additional fields in output
       </para>
     </listitem>
   </varlistentry>
@@ -5746,18 +6090,19 @@ List snapshot command
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_set">
         <title>openstack snapshot set</title>
-        <screen><computeroutput>usage: openstack snapshot set [-h] [--name &lt;new-snapshot-name&gt;]
-                              [--description &lt;new-snapshot-description&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token snapshot set [-h] [--name &lt;name&gt;]
+                              [--description &lt;description&gt;]
+                              [--property &lt;key=value&gt;]
                               &lt;snapshot&gt;</computeroutput></screen>
         <para>
-Set snapshot command
+Set snapshot properties
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;snapshot&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of snapshot to change
+        Snapshot to modify (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -5773,18 +6118,27 @@ Set snapshot command
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--name &lt;new-snapshot-name&gt;</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-      New snapshot name
+        New snapshot name
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--description &lt;new-snapshot-description&gt;</command></term>
+    <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
       New snapshot description
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Property to add/change for this snapshot (repeat
+      option to set multiple properties)
       </para>
     </listitem>
   </varlistentry>
@@ -5792,19 +6146,19 @@ Set snapshot command
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_show">
         <title>openstack snapshot show</title>
-        <screen><computeroutput>usage: openstack snapshot show [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token snapshot show [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--prefix PREFIX]
                                &lt;snapshot&gt;</computeroutput></screen>
         <para>
-Show snapshot command
+Display snapshot details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;snapshot&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of snapshot to display
+        Snapshot to display (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -5821,10 +6175,47 @@ Show snapshot command
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_snapshot_unset">
+        <title>openstack snapshot unset</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token snapshot unset [-h] [--property &lt;key&gt;] &lt;snapshot&gt;</computeroutput></screen>
+        <para>
+Unset snapshot properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Snapshot to modify (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Property to remove from snapshot (repeat to remove
+      multiple values)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_token_issue">
         <title>openstack token issue</title>
-        <screen><computeroutput>usage: openstack token issue [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token token issue [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--prefix PREFIX]</computeroutput></screen>
         <para>
 Issue new token
@@ -5842,7 +6233,7 @@ Issue new token
     </section>
     <section xml:id="openstackclient_subcommand_token_revoke">
         <title>openstack token revoke</title>
-        <screen><computeroutput>usage: openstack token revoke [-h] &lt;token&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token token revoke [-h] &lt;token&gt;</computeroutput></screen>
         <para>
 Revoke existing token
         </para>  <variablelist wordsize="10">
@@ -5868,20 +6259,105 @@ Revoke existing token
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_usage_list">
+        <title>openstack usage list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token usage list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
+                            [--max-width &lt;integer&gt;]
+                            [--quote {all,minimal,none,nonnumeric}]
+                            [--start &lt;start&gt;] [--end &lt;end&gt;]</computeroutput></screen>
+        <para>
+List resource usage per project
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--start &lt;start&gt;</command></term>
+    <listitem>
+      <para>
+        Usage range start date, ex 2012-01-20 (default: 4
+      weeks ago)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--end &lt;end&gt;</command></term>
+    <listitem>
+      <para>
+        Usage range end date, ex 2012-01-20 (default:
+      tomorrow)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_usage_show">
+        <title>openstack usage show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token usage show [-h] [-f {html,json,shell,table,value,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;]
+                            [--prefix PREFIX] [--project &lt;project&gt;]
+                            [--start &lt;start&gt;] [--end &lt;end&gt;]</computeroutput></screen>
+        <para>
+Show resource usage for a single project
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--project &lt;project&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of project to show usage for
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--start &lt;start&gt;</command></term>
+    <listitem>
+      <para>
+        Usage range start date, ex 2012-01-20 (default: 4
+      weeks ago)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--end &lt;end&gt;</command></term>
+    <listitem>
+      <para>
+        Usage range end date, ex 2012-01-20 (default:
+      tomorrow)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_user_create">
         <title>openstack user create</title>
-        <screen><computeroutput>usage: openstack user create [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
-                             [--prefix PREFIX] [--password &lt;user-password&gt;]
-                             [--password-prompt] [--email &lt;user-email&gt;]
-                             [--project &lt;project&gt;] [--enable | --disable]
-                             &lt;user-name&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token user create [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
+                             [--prefix PREFIX] [--project &lt;project&gt;]
+                             [--password &lt;password&gt;] [--password-prompt]
+                             [--email &lt;email-address&gt;] [--enable | --disable]
+                             [--or-show]
+                             &lt;name&gt;</computeroutput></screen>
         <para>
 Create new user
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;user-name&gt;</command></term>
+    <term><command>&lt;name&gt;</command></term>
     <listitem>
       <para>
         New user name
@@ -5900,10 +6376,18 @@ Create new user
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--password &lt;user-password&gt;</command></term>
+    <term><command>--project &lt;project&gt;</command></term>
     <listitem>
       <para>
-      New user password
+        Default project (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--password &lt;password&gt;</command></term>
+    <listitem>
+      <para>
+      Set user password
       </para>
     </listitem>
   </varlistentry>
@@ -5916,18 +6400,10 @@ Create new user
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--email &lt;user-email&gt;</command></term>
+    <term><command>--email &lt;email-address&gt;</command></term>
     <listitem>
       <para>
-        New user email address
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--project &lt;project&gt;</command></term>
-    <listitem>
-      <para>
-        Set default project (name or ID)
+      Set user email address
       </para>
     </listitem>
   </varlistentry>
@@ -5947,20 +6423,28 @@ Create new user
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--or-show</command></term>
+    <listitem>
+      <para>
+        Return existing user
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_user_delete">
         <title>openstack user delete</title>
-        <screen><computeroutput>usage: openstack user delete [-h] &lt;user&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token user delete [-h] &lt;user&gt; [&lt;user&gt; ...]</computeroutput></screen>
         <para>
-Delete user
+Delete user(s)
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;user&gt;</command></term>
     <listitem>
       <para>
-        User to delete (name or ID)
+        User(s) to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -5979,7 +6463,7 @@ Delete user
     </section>
     <section xml:id="openstackclient_subcommand_user_list">
         <title>openstack user list</title>
-        <screen><computeroutput>usage: openstack user list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token user list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                            [--max-width &lt;integer&gt;]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--project &lt;project&gt;] [--long]</computeroutput></screen>
@@ -6015,8 +6499,8 @@ List users
     </section>
     <section xml:id="openstackclient_subcommand_user_role_list">
         <title>openstack user role list</title>
-        <screen><computeroutput>usage: openstack user role list [-h] [-f {csv,table}] [-c COLUMN]
-                                [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token user role list [-h] [-f {csv,html,json,table,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--project &lt;project&gt;]
                                 [&lt;user&gt;]</computeroutput></screen>
@@ -6028,7 +6512,7 @@ List user-role assignments
     <term><command>&lt;user&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of user to include
+        User to list (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6047,7 +6531,7 @@ List user-role assignments
     <term><command>--project &lt;project&gt;</command></term>
     <listitem>
       <para>
-        Include project (name or ID)
+        Filter users by &lt;project&gt; (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6055,10 +6539,9 @@ List user-role assignments
     </section>
     <section xml:id="openstackclient_subcommand_user_set">
         <title>openstack user set</title>
-        <screen><computeroutput>usage: openstack user set [-h] [--name &lt;new-user-name&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token user set [-h] [--name &lt;name&gt;] [--project &lt;project&gt;]
                           [--password &lt;user-password&gt;] [--password-prompt]
-                          [--email &lt;user-email&gt;] [--project &lt;project&gt;]
-                          [--enable | --disable]
+                          [--email &lt;email-address&gt;] [--enable | --disable]
                           &lt;user&gt;</computeroutput></screen>
         <para>
 Set user properties
@@ -6084,10 +6567,18 @@ Set user properties
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--name &lt;new-user-name&gt;</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-      New user name
+        Set user name
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--project &lt;project&gt;</command></term>
+    <listitem>
+      <para>
+        Set default project (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6095,7 +6586,7 @@ Set user properties
     <term><command>--password &lt;user-password&gt;</command></term>
     <listitem>
       <para>
-      New user password
+      Set user password
       </para>
     </listitem>
   </varlistentry>
@@ -6108,18 +6599,10 @@ Set user properties
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--email &lt;user-email&gt;</command></term>
+    <term><command>--email &lt;email-address&gt;</command></term>
     <listitem>
       <para>
-        New user email address
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--project &lt;project&gt;</command></term>
-    <listitem>
-      <para>
-        New default project (name or ID)
+      Set user email address
       </para>
     </listitem>
   </varlistentry>
@@ -6143,12 +6626,12 @@ Set user properties
     </section>
     <section xml:id="openstackclient_subcommand_user_show">
         <title>openstack user show</title>
-        <screen><computeroutput>usage: openstack user show [-h] [-f {shell,table,value}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token user show [-h] [-f {html,json,shell,table,value,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;]
                            [--prefix PREFIX]
                            &lt;user&gt;</computeroutput></screen>
         <para>
-Show user details
+Display user details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -6174,16 +6657,16 @@ Show user details
     </section>
     <section xml:id="openstackclient_subcommand_volume_create">
         <title>openstack volume create</title>
-        <screen><computeroutput>usage: openstack volume create [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token volume create [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--prefix PREFIX] --size &lt;size&gt;
                                [--snapshot-id &lt;snapshot-id&gt;]
                                [--description &lt;description&gt;]
                                [--type &lt;volume-type&gt;] [--user &lt;user&gt;]
                                [--project &lt;project&gt;]
                                [--availability-zone &lt;availability-zone&gt;]
-                               [--property &lt;key=value&gt;] [--image &lt;image&gt;]
-                               [--source &lt;volume&gt;]
+                               [--image &lt;image&gt;] [--source &lt;volume&gt;]
+                               [--property &lt;key=value&gt;]
                                &lt;name&gt;</computeroutput></screen>
         <para>
 Create new volume
@@ -6193,7 +6676,7 @@ Create new volume
     <term><command>&lt;name&gt;</command></term>
     <listitem>
       <para>
-        Name of the new volume
+        New volume name
       </para>
     </listitem>
   </varlistentry>
@@ -6212,7 +6695,7 @@ Create new volume
     <term><command>--size &lt;size&gt;</command></term>
     <listitem>
       <para>
-        New volume size
+        New volume size in GB
       </para>
     </listitem>
   </varlistentry>
@@ -6228,7 +6711,7 @@ Create new volume
     <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
-      Description of the volume
+      New volume description
       </para>
     </listitem>
   </varlistentry>
@@ -6236,7 +6719,7 @@ Create new volume
     <term><command>--type &lt;volume-type&gt;</command></term>
     <listitem>
       <para>
-        Type of volume
+        Use &lt;volume-type&gt; as the new volume type
       </para>
     </listitem>
   </varlistentry>
@@ -6244,7 +6727,7 @@ Create new volume
     <term><command>--user &lt;user&gt;</command></term>
     <listitem>
       <para>
-        Specify a different user (admin only)
+        Specify an alternate user (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6252,7 +6735,7 @@ Create new volume
     <term><command>--project &lt;project&gt;</command></term>
     <listitem>
       <para>
-        Specify a different project (admin only)
+        Specify an alternate project (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6265,19 +6748,10 @@ Create new volume
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--property &lt;key=value&gt;</command></term>
-    <listitem>
-      <para>
-      Property to store for this volume (repeat option to
-      set multiple properties)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--image &lt;image&gt;</command></term>
     <listitem>
       <para>
-        Use &lt;image&gt; as source of new volume
+        Use &lt;image&gt; as source of new volume (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6289,20 +6763,29 @@ Create new volume
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Set a property on this volume (repeat option to set
+      multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_volume_delete">
         <title>openstack volume delete</title>
-        <screen><computeroutput>usage: openstack volume delete [-h] [--force] &lt;volume&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume delete [-h] [--force] &lt;volume&gt; [&lt;volume&gt; ...]</computeroutput></screen>
         <para>
-Delete a volume
+Delete volume(s)
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Volume to delete (name or ID)
+        Volume(s) to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6321,7 +6804,8 @@ Delete a volume
     <term><command>--force</command></term>
     <listitem>
       <para>
-        Attempt forced removal of a volume, regardless of state
+        Attempt forced removal of volume(s), regardless of state
+      (defaults to False)
       </para>
     </listitem>
   </varlistentry>
@@ -6329,7 +6813,7 @@ Delete a volume
     </section>
     <section xml:id="openstackclient_subcommand_volume_list">
         <title>openstack volume list</title>
-        <screen><computeroutput>usage: openstack volume list [-h] [-f {csv,table}] [-c COLUMN]
+        <screen><computeroutput>usage: openstack --os-auth-type token volume list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--status &lt;status&gt;] [--name &lt;name&gt;]
@@ -6374,7 +6858,7 @@ List volumes
     <term><command>--long</command></term>
     <listitem>
       <para>
-        Display properties
+        List additional fields in output
       </para>
     </listitem>
   </varlistentry>
@@ -6382,8 +6866,7 @@ List volumes
     </section>
     <section xml:id="openstackclient_subcommand_volume_set">
         <title>openstack volume set</title>
-        <screen><computeroutput>usage: openstack volume set [-h] [--name &lt;new-name&gt;]
-                            [--description &lt;new-description&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token volume set [-h] [--name &lt;name&gt;] [--description &lt;description&gt;]
                             [--property &lt;key=value&gt;]
                             &lt;volume&gt;</computeroutput></screen>
         <para>
@@ -6410,7 +6893,7 @@ Set volume properties
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--name &lt;new-name&gt;</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
         New volume name
@@ -6418,7 +6901,7 @@ Set volume properties
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--description &lt;new-description&gt;</command></term>
+    <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
       New volume description
@@ -6429,8 +6912,8 @@ Set volume properties
     <term><command>--property &lt;key=value&gt;</command></term>
     <listitem>
       <para>
-      Property to add/change for this volume (repeat option
-      to set multiple properties)
+      Property to add or modify for this volume (repeat
+      option to set multiple properties)
       </para>
     </listitem>
   </varlistentry>
@@ -6438,8 +6921,8 @@ Set volume properties
     </section>
     <section xml:id="openstackclient_subcommand_volume_show">
         <title>openstack volume show</title>
-        <screen><computeroutput>usage: openstack volume show [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--variable VARIABLE]
+        <screen><computeroutput>usage: openstack --os-auth-type token volume show [-h] [-f {html,json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--prefix PREFIX]
                              &lt;volume&gt;</computeroutput></screen>
         <para>
@@ -6469,10 +6952,10 @@ Show volume details
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_create">
         <title>openstack volume type create</title>
-        <screen><computeroutput>usage: openstack volume type create [-h] [-f {shell,table,value}] [-c COLUMN]
-                                    [--max-width &lt;integer&gt;]
-                                    [--variable VARIABLE] [--prefix PREFIX]
-                                    [--property &lt;key=value&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token volume type create [-h]
+                                    [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width &lt;integer&gt;]
+                                    [--prefix PREFIX] [--property &lt;key=value&gt;]
                                     &lt;name&gt;</computeroutput></screen>
         <para>
 Create new volume type
@@ -6510,7 +6993,7 @@ Create new volume type
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_delete">
         <title>openstack volume type delete</title>
-        <screen><computeroutput>usage: openstack volume type delete [-h] &lt;volume-type&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume type delete [-h] &lt;volume-type&gt;</computeroutput></screen>
         <para>
 Delete volume type
         </para>  <variablelist wordsize="10">
@@ -6519,7 +7002,7 @@ Delete volume type
     <term><command>&lt;volume-type&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of volume type to delete
+        Volume type to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6538,8 +7021,8 @@ Delete volume type
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_list">
         <title>openstack volume type list</title>
-        <screen><computeroutput>usage: openstack volume type list [-h] [-f {csv,table}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token volume type list [-h] [-f {csv,html,json,table,yaml}]
+                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--quote {all,minimal,none,nonnumeric}]
                                   [--long]</computeroutput></screen>
         <para>
@@ -6566,16 +7049,16 @@ List volume types
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_set">
         <title>openstack volume type set</title>
-        <screen><computeroutput>usage: openstack volume type set [-h] [--property &lt;key=value&gt;] &lt;volume-type&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume type set [-h] [--property &lt;key=value&gt;] &lt;volume-type&gt;</computeroutput></screen>
         <para>
-Set volume type property
+Set volume type properties
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume-type&gt;</command></term>
     <listitem>
       <para>
-        Volume type name or ID to update
+        Volume type to modify (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6594,7 +7077,7 @@ Set volume type property
     <term><command>--property &lt;key=value&gt;</command></term>
     <listitem>
       <para>
-      Property to add/change for this volume type (repeat
+      Property to add or modify for this volume type (repeat
       option to set multiple properties)
       </para>
     </listitem>
@@ -6603,16 +7086,16 @@ Set volume type property
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_unset">
         <title>openstack volume type unset</title>
-        <screen><computeroutput>usage: openstack volume type unset [-h] [--property &lt;key&gt;] &lt;volume-type&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume type unset [-h] [--property &lt;key&gt;] &lt;volume-type&gt;</computeroutput></screen>
         <para>
-Unset volume type property
+Unset volume type properties
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;volume-type&gt;</command></term>
     <listitem>
       <para>
-        Type ID or name to remove
+        Volume type to modify (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6631,7 +7114,7 @@ Unset volume type property
     <term><command>--property &lt;key&gt;</command></term>
     <listitem>
       <para>
-        Property key to remove from volume (repeat option to
+        Property to remove from volume type (repeat option to
       remove multiple properties)
       </para>
     </listitem>
@@ -6640,7 +7123,7 @@ Unset volume type property
     </section>
     <section xml:id="openstackclient_subcommand_volume_unset">
         <title>openstack volume unset</title>
-        <screen><computeroutput>usage: openstack volume unset [-h] [--property &lt;key&gt;] &lt;volume&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume unset [-h] [--property &lt;key&gt;] &lt;volume&gt;</computeroutput></screen>
         <para>
 Unset volume properties
         </para>  <variablelist wordsize="10">
@@ -6649,7 +7132,7 @@ Unset volume properties
     <term><command>&lt;volume&gt;</command></term>
     <listitem>
       <para>
-        Volume to change (name or ID)
+        Volume to modify (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -6668,8 +7151,8 @@ Unset volume properties
     <term><command>--property &lt;key&gt;</command></term>
     <listitem>
       <para>
-        Property key to remove from volume (repeat to set multiple
-      values)
+        Property to remove from volume (repeat option to remove
+      multiple properties)
       </para>
     </listitem>
   </varlistentry>
