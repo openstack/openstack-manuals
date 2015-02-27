@@ -1,157 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section xmlns="http://docbook.org/ns/docbook"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
-    xml:id="huawei-storage-driver">
+<section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="huawei-storage-driver">
     <title>Huawei storage driver</title>
     <para>The Huawei driver supports the iSCSI and Fibre Channel connections and enables OceanStor T
-        series unified storage, OceanStor TV3 storage, and OceanStor 18000 high-end storage to
+        series V200R002, OceanStor 18000 series V100R001 and OceanStor V3 series V300R002 storage to
         provide block storage services for OpenStack.</para>
     <simplesect>
         <title>Supported operations</title>
-        <para>OceanStor T series unified storage supports these
-           operations:
-        </para>
         <itemizedlist>
-          <listitem>
-            <para>Create, delete, attach, and detach volumes.</para>
-          </listitem>
-          <listitem>
-            <para>Create, list, and delete volume snapshots.</para>
-          </listitem>
-          <listitem>
-            <para>Create a volume from a snapshot.</para>
-          </listitem>
-          <listitem>
-            <para>Copy an image to a volume.</para>
-          </listitem>
-          <listitem>
-            <para>Copy a volume to an image.</para>
-          </listitem>
-          <listitem>
-            <para>Clone a volume.</para>
-          </listitem>
-        </itemizedlist>
-        <para>OceanStor V3 supports these operations:</para>
-        <itemizedlist>
-          <listitem>
-            <para>Create, delete, attach, and detach volumes.</para>
-          </listitem>
-          <listitem>
-            <para>Create, list, and delete volume snapshots.</para>
-          </listitem>
-          <listitem>
-            <para>Copy an image to a volume.</para>
-          </listitem>
-          <listitem>
-            <para>Copy a volume to an image.</para>
-          </listitem>
-          <listitem>
-            <para>Create a volume from a snapshot.</para>
-          </listitem>
-          <listitem>
-            <para>Clone a volume.</para>
-          </listitem>
-        </itemizedlist>
-    <para>OceanStor 18000 supports these operations:</para>
-    <itemizedlist>
-          <listitem>
-            <para>Create, delete, attach, and detach volumes.</para>
-          </listitem>
-          <listitem>
-            <para>Create, list, and delete volume snapshots.</para>
-          </listitem>
-          <listitem>
-            <para>Copy an image to a volume.</para>
-          </listitem>
-          <listitem>
-            <para>Copy a volume to an image.</para>
-          </listitem>
-          <listitem>
-            <para>Create a volume from a snapshot.</para>
-          </listitem>
-          <listitem>
-            <para>Clone a volume.</para>
-          </listitem>
+            <listitem>
+                <para>Create, delete, expand, attach, and detach volumes.</para>
+            </listitem>
+            <listitem>
+                <para>Create and delete a snapshot.</para>
+            </listitem>
+            <listitem>
+                <para>Copy an image to a volume.</para>
+            </listitem>
+            <listitem>
+                <para>Copy a volume to an image.</para>
+            </listitem>
+            <listitem>
+                <para>Create a volume from a snapshot.</para>
+            </listitem>
+            <listitem>
+                <para>Clone a volume.</para>
+            </listitem>
         </itemizedlist>
     </simplesect>
     <simplesect>
-        <title>Configure Block Storage nodes</title>
-        <para>In <filename>/etc/cinder</filename>, create the driver
-            configuration file named
-                <filename>cinder_huawei_conf.xml</filename>.</para>
-        <para>You must configure <option>Product</option> and
-                <option>Protocol</option> to specify a storage system
-            and link type. The following uses the iSCSI driver as an
-            example. The driver configuration file of OceanStor T
-            series unified storage is shown as follows:</para>
-        <programlisting>&lt;?xml version='1.0' encoding='UTF-8'?>
-&lt;config>
-    &lt;Storage>
-        &lt;Product>T&lt;/Product>
-        &lt;Protocol>iSCSI&lt;/Protocol>
-        &lt;ControllerIP0>x.x.x.x&lt;/ControllerIP0>
-        &lt;ControllerIP1>x.x.x.x&lt;/ControllerIP1>
-        &lt;UserName>xxxxxxxx&lt;/UserName>
-        &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
-    &lt;/Storage>
-    &lt;LUN>
-        &lt;LUNType>Thick&lt;/LUNType>
-        &lt;StripUnitSize>64&lt;/StripUnitSize>
-        &lt;WriteType>1&lt;/WriteType>
-        &lt;MirrorSwitch>1&lt;/MirrorSwitch>
-        &lt;Prefetch Type="3" value="0"/>
-        &lt;StoragePool Name="xxxxxxxx"/>
-        &lt;StoragePool Name="xxxxxxxx"/>
-    &lt;/LUN>
-    &lt;iSCSI>
-        &lt;DefaultTargetIP>x.x.x.x&lt;/DefaultTargetIP>
-        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
-        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
-    &lt;/iSCSI>
-    &lt;Host OSType="Linux" HostIP="x.x.x.x, x.x.x.x"/>
-&lt;/config></programlisting>
-        <para>The driver configuration file of OceanStor V3 is
-            shown as follows:</para>
-        <programlisting>&lt;?xml version='1.0' encoding='UTF-8'?>
-&lt;config>
-    &lt;Storage>
-        &lt;Product>V3&lt;/Product>
-        &lt;Protocol>iSCSI&lt;/Protocol>
-        &lt;ControllerIP0>x.x.x.x&lt;/ControllerIP0>
-        &lt;ControllerIP1>x.x.x.x&lt;/ControllerIP1>
-        &lt;UserName>xxxxxxxx&lt;/UserName>
-        &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
-    &lt;/Storage>
-    &lt;LUN>
-        &lt;StripUnitSize>64&lt;/StripUnitSize>
-        &lt;WriteType>1&lt;/WriteType>
-        &lt;MirrorSwitch>1&lt;/MirrorSwitch>
-        &lt;StoragePool Name="xxxxxxxx"/>
-        &lt;StoragePool Name="xxxxxxxx"/>
-    &lt;/LUN>
-    &lt;iSCSI>
-        &lt;DefaultTargetIP>x.x.x.x&lt;/DefaultTargetIP>
-        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
-        &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
-    &lt;/iSCSI>
-    &lt;Host OSType="Linux" HostIP="x.x.x.x, x.x.x.x"/>
-&lt;/config></programlisting>
-        <para>The driver configuration file of OceanStor 18000 is shown as follows:</para>
-        <para>
-            <programlisting>&lt;?xml version='1.0' encoding='UTF-8'?>
+        <title>Configure block storage nodes</title>
+        <procedure>
+            <step>
+                <para>Modify the <filename>cinder.conf</filename> configuration file and add
+                        <option>volume_driver</option> and <option>cinder_huawei_conf_file
+                        items</option>.<itemizedlist>
+                        <listitem>
+                            <para>Example for configuring a storage system:</para>
+                            <programlisting language="ini">volume_driver = cinder.volume.drivers.huawei.HuaweiVolumeDriver
+cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
+                        </listitem>
+                    </itemizedlist><itemizedlist>
+                        <listitem>
+                            <para>Example for configuring multiple storage systems:</para>
+                            <programlisting language="ini">enabled_backends = t_iscsi, 18000_iscsi
+[t_iscsi]
+volume_driver = cinder.volume.drivers.huawei.HuaweiVolumeDriver
+cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_t_iscsi.xml
+volume_backend_name = HuaweiTISCSIDriver
+
+[18000_iscsi]
+volume_driver = cinder.volume.drivers.huawei.HuaweiVolumeDriver
+cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_18000_iscsi.xml
+volume_backend_name = Huawei18000ISCSIDriver</programlisting>
+                        </listitem>
+                    </itemizedlist></para>
+            </step>
+            <step>
+                <para>In <filename>/etc/cinder</filename>, create a driver configuration file. The
+                    driver configuration file name must be the same as the <literal>cinder_huawei_conf_file</literal>
+                    item in the <filename>cinder_conf</filename> configuration file.</para>
+            </step>
+            <step>
+                <title>Configure product and protocol.</title>
+                <para>Product and Protocol indicate the storage system type and link type
+                    respectively. For the OceanStor 18000 series V100R001 storage systems, the
+                    driver configuration file is as follows:</para>
+                <programlisting language="xml">&lt;?xml version='1.0' encoding='UTF-8'?>
 &lt;config>
     &lt;Storage>
         &lt;Product>18000&lt;/Product>
         &lt;Protocol>iSCSI&lt;/Protocol>
-        &lt;RestURL>https://x.x.x.x:8088/deviceManager/rest/&lt;/RestURL>
+        &lt;RestURL>https://x.x.x.x/deviceManager/rest/&lt;/RestURL>
         &lt;UserName>xxxxxxxx&lt;/UserName>
         &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
     &lt;/Storage>
     &lt;LUN>
         &lt;LUNType>Thick&lt;/LUNType>
         &lt;WriteType>1&lt;/WriteType>
-        &lt;MirrorSwitch>1&lt;/MirrorSwitch>
+        &lt;MirrorSwitch>0&lt;/MirrorSwitch>
+        &lt;LUNcopyWaitInterval>5&lt;/LUNcopyWaitInterval>
+        &lt;Timeout>432000&lt;/Timeout>
         &lt;StoragePool>xxxxxxxx&lt;/StoragePool>
     &lt;/LUN>
     &lt;iSCSI>
@@ -161,339 +90,308 @@
     &lt;/iSCSI>
     &lt;Host OSType="Linux" HostIP="x.x.x.x, x.x.x.x"/>
 &lt;/config></programlisting>
-            <note>
-            <title>Note for Fibre Channel driver configuration</title>
-                <para>You do not need to configure the iSCSI target IP
-                    address for the Fibre Channel driver. In the prior
-                    example, delete the iSCSI configuration:</para>
-            </note>
-        </para>
-        <programlisting>    &lt;iSCSI>
+                <para>
+                    <note>
+                        <itemizedlist>
+                            <title>Note for fibre channel driver configuration</title>
+                            <listitem>
+                                <para>In the configuration files of OceanStor T series V200R002 and
+                                    OceanStor V3 V300R002, parameter configurations are the same
+                                    with the exception of the RestURL parameter. The following
+                                    describes how to configure the RestURL parameter:</para>
+                                <programlisting language="xml">&lt;RestURL>https://x.x.x.x:8088/deviceManager/rest/&lt;/RestURL></programlisting>
+                            </listitem>
+                        </itemizedlist>
+                        <itemizedlist>
+                            <listitem>
+                                <para>For a Fibre Channel driver, you do not need to configure an
+                                    iSCSI target IP address. Delete the iSCSI configuration from the
+                                    preceding examples.</para>
+                                <programlisting language="xml">&lt;iSCSI>
         &lt;DefaultTargetIP>x.x.x.x&lt;/DefaultTargetIP>
         &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
         &lt;Initiator Name="xxxxxxxx" TargetIP="x.x.x.x"/>
-    &lt;/iSCSI></programlisting>
-        <para>To add <option>volume_driver</option> and
-                <option>cinder_huawei_conf_file</option> items, you
-            can modify the <filename>cinder.conf</filename>
-            configuration file as follows:</para>
-        <programlisting>volume_driver = cinder.volume.drivers.huawei.HuaweiVolumeDriver
-cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
-        <para>You can configure multiple Huawei back-end storages as
-            follows:</para>
-        <programlisting>enabled_backends = t_iscsi, 18000_iscsi
-[t_iscsi]
-volume_driver = cinder.volume.drivers.huawei.HuaweiVolumeDriver
-cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_t_iscsi.xml
-volume_backend_name = HuaweiTISCSIDriver
-[18000_iscsi]
-volume_driver = cinder.volume.drivers.huawei.HuaweiVolumeDriver
-cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_18000_iscsi.xml
-volume_backend_name = Huawei18000ISCSIDriver</programlisting>
-    </simplesect>
-    <simplesect>
-        <title>Configuration file details</title>
-        <para>This table describes the Huawei storage driver
-            configuration options:</para>
-        <table rules="all">
-            <caption>Huawei storage driver configuration
-                options</caption>
-            <col width="35%"/>
-            <col width="14%"/>
-            <col width="16%"/>
-            <col width="35%"/>
-            <col width="2%"/>
-            <thead>
-                <tr>
-                    <th>Flag name</th>
-                    <th>Type</th>
-                    <th>Default</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <para><option>Product</option></para>
-                    </td>
-                    <td>
-                        <para>Required</para>
-                    </td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>
-                        <para>Type of a storage product. Valid values
-                            are <literal>T</literal>,
-                                <literal>TV3</literal>, or <literal>18000</literal>.</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td><option>Protocol</option></td>
-                    <td>Required</td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>Type of a protocol. Valid values are
-                            <literal>iSCSI</literal> or
-                            <literal>FC</literal>.</td>
-                    <td/>
-                </tr>
-                <tr>
-                    <td><option>ControllerIP0</option></td>
-                    <td>Required</td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>IP address of the primary controller (not
-                        required for the 18000)</td>
-                </tr>
-                <tr>
-                    <td>
-                        <para><option>ControllerIP1</option></para>
-                    </td>
-                    <td>
-                        <para>Required</para>
-                    </td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>
-                        <para>IP address of the secondary controller
-                            (not required for the 18000)</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td><option>RestURL</option></td>
-                    <td>Required</td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>Access address of the Rest port (required only
-                        for the 18000)</td>
-                </tr>
-                <tr>
-                    <td>
-                        <para><option>UserName</option></para>
-                    </td>
-                    <td>
-                        <para>Required</para>
-                    </td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>
-                        <para>User name of an administrator</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <para><option>UserPassword</option>
-                        </para>
-                    </td>
-                    <td>
-                        <para>Required</para>
-                    </td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>
-                        <para>Password of an administrator</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <para><option>LUNType</option></para>
-                    </td>
-                    <td>
-                        <para>Optional</para>
-                    </td>
-                    <td>
-                        <para>Thin</para>
-                    </td>
-                    <td>
-                        <para>Type of a created LUN. Valid values are
-                                <literal>Thick</literal> or
-                                <literal>Thin</literal>.</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <para><option>StripUnitSize</option>
-                        </para>
-                    </td>
-                    <td>
-                        <para>Optional</para>
-                    </td>
-                    <td>
-                        <para>64</para>
-                    </td>
-                    <td>
-                        <para>Stripe depth of a created LUN. The value
-                            is expressed in KB.</para>
-                            <para>This flag is not valid for a thin
-                                LUN.</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <para><option>WriteType</option>
-                        </para>
-                    </td>
-                    <td>
-                        <para>Optional</para>
-                    </td>
-                    <td>
-                        <para>1</para>
-                    </td>
-                    <td>
-                        <para>Cache write method. The method can be
-                            write back, write through, or Required
-                            write back. The default value is
-                                <literal>1</literal>, indicating write
-                            back.</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <para><option>MirrorSwitch</option></para>
-                    </td>
-                    <td>
-                        <para>Optional</para>
-                    </td>
-                    <td>
-                        <para>1</para>
-                    </td>
-                    <td>
-                        <para>Cache mirroring policy. The default
-                            value is <literal>1</literal>, indicating
-                            that a mirroring policy is used.</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td><option>Prefetch Type</option></td>
-                    <td>Optional</td>
-                    <td>
-                        <para>3</para>
-                    </td>
-                    <td>
-                        <para>Cache prefetch strategy. The strategy
-                            can be constant prefetch, variable
-                            prefetch, or intelligent prefetch. Default
-                            value is <literal>3</literal>, which
-                            indicates intelligent prefetch and is not
-                            required for the 18000.</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td><option>Prefetch Value</option></td>
-                    <td>Optional</td>
-                    <td>
-                        <para>0</para>
-                    </td>
-                    <td>
-                        <para>Cache prefetch value.</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td><option>StoragePool</option></td>
-                    <td>Required</td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>
-                        <para>Name of a storage pool that you want to use.</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td><option>DefaultTargetIP</option></td>
-                    <td>Optional</td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>
-                        <para>Default IP address of the iSCSI port
-                            provided for compute nodes.</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td><option>Initiator Name</option></td>
-                    <td>Optional</td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>
-                        <para>Name of a compute node initiator.</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td><option>Initiator TargetIP</option></td>
-                    <td>Optional</td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>
-                        <para>IP address of the iSCSI port provided
-                            for compute nodes.</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td><option>OSType</option></td>
-                    <td>Optional</td>
-                    <td>
-                        <para>Linux</para>
-                    </td>
-                    <td>The OS type for a compute node.</td>
-                </tr>
-                <tr>
-                    <td><option>HostIP</option></td>
-                    <td>Optional</td>
-                    <td>
-                        <para/>
-                    </td>
-                    <td>The IPs for compute nodes.</td>
-                </tr>
-            </tbody>
-        </table>
-        <note>
-        <title>Note for the configuration</title>
-            <orderedlist>
-                <listitem>
-                    <para>You can configure one iSCSI target port for
-                        each or all compute nodes. The driver checks
-                        whether a target port IP address is configured
-                        for the current compute node. If not, select
-                            <option>DefaultTargetIP</option>.</para>
-                </listitem>
-                <listitem>
-                    <para>You can configure multiple storage pools in
-                        one configuration file, which supports the use
-                        of multiple storage pools in a storage system.
-                        (The 18000 driver allows configuration of only
-                        one storage pool.)</para>
-                </listitem>
-                <listitem>
-                    <para>For details about LUN configuration
-                        information, see the
-                            <command>createlun</command> command in
-                        the command-line interface (CLI) documentation
-                        or run the <command>help -c
-                            createlun</command> on the storage system
-                        CLI.</para>
-                </listitem>
-                <listitem>
-                    <para>After the driver is loaded, the storage
-                        system obtains any modification of the driver
-                        configuration file in real time and you do not
-                        need to restart the <systemitem
-                            class="service">cinder-volume</systemitem>
-                        service.</para>
-                </listitem>
-                <listitem>
-                    <para>The driver does not support the
-                        iSCSI multipath scenarios.</para>
-                </listitem>
-            </orderedlist>
-        </note>
+&lt;/iSCSI></programlisting>
+                            </listitem>
+                        </itemizedlist>
+                    </note>
+                </para>
+                <para>This table describes the Huawei storage driver configuration options:</para>
+                <table rules="all">
+                    <caption>Huawei storage driver configuration options</caption>
+                    <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Type</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <para><option>Product</option></para>
+                            </td>
+                            <td>
+                                <para>Mandatory</para>
+                            </td>
+                            <td>
+                                <para>-</para>
+                            </td>
+                            <td>
+                                <para>Type of a storage product. Valid values are
+                                        <literal>T</literal>, <literal>TV3</literal>, or
+                                        <literal>18000</literal>.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><option>Protocol</option></td>
+                            <td>Mandatory</td>
+                            <td>
+                                <para>-</para>
+                            </td>
+                            <td>Type of a protocol. Valid values are <literal>iSCSI</literal> or
+                                    <literal>FC</literal>.</td>
+                            <td/>
+                        </tr>
+                        <tr>
+                            <td><option>RestURL</option></td>
+                            <td>Mandatory</td>
+                            <td>
+                                <para>-</para>
+                            </td>
+                            <td>Access address of the Rest port (required only for the 18000)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <para><option>UserName</option></para>
+                            </td>
+                            <td>
+                                <para>Mandatory</para>
+                            </td>
+                            <td>
+                                <para>-</para>
+                            </td>
+                            <td>
+                                <para>User name of an administrator</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <para><option>UserPassword</option>
+                                </para>
+                            </td>
+                            <td>
+                                <para>Mandatory</para>
+                            </td>
+                            <td>
+                                <para>-</para>
+                            </td>
+                            <td>
+                                <para>Password of an administrator</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <para><option>LUNType</option></para>
+                            </td>
+                            <td>
+                                <para>Optional</para>
+                            </td>
+                            <td>
+                                <para>Thin</para>
+                            </td>
+                            <td>
+                                <para>Type of a created LUN. Valid values are
+                                        <literal>Thick</literal> or <literal>Thin</literal>.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <para><option>StripUnitSize</option>
+                                </para>
+                            </td>
+                            <td>
+                                <para>Optional</para>
+                            </td>
+                            <td>
+                                <para>64</para>
+                            </td>
+                            <td>
+                                <para>Stripe depth of a created LUN. The value is expressed in
+                                    KB.</para>
+                                <para>This flag is not valid for a thin LUN.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <para><option>WriteType</option>
+                                </para>
+                            </td>
+                            <td>
+                                <para>Optional</para>
+                            </td>
+                            <td>
+                                <para>1</para>
+                            </td>
+                            <td>
+                                <para>Cache write method. The method can be write back, write
+                                    through, or Required write back. The default value is
+                                        <literal>1</literal>, indicating write back.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <para><option>MirrorSwitch</option></para>
+                            </td>
+                            <td>
+                                <para>Optional</para>
+                            </td>
+                            <td>
+                                <para>1</para>
+                            </td>
+                            <td>
+                                <para>Cache mirroring policy. The default value is
+                                        <literal>1</literal>, indicating that a mirroring policy is
+                                    used.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><option>Prefetch Type</option></td>
+                            <td>Optional</td>
+                            <td>
+                                <para>3</para>
+                            </td>
+                            <td>
+                                <para>Cache prefetch strategy. The strategy can be constant
+                                    prefetch, variable prefetch, or intelligent prefetch. Default
+                                    value is <literal>3</literal>, which indicates intelligent
+                                    prefetch and is not required for the OceanStor 18000 series.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><option>Prefetch Value</option></td>
+                            <td>Optional</td>
+                            <td>
+                                <para>0</para>
+                            </td>
+                            <td>
+                                <para>Cache prefetch value.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><option>LUNcopyWaitInterval</option></td>
+                            <td>Optional</td>
+                            <td>
+                                <para>5</para>
+                            </td>
+                            <td>
+                                <para>After LUN copy is enabled, the plug-in frequently queries the
+                                    copy progress. You can set a value to specify the query
+                                    interval.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><option>Timeout</option></td>
+                            <td>Optional</td>
+                            <td>
+                                <para>432,000</para>
+                            </td>
+                            <td>
+                                <para>Timeout period for waiting LUN copy of an array to
+                                    complete.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><option>StoragePool</option></td>
+                            <td>Mandatory</td>
+                            <td>
+                                <para>-</para>
+                            </td>
+                            <td>
+                                <para>Name of a storage pool that you want to use.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><option>DefaultTargetIP</option></td>
+                            <td>Optional</td>
+                            <td>
+                                <para>-</para>
+                            </td>
+                            <td>
+                                <para>Default IP address of the iSCSI port provided for compute
+                                    nodes.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><option>Initiator Name</option></td>
+                            <td>Optional</td>
+                            <td>
+                                <para>-</para>
+                            </td>
+                            <td>
+                                <para>Name of a compute node initiator.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><option>Initiator TargetIP</option></td>
+                            <td>Optional</td>
+                            <td>
+                                <para>-</para>
+                            </td>
+                            <td>
+                                <para>IP address of the iSCSI port provided for compute
+                                    nodes.</para>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><option>OSType</option></td>
+                            <td>Optional</td>
+                            <td>
+                                <para>Linux</para>
+                            </td>
+                            <td>The OS type for a compute node.</td>
+                        </tr>
+                        <tr>
+                            <td><option>HostIP</option></td>
+                            <td>Optional</td>
+                            <td>
+                                <para>-</para>
+                            </td>
+                            <td>The IPs for compute nodes.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <note>
+                    <title>Note for the configuration</title>
+                    <orderedlist>
+                        <listitem>
+                            <para>You can configure one iSCSI target port for each or all compute
+                                nodes. The driver checks whether a target port IP address is
+                                configured for the current compute node. If not, select
+                                    <option>DefaultTargetIP</option>.</para>
+                        </listitem>
+                        <listitem>
+                            <para>Only one storage pool can be configured.</para>
+                        </listitem>
+                        <listitem>
+                            <para>For details about LUN configuration information, see the
+                                    <command>show lun general</command> command in the command-line
+                                interface (CLI) documentation or run the <command>help -c show lun
+                                    general</command> on the storage system CLI.</para>
+                        </listitem>
+                        <listitem>
+                            <para>After the driver is loaded, the storage system obtains any
+                                modification of the driver configuration file in real time and you
+                                do not need to restart the <systemitem class="service"
+                                    >cinder-volume</systemitem> service.</para>
+                        </listitem>
+                    </orderedlist>
+                </note>
+            </step>
+            <step>
+                <para>Restart the Cinder service.</para>
+            </step>
+        </procedure>
     </simplesect>
 </section>
