@@ -47,16 +47,16 @@
           following items:
           <itemizedlist>
             <listitem>
-              <para><parameter>field</parameter></para>
+              <para><literal>field</literal></para>
             </listitem>
             <listitem>
-              <para><parameter>op</parameter></para>
+              <para><literal>op</literal></para>
             </listitem>
             <listitem>
-              <para><parameter>value</parameter></para>
+              <para><literal>value</literal></para>
             </listitem>
             <listitem>
-              <para><parameter>type</parameter></para>
+              <para><literal>type</literal></para>
             </listitem>
           </itemizedlist></para>
         <para>Regardless of the endpoint on which the filter is applied on, it will
@@ -134,16 +134,16 @@
             operation.</para>
         </note>
         <para>Complex query supports specifying a list of
-          <parameter>orderby</parameter> expressions. This means that the result
+          <literal>orderby</literal> expressions. This means that the result
           of the query can be ordered based on the field names provided in this
           list. When multiple keys are defined for the ordering, these will be applied
           sequentially in the order of the specification. The second expression will
           be applied on the groups for which the values of the first expression
           are the same. The ordering can be ascending or descending.</para>
         <para>The number of returned items can be bounded using the
-          <parameter>limit</parameter> option.</para>
-        <para>The <parameter>filter</parameter>, <parameter>orderby</parameter>
-          and <parameter>limit</parameter> fields are optional.</para>
+          <option>limit</option> option.</para>
+        <para>The <literal>filter</literal>, <literal>orderby</literal>
+          and <literal>limit</literal> fields are optional.</para>
         <note>
           <para>As opposed to the simple query, complex query is available via
             a separate API endpoint. For more information see the
@@ -188,7 +188,7 @@
                 </itemizedlist>
               </para>
               <note>
-                <para>The <parameter>aggregate.param</parameter> parameter is
+                <para>The <option>aggregate.param</option> parameter is
                   required.</para>
               </note>
             </listitem>
@@ -247,7 +247,7 @@
     </note>
     <para>Similarly to other OpenStack command line clients, the <command>ceilometer</command>
       client uses OpenStack Identity for authentication. The proper credentials and
-      <parameter>auth_url</parameter> parameter have to be defined via command line
+      <parameter>--auth_url</parameter> parameter have to be defined via command line
       parameters or environment variables.</para>
     <para>This section provides some examples without the aim of completeness. These commands
       can be used for instance for validating an installation of Telemetry.</para>
@@ -277,7 +277,7 @@
       in an ascending order based on the name of the meter.</para>
     <para>Samples are collected for each meter that is present in the list of meters,
       except in case of instances that are not running or deleted from the OpenStack Compute
-      database. If an instance is no more existing and there is <parameter>time_to_live</parameter>
+      database. If an instance is no more existing and there is <option>time_to_live</option>
       value is set in the <filename>ceilometer.conf</filename> configuration file, then a
       group of samples are deleted in each expiration cycle. When the last sample is
       deleted for a meter, the database can be cleaned up by running
@@ -362,7 +362,7 @@
         <varlistentry>
           <term><parameter>--orderby</parameter></term>
           <listitem>
-            <para>Contains the list of <parameter>orderby</parameter> expressions
+            <para>Contains the list of <literal>orderby</literal> expressions
               in the form of:
               <literal>[{field_name: direction}, {field_name: direction}]</literal>.</para>
           </listitem>
@@ -403,7 +403,7 @@
         instance with the proper credentials:
         <programlisting>&gt;&gt;&gt; import ceilometerclient.client
 &gt;&gt;&gt; cclient = ceilometerclient.client.get_client(<replaceable>VERSION</replaceable>, username=<replaceable>USERNAME</replaceable>, password=<replaceable>PASSWORD</replaceable>, tenant_name=<replaceable>PROJECT_NAME</replaceable>, auth_url=<replaceable>AUTH_URL</replaceable>)</programlisting>
-        The <parameter>VERSION</parameter> parameter can be <literal>1</literal> or
+        The <literal>VERSION</literal> parameter can be <literal>1</literal> or
         <literal>2</literal>, specifying the API version to be used.</para>
       <para>The method calls look like the following:
         <programlisting>&gt;&gt;&gt; cclient.meters.list()
@@ -493,7 +493,7 @@
       <literal>notifier</literal>:
       <variablelist>
         <varlistentry>
-          <term><parameter>per_meter_topic</parameter></term>
+          <term><option>per_meter_topic</option></term>
           <listitem>
             <para>The value of it is 1. It is used for publishing the samples on
               additional <literal>metering_topic.sample_name</literal> topic queue
@@ -501,7 +501,7 @@
           </listitem>
         </varlistentry>
         <varlistentry>
-          <term><parameter>policy</parameter></term>
+          <term><option>policy</option></term>
           <listitem>
             <para>It is used for configuring the behavior for the case, when the
               publisher fails to send the samples, where the possible predefined
@@ -524,7 +524,7 @@
                   <listitem>
                     <para>Used for creating an in-memory queue and retrying to send the samples
                       on the queue on the next samples publishing period (the queue length
-                      can be configured with <parameter>max_queue_length</parameter>, where
+                      can be configured with <option>max_queue_length</option>, where
                       1024 is the default value).</para>
                   </listitem>
                 </varlistentry>
@@ -535,7 +535,7 @@
     <para>The following options are available for the <literal>file</literal> publisher:
       <variablelist>
         <varlistentry>
-          <term><parameter>max_bytes</parameter></term>
+          <term><option>max_bytes</option></term>
           <listitem>
             <para>When this option is greater than zero, it will cause a rollover. When the
               size is about to be exceeded, the file is closed and a new file is silently
@@ -543,7 +543,7 @@
           </listitem>
         </varlistentry>
         <varlistentry>
-          <term><parameter>backup_count</parameter></term>
+          <term><option>backup_count</option></term>
           <listitem>
             <para>If this value is non-zero, an extension will be appended to the filename
               of the old log, as '.1', '.2', and so forth until the specified value is reached.

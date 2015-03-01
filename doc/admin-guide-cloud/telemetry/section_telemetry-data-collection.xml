@@ -454,7 +454,7 @@
       <para>Pipeline configuration by default, is stored in a separate configuration
         file, called <filename>pipeline.yaml</filename>, next to the
         <filename>ceilometer.conf</filename> file. The pipeline
-        configuration file can be set in the <parameter>pipeline_cfg_file</parameter>
+        configuration file can be set in the <option>pipeline_cfg_file</option>
         parameter listed in the <link xlink:href=
         "http://docs.openstack.org/juno/config-reference/content/ch_configuring-openstack-telemetry.html"
         >Description of configuration options for api table</link> section in the
@@ -642,7 +642,7 @@ sinks:
               name: "disk.kilobytes"
               unit: "KB"
               scale: "1.0 / 1024.0"</programlisting>
-          <para>With the <parameter>map_from</parameter> and <parameter>map_to</parameter>
+          <para>With the <option>map_from</option> and <option>map_to</option>
             :</para>
           <programlisting>transformers:
     - name: "unit_conversion"
@@ -660,27 +660,27 @@ sinks:
           <title>Aggregator transformer</title>
           <para>A transformer that sums up the incoming samples until enough samples have
             come in or a timeout has been reached.</para>
-          <para>Timeout can be specified with the <parameter>retention_time</parameter> parameter.
+          <para>Timeout can be specified with the <option>retention_time</option> parameter.
             If we want to flush the aggregation after a set number of samples have been
             aggregated, we can specify the size parameter.</para>
           <para>The volume of the created sample is the sum of the volumes of samples that came
-            into the transformer. Samples can be aggregated by the attributes <parameter>project_id
-            </parameter>, <parameter>user_id</parameter> and <parameter>resource_metadata</parameter>.
+            into the transformer. Samples can be aggregated by the attributes <option>project_id
+            </option>, <option>user_id</option> and <option>resource_metadata</option>.
             To aggregate by the chosen attributes, specify them in the configuration and set
             which value of the attribute to take for the new sample (first to take the first
             sample's attribute, last to take the last sample's attribute, and drop to discard
             the attribute).</para>
-          <para>To aggregate 60s worth of samples by <parameter>resource_metadata</parameter>
-            and keep the <parameter>resource_metadata</parameter> of the latest received
+          <para>To aggregate 60s worth of samples by <option>resource_metadata</option>
+            and keep the <option>resource_metadata</option> of the latest received
             sample:</para>
           <programlisting>transformers:
     - name: "aggregator"
       parameters:
           retention_time: 60
           resource_metadata: last</programlisting>
-          <para>To aggregate each 15 samples by <parameter>user_id</parameter> and <parameter>resource_metadata
-            </parameter> and keep the <parameter>user_id</parameter> of the first received sample and
-            drop the <parameter>resource_metadata</parameter>:</para>
+          <para>To aggregate each 15 samples by <option>user_id</option> and <option>resource_metadata
+            </option> and keep the <option>user_id</option> of the first received sample and
+            drop the <option>resource_metadata</option>:</para>
           <programlisting>transformers:
     - name: "aggregator"
       parameters:
@@ -772,7 +772,7 @@ sinks:
     </note>
     <para>Multiple <systemitem class="service">ceilometer-collector</systemitem> process can be
       run at a time. It is also supported to start multiple worker threads per collector process.
-      The <parameter>collector_workers</parameter> configuration option has to be modified in the
+      The <option>collector_workers</option> configuration option has to be modified in the
       <link xlink:href=
       "http://docs.openstack.org/juno/config-reference/content/ch_configuring-openstack-telemetry.html">
       collector section</link> of the <filename>ceilometer.conf</filename>
@@ -784,7 +784,7 @@ sinks:
     <simplesect>
       <title>Database dispatcher</title>
       <para>When the database dispatcher is configured as data store, you have the option to set
-        a <parameter>time_to_live</parameter> parameter (ttl) for samples. By default the time to
+        a <option>time_to_live</option> parameter (ttl) for samples. By default the time to
         live value for samples is set to -1, which means that they are kept in the database forever.
       </para>
       <para>The time to live value is specified in seconds. Each sample has a time stamp, and the
