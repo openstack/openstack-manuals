@@ -9,7 +9,7 @@
     the persisted data can be accessed. As described in
     <xref linkend="section_telemetry-system-architecture"/> and in
     <xref linkend="section_telemetry-data-collection"/> the collected
-    information is stored in one or more database backends, which
+    information can be stored in one or more database backends, which
     are hidden by the Telemetry RESTful API.</para>
   <note>
     <para>It is highly recommended not to access directly the
@@ -418,19 +418,8 @@
   </section>
   <section xml:id="section_telemetry-publishers">
     <title>Publishers</title>
-    <para>Publishing meters for different uses is a two dimensional problem.
-      The first variable is the frequency of publication. Typically a meter that is
-      published for billing purposes will need to be updated every 30 min while the same
-      meter can be needed for performance tuning in every minute.</para>
-    <note>
-      <para>The use of rapid cadence should be avoided, as it results in a huge amount
-        of data in a short time frame, which may affect the performance of
-        both Telemetry and the underlying database backend as it would be filled up
-        rapidly. Therefore the use of small granularity value like 10 seconds is
-        highly not recommended.</para>
-    </note>
-    <para>The second variable is the transport. The Telemetry module provides several
-      transport methods to forward the data collected to the <systemitem class="service">
+    <para>The Telemetry module provides several transport methods to forward
+      the data collected to the <systemitem class="service">
       ceilometer-collector</systemitem> service or to an external system. The
       consumers of this data are widely different, like monitoring systems, for which
       data loss is acceptable and billing systems, which require reliable data
@@ -440,9 +429,9 @@
       through the message bus or to send it to one or more external consumers.
       One chain can contain multiple publishers.</para>
     <para>To solve the above mentioned problem, the notion of multi-publisher can
-      be configured for each meter within the Telemetry module, allowing the same
-      technical meter to be published multiple times to multiple destinations, each
-      potentially using a different transport and frequency of publication.</para>
+      be configured for each datapoint within the Telemetry module, allowing the same
+      technical meter or event to be published multiple times to multiple destinations, each
+      potentially using a different transport.</para>
     <para>Publishers can be specified  in the <literal>publishers</literal> section
       for each pipeline (for further details about pipelines see
       <xref linkend="section_telemetry-data-collection-processing"/>) that is defined
@@ -455,8 +444,9 @@
           <term>notifier</term>
           <listitem>
             <para>It can be specified in the form of
-              <literal>notifier://?option1=value1&amp;option2=value2</literal>. It emits metering
-              data over AMQP using oslo.messaging.</para>
+              <literal>notifier://?option1=value1&amp;option2=value2</literal>. It emits
+              data over AMQP using oslo.messaging. This is the recommended method of
+              publishing.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -464,7 +454,7 @@
           <listitem>
             <para>It can be specified in the form of
               <literal>rpc://?option1=value1&amp;option2=value2</literal>. It emits metering data
-              over lossy AMQP.</para>
+              over lossy AMQP. This method is synchronous and may experience performance issues.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
