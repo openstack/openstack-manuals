@@ -234,6 +234,32 @@
     <para>The following meters are collected for OpenStack Object Storage:</para>
     <xi:include href="tables/ceilometer-measurements-swift.xml"/>
   </section>
+  <section xml:id="section_telemetry-ceph-object-storage-metrics">
+    <title>Ceph Object Storage</title>
+    <para>In order to gather metrics from Ceph, you have to install and
+      configure the Ceph Object Gateway (radosgw) as it is described
+      in the <link xlink:href="http://docs.ceph.com/docs/master/radosgw/">
+      Installation Manual</link>. You have to enable <link xlink:href=
+      "http://ceph.com/docs/master/man/8/radosgw/#usage-logging">usage logging</link>
+      in order to get the related meters from Ceph. You will also need an
+      <literal>admin</literal> user with <literal>users</literal>,
+      <literal>buckets</literal>, <literal>metadata</literal> and
+      <literal>usage</literal> <literal>caps</literal> configured.</para>
+    <para>In order to access Ceph from Telemetry, you need to specify a
+      <literal>service group</literal> for <option>radosgw</option> in
+      the <filename>ceilometer.conf</filename> configuration file along
+      with <option>access_key</option> and <option>secret_key</option>
+      of the <literal>admin</literal> user mentioned above.</para>
+    <para>The following meters are collected for Ceph Object Storage:</para>
+    <xi:include href="tables/ceilometer-measurements-ceph.xml"/>
+    <note>
+      <para>The <literal>usage</literal> related information may not be updated
+        right after an upload or download, because the Ceph Object Gateway
+        needs time to update the usage properties. For instance, the default
+        configuration needs approximately 30 minutes to generate the usage logs.
+      </para>
+    </note>
+  </section>
   <section xml:id="section_telemetry-keystone-metrics">
     <title>OpenStack Identity</title>
     <para>The following meters are collected for OpenStack Identity:</para>
