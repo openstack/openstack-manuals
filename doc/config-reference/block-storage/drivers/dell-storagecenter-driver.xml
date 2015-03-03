@@ -10,6 +10,9 @@
     Enterprise Manager. Enterprise Manager connection settings and Storage
     Center options are defined in the <filename>cinder.conf</filename> file.
   </para>
+  <para>
+    Prerequisite: Dell Enterprise Manager 2015 R1 or later must be used.
+  </para>
     <simplesect>
       <title>Supported operations</title>
       <para>The Dell Storage Center volume driver provides the following
@@ -57,7 +60,7 @@
       # Enterprise Manager user name
       san_login = Admin
       # Enterprise Manager password
-      san_password = mmmm
+      san_password = secret
       # The Storage Center iSCSI IP address
       iscsi_ip_address = 192.168.0.20
       # The Storage Center serial number to use
@@ -86,7 +89,7 @@
 
       [dellfc]
       # Name to give this storage backend
-      volume_backend_name = delliscsi
+      volume_backend_name = dellfc
       # The FC driver to load
       volume_driver = cinder.volume.drivers.dell.dell_storagecenter_fc.DellStorageCenterFCDriver
       # IP address of Enterprise Manager
@@ -94,7 +97,7 @@
       # Enterprise Manager user name
       san_login = Admin
       # Enterprise Manager password
-      san_password = mmmm
+      san_password = secret
       # The Storage Center serial number to use
       dell_sc_ssn = 64702
 
