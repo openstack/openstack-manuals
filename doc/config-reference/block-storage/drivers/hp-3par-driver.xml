@@ -20,9 +20,19 @@
         <itemizedlist>
             <listitem>
                 <para>HP 3PAR Operating System software version 3.1.3 MU1
-                    or higher. Dedupication provisioning requires SSD disks
-                    and HP 3PAR Operating System software version
-                    3.2.1 MU1 or higher.</para>
+                    or higher.</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Dedupication provisioning requires SSD disks
+                            and HP 3PAR Operating System software version
+                            3.2.1 MU1 or higher.</para>
+                    </listitem>
+                    <listitem>
+                        <para>Enabling Flash Cache Policy requires SSD disks
+                            and HP 3PAR Operating System software version
+                            3.2.1 MU2 or higher.</para>
+                    </listitem>
+                </itemizedlist>
             </listitem>
             <listitem>
                 <para>HP 3PAR Web Services API Server must be enabled
@@ -95,6 +105,9 @@
             <listitem>
                 <para><literal>hp3par:vvs</literal></para>
             </listitem>
+            <listitem>
+                <para><literal>hp3par:flash_cache</literal></para>
+            </listitem>
         </itemizedlist>
         <para>To work with the default filter scheduler, the key
             values are case sensitive and scoped with
@@ -147,6 +160,12 @@
                         VMware</literal>, <literal>9 -
                         OpenVMS</literal>, <literal>10 - HPUX</literal>,
                         and <literal>11 - WindowsServer</literal>.</para>
+            </listitem>
+            <listitem>
+                <para><literal>hp3par:flash_cache</literal> -
+                    Defaults to <literal>false</literal>, the valid values
+                    are <literal>true</literal>
+                    and <literal>false</literal>.</para>
             </listitem>
         </itemizedlist>
         <para>QoS support for both HP 3PAR drivers includes
@@ -236,6 +255,19 @@
                 and maxBWS must be used together. If only one is set
                 the other will be set to the same value.</para>
         </note>
+
+        <para>The following keys require that the HP 3PAR StoreServ
+            storage array has an Adaptive Flash Cache license
+            installed.</para>
+        <itemizedlist>
+            <listitem>
+                <para><literal>hp3par:flash_cache</literal> - The
+                    flash-cache policy, which can be turned on and off
+                    by setting the value to <literal>true</literal> or
+                    <literal>false</literal>.</para>
+            </listitem>
+        </itemizedlist>
+
     </section>
     <section xml:id="enable-hp-3par-fibre-channel">
         <title>Enable the HP 3PAR Fibre Channel and iSCSI
