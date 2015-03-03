@@ -4,57 +4,137 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
   xml:id="configuring-keystone-for-ldap-backend-assignments">
-<title>Separate role authorization and user authentication</title>
-    <para>When you configure the Identity service to use LDAP back
-    ends, you can split authentication and authorization using the
-    <emphasis>Assignments</emphasis> feature.</para>
-    <para>The Assignments feature enables administrators to manage
-    project role authorization using the Identity service SQL
-    database, while still providing user authentication through the
-    LDAP directory.</para>
-    <para>To configure this:</para>
+    <title>Integrate assignment back end with LDAP</title>
+    <para>When you configure the OpenStack Identity service to use LDAP
+        servers, you can split authentication and authorization using the
+        <emphasis>assignment</emphasis> feature. Integrating the
+        assignment back end with LDAP allows administrators to use
+        projects (tenant), roles, domains, and role assignments
+        in LDAP.</para>
+    <note>
+        <para>Using LDAP as an assignment back end is not recommended.</para>
+    </note>
+    <note>
+        <para>The OpenStack Identity service does not support domain-specific
+          assignment back ends.</para>
+    </note>
+    <important>
+        <para>For OpenStack Identity assignments to access LDAP servers, you
+          must define the destination LDAP server in
+          the <filename>keystone.conf</filename> file. For more information,
+          see <xref linkend="configuring-keystone-for-ldap-backend"/>.</para>
+    </important>
     <procedure>
-        <title>Separating role authorization and user authentication
-        through Assignments</title>
-      <para>Modify the <filename>/etc/keystone/keystone.conf</filename>
-        configuration file for a single LDAP server, or
-        <filename>etc/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>
-        files for multiple LDAP back ends, performing the following actions:</para>
-    <step>
-        <para>Configure the Identity service to authenticate users
-        through the LDAP driver. In the <literal>[identity]</literal> section, set
-        the <literal>driver</literal> configuration key to
-        <literal>keystone.identity.backends.ldap.Identity</literal>:
-        </para>
-    <programlisting>[identity]
-driver = keystone.identity.backends.ldap.Identity</programlisting>
-    </step>
-    <step><para>Enable the Assignment driver. In the
-    <literal>[assignment]</literal> section, set the <literal>driver</literal>
-    configuration key to <literal>keystone.assignment.backends.sql.Assignment</literal>:
-    </para>
-    <programlisting>[assignment]
-driver = keystone.assignment.backends.sql.Assignment</programlisting>
-    </step>
+        <title>Integrating assignment back ends with LDAP</title>
+        <step>
+            <para>Enable the assignment driver. In the
+              <literal>[assignment]</literal> section, set the
+              <literal>driver</literal> configuration key to
+                <literal>keystone.assignment.backends.sql.Assignment</literal>:</para>
+            <programlisting language="ini">[assignment]
+#driver = keystone.assignment.backends.sql.Assignment
+driver = keystone.assignment.backends.ldap.Assignment</programlisting>
+        </step>
+        <step>
+            <para>Create the organizational units (OU) in the LDAP
+                directory, and define their corresponding location in
+                the <filename>keystone.conf</filename> file:</para>
+            <programlisting language="ini">[ldap]
+role_tree_dn =
+role_objectclass = inetOrgPerson
+
+project_tree_dn = ou=Groups,dc=example,dc=org
+project_objectclass = groupOfNames</programlisting>
+            <note>
+                <para>These schema attributes are extensible for
+                    compatibility with various schemas. For example,
+                    this entry maps to the
+                        <systemitem>groupOfNames</systemitem> attribute in
+                    Active Directory:</para>
+                <programlisting language="ini">project_objectclass = groupOfNames</programlisting>
+            </note>
+        </step>
+        <step>
+            <para>A read-only implementation is recommended for LDAP
+                integration. These permissions are applied to object
+                types in the <filename>keystone.conf</filename>
+                file:</para>
+            <programlisting language="ini">[ldap]
+role_allow_create = False
+role_allow_update = False
+role_allow_delete = False
+
+project_allow_create = False
+project_allow_update = False
+project_allow_delete = False</programlisting>
+        </step>
+        <step>
+            <para>Restart the OpenStack Identity service:</para>
+            <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
+            <warning><para>During service restart, authentication and
+            authorization are unavailable.</para></warning>
+        </step>
     </procedure>
-    <para os="rhel;centos;fedora;opensuse;sles">On
-     distributions that include
-     <application>openstack-config</application>, you can
-     configure both drivers by running the following commands.</para>
-   <itemizedlist>
-     <listitem>
-       <para>For a single LDAP server:</para>
-           <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
-identity driver keystone.identity.backends.ldap.Identity</userinput>
-<prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
-assignment driver keystone.assignment.backends.sql.Assignment</userinput></screen>
-     </listitem>
-     <listitem>
-       <para>For multiple LDAP back ends:</para>
-<screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>openstack-config --set /etc/keystone/keystone.conf \
-    identity driver keystone.identity.backends.ldap.Identity</userinput>
-  <prompt>#</prompt> <userinput>openstack-config --set etc/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf \
-    assignment driver keystone.assignment.backends.sql.Assignment</userinput></screen>
-      </listitem>
-    </itemizedlist>
+    <formalpara>
+        <title>Additional LDAP integration settings</title>
+        <para>Set these options in the
+            <filename>/etc/keystone/keystone.conf</filename>
+            file for a single LDAP server, or
+            <filename>/etc/keystone/domains/keystone.
+                <replaceable>DOMAIN_NAME</replaceable>.conf</filename>
+            files for multiple back ends.</para>
+    </formalpara>
+    <variablelist>
+        <varlistentry>
+            <term>Filters</term>
+            <listitem>
+                <para>Use filters to control the scope of data
+                    presented through LDAP.</para>
+                <programlisting language="ini">[ldap]
+project_filter = (member=cn=openstack-user,ou=workgroups,dc=example,dc=org)
+role_filter = </programlisting>
+                <warning><para>Filtering method</para></warning>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>Assignment attribute mapping</term>
+            <listitem>
+                <para>Mask account status values (include any additional
+                    attribute mappings) for compatibility with various
+                    directory services. Superfluous accounts are filtered with
+                        <systemitem>user_filter</systemitem>.</para>
+                <para>Setting attribute ignore to list of attributes
+                    stripped off on update.</para>
+                <programlisting language="ini">[ldap]
+role_id_attribute = cn
+role_name_attribute = ou
+role_member_attribute = roleOccupant
+role_additional_attribute_mapping =
+role_attribute_ignore =
+
+project_id_attribute = cn
+project_name_attribute = ou
+project_member_attribute = member
+project_desc_attribute = description
+project_enabled_attribute = enabled
+project_domain_id_attribute = businessCategory
+project_additional_attribute_mapping =
+project_attribute_ignore =</programlisting>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term>Enabled emulation</term>
+            <listitem>
+                <para>An alternative method to determine if a project is
+                    enabled or not is to check if that project is a
+                    member of the emulation group.</para>
+                <para>Use DN of the group entry to hold enabled
+                    projects when using enabled emulation.</para>
+                <programlisting language="ini">[ldap]
+project_enabled_emulation = false
+project_enabled_emulation_dn = false</programlisting>
+            </listitem>
+        </varlistentry>
+    </variablelist>
 </section>
+
