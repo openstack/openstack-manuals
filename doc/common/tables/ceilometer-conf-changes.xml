@@ -13,6 +13,10 @@
       </tr>
     </thead>
     <tr>
+      <td>[DEFAULT] api_workers = 1</td>
+      <td>(IntOpt) Number of workers for Ceilometer API server.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] event_pipeline_cfg_file = event_pipeline.yaml</td>
       <td>(StrOpt) Configuration file for event pipeline definition.</td>
     </tr>
@@ -37,12 +41,20 @@
       <td>(ListOpt) List of metadata keys reserved for metering use. And these keys are additional to the ones included in the namespace.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] shuffle_time_before_polling_task = 0</td>
+      <td>(IntOpt) To reduce large requests at same time to Nova or other components from different compute agents, shuffle start time of polling task.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] swift_control_exchange = swift</td>
+      <td>(StrOpt) Exchange name for Swift notifications.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] zaqar_control_exchange = zaqar</td>
       <td>(StrOpt) Exchange name for Messaging service notifications.</td>
     </tr>
     <tr>
-      <td>[alarm] evaluation_service = default</td>
-      <td>(StrOpt) Driver to use for alarm evaluation service. DEPRECATED: "singleton" and "partitioned" alarm evaluator services will be removed in Kilo in favour of the default alarm evaluation service using tooz for partitioning.</td>
+      <td>[collector] requeue_event_on_dispatcher_error = False</td>
+      <td>(BoolOpt) Requeue the event on the collector event queue when the collector fails to dispatch it.</td>
     </tr>
     <tr>
       <td>[coordination] check_watchers = 10.0</td>
@@ -55,6 +67,14 @@
     <tr>
       <td>[database] event_connection = None</td>
       <td>(StrOpt) The connection string used to connect to the event database. (if unset, connection is used)</td>
+    </tr>
+    <tr>
+      <td>[database] event_time_to_live = -1</td>
+      <td>(IntOpt) Number of seconds that events are kept in the database for (&lt;= 0 means forever).</td>
+    </tr>
+    <tr>
+      <td>[database] metering_time_to_live = -1</td>
+      <td>(IntOpt) Number of seconds that samples are kept in the database for (&lt;= 0 means forever).</td>
     </tr>
     <tr>
       <td>[database] mongodb_replica_set = </td>
@@ -73,6 +93,14 @@
       <td>(IntOpt) The max time in second to wait for a request to timeout.</td>
     </tr>
     <tr>
+      <td>[ipmi] polling_retry = 3</td>
+      <td>(IntOpt) Tolerance of IPMI/NM polling failures before disable this pollster. Negative indicates retrying forever.</td>
+    </tr>
+    <tr>
+      <td>[notification] disable_non_metric_meters = False</td>
+      <td>(BoolOpt) WARNING: Ceilometer historically offered the ability to store events as meters. This usage is NOT advised as it can flood the metering database and cause performance degradation. This option disables the collection of non-metric meters and will be the default behavior in Liberty.</td>
+    </tr>
+    <tr>
       <td>[notification] workload_partitioning = False</td>
       <td>(BoolOpt) Enable workload partitioning, allowing multiple notification agents to be run simultaneously.</td>
     </tr>
@@ -85,8 +113,204 @@
       <td>(StrOpt) Directory to use for lock files.  For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.</td>
     </tr>
     <tr>
+      <td>[oslo_messaging_amqp] allow_insecure_clients = False</td>
+      <td>(BoolOpt) Accept clients using either SSL or plain TCP</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] broadcast_prefix = broadcast</td>
+      <td>(StrOpt) address prefix used when broadcasting to all servers</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] container_name = None</td>
+      <td>(StrOpt) Name for the AMQP container</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] group_request_prefix = unicast</td>
+      <td>(StrOpt) address prefix when sending to any server in group</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] idle_timeout = 0</td>
+      <td>(IntOpt) Timeout for inactive connections (in seconds)</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] server_request_prefix = exclusive</td>
+      <td>(StrOpt) address prefix used when sending to a specific server</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] ssl_ca_file = </td>
+      <td>(StrOpt) CA certificate PEM file for verifing server certificate</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] ssl_cert_file = </td>
+      <td>(StrOpt) Identifying certificate PEM file to present to clients</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] ssl_key_file = </td>
+      <td>(StrOpt) Private key PEM file used to sign cert_file certificate</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] ssl_key_password = None</td>
+      <td>(StrOpt) Password for decrypting ssl_key_file (if encrypted)</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] trace = False</td>
+      <td>(BoolOpt) Debug: dump AMQP frames to stdout</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] amqp_auto_delete = False</td>
+      <td>(BoolOpt) Auto-delete queues in AMQP.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] amqp_durable_queues = False</td>
+      <td>(BoolOpt) Use durable queues in AMQP.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] qpid_heartbeat = 60</td>
+      <td>(IntOpt) Seconds between connection keepalive heartbeats.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] qpid_hostname = localhost</td>
+      <td>(StrOpt) Qpid broker hostname.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] qpid_hosts = $qpid_hostname:$qpid_port</td>
+      <td>(ListOpt) Qpid HA cluster host:port pairs.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] qpid_password = </td>
+      <td>(StrOpt) Password for Qpid connection.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] qpid_port = 5672</td>
+      <td>(IntOpt) Qpid broker port.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] qpid_protocol = tcp</td>
+      <td>(StrOpt) Transport to use, either 'tcp' or 'ssl'.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] qpid_receiver_capacity = 1</td>
+      <td>(IntOpt) The number of prefetched messages held by receiver.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] qpid_sasl_mechanisms = </td>
+      <td>(StrOpt) Space separated list of SASL mechanisms to use for auth.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] qpid_tcp_nodelay = True</td>
+      <td>(BoolOpt) Whether to disable the Nagle algorithm.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] qpid_topology_version = 1</td>
+      <td>(IntOpt) The qpid topology version to use.  Version 1 is what was originally used by impl_qpid.  Version 2 includes some backwards-incompatible changes that allow broker federation to work.  Users should update to version 2 when they are able to take everything down, as it requires a clean break.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] qpid_username = </td>
+      <td>(StrOpt) Username for Qpid connection.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] rpc_conn_pool_size = 30</td>
+      <td>(IntOpt) Size of RPC connection pool.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] amqp_auto_delete = False</td>
+      <td>(BoolOpt) Auto-delete queues in AMQP.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] amqp_durable_queues = False</td>
+      <td>(BoolOpt) Use durable queues in AMQP.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] fake_rabbit = False</td>
+      <td>(BoolOpt) Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
+      <td>(FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] kombu_ssl_ca_certs = </td>
+      <td>(StrOpt) SSL certification authority file (valid only if SSL enabled).</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] kombu_ssl_certfile = </td>
+      <td>(StrOpt) SSL cert file (valid only if SSL enabled).</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] kombu_ssl_keyfile = </td>
+      <td>(StrOpt) SSL key file (valid only if SSL enabled).</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] kombu_ssl_version = </td>
+      <td>(StrOpt) SSL version to use (valid only if SSL enabled). Valid values are TLSv1 and SSLv23. SSLv2, SSLv3, TLSv1_1, and TLSv1_2 may be available on some distributions.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_ha_queues = False</td>
+      <td>(BoolOpt) Use HA queues in RabbitMQ (x-ha-policy: all). If you change this option, you must wipe the RabbitMQ database.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_host = localhost</td>
+      <td>(StrOpt) The RabbitMQ broker address where a single node is used.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_hosts = $rabbit_host:$rabbit_port</td>
+      <td>(ListOpt) RabbitMQ HA cluster host:port pairs.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_login_method = AMQPLAIN</td>
+      <td>(StrOpt) The RabbitMQ login method.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_max_retries = 0</td>
+      <td>(IntOpt) Maximum number of RabbitMQ connection retries. Default is 0 (infinite retry count).</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_password = guest</td>
+      <td>(StrOpt) The RabbitMQ password.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_port = 5672</td>
+      <td>(IntOpt) The RabbitMQ broker port where a single node is used.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_retry_backoff = 2</td>
+      <td>(IntOpt) How long to backoff for between retries when connecting to RabbitMQ.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_retry_interval = 1</td>
+      <td>(IntOpt) How frequently to retry connecting with RabbitMQ.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_use_ssl = False</td>
+      <td>(BoolOpt) Connect over SSL for RabbitMQ.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_userid = guest</td>
+      <td>(StrOpt) The RabbitMQ userid.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rabbit_virtual_host = /</td>
+      <td>(StrOpt) The RabbitMQ virtual host.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] rpc_conn_pool_size = 30</td>
+      <td>(IntOpt) Size of RPC connection pool.</td>
+    </tr>
+    <tr>
       <td>[polling] partitioning_group_prefix = None</td>
       <td>(StrOpt) Work-load partitioning group prefix. Use only if you want to run multiple polling agents with different config files. For each sub-group of the agent pool with the same partitioning_group_prefix a disjoint subset of pollsters should be loaded.</td>
+    </tr>
+    <tr>
+      <td>[publisher] telemetry_secret = change this or be hacked</td>
+      <td>(StrOpt) Secret value for signing metering messages.</td>
+    </tr>
+    <tr>
+      <td>[publisher_notifier] event_topic = event</td>
+      <td>(StrOpt) The topic that ceilometer uses for event notifications.</td>
+    </tr>
+    <tr>
+      <td>[publisher_notifier] telemetry_driver = messagingv2</td>
+      <td>(StrOpt) The driver that ceilometer uses for metering notifications.</td>
     </tr>
     <tr>
       <td>[vmware] host_port = 443</td>
@@ -109,6 +333,25 @@
       <td>[DEFAULT] rpc_zmq_matchmaker</td>
       <td>oslo.messaging._drivers.matchmaker.MatchMakerLocalhost</td>
       <td>oslo_messaging._drivers.matchmaker.MatchMakerLocalhost</td>
+    </tr>
+  </table>
+  <table>
+    <caption>Deprecated options</caption>
+    <col width="50%"/>
+    <col width="50%"/>
+    <thead>
+      <tr>
+        <td>Deprecated option</td>
+        <td>New Option</td>
+      </tr>
+    </thead>
+    <tr>
+      <td>[database] time_to_live</td>
+      <td>[database] metering_time_to_live</td>
+    </tr>
+    <tr>
+      <td>[publisher] metering_secret</td>
+      <td>[publisher] telemetry_secret</td>
     </tr>
   </table>
 </section>
