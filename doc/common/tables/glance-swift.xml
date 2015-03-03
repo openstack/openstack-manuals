@@ -77,6 +77,10 @@
         <td>(BoolOpt) A boolean value that determines if we create the container if it does not exist.</td>
       </tr>
       <tr>
+        <td><option>swift_store_endpoint</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) If set, the configured endpoint will be used. If None, the storage url from the auth response will be used.</td>
+      </tr>
+      <tr>
         <td><option>swift_store_endpoint_type</option> = <replaceable>publicURL</replaceable></td>
         <td>(StrOpt) A string giving the endpoint type of the swift service to use (publicURL, adminURL or internalURL). This setting is only used if swift_store_auth_version is 2.</td>
       </tr>
@@ -95,6 +99,10 @@
       <tr>
         <td><option>swift_store_multi_tenant</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) If set to True, enables multi-tenant storage mode which causes Glance images to be stored in tenant specific Swift accounts.</td>
+      </tr>
+      <tr>
+        <td><option>swift_store_multiple_containers_seed</option> = <replaceable>0</replaceable></td>
+        <td>(IntOpt) When set to 0, a single-tenant store will only use one container to store all images. When set to an integer value between 1 and 32, a single-tenant store will use multiple containers to store images, and this value will determine how many containers are created.Used only when swift_store_multi_tenant is disabled. The total number of containers that will be used is equal to 16^N, so if this config option is set to 2, then 16^2=256 containers will be used to store images.</td>
       </tr>
       <tr>
         <td><option>swift_store_region</option> = <replaceable>None</replaceable></td>
