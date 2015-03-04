@@ -309,6 +309,18 @@
                     </tr>
                 </tbody>
             </table>
+            <note>
+                  <para>You can modify a port’s <option>mac_address</option>
+                        in the ML2 plug-in. This solves the problem where a MAC address
+                        is changed after NIC fails on <glossterm>ironic</glossterm>
+                        servers. Previously, when NIC failed, it was replaced with
+                        a new one having a different MAC address.
+                        That may lead to undesirable changing of an IP address.</para>
+                  <para>Since the Juno release, the port can be assigned with a new MAC address.
+                        The NIC can retain the same IP address. Use the following command to
+                        update a MAC address:</para>
+                  <screen><prompt>$</prompt> <userinput>neutron port-update <replaceable>SUBNET_UUID</replaceable> mac_address=<replaceable>MAC_ADDRESS</replaceable> </userinput></screen>
+            </note>
         </section>
         <section xml:id="basic_operations">
             <title>Basic Networking operations</title>
