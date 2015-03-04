@@ -102,3 +102,4 @@ service with its package name and description.
    common/cli_create_and_manage_networks.rst
    common/cli_manage_images.rst
    common/cli_manage_volumes.rst
+   analyzing-log-files-with-swift-cli.rst
