@@ -19,8 +19,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-03-02 19:11+0000\n"
-"PO-Revision-Date: 2015-03-02 19:12+0000\n"
+"POT-Creation-Date: 2015-03-03 19:39+0000\n"
+"PO-Revision-Date: 2015-03-03 19:53+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -392,7 +392,6 @@ msgstr ""
 #: ./doc/common/tables/cinder-logging.xml13(th)
 #: ./doc/common/tables/nova-redis.xml13(th)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml15(th)
-#: ./doc/common/tables/glance-rabbitmq.xml13(th)
 #: ./doc/common/tables/neutron-l3_agent.xml13(th)
 #: ./doc/common/tables/swift-container-server-pipeline-main.xml15(th)
 #: ./doc/common/tables/glance-policy.xml13(th)
@@ -574,7 +573,6 @@ msgstr ""
 #: ./doc/common/tables/trove-guestagent.xml13(th)
 #: ./doc/common/tables/ironic-irmc.xml13(th)
 #: ./doc/common/tables/nova-qpid.xml13(th)
-#: ./doc/common/tables/glance-qpid.xml13(th)
 #: ./doc/common/tables/sahara-rpc.xml13(th)
 #: ./doc/common/tables/neutron-lbaas_radware.xml13(th)
 #: ./doc/common/tables/neutron-ml2_sriov.xml13(th)
@@ -627,6 +625,7 @@ msgstr ""
 #: ./doc/common/tables/neutron-hyperv_agent.xml13(th)
 #: ./doc/common/tables/ceilometer-tripleo.xml13(th)
 #: ./doc/common/tables/keystone-federation.xml13(th)
+#: ./doc/common/tables/glance-taskflow.xml13(th)
 #: ./doc/common/tables/ceilometer-service_types.xml13(th)
 #: ./doc/common/tables/cinder-eqlx.xml13(th)
 #: ./doc/common/tables/heat-redis.xml13(th)
@@ -3345,151 +3344,78 @@ msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap.xml8(para)
 msgid ""
-"Identity Service supports integration with existing LDAP directories for "
-"authentication and authorization services."
+"The Openstack Identity Service supports integration with existing LDAP "
+"directories for authentication and authorization services."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml12(para)
+#: ./doc/common/section_keystone_config_ldap.xml11(para)
 msgid ""
-"For OpenStack Identity to access LDAP servers, you must enable the "
-"<placeholder-1/> boolean value for SELinux on the Identity server. To enable"
-" and make the option persistent across reboots:"
+"When the Openstack Identity service is configured to use LDAP back ends, you"
+" can split authentication (using the <emphasis>identity</emphasis> feature) "
+"and authorization (using the <emphasis>assignment</emphasis> feature)."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml19(para)
+#: ./doc/common/section_keystone_config_ldap.xml16(para)
 msgid ""
-"You can integrate Identity with a single LDAP server, or multiple back ends "
-"using domain-specific configuration files."
+"The identity feature enables administrators to manage users and groups by "
+"each domain or the Openstack Identity Service entirely."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml23(title)
-msgid "To integrate Identity with a LDAP server"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml25(para)
+#: ./doc/common/section_keystone_config_ldap.xml18(para)
 msgid ""
-"Enable the LDAP driver in the "
-"<filename>/etc/keystone/keystone.conf</filename> file:"
+"The Assignments feature enables administrators to manage project role "
+"authorization using the Openstack Identity service SQL database, while "
+"providing user authentication through the LDAP directory."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml32(para)
+#: ./doc/common/section_keystone_config_ldap.xml23(para)
 msgid ""
-"Define the destination LDAP server in the "
-"<filename>/etc/keystone/keystone.conf</filename> file:"
+"For OpenStack Identity service to access LDAP servers, you must enable the "
+"<placeholder-1/> boolean value for SELinux on the Openstack Identity server."
+" To enable and make the option persistent across reboots:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml43(para)
+#: ./doc/common/section_keystone_config_ldap.xml29(para)
 msgid ""
-"Create the organizational units (OU) in the LDAP directory, and define their"
-" corresponding location in the <filename>keystone.conf</filename> file:"
+"Identity configuration is split into two separate back ends: identity (back "
+"end for users and groups) and assignments (back end for domains, projects, "
+"roles, role assignments). To configure identity, set options in the "
+"<filename>/etc/keystone/keystone.conf</filename> file. See <xref linkend"
+"=\"configuring-keystone-for-ldap-backend-identity\"/> for identity back end "
+"configuration examples and <xref linkend=\"configuring-keystone-for-ldap-"
+"backend-assignments\"/> for assignment back end configuration examples. "
+"Modify these examples as needed."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml56(para)
-#: ./doc/common/section_keystone_config_ldap.xml159(para)
+#: ./doc/common/section_keystone_config_ldap.xml39(para)
 msgid ""
-"These schema attributes are extensible for compatibility with various "
-"schemas. For example, this entry maps to the <systemitem>person</systemitem>"
-" attribute in Active Directory:"
+"Multiple back ends are supported. You can integrate the Openstack Identity "
+"service with a single LDAP server (configure both identity and assignments "
+"to LDAP, or set identity and assignments back end with SQL or LDAP), or "
+"multiple back ends using domain-specific configuration files."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml65(para)
+#: ./doc/common/section_keystone_config_ldap.xml45(title)
+msgid "To define the destination LDAP server"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml46(para)
 msgid ""
-"A read-only implementation is recommended for LDAP integration. These "
-"permissions are applied to object types in the "
-"<filename>keystone.conf</filename> file:"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml83(para)
-#: ./doc/common/section_keystone_config_ldap.xml185(para)
-msgid "Restart the Identity service:"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml85(para)
-#: ./doc/common/section_keystone_config_ldap.xml187(para)
-msgid ""
-"During service restart, authentication and authorization are unavailable."
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml90(title)
-msgid "To integrate Identity with multiple back ends"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml92(para)
-msgid ""
-"Set the following options in the "
-"<filename>/etc/keystone/keystone.conf</filename> file:"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml96(para)
-msgid "Enable the LDAP driver:"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml102(para)
-msgid "Enable domain-specific drivers:"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml110(para)
-msgid "Restart the service:"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml114(para)
-msgid ""
-"List the domains using the dashboard, or the OpenStackClient CLI. Refer to "
-"the <link href=\"http://docs.openstack.org/developer/python-openstackclient"
-"/command-list.html\">Command List</link> for a list of OpenStackClient "
-"commands."
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml119(para)
-msgid "Create domains using OpenStack dashboard, or the OpenStackClient CLI."
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml123(para)
-msgid ""
-"For each domain, create a domain-specific configuration file in the "
-"<filename>/etc/keystone/domains</filename> directory. Use the file naming "
-"convention "
-"<filename>keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>, "
-"where <replaceable>DOMAIN_NAME</replaceable> is the domain name assigned in "
-"the previous step."
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml128(para)
-msgid ""
-"The options set in the "
-"<filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>"
-" file will override options in the "
-"<filename>/etc/keystone/keystone.conf</filename> file."
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml134(para)
-msgid ""
-"Define the destination LDAP server in the "
-"<filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>"
-" file. For example:"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml145(para)
-msgid ""
-"Create the organizational units (OU) in the LDAP directory, and define their"
-" corresponding location in the "
-"<filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>"
-" file. For example:"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml167(para)
-msgid ""
-"A read-only implementation is recommended for LDAP integration. These "
-"permissions are applied to object types in the "
-"<filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>"
+"Define the destination LDAP server in the <filename>keystone.conf</filename>"
 " file:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml192(title)
+#: ./doc/common/section_keystone_config_ldap.xml57(para)
+msgid "Configure <placeholder-1/> if you set <placeholder-2/> to true."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml62(title)
+#: ./doc/common/section_keystone_config_ldap-identity.xml164(title)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml79(title)
 msgid "Additional LDAP integration settings"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml193(para)
+#: ./doc/common/section_keystone_config_ldap.xml63(para)
 msgid ""
 "Set these options in the <filename>/etc/keystone/keystone.conf</filename> "
 "file for a single LDAP server, or "
@@ -3497,29 +3423,82 @@ msgid ""
 " files for multiple back ends."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml200(term)
-msgid "Filters"
+#: ./doc/common/section_keystone_config_ldap.xml70(term)
+msgid "Query option"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml202(para)
-msgid "Use filters to control the scope of data presented through LDAP."
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml211(term)
-msgid "LDAP Account Status"
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap.xml213(para)
+#: ./doc/common/section_keystone_config_ldap.xml72(para)
 msgid ""
-"Mask account status values for compatibility with various directory "
-"services. Superfluous accounts are filtered with "
-"<systemitem>user_filter</systemitem>."
+"Use <placeholder-1/> to control the scope level of data presented (search "
+"only the first level or search an entire sub-tree) through LDAP."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap.xml217(para)
+#: ./doc/common/section_keystone_config_ldap.xml76(para)
 msgid ""
-"For example, you can mask Active Directory account status attributes in the "
-"<filename>keystone.conf</filename> file:"
+"Use <placeholder-1/> to control the maximum results per page. A value of "
+"zero disables paging."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml78(para)
+msgid ""
+"Use <placeholder-1/> to control the LDAP dereferencing option for queries."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml80(para)
+msgid ""
+"Use <placeholder-1/> to override the system's default referral chasing "
+"behavior for queries."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml90(term)
+msgid "Debug"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml92(para)
+msgid ""
+"Use <placeholder-1/> to set the LDAP debugging level for LDAP calls. A value"
+" of zero means that debugging is not enabled."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml97(para)
+msgid ""
+"This value is a bitmask, consult your LDAP documentation for possible "
+"values."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml102(term)
+msgid "Connection pooling"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml104(para)
+msgid ""
+"Use <placeholder-1/> to enable LDAP connection pooling. Configure connection"
+" pool size, maximum retry, reconnect trials, timeout (-1 indicates "
+"indefinite wait) and lifetime in seconds."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml118(term)
+msgid "Connection pooling for end user authentication"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml120(para)
+msgid ""
+"Use <placeholder-1/> to enable LDAP connection pooling for end user "
+"authentication. Configure connection pool size and lifetime in seconds."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml130(para)
+msgid ""
+"When you have finished configuration, restart the Openstack Identity "
+"service:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap.xml132(para)
+#: ./doc/common/section_keystone_config_ldap-identity.xml64(para)
+#: ./doc/common/section_keystone_config_ldap-identity.xml159(para)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml74(para)
+msgid ""
+"During service restart, authentication and authorization are unavailable."
 msgstr ""
 
 #: ./doc/common/app_support.xml8(title)
@@ -4297,42 +4276,42 @@ msgstr ""
 
 #: ./doc/common/section_cli_nova_customize_flavors.xml137(para)
 msgid ""
-"<parameter>cpu_shares</parameter>. Specifies the proportional weighted share"
-" for the domain. If this element is omitted, the service defaults to the OS "
-"provided defaults. There is no unit for the value; it is a relative measure "
-"based on the setting of other VMs. For example, a VM configured with value "
-"2048 gets twice as much CPU time as a VM configured with value 1024."
+"<placeholder-1/>. Specifies the proportional weighted share for the domain. "
+"If this element is omitted, the service defaults to the OS provided "
+"defaults. There is no unit for the value; it is a relative measure based on "
+"the setting of other VMs. For example, a VM configured with value 2048 gets "
+"twice as much CPU time as a VM configured with value 1024."
 msgstr ""
 
 #: ./doc/common/section_cli_nova_customize_flavors.xml148(para)
 msgid ""
-"<parameter>cpu_period</parameter>. Specifies the enforcement interval (unit:"
-" microseconds) for QEMU and LXC hypervisors. Within a period, each VCPU of "
-"the domain is not allowed to consume more than the quota worth of runtime. "
-"The value should be in range <literal>[1000, 1000000]</literal>. A period "
-"with value 0 means no value."
+"<placeholder-1/>. Specifies the enforcement interval (unit: microseconds) "
+"for QEMU and LXC hypervisors. Within a period, each VCPU of the domain is "
+"not allowed to consume more than the quota worth of runtime. The value "
+"should be in range <literal>[1000, 1000000]</literal>. A period with value 0"
+" means no value."
 msgstr ""
 
 #: ./doc/common/section_cli_nova_customize_flavors.xml158(para)
 msgid ""
-"<parameter>cpu_limit</parameter>. Specifies the upper limit for VMware "
-"machine CPU allocation in MHz. This parameter ensures that a machine never "
-"uses more than the defined amount of CPU time. It can be used to enforce a "
-"limit on the machine's CPU performance."
+"<placeholder-1/>. Specifies the upper limit for VMware machine CPU "
+"allocation in MHz. This parameter ensures that a machine never uses more "
+"than the defined amount of CPU time. It can be used to enforce a limit on "
+"the machine's CPU performance."
 msgstr ""
 
 #: ./doc/common/section_cli_nova_customize_flavors.xml163(para)
 msgid ""
-"<parameter>cpu_reservation</parameter>. Specifies the guaranteed minimum CPU"
-" reservation in MHz for VMware. This means that if needed, the machine will "
-"definitely get allocated the reserved amount of CPU cycles."
+"<placeholder-1/>. Specifies the guaranteed minimum CPU reservation in MHz "
+"for VMware. This means that if needed, the machine will definitely get "
+"allocated the reserved amount of CPU cycles."
 msgstr ""
 
 #: ./doc/common/section_cli_nova_customize_flavors.xml168(para)
 msgid ""
-"<parameter>cpu_quota</parameter>. Specifies the maximum allowed bandwidth "
-"(unit: microseconds). A domain with a negative-value quota indicates that "
-"the domain has infinite bandwidth, which means that it is not bandwidth "
+"<placeholder-1/>. Specifies the maximum allowed bandwidth (unit: "
+"microseconds). A domain with a negative-value quota indicates that the "
+"domain has infinite bandwidth, which means that it is not bandwidth "
 "controlled. The value should be in range <literal>[1000, "
 "18446744073709551]</literal> or less than 0. A quota with value 0 means no "
 "value. You can use this feature to ensure that all vCPUs run at the same "
@@ -6489,7 +6468,6 @@ msgstr "80"
 #: ./doc/common/tables/neutron-bigswitch.xml148(replaceable)
 #: ./doc/common/tables/swift-container-server-container-updater.xml25(replaceable)
 #: ./doc/common/tables/neutron-dhcp_agent.xml41(replaceable)
-#: ./doc/common/tables/glance-common.xml93(replaceable)
 msgid "4"
 msgstr ""
 
@@ -6834,12 +6812,12 @@ msgstr "Service de traitement des données"
 #: ./doc/common/section_getstart_sahara.xml8(para)
 msgid ""
 "The Data processing service for OpenStack (sahara) aims to provide users "
-"with simple means to provision data processing (Hadoop, Spark) clusters by "
-"specifying several parameters like Hadoop version, cluster topology, nodes "
-"hardware details and a few more. After user fills in all the parameters, the"
-" Data processing service deploys the cluster in a few minutes. Also sahara "
-"provides means to scale already provisioned clusters by adding/removing "
-"worker nodes on demand."
+"with a simple means to provision data processing (Hadoop, Spark) clusters by"
+" specifying several parameters like Hadoop version, cluster topology, node "
+"hardware details and a few more. After a user fills in all the parameters, "
+"the Data processing service deploys the cluster in a few minutes. Sahara "
+"also provides a means to scale already provisioned clusters by "
+"adding/removing worker nodes on demand."
 msgstr ""
 
 #: ./doc/common/section_getstart_sahara.xml19(para)
@@ -6886,7 +6864,7 @@ msgstr ""
 
 #: ./doc/common/section_getstart_sahara.xml42(para)
 msgid ""
-"Predefined templates of Hadoop configurations with ability to modify "
+"Predefined templates of Hadoop configurations with the ability to modify "
 "parameters."
 msgstr ""
 
@@ -7204,23 +7182,23 @@ msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap-hardening.xml54(para)
 msgid ""
-"<parameter>demand</parameter>: a certificate will always be requested from "
-"the LDAP server. The session will be terminated if no certificate is "
-"provided, or if the certificate provided cannot be verified against the "
-"existing certificate authorities file."
+"<literal>demand</literal>: a certificate will always be requested from the "
+"LDAP server. The session will be terminated if no certificate is provided, "
+"or if the certificate provided cannot be verified against the existing "
+"certificate authorities file."
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap-hardening.xml61(para)
 msgid ""
-"<parameter>allow</parameter>: a certificate will always be requested from "
-"the LDAP server. The session will proceed as normal even if a certificate is"
-" not provided. If a certificate is provided but it cannot be verified "
-"against the existing certificate authorities file, the certificate will be "
-"ignored and the session will proceed as normal."
+"<literal>allow</literal>: a certificate will always be requested from the "
+"LDAP server. The session will proceed as normal even if a certificate is not"
+" provided. If a certificate is provided but it cannot be verified against "
+"the existing certificate authorities file, the certificate will be ignored "
+"and the session will proceed as normal."
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap-hardening.xml68(para)
-msgid "<parameter>never</parameter>: a certificate will never be requested."
+msgid "<literal>never</literal>: a certificate will never be requested."
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap-hardening.xml73(para)
@@ -8535,8 +8513,7 @@ msgstr ""
 #: ./doc/common/section_keystone-keyring-support.xml12(para)
 msgid ""
 "Keyring is used only if <parameter>--os-use-keyring</parameter> is specified"
-" or if the environment variable <parameter>OS_USE_KEYRING=true</parameter> "
-"is defined."
+" or if the environment variable <placeholder-1/> is defined."
 msgstr ""
 
 #: ./doc/common/section_keystone-keyring-support.xml16(para)
@@ -8552,8 +8529,8 @@ msgstr ""
 msgid ""
 "For example, when you specify your password using the command-line client "
 "with the <parameter>--os-password</parameter> argument, anyone with access "
-"to your computer can view it in plain text with the "
-"<parameter>ps</parameter> field."
+"to your computer can view it in plain text with the <literal>ps</literal> "
+"field."
 msgstr ""
 
 #: ./doc/common/section_keystone-keyring-support.xml24(para)
@@ -9258,9 +9235,9 @@ msgstr ""
 
 #: ./doc/common/section_cli_cinder_manage_volumes.xml290(para)
 msgid ""
-"While the <parameter>auth_key</parameter> property is visible in the output "
-"of <placeholder-1/>, it will not be available in subsequent <placeholder-2/>"
-" commands."
+"While the <literal>auth_key</literal> property is visible in the output of "
+"<placeholder-1/>, it will not be available in subsequent <placeholder-2/> "
+"commands."
 msgstr ""
 
 #: ./doc/common/section_cli_cinder_manage_volumes.xml299(para)
@@ -9643,6 +9620,196 @@ msgid ""
 " and PostgreSQL."
 msgstr ""
 
+#: ./doc/common/section_keystone_config_ldap-identity.xml8(title)
+msgid "Integrate identity back end with LDAP"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml9(para)
+msgid ""
+"The identity back end contains information for users, groups, and group "
+"member lists. Integrating the identity back end with LDAP allows "
+"administrators to use users and groups in LDAP."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml13(para)
+msgid ""
+"For OpenStack Identity Service to access LDAP servers, you must define the "
+"destination LDAP server in the <filename>keystone.conf</filename> file. For "
+"more information, see <xref linkend=\"configuring-keystone-for-ldap-"
+"backend\"/>."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml19(title)
+msgid "Integrating an identity back end with LDAP"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml21(para)
+msgid ""
+"Enable the LDAP identity driver in the <filename>keystone.conf</filename> "
+"file. This allows LDAP as an identity back end:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml29(para)
+msgid ""
+"Create the organizational units (OU) in the LDAP directory, and define the "
+"corresponding location in the <filename>keystone.conf</filename> file:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml39(para)
+#: ./doc/common/section_keystone_config_ldap-identity.xml135(para)
+msgid ""
+"These schema attributes are extensible for compatibility with various "
+"schemas. For example, this entry maps to the <systemitem>person</systemitem>"
+" attribute in Active Directory:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml48(para)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml58(para)
+msgid ""
+"A read-only implementation is recommended for LDAP integration. These "
+"permissions are applied to object types in the "
+"<filename>keystone.conf</filename> file:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml62(para)
+#: ./doc/common/section_keystone_config_ldap-identity.xml157(para)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml72(para)
+msgid "Restart the OpenStack Identity service:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml69(title)
+msgid "Integrating identity with multiple back ends"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml71(para)
+msgid ""
+"Set the following options in the "
+"<filename>/etc/keystone/keystone.conf</filename> file:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml75(para)
+msgid "Enable the LDAP driver:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml81(para)
+msgid "Enable domain-specific drivers:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml89(para)
+msgid "Restart the service:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml93(para)
+msgid ""
+"List the domains using the dashboard, or the OpenStackClient CLI. Refer to "
+"the <link href=\"http://docs.openstack.org/developer/python-openstackclient"
+"/command-list.html\">Command List</link> for a list of OpenStackClient "
+"commands."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml98(para)
+msgid "Create domains using OpenStack dashboard, or the OpenStackClient CLI."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml102(para)
+msgid ""
+"For each domain, create a domain-specific configuration file in the "
+"<filename>/etc/keystone/domains</filename> directory. Use the file naming "
+"convention "
+"<filename>keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>, "
+"where <replaceable>DOMAIN_NAME</replaceable> is the domain name assigned in "
+"the previous step."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml107(para)
+msgid ""
+"The options set in the "
+"<filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>"
+" file will override options in the "
+"<filename>/etc/keystone/keystone.conf</filename> file."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml113(para)
+msgid ""
+"Define the destination LDAP server in the "
+"<filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>"
+" file. For example:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml124(para)
+msgid ""
+"Create the organizational units (OU) in the LDAP directories, and define "
+"their corresponding locations in the "
+"<filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>"
+" file. For example:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml143(para)
+msgid ""
+"A read-only implementation is recommended for LDAP integration. These "
+"permissions are applied to object types in the "
+"<filename>/etc/keystone/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>"
+" file:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml165(para)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml80(para)
+msgid ""
+"Set these options in the <filename>/etc/keystone/keystone.conf</filename> "
+"file for a single LDAP server, or <filename>/etc/keystone/domains/keystone. "
+"<replaceable>DOMAIN_NAME</replaceable>.conf</filename> files for multiple "
+"back ends."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml174(term)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml89(term)
+msgid "Filters"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml176(para)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml91(para)
+msgid "Use filters to control the scope of data presented through LDAP."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml184(term)
+msgid "Identity attribute mapping"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml186(para)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml102(para)
+msgid ""
+"Mask account status values (include any additional attribute mappings) for "
+"compatibility with various directory services. Superfluous accounts are "
+"filtered with <systemitem>user_filter</systemitem>."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml191(para)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml106(para)
+msgid "Setting attribute ignore to list of attributes stripped off on update."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml193(para)
+msgid ""
+"For example, you can mask Active Directory account status attributes in the "
+"<filename>keystone.conf</filename> file:"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml219(term)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml126(term)
+msgid "Enabled emulation"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml221(para)
+msgid ""
+"An alternative method to determine if a user is enabled or not is by "
+"checking if that user is a member of the emulation group."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-identity.xml224(para)
+msgid ""
+"Use DN of the group entry to hold enabled user when using enabled emulation."
+msgstr ""
+
 #: ./doc/common/section_cli_nova_manage_images.xml4(title)
 msgid "Create an image (nova)"
 msgstr ""
@@ -9735,7 +9902,7 @@ msgid ""
 "instance, and the name of the resulting back-up image, it requires the "
 "<literal>backup-type</literal> argument with the possible values "
 "<literal>daily</literal> or <literal>weekly</literal>, and the "
-"<parameter>rotation</parameter> argument. The rotation number is an integer "
+"<literal>rotation</literal> argument. The rotation number is an integer "
 "standing for the number of back-up images (associated with a single "
 "instance) to keep around. If this number exceeds the rotation threshold, the"
 " excess backups are deleted automatically."
@@ -9857,71 +10024,78 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap-assignments.xml7(title)
-msgid "Separate role authorization and user authentication"
+msgid "Integrate assignment back end with LDAP"
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap-assignments.xml8(para)
 msgid ""
-"When you configure the Identity service to use LDAP back ends, you can split"
-" authentication and authorization using the <emphasis>Assignments</emphasis>"
-" feature."
-msgstr ""
-
-#: ./doc/common/section_keystone_config_ldap-assignments.xml11(para)
-msgid ""
-"The Assignments feature enables administrators to manage project role "
-"authorization using the Identity service SQL database, while still providing"
-" user authentication through the LDAP directory."
+"When you configure the OpenStack Identity service to use LDAP servers, you "
+"can split authentication and authorization using the "
+"<emphasis>assignment</emphasis> feature. Integrating the assignment back end"
+" with LDAP allows administrators to use projects (tenant), roles, domains, "
+"and role assignments in LDAP."
 msgstr ""
 
 #: ./doc/common/section_keystone_config_ldap-assignments.xml15(para)
-msgid "To configure this:"
+msgid "Using LDAP as an assignment back end is not recommended."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-assignments.xml17(title)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml18(para)
 msgid ""
-"Separating role authorization and user authentication through Assignments"
+"The OpenStack Identity service does not support domain-specific assignment "
+"back ends."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-assignments.xml19(para)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml22(para)
 msgid ""
-"Modify the <filename>/etc/keystone/keystone.conf</filename> configuration "
-"file for a single LDAP server, or "
-"<filename>etc/domains/keystone.<replaceable>DOMAIN_NAME</replaceable>.conf</filename>"
-" files for multiple LDAP back ends, performing the following actions:"
+"For OpenStack Identity assignments to access LDAP servers, you must define "
+"the destination LDAP server in the <filename>keystone.conf</filename> file. "
+"For more information, see <xref linkend=\"configuring-keystone-for-ldap-"
+"backend\"/>."
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-assignments.xml24(para)
-msgid ""
-"Configure the Identity service to authenticate users through the LDAP "
-"driver. In the <literal>[identity]</literal> section, set the "
-"<literal>driver</literal> configuration key to "
-"<literal>keystone.identity.backends.ldap.Identity</literal>:"
+#: ./doc/common/section_keystone_config_ldap-assignments.xml28(title)
+msgid "Integrating assignment back ends with LDAP"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-assignments.xml32(para)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml30(para)
 msgid ""
-"Enable the Assignment driver. In the <literal>[assignment]</literal> "
+"Enable the assignment driver. In the <literal>[assignment]</literal> "
 "section, set the <literal>driver</literal> configuration key to "
 "<literal>keystone.assignment.backends.sql.Assignment</literal>:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-assignments.xml40(para)
+#: ./doc/common/section_keystone_config_ldap-assignments.xml39(para)
 msgid ""
-"On distributions that include <application>openstack-config</application>, "
-"you can configure both drivers by running the following commands."
+"Create the organizational units (OU) in the LDAP directory, and define their"
+" corresponding location in the <filename>keystone.conf</filename> file:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-assignments.xml46(para)
-msgid "For a single LDAP server:"
+#: ./doc/common/section_keystone_config_ldap-assignments.xml49(para)
+msgid ""
+"These schema attributes are extensible for compatibility with various "
+"schemas. For example, this entry maps to the "
+"<systemitem>groupOfNames</systemitem> attribute in Active Directory:"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-assignments.xml53(para)
-msgid "For multiple LDAP back ends:"
+#: ./doc/common/section_keystone_config_ldap-assignments.xml96(para)
+msgid "Filtering method"
 msgstr ""
 
-#: ./doc/common/section_keystone_config_ldap-assignments.xml56(replaceable)
-msgid "DOMAIN_NAME"
+#: ./doc/common/section_keystone_config_ldap-assignments.xml100(term)
+msgid "Assignment attribute mapping"
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml128(para)
+msgid ""
+"An alternative method to determine if a project is enabled or not is to "
+"check if that project is a member of the emulation group."
+msgstr ""
+
+#: ./doc/common/section_keystone_config_ldap-assignments.xml131(para)
+msgid ""
+"Use DN of the group entry to hold enabled projects when using enabled "
+"emulation."
 msgstr ""
 
 #: ./doc/common/section_cli_install.xml8(title)
@@ -10501,7 +10675,6 @@ msgstr "Sections"
 #: ./doc/common/tables/cinder-violin.xml18(th)
 #: ./doc/common/tables/cinder-logging.xml18(th)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml8(literal)
-#: ./doc/common/tables/glance-rabbitmq.xml18(th)
 #: ./doc/common/tables/neutron-l3_agent.xml18(th)
 #: ./doc/common/tables/glance-policy.xml18(th)
 #: ./doc/common/tables/nova-neutron.xml18(th)
@@ -10596,7 +10769,6 @@ msgstr "Sections"
 #: ./doc/common/tables/heat-debug.xml18(th)
 #: ./doc/common/tables/trove-guestagent.xml18(th)
 #: ./doc/common/tables/nova-qpid.xml18(th)
-#: ./doc/common/tables/glance-qpid.xml18(th)
 #: ./doc/common/tables/sahara-rpc.xml18(th)
 #: ./doc/common/tables/cinder-ibmnas.xml18(th)
 #: ./doc/common/tables/glance-amqp.xml18(th)
@@ -13111,7 +13283,6 @@ msgstr ""
 #: ./doc/common/tables/cinder-logging.xml12(th)
 #: ./doc/common/tables/nova-redis.xml12(th)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml14(th)
-#: ./doc/common/tables/glance-rabbitmq.xml12(th)
 #: ./doc/common/tables/neutron-l3_agent.xml12(th)
 #: ./doc/common/tables/swift-container-server-pipeline-main.xml14(th)
 #: ./doc/common/tables/glance-policy.xml12(th)
@@ -13293,7 +13464,6 @@ msgstr ""
 #: ./doc/common/tables/trove-guestagent.xml12(th)
 #: ./doc/common/tables/ironic-irmc.xml12(th)
 #: ./doc/common/tables/nova-qpid.xml12(th)
-#: ./doc/common/tables/glance-qpid.xml12(th)
 #: ./doc/common/tables/sahara-rpc.xml12(th)
 #: ./doc/common/tables/neutron-lbaas_radware.xml12(th)
 #: ./doc/common/tables/neutron-ml2_sriov.xml12(th)
@@ -13346,6 +13516,7 @@ msgstr ""
 #: ./doc/common/tables/neutron-hyperv_agent.xml12(th)
 #: ./doc/common/tables/ceilometer-tripleo.xml12(th)
 #: ./doc/common/tables/keystone-federation.xml12(th)
+#: ./doc/common/tables/glance-taskflow.xml12(th)
 #: ./doc/common/tables/ceilometer-service_types.xml12(th)
 #: ./doc/common/tables/cinder-eqlx.xml12(th)
 #: ./doc/common/tables/heat-redis.xml12(th)
@@ -13511,17 +13682,19 @@ msgstr ""
 #: ./doc/common/tables/glance-auth_token.xml21(replaceable)
 #: ./doc/common/tables/glance-auth_token.xml29(replaceable)
 #: ./doc/common/tables/glance-auth_token.xml33(replaceable)
-#: ./doc/common/tables/glance-auth_token.xml53(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml45(replaceable)
 #: ./doc/common/tables/glance-auth_token.xml57(replaceable)
 #: ./doc/common/tables/glance-auth_token.xml61(replaceable)
 #: ./doc/common/tables/glance-auth_token.xml65(replaceable)
 #: ./doc/common/tables/glance-auth_token.xml69(replaceable)
-#: ./doc/common/tables/glance-auth_token.xml89(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml73(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml77(replaceable)
 #: ./doc/common/tables/glance-auth_token.xml97(replaceable)
-#: ./doc/common/tables/glance-auth_token.xml109(replaceable)
-#: ./doc/common/tables/glance-auth_token.xml113(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml105(replaceable)
 #: ./doc/common/tables/glance-auth_token.xml117(replaceable)
-#: ./doc/common/tables/glance-auth_token.xml125(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml141(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml145(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml157(replaceable)
 #: ./doc/common/tables/cinder-netapp_7mode_nfs.xml25(replaceable)
 #: ./doc/common/tables/cinder-netapp_7mode_nfs.xml29(replaceable)
 #: ./doc/common/tables/cinder-netapp_7mode_nfs.xml33(replaceable)
@@ -13581,8 +13754,9 @@ msgstr ""
 #: ./doc/common/tables/nova-ironic.xml37(replaceable)
 #: ./doc/common/tables/nova-ironic.xml41(replaceable)
 #: ./doc/common/tables/nova-ironic.xml57(replaceable)
-#: ./doc/common/tables/glance-rpc.xml60(replaceable)
-#: ./doc/common/tables/glance-rpc.xml88(replaceable)
+#: ./doc/common/tables/glance-rpc.xml56(replaceable)
+#: ./doc/common/tables/glance-rpc.xml71(replaceable)
+#: ./doc/common/tables/glance-rpc.xml99(replaceable)
 #: ./doc/common/tables/glance-database.xml32(replaceable)
 #: ./doc/common/tables/glance-database.xml64(replaceable)
 #: ./doc/common/tables/glance-database.xml68(replaceable)
@@ -13897,8 +14071,8 @@ msgstr ""
 #: ./doc/common/tables/nova-barbican.xml45(replaceable)
 #: ./doc/common/tables/nova-barbican.xml49(replaceable)
 #: ./doc/common/tables/glance-api.xml61(replaceable)
-#: ./doc/common/tables/glance-api.xml95(replaceable)
 #: ./doc/common/tables/glance-api.xml99(replaceable)
+#: ./doc/common/tables/glance-api.xml103(replaceable)
 #: ./doc/common/tables/cinder-storwize.xml49(replaceable)
 #: ./doc/common/tables/cinder-hplefthand.xml21(replaceable)
 #: ./doc/common/tables/cinder-hplefthand.xml25(replaceable)
@@ -14012,9 +14186,10 @@ msgstr ""
 #: ./doc/common/tables/glance-swift.xml52(replaceable)
 #: ./doc/common/tables/glance-swift.xml64(replaceable)
 #: ./doc/common/tables/glance-swift.xml68(replaceable)
-#: ./doc/common/tables/glance-swift.xml84(replaceable)
-#: ./doc/common/tables/glance-swift.xml100(replaceable)
-#: ./doc/common/tables/glance-swift.xml116(replaceable)
+#: ./doc/common/tables/glance-swift.xml80(replaceable)
+#: ./doc/common/tables/glance-swift.xml88(replaceable)
+#: ./doc/common/tables/glance-swift.xml108(replaceable)
+#: ./doc/common/tables/glance-swift.xml124(replaceable)
 #: ./doc/common/tables/cinder-auth_token.xml21(replaceable)
 #: ./doc/common/tables/cinder-auth_token.xml29(replaceable)
 #: ./doc/common/tables/cinder-auth_token.xml33(replaceable)
@@ -14113,6 +14288,7 @@ msgstr ""
 #: ./doc/common/tables/glance-filesystem.xml33(replaceable)
 #: ./doc/common/tables/trove-rpc.xml68(replaceable)
 #: ./doc/common/tables/trove-rpc.xml96(replaceable)
+#: ./doc/common/tables/glance-debug.xml21(replaceable)
 #: ./doc/common/tables/nova-network.xml37(replaceable)
 #: ./doc/common/tables/nova-network.xml85(replaceable)
 #: ./doc/common/tables/nova-network.xml97(replaceable)
@@ -14286,11 +14462,11 @@ msgstr ""
 #: ./doc/common/tables/glance-cinder.xml25(replaceable)
 #: ./doc/common/tables/glance-cinder.xml33(replaceable)
 #: ./doc/common/tables/glance-common.xml37(replaceable)
-#: ./doc/common/tables/glance-common.xml65(replaceable)
 #: ./doc/common/tables/glance-common.xml69(replaceable)
-#: ./doc/common/tables/glance-common.xml77(replaceable)
-#: ./doc/common/tables/glance-common.xml100(replaceable)
-#: ./doc/common/tables/glance-common.xml118(replaceable)
+#: ./doc/common/tables/glance-common.xml73(replaceable)
+#: ./doc/common/tables/glance-common.xml81(replaceable)
+#: ./doc/common/tables/glance-common.xml104(replaceable)
+#: ./doc/common/tables/glance-common.xml122(replaceable)
 #: ./doc/common/tables/neutron-ml2_vxlan.xml25(replaceable)
 #: ./doc/common/tables/keystone-ec2.xml21(replaceable)
 #: ./doc/common/tables/keystone-ec2.xml25(replaceable)
@@ -14511,6 +14687,14 @@ msgstr "Aucun"
 #: ./doc/common/tables/glance-auth_token.xml121(td)
 #: ./doc/common/tables/glance-auth_token.xml125(td)
 #: ./doc/common/tables/glance-auth_token.xml129(td)
+#: ./doc/common/tables/glance-auth_token.xml133(td)
+#: ./doc/common/tables/glance-auth_token.xml137(td)
+#: ./doc/common/tables/glance-auth_token.xml141(td)
+#: ./doc/common/tables/glance-auth_token.xml145(td)
+#: ./doc/common/tables/glance-auth_token.xml149(td)
+#: ./doc/common/tables/glance-auth_token.xml153(td)
+#: ./doc/common/tables/glance-auth_token.xml157(td)
+#: ./doc/common/tables/glance-auth_token.xml161(td)
 #: ./doc/common/tables/cinder-netapp_7mode_nfs.xml21(td)
 #: ./doc/common/tables/cinder-netapp_7mode_nfs.xml25(td)
 #: ./doc/common/tables/cinder-netapp_7mode_nfs.xml29(td)
@@ -14886,12 +15070,42 @@ msgstr "Aucun"
 #: ./doc/common/tables/glance-rpc.xml45(td)
 #: ./doc/common/tables/glance-rpc.xml52(td)
 #: ./doc/common/tables/glance-rpc.xml56(td)
-#: ./doc/common/tables/glance-rpc.xml60(td)
-#: ./doc/common/tables/glance-rpc.xml64(td)
-#: ./doc/common/tables/glance-rpc.xml68(td)
-#: ./doc/common/tables/glance-rpc.xml72(td)
-#: ./doc/common/tables/glance-rpc.xml88(td)
-#: ./doc/common/tables/glance-rpc.xml92(td)
+#: ./doc/common/tables/glance-rpc.xml63(td)
+#: ./doc/common/tables/glance-rpc.xml67(td)
+#: ./doc/common/tables/glance-rpc.xml71(td)
+#: ./doc/common/tables/glance-rpc.xml75(td)
+#: ./doc/common/tables/glance-rpc.xml79(td)
+#: ./doc/common/tables/glance-rpc.xml83(td)
+#: ./doc/common/tables/glance-rpc.xml99(td)
+#: ./doc/common/tables/glance-rpc.xml103(td)
+#: ./doc/common/tables/glance-rpc.xml110(td)
+#: ./doc/common/tables/glance-rpc.xml114(td)
+#: ./doc/common/tables/glance-rpc.xml118(td)
+#: ./doc/common/tables/glance-rpc.xml122(td)
+#: ./doc/common/tables/glance-rpc.xml126(td)
+#: ./doc/common/tables/glance-rpc.xml134(td)
+#: ./doc/common/tables/glance-rpc.xml138(td)
+#: ./doc/common/tables/glance-rpc.xml142(td)
+#: ./doc/common/tables/glance-rpc.xml150(td)
+#: ./doc/common/tables/glance-rpc.xml154(td)
+#: ./doc/common/tables/glance-rpc.xml162(td)
+#: ./doc/common/tables/glance-rpc.xml169(td)
+#: ./doc/common/tables/glance-rpc.xml173(td)
+#: ./doc/common/tables/glance-rpc.xml177(td)
+#: ./doc/common/tables/glance-rpc.xml181(td)
+#: ./doc/common/tables/glance-rpc.xml201(td)
+#: ./doc/common/tables/glance-rpc.xml205(td)
+#: ./doc/common/tables/glance-rpc.xml209(td)
+#: ./doc/common/tables/glance-rpc.xml213(td)
+#: ./doc/common/tables/glance-rpc.xml217(td)
+#: ./doc/common/tables/glance-rpc.xml221(td)
+#: ./doc/common/tables/glance-rpc.xml225(td)
+#: ./doc/common/tables/glance-rpc.xml229(td)
+#: ./doc/common/tables/glance-rpc.xml233(td)
+#: ./doc/common/tables/glance-rpc.xml237(td)
+#: ./doc/common/tables/glance-rpc.xml241(td)
+#: ./doc/common/tables/glance-rpc.xml245(td)
+#: ./doc/common/tables/glance-rpc.xml249(td)
 #: ./doc/common/tables/neutron-policy.xml21(td)
 #: ./doc/common/tables/neutron-policy.xml25(td)
 #: ./doc/common/tables/neutron-policy.xml29(td)
@@ -15815,19 +16029,6 @@ msgstr "Aucun"
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml130(td)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml134(td)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml138(td)
-#: ./doc/common/tables/glance-rabbitmq.xml21(td)
-#: ./doc/common/tables/glance-rabbitmq.xml41(td)
-#: ./doc/common/tables/glance-rabbitmq.xml45(td)
-#: ./doc/common/tables/glance-rabbitmq.xml49(td)
-#: ./doc/common/tables/glance-rabbitmq.xml53(td)
-#: ./doc/common/tables/glance-rabbitmq.xml57(td)
-#: ./doc/common/tables/glance-rabbitmq.xml61(td)
-#: ./doc/common/tables/glance-rabbitmq.xml65(td)
-#: ./doc/common/tables/glance-rabbitmq.xml69(td)
-#: ./doc/common/tables/glance-rabbitmq.xml73(td)
-#: ./doc/common/tables/glance-rabbitmq.xml77(td)
-#: ./doc/common/tables/glance-rabbitmq.xml81(td)
-#: ./doc/common/tables/glance-rabbitmq.xml85(td)
 #: ./doc/common/tables/neutron-l3_agent.xml21(td)
 #: ./doc/common/tables/neutron-l3_agent.xml25(td)
 #: ./doc/common/tables/neutron-l3_agent.xml29(td)
@@ -16388,8 +16589,9 @@ msgstr "Aucun"
 #: ./doc/common/tables/glance-api.xml77(td)
 #: ./doc/common/tables/glance-api.xml84(td)
 #: ./doc/common/tables/glance-api.xml88(td)
-#: ./doc/common/tables/glance-api.xml95(td)
+#: ./doc/common/tables/glance-api.xml92(td)
 #: ./doc/common/tables/glance-api.xml99(td)
+#: ./doc/common/tables/glance-api.xml103(td)
 #: ./doc/common/tables/swift-proxy-server-filter-gatekeeper.xml20(td)
 #: ./doc/common/tables/swift-proxy-server-filter-gatekeeper.xml24(td)
 #: ./doc/common/tables/swift-proxy-server-filter-gatekeeper.xml28(td)
@@ -16803,6 +17005,8 @@ msgstr "Aucun"
 #: ./doc/common/tables/glance-swift.xml108(td)
 #: ./doc/common/tables/glance-swift.xml112(td)
 #: ./doc/common/tables/glance-swift.xml116(td)
+#: ./doc/common/tables/glance-swift.xml120(td)
+#: ./doc/common/tables/glance-swift.xml124(td)
 #: ./doc/common/tables/trove-quota.xml21(td)
 #: ./doc/common/tables/trove-quota.xml25(td)
 #: ./doc/common/tables/trove-quota.xml29(td)
@@ -17355,6 +17559,7 @@ msgstr "Aucun"
 #: ./doc/common/tables/trove-backup.xml49(td)
 #: ./doc/common/tables/trove-backup.xml53(td)
 #: ./doc/common/tables/trove-backup.xml57(td)
+#: ./doc/common/tables/glance-debug.xml21(td)
 #: ./doc/common/tables/nova-network.xml21(td)
 #: ./doc/common/tables/nova-network.xml25(td)
 #: ./doc/common/tables/nova-network.xml29(td)
@@ -17496,14 +17701,6 @@ msgstr "Aucun"
 #: ./doc/common/tables/nova-qpid.xml45(td)
 #: ./doc/common/tables/nova-qpid.xml53(td)
 #: ./doc/common/tables/nova-qpid.xml57(td)
-#: ./doc/common/tables/glance-qpid.xml21(td)
-#: ./doc/common/tables/glance-qpid.xml25(td)
-#: ./doc/common/tables/glance-qpid.xml29(td)
-#: ./doc/common/tables/glance-qpid.xml37(td)
-#: ./doc/common/tables/glance-qpid.xml41(td)
-#: ./doc/common/tables/glance-qpid.xml45(td)
-#: ./doc/common/tables/glance-qpid.xml53(td)
-#: ./doc/common/tables/glance-qpid.xml57(td)
 #: ./doc/common/tables/sahara-rpc.xml21(td)
 #: ./doc/common/tables/sahara-rpc.xml25(td)
 #: ./doc/common/tables/sahara-rpc.xml29(td)
@@ -17784,6 +17981,8 @@ msgstr "Aucun"
 #: ./doc/common/tables/ceilometer-tripleo.xml25(td)
 #: ./doc/common/tables/ceilometer-tripleo.xml29(td)
 #: ./doc/common/tables/keystone-federation.xml25(td)
+#: ./doc/common/tables/glance-taskflow.xml21(td)
+#: ./doc/common/tables/glance-taskflow.xml25(td)
 #: ./doc/common/tables/ceilometer-service_types.xml21(td)
 #: ./doc/common/tables/ceilometer-service_types.xml25(td)
 #: ./doc/common/tables/ceilometer-service_types.xml29(td)
@@ -18382,13 +18581,14 @@ msgstr "Aucun"
 #: ./doc/common/tables/glance-common.xml85(td)
 #: ./doc/common/tables/glance-common.xml89(td)
 #: ./doc/common/tables/glance-common.xml93(td)
-#: ./doc/common/tables/glance-common.xml100(td)
-#: ./doc/common/tables/glance-common.xml107(td)
+#: ./doc/common/tables/glance-common.xml97(td)
+#: ./doc/common/tables/glance-common.xml104(td)
 #: ./doc/common/tables/glance-common.xml111(td)
-#: ./doc/common/tables/glance-common.xml118(td)
-#: ./doc/common/tables/glance-common.xml125(td)
+#: ./doc/common/tables/glance-common.xml115(td)
+#: ./doc/common/tables/glance-common.xml122(td)
 #: ./doc/common/tables/glance-common.xml129(td)
 #: ./doc/common/tables/glance-common.xml133(td)
+#: ./doc/common/tables/glance-common.xml137(td)
 #: ./doc/common/tables/neutron-ml2_vxlan.xml25(td)
 #: ./doc/common/tables/swift-dispersion-dispersion.xml20(td)
 #: ./doc/common/tables/swift-dispersion-dispersion.xml24(td)
@@ -18868,7 +19068,8 @@ msgstr ""
 #: ./doc/common/tables/ceilometer-common.xml49(replaceable)
 #: ./doc/common/tables/cinder-database.xml36(replaceable)
 #: ./doc/common/tables/ironic-rabbitmq.xml57(replaceable)
-#: ./doc/common/tables/glance-rpc.xml68(replaceable)
+#: ./doc/common/tables/glance-rpc.xml79(replaceable)
+#: ./doc/common/tables/glance-rpc.xml217(replaceable)
 #: ./doc/common/tables/glance-database.xml36(replaceable)
 #: ./doc/common/tables/nova-rabbitmq.xml57(replaceable)
 #: ./doc/common/tables/sahara-database.xml36(replaceable)
@@ -18899,7 +19100,6 @@ msgstr ""
 #: ./doc/common/tables/nova-volumes.xml37(replaceable)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml56(replaceable)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml76(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml57(replaceable)
 #: ./doc/common/tables/keystone-ldap.xml97(replaceable)
 #: ./doc/common/tables/keystone-ldap.xml321(replaceable)
 #: ./doc/common/tables/nova-vpn.xml41(replaceable)
@@ -18915,6 +19115,7 @@ msgstr ""
 #: ./doc/common/tables/trove-rabbitmq.xml57(replaceable)
 #: ./doc/common/tables/ironic-glance.xml41(replaceable)
 #: ./doc/common/tables/ironic-glance.xml69(replaceable)
+#: ./doc/common/tables/glance-api.xml88(replaceable)
 #: ./doc/common/tables/cinder-storwize.xml69(replaceable)
 #: ./doc/common/tables/cinder-storwize.xml77(replaceable)
 #: ./doc/common/tables/cinder-lvm.xml25(replaceable)
@@ -18922,6 +19123,7 @@ msgstr ""
 #: ./doc/common/tables/cinder-common.xml149(replaceable)
 #: ./doc/common/tables/cinder-common.xml197(replaceable)
 #: ./doc/common/tables/glance-swift.xml104(replaceable)
+#: ./doc/common/tables/glance-swift.xml112(replaceable)
 #: ./doc/common/tables/ceilometer-alarm.xml53(replaceable)
 #: ./doc/common/tables/nova-glance.xml44(replaceable)
 #: ./doc/common/tables/neutron-database.xml29(replaceable)
@@ -18953,7 +19155,7 @@ msgstr ""
 #: ./doc/common/tables/nova-database.xml36(replaceable)
 #: ./doc/common/tables/swift-drive-audit-drive-audit.xml44(replaceable)
 #: ./doc/common/tables/nova-rpc.xml86(replaceable)
-#: ./doc/common/tables/glance-common.xml89(replaceable)
+#: ./doc/common/tables/glance-common.xml93(replaceable)
 #: ./doc/common/tables/swift-account-server-DEFAULT.xml52(replaceable)
 #: ./doc/common/tables/swift-account-server-DEFAULT.xml72(replaceable)
 #: ./doc/common/tables/neutron-rabbitmq.xml57(replaceable)
@@ -18996,9 +19198,10 @@ msgstr ""
 #: ./doc/common/tables/neutron-rpc.xml74(replaceable)
 #: ./doc/common/tables/neutron-rpc.xml114(replaceable)
 #: ./doc/common/tables/trove-db_percona.xml61(replaceable)
-#: ./doc/common/tables/glance-auth_token.xml73(replaceable)
-#: ./doc/common/tables/glance-auth_token.xml77(replaceable)
-#: ./doc/common/tables/glance-auth_token.xml105(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml81(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml85(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml113(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml149(replaceable)
 #: ./doc/common/tables/keystone-testing.xml21(replaceable)
 #: ./doc/common/tables/cinder-flashsystem.xml29(replaceable)
 #: ./doc/common/tables/neutron-amqp.xml21(replaceable)
@@ -19037,7 +19240,15 @@ msgstr ""
 #: ./doc/common/tables/keystone-api.xml97(replaceable)
 #: ./doc/common/tables/ceilometer-dispatcher_http.xml21(replaceable)
 #: ./doc/common/tables/glance-rpc.xml52(replaceable)
-#: ./doc/common/tables/glance-rpc.xml92(replaceable)
+#: ./doc/common/tables/glance-rpc.xml63(replaceable)
+#: ./doc/common/tables/glance-rpc.xml103(replaceable)
+#: ./doc/common/tables/glance-rpc.xml110(replaceable)
+#: ./doc/common/tables/glance-rpc.xml114(replaceable)
+#: ./doc/common/tables/glance-rpc.xml169(replaceable)
+#: ./doc/common/tables/glance-rpc.xml173(replaceable)
+#: ./doc/common/tables/glance-rpc.xml177(replaceable)
+#: ./doc/common/tables/glance-rpc.xml201(replaceable)
+#: ./doc/common/tables/glance-rpc.xml237(replaceable)
 #: ./doc/common/tables/neutron-policy.xml21(replaceable)
 #: ./doc/common/tables/glance-database.xml40(replaceable)
 #: ./doc/common/tables/glance-database.xml104(replaceable)
@@ -19120,8 +19331,6 @@ msgstr ""
 #: ./doc/common/tables/cinder-logging.xml93(replaceable)
 #: ./doc/common/tables/cinder-logging.xml97(replaceable)
 #: ./doc/common/tables/cinder-logging.xml101(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml41(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml77(replaceable)
 #: ./doc/common/tables/neutron-l3_agent.xml29(replaceable)
 #: ./doc/common/tables/neutron-l3_agent.xml65(replaceable)
 #: ./doc/common/tables/nova-neutron.xml52(replaceable)
@@ -19208,7 +19417,7 @@ msgstr ""
 #: ./doc/common/tables/cinder-common.xml201(replaceable)
 #: ./doc/common/tables/glance-swift.xml56(replaceable)
 #: ./doc/common/tables/glance-swift.xml76(replaceable)
-#: ./doc/common/tables/glance-swift.xml96(replaceable)
+#: ./doc/common/tables/glance-swift.xml100(replaceable)
 #: ./doc/common/tables/cinder-auth_token.xml81(replaceable)
 #: ./doc/common/tables/cinder-auth_token.xml85(replaceable)
 #: ./doc/common/tables/cinder-auth_token.xml113(replaceable)
@@ -19377,7 +19586,7 @@ msgstr ""
 #: ./doc/common/tables/trove-auth_token.xml105(replaceable)
 #: ./doc/common/tables/keystone-trust.xml21(replaceable)
 #: ./doc/common/tables/glance-cinder.xml21(replaceable)
-#: ./doc/common/tables/glance-common.xml85(replaceable)
+#: ./doc/common/tables/glance-common.xml89(replaceable)
 #: ./doc/common/tables/neutron-rabbitmq.xml41(replaceable)
 #: ./doc/common/tables/neutron-rabbitmq.xml77(replaceable)
 #: ./doc/common/tables/keystone-ec2.xml29(replaceable)
@@ -19463,7 +19672,7 @@ msgstr ""
 #: ./doc/common/tables/trove-db_percona.xml77(replaceable)
 #: ./doc/common/tables/nova-periodic.xml21(replaceable)
 #: ./doc/common/tables/nova-periodic.xml29(replaceable)
-#: ./doc/common/tables/glance-auth_token.xml101(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml109(replaceable)
 #: ./doc/common/tables/swift-proxy-server-DEFAULT.xml146(replaceable)
 #: ./doc/common/tables/cinder-flashsystem.xml25(replaceable)
 #: ./doc/common/tables/cinder-qpid.xml53(replaceable)
@@ -19484,6 +19693,7 @@ msgstr ""
 #: ./doc/common/tables/keystone-api.xml45(replaceable)
 #: ./doc/common/tables/keystone-api.xml112(replaceable)
 #: ./doc/common/tables/cinder-zoning_fabric_cisco.xml37(replaceable)
+#: ./doc/common/tables/glance-rpc.xml150(replaceable)
 #: ./doc/common/tables/glance-database.xml21(replaceable)
 #: ./doc/common/tables/glance-database.xml44(replaceable)
 #: ./doc/common/tables/glance-database.xml100(replaceable)
@@ -19573,7 +19783,7 @@ msgstr ""
 #: ./doc/common/tables/cinder-common.xml157(replaceable)
 #: ./doc/common/tables/cinder-common.xml181(replaceable)
 #: ./doc/common/tables/cinder-common.xml205(replaceable)
-#: ./doc/common/tables/glance-swift.xml112(replaceable)
+#: ./doc/common/tables/glance-swift.xml120(replaceable)
 #: ./doc/common/tables/cinder-auth_token.xml109(replaceable)
 #: ./doc/common/tables/ceilometer-alarm.xml41(replaceable)
 #: ./doc/common/tables/ceilometer-alarm.xml57(replaceable)
@@ -19617,7 +19827,6 @@ msgstr ""
 #: ./doc/common/tables/cinder-prophetstor_dpl.xml45(replaceable)
 #: ./doc/common/tables/neutron-dhcp_agent.xml49(replaceable)
 #: ./doc/common/tables/nova-qpid.xml53(replaceable)
-#: ./doc/common/tables/glance-qpid.xml53(replaceable)
 #: ./doc/common/tables/sahara-logging.xml89(replaceable)
 #: ./doc/common/tables/trove-compute.xml41(replaceable)
 #: ./doc/common/tables/cinder-storage_gpfs.xml37(replaceable)
@@ -19745,6 +19954,8 @@ msgstr ""
 #: ./doc/common/tables/neutron-openvswitch_agent.xml29(replaceable)
 #: ./doc/common/tables/neutron-openvswitch_agent.xml60(replaceable)
 #: ./doc/common/tables/glance-auth_token.xml121(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml129(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml153(replaceable)
 #: ./doc/common/tables/ironic-seamicro.xml21(replaceable)
 #: ./doc/common/tables/ceilometer-vmware.xml21(replaceable)
 #: ./doc/common/tables/neutron-cisco.xml115(replaceable)
@@ -19850,7 +20061,7 @@ msgstr ""
 #: ./doc/common/tables/nova-quota.xml89(replaceable)
 #: ./doc/common/tables/ironic-console.xml25(replaceable)
 #: ./doc/common/tables/trove-auth_token.xml121(replaceable)
-#: ./doc/common/tables/glance-common.xml45(replaceable)
+#: ./doc/common/tables/glance-common.xml49(replaceable)
 #: ./doc/common/tables/swift-account-server-account-reaper.xml52(replaceable)
 #: ./doc/common/tables/nova-hyperv.xml41(replaceable)
 #: ./doc/common/tables/neutron-common.xml145(replaceable)
@@ -19901,6 +20112,9 @@ msgstr ""
 #: ./doc/common/tables/cinder-xio.xml37(replaceable)
 #: ./doc/common/tables/cinder-xio.xml41(replaceable)
 #: ./doc/common/tables/nova-ironic.xml53(replaceable)
+#: ./doc/common/tables/glance-rpc.xml142(replaceable)
+#: ./doc/common/tables/glance-rpc.xml154(replaceable)
+#: ./doc/common/tables/glance-rpc.xml233(replaceable)
 #: ./doc/common/tables/glance-database.xml56(replaceable)
 #: ./doc/common/tables/glance-database.xml76(replaceable)
 #: ./doc/common/tables/nova-xen.xml207(replaceable)
@@ -19916,7 +20130,6 @@ msgstr ""
 #: ./doc/common/tables/neutron-vmware.xml152(replaceable)
 #: ./doc/common/tables/nova-zeromq.xml25(replaceable)
 #: ./doc/common/tables/heat-zeromq.xml25(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml73(replaceable)
 #: ./doc/common/tables/cinder-zeromq.xml25(replaceable)
 #: ./doc/common/tables/ironic-disk_partitioner.xml21(replaceable)
 #: ./doc/common/tables/swift-object-expirer-object-expirer.xml24(replaceable)
@@ -19943,14 +20156,13 @@ msgstr ""
 #: ./doc/common/tables/swift-proxy-server-filter-dlo.xml28(replaceable)
 #: ./doc/common/tables/nova-qpid.xml45(replaceable)
 #: ./doc/common/tables/nova-qpid.xml57(replaceable)
-#: ./doc/common/tables/glance-qpid.xml45(replaceable)
-#: ./doc/common/tables/glance-qpid.xml57(replaceable)
 #: ./doc/common/tables/sahara-rabbitmq.xml73(replaceable)
 #: ./doc/common/tables/swift-object-server-object-auditor.xml24(replaceable)
 #: ./doc/common/tables/trove-zeromq.xml25(replaceable)
 #: ./doc/common/tables/cinder-backups_swift.xml25(replaceable)
 #: ./doc/common/tables/ironic-common.xml37(replaceable)
 #: ./doc/common/tables/ironic-zeromq.xml25(replaceable)
+#: ./doc/common/tables/glance-taskflow.xml25(replaceable)
 #: ./doc/common/tables/ironic-conductor.xml57(replaceable)
 #: ./doc/common/tables/neutron-metadata.xml53(replaceable)
 #: ./doc/common/tables/sahara-qpid.xml45(replaceable)
@@ -20165,9 +20377,16 @@ msgstr "(IntOpt) Nombre minimum de connexions SQL à garder ouvertes dans un poo
 #: ./doc/common/tables/swift-container-reconciler-DEFAULT.xml24(td)
 #: ./doc/common/tables/swift-container-reconciler-DEFAULT.xml49(td)
 #: ./doc/common/tables/swift-container-reconciler-DEFAULT.xml63(td)
-#: ./doc/common/tables/glance-rpc.xml76(td)
-#: ./doc/common/tables/glance-rpc.xml80(td)
-#: ./doc/common/tables/glance-rpc.xml84(td)
+#: ./doc/common/tables/glance-rpc.xml87(td)
+#: ./doc/common/tables/glance-rpc.xml91(td)
+#: ./doc/common/tables/glance-rpc.xml95(td)
+#: ./doc/common/tables/glance-rpc.xml130(td)
+#: ./doc/common/tables/glance-rpc.xml146(td)
+#: ./doc/common/tables/glance-rpc.xml158(td)
+#: ./doc/common/tables/glance-rpc.xml185(td)
+#: ./doc/common/tables/glance-rpc.xml189(td)
+#: ./doc/common/tables/glance-rpc.xml193(td)
+#: ./doc/common/tables/glance-rpc.xml197(td)
 #: ./doc/common/tables/heat-clients_heat.xml41(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml37(td)
 #: ./doc/common/tables/nova-rabbitmq.xml25(td)
@@ -20221,10 +20440,6 @@ msgstr "(IntOpt) Nombre minimum de connexions SQL à garder ouvertes dans un poo
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml64(td)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml93(td)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml107(td)
-#: ./doc/common/tables/glance-rabbitmq.xml25(td)
-#: ./doc/common/tables/glance-rabbitmq.xml29(td)
-#: ./doc/common/tables/glance-rabbitmq.xml33(td)
-#: ./doc/common/tables/glance-rabbitmq.xml37(td)
 #: ./doc/common/tables/neutron-l3_agent.xml41(td)
 #: ./doc/common/tables/neutron-l3_agent.xml81(td)
 #: ./doc/common/tables/nova-neutron.xml72(td)
@@ -20264,7 +20479,7 @@ msgstr "(IntOpt) Nombre minimum de connexions SQL à garder ouvertes dans un poo
 #: ./doc/common/tables/ironic-glance.xml21(td)
 #: ./doc/common/tables/neutron-ml2_ofa.xml21(td)
 #: ./doc/common/tables/neutron-ml2_ofa.xml44(td)
-#: ./doc/common/tables/glance-api.xml106(td)
+#: ./doc/common/tables/glance-api.xml110(td)
 #: ./doc/common/tables/heat-waitcondition_api.xml21(td)
 #: ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml32(td)
 #: ./doc/common/tables/swift-object-expirer-filter-proxy-logging.xml54(td)
@@ -20376,9 +20591,6 @@ msgstr "(IntOpt) Nombre minimum de connexions SQL à garder ouvertes dans un poo
 #: ./doc/common/tables/nova-qpid.xml33(td)
 #: ./doc/common/tables/nova-qpid.xml49(td)
 #: ./doc/common/tables/nova-qpid.xml61(td)
-#: ./doc/common/tables/glance-qpid.xml33(td)
-#: ./doc/common/tables/glance-qpid.xml49(td)
-#: ./doc/common/tables/glance-qpid.xml61(td)
 #: ./doc/common/tables/sahara-rpc.xml76(td)
 #: ./doc/common/tables/sahara-rpc.xml80(td)
 #: ./doc/common/tables/sahara-rpc.xml84(td)
@@ -20715,6 +20927,8 @@ msgstr ""
 #: ./doc/common/tables/swift-proxy-server-DEFAULT.xml36(replaceable)
 #: ./doc/common/tables/cinder-xio.xml25(replaceable)
 #: ./doc/common/tables/glance-rpc.xml37(replaceable)
+#: ./doc/common/tables/glance-rpc.xml162(replaceable)
+#: ./doc/common/tables/glance-rpc.xml249(replaceable)
 #: ./doc/common/tables/nova-xen.xml67(replaceable)
 #: ./doc/common/tables/neutron-ml2_cisco.xml32(replaceable)
 #: ./doc/common/tables/neutron-ml2_fslsdn.xml53(replaceable)
@@ -20907,7 +21121,7 @@ msgstr ""
 #: ./doc/common/tables/trove-network.xml25(replaceable)
 #: ./doc/common/tables/neutron-conf-changes.xml805(td)
 #: ./doc/common/tables/trove-volume.xml25(replaceable)
-#: ./doc/common/tables/glance-swift.xml80(replaceable)
+#: ./doc/common/tables/glance-swift.xml84(replaceable)
 #: ./doc/common/tables/trove-heat.xml21(replaceable)
 #: ./doc/common/tables/trove-compute.xml25(replaceable)
 #: ./doc/common/tables/swift-dispersion-dispersion.xml56(replaceable)
@@ -21028,7 +21242,8 @@ msgid "Description of RPC configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml21(replaceable)
-#: ./doc/common/tables/glance-auth_token.xml129(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml125(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml161(replaceable)
 #: ./doc/common/tables/swift-container-server-container-sync.xml24(replaceable)
 #: ./doc/common/tables/glance-rpc.xml25(replaceable)
 #: ./doc/common/tables/nova-xen.xml71(replaceable)
@@ -21194,6 +21409,8 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml38(td)
+#: ./doc/common/tables/glance-rpc.xml163(td)
+#: ./doc/common/tables/glance-rpc.xml250(td)
 #: ./doc/common/tables/ironic-rpc.xml38(td)
 #: ./doc/common/tables/keystone-rpc.xml38(td)
 #: ./doc/common/tables/ceilometer-rpc.xml42(td)
@@ -21207,6 +21424,7 @@ msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml41(replaceable)
 #: ./doc/common/tables/nova-periodic.xml25(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml137(replaceable)
 #: ./doc/common/tables/cinder-netapp_7mode_nfs.xml65(replaceable)
 #: ./doc/common/tables/swift-container-server-container-sync.xml20(replaceable)
 #: ./doc/common/tables/swift-proxy-server-DEFAULT.xml44(replaceable)
@@ -21217,6 +21435,7 @@ msgstr ""
 #: ./doc/common/tables/trove-qpid.xml21(replaceable)
 #: ./doc/common/tables/nova-ironic.xml45(replaceable)
 #: ./doc/common/tables/glance-rpc.xml41(replaceable)
+#: ./doc/common/tables/glance-rpc.xml118(replaceable)
 #: ./doc/common/tables/nova-xen.xml63(replaceable)
 #: ./doc/common/tables/nova-xen.xml159(replaceable)
 #: ./doc/common/tables/ceilometer-auth_token.xml137(replaceable)
@@ -21265,7 +21484,6 @@ msgstr ""
 #: ./doc/common/tables/trove-guestagent.xml21(replaceable)
 #: ./doc/common/tables/ironic-irmc.xml25(replaceable)
 #: ./doc/common/tables/nova-qpid.xml21(replaceable)
-#: ./doc/common/tables/glance-qpid.xml21(replaceable)
 #: ./doc/common/tables/sahara-rpc.xml41(replaceable)
 #: ./doc/common/tables/cinder-rpc.xml41(replaceable)
 #: ./doc/common/tables/ironic-common.xml69(replaceable)
@@ -21335,6 +21553,7 @@ msgid "(BoolOpt) Enable server RPC compatibility with old agents"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml60(th)
+#: ./doc/common/tables/glance-rpc.xml49(th)
 #: ./doc/common/tables/ceilometer-concurrency.xml18(th)
 #: ./doc/common/tables/ironic-rpc.xml49(th)
 #: ./doc/common/tables/cinder-rpc.xml53(th)
@@ -21343,17 +21562,18 @@ msgid "[oslo_concurrency]"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml64(td)
+#: ./doc/common/tables/glance-rpc.xml53(td)
 #: ./doc/common/tables/ceilometer-concurrency.xml22(td)
 #: ./doc/common/tables/sahara-debug.xml22(td)
 #: ./doc/common/tables/ironic-rpc.xml53(td)
 #: ./doc/common/tables/ceilometer-conf-changes.xml81(td)
-#: ./doc/common/tables/glance-debug.xml22(td)
 #: ./doc/common/tables/cinder-rpc.xml57(td)
 #: ./doc/common/tables/nova-rpc.xml60(td)
 msgid "(BoolOpt) Enables or disables inter-process locks."
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml68(td)
+#: ./doc/common/tables/glance-rpc.xml57(td)
 #: ./doc/common/tables/ceilometer-concurrency.xml26(td)
 #: ./doc/common/tables/ironic-rpc.xml57(td)
 #: ./doc/common/tables/ceilometer-conf-changes.xml85(td)
@@ -21367,7 +21587,7 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml71(th)
-#: ./doc/common/tables/glance-rpc.xml49(th)
+#: ./doc/common/tables/glance-rpc.xml60(th)
 #: ./doc/common/tables/ironic-ca.xml18(th)
 #: ./doc/common/tables/ironic-amqp.xml45(th)
 #: ./doc/common/tables/keystone-rpc.xml49(th)
@@ -21381,7 +21601,7 @@ msgid "[oslo_messaging_amqp]"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml75(td)
-#: ./doc/common/tables/glance-rpc.xml53(td)
+#: ./doc/common/tables/glance-rpc.xml64(td)
 #: ./doc/common/tables/ironic-amqp.xml49(td)
 #: ./doc/common/tables/keystone-rpc.xml53(td)
 #: ./doc/common/tables/ceilometer-rpc.xml64(td)
@@ -21394,7 +21614,7 @@ msgid "(BoolOpt) Accept clients using either SSL or plain TCP"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml78(replaceable)
-#: ./doc/common/tables/glance-rpc.xml56(replaceable)
+#: ./doc/common/tables/glance-rpc.xml67(replaceable)
 #: ./doc/common/tables/ironic-amqp.xml52(replaceable)
 #: ./doc/common/tables/keystone-rpc.xml56(replaceable)
 #: ./doc/common/tables/ceilometer-rpc.xml67(replaceable)
@@ -21407,7 +21627,7 @@ msgid "broadcast"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml79(td)
-#: ./doc/common/tables/glance-rpc.xml57(td)
+#: ./doc/common/tables/glance-rpc.xml68(td)
 #: ./doc/common/tables/ironic-amqp.xml53(td)
 #: ./doc/common/tables/keystone-rpc.xml57(td)
 #: ./doc/common/tables/ceilometer-rpc.xml68(td)
@@ -21420,7 +21640,7 @@ msgid "(StrOpt) address prefix used when broadcasting to all servers"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml83(td)
-#: ./doc/common/tables/glance-rpc.xml61(td)
+#: ./doc/common/tables/glance-rpc.xml72(td)
 #: ./doc/common/tables/ironic-amqp.xml57(td)
 #: ./doc/common/tables/keystone-rpc.xml61(td)
 #: ./doc/common/tables/ceilometer-rpc.xml72(td)
@@ -21433,7 +21653,7 @@ msgid "(StrOpt) Name for the AMQP container"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml86(replaceable)
-#: ./doc/common/tables/glance-rpc.xml64(replaceable)
+#: ./doc/common/tables/glance-rpc.xml75(replaceable)
 #: ./doc/common/tables/ironic-amqp.xml60(replaceable)
 #: ./doc/common/tables/keystone-rpc.xml64(replaceable)
 #: ./doc/common/tables/ceilometer-rpc.xml75(replaceable)
@@ -21446,7 +21666,7 @@ msgid "unicast"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml87(td)
-#: ./doc/common/tables/glance-rpc.xml65(td)
+#: ./doc/common/tables/glance-rpc.xml76(td)
 #: ./doc/common/tables/ironic-amqp.xml61(td)
 #: ./doc/common/tables/keystone-rpc.xml65(td)
 #: ./doc/common/tables/ceilometer-rpc.xml76(td)
@@ -21459,7 +21679,7 @@ msgid "(StrOpt) address prefix when sending to any server in group"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml91(td)
-#: ./doc/common/tables/glance-rpc.xml69(td)
+#: ./doc/common/tables/glance-rpc.xml80(td)
 #: ./doc/common/tables/ironic-amqp.xml65(td)
 #: ./doc/common/tables/keystone-rpc.xml69(td)
 #: ./doc/common/tables/ceilometer-rpc.xml80(td)
@@ -21472,7 +21692,7 @@ msgid "(IntOpt) Timeout for inactive connections (in seconds)"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml94(replaceable)
-#: ./doc/common/tables/glance-rpc.xml72(replaceable)
+#: ./doc/common/tables/glance-rpc.xml83(replaceable)
 #: ./doc/common/tables/ironic-amqp.xml68(replaceable)
 #: ./doc/common/tables/keystone-rpc.xml72(replaceable)
 #: ./doc/common/tables/ceilometer-rpc.xml83(replaceable)
@@ -21485,7 +21705,7 @@ msgid "exclusive"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml95(td)
-#: ./doc/common/tables/glance-rpc.xml73(td)
+#: ./doc/common/tables/glance-rpc.xml84(td)
 #: ./doc/common/tables/ironic-amqp.xml69(td)
 #: ./doc/common/tables/keystone-rpc.xml73(td)
 #: ./doc/common/tables/ceilometer-rpc.xml84(td)
@@ -21498,7 +21718,7 @@ msgid "(StrOpt) address prefix used when sending to a specific server"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml99(td)
-#: ./doc/common/tables/glance-rpc.xml77(td)
+#: ./doc/common/tables/glance-rpc.xml88(td)
 #: ./doc/common/tables/ironic-ca.xml22(td)
 #: ./doc/common/tables/keystone-rpc.xml77(td)
 #: ./doc/common/tables/ceilometer-rpc.xml88(td)
@@ -21511,7 +21731,7 @@ msgid "(StrOpt) CA certificate PEM file for verifing server certificate"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml103(td)
-#: ./doc/common/tables/glance-rpc.xml81(td)
+#: ./doc/common/tables/glance-rpc.xml92(td)
 #: ./doc/common/tables/ironic-ca.xml26(td)
 #: ./doc/common/tables/keystone-rpc.xml81(td)
 #: ./doc/common/tables/ceilometer-rpc.xml92(td)
@@ -21524,7 +21744,7 @@ msgid "(StrOpt) Identifying certificate PEM file to present to clients"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml107(td)
-#: ./doc/common/tables/glance-rpc.xml85(td)
+#: ./doc/common/tables/glance-rpc.xml96(td)
 #: ./doc/common/tables/ironic-ca.xml30(td)
 #: ./doc/common/tables/keystone-rpc.xml85(td)
 #: ./doc/common/tables/ceilometer-rpc.xml96(td)
@@ -21537,7 +21757,7 @@ msgid "(StrOpt) Private key PEM file used to sign cert_file certificate"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml111(td)
-#: ./doc/common/tables/glance-rpc.xml89(td)
+#: ./doc/common/tables/glance-rpc.xml100(td)
 #: ./doc/common/tables/ironic-ca.xml34(td)
 #: ./doc/common/tables/keystone-rpc.xml89(td)
 #: ./doc/common/tables/ceilometer-rpc.xml100(td)
@@ -21550,7 +21770,7 @@ msgid "(StrOpt) Password for decrypting ssl_key_file (if encrypted)"
 msgstr ""
 
 #: ./doc/common/tables/neutron-rpc.xml115(td)
-#: ./doc/common/tables/glance-rpc.xml93(td)
+#: ./doc/common/tables/glance-rpc.xml104(td)
 #: ./doc/common/tables/ironic-amqp.xml73(td)
 #: ./doc/common/tables/keystone-rpc.xml93(td)
 #: ./doc/common/tables/ceilometer-rpc.xml104(td)
@@ -22175,7 +22395,7 @@ msgstr ""
 #: ./doc/common/tables/keystone-auth_token.xml18(th)
 #: ./doc/common/tables/sahara-common.xml164(th)
 #: ./doc/common/tables/trove-auth_token.xml18(th)
-#: ./doc/common/tables/glance-common.xml115(th)
+#: ./doc/common/tables/glance-common.xml119(th)
 #: ./doc/common/tables/neutron-common.xml230(th)
 msgid "[keystone_authtoken]"
 msgstr ""
@@ -22300,7 +22520,17 @@ msgid ""
 "identity_uri."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml45(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml46(td)
+#: ./doc/common/tables/ceilometer-auth_token.xml46(td)
+#: ./doc/common/tables/neutron-auth_token.xml46(td)
+#: ./doc/common/tables/ironic-auth_token.xml46(td)
+#: ./doc/common/tables/sahara-auth_token.xml46(td)
+#: ./doc/common/tables/nova-auth_token.xml46(td)
+#: ./doc/common/tables/cinder-auth_token.xml46(td)
+msgid "(StrOpt) Name of the plugin to load"
+msgstr ""
+
+#: ./doc/common/tables/glance-auth_token.xml49(replaceable)
 #: ./doc/common/tables/keystone-api.xml29(replaceable)
 #: ./doc/common/tables/ceilometer-auth_token.xml49(replaceable)
 #: ./doc/common/tables/neutron-auth_token.xml49(replaceable)
@@ -22314,7 +22544,7 @@ msgstr ""
 msgid "35357"
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml46(td)
+#: ./doc/common/tables/glance-auth_token.xml50(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml50(td)
 #: ./doc/common/tables/neutron-auth_token.xml50(td)
 #: ./doc/common/tables/ironic-auth_token.xml50(td)
@@ -22329,7 +22559,7 @@ msgid ""
 "identity_uri."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml49(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml53(replaceable)
 #: ./doc/common/tables/ceilometer-auth_token.xml53(replaceable)
 #: ./doc/common/tables/neutron-auth_token.xml53(replaceable)
 #: ./doc/common/tables/ironic-auth_token.xml53(replaceable)
@@ -22342,7 +22572,7 @@ msgstr ""
 msgid "https"
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml50(td)
+#: ./doc/common/tables/glance-auth_token.xml54(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml54(td)
 #: ./doc/common/tables/neutron-auth_token.xml54(td)
 #: ./doc/common/tables/ironic-auth_token.xml54(td)
@@ -22357,7 +22587,17 @@ msgid ""
 "Deprecated, use identity_uri."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml54(td)
+#: ./doc/common/tables/glance-auth_token.xml58(td)
+#: ./doc/common/tables/ceilometer-auth_token.xml58(td)
+#: ./doc/common/tables/neutron-auth_token.xml58(td)
+#: ./doc/common/tables/ironic-auth_token.xml58(td)
+#: ./doc/common/tables/sahara-auth_token.xml58(td)
+#: ./doc/common/tables/nova-auth_token.xml58(td)
+#: ./doc/common/tables/cinder-auth_token.xml58(td)
+msgid "(StrOpt) Config Section from which to load plugin specific options"
+msgstr ""
+
+#: ./doc/common/tables/glance-auth_token.xml62(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml62(td)
 #: ./doc/common/tables/neutron-auth_token.xml62(td)
 #: ./doc/common/tables/ironic-auth_token.xml62(td)
@@ -22370,7 +22610,7 @@ msgstr ""
 msgid "(StrOpt) Complete public Identity API endpoint."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml58(td)
+#: ./doc/common/tables/glance-auth_token.xml66(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml66(td)
 #: ./doc/common/tables/neutron-auth_token.xml66(td)
 #: ./doc/common/tables/ironic-auth_token.xml66(td)
@@ -22383,7 +22623,7 @@ msgstr ""
 msgid "(StrOpt) API version of the admin Identity API endpoint."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml62(td)
+#: ./doc/common/tables/glance-auth_token.xml70(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml70(td)
 #: ./doc/common/tables/neutron-auth_token.xml70(td)
 #: ./doc/common/tables/ironic-auth_token.xml70(td)
@@ -22396,7 +22636,7 @@ msgstr ""
 msgid "(StrOpt) Env key for the swift cache."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml66(td)
+#: ./doc/common/tables/glance-auth_token.xml74(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml74(td)
 #: ./doc/common/tables/neutron-auth_token.xml74(td)
 #: ./doc/common/tables/ironic-auth_token.xml74(td)
@@ -22411,8 +22651,8 @@ msgid ""
 "connections. Defaults to system CAs."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml70(td)
-#: ./doc/common/tables/glance-auth_token.xml110(td)
+#: ./doc/common/tables/glance-auth_token.xml78(td)
+#: ./doc/common/tables/glance-auth_token.xml118(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml78(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml118(td)
 #: ./doc/common/tables/neutron-auth_token.xml78(td)
@@ -22434,7 +22674,7 @@ msgstr ""
 msgid "(StrOpt) Required if identity server requires client certificate"
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml74(td)
+#: ./doc/common/tables/glance-auth_token.xml82(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml82(td)
 #: ./doc/common/tables/neutron-auth_token.xml82(td)
 #: ./doc/common/tables/ironic-auth_token.xml82(td)
@@ -22449,7 +22689,7 @@ msgid ""
 "This requires that PKI tokens are configured on the identity server."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml78(td)
+#: ./doc/common/tables/glance-auth_token.xml86(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml86(td)
 #: ./doc/common/tables/neutron-auth_token.xml86(td)
 #: ./doc/common/tables/ironic-auth_token.xml86(td)
@@ -22464,7 +22704,7 @@ msgid ""
 "delegate the authorization decision to downstream WSGI components."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml81(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml89(replaceable)
 #: ./doc/common/tables/ceilometer-auth_token.xml89(replaceable)
 #: ./doc/common/tables/neutron-auth_token.xml89(replaceable)
 #: ./doc/common/tables/ironic-auth_token.xml89(replaceable)
@@ -22478,7 +22718,7 @@ msgstr ""
 msgid "permissive"
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml82(td)
+#: ./doc/common/tables/glance-auth_token.xml90(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml90(td)
 #: ./doc/common/tables/neutron-auth_token.xml90(td)
 #: ./doc/common/tables/ironic-auth_token.xml90(td)
@@ -22498,7 +22738,7 @@ msgid ""
 "must be present in tokens."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml85(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml93(replaceable)
 #: ./doc/common/tables/ceilometer-auth_token.xml93(replaceable)
 #: ./doc/common/tables/neutron-auth_token.xml93(replaceable)
 #: ./doc/common/tables/ironic-auth_token.xml93(replaceable)
@@ -22512,7 +22752,7 @@ msgstr ""
 msgid "md5"
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml86(td)
+#: ./doc/common/tables/glance-auth_token.xml94(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml94(td)
 #: ./doc/common/tables/neutron-auth_token.xml94(td)
 #: ./doc/common/tables/heat-conf-changes.xml137(td)
@@ -22540,7 +22780,7 @@ msgid ""
 "better performance."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml90(td)
+#: ./doc/common/tables/glance-auth_token.xml98(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml98(td)
 #: ./doc/common/tables/neutron-auth_token.xml98(td)
 #: ./doc/common/tables/ironic-auth_token.xml98(td)
@@ -22554,7 +22794,8 @@ msgid ""
 "(IntOpt) Request timeout value for communicating with Identity API server."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml93(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml101(replaceable)
+#: ./doc/common/tables/glance-auth_token.xml133(replaceable)
 #: ./doc/common/tables/ironic-seamicro.xml25(replaceable)
 #: ./doc/common/tables/cinder-fusionio.xml21(replaceable)
 #: ./doc/common/tables/ceilometer-auth_token.xml101(replaceable)
@@ -22615,7 +22856,7 @@ msgstr ""
 msgid "3"
 msgstr "3"
 
-#: ./doc/common/tables/glance-auth_token.xml94(td)
+#: ./doc/common/tables/glance-auth_token.xml102(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml102(td)
 #: ./doc/common/tables/neutron-auth_token.xml102(td)
 #: ./doc/common/tables/ironic-auth_token.xml102(td)
@@ -22630,7 +22871,7 @@ msgid ""
 "Identity API Server."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml98(td)
+#: ./doc/common/tables/glance-auth_token.xml106(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml106(td)
 #: ./doc/common/tables/neutron-auth_token.xml106(td)
 #: ./doc/common/tables/heat-conf-changes.xml141(td)
@@ -22652,7 +22893,7 @@ msgid ""
 "unversioned root endpoint e.g. https://localhost:35357/"
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml102(td)
+#: ./doc/common/tables/glance-auth_token.xml110(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml110(td)
 #: ./doc/common/tables/neutron-auth_token.xml110(td)
 #: ./doc/common/tables/ironic-auth_token.xml110(td)
@@ -22668,7 +22909,7 @@ msgid ""
 "and will not set the X-Service-Catalog header."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml106(td)
+#: ./doc/common/tables/glance-auth_token.xml114(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml114(td)
 #: ./doc/common/tables/neutron-auth_token.xml114(td)
 #: ./doc/common/tables/nova-volumes.xml69(td)
@@ -22683,7 +22924,67 @@ msgstr ""
 msgid "(BoolOpt) Verify HTTPS connections."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml114(td)
+#: ./doc/common/tables/glance-auth_token.xml122(td)
+#: ./doc/common/tables/ceilometer-auth_token.xml122(td)
+#: ./doc/common/tables/neutron-auth_token.xml122(td)
+#: ./doc/common/tables/ironic-auth_token.xml122(td)
+#: ./doc/common/tables/sahara-auth_token.xml122(td)
+#: ./doc/common/tables/nova-auth_token.xml122(td)
+#: ./doc/common/tables/cinder-auth_token.xml122(td)
+msgid ""
+"(IntOpt) (Optional) Number of seconds that an operation will wait to get a "
+"memcache client connection from the pool."
+msgstr ""
+
+#: ./doc/common/tables/glance-auth_token.xml126(td)
+#: ./doc/common/tables/ceilometer-auth_token.xml126(td)
+#: ./doc/common/tables/neutron-auth_token.xml126(td)
+#: ./doc/common/tables/ironic-auth_token.xml126(td)
+#: ./doc/common/tables/sahara-auth_token.xml126(td)
+#: ./doc/common/tables/nova-auth_token.xml126(td)
+#: ./doc/common/tables/cinder-auth_token.xml126(td)
+msgid ""
+"(IntOpt) (Optional) Number of seconds memcached server is considered dead "
+"before it is tried again."
+msgstr ""
+
+#: ./doc/common/tables/glance-auth_token.xml130(td)
+#: ./doc/common/tables/ceilometer-auth_token.xml130(td)
+#: ./doc/common/tables/neutron-auth_token.xml130(td)
+#: ./doc/common/tables/ironic-auth_token.xml130(td)
+#: ./doc/common/tables/sahara-auth_token.xml130(td)
+#: ./doc/common/tables/nova-auth_token.xml130(td)
+#: ./doc/common/tables/cinder-auth_token.xml130(td)
+msgid ""
+"(IntOpt) (Optional) Maximum total number of open connections to every "
+"memcached server."
+msgstr ""
+
+#: ./doc/common/tables/glance-auth_token.xml134(td)
+#: ./doc/common/tables/ceilometer-auth_token.xml134(td)
+#: ./doc/common/tables/neutron-auth_token.xml134(td)
+#: ./doc/common/tables/ironic-auth_token.xml134(td)
+#: ./doc/common/tables/sahara-auth_token.xml134(td)
+#: ./doc/common/tables/nova-auth_token.xml134(td)
+#: ./doc/common/tables/cinder-auth_token.xml134(td)
+msgid ""
+"(IntOpt) (Optional) Socket timeout in seconds for communicating with a "
+"memcache server."
+msgstr ""
+
+#: ./doc/common/tables/glance-auth_token.xml138(td)
+#: ./doc/common/tables/ceilometer-auth_token.xml138(td)
+#: ./doc/common/tables/neutron-auth_token.xml138(td)
+#: ./doc/common/tables/ironic-auth_token.xml138(td)
+#: ./doc/common/tables/sahara-auth_token.xml138(td)
+#: ./doc/common/tables/nova-auth_token.xml138(td)
+#: ./doc/common/tables/cinder-auth_token.xml138(td)
+msgid ""
+"(IntOpt) (Optional) Number of seconds a connection to memcached is held "
+"unused in the pool before it is closed."
+msgstr ""
+
+#: ./doc/common/tables/glance-auth_token.xml142(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml142(td)
 #: ./doc/common/tables/neutron-auth_token.xml142(td)
 #: ./doc/common/tables/ironic-auth_token.xml142(td)
@@ -22698,7 +22999,7 @@ msgid ""
 " string is used for key derivation."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml118(td)
+#: ./doc/common/tables/glance-auth_token.xml146(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml146(td)
 #: ./doc/common/tables/neutron-auth_token.xml146(td)
 #: ./doc/common/tables/ironic-auth_token.xml146(td)
@@ -22717,7 +23018,19 @@ msgid ""
 "exception on initialization."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml122(td)
+#: ./doc/common/tables/glance-auth_token.xml150(td)
+#: ./doc/common/tables/ceilometer-auth_token.xml150(td)
+#: ./doc/common/tables/neutron-auth_token.xml150(td)
+#: ./doc/common/tables/ironic-auth_token.xml150(td)
+#: ./doc/common/tables/sahara-auth_token.xml150(td)
+#: ./doc/common/tables/nova-auth_token.xml150(td)
+#: ./doc/common/tables/cinder-auth_token.xml150(td)
+msgid ""
+"(BoolOpt) (Optional) Use the advanced (eventlet safe) memcache client pool. "
+"The advanced pool will only work under python 2.x."
+msgstr ""
+
+#: ./doc/common/tables/glance-auth_token.xml154(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml154(td)
 #: ./doc/common/tables/neutron-auth_token.xml154(td)
 #: ./doc/common/tables/ironic-auth_token.xml158(td)
@@ -22734,7 +23047,7 @@ msgid ""
 "reduce performance."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml126(td)
+#: ./doc/common/tables/glance-auth_token.xml158(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml158(td)
 #: ./doc/common/tables/neutron-auth_token.xml158(td)
 #: ./doc/common/tables/ironic-auth_token.xml162(td)
@@ -22747,7 +23060,7 @@ msgstr ""
 msgid "(StrOpt) Directory used to cache files related to PKI tokens."
 msgstr ""
 
-#: ./doc/common/tables/glance-auth_token.xml130(td)
+#: ./doc/common/tables/glance-auth_token.xml162(td)
 #: ./doc/common/tables/ceilometer-auth_token.xml162(td)
 #: ./doc/common/tables/neutron-auth_token.xml162(td)
 #: ./doc/common/tables/ironic-auth_token.xml166(td)
@@ -22957,6 +23270,7 @@ msgstr ""
 
 #: ./doc/common/tables/keystone-testing.xml22(td)
 #: ./doc/common/tables/nova-testing.xml30(td)
+#: ./doc/common/tables/glance-rpc.xml178(td)
 #: ./doc/common/tables/cinder-testing.xml22(td)
 #: ./doc/common/tables/heat-testing.xml22(td)
 #: ./doc/common/tables/sahara-testing.xml22(td)
@@ -23814,6 +24128,7 @@ msgstr "swift"
 #: ./doc/common/tables/ironic-rabbitmq.xml21(replaceable)
 #: ./doc/common/tables/swift-container-reconciler-DEFAULT.xml40(replaceable)
 #: ./doc/common/tables/swift-container-reconciler-DEFAULT.xml57(replaceable)
+#: ./doc/common/tables/glance-rpc.xml181(replaceable)
 #: ./doc/common/tables/nova-xen.xml211(replaceable)
 #: ./doc/common/tables/nova-rabbitmq.xml21(replaceable)
 #: ./doc/common/tables/cinder-rabbitmq.xml21(replaceable)
@@ -23823,7 +24138,6 @@ msgstr "swift"
 #: ./doc/common/tables/cinder-storage.xml25(replaceable)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml84(replaceable)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml101(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml21(replaceable)
 #: ./doc/common/tables/swift-object-server-app-object-server.xml48(replaceable)
 #: ./doc/common/tables/heat-rabbitmq.xml21(replaceable)
 #: ./doc/common/tables/swift-object-server-DEFAULT.xml96(replaceable)
@@ -23872,6 +24186,8 @@ msgstr ""
 #: ./doc/common/tables/ironic-rabbitmq.xml45(replaceable)
 #: ./doc/common/tables/trove-qpid.xml25(replaceable)
 #: ./doc/common/tables/swift-container-reconciler-DEFAULT.xml45(replaceable)
+#: ./doc/common/tables/glance-rpc.xml122(replaceable)
+#: ./doc/common/tables/glance-rpc.xml205(replaceable)
 #: ./doc/common/tables/nova-rabbitmq.xml45(replaceable)
 #: ./doc/common/tables/heat-qpid.xml25(replaceable)
 #: ./doc/common/tables/cinder-rabbitmq.xml45(replaceable)
@@ -23880,7 +24196,6 @@ msgstr ""
 #: ./doc/common/tables/nova-common.xml37(replaceable)
 #: ./doc/common/tables/heat-zeromq.xml29(replaceable)
 #: ./doc/common/tables/swift-container-server-DEFAULT.xml89(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml45(replaceable)
 #: ./doc/common/tables/cinder-zeromq.xml29(replaceable)
 #: ./doc/common/tables/heat-rabbitmq.xml45(replaceable)
 #: ./doc/common/tables/swift-object-server-DEFAULT.xml101(replaceable)
@@ -23896,7 +24211,6 @@ msgstr ""
 #: ./doc/common/tables/keystone-zeromq.xml29(replaceable)
 #: ./doc/common/tables/glance-zeromq.xml29(replaceable)
 #: ./doc/common/tables/nova-qpid.xml25(replaceable)
-#: ./doc/common/tables/glance-qpid.xml25(replaceable)
 #: ./doc/common/tables/swift-object-expirer-DEFAULT.xml49(replaceable)
 #: ./doc/common/tables/sahara-rabbitmq.xml45(replaceable)
 #: ./doc/common/tables/swift-proxy-server-filter-proxy-logging.xml50(replaceable)
@@ -24112,6 +24426,8 @@ msgid "Description of AMQP configuration options"
 msgstr ""
 
 #: ./doc/common/tables/neutron-amqp.xml22(td)
+#: ./doc/common/tables/glance-rpc.xml111(td)
+#: ./doc/common/tables/glance-rpc.xml170(td)
 #: ./doc/common/tables/trove-amqp.xml22(td)
 #: ./doc/common/tables/ironic-amqp.xml22(td)
 #: ./doc/common/tables/heat-amqp.xml22(td)
@@ -24124,6 +24440,8 @@ msgid "(BoolOpt) Auto-delete queues in AMQP."
 msgstr ""
 
 #: ./doc/common/tables/neutron-amqp.xml26(td)
+#: ./doc/common/tables/glance-rpc.xml115(td)
+#: ./doc/common/tables/glance-rpc.xml174(td)
 #: ./doc/common/tables/trove-amqp.xml26(td)
 #: ./doc/common/tables/ironic-amqp.xml26(td)
 #: ./doc/common/tables/heat-amqp.xml26(td)
@@ -24241,7 +24559,6 @@ msgstr ""
 #: ./doc/common/tables/heat-qpid.xml7(caption)
 #: ./doc/common/tables/ironic-qpid.xml7(caption)
 #: ./doc/common/tables/nova-qpid.xml7(caption)
-#: ./doc/common/tables/glance-qpid.xml7(caption)
 #: ./doc/common/tables/sahara-qpid.xml7(caption)
 #: ./doc/common/tables/neutron-qpid.xml7(caption)
 #: ./doc/common/tables/keystone-qpid.xml7(caption)
@@ -24251,10 +24568,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml22(td)
 #: ./doc/common/tables/trove-qpid.xml22(td)
+#: ./doc/common/tables/glance-rpc.xml119(td)
 #: ./doc/common/tables/heat-qpid.xml22(td)
 #: ./doc/common/tables/ironic-qpid.xml22(td)
 #: ./doc/common/tables/nova-qpid.xml22(td)
-#: ./doc/common/tables/glance-qpid.xml22(td)
 #: ./doc/common/tables/sahara-qpid.xml22(td)
 #: ./doc/common/tables/neutron-qpid.xml22(td)
 #: ./doc/common/tables/keystone-qpid.xml22(td)
@@ -24264,10 +24581,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml26(td)
 #: ./doc/common/tables/trove-qpid.xml26(td)
+#: ./doc/common/tables/glance-rpc.xml123(td)
 #: ./doc/common/tables/heat-qpid.xml26(td)
 #: ./doc/common/tables/ironic-qpid.xml26(td)
 #: ./doc/common/tables/nova-qpid.xml26(td)
-#: ./doc/common/tables/glance-qpid.xml26(td)
 #: ./doc/common/tables/sahara-qpid.xml26(td)
 #: ./doc/common/tables/neutron-qpid.xml26(td)
 #: ./doc/common/tables/keystone-qpid.xml26(td)
@@ -24277,10 +24594,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml29(replaceable)
 #: ./doc/common/tables/trove-qpid.xml29(replaceable)
+#: ./doc/common/tables/glance-rpc.xml126(replaceable)
 #: ./doc/common/tables/heat-qpid.xml29(replaceable)
 #: ./doc/common/tables/ironic-qpid.xml29(replaceable)
 #: ./doc/common/tables/nova-qpid.xml29(replaceable)
-#: ./doc/common/tables/glance-qpid.xml29(replaceable)
 #: ./doc/common/tables/sahara-qpid.xml29(replaceable)
 #: ./doc/common/tables/neutron-qpid.xml29(replaceable)
 #: ./doc/common/tables/keystone-qpid.xml29(replaceable)
@@ -24290,10 +24607,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml30(td)
 #: ./doc/common/tables/trove-qpid.xml30(td)
+#: ./doc/common/tables/glance-rpc.xml127(td)
 #: ./doc/common/tables/heat-qpid.xml30(td)
 #: ./doc/common/tables/ironic-qpid.xml30(td)
 #: ./doc/common/tables/nova-qpid.xml30(td)
-#: ./doc/common/tables/glance-qpid.xml30(td)
 #: ./doc/common/tables/sahara-qpid.xml30(td)
 #: ./doc/common/tables/neutron-qpid.xml30(td)
 #: ./doc/common/tables/keystone-qpid.xml30(td)
@@ -24303,10 +24620,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml34(td)
 #: ./doc/common/tables/trove-qpid.xml34(td)
+#: ./doc/common/tables/glance-rpc.xml131(td)
 #: ./doc/common/tables/heat-qpid.xml34(td)
 #: ./doc/common/tables/ironic-qpid.xml34(td)
 #: ./doc/common/tables/nova-qpid.xml34(td)
-#: ./doc/common/tables/glance-qpid.xml34(td)
 #: ./doc/common/tables/sahara-qpid.xml34(td)
 #: ./doc/common/tables/neutron-qpid.xml34(td)
 #: ./doc/common/tables/keystone-qpid.xml34(td)
@@ -24317,16 +24634,16 @@ msgstr ""
 #: ./doc/common/tables/cinder-qpid.xml37(replaceable)
 #: ./doc/common/tables/ironic-rabbitmq.xml65(replaceable)
 #: ./doc/common/tables/trove-qpid.xml37(replaceable)
+#: ./doc/common/tables/glance-rpc.xml134(replaceable)
+#: ./doc/common/tables/glance-rpc.xml225(replaceable)
 #: ./doc/common/tables/nova-rabbitmq.xml65(replaceable)
 #: ./doc/common/tables/heat-qpid.xml37(replaceable)
 #: ./doc/common/tables/cinder-rabbitmq.xml65(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml65(replaceable)
 #: ./doc/common/tables/heat-rabbitmq.xml65(replaceable)
 #: ./doc/common/tables/trove-rabbitmq.xml65(replaceable)
 #: ./doc/common/tables/ironic-qpid.xml37(replaceable)
 #: ./doc/common/tables/keystone-rabbitmq.xml65(replaceable)
 #: ./doc/common/tables/nova-qpid.xml37(replaceable)
-#: ./doc/common/tables/glance-qpid.xml37(replaceable)
 #: ./doc/common/tables/sahara-rabbitmq.xml65(replaceable)
 #: ./doc/common/tables/sahara-qpid.xml37(replaceable)
 #: ./doc/common/tables/neutron-qpid.xml37(replaceable)
@@ -24339,10 +24656,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml38(td)
 #: ./doc/common/tables/trove-qpid.xml38(td)
+#: ./doc/common/tables/glance-rpc.xml135(td)
 #: ./doc/common/tables/heat-qpid.xml38(td)
 #: ./doc/common/tables/ironic-qpid.xml38(td)
 #: ./doc/common/tables/nova-qpid.xml38(td)
-#: ./doc/common/tables/glance-qpid.xml38(td)
 #: ./doc/common/tables/sahara-qpid.xml38(td)
 #: ./doc/common/tables/neutron-qpid.xml38(td)
 #: ./doc/common/tables/keystone-qpid.xml38(td)
@@ -24352,10 +24669,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml41(replaceable)
 #: ./doc/common/tables/trove-qpid.xml41(replaceable)
+#: ./doc/common/tables/glance-rpc.xml138(replaceable)
 #: ./doc/common/tables/heat-qpid.xml41(replaceable)
 #: ./doc/common/tables/ironic-qpid.xml41(replaceable)
 #: ./doc/common/tables/nova-qpid.xml41(replaceable)
-#: ./doc/common/tables/glance-qpid.xml41(replaceable)
 #: ./doc/common/tables/sahara-qpid.xml41(replaceable)
 #: ./doc/common/tables/neutron-qpid.xml41(replaceable)
 #: ./doc/common/tables/keystone-qpid.xml41(replaceable)
@@ -24365,10 +24682,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml42(td)
 #: ./doc/common/tables/trove-qpid.xml42(td)
+#: ./doc/common/tables/glance-rpc.xml139(td)
 #: ./doc/common/tables/heat-qpid.xml42(td)
 #: ./doc/common/tables/ironic-qpid.xml42(td)
 #: ./doc/common/tables/nova-qpid.xml42(td)
-#: ./doc/common/tables/glance-qpid.xml42(td)
 #: ./doc/common/tables/sahara-qpid.xml42(td)
 #: ./doc/common/tables/neutron-qpid.xml42(td)
 #: ./doc/common/tables/keystone-qpid.xml42(td)
@@ -24378,12 +24695,12 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml46(td)
 #: ./doc/common/tables/trove-qpid.xml46(td)
+#: ./doc/common/tables/glance-rpc.xml143(td)
 #: ./doc/common/tables/heat-qpid.xml46(td)
 #: ./doc/common/tables/heat-conf-changes.xml49(td)
 #: ./doc/common/tables/neutron-conf-changes.xml145(td)
 #: ./doc/common/tables/ironic-qpid.xml46(td)
 #: ./doc/common/tables/nova-qpid.xml46(td)
-#: ./doc/common/tables/glance-qpid.xml46(td)
 #: ./doc/common/tables/sahara-qpid.xml46(td)
 #: ./doc/common/tables/neutron-qpid.xml46(td)
 #: ./doc/common/tables/keystone-qpid.xml46(td)
@@ -24393,10 +24710,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml50(td)
 #: ./doc/common/tables/trove-qpid.xml50(td)
+#: ./doc/common/tables/glance-rpc.xml147(td)
 #: ./doc/common/tables/heat-qpid.xml50(td)
 #: ./doc/common/tables/ironic-qpid.xml50(td)
 #: ./doc/common/tables/nova-qpid.xml50(td)
-#: ./doc/common/tables/glance-qpid.xml50(td)
 #: ./doc/common/tables/sahara-qpid.xml50(td)
 #: ./doc/common/tables/neutron-qpid.xml50(td)
 #: ./doc/common/tables/keystone-qpid.xml50(td)
@@ -24406,10 +24723,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml54(td)
 #: ./doc/common/tables/trove-qpid.xml54(td)
+#: ./doc/common/tables/glance-rpc.xml151(td)
 #: ./doc/common/tables/heat-qpid.xml54(td)
 #: ./doc/common/tables/ironic-qpid.xml54(td)
 #: ./doc/common/tables/nova-qpid.xml54(td)
-#: ./doc/common/tables/glance-qpid.xml54(td)
 #: ./doc/common/tables/sahara-qpid.xml54(td)
 #: ./doc/common/tables/neutron-qpid.xml54(td)
 #: ./doc/common/tables/keystone-qpid.xml54(td)
@@ -24419,10 +24736,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml58(td)
 #: ./doc/common/tables/trove-qpid.xml58(td)
+#: ./doc/common/tables/glance-rpc.xml155(td)
 #: ./doc/common/tables/heat-qpid.xml58(td)
 #: ./doc/common/tables/ironic-qpid.xml58(td)
 #: ./doc/common/tables/nova-qpid.xml58(td)
-#: ./doc/common/tables/glance-qpid.xml58(td)
 #: ./doc/common/tables/sahara-qpid.xml58(td)
 #: ./doc/common/tables/neutron-qpid.xml58(td)
 #: ./doc/common/tables/keystone-qpid.xml58(td)
@@ -24436,10 +24753,10 @@ msgstr ""
 
 #: ./doc/common/tables/cinder-qpid.xml62(td)
 #: ./doc/common/tables/trove-qpid.xml62(td)
+#: ./doc/common/tables/glance-rpc.xml159(td)
 #: ./doc/common/tables/heat-qpid.xml62(td)
 #: ./doc/common/tables/ironic-qpid.xml62(td)
 #: ./doc/common/tables/nova-qpid.xml62(td)
-#: ./doc/common/tables/glance-qpid.xml62(td)
 #: ./doc/common/tables/sahara-qpid.xml62(td)
 #: ./doc/common/tables/neutron-qpid.xml62(td)
 #: ./doc/common/tables/keystone-qpid.xml62(td)
@@ -25405,7 +25722,7 @@ msgstr ""
 #: ./doc/common/tables/glance-filesystem.xml18(th)
 #: ./doc/common/tables/glance-gridfs.xml18(th)
 #: ./doc/common/tables/glance-cinder.xml18(th)
-#: ./doc/common/tables/glance-common.xml97(th)
+#: ./doc/common/tables/glance-common.xml101(th)
 msgid "[glance_store]"
 msgstr ""
 
@@ -25428,6 +25745,7 @@ msgstr ""
 #: ./doc/common/tables/ironic-conductor.xml61(replaceable)
 #: ./doc/common/tables/swift-container-server-container-replicator.xml20(replaceable)
 #: ./doc/common/tables/swift-rsyncd-object.xml24(replaceable)
+#: ./doc/common/tables/glance-common.xml97(replaceable)
 msgid "8"
 msgstr ""
 
@@ -25558,7 +25876,7 @@ msgstr ""
 #: ./doc/common/tables/cinder-common.xml82(td)
 #: ./doc/common/tables/sahara-common.xml70(td)
 #: ./doc/common/tables/ironic-common.xml58(td)
-#: ./doc/common/tables/glance-common.xml66(td)
+#: ./doc/common/tables/glance-common.xml70(td)
 #: ./doc/common/tables/neutron-common.xml162(td)
 msgid "(ListOpt) Memcached servers or None for in process cache."
 msgstr ""
@@ -25653,7 +25971,7 @@ msgstr ""
 #: ./doc/common/tables/ironic-auth_token.xml154(td)
 #: ./doc/common/tables/cinder-common.xml213(td)
 #: ./doc/common/tables/sahara-common.xml168(td)
-#: ./doc/common/tables/glance-common.xml119(td)
+#: ./doc/common/tables/glance-common.xml123(td)
 #: ./doc/common/tables/neutron-common.xml234(td)
 msgid ""
 "(ListOpt) Optionally specify a list of memcached server(s) to use for "
@@ -26423,7 +26741,6 @@ msgstr ""
 #: ./doc/common/tables/ironic-rabbitmq.xml7(caption)
 #: ./doc/common/tables/nova-rabbitmq.xml7(caption)
 #: ./doc/common/tables/cinder-rabbitmq.xml7(caption)
-#: ./doc/common/tables/glance-rabbitmq.xml7(caption)
 #: ./doc/common/tables/heat-rabbitmq.xml7(caption)
 #: ./doc/common/tables/trove-rabbitmq.xml7(caption)
 #: ./doc/common/tables/keystone-rabbitmq.xml7(caption)
@@ -26434,11 +26751,11 @@ msgid "Description of RabbitMQ configuration options"
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml22(td)
+#: ./doc/common/tables/glance-rpc.xml182(td)
 #: ./doc/common/tables/nova-rabbitmq.xml22(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml22(td)
 #: ./doc/common/tables/heat-conf-changes.xml37(td)
 #: ./doc/common/tables/neutron-conf-changes.xml81(td)
-#: ./doc/common/tables/glance-rabbitmq.xml22(td)
 #: ./doc/common/tables/heat-rabbitmq.xml22(td)
 #: ./doc/common/tables/trove-rabbitmq.xml22(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml22(td)
@@ -26451,9 +26768,9 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml26(td)
+#: ./doc/common/tables/glance-rpc.xml186(td)
 #: ./doc/common/tables/nova-rabbitmq.xml26(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml26(td)
-#: ./doc/common/tables/glance-rabbitmq.xml26(td)
 #: ./doc/common/tables/heat-rabbitmq.xml26(td)
 #: ./doc/common/tables/trove-rabbitmq.xml26(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml26(td)
@@ -26464,9 +26781,9 @@ msgid "(StrOpt) SSL certification authority file (valid only if SSL enabled)."
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml30(td)
+#: ./doc/common/tables/glance-rpc.xml190(td)
 #: ./doc/common/tables/nova-rabbitmq.xml30(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml30(td)
-#: ./doc/common/tables/glance-rabbitmq.xml30(td)
 #: ./doc/common/tables/heat-rabbitmq.xml30(td)
 #: ./doc/common/tables/trove-rabbitmq.xml30(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml30(td)
@@ -26477,9 +26794,9 @@ msgid "(StrOpt) SSL cert file (valid only if SSL enabled)."
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml34(td)
+#: ./doc/common/tables/glance-rpc.xml194(td)
 #: ./doc/common/tables/nova-rabbitmq.xml34(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml34(td)
-#: ./doc/common/tables/glance-rabbitmq.xml34(td)
 #: ./doc/common/tables/heat-rabbitmq.xml34(td)
 #: ./doc/common/tables/trove-rabbitmq.xml34(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml34(td)
@@ -26490,6 +26807,7 @@ msgid "(StrOpt) SSL key file (valid only if SSL enabled)."
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml38(td)
+#: ./doc/common/tables/glance-rpc.xml198(td)
 #: ./doc/common/tables/nova-rabbitmq.xml38(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml38(td)
 #: ./doc/common/tables/neutron-rabbitmq.xml38(td)
@@ -26501,9 +26819,9 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml42(td)
+#: ./doc/common/tables/glance-rpc.xml202(td)
 #: ./doc/common/tables/nova-rabbitmq.xml42(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml42(td)
-#: ./doc/common/tables/glance-rabbitmq.xml42(td)
 #: ./doc/common/tables/heat-rabbitmq.xml42(td)
 #: ./doc/common/tables/trove-rabbitmq.xml42(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml42(td)
@@ -26516,9 +26834,9 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml46(td)
+#: ./doc/common/tables/glance-rpc.xml206(td)
 #: ./doc/common/tables/nova-rabbitmq.xml46(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml46(td)
-#: ./doc/common/tables/glance-rabbitmq.xml46(td)
 #: ./doc/common/tables/heat-rabbitmq.xml46(td)
 #: ./doc/common/tables/trove-rabbitmq.xml46(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml46(td)
@@ -26529,9 +26847,9 @@ msgid "(StrOpt) The RabbitMQ broker address where a single node is used."
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml49(replaceable)
+#: ./doc/common/tables/glance-rpc.xml209(replaceable)
 #: ./doc/common/tables/nova-rabbitmq.xml49(replaceable)
 #: ./doc/common/tables/cinder-rabbitmq.xml49(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml49(replaceable)
 #: ./doc/common/tables/heat-rabbitmq.xml49(replaceable)
 #: ./doc/common/tables/trove-rabbitmq.xml49(replaceable)
 #: ./doc/common/tables/keystone-rabbitmq.xml49(replaceable)
@@ -26542,9 +26860,9 @@ msgid "$rabbit_host:$rabbit_port"
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml50(td)
+#: ./doc/common/tables/glance-rpc.xml210(td)
 #: ./doc/common/tables/nova-rabbitmq.xml50(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml50(td)
-#: ./doc/common/tables/glance-rabbitmq.xml50(td)
 #: ./doc/common/tables/heat-rabbitmq.xml50(td)
 #: ./doc/common/tables/trove-rabbitmq.xml50(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml50(td)
@@ -26555,9 +26873,9 @@ msgid "(ListOpt) RabbitMQ HA cluster host:port pairs."
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml53(replaceable)
+#: ./doc/common/tables/glance-rpc.xml213(replaceable)
 #: ./doc/common/tables/nova-rabbitmq.xml53(replaceable)
 #: ./doc/common/tables/cinder-rabbitmq.xml53(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml53(replaceable)
 #: ./doc/common/tables/heat-rabbitmq.xml53(replaceable)
 #: ./doc/common/tables/trove-rabbitmq.xml53(replaceable)
 #: ./doc/common/tables/keystone-rabbitmq.xml53(replaceable)
@@ -26568,9 +26886,9 @@ msgid "AMQPLAIN"
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml54(td)
+#: ./doc/common/tables/glance-rpc.xml214(td)
 #: ./doc/common/tables/nova-rabbitmq.xml54(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml54(td)
-#: ./doc/common/tables/glance-rabbitmq.xml54(td)
 #: ./doc/common/tables/heat-rabbitmq.xml54(td)
 #: ./doc/common/tables/trove-rabbitmq.xml54(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml54(td)
@@ -26581,9 +26899,9 @@ msgid "(StrOpt) The RabbitMQ login method."
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml58(td)
+#: ./doc/common/tables/glance-rpc.xml218(td)
 #: ./doc/common/tables/nova-rabbitmq.xml58(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml58(td)
-#: ./doc/common/tables/glance-rabbitmq.xml58(td)
 #: ./doc/common/tables/heat-rabbitmq.xml58(td)
 #: ./doc/common/tables/trove-rabbitmq.xml58(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml58(td)
@@ -26597,12 +26915,12 @@ msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml61(replaceable)
 #: ./doc/common/tables/ironic-rabbitmq.xml81(replaceable)
+#: ./doc/common/tables/glance-rpc.xml221(replaceable)
+#: ./doc/common/tables/glance-rpc.xml241(replaceable)
 #: ./doc/common/tables/nova-rabbitmq.xml61(replaceable)
 #: ./doc/common/tables/nova-rabbitmq.xml81(replaceable)
 #: ./doc/common/tables/cinder-rabbitmq.xml61(replaceable)
 #: ./doc/common/tables/cinder-rabbitmq.xml81(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml61(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml81(replaceable)
 #: ./doc/common/tables/heat-rabbitmq.xml61(replaceable)
 #: ./doc/common/tables/heat-rabbitmq.xml81(replaceable)
 #: ./doc/common/tables/trove-rabbitmq.xml61(replaceable)
@@ -26619,9 +26937,9 @@ msgid "guest"
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml62(td)
+#: ./doc/common/tables/glance-rpc.xml222(td)
 #: ./doc/common/tables/nova-rabbitmq.xml62(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml62(td)
-#: ./doc/common/tables/glance-rabbitmq.xml62(td)
 #: ./doc/common/tables/heat-rabbitmq.xml62(td)
 #: ./doc/common/tables/trove-rabbitmq.xml62(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml62(td)
@@ -26632,9 +26950,9 @@ msgid "(StrOpt) The RabbitMQ password."
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml66(td)
+#: ./doc/common/tables/glance-rpc.xml226(td)
 #: ./doc/common/tables/nova-rabbitmq.xml66(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml66(td)
-#: ./doc/common/tables/glance-rabbitmq.xml66(td)
 #: ./doc/common/tables/heat-rabbitmq.xml66(td)
 #: ./doc/common/tables/trove-rabbitmq.xml66(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml66(td)
@@ -26646,6 +26964,7 @@ msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml69(replaceable)
 #: ./doc/common/tables/nova-ironic.xml49(replaceable)
+#: ./doc/common/tables/glance-rpc.xml229(replaceable)
 #: ./doc/common/tables/ironic-swift.xml21(replaceable)
 #: ./doc/common/tables/nova-rabbitmq.xml69(replaceable)
 #: ./doc/common/tables/neutron-ml2_cisco.xml28(replaceable)
@@ -26657,7 +26976,6 @@ msgstr ""
 #: ./doc/common/tables/neutron-vmware.xml57(replaceable)
 #: ./doc/common/tables/neutron-vmware.xml61(replaceable)
 #: ./doc/common/tables/neutron-conf-changes.xml825(td)
-#: ./doc/common/tables/glance-rabbitmq.xml69(replaceable)
 #: ./doc/common/tables/neutron-l3_agent.xml49(replaceable)
 #: ./doc/common/tables/neutron-l3_agent.xml77(replaceable)
 #: ./doc/common/tables/cinder-backups.xml37(replaceable)
@@ -26684,9 +27002,9 @@ msgid "2"
 msgstr "2"
 
 #: ./doc/common/tables/ironic-rabbitmq.xml70(td)
+#: ./doc/common/tables/glance-rpc.xml230(td)
 #: ./doc/common/tables/nova-rabbitmq.xml70(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml70(td)
-#: ./doc/common/tables/glance-rabbitmq.xml70(td)
 #: ./doc/common/tables/heat-rabbitmq.xml70(td)
 #: ./doc/common/tables/trove-rabbitmq.xml70(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml70(td)
@@ -26699,9 +27017,9 @@ msgid ""
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml74(td)
+#: ./doc/common/tables/glance-rpc.xml234(td)
 #: ./doc/common/tables/nova-rabbitmq.xml74(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml74(td)
-#: ./doc/common/tables/glance-rabbitmq.xml74(td)
 #: ./doc/common/tables/heat-rabbitmq.xml74(td)
 #: ./doc/common/tables/trove-rabbitmq.xml74(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml74(td)
@@ -26712,9 +27030,9 @@ msgid "(IntOpt) How frequently to retry connecting with RabbitMQ."
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml78(td)
+#: ./doc/common/tables/glance-rpc.xml238(td)
 #: ./doc/common/tables/nova-rabbitmq.xml78(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml78(td)
-#: ./doc/common/tables/glance-rabbitmq.xml78(td)
 #: ./doc/common/tables/heat-rabbitmq.xml78(td)
 #: ./doc/common/tables/trove-rabbitmq.xml78(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml78(td)
@@ -26725,9 +27043,9 @@ msgid "(BoolOpt) Connect over SSL for RabbitMQ."
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml82(td)
+#: ./doc/common/tables/glance-rpc.xml242(td)
 #: ./doc/common/tables/nova-rabbitmq.xml82(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml82(td)
-#: ./doc/common/tables/glance-rabbitmq.xml82(td)
 #: ./doc/common/tables/heat-rabbitmq.xml82(td)
 #: ./doc/common/tables/trove-rabbitmq.xml82(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml82(td)
@@ -26738,9 +27056,9 @@ msgid "(StrOpt) The RabbitMQ userid."
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml85(replaceable)
+#: ./doc/common/tables/glance-rpc.xml245(replaceable)
 #: ./doc/common/tables/nova-rabbitmq.xml85(replaceable)
 #: ./doc/common/tables/cinder-rabbitmq.xml85(replaceable)
-#: ./doc/common/tables/glance-rabbitmq.xml85(replaceable)
 #: ./doc/common/tables/heat-rabbitmq.xml85(replaceable)
 #: ./doc/common/tables/trove-rabbitmq.xml85(replaceable)
 #: ./doc/common/tables/neutron-nuage.xml25(replaceable)
@@ -26753,9 +27071,9 @@ msgid "/"
 msgstr ""
 
 #: ./doc/common/tables/ironic-rabbitmq.xml86(td)
+#: ./doc/common/tables/glance-rpc.xml246(td)
 #: ./doc/common/tables/nova-rabbitmq.xml86(td)
 #: ./doc/common/tables/cinder-rabbitmq.xml86(td)
-#: ./doc/common/tables/glance-rabbitmq.xml86(td)
 #: ./doc/common/tables/heat-rabbitmq.xml86(td)
 #: ./doc/common/tables/trove-rabbitmq.xml86(td)
 #: ./doc/common/tables/keystone-rabbitmq.xml86(td)
@@ -27302,7 +27620,7 @@ msgid "(StrOpt) Endpoint policy backend driver"
 msgstr ""
 
 #: ./doc/common/tables/keystone-api.xml123(th)
-#: ./doc/common/tables/glance-api.xml92(th)
+#: ./doc/common/tables/glance-api.xml96(th)
 #: ./doc/common/tables/heat-api.xml154(th)
 msgid "[paste_deploy]"
 msgstr ""
@@ -27452,7 +27770,7 @@ msgstr "[container-auditor]"
 #: ./doc/common/tables/trove-api.xml57(replaceable)
 #: ./doc/common/tables/trove-api.xml61(replaceable)
 #: ./doc/common/tables/trove-api.xml65(replaceable)
-#: ./doc/common/tables/glance-swift.xml88(replaceable)
+#: ./doc/common/tables/glance-swift.xml92(replaceable)
 #: ./doc/common/tables/neutron-ml2_bigswitch.xml170(replaceable)
 #: ./doc/common/tables/neutron-bigswitch.xml170(replaceable)
 #: ./doc/common/tables/swift-account-server-account-auditor.xml20(replaceable)
@@ -27525,6 +27843,14 @@ msgstr ""
 msgid ""
 "(ListOpt) Modules of exceptions that are permitted to be recreatedupon "
 "receiving exception data from an rpc call."
+msgstr ""
+
+#: ./doc/common/tables/glance-rpc.xml107(th)
+msgid "[oslo_messaging_qpid]"
+msgstr ""
+
+#: ./doc/common/tables/glance-rpc.xml166(th)
+msgid "[oslo_messaging_rabbit]"
 msgstr ""
 
 #: ./doc/common/tables/neutron-policy.xml22(td)
@@ -28070,90 +28396,6 @@ msgstr ""
 msgid "(DictOpt) Unique ID to tag notification events."
 msgstr ""
 
-#: ./doc/common/tables/ceilometer-auth_token.xml46(td)
-#: ./doc/common/tables/neutron-auth_token.xml46(td)
-#: ./doc/common/tables/ironic-auth_token.xml46(td)
-#: ./doc/common/tables/sahara-auth_token.xml46(td)
-#: ./doc/common/tables/nova-auth_token.xml46(td)
-#: ./doc/common/tables/cinder-auth_token.xml46(td)
-msgid "(StrOpt) Name of the plugin to load"
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-auth_token.xml58(td)
-#: ./doc/common/tables/neutron-auth_token.xml58(td)
-#: ./doc/common/tables/ironic-auth_token.xml58(td)
-#: ./doc/common/tables/sahara-auth_token.xml58(td)
-#: ./doc/common/tables/nova-auth_token.xml58(td)
-#: ./doc/common/tables/cinder-auth_token.xml58(td)
-msgid "(StrOpt) Config Section from which to load plugin specific options"
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-auth_token.xml122(td)
-#: ./doc/common/tables/neutron-auth_token.xml122(td)
-#: ./doc/common/tables/ironic-auth_token.xml122(td)
-#: ./doc/common/tables/sahara-auth_token.xml122(td)
-#: ./doc/common/tables/nova-auth_token.xml122(td)
-#: ./doc/common/tables/cinder-auth_token.xml122(td)
-msgid ""
-"(IntOpt) (Optional) Number of seconds that an operation will wait to get a "
-"memcache client connection from the pool."
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-auth_token.xml126(td)
-#: ./doc/common/tables/neutron-auth_token.xml126(td)
-#: ./doc/common/tables/ironic-auth_token.xml126(td)
-#: ./doc/common/tables/sahara-auth_token.xml126(td)
-#: ./doc/common/tables/nova-auth_token.xml126(td)
-#: ./doc/common/tables/cinder-auth_token.xml126(td)
-msgid ""
-"(IntOpt) (Optional) Number of seconds memcached server is considered dead "
-"before it is tried again."
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-auth_token.xml130(td)
-#: ./doc/common/tables/neutron-auth_token.xml130(td)
-#: ./doc/common/tables/ironic-auth_token.xml130(td)
-#: ./doc/common/tables/sahara-auth_token.xml130(td)
-#: ./doc/common/tables/nova-auth_token.xml130(td)
-#: ./doc/common/tables/cinder-auth_token.xml130(td)
-msgid ""
-"(IntOpt) (Optional) Maximum total number of open connections to every "
-"memcached server."
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-auth_token.xml134(td)
-#: ./doc/common/tables/neutron-auth_token.xml134(td)
-#: ./doc/common/tables/ironic-auth_token.xml134(td)
-#: ./doc/common/tables/sahara-auth_token.xml134(td)
-#: ./doc/common/tables/nova-auth_token.xml134(td)
-#: ./doc/common/tables/cinder-auth_token.xml134(td)
-msgid ""
-"(IntOpt) (Optional) Socket timeout in seconds for communicating with a "
-"memcache server."
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-auth_token.xml138(td)
-#: ./doc/common/tables/neutron-auth_token.xml138(td)
-#: ./doc/common/tables/ironic-auth_token.xml138(td)
-#: ./doc/common/tables/sahara-auth_token.xml138(td)
-#: ./doc/common/tables/nova-auth_token.xml138(td)
-#: ./doc/common/tables/cinder-auth_token.xml138(td)
-msgid ""
-"(IntOpt) (Optional) Number of seconds a connection to memcached is held "
-"unused in the pool before it is closed."
-msgstr ""
-
-#: ./doc/common/tables/ceilometer-auth_token.xml150(td)
-#: ./doc/common/tables/neutron-auth_token.xml150(td)
-#: ./doc/common/tables/ironic-auth_token.xml150(td)
-#: ./doc/common/tables/sahara-auth_token.xml150(td)
-#: ./doc/common/tables/nova-auth_token.xml150(td)
-#: ./doc/common/tables/cinder-auth_token.xml150(td)
-msgid ""
-"(BoolOpt) (Optional) Use the advanced (eventlet safe) memcache client pool. "
-"The advanced pool will only work under python 2.x."
-msgstr ""
-
 #: ./doc/common/tables/ironic-swift.xml7(caption)
 #: ./doc/common/tables/glance-swift.xml7(caption)
 #: ./doc/common/tables/ceilometer-swift.xml7(caption)
@@ -28371,7 +28613,7 @@ msgstr ""
 #: ./doc/common/tables/swift-proxy-server-filter-bulk.xml36(replaceable)
 #: ./doc/common/tables/nova-api.xml109(replaceable)
 #: ./doc/common/tables/glance-common.xml25(replaceable)
-#: ./doc/common/tables/glance-common.xml125(replaceable)
+#: ./doc/common/tables/glance-common.xml129(replaceable)
 msgid "1000"
 msgstr ""
 
@@ -29057,9 +29299,9 @@ msgstr ""
 #: ./doc/common/tables/swift-swift-swift-constraints.xml48(replaceable)
 #: ./doc/common/tables/neutron-conf-changes.xml819(td)
 #: ./doc/common/tables/nova-quota.xml65(replaceable)
-#: ./doc/common/tables/glance-common.xml49(replaceable)
 #: ./doc/common/tables/glance-common.xml53(replaceable)
 #: ./doc/common/tables/glance-common.xml57(replaceable)
+#: ./doc/common/tables/glance-common.xml61(replaceable)
 msgid "128"
 msgstr ""
 
@@ -29623,7 +29865,6 @@ msgid "egg:swift#recon"
 msgstr ""
 
 #: ./doc/common/tables/sahara-debug.xml21(td)
-#: ./doc/common/tables/glance-debug.xml21(td)
 msgid "disable_process_locking = False"
 msgstr ""
 
@@ -31093,7 +31334,7 @@ msgid "[DEFAULT] metadata_source_path = /etc/glance/metadefs/"
 msgstr ""
 
 #: ./doc/common/tables/glance-conf-changes.xml25(td)
-#: ./doc/common/tables/glance-common.xml74(td)
+#: ./doc/common/tables/glance-common.xml78(td)
 msgid "(StrOpt) Path to the directory where json metadata files are stored"
 msgstr ""
 
@@ -31166,7 +31407,7 @@ msgid "[glance_store] stores = file, http"
 msgstr ""
 
 #: ./doc/common/tables/glance-conf-changes.xml57(td)
-#: ./doc/common/tables/glance-api.xml89(td)
+#: ./doc/common/tables/glance-api.xml93(td)
 msgid "(ListOpt) List of stores enabled"
 msgstr ""
 
@@ -31192,7 +31433,7 @@ msgstr ""
 
 #: ./doc/common/tables/glance-conf-changes.xml69(td)
 #: ./doc/common/tables/glance-swift.xml34(td)
-#: ./doc/common/tables/glance-swift.xml85(td)
+#: ./doc/common/tables/glance-swift.xml89(td)
 msgid ""
 "(StrOpt) Auth key for the user authenticating against the Swift "
 "authentication service. (deprecated)"
@@ -31204,7 +31445,7 @@ msgstr ""
 
 #: ./doc/common/tables/glance-conf-changes.xml73(td)
 #: ./doc/common/tables/glance-swift.xml38(td)
-#: ./doc/common/tables/glance-swift.xml117(td)
+#: ./doc/common/tables/glance-swift.xml125(td)
 msgid ""
 "(StrOpt) The user to authenticate against the Swift authentication service "
 "(deprecated)"
@@ -31238,7 +31479,7 @@ msgid "[task] eventlet_executor_pool_size = 1000"
 msgstr ""
 
 #: ./doc/common/tables/glance-conf-changes.xml97(td)
-#: ./doc/common/tables/glance-common.xml126(td)
+#: ./doc/common/tables/glance-common.xml130(td)
 msgid ""
 "(IntOpt) Specifies the maximum number of eventlet threads which can be spun "
 "up by the eventlet based task executor to perform execution of Glance tasks."
@@ -31249,7 +31490,7 @@ msgid "[task] task_executor = eventlet"
 msgstr ""
 
 #: ./doc/common/tables/glance-conf-changes.xml101(td)
-#: ./doc/common/tables/glance-common.xml130(td)
+#: ./doc/common/tables/glance-common.xml134(td)
 msgid ""
 "(StrOpt) Specifies which task executor to be used to run the task scripts."
 msgstr ""
@@ -32308,6 +32549,7 @@ msgid "(StrOpt) Router image id (Embrane FW/VPN)"
 msgstr ""
 
 #: ./doc/common/tables/cinder-debug.xml22(td)
+#: ./doc/common/tables/glance-debug.xml22(td)
 #: ./doc/common/tables/heat-debug.xml22(td)
 #: ./doc/common/tables/ceilometer-debug.xml22(td)
 #: ./doc/common/tables/neutron-debug.xml22(td)
@@ -35187,7 +35429,7 @@ msgstr ""
 #: ./doc/common/tables/nova-barbican.xml46(td)
 #: ./doc/common/tables/nova-conf-changes.xml81(td)
 #: ./doc/common/tables/cinder-compute.xml46(td)
-#: ./doc/common/tables/glance-common.xml101(td)
+#: ./doc/common/tables/glance-common.xml105(td)
 #: ./doc/common/tables/cinder-conf-changes.xml237(td)
 msgid "(StrOpt) Region name of this node"
 msgstr ""
@@ -35457,16 +35699,6 @@ msgstr ""
 msgid ""
 "Whether or not check if the devices are mounted to prevent accidentally "
 "writing to the root device"
-msgstr ""
-
-#: ./doc/common/tables/glance-rabbitmq.xml38(td)
-#: ./doc/common/tables/heat-rabbitmq.xml38(td)
-#: ./doc/common/tables/trove-rabbitmq.xml38(td)
-#: ./doc/common/tables/keystone-rabbitmq.xml38(td)
-#: ./doc/common/tables/sahara-rabbitmq.xml38(td)
-msgid ""
-"(StrOpt) SSL version to use (valid only if SSL enabled). valid values are "
-"TLSv1 and SSLv23. SSLv2 and SSLv3 may be available on some distributions."
 msgstr ""
 
 #: ./doc/common/tables/neutron-l3_agent.xml7(caption)
@@ -37263,6 +37495,15 @@ msgstr ""
 msgid "[container-reconciler]"
 msgstr ""
 
+#: ./doc/common/tables/heat-rabbitmq.xml38(td)
+#: ./doc/common/tables/trove-rabbitmq.xml38(td)
+#: ./doc/common/tables/keystone-rabbitmq.xml38(td)
+#: ./doc/common/tables/sahara-rabbitmq.xml38(td)
+msgid ""
+"(StrOpt) SSL version to use (valid only if SSL enabled). valid values are "
+"TLSv1 and SSLv23. SSLv2 and SSLv3 may be available on some distributions."
+msgstr ""
+
 #: ./doc/common/tables/swift-proxy-server-filter-keystoneauth.xml8(literal)
 msgid "[filter-keystoneauth]"
 msgstr ""
@@ -37926,26 +38167,35 @@ msgstr ""
 msgid "file"
 msgstr ""
 
-#: ./doc/common/tables/glance-api.xml88(replaceable)
+#: ./doc/common/tables/glance-api.xml89(td)
+msgid ""
+"(IntOpt) Minimum interval seconds to execute updating dynamic storage "
+"capabilities based on backend status then. It's not a periodic routine, the "
+"update logic will be executed only when interval seconds elapsed and an "
+"operation of store has triggered. The feature will be enabled only when the "
+"option value greater then zero."
+msgstr ""
+
+#: ./doc/common/tables/glance-api.xml92(replaceable)
 msgid "file, http"
 msgstr ""
 
-#: ./doc/common/tables/glance-api.xml96(td)
+#: ./doc/common/tables/glance-api.xml100(td)
 msgid "(StrOpt) Name of the paste configuration file."
 msgstr ""
 
-#: ./doc/common/tables/glance-api.xml100(td)
+#: ./doc/common/tables/glance-api.xml104(td)
 msgid ""
 "(StrOpt) Partial name of a pipeline in your paste configuration file with "
 "the service name removed. For example, if your paste section name is "
 "[pipeline:glance-api-keystone] use the value \"keystone\""
 msgstr ""
 
-#: ./doc/common/tables/glance-api.xml103(th)
+#: ./doc/common/tables/glance-api.xml107(th)
 msgid "[store_type_location_strategy]"
 msgstr ""
 
-#: ./doc/common/tables/glance-api.xml107(td)
+#: ./doc/common/tables/glance-api.xml111(td)
 msgid ""
 "(ListOpt) The store names to use to get store preference order. The name "
 "must be registered by one of the stores defined by the 'stores' config "
@@ -39920,59 +40170,76 @@ msgstr ""
 
 #: ./doc/common/tables/glance-swift.xml81(td)
 msgid ""
+"(StrOpt) If set, the configured endpoint will be used. If None, the storage "
+"url from the auth response will be used."
+msgstr ""
+
+#: ./doc/common/tables/glance-swift.xml85(td)
+msgid ""
 "(StrOpt) A string giving the endpoint type of the swift service to use "
 "(publicURL, adminURL or internalURL). This setting is only used if "
 "swift_store_auth_version is 2."
 msgstr ""
 
-#: ./doc/common/tables/glance-swift.xml89(td)
+#: ./doc/common/tables/glance-swift.xml93(td)
 msgid ""
 "(IntOpt) The amount of data written to a temporary disk buffer during the "
 "process of chunking the image file."
 msgstr ""
 
-#: ./doc/common/tables/glance-swift.xml92(replaceable)
+#: ./doc/common/tables/glance-swift.xml96(replaceable)
 #: ./doc/common/tables/sahara-common.xml57(replaceable)
 msgid "5120"
 msgstr ""
 
-#: ./doc/common/tables/glance-swift.xml93(td)
+#: ./doc/common/tables/glance-swift.xml97(td)
 msgid ""
 "(IntOpt) The size, in MB, that Glance will start chunking image files and do"
 " a large object manifest in Swift."
 msgstr ""
 
-#: ./doc/common/tables/glance-swift.xml97(td)
+#: ./doc/common/tables/glance-swift.xml101(td)
 msgid ""
 "(BoolOpt) If set to True, enables multi-tenant storage mode which causes "
 "Glance images to be stored in tenant specific Swift accounts."
 msgstr ""
 
-#: ./doc/common/tables/glance-swift.xml101(td)
+#: ./doc/common/tables/glance-swift.xml105(td)
+msgid ""
+"(IntOpt) When set to 0, a single-tenant store will only use one container to"
+" store all images. When set to an integer value between 1 and 32, a single-"
+"tenant store will use multiple containers to store images, and this value "
+"will determine how many containers are created.Used only when "
+"swift_store_multi_tenant is disabled. The total number of containers that "
+"will be used is equal to 16^N, so if this config option is set to 2, then "
+"16^2=256 containers will be used to store images."
+msgstr ""
+
+#: ./doc/common/tables/glance-swift.xml109(td)
 msgid ""
 "(StrOpt) The region of the swift endpoint to be used for single tenant. This"
 " setting is only necessary if the tenant has multiple swift endpoints."
 msgstr ""
 
-#: ./doc/common/tables/glance-swift.xml105(td)
+#: ./doc/common/tables/glance-swift.xml113(td)
 msgid ""
 "(IntOpt) The number of times a Swift download will be retried before the "
 "request fails."
 msgstr ""
 
-#: ./doc/common/tables/glance-swift.xml108(replaceable)
+#: ./doc/common/tables/glance-swift.xml116(replaceable)
 #: ./doc/common/tables/ceilometer-service_types.xml37(replaceable)
 #: ./doc/common/tables/trove-swift.xml25(replaceable)
 msgid "object-store"
 msgstr ""
 
-#: ./doc/common/tables/glance-swift.xml109(td)
+#: ./doc/common/tables/glance-swift.xml117(td)
 msgid ""
 "(StrOpt) A string giving the service type of the swift service to use. This "
 "setting is only used if swift_store_auth_version is 2."
 msgstr ""
 
-#: ./doc/common/tables/glance-swift.xml113(td)
+#: ./doc/common/tables/glance-swift.xml121(td)
 msgid ""
 "(BoolOpt) If set to False, disables SSL layer compression of https swift "
 "requests. Setting to False may improve performance for images which are "
@@ -44953,6 +45220,31 @@ msgstr ""
 msgid "(StrOpt) Federation backend driver."
 msgstr ""
 
+#: ./doc/common/tables/glance-taskflow.xml7(caption)
+msgid "Description of TaskFlow configuration options"
+msgstr ""
+
+#: ./doc/common/tables/glance-taskflow.xml18(th)
+msgid "[taskflow_executor]"
+msgstr ""
+
+#: ./doc/common/tables/glance-taskflow.xml21(replaceable)
+msgid "serial"
+msgstr ""
+
+#: ./doc/common/tables/glance-taskflow.xml22(td)
+msgid ""
+"(StrOpt) The mode in which the engine will run. Can be 'serial' or "
+"'parallel'."
+msgstr ""
+
+#: ./doc/common/tables/glance-taskflow.xml26(td)
+msgid ""
+"(IntOpt) The number of parallel activities executed at the same time by the "
+"engine. The value can be greater than one when the engine mode is "
+"'parallel'."
+msgstr ""
+
 #: ./doc/common/tables/ceilometer-service_types.xml7(caption)
 msgid "Description of service types configuration options"
 msgstr ""
@@ -47146,74 +47438,88 @@ msgstr ""
 msgid "(StrOpt) Python module path of data access API"
 msgstr ""
 
+#: ./doc/common/tables/glance-common.xml45(replaceable)
+msgid "sha1"
+msgstr "sha1"
+
 #: ./doc/common/tables/glance-common.xml46(td)
+msgid ""
+"(StrOpt) Digest algorithm which will be used for digital signature; the "
+"default is sha1 the default in Kilo for a smooth upgrade process, and it "
+"will be updated with sha256 in next release(L). Use the command \"openssl "
+"list-message-digest-algorithms\" to get the available algorithms supported "
+"by the version of OpenSSL on the platform. Examples are \"sha1\", "
+"\"sha256\", \"sha512\", etc."
+msgstr ""
+
+#: ./doc/common/tables/glance-common.xml50(td)
 msgid ""
 "(IntOpt) Maximum number of locations allowed on an image. Negative values "
 "evaluate to unlimited."
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml50(td)
+#: ./doc/common/tables/glance-common.xml54(td)
 msgid ""
 "(IntOpt) Maximum number of image members per image. Negative values evaluate"
 " to unlimited."
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml54(td)
+#: ./doc/common/tables/glance-common.xml58(td)
 msgid ""
 "(IntOpt) Maximum number of properties allowed on an image. Negative values "
 "evaluate to unlimited."
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml58(td)
+#: ./doc/common/tables/glance-common.xml62(td)
 msgid ""
 "(IntOpt) Maximum number of tags allowed on an image. Negative values "
 "evaluate to unlimited."
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml61(replaceable)
+#: ./doc/common/tables/glance-common.xml65(replaceable)
 #: ./doc/common/tables/swift-dispersion-dispersion.xml36(replaceable)
 #: ./doc/common/tables/swift-account-server-account-reaper.xml20(replaceable)
 msgid "25"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml62(td)
+#: ./doc/common/tables/glance-common.xml66(td)
 msgid ""
 "(IntOpt) Default value for the number of items returned by a request if not "
 "specified explicitly in the request"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml70(td)
+#: ./doc/common/tables/glance-common.xml74(td)
 msgid ""
 "(StrOpt) Key used for encrypting sensitive metadata while talking to the "
 "registry or database."
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml73(replaceable)
+#: ./doc/common/tables/glance-common.xml77(replaceable)
 msgid "/etc/glance/metadefs/"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml78(td)
+#: ./doc/common/tables/glance-common.xml82(td)
 msgid "(StrOpt) The location of the property protection file."
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml81(replaceable)
+#: ./doc/common/tables/glance-common.xml85(replaceable)
 msgid "roles"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml82(td)
+#: ./doc/common/tables/glance-common.xml86(td)
 msgid ""
 "(StrOpt) This config value indicates whether \"roles\" or \"policies\" are "
 "used in the property protection file."
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml86(td)
+#: ./doc/common/tables/glance-common.xml90(td)
 msgid ""
 "(BoolOpt) Whether to include the backend image storage location in image "
 "properties. Revealing storage location can be a security risk, so use this "
 "setting with caution!"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml90(td)
+#: ./doc/common/tables/glance-common.xml94(td)
 msgid ""
 "(StrOpt) Set a system wide quota for every user. This value is the total "
 "capacity that a user can use across all storage systems. A value of 0 means "
@@ -47224,45 +47530,45 @@ msgid ""
 "case sensitive."
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml94(td)
+#: ./doc/common/tables/glance-common.xml98(td)
 msgid ""
 "(IntOpt) The number of child process workers that will be created to service"
 " requests. The default will be equal to the number of CPUs available."
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml104(th)
+#: ./doc/common/tables/glance-common.xml108(th)
 msgid "[image_format]"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml107(replaceable)
+#: ./doc/common/tables/glance-common.xml111(replaceable)
 msgid "ami, ari, aki, bare, ovf, ova"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml108(td)
+#: ./doc/common/tables/glance-common.xml112(td)
 msgid "(ListOpt) Supported values for the 'container_format' image attribute"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml111(replaceable)
+#: ./doc/common/tables/glance-common.xml115(replaceable)
 msgid "ami, ari, aki, vhd, vmdk, raw, qcow2, vdi, iso"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml112(td)
+#: ./doc/common/tables/glance-common.xml116(td)
 msgid "(ListOpt) Supported values for the 'disk_format' image attribute"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml122(th)
+#: ./doc/common/tables/glance-common.xml126(th)
 msgid "[task]"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml129(replaceable)
+#: ./doc/common/tables/glance-common.xml133(replaceable)
 msgid "eventlet"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml133(replaceable)
+#: ./doc/common/tables/glance-common.xml137(replaceable)
 msgid "48"
 msgstr ""
 
-#: ./doc/common/tables/glance-common.xml134(td)
+#: ./doc/common/tables/glance-common.xml138(td)
 msgid ""
 "(IntOpt) Time in hours for which a task lives after, either succeeding or "
 "failing"
