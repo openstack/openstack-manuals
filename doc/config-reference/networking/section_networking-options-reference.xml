@@ -181,6 +181,17 @@ for your driver to change security group settings.</para>
  it does not need to reload iptables if only members of security group were
  changed, it should just update an IPset.</para>
 </note>
+<note>
+<para>A single default security group has been introduced in order
+ to avoid race conditions when creating a tenant's default security
+ group. The race conditions are caused by the uniqueness check of
+ a new security group name. A table <literal>default_security_group</literal>
+ implements such a group. It has <literal>tenant_id</literal> field
+ as a primary key and <literal>security_group_id</literal>, which
+ is an identifier of a default security group. The migration that introduces
+ this table has a sanity check that verifies if a default security
+ group is not duplicated in any tenant.</para>
+</note>
 </section>
 
 <section xml:id="networking-options-ssl">
