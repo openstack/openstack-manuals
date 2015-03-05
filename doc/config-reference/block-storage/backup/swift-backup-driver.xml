@@ -3,7 +3,7 @@
         xmlns:xi="http://www.w3.org/2001/XInclude"
         xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
         <title>Swift backup driver</title>
-        <para>The backup driver for Swift back-end performs a volume
+        <para>The backup driver for Swift back end performs a volume
                 backup to a Swift object storage system.</para>
         <para>To enable the Swift backup driver, include the following
                 option in the <filename>cinder.conf</filename>
@@ -13,10 +13,19 @@
                 the Swift back-end backup driver.</para>
         <xi:include
                 href="../../../common/tables/cinder-backups_swift.xml"/>
+
+        <para>To enable Swift backup driver for 1.0 or 2.0 authentication version,
+ specify <literal>1</literal> or <literal>2</literal> correspondingly. For example:</para>
+        <programlisting>backup_swift_auth_version = 2</programlisting>
+        <para>In addition, the 2.0 authentication system requires
+ <parameter>backup_swift_tenant</parameter> setting:</para>
+        <programlisting>backup_swift_tenant = &lt;None&gt;</programlisting>
+
         <para>This example shows the default options for the Swift
                 back-end backup driver.</para>
         <programlisting>backup_swift_url = http://localhost:8080/v1/AUTH_
 backup_swift_auth = per_user
+backup_swift_auth_version = 1
 backup_swift_user = &lt;None&gt;
 backup_swift_key = &lt;None&gt;
 backup_swift_container = volumebackups
