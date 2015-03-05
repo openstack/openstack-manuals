@@ -243,4 +243,22 @@ inject_partition = -2</programlisting>
                 disable injection.</para>
         </note>
     </section>
+<section xml:id="live-snapshotting-fail">
+        <title>Disable live snapshotting</title>
+        <para>If you use libvirt version <literal>1.2.2</literal>,
+              you may experience problems with live snapshots creation.
+              Occasionally, libvirt of the specified version
+              fails to perform the live snapshotting under load
+              that presupposes a concurrent creation of
+              multiple snapshots.</para>
+
+        <para>To effectively disable the libvirt live snapshotting, until the problem
+              is resolved, configure the <option>disable_libvirt_livesnapshot</option>
+              option. You can turn off the live snapshotting mechanism by setting
+              up its value to <literal>True</literal> in the
+              <literal>[workarounds]</literal> section
+              of the <filename>nova.conf</filename> configuration file:</para>
+              <programlisting language="ini">[workarounds]
+disable_libvirt_livesnapshot = True</programlisting>
+</section>
 </section>
