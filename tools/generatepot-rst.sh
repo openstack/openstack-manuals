@@ -27,6 +27,7 @@ sphinx-build -b gettext doc/$DOCNAME/source/ doc/$DOCNAME/source/locale/
 
 # Take care of deleting all temporary files so that git add
 # doc/$DOCNAME/source/locale will only add the single pot file.
-msgcat doc/$DOCNAME/source/locale/*.pot > doc/$DOCNAME/source/DOCNAME.pot
+msgcat doc/$DOCNAME/source/locale/*.pot > doc/$DOCNAME/source/$DOCNAME.pot
 rm doc/$DOCNAME/source/locale/*.pot
-mv doc/$DOCNAME/source/DOCNAME.pot doc/$DOCNAME/source/locale/DOCNAME.pot
+rm -rf doc/$DOCNAME/source/locale/*.doctrees/
+mv doc/$DOCNAME/source/$DOCNAME.pot doc/$DOCNAME/source/locale/$DOCNAME.pot
