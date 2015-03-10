@@ -1,5 +1,5 @@
-Welcome to the end user documentation for OpenStack
-===================================================
+OpenStack User Guide
+====================
 
 Contents:
 
