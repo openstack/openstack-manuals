@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+%openstack;
+]>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="driver_filter_weighing">
+    <title>
+      Configure and use driver filter and weighing for scheduler
+    </title>
+
+    <para>
+      OpenStack Block Storage enables you to choose a volume back
+      end based on back-end specific properties by using the
+      DriverFilter and GoodnessWeigher for the scheduler. The
+      driver filter and weigher scheduling can help ensure that the
+      scheduler chooses the best back end based on requested volume
+      properties as well as various back-end specific properties.
+    </para>
+
+    <simplesect>
+      <title>
+        What is driver filter and weigher and when to use it
+      </title>
+      <para>
+        The driver filter and weigher gives you the ability
+        to more finely control how the OpenStack Block Storage
+        scheduler chooses the best back end to use when handling
+        a volume request.
+
+        One example scenario where using the driver filter and
+        weigher can be if a back end that utilizes thin-provisioning
+        is used. The default filters use the "free capacity"
+        property to determine the best back end, but that is not
+        always perfect. If a back end has the ability to provide a
+        more accurate back-end specific value you can use that as
+        part of the weighing.
+
+        Another example of when the driver filter and weigher can
+        prove useful is if a back end exists where there is a hard
+        limit of 1000 volumes. The maxmimum volume size is
+        500&nbsp;GB. Once 75% of the total space is occupied the
+        performance of the back end degrades. The driver filter and
+        weigher can provide a way for these limits to be checked
+        for.
+      </para>
+    </simplesect>
+
+    <simplesect>
+      <title>Enable driver filter and weighing</title>
+      <para>
+        To enable the driver filter, set the <option>
+        scheduler_default_filters</option> option in the <filename>
+        cinder.conf</filename> file to <literal>DriverFilter
+        </literal> or add it to the list if other filters are
+        already present.
+      </para>
+
+      <para>
+        To enable the goodness filter as a weigher, set the <option>
+        scheduler_default_weighers</option> option in the <filename>
+        cinder.conf</filename> file to <literal>GoodnessWeigher
+        </literal> or add it to the list if other weighers are
+        already present.
+      </para>
+
+      <para>
+        You can choose to use the <literal>DriverFilter</literal>
+        without the <literal>GoodnessWeigher</literal> or
+        vice-versa. The filter and weigher working together,
+        however, create the most benefits when helping the
+        scheduler choose an ideal back end.
+      </para>
+
+      <important>
+          <para>
+            The support for the <literal>DriverFilter</literal> and
+            <literal>GoodnessWeigher</literal> is optional for back
+            ends. If you are using a back end that does not support
+            the filter and weigher functionality you may not get the
+            full benefit.
+          </para>
+      </important>
+
+      <para>
+        Example <filename>cinder.conf</filename> configuration file:
+      </para>
+      <programlisting language="ini">scheduler_default_filters = DriverFilter
+scheduler_default_weighers = GoodnessWeigher</programlisting>
+
+      <note>
+          <para>
+            It is useful to use the other filters and weighers
+            available in OpenStack in combination with these custom
+            ones. For example, the <literal>CapacityFilter</literal>
+            and <literal>CapacityWeigher</literal> can be combined
+            with these.
+          </para>
+      </note>
+    </simplesect>
+
+    <simplesect>
+      <title>Defining your own filter and goodness functions</title>
+      <para>
+        You can define your own filter and goodness functions
+        through the use of various properties that OpenStack
+        Block Storage has exposed. Properties exposed include
+        information about the volume request being made, volume_type
+        settings, and back-end specific information about drivers.
+        All of these allow for a lot of control over how the ideal
+        back end for a volume request will be decided.
+      </para>
+
+      <para>
+        The <option>filter_function</option> option is a string
+        defining an equation that will determine whether a back end
+        should be considered as a potential candidate in the
+        scheduler.
+      </para>
+
+      <para>
+        The <option>goodness_function</option> option is a string
+        defining an equation that will rate the quality of the
+        potential host (0 to 100, 0 lowest, 100 highest).
+      </para>
+
+      <important>
+        <para>
+          Default values for the filter and goodness functions will
+          be used for each back end if you do not define them
+          yourself.  If complete control is desired then a filter
+          and goodness function should be defined for each of the
+          back ends in the <filename>cinder.conf</filename> file.
+        </para>
+      </important>
+    </simplesect>
+
+    <simplesect>
+      <title>
+        Supported operations in filter and goodness functions
+      </title>
+      <para>
+        Below is a table of all the operations currently usable in
+        custom filter and goodness functions created by you:
+      </para>
+
+      <informaltable>
+        <thead>
+          <tr>
+            <th>Operations</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><para>+, -, *, /, ^</para></td>
+            <td><para>standard math</para></td>
+          </tr>
+          <tr>
+            <td><para>not, and, or, &amp;, |, !</para></td>
+            <td><para>logic</para></td>
+          </tr>
+          <tr>
+            <td>
+              <para>
+                &gt;, &gt;=, &lt;, &lt;=, ==, &lt;&gt;, !=
+              </para>
+            </td>
+            <td><para>equality</para></td>
+          </tr>
+          <tr>
+            <td><para>+, -</para></td>
+            <td><para>sign</para></td>
+          </tr>
+          <tr>
+            <td><para>x ? a : b</para></td>
+            <td><para>ternary</para></td>
+          </tr>
+          <tr>
+            <td><para>abs(x), max(x, y), min(x, y)</para></td>
+            <td><para>math helper functions</para></td>
+          </tr>
+        </tbody>
+      </informaltable>
+
+      <caution>
+        <para>
+          Syntax errors in filter or goodness strings defined by you
+          will cause errors to be thrown at volume request time.
+        </para>
+      </caution>
+    </simplesect>
+
+    <simplesect>
+      <title>
+        Available properties when creating custom functions
+      </title>
+      <para>
+        There are various properties that can be used in either the
+        <option>filter_function</option> or the <option>
+        goodness_function</option> strings. The properties allow
+        access to volume info, qos settings, extra specs, and so on.
+      </para>
+
+      <para>
+        Here is a list of the properties and their sub-properties
+        currently available for use:
+      </para>
+
+      <itemizedlist>
+        <listitem>
+          <para>
+            <literal>stats</literal>&mdash;These are the host stats
+            for a back end.
+          </para>
+          <variablelist>
+            <varlistentry><term>host</term>
+              <listitem><para>The host's name.</para></listitem>
+            </varlistentry>
+            <varlistentry><term>volume_backend_name</term>
+              <listitem><para>The volume back end name.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>vendor_name</term>
+              <listitem><para>The vendor name.</para></listitem>
+            </varlistentry>
+            <varlistentry><term>driver_version</term>
+              <listitem><para>The driver version.</para></listitem>
+            </varlistentry>
+            <varlistentry><term>storage_protocol</term>
+              <listitem><para>The storage protocol.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>QoS_support</term>
+              <listitem><para>Boolean signifying whether QoS is
+                supported.</para></listitem>
+            </varlistentry>
+            <varlistentry><term>total_capacity_gb</term>
+              <listitem><para>The total capacity in GB.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>allocated_capacity_gb</term>
+              <listitem><para>The allocated capacity in GB.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>reserved_percentage</term>
+              <listitem><para>The reserved storage percentage.
+              </para></listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>capabilities</literal>&mdash;These are the
+            capabilities specific to a back end.
+          </para>
+          <para>
+            The properties available here are determined by the
+            specific back end you are creating filter and goodness
+            functions for. Some back ends may not have any
+            properties available here.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>volume</literal>&mdash;The requested volume
+            properties.
+          </para>
+          <variablelist>
+            <varlistentry><term>status</term>
+              <listitem><para>Status for the requested volume.
+              </para></listitem>
+            </varlistentry>
+            <varlistentry><term>volume_type_id</term>
+              <listitem><para>The volume type ID.</para></listitem>
+            </varlistentry>
+            <varlistentry><term>display_name</term>
+              <listitem><para>The display name of the volume.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>volume_metadata</term>
+              <listitem><para>Any metadata the volume has.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>reservations</term>
+              <listitem><para>Any reservations the volume has.
+              </para></listitem>
+            </varlistentry>
+            <varlistentry><term>user_id</term>
+              <listitem><para>The volume's user ID.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>attach_status</term>
+              <listitem><para>The attach status for the volume.
+              </para></listitem>
+            </varlistentry>
+            <varlistentry><term>display_description</term>
+              <listitem><para>The volume's display description.
+              </para></listitem>
+            </varlistentry>
+            <varlistentry><term>id</term>
+              <listitem><para>The volume's ID.</para></listitem>
+            </varlistentry>
+            <varlistentry><term>replication_status</term>
+              <listitem><para>The volume's replication status.
+              </para></listitem>
+            </varlistentry>
+            <varlistentry><term>snapshot_id</term>
+              <listitem><para>The volume's snapshot ID.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>encryption_key_id</term>
+              <listitem><para>The volume's encryption key ID.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>source_volid</term>
+              <listitem><para>The source volume ID.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>volume_admin_metadata</term>
+              <listitem><para>Any admin metadata for this volume.
+              </para></listitem>
+            </varlistentry>
+            <varlistentry><term>source_replicaid</term>
+              <listitem><para>The source replication ID.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>consistencygroup_id</term>
+              <listitem><para>The consistency group ID.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>size</term>
+              <listitem><para>The size of the volume in GB.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry><term>metadata</term>
+              <listitem><para>General metadata.</para></listitem>
+            </varlistentry>
+          </variablelist>
+
+          <para>
+            The property most used from here will most likely be the
+            <literal>size</literal> sub-property.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>extra</literal>&mdash;The extra specs for the
+            requested volume type.
+          </para>
+          <para>
+            View the available properties for volume types by
+            running: <screen><prompt>$</prompt> <userinput>cinder extra-specs-list</userinput></screen>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <literal>qos</literal>&mdash;The current QoS specs for
+            the requested volume type.
+          </para>
+          <para>
+            View the available properties for volume types by
+            running: <screen><prompt>$</prompt> <userinput>cinder qos-list</userinput></screen>
+          </para>
+        </listitem>
+      </itemizedlist>
+
+      <para>
+        In order to access these properties in a custom string use
+        the following format:
+      </para>
+      <para>
+        <command>&lt;property&gt;.&lt;sub_property&gt;</command>
+      </para>
+    </simplesect>
+
+    <simplesect>
+      <title>Driver filter and weigher usage examples</title>
+      <para>
+        Below are examples for using the filter and weigher separately, together,
+        and using driver-specific properties.
+      </para>
+
+      <para>
+        Example <filename>cinder.conf</filename> file configuration
+        for customizing the filter function:
+      </para>
+      <programlisting language="ini">[default]
+scheduler_default_filters = DriverFilter
+enabled_backends = lvm-1, lvm-2
+
+[lvm-1]
+volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_backend_name = sample_LVM
+filter_function = "volume.size &lt; 10"
+
+[lvm-2]
+volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_backend_name = sample_LVM
+filter_function = "volume.size &gt;= 10"</programlisting>
+      <para>
+        The above example will filter volumes to different back ends
+        depending on the size of the requested volume. Default
+        OpenStack Block Storage scheduler weighing is done. Volumes
+        with a size less than 10&nbsp;GB are sent to lvm-1 and
+        volumes with a size greater than or equal to 10&nbsp;GB are
+        sent to lvm-2.
+      </para>
+
+      <para>
+        Example <filename>cinder.conf</filename> file configuration
+        for customizing the goodness function:
+      </para>
+      <programlisting language="ini">[default]
+scheduler_default_weighers = GoodnessWeigher
+enabled_backends = lvm-1, lvm-2
+
+[lvm-1]
+volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_backend_name = sample_LVM
+goodness_function = "(volume.size &lt; 5) ? 100 : 50"
+
+[lvm-2]
+volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_backend_name = sample_LVM
+goodness_function = "(volume.size &gt;= 5) ? 100 : 25"</programlisting>
+      <para>
+        The above example will determine the goodness rating of a
+        backend based off of the requested volume's size. Default
+        OpenStack Block Storage scheduler filtering is done. The
+        example shows how the ternary if statement can be used in a
+        filter or goodness function. If a requested volume is of
+        size 10&nbsp;GB then lvm-1 is rated as 50 and lvm-2 is rated
+        as 100. In this case lvm-2 wins. If a requested volume is
+        of size 3&nbsp;GB then lvm-1 is rated 100 and lvm-2 is rated
+        25. In this case lvm-1 would win.
+      </para>
+
+      <para>
+        Example <filename>cinder.conf</filename> file configuration
+        for customizing both the filter and goodness functions:
+      </para>
+      <programlisting language="ini">[default]
+scheduler_default_filters = DriverFilter
+scheduler_default_weighers = GoodnessWeigher
+enabled_backends = lvm-1, lvm-2
+
+[lvm-1]
+volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_backend_name = sample_LVM
+filter_function = "stats.total_capacity_gb &lt; 500"
+goodness_function = "(volume.size &lt; 25) ? 100 : 50"
+
+[lvm-2]
+volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_backend_name = sample_LVM
+filter_function = "stats.total_capacity_gb &gt;= 500"
+goodness_function = "(volume.size &gt;= 25) ? 100 : 75"</programlisting>
+
+      <para>
+        The above example combines the techniques from the first
+        two examples.  The best back end is now decided based off
+        of the total capacity of the back end and the requested
+        volume's size.
+      </para>
+
+      <para>
+        Example <filename>cinder.conf</filename> file configuration
+        for accessing driver specific properties:
+      </para>
+      <programlisting language="ini">[default]
+scheduler_default_filters = DriverFilter
+scheduler_default_weighers = GoodnessWeigher
+enabled_backends = lvm-1,lvm-2,lvm-3
+
+[lvm-1]
+volume_group = stack-volumes-lvmdriver-1
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_backend_name = lvmdriver-1
+filter_function = "volume.size &lt; 5"
+goodness_function = "(capabilities.total_volumes &lt; 3) ? 100 : 50"
+
+[lvm-2]
+volume_group = stack-volumes-lvmdriver-2
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_backend_name = lvmdriver-2
+filter_function = "volumes.size &lt; 5"
+goodness_function = "(capabilities.total_volumes &lt; 8) ? 100 : 50"
+
+[lvm-3]
+volume_group = stack-volumes-lvmdriver-3
+volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+volume_backend_name = lvmdriver-3
+goodness_function = "55"</programlisting>
+
+      <para>
+        The above is an example of how back-end specific properties
+        can be used in the fitler and goodness functions. In this
+        example the LVM driver's 'total_volumes' capability is being
+        used to determine which host gets used during a volume
+        request.
+
+        In the above example, lvm-1 and lvm-2 will handle volume
+        requests for all volumes with a size less than 5&nbsp;GB.
+        The lvm-1 host will have priority until it contains three
+        or more volumes. After than lvm-2 will have priority until
+        it contains eight or more volumes.  The lvm-3 will collect
+        all volumes greater or equal to 5&nbsp;GB as well as all
+        volumes once lvm-1 and lvm-2 lose priority.
+      </para>
+    </simplesect>
+</section>
