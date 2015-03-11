@@ -1,3 +1,6 @@
+.. highlight: python
+   :linenothreshold: 5
+
 ==========================================
 Authenticate against a Networking endpoint
 ==========================================
@@ -5,7 +8,8 @@ Authenticate against a Networking endpoint
 To authenticate against a Networking endpoint, instantiate a
 ``neutronclient.v_2_0.client.Client`` object:
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
    from os import environ as env
    from neutronclient.v2_0 import client as neutronclient
@@ -18,7 +22,8 @@ To authenticate against a Networking endpoint, instantiate a
 You can also authenticate by explicitly specifying the endpoint and
 token:
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
    from os import environ as env
    import keystoneclient.v2_0.client as ksclient

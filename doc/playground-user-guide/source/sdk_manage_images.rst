@@ -1,3 +1,6 @@
+.. highlight: python
+   :linenothreshold: 5
+
 =============
 Manage images
 =============
@@ -13,7 +16,7 @@ List images
 To list the available images, call the
 ``glanceclient.v2.images.Controller.list`` method:
 
-.. code:: python
+.. code-block:: python
 
     import glanceclient.v2.client as glclient
     glance = glclient.Client(...)
@@ -87,7 +90,7 @@ Get image by ID
 To retrieve an image object from its ID, call the
 ``glanceclient.v2.images.Controller.get`` method:
 
-.. code:: python
+.. code-block:: python
 
     import glanceclient.v2.client as glclient
     image_id = 'c002c82e-2cfa-4952-8461-2095b69c18a6'
@@ -104,7 +107,7 @@ image object by name. However, the Compute Python bindings enable you to
 get an image object by name. To get an image object by name, call the
 ``novaclient.v1\_1.images.ImageManager.find`` method:
 
-.. code:: python
+.. code-block:: python
 
     import novaclient.v1_1.client as nvclient
     name = "cirros"
@@ -119,7 +122,8 @@ Upload an image
 To upload an image, call the ``glanceclient.v2.images.ImageManager.create``
 method:
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     import glanceclient.v2.client as glclient
     imagefile = "/tmp/myimage.img"

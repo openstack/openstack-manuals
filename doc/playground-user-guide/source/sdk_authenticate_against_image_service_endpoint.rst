@@ -1,3 +1,6 @@
+.. highlight: python
+   :linenothreshold: 5
+
 ==============================================
 Authenticate against an Image Service endpoint
 ==============================================
@@ -5,7 +8,8 @@ Authenticate against an Image Service endpoint
 To authenticate against an Image Service endpoint, instantiate a
 `glanceclient.v2.client.Client <http://docs.openstack.org/developer/python-glanceclient/api/glanceclient.v2.client.html#glanceclient.v2.client.Client>`__ object:
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
    from os import environ as env
    import glanceclient.v2.client as glclient

@@ -1,3 +1,6 @@
+.. highlight: python
+   :linenothreshold: 5
+
 =======
 Compute
 =======
@@ -18,7 +21,8 @@ Get OpenStack credentials (API v2)
 
 This example uses the ``get_nova_credentials_v2`` method:
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     def get_nova_credentials_v2():
         d = {}
@@ -35,7 +39,7 @@ import.
 Use the ``get_nova_credentials_v2()`` method to populate and get a
 dictionary:
 
-.. code:: python
+.. code-block:: python
 
     credentials = get_nova_credentials_v2()
 
@@ -46,7 +50,7 @@ The following program lists servers by using the Compute API v2.
 
 #. Import the following modules:
 
-    .. code:: python
+    .. code-block:: python
 
       from credentials import get_nova_credentials_v2
       from novaclient.client import Client
@@ -57,20 +61,21 @@ The following program lists servers by using the Compute API v2.
 #. Instantiate the ``nova_client`` client object by using the
    ``credentials`` dictionary object:
 
-    .. code:: python
+    .. code-block:: python
 
       nova_client = Client(**credentials)
 
 #. List servers by calling ``servers.list`` on ``nova_client`` object:
 
-    .. code:: python
+    .. code-block:: python
 
       print(nova_client.servers.list())
 
 List server code listing example
 --------------------------------
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     #!/usr/bin/env python
     from credentials import get_nova_credentials_v2
@@ -88,7 +93,7 @@ The following program creates a server (VM) by using the Compute API v2.
 
 #. Import the following modules:
 
-    .. code:: python
+    .. code-block:: python
 
       import time
       from credentials import get_nova_credentials_v2
@@ -100,7 +105,7 @@ The following program creates a server (VM) by using the Compute API v2.
 #. Instantiate the ``nova_client`` client object by using the
    ``credentials`` dictionary object:
 
-    .. code:: python
+    .. code-block:: python
 
       nova_client = Client(**credentials)
 
@@ -108,7 +113,7 @@ The following program creates a server (VM) by using the Compute API v2.
    the ``cirros`` image, the ``m1.tiny`` flavor, and the ``private``
    network:
 
-    .. code:: python
+    .. code-block:: python
 
       image = nova_client.images.find(name="cirros")
       flavor = nova_client.flavors.find(name="m1.tiny")
@@ -116,7 +121,7 @@ The following program creates a server (VM) by using the Compute API v2.
 
 #. To create the server, use the network, image, and flavor:
 
-    .. code:: python
+    .. code-block:: python
 
       nics = [{'net-id': net.id}]
       instance = nova_client.servers.create(name="vm2", image=image,
@@ -125,17 +130,18 @@ The following program creates a server (VM) by using the Compute API v2.
 #. Run the "Sleep for five seconds" command, and determine whether
    the server/vm was created by calling ``nova_client.servers.list()``:
 
-    .. code:: python
+    .. code-block:: python
 
       print("Sleeping for 5s after create command")
-     time.sleep(5)
+      time.sleep(5)
       print("List of VMs")
       print(nova_client.servers.list())
 
 Create server code listing example
 ----------------------------------
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     #!/usr/bin/env python
     import time
@@ -166,7 +172,7 @@ The following program deletes a server (VM) by using the Compute API v2.
 
 #. Import the following modules:
 
-    .. code:: python
+    .. code-block:: python
 
       import time
       from credentials import get_nova_credentials_v2
@@ -178,7 +184,7 @@ The following program deletes a server (VM) by using the Compute API v2.
 #. Instantiate the ``nova_client`` client object by using the
    ``credentials`` dictionary object:
 
-    .. code:: python
+    .. code-block:: python
 
       nova_client = Client(**credentials)
 
@@ -191,7 +197,8 @@ The following program deletes a server (VM) by using the Compute API v2.
    c. If true, set the variable name ``server_exists`` to ``True``
    and break from the for loop:
 
-    .. code:: python
+   .. code-block:: python
+      :linenos:
 
       servers_list = nova_client.servers.list()
       server_del = "vm1"
@@ -207,14 +214,15 @@ The following program deletes a server (VM) by using the Compute API v2.
 #. If the server exists, run the ``delete`` method of the
    ``nova_client.servers`` object:
 
-    .. code:: python
+    .. code-block:: python
 
       nova_client.servers.delete(s)
 
 Delete server code example
 --------------------------
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     #!/usr/bin/env python
     from credentials import get_nova_credentials_v2
@@ -247,7 +255,7 @@ Compute API v2.
 
 #. Import the following modules:
 
-    .. code:: python
+    .. code-block:: python
 
       from credentials import get_nova_credentials_v2
       from novaclient.client import Client
@@ -256,7 +264,8 @@ Compute API v2.
    ``print_server`` is a method defined in ``utils.py`` and prints the
    server details as shown in the code listing below:
 
-    .. code:: python
+   .. code-block:: python
+      :linenos:
 
       def print_server(server):
           print("-"*35)
@@ -274,7 +283,7 @@ Compute API v2.
 #. Instantiate the ``nova_client`` client object by using the
    ``credentials`` dictionary object:
 
-    .. code:: python
+    .. code-block:: python
 
       nova_client = Client(**credentials)
 
@@ -282,7 +291,7 @@ Compute API v2.
 #. Get the server instance using ``server_id`` and print the details by
 calling ``print_server`` method:
 
-    .. code:: python
+    .. code-block:: python
 
       server_id = '99889c8d-113f-4a7e-970c-77f1916bfe14'
       server = nova_client.servers.get(server_id)
@@ -292,26 +301,28 @@ calling ``print_server`` method:
 #. Call ``server.update`` on the server object with the new value for
    ``name`` variable:
 
-    .. code:: python
+   .. code-block:: python
+      :linenos:
 
       server.update(name = n + '1')
 
 #. Get the updated instance of the server:
 
-    .. code:: python
+    .. code-block:: python
 
       server_updated = nova_client.servers.get(server_id)
 
 #. Call ``print_server`` again to check the update server details:
 
-    .. code:: python
+    .. code-block:: python
 
       print_server(server_updated)
 
 Update server code listing example
 ----------------------------------
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     #!/usr/bin/env python
 
@@ -341,7 +352,7 @@ Compute API v2.
 
 #. Import the following modules:
 
-    .. code:: python
+    .. code-block:: python
 
       from credentials import get_nova_credentials_v2
       from novaclient.client import Client
@@ -350,7 +361,8 @@ Compute API v2.
    The ``print_flavors`` method is defined in ``utils.py`` and prints the
    flavor details:
 
-    .. code:: python
+   .. code-block:: python
+      :linenos:
 
       def print_flavors(flavor_list):
           for flavor in flavor_list:
@@ -365,26 +377,27 @@ Compute API v2.
 #. Instantiate the ``nova_client`` client object by using the
    ``credentials`` dictionary object:
 
-    .. code:: python
+    .. code-block:: python
 
       nova_client = Client(**credentials)
 
 #. List flavors by calling ``list()`` on ``nova_client.flavors`` object:
 
-    .. code:: python
+    .. code-block:: python
 
       flavors_list =  nova_client.flavors.list()
 
 #. Print the flavor details, id and name by calling ``print_flavors``:
 
-    .. code:: python
+    .. code-block:: python
 
       print_flavors(flavors_list)
 
 List flavors code listing example
 ---------------------------------
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     #!/usr/bin/env python
 
@@ -406,7 +419,7 @@ the Compute API v2.
 
 #. Import the following modules:
 
-    .. code:: python
+    .. code-block:: python
 
       from credentials import get_nova_credentials_v2
       from novaclient.client import Client
@@ -415,7 +428,8 @@ the Compute API v2.
    The ``print_values_ip`` method is defined in ``utils.py`` and prints the
    floating\_ip object details:
 
-    .. code:: python
+   .. code-block:: python
+      :linenos:
 
       def print_values_ip(ip_list):
           ip_dict_lisl = []
@@ -433,27 +447,28 @@ the Compute API v2.
 #. Instantiate the ``nova_client`` client object by using the
    ``credentials`` dictionary object:
 
-    .. code:: python
+    .. code-block:: python
 
       nova_client = Client(**credentials)
 
 #. List floating IPs by calling ``list()`` on ``nova_client.floating_ips``
 object:
 
-    .. code:: python
+    .. code-block:: python
 
       ip_list = nova_client.floating_ips.list()
 
 #. Print the floating IP object details by calling ``print_values_ip``:
 
-    .. code:: python
+    .. code-block:: python
 
       print_values_ip(ip_list)
 
 List floating IPs code listing example
 --------------------------------------
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     #!/usr/bin/env python
 
@@ -473,7 +488,7 @@ The following program lists the hosts by using the Compute API v2.
 
 #. Import the following modules:
 
-.. code:: python
+.. code-block:: python
 
       from credentials import get_nova_credentials_v2
       from novaclient.client import Client
@@ -482,7 +497,8 @@ The following program lists the hosts by using the Compute API v2.
    The ``print_hosts`` method is defined in ``utils.py`` and prints the
    host object details:
 
-    .. code:: python
+    .. code-block:: python
+       :linenos:
 
       def print_hosts(host_list):
           for host in host_list:
@@ -498,26 +514,27 @@ The following program lists the hosts by using the Compute API v2.
 #. Instantiate the ``nova_client`` client object by using the
    ``credentials`` dictionary object:
 
-    .. code:: python
+    .. code-block:: python
 
       nova_client = Client(**credentials)
 
 #. List hosts by calling ``list()`` on ``nova_client.hosts`` object:
 
-    .. code:: python
+    .. code-block:: python
 
       host_list = nova_client.hosts.list()
 
 #. Print the host object details by calling ``print_hosts(host_list)``:
 
-     .. code:: python
+    .. code-block:: python
 
       print_hosts(host_list)
 
 List hosts code listing example
 -------------------------------
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     #!/usr/bin/env python
 

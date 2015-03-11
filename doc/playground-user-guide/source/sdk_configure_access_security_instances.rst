@@ -1,3 +1,6 @@
+.. highlight: python
+   :linenothreshold: 5
+
 ===========================================
 Configure access and security for instances
 ===========================================
@@ -15,7 +18,8 @@ To generate a keypair, call the
 openstack.org/developer/python-novaclient/api/novaclient.v1_1.keypairs
 .html#novaclient.v1_1.keypairs.KeypairManager.create>`__ method:
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     import novaclient.v1_1.client as nvclient
     nova = nvclient.Client(...)
@@ -41,7 +45,8 @@ the SSH client will refuse to read the private key file. The safest way
 is to create the file with the appropriate permissions, as shown in the
 following example:
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     import novaclient.v1_1.client as nvclient
     import os
@@ -68,7 +73,8 @@ openstack.org/developer/python-novaclient/api/novaclient.v1_1.keypairs
 .html#novaclient.v1_1.keypairs.KeypairManager.create>`__ method to
 import the public key to Compute:
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     import novaclient.v1_1.client as nvclient
     import os.path
@@ -87,7 +93,7 @@ To list keypairs, call the
 org/developer/python-novaclient/api/novaclient.v1_1.keypairs.html
 #novaclient.v1_1.keypairs.KeypairManager.list>`__ method:
 
-.. code:: python
+.. code-block:: python
 
     import novaclient.v1_1.client as nvclient
     nova = nvclient.Client(...)
@@ -104,7 +110,7 @@ To list security groups for the current project, call the
 .v1_1.security_groups.html#novaclient.v1_1.security_groups.
 SecurityGroupManager.list>`__ method:
 
-.. code:: python
+.. code-block:: python
 
     import novaclient.v1_1.client as nvclient
     nova = nvclient.Client(...)
@@ -116,7 +122,7 @@ the `novaclient.v\_1.security\_groups.SecurityGroupManager.create
 v1_1.security_groups.html#novaclient.v1_1.security_groups.
 SecurityGroupManager.create>`__ method:
 
-.. code:: python
+.. code-block:: python
 
     import novaclient.v1_1.client as nvclient
     nova = nvclient.Client(...)
@@ -132,7 +138,8 @@ SecurityGroupManager.delete>`__ method, passing either a
 .v1_1.security_groups.html#novaclient.v1_1.security_groups.
 SecurityGroup>`__ object or group ID as an argument:
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     import novaclient.v1_1.client as nvclient
     nova = nvclient.Client(...)
@@ -152,7 +159,7 @@ Access the security group rules from the ``rules`` attribute of a
 openstack.org/developer/python-novaclient/api/novaclient.v1_1.security
 _groups.html#novaclient.v1_1.security_groups.SecurityGroup>`__ object:
 
-.. code:: python
+.. code-block:: python
 
     import novaclient.v1_1.client as nvclient
     nova = nvclient.Client(...)
@@ -165,7 +172,8 @@ create <http://docs.openstack.org/developer/python-novaclient/api/
 novaclient.v1_1.security_group_rules.html#novaclient.v1_1.
 security_group_rules.SecurityGroupRuleManager.create>`__ method:
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
     import novaclient.v1_1.client as nvclient
     nova = nvclient.Client(...)
