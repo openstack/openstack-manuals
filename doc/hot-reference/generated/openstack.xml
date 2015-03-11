@@ -3485,10 +3485,10 @@ actions.</para>
         <varlistentry>
           <term role="String">signal_transport</term>
           <listitem>
-            <para>How the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL. HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. NO_SIGNAL will result in the resource going to the COMPLETE state without waiting for any signal.</para>
+            <para>How the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL. TEMP_URL_SIGNAL will create a Swift TempURL to be signaled via HTTP PUT. HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. NO_SIGNAL will result in the resource going to the COMPLETE state without waiting for any signal.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property, defaults to "CFN_SIGNAL".</para>
-            <para>Allowed values: CFN_SIGNAL, HEAT_SIGNAL, NO_SIGNAL</para>
+            <para>Allowed values: CFN_SIGNAL, TEMP_URL_SIGNAL, HEAT_SIGNAL, NO_SIGNAL</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -3620,10 +3620,10 @@ Resources:
         <varlistentry>
           <term role="String">signal_transport</term>
           <listitem>
-            <para>How the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL. HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. NO_SIGNAL will result in the resource going to the COMPLETE state without waiting for any signal.</para>
+            <para>How the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL. TEMP_URL_SIGNAL will create a Swift TempURL to be signaled via HTTP PUT. HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. NO_SIGNAL will result in the resource going to the COMPLETE state without waiting for any signal.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property, defaults to "CFN_SIGNAL".</para>
-            <para>Allowed values: CFN_SIGNAL, HEAT_SIGNAL, NO_SIGNAL</para>
+            <para>Allowed values: CFN_SIGNAL, TEMP_URL_SIGNAL, HEAT_SIGNAL, NO_SIGNAL</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -4117,10 +4117,10 @@ different input_key property value can be specified.</para>
         <varlistentry>
           <term role="String">signal_transport</term>
           <listitem>
-            <para>How the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL. HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. NO_SIGNAL will result in the resource going to the COMPLETE state without waiting for any signal.</para>
+            <para>How the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL. TEMP_URL_SIGNAL will create a Swift TempURL to be signaled via HTTP PUT. HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. NO_SIGNAL will result in the resource going to the COMPLETE state without waiting for any signal.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property, defaults to "CFN_SIGNAL".</para>
-            <para>Allowed values: CFN_SIGNAL, HEAT_SIGNAL, NO_SIGNAL</para>
+            <para>Allowed values: CFN_SIGNAL, TEMP_URL_SIGNAL, HEAT_SIGNAL, NO_SIGNAL</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -4275,10 +4275,10 @@ Resources:
         <varlistentry>
           <term role="String">signal_transport</term>
           <listitem>
-            <para>How the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL. HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. NO_SIGNAL will result in the resource going to the COMPLETE state without waiting for any signal.</para>
+            <para>How the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL. TEMP_URL_SIGNAL will create a Swift TempURL to be signaled via HTTP PUT. HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials. NO_SIGNAL will result in the resource going to the COMPLETE state without waiting for any signal.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property, defaults to "CFN_SIGNAL".</para>
-            <para>Allowed values: CFN_SIGNAL, HEAT_SIGNAL, NO_SIGNAL</para>
+            <para>Allowed values: CFN_SIGNAL, TEMP_URL_SIGNAL, HEAT_SIGNAL, NO_SIGNAL</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -4697,6 +4697,96 @@ Resources:
   "Resources" : {
     "TheResource": {
       "Type": "OS::Heat::WaitConditionHandle"
+    }
+  }
+}</programlisting>
+    </section>
+  </section>
+  <section xml:id="OS__Keystone__Role">
+    <?dbhtml stop-chunking?>
+    <title>OS::Keystone::Role</title>
+    <para>Heat Template Resource for Keystone Role.</para>
+    <para>heat_template_version: 2013-05-23</para>
+    <variablelist role="definition_list">
+      <varlistentry>
+        <term>parameters:</term>
+        <listitem>
+          <variablelist role="definition_list">
+            <varlistentry>
+              <term>role_name:</term>
+              <listitem>
+                <para>type: string
+description: Keystone role name</para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>resources:</term>
+        <listitem>
+          <variablelist role="definition_list">
+            <varlistentry>
+              <term>sample_role:</term>
+              <listitem>
+                <para>type: OS::Keystone::Role
+properties:</para>
+                <blockquote>
+                  <para>name: {get_param: role_name}</para>
+                </blockquote>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para>Available since 2015.1 (Kilo).</para>
+    <section xml:id="OS__Keystone__Role-props">
+      <title>Properties</title>
+      <variablelist role="definition_list">
+        <varlistentry>
+          <term role="String">name</term>
+          <listitem>
+            <para>Name of keystone role.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section xml:id="OS__Keystone__Role-hot">
+      <title>HOT Syntax</title>
+      <programlisting language="hot">heat_template_version: 2013-05-23
+...
+resources:
+  ...
+  the_resource:
+    type: OS::Keystone::Role
+    properties:
+      name: String</programlisting>
+    </section>
+    <section xml:id="OS__Keystone__Role-yaml">
+      <title>YAML Syntax</title>
+      <programlisting language="yaml">HeatTemplateFormatVersion: '2012-12-12'
+...
+Resources:
+  ...
+  TheResource:
+    Type: OS::Keystone::Role
+    Properties:
+      name: String</programlisting>
+    </section>
+    <section xml:id="OS__Keystone__Role-json">
+      <title>JSON Syntax</title>
+      <programlisting language="json">{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  ...
+  "Resources" : {
+    "TheResource": {
+      "Type": "OS::Keystone::Role",
+      "Properties": {
+        "name": String
+      }
     }
   }
 }</programlisting>
@@ -5362,6 +5452,7 @@ Resources:
             <para>ID of an existing port with at least one IP address to associate with this floating IP.</para>
             <para>Can be updated without replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.port</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -5507,6 +5598,7 @@ Resources:
             <para>ID of an existing port with at least one IP address to associate with this floating IP.</para>
             <para>Can be updated without replacement.</para>
             <para>Required property.</para>
+            <para>Value must be of type neutron.port</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -8388,6 +8480,7 @@ Resources:
             <para>The port, either subnet or port should be specified.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.port</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -8412,8 +8505,10 @@ Resources:
             <note>
               <para>DEPRECATED - Deprecated in Kilo. Use property port.</para>
             </note>
+            <para>The port id, either subnet or port_id should be specified.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.port</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -8716,7 +8811,7 @@ Resources:
         <varlistentry>
           <term role="String">gateway_ip</term>
           <listitem>
-            <para>The gateway IP address.</para>
+            <para>The gateway IP address. Set to any of [ null | ~ | "" ] to create the subnet without a gateway. If omitted, the first IP address within the subnet is assigned to the gateway.</para>
             <para>Can be updated without replacement.</para>
             <para>Optional property.</para>
           </listitem>
@@ -9532,6 +9627,7 @@ Resources:
   <section xml:id="OS__Nova__Server">
     <?dbhtml stop-chunking?>
     <title>OS::Nova::Server</title>
+    <para>Resource for Rackspace Cloud Servers.</para>
     <section xml:id="OS__Nova__Server-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -9738,6 +9834,7 @@ Resources:
                         <para>ID of an existing port to associate with this server.</para>
                         <para>Updates cause replacement.</para>
                         <para>Optional property.</para>
+                        <para>Value must be of type neutron.port</para>
                       </listitem>
                     </varlistentry>
                     <varlistentry>
@@ -10086,7 +10183,7 @@ Resources:
             <para>Default name or UUID of the image used to boot Hadoop nodes.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
-            <para>Value must be of type glance.image</para>
+            <para>Value must be of type sahara.image</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -10259,7 +10356,7 @@ Resources:
             <para>ID of the default image to use for the template.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
-            <para>Value must be of type glance.image</para>
+            <para>Value must be of type sahara.image</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -10476,6 +10573,15 @@ Resources:
           </listitem>
         </varlistentry>
         <varlistentry>
+          <term role="String">image_id</term>
+          <listitem>
+            <para>ID of the image to use for the template.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+            <para>Value must be of type sahara.image</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
           <term role="String">name</term>
           <listitem>
             <para>Name for the Sahara Node Group Template.</para>
@@ -10594,6 +10700,7 @@ resources:
       flavor: String
       floating_ip_pool: String
       hadoop_version: String
+      image_id: String
       name: String
       node_configs: {...}
       node_processes: [String, String, ...]
@@ -10619,6 +10726,7 @@ Resources:
       flavor: String
       floating_ip_pool: String
       hadoop_version: String
+      image_id: String
       name: String
       node_configs: {...}
       node_processes: [String, String, ...]
@@ -10644,6 +10752,7 @@ Resources:
         "flavor": String,
         "floating_ip_pool": String,
         "hadoop_version": String,
+        "image_id": String,
         "name": String,
         "node_configs": {...},
         "node_processes": [String, String, ...],
@@ -10956,6 +11065,7 @@ Resources:
                         <para>Name or UUID of Neutron port to attach this NIC to. Either port or network must be specified.</para>
                         <para>Updates cause replacement.</para>
                         <para>Optional property.</para>
+                        <para>Value must be of type neutron.port</para>
                       </listitem>
                     </varlistentry>
                   </variablelist>
