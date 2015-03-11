@@ -10,5 +10,6 @@ HOT guide
    software_deployment
    environment
    composition
+   existing_templates
    #advanced_topics
    #functions
