@@ -478,35 +478,54 @@ aggregate_image_properties_isolation_separator = .</programlisting>
                 instance's image. It passes hosts that can support the
                 specified image properties contained in the instance.
                 Properties include the architecture, hypervisor type,
-                and virtual machine mode. for example, an instance
-                might require a host that runs an ARM-based processor
-                and QEMU as the hypervisor. An image can be decorated
+                hypervisor version (for Xen hypervisor type only),
+                and virtual machine mode.</para>
+             <para>For example, an instance
+                might require a host that runs an ARM-based processor,
+                and QEMU as the hypervisor. You can decorate an image
                 with these properties by using:</para>
             <screen><prompt>$</prompt> <userinput>glance image-update img-uuid --property architecture=arm --property hypervisor_type=qemu</userinput></screen>
-            <para>The image properties that the filter checks for
-                are:</para>
+            <para>The image properties that the filter checks for are:</para>
             <itemizedlist>
                 <listitem>
                     <para><literal>architecture</literal>:
-                        Architecture describes the machine
+                        describes the machine
                         architecture required by the image. Examples
-                        are i686, x86_64, arm, and ppc64.</para>
+                        are <literal>i686</literal>, <literal>x86_64</literal>,
+                        <literal>arm</literal>, and <literal>ppc64</literal>.</para>
                 </listitem>
                 <listitem>
                     <para><literal>hypervisor_type</literal>:
-                        Hypervisor type describes the hypervisor
-                        required by the image. Examples are xen, qemu,
-                        and xenapi. Note that qemu is used for both
-                        QEMU and KVM hypervisor types.</para>
+                        describes the hypervisor required by the image.
+                        Examples are <literal>xen</literal>,
+                        <literal>qemu</literal>, and <literal>xenapi</literal>.</para>
+                     <note><para><literal>qemu</literal> is used for both
+                        QEMU and KVM hypervisor types.</para></note>
                 </listitem>
                 <listitem>
-                    <para><literal>vm_mode</literal>: Virtual machine
-                        mode describes the hypervisor application
+                    <para><literal>hypervisor_version_requires</literal>:
+                        describes the hypervisor version required by the image.
+                        The property is supported for Xen hypervisor type only.
+                        It can be used to enable support
+                        for multiple hypervisor versions,
+                        and to prevent instances with newer
+                        Xen tools from being provisioned on an older version
+                        of a hypervisor. If available, the property value
+                        is compared to the hypervisor version of the compute host.</para>
+                    <para>To filter the hosts by the hypervisor version,
+                        add the <literal>hypervisor_version_requires</literal> property
+                        on the image as metadata and pass an operator and a
+                        required hypervisor version as its value:</para>
+<screen><prompt>$</prompt> <userinput>glance image-update img-uuid --property hypervisor_type=xen --property hypervisor_version_requires=">=4.3"</userinput></screen>
+                </listitem>
+                <listitem>
+                    <para><literal>vm_mode</literal>: describes the hypervisor application
                         binary interface (ABI) required by the image.
-                        Examples are 'xen' for Xen 3.0 paravirtual
-                        ABI, 'hvm' for native ABI, 'uml' for User Mode
-                        Linux paravirtual ABI, exe for container virt
-                        executable ABI.</para>
+                        Examples are <literal>xen</literal> for Xen 3.0 paravirtual
+                        ABI, <literal>hvm</literal> for native ABI,
+                        <literal>uml</literal> for User Mode
+                        Linux paravirtual ABI, <literal>exe</literal>
+                        for container virt executable ABI.</para>
                 </listitem>
             </itemizedlist>
         </section>
