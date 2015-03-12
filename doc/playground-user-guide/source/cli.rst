@@ -28,7 +28,58 @@ sizes of server instances.
 The following table lists the command-line client for each OpenStack
 service with its package name and description.
 
-TODO(ajaeger): Add table with command-line clients.
++----------------+----------+-----------------------+------------------------+
+|Service         |Client    |Package                |Description             |
++================+==========+=======================+========================+
+|Block Storage   |cinder    |python-cinderclient    |Create and manage       |
+|                |          |                       |volumes.                |
++----------------+----------+-----------------------+------------------------+
+|Compute         |nova      |python-novaclient      |Create and manage       |
+|                |          |                       |images, instances, and  |
+|                |          |                       |flavors.                |
++----------------+----------+-----------------------+------------------------+
+|Database Service|trove     |python-troveclient     |Create and manage       |
+|                |          |                       |databases.              |
++----------------+----------+-----------------------+------------------------+
+|Identity        |keystone  |python-keystoneclient  |Create and manage users,|
+|                |          |                       |tenants, roles,         |
+|                |          |                       |endpoints, and          |
+|                |          |                       |credentials.            |
++----------------+----------+-----------------------+------------------------+
+|Image Service   |glance    |python-glanceclient    |Create and manage       |
+|                |          |                       |images.                 |
++----------------+----------+-----------------------+------------------------+
+|Networking      |neutron   |python-neutronclient   |Configure networks for  |
+|                |          |                       |guest servers.          |
++----------------+----------+-----------------------+------------------------+
+|Object Storage  |swift     |python-swiftclient     |Gather statistics, list |
+|                |          |                       |items, update metadata, |
+|                |          |                       |and upload, download,   |
+|                |          |                       |and delete files stored |
+|                |          |                       |by the Object Storage   |
+|                |          |                       |service. Gain access to |
+|                |          |                       |an Object Storage       |
+|                |          |                       |installation for ad hoc |
+|                |          |                       |processing.             |
++----------------+----------+-----------------------+------------------------+
+|Orchestration   |heat      |python-heatclient      |Launch stacks from      |
+|                |          |                       |templates, view details |
+|                |          |                       |of running stacks       |
+|                |          |                       |including events and    |
+|                |          |                       |resources, and update   |
+|                |          |                       |and delete stacks.      |
++----------------+----------+-----------------------+------------------------+
+|Telemetry       |ceilometer|python-ceilometerclient|Create and collect      |
+|                |          |                       |measurements across     |
+|                |          |                       |OpenStack.              |
++----------------+----------+-----------------------+------------------------+
+|Data Processing |sahara    |python-saharaclient    |Create and manage       |
+|                |          |                       |Hadoop clusters on      |
+|                |          |                       |OpenStack.              |
++----------------+----------+-----------------------+------------------------+
+|Common client   |openstack |python-openstackclient |Common client for the   |
+|                |          |                       |OpenStack project.      |
++----------------+----------+-----------------------+------------------------+
 
 .. toctree::
    :maxdepth: 2
