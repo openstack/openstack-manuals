@@ -17,3 +17,4 @@ sizes of server instances.
    dashboard_manage_containers.rst
    dashboard_manage_volumes.rst
    configure_access_and_security_for_instances.rst
+   manage_instances.rst
