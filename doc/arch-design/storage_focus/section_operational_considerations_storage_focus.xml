@@ -83,7 +83,7 @@
         </listitem>
         <listitem>
             <para>Alerting and notification of responsible teams or
-                automated systems which will remediate problems with
+                automated systems which remediate problems with
                 storage as they arise.</para>
         </listitem>
         <listitem>
@@ -94,7 +94,7 @@
 
     <section xml:id="management-efficiency">
       <title>Management efficiency</title>
-    <para>Operations personnel will often be required to replace failed
+    <para>Operations personnel are often required to replace failed
         drives or nodes and provide ongoing maintenance of the storage hardware.</para>
     <para>Provisioning and configuration of new or upgraded storage is
         another important consideration when it comes to management of
@@ -109,8 +109,8 @@
       <title>Application awareness</title>
     <para>Well-designed applications should be aware of underlying storage
         subsystems, in order to use cloud storage solutions effectively.</para>
-    <para>If natively available replication is not available, the application
-        must be able to be modified by operations personnel so that they
+    <para>If natively available replication is not available, operations personnel
+        must be able to modify the application so that they
         can provide their own replication service. In the event that
         replication is unavailable, operations personnel can design applications
         to react such that they can provide their own replication services.
@@ -125,22 +125,21 @@
     <para>Designing for fault tolerance and availability of storage
         systems in an OpenStack cloud is vastly different when
         comparing the Block Storage and Object Storage services. The
-        Object Storage service is designed to have consistency and
+        Object Storage service design features consistency and
         partition tolerance as a function of the application.
         Therefore, it does not have any reliance on hardware RAID
         controllers to provide redundancy for physical disks.</para>
 
       <section xml:id="block-storage-fault-tolerance-and-availability">
           <title>Block Storage fault tolerance and availability</title>
-        <para>Block Storage resource nodes are commonly configured
-          with advanced RAID controllers and high performance disks that
-          are designed to provide fault tolerance at the hardware
-          level.</para>
-        <para>Deploy high performing storage solutions
+       <para>Block Storage resource nodes are commonly configured
+          with advanced RAID controllers and high performance disks to
+          provide fault tolerance at the hardware level.</para>
+       <para>Deploy high performing storage solutions
           such as SSD disk drives or flash storage systems in cases where applications
           require extreme performance out of Block Storage devices.</para>
-      <para>In environments that place extreme demands on Block Storage,
-          it is advisable to take advantage of multiple storage pools.
+        <para>In environments that place extreme demands on Block Storage,
+          we recommend using multiple storage pools.
           In this case, each pool of devices should have a similar
           hardware design and disk configuration across all hardware
           nodes in that pool. This allows for a design that provides
@@ -152,13 +151,13 @@
           storage across resource nodes. Ensuring that applications can
           schedule volumes in multiple regions, each with their own
           network, power, and cooling infrastructure, can give tenants
-          the ability to build fault tolerant applications that will be
+          the ability to build fault tolerant applications that are
           distributed across multiple availability zones.</para>
       <para>In addition to the Block Storage resource nodes, it is
           important to design for high availability and redundancy of
           the APIs and related services that are responsible for
           provisioning and providing access to storage. We
-          recommend desiging a layer of hardware or software load
+          recommend designing a layer of hardware or software load
           balancers in order to achieve high availability of the
           appropriate REST API services to provide uninterrupted
           service. In some cases, it may also be necessary to deploy an
@@ -172,8 +171,8 @@
           so that tenants can manage Block Storage volumes.</para>
       <para>In a cloud with extreme demands on Block Storage, the network
           architecture should take into account the amount of East-West
-          bandwidth that will be required for instances to make use of
-          the available storage resources. Network devices selected
+          bandwidth required for instances to make use of
+          the available storage resources. The selected network devices
           should support jumbo frames for transferring large blocks of
           data. In some cases, it may be necessary to create an
           additional back-end storage network dedicated to providing
@@ -184,38 +183,37 @@
           <title>Object Storage fault tolerance and availability</title>
         <para>While consistency and partition tolerance are both inherent
           features of the Object Storage service, it is important to
-          design the overall storage architecture to ensure that those
-          goals are met by the system being implemented. The
+          design the overall storage architecture to ensure that the
+          implemented system meets those goals. The
           OpenStack Object Storage service places a specific number of
           data replicas as objects on resource nodes. These replicas are
           distributed throughout the cluster based on a consistent hash
           ring which exists on all nodes in the cluster.</para>
-        <para>The Object Storage system should be designed with sufficient
+        <para>Design the Object Storage system with a sufficient
           number of zones to provide quorum for the number of replicas
-          defined. As an example, with three replicas configured in the
+          defined. For example, with three replicas configured in the
           Swift cluster, the recommended number of zones to configure
           within the Object Storage cluster in order to achieve quorum
           is 5. While it is possible to deploy a solution with fewer
           zones, the implied risk of doing so is that some data may not
           be available and API requests to certain objects stored in the
-          cluster might fail. For this reason, ensure the number of
-          zones in the Object Storage cluster is properly accounted for.</para>
+          cluster might fail. For this reason, ensure you properly account
+          for the number of zones in the Object Storage cluster.</para>
       <para>Each Object Storage zone should be self-contained within its
           own availability zone. Each availability zone should have
           independent access to network, power and cooling
           infrastructure to ensure uninterrupted access to data. In
-          addition, each availability zone should be serviced by a pool
-          of Object Storage proxy servers which will provide access to
-          data stored on the object nodes. Object proxies in each region
-          should leverage local read and write affinity so that access
-          to objects is facilitated by local storage resources wherever
-          possible. We recommend that upstream load balancing be
-          deployed to ensure that proxy services can be distributed
-          across the multiple zones and, in some cases, it may be
-          necessary to make use of third party solutions to aid with
-          geographical distribution of services.</para>
+          addition, a pool of Object Storage proxy servers providing access
+          to data stored on the object nodes should service
+          each availability zone. Object proxies in each region
+          should leverage local read and write affinity so that local storage
+          resources facilitate access to objects wherever
+          possible. We recommend deploying upstream load balancing to ensure
+          that proxy services are distributed across the multiple zones and,
+          in some cases, it may be necessary to make use of third party
+          solutions to aid with geographical distribution of services.</para>
       <para>A zone within an Object Storage cluster is a logical
-          division. A zone can be represented as any of the following:</para>
+          division. Any of the following may represent a zone:</para>
         <itemizedlist>
           <listitem>
             <para>
@@ -243,7 +241,7 @@
             </para>
           </listitem>
         </itemizedlist>
-      <para>Deciding the proper zone design is crucial for allowing the Object
+      <para>Selecting the proper zone design is crucial for allowing the Object
           Storage cluster to scale while providing an available and
           redundant storage system. It may be necessary to
           configure storage policies that have different requirements
@@ -263,9 +261,9 @@
         consideration during the design phase.</para>
       <section xml:id="scaling-block-storage">
         <title>Scaling Block Storage</title>
-      <para>Block Storage pools can be upgraded to add storage capacity
-          rather easily without interruption to the overall Block
-          Storage service. Nodes can be added to the pool by simply
+      <para>You can upgrade Block Storage pools to add storage capacity
+          without interruption to the overall Block
+          Storage service. Add nodes to the pool by
           installing and configuring the appropriate hardware and
           software and then allowing that node to report in to the
           proper storage pool via the message bus. This is because Block
@@ -276,10 +274,10 @@
       <para>In some cases, the demand on Block Storage from instances
           may exhaust the available network bandwidth. As a result,
           design network infrastructure that services Block Storage
-          resources in such a way that capacity and bandwidth can be
-          added relatively easily. This often involves the use of
+          resources in such a way that you can add capacity and
+          bandwidth easily. This often involves the use of
           dynamic routing protocols or advanced networking solutions to
-          allow capacity to be added to downstream devices easily. Both
+          add capacity to downstream devices easily. Both
           the front-end and back-end storage network designs should
           encompass the ability to quickly and easily add capacity and
           bandwidth.</para>
@@ -297,23 +295,23 @@
           disks.</para>
       <para>For example, a system that starts with a single disk and a
           partition power of 3 can have 8 (2^3) partitions. Adding a
-          second disk means that each will have 4 partitions.
+          second disk means that each has 4 partitions.
           The one-disk-per-partition limit means that this system can
           never have more than 8 disks, limiting its scalability.
           However, a system that starts with a single disk and a
           partition power of 10 can have up to 1024 (2^10) disks.</para>
-      <para>As back-end storage capacity is added to the system, the
-          partition maps cause data to be redistributed amongst storage
-          nodes. In some cases, this replication can consist of
-          extremely large data sets. In these cases, we recommended
-          making use of back-end replication links which will not
+      <para>As you add back-end storage capacity to the system, the
+          partition maps redistribute data amongst the storage
+          nodes. In some cases, this replication consists of
+          extremely large data sets. In these cases, we recommend
+          using back-end replication links that do not
           contend with tenants' access to data.</para>
       <para>As more tenants begin to access data within the cluster and
-          their data sets grow it will become necessary to add front-end
+          their data sets grow it is necessary to add front-end
           bandwidth to service data access requests. Adding front-end
           bandwidth to an Object Storage cluster requires careful
-          planning and design of the Object Storage proxies that will be
-          used by tenants to gain access to the data, along with the
+          planning and design of the Object Storage proxies that tenants
+          use to gain access to the data, along with the
           high availability solutions that enable easy scaling of the
           proxy layer. We recommend designing a front-end load
           balancing layer that tenants and consumers use to gain access
@@ -321,9 +319,9 @@
           may be distributed across zones, regions or even across
           geographic boundaries, which may also require that the design
           encompass geo-location solutions.</para>
-      <para>In some cases, adding bandwidth and capacity to the network
+      <para>In some cases, you must add bandwidth and capacity to the network
           resources servicing requests between proxy servers and storage
-          nodes will be required. For this reason, the network
+          nodes. For this reason, the network
           architecture used for access to storage nodes and proxy
           servers should make use of a design which is scalable.</para>
       </section>

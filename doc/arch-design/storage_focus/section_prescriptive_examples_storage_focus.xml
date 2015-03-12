@@ -7,8 +7,8 @@
     <?dbhtml stop-chunking?>
     <title>Prescriptive examples</title>
     <para>Storage-focused architecture highly depends on the
-        specific use case. Three specific example use cases are
-        discussed in this section:</para>
+        specific use case. This section discusses three
+        specific example use cases:</para>
       <itemizedlist>
         <listitem>
           <para>
@@ -38,9 +38,9 @@
           </imageobject>
       </mediaobject>
     </para>
-    <para>The presented REST interface does not require a high performance
-        caching tier, and is presented as a traditional Object store running
-        on traditional spindles.</para>
+    <para>The example REST interface, presented as a traditional Object store running
+        on traditional spindles, does not require a high performance
+        caching tier.</para>
     <para>This example uses the following components:</para>
     <para>Network:</para>
     <itemizedlist>
@@ -52,7 +52,7 @@
     <para>Storage hardware:</para>
     <itemizedlist>
         <listitem>
-            <para>10 storage servers each with 12x4 TB disks equalling
+            <para>10 storage servers each with 12x4 TB disks equaling
                 480 TB total space with approximately 160 Tb of
                 usable space after replicas.</para>
         </listitem>
@@ -87,7 +87,7 @@
   </para>
   <para>One potential solution to this problem is the implementation of storage
       systems designed for performance. Parallel file systems have previously
-      filled this need in the HPC space and as a result could be considered
+      filled this need in the HPC space and are suitable
       for large scale performance-orientated systems.</para>
   <para>OpenStack has integration with Hadoop to manage the Hadoop cluster
       within the cloud. This diagram shows an OpenStack store with a high
@@ -112,37 +112,36 @@
     <title>High performance database with Database service</title>
   <para>Databases are a common workload that benefit from high performance
       storage back ends. Although enterprise storage is not a requirement,
-      many environments have existing storage that can be used as back ends for
-      OpenStack cloud. A storage pool can be created to provide block devices
+      many environments have existing storage that OpenStack cloud can use as
+      back ends. You can create a storage pool to provide block devices
       with OpenStack Block Storage for instances as well as object interfaces.
-      In this example, the database I-O requirements were high and demanded
+      In this example, the database I-O requirements are high and demand
       storage presented from a fast SSD pool.</para>
-  <para>A storage system is used to present a LUN that is backed by
+  <para>A storage system presents a LUN backed by
       a set of SSDs using a traditional storage array with OpenStack
       Block Storage integration or a storage platform such as Ceph
       or Gluster.</para>
   <para>This system can provide additional performance. For example,
       in the database example below, a portion of the SSD pool can act
       as a block device to the Database server. In the high performance analytics
-      example, the REST interface would be accelerated by the inline
-      SSD cache layer.</para>
+      example, the inline SSD cache layer accelerates the REST interface.</para>
     <mediaobject>
         <imageobject>
             <imagedata contentwidth="4in"
                 fileref="../figures/Storage_Database_+_Object5.png"/>
         </imageobject>
     </mediaobject>
-    <para>Ceph was selected to present a Swift-compatible REST
+    <para>In this example, Ceph presents a Swift-compatible REST
         interface, as well as a block level storage from a distributed
         storage cluster. It is highly flexible and has features that
-        allow to reduce cost of operations such as self healing and
+        enable reduced cost of operations such as self healing and
         auto balancing. Using erasure coded pools are a suitable way of
         maximizing the amount of usable space.</para>
       <note>
         <para>There are special considerations around erasure coded pools.
         For example, higher computational requirements and limitations on
-        the operations allowed on an object; partial writes are not
-        supported in an erasure coded pool.
+        the operations allowed on an object; erasure coded pools do not
+        support partial writes.
         </para>
       </note>
     <para>Using Ceph as an applicable example, a potential architecture
@@ -183,8 +182,8 @@
         </listitem>
     </itemizedlist>
     <para>Using an SSD cache layer, you can present block devices
-        directly to Hypervisors or instances. The SSD cache systems
-        can also be used as an inline cache for the REST interface.
+        directly to Hypervisors or instances. The REST interface can
+        also use the SSD cache systems as an inline cache.
     </para>
   </section>
 </section>
