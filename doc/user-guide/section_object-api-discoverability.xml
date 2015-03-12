@@ -12,7 +12,8 @@
             <para><xref linkend="large-object-creation"/></para>
         </listitem>
         <listitem>
-            <para><xref linkend="archive-auto-extract"/></para>
+            <para><xref linkend="archive-auto-extract"/> (bulk
+                upload)</para>
         </listitem>
         <listitem>
             <para><xref linkend="expire-objects"/></para>
@@ -29,21 +30,75 @@
     <para>To use the <literal>/info</literal> request, send a &GET;
         request using the <literal>/info</literal> path to the Object
         Store endpoint as shown in this example:</para>
-    <screen><prompt>$</prompt> <userinput>curl https://storage.example.com/info</userinput></screen>
-    <para>This example shows a truncated response body:</para>
+    <screen><prompt>$</prompt> <userinput>curl https://storage.example.com/info 2>/dev/null | python -m json.tool</userinput></screen>
+    <para>This example shows a response body:</para>
     <programlisting language="json">{
-   "swift":{
-      "version":"1.11.0"
-   },
-   "staticweb":{
-
-   },
-   "tempurl":{
-
-   }
+    "account_quotas": {},
+    "bulk_delete": {
+        "max_deletes_per_request": 10000,
+        "max_failed_deletes": 1000
+    },
+    "bulk_upload": {
+        "max_containers_per_extraction": 10000,
+        "max_failed_extractions": 1000
+    },
+    "container_quotas": {},
+    "crossdomain": {},
+    "ratelimit": {},
+    "slo": {
+        "max_manifest_segments": 1000,
+        "max_manifest_size": 2097152,
+        "min_segment_size": 1
+    },
+    "staticweb": {},
+    "swift": {
+        "account_listing_limit": 10000,
+        "container_listing_limit": 10000,
+        "max_account_name_length": 256,
+        "max_container_name_length": 256,
+        "max_file_size": 5368709122,
+        "max_meta_count": 90,
+        "max_meta_name_length": 128,
+        "max_meta_value_length": 256,
+        "max_object_name_length": 1024,
+        "version": "1.11.0.90.g9ce7877"
+    },
+    "tempauth": {},
+    "tempurl": {
+        "methods": [
+            "GET",
+            "HEAD",
+            "PUT"
+        ]
+    }
 }</programlisting>
-    <para>This output shows that the Object Storage system has enabled
-        the static website and temporary URL features.</para>
+    <para>The output shows that the Object Storage system has enabled
+        the following features:</para>
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para>Staticweb</para>
+            </listitem>
+            <listitem>
+                <para>Temporary URL including allowed methods.</para>
+            </listitem>
+            <listitem>
+                <para>Bulk upload (Archive-auto-extract)</para>
+            </listitem>
+            <listitem>
+                <para>Bulk delete</para>
+            </listitem>
+            <listitem>
+                <para>Cross domain</para>
+            </listitem>
+            <listitem>
+                <para>Account and container quota information</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>Additionally, the output shows the swift version and
+        various constraints that have been applied to the Object
+        Storage system.</para>
     <?sbr?>
     <note>
         <para>In some cases, the <literal>/info</literal> request will
