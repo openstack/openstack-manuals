@@ -3,21 +3,21 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
-  xml:id="ceilometer-agent-glance">
-  <title>Configure the Image Service for Telemetry</title>
+  xml:id="ceilometer-glance">
+  <title>Configure the Image Service</title>
+  <para>To retrieve image-oriented events and samples, configure
+    the Image Service to send notifications to the message bus.
+    Perform these steps on the controller node.</para>
   <procedure>
-    <title>To configure prerequisites</title>
-    <para>To retrieve image samples, you must configure the Image
-      Service to send notifications to the message broker. Edit the
-      <filename>/etc/glance/glance-api.conf</filename> and
-      <filename>/etc/glance/glance-registry.conf</filename> files and
+    <para>Edit the <filename>/etc/glance/glance-api.conf</filename>
+      and <filename>/etc/glance/glance-registry.conf</filename> files and
       complete the following actions:</para>
     <step>
       <para>In the <literal>[DEFAULT]</literal> section, configure
       notifications and RabbitMQ message broker access:</para>
       <programlisting language="ini">[DEFAULT]
 ...
-notification_driver = messaging
+notification_driver = messagingv2
 rpc_backend = rabbit
 rabbit_host = <replaceable>controller</replaceable>
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>

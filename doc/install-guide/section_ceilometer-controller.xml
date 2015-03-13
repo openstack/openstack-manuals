@@ -203,7 +203,7 @@ connecting to: controller:27017/test
   openstack-ceilometer-alarm-evaluator openstack-ceilometer-alarm-notifier</userinput></screen>
     </step>
     <step>
-      <para>Generate a random value to use as the metering secret:</para>
+      <para>Generate a random value to use as the telemetry secret:</para>
       <screen os="ubuntu;rhel;centos;fedora"><prompt>$</prompt> <userinput>openssl rand -hex 10</userinput></screen>
       <screen os="sles;opensuse"><prompt>$</prompt> <userinput>openssl rand 10 | hexdump -e '1/1 "%.2x"'</userinput></screen>
     </step>
@@ -274,12 +274,12 @@ os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
         </step>
         <step>
           <para>In the <literal>[publisher]</literal> section, configure
-            the metering secret:</para>
+            the telemetry secret:</para>
           <programlisting language="ini">[publisher]
 ...
-metering_secret = <replaceable>METERING_SECRET</replaceable></programlisting>
-          <para>Replace <replaceable>METERING_SECRET</replaceable> with the
-            metering secret that you generated in a previous step.</para>
+telemetry_secret = <replaceable>TELEMETRY_SECRET</replaceable></programlisting>
+          <para>Replace <replaceable>TELEMETRY_SECRET</replaceable> with the
+            telemetry secret that you generated in a previous step.</para>
         </step>
         <step os="opensuse;sles">
           <para>In the <literal>[collector]</literal> section, configure the
@@ -320,7 +320,7 @@ verbose = True</programlisting>
         credentials</link>.</para>
     </step>
     <step>
-      <para>Generate a random value to use as the metering secret:</para>
+      <para>Generate a random value to use as the telemetry secret:</para>
       <screen><prompt>$</prompt> <userinput>openssl rand -hex 10</userinput></screen>
     </step>
     <step>
@@ -329,12 +329,12 @@ verbose = True</programlisting>
       <substeps>
         <step>
           <para>In the <literal>[publisher]</literal> section, configure
-            the metering secret:</para>
+            the telemetry secret:</para>
           <programlisting language="ini">[publisher]
 ...
-metering_secret = <replaceable>METERING_SECRET</replaceable></programlisting>
-          <para>Replace <replaceable>METERING_SECRET</replaceable> with the
-            metering secret that you generated in a previous step.</para>
+telemetry_secret = <replaceable>TELEMETRY_SECRET</replaceable></programlisting>
+          <para>Replace <replaceable>TELEMETRY_SECRET</replaceable> with the
+            telemetry secret that you generated in a previous step.</para>
         </step>
         <step>
           <para>In the <literal>[service_credentials]</literal>
