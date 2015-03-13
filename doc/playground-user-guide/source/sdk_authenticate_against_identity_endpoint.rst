@@ -1,3 +1,6 @@
+.. highlight: python
+   :linenothreshold: 5
+
 =========================================
 Authenticate against an Identity endpoint
 =========================================
@@ -5,7 +8,8 @@ Authenticate against an Identity endpoint
 To authenticate against the Identity v2.0 endpoint, instantiate a
 `keystoneclient.v\_20.client.Client <http://docs.openstack.org/developer/python-keystoneclient/api/keystoneclient.v2_0.client.html#keystoneclient.v2_0.client.Client>`__ object:
 
-.. code:: python
+.. code-block:: python
+   :linenos:
 
    from os import environ as env
    import keystoneclient.v2_0.client as ksclient
@@ -18,7 +22,7 @@ To authenticate against the Identity v2.0 endpoint, instantiate a
 After you instantiate a ``Client`` object, you can retrieve the token by
 accessing its ``auth_token`` attribute object:
 
-.. code:: python
+.. code-block:: python
 
    import keystoneclient.v2_0.client as ksclient
    keystone = ksclient.Client(...)
