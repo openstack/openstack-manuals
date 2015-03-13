@@ -23,11 +23,14 @@ if [ -z "$DOCNAME" ] ; then
     exit 1
 fi
 
+# First remove the old pot file, otherwise the new file will contain
+# old references
+rm doc/$DOCNAME/source/locale/$DOCNAME.pot
 sphinx-build -b gettext doc/$DOCNAME/source/ doc/$DOCNAME/source/locale/
 
 # Take care of deleting all temporary files so that git add
 # doc/$DOCNAME/source/locale will only add the single pot file.
-msgcat doc/$DOCNAME/source/locale/*.pot > doc/$DOCNAME/source/$DOCNAME.pot
-rm doc/$DOCNAME/source/locale/*.pot
-rm -rf doc/$DOCNAME/source/locale/*.doctrees/
+msgcat --sort-output doc/$DOCNAME/source/locale/*.pot > doc/$DOCNAME/source/$DOCNAME.pot
+rm  doc/$DOCNAME/source/locale/*.pot
+rm -rf doc/$DOCNAME/source/locale/.doctrees/
 mv doc/$DOCNAME/source/$DOCNAME.pot doc/$DOCNAME/source/locale/$DOCNAME.pot
