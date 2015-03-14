@@ -13,7 +13,7 @@ Contents:
    migration.rst
    miscellaneous.rst
    adv_config.rst
-
+   scenario-l3ha-ovs.rst
 
 Indices and tables
 ==================
