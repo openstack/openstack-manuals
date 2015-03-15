@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-03-12 06:13+0000\n"
+"POT-Creation-Date: 2015-03-15 06:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -323,14 +323,18 @@ msgid "The Telemetry module was originally designed to support billing systems f
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_telemetry.xml:25(para)
+msgid "In addition to system measurements, the Telemetry module also captures event notifications triggered when various actions are executed in the OpenStack system. This data is captured as Events and stored alongside metering data."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/ch_telemetry.xml:29(para)
 msgid "The list of meters is continuously growing, which makes it possible to use the data collected by Telemetry for different purposes, other than billing. For example, the autoscaling feature in the Orchestration module can be triggered by alarms this module sets and then gets notified within Telemetry."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_telemetry.xml:30(para)
+#: ./doc/admin-guide-cloud/ch_telemetry.xml:34(para)
 msgid "The sections in this document contain information about the architecture and usage of Telemetry. The first section contains a brief summary about the system architecture used in a typical OpenStack deployment. The second section describes the data collection mechanisms. You can also read about alarming to understand how alarm definitions can be posted to Telemetry and what actions can happen if an alarm is raised. The last section contains a troubleshooting guide, which mentions error situations and possible solutions for the problems."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_telemetry.xml:39(para)
+#: ./doc/admin-guide-cloud/ch_telemetry.xml:43(para)
 msgid "You can retrieve the collected samples three different ways: with the REST API, with the command line interface, or with the Metering tab on an OpenStack dashboard."
 msgstr ""
 
@@ -1824,7 +1828,7 @@ msgstr ""
 msgid "Create a port with a specified allowed address pairs:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:370(replaceable) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:375(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:370(replaceable) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:375(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:322(replaceable)
 msgid "MAC_ADDRESS"
 msgstr ""
 
@@ -2570,263 +2574,275 @@ msgstr ""
 msgid "Owner of the network. Only administrative users can set the tenant identifier; this cannot be changed using authorization policies."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:314(title) ./doc/admin-guide-cloud/networking/section_networking-use.xml:322(caption)
-msgid "Basic Networking operations"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:315(para)
-msgid "To learn about advanced capabilities available through the neutron command-line interface (CLI), read the networking section in the <link href=\"http://docs.openstack.org/user-guide/content/index.html\"> OpenStack End User Guide</link>."
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:313(para)
+msgid "You can modify a port’s <placeholder-1/> in the ML2 plug-in. This solves the problem where a MAC address is changed after NIC fails on <glossterm>ironic</glossterm> servers. Previously, when NIC failed, it was replaced with a new one having a different MAC address. That may lead to undesirable changing of an IP address."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking-use.xml:319(para)
+msgid "Since the Juno release, the port can be assigned with a new MAC address. The NIC can retain the same IP address. Use the following command to update a MAC address:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:322(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:828(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:847(replaceable)
+msgid "SUBNET_UUID"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:326(title) ./doc/admin-guide-cloud/networking/section_networking-use.xml:334(caption)
+msgid "Basic Networking operations"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:327(para)
+msgid "To learn about advanced capabilities available through the neutron command-line interface (CLI), read the networking section in the <link href=\"http://docs.openstack.org/user-guide/content/index.html\"> OpenStack End User Guide</link>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:331(para)
 msgid "This table shows example neutron commands that enable you to complete basic network operations:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:327(th) ./doc/admin-guide-cloud/networking/section_networking-use.xml:394(th) ./doc/admin-guide-cloud/networking/section_networking-use.xml:504(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:386(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:735(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1247(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1680(th) ./doc/admin-guide-cloud/networking/section_networking_config-agents.xml:579(th)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:339(th) ./doc/admin-guide-cloud/networking/section_networking-use.xml:406(th) ./doc/admin-guide-cloud/networking/section_networking-use.xml:516(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:386(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:735(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1247(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1680(th) ./doc/admin-guide-cloud/networking/section_networking_config-agents.xml:579(th)
 msgid "Operation"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:328(th) ./doc/admin-guide-cloud/networking/section_networking-use.xml:395(th) ./doc/admin-guide-cloud/networking/section_networking-use.xml:445(th) ./doc/admin-guide-cloud/networking/section_networking-use.xml:505(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:387(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:736(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1248(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1681(th) ./doc/admin-guide-cloud/networking/section_networking_config-agents.xml:580(th)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:340(th) ./doc/admin-guide-cloud/networking/section_networking-use.xml:407(th) ./doc/admin-guide-cloud/networking/section_networking-use.xml:457(th) ./doc/admin-guide-cloud/networking/section_networking-use.xml:517(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:387(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:736(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1248(th) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1681(th) ./doc/admin-guide-cloud/networking/section_networking_config-agents.xml:580(th)
 msgid "Command"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:333(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:345(td)
 msgid "Creates a network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:337(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:349(td)
 msgid "Creates a subnet that is associated with net1."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:341(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:353(td)
 msgid "Lists ports for a specified tenant."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:345(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:357(td)
 msgid "Lists ports for a specified tenant and displays the <placeholder-1/>, <placeholder-2/>, and <placeholder-3/> columns."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:351(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:363(td)
 msgid "Shows information for a specified port."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:352(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:470(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:802(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:364(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:482(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:802(replaceable)
 msgid "PORT_ID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:357(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:369(para)
 msgid "The <placeholder-1/> field describes who owns the port. A port whose <placeholder-2/> begins with:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:361(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:373(para)
 msgid "<literal>network</literal> is created by Networking."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:364(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:376(para)
 msgid "<literal>compute</literal> is created by Compute."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:370(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:382(title)
 msgid "Administrative operations"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:371(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:383(para)
 msgid "The cloud administrator can run any <placeholder-1/> command on behalf of tenants by specifying an Identity <placeholder-2/> in the command, as follows:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:374(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:193(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:200(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:210(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:220(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:386(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:193(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:200(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:210(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:220(replaceable)
 msgid "TENANT_ID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:374(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:386(replaceable)
 msgid "NETWORK_NAME"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:375(para) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1725(para) ./doc/admin-guide-cloud/networking/section_networking_config-agents.xml:206(para) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:199(para) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:263(para) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:48(para) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:62(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:387(para) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1725(para) ./doc/admin-guide-cloud/networking/section_networking_config-agents.xml:206(para) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:199(para) ./doc/admin-guide-cloud/networking/section_networking-adv-config.xml:263(para) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:48(para) ./doc/admin-guide-cloud/networking/section_networking-config-identity.xml:62(para)
 msgid "For example:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:378(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:390(para)
 msgid "To view all tenant IDs in Identity, run the following command as an Identity Service admin user:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:385(title) ./doc/admin-guide-cloud/networking/section_networking-use.xml:389(caption)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:397(title) ./doc/admin-guide-cloud/networking/section_networking-use.xml:401(caption)
 msgid "Advanced Networking operations"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:386(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:398(para)
 msgid "This table shows example Networking commands that enable you to complete advanced network operations:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:400(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:412(td)
 msgid "Creates a network that all tenants can use."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:404(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:416(td)
 msgid "Creates a subnet with a specified gateway IP address."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:408(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:420(td)
 msgid "Creates a subnet that has no gateway IP address."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:412(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:424(td)
 msgid "Creates a subnet with DHCP disabled."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:416(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:428(td)
 msgid "Creates a subnet with a specified set of host routes."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:420(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:432(td)
 msgid "Creates a subnet with a specified set of dns name servers."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:424(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:436(td)
 msgid "Displays all ports and IPs allocated on a network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:425(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:455(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:437(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:467(replaceable)
 msgid "NET_ID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:433(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:445(title)
 msgid "Use Compute with Networking"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:435(title) ./doc/admin-guide-cloud/networking/section_networking-use.xml:439(caption)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:447(title) ./doc/admin-guide-cloud/networking/section_networking-use.xml:451(caption)
 msgid "Basic Compute and Networking operations"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:436(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:448(para)
 msgid "This table shows example neutron and nova commands that enable you to complete basic VM networking operations:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:444(th)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:456(th)
 msgid "Action"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:450(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:462(td)
 msgid "Checks available networks."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:454(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:466(td)
 msgid "Boots a VM with a single NIC on a selected Networking network."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:455(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:511(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:515(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:521(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:467(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:523(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:527(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:533(replaceable)
 msgid "IMAGE"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:455(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:511(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:515(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:521(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:467(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:523(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:527(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:533(replaceable)
 msgid "FLAVOR"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:455(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:511(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:515(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:521(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:467(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:523(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:527(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:533(replaceable)
 msgid "VM_NAME"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:458(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:470(para)
 msgid "Searches for ports with a <placeholder-1/> that matches the Compute instance UUID. See <xref linkend=\"network_compute_note\"/>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:461(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:466(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:473(replaceable) ./doc/admin-guide-cloud/networking/section_networking-use.xml:478(replaceable)
 msgid "VM_ID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:464(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:476(td)
 msgid "Searches for ports, but shows only the <placeholder-1/> of the port."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:469(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:481(td)
 msgid "Temporarily disables a port from sending traffic."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:475(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:487(para)
 msgid "The <placeholder-1/> can also be a logical router ID."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:478(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:490(title)
 msgid "Create and delete VMs"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:481(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:493(para)
 msgid "When you boot a Compute VM, a port on the network that corresponds to the VM NIC is automatically created and associated with the default security group. You can configure <link linkend=\"enabling_ping_and_ssh\">security group rules</link> to enable users to access the VM."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:488(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:500(para)
 msgid "When you delete a Compute VM, the underlying Networking port is automatically deleted."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:495(title) ./doc/admin-guide-cloud/networking/section_networking-use.xml:499(caption)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:507(title) ./doc/admin-guide-cloud/networking/section_networking-use.xml:511(caption)
 msgid "Advanced VM creation operations"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:496(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:508(para)
 msgid "This table shows example nova and neutron commands that enable you to complete advanced VM creation operations:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:510(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:522(td)
 msgid "Boots a VM with multiple NICs."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:511(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:523(replaceable)
 msgid "NET1-ID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:511(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:523(replaceable)
 msgid "NET2-ID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:514(parameter)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:526(parameter)
 msgid "--num-instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:514(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:526(td)
 msgid "Boots a VM with a specific IP address. Note that you cannot use the <placeholder-1/> parameter in this case."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:515(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:527(replaceable)
 msgid "NET-ID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:515(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:527(replaceable)
 msgid "IP-ADDR"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:519(parameter)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:531(parameter)
 msgid "--nic"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:518(td)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:530(td)
 msgid "Boots a VM that connects to all networks that are accessible to the tenant who submits the request (without the <placeholder-1/> option)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:526(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:538(para)
 msgid "Cloud images that distribution vendors offer usually have only one active NIC configured. When you boot with multiple NICs, you must configure additional interfaces on the image or the NICS are not reachable."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:529(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:541(para)
 msgid "The following Debian/Ubuntu-based example shows how to set up the interfaces within the instance in the <filename>/etc/network/interfaces</filename> file. You must apply this configuration to the image."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:544(title)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:556(title)
 msgid "Enable ping and SSH on VMs (security groups)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:545(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:557(para)
 msgid "You must configure security group rules depending on the type of plug-in you are using. If you are using a plug-in that:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:549(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:561(para)
 msgid "Implements Networking security groups, you can configure security group rules directly by using the <placeholder-1/> command. This example enables <placeholder-2/> and <placeholder-3/> access to your VMs."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:560(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:572(para)
 msgid "Does not implement Networking security groups, you can configure security group rules by using the <placeholder-1/> or <placeholder-2/> command. These <placeholder-3/> commands enable <placeholder-4/> and <placeholder-5/> access to your VMs."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:570(para)
+#: ./doc/admin-guide-cloud/networking/section_networking-use.xml:582(para)
 msgid "If your plug-in implements Networking security groups, you can also leverage Compute security groups by setting <code>security_group_api = neutron</code> in the <filename>nova.conf</filename> file. After you set this option, all Compute security group commands are proxied to Networking."
 msgstr ""
 
@@ -3362,7 +3378,7 @@ msgstr ""
 msgid "id"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:263(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:321(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:621(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:664(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:876(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:998(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1066(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1187(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1591(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1632(td)
+#: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:263(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:321(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:621(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:664(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:876(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:998(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1066(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1187(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1591(td) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:1632(td) ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:49(term)
 msgid "generated"
 msgstr ""
 
@@ -3824,10 +3840,6 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:822(para)
 msgid "<parameter>--provider</parameter> is an optional argument. If not used, the pool is created with default provider for LBaaS service. You should configure the default provider in the <literal>[service_providers]</literal> section of <filename>neutron.conf</filename> file. If no default provider is specified for LBaaS, the <parameter>--provider</parameter> option is required for pool creation."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:828(replaceable) ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:847(replaceable)
-msgid "SUBNET_UUID"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_adv_features.xml:828(replaceable)
@@ -8660,6 +8672,162 @@ msgstr ""
 msgid "You can store samples in a file by setting the <placeholder-1/> option in <filename>ceilometer.conf</filename> o <literal>file</literal>. For the list of configuration options, see the <link href=\"http://docs.openstack.org/juno/config-reference/content/ch_configuring-openstack-telemetry.html\"><literal>dispatcher_file</literal> section</link> in the <citetitle>OpenStack Configuration Reference</citetitle>."
 msgstr ""
 
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:7(title)
+msgid "Events"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:8(para)
+msgid "In addition to metrics, the Telemetry module collects events triggered within an OpenStack environment. This section provides a brief summary of the events format in the Telemetry module."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:11(para)
+msgid "While a sample represents a single, numeric datapoint within a time-series, an event is a broader concept that represents the state of a resource at a point in time. The state may be described using various data types including non-numeric data such as an instance's flavor. In general, events represent any action made in the OpenStack system."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:17(title)
+msgid "Event configuration"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:18(para)
+msgid "To enable the creation and storage of events in the Telemetry module <placeholder-1/> option needs to be set to <literal>True</literal>. For further configuration options, see the event section in the <link href=\"http://docs.openstack.org/juno/config-reference/content/ch_configuring-openstack-telemetry.html\"><citetitle>OpenStack Configuration Reference</citetitle></link>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:24(para)
+msgid "It is advisable to set <placeholder-1/> to <literal>True</literal> when enabling events in the Telemetry module. The Telemetry module historically represented events as metering data, which may create duplication of data if both events and non-metric meters are enabled."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:31(title)
+msgid "Event structure"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:32(para)
+msgid "Events captured by the Telemetry module are represented by five key attributes:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:36(term) ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:127(term)
+msgid "event_type"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:38(para)
+msgid "A dotted string defining what event occurred such as <literal>compute.instance.resize.start\"</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:43(term)
+msgid "message_id"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:45(para)
+msgid "A UUID for the event."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:51(para)
+msgid "A timestamp of when the event occurred in the system."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:55(term) ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:136(term)
+msgid "traits"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:57(para)
+msgid "A flat mapping of key-value pairs which describe the event. The event's Traits contain most of the details of the event. Traits are typed, and can be strings, integers, floats, or datetimes."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:63(term) ./doc/admin-guide-cloud/blockstorage/section_ts_eql_volume_size.xml:114(entry)
+msgid "raw"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:65(para)
+msgid "Mainly for auditing purpose, the full event message can be stored (unindexed) for future evaluation."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:72(title)
+msgid "Event indexing"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:73(para)
+msgid "The general philosophy of notifications in OpenStack is to emit any and all data someone might need, and let the consumer filter out what they are not interested in. In order to make processing simpler and more efficient, the notifications are stored and processed within Ceilometer as events. The notification payload, which can be an arbitrarily complex JSON data structure, is converted to a flat set of key-value pairs. This conversion is specified by a config file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:80(para)
+msgid "The event format is meant for efficient processing and querying. Storage of complete notifications for auditing purposes can be enabled by configuring <placeholder-1/> option."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:84(title)
+msgid "Event conversion"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:85(para)
+msgid "The conversion from notifications to events is driven by a configuration file defined by the <placeholder-1/> in the <filename>ceilometer.conf</filename> configuration file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:88(para)
+msgid "This includes descriptions of how to map fields in the notification body to Traits, and optional plugins for doing any programmatic translations (splitting a string, forcing case)."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:91(para)
+msgid "The mapping of notifications to events is defined per event_type, which can be wildcarded. Traits are added to events if the corresponding fields in the notification exist and are non-null."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:94(para)
+msgid "The default definition file included with the Telemetry module contains a list of known notifications and useful traits. The mappings provided can be modified to include more or less data according to user requirements."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:98(para)
+msgid "If the definitions file is not present, a warning will be logged, but an empty set of definitions will be assumed. By default, any notifications that do not have a corresponding event definition in the definitions file will be converted to events with a set of minimal traits. This can be changed by setting the option <placeholder-1/> in the <filename>ceilometer.conf</filename> file. If this is set to True, any unmapped notifications will be dropped."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:106(para)
+msgid "The basic set of traits (all are TEXT type) that will be added to all events if the notification has the relevant data are: service (notification's publisher), tenant_id, and request_id. These do not have to be specified in the event definition, they are automatically added, but their definitions can be overridden for a given event_type."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:114(title)
+msgid "Event definitions format"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:115(para)
+msgid "The event definitions file is in YAML format. It consists of a list of event definitions, which are mappings. Order is significant, the list of definitions is scanned in reverse order to find a definition which matches the notification's event_type. That definition will be used to generate the event. The reverse ordering is done because it is common to want to have a more general wildcarded definition (such as <literal>compute.instance.*</literal>) with a set of traits common to all of those events, with a few more specific event definitions afterwards that have all of the above traits, plus a few more."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:124(para)
+msgid "Each event definition is a mapping with two keys:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:128(para)
+msgid "This is a list (or a string, which will be taken as a 1 element list) of event_types this definition will handle. These can be wildcarded with unix shell glob syntax. An exclusion listing (starting with a <literal>!</literal>) will exclude any types listed from matching. If only exclusions are listed, the definition will match anything not matching the exclusions."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:137(para)
+msgid "This is a mapping, the keys are the trait names, and the values are trait definitions."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:141(para)
+msgid "Each trait definition is a mapping with the following keys:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:144(term)
+msgid "fields"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:145(para)
+msgid "A path specification for the field(s) in the notification you wish to extract for this trait. Specifications can be written to match multiple possible fields. By default the value will be the first such field. The paths can be specified with a dot syntax (<literal>payload.host</literal>). Square bracket syntax (<literal>payload[host]</literal>) is also supported. In either case, if the key for the field you are looking for contains special characters, like <literal>.</literal>, it will need to be quoted (with double or single quotes): <literal>payload.image_meta.’org.openstack__1__architecture’</literal>. The syntax used for the field specification is a variant of <link href=\"https://github.com/kennknowles/python-jsonpath-rw\">JSONPath </link>"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:159(term) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-retrieval.xml:59(literal)
+msgid "type"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:160(para)
+msgid "(Optional) The data type for this trait. Valid options are: <literal>text</literal>, <literal>int</literal>, <literal>float</literal>, and <literal>datetime</literal>. Defaults to <literal>text</literal> if not specified."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:166(term)
+msgid "plugin"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:167(para)
+msgid "(Optional) Used to execute simple programmatic conversions on the value in a notification field."
+msgstr ""
+
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-retrieval.xml:7(title)
 msgid "Data retrieval"
 msgstr ""
@@ -8714,10 +8882,6 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-retrieval.xml:56(literal)
 msgid "value"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-retrieval.xml:59(literal)
-msgid "type"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-retrieval.xml:45(para)
@@ -12716,10 +12880,6 @@ msgstr ""
 msgid "image_from_volume1"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_ts_eql_volume_size.xml:114(entry)
-msgid "raw"
-msgstr ""
-
 #: ./doc/admin-guide-cloud/blockstorage/section_ts_eql_volume_size.xml:115(entry)
 msgid "bare"
 msgstr ""
@@ -14937,11 +15097,11 @@ msgstr ""
 msgid "rootwrap.conf configuration options"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:51(para) ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:82(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:51(para) ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:96(para)
 msgid "Configuration option=Default value"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:52(para) ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:83(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:52(para) ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:97(para)
 msgid "(Type) Description"
 msgstr ""
 
@@ -14958,26 +15118,38 @@ msgid "(ListOpt) Comma-separated list of directories containing filter definitio
 msgstr ""
 
 #: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:66(para)
+msgid "If the root wrapper is not performing correctly, you can add a workaround option into the <filename>nova.conf</filename> configuration file. This workaround re-configures the root wrapper configuration to fall back to running commands as sudo, and is a Kilo release feature."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:71(para)
+msgid "Including this workaround in your configuration file safeguards your environment from issues that can impair root wrapper performance. Tool changes that have impacted <link href=\"https://git.openstack.org/cgit/openstack-dev/pbr/\">Python Build Reasonableness (PBR)</link>, for example, are a known issue that affects root wrapper performance."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:77(para)
+msgid "To set up this workaround, configure the <parameter>disable_rootwrap</parameter> option in the <placeholder-1/> section of the <filename>nova.conf</filename> configuration file."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:80(para)
 msgid "The filters definition files contain lists of filters that rootwrap will use to allow or deny a specific command. They are generally suffixed by <literal>.filters</literal>. Since they are in the trusted security path, they need to be owned and writable only by the root user. Their location is specified in the <filename>rootwrap.conf</filename> file."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:72(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:86(para)
 msgid "Filter definition files use an INI file format with a <literal>[Filters]</literal> section and several lines, each with a unique parameter name, which should be different for each filter you define:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:77(caption)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:91(caption)
 msgid ".filters configuration options"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:88(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:102(para)
 msgid "[Filters]"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:89(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:103(para)
 msgid "filter_name=kpartx: CommandFilter, /sbin/kpartx, root"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:90(para)
+#: ./doc/admin-guide-cloud/compute/section_compute-rootwrap.xml:104(para)
 msgid "(ListOpt) Comma-separated list containing the filter class to use, followed by the Filter arguments (which vary depending on the Filter class selected)."
 msgstr ""
 

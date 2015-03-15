@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-03-11 04:32+0000\n"
-"PO-Revision-Date: 2015-03-10 00:16+0000\n"
+"POT-Creation-Date: 2015-03-14 08:39+0000\n"
+"PO-Revision-Date: 2015-03-13 04:08+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -2472,134 +2472,115 @@ msgid "The Telemetry module performs the following functions:"
 msgstr ""
 
 #: ./doc/common/section_getstart_telemetry.xml12(para)
-msgid ""
-"Efficiently collects the metering data about the CPU and network costs."
+msgid "Efficiently polls metering data related to OpenStack services."
 msgstr ""
 
 #: ./doc/common/section_getstart_telemetry.xml16(para)
 msgid ""
-"Collects data by monitoring notifications sent from services or by polling "
-"the infrastructure."
+"Collects event and metering data by monitoring notifications sent from "
+"services."
 msgstr ""
 
 #: ./doc/common/section_getstart_telemetry.xml20(para)
 msgid ""
-"Configures the type of collected data to meet various operating "
-"requirements. It accesses and inserts the metering data through the REST "
-"API."
+"Publishes collected data to various targets including data stores and "
+"message queues."
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml25(para)
-msgid ""
-"Expands the framework to collect custom usage data by additional plug-ins."
+#: ./doc/common/section_getstart_telemetry.xml24(para)
+msgid "Creates alarms when collected data breaks defined rules."
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml29(para)
-msgid "Produces signed metering messages that cannot be repudiated."
-msgstr ""
-
-#: ./doc/common/section_getstart_telemetry.xml34(para)
+#: ./doc/common/section_getstart_telemetry.xml28(para)
 msgid "The Telemetry module consists of the following components:"
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml37(term)
+#: ./doc/common/section_getstart_telemetry.xml31(term)
 msgid ""
 "A compute agent (<systemitem class=\"service\">ceilometer-agent-"
 "compute</systemitem>)"
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml39(para)
+#: ./doc/common/section_getstart_telemetry.xml33(para)
 msgid ""
 "Runs on each compute node and polls for resource utilization statistics. "
 "There may be other types of agents in the future, but for now our focus is "
 "creating the compute agent."
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml44(term)
+#: ./doc/common/section_getstart_telemetry.xml38(term)
 msgid ""
 "A central agent (<systemitem class=\"service\">ceilometer-agent-"
 "central</systemitem>)"
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml46(para)
+#: ./doc/common/section_getstart_telemetry.xml40(para)
 msgid ""
 "Runs on a central management server to poll for resource utilization "
-"statistics for resources not tied to instances or compute nodes."
+"statistics for resources not tied to instances or compute nodes. Multiple "
+"agents can be started to scale service horizontally."
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml50(term)
+#: ./doc/common/section_getstart_telemetry.xml45(term)
 msgid ""
 "A notification agent (<systemitem class=\"service\">ceilometer-agent-"
 "notification</systemitem>)"
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml52(para)
+#: ./doc/common/section_getstart_telemetry.xml47(para)
 msgid ""
-"Runs on a central management server to initiate alarm actions, such as "
-"calling out to a webhook with a description of the alarm state transition."
+"Runs on a central management server(s) and consumes messages from the "
+"message queue(s) to build event and metering data."
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml56(term)
+#: ./doc/common/section_getstart_telemetry.xml51(term)
 msgid ""
 "A collector (<systemitem class=\"service\">ceilometer-"
 "collector</systemitem>)"
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml58(para)
+#: ./doc/common/section_getstart_telemetry.xml53(para)
 msgid ""
-"Runs on central management server(s) to monitor the message queues (for "
-"notifications and for metering data coming from the agent). Notification "
-"messages are processed and turned into metering messages, which are sent to "
-"the message bus using the appropriate topic. Telemetry messages are written "
-"to the data store without modification."
+"Runs on central management server(s) and dispatches collected telemetry data"
+" to a data store or external consumer without modification."
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml66(term)
+#: ./doc/common/section_getstart_telemetry.xml58(term)
 msgid ""
 "An alarm evaluator (<systemitem class=\"service\">ceilometer-alarm-"
 "evaluator</systemitem>)"
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml68(para)
+#: ./doc/common/section_getstart_telemetry.xml60(para)
 msgid ""
 "Runs on one or more central management servers to determine when alarms fire"
 " due to the associated statistic trend crossing a threshold over a sliding "
 "time window."
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml72(term)
+#: ./doc/common/section_getstart_telemetry.xml64(term)
 msgid ""
 "An alarm notifier (<systemitem class=\"service\">ceilometer-alarm-"
 "notifier</systemitem>)"
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml74(para)
+#: ./doc/common/section_getstart_telemetry.xml66(para)
 msgid ""
 "Runs on one or more central management servers to allow alarms to be set "
 "based on the threshold evaluation for a collection of samples."
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml79(term)
-msgid "A data store"
-msgstr ""
-
-#: ./doc/common/section_getstart_telemetry.xml80(para)
-msgid ""
-"A database capable of handling concurrent writes (from one or more collector"
-" instances) and reads (from the API server)."
-msgstr ""
-
-#: ./doc/common/section_getstart_telemetry.xml85(term)
+#: ./doc/common/section_getstart_telemetry.xml71(term)
 msgid "An API server (<systemitem class=\"service\">ceilometer-api</systemitem>)"
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml87(para)
+#: ./doc/common/section_getstart_telemetry.xml73(para)
 msgid ""
 "Runs on one or more central management servers to provide data access from "
 "the data store."
 msgstr ""
 
-#: ./doc/common/section_getstart_telemetry.xml91(para)
+#: ./doc/common/section_getstart_telemetry.xml77(para)
 msgid ""
 "These services communicate by using the OpenStack messaging bus. Only the "
 "collector and API server have access to the data store."
