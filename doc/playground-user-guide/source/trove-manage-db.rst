@@ -6,9 +6,14 @@ functionality for both relational and non-relational database engines.
 Users can quickly and easily use database features without the burden of
 handling complex administrative tasks.
 
+.. toctree::
+   :maxdepth: 1
+
+   create_db.rst
+
 TODO(lmichaels):
 
-Add toctree here, then as these files get converted, add them to the toctree:
+As these files get converted, add them to the toctree:
 
 - create_db.rst
 
