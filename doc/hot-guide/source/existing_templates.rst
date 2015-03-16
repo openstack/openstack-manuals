@@ -4,8 +4,7 @@
 Where to find existing templates
 ================================
 
-There are several repositories where you can find existing tested HOT
-templates.
+There are several repositories where you can find existing HOT templates.
 
 
 The `OpenStack Heat Templates repository`_ is a collection of example
