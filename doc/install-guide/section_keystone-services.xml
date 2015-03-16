@@ -47,12 +47,16 @@
         catalog to determine how to communicate with other services in your
         environment.</para>
       <para>OpenStack provides three API endpoint variations for each service:
-        admin, internal, and public. In a production environment, the variants
-        might reside on separate networks that service different types of users
-        for security reasons. Also, OpenStack supports multiple regions for
-        scalability. For simplicity, this configuration uses the management
-        network for all endpoint variations and the
-        <literal>regionOne</literal> region.</para>
+        admin, internal, and public. The admin API endpoint allows modifying
+        users and tenants by default, while the public and internal APIs
+        do not. In a production environment, the variants might reside on
+        separate networks that service different types of users for security
+        reasons. For instance, the public API network might be reachable from
+        outside the cloud for management tools, the admin API network might be
+        protected, while the internal API network is connected to each host.
+        Also, OpenStack supports multiple regions for scalability. For
+        simplicity, this configuration uses the management network for all
+        endpoint variations and the <literal>regionOne</literal> region.</para>
       <para>Create the Identity service API endpoints:</para>
       <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ identity / {print $2}') \
