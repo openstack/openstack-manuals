@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="section_orchestration-auth-model">
+  <title>Orchestration authorization model</title>
+  <para>Orchestration authorization model defines the process of
+      authorization that orchestration module uses to authorize requests during
+      so called deferred operations. The typical example of such operation is
+      autoscaling group update when heat requests another components
+      (nova, neutron or others) to extend (reduce) capacity of autoscaling
+      group.</para>
+  <para>At the current moment, Orchestration provides two kinds of
+      authorization models:</para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>Password authorization.</para>
+      </listitem>
+      <listitem>
+        <para>Authorization with OpenStack Identity trusts.</para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  <section xml:id="section_orchestration-password-authorization">
+     <title>Password authorization</title>
+     <para>Password authorization is the initial authorization model that was
+         supported by Orchestration module. This kind of authorization requires
+         from a user to pass a password to Orchestration. Orchestration
+         stores the encrypted password in database and uses it for deferred
+         operations.</para>
+     <para>The following steps are executed for password authorization:</para>
+     <para>
+       <orderedlist>
+         <listitem>
+           <para>User requests stack creation, providing a token and
+               username/password (python-heatclient or OpenStack dashboard
+               normally requests the token for you).</para>
+         </listitem>
+         <listitem>
+           <para>If the stack contains any resources marked as requiring
+               deferred operations orchestration engine will fail validation
+               checks if no username/password is provided.</para>
+         </listitem>
+         <listitem>
+           <para>The username/password are encrypted and stored in the
+               orchestration DB.</para>
+         </listitem>
+         <listitem>
+           <para>Stack creation is completed.</para>
+         </listitem>
+         <listitem>
+           <para>At some later stage Orchestration retrieves the
+               credentials and requests another token on behalf of the user,
+               the token is not limited in scope and provides access to all
+               roles of the stack owner.</para>
+         </listitem>
+       </orderedlist>
+     </para>
+   </section>
+   <section xml:id="section_orchestration-keystone-trusts-authorization">
+     <title>Keystone trusts authorization</title>
+     <para>OpenStack Identity trusts is the new authorization method available
+         since IceHouse release.</para>
+     <para>Trusts are an OpenStack Identity extension, which provide a method to
+         enable delegation, and optionally impersonation via OpenStack
+         Identity. The key terminology is <emphasis>trustor</emphasis>
+         (the user delegating) and <emphasis>trustee</emphasis>
+         (the user being delegated to).</para>
+     <para>To create a trust, the <emphasis>trustor</emphasis>(in this case
+         the user creating the stack in Orchestration module) provides
+         OpenStack Identity with the following information:</para>
+     <para>
+       <itemizedlist>
+         <listitem>
+           <para>The ID of the <emphasis>trustee</emphasis>(who you want to
+               delegate to, in this case the Orchestration service user).
+           </para>
+         </listitem>
+         <listitem>
+           <para>The roles to be delegated(configurable via the
+               <filename>heat.conf</filename>, but it needs to contain whatever
+               roles are required to perform the deferred operations on the
+               users behalf, e.g launching a OpenStack Compute instance in
+               response to an AutoScaling event).</para>
+         </listitem>
+         <listitem>
+           <para>Whether to enable impersonation.</para>
+         </listitem>
+       </itemizedlist>
+     </para>
+     <para>OpenStack Identity then provides a trust_id, which can be consumed by
+         the trustee (and <emphasis>only</emphasis> the trustee) to obtain a
+         <emphasis>trust scoped token</emphasis>. This token is limited in
+         scope such that the trustee has limited access to those roles
+         delegated, along with effective impersonation of the trustor user, if
+         it was selected when creating the trust. More information is available
+         in Identity management section.</para>
+     <para>The following steps are executed for trusts authorization:</para>
+     <para>
+       <orderedlist>
+         <listitem>
+           <para>User creates a stack via an API request (only the token is
+           required).</para>
+         </listitem>
+         <listitem>
+           <para>Orchestration uses the token to create a trust between
+               the stack owner (trustor) and the heat service user (trustee),
+               delegating a special role (or roles) as defined in the
+               <emphasis>trusts_delegated_roles</emphasis> list in the
+               heat configuration file. By default heat sets all roles from
+               trustor available for trustee. Deployers may modify this list to
+               reflect local RBAC policy, e.g to ensure the heat process can
+               only access those services expected while impersonating
+               a stack owner.</para>
+         </listitem>
+         <listitem>
+           <para>Orchestration stores the encrypted
+               <emphasis>trust id</emphasis> in the Orchestration DB.</para>
+         </listitem>
+         <listitem>
+           <para>When a deferred operation is required, Orchestration
+               retrieves the <emphasis>trust id</emphasis>, and requests a
+               trust scoped token which enables the service user to impersonate
+               the stack owner for the duration of the deferred operation, e.g
+               to launch some OpenStack Compute instances on behalf of
+               the stack owner in response to an AutoScaling event.</para>
+         </listitem>
+       </orderedlist>
+     </para>
+   </section>
+   <section xml:id="section_orchestration-authorization-model-configuration">
+     <title>Authorization model configuration</title>
+     <para>Password authorization model had been the default authorization
+         model enabled for Orchestration module before Kilo release. Since Kilo
+         release trusts authorization model has been enabled by default.</para>
+     <para>To enable password authorization model the following change should
+         be made in <filename>heat.conf</filename>:</para>
+     <programlisting language="ini">deferred_auth_method=password</programlisting>
+     <para>To enable trusts authorization model the following change should be
+         made in <filename>heat.conf</filename>:</para>
+     <programlisting language="ini">deferred_auth_method=trusts</programlisting>
+     <para>To specify trustor roles that will be delegated to trustee during
+         authorization <literal>trusts_delegated_roles</literal> parameter
+         should be specified in <filename>heat.conf</filename>. If
+         <literal>trusts_delegated_roles</literal> is not defined then all
+         trustor roles will be delegated to trustee. Please pay attention that
+         trust delegated roles should be pre-configured in OpenStack Identity
+         before using it in Orchestration module.</para>
+   </section>
+</section>
+
