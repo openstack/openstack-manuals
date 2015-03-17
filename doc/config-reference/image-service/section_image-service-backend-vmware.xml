@@ -94,12 +94,6 @@ vmware_api_insecure = <replaceable>False</replaceable></programlisting>
             parameter value to the vCenter name of the data store.
             This configuration limits the back end to a single data
             store.</para>
-        <para>Alternatively, you can specify a SPBM policy, which can
-            comprise multiple vCenter data stores. Both approaches are
-            described.</para>
-        <note>
-            <para>SPBM requires vCenter Server 5.5 or later.</para>
-        </note>
         <procedure>
             <title>To configure a single data store</title>
             <step>
@@ -115,69 +109,6 @@ vmware_api_insecure = <replaceable>False</replaceable></programlisting>
                     store.</para>
             </step>
             <step>
-                <para>Complete the other vCenter configuration
-                    parameters as appropriate.</para>
-            </step>
-        </procedure>
-        <procedure>
-            <title>To configure multiple data stores using
-                SPBM</title>
-            <step>
-                <para>In vCenter, use tagging to identify the data
-                    stores and define a storage policy:</para>
-                <substeps>
-                    <step>
-                        <para>Create the tag.</para>
-                    </step>
-                    <step>
-                        <para>Apply the tag to the data stores to be
-                            used by the SPBM policy.</para>
-                    </step>
-                    <step>
-                        <para>Create a tag-based storage policy that
-                            uses one or more tags to identify a set of
-                            data stores.</para>
-                    </step>
-                </substeps>
-                <note>
-                    <para>For details about creating tags in vSphere,
-                        see the <link
-                            xlink:href="http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.vsphere.vcenterhost.doc/GUID-379F40D3-8CD6-449E-89CB-79C4E2683221.html">vSphere documentation</link>.
-                    </para>
-                    <para>For details about storage policies in
-                        vSphere, see the <link
-                            xlink:href="http://pubs.vmware.com/vsphere-55/index.jsp#com.vmware.vsphere.storage.doc/GUID-A8BA9141-31F1-4555-A554-4B5B04D75E54.html">vSphere documentation</link>.
-                    </para>
-                </note>
-            </step>
-            <step>
-                <para>Return to the
-                        <filename>glance-api.conf</filename>
-                    file.</para>
-            </step>
-            <step>
-                <para>Comment or delete the
-                        <option>vmware_datastore_name</option>
-                    parameter.</para>
-            </step>
-            <step>
-                <para>Uncomment and define the
-                        <option>vmware_pbm_policy</option>
-                    parameter by entering the same value as the tag
-                    you defined and applied to the data stores in
-                    vCenter.</para>
-            </step>
-            <step>
-                <para>Uncomment and define the
-                        <option>vmware_pbm_wsdl_location</option>
-                    parameter by entering the location of the PBM
-                    service WSDL file. For example,
-                        <filename>file:///opt/SDK/spbm/wsdl/pbmService.wsdl</filename>.</para>
-                <note>
-                    <para>If you do not set this parameter, the
-                        storage policy cannot be used to place images
-                        in the data store.</para>
-                </note>
                 <para>Complete the other vCenter configuration
                     parameters as appropriate.</para>
             </step>
