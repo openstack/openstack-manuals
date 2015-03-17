@@ -22,12 +22,12 @@ Create instance snapshots
 
 #. On the :guilabel:`Admin` tab, click the :guilabel:`Instances` category.
 
-#. Select an instance to create a snapshot from it. From the :guilabel:`Actions`
-   drop-down list, select :guilabel:`Create Snapshot`.
+#. Select an instance to create a snapshot from it. From the
+   :guilabel:`Actions` drop-down list, select :guilabel:`Create Snapshot`.
 
 #. In the :guilabel:`Create Snapshot` window, enter a name for the snapshot.
 
-# Click :guilabel:`Create Snapshot`. The dashboard shows the instance snapshot
+#. Click :guilabel:`Create Snapshot`. The dashboard shows the instance snapshot
    in the :guilabel:`Images & Snapshots` category.
 
 #. To launch an instance from the snapshot, select the snapshot and
