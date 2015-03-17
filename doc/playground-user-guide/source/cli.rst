@@ -96,4 +96,4 @@ service with its package name and description.
    cli_nova_migrate.rst
    managing-openstack-object-storage-with-swift-cli.rst
    cli_use_snapshots_to_migrate_instances.rst
-
+   cli_admin_manage_environment.rst
