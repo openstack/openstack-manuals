@@ -21,11 +21,19 @@
           </listitem>
       </varlistentry>
       <varlistentry>
+        <term><systemitem class="service">ceilometer-polling</systemitem></term>
+          <listitem>
+            <para>Polls for different kinds of metric data by using the polling
+              plug-ins (pollsters) registered in different namespaces.</para>
+          </listitem>
+      </varlistentry>
+      <varlistentry>
         <term><systemitem class="service">ceilometer-agent-central</systemitem></term>
           <listitem>
             <para>Polls the public RESTful APIs of other OpenStack
-              services such as Compute service and Image service, in order to
-              keep tabs on resource existence.</para>
+              services such as Compute service and Image service, in order to keep
+              tabs on resource existence, by using the polling plug-ins (pollsters)
+              registered in the central polling namespace.</para>
           </listitem>
       </varlistentry>
       <varlistentry>
@@ -33,20 +41,22 @@
           <listitem>
             <para>Polls the local hypervisor or libvirt daemon to acquire
               performance data for the local instances, messages and emits these
-              data as AMQP messages.</para>
+              data as AMQP messages, by using the polling plug-ins (pollsters)
+              registered in the compute polling namespace.</para>
+          </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term><systemitem class="service">ceilometer-agent-ipmi</systemitem></term>
+          <listitem>
+            <para>Polls the local node with IPMI support, in order to
+              acquire IPMI sensor data and Intel Node Manager data, by using the polling
+              plug-ins (pollsters) registered in the ipmi polling namespace.</para>
           </listitem>
       </varlistentry>
       <varlistentry>
         <term><systemitem class="service">ceilometer-agent-notification</systemitem></term>
           <listitem>
             <para>Consumes AMQP messages from other OpenStack services.</para>
-          </listitem>
-      </varlistentry>
-      <varlistentry>
-        <term><systemitem class="service">ceilometer-agent-ipmi</systemitem></term>
-          <listitem>
-            <para>Polls compute node with IPMI support, in order to
-              acquire IPMI sensor data and Intel Node Manager data.</para>
           </listitem>
       </varlistentry>
       <varlistentry>
@@ -72,7 +82,12 @@
       </varlistentry>
     </variablelist>
   </para>
-  <para>Besides the <systemitem class="service">ceilometer-agent-compute</systemitem> service,
+  <note>
+    <para>The <systemitem class="service">ceilometer-polling</systemitem> service is available
+      since the Kilo release.</para>
+  </note>
+  <para>Besides the <systemitem class="service">ceilometer-agent-compute</systemitem> and
+    the <systemitem class="service">ceilometer-agent-ipmi</systemitem> service,
     all the other services are placed on one or more controller nodes.</para>
   <para>The Telemetry architecture highly depends on the AMQP service both for consuming
     notifications coming from OpenStack services and internal communication.</para>
