@@ -17,7 +17,7 @@
         functions for VNX.</para>
     <section xml:id="emc-vnx-direct-supported-release">
         <title>Supported OpenStack release</title>
-        <para><literal>EMC VNX direct driver</literal> supports the Juno release.</para>
+        <para><literal>EMC VNX direct driver</literal> supports the Kilo release.</para>
     </section>
     <section xml:id="emc-vnx-direct-reqs">
         <title>System requirements</title>
@@ -71,6 +71,9 @@
           </listitem>
           <listitem>
             <para>Create, list, and delete consistency group snapshots.</para>
+          </listitem>
+          <listitem>
+            <para>Modify consistency groups.</para>
           </listitem>
         </itemizedlist>
     </section>
@@ -141,6 +144,21 @@
             <para>Steps mentioned below are for a compute node. Please follow the same
                 steps for the Block Storage nodes also. The steps can be skipped if initiator
                 auto registration is enabled.</para>
+            <note>
+                <para>When the driver notices that there is no existing storage group that has
+                    the host name as the storage group name, it will create the storage group
+                    and then add the compute nodes' or Block Storage nodes' registered initiators
+                    into the storage group.</para>
+                <para>If the driver notices that the storage group already exists, it will assume
+                    that the registered initiators have also been put into it and skip the
+                    operations above for better performance.</para>
+                <para>It is recommended that the storage administrator does not create the storage
+                    group manually and instead relies on the driver for the preparation. If the
+                    storage administrator needs to create the storage group manually for some
+                    special requirements, the correct registered initiators should be put into the
+                    storage group as well (otherwise the following volume attaching operations will
+                    fail).</para>
+            </note>
             <section xml:id="register-vnx-direct-fc">
                 <title>EMCCLIFCDriver</title>
                 <para>Steps for <literal>EMCCLIFCDriver</literal>:</para>
@@ -161,7 +179,8 @@
                                 with SP Port <literal>A-1</literal> appears.</para></step>
                             <step><para>Click the <guibutton>Register</guibutton> button,
                                 select <guilabel>CLARiiON/VNX</guilabel> and enter the
-                                hostname and IP address:</para>
+                                hostname (which is the output of the linux command <literal>
+                                hostname</literal>) and IP address:</para>
                                 <itemizedlist>
                                   <listitem>
                                     <para>Hostname : <literal>myhost1</literal></para>
@@ -223,7 +242,8 @@
                                 with SP Port <literal>A-8v0</literal> appears.</para></step>
                             <step><para>Click the <guibutton>Register</guibutton> button,
                                 select <guilabel>CLARiiON/VNX</guilabel> and enter the
-                                hostname and IP address:</para>
+                                hostname (which is the output of the linux command <literal>
+                                hostname</literal>) and IP address:</para>
                                 <itemizedlist>
                                   <listitem>
                                     <para>Hostname : <literal>myhost1</literal></para>
@@ -405,6 +425,14 @@ storage_vnx_authentication_type = ldap</programlisting>
             snapshot, the volume's status would change to
             <literal>error_extending</literal>.</para>
     </section>
+    <section xml:id="emc-vnx-direct-vol-iscsi-restriction">
+        <title>Restriction of iSCSI attachment</title>
+        <para>The driver caches the iSCSI ports information. If the iSCSI port
+            configurations are changed, the administrator should restart the
+            <systemitem class="service">cinder-volume</systemitem> service or
+            wait 5 minutes before any volume attachment operation. Otherwise,
+            the attachment may fail because the old iSCSI port configurations were used.</para>
+    </section>
     <section xml:id="emc-vnx-direct-provisioning">
         <title>Provisioning type (thin, thick, deduplicated and compressed)</title>
         <para>User can specify extra spec key <literal>storagetype:provisioning</literal>
@@ -427,7 +455,7 @@ storage_vnx_authentication_type = ldap</programlisting>
                 deduplication settings. To create a deduplicated volume, the VNX
                 deduplication license should be activated on VNX first, and use key
                 <literal>deduplication_support=True</literal> to let Block Storage scheduler
-                find a volume backend which manages a VNX with deduplication license
+                find a volume back end which manages a VNX with deduplication license
                 activated.</para>
           </listitem>
           <listitem>
@@ -437,7 +465,7 @@ storage_vnx_authentication_type = ldap</programlisting>
                 compression settings. To create a compressed volume, the VNX compression
                 license should be activated on VNX first, and the user should specify
                 key <literal>compression_support=True</literal> to let Block Storage scheduler
-                find a volume backend which manages a VNX with compression license activated.
+                find a volume back end which manages a VNX with compression license activated.
                 VNX does not support to create a snapshot on a compressed volume. If the
                 user tries to create a snapshot on a compressed volume, the operation would
                 fail and OpenStack would show the new snapshot in error state.</para>
@@ -478,7 +506,7 @@ storage_vnx_authentication_type = ldap</programlisting>
             use the extra spec key <literal>storagetype:tiering</literal> to set
             the tiering policy of a volume and use the extra spec key
             <literal>fast_support=True</literal> to let Block Storage scheduler find a volume
-            backend which manages a VNX with FAST license activated. Here are the five
+            back end which manages a VNX with FAST license activated. Here are the five
             supported values for the extra spec key
             <literal>storagetype:tiering</literal>:</para>
         <itemizedlist>
@@ -512,14 +540,14 @@ storage_vnx_authentication_type = ldap</programlisting>
         <para>VNX has FAST Cache feature which requires the FAST Cache license
             activated on the VNX. The OpenStack administrator can use the extra
             spec key <literal>fast_cache_enabled</literal> to choose whether to create
-            a volume on the volume backend which manages a pool with FAST Cache
-            enabled. This feature is only supported by pool-based backend (Refer
+            a volume on the volume bac kend which manages a pool with FAST Cache
+            enabled. This feature is only supported by pool-based bac kend (Refer
             to <xref linkend="emc-vnx-direct-multipool"/>). The value of the
             extra spec key <literal>fast_cache_enabled</literal> is either
             <literal>True</literal> or <literal>False</literal>. When creating
             a volume, if the key <literal>fast_cache_enabled</literal> is set to
             <literal>True</literal> in the volume type, the volume will be created by
-            a pool-based backend which manages a pool with FAST Cache enabled.</para>
+            a pool-based back end which manages a pool with FAST Cache enabled.</para>
     </section>
     <section xml:id="emc-vnx-direct-sg-autodeletion">
         <title>Storage group automatic deletion</title>
@@ -547,12 +575,12 @@ storage_vnx_authentication_type = ldap</programlisting>
             not be triggered:</para>
         <itemizedlist>
           <listitem>
-            <para>Volume migration between backends with different
+            <para>Volume migration between back ends with different
                 storage protocol, ex, FC and iSCSI.</para>
           </listitem>
           <listitem>
-            <para>Volume migration from pool-based backend to
-                array-based backend.</para>
+            <para>Volume migration from pool-based bac kend to
+                array-based back end.</para>
           </listitem>
           <listitem>
             <para>Volume is being migrated across arrays.</para>
@@ -569,6 +597,13 @@ storage_vnx_authentication_type = ldap</programlisting>
             on VNX but not register with the other ports, this functionality should be
             disabled.</para>
     </section>
+    <section xml:id="emc-vnx-direct-initiator-autodereg">
+        <title>Initiator auto deregistration</title>
+        <para>Enabling storage group automatic deletion is the precondition of this
+            functionality. If <literal>initiator_auto_deregistration=True</literal> is set,
+            the driver will deregister all the iSCSI initiators of the host after its
+            storage group is deleted.</para>
+    </section>
     <section xml:id="emc-vnx-direct-ro-vol">
         <title>Read-only volumes</title>
         <para>OpenStack supports read-only volumes. The following
@@ -582,18 +617,18 @@ storage_vnx_authentication_type = ldap</programlisting>
     </section>
     <section xml:id="emc-vnx-direct-multipool">
         <title>Multiple pools support</title>
-        <para>Normally a storage pool is configured for a Block Storage backend (named
-            as pool-based backend), so that only that storage pool will be used
-            by that Block Storage backend.</para>
+        <para>Normally a storage pool is configured for a Block Storage back end (named
+            as pool-based back end), so that only that storage pool will be used
+            by that Block Storage back end.</para>
         <para>If <literal>storage_vnx_pool_name</literal> is not given in the
             configuration file, the driver will allow user to use the extra spec key
             <literal>storagetype:pool</literal> in the volume type to specify the
             storage pool for volume creation. If <literal>storagetype:pool</literal>
             is not specified in the volume type and <literal>storage_vnx_pool_name</literal>
             is not found in the configuration file, the driver will randomly
-            choose a pool to create the volume. This kind of Block Storage backend is
-            named as array-based backend.</para>
-        <para>Here is an example about configuration of array-based backend:</para>
+            choose a pool to create the volume. This kind of Block Storage back end is
+            named as array-based back end.</para>
+        <para>Here is an example about configuration of array-based back end:</para>
         <programlisting language="ini">san_ip = 10.10.72.41
 #Directory path that contains the VNX security file. Make sure the security file is generated first
 storage_vnx_security_file_dir = /etc/secfile/array1
@@ -617,11 +652,25 @@ volume_backend_name = vnx_41</programlisting>
             In later driver update, the driver side change which cooperates with
             pool-aware-cinder-scheduler will be introduced.</para>
     </section>
+        <section xml:id="emc-vnx-direct-vol-num-threshold">
+        <title>Volume number threshold</title>
+        <para>In VNX, there is a limit on the maximum number of pool volumes that can be
+            created in the system. When the limit is reached, no more pool volumes can
+            be created even if there is enough remaining capacity in the storage pool. In other
+            words, if the scheduler dispatches a volume creation request to a back end that
+            has free capacity but reaches the limit, the back end will fail to create the
+            corresponding volume.</para>
+        <para>The default value of the option <literal>check_max_pool_luns_threshold</literal> is
+            <literal>False</literal>. When <literal>check_max_pool_luns_threshold=True</literal>,
+            the pool-based back end will check the limit and will report 0 free capacity to the
+            scheduler if the limit is reached. So the scheduler will be able to skip this kind
+            of pool-based back end that runs out of the pool volume number.</para>
+    </section>
     <section xml:id="emc-vnx-direct-auto-zoning">
         <title>FC SAN auto zoning</title>
         <para>EMC direct driver supports FC SAN auto zoning when
             ZoneManager is configured. Set <literal>zoning_mode</literal>
-            to <literal>fabric</literal> in backend configuration section to
+            to <literal>fabric</literal> in back-end configuration section to
             enable this feature. For ZoneManager configuration, please refer
             to <xref linkend="section_fc-zoning"/>.</para>
     </section>
@@ -663,6 +712,19 @@ max_overflow = 30</programlisting>
         <para>For more details on multi-backend, see <link
             xlink:href="http://docs.openstack.org/admin-guide-cloud/content/multi_backend.html">OpenStack
             Cloud Administration Guide</link>.</para>
+    </section>
+    <section xml:id="emc-vnx-direct-volume-force-deletion">
+        <title>Force delete volumes in storage groups</title>
+        <para>Some available volumes may remain in storage groups on the VNX array due to some
+            OpenStack timeout issues. But the VNX array does not allow the user to delete the
+            volumes which are still in storage groups. The option <literal>
+            force_delete_lun_in_storagegroup</literal> is introduced to allow the user to delete
+            the available volumes in this tricky situation.</para>
+        <para>When <literal>force_delete_lun_in_storagegroup=True</literal> is set in the back-end
+            section, the driver will move the volumes out of storage groups and then delete them
+            if the user tries to delete the volumes that remain in storage groups on the VNX array.</para>
+        <para>The default value of <literal>force_delete_lun_in_storagegroup</literal> is
+            <literal>False</literal>.</para>
     </section>
 </section>
 
