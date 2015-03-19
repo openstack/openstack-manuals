@@ -15,7 +15,7 @@
         interface (CLI) for the Database API and its extensions.
 
        This chapter documents <command>trove</command> version
-        <literal>1.0.8</literal>.
+        <literal>1.0.9</literal>.
     </para>
 
     <para>For help on a specific <command>trove</command>
@@ -320,6 +320,14 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>eject-replica-source</command></term>
+    <listitem>
+      <para>
+        Ejects a replica source from its set.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>flavor-list</command></term>
     <listitem>
       <para>
@@ -399,6 +407,15 @@
     <listitem>
       <para>
         Updates metadata, this is destructive.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>promote-to-replica-source</command></term>
+    <listitem>
+      <para>
+        Promotes a replica to be the new replica
+      source of its set.
       </para>
     </listitem>
   </varlistentry>
@@ -617,6 +634,7 @@
     <term><command>--os-auth-system &lt;auth-system&gt;</command></term>
     <listitem>
       <para>
+        Defaults to <code>env[OS_AUTH_SYSTEM]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -932,7 +950,7 @@ Creates a backup of an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1019,7 +1037,7 @@ Lists available backups for an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1188,7 +1206,7 @@ Attaches a configuration group to an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1236,7 +1254,8 @@ Creates a configuration group.
     <listitem>
       <para>
         Datastore assigned to the configuration
-      group.
+      group. Required if default datastore is not
+      configured.
       </para>
     </listitem>
   </varlistentry>
@@ -1271,7 +1290,7 @@ Shows the default configuration of an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1305,7 +1324,7 @@ Detaches a configuration group from an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1507,7 +1526,7 @@ Updates a configuration group.
                     [--datastore_version &lt;datastore_version&gt;]
                     [--nic &lt;net-id=net-uuid,v4-fixed-ip=ip-addr,port-id=port-uuid&gt;]
                     [--configuration &lt;configuration&gt;]
-                    [--replica_of &lt;source_id&gt;]</computeroutput></screen>
+                    [--replica_of &lt;source_instance&gt;] [--replica_count &lt;count&gt;]</computeroutput></screen>
         <para>
 Creates a new instance.
         </para>  <variablelist wordsize="10">
@@ -1614,11 +1633,20 @@ Creates a new instance.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--replica_of &lt;source_id&gt; ID</command></term>
+    <term><command>--replica_of &lt;source_instance&gt; ID</command></term>
     <listitem>
       <para>
-        of an existing instance to replicate
-      from.
+        or name of an existing instance to
+      replicate from.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--replica_count &lt;count&gt;</command></term>
+    <listitem>
+      <para>
+        Number of replicas to create (defaults to
+      1).
       </para>
     </listitem>
   </varlistentry>
@@ -1637,7 +1665,7 @@ Creates a database on an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1681,7 +1709,7 @@ Deletes a database from an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1706,7 +1734,7 @@ Lists available databases on an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1794,7 +1822,7 @@ Deletes an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1811,7 +1839,24 @@ Detaches a replica instance from its replication source.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="troveclient_subcommand_eject-replica-source">
+        <title>trove eject-replica-source</title>
+        <screen><computeroutput>usage: trove eject-replica-source &lt;instance&gt;</computeroutput></screen>
+        <para>
+Ejects a replica source from its set.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance&gt;</command></term>
+    <listitem>
+      <para>
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -1819,10 +1864,29 @@ Detaches a replica instance from its replication source.
     </section>
     <section xml:id="troveclient_subcommand_flavor-list">
         <title>trove flavor-list</title>
-        <screen><computeroutput>usage: trove flavor-list</computeroutput></screen>
+        <screen><computeroutput>usage: trove flavor-list [--datastore_type &lt;datastore_type&gt;]
+                         [--datastore_version_id &lt;datastore_version_id&gt;]</computeroutput></screen>
         <para>
 Lists available flavors.
-        </para>
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--datastore_type &lt;datastore_type&gt;</command></term>
+    <listitem>
+      <para>
+      Type of the datastore. For eg: mysql.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--datastore_version_id &lt;datastore_version_id&gt;</command></term>
+    <listitem>
+      <para>
+      ID of the datastore version.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="troveclient_subcommand_flavor-show">
         <title>trove flavor-show</title>
@@ -2058,6 +2122,23 @@ Updates metadata, this is destructive.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="troveclient_subcommand_promote-to-replica-source">
+        <title>trove promote-to-replica-source</title>
+        <screen><computeroutput>usage: trove promote-to-replica-source &lt;instance&gt;</computeroutput></screen>
+        <para>
+Promotes a replica to be the new replica source of its set.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance&gt;</command></term>
+    <listitem>
+      <para>
+        ID or name of the instance.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="troveclient_subcommand_resize-instance">
         <title>trove resize-instance</title>
         <screen><computeroutput>usage: trove resize-instance &lt;instance&gt; &lt;flavor_id&gt;</computeroutput></screen>
@@ -2069,7 +2150,7 @@ Resizes an instance with a new flavor.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2094,7 +2175,7 @@ Resizes the volume size of an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2119,7 +2200,7 @@ Restarts an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2136,7 +2217,7 @@ Enables root for an instance and resets if already exists.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2153,7 +2234,7 @@ Gets status if root was ever enabled for an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2272,7 +2353,7 @@ Updates an instance: Edits name, configuration, or replica source.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        UUID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2327,7 +2408,7 @@ Creates a user on an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2379,7 +2460,7 @@ Deletes a user from an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2416,7 +2497,7 @@ Grants access to a database(s) for a user.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2460,7 +2541,7 @@ Lists the users for an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2477,7 +2558,7 @@ Revokes access to a database for a user.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2521,7 +2602,7 @@ Shows details of a user of an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2557,7 +2638,7 @@ Shows access details of a user of an instance.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2597,7 +2678,7 @@ must be provided.
     <term><command>&lt;instance&gt;</command></term>
     <listitem>
       <para>
-        ID of the instance.
+        ID or name of the instance.
       </para>
     </listitem>
   </varlistentry>
