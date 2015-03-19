@@ -84,9 +84,10 @@ service with its package name and description.
 .. toctree::
    :maxdepth: 2
 
-   cli_launch_instances.rst
    cli_cheat_sheet.rst
    trove-manage-db.rst
-
-.. TODO(ajaeger): Add further sections
+   cli_cheat_sheet.rst
+   cli_launch_instances.rst
+   cli_manage_instances_hosts.rst
+   cli_provide_user_data_to_instances.rst
 
