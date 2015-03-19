@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Compute API and its extensions.
 
        This chapter documents <command>nova</command> version
-        <literal>2.22.0</literal>.
+        <literal>2.23.0</literal>.
     </para>
 
     <para>For help on a specific <command>nova</command>
@@ -1035,7 +1035,9 @@
     <term><command>secgroup-add-default-rule</command></term>
     <listitem>
       <para>
-        Add a rule to the default security group.
+        Add a rule to the set of rules that will be
+      added to the 'default' security group for new
+      tenants.
       </para>
     </listitem>
   </varlistentry>
@@ -1075,7 +1077,9 @@
     <term><command>secgroup-delete-default-rule</command></term>
     <listitem>
       <para>
-      Delete a rule from the default security group.
+      Delete a rule from the set of rules that will
+      be added to the 'default' security group for
+      new tenants.
       </para>
     </listitem>
   </varlistentry>
@@ -1108,7 +1112,8 @@
     <term><command>secgroup-list-default-rules</command></term>
     <listitem>
       <para>
-      List rules for the default security group.
+      List rules that will be added to the 'default'
+      security group for new tenants.
       </para>
     </listitem>
   </varlistentry>
@@ -2718,8 +2723,8 @@ Boot a new server.
     <listitem>
       <para>
         Store arbitrary files from &lt;src-path&gt; locally
-      to &lt;dst-path&gt; on the new server. You may store
-      up to 5 files.
+      to &lt;dst-path&gt; on the new server. Limited by
+      the injected_files quota value.
       </para>
     </listitem>
   </varlistentry>
@@ -6193,7 +6198,8 @@ Delete networks and security groups associated with a project.
         <title>nova secgroup-add-default-rule</title>
         <screen><computeroutput>usage: nova secgroup-add-default-rule &lt;ip-proto&gt; &lt;from-port&gt; &lt;to-port&gt; &lt;cidr&gt;</computeroutput></screen>
         <para>
-Add a rule to the default security group.
+Add a rule to the set of rules that will be added to the 'default' security
+group for new tenants.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -6377,7 +6383,8 @@ Delete a security group.
         <screen><computeroutput>usage: nova secgroup-delete-default-rule &lt;ip-proto&gt; &lt;from-port&gt; &lt;to-port&gt;
                                          &lt;cidr&gt;</computeroutput></screen>
         <para>
-Delete a rule from the default security group.
+Delete a rule from the set of rules that will be added to the 'default'
+security group for new tenants.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -6535,7 +6542,7 @@ List security groups for the current tenant.
         <title>nova secgroup-list-default-rules</title>
         <screen><computeroutput>usage: nova secgroup-list-default-rules</computeroutput></screen>
         <para>
-List rules for the default security group.
+List rules that will be added to the 'default' security group for new tenants.
         </para>
     </section>
     <section xml:id="novaclient_subcommand_secgroup-list-rules">
