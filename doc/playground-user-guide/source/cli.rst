@@ -97,3 +97,8 @@ service with its package name and description.
    managing-openstack-object-storage-with-swift-cli.rst
    cli_use_snapshots_to_migrate_instances.rst
    cli_admin_manage_environment.rst
+   common/cli_discover_version_number_for_a_client.rst
+   common/cli_set_environment_variables_using_openstack_rc.rst
+   common/cli_create_and_manage_networks.rst
+   common/cli_manage_images.rst
+   common/cli_manage_volumes.rst
