@@ -150,8 +150,6 @@ for each client. The following values are valid:
 
 -  ``heat`` - Orchestration API
 
--  ``keystone`` - Identity service API and extensions
-
 -  ``neutron`` - Networking API
 
 -  ``nova`` - Compute API and extensions
@@ -163,6 +161,11 @@ for each client. The following values are valid:
 -  ``trove`` - Database Service API
 
 -  ``openstack`` - Common OpenStack client supporting multiple services
+
+The following CLIs are deprecated in favor of ``openstack``, the
+Common OpenStack client supporting multiple services:
+
+-  ``keystone`` - Identity service API and extensions
 
 The following example shows the command for installing the nova client
 with ``pip``.
