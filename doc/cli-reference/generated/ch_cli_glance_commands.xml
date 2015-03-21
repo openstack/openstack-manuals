@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Image Service API and its extensions.
 
        This chapter documents <command>glance</command> version
-        <literal>0.16.1</literal>.
+        <literal>0.17.0</literal>.
     </para>
 
     <para>For help on a specific <command>glance</command>
@@ -205,7 +205,7 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_IMAGE_URL]</code>. If the provided image
-      url contains a a version number and `--os-image-api-
+      url contains a version number and `--os-image-api-
       version` is omitted the version of the URL will be
       picked as the image api version to use.
       </para>
@@ -1122,9 +1122,9 @@ Create a new image.
     <term><command>--file &lt;FILE&gt;</command></term>
     <listitem>
       <para>
-        Local file to save downloaded image data to. If this
-      is not specified the image data will be written to
-      stdout.
+        Local file that contains disk image to be uploaded
+      during creation. Alternatively, images can be passed
+      to the client via stdin.
       </para>
     </listitem>
   </varlistentry>
@@ -1198,7 +1198,9 @@ Download a specific image.
                          [--visibility &lt;VISIBILITY&gt;]
                          [--member-status &lt;MEMBER_STATUS&gt;] [--owner &lt;OWNER&gt;]
                          [--property-filter &lt;KEY=VALUE&gt;]
-                         [--checksum &lt;CHECKSUM&gt;] [--tag &lt;TAG&gt;]</computeroutput></screen>
+                         [--checksum &lt;CHECKSUM&gt;] [--tag &lt;TAG&gt;]
+                         [--sort-key {name,status,container_format,disk_format,size,id,created_at,updated_at}]
+                         [--sort-dir {asc,desc}] [--sort &lt;key&gt;[:&lt;direction&gt;]]</computeroutput></screen>
         <para>
 List images you can access.
         </para>  <variablelist wordsize="10">
@@ -1264,6 +1266,33 @@ List images you can access.
     <listitem>
       <para>
         Filter images by a user-defined tag.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort-key {name,status,container_format,disk_format,size,id,created_at,updated_at}</command></term>
+    <listitem>
+      <para>
+      Sort image list by specified fields.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort-dir {asc,desc}</command></term>
+    <listitem>
+      <para>
+      Sort image list in specified directions.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort &lt;key&gt;[:&lt;direction&gt;]</command></term>
+    <listitem>
+      <para>
+      Comma-separated list of sort keys and directions in
+      the form of &lt;key&gt;[:&lt;asc|desc&gt;]. Valid keys: name,
+      status, container_format, disk_format, size, id,
+      created_at, updated_at. OPTIONAL: Default='name:asc'.
       </para>
     </listitem>
   </varlistentry>
@@ -2297,7 +2326,8 @@ Update the status of a member for a given image.
     <term><command>&lt;MEMBER_STATUS&gt;</command></term>
     <listitem>
       <para>
-        Updated status of member.
+        Updated status of member. Valid Values: accepted, rejected,
+      pending
       </para>
     </listitem>
   </varlistentry>
