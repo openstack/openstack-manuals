@@ -91,4 +91,5 @@ service with its package name and description.
    cli_manage_instances_hosts.rst
    cli_provide_user_data_to_instances.rst
    cli_set_quotas.rst
-
+   manage_projects_users_and_roles.rst
+   nova_cli_manage_projects_security.rst

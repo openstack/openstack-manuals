@@ -1,5 +1,5 @@
 .. meta::
-    :scope: admin_only
+   :scope: admin_only
 
 =======================
 Manage project security

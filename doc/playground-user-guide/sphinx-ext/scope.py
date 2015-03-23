@@ -49,7 +49,10 @@ def env_get_outdated(app, env, added, changed, removed):
 
 def doctree_read(app, doctree):
     for toctreenode in doctree.traverse(addnodes.toctree):
+        to_remove = []
         for e in toctreenode['entries']:
             ref = str(e[1])
             if ref in docs_for_admin:
-                toctreenode['entries'].remove(e)
+                to_remove.append(e)
+        for e in to_remove:
+            toctreenode['entries'].remove(e)
