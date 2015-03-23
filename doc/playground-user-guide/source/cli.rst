@@ -90,4 +90,5 @@ service with its package name and description.
    cli_launch_instances.rst
    cli_manage_instances_hosts.rst
    cli_provide_user_data_to_instances.rst
+   cli_set_quotas.rst
 
