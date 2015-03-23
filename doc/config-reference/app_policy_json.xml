@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix xmlns="http://docbook.org/ns/docbook"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.0"
+  xml:id="policy-json-file">
+
+<?dbhtml stop-chunking?>
+
+    <title>The policy.json file</title>
+
+    <para>Each OpenStack service, Identity, Compute, Networking and so on, has its own
+    role-based access policies. They determine which user can access which objects in
+    which way, and are defined in the service’s <filename>policy.json</filename>
+    file.</para>
+
+    <para>Whenever an API call to an OpenStack service is made, the service’s policy
+    engine uses the appropriate policy definitions to determine if the call can be
+    accepted. Any changes to <filename>policy.json</filename> are effective immediately,
+    which allows
+    new policies to be implemented while the service is running.</para>
+
+    <para>As the name implies, <filename>policy.json</filename> files are in JSON (Javascript
+    Object Notation) format. A policy is defined by a statement with the general form
+    <code>"&lt;target&gt;" : "&lt;rule&gt;"</code>.
+
+    A target, also named “action”, is an API call, such as “start an instance” or
+    “attach a volume”. The rule determines under which circumstances the API call
+    is permitted. In most cases, these circumstances involve the user who makes the
+    call, thereafter named the “API user” for simplicity.</para>
+
+    <section xml:id="Examples">
+    <title>Examples</title>
+
+    <para>A simple rule might look like this:
+
+    <programlisting language="json">"compute:get_all" : ""</programlisting>
+
+    The target is <code>"compute:get_all"</code>, the “list all instances” API
+    of the Compute service. The rule is an empty string meaning “always”. This policy
+    allows anybody to list instances.</para>
+
+    <para>You can also decline permission to use an API:
+
+    <programlisting language="json">"compute:shelve": "!"</programlisting>
+
+    The exclamation mark stands for “never” or “nobody”, which effectively disables
+    the Compute API “shelve an instance”.</para>
+
+    <para>Many APIs can only be called by admin users. This can be expressed by the rule
+    <code>"role:admin"</code>, which checks whether the API user has the admin role.
+    The following policy ensures that only administrators can create new users in the
+    Identity database:
+
+    <programlisting language="json">"identity:create_user" : "role:admin"</programlisting>
+    </para>
+
+    <para>You can limit APIs to any role. For example, the Orchestration service defines
+    a role named <code>heat_stack_user</code>. Whoever has this role isn't allowed to create stacks:
+
+    <programlisting language="json">"stacks:create": "not role:heat_stack_user"</programlisting>
+
+    This rule makes use of the boolean operator <code>not</code>.
+    More complex rules can be built using operators <code>and</code>, <code>or</code>
+    and parentheses.</para>
+
+    <para>You can define aliases for rules:
+
+    <programlisting language="json">"deny_stack_user": "not role:heat_stack_user"</programlisting>
+
+    The policy engine
+    understands that <code>"deny_stack_user"</code> is not an API and consequently
+    interprets it as an alias. The stack creation policy above can then be written as:
+
+    <programlisting language="json">"stacks:create": "rule:deny_stack_user"</programlisting>
+
+    This is taken verbatim from <filename>/etc/heat/policy.json</filename>.</para>
+
+    <para>Rules can compare API attributes to object attributes. For example:
+
+    <programlisting language="json">"compute:start" : "user_id:%(user_id)s"</programlisting>
+
+    states that only the owner of an instance can start it up. The <code>user_id</code>
+    string
+    before the colon is an API attribute, namely the user ID of the API user.
+    It is compared with the user ID of the object (in this case, an instance); more
+    precisely, it is compared with the <code>user_id</code> field of that object
+    in the database. If the two values are equal, permission is
+    granted.</para>
+
+    <para>An admin user always has permission to call APIs.
+    This is how <filename>/etc/keystone/policy.json</filename> makes this policy explicit:
+
+    <programlisting language="json">"admin_required": "role:admin or is_admin:1",
+"owner" : "user_id:%(user_id)s",
+"admin_or_owner": "rule:admin_required or rule:owner",
+"identity:change_password": "rule:admin_or_owner"</programlisting>
+
+    The first two lines define aliases for
+    "user is an admin user" and "user owns the object", respectively.
+    <code>is_admin</code> in line 1 is a flag that indicates an
+    admin user. While it looks redundant to <code>role:admin</code>, it allows
+    administrative users that don't have the admin role.
+    The <code>owner</code> alias (line 2) compares the API's user ID with the object's user ID.
+
+    Line 3 defines a third alias <code>admin_or_owner</code>, combining
+    the two first aliases with the Boolean operator <code>or</code>.
+    Line 4, then, sets up the policy that
+    a password can only be modified by its owner or an admin user.</para>
+
+    <para>As a final example, let's examine a more complex rule:
+
+    <programlisting language="json">"identity:ec2_delete_credential": "rule:admin_required or
+             (rule:owner and user_id:%(target.credential.user_id)s)"
+    </programlisting>
+
+    It determines who can use the Identity API “delete EC2 credential”.
+    Here, boolean operators and parentheses combine three simpler rules.
+    <code>admin_required</code> and <code>owner</code> are the same aliases as in the
+    previous example. <code>user_id:%(target.credential.user_id)s</code> compares the
+    API user with the user ID of the credential object associated with the target.</para>
+
+    </section>
+
+    <section xml:id="syntax">
+    <title>Syntax</title>
+
+    <para>A <filename>policy.json</filename> file consists of policies and aliases of the
+    form <code>target:rule</code> or <code>alias:definition</code>, separated by commas
+    and enclosed in curly braces:
+
+    <programlisting language="json"> {
+       "alias 1" : "definition 1",
+       "alias 2" : "definition 2",
+       ...
+       "target 1" : "rule 1",
+       "target 2" : "rule 2",
+       ....
+}
+    </programlisting>
+
+    </para>
+    <para>Targets are APIs and are written <code>"service:API"</code> or simply
+    <code>"API"</code>. For example, <code>"compute:create"</code> or
+    <code>"add_image"</code>.</para>
+
+    <para>Rules determine whether the API call is allowed.</para>
+    <para>Rules can be:
+
+    <itemizedlist>
+    <listitem><para>always true. The action is always permitted. This can be written as
+      <code>""</code> (empty string), <code>[]</code>, or <code>"@"</code>.</para></listitem>
+    <listitem><para>always false. The action is never permitted. Written as <code>"!"</code>.</para></listitem>
+    <listitem><para>a special check</para></listitem>
+    <listitem><para>a comparison of two values</para></listitem>
+    <listitem><para>boolean expressions based on simpler rules</para></listitem>
+    </itemizedlist>
+    </para>
+
+    <para>Special checks are
+
+    <itemizedlist>
+    <listitem><para><code>&lt;role&gt;:&lt;role name&gt;</code>, a test whether the API credentials
+    contain this role.</para></listitem>
+    <listitem><para><code>&lt;rule&gt;:&lt;rule name&gt;</code>,
+    the definition of an alias.</para></listitem>
+    <listitem><para><code>http:&lt;target URL&gt;</code>,
+    which delegates the check to a remote server.
+    The API is authorized when the server returns True.</para></listitem>
+    </itemizedlist>
+    </para>
+
+    <para>Developers can define additional special checks.</para>
+
+    <para>Two values are compared in the following way:
+
+    <programlisting language="json">"value1 : value2"</programlisting>
+
+    </para>
+    <para>Possible values are
+
+    <itemizedlist>
+    <listitem><para>constants: Strings, numbers, <code>true</code>, <code>false</code></para></listitem>
+    <listitem><para>API attributes</para></listitem>
+    <listitem><para>target object attributes</para></listitem>
+    <listitem><para>the flag <code>is_admin</code></para></listitem>
+    </itemizedlist>
+    </para>
+
+    <para>API attributes can be <code>project_id</code>, <code>user_id</code> or
+    <code>domain_id</code>.</para>
+
+    <para>Target object attributes are fields from the object description in the database.
+    For example in the case of the <code>"compute:start"</code> API, the object is the
+    instance to be started. The policy for starting instances could use the
+    <code>%(project_id)s</code>attribute, that is the project that owns the instance.
+    The trailing s indicates this is a string.</para>
+
+    <para><code>is_admin</code> tells whether the API user is an administrator,
+    no matter if the user has the admin role or not.</para>
+
+    <para>The alias construct exists for convenience. An alias is short name for a
+    complex or hard to understand rule.
+    It is defined in the same way as a policy:
+
+    <programlisting language="json">alias name : alias definition</programlisting>
+
+    Once an alias is defined, use the <code>rule</code> keyword to use it in a policy rule.</para>
+
+    </section>
+
+    <section xml:id="older-syntax">
+    <title>Older syntax</title>
+
+    <para>You may encounter older <filename>policy.json</filename> files that feature a different syntax,
+    where JavaScript arrays are used instead of boolean operators.
+    For example, the EC2 credentials rule above would have been written as
+    follows:
+
+    <programlisting language="json">"identity:ec2_delete_credential": [ [ "rule:admin_required ],
+             [ "rule:owner", "user_id:%(target.credential.user_id)s)" ] ]
+    </programlisting>
+    The rule is an array of arrays. The innermost arrays are or'ed together,
+    whereas elements inside the innermost arrays are and'ed.</para>
+
+    <para>While the old syntax is still supported, we recommend using the newer, more
+    intuitive syntax.</para>
+
+    </section>
+
+</appendix>
