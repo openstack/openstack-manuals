@@ -84,6 +84,7 @@ service with its package name and description.
 .. toctree::
    :maxdepth: 2
 
+   common/cli_install_openstack_command_line_clients.rst
    cli_cheat_sheet.rst
    trove-manage-db.rst
    cli_cheat_sheet.rst
