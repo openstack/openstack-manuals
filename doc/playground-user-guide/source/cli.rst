@@ -95,3 +95,4 @@ service with its package name and description.
    manage_projects_users_and_roles.rst
    nova_cli_manage_projects_security.rst
    cli_manage_services.rst
+   cli_nova_migrate.rst
