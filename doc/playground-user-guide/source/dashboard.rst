@@ -20,3 +20,4 @@ sizes of server instances.
    configure_access_and_security_for_instances.rst
    manage_instances.rst
    dashboard_set_quotas.rst
+   dashboard_manage_flavors.rst
