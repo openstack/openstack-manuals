@@ -10,20 +10,12 @@ handling complex administrative tasks.
    :maxdepth: 1
 
    create_db.rst
+   backup_db.rst
 
-TODO(lmichaels):
-
-As these files get converted, add them to the toctree:
-
-- create_db.rst
-
-- backup_db.rst
-
-- backup_db_incremental.rst
-
-- manage_db_config.rst
-
-- set_up_replication.rst
-
-- set_up_clustering.rst
+.. TODO(lmichaels):
+   As these files get converted, add them to the toctree:
+   - backup_db_incremental.rst
+   - manage_db_config.rst
+   - set_up_replication.rst
+   - set_up_clustering.rst
 
