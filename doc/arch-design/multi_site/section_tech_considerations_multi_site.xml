@@ -10,8 +10,8 @@
         with regard to designing a multi-site OpenStack
         implementation. An OpenStack cloud can be designed in a
         variety of ways to handle individual application needs. A
-        multi-site deployment will have additional challenges compared
-        to single site installations and will therefore be a more
+        multi-site deployment has additional challenges compared
+        to single site installations and therefore is a more
         complex solution.</para>
     <para>When determining capacity options be sure to take into
         account not just the technical issues, but also the economic
@@ -22,7 +22,7 @@
         includes parameters such as bandwidth, latency, whether or not
         a link is dedicated, and any business policies applied to the
         connection. The capability and number of the links between
-        sites will determine what kind of options may be available for
+        sites determine what kind of options are available for
         deployment. For example, if two sites have a pair of
         high-bandwidth links available between them, it may be wise to
         configure a separate storage replication network between the
@@ -35,7 +35,7 @@
         tenant private networks across the secondary link using
         overlay networks with a third party mapping the site overlays
         to each other.</para>
-    <para>The capacity requirements of the links between sites will be
+    <para>The capacity requirements of the links between sites is
         driven by application behavior. If the latency of the links is
         too high, certain applications that use a large number of
         small packets, for example RPC calls, may encounter issues
@@ -54,7 +54,7 @@
         the Icehouse release, OpenStack Networking was not capable of managing
         tunnel IDs across installations. This means that if one site
         runs out of IDs, but other does not, that tenant's network
-        will be unable to reach the other site.</para>
+        is unable to reach the other site.</para>
     <para>Capacity can take other forms as well. The ability for a
         region to grow depends on scaling out the number of available
         compute nodes. This topic is covered in greater detail in the
@@ -93,18 +93,18 @@
         actions to an API endpoint or in the dashboard.</para>
     <para>Load balancing is another common issue with multi-site
         installations. While it is still possible to run HAproxy
-        instances with Load-Balancer-as-a-Service, these will be local
+        instances with Load-Balancer-as-a-Service, these are local
         to a specific region. Some applications may be able to cope
         with this via internal mechanisms. Others, however, may
         require the implementation of an external system including
         global services load balancers or anycast-advertised
         DNS.</para>
     <para>Depending on the storage model chosen during site design,
-        storage replication and availability will also be a concern
+        storage replication and availability are also a concern
         for end-users. If an application is capable of understanding
         regions, then it is possible to keep the object storage system
         separated by region. In this case, users who want to have an
-        object available to more than one region will need to do the
+        object available to more than one region need to do the
         cross-site replication themselves. With a centralized swift
         proxy, however, the user may need to benchmark the replication
         timing of the Object Storage back end. Benchmarking allows the
@@ -133,7 +133,7 @@
         not created. Some applications may need to be tuned to account
         for this effect. Block Storage does not currently have a
         method for replicating data across multiple regions, so
-        applications that depend on available block storage will need
+        applications that depend on available block storage need
         to manually cope with this limitation by creating duplicate
         block storage entries in each region.</para></section>
     <section xml:id="security-multi-site"><title>Security</title>
@@ -142,8 +142,8 @@
         to be secure. In a multi-site installation the use of a
         non-private connection between sites may be required. This may
         mean that traffic would be visible to third parties and, in
-        cases where an application requires security, this issue will
-        require mitigation. Installing a VPN or encrypted connection
+        cases where an application requires security, this issue
+        requires mitigation. Installing a VPN or encrypted connection
         between sites is recommended in such instances.</para>
     <para>Another security consideration with regard to multi-site
         deployments is Identity. Authentication in a multi-site
