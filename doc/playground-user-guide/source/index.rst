@@ -6,9 +6,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   cli.rst
    dashboard.rst
+   cli.rst
    sdk.rst
+   cli_cheat_sheet.rst
 
 Indices and tables
 ==================

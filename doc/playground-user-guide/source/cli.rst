@@ -85,9 +85,7 @@ service with its package name and description.
    :maxdepth: 2
 
    common/cli_install_openstack_command_line_clients.rst
-   cli_cheat_sheet.rst
    trove-manage-db.rst
-   cli_cheat_sheet.rst
    cli_launch_instances.rst
    cli_manage_instances_hosts.rst
    cli_provide_user_data_to_instances.rst
