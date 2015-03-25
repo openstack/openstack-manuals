@@ -17,12 +17,4 @@ discusses node management tasks.
   cli_manage_ip_addresses.rst
   cli_change_the_size_of_your_server.rst
   cli_stop_and_start_an_instance.rst
-
-..
-  Add the following when converted TODO(DC)
-  section_cli_nova_search_ip.xml
-  section_cli_nova_reboot.xml
-  section_cli_nova_terminate.xml
-  section_cli_nova_get_console.xml
-  section_cli_nova_baremetal.xml
-  /common/section_cli_nova_usage_statistics.xml
+  common/cli_nova_show_usage_statistics_for_hosts_instances.rst
