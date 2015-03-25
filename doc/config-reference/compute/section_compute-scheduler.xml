@@ -411,25 +411,64 @@ aggregate_image_properties_isolation_separator = .</programlisting>
                 example:</para>
             <programlisting language="json"><xi:include href="../../common/samples/server-scheduler-hints.json" parse="text"/></programlisting>
         </section>
-        <section xml:id="diskfilter">
+         <section xml:id="diskfilter">
             <title>DiskFilter</title>
             <para>Only schedules instances on hosts if there is
                 sufficient disk space available for root and ephemeral
                 storage.</para>
             <para>You can configure this filter to enable a fixed
                 amount of disk overcommitment by using the
-                    <literal>disk_allocation_ratio</literal>
-                configuration option in
-                <filename>nova.conf</filename>. The default setting
-                is:</para>
+                <literal>disk_allocation_ratio</literal>
+                configuration option in the
+                <filename>nova.conf</filename> configuration file.
+                The default setting disables the possibility of the
+                overcommitment and allows launching a VM only if
+                there is a sufficient amount of disk space available
+                on a host:</para>
             <programlisting language="ini">disk_allocation_ratio = 1.0</programlisting>
-            <para>Adjusting this value to greater than 1.0 enables
-                scheduling instances while over committing disk
-                resources on the node. This might be desirable if you
-                use an image format that is sparse or copy on write so
-                that each virtual instance does not require a 1:1
-                allocation of virtual disk to physical storage.</para>
-        </section>
+            <para>DiskFilter always considers the value of the
+                <option>disk_available_least</option> property and not the
+                one of the <option>free_disk_gb</option> property
+                of a hypervisor's statistics:</para>
+<screen><prompt>$</prompt> <userinput>nova hypervisor-stats</userinput>
+<computeroutput>+----------------------+-------+
+| Property             | Value |
++----------------------+-------+
+| count                |  1    |
+| current_workload     |  0    |
+| disk_available_least |  29   |
+| free_disk_gb         |  35   |
+| free_ram_mb          |  3441 |
+| local_gb             |  35   |
+| local_gb_used        |  0    |
+| memory_mb            |  3953 |
+| memory_mb_used       |  512  |
+| running_vms          |  0    |
+| vcpus                |  2    |
+| vcpus_used           |  0    |
++----------------------+-------+</computeroutput></screen>
+             <para>As it can be viewed from the command output above,
+                 the amount of the available disk space
+                 can be less than the amount of the free disk space.
+                 It happens because the <option>disk_available_least</option>
+                 property accounts for the virtual size rather
+                 than the actual size of images. If you use an image format that
+                 is sparse or copy on write so that each virtual instance
+                 does not require a 1:1 allocation of a virtual disk
+                 to a physical storage, it may be useful to allow the
+                 overcommitment of disk space.</para>
+              <para>To enable scheduling instances while overcommitting disk
+                 resources on the node, adjust the value of
+                 the <literal>disk_allocation_ratio</literal>
+                 configuration option to greater than <literal>1.0</literal>:</para>
+             <programlisting language="ini">disk_allocation_ratio > 1.0</programlisting>
+    <note>
+      <para>If the value is set to <literal>>1</literal>, we recommend
+          keeping track of the free disk space, as the value approaching
+          <literal>0</literal> may result in the incorrect functioning
+          of instances using it at the moment.</para>
+    </note>
+</section>
         <section xml:id="groupaffinityfilter">
             <title>GroupAffinityFilter</title>
             <note>
