@@ -11,17 +11,16 @@ sizes of server instances.
    :maxdepth: 2
 
    log_in_dashboard.rst
-   launching_instances_using_dashboard.rst
-   dashboard_databases.rst
+   configure_access_and_security_for_instances.rst
    dashboard_create_networks.rst
    dashboard_manage_containers.rst
    dashboard_manage_roles.rst
    dashboard_manage_volumes.rst
-   configure_access_and_security_for_instances.rst
    manage_instances.rst
    dashboard_manage_flavors.rst
    dashboard_set_quotas
    dashboard_view_cloud_resources
+   dashboard_databases.rst
 
 .. TODO(karenb): Added dashboard_view_cloud_resources.rst
    to toc until dashboard_manage_resources (parent file) is merged.
