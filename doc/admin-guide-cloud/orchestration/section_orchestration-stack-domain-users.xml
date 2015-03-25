@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns="http://docbook.org/ns/docbook"
+   xmlns:xi="http://www.w3.org/2001/XInclude"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="5.0"
+   xml:id="section_orchestration-stack-domain-users">
+   <title>Stack domain users</title>
+   <para>Orchestration stack domain users allows heat to authorize inside
+       VMs booted and execute the following operations:</para>
+   <para>
+    <itemizedlist>
+      <listitem>
+        <para>Provide metadata to agents inside instances, which poll for
+            changes and apply the configuration expressed in the metadata to
+            the instance.</para>
+      </listitem>
+      <listitem>
+        <para>Detect signal completion of some action, typically configuration
+            of software on a VM after it is booted (because OpenStack Compute
+            moves the state of a VM to "Active" as soon as it spawns it, not
+            when orchestration has fully configured it).</para>
+      </listitem>
+      <listitem>
+        <para>Provide application level status or metrics from inside the
+            instance. For example, allow AutoScaling actions to be performed in
+            response to some measure of performance or quality of service.
+        </para>
+      </listitem>
+    </itemizedlist>
+   </para>
+   <para>Orchestration provides API's which enable all of these things,
+       but all of those API's require some sort of authentication. For example,
+       credentials to access the instance agent is running on. The heat-cfntools
+       agents use signed requests, which requires an ec2 keypair created via
+       OpenStack Identity, which is then used to sign requests to
+       the Orchestration cloudformation and cloudwatch compatible API's,
+       which are authenticated by Orchestration via signature validation
+       (which uses the OpenStack Identity ec2tokens extension). Stack domain
+       users allow to encapuslate all stack-defined users (users created
+       as a result of things contained in a Orchestration template) in
+       a separate domain, which is created specifically to contain things
+       related only to Orchestration stacks. A user is created which is
+       the <emphasis>domain admin</emphasis>, and Orchestration uses that user
+       to manage the lifecycle of the users in the
+       <emphasis>stack user domain</emphasis>.</para>
+   <para>Stack domain users functionality is available since Icehouse release.
+   </para>
+   <section xml:id="section_orchestration_stack-domain-users-configuration">
+     <title>Stack domain users configuration</title>
+     <para>To configure stack domain users the following steps shall be
+         executed:</para>
+     <para>
+       <orderedlist>
+         <listitem>
+           <para>A special OpenStack Identity service domain is created.
+               For example, the one called <literal>heat</literal> and
+               the ID is set in the <literal>stack_user_domain</literal> option
+               in <filename>heat.conf</filename>.</para>
+         </listitem>
+         <listitem>
+           <para>A user with sufficient permissions to create and delete
+               projects and users in the <literal>heat</literal> domain is
+               created.
+           </para>
+         </listitem>
+         <listitem>
+           <para>The username and password for the domain admin user is set in
+               <filename>heat.conf</filename>
+               (<literal>stack_domain_admin</literal> and
+               <literal>stack_domain_admin_password</literal>). This user
+               administers <emphasis>stack domain users</emphasis> on behalf
+               of stack owners, so they no longer need to be admins themselves,
+               and the risk of this escalation path is limited because the
+               <option>heat_domain_admin</option> is only given administrative
+               permission for the <literal>heat</literal> domain.</para>
+         </listitem>
+       </orderedlist>
+     </para>
+     <para>You must complete the following steps to setup stack domain users:</para>
+       <orderedlist>
+           <listitem>
+               <para>Create the domain:</para>
+               <para><literal>$OS_TOKEN</literal> refers to a token. For example,
+                   the service admin token or some other valid token for a user
+                   with sufficient roles to create users and domains.
+                   <literal>$KS_ENDPOINT_V3</literal> refers to the v3
+                   OpenStack Identity endpoint (for example
+                   <literal>http://<replaceable>keystone_address:5000/v3</replaceable></literal>
+                   where <emphasis>keystone_address</emphasis> is the IP address or
+                   resolvable name for the OpenStack Identity service).</para>
+               <screen><prompt>$</prompt> <userinput>openstack --os-token $OS_TOKEN --os-url=$KS_ENDPOINT_V3 --os-identity-api-version=3 domain create heat --description "Owns users and projects created by heat"</userinput></screen>
+               <para>The domain ID is returned by this command, and is referred
+                   to as <literal>$HEAT_DOMAIN_ID below</literal>.</para>
+               <para>The domain ID is returned by this command, and is referred
+                   to as <literal>$HEAT_DOMAIN_ID</literal> below.</para>
+           </listitem>
+           <listitem>
+               <para>Create the user:</para>
+               <screen><prompt>$</prompt> <userinput>openstack --os-token $OS_TOKEN --os-url=$KS_ENDPOINT_V3 --os-identity-api-version=3 user create --password $PASSWORD --domain $HEAT_DOMAIN_ID heat_domain_admin --description "Manages users and projects created by heat" </userinput></screen>
+               <para>The user ID is returned by this command and is referred
+                   to as <literal>$DOMAIN_ADMIN_ID</literal> below.</para>
+           </listitem>
+           <listitem>
+               <para>Make the user a domain admin:</para>
+               <screen><prompt>$</prompt> <userinput>openstack --os-token $OS_TOKEN --os-url=$KS_ENDPOINT_V3 --os-identity-api-version=3 role add --user $DOMAIN_ADMIN_ID --domain $HEAT_DOMAIN_ID admin</userinput></screen>
+               <para>Then you need to add the domain ID, username and password
+                   from these steps to <filename>heat.conf</filename>:
+                 <programlisting language="ini">stack_domain_admin_password = <replaceable>password</replaceable>
+stack_domain_admin = heat_domain_admin
+stack_user_domain = <replaceable>domain id returned from domain create above</replaceable></programlisting>
+               </para>
+           </listitem>
+       </orderedlist>
+    </section>
+    <section xml:id="section_orchestration_usage_workflow">
+      <title>Usage workflow</title>
+        <para>The following steps will be executed during stack creation:</para>
+        <para>
+         <orderedlist>
+             <listitem>
+                <para>Orchestration creates a new "stack domain project"
+                    in the "heat" domain, if the stack contains any resources
+                    which require creation of a "stack domain user".</para>
+             </listitem>
+             <listitem>
+                <para>Any resources which require a user, Orchestration
+                    creates the user in the "stack domain project", which is
+                    associated with the heat stack in the heat database, but
+                    is completely separate and unrelated (from an
+                    authentication perspective) to the stack owners project
+                    (the users created in the stack domain are still assigned
+                    the <literal>heat_stack_user</literal> role, so the API
+                    surface they can access is limited via policy.json.
+                    See OpenStack Identity documentation for more info).</para>
+             </listitem>
+             <listitem>
+                <para>When API requests are processed, Heat Orchestration does
+                    an internal lookup, and allow stack details for a given
+                    stack to be retrieved from the database for both the
+                    stack owner's project (the default API path to the stack),
+                    and also the <emphasis>stack domain project</emphasis>,
+                    subject to the policy.json restrictions.</para>
+             </listitem>
+        </orderedlist>
+        </para>
+        <para>To clarify that last point, that means there are now two paths
+            which can result in retrieval of the same data via the
+            Orchestration API. The example for resource-metadata is below:</para>
+        <programlisting language="ini">GET v1/​{stack_owner_project_id}​/stacks/​{stack_name}​/​{stack_id}​/resources/​{resource_name}​/metadata</programlisting>
+        <para>or:</para>
+        <programlisting language="ini">GET v1/​{stack_domain_project_id}​/stacks/​{stack_name}​/​{stack_id}​/resources/​{resource_name}​/metadata</programlisting>
+        <para>The stack owner would use the former
+            (via <literal>heat resource-metadata {stack_name}
+                {resource_name}</literal>), and any agents in the instance will
+            use the latter.</para>
+    </section>
+</section>
