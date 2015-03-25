@@ -4,179 +4,161 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
   xml:id="keystone-users">
-  <title>Create tenants, users, and roles</title>
-  <para>After you install the Identity service, create
-    <glossterm baseform="tenant">tenants</glossterm> (projects),
+  <title>Create projects, users, and roles</title>
+  <para>The Identity service provides authentication services for each
+    OpenStack service. The authentication service uses a combination of
+    <glossterm baseform="domain">domains</glossterm>,
+    <glossterm baseform="project">projects</glossterm> (tenants),
     <glossterm baseform="user">users</glossterm>, and
-    <glossterm baseform="role">roles</glossterm> for your environment. You
-    must use the temporary administration token that you created in
-    <xref linkend="keystone-install"/> and manually configure the location
-    (endpoint) of the Identity service before you run
-    <command>keystone</command> commands.</para>
-  <para>You can pass the value of the administration token to the
-    <command>keystone</command> command with the <parameter>--os-token</parameter>
-    option or set the temporary <envar>OS_SERVICE_TOKEN</envar> environment
-    variable. Similarly, you can pass the location of the Identity service
-    to the <command>keystone</command> command with the
-    <parameter>--os-endpoint</parameter> option or set the temporary
-    <envar>OS_SERVICE_ENDPOINT</envar> environment variable. This guide
-    uses environment variables to reduce command length.</para>
-  <para>For more information, see the
-    <link xlink:href="http://docs.openstack.org/openstack-ops/content/projects_users.html">Operations Guide - Managing Project and Users</link>.</para>
-  <procedure>
-    <title>To configure prerequisites</title>
-      <note os="debian"><para>In Debian, the admin tenant, user and roles can be
-        created automatically when installing the Keystone package. You
-        must manually create the demo tenant and user however.
-        </para></note>
-    <step>
-      <para>Configure the administration token:</para>
-      <screen><prompt>$</prompt> <userinput>export OS_SERVICE_TOKEN=<replaceable>ADMIN_TOKEN</replaceable></userinput></screen>
-      <para>Replace <replaceable>ADMIN_TOKEN</replaceable> with the
-        administration token that you generated in
-        <xref linkend="keystone-install"/>. For example:</para>
-      <screen><prompt>$</prompt> <userinput>export OS_SERVICE_TOKEN=294a4c8a8a475f9b9836</userinput></screen>
-    </step>
-    <step>
-      <para>Configure the endpoint:</para>
-      <screen><prompt>$</prompt> <userinput>export OS_SERVICE_ENDPOINT=http://<replaceable>controller</replaceable>:35357/v2.0</userinput></screen>
-    </step>
-  </procedure>
+    <glossterm baseform="role">roles</glossterm>.</para>
+  <note>
+    <para>For simplicity, this guide implicitly uses the
+      <literal>default</literal> domain.</para>
+  </note>
   <procedure>
     <title>To create tenants, users, and roles</title>
+    <note os="debian">
+      <para>The packages can automatically create the service entity and
+        API endpoints.</para>
+    </note>
     <step>
-      <para>Create an administrative tenant, user, and role for
+      <para>Create an administrative project, user, and role for
         administrative operations in your environment:</para>
       <substeps>
         <step>
-          <para>Create the <literal>admin</literal> tenant:</para>
-          <screen><prompt>$</prompt> <userinput>keystone tenant-create --name admin --description "Admin Tenant"</userinput>
+          <para>Create the <literal>admin</literal> project:</para>
+          <screen><prompt>$</prompt> <userinput>openstack project create --description "Admin Project" admin</userinput>
 <computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
+| Field       | Value                            |
 +-------------+----------------------------------+
-| description |           Admin Tenant           |
-|   enabled   |               True               |
-|      id     | 6f4c1e4cbfef4d5a8a1345882fbca110 |
-|     name    |              admin               |
+| description | Admin Project                    |
+| enabled     | True                             |
+| id          | cf12a15c5ea84b019aec3dc45580896b |
+| name        | admin                            |
 +-------------+----------------------------------+</computeroutput></screen>
           <note>
             <para>OpenStack generates IDs dynamically, so you will see
-              different values from the example command output.</para>
+              different values in the example command output.</para>
           </note>
         </step>
         <step>
           <para>Create the <literal>admin</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name admin --pass <replaceable>ADMIN_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput>
-<computeroutput>+----------+----------------------------------+
-| Property |              Value               |
-+----------+----------------------------------+
-|  email   |        admin@example.com         |
-| enabled  |               True               |
-|    id    | ea8c352d253443118041c9c8b8416040 |
-|   name   |              admin               |
-| username |              admin               |
-+----------+----------------------------------+</computeroutput></screen>
-          <para>Replace <replaceable>ADMIN_PASS</replaceable> with a
-            suitable password and <replaceable>EMAIL_ADDRESS</replaceable>
-            with a suitable e-mail address.</para>
+          <screen><prompt>$</prompt> <userinput>openstack user create --password-prompt admin</userinput>
+<computeroutput>User Password:
+Repeat User Password:
++------------+----------------------------------+
+| Field      | Value                            |
++------------+----------------------------------+
+| email      | None                             |
+| enabled    | True                             |
+| id         | 4d411f2291f34941b30eef9bd797505a |
+| name       | admin                            |
+| username   | admin                            |
++------------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
           <para>Create the <literal>admin</literal> role:</para>
-          <screen><prompt>$</prompt> <userinput>keystone role-create --name admin</userinput>
-<computeroutput>+----------+----------------------------------+
-| Property |              Value               |
-+----------+----------------------------------+
-|    id    | bff3a6083b714fa29c9344bf8930d199 |
-|   name   |              admin               |
-+----------+----------------------------------+</computeroutput></screen>
+          <screen><prompt>$</prompt> <userinput>openstack role create admin</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | cd2cb9a39e874ea69e5d4b896eb16128 |
+| name  | admin                            |
++-------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
           <para>Add the <literal>admin</literal> role to the
-            <literal>admin</literal> tenant and user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user admin --tenant admin --role admin</userinput></screen>
-          <note>
-            <para>This command provides no output.</para>
-          </note>
+            <literal>admin</literal> project and user:</para>
+          <screen><prompt>$</prompt> <userinput>openstack role add --project admin --user admin admin</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | cd2cb9a39e874ea69e5d4b896eb16128 |
+| name  | admin                            |
++-------+----------------------------------+</computeroutput></screen>
         </step>
       </substeps>
       <note>
         <para>Any roles that you create must map to roles specified in the
-        <filename>policy.json</filename> file included with each OpenStack
-        service. The default policy for most services grants administrative
-        access to the <literal>admin</literal> role. For more information,
+        <filename>policy.json</filename> file in the configuration file
+        directory of each OpenStack service. The default policy for most
+        services grants administrative access to the
+        <literal>admin</literal> role. For more information,
         see the
         <link xlink:href="http://docs.openstack.org/openstack-ops/content/projects_users.html">Operations Guide - Managing Projects and Users</link>.</para>
       </note>
     </step>
     <step>
-      <para>Create a demo tenant and user for typical operations in your
-        environment:</para>
+      <para>This guide uses a service project that contains a unique
+        user for each service that you add to your environment.</para>
       <substeps>
         <step>
-          <para>Create the <literal>demo</literal> tenant:</para>
-          <screen><prompt>$</prompt> <userinput>keystone tenant-create --name demo --description "Demo Tenant"</userinput>
+          <para>Create the <literal>service</literal> project:</para>
+          <screen><prompt>$</prompt> <userinput>openstack project create --description "Service Project" service</userinput>
 <computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
+| Field       | Value                            |
 +-------------+----------------------------------+
-| description |           Demo Tenant            |
-|   enabled   |               True               |
-|      id     | 4aa51bb942be4dd0ac0555d7591f80a6 |
-|     name    |               demo               |
+| description | Service Project                  |
+| enabled     | True                             |
+| id          | 55cbd79c0c014c8a95534ebd16213ca1 |
+| name        | service                          |
++-------------+----------------------------------+</computeroutput></screen>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <para>Regular (non-admin) tasks should use an unprivileged project
+        and user. As an example, this guide creates the
+        <literal>demo</literal> project and user.</para>
+      <substeps>
+        <step>
+          <para>Create the <literal>demo</literal> project:</para>
+          <screen><prompt>$</prompt> <userinput>openstack project create --description "Demo Project" demo</userinput>
+<computeroutput>+-------------+----------------------------------+
+| Field       | Value                            |
++-------------+----------------------------------+
+| description | Demo Project                     |
+| enabled     | True                             |
+| id          | ab8ea576c0574b6092bb99150449b2d3 |
+| name        | demo                             |
 +-------------+----------------------------------+</computeroutput></screen>
           <note>
             <para>Do not repeat this step when creating additional
-              users for this tenant.</para>
+              users for this project.</para>
           </note>
         </step>
         <step>
-          <para>Create the <literal>demo</literal> user under the
-            <literal>demo</literal> tenant:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name demo --tenant demo --pass <replaceable>DEMO_PASS</replaceable> --email <replaceable>EMAIL_ADDRESS</replaceable></userinput>
-<computeroutput>+----------+----------------------------------+
-| Property |              Value               |
-+----------+----------------------------------+
-|  email   |         demo@example.com         |
-| enabled  |               True               |
-|    id    | 7004dfa0dda84d63aef81cf7f100af01 |
-|   name   |               demo               |
-| tenantId | 4aa51bb942be4dd0ac0555d7591f80a6 |
-| username |               demo               |
-+----------+----------------------------------+</computeroutput></screen>
-          <para>Replace <replaceable>DEMO_PASS</replaceable> with a suitable
-            password and <replaceable>EMAIL_ADDRESS</replaceable> with a
-            suitable e-mail address.</para>
-          <note>
-            <para>Using the <literal>--tenant</literal> option
-              automatically assigns the <literal>_member_</literal> role
-              to a user. This option will also create the
-              <literal>_member_</literal> role if it does not exist.</para>
-          </note>
+          <para>Create the <literal>demo</literal> user:</para>
+          <screen><prompt>$</prompt> <userinput>openstack user create --password-prompt demo</userinput>
+<computeroutput>User Password:
+Repeat User Password:
++------------+----------------------------------+
+| Field      | Value                            |
++------------+----------------------------------+
+| email      | None                             |
+| enabled    | True                             |
+| id         | 3a81e6c8103b46709ef8d141308d4c72 |
+| name       | demo                             |
+| project_id | ab8ea576c0574b6092bb99150449b2d3 |
+| username   | demo                             |
++------------+----------------------------------+</computeroutput></screen>
+        </step>
+        <step>
+          <para>Add the <literal>_member_</literal> role to the
+            <literal>demo</literal> project and user:</para>
+          <screen><prompt>$</prompt> <userinput>openstack role add --project demo --user demo _member_</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | 9fe2ff9ee4384b1894a90878d3e92bab |
+| name  | _member_                         |
++-------+----------------------------------+</computeroutput></screen>
         </step>
       </substeps>
       <note>
-        <para>You can repeat this procedure to create additional tenants
+        <para>You can repeat this procedure to create additional projects
           and users.</para>
       </note>
-    </step>
-    <step>
-      <para>OpenStack services also require a tenant, user, and role to
-        interact with other services. Each service typically requires
-        creating one or more unique users with the <literal>admin</literal>
-        role under the <literal>service</literal> tenant.</para>
-      <substeps>
-        <step>
-          <para>Create the <literal>service</literal> tenant:</para>
-          <screen><prompt>$</prompt> <userinput>keystone tenant-create --name service --description "Service Tenant"</userinput>
-<computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
-+-------------+----------------------------------+
-| description |          Service Tenant          |
-|   enabled   |               True               |
-|      id     | 6b69202e1bf846a4ae50d65bc4789122 |
-|     name    |             service              |
-+-------------+----------------------------------+</computeroutput></screen>
-        </step>
-      </substeps>
     </step>
   </procedure>
 </section>
