@@ -198,10 +198,39 @@
       other assets, like hypervisors. The latter case requires closer interaction with
       the compute hosts. To solve this issue, Telemetry uses an agent based
       architecture to fulfill the requirements against the data collection.</para>
-    <para>There are two agents supporting the polling mechanism, namely the compute
-      agent and the central agent. The following subsections give further information
-      regarding to the architectural and configuration details of these components.
+    <para>There are three types of agents supporting the polling mechanism, the compute
+      agent, the central agent, and the IPMI agent. Under the hood, all the types of polling
+      agents are the same <systemitem class="service">ceilometer-polling</systemitem> agent,
+      except that they load different polling plug-ins (pollsters) from differernt namespaces
+      to gather data. The following subsections give further information regarding the
+      architectural and configuration details of these components.</para>
+    <para>Running <systemitem class="service">ceilometer-agent-compute</systemitem> is exactly
+      the same as:
+      <screen><prompt>$</prompt> <userinput>ceilometer-polling --polling-namespaces compute</userinput>
+      </screen>
+      Running <systemitem class="service">ceilometer-agent-central</systemitem> is exactly
+      the same as:
+      <screen><prompt>$</prompt> <userinput>ceilometer-polling --polling-namespaces central</userinput>
+      </screen>
+      Running <systemitem class="service">ceilometer-agent-ipmi</systemitem> is exactly
+      the same as:
+      <screen><prompt>$</prompt> <userinput>ceilometer-polling --polling-namespaces ipmi</userinput>
+      </screen>
     </para>
+    <para>In addition to loading all the polling plug-ins registered in the specified namespaces,
+      the <systemitem class="service">ceilometer-polling</systemitem> agent can also specify the
+      polling plug-ins to be loaded by using the <option>pollster-list</option> option:
+      <screen><prompt>$</prompt> <userinput>ceilometer-polling --polling-namespaces central \
+        --pollster-list image image.size storage.*</userinput></screen>
+    </para>
+    <note>
+      <para>HA deployment is NOT supported if the <option>pollster-list</option> option is used.
+      </para>
+    </note>
+    <note>
+      <para>The <systemitem class="service">ceilometer-polling</systemitem> service is available
+        since Kilo release.</para>
+    </note>
     <section xml:id="section_telemetry-central-agent">
       <title>Central agent</title>
       <para>As the name of this agent shows, it is a central component in the
