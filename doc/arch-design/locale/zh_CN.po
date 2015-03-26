@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-03-20 03:44+0000\n"
-"PO-Revision-Date: 2015-03-20 03:12+0000\n"
+"POT-Creation-Date: 2015-03-26 05:47+0000\n"
+"PO-Revision-Date: 2015-03-25 10:27+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -934,12 +934,12 @@ msgstr "部署者务必意识到这点，为他们的站点提供合适的定制
 
 #: ./doc/arch-design/multi_site/section_operational_considerations_multi_site.xml19(para)
 msgid ""
-"Note that, as of the Icehouse release, documentation for implementing this "
-"feature is in progress. See this bug for more information: <link "
+"As of the Icehouse release, documentation for implementing this feature is "
+"in progress. See this bug for more information: <link "
 "href=\"https://bugs.launchpad.net/openstack-"
 "manuals/+bug/1340509\">https://bugs.launchpad.net/openstack-"
 "manuals/+bug/1340509</link>."
-msgstr "注意，自从Icehouse版本发布后，实现此特性的文档一直都在写作中，详情请浏览： <link href=\"https://bugs.launchpad.net/openstack-manuals/+bug/1340509\">https://bugs.launchpad.net/openstack-manuals/+bug/1340509</link>。"
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_operational_considerations_multi_site.xml26(title)
 msgid "Licensing"
@@ -1150,18 +1150,18 @@ msgid ""
 "resources in the environment. It is important that user documentation is "
 "accessible by users of the cloud infrastructure to ensure they are given "
 "sufficient information to help them leverage the cloud. As an example, by "
-"default OpenStack will schedule instances on a compute node automatically. "
+"default OpenStack schedules instances on a compute node automatically. "
 "However, when multiple regions are available, it is left to the end user to "
-"decide in which region to schedule the new instance. The dashboard will "
-"present the user with the first region in your configuration. The API and "
-"CLI tools will not execute commands unless a valid region is specified. It "
-"is therefore important to provide documentation to your users describing the"
-" region layout as well as calling out that quotas are region-specific. If a "
-"user reaches his or her quota in one region, OpenStack will not "
-"automatically build new instances in another. Documenting specific examples "
-"will help users understand how to operate the cloud, thereby reducing calls "
-"and tickets filed with the help desk."
-msgstr "用户必须自行去操作云基础设施以及在环境中部署新的资源。用户查阅用户文档来操作云，这样的话能够给出准确的文档就很重要。举例来说，默认情况下OpenStack自动的调度实例到某个计算节点，但是，当多个region均可用时，就得用户自行决定在哪个region中调度新的实例。GUI界面显示的是用户配置的第一个region，而API和CLI工具若不指定合法的region就不会执行。因此提供文档很重要，文档中要描述region的层次以及特定region的配额等，如果用户在一个region中达到了配额的上限，OpenStack是不会自动到另外的region中构建新的实例的。文档中描述特别的例子将会帮助用户理解如何操作云，因此而减少电话呼救和现场维修。"
+"decide in which region to schedule the new instance. The dashboard presents "
+"the user with the first region in your configuration. The API and CLI tools "
+"do not execute commands unless a valid region is specified. It is therefore "
+"important to provide documentation to your users describing the region "
+"layout as well as calling out that quotas are region-specific. If a user "
+"reaches his or her quota in one region, OpenStack does not automatically "
+"build new instances in another. Documenting specific examples helps users "
+"understand how to operate the cloud, thereby reducing calls and tickets "
+"filed with the help desk."
+msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
@@ -1183,16 +1183,16 @@ msgstr "架构"
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml9(para)
 msgid ""
-"This graphic is a high level diagram of a multiple site OpenStack "
-"architecture. Each site is an OpenStack cloud but it may be necessary to "
-"architect the sites on different versions. For example, if the second site "
-"is intended to be a replacement for the first site, they would be different."
-" Another common design would be a private OpenStack cloud with replicated "
-"site that would be used for high availability or disaster recovery. The most"
-" important design decision is how to configure the storage. It can be "
-"configured as a single shared pool or separate pools, depending on the user "
-"and technical requirements."
-msgstr "此图一个多区域OpenStack架构的高度抽象示意图。每个站点都是一个OpenStack云，但是根据架构的需要可能是不同的版本。例如，如果第二个站点的使命就是替代第一个站点，他们就可以不同。另为通用的设计是一个私有的OpenStack云是完全复制的站点将用来做高可用或灾难恢复。最重要的设计决定是如何配置存储，既可以配置为单个共享池也可以是分离的池，这取决于用户和技术的需求。"
+"This graphic is a high level diagram of a multi-site OpenStack architecture."
+" Each site is an OpenStack cloud but it may be necessary to architect the "
+"sites on different versions. For example, if the second site is intended to "
+"be a replacement for the first site, they would be different. Another common"
+" design would be a private OpenStack cloud with replicated site that would "
+"be used for high availability or disaster recovery. The most important "
+"design decision is how to configure the storage. It can be configured as a "
+"single shared pool or separate pools, depending on the user and technical "
+"requirements."
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml25(title)
 msgid "OpenStack services architecture"
@@ -1316,21 +1316,21 @@ msgid ""
 "The architecture for a multi-site installation of OpenStack is dependent on "
 "a number of factors. One major dependency to consider is storage. When "
 "designing the storage system, the storage mechanism needs to be determined. "
-"Once the storage type is determined, how it will be accessed is critical. "
-"For example, we recommend that storage should use a dedicated network. "
-"Another concern is how the storage is configured to protect the data. For "
-"example, the recovery point objective (RPO) and the recovery time objective "
-"(RTO). How quickly can the recovery from a fault be completed, will "
-"determine how often the replication of data be required. Ensure that enough "
-"storage is allocated to support the data protection strategy."
-msgstr "对于一个多区域OpenStack安装架构来说，依赖于很多的因素，其中一个主要的依赖需要考虑的就是存储。当设计存储系统时，存储的机制需要决定。一旦存储的类型决定了，如何访问就成了重点。例如，我们建议存储使用专用网络。另外一个需要考虑的是如果配置存储来保护数据。例如恢复点目标(RPO)和恢复时间目标(RTO),如何快速的从完全失效中恢复，将决定复制数据如何频繁的需求。确保有足够的存储来分配，以支持数据保护策略。"
+"Once the storage type is determined, how it is accessed is critical. For "
+"example, we recommend that storage should use a dedicated network. Another "
+"concern is how the storage is configured to protect the data. For example, "
+"the recovery point objective (RPO) and the recovery time objective (RTO). "
+"How quickly can the recovery from a fault be completed, determines how often"
+" the replication of data is required. Ensure that enough storage is "
+"allocated to support the data protection strategy."
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_architecture_multi_site.xml115(para)
 msgid ""
-"Networking decisions include the encapsulation mechanism that will be used "
+"Networking decisions include the encapsulation mechanism that can be used "
 "for the tenant networks, how large the broadcast domains should be, and the "
 "contracted SLAs for the interconnects."
-msgstr "网络决定包括用于租户网络的封装机制，广播域有多大，以及内部联通的服务水平协议。"
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml8(title)
 #: ./doc/arch-design/network_focus/section_user_requirements_network_focus.xml8(title)
@@ -1460,17 +1460,17 @@ msgid ""
 "different sites. This needs to be built into the infrastructure. If the "
 "OpenStack Object Storage is used as a back end for the Image Service, it is "
 "possible to create repositories of consistent images across multiple sites. "
-"Having central endpoints with multiple storage nodes will allow for "
-"consistent centralized storage for each and every site."
-msgstr "在跨不同的站点有必要保持部署实例的一致性，这需要构建基础设施，如果为镜像服务提供的后端存储是OpenStack对象存储的话，这很轻松的就可跨多个站点建立一致性镜像的仓库。具有中央端点与多个存储节点将允许为每一个站点有一致的集中存储。"
+"Having central endpoints with multiple storage nodes allows consistent "
+"centralized storage for each and every site."
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml81(para)
 msgid ""
-"Not using a centralized object store will increase operational overhead so "
-"that a consistent image library can be maintained. This could include "
-"development of a replication mechanism to handle the transport of images and"
-" the changes to the images across multiple sites."
-msgstr "不使用中心化的对象存储将会带来运维方面的问题，例如一致性的镜像库就需要维护，包括开发复制机制以掌控传输镜像和跨多站点的镜像变化。"
+"Not using a centralized object store increases operational overhead so that "
+"a consistent image library can be maintained. This could include development"
+" of a replication mechanism to handle the transport of images and the "
+"changes to the images across multiple sites."
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml87(para)
 msgid ""
@@ -1508,9 +1508,9 @@ msgstr "多网络链路应该在站点之间部署，以提供所有组件的冗
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml108(para)
 msgid ""
 "The ability to maintain object availability in both sites has significant "
-"implications on the object storage design and implementation. It will also "
-"have a significant impact on the WAN network design between the sites."
-msgstr "维护对象可用性的能力会显著影响到对象存储的设计和实现，也会影响到站点之间的广域网网络设计。"
+"implications on the object storage design and implementation. It also has a "
+"significant impact on the WAN network design between the sites."
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml112(para)
 msgid ""
@@ -1618,11 +1618,11 @@ msgstr "已经部署的应用需要持续的服务，且更加重要的，需要
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml178(para)
 msgid ""
-"It is important to understand what will happen to the replication of objects"
-" and data between the sites when a site goes down. If this causes queues to "
+"It is important to understand what happens to the replication of objects and"
+" data between the sites when a site goes down. If this causes queues to "
 "start building up, consider how long these queues can safely exist until "
 "something explodes."
-msgstr "当一个站点失效时，理解在站点之间的对象和数据复制会发生什么很重要。如果这导致队列开始建立，要考虑到多长时间这些队列到什么事情爆炸发生之前可安全完成。"
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml185(para)
 msgid ""
@@ -1674,16 +1674,16 @@ msgstr "站点之间的认证"
 #: ./doc/arch-design/multi_site/section_user_requirements_multi_site.xml213(para)
 msgid ""
 "Ideally it is best to have a single authentication domain and not need a "
-"separate implementation for each and every site. This will, of course, "
-"require an authentication mechanism that is highly available and distributed"
-" to ensure continuous operation. Authentication server locality is also "
+"separate implementation for each and every site. This, of course, requires "
+"an authentication mechanism that is highly available and distributed to "
+"ensure continuous operation. Authentication server locality is also "
 "something that might be needed as well and should be planned for."
-msgstr "理想中最好是有一个单一的认证域而不是在每个站点中分离的去实现。这当然会要求认证机制是高可用和分布式的确定持续可操作。局部认证服务也需要好好的规划。"
+msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml86(None)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml85(None)
 msgid ""
 "@@image: '../figures/Multi-Site_Customer_Edge.png'; "
 "md5=01850cf774e7075bd7202c6e7f087f36"
@@ -1692,7 +1692,7 @@ msgstr "@@image: '../figures/Multi-Site_Customer_Edge.png'; md5=01850cf774e7075b
 #. When image changes, this message will be marked fuzzy or untranslated for
 #. you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml190(None)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml191(None)
 msgid ""
 "@@image: '../figures/Multi-site_Geo_Redundant_LB.png'; "
 "md5=c94a96f6084c2e50a0eb6846f6fde479"
@@ -1717,13 +1717,13 @@ msgstr "示例"
 
 #: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml13(para)
 msgid ""
-"Based on the needs of the intended workloads, there are multiple ways to "
-"build a multi-site OpenStack installation. Below are example architectures "
+"There are multiple ways to build a multi-site OpenStack installation, based "
+"on the needs of the intended workloads. Below are example architectures "
 "based on different requirements. These examples are meant as a reference, "
 "and not a hard and fast rule for deployments. Use the previous sections of "
 "this chapter to assist in selecting specific components and implementations "
 "based on specific needs."
-msgstr "基于所需要专注的负载，构建多区域OpenStack安装有好几种办法。下面的架构例子基于不同的需求，这些例子仅仅用作参考，对于部署不是硬性和快速的规则。使用前面本章前几节来帮助基于特殊的需求选择特定的组件和实现。"
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml20(para)
 msgid ""
@@ -1738,72 +1738,71 @@ msgid ""
 "horizontal scaling than a traditional compute workload scale. The intent is "
 "to scale by creating more copies of the application in closer proximity to "
 "the users that need it most, in order to ensure faster response time to user"
-" requests. This provider will deploy two datacenters at each of the four "
-"chosen regions. The implications of this design are based around the method "
-"of placing copies of resources in each of the remote regions. Swift objects,"
-" Glance images, and block storage will need to be manually replicated into "
-"each region. This may be beneficial for some systems, such as the case of "
-"content service, where only some of the content needs to exist in some but "
-"not all regions. A centralized Keystone is recommended to ensure "
-"authentication and that access to the API endpoints is easily manageable."
-msgstr "一个大型的内容提供商需要为分散在不同地理位置的客户交付内容，此负载对延迟极为敏感，而且还得快速响应最终用户。经过用户的回顾，技术和运营的考虑，最后决定构建有利于本地客户边缘的几个region，在此用例中，没有选择构建几个大型的、中心化的数据中心，而是架构的意图很明确，在接近最终用户的地方提供几个小型的数据中心，在此用例中，取代传统计算负载扩展的方式，而使用不同的横向扩展快速扩充应用，为了确保用户需求的快速响应时间，为贴近用户最迫切的需求，专注于通过创建更多应用的复制的扩展。此供应商会在每4个所选择的region部署两个数据中心，此设计的实现是围绕这每个远端的region复制资源的方法。Swift对象存储服务，Glance镜像服务，以及块存储在每个region都需要手动的复制，这也许有利于一些系统，比如内容服务的用例，他们的一些内容仅出现在部分而不是全部的region。建议建立一个中心化的Keystone，确保认证服务和API端点访问可轻松管理。"
+" requests. This provider deploys two datacenters at each of the four chosen "
+"regions. The implications of this design are based around the method of "
+"placing copies of resources in each of the remote regions. Swift objects, "
+"Glance images, and block storage need to be manually replicated into each "
+"region. This may be beneficial for some systems, such as the case of content"
+" service, where only some of the content needs to exist in some but not all "
+"regions. A centralized Keystone is recommended to ensure authentication and "
+"that access to the API endpoints is easily manageable."
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml44(para)
 msgid ""
-"Installation of an automated DNS system such as Designate is highly "
-"recommended. Unless an external Dynamic DNS system is available, application"
-" administrators will need a way to manage the mapping of which application "
-"copy exists in each region and how to reach it. Designate will assist by "
-"making the process automatic and by populating the records in the each "
-"region's zone."
-msgstr "强烈建议安装一个自动的DNS系统，比如Designate。除非有外部的动态DNS系统可用，应用管理员会需要一个管理办法，在每个region中映射那个应用复制出现以及如何访问它们。Desginate将会将这些流程自动化，而且会填充记录到每个region的区。"
+"It is recommended that you install an automated DNS system such as "
+"Designate. Application administrators need a way to manage the mapping of "
+"which application copy exists in each region and how to reach it, unless an "
+"external Dynamic DNS system is available. Designate assists by making the "
+"process automatic and by populating the records in the each region's zone."
+msgstr ""
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml51(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml50(para)
 msgid ""
 "Telemetry for each region is also deployed, as each region may grow "
-"differently or be used at a different rate. Ceilometer will run to collect "
-"each region's metrics from each of the controllers and report them back to a"
-" central location. This is useful both to the end user and the administrator"
-" of the OpenStack environment. The end user will find this method useful, in"
-" that it is possible to determine if certain locations are experiencing "
-"higher load than others, and take appropriate action. Administrators will "
-"also benefit by possibly being able to forecast growth per region, rather "
-"than expanding the capacity of all regions simultaneously, therefore "
-"maximizing the cost-effectiveness of the multi-site design."
-msgstr "Telemetry也会部署到每个region中，虽然每个region的增长可能不一样或者使用的频率也不同。Ceilometer将运行在每个region中的监测数据，然后回报到中心地点。这在OpenStack环境中对于最终用户也好，对于系统管理员也好，都有很大的用处，使最终用户根据某些局部的负载高于其他地方做出决定而成为可能，然后采取相应的措施。使系统管理员在每个region预测增长成为可能，而不是去盲目的同等看待所有region而去扩展它们，因此对于多区域设计是最大化的节省资源。"
+"differently or be used at a different rate. Ceilometer collects each "
+"region's metrics from each of the controllers and report them back to a "
+"central location. This is useful both to the end user and the administrator "
+"of the OpenStack environment. The end user will find this method useful, as "
+"it makes possible to determine if certain locations are experiencing higher "
+"load than others, and take appropriate action. Administrators also benefit "
+"by possibly being able to forecast growth per region, rather than expanding "
+"the capacity of all regions simultaneously, therefore maximizing the cost-"
+"effectiveness of the multi-site design."
+msgstr ""
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml64(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml63(para)
 msgid ""
 "One of the key decisions of running this sort of infrastructure is whether "
 "or not to provide a redundancy model. Two types of redundancy and high "
-"availability models in this configuration will be implemented. The first "
-"type revolves around the availability of the central OpenStack components. "
-"Keystone will be made highly available in three central data centers that "
-"will host the centralized OpenStack components. This prevents a loss of any "
-"one of the regions causing an outage in service. It also has the added "
-"benefit of being able to run a central storage repository as a primary cache"
-" for distributing content to each of the regions."
-msgstr "运行此类基础设施的一个关键决定是是否提供冗余模式。在此配置中有两类冗余和高可用模式需要被实现。第一类围绕中心化OpenStack组件的可用性，Keystone会基于三个中心化的数据中心而形成高可用，而成为中心化的OpenStack组件。这会防止任何的region失效而导致服务不可用。这也会为在每个region运行着中央存储仓库作为主要缓存，用于分发内容，带来额外的好处。"
+"availability models in this configuration can be implemented. The first type"
+" revolves around the availability of the central OpenStack components. "
+"Keystone can be made highly available in three central data centers that "
+"host the centralized OpenStack components. This prevents a loss of any one "
+"of the regions causing an outage in service. It also has the added benefit "
+"of being able to run a central storage repository as a primary cache for "
+"distributing content to each of the regions."
+msgstr ""
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml75(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml74(para)
 msgid ""
 "The second redundancy topic is that of the edge data center itself. A second"
-" data center in each of the edge regional locations will house a second "
-"region near the first. This ensures that the application will not suffer "
-"degraded performance in terms of latency and availability."
-msgstr "第二类容易是边缘数据中心本身。在每个边缘region地带的第二个数据中心会在靠近第一个region边上承载起第二个region的功用。这确保应用不会遭受延迟和可用性方面的性能下降。"
+" data center in each of the edge regional locations house a second region "
+"near the first. This ensures that the application does not suffer degraded "
+"performance in terms of latency and availability."
+msgstr ""
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml80(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml79(para)
 msgid ""
 "This figure depicts the solution designed to have both a centralized set of "
 "core data centers for OpenStack services and paired edge data centers:"
 msgstr "此示意图描述所设计的解决方案，同时拥有一个为OpenStack服务的中心化的核心数据中心和两个边缘化的数据中心："
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml90(title)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml89(title)
 msgid "Geo-redundant load balancing"
 msgstr "地理冗余负载均衡"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml91(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml90(para)
 msgid ""
 "A large-scale web application has been designed with cloud principles in "
 "mind. The application is designed provide service to application store, on a"
@@ -1812,7 +1811,7 @@ msgid ""
 "the information."
 msgstr "在脑子里想着一个大型扩展的web应用被设计为遵循云的原则。应用被设计为在应用商店中7*24的提供服务，公司拥有典型的2层架构，前端是用户需求的web服务，后端是用NoSQL数据库存放信息。"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml97(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml96(para)
 msgid ""
 "As of late there has been several outages in number of major public cloud "
 "providersusually due to the fact these applications were running out of a "
@@ -1820,90 +1819,94 @@ msgid ""
 "chance of a single site causing an outage for their business."
 msgstr "最后，经常由于一些因素他们的应用运行在单个地理位置,主要的公有云提供者因此会停止一些服务。因此设计中要考虑如何降低由于单个站点引起的中断业务的几率。"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml102(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml101(para)
 #: ./doc/arch-design/generalpurpose/section_prescriptive_example_general_purpose.xml30(para)
 msgid "The solution would consist of the following OpenStack components:"
 msgstr "解决方案将由下列OpenStack组件组成："
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml106(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml105(para)
 #: ./doc/arch-design/generalpurpose/section_prescriptive_example_general_purpose.xml34(para)
 msgid ""
 "A firewall, switches and load balancers on the public facing network "
 "connections."
 msgstr "防火墙、交换机、以及负载均衡设备在公网中直接面向全网的连接。"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml110(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml109(para)
 msgid ""
 "OpenStack Controller services running, Networking, dashboard, Block Storage "
 "and Compute running locally in each of the three regions. The other "
 "services, Identity, Orchestration, Telemetry, Image Service and Object "
-"Storage will be installed centrallywith nodes in each of the region "
-"providing a redundant OpenStack Controller plane throughout the globe."
-msgstr "运行着OpenStack控制器服务的：网络服务、GUI界面、块存储以及计算服务，都运行在每三个region的本地。其他的服务：认证、Orchestration、Telemetry、镜像服务以及对象存储会安装到每个region的中心节点，通过全局来提供冗余的OpenStack控制器。"
+"Storage can be installed centrallywith nodes in each of the region providing"
+" a redundant OpenStack Controller plane throughout the globe."
+msgstr ""
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml120(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml119(para)
 #: ./doc/arch-design/generalpurpose/section_prescriptive_example_general_purpose.xml44(para)
 msgid "OpenStack Compute nodes running the KVM hypervisor."
 msgstr "OpenStack计算节点运行着KVM的hypervisor。"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml124(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml123(para)
 msgid ""
-"OpenStack Object Storage for serving static objects such as images will be "
+"OpenStack Object Storage for serving static objects such as images can be "
 "used to ensure that all images are standardized across all the regions, and "
 "replicated on a regular basis."
-msgstr "OpenStack对象存储为静态内容提供服务，例如图片，确保所有的图片都通过标准化的存于所有的region，且使用定期复制。"
+msgstr ""
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml130(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml129(para)
 msgid ""
 "A Distributed DNS service available to all regionsthat allows for dynamic "
 "update of DNS records of deployed instances."
 msgstr "在所有的region中都有一个分布式DNS服务可用，允许动态的为已经部署的实例更新DNS记录。"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml135(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml134(para)
 msgid ""
-"A geo-redundant load balancing service will be used to service the requests "
+"A geo-redundant load balancing service can be used to service the requests "
 "from the customers based on their origin."
-msgstr "基于地理位置的负载均衡服务用于顾客过去使用的需求。"
+msgstr ""
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml140(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml139(para)
 msgid ""
-"An autoscaling heat template will used to deploy the application in the "
-"three regions. This template will include:"
-msgstr "在三个region中都使用自动伸缩heat模板来部署应用。此模板包括："
+"An autoscaling heat template can be used to deploy the application in the "
+"three regions. This template includes:"
+msgstr ""
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml145(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml143(para)
 msgid "Web Servers, running Apache."
 msgstr "Web服务，运行 Apache。"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml148(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml146(para)
 msgid ""
 "Appropriate <literal>user_data</literal> to populate the central DNS servers"
 " upon instance launch."
 msgstr "当实例启动时，中心DNS服务器会填写合适的<literal>user_data</literal>。"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml152(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml150(para)
 msgid ""
 "Appropriate Telemetry alarms that maintain state of the application and "
 "allow for handling of region or instance failure."
 msgstr "正确的Telemetry警告，维护着应用的状态且允许掌控region或实例失效。"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml157(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml155(para)
 msgid ""
-"Another autoscaling Heat template will be used to deploy a distributed "
+"Another autoscaling Heat template can be used to deploy a distributed "
 "MongoDB shard over the three locationswith the option of storing required "
-"data on a globally available swift container. according to the usage and "
-"load on the database serveradditional shards will be provisioned according "
-"to the thresholds defined in Telemetry."
-msgstr "另外一个自动伸缩的Heat模板会用于部署分布式MongoDB shard，在全部的三个地点存储全局可用的swift容器数据。基于数据库服务所使用的和负载，以及Telemetry定义的阀值，来决定是否增加额外的shard。"
+"data on a globally available swift container. According to the usage and "
+"load on the database serveradditional shards can be provisioned according to"
+" the thresholds defined in Telemetry."
+msgstr ""
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml163(para)
+#. <para>The reason that three regions were selected here was because of
+#.         the fear of having abnormal load on a single region in the
+#.         event of a failure. Two data center would have been sufficient
+#.       had the requirements been met.</para>
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml165(para)
 msgid ""
-"The reason that three regions were selected here was because of the fear of "
-"having abnormal load on a single region in the event of a failure. Two data "
-"center would have been sufficient had the requirements been met."
-msgstr "这里选择三个region的原因是由于担心偶然的异常负载在单个region会引发失效。两个数据中心足够可以满足需求。"
+"Two data centers would have been sufficient had the requirements been met. "
+"But three regions are selected here to avoid abnormal load on a single "
+"region in the event of a failure."
+msgstr ""
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml167(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml168(para)
 msgid ""
 "Orchestration is used because of the built-in functionality of autoscaling "
 "and auto healing in the event of increased load. Additional configuration "
@@ -1914,37 +1917,37 @@ msgid ""
 "scenario was relatively straight forwardthe external tools were not needed."
 msgstr "这里用到Orchestration是由于自动伸缩的内部功能和偶然增长的负载后的自动复原功能。另外一些配置管理工具，如Puppet或Chef也会在此场景下用到，但是不会被选择用于Orchestration，在OpenStack云中它们做不到内部的钩子，也不是OpenStack本身的工具。此外，其实相对简单的场景根本用不到这些额外的工具。"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml176(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml177(para)
 msgid ""
 "OpenStack Object Storage is used here to serve as a back end for the Image "
-"Service since was the most suitable solution for a globally distributed "
+"Service since it is the most suitable solution for a globally distributed "
 "storage solutionwith its own replication mechanism. Home grown solutions "
 "could also have been used including the handling of replicationbut were not "
 "chosen, because Object Storage is already an intricate part of the "
 "infrastructureand proven solution."
-msgstr "OpenStack对象存储在这里的使用，是为镜像服务提供后端支撑，而镜像存储最合适的解决方案就是全局的分布式存储解决方案，而对象存储恰恰满足其自身的复制机制。本土的解决方案也已经被使用，包括复制的处理，但都没有选择，因为对象存储已经是基础设施和成熟的解决方案的复杂部分。"
+msgstr ""
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml184(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml185(para)
 msgid ""
 "An external load balancing service was used and not the LBaaS in OpenStack "
 "because the solution in OpenStack is not redundant and does not have any "
 "awareness of geo location."
 msgstr "一个额外的负载均衡服务将被使用，而不是OpenStack的LBaaS,因为OpenStack的LBaaS在OpenStack中不是冗余的解决方案而且不具有地理位置的任何特征。"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml193(title)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml194(title)
 msgid "Location-local service"
 msgstr "本地服务"
 
-#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml194(para)
+#: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml195(para)
 msgid ""
 "A common use for a multi-site deployment of OpenStack, is for creating a "
 "Content Delivery Network. An application that uses a location-local "
-"architecture will require low network latency and proximity to the user, in "
+"architecture requires low network latency and proximity to the user, in "
 "order to provide an optimal user experience, in addition to reducing the "
 "cost of bandwidth and transit, since the content resides on sites closer to "
-"the customer, instead of a centralized content store that would require "
-"utilizing higher cost cross country links."
-msgstr "多区域OpenStack部署常见的一个场景是创建内容分发网络CDN，一个应用使用本地架构会有低网络延迟和接近用户的需求，为了提供给用户极致的体验，为了减少带宽和传送的费用，因此将内容输送到更加接近客户，而替代中心化的内容存储这种需要跨国连接的高额费用。"
+"the customer, instead of a centralized content store that requires utilizing"
+" higher cost cross-country links."
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_prescriptive_examples_multi_site.xml203(para)
 msgid ""
@@ -1961,11 +1964,11 @@ msgstr "此架构通常包括一个放置在最接近节点的用户需求的地
 msgid ""
 "In this example, the application utilizing this multi-site OpenStack install"
 " that is location aware would launch web server or content serving instances"
-" on the compute cluster in each site. Requests from clients will first be "
-"sent to a global services load balancer that determines the location of the "
+" on the compute cluster in each site. Requests from clients are first sent "
+"to a global services load balancer that determines the location of the "
 "client, then routes the request to the closest OpenStack site where the "
 "application completes the request."
-msgstr "在此例中，应用利用此多区域OpenStack基于位置敏感的安装，在每个站点的计算集群中启动web服务和内容服务的实例，来自客户的请求会第一时间发送到全局服务负载均衡器，然后负载均衡器会决定客户的位置，当应用完成请求，路由会将请求发给最近的OpenStack站点。"
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml8(title)
 #: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml8(title)
@@ -1983,9 +1986,9 @@ msgid ""
 "There are many technical considerations to take into account with regard to "
 "designing a multi-site OpenStack implementation. An OpenStack cloud can be "
 "designed in a variety of ways to handle individual application needs. A "
-"multi-site deployment will have additional challenges compared to single "
-"site installations and will therefore be a more complex solution."
-msgstr "设计一个多区域OpenStack有许多的技术因素需要被纳入有关的账单。一个OpenStack云有很多中办法来设计，去掌控分离的应用需求，一个多区域的部署相比于单一站点的安装会带来额外的挑战，也因此将会是一个更加复杂的解决方案。"
+"multi-site deployment has additional challenges compared to single site "
+"installations and therefore is a more complex solution."
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml16(para)
 msgid ""
@@ -2000,11 +2003,11 @@ msgid ""
 "between the different OpenStack sites. This includes parameters such as "
 "bandwidth, latency, whether or not a link is dedicated, and any business "
 "policies applied to the connection. The capability and number of the links "
-"between sites will determine what kind of options may be available for "
-"deployment. For example, if two sites have a pair of high-bandwidth links "
-"available between them, it may be wise to configure a separate storage "
-"replication network between the two sites to support a single Swift endpoint"
-" and a shared object storage capability between them. (An example of this "
+"between sites determine what kind of options are available for deployment. "
+"For example, if two sites have a pair of high-bandwidth links available "
+"between them, it may be wise to configure a separate storage replication "
+"network between the two sites to support a single Swift endpoint and a "
+"shared object storage capability between them. (An example of this "
 "technique, as well as a configuration walk-through, is available at <link "
 "href=\"http://docs.openstack.org/developer/swift/replication_network.html"
 "#dedicated-replication-"
@@ -2013,18 +2016,18 @@ msgid ""
 "to build a dedicated set of tenant private networks across the secondary "
 "link using overlay networks with a third party mapping the site overlays to "
 "each other."
-msgstr "站点间的链接能力描述的是在不同的OpenStack站点之间连通性的能力。这里包含的参数有带宽、延迟，线路是否是专用、以及任何连接的业务规则认可。站点之间连接的能力和数量将决定部署时何种属性可用。例如，如果在两个站点之间有一组高带宽的连接可用，也许就想配置一个在两个站点之间分离的存储复制网络，以支持单一的Swift端点和共享的对象存储。 (此技术的一个更好的例子，详细的配置，请参阅 <link href=\"http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network\">http://docs.openstack.org/developer/swift/replication_network.html#dedicated-replication-network</link>)。此场景的另外一个属性是构建专用的一组租户私有网络，在第二条线路使用覆盖网络，一个第三方的映射在彼此的站点覆盖。"
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml38(para)
 msgid ""
-"The capacity requirements of the links between sites will be driven by "
+"The capacity requirements of the links between sites is driven by "
 "application behavior. If the latency of the links is too high, certain "
 "applications that use a large number of small packets, for example RPC "
 "calls, may encounter issues communicating with each other or operating "
 "properly. Additionally, OpenStack may encounter similar types of issues. To "
 "mitigate this, tuning of the Identity service call timeouts may be necessary"
 " to prevent issues authenticating against a central Identity service."
-msgstr "应用的行为驱动着站点之间线路能力的需求，如果线路的延迟太高，某些应用使用大量的小包，比如RPC调用，就会遭遇彼此之间的通信问题和正确操作的问题。另外，OpenStack会遇到类似的问题，为了降低这些问题的发生几率，优化认证服务调用的超时时间就非常的有必要，这样可以防止认证在中心化身份服务的冲突。"
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml47(para)
 msgid ""
@@ -2036,8 +2039,8 @@ msgid ""
 "IDs between the zones are identical. Note that, as of the Icehouse release, "
 "OpenStack Networking was not capable of managing tunnel IDs across "
 "installations. This means that if one site runs out of IDs, but other does "
-"not, that tenant's network will be unable to reach the other site."
-msgstr "另外关于容量的考虑因素，当它涉及到多站点部署网络的可用量时，以及对于租户网络的负载网络的性能。如果使用了跨zone的共享租户网络，那么将外部覆盖管理或控制器映射到一起就很迫切。非常有必要确保zone之间的ID量一致。记住，在Icehouse版本发布时，OpenStack网络还没有在安装时拥有管理隧道ID的能力，这意味着如果其中一个站点用完了ID，但是另外一个站点没有用完，租户网络将无法达到其它站点。"
+"not, that tenant's network is unable to reach the other site."
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml58(para)
 msgid ""
@@ -2094,25 +2097,25 @@ msgstr "身份是多数OpenStack用户的第一道“门槛”，对于绝大多
 msgid ""
 "Load balancing is another common issue with multi-site installations. While "
 "it is still possible to run HAproxy instances with Load-Balancer-"
-"as-a-Service, these will be local to a specific region. Some applications "
-"may be able to cope with this via internal mechanisms. Others, however, may "
+"as-a-Service, these are local to a specific region. Some applications may be"
+" able to cope with this via internal mechanisms. Others, however, may "
 "require the implementation of an external system including global services "
 "load balancers or anycast-advertised DNS."
-msgstr "负载均衡是安装多站点OpenStack另外一个常见的问题，它可能运行着负载均衡即服务的HAproxy实例，这些可能是本地一个特定的region，一些应用也许通过内部机制来应对这种情况，另外，也许需要外部的系统来实现，诸如全局服务负载均衡器或者anycast-advertised DNS。"
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml102(para)
 msgid ""
 "Depending on the storage model chosen during site design, storage "
-"replication and availability will also be a concern for end-users. If an "
+"replication and availability are also a concern for end-users. If an "
 "application is capable of understanding regions, then it is possible to keep"
 " the object storage system separated by region. In this case, users who want"
-" to have an object available to more than one region will need to do the "
-"cross-site replication themselves. With a centralized swift proxy, however, "
-"the user may need to benchmark the replication timing of the Object Storage "
-"back end. Benchmarking allows the operational staff to provide users with an"
-" understanding of the amount of time required for a stored or modified "
-"object to become available to the entire environment."
-msgstr "取决于在设计站点时的选择的存储模式，存储的复制和可用性也是最终用户所关心的。如果一个应用有理解region的能力，那么它可能会保持通过region分离的对象存储系统，在此种情形下，用户需要在多个region访问对象的话就需要去自己去跨站点复制，基于中心化的swift代理，用户也许需要后端对象存储的复制基准时间。测试基准允许运维人员提供给用户可以理解的存储需求的总计时间或者是更改对象使之在整个环境中可用。"
+" to have an object available to more than one region need to do the cross-"
+"site replication themselves. With a centralized swift proxy, however, the "
+"user may need to benchmark the replication timing of the Object Storage back"
+" end. Benchmarking allows the operational staff to provide users with an "
+"understanding of the amount of time required for a stored or modified object"
+" to become available to the entire environment."
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml114(title)
 #: ./doc/arch-design/network_focus/section_tech_considerations_network_focus.xml432(title)
@@ -2157,9 +2160,9 @@ msgid ""
 "was not created. Some applications may need to be tuned to account for this "
 "effect. Block Storage does not currently have a method for replicating data "
 "across multiple regions, so applications that depend on available block "
-"storage will need to manually cope with this limitation by creating "
-"duplicate block storage entries in each region."
-msgstr "在一个多区域部署中，存储可用性也会影响到架构。一个中心化的对象存储服务需要在region中为实例本地存取对象中频繁的使用，在对象没有建立的地方。一些应用也许为此而需要作出相应的调整。块存储目前还没有跨多个region的复制数据的方法，所以应用若依赖可用的块存储的话，需要手动的复制，由于这种限制导致在每个region都要创建重复的块存储。"
+"storage need to manually cope with this limitation by creating duplicate "
+"block storage entries in each region."
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml139(title)
 #: ./doc/arch-design/network_focus/section_user_requirements_network_focus.xml163(title)
@@ -2182,10 +2185,10 @@ msgid ""
 "Tenants may expect a tenant-created network to be secure. In a multi-site "
 "installation the use of a non-private connection between sites may be "
 "required. This may mean that traffic would be visible to third parties and, "
-"in cases where an application requires security, this issue will require "
+"in cases where an application requires security, this issue requires "
 "mitigation. Installing a VPN or encrypted connection between sites is "
 "recommended in such instances."
-msgstr "多区域OpenStack安装的安全会来带额外的挑战，租户会为了安全会建立一个租户创建的网络。在多区域站点安装中也许没有需求去使用非私有网络来连接站点，这意味着流量对于第三方来说是可见的，假如应用对安全有需求，这就是个问题需要去解决，安全一VPN或者将连接加密在站点之间，在此情形下就非常有必要。"
+msgstr ""
 
 #: ./doc/arch-design/multi_site/section_tech_considerations_multi_site.xml148(para)
 msgid ""
