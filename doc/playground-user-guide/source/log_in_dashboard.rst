@@ -1,12 +1,3 @@
-===================
-OpenStack dashboard
-===================
-
-As a cloud end user, you can use the OpenStack dashboard to provision
-your own resources within the limits set by administrators. You can
-modify the examples provided in this section to create other types and
-sizes of server instances.
-
 Log in to the dashboard
 -----------------------
 
