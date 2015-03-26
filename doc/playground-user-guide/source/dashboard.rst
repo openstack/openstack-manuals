@@ -22,6 +22,7 @@ sizes of server instances.
    dashboard_manage_services
    dashboard_view_cloud_resources
    dashboard_databases.rst
+   dashboard_manage_images.rst
 
 .. TODO(karenb): Added dashboard_view_cloud_resources.rst
    to toc until dashboard_manage_resources (parent file) is merged.
