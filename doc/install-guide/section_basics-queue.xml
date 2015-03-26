@@ -3,18 +3,18 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
-  xml:id="basics-messaging-server">
+  xml:id="basics-message-queue">
   <?dbhtml stop-chunking?>
-  <title>Messaging server</title>
-  <para>OpenStack uses a <glossterm>message broker</glossterm> to coordinate
-    operations and status information among services. The message broker
+  <title>Message queue</title>
+  <para>OpenStack uses a <glossterm>message queue</glossterm> to coordinate
+    operations and status information among services. The message queue
     service typically runs on the controller node. OpenStack supports several
-    message brokers including <application>RabbitMQ</application>,
+    message queue services including <application>RabbitMQ</application>,
     <application>Qpid</application>, and <application>ZeroMQ</application>.
     However, most distributions that package OpenStack support a particular
-    message broker. This guide covers the RabbitMQ message broker which is
-    supported by each distribution. If you prefer to implement a
-    different message broker, consult the documentation associated
+    message queue service. This guide implements the RabbitMQ message queue
+    service because most distributions support it. If you prefer to implement
+    a different message queue service, consult the documentation associated
     with it.</para>
   <itemizedlist>
     <listitem>
@@ -28,8 +28,23 @@
     </listitem>
   </itemizedlist>
   <procedure>
-    <title>To install the <application>RabbitMQ</application> message broker service</title>
+    <title>To install the message queue service</title>
+    <step os="ubuntu">
+      <para>Add the upstream repository key:</para>
+      <screen><prompt>#</prompt> <userinput>curl -O https://www.rabbitmq.com/rabbitmq-signing-key-public.asc</userinput>
+<prompt>#</prompt> <userinput>apt-key add rabbitmq-signing-key-public.asc</userinput></screen>
+    </step>
+    <step os="ubuntu">
+      <para>Add the upstream repository:</para>
+      <screen><prompt>#</prompt> <userinput>echo "deb http://www.rabbitmq.com/debian/ testing main" \
+  > /etc/apt/sources.list.d/rabbitmq.list</userinput></screen>
+    </step>
+    <step os="ubuntu">
+      <para>Update the package database:</para>
+      <screen><prompt>#</prompt> <userinput>apt-get update</userinput></screen>
+    </step>
     <step os="ubuntu;debian">
+      <para>Install the package:</para>
       <screen><prompt>#</prompt> <userinput>apt-get install rabbitmq-server</userinput></screen>
     </step>
     <step os="rhel;centos;fedora">
@@ -40,9 +55,9 @@
     </step>
   </procedure>
   <procedure>
-    <title>To configure the message broker service</title>
+    <title>To configure the message queue service</title>
     <step os="rhel;centos;fedora;sles;opensuse">
-      <para>Start the message broker service and configure it to start when the
+      <para>Start the message queue service and configure it to start when the
           system boots:</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable rabbitmq-server.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start rabbitmq-server.service</userinput></screen>
@@ -54,64 +69,17 @@
 <prompt>#</prompt> <userinput>systemctl start rabbitmq-server.service</userinput></screen>
     </step>
     <step>
-      <para>The message broker creates a default account that uses
-        <literal>guest</literal> for the username and password. To simplify
-        installation of your test environment, we recommend that you use this
-        account, but change the password for it.</para>
-      <para>Run the following command:</para>
+      <para>Add the <literal>openstack</literal> user:</para>
+      <screen><prompt>#</prompt> <userinput>rabbitmqctl add_user openstack <replaceable>RABBIT_PASS</replaceable></userinput>
+<computeroutput>Creating user "openstack" ...</computeroutput></screen>
       <para>Replace <replaceable>RABBIT_PASS</replaceable> with a suitable
         password.</para>
-      <screen><prompt>#</prompt> <userinput>rabbitmqctl change_password guest <replaceable>RABBIT_PASS</replaceable></userinput>
-<computeroutput>Changing password for user "guest" ...
-...done.</computeroutput></screen>
-      <para>You must configure the <literal>rabbit_password</literal> key
-        in the configuration file for each OpenStack service that uses the
-        message broker.</para>
-      <note>
-        <para>For production environments, you should create a unique account
-          with a suitable password. For more information on securing the
-          message broker, see the
-        <link xlink:href="https://www.rabbitmq.com/man/rabbitmqctl.1.man.html"
-          >documentation</link>.</para>
-        <para>If you decide to create a unique account with a suitable password
-          for your test environment, you must configure the
-          <literal>rabbit_userid</literal> and
-          <literal>rabbit_password</literal> keys in the configuration file
-          of each OpenStack service that uses the message broker.</para>
-      </note>
     </step>
     <step>
-      <para>For RabbitMQ version 3.3.0 or newer, you must enable remote
-        access for the <literal>guest</literal> account.</para>
-      <substeps>
-        <step>
-          <para>Check the RabbitMQ version:</para>
-          <screen><prompt>#</prompt> <userinput>rabbitmqctl status | grep rabbit</userinput>
-<computeroutput>Status of node 'rabbit@controller' ...
- {running_applications,[{rabbit,"RabbitMQ","3.4.2"},</computeroutput></screen>
-        </step>
-        <step>
-          <para>If necessary, edit the
-            <filename>/etc/rabbitmq/rabbitmq.config</filename>
-            file and configure <literal>loopback_users</literal> to
-            reference an empty list:</para>
-          <programlisting>[{rabbit, [{loopback_users, []}]}].</programlisting>
-          <note>
-            <para>Contents of the original file might vary depending on the
-              source of the RabbitMQ package. In some cases, you might need
-              to create this file.</para>
-          </note>
-        </step>
-        <step>
-          <para>Restart the message broker service:</para>
-          <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service rabbitmq-server restart</userinput></screen>
-          <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl restart rabbitmq-server.service</userinput></screen>
-          <para os="sles">On SLES:</para>
-          <screen os="sles"><prompt>#</prompt> <userinput>service rabbitmq-server restart</userinput></screen>
-          <para os="opensuse">On openSUSE:</para>
-          <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart rabbitmq-server.service</userinput></screen>
-        </step>
-      </substeps>
+      <para>Permit configuration, write, and read access for the
+        <literal>openstack</literal> user:</para>
+      <screen><prompt>#</prompt> <userinput>rabbitmqctl set_permissions openstack ".*" ".*" ".*"</userinput>
+<computeroutput>Setting permissions for user "openstack" in vhost "/" ...</computeroutput></screen>
     </step>
   </procedure>
 </section>
