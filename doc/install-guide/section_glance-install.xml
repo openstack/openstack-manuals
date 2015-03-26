@@ -55,65 +55,76 @@
       <substeps>
         <step>
           <para>Create the <literal>glance</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name glance --pass <replaceable>GLANCE_PASS</replaceable></userinput>
-<computeroutput>+----------+----------------------------------+
-| Property |              Value               |
+          <screen><prompt>$</prompt> <userinput>openstack user create --password-prompt glance</userinput>
+<computeroutput>User Password:
+Repeat User Password:
 +----------+----------------------------------+
-|  email   |                                  |
-| enabled  |               True               |
-|    id    | f89cca5865dc42b18e2421fa5f5cce66 |
-|   name   |              glance              |
-| username |              glance              |
+| Field    | Value                            |
++----------+----------------------------------+
+| email    | None                             |
+| enabled  | True                             |
+| id       | 1dc206e084334db2bee88363745da014 |
+| name     | glance                           |
+| username | glance                           |
 +----------+----------------------------------+</computeroutput></screen>
-          <para>Replace <replaceable>GLANCE_PASS</replaceable> with a suitable
-            password.</para>
         </step>
         <step>
           <para>Add the <literal>admin</literal> role to the
-            <literal>glance</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user glance --tenant service --role admin</userinput></screen>
-          <note>
-            <para>This command provides no output.</para>
-          </note>
+            <literal>glance</literal> user and <literal>service</literal>
+            project:</para>
+          <screen><prompt>$</prompt> <userinput>openstack role add --project service --user glance admin</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | 1169d778631b4fd1aefd9d35314e1c56 |
+| name  | admin                            |
++-------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
           <para>Create the <literal>glance</literal> service entity:</para>
-          <screen><prompt>$</prompt> <userinput>keystone service-create --name glance --type image \
-  --description "OpenStack Image Service"</userinput>
+          <screen><prompt>$</prompt> <userinput>openstack service create --type image \
+  --description "OpenStack Image Service" glance</userinput>
 <computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
+| Field       | Value                            |
 +-------------+----------------------------------+
-| description |     OpenStack Image Service      |
-|   enabled   |               True               |
-|      id     | 23f409c4e79f4c9e9d23d809c50fbacf |
-|     name    |              glance              |
-|     type    |              image               |
+| description | OpenStack Image Service          |
+| enabled     | True                             |
+| id          | 178124d6081c441b80d79972614149c6 |
+| name        | glance                           |
+| type        | image                            |
 +-------------+----------------------------------+</computeroutput></screen>
         </step>
       </substeps>
     </step>
     <step>
       <para>Create the Image Service API endpoints:</para>
-      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ image / {print $2}') \
+      <screen><prompt>$</prompt> <userinput>openstack endpoint create \
   --publicurl http://<replaceable>controller</replaceable>:9292 \
   --internalurl http://<replaceable>controller</replaceable>:9292 \
   --adminurl http://<replaceable>controller</replaceable>:9292 \
-  --region regionOne</userinput>
-<computeroutput>+-------------+----------------------------------+
-|   Property  |             Value                |
-+-------------+----------------------------------+
-|   adminurl  |   http://controller:9292         |
-|      id     | a2ee818c69cb475199a1ca108332eb35 |
-| internalurl |   http://controller:9292         |
-|  publicurl  |   http://controller:9292         |
-|    region   |           regionOne              |
-|  service_id | 23f409c4e79f4c9e9d23d809c50fbacf |
-+-------------+----------------------------------+</computeroutput></screen>
+  --region regionOne \
+  image</userinput>
+<computeroutput>+--------------+----------------------------------+
+| Field        | Value                            |
++--------------+----------------------------------+
+| adminurl     | http://controller:9292           |
+| id           | 805b1dbc90ab47479111102bc6423313 |
+| internalurl  | http://controller:9292           |
+| publicurl    | http://controller:9292           |
+| region       | regionOne                        |
+| service_id   | 178124d6081c441b80d79972614149c6 |
+| service_name | glance                           |
+| service_type | image                            |
++--------------+----------------------------------+</computeroutput></screen>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To install and configure the Image Service components</title>
+    <note>
+       <para>Default configuration files vary by distribution. You might need
+         to add these sections and options rather than modifying existing
+         sections and options.</para>
+    </note>
     <step>
       <para>Install the packages:</para>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install glance python-glanceclient</userinput></screen>
@@ -139,7 +150,7 @@ connection = mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceabl
             service access:</para>
           <programlisting language="ini">[keystone_authtoken]
 ...
-auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+auth_uri = http://<replaceable>controller</replaceable>:5000
 identity_uri = http://<replaceable>controller</replaceable>:35357
 admin_tenant_name = service
 admin_user = glance
@@ -178,6 +189,13 @@ notification_driver = noop</programlisting>
             that enables notifications.</para>
         </step>
         <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            log file:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+log_file = /var/log/glance/api.log</programlisting>
+        </step>
+        <step>
           <para>(Optional) To assist with troubleshooting,
             enable verbose logging in the <literal>[DEFAULT]</literal>
             section:</para>
@@ -206,7 +224,7 @@ connection = mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceabl
             service access:</para>
           <programlisting language="ini">[keystone_authtoken]
 ...
-auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
+auth_uri = http://<replaceable>controller</replaceable>:5000
 identity_uri = http://<replaceable>controller</replaceable>:35357
 admin_tenant_name = service
 admin_user = glance
@@ -236,7 +254,14 @@ notification_driver = noop</programlisting>
           <para>The Telemetry chapter provides an Image Service configuration
             that enables notifications.</para>
         </step>
-          <step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            log file:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+log_file = /var/log/glance/registry.log</programlisting>
+        </step>
+        <step>
           <para>(Optional) To assist with troubleshooting,
             enable verbose logging in the <literal>[DEFAULT]</literal>
             section:</para>
