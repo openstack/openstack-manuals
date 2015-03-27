@@ -22,3 +22,4 @@ sizes of server instances.
    dashboard_databases.rst
    dashboard_manage_images.rst
    dashboard_manage_resources.rst
+   dashboard_manage_host_aggregates.rst
