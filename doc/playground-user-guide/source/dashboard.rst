@@ -34,3 +34,4 @@ sizes of server instances.
    dashboard_set_quotas
    dashboard_manage_resources.rst
    dashboard_manage_host_aggregates.rst
+   dashboard_admin_manage_stacks.rst
