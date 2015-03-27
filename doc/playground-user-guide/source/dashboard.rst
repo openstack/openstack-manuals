@@ -19,13 +19,6 @@ sizes of server instances.
    manage_instances.rst
    dashboard_manage_flavors.rst
    dashboard_set_quotas
-   dashboard_manage_services
-   dashboard_view_cloud_resources
    dashboard_databases.rst
    dashboard_manage_images.rst
-
-.. TODO(karenb): Added dashboard_view_cloud_resources.rst
-   to toc until dashboard_manage_resources (parent file) is merged.
-
-.. TODO(karenb): Added dashboard_manage_services.rst to toc
-   until dashboard_manage_resources.rst (parent file) is merged.
+   dashboard_manage_resources.rst

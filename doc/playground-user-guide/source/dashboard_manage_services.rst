@@ -1,3 +1,6 @@
+.. meta::
+    :scope: admin_only
+
 =========================
 View services information
 =========================
