@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-03-26 06:09+0000\n"
+"POT-Creation-Date: 2015-03-27 06:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6071,142 +6071,138 @@ msgid "FAST Cache support"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:540(para)
-msgid "VNX has FAST Cache feature which requires the FAST Cache license activated on the VNX. The OpenStack administrator can use the extra spec key <literal>fast_cache_enabled</literal> to choose whether to create a volume on the volume bac kend which manages a pool with FAST Cache enabled. This feature is only supported by pool-based bac kend (Refer to <xref linkend=\"emc-vnx-direct-multipool\"/>). The value of the extra spec key <literal>fast_cache_enabled</literal> is either <literal>True</literal> or <literal>False</literal>. When creating a volume, if the key <literal>fast_cache_enabled</literal> is set to <literal>True</literal> in the volume type, the volume will be created by a pool-based back end which manages a pool with FAST Cache enabled."
+msgid "VNX has FAST Cache feature which requires the FAST Cache license activated on the VNX. The OpenStack administrator can use the extra spec key <literal>fast_cache_enabled</literal> to choose whether to create a volume on the volume back end which manages a pool with FAST Cache enabled. The value of the extra spec key <literal>fast_cache_enabled</literal> is either <literal>True</literal> or <literal>False</literal>. When creating a volume, if the key <literal>fast_cache_enabled</literal> is set to <literal>True</literal> in the volume type, the volume will be created by a back end which manages a pool with FAST Cache enabled."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:553(title)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:551(title)
 msgid "Storage group automatic deletion"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:554(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:552(para)
 msgid "For volume attaching, the driver has a storage group on VNX for each compute node hosting the vm instances that are going to consume VNX Block Storage (using the compute node's hostname as the storage group's name). All the volumes attched to the vm instances in a computer node will be put into the corresponding Storage Group. If <literal>destroy_empty_storage_group=True</literal>, the driver will remove the empty storage group when its last volume is detached. For data safety, it does not suggest to set the option <literal>destroy_empty_storage_group=True</literal> unless the VNX is exclusively managed by one Block Storage node because consistent <literal>lock_path</literal> is required for operation synchronization for this behavior."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:568(title)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:566(title)
 msgid "EMC storage-assisted volume migration"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:569(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:567(para)
 msgid "<literal>EMC VNX direct driver</literal> supports storage-assisted volume migration, when the user starts migrating with <literal>cinder migrate --force-host-copy False volume_id host</literal> or <literal>cinder migrate volume_id host</literal>, cinder will try to leverage the VNX's native volume migration functionality."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:574(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:572(para)
 msgid "In the following scenarios, VNX native volume migration will not be triggered:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:578(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:576(para)
 msgid "Volume migration between back ends with different storage protocol, ex, FC and iSCSI."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:582(para)
-msgid "Volume migration from pool-based bac kend to array-based back end."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:586(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:580(para)
 msgid "Volume is being migrated across arrays."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:591(title)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:585(title)
 msgid "Initiator auto registration"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:592(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:586(para)
 msgid "If <literal>initiator_auto_registration=True</literal>, the driver will automatically register iSCSI initiators with all working iSCSI target ports on the VNX array during volume attaching (The driver will skip those initiators that have already been registered)."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:596(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:590(para)
 msgid "If the user wants to register the initiators with some specific ports on VNX but not register with the other ports, this functionality should be disabled."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:601(title)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:595(title)
 msgid "Initiator auto deregistration"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:602(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:596(para)
 msgid "Enabling storage group automatic deletion is the precondition of this functionality. If <literal>initiator_auto_deregistration=True</literal> is set, the driver will deregister all the iSCSI initiators of the host after its storage group is deleted."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:608(title)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:602(title)
 msgid "Read-only volumes"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:609(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:603(para)
 msgid "OpenStack supports read-only volumes. The following command can be used to set a volume to read-only."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:613(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:607(para)
 msgid "After a volume is marked as read-only, the driver will forward the information when a hypervisor is attaching the volume and the hypervisor will have an implementation-specific way to make sure the volume is not written."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:619(title)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:613(title)
 msgid "Multiple pools support"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:620(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:614(para)
 msgid "Normally a storage pool is configured for a Block Storage back end (named as pool-based back end), so that only that storage pool will be used by that Block Storage back end."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:623(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:617(para)
 msgid "If <literal>storage_vnx_pool_name</literal> is not given in the configuration file, the driver will allow user to use the extra spec key <literal>storagetype:pool</literal> in the volume type to specify the storage pool for volume creation. If <literal>storagetype:pool</literal> is not specified in the volume type and <literal>storage_vnx_pool_name</literal> is not found in the configuration file, the driver will randomly choose a pool to create the volume. This kind of Block Storage back end is named as array-based back end."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:631(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:625(para)
 msgid "Here is an example about configuration of array-based back end:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:641(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:635(para)
 msgid "In this configuration, if the user wants to create a volume on a certain storage pool, a volume type with a extra spec specified the storage pool should be created first, then the user can use this volume type to create the volume."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:645(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:639(para)
 msgid "Here is an example about creating the volume type:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:649(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:643(para)
 msgid "Multiple pool support is still an experimental workaround before blueprint pool-aware-cinder-scheduler is introduced. It is NOT recommended to enable this feature since Juno just supports pool-aware-cinder-scheduler. In later driver update, the driver side change which cooperates with pool-aware-cinder-scheduler will be introduced."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:656(title)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:650(title)
 msgid "Volume number threshold"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:657(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:651(para)
 msgid "In VNX, there is a limit on the maximum number of pool volumes that can be created in the system. When the limit is reached, no more pool volumes can be created even if there is enough remaining capacity in the storage pool. In other words, if the scheduler dispatches a volume creation request to a back end that has free capacity but reaches the limit, the back end will fail to create the corresponding volume."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:663(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:657(para)
 msgid "The default value of the option <literal>check_max_pool_luns_threshold</literal> is <literal>False</literal>. When <literal>check_max_pool_luns_threshold=True</literal>, the pool-based back end will check the limit and will report 0 free capacity to the scheduler if the limit is reached. So the scheduler will be able to skip this kind of pool-based back end that runs out of the pool volume number."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:670(title)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:664(title)
 msgid "FC SAN auto zoning"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:671(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:665(para)
 msgid "EMC direct driver supports FC SAN auto zoning when ZoneManager is configured. Set <literal>zoning_mode</literal> to <literal>fabric</literal> in back-end configuration section to enable this feature. For ZoneManager configuration, please refer to <xref linkend=\"section_fc-zoning\"/>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:678(title)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:672(title)
 msgid "Multi-backend configuration"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:712(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:706(para)
 msgid "For more details on multi-backend, see <link href=\"http://docs.openstack.org/admin-guide-cloud/content/multi_backend.html\">OpenStack Cloud Administration Guide</link>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:717(title)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:711(title)
 msgid "Force delete volumes in storage groups"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:718(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:712(para)
 msgid "Some available volumes may remain in storage groups on the VNX array due to some OpenStack timeout issues. But the VNX array does not allow the user to delete the volumes which are still in storage groups. The option <literal> force_delete_lun_in_storagegroup</literal> is introduced to allow the user to delete the available volumes in this tricky situation."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:723(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:717(para)
 msgid "When <literal>force_delete_lun_in_storagegroup=True</literal> is set in the back-end section, the driver will move the volumes out of storage groups and then delete them if the user tries to delete the volumes that remain in storage groups on the VNX array."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:726(para)
+#: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:720(para)
 msgid "The default value of <literal>force_delete_lun_in_storagegroup</literal> is <literal>False</literal>."
 msgstr ""
 
