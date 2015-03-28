@@ -2,7 +2,7 @@
     :scope: admin_only
 
 ====================
-View Cloud Resources
+View cloud resources
 ====================
 
 

@@ -1,5 +1,5 @@
 =============
-Manage Images
+Manage images
 =============
 
 The cloud operator assigns roles to users. Roles determine who can
