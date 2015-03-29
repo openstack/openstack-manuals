@@ -12,7 +12,7 @@
                 human user. Has associated information such as user
                 name, password, and email. This example creates a user
                 named <literal>alice</literal>:</para>
-            <screen><prompt>$</prompt> <userinput>keystone user-create --name alice --pass mypassword123 --email alice@example.com</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>openstack user create --password-prompt --email alice@example.com alice</userinput></screen>
         </listitem>
         <listitem>
             <para><emphasis role="bold">Tenant</emphasis>. A project,
@@ -23,7 +23,7 @@
                 instances in the tenant that you specified in your
                 query. This example creates a tenant named
                     <literal>acme</literal>:</para>
-            <screen><prompt>$</prompt> <userinput>keystone tenant-create --name acme</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>openstack project create acme</userinput></screen>
             <note>
                 <para>Because the term <emphasis>project</emphasis>
                     was used instead of <emphasis>tenant</emphasis> in
@@ -40,7 +40,7 @@
                 operations that a user can perform in a given tenant.</para>
             <para>This example creates a role named
                     <literal>compute-user</literal>:</para>
-            <screen><prompt>$</prompt> <userinput>keystone role-create --name compute-user</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>openstack role create compute-user</userinput></screen>
             <note>
                 <para>Individual services, such as Compute and the
                     Image Service, assign meaning to roles. In the
@@ -53,25 +53,25 @@
         You might assign the <literal>compute-user</literal> role to
         the <literal>alice</literal> user in the
             <literal>acme</literal> tenant:</para>
-    <screen><prompt>$</prompt> <userinput>keystone user-list</userinput>
-<computeroutput>+--------+---------+-------------------+--------+
-|   id   | enabled |       email       |  name  |
-+--------+---------+-------------------+--------+
-| 892585 |   True  | alice@example.com | alice  |
-+--------+---------+-------------------+--------+</computeroutput></screen>
-    <screen><prompt>$</prompt> <userinput>keystone role-list</userinput>
-<computeroutput>+--------+--------------+
-|   id   |     name     |
-+--------+--------------+
-| 9a764e | compute-user |
-+--------+--------------+</computeroutput></screen>
-    <screen><prompt>$</prompt> <userinput>keystone tenant-list</userinput>
-<computeroutput>+--------+------+---------+
-|   id   | name | enabled |
-+--------+------+---------+
-| 6b8fd2 | acme |   True  |
-+--------+------+---------+</computeroutput></screen>
-    <screen><prompt>$</prompt> <userinput>keystone user-role-add --user 892585 --role 9a764e --tenant-id 6b8fd2</userinput>       </screen>
+    <screen><prompt>$</prompt> <userinput>openstack user list</userinput>
+<computeroutput>+--------+-------+
+| ID     | Name  |
++--------+-------+
+| 892585 | alice |
++--------+-------+</computeroutput></screen>
+    <screen><prompt>$</prompt> <userinput>openstack role list</userinput>
+<computeroutput>+--------+---------------+
+| ID     | Name          |
++--------+---------------+
+| 9a764e | compute-user  |
++--------+---------------+</computeroutput></screen>
+    <screen><prompt>$</prompt> <userinput>openstack project list</userinput>
+<computeroutput>+--------+--------------------+
+| ID     | Name               |
++--------+--------------------+
+| 6b8fd2 | acme               |
++--------+--------------------+</computeroutput></screen>
+    <screen><prompt>$</prompt> <userinput>openstack role add --project 6b8fd2 --user 892585 9a764e</userinput>       </screen>
     <para>A user can have different roles in different tenants. For
         example, Alice might also have the <literal>admin</literal>
         role in the <literal>Cyberdyne</literal> tenant. A user can
