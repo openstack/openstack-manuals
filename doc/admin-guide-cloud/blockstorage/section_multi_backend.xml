@@ -7,8 +7,9 @@
     <title>Configure multiple-storage back ends</title>
     <para>When you configure multiple-storage back ends, you can
         create several back-end storage solutions that serve the same
-        OpenStack Compute configuration and one <systemitem class="service">cinder-volume</systemitem>
-        is launched for each back-end storage or back-end storage pool.</para>
+        OpenStack Compute configuration and one <systemitem
+        class="service">cinder-volume</systemitem> is launched for each
+        back-end storage or back-end storage pool.</para>
     <para>In a multiple-storage back end configuration, each back end has a name
             (<literal>volume_backend_name</literal>). Several back
         ends can have the same name. In that case, the scheduler
@@ -32,6 +33,15 @@
         <note>
             <para>The configuration group name is not related to the
                     <literal>volume_backend_name</literal>.</para>
+        </note>
+        <note>
+            <para>After setting the <option>enabled_backends</option> flag
+            on an existing cinder service, and restarting the Block Storage
+            services, the original <literal>host</literal>
+            service is replaced with a new host service. The new service
+            appears with a name like <literal>host@backend</literal>. Use:
+           <screen><prompt>$</prompt> <userinput>cinder-manage volume host --currentname <replaceable>CURRENTNAME</replaceable> --newname <replaceable>CURRENTNAME</replaceable>@<replaceable>BACKEND</replaceable></userinput></screen>
+            to convert current block devices to the new hostname.</para>
         </note>
         <para>The options for a configuration group must be defined in
             the group (or default options are used). All the standard
