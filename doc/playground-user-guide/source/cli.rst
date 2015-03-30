@@ -26,6 +26,7 @@ OpenStack command-line clients
    common/cli_create_and_manage_networks.rst
    managing-openstack-object-storage-with-swift-cli.rst
    common/cli_manage_volumes.rst
+   cli_manage_flavors.rst
    trove-manage-db.rst
 
    manage_projects_users_and_roles.rst
