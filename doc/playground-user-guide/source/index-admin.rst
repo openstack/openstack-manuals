@@ -1,9 +1,7 @@
 :orphan:
 
-OpenStack End User Guide
-========================
-
-This is the OpenStack End User Guide.
+OpenStack Admin User Guide
+==========================
 
 Contents:
 
@@ -12,8 +10,6 @@ Contents:
 
    dashboard.rst
    cli.rst
-   sdk.rst
-   cli_cheat_sheet.rst
 
 Indices and tables
 ==================

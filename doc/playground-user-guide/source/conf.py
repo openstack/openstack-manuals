@@ -58,10 +58,18 @@ source_suffix = '.rst'
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+# The master toctree document.
+if tags.has('admin_only'):  # noqa
+    master_doc = 'index-admin'
+else:
+    master_doc = 'index'
 
 # General information about the project.
-project = u'User Guide'
+if tags.has('admin_only'):  # noqa
+    project = u'Admin User Guide'
+else:
+    project = u'End User Guide'
+
 copyright = u'2015, OpenStack contributors'
 
 # The version info for the project you're documenting, acts as replacement for
