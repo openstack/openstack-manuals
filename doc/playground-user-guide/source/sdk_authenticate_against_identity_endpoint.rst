@@ -34,9 +34,7 @@ accessing its ``auth_token`` attribute object:
    print keystone.auth_token
 
 If the OpenStack cloud is configured to use public-key infrastructure
-(PKI) tokens, the Python script output looks something like this:
-
-.. code::
+(PKI) tokens, the Python script output looks something like this::
 
    MIIQUQYJKoZIhvcNAQcCoIIQQjCCED4CAQExCTAHBgUrDgMCGjCCDqcGCSqGSIb3DQEHAaCCDpgE
    gg6UeyJhY2Nlc3MiOiB7InRva2VuIjogeyJpc3N1ZWRfYXQiOiAiMjAxMy0xMC0yMFQxNjo1NjoyNi

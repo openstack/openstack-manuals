@@ -15,9 +15,7 @@ By default, when you reboot an instance, it is a soft reboot.
 
   $ nova reboot SERVER
 
-To perform a hard reboot, pass the ``--hard`` parameter, as follows:
-
-.. code::
+To perform a hard reboot, pass the ``--hard`` parameter, as follows::
 
   $ nova reboot --hard SERVER
 
@@ -37,22 +35,16 @@ the instance inaccessible. By default, it starts an instance from the
 initial image attaching the current boot disk as a secondary one.
 
 To perform an instance reboot into rescue mode, run the following
-command:
-
-.. code::
+command::
 
   $ nova rescue SERVER
 
 To restart the instance from the normal boot disk, run the following
-command:
-
-.. code::
+command::
 
   $ nova unrescue SERVER
 
 If you want to rescue an instance with a specific image, rather than the
-default one, use the ``--rescue_image_ref`` parameter:
-
-.. code::
+default one, use the ``--rescue_image_ref`` parameter::
 
   $ nova rescue --rescue_image_ref IMAGE_ID SERVER

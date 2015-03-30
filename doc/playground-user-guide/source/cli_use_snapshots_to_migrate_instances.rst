@@ -42,7 +42,7 @@ Create a snapshot of the instance
 
     $ nova stop example
 
-#. Use the ``nova list`` command to confirm that the instance shows a
+#. Use the :command:`nova list` command to confirm that the instance shows a
    ``SHUTOFF`` status::
 
     $ nova list
@@ -52,12 +52,12 @@ Create a snapshot of the instance
     | c41f3074-c82a-4837-8673-fa7e9fea7e11 | myInstance | SHUTOFF | private=10.0.0.3 |
     +--------------------------------------+------------+---------+------------------+
 
-#. Use the ``nova image-create`` command to take a snapshot::
+#. Use the :command:`nova image-create` command to take a snapshot::
 
     $ nova image-create --poll myInstance myInstanceSnapshot
     Instance snapshotting... 50% complete
 
-#. Use the ``nova image-list`` command to check the status until the status is
+#. Use the :command:`nova image-list` command to check the status until the status is
    ``ACTIVE``::
 
     $ nova image-list
@@ -92,7 +92,7 @@ Download the snapshot as an image
 
    .. note::
 
-     The ``glance image-download`` command requires the image ID and
+     The :command:`glance image-download` command requires the image ID and
      cannot use the image name.
      Check there is sufficient space on the destination file system for
      the image file.
@@ -117,8 +117,6 @@ Boot a new instance from the snapshot
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the new project or cloud environment, use the snapshot to create the
-new instance:
-
-.. code::
+new instance::
 
   $ nova boot --flavor m1.tiny --image myInstanceSnapshot myNewInstance

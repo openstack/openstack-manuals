@@ -25,9 +25,7 @@ You can only assign these headers to objects. For more information, see
 `www.w3.org/TR/access-control/ <http://www.w3.org/TR/access-control/>`__.
 
 This example assigns the file origin to the ``Origin`` header, which
-ensures that the file originated from a reputable source:
-
-.. code::
+ensures that the file originated from a reputable source::
 
     $ curl -i -X POST -H "Origin: example.com" -H "X-Auth-Token:
     48e17715dfce47bb90dc2a336f63493a"

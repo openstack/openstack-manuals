@@ -1,3 +1,5 @@
+.. _volume:
+
 ==============
 Manage volumes
 ==============
@@ -23,7 +25,7 @@ Possible use cases for data migration include:
 
 -  Free up space in a thinly-provisioned back end.
 
-Migrate a volume with the ``cinder migrate`` command, as shown in the
+Migrate a volume with the :command:`cinder migrate` command, as shown in the
 following example::
 
   $ cinder migrate volumeID destinationHost --force-host-copy True|False
@@ -107,6 +109,8 @@ This example creates a my-new-volume volume based on an image.
 
    If your volume was created successfully, its status is ``available``. If
    its status is ``error``, you might have exceeded your quota.
+
+.. _Attach_a_volume_to_an_instance:
 
 Attach a volume to an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

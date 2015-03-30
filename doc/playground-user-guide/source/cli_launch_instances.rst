@@ -5,6 +5,11 @@
 Launch instances
 ================
 
+.. toctree::
+   :maxdepth: 2
+
+   common/cli_nova_launch_instance_from_volume.rst
+
 Instances are virtual machines that run inside the cloud.
 
 Before you can launch an instance, gather the following parameters:
@@ -57,14 +62,12 @@ Before you can launch an instance, gather the following parameters:
   the default security group.
 
   You can also assign a floating IP address to a running instance to
-  make it accessible from outside the cloud. See ?.
-
-.. TODO (DC) Add link to Manage IP Addresses when file is converted to RST.
+  make it accessible from outside the cloud. See
+  :doc:`cli_manage_ip_addresses`.
 
 After you gather the parameters that you need to launch an instance, you
-can launch it from an `image <#launch_from_image>`__ or a
-`volume <#boot_from_volume>`__. You can launch an instance directly from
-one of the available OpenStack images or from an image that you have
+can launch it from an image_ or a :ref:`volume`. You can launch an instance directly
+from one of the available OpenStack images or from an image that you have
 copied to a persistent volume. The OpenStack Image Service provides a
 pool of images that are accessible to members of different projects.
 
@@ -142,6 +145,8 @@ Before you begin, source the OpenStack RC file.
    SSH access::
 
     $ nova keypair-list
+
+.. _image:
 
 Launch an instance from an image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -254,7 +259,7 @@ Launch an instance from an image
 
    If the status for the instance is ACTIVE, the instance is online.
 
-#. To view the available options for the ``nova list`` command, run the
+#. To view the available options for the :command:`nova list` command, run the
    following command::
 
     $ nova help list

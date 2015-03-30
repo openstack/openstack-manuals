@@ -24,11 +24,9 @@ You should also be familiar with:
    sdk_install.rst
    sdk_authenticate.rst
    sdk_manage_images.rst
+   sdk_assign_cors_headers.rst
+   sdk_schedule_objects_for_deletion.rst
    sdk_configure_access_security_instances.rst
    sdk_authenticate_networking_endpoint.rst
    sdk_authenticate_compute_output.rst
-   sdk_assign_cors_headers.rst
-   sdk_schedule_objects_for_deletion.rst
-
-.. add sections when migrated TODO(DC)
 

@@ -6,7 +6,7 @@ Search for an instance using IP address
 =======================================
 
 You can search for an instance using the IP address parameter, ``--ip``,
-with the ``nova list`` command.
+with the :command:`nova list` command.
 
 .. code::
 

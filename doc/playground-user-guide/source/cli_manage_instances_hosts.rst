@@ -27,7 +27,3 @@ discusses node management tasks.
   cli_access_instance_through_a_console.rst
   cli_manage_bare_metal_nodes.rst
 
-..
-  TODO(DC)Add the following when converted:
-  /common/section_cli_nova_usage_statistics.xml
-
