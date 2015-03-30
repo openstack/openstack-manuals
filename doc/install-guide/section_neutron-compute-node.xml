@@ -49,7 +49,7 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
           >Identity service credentials</link>, <link
           linkend="debconf-api-endpoints">service endpoint
           registration</link>, and <link linkend="debconf-rabbitmq"
-          >message broker credentials</link>.</para>
+          >message queue credentials</link>.</para>
     </step>
     <step>
        <para>Select the ML2 plug-in:</para>
@@ -74,7 +74,14 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure the Networking common components</title>
     <para>The Networking common component configuration includes the
-      authentication mechanism, message broker, and plug-in.</para>
+      authentication mechanism, message queue, and plug-in.</para>
+    <note>
+       <para>Default configuration files vary by distribution. You might need
+         to add these sections and options rather than modifying existing
+         sections and options. Also, an ellipsis (...) in the configuration
+         snippets indicates potential default configuration options that you
+         should retain.</para>
+    </note>
     <step>
       <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file
         and complete the following actions:</para>
@@ -85,15 +92,20 @@ net.ipv4.conf.default.rp_filter=0</programlisting>
             do not directly access the database.</para>
         </step>
         <step>
-          <para>In the <literal>[DEFAULT]</literal> section, configure
-            <application>RabbitMQ</application> message broker access:</para>
+         <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[oslo_messaging_rabbit]</literal> sections, configure
+            <application>RabbitMQ</application> message queue access:</para>
           <programlisting language="ini">[DEFAULT]
 ...
 rpc_backend = rabbit
+
+[oslo_messaging_rabbit]
+...
 rabbit_host = <replaceable>controller</replaceable>
+rabbit_userid = openstack
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
           <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
-            password you chose for the <literal>guest</literal> account in
+            password you chose for the <literal>openstack</literal> account in
             <application>RabbitMQ</application>.</para>
         </step>
         <step>
@@ -106,19 +118,20 @@ auth_strategy = keystone
 
 [keystone_authtoken]
 ...
-auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
-identity_uri = http://<replaceable>controller</replaceable>:35357
-admin_tenant_name = service
-admin_user = neutron
-admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
+auth_uri = http://<replaceable>controller</replaceable>:5000
+auth_url = http://<replaceable>controller</replaceable>:35357
+auth_plugin = password
+project_domain_id = default
+user_domain_id = default
+project_name = service
+username = neutron
+password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
           <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
             password you chose or the <literal>neutron</literal> user in the
             Identity service.</para>
           <note>
-            <para>Comment out any <literal>auth_host</literal>,
-              <literal>auth_port</literal>, and
-              <literal>auth_protocol</literal> options because the
-              <literal>identity_uri</literal> option replaces them.</para>
+            <para>Comment out or remove any other options in the
+              <literal>[keystone_authtoken]</literal> section.</para>
           </note>
         </step>
         <step>
@@ -153,13 +166,15 @@ verbose = True</programlisting>
       <substeps>
         <step os="ubuntu;rhel;centos;fedora;sles;opensuse">
           <para>In the <literal>[ml2]</literal> section, enable the
-            <glossterm baseform="flat network">flat</glossterm> and
-            <glossterm>generic routing encapsulation (GRE)</glossterm>
+            <glossterm baseform="flat network">flat</glossterm>,
+            <glossterm baseform="VLAN network">VLAN</glossterm>,
+            <glossterm>generic routing encapsulation (GRE)</glossterm>, and
+            <glossterm>virtual extensible LAN (VXLAN)</glossterm>
             network type drivers, GRE tenant networks, and the OVS
             mechanism driver:</para>
           <programlisting language="ini">[ml2]
 ...
-type_drivers = flat,gre
+type_drivers = flat,vlan,gre,vxlan
 tenant_network_types = gre
 mechanism_drivers = openvswitch</programlisting>
         </step>
@@ -186,8 +201,7 @@ firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewal
             and configure the local tunnel endpoint:</para>
           <programlisting language="ini">[ovs]
 ...
-local_ip = <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
-enable_tunneling = True</programlisting>
+local_ip = <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable></programlisting>
           <para>Replace
             <replaceable>INSTANCE_TUNNELS_INTERFACE_IP_ADDRESS</replaceable>
             with the IP address of the instance tunnels network interface
@@ -341,9 +355,16 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
 <computeroutput>+--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
 | id                                   | agent_type         | host     | alive | admin_state_up | binary                    |
 +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
-...
+| 30275801-e17a-41e4-8f53-9db63544f689 | Metadata agent     | network  | :-)   | True           | neutron-metadata-agent    |
+| 4bd8c50e-7bad-4f3b-955d-67658a491a15 | Open vSwitch agent | network  | :-)   | True           | neutron-openvswitch-agent |
+| 756e5bba-b70f-4715-b80e-e37f59803d20 | L3 agent           | network  | :-)   | True           | neutron-l3-agent          |
+| 9c45473c-6d6d-4f94-8df1-ebd0b6838d5f | DHCP agent         | network  | :-)   | True           | neutron-dhcp-agent        |
 | a5a49051-05eb-4b4f-bfc7-d36235fe9131 | Open vSwitch agent | compute1 | :-)   | True           | neutron-openvswitch-agent |
 +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+</computeroutput></screen>
+      <note>
+        <para>This output should indicate four agents alive on the
+          network node and one agent alive on the compute node.</para>
+      </note>
     </step>
   </procedure>
 </section>
