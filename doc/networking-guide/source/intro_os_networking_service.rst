@@ -68,8 +68,14 @@ Routing services
 VPNaaS
 ------
 
+The Virtual Private Network as a Service (VPNaaS) is a Neutron extension that introduces the VPN feature set.
+
 LbaaS
 -----
 
+The Load-Balancer-as-a-Service (LBaaS) API provisions and configures load balancers. The Havana release offers a reference implementation that is based on the HAProxy software load balancer.
+
 FwaaS
 -----
+
+The Firewall-as-a-Service (FWaaS) API is an experimental API that enables early adopters and vendors to test their networking implementations.
