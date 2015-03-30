@@ -26,6 +26,7 @@ sizes of server instances.
    dashboard_create_networks.rst
    dashboard_manage_containers.rst
    dashboard_manage_volumes.rst
+   dashboard_stacks.rst
    dashboard_databases.rst
 
    dashboard_manage_roles.rst
