@@ -16,7 +16,7 @@ default, this security group denies all incoming traffic and allows only
 outgoing traffic to your instance.
 
 You can use the ``allow_same_net_traffic`` option in the
-``/etc/nova/nova.conf`` file to globally control whether the rules apply
+:file:`/etc/nova/nova.conf` file to globally control whether the rules apply
 to hosts which share a network.
 
 If set to:
@@ -33,10 +33,11 @@ If set to:
 Additionally, the number of maximum rules per security group is
 controlled by the ``security_group_rules`` and the number of allowed
 security groups per project is controlled by the ``security_groups``
-quota.
+quota (see the `Manage quotas <http://docs.openstack.org/user-guide-admin/content/cli_set_quotas.html>`_
+section).
 
-**Procedure: List and view current security groups**
-
+List and view current security groups
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 From the command line you can get a list of security groups for the
 project, using the nova command:
 
@@ -72,12 +73,12 @@ project, using the nova command:
 
        $ nova secgroup-list-rules open
        +-------------+-----------+---------+-----------+--------------+
-        | IP Protocol | From Port | To Port | IP Range  | Source Group |
-        +-------------+-----------+---------+-----------+--------------+
-        | icmp        | -1        | 255     | 0.0.0.0/0 |              |
-        | tcp         | 1         | 65535   | 0.0.0.0/0 |              |
-        | udp         | 1         | 65535   | 0.0.0.0/0 |              |
-        +-------------+-----------+---------+-----------+--------------+
+       | IP Protocol | From Port | To Port | IP Range  | Source Group |
+       +-------------+-----------+---------+-----------+--------------+
+       | icmp        | -1        | 255     | 0.0.0.0/0 |              |
+       | tcp         | 1         | 65535   | 0.0.0.0/0 |              |
+       | udp         | 1         | 65535   | 0.0.0.0/0 |              |
+       +-------------+-----------+---------+-----------+--------------+
 
    These rules are allow type rules as the default is deny. The first
    column is the IP protocol (one of icmp, tcp, or udp). The second and
@@ -85,8 +86,8 @@ project, using the nova command:
    specifies the IP range in CIDR format. This example shows the full
    port range for all protocols allowed from all IPs.
 
-**Procedure: Create a security group**
-
+Create a security group
+~~~~~~~~~~~~~~~~~~~~~~~
 When adding a new security group, you should pick a descriptive but
 brief name. This name shows up in brief descriptions of the instances
 that use it where the longer description field often does not. For
@@ -160,8 +161,8 @@ easier to understand than "bobs\_group" or "secgrp1".
        | tcp         | 443       | 443     | 0.0.0.0/0 |              |
        +-------------+-----------+---------+-----------+--------------+
 
-**Procedure 3. Delete a security group**
-
+Delete a security group
+~~~~~~~~~~~~~~~~~~~~~~~
 #. Ensure your system variables are set for the user and tenant for
    which you are deleting a security group for.
 
@@ -177,8 +178,8 @@ easier to understand than "bobs\_group" or "secgrp1".
 
        $ nova secgroup-delete global_http
 
-**Procedure 4. Create security group rules for a cluster of instances**
-
+Create security group rules for a cluster of instances
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Source Groups are a special, dynamic way of defining the CIDR of allowed
 sources. The user specifies a Source Group (Security Group name), and
 all the users' other Instances using the specified Source Group are
