@@ -1,3 +1,5 @@
+:orphan:
+
 Installing OpenStack SDK
 -------------------------
 
