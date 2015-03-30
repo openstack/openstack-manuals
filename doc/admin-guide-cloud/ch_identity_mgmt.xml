@@ -104,34 +104,6 @@ admin_tenant_name = service</programlisting>
         <literal>identity_uri</literal> option replaces them.</para>
     </note>
   </section>
-  <section xml:id="monitoring">
-    <title>Monitoring</title>
-    <para>Identity provides some basic request and response
-      monitoring statistics out of the box.</para>
-    <para>Enable data collection by defining a
-        <literal>stats_monitoring</literal> filter and including it at
-      the beginning of any desired WSGI pipelines:</para>
-    <programlisting language="ini"><?db-font-size 75%?>[filter:stats_monitoring]
-paste.filter_factory = keystone.contrib.stats:StatsMiddleware.factory
-
-[pipeline:public_api]
-pipeline = stats_monitoring [...] public_service</programlisting>
-    <para>Enable the reporting of collected data by defining a
-        <literal>stats_reporting</literal> filter and including it
-      near the end of your <literal>admin_api</literal> WSGI pipeline
-      (After <literal>*_body</literal> middleware and before
-        <literal>*_extension</literal> filters is recommended):</para>
-    <programlisting language="ini"><?db-font-size 75%?>[filter:stats_reporting]
-paste.filter_factory = keystone.contrib.stats:StatsExtension.factory
-
-[pipeline:admin_api]
-pipeline = [...] json_body stats_reporting ec2_extension [...] admin_service</programlisting>
-    <para>Query the admin API for statistics using:</para>
-    <screen><prompt>$</prompt> <userinput>curl -H 'X-Auth-Token: ADMIN' http://localhost:35357/v2.0/OS-STATS/stats</userinput></screen>
-    <para>Reset collected data using:</para>
-    <screen><prompt>$</prompt> <userinput>curl -H 'X-Auth-Token: ADMIN' -X DELETE \
-           http://localhost:35357/v2.0/OS-STATS/stats</userinput></screen>
-  </section>
   <section xml:id="running-keystone">
     <title>Start the Identity services</title>
     <para>To start the services for Identity, run the
