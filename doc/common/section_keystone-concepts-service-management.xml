@@ -10,16 +10,25 @@
          It consists of:</para>
       <itemizedlist>
         <listitem>
-          <para><systemitem class="service">keystone-all</systemitem>.
-            Starts both the service and administrative APIs in a
-            single process to provide Catalog, Authorization, and
-            Authentication services for OpenStack.</para>
+          <para><systemitem class="service">keystone Web Server Gateway
+            Interface (WSGI) service</systemitem>. Can be run in a
+            WSGI-capable web server such as Apache httpd to provide the
+            Identity Service. The service and administrative APIs are run as
+            separate instances of the WSGI service.
+            </para>
         </listitem>
         <listitem>
           <para>Identity Service functions. Each has a pluggable back
             end that allows different ways to use the particular
             service. Most support standard back ends like LDAP or
             SQL.</para>
+        </listitem>
+        <listitem>
+          <para><systemitem class="service">keystone-all</systemitem>.
+            Starts both the service and administrative APIs in a
+            single process. Using federation with keystone-all is not
+            supported. keystone-all is deprecated in favor of the WSGI
+            service.</para>
         </listitem>
       </itemizedlist>
         <para>The Identity Service also maintains a user that
