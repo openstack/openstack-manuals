@@ -25,7 +25,7 @@ tenant can create.
 The quota value is defined in the OpenStack Networking
 :file:`neutron.conf` configuration file. To disable quotas for
 a specific resource, such as network, subnet,
-or port, remove a corresponding item from :option:`quota_items`.
+or port, remove a corresponding item from :code:`quota_items`.
 This example shows the default quota values:
 
 .. code:: ini
@@ -60,7 +60,7 @@ router and floating IP. Add these lines to the
   quota_floatingip = 50
 
 .. note::
-   The :option:`quota_items` option does not affect these quotas.
+   The :code:`quota_items` option does not affect these quotas.
 
 OpenStack Networking also supports quotas for security group
 resources: number of security groups and the number of rules for
@@ -77,7 +77,7 @@ each security group. Add these lines to the
   quota_security_group_rule = 100
 
 .. note::
-   The :option:`quota_items` option does not affect these quotas.
+   The :code:`quota_items` option does not affect these quotas.
 
 .. _cfg_quotas_per_tenant:
 
@@ -106,7 +106,7 @@ the default set of quotas are enforced for all tenants, so no
 
 #. Configure Networking to show per-tenant quotas
 
-   Set the :option:`quota_driver` option in the :file:`neutron.conf` file::
+   Set the :code:`quota_driver` option in the :file:`neutron.conf` file::
 
     quota_driver = neutron.db.quota_db.DbQuotaDriver
 
