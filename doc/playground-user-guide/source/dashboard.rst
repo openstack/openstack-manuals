@@ -29,7 +29,7 @@ sizes of server instances.
    dashboard_stacks.rst
    dashboard_databases.rst
 
-   dashboard_manage_roles.rst
+   dashboard_admin_manage_roles.rst
    dashboard_manage_instances.rst
    dashboard_manage_flavors.rst
    dashboard_set_quotas
