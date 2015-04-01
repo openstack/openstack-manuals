@@ -1,3 +1,6 @@
+.. meta::
+    :scope: user_only
+
 ==============================
 Provide user data to instances
 ==============================

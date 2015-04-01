@@ -1,3 +1,6 @@
+.. meta::
+    :scope: user_only
+
 :orphan:
 
 .. _sdk_authenticate:

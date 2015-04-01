@@ -1,3 +1,6 @@
+.. meta::
+    :scope: user_only
+
 =================================================
 Page through large lists of containers or objects
 =================================================

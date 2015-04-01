@@ -1,3 +1,6 @@
+.. meta::
+    :scope: user_only
+
 ===========================================
 Pseudo-hierarchical folders and directories
 ===========================================

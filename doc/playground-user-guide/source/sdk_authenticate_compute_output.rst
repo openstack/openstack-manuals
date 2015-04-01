@@ -1,3 +1,6 @@
+.. meta::
+    :scope: user_only
+
 :orphan:
 
 .. highlight: python
@@ -14,7 +17,7 @@ Set environment variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To set up environmental variables and authenticate against Compute API
-endpoints, see :ref:`Authenticate <sdk_authenticate>`.
+endpoints, see :ref:`sdk_authenticate`.
 
 .. _get-openstack-credentials:
 

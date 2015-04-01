@@ -1,3 +1,6 @@
+.. meta::
+    :scope: user_only
+
 =======================================
 Search for an instance using IP address
 =======================================

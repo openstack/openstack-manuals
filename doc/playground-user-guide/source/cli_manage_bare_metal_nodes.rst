@@ -1,3 +1,6 @@
+.. meta::
+    :scope: user_only
+
 =======================
 Manage bare-metal nodes
 =======================
