@@ -13,16 +13,40 @@
       </tr>
     </thead>
     <tr>
+      <td>[DEFAULT] advertise_mtu = False</td>
+      <td>(BoolOpt) If True, effort is made to advertise MTU settings to VMs via network methods (DHCP and RA MTU options) when the network's preferred MTU is known.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] allow_automatic_dhcp_failover = True</td>
       <td>(BoolOpt) Automatically remove networks from offline DHCP agents.</td>
     </tr>
     <tr>
-      <td>[DEFAULT] conn_idle_timeout = 900</td>
-      <td>(IntOpt) Reconnect connection to nsx if not used within this amount of time.</td>
+      <td>[DEFAULT] default_ipv4_subnet_pool = None</td>
+      <td>(StrOpt) Default IPv4 subnet-pool to be used for automatic subnet CIDR allocation</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] default_ipv6_subnet_pool = None</td>
+      <td>(StrOpt) Default IPv6 subnet-pool to be used for automatic subnet CIDR allocation</td>
     </tr>
     <tr>
       <td>[DEFAULT] dhcp_broadcast_reply = False</td>
       <td>(BoolOpt) Use broadcast in DHCP replies</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] dhcp_load_type = networks</td>
+      <td>(StrOpt) Representing the resource type whose load is being reported by the agent. This can be "networks", "subnets" or "ports". When specified (Default is networks), the server will extract particular load sent as part of its agent configuration object from the agent report state, which is the number of resources being consumed, at every report_interval.dhcp_load_type can be used in combination with network_scheduler_driver = neutron.scheduler.dhcp_agent_scheduler.WeightScheduler When the network_scheduler_driver is WeightScheduler, dhcp_load_type can be configured to represent the choice for the resource being balanced. Example: dhcp_load_type=networks</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] enable_services_on_agents_with_admin_state_down = False</td>
+      <td>(BoolOpt) Enable services on an agent with admin_state_up False. If this option is False, when admin_state_up of an agent is turned False, services on it will be disabled. Agents with admin_state_up False are not selected for automatic scheduling regardless of this option. But manual scheduling to such agents is available if this option is True.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] external_ingress_mark = 0x2</td>
+      <td>(StrOpt) Iptables mangle mark used to mark ingress from external network</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] ipv6_gateway = </td>
+      <td>(StrOpt) With IPv6, the network used for the external gateway does not need to have an associated subnet, since the automatically assigned link-local address (LLA) can be used. However, an IPv6 gateway address is needed for use as the next-hop for the default route. If no IPv6 gateway address is configured here, (and only then) the neutron router will be configured to get its default route from router advertisements (RAs) from the upstream router; in which case the upstream router must also be configured to send these RAs. The ipv6_gateway, when configured, should be the LLA of the interface on the upstream router. If a next-hop using a global unique address (GUA) is desired, it needs to be done via a subnet allocated to the network and not through this parameter.</td>
     </tr>
     <tr>
       <td>[DEFAULT] metadata_access_mark = 0x1</td>
@@ -30,11 +54,15 @@
     </tr>
     <tr>
       <td>[DEFAULT] metadata_proxy_group = </td>
-      <td>(StrOpt) Group (gid or name) running metadata proxy after its initialization (if empty: L3 agent effective group)</td>
+      <td>(StrOpt) Group (gid or name) running metadata proxy after its initialization (if empty: agent effective group)</td>
     </tr>
     <tr>
       <td>[DEFAULT] metadata_proxy_user = </td>
-      <td>(StrOpt) User (uid or name) running metadata proxy after its initialization (if empty: L3 agent effective user)</td>
+      <td>(StrOpt) User (uid or name) running metadata proxy after its initialization (if empty: agent effective user)</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] metadata_proxy_watch_log = None</td>
+      <td>(BoolOpt) Enable/Disable log watch by metadata proxy. It should be disabled when metadata_proxy_user/group is not allowed to read/write its log file and copytruncate logrotate option must be used if logrotate is enabled on metadata proxy log files. Option default value is deduced from metadata_proxy_user: watch log is enabled if metadata_proxy_user is agent effective user id/name.</td>
     </tr>
     <tr>
       <td>[DEFAULT] nova_admin_tenant_name = None</td>
@@ -46,14 +74,18 @@
     </tr>
     <tr>
       <td>[DEFAULT] policy_dirs = ['policy.d']</td>
-      <td>(MultiStrOpt) Directories where policy configuration files are stored.</td>
+      <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.  Missing or empty directories are ignored.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] vlan_transparent = False</td>
+      <td>(BoolOpt) If True, then allow plugins that support it to create VLAN transparent networks.</td>
     </tr>
     <tr>
       <td>[AGENT] check_child_processes_action = respawn</td>
       <td>(StrOpt) Action to be executed when a child process dies</td>
     </tr>
     <tr>
-      <td>[AGENT] check_child_processes_interval = 0</td>
+      <td>[AGENT] check_child_processes_interval = 60</td>
       <td>(IntOpt) Interval between checks of child process liveness (seconds), use 0 to disable</td>
     </tr>
     <tr>
@@ -61,16 +93,28 @@
       <td>(BoolOpt) Add comments to iptables rules.</td>
     </tr>
     <tr>
+      <td>[AGENT] root_helper_daemon = None</td>
+      <td>(StrOpt) Root helper daemon application to use when possible.</td>
+    </tr>
+    <tr>
       <td>[AGENT] use_helper_for_ns_read = True</td>
       <td>(BoolOpt) Use the root helper to read the namespaces from the operating system.</td>
     </tr>
     <tr>
-      <td>[CISCO_N1K] restrict_network_profiles = True</td>
-      <td>(BoolOpt) Restrict tenants from accessing network profiles belonging to some other tenant</td>
-    </tr>
-    <tr>
       <td>[OFC] support_packet_filter_on_ofc_router = True</td>
       <td>(BoolOpt) Support packet filter on OFC router interface.</td>
+    </tr>
+    <tr>
+      <td>[ml2] path_mtu = 0</td>
+      <td>(IntOpt) The maximum permissible size of an unfragmented packet travelling from and to addresses where encapsulated Neutron traffic is sent.  If &lt;= 0, the path MTU is indeterminate.</td>
+    </tr>
+    <tr>
+      <td>[ml2] physical_network_mtus = </td>
+      <td>(ListOpt) A list of mappings of physical networks to MTU values. The format of the mapping is &lt;physnet&gt;:&lt;mtu val&gt;. This mapping allows specifying a physical network MTU value that differs from the default segment_mtu value.</td>
+    </tr>
+    <tr>
+      <td>[ml2] segment_mtu = 0</td>
+      <td>(IntOpt) The maximum permissible size of an unfragmented packet travelling a L2 network segment.  If &lt;= 0, the segment MTU is indeterminate.</td>
     </tr>
     <tr>
       <td>[nova] auth_plugin = None</td>
@@ -225,6 +269,14 @@
       <td>(BoolOpt) Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake</td>
     </tr>
     <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_rate = 2</td>
+      <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 60</td>
+      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat).</td>
+    </tr>
+    <tr>
       <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
       <td>(FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.</td>
     </tr>
@@ -312,12 +364,17 @@
     <tr>
       <td>[DEFAULT] default_log_levels</td>
       <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN</td>
-      <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN</td>
+      <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, requests.packages.urllib3.util.retry=WARN, urllib3.util.retry=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN</td>
     </tr>
     <tr>
       <td>[DEFAULT] rpc_zmq_matchmaker</td>
       <td>oslo.messaging._drivers.matchmaker.MatchMakerLocalhost</td>
       <td>oslo_messaging._drivers.matchmaker.MatchMakerLocalhost</td>
+    </tr>
+    <tr>
+      <td>[CISCO_N1K] restrict_network_profiles</td>
+      <td>False</td>
+      <td>True</td>
     </tr>
     <tr>
       <td>[OVS] local_ip</td>
@@ -328,6 +385,11 @@
       <td>[OVS] ovsdb_interface</td>
       <td>None</td>
       <td>vsctl</td>
+    </tr>
+    <tr>
+      <td>[VXLAN] enable_vxlan</td>
+      <td>False</td>
+      <td>True</td>
     </tr>
     <tr>
       <td>[VXLAN] local_ip</td>
@@ -351,16 +413,16 @@
       </tr>
     </thead>
     <tr>
-      <td>[DEFAULT] nova_region_name</td>
-      <td>[nova] region_name</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] nova_ca_certificates_file</td>
       <td>[nova] cafile</td>
     </tr>
     <tr>
       <td>[DEFAULT] nova_api_insecure</td>
       <td>[nova] insecure</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] nova_region_name</td>
+      <td>[nova] region_name</td>
     </tr>
   </table>
 </section>

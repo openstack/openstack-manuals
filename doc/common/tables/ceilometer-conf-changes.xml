@@ -25,10 +25,6 @@
       <td>(StrOpt) Exchange name for Magnetodb notifications.</td>
     </tr>
     <tr>
-      <td>[DEFAULT] policy_dirs = ['policy.d']</td>
-      <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] polling_namespaces = ['compute', 'central']</td>
       <td>(MultiChoicesOpt) Polling namespace(s) to be used while resource polling</td>
     </tr>
@@ -45,12 +41,20 @@
       <td>(IntOpt) To reduce large requests at same time to Nova or other components from different compute agents, shuffle start time of polling task.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] sql_expire_samples_only = False</td>
+      <td>(BoolOpt) Indicates if expirer expires only samples. If set true, expired samples will be deleted, but residual resource and meter definition data will remain.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] swift_control_exchange = swift</td>
       <td>(StrOpt) Exchange name for Swift notifications.</td>
     </tr>
     <tr>
       <td>[DEFAULT] zaqar_control_exchange = zaqar</td>
       <td>(StrOpt) Exchange name for Messaging service notifications.</td>
+    </tr>
+    <tr>
+      <td>[alarms] gnocchi_url = http://localhost:8041</td>
+      <td>(StrOpt) URL to Gnocchi.</td>
     </tr>
     <tr>
       <td>[collector] requeue_event_on_dispatcher_error = False</td>
@@ -82,15 +86,23 @@
     </tr>
     <tr>
       <td>[dispatcher_http] cadf_only = False</td>
-      <td>(BoolOpt) The flag which indicates if only cadf message should be posted. If false, all meters will be posted.</td>
+      <td>(BoolOpt) The flag that indicates if only cadf message should be posted. If false, all meters will be posted.</td>
+    </tr>
+    <tr>
+      <td>[dispatcher_http] event_target = None</td>
+      <td>(StrOpt) The target for event data where the http request will be sent to. If this is not set, it will default to same as Sample target.</td>
     </tr>
     <tr>
       <td>[dispatcher_http] target = </td>
-      <td>(StrOpt) The target where the http request will be sent to. If this is not set, no data will be posted. For example: target = http://hostname:1234/path</td>
+      <td>(StrOpt) The target where the http request will be sent. If this is not set, no data will be posted. For example: target = http://hostname:1234/path</td>
     </tr>
     <tr>
       <td>[dispatcher_http] timeout = 5</td>
-      <td>(IntOpt) The max time in second to wait for a request to timeout.</td>
+      <td>(IntOpt) The max time in seconds to wait for a request to timeout.</td>
+    </tr>
+    <tr>
+      <td>[event] store_raw = []</td>
+      <td>(MultiStrOpt) Store the raw notification for select priority levels (info and/or error). By default, raw details are not captured.</td>
     </tr>
     <tr>
       <td>[ipmi] polling_retry = 3</td>
@@ -225,6 +237,14 @@
       <td>(BoolOpt) Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake</td>
     </tr>
     <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_rate = 2</td>
+      <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 60</td>
+      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat).</td>
+    </tr>
+    <tr>
       <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
       <td>(FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.</td>
     </tr>
@@ -301,8 +321,8 @@
       <td>(StrOpt) Work-load partitioning group prefix. Use only if you want to run multiple polling agents with different config files. For each sub-group of the agent pool with the same partitioning_group_prefix a disjoint subset of pollsters should be loaded.</td>
     </tr>
     <tr>
-      <td>[publisher] telemetry_secret = change this or be hacked</td>
-      <td>(StrOpt) Secret value for signing metering messages.</td>
+      <td>[publisher] telemetry_secret = change this for valid signing</td>
+      <td>(StrOpt) Secret value for signing messages. Set value empty if signing is not required to avoid computational overhead.</td>
     </tr>
     <tr>
       <td>[publisher_notifier] event_topic = event</td>

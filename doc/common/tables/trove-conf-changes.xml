@@ -13,12 +13,24 @@
       </tr>
     </thead>
     <tr>
+      <td>[DEFAULT] agent_heartbeat_expiry = 60</td>
+      <td>(IntOpt) Time (in seconds) after which a guest is considered unreachable</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] cinder_endpoint_type = publicURL</td>
       <td>(StrOpt) Service endpoint type to use when searching catalog.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] guest_info = guest_info.conf</td>
+      <td>(StrOpt) The guest info filename found in the injected config location.  If a full path is specified then it will be used as the path to the guest info file</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] heat_endpoint_type = publicURL</td>
       <td>(StrOpt) Service endpoint type to use when searching catalog.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] injected_config_location = /etc/trove/conf.d</td>
+      <td>(StrOpt) Path to folder on the Guest where config files will be injected during instance creation.</td>
     </tr>
     <tr>
       <td>[DEFAULT] neutron_endpoint_type = publicURL</td>
@@ -35,6 +47,110 @@
     <tr>
       <td>[DEFAULT] transport_url = None</td>
       <td>(StrOpt) A URL representing the messaging driver to use and its full configuration. If not set, we fall back to the rpc_backend option and driver specific configuration.</td>
+    </tr>
+    <tr>
+      <td>[couchdb] backup_incremental_strategy = {}</td>
+      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.</td>
+    </tr>
+    <tr>
+      <td>[couchdb] backup_namespace = None</td>
+      <td>(StrOpt) Namespace to load backup strategies from.</td>
+    </tr>
+    <tr>
+      <td>[couchdb] backup_strategy = None</td>
+      <td>(StrOpt) Default strategy to perform backups.</td>
+    </tr>
+    <tr>
+      <td>[couchdb] device_path = /dev/vdb</td>
+      <td>(StrOpt) Device path for volume if volume support is enabled.</td>
+    </tr>
+    <tr>
+      <td>[couchdb] mount_point = /var/lib/couchdb</td>
+      <td>(StrOpt) Filesystem path for mounting volumes if volume support is enabled.</td>
+    </tr>
+    <tr>
+      <td>[couchdb] replication_strategy = None</td>
+      <td>(StrOpt) Default strategy for replication.</td>
+    </tr>
+    <tr>
+      <td>[couchdb] restore_namespace = None</td>
+      <td>(StrOpt) Namespace to load restore strategies from.</td>
+    </tr>
+    <tr>
+      <td>[couchdb] root_on_create = False</td>
+      <td>(BoolOpt) Enable the automatic creation of the root user for the service during instance-create. The generated password for the root user is immediately returned in the response of instance-create as the "password" field.</td>
+    </tr>
+    <tr>
+      <td>[couchdb] tcp_ports = 5984</td>
+      <td>(ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).</td>
+    </tr>
+    <tr>
+      <td>[couchdb] udp_ports = </td>
+      <td>(ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).</td>
+    </tr>
+    <tr>
+      <td>[couchdb] volume_support = True</td>
+      <td>(BoolOpt) Whether to provision a Cinder volume for datadir.</td>
+    </tr>
+    <tr>
+      <td>[database] connection = sqlite:///trove_test.sqlite</td>
+      <td>(StrOpt) SQL Connection.</td>
+    </tr>
+    <tr>
+      <td>[database] idle_timeout = 3600</td>
+      <td>(IntOpt) None</td>
+    </tr>
+    <tr>
+      <td>[database] query_log = False</td>
+      <td>(BoolOpt) None</td>
+    </tr>
+    <tr>
+      <td>[db2] backup_incremental_strategy = {}</td>
+      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.</td>
+    </tr>
+    <tr>
+      <td>[db2] backup_namespace = None</td>
+      <td>(StrOpt) Namespace to load backup strategies from.</td>
+    </tr>
+    <tr>
+      <td>[db2] backup_strategy = None</td>
+      <td>(StrOpt) Default strategy to perform backups.</td>
+    </tr>
+    <tr>
+      <td>[db2] device_path = /dev/vdb</td>
+      <td>(StrOpt) Device path for volume if volume support is enabled.</td>
+    </tr>
+    <tr>
+      <td>[db2] ignore_users = PUBLIC, DB2INST1</td>
+      <td>(ListOpt) None</td>
+    </tr>
+    <tr>
+      <td>[db2] mount_point = /home/db2inst1/db2inst1</td>
+      <td>(StrOpt) Filesystem path for mounting volumes if volume support is enabled.</td>
+    </tr>
+    <tr>
+      <td>[db2] replication_strategy = None</td>
+      <td>(StrOpt) Default strategy for replication.</td>
+    </tr>
+    <tr>
+      <td>[db2] restore_namespace = None</td>
+      <td>(StrOpt) Namespace to load restore strategies from.</td>
+    </tr>
+    <tr>
+      <td>[db2] root_on_create = False</td>
+      <td>(BoolOpt) Enable the automatic creation of the root user for the service during instance-create. The generated password for the root user is immediately returned in the response of instance-create as the 'password' field.</td>
+    </tr>
+    <tr>
+      <td>[db2] tcp_ports = 50000</td>
+      <td>(ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).</td>
+    </tr>
+    <tr>
+      <td>[db2] udp_ports = </td>
+      <td>(ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).</td>
+    </tr>
+    <tr>
+      <td>[db2] volume_support = True</td>
+      <td>(BoolOpt) Whether to provision a Cinder volume for datadir.</td>
     </tr>
     <tr>
       <td>[oslo_messaging_amqp] allow_insecure_clients = False</td>
@@ -149,6 +265,14 @@
       <td>(BoolOpt) Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake</td>
     </tr>
     <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_rate = 2</td>
+      <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 60</td>
+      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat).</td>
+    </tr>
+    <tr>
       <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
       <td>(FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.</td>
     </tr>
@@ -221,6 +345,14 @@
       <td>(IntOpt) Size of RPC connection pool.</td>
     </tr>
     <tr>
+      <td>[profiler] enabled = False</td>
+      <td>(BoolOpt) If False fully disable profiling feature.</td>
+    </tr>
+    <tr>
+      <td>[profiler] trace_sqlalchemy = True</td>
+      <td>(BoolOpt) If False doesn't trace SQL requests.</td>
+    </tr>
+    <tr>
       <td>[upgrade_levels] conductor = icehouse</td>
       <td>(StrOpt) Set a version cap for messages sent to conductor services</td>
     </tr>
@@ -231,6 +363,70 @@
     <tr>
       <td>[upgrade_levels] taskmanager = icehouse</td>
       <td>(StrOpt) Set a version cap for messages sent to taskmanager services</td>
+    </tr>
+    <tr>
+      <td>[vertica] api_strategy = trove.common.strategies.cluster.experimental.vertica.api.VerticaAPIStrategy</td>
+      <td>(StrOpt) Class that implements datastore-specific API logic.</td>
+    </tr>
+    <tr>
+      <td>[vertica] backup_incremental_strategy = {}</td>
+      <td>(DictOpt) Incremental Backup Runner based on the default strategy. For strategies that do not implement an incremental, the runner will use the default full backup.</td>
+    </tr>
+    <tr>
+      <td>[vertica] backup_namespace = None</td>
+      <td>(StrOpt) Namespace to load backup strategies from.</td>
+    </tr>
+    <tr>
+      <td>[vertica] backup_strategy = None</td>
+      <td>(StrOpt) Default strategy to perform backups.</td>
+    </tr>
+    <tr>
+      <td>[vertica] cluster_member_count = 3</td>
+      <td>(IntOpt) Number of members in Vertica cluster.</td>
+    </tr>
+    <tr>
+      <td>[vertica] cluster_support = True</td>
+      <td>(BoolOpt) Enable clusters to be created and managed.</td>
+    </tr>
+    <tr>
+      <td>[vertica] device_path = /dev/vdb</td>
+      <td>(StrOpt) Device path for volume if volume support is enabled.</td>
+    </tr>
+    <tr>
+      <td>[vertica] guestagent_strategy = trove.common.strategies.cluster.experimental.vertica.guestagent.VerticaGuestAgentStrategy</td>
+      <td>(StrOpt) Class that implements datastore-specific Guest Agent API logic.</td>
+    </tr>
+    <tr>
+      <td>[vertica] mount_point = /var/lib/vertica</td>
+      <td>(StrOpt) Filesystem path for mounting volumes if volume support is enabled.</td>
+    </tr>
+    <tr>
+      <td>[vertica] readahead_size = 2048</td>
+      <td>(IntOpt) Size(MB) to be set as readahead_size for data volume</td>
+    </tr>
+    <tr>
+      <td>[vertica] replication_strategy = None</td>
+      <td>(StrOpt) Default strategy for replication.</td>
+    </tr>
+    <tr>
+      <td>[vertica] restore_namespace = None</td>
+      <td>(StrOpt) Namespace to load restore strategies from.</td>
+    </tr>
+    <tr>
+      <td>[vertica] taskmanager_strategy = trove.common.strategies.cluster.experimental.vertica.taskmanager.VerticaTaskManagerStrategy</td>
+      <td>(StrOpt) Class that implements datastore-specific task manager logic.</td>
+    </tr>
+    <tr>
+      <td>[vertica] tcp_ports = 5433, 5434, 22, 5444, 5450, 4803</td>
+      <td>(ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).</td>
+    </tr>
+    <tr>
+      <td>[vertica] udp_ports = 5433, 4803, 4804, 6453</td>
+      <td>(ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).</td>
+    </tr>
+    <tr>
+      <td>[vertica] volume_support = True</td>
+      <td>(BoolOpt) Whether to provision a Cinder volume for datadir.</td>
     </tr>
   </table>
   <table>
@@ -251,6 +447,16 @@
       <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN</td>
     </tr>
     <tr>
+      <td>[DEFAULT] guest_config</td>
+      <td>$pybasedir/etc/trove/trove-guestagent.conf.sample</td>
+      <td>/etc/trove/trove-guestagent.conf</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] notification_service_id</td>
+      <td>{'postgresql': 'ac277e0d-4f21-40aa-b347-1ea31e571720', 'couchbase': 'fa62fe68-74d9-4779-a24e-36f19602c415', 'mongodb': 'c8c907af-7375-456f-b929-b637ff9209ee', 'redis': 'b216ffc5-1947-456c-a4cf-70f94c05f7d0', 'mysql': '2f3ff068-2bfb-4f70-9a9d-a6bb65bc084b', 'cassandra': '459a230d-4e97-4344-9067-2a54a310b0ed'}</td>
+      <td>{'vertica': 'a8d805ae-a3b2-c4fd-gb23-b62cee5201ae', 'db2': 'e040cd37-263d-4869-aaa6-c62aa97523b5', 'postgresql': 'ac277e0d-4f21-40aa-b347-1ea31e571720', 'mysql': '2f3ff068-2bfb-4f70-9a9d-a6bb65bc084b', 'couchbase': 'fa62fe68-74d9-4779-a24e-36f19602c415', 'mongodb': 'c8c907af-7375-456f-b929-b637ff9209ee', 'couchdb': 'f0a9ab7b-66f7-4352-93d7-071521d44c7c', 'redis': 'b216ffc5-1947-456c-a4cf-70f94c05f7d0', 'cassandra': '459a230d-4e97-4344-9067-2a54a310b0ed'}</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] os_region_name</td>
       <td>None</td>
       <td>RegionOne</td>
@@ -266,19 +472,59 @@
       <td>oslo_messaging._drivers.matchmaker.MatchMakerLocalhost</td>
     </tr>
     <tr>
+      <td>[couchbase] backup_namespace</td>
+      <td>trove.guestagent.strategies.backup.couchbase_impl</td>
+      <td>trove.guestagent.strategies.backup.experimental.couchbase_impl</td>
+    </tr>
+    <tr>
+      <td>[couchbase] restore_namespace</td>
+      <td>trove.guestagent.strategies.restore.couchbase_impl</td>
+      <td>trove.guestagent.strategies.restore.experimental.couchbase_impl</td>
+    </tr>
+    <tr>
       <td>[mongodb] api_strategy</td>
       <td>trove.common.strategies.mongodb.api.MongoDbAPIStrategy</td>
-      <td>trove.common.strategies.cluster.mongodb.api.MongoDbAPIStrategy</td>
+      <td>trove.common.strategies.cluster.experimental.mongodb.api.MongoDbAPIStrategy</td>
     </tr>
     <tr>
       <td>[mongodb] guestagent_strategy</td>
       <td>trove.common.strategies.mongodb.guestagent.MongoDbGuestAgentStrategy</td>
-      <td>trove.common.strategies.cluster.mongodb.guestagent.MongoDbGuestAgentStrategy</td>
+      <td>trove.common.strategies.cluster.experimental.mongodb.guestagent.MongoDbGuestAgentStrategy</td>
     </tr>
     <tr>
       <td>[mongodb] taskmanager_strategy</td>
       <td>trove.common.strategies.mongodb.taskmanager.MongoDbTaskManagerStrategy</td>
-      <td>trove.common.strategies.cluster.mongodb.taskmanager.MongoDbTaskManagerStrategy</td>
+      <td>trove.common.strategies.cluster.experimental.mongodb.taskmanager.MongoDbTaskManagerStrategy</td>
+    </tr>
+    <tr>
+      <td>[mysql] replication_namespace</td>
+      <td>trove.guestagent.strategies.replication.mysql_binlog</td>
+      <td>trove.guestagent.strategies.replication.mysql_gtid</td>
+    </tr>
+    <tr>
+      <td>[mysql] replication_strategy</td>
+      <td>MysqlBinlogReplication</td>
+      <td>MysqlGTIDReplication</td>
+    </tr>
+    <tr>
+      <td>[percona] replication_namespace</td>
+      <td>trove.guestagent.strategies.replication.mysql_binlog</td>
+      <td>trove.guestagent.strategies.replication.mysql_gtid</td>
+    </tr>
+    <tr>
+      <td>[percona] replication_strategy</td>
+      <td>MysqlBinlogReplication</td>
+      <td>MysqlGTIDReplication</td>
+    </tr>
+    <tr>
+      <td>[postgresql] backup_namespace</td>
+      <td>trove.guestagent.strategies.backup.postgresql_impl</td>
+      <td>trove.guestagent.strategies.backup.experimental.postgresql_impl</td>
+    </tr>
+    <tr>
+      <td>[postgresql] restore_namespace</td>
+      <td>trove.guestagent.strategies.restore.postgresql_impl</td>
+      <td>trove.guestagent.strategies.restore.experimental.postgresql_impl</td>
     </tr>
   </table>
   <table>
@@ -294,6 +540,18 @@
     <tr>
       <td>[rpc_notifier2] topics</td>
       <td>[DEFAULT] notification_topics</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] sql_query_log</td>
+      <td>[database] query_log</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] sql_connection</td>
+      <td>[database] connection</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] sql_idle_timeout</td>
+      <td>[database] idle_timeout</td>
     </tr>
   </table>
 </section>

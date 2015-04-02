@@ -13,6 +13,10 @@
       </tr>
     </thead>
     <tr>
+      <td>[DEFAULT] available_plugins = </td>
+      <td>(ListOpt) A list of artifacts that are allowed in the format name or name-version. Empty list means that any artifact can be loaded.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] backdoor_port = None</td>
       <td>(StrOpt) Enable eventlet backdoor.  Acceptable values are 0, &lt;port&gt;, and &lt;start&gt;:&lt;end&gt;, where 0 results in listening on a random tcp port number; &lt;port&gt; results in listening on the specified port number (and not enabling backdoor if that port is in use); and &lt;start&gt;:&lt;end&gt; results in listening on the smallest unused port number within the specified range of port numbers.  The chosen port is displayed in the service's log file.</td>
     </tr>
@@ -21,12 +25,36 @@
       <td>(StrOpt) Digest algorithm which will be used for digital signature; the default is sha1 the default in Kilo for a smooth upgrade process, and it will be updated with sha256 in next release(L). Use the command "openssl list-message-digest-algorithms" to get the available algorithms supported by the version of OpenSSL on the platform. Examples are "sha1", "sha256", "sha512", etc.</td>
     </tr>
     <tr>
-      <td>[DEFAULT] policy_dirs = ['policy.d']</td>
-      <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.</td>
+      <td>[DEFAULT] disabled_notifications = </td>
+      <td>(ListOpt) List of disabled notifications. A notification can be given either as a notification type to disable a single event, or as a notification group prefix to disable all events within a group. Example: if this config option is set to ["image.create", "metadef_namespace"], then "image.create" notification will not be sent after image is created and none of the notifications for metadefinition namespaces will be sent.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] host = localhost</td>
+      <td>(StrOpt) Name of this node, which must be valid in an AMQP key. Can be an opaque identifier. For ZeroMQ only, must be a valid host name, FQDN, or IP address.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] http_keepalive = True</td>
+      <td>(BoolOpt) If False, server will return the header "Connection: close", If True, server will return "Connection: Keep-Alive" in its responses. In order to close the client socket connection explicitly after the response is sent and read successfully by the client, you simply have to set this option to False when you create a wsgi server.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] http_timeout = 600</td>
+      <td>(IntOpt) Timeout seconds for HTTP requests. Set it to None to disable timeout.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] listener_workers = 1</td>
+      <td>(IntOpt) Number of workers for notification service. A single notification agent is enabled by default.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] load_enabled = True</td>
+      <td>(BoolOpt) When false, no artifacts can be loaded regardless of available_plugins. When true, artifacts can be loaded.</td>
     </tr>
     <tr>
       <td>[DEFAULT] public_endpoint = None</td>
       <td>(StrOpt) Public url to use for versions endpoint. The default is None, which will use the request's host_url attribute to populate the URL base. If Glance is operating behind a proxy, you will want to change this to represent the proxy's URL.</td>
+    </tr>
+    <tr>
+      <td>[elasticsearch] hosts = 127.0.0.1:9200</td>
+      <td>(ListOpt) List of nodes where Elasticsearch instances are running. A single node should be defined as an IP address and port number.</td>
     </tr>
     <tr>
       <td>[glance_store] store_capabilities_update_min_interval = 0</td>
@@ -43,6 +71,10 @@
     <tr>
       <td>[glance_store] swift_store_multiple_containers_seed = 0</td>
       <td>(IntOpt) When set to 0, a single-tenant store will only use one container to store all images. When set to an integer value between 1 and 32, a single-tenant store will use multiple containers to store images, and this value will determine how many containers are created.Used only when swift_store_multi_tenant is disabled. The total number of containers that will be used is equal to 16^N, so if this config option is set to 2, then 16^2=256 containers will be used to store images.</td>
+    </tr>
+    <tr>
+      <td>[glance_store] vmware_datastores = None</td>
+      <td>(MultiStrOpt) A list of datastores where the image can be stored. This option may be specified multiple times for specifying multiple datastores. Either one of vmware_datastore_name or vmware_datastores is required. The datastore name should be specified after its datacenter path, seperated by ":". An optional weight may be given after the datastore name, seperated again by ":". Thus, the required format becomes &lt;datacenter_path&gt;:&lt;datastore_name&gt;:&lt;optional_weight&gt;. When adding an image, the datastore with highest weight will be selected, unless there is not enough free space available in cases where the image size is already known. If no weight is given, it is assumed to be zero and the directory will be considered for selection last. If multiple datastores have the same weight, then the one with the most free space available is selected.</td>
     </tr>
     <tr>
       <td>[oslo_concurrency] disable_process_locking = False</td>
@@ -165,6 +197,14 @@
       <td>(BoolOpt) Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake</td>
     </tr>
     <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_rate = 2</td>
+      <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 60</td>
+      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat).</td>
+    </tr>
+    <tr>
       <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
       <td>(FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.</td>
     </tr>
@@ -237,11 +277,67 @@
       <td>(IntOpt) Size of RPC connection pool.</td>
     </tr>
     <tr>
-      <td>[taskflow_executor] engine_mode = serial</td>
+      <td>[oslo_policy] policy_default_rule = default</td>
+      <td>(StrOpt) Default rule. Enforced when a requested rule is not found.</td>
+    </tr>
+    <tr>
+      <td>[oslo_policy] policy_dirs = ['policy.d']</td>
+      <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.  Missing or empty directories are ignored.</td>
+    </tr>
+    <tr>
+      <td>[oslo_policy] policy_file = policy.json</td>
+      <td>(StrOpt) The JSON file that defines policies.</td>
+    </tr>
+    <tr>
+      <td>[service_credentials] insecure = False</td>
+      <td>(BoolOpt) Disables X.509 certificate validation when an SSL connection to Identity Service is established.</td>
+    </tr>
+    <tr>
+      <td>[service_credentials] os_auth_url = http://localhost:5000/v2.0</td>
+      <td>(StrOpt) Auth URL to use for OpenStack service access.</td>
+    </tr>
+    <tr>
+      <td>[service_credentials] os_cacert = None</td>
+      <td>(StrOpt) Certificate chain for SSL validation.</td>
+    </tr>
+    <tr>
+      <td>[service_credentials] os_endpoint_type = publicURL</td>
+      <td>(StrOpt) Type of endpoint in Identity service catalog to use for communication with OpenStack services.</td>
+    </tr>
+    <tr>
+      <td>[service_credentials] os_password = admin</td>
+      <td>(StrOpt) Password to use for OpenStack service access.</td>
+    </tr>
+    <tr>
+      <td>[service_credentials] os_region_name = None</td>
+      <td>(StrOpt) Region name to use for OpenStack service endpoints.</td>
+    </tr>
+    <tr>
+      <td>[service_credentials] os_tenant_id = </td>
+      <td>(StrOpt) Tenant ID to use for OpenStack service access.</td>
+    </tr>
+    <tr>
+      <td>[service_credentials] os_tenant_name = admin</td>
+      <td>(StrOpt) Tenant name to use for OpenStack service access.</td>
+    </tr>
+    <tr>
+      <td>[service_credentials] os_username = glance</td>
+      <td>(StrOpt) User name to use for OpenStack service access.</td>
+    </tr>
+    <tr>
+      <td>[task] work_dir = None</td>
+      <td>(StrOpt) Work dir for asynchronous task operations. The directory set here will be used to operate over images - normally before they are imported in the destination store. When providing work dir, make sure enough space is provided for concurrent tasks to run efficiently without running out of space. A rough estimation can be done by multiplying the number of `max_workers` - or the N of workers running - by an average image size (e.g 500MB). The image size estimation should be done based on the average size in your deployment. Note that depending on the tasks running you may need to multiply this number by some factor depending on what the task does. For example, you may want to double the available size if image conversion is enabled. All this being said, remember these are just estimations and you should do them based on the worst case scenario and be prepared to act in case they were wrong.</td>
+    </tr>
+    <tr>
+      <td>[taskflow_executor] conversion_format = None</td>
+      <td>(StrOpt) The format to which images will be automatically converted. Can be 'qcow2' or 'raw'.</td>
+    </tr>
+    <tr>
+      <td>[taskflow_executor] engine_mode = parallel</td>
       <td>(StrOpt) The mode in which the engine will run. Can be 'serial' or 'parallel'.</td>
     </tr>
     <tr>
-      <td>[taskflow_executor] max_workers = 1</td>
+      <td>[taskflow_executor] max_workers = 10</td>
       <td>(IntOpt) The number of parallel activities executed at the same time by the engine. The value can be greater than one when the engine mode is 'parallel'.</td>
     </tr>
   </table>
@@ -258,14 +354,29 @@
       </tr>
     </thead>
     <tr>
-      <td>[DEFAULT] default_log_levels</td>
-      <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN</td>
-      <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] rpc_zmq_matchmaker</td>
       <td>oslo.messaging._drivers.matchmaker.MatchMakerLocalhost</td>
       <td>oslo_messaging._drivers.matchmaker.MatchMakerLocalhost</td>
+    </tr>
+    <tr>
+      <td>[task] task_executor</td>
+      <td>eventlet</td>
+      <td>taskflow</td>
+    </tr>
+  </table>
+  <table>
+    <caption>Deprecated options</caption>
+    <col width="50%"/>
+    <col width="50%"/>
+    <thead>
+      <tr>
+        <td>Deprecated option</td>
+        <td>New Option</td>
+      </tr>
+    </thead>
+    <tr>
+      <td>[task] eventlet_executor_pool_size</td>
+      <td>[taskflow_executor] max_workers</td>
     </tr>
   </table>
 </section>

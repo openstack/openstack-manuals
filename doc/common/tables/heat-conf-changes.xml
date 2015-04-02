@@ -17,12 +17,28 @@
       <td>(BoolOpt) Enables engine with convergence architecture. All stacks with this option will be created using convergence engine .</td>
     </tr>
     <tr>
+      <td>[DEFAULT] default_deployment_signal_transport = CFN_SIGNAL</td>
+      <td>(StrOpt) Template default for how the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL (requires enabled heat-api-cfn). TEMP_URL_SIGNAL will create a Swift TempURL to be signaled via HTTP PUT (requires object-store endpoint which supports TempURL). HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] default_software_config_transport = POLL_SERVER_CFN</td>
+      <td>(StrOpt) Template default for how the server should receive the metadata required for software configuration. POLL_SERVER_CFN will allow calls to the cfn API action DescribeStackResource authenticated with the provided keypair (requires enabled heat-api-cfn). POLL_SERVER_HEAT will allow calls to the Heat API resource-show using the provided keystone credentials (requires keystone v3 API, and configured stack_user_* config options). POLL_TEMP_URL will create and populate a Swift TempURL with metadata for polling (requires object-store endpoint which supports TempURL).</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] error_wait_time = 240</td>
       <td>(IntOpt) Error wait time in seconds for stack action (ie. create or update).</td>
     </tr>
     <tr>
+      <td>[DEFAULT] fatal_exception_format_errors = False</td>
+      <td>(BoolOpt) Make exception message format errors fatal</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] policy_dirs = ['policy.d']</td>
       <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] stack_scheduler_hints = False</td>
+      <td>(BoolOpt) When this feature is enabled, scheduler hints identifying the heat stack context of a server resource are passed to the configured schedulers in nova, for server creates done using heat resource types OS::Nova::Server and AWS::EC2::Instance. heat_root_stack_id will be set to the id of the root stack of the resource, heat_stack_id will be set to the id of the resource's parent stack, heat_stack_name will be set to the name of the resource's parent stack, heat_path_in_stack will be set to a list of tuples, (stackresourcename, stackname) with list[0] being (None, rootstackname), and heat_resource_name will be set to the resource's name.</td>
     </tr>
     <tr>
       <td>[clients_sahara] ca_file = None</td>
@@ -42,6 +58,22 @@
     </tr>
     <tr>
       <td>[clients_sahara] key_file = None</td>
+      <td>(StrOpt) Optional PEM-formatted file that contains the private key.</td>
+    </tr>
+    <tr>
+      <td>[ec2authtoken] ca_file = None</td>
+      <td>(StrOpt) Optional CA cert file to use in SSL connections.</td>
+    </tr>
+    <tr>
+      <td>[ec2authtoken] cert_file = None</td>
+      <td>(StrOpt) Optional PEM-formatted certificate chain file.</td>
+    </tr>
+    <tr>
+      <td>[ec2authtoken] insecure = False</td>
+      <td>(BoolOpt) If set, then the server's certificate will not be verified.</td>
+    </tr>
+    <tr>
+      <td>[ec2authtoken] key_file = None</td>
       <td>(StrOpt) Optional PEM-formatted file that contains the private key.</td>
     </tr>
     <tr>
@@ -157,6 +189,14 @@
       <td>(BoolOpt) Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake</td>
     </tr>
     <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_rate = 2</td>
+      <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 60</td>
+      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat).</td>
+    </tr>
+    <tr>
       <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
       <td>(FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.</td>
     </tr>
@@ -250,9 +290,24 @@
       </tr>
     </thead>
     <tr>
+      <td>[DEFAULT] deferred_auth_method</td>
+      <td>password</td>
+      <td>trusts</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] max_nested_stack_depth</td>
       <td>3</td>
       <td>5</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] num_engine_workers</td>
+      <td>1</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] plugin_dirs</td>
+      <td>/usr/lib64/heat, /usr/lib/heat</td>
+      <td>/usr/lib64/heat, /usr/lib/heat, /usr/local/lib/heat, /usr/local/lib64/heat</td>
     </tr>
     <tr>
       <td>[DEFAULT] rpc_zmq_matchmaker</td>
