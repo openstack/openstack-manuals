@@ -18,7 +18,7 @@ on this host.
    $ nova boot --image <uuid> --flavor m1.tiny --key_name test --availability-zone nova:server2
 
 #. To specify which roles can launch an instance on a
-   specified host, enable the :option:`create:forced_host` option in
+   specified host, enable the :code:`create:forced_host` option in
    the :file:`policy.json` file. By default, this option is
    enabled for only the admin role.
 

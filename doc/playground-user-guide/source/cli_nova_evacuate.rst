@@ -19,7 +19,7 @@ fails with an error.
    $ nova host-list
 
 #. Evacuate the instance. You can pass the instance password to the command by using
-   the :option:`--password <pwd>` option. If you do not specify a
+   the :option:`--password PWD` option. If you do not specify a
    password, one is generated and printed after the command finishes successfully. The
    following command evacuates a server without shared storage from a host that is down
    to the specified HOST_B::
