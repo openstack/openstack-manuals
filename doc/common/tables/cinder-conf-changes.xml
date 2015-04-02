@@ -17,8 +17,40 @@
       <td>(StrOpt) Backend override of host value.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] backup_container = None</td>
+      <td>(StrOpt) Custom container to use for backups.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_enable_progress_timer = True</td>
+      <td>(BoolOpt) Enable or Disable the timer to send the periodic progress notifications to Ceilometer when backing up the volume to the backend storage. The default value is True to enable the timer.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_file_size = 1999994880</td>
+      <td>(IntOpt) The maximum size in bytes of the files used to hold backups. If the volume being backed up exceeds this size, then it will be backed up into multiple files.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_mount_options = None</td>
+      <td>(StrOpt) Mount options passed to the NFS client. See NFS man page for details.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_mount_point_base = $state_path/backup_mount</td>
+      <td>(StrOpt) Base dir containing mount point for NFS share.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] backup_object_number_per_notification = 10</td>
       <td>(IntOpt) The number of chunks or objects, for which one Ceilometer notification will be sent</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_sha_block_size_bytes = 32768</td>
+      <td>(IntOpt) The size in bytes that changes are tracked for incremental backups. backup_swift_object_size has to be multiple of backup_swift_block_size.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_share = None</td>
+      <td>(StrOpt) NFS share in fqdn:path, ipv4addr:path, or "[ipv6addr]:path" format.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] backup_swift_block_size = 32768</td>
+      <td>(IntOpt) The size in bytes that changes are tracked for incremental backups. backup_swift_object_size has to be multiple of backup_swift_block_size.</td>
     </tr>
     <tr>
       <td>[DEFAULT] backup_swift_enable_progress_timer = True</td>
@@ -73,10 +105,6 @@
       <td>(StrOpt) Chiscsi (CXT) global defaults configuration file</td>
     </tr>
     <tr>
-      <td>[DEFAULT] coraid_default_repository = None</td>
-      <td>(StrOpt) ESM Repository Name to use if not specified in Volume Type keys</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] dell_sc_api_port = 3033</td>
       <td>(IntOpt) Dell API port</td>
     </tr>
@@ -93,8 +121,8 @@
       <td>(StrOpt) Name of the volume folder to use on the Storage Center</td>
     </tr>
     <tr>
-      <td>[DEFAULT] drbdmanage_redundancy = 1</td>
-      <td>(StrOpt) Number of nodes that should replicate the data.</td>
+      <td>[DEFAULT] driver_data_namespace = None</td>
+      <td>(StrOpt) Namespace for driver private data values to be saved in.</td>
     </tr>
     <tr>
       <td>[DEFAULT] driver_use_ssl = False</td>
@@ -107,6 +135,10 @@
     <tr>
       <td>[DEFAULT] enforce_multipath_for_image_xfer = False</td>
       <td>(BoolOpt) If this is set to True, attachment of volumes for image transfer will be aborted when multipathd is not running. Otherwise, it will fallback to single path.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] filter_function = None</td>
+      <td>(StrOpt) String representation for an equation that will be used to filter hosts. Only used when the driver filter is set to be used by the Cinder scheduler.</td>
     </tr>
     <tr>
       <td>[DEFAULT] flashsystem_connection_protocol = FC</td>
@@ -131,6 +163,10 @@
     <tr>
       <td>[DEFAULT] gateway_mgb = None</td>
       <td>(StrOpt) IP address or hostname of mg-b</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] goodness_function = None</td>
+      <td>(StrOpt) String representation for an equation that will be used to determine the goodness of a host. Only used when using the goodness weigher is set to be used by the Cinder scheduler.</td>
     </tr>
     <tr>
       <td>[DEFAULT] initiator_auto_deregistration = False</td>
@@ -210,7 +246,11 @@
     </tr>
     <tr>
       <td>[DEFAULT] policy_dirs = ['policy.d']</td>
-      <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.</td>
+      <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.  Missing or empty directories are ignored.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] public_endpoint = None</td>
+      <td>(StrOpt) Public url to use for versions endpoint. The default is None, which will use the request's host_url attribute to populate the URL base. If Cinder is operating behind a proxy, you will want to change this to represent the proxy's URL.</td>
     </tr>
     <tr>
       <td>[DEFAULT] quobyte_client_cfg = None</td>
@@ -254,7 +294,7 @@
     </tr>
     <tr>
       <td>[DEFAULT] sf_template_account_name = openstack-vtemplate</td>
-      <td>(StrOpt) Account name on the SolidFire Cluster to use as owner of template/cache volumes (created if doesnt exist).</td>
+      <td>(StrOpt) Account name on the SolidFire Cluster to use as owner of template/cache volumes (created if does not exist).</td>
     </tr>
     <tr>
       <td>[DEFAULT] srb_base_urls = None</td>
@@ -263,14 +303,6 @@
     <tr>
       <td>[DEFAULT] start_time = None</td>
       <td>(StrOpt) If this option is specified then the start time specified is used instead of the start time of the last completed audit period.</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] storpool_replication = 3</td>
-      <td>(IntOpt) The default StorPool chain replication value.  Used when creating a volume with no specified type if storpool_template is not set.  Also used for calculating the apparent free space reported in the stats.</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] storpool_template = None</td>
-      <td>(StrOpt) The StorPool template for volumes with no type.</td>
     </tr>
     <tr>
       <td>[DEFAULT] use_chap_auth = False</td>
@@ -287,42 +319,6 @@
     <tr>
       <td>[DEFAULT] xtremio_cluster_name = </td>
       <td>(StrOpt) XMS cluster id in multi-cluster environment</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] zfssa_data_ip = None</td>
-      <td>(StrOpt) Data path IP address</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] zfssa_https_port = 443</td>
-      <td>(StrOpt) HTTPS port number</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] zfssa_initiator_config = </td>
-      <td>(StrOpt) iSCSI initiators configuration.</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] zfssa_nfs_mount_options = </td>
-      <td>(StrOpt) Options to be passed while mounting share over nfs</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] zfssa_nfs_pool = </td>
-      <td>(StrOpt) Storage pool name.</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] zfssa_nfs_project = NFSProject</td>
-      <td>(StrOpt) Project name.</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] zfssa_nfs_share = nfs_share</td>
-      <td>(StrOpt) Share name.</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] zfssa_nfs_share_compression = off</td>
-      <td>(StrOpt) Data compression.</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] zfssa_nfs_share_logbias = latency</td>
-      <td>(StrOpt) Synchronous write bias-latency, throughput.</td>
     </tr>
     <tr>
       <td>[oslo_concurrency] disable_process_locking = False</td>
@@ -445,6 +441,14 @@
       <td>(BoolOpt) Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake</td>
     </tr>
     <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_rate = 2</td>
+      <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 60</td>
+      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat).</td>
+    </tr>
+    <tr>
       <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
       <td>(FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.</td>
     </tr>
@@ -540,19 +544,24 @@
       <td>900</td>
     </tr>
     <tr>
-      <td>[DEFAULT] gpfs_images_share_mode</td>
+      <td>[DEFAULT] default_log_levels</td>
+      <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN</td>
+      <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, requests.packages.urllib3.util.retry=WARN, urllib3.util.retry=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] iscsi_num_targets</td>
+      <td>100</td>
       <td>None</td>
-      <td>copy_on_write</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] iser_num_targets</td>
+      <td>100</td>
+      <td>None</td>
     </tr>
     <tr>
       <td>[DEFAULT] iser_target_prefix</td>
       <td>iqn.2010-10.org.iser.openstack:</td>
       <td>iqn.2010-10.org.openstack:</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] netapp_storage_protocol</td>
-      <td>None</td>
-      <td>iscsi</td>
     </tr>
     <tr>
       <td>[DEFAULT] nova_catalog_admin_info</td>
@@ -568,16 +577,6 @@
       <td>[DEFAULT] rpc_zmq_matchmaker</td>
       <td>oslo.messaging._drivers.matchmaker.MatchMakerLocalhost</td>
       <td>oslo_messaging._drivers.matchmaker.MatchMakerLocalhost</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] zfssa_lun_compression</td>
-      <td></td>
-      <td>off</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] zfssa_lun_logbias</td>
-      <td></td>
-      <td>latency</td>
     </tr>
     <tr>
       <td>[keymgr] encryption_auth_url</td>

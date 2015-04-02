@@ -21,12 +21,24 @@
       <td>(StrOpt) Define the notification format for Identity Service events. A "basic" notification has information about the resource being operated on. A "cadf" notification has the same information, as well as information about the initiator of the event. Valid options are: basic and cadf</td>
     </tr>
     <tr>
-      <td>[DEFAULT] policy_dirs = ['policy.d']</td>
-      <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] secure_proxy_ssl_header = None</td>
       <td>(StrOpt) The HTTP header used to determine the scheme for the original request, even if it was removed by an SSL terminating proxy. Typical value is "HTTP_X_FORWARDED_PROTO".</td>
+    </tr>
+    <tr>
+      <td>[auth] oauth1 = keystone.auth.plugins.oauth1.OAuth</td>
+      <td>(StrOpt) The oAuth1.0 auth plugin module.</td>
+    </tr>
+    <tr>
+      <td>[domain_config] cache_time = 300</td>
+      <td>(IntOpt) TTL (in seconds) to cache domain config data. This has no effect unless domain config caching is enabled.</td>
+    </tr>
+    <tr>
+      <td>[domain_config] caching = True</td>
+      <td>(BoolOpt) Toggle for domain config caching. This has no effect unless global caching is enabled.</td>
+    </tr>
+    <tr>
+      <td>[domain_config] driver = keystone.resource.config_backends.sql.DomainConfig</td>
+      <td>(StrOpt) Domain config backend driver.</td>
     </tr>
     <tr>
       <td>[eventlet_server] admin_bind_host = 0.0.0.0</td>
@@ -114,7 +126,7 @@
     </tr>
     <tr>
       <td>[identity] domain_configurations_from_database = False</td>
-      <td>(BoolOpt) Extract the domain specific configuration options from the resource backend where they have been stored with the domain data. This feature is disabled by default (in which case the domain specific options will be loaded from files in the domain configuration directory); set to true to enable. This feature is not yet supported.</td>
+      <td>(BoolOpt) Extract the domain specific configuration options from the resource backend where they have been stored with the domain data. This feature is disabled by default (in which case the domain specific options will be loaded from files in the domain configuration directory); set to true to enable.</td>
     </tr>
     <tr>
       <td>[oslo_messaging_amqp] allow_insecure_clients = False</td>
@@ -229,6 +241,14 @@
       <td>(BoolOpt) Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake</td>
     </tr>
     <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_rate = 2</td>
+      <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 60</td>
+      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat).</td>
+    </tr>
+    <tr>
       <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
       <td>(FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.</td>
     </tr>
@@ -317,6 +337,10 @@
       <td>(IntOpt) Maximum number of entities that will be returned in a resource collection.</td>
     </tr>
     <tr>
+      <td>[revoke] cache_time = 3600</td>
+      <td>(IntOpt) Time to cache the revocation list and the revocation events (in seconds). This has no effect unless global and token caching are enabled.</td>
+    </tr>
+    <tr>
       <td>[role] cache_time = None</td>
       <td>(IntOpt) TTL (in seconds) to cache role data. This has no effect unless global caching is enabled.</td>
     </tr>
@@ -331,6 +355,10 @@
     <tr>
       <td>[role] list_limit = None</td>
       <td>(IntOpt) Maximum number of entities that will be returned in a role collection.</td>
+    </tr>
+    <tr>
+      <td>[saml] relay_state_prefix = ss:mem:</td>
+      <td>(StrOpt) The prefix to use for the RelayState SAML attribute, used when generating ECP wrapped assertions.</td>
     </tr>
     <tr>
       <td>[token] allow_rescope_scoped_token = True</td>
@@ -361,6 +389,11 @@
       <td>[DEFAULT] rpc_zmq_matchmaker</td>
       <td>oslo.messaging._drivers.matchmaker.MatchMakerLocalhost</td>
       <td>oslo_messaging._drivers.matchmaker.MatchMakerLocalhost</td>
+    </tr>
+    <tr>
+      <td>[auth] methods</td>
+      <td>external, password, token</td>
+      <td>external, password, token, oauth1</td>
     </tr>
     <tr>
       <td>[revoke] driver</td>
@@ -426,6 +459,10 @@
     <tr>
       <td>[DEFAULT] tcp_keepalive</td>
       <td>[eventlet_server] tcp_keepalive</td>
+    </tr>
+    <tr>
+      <td>[token] revocation_cache_time</td>
+      <td>[revoke] cache_time</td>
     </tr>
     <tr>
       <td>[DEFAULT] public_workers</td>
