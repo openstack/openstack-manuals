@@ -21,9 +21,7 @@ Show host usage statistics
 The following examples show the host usage statistics for a host called
 ``devstack``.
 
--  List the hosts and the nova-related services that run on them:
-
-   .. code::
+-  List the hosts and the nova-related services that run on them::
 
      $ nova host-list
      +-----------+-------------+----------+
@@ -38,9 +36,7 @@ The following examples show the host usage statistics for a host called
      +-----------+-------------+----------+
 
 -  Get a summary of resource usage of all of the instances running on
-   the host:
-
-   .. code::
+   the host::
 
      $ nova host-describe devstack
      +-----------+----------------------------------+-----+-----------+---------+

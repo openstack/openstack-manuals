@@ -27,14 +27,12 @@ After you allocate a floating IP address to a project, you can:
 - Delete a floating IP from the project which automatically deletes that IP's
   associations.
 
-Use the ``nova floating-ip-*`` commands to manage floating IP addresses.
+Use the :command:`nova floating-ip-*` commands to manage floating IP addresses.
 
 List floating IP address information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To list all pools that provide floating IP addresses, run:
-
-.. code::
+To list all pools that provide floating IP addresses, run::
 
   $ nova floating-ip-pool-list
   +--------+
@@ -49,9 +47,7 @@ To list all pools that provide floating IP addresses, run:
   of floating IP addresses.
 
 To list all floating IP addresses that are allocated to the current project,
-run:
-
-.. code::
+run::
 
   $ nova floating-ip-list
   +--------------+--------------------------------------+----------+--------+
@@ -85,9 +81,7 @@ You can assign a floating IP address to a project and to an instance.
 
      If more than one IP address pool is available, you can specify from which
      pool to allocate the IP address, using the pool's name. For example, to
-     allocate a floating IP address from the ``test`` pool, run:
-
-    .. code::
+     allocate a floating IP address from the ``test`` pool, run::
 
       $ nova floating-ip-create test
 
@@ -103,7 +97,6 @@ You can assign a floating IP address to a project and to an instance.
     +---------------------+------+---------+------------+-------------+------------------+
 
 #. Associate an IP address with an instance in the project, as follows::
-
 
     $ nova floating-ip-associate INSTANCE_NAME_OR_ID FLOATING_IP_ADDRESS
 

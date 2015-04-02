@@ -19,7 +19,7 @@ When you no longer need an instance, you can delete it.
     | d7efd3e4... | newServer            | ERROR  | None       | NOSTATE     |                  |
     +-------------+----------------------+--------+------------+-------------+------------------+
 
-#. Run the ``nova delete`` command to delete the instance. The following
+#. Run the :command:`nova delete` command to delete the instance. The following
    example shows deletion of the ``newServer`` instance, which is in
    ``ERROR`` state::
 
@@ -27,7 +27,8 @@ When you no longer need an instance, you can delete it.
 
    The command does not notify that your server was deleted.
 
-#. To verify that the server was deleted, run the ``nova list`` command::
+#. To verify that the server was deleted, run the :command:`nova list`
+   command::
 
     $ nova list
     +-------------+----------------------+--------+------------+-------------+------------------+

@@ -140,7 +140,7 @@ can simply specify ``zone:,node``, still including the comma.
 List bare-metal nodes and interfaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the ``nova baremetal-node-list`` command to view all bare-metal
+Use the :command:`nova baremetal-node-list` command to view all bare-metal
 nodes and interfaces. When a node is in use, its status includes the
 UUID of the instance that runs on it:
 
