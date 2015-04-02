@@ -45,14 +45,14 @@ Server hardware requirements
    deploy an odd quantity of network nodes with a minimum of three nodes.
 
 .. figure:: ./figures/scenario-l3ha-hw.png
-   :alt: L3 HA OVS Scenario - Hardware Requirements
+   :alt: L3 HA OVS scenario - hardware requirements
 
-   L3 HA OVS Scenario - Hardware Requirements
+   L3 HA OVS scenario - hardware requirements
 
 .. figure:: ./figures/scenario-l3ha-networks.png
-   :alt: L3 HA OVS Scenario - Network Layout
+   :alt: L3 HA OVS scenario - network layout
 
-   L3 HA OVS Scenario - Network Layout
+   L3 HA OVS scenario - network layout
 
 .. note::
 
@@ -110,9 +110,9 @@ Compute nodes
   dependencies including the ``ipset`` utility.
 
 .. figure:: ./figures/scenario-l3ha-ovs-services.png
-   :alt: L3 HA OVS Scenario - Service Layout
+   :alt: L3 HA OVS scenario - service layout
 
-   L3 HA OVS Scenario - Service Layout
+   L3 HA OVS scenario - service layout
 
 OpenVSwitch Layer 3 architecture for high availability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -129,24 +129,24 @@ bandwidth constraints that limit performance. Consider deploying DVR to
 increase performance.
 
 .. figure:: ./figures/scenario-l3ha-general.png
-   :alt: L3 HA OVS Scenario - Architecture Overview
+   :alt: L3 HA OVS scenario - architecture overview
 
-   L3 HA OVS Scenario - Architecture Overview
+   L3 HA OVS scenario - architecture overview
 
 The network nodes run the Open vSwitch agent, L3 agent, DHCP agent, and
 metadata agent.
 
 .. figure:: ./figures/scenario-l3ha-ovs-network1.png
-   :alt: L3 HA OVS Scenario - Network Node Overview
+   :alt: L3 HA OVS scenario - network node overview
 
-   L3 HA OVS Scenario - Network Node Overview
+   L3 HA OVS scenario - network node overview
 
 The compute nodes run the Open vSwitch agent.
 
 .. figure:: ./figures/scenario-l3ha-ovs-compute1.png
-   :alt: L3 HA OVS Scenario - Compute Node Overview
+   :alt: L3 HA OVS scenario - compute node overview
 
-   L3 HA OVS Scenario - Compute Node Overview
+   L3 HA OVS scenario - compute node overview
 
 Node components
 ---------------
@@ -168,9 +168,9 @@ The network node contains the following components:
 * Metadata agent handling metadata operations.
 
 .. figure:: ./figures/scenario-l3ha-ovs-network2.png
-   :alt: L3 HA OVS Scenario - Network Node Components
+   :alt: L3 HA OVS scenario - network node components
 
-   L3 HA OVS Scenario - Network Node Components
+   L3 HA OVS scenario - network node components
 
 The compute nodes contain the following components:
 
@@ -183,9 +183,9 @@ The compute nodes contain the following components:
   to manage security groups for instances.
 
 .. figure:: ./figures/scenario-l3ha-ovs-compute2.png
-   :alt: L3 HA OVS Scenario - Compute Node Components
+   :alt: L3 HA OVS scenario - compute node components
 
-   L3 HA OVS Scenario - Compute Node Components
+   L3 HA OVS scenario - compute node components
 
 Packet flow
 ~~~~~~~~~~~
@@ -196,12 +196,12 @@ legacy scenario with Open vSwitch.
 Failover operations
 ~~~~~~~~~~~~~~~~~~~
 
-.. todo: Placeholder for failover operations discussion.
+.. TODO: Placeholder for failover operations discussion.
 
 .. figure:: ./figures/scenario-l3ha-ovs-flowfailover1.png
-   :alt: L3 HA OVS Scenario - Failover Operations
+   :alt: L3 HA OVS scenario - failover operations
 
-   L3 HA OVS Scenario - Failover Operations
+   L3 HA OVS scenario - failover operations
 
 Example configuration template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
