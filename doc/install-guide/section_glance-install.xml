@@ -123,7 +123,9 @@ Repeat User Password:
     <note>
        <para>Default configuration files vary by distribution. You might need
          to add these sections and options rather than modifying existing
-         sections and options.</para>
+         sections and options. Also, an ellipsis (...) in the configuration
+         snippets indicates potential default configuration options that you
+         should retain.</para>
     </note>
     <step>
       <para>Install the packages:</para>
@@ -151,10 +153,13 @@ connection = mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceabl
           <programlisting language="ini">[keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000
-identity_uri = http://<replaceable>controller</replaceable>:35357
-admin_tenant_name = service
-admin_user = glance
-admin_password = <replaceable>GLANCE_PASS</replaceable>
+auth_url = http://<replaceable>controller</replaceable>:35357
+auth_plugin = password
+project_domain_id = default
+user_domain_id = default
+project_name = service
+username = glance
+password = <replaceable>GLANCE_PASS</replaceable>
 
 [paste_deploy]
 ...
@@ -163,10 +168,8 @@ flavor = keystone</programlisting>
             password you chose for the <literal>glance</literal> user in the
             Identity service.</para>
           <note>
-            <para>Comment out any <literal>auth_host</literal>,
-              <literal>auth_port</literal>, and
-              <literal>auth_protocol</literal> options because the
-              <literal>identity_uri</literal> option replaces them.</para>
+            <para>Comment out or remove any other options in the
+              <literal>[keystone_authtoken]</literal> section.</para>
           </note>
         </step>
         <step>
@@ -187,13 +190,6 @@ filesystem_store_datadir = /var/lib/glance/images/</programlisting>
 notification_driver = noop</programlisting>
           <para>The Telemetry chapter provides an Image Service configuration
             that enables notifications.</para>
-        </step>
-        <step>
-          <para>In the <literal>[DEFAULT]</literal> section, configure the
-            log file:</para>
-          <programlisting language="ini">[DEFAULT]
-...
-log_file = /var/log/glance/api.log</programlisting>
         </step>
         <step>
           <para>(Optional) To assist with troubleshooting,
@@ -225,10 +221,13 @@ connection = mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceabl
           <programlisting language="ini">[keystone_authtoken]
 ...
 auth_uri = http://<replaceable>controller</replaceable>:5000
-identity_uri = http://<replaceable>controller</replaceable>:35357
-admin_tenant_name = service
-admin_user = glance
-admin_password = <replaceable>GLANCE_PASS</replaceable>
+auth_url = http://<replaceable>controller</replaceable>:35357
+auth_plugin = password
+project_domain_id = default
+user_domain_id = default
+project_name = service
+username = glance
+password = <replaceable>GLANCE_PASS</replaceable>
 
 [paste_deploy]
 ...
@@ -237,10 +236,8 @@ flavor = keystone</programlisting>
             password you chose for the <literal>glance</literal> user in the
             Identity service.</para>
           <note>
-            <para>Comment out any <literal>auth_host</literal>,
-              <literal>auth_port</literal>, and
-              <literal>auth_protocol</literal> options because the
-              <literal>identity_uri</literal> option replaces them.</para>
+            <para>Comment out or remove any other options in the
+              <literal>[keystone_authtoken]</literal> section.</para>
           </note>
         </step>
         <step>
@@ -253,13 +250,6 @@ flavor = keystone</programlisting>
 notification_driver = noop</programlisting>
           <para>The Telemetry chapter provides an Image Service configuration
             that enables notifications.</para>
-        </step>
-        <step>
-          <para>In the <literal>[DEFAULT]</literal> section, configure the
-            log file:</para>
-          <programlisting language="ini">[DEFAULT]
-...
-log_file = /var/log/glance/registry.log</programlisting>
         </step>
         <step>
           <para>(Optional) To assist with troubleshooting,
