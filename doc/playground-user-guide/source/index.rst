@@ -14,6 +14,7 @@ Contents:
    cli.rst
    sdk.rst
    cli_cheat_sheet.rst
+   hot-guide/hot.rst
 
 Indices and tables
 ==================
