@@ -6,7 +6,7 @@
   xml:id="neutron-initial-networks">
   <title>Create initial networks</title>
   <para>Before launching your first instance, you must create the
-    necessary virtual network infrastructure to which the instance will
+    necessary virtual network infrastructure to which the instances
     connect, including the
     <link linkend="neutron_initial-external-network">external network</link>
     and
@@ -51,7 +51,7 @@
       </step>
       <step>
         <para>Create the network:</para>
-        <screen><prompt>$</prompt> <userinput>neutron net-create ext-net --router:external True \
+        <screen><prompt>$</prompt> <userinput>neutron net-create ext-net --router:external \
   --provider:physical_network external --provider:network_type flat</userinput>
 <computeroutput>Created a new network:
 +---------------------------+--------------------------------------+
@@ -158,8 +158,8 @@
     </procedure>
     <para>Like the external network, your tenant network also requires
       a subnet attached to it. You can specify any valid subnet because the
-      architecture isolates tenant networks. By default, this subnet will
-      use DHCP so your instances can obtain IP addresses.</para>
+      architecture isolates tenant networks. By default, this subnet uses
+      DHCP so your instances can obtain IP addresses.</para>
     <procedure>
       <title>To create a subnet on the tenant network</title>
       <step>
@@ -196,7 +196,7 @@
     <para>A virtual router passes network traffic between two or more virtual
       networks. Each router requires one or more
       <glossterm baseform="interface">interfaces</glossterm> and/or gateways
-      that provide access to specific networks. In this case, you will create
+      that provide access to specific networks. In this case, you create
       a router and attach your tenant and external networks to it.</para>
     <procedure>
       <title>To create a router on the tenant network and attach the external
@@ -249,7 +249,8 @@
     <procedure>
       <title>To verify network connectivity</title>
       <step>
-        <para>Ping the tenant router gateway:</para>
+        <para>From a host on the the external network, ping the tenant router
+          gateway:</para>
         <screen><prompt>$</prompt> <userinput>ping -c 4 203.0.113.101</userinput>
 <computeroutput>PING 203.0.113.101 (203.0.113.101) 56(84) bytes of data.
 64 bytes from 203.0.113.101: icmp_req=1 ttl=64 time=0.619 ms

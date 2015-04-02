@@ -47,61 +47,66 @@
       <substeps>
         <step>
           <para>Create the <literal>neutron</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name neutron --pass <replaceable>NEUTRON_PASS</replaceable></userinput>
-<computeroutput>+----------+----------------------------------+
-| Property |              Value               |
+          <screen><prompt>$</prompt> <userinput>openstack user create --password-prompt neutron</userinput>
+<computeroutput>User Password:
+Repeat User Password:
 +----------+----------------------------------+
-|  email   |                                  |
-| enabled  |               True               |
-|    id    | 7fd67878dcd04d0393469ef825a7e005 |
-|   name   |              neutron             |
-| username |              neutron             |
+| Field    | Value                            |
++----------+----------------------------------+
+| email    | None                             |
+| enabled  | True                             |
+| id       | ab67f043d9304017aaa73d692eeb4945 |
+| name     | neutron                          |
+| username | neutron                          |
 +----------+----------------------------------+</computeroutput></screen>
-          <para>Replace <replaceable>NEUTRON_PASS</replaceable> with a suitable
-            password.</para>
         </step>
         <step>
           <para>Add the <literal>admin</literal> role to the
             <literal>neutron</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user neutron --tenant service --role admin</userinput></screen>
-          <note>
-            <para>This command provides no output.</para>
-          </note>
+          <screen><prompt>$</prompt> <userinput>openstack role add --project service --user neutron admin</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | 1169d778631b4fd1aefd9d35314e1c56 |
+| name  | admin                            |
++-------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
           <para>Create the <literal>neutron</literal> service entity:</para>
-          <screen><prompt>$</prompt> <userinput>keystone service-create --name neutron --type network \
-  --description "OpenStack Networking"</userinput>
+          <screen><prompt>$</prompt> <userinput>openstack service create --type network \
+  --description "OpenStack Networking" neutron</userinput>
 <computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
+| Field       | Value                            |
 +-------------+----------------------------------+
-| description |       OpenStack Networking       |
-|   enabled   |               True               |
-|      id     | 6369ddaf99a447f3a0d41dac5e342161 |
-|     name    |             neutron              |
-|     type    |             network              |
+| description | OpenStack Networking             |
+| enabled     | True                             |
+| id          | f71529314dab4a4d8eca427e701d209e |
+| name        | neutron                          |
+| type        | network                          |
 +-------------+----------------------------------+</computeroutput></screen>
         </step>
       </substeps>
     </step>
     <step>
       <para>Create the Networking service API endpoints:</para>
-      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ network / {print $2}') \
+      <screen><prompt>$</prompt> <userinput>openstack endpoint create \
   --publicurl http://<replaceable>controller</replaceable>:9696 \
   --adminurl http://<replaceable>controller</replaceable>:9696 \
   --internalurl http://<replaceable>controller</replaceable>:9696 \
-  --region regionOne</userinput>
-<computeroutput>+-------------+----------------------------------+
-|   Property  |             Value                |
-+-------------+----------------------------------+
-|   adminurl  |   http://controller:9696         |
-|      id     | fa18b41938a94bf6b35e2c152063ee21 |
-| internalurl |   http://controller:9696         |
-|  publicurl  |   http://controller:9696         |
-|    region   |           regionOne              |
-|  service_id | 6369ddaf99a447f3a0d41dac5e342161 |
-+-------------+----------------------------------+</computeroutput></screen>
+  --region regionOne
+  network</userinput>
+<computeroutput>+--------------+----------------------------------+
+| Field        | Value                            |
++--------------+----------------------------------+
+| adminurl     | http://controller:9696           |
+| id           | 04a7d3c1de784099aaba83a8a74100b3 |
+| internalurl  | http://controller:9696           |
+| publicurl    | http://controller:9696           |
+| region       | regionOne                        |
+| service_id   | f71529314dab4a4d8eca427e701d209e |
+| service_name | neutron                          |
+| service_type | network                          |
++--------------+----------------------------------+</computeroutput></screen>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
@@ -130,7 +135,7 @@
         credentials</link>,
         <link linkend="debconf-api-endpoints">service endpoint
         registration</link>, and
-        <link linkend="debconf-rabbitmq">message broker
+        <link linkend="debconf-rabbitmq">message queue
         credentials</link>.</para>
     </step>
     <step>
@@ -156,8 +161,15 @@
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure the Networking server component</title>
     <para>The Networking server component configuration includes the database,
-      authentication mechanism, message broker, topology change notifications,
+      authentication mechanism, message queue, topology change notifications,
       and plug-in.</para>
+    <note>
+       <para>Default configuration files vary by distribution. You might need
+         to add these sections and options rather than modifying existing
+         sections and options. Also, an ellipsis (...) in the configuration
+         snippets indicates potential default configuration options that you
+         should retain.</para>
+    </note>
     <step>
       <para>Edit the <filename>/etc/neutron/neutron.conf</filename> file
         and complete the following actions:</para>
@@ -172,16 +184,21 @@ connection = mysql://neutron:<replaceable>NEUTRON_DBPASS</replaceable>@<replacea
             password you chose for the database.</para>
         </step>
         <step>
-          <para>In the <literal>[DEFAULT]</literal> section, configure
-            <application>RabbitMQ</application> message broker access:</para>
+          <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[oslo_messaging_rabbit]</literal> sections, configure
+            <application>RabbitMQ</application> message queue access:</para>
           <programlisting language="ini">[DEFAULT]
 ...
 rpc_backend = rabbit
+
+[oslo_messaging_rabbit]
+...
 rabbit_host = <replaceable>controller</replaceable>
+rabbit_userid = openstack
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
           <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
-            password you chose for the <literal>guest</literal> account in
-            <application>RabbitMQ</application>.</para>
+            password you chose for the <literal>openstack</literal> account
+            in <application>RabbitMQ</application>.</para>
         </step>
         <step>
           <para>In the <literal>[DEFAULT]</literal> and
@@ -193,19 +210,20 @@ auth_strategy = keystone
 
 [keystone_authtoken]
 ...
-auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
-identity_uri = http://<replaceable>controller</replaceable>:35357
-admin_tenant_name = service
-admin_user = neutron
-admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
+auth_uri = http://<replaceable>controller</replaceable>:5000
+auth_url = http://<replaceable>controller</replaceable>:35357
+auth_plugin = password
+project_domain_id = default
+user_domain_id = default
+project_name = service
+username = neutron
+password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
           <para>Replace <replaceable>NEUTRON_PASS</replaceable> with the
-            password you chose or the <literal>neutron</literal> user in the
+            password you chose for the <literal>neutron</literal> user in the
             Identity service.</para>
           <note>
-            <para>Comment out any <literal>auth_host</literal>,
-              <literal>auth_port</literal>, and
-              <literal>auth_protocol</literal> options because the
-              <literal>identity_uri</literal> option replaces them.</para>
+            <para>Comment out or remove any other options in the
+              <literal>[keystone_authtoken]</literal> section.</para>
           </note>
         </step>
         <step>
@@ -219,37 +237,28 @@ service_plugins = router
 allow_overlapping_ips = True</programlisting>
         </step>
         <step>
-          <para>In the <literal>[DEFAULT]</literal> section, configure
+          <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[nova]</literal> sections, configure
             Networking to notify Compute of network topology changes:</para>
           <programlisting language="ini">[DEFAULT]
 ...
 notify_nova_on_port_status_changes = True
 notify_nova_on_port_data_changes = True
 nova_url = http://<replaceable>controller</replaceable>:8774/v2
-nova_admin_auth_url = http://<replaceable>controller</replaceable>:35357/v2.0
-nova_region_name = regionOne
-nova_admin_username = nova
-nova_admin_tenant_id = <replaceable>SERVICE_TENANT_ID</replaceable>
-nova_admin_password = <replaceable>NOVA_PASS</replaceable></programlisting>
-          <para>Replace <replaceable>SERVICE_TENANT_ID</replaceable> with the
-            <literal>service</literal> tenant identifier (id) in the Identity
-            service and <replaceable>NOVA_PASS</replaceable> with the password
+
+[nova]
+...
+auth_url = http://<replaceable>controller</replaceable>:35357
+auth_plugin = password
+project_domain_id = default
+user_domain_id = default
+region_name = regionOne
+project_name = service
+username = nova
+password = <replaceable>NOVA_PASS</replaceable></programlisting>
+          <para>Replace <literal>NOVA_PASS</literal> with the password
             you chose for the <literal>nova</literal> user in the Identity
             service.</para>
-          <note>
-            <para>To obtain the <literal>service</literal> tenant
-              identifier (id):</para>
-            <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput>
-<prompt>$</prompt> <userinput>keystone tenant-get service</userinput>
-<computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
-+-------------+----------------------------------+
-| description |          Service Tenant          |
-|   enabled   |               True               |
-|      id     | f727b5ec2ceb4d71bad86dfc414449bf |
-|     name    |             service              |
-+-------------+----------------------------------+</computeroutput></screen>
-          </note>
         </step>
         <step>
           <para>(Optional) To assist with troubleshooting,
@@ -276,18 +285,20 @@ verbose = True</programlisting>
       <substeps>
         <step>
           <para>In the <literal>[ml2]</literal> section, enable the
-            <glossterm baseform="flat network">flat</glossterm> and
-            <glossterm>generic routing encapsulation (GRE)</glossterm>
+            <glossterm baseform="flat network">flat</glossterm>,
+            <glossterm baseform="VLAN network">VLAN</glossterm>,
+            <glossterm>generic routing encapsulation (GRE)</glossterm>, and
+            <glossterm>virtual extensible LAN (VXLAN)</glossterm>
             network type drivers, GRE tenant networks, and the OVS
             mechanism driver:</para>
           <programlisting language="ini">[ml2]
 ...
-type_drivers = flat,gre
+type_drivers = flat,vlan,gre,vxlan
 tenant_network_types = gre
 mechanism_drivers = openvswitch</programlisting>
           <warning>
-            <para>Once you configure the ML2 plug-in, be aware that disabling
-              a network type driver and re-enabling it later can lead to
+            <para>Once you configure the ML2 plug-in, changing values in
+              the <literal>type_drivers</literal> option can lead to
               database inconsistency.</para>
           </warning>
         </step>
@@ -378,8 +389,10 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
     </step>
     <step os="ubuntu;rhel;centos;fedora">
       <para>Populate the database:</para>
+      <!-- FIXME: Change database version from 'head' to 'kilo' after
+           release. -->
       <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
-  --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade juno" neutron</userinput></screen>
+  --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron</userinput></screen>
       <note>
         <para>Database population occurs later for Networking because the
           script requires complete server and plug-in configuration
@@ -397,9 +410,7 @@ admin_password = <replaceable>NEUTRON_PASS</replaceable></programlisting>
       <para os="opensuse">On openSUSE:</para>
       <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl restart openstack-nova-api.service openstack-nova-scheduler.service \
   openstack-nova-conductor.service</userinput></screen>
-      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-api restart</userinput>
-<prompt>#</prompt> <userinput>service nova-scheduler restart</userinput>
-<prompt>#</prompt> <userinput>service nova-conductor restart</userinput></screen>
+      <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service nova-api restart</userinput></screen>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Networking service and configure it to start when the
