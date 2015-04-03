@@ -23,10 +23,17 @@ if [ -z "$DOCNAME" ] ; then
     exit 1
 fi
 
+OPTS=""
+# We need to build guides with all tags so that all strings get
+# extracted.
+if [ "$DOCNAME" = "playground-user-guide" ] ; then
+    OPTS="-t user_only -t admin_only"
+fi
+
 # First remove the old pot file, otherwise the new file will contain
 # old references
 rm doc/$DOCNAME/source/locale/$DOCNAME.pot
-sphinx-build -b gettext doc/$DOCNAME/source/ doc/$DOCNAME/source/locale/
+sphinx-build $OPTS -b gettext doc/$DOCNAME/source/ doc/$DOCNAME/source/locale/
 
 # Take care of deleting all temporary files so that git add
 # doc/$DOCNAME/source/locale will only add the single pot file.
