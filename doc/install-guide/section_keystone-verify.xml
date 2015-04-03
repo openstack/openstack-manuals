@@ -5,96 +5,150 @@
   version="5.0"
   xml:id="keystone-verify">
   <title>Verify operation</title>
-  <para>This section describes how to verify operation of the Identity
-    service.</para>
+  <para>Verify operation of the Identity service before installing other
+    services.</para>
   <procedure>
     <step>
-      <para>Unset the temporary <envar>OS_SERVICE_TOKEN</envar> and
-      <envar>OS_SERVICE_ENDPOINT</envar> environment variables:</para>
-      <screen><prompt>$</prompt> <userinput>unset OS_SERVICE_TOKEN OS_SERVICE_ENDPOINT</userinput></screen>
+      <para>For security reasons, disable the temporary authentication
+        token mechanism:</para>
+      <para>Edit the <filename>/etc/keystone/keystone-paste.ini</filename> file
+        and remove <literal>admin_token_auth</literal> from the
+        <literal>[pipeline:public_api]</literal>,
+        <literal>[pipeline:admin_api]</literal>, and
+        <literal>[pipeline:api_v3]</literal> sections.</para>
     </step>
     <step>
-      <para>As the <literal>admin</literal> tenant and user, request an
-        authentication token:</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name admin --os-username admin --os-password <replaceable>ADMIN_PASS</replaceable> \
-  --os-auth-url http://controller:35357/v2.0 token-get</userinput>
-<computeroutput>+-----------+----------------------------------+
-|  Property |              Value               |
-+-----------+----------------------------------+
-|  expires  |       2014-10-10T12:50:12Z       |
-|     id    | 8963eb5ccd864769a894ec316ef8f7d4 |
-| tenant_id | 6f4c1e4cbfef4d5a8a1345882fbca110 |
-|  user_id  | ea8c352d253443118041c9c8b8416040 |
-+-----------+----------------------------------+</computeroutput></screen>
-      <para>Replace <replaceable>ADMIN_PASS</replaceable> with the password
-        you chose for the <literal>admin</literal> user in the Identity
-        service. You might need to use single quotes (') around your password
-        if it includes special characters.</para>
+      <para>Unset the temporary <envar>OS_TOKEN</envar> and
+      <envar>OS_URL</envar> environment variables:</para>
+      <screen><prompt>$</prompt> <userinput>unset OS_TOKEN OS_URL</userinput></screen>
     </step>
     <step>
-      <para os="ubuntu;rhel;centos;fedora;sles;opensuse">As the
-        <literal>admin</literal> tenant and user, list tenants to verify
-        that the <literal>admin</literal> tenant and user can execute
-        admin-only CLI commands and that the Identity service contains the
-        tenants that you created in <xref linkend="keystone-users"/>:</para>
-      <para os="debian">As the <literal>admin</literal> tenant and user, list
-        tenants to verify that the <literal>admin</literal> tenant and user
-        can execute admin-only CLI commands and that the Identity service
-        contains the tenants created by the configuration tool:</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name admin --os-username admin --os-password <replaceable>ADMIN_PASS</replaceable> \
-  --os-auth-url http://controller:35357/v2.0 tenant-list</userinput>
-<computeroutput>+----------------------------------+----------+---------+
-|                id                |   name   | enabled |
-+----------------------------------+----------+---------+
-| 6f4c1e4cbfef4d5a8a1345882fbca110 |  admin   |   True  |
-| 4aa51bb942be4dd0ac0555d7591f80a6 |   demo   |   True  |
-| 6b69202e1bf846a4ae50d65bc4789122 | service  |   True  |
-+----------------------------------+----------+---------+</computeroutput></screen>
+      <para>As the <literal>admin</literal> user, request an authentication
+        token from the Identity version 2.0 API:</para>
+      <screen><prompt>$</prompt> <userinput>openstack --os-auth-url http://controller:35357 \
+  --os-project-name admin --os-username admin --os-auth-type password \
+  token issue</userinput>
+<computeroutput>Password:
++------------+----------------------------------+
+| Field      | Value                            |
++------------+----------------------------------+
+| expires    | 2015-03-24T18:55:01Z             |
+| id         | ff5ed908984c4a4190f584d826d75fed |
+| project_id | cf12a15c5ea84b019aec3dc45580896b |
+| user_id    | 4d411f2291f34941b30eef9bd797505a |
++------------+----------------------------------+</computeroutput></screen>
       <note>
-        <para>Because OpenStack generates IDs dynamically, you will see
-          different values from this example command output.</para>
+        <para>This command uses the password for the <literal>admin</literal>
+          user.</para>
+      </note>
+    </step>
+    <step>
+      <para>The Identity version 3 API adds support for domains that contain
+        projects and users. Projects and users can use the same names in
+        different domains. Therefore, in order to use the version 3 API,
+        requests must also explicitly contain at least the
+        <literal>default</literal> domain or use IDs. For simplicity, this
+        guide explicitly uses the <literal>default</literal> domain
+        so examples can use names instead of IDs.</para>
+      <screen><prompt>$</prompt> <userinput>openstack --os-auth-url http://controller:35357 \
+  --os-project-domain-id default --os-user-domain-id default \
+  --os-project-name admin --os-username admin --os-auth-type password \
+  token issue</userinput>
+<computeroutput>Password:
++------------+----------------------------------+
+| Field      | Value                            |
++------------+----------------------------------+
+| expires    | 2015-03-24T18:55:01Z             |
+| id         | ff5ed908984c4a4190f584d826d75fed |
+| project_id | cf12a15c5ea84b019aec3dc45580896b |
+| user_id    | 4d411f2291f34941b30eef9bd797505a |
++------------+----------------------------------+</computeroutput></screen>
+      <note>
+        <para>This command uses the password for the <literal>admin</literal>
+          user.</para>
       </note>
     </step>
     <step>
       <para os="ubuntu;rhel;centos;fedora;sles;opensuse">As the
-        <literal>admin</literal> tenant and user, list users to verify
-        that the Identity service contains the users that you created
-        in <xref linkend="keystone-users"/>:</para>
-      <para os="debian">As the <literal>admin</literal> tenant and user, list
-        users to verify that the Identity service contains the users
+        <literal>admin</literal> user, list projects to verify that the
+        <literal>admin</literal> user can execute admin-only CLI commands
+        and that the Identity service contains the projects that you
+        created in <xref linkend="keystone-users"/>:</para>
+      <para os="debian">As the <literal>admin</literal> user, list projects
+        to verify that the <literal>admin</literal> user can execute
+        CLI commands and that the Identity service contains the projects
         created by the configuration tool:</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name admin --os-username admin --os-password <replaceable>ADMIN_PASS</replaceable> \
-  --os-auth-url http://controller:35357/v2.0 user-list</userinput>
-<computeroutput>+----------------------------------+---------+---------+---------------------+
-|                id                |   name  | enabled |        email        |
-+----------------------------------+---------+---------+---------------------+
-| ea8c352d253443118041c9c8b8416040 |  admin  |   True  |  admin@example.com  |
-| 7004dfa0dda84d63aef81cf7f100af01 |   demo  |   True  |  demo@example.com   |
-+----------------------------------+---------+---------+---------------------+</computeroutput></screen>
+      <screen><prompt>$</prompt> <userinput>openstack --os-auth-url http://controller:35357 \
+  --os-project-name admin --os-username admin --os-auth-type password \
+  project list</userinput>
+<computeroutput>Password:
++----------------------------------+---------+
+| ID                               | Name    |
++----------------------------------+---------+
+| 55cbd79c0c014c8a95534ebd16213ca1 | service |
+| ab8ea576c0574b6092bb99150449b2d3 | demo    |
+| cf12a15c5ea84b019aec3dc45580896b | admin   |
++----------------------------------+---------+</computeroutput></screen>
+      <note>
+        <para>This command uses the password for the <literal>admin</literal>
+          user.</para>
+      </note>
     </step>
     <step>
       <para os="ubuntu;rhel;centos;fedora;sles;opensuse">As the
-        <literal>admin</literal> tenant and user, list roles to verify
-        that the Identity service contains the role that you created
-        in <xref linkend="keystone-users"/>:</para>
-      <para os="debian">As the <literal>admin</literal> tenant and user, list
-        roles to verify that the Identity service contains the role
-        created by the configuration tool:</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name admin --os-username admin --os-password <replaceable>ADMIN_PASS</replaceable> \
-  --os-auth-url http://controller:35357/v2.0 role-list</userinput>
-<computeroutput>+----------------------------------+----------+
-|                id                |   name   |
-+----------------------------------+----------+
-| 9fe2ff9ee4384b1894a90878d3e92bab | _member_ |
-| bff3a6083b714fa29c9344bf8930d199 |  admin   |
-+----------------------------------+----------+</computeroutput></screen>
+        <literal>admin</literal> user, list users to verify that the
+        Identity service contains the users that you created in
+        <xref linkend="keystone-users"/>:</para>
+      <para os="debian">As the <literal>admin</literal> user, list users to
+        verify that the Identity service contains the users created by
+        the configuration tool:</para>
+      <screen><prompt>$</prompt> <userinput>openstack --os-auth-url http://controller:35357 \
+  --os-project-name admin --os-username admin --os-auth-type password \
+  user list</userinput>
+<computeroutput>Password:
++----------------------------------+-------+
+| ID                               | Name  |
++----------------------------------+-------+
+| 4d411f2291f34941b30eef9bd797505a | admin |
+| 3a81e6c8103b46709ef8d141308d4c72 | demo  |
++----------------------------------+-------+</computeroutput></screen>
+      <note>
+        <para>This command uses the password for the <literal>admin</literal>
+          user.</para>
+      </note>
     </step>
     <step>
-      <para>As the <literal>demo</literal> tenant and user, request an
-        authentication token:</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name demo --os-username demo --os-password <replaceable>DEMO_PASS</replaceable> \
-  --os-auth-url http://controller:35357/v2.0 token-get</userinput>
-<computeroutput>+-----------+----------------------------------+
+      <para os="ubuntu;rhel;centos;fedora;sles;opensuse">As the
+        <literal>admin</literal> user, list roles to verify that the
+        Identity service contains the role that you created in
+        <xref linkend="keystone-users"/>:</para>
+      <para os="debian">As the <literal>admin</literal> user, list roles to
+        verify that the Identity service contains the role created by the
+        configuration tool:</para>
+      <screen><prompt>$</prompt> <userinput>openstack --os-auth-url http://controller:35357 \
+  --os-project-name admin --os-username admin --os-auth-type password \
+  role list</userinput>
+<computeroutput>Password:
++----------------------------------+----------+
+| ID                               | Name     |
++----------------------------------+----------+
+| 9fe2ff9ee4384b1894a90878d3e92bab | _member_ |
+| cd2cb9a39e874ea69e5d4b896eb16128 | admin    |
++----------------------------------+----------+</computeroutput></screen>
+      <note>
+        <para>This command uses the password for the <literal>admin</literal>
+          user.</para>
+      </note>
+    </step>
+    <step>
+      <para>As the <literal>demo</literal> user, request an authentication
+        token from the Identity version 3 API:</para>
+      <screen><prompt>$</prompt> <userinput>openstack --os-auth-url http://controller:5000 \
+  --os-project-domain-id default --os-user-domain-id default \
+  --os-project-name demo --os-username demo --os-auth-type password \
+  token issue</userinput>
+<computeroutput>Password:
++-----------+----------------------------------+
 |  Property |              Value               |
 +-----------+----------------------------------+
 |  expires  |       2014-10-10T12:51:33Z       |
@@ -102,24 +156,20 @@
 | tenant_id | 4aa51bb942be4dd0ac0555d7591f80a6 |
 |  user_id  | 7004dfa0dda84d63aef81cf7f100af01 |
 +-----------+----------------------------------+</computeroutput></screen>
-      <para>Replace <replaceable>DEMO_PASS</replaceable> with the password
-        you chose for the <literal>demo</literal> user in the Identity
-        service.</para>
+      <note>
+        <para>This command uses the password for the <literal>demo</literal>
+          user and API port 5000 which only allows regular (non-admin)
+          access to the Identity service API.</para>
+      </note>
     </step>
     <step>
-      <para>As the <literal>demo</literal> tenant and user, attempt to list
-        users to verify that you cannot execute admin-only CLI
-        commands:</para>
-      <screen><prompt>$</prompt> <userinput>keystone --os-tenant-name demo --os-username demo --os-password <replaceable>DEMO_PASS</replaceable> \
-  --os-auth-url http://controller:35357/v2.0 user-list</userinput>
-<computeroutput>You are not authorized to perform the requested action, admin_required. (HTTP 403)</computeroutput></screen>
-      <note>
-        <para>Each OpenStack service references a
-          <filename>policy.json</filename> file to determine the operations
-          available to a particular tenant, user, or role. For more
-          information, see the
-          <link xlink:href="http://docs.openstack.org/openstack-ops/content/projects_users.html">Operations Guide - Managing Projects and Users</link>.</para>
-      </note>
+      <para>As the <literal>demo</literal> user, attempt to list users
+        to verify that it cannot execute admin-only CLI commands:</para>
+      <screen><prompt>$</prompt> <userinput>openstack --os-auth-url http://controller:5000 \
+  --os-project-domain-id default --os-user-domain-id default \
+  --os-project-name demo --os-username demo --os-auth-type password \
+  user list</userinput>
+<computeroutput>ERROR: openstack You are not authorized to perform the requested action, admin_required. (HTTP 403)</computeroutput></screen>
     </step>
   </procedure>
 </section>

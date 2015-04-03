@@ -10,7 +10,10 @@
   xml:id="keystone-install">
   <title>Install and configure</title>
   <para>This section describes how to install and configure the OpenStack
-    Identity service on the controller node.</para>
+    Identity service, code-named keystone, on the controller node. For
+    performance, this configuration deploys the Apache HTTP server to
+    handle requests and Memcached to store tokens instead of a SQL
+    database.</para>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure prerequisites</title>
     <para>Before you configure the OpenStack Identity service, you must create
@@ -49,10 +52,26 @@
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
-    <title>To install and configure the components</title>
+    <title>To install and configure the Identity service components</title>
+    <note>
+       <para>Default configuration files vary by distribution. You might need
+         to add these sections and options rather than modifying existing
+         sections and options. Also, an ellipsis (...) in the configuration
+         snippets indicates potential default configuration options that you
+         should retain.</para>
+    </note>
+    <step os="ubuntu">
+      <para>By default, the <systemitem class="service">keystone</systemitem>
+        service listens on ports 5000 and 35357. However, this guide
+        configures the Apache HTTP server to listen on those ports. To avoid
+        port conflicts, disable the
+        <systemitem class="service">keystone</systemitem> service from starting
+        automatically after installation:</para>
+      <screen><prompt>#</prompt> <userinput>echo "manual" > /etc/init/keystone.override</userinput></screen>
+    </step>
     <step>
       <para>Run the following command to install the packages:</para>
-      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install keystone python-keystoneclient</userinput></screen>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install keystone python-openstackclient apache2 libapache2-mod-wsgi memcached python-memcache</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-keystone python-keystoneclient</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-keystone python-keystoneclient</userinput></screen>
     </step>
@@ -79,12 +98,19 @@ connection = mysql://keystone:<replaceable>KEYSTONE_DBPASS</replaceable>@<replac
             password you chose for the database.</para>
         </step>
         <step>
+          <para>In the <literal>[memcache]</literal> section, configure
+            the Memcache service:</para>
+          <programlisting language="ini">[memcache]
+...
+servers = localhost:11211</programlisting>
+        </step>
+        <step>
           <para>In the <literal>[token]</literal> section, configure the UUID
-            token provider and SQL driver:</para>
+            token provider and Memcached driver:</para>
           <programlisting language="ini">[token]
 ...
 provider = keystone.token.providers.uuid.Provider
-driver = keystone.token.persistence.backends.sql.Token</programlisting>
+driver = keystone.token.persistence.backends.memcache.Token</programlisting>
         </step>
         <step>
           <para>In the <literal>[revoke]</literal> section, configure
@@ -92,6 +118,13 @@ driver = keystone.token.persistence.backends.sql.Token</programlisting>
           <programlisting language="ini">[revoke]
 ...
 driver = keystone.contrib.revoke.backends.sql.Revoke</programlisting>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure the
+            log directory:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+log_dir = /var/log/keystone</programlisting>
         </step>
         <step>
           <para>(Optional) To assist with troubleshooting,
@@ -231,11 +264,81 @@ admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
       </informalfigure>
     </step>
   </procedure>
+  <procedure os="ubuntu">
+    <title>To configure the Apache HTTP server</title>
+    <step>
+      <para>Edit the <filename>/etc/apache2/apache2.conf</filename> file and
+        configure the <literal>ServerName</literal> option to reference the
+        controller node:</para>
+      <programlisting>ServerName <replaceable>controller</replaceable></programlisting>
+    </step>
+    <step>
+      <para>Create the
+        <filename>/etc/apache2/sites-available/wsgi-keystone.conf</filename>
+        file with the following content:</para>
+      <programlisting>Listen 5000
+Listen 35357
+
+&lt;VirtualHost *:5000&gt;
+    WSGIDaemonProcess keystone-public processes=5 threads=1 user=keystone display-name=%{GROUP}
+    WSGIProcessGroup keystone-public
+    WSGIScriptAlias / /var/www/cgi-bin/keystone/main
+    WSGIApplicationGroup %{GLOBAL}
+    WSGIPassAuthorization On
+    &lt;IfVersion &gt;= 2.4&gt;
+      ErrorLogFormat "%{cu}t %M"
+    &lt;/IfVersion&gt;
+    LogLevel info
+    ErrorLog /var/log/apache2/keystone-error.log
+    CustomLog /var/log/apache2/keystone-access.log combined
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:35357&gt;
+    WSGIDaemonProcess keystone-admin processes=5 threads=1 user=keystone display-name=%{GROUP}
+    WSGIProcessGroup keystone-admin
+    WSGIScriptAlias / /var/www/cgi-bin/keystone/admin
+    WSGIApplicationGroup %{GLOBAL}
+    WSGIPassAuthorization On
+    &lt;IfVersion &gt;= 2.4&gt;
+      ErrorLogFormat "%{cu}t %M"
+    &lt;/IfVersion>
+    LogLevel info
+    ErrorLog /var/log/apache2/keystone-error.log
+    CustomLog /var/log/apache2/keystone-access.log combined
+&lt;/VirtualHost&gt;</programlisting>
+    </step>
+    <step>
+      <para>Disable the default virtual host:</para>
+      <screen><prompt>#</prompt> <userinput>rm /etc/apache2/sites-enabled/000-default.conf</userinput></screen>
+    </step>
+    <step>
+      <para>Enable the Identity service virtual hosts:</para>
+      <screen><prompt>#</prompt> <userinput>ln -s /etc/apache2/sites-available/wsgi-keystone.conf /etc/apache2/sites-enabled</userinput></screen>
+    </step>
+    <step>
+      <para>Create the directory structure for the WSGI components:</para>
+      <screen><prompt>#</prompt> <userinput>mkdir -p /var/www/cgi-bin/keystone</userinput></screen>
+    </step>
+    <step>
+      <para>Copy the WSGI components from the upstream repository into this
+        directory:</para>
+      <screen><prompt>#</prompt> <userinput>curl https://raw.githubusercontent.com/openstack/keystone/master/httpd/keystone.py \
+  > /var/www/cgi-bin/keystone/main</userinput>
+<prompt>#</prompt> <userinput>curl https://raw.githubusercontent.com/openstack/keystone/master/httpd/keystone.py \
+  > /var/www/cgi-bin/keystone/admin</userinput></screen>
+    </step>
+    <step>
+      <para>Adjust ownership and permissions on this directory and the files
+        in it:</para>
+      <screen><prompt>#</prompt> <userinput>chown -R keystone:keystone /var/www/cgi-bin/keystone</userinput>
+<prompt>#</prompt> <userinput>chmod 755 /var/www/cgi-bin/keystone/*</userinput></screen>
+    </step>
+  </procedure>
   <procedure>
     <title>To finalize installation</title>
     <step os="ubuntu">
-      <para>Restart the Identity service:</para>
-      <screen><prompt>#</prompt> <userinput>service keystone restart</userinput></screen>
+      <para>Restart the Apache HTTP server:</para>
+      <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput></screen>
     </step>
     <step os="rhel;fedora;centos;opensuse;sles">
       <para>Start the Identity service and configure it to start when the
@@ -255,27 +358,18 @@ admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
         remove the SQLite database file:</para>
       <screen><prompt>#</prompt> <userinput>rm -f /var/lib/keystone/keystone.db</userinput></screen>
     </step>
-    <step>
-      <para os="ubuntu;rhel;centos;fedora;opensuse;sles">By default, the Identity service stores expired tokens in the
-        database indefinitely. The accumulation of expired tokens considerably
-        increases the database size and might degrade service performance,
-        particularly in environments with limited resources.</para>
-      <para os="debian">The Keystone package already contains a cron job
+    <step os="rhel;centos;fedora;sles;opensuse;debian">
+      <para>By default, the Identity service stores expired tokens in the
+        SQL database indefinitely. The accumulation of expired tokens
+        considerably increases the database size and degrades performance
+        over time, particularly in environments with limited resources.</para>
+      <para os="sles;opensuse;debian">The packages already contain a cron job
         under <filename>/etc/cron.hourly/keystone</filename>, so it is not
-        necessary to manually configure a periodic task that purges expired tokens
-        hourly. You can however have a look at (and eventually customize) the already
-        configured script.</para>
-      <para os="opensuse;sles">The Keystone package already contains a cron job
-        under <filename>/etc/cron.hourly/openstack-keystone</filename>, so it is not
-        necessary to manually configure a periodic task that purges expired tokens
-        hourly. You can however have a look at (and eventually customize) the already
-        configured script.</para>
-      <para os="ubuntu;rhel;centos;fedora">We recommend that you use
+        necessary to manually configure a periodic task that purges expired
+        tokens.</para>
+      <para os="rhel;centos;fedora">We recommend that you use
         <systemitem class="service">cron</systemitem> to configure a periodic
         task that purges expired tokens hourly:</para>
-      <screen os="ubuntu"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
-  echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
-  >> /var/spool/cron/crontabs/keystone</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
   echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
   >> /var/spool/cron/keystone</userinput></screen>

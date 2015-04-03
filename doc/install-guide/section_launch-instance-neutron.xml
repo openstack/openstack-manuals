@@ -10,25 +10,17 @@
     <para>Most cloud images support
       <glossterm>public key authentication</glossterm> rather than conventional
       user name/password authentication. Before launching an instance, you must
-      generate a public/private key pair using <command>ssh-keygen</command>
-      and add the public key to your OpenStack environment.</para>
+      generate a public/private key pair.</para>
     <step>
       <para>Source the <literal>demo</literal> tenant credentials:</para>
       <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
     </step>
     <step>
-      <para>Generate a key pair:</para>
-      <screen><prompt>$</prompt> <userinput>ssh-keygen</userinput></screen>
+      <para>Generate and add a key pair:</para>
+      <screen><prompt>$</prompt> <userinput>nova keypair-add demo-key</userinput></screen>
     </step>
     <step>
-      <para>Add the public key to your OpenStack environment:</para>
-      <screen><prompt>$</prompt> <userinput>nova keypair-add --pub-key ~/.ssh/id_rsa.pub demo-key</userinput></screen>
-      <note>
-        <para>This command provides no output.</para>
-      </note>
-    </step>
-    <step>
-      <para>Verify addition of the public key:</para>
+      <para>Verify addition of the key pair:</para>
       <screen><prompt>$</prompt> <userinput>nova keypair-list</userinput>
 <computeroutput>+----------+-------------------------------------------------+
 | Name     | Fingerprint                                     |

@@ -3,42 +3,72 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
-  xml:id="keystone-services"
-  os="ubuntu;rhel;centos;fedora;sles;opensuse">
-  <title>Create the service entity and API endpoint</title>
-  <para>After you create tenants, users, and roles, you must create the
-    <glossterm>service</glossterm> entity and
-    <glossterm baseform="API endpoint">API endpoints</glossterm> for the
-    Identity service.</para>
+  xml:id="keystone-services">
+  <title>Create the service entity and API endpoints</title>
+  <para>The Identity service provides a catalog of services and their
+     locations. Each service that you add to your OpenStack environment
+     requires a <glossterm>service</glossterm> entity and several
+    <glossterm baseform="API endpoint">API endpoints</glossterm> in the
+    catalog.</para>
   <procedure>
     <title>To configure prerequisites</title>
+      <para>By default, the Identity service database contains no information
+        to support conventional authentication and catalog services. You must
+        use a temporary authentication token that you created in
+        <xref linkend="keystone-install"/> to initialize the service entity
+        and API endpoints for the Identity service.</para>
+      <para>You must pass the value of the authentication token to the
+        <command>openstack</command> command with the
+        <parameter>--os-token</parameter> parameter or set the
+        <envar>OS_TOKEN</envar> environment variable. Similarly, you
+        must also pass the value of the Identity service URL to the
+        <command>openstack</command> command with the
+        <parameter>--os-url</parameter> parameter or set the
+        <envar>OS_URL</envar> environment variable. This guide
+        uses environment variables to reduce command length.</para>
+      <warning>
+        <para>For security reasons, do not use the temporary authentication
+          token for longer than necessary to initialize the Identity
+          service.</para>
+      </warning>
     <step>
-      <para>Set the <envar>OS_SERVICE_TOKEN</envar> and
-        <envar>OS_SERVICE_ENDPOINT</envar> environment variables, as described
-        in <xref linkend="keystone-users"/>.</para>
+      <para>Configure the authentication token:</para>
+      <screen><prompt>$</prompt> <userinput>export OS_TOKEN=<replaceable>ADMIN_TOKEN</replaceable></userinput></screen>
+      <para>Replace <replaceable>ADMIN_TOKEN</replaceable> with the
+        authentication token that you generated in
+        <xref linkend="keystone-install"/>. For example:</para>
+      <screen><prompt>$</prompt> <userinput>export OS_TOKEN=294a4c8a8a475f9b9836</userinput></screen>
+    </step>
+    <step>
+      <para>Configure the endpoint URL:</para>
+      <screen><prompt>$</prompt> <userinput>export OS_URL=http://<replaceable>controller</replaceable>:35357/v2.0</userinput></screen>
     </step>
   </procedure>
   <procedure>
     <title>To create the service entity and API endpoints</title>
+    <note os="debian">
+      <para>The packages can automatically create the service entity and
+        API endpoints.</para>
+    </note>
     <step>
       <para>The Identity service manages a catalog of services in your
-        OpenStack environment. Services use this catalog to locate other
-        services in your environment.</para>
+        OpenStack environment. Services use this catalog to determine
+        the other services available in your environment.</para>
       <para>Create the service entity for the Identity service:</para>
-      <screen><prompt>$</prompt> <userinput>keystone service-create --name keystone --type identity \
-  --description "OpenStack Identity"</userinput>
+      <screen><prompt>$</prompt> <userinput>openstack service create --type identity \
+  --description "OpenStack Identity" keystone</userinput>
 <computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
+| Field       | Value                            |
 +-------------+----------------------------------+
-| description |        OpenStack Identity        |
-|   enabled   |               True               |
-|      id     | 15c11a23667e427e91bc31335b45f4bd |
-|     name    |             keystone             |
-|     type    |             identity             |
+| description | OpenStack Identity               |
+| enabled     | True                             |
+| id          | 4ddaae90388b4ebc9d252ec2252d8d10 |
+| name        | keystone                         |
+| type        | identity                         |
 +-------------+----------------------------------+</computeroutput></screen>
       <note>
-        <para>Because OpenStack generates IDs dynamically, you will see
-          different values from this example command output.</para>
+        <para>OpenStack generates IDs dynamically, so you will see
+          different values in the example command output.</para>
       </note>
     </step>
     <step>
@@ -46,7 +76,7 @@
         with the services in your OpenStack environment. Services use this
         catalog to determine how to communicate with other services in your
         environment.</para>
-      <para>OpenStack provides three API endpoint variations for each service:
+      <para>OpenStack uses three API endpoint variants for each service:
         admin, internal, and public. The admin API endpoint allows modifying
         users and tenants by default, while the public and internal APIs
         do not. In a production environment, the variants might reside on
@@ -55,35 +85,33 @@
         outside the cloud for management tools, the admin API network might be
         protected, while the internal API network is connected to each host.
         Also, OpenStack supports multiple regions for scalability. For
-        simplicity, this configuration uses the management network for all
-        endpoint variations and the <literal>regionOne</literal> region.</para>
+        simplicity, this guide uses the management network for all
+        endpoint variations and the default <literal>regionOne</literal>
+        region.</para>
       <para>Create the Identity service API endpoints:</para>
-      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ identity / {print $2}') \
+      <screen><prompt>$</prompt> <userinput>openstack endpoint create \
   --publicurl http://<replaceable>controller</replaceable>:5000/v2.0 \
   --internalurl http://<replaceable>controller</replaceable>:5000/v2.0 \
   --adminurl http://<replaceable>controller</replaceable>:35357/v2.0 \
-  --region regionOne</userinput>
-<computeroutput>+-------------+----------------------------------+
-|   Property  |             Value                |
-+-------------+----------------------------------+
-|   adminurl  |   http://controller:35357/v2.0   |
-|      id     | 11f9c625a3b94a3f8e66bf4e5de2679f |
-| internalurl |   http://controller:5000/v2.0    |
-|  publicurl  |   http://controller:5000/v2.0    |
-|    region   |           regionOne              |
-|  service_id | 15c11a23667e427e91bc31335b45f4bd |
-+-------------+----------------------------------+</computeroutput></screen>
-      <note>
-        <para>This command references the ID of the service that you created
-          in the previous step.</para>
-      </note>
+  --region regionOne \
+  identity</userinput>
+<computeroutput>+--------------+----------------------------------+
+| Field        | Value                            |
++--------------+----------------------------------+
+| adminurl     | http://controller:35357/v2.0     |
+| id           | 4a9ffc04b8eb4848a49625a3df0170e5 |
+| internalurl  | http://controller:5000/v2.0      |
+| publicurl    | http://controller:5000/v2.0      |
+| region       | regionOne                        |
+| service_id   | 4ddaae90388b4ebc9d252ec2252d8d10 |
+| service_name | keystone                         |
+| service_type | identity                         |
++--------------+----------------------------------+</computeroutput></screen>
     </step>
   </procedure>
   <note>
     <para>Each service that you add to your OpenStack environment requires
-      adding information such as API endpoints to the Identity service. The
-      sections of this guide that cover service installation include steps
-      to add the appropriate information to the Identity service.</para>
+      one or more service entities and API endpoints in the Identity
+      service.</para>
   </note>
 </section>
