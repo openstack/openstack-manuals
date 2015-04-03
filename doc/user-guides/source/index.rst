@@ -22,12 +22,12 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   intro-user.rst
+   enduser/intro-user.rst
    dashboard.rst
    cli.rst
-   sdk.rst
-   cli_cheat_sheet.rst
-   hot-guide/hot.rst
+   enduser/sdk.rst
+   enduser/cli_cheat_sheet.rst
+   enduser/hot-guide/hot.rst
 
 Indices and tables
 ~~~~~~~~~~~~~~~~~~

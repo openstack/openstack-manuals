@@ -52,7 +52,7 @@ Control the state of an instance
    pause, un-pause, suspend, resume, soft or hard reboot, or terminate
    an instance (items in red are disabled).
 
-.. figure:: figures/change_instance_state.png
+.. figure:: ../figures/change_instance_state.png
 
    **Figure Dashboard—Instance Actions**
 

@@ -22,7 +22,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   intro-admin.rst
+   adminuser/intro-admin.rst
    dashboard.rst
    cli.rst
 

@@ -8,7 +8,7 @@ Launch instances
 .. toctree::
    :maxdepth: 2
 
-   common/cli_nova_launch_instance_from_volume.rst
+   ../common/cli_nova_launch_instance_from_volume.rst
 
 Instances are virtual machines that run inside the cloud.
 

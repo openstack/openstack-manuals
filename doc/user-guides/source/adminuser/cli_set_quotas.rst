@@ -47,6 +47,6 @@ node.
 .. toctree::
    :maxdepth: 2
 
-   common/cli_set_compute_quotas.rst
+   ../common/cli_set_compute_quotas.rst
    cli_cinder_quotas.rst
-   common/networking_advanced_quotas.rst
+   ../common/networking_advanced_quotas.rst

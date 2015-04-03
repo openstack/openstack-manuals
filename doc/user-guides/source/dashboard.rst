@@ -20,19 +20,19 @@ sizes of server instances.
 .. toctree::
    :maxdepth: 2
 
-   log_in_dashboard.rst
-   dashboard_manage_images.rst
-   configure_access_and_security_for_instances.rst
-   dashboard_create_networks.rst
-   dashboard_manage_containers.rst
-   dashboard_manage_volumes.rst
-   dashboard_stacks.rst
-   dashboard_databases.rst
+   common/log_in_dashboard.rst
+   enduser/configure_access_and_security_for_instances.rst
+   enduser/dashboard_create_networks.rst
+   enduser/dashboard_manage_containers.rst
+   enduser/dashboard_manage_volumes.rst
+   enduser/dashboard_stacks.rst
+   enduser/dashboard_databases.rst
 
-   dashboard_admin_manage_roles.rst
-   dashboard_manage_instances.rst
-   dashboard_manage_flavors.rst
-   dashboard_set_quotas
-   dashboard_manage_resources.rst
-   dashboard_manage_host_aggregates.rst
-   dashboard_admin_manage_stacks.rst
+   adminuser/dashboard_manage_images.rst
+   adminuser/dashboard_admin_manage_roles.rst
+   adminuser/dashboard_manage_instances.rst
+   adminuser/dashboard_manage_flavors.rst
+   adminuser/dashboard_set_quotas
+   adminuser/dashboard_manage_resources.rst
+   adminuser/dashboard_manage_host_aggregates.rst
+   adminuser/dashboard_admin_manage_stacks.rst
