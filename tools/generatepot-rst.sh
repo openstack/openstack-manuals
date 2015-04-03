@@ -26,7 +26,7 @@ fi
 OPTS=""
 # We need to build guides with all tags so that all strings get
 # extracted.
-if [ "$DOCNAME" = "playground-user-guide" ] ; then
+if [ "$DOCNAME" = "user-guides" ] ; then
     OPTS="-t user_only -t admin_only"
 fi
 
