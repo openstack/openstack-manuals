@@ -1,11 +1,13 @@
+:orphan:
+
 .. _hot_advanced_topics:
 
-###############
+===============
 Advanced topics
-###############
+===============
 
 Networking
-==========
+~~~~~~~~~~
 
 Load balancer
 -------------
@@ -23,7 +25,7 @@ VPN
 TODO
 
 Auto scaling
-============
+~~~~~~~~~~~~
 
 Alarming
 --------
