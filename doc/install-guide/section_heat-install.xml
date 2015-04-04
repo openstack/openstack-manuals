@@ -74,6 +74,15 @@
           <screen><prompt>$</prompt> <userinput>keystone role-create --name heat_stack_owner</userinput></screen>
         </step>
         <step>
+          <para>Create the heat domain in Identity service:</para>
+          <screen><prompt>$</prompt> <userinput>heat-keystone-setup-domain \
+                  --stack-user-domain-name heat_user_domain \
+                  --stack-domain-admin heat_domain_admin \
+                  --stack-domain-admin-password <replaceable>HEAT_DOMAIN_PASS</replaceable></userinput></screen>
+          <para>Replace <replaceable>HEAT_DOMAIN_PASS</replaceable> with a suitable
+            password.</para>
+        </step>
+        <step>
           <para>Add the <literal>heat_stack_owner</literal> role to the
             <literal>demo</literal> tenant and user:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --user demo --tenant demo --role heat_stack_owner</userinput></screen>
@@ -225,6 +234,18 @@ auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0</programlistin
 ...
 heat_metadata_server_url = http://<replaceable>controller</replaceable>:8000
 heat_waitcondition_server_url = http://<replaceable>controller</replaceable>:8000/v1/waitcondition</programlisting>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, configure
+            information about the heat Identity service domain:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+stack_domain_admin = heat_domain_admin
+stack_domain_admin_password = <replaceable>HEAT_DOMAIN_PASS</replaceable>
+stack_user_domain_name = heat_user_domain</programlisting>
+          <para>Replace <replaceable>HEAT_DOMAIN_PASS</replaceable> with the
+            password you chose for the admin user of the
+            <literal>heat</literal> user domain in the Identity service.</para>
         </step>
         <step>
           <para>(Optional) To assist with troubleshooting, enable verbose
