@@ -59,13 +59,15 @@
             example.</para>
     </note>
     <section xml:id="ssl-configuration">
-        <title>SSL configuration</title>
-        <para>To enable SSL with client authentication, modify the
-                <literal>[ssl]</literal> section in the
+        <title>Client authentication with keystone-all</title>
+        <para>When running keystone-all, the server can be configured to
+              enable SSL with client authentication using the following
+              instructions. Modify the
+              <literal>[eventlet_server_ssl]</literal> section in the
                 <filename>etc/keystone.conf</filename> file. The
             following SSL configuration example uses the included
             sample certificates:</para>
-        <programlisting language="ini">[ssl]
+        <programlisting language="ini">[eventlet_server_ssl]
 enable = True
 certfile = &lt;path to keystone.pem&gt;
 keyfile = &lt;path to keystonekey.pem&gt;
@@ -96,5 +98,9 @@ cert_required = True</programlisting>
                     client certificate. Default is False.</para>
             </listitem>
         </itemizedlist>
+        <para>When running the Identity Service as a WSGI service in a web
+        server such as Apache httpd, this configuration is done in the web
+        server instead. In this case the options in the
+        <literal>[eventlet_server_ssl]</literal> section are ignored.</para>
     </section>
 </section>
