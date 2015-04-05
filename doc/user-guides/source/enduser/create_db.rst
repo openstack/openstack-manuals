@@ -1,6 +1,8 @@
 .. meta::
     :scope: user_only
 
+.. _create_db:
+
 ============================
 Create and access a database
 ============================
