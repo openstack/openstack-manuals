@@ -5,11 +5,11 @@
   version="5.0"
   xml:id="section_telemetry-measurements">
   <title>Measurements</title>
-  <para>The Telemetry module collects metrics within an OpenStack
-    deployment. This section provides a brief summary about metrics
+  <para>The Telemetry module collects meters within an OpenStack
+    deployment. This section provides a brief summary about meters
     format and origin and also contains the list of available
     meters.</para>
-  <para>Telemetry collects metrics by polling the infrastructure
+  <para>Telemetry collects meters by polling the infrastructure
     elements and also by consuming the notifications emitted
     by other OpenStack services. For more information about the
     polling mechanism and notifications see
@@ -27,9 +27,9 @@
       "http://docs.openstack.org/developer/ceilometer/install/manual.html">
       Telemetry manual installation</link> description.</para>
   </note>
-  <para>Telemetry uses the following metric types:</para>
+  <para>Telemetry uses the following meter types:</para>
   <table rules="all">
-    <caption>Telemetry metric types</caption>
+    <caption>Telemetry meter types</caption>
     <col width="25%"/>
     <col width="75%"/>
     <thead>
@@ -92,7 +92,7 @@
       of meters still contains existence type and other event related
       items. The proper way of using Telemetry is to configure it to
       use the event store and turn off the collection of the event
-      related metrics. For further information about events see <link xlink:href=
+      related meters. For further information about events see <link xlink:href=
       "http://docs.openstack.org/developer/ceilometer/events.html">Events
       section</link> in the Telemetry documentation. For further
       information about how to turn on and off meters see
@@ -100,13 +100,13 @@
       also note that currently no migration is available to move the already
       existing event type samples to the event store.</para>
   </note>
-  <section xml:id="section_telemetry-compute-metrics">
+  <section xml:id="section_telemetry-compute-meters">
     <title>OpenStack Compute</title>
     <para>The following meters are collected for OpenStack Compute:</para>
     <xi:include href="tables/ceilometer-measurements-nova.xml"/>
     <para>The Telemetry module supports to create new meters by using
       transformers. For more details about transformers see
-      <xref linkend="section_telemetry-pipeline-transformers"/>. Among the metrics
+      <xref linkend="section_telemetry-pipeline-transformers"/>. Among the meters
       gathered from Libvirt and HyperV there are a few ones, which are generated from
       other meters.  The list of meters that are created by using the
       <literal>rate_of_change</literal> transformer from the above table is
@@ -162,7 +162,7 @@
       the image balloon driver.</para>
     </note>
     <para>OpenStack Compute is capable of collecting <literal>CPU</literal>
-      related metrics from the compute host machines. In order to use that
+      related meters from the compute host machines. In order to use that
       you need to set the <option>compute_monitors</option> option to
       <literal>ComputeDriverCPUMonitor</literal> in the <filename>nova.conf</filename>
       configuration file. For further information see the Compute configuration
@@ -174,7 +174,7 @@
       for OpenStack Compute:</para>
     <xi:include href="tables/ceilometer-measurements-nova-host.xml"/>
   </section>
-  <section xml:id="section_telemetry-ironic-metrics">
+  <section xml:id="section_telemetry-ironic-meters">
     <title>Bare metal module for OpenStack</title>
     <para>Telemetry captures notifications that are emitted by the
       Bare metal module for OpenStack. The source of the notifications
@@ -189,11 +189,11 @@
     <para>The following meters are recorded for the Bare metal module:</para>
     <xi:include href="tables/ceilometer-measurements-ironic.xml"/>
   </section>
-  <section xml:id="section_telemetry-ipmi-metrics">
+  <section xml:id="section_telemetry-ipmi-meters">
     <title>IPMI based meters</title>
     <para>Another way of gathering IPMI based data is to use IPMI
       sensors independently from the Bare metal module's components.
-      Same meters as <xref linkend="section_telemetry-ironic-metrics"/>
+      Same meters as <xref linkend="section_telemetry-ironic-meters"/>
       could be fetched except that origin is <literal>Pollster</literal>
       instead of <literal>Notification</literal>.
     </para>
@@ -214,33 +214,33 @@
         meters are recorded from capable platform:</para>
     <xi:include href="tables/ceilometer-measurements-ipmi.xml"/>
   </section>
-  <section xml:id="section_telemetry-snmp-metrics">
+  <section xml:id="section_telemetry-snmp-meters">
     <title>SNMP based meters</title>
-    <para>Telemetry supports gathering SNMP based generic host metrics.
+    <para>Telemetry supports gathering SNMP based generic host meters.
       In order to be able to collect this data you need to run
       <systemitem class="service">smpd</systemitem> on each target host.</para>
     <para>The following meters are available about the host machines
       by using SNMP:</para>
     <xi:include href="tables/ceilometer-measurements-snmp.xml"/>
   </section>
-  <section xml:id="section_telemetry-image-metrics">
+  <section xml:id="section_telemetry-image-meters">
     <title>OpenStack Image Service</title>
     <para>The following meters are collected for OpenStack Image Service:</para>
     <xi:include href="tables/ceilometer-measurements-glance.xml"/>
   </section>
-  <section xml:id="section_telemetry-volume-metrics">
+  <section xml:id="section_telemetry-volume-meters">
     <title>OpenStack Block Storage</title>
     <para>The following meters are collected for OpenStack Block Storage:</para>
     <xi:include href="tables/ceilometer-measurements-cinder.xml"/>
   </section>
-  <section xml:id="section_telemetry-object-storage-metrics">
+  <section xml:id="section_telemetry-object-storage-meters">
     <title>OpenStack Object Storage</title>
     <para>The following meters are collected for OpenStack Object Storage:</para>
     <xi:include href="tables/ceilometer-measurements-swift.xml"/>
   </section>
-  <section xml:id="section_telemetry-ceph-object-storage-metrics">
+  <section xml:id="section_telemetry-ceph-object-storage-meters">
     <title>Ceph Object Storage</title>
-    <para>In order to gather metrics from Ceph, you have to install and
+    <para>In order to gather meters from Ceph, you have to install and
       configure the Ceph Object Gateway (radosgw) as it is described
       in the <link xlink:href="http://docs.ceph.com/docs/master/radosgw/">
       Installation Manual</link>. You have to enable <link xlink:href=
@@ -264,17 +264,17 @@
       </para>
     </note>
   </section>
-  <section xml:id="section_telemetry-keystone-metrics">
+  <section xml:id="section_telemetry-keystone-meters">
     <title>OpenStack Identity</title>
     <para>The following meters are collected for OpenStack Identity:</para>
     <xi:include href="tables/ceilometer-measurements-keystone.xml"/>
   </section>
-  <section xml:id="section_telemetry-network-metrics">
+  <section xml:id="section_telemetry-network-meters">
     <title>OpenStack Networking</title>
     <para>The following meters are collected for OpenStack Networking:</para>
     <xi:include href="tables/ceilometer-measurements-neutron.xml"/>
   </section>
-  <section xml:id="section_telemetry-sdn-metrics">
+  <section xml:id="section_telemetry-sdn-meters">
     <title>SDN controllers</title>
     <para>The following meters are collected for SDN:</para>
     <xi:include href="tables/ceilometer-measurements-sdn.xml"/>
@@ -282,38 +282,38 @@
       In order to enable these meters, each driver needs to be properly
       configured.</para>
   </section>
-  <section xml:id="section_telemetry-lbaas-metrics">
+  <section xml:id="section_telemetry-lbaas-meters">
     <title>LoadBalancer as a Service (LBaaS)</title>
     <para>The following meters are collected for LBaaS:</para>
     <xi:include href="tables/ceilometer-measurements-lbaas.xml"/>
   </section>
-  <section xml:id="section_telemetry-vpnaas-metrics">
+  <section xml:id="section_telemetry-vpnaas-meters">
     <title>VPN as a Service (VPNaaS)</title>
     <para>The following meters are collected for VPNaaS:</para>
     <xi:include href="tables/ceilometer-measurements-vpnaas.xml"/>
   </section>
-  <section xml:id="section_telemetry-fwaas-metrics">
+  <section xml:id="section_telemetry-fwaas-meters">
     <title>Firewall as a Service (FWaaS)</title>
     <para>The following meters are collected for FWaaS:</para>
     <xi:include href="tables/ceilometer-measurements-fwaas.xml"/>
   </section>
-  <section xml:id="section_telemetry-orchestration-metrics">
+  <section xml:id="section_telemetry-orchestration-meters">
     <title>Orchestration module</title>
     <para>The following meters are collected for the Orchestration module:</para>
     <xi:include href="tables/ceilometer-measurements-heat.xml"/>
   </section>
-  <section xml:id="section_telemetry-data-processing-metrics">
+  <section xml:id="section_telemetry-data-processing-meters">
     <title>Data processing service for OpenStack</title>
     <para>The following meters are collected for the Data processing
       service for OpenStack:</para>
     <xi:include href="tables/ceilometer-measurements-sahara.xml"/>
   </section>
-  <section xml:id="section_telemetry-key-value-store-metrics">
+  <section xml:id="section_telemetry-key-value-store-meters">
     <title>Key Value Store module</title>
     <para>The following meters are collected for the Key Value Store module:</para>
     <xi:include href="tables/ceilometer-measurements-magnetodb.xml"/>
   </section>
-  <section xml:id="section_telemetry-energy-metrics">
+  <section xml:id="section_telemetry-energy-meters">
     <title>Energy</title>
     <para>The following energy related meters are available:</para>
     <xi:include href="tables/ceilometer-measurements-kwapi.xml"/>

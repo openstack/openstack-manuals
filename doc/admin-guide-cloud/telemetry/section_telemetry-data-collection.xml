@@ -166,7 +166,7 @@
         behind the proxy of Object Store. This additional component emits notifications containing
         data-flow-oriented meters, namely the storage.objects.(incoming|outgoing).bytes values.
         The list of these meters are listed in <xref linkend=
-        "section_telemetry-object-storage-metrics"/>,
+        "section_telemetry-object-storage-meters"/>,
         marked with <literal>notification</literal> as origin.</para>
       <para>The instructions on how to install this middleware can be found in <link xlink:href=
         "http://docs.openstack.org/juno/install-guide/install/apt/content/ceilometer-agent-swift.html">
@@ -253,7 +253,7 @@
           <para>Hardware resources via SNMP</para>
         </listitem>
         <listitem>
-          <para>Energy consumption metrics via <link xlink:href="https://launchpad.net/kwapi">
+          <para>Energy consumption meters via <link xlink:href="https://launchpad.net/kwapi">
             Kwapi</link> framework</para>
         </listitem>
       </itemizedlist>
@@ -286,9 +286,9 @@
         <xref linkend="section_telemetry-supported-hypervisors"/>.
         The compute agent uses the API of the hypervisor installed on the compute hosts.
         Therefore the supported meters may be different in case of each virtualization
-        back end, as each inspection tool provides a different set of metrics.</para>
+        back end, as each inspection tool provides a different set of meters.</para>
       <para>The list of collected meters can be found in <xref linkend=
-        "section_telemetry-compute-metrics"/>.
+        "section_telemetry-compute-meters"/>.
         The support column provides the information that which meter is available for
         each hypervisor supported by the Telemetry module.</para>
       <note>
@@ -381,7 +381,7 @@
         access. The samples are sent via AMQP to the collector.
       </para>
       <para>The list of collected meters can be found in <xref linkend=
-        "section_telemetry-ironic-metrics"/>.</para>
+        "section_telemetry-ironic-meters"/>.</para>
       <note>
         <para>Do not deploy both the IPMI agent and the Bare metal module for OpenStack on
           one compute node. If <option>conductor.send_sensor_data</option> set, this
@@ -757,7 +757,7 @@ sinks:
           unit: "%"
           type: "gauge"
           expr: "100 * $(memory.usage) / $(memory)"</programlisting>
-          <para>To demonstrate the use of metadata, here is the implementation of a silly metric
+          <para>To demonstrate the use of metadata, here is the implementation of a silly meter
             that shows average CPU time per core:</para>
           <programlisting>transformers:
     - name: "arithmetic"
