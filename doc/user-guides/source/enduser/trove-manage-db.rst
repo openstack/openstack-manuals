@@ -16,9 +16,9 @@ handling complex administrative tasks.
    backup_db.rst
    backup_db_incremental.rst
    manage_db_config.rst
+   set_up_replication.rst
 
 .. TODO(lmichaels):
    As these files get converted, add them to the toctree:
-   - set_up_replication.rst
    - set_up_clustering.rst
 
