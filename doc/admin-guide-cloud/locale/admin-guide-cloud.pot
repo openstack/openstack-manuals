@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-04-04 06:08+0000\n"
+"POT-Creation-Date: 2015-04-06 06:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgid "Excerpted from a blog post by <link href=\"http://swiftstack.com/blog/201
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:13(para)
-msgid "An OpenStack Object Storage cluster is a collection of many daemons that work together across many nodes. With so many different components, you must be able to tell what is going on inside the cluster. Tracking server-level metrics like CPU utilization, load, memory consumption, disk usage and utilization, and so on is necessary, but not sufficient."
+msgid "An OpenStack Object Storage cluster is a collection of many daemons that work together across many nodes. With so many different components, you must be able to tell what is going on inside the cluster. Tracking server-level meters like CPU utilization, load, memory consumption, disk usage and utilization, and so on is necessary, but not sufficient."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:20(para)
@@ -35,7 +35,7 @@ msgid "Swift Recon"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:28(para)
-msgid "The Swift Recon middleware (see <link href=\"http://swift.openstack.org/admin_guide.html#cluster-telemetry-and-monitoring\">http://swift.openstack.org/admin_guide.html#cluster-telemetry-and-monitoring</link>) provides general machine statistics, such as load average, socket statistics, <code>/proc/meminfo</code> contents, and so on, as well as Swift-specific metrics:"
+msgid "The Swift Recon middleware (see <link href=\"http://swift.openstack.org/admin_guide.html#cluster-telemetry-and-monitoring\">http://swift.openstack.org/admin_guide.html#cluster-telemetry-and-monitoring</link>) provides general machine statistics, such as load average, socket statistics, <code>/proc/meminfo</code> contents, and so on, as well as Swift-specific meters:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:36(para)
@@ -59,7 +59,7 @@ msgid "Swift Recon is middleware that is installed in the object servers pipelin
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:58(para)
-msgid "There are some good Object Storage cluster statistics but the general server metrics overlap with existing server monitoring systems. To get the Swift-specific metrics into a monitoring system, they must be polled. Swift Recon essentially acts as a middleware metrics collector. The process that feeds metrics to your statistics system, such as <literal>collectd</literal> and <literal>gmond</literal>, probably already runs on the storage node. So, you can choose to either talk to Swift Recon or collect the metrics directly."
+msgid "There are some good Object Storage cluster statistics but the general server meters overlap with existing server monitoring systems. To get the Swift-specific meters into a monitoring system, they must be polled. Swift Recon essentially acts as a middleware meters collector. The process that feeds meters to your statistics system, such as <literal>collectd</literal> and <literal>gmond</literal>, probably already runs on the storage node. So, you can choose to either talk to Swift Recon or collect the meters directly."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:70(title)
@@ -67,23 +67,23 @@ msgid "Swift-Informant"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:71(para)
-msgid "Florian Hines developed the Swift-Informant middleware (see <link href=\"https://github.com/pandemicsyn/swift-informant\">https://github.com/pandemicsyn/swift-informant</link>) to get real-time visibility into Object Storage client requests. It sits in the pipeline for the proxy server, and after each request to the proxy server, sends three metrics to a StatsD server (see <link href=\"http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/\">http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/</link>):"
+msgid "Florian Hines developed the Swift-Informant middleware (see <link href=\"https://github.com/pandemicsyn/swift-informant\">https://github.com/pandemicsyn/swift-informant</link>) to get real-time visibility into Object Storage client requests. It sits in the pipeline for the proxy server, and after each request to the proxy server, sends three meters to a StatsD server (see <link href=\"http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/\">http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/</link>):"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:83(para)
-msgid "A counter increment for a metric like <code>obj.GET.200</code> or <code>cont.PUT.404</code>."
+msgid "A counter increment for a meter like <code>obj.GET.200</code> or <code>cont.PUT.404</code>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:88(para)
-msgid "Timing data for a metric like <code>acct.GET.200</code> or <code>obj.GET.200</code>. [The README says the metrics look like <code>duration.acct.GET.200</code>, but I do not see the <literal>duration</literal> in the code. I am not sure what the Etsy server does but our StatsD server turns timing metrics into five derivative metrics with new segments appended, so it probably works as coded. The first metric turns into <code>acct.GET.200.lower</code>, <code>acct.GET.200.upper</code>, <code>acct.GET.200.mean</code>, <code>acct.GET.200.upper_90</code>, and <code>acct.GET.200.count</code>]."
+msgid "Timing data for a meter like <code>acct.GET.200</code> or <code>obj.GET.200</code>. [The README says the meters look like <code>duration.acct.GET.200</code>, but I do not see the <literal>duration</literal> in the code. I am not sure what the Etsy server does but our StatsD server turns timing meters into five derivative meters with new segments appended, so it probably works as coded. The first meter turns into <code>acct.GET.200.lower</code>, <code>acct.GET.200.upper</code>, <code>acct.GET.200.mean</code>, <code>acct.GET.200.upper_90</code>, and <code>acct.GET.200.count</code>]."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:105(para)
-msgid "A counter increase by the bytes transferred for a metric like <code>tfer.obj.PUT.201</code>."
+msgid "A counter increase by the bytes transferred for a meter like <code>tfer.obj.PUT.201</code>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:110(para)
-msgid "This is good for getting a feel for the quality of service clients are experiencing with the timing metrics, as well as getting a feel for the volume of the various permutations of request server type, command, and response code. Swift-Informant also requires no change to core Object Storage code because it is implemented as middleware. However, it gives you no insight into the workings of the cluster past the proxy server. If the responsiveness of one storage node degrades, you can only see that some of your requests are bad, either as high latency or error status codes. You do not know exactly why or where that request tried to go. Maybe the container server in question was on a good node but the object server was on a different, poorly-performing node."
+msgid "This is good for getting a feel for the quality of service clients are experiencing with the timing meters, as well as getting a feel for the volume of the various permutations of request server type, command, and response code. Swift-Informant also requires no change to core Object Storage code because it is implemented as middleware. However, it gives you no insight into the workings of the cluster past the proxy server. If the responsiveness of one storage node degrades, you can only see that some of your requests are bad, either as high latency or error status codes. You do not know exactly why or where that request tried to go. Maybe the container server in question was on a good node but the object server was on a different, poorly-performing node."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:126(title)
@@ -91,15 +91,15 @@ msgid "Statsdlog"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:127(para)
-msgid "Florian's <link href=\"https://github.com/pandemicsyn/statsdlog\">Statsdlog</link> project increments StatsD counters based on logged events. Like Swift-Informant, it is also non-intrusive, but statsdlog can track events from all Object Storage daemons, not just proxy-server. The daemon listens to a UDP stream of syslog messages and StatsD counters are incremented when a log line matches a regular expression. Metric names are mapped to regex match patterns in a JSON file, allowing flexible configuration of what metrics are extracted from the log stream."
+msgid "Florian's <link href=\"https://github.com/pandemicsyn/statsdlog\">Statsdlog</link> project increments StatsD counters based on logged events. Like Swift-Informant, it is also non-intrusive, but statsdlog can track events from all Object Storage daemons, not just proxy-server. The daemon listens to a UDP stream of syslog messages and StatsD counters are incremented when a log line matches a regular expression. Meter names are mapped to regex match patterns in a JSON file, allowing flexible configuration of what meters are extracted from the log stream."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:138(para)
-msgid "Currently, only the first matching regex triggers a StatsD counter increment, and the counter is always incremented by one. There is no way to increment a counter by more than one or send timing data to StatsD based on the log line content. The tool could be extended to handle more metrics for each line and data extraction, including timing data. But a coupling would still exist between the log textual format and the log parsing regexes, which would themselves be more complex to support multiple matches for each line and data extraction. Also, log processing introduces a delay between the triggering event and sending the data to StatsD. It would be preferable to increment error counters where they occur and send timing data as soon as it is known to avoid coupling between a log string and a parsing regex and prevent a time delay between events and sending data to StatsD."
+msgid "Currently, only the first matching regex triggers a StatsD counter increment, and the counter is always incremented by one. There is no way to increment a counter by more than one or send timing data to StatsD based on the log line content. The tool could be extended to handle more meters for each line and data extraction, including timing data. But a coupling would still exist between the log textual format and the log parsing regexes, which would themselves be more complex to support multiple matches for each line and data extraction. Also, log processing introduces a delay between the triggering event and sending the data to StatsD. It would be preferable to increment error counters where they occur and send timing data as soon as it is known to avoid coupling between a log string and a parsing regex and prevent a time delay between events and sending data to StatsD."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:154(para)
-msgid "The next section describes another method for gathering Object Storage operational metrics."
+msgid "The next section describes another method for gathering Object Storage operational meters."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:158(title)
@@ -107,15 +107,15 @@ msgid "Swift StatsD logging"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:159(para)
-msgid "StatsD (see <link href=\"http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/\">http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/</link>) was designed for application code to be deeply instrumented; metrics are sent in real-time by the code that just noticed or did something. The overhead of sending a metric is extremely low: a <code>sendto</code> of one UDP packet. If that overhead is still too high, the StatsD client library can send only a random portion of samples and StatsD approximates the actual number when flushing metrics upstream."
+msgid "StatsD (see <link href=\"http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/\">http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/</link>) was designed for application code to be deeply instrumented; meters are sent in real-time by the code that just noticed or did something. The overhead of sending a meter is extremely low: a <code>sendto</code> of one UDP packet. If that overhead is still too high, the StatsD client library can send only a random portion of samples and StatsD approximates the actual number when flushing meters upstream."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:170(para)
-msgid "To avoid the problems inherent with middleware-based monitoring and after-the-fact log processing, the sending of StatsD metrics is integrated into Object Storage itself. The submitted change set (see <link href=\"https://review.openstack.org/#change,6058\">https://review.openstack.org/#change,6058</link>) currently reports 124 metrics across 15 Object Storage daemons and the tempauth middleware. Details of the metrics tracked are in the <link href=\"http://docs.openstack.org/developer/swift/admin_guide.html\">Administrator's Guide</link>."
+msgid "To avoid the problems inherent with middleware-based monitoring and after-the-fact log processing, the sending of StatsD meters is integrated into Object Storage itself. The submitted change set (see <link href=\"https://review.openstack.org/#change,6058\">https://review.openstack.org/#change,6058</link>) currently reports 124 meters across 15 Object Storage daemons and the tempauth middleware. Details of the meters tracked are in the <link href=\"http://docs.openstack.org/developer/swift/admin_guide.html\">Administrator's Guide</link>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:181(para)
-msgid "The sending of metrics is integrated with the logging framework. To enable, configure <code>log_statsd_host</code> in the relevant config file. You can also specify the port and a default sample rate. The specified default sample rate is used unless a specific call to a statsd logging method (see the list below) overrides it. Currently, no logging calls override the sample rate, but it is conceivable that some metrics may require accuracy (sample_rate == 1) while others may not."
+msgid "The sending of meters is integrated with the logging framework. To enable, configure <code>log_statsd_host</code> in the relevant config file. You can also specify the port and a default sample rate. The specified default sample rate is used unless a specific call to a statsd logging method (see the list below) overrides it. Currently, no logging calls override the sample rate, but it is conceivable that some meters may require accuracy (sample_rate == 1) while others may not."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:196(para)
@@ -123,7 +123,7 @@ msgid "Then the LogAdapter object returned by <code>get_logger()</code>, usually
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:202(para)
-msgid "<code>set_statsd_prefix(self, prefix)</code> Sets the client library stat prefix value which gets prefixed to every metric. The default prefix is the \"name\" of the logger such as \"object-server\", \"container-auditor\", and so on. This is currently used to turn \"proxy-server\" into one of \"proxy-server.Account\", \"proxy-server.Container\", or \"proxy-server.Object\" as soon as the Controller object is determined and instantiated for the request."
+msgid "<code>set_statsd_prefix(self, prefix)</code> Sets the client library stat prefix value which gets prefixed to every meter. The default prefix is the \"name\" of the logger such as \"object-server\", \"container-auditor\", and so on. This is currently used to turn \"proxy-server\" into one of \"proxy-server.Account\", \"proxy-server.Container\", or \"proxy-server.Object\" as soon as the Controller object is determined and instantiated for the request."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:213(para)
@@ -147,11 +147,11 @@ msgid "<code>timing_since(self, metric, orig_time, sample_rate=1)</code> Conveni
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:244(para)
-msgid "Note that these logging methods may safely be called anywhere you have a logger object. If StatsD logging has not been configured, the methods are no-ops. This avoids messy conditional logic each place a metric is recorded. These example usages show the new logging methods:"
+msgid "Note that these logging methods may safely be called anywhere you have a logger object. If StatsD logging has not been configured, the methods are no-ops. This avoids messy conditional logic each place a meter is recorded. These example usages show the new logging methods:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-monitoring.xml:287(para)
-msgid "The development team of StatsD wanted to use the <link href=\"https://github.com/sivy/py-statsd\">pystatsd</link> client library (not to be confused with a <link href=\"https://github.com/sivy/py-statsd\">similar-looking project</link> also hosted on GitHub), but the released version on PyPI was missing two desired features the latest version in GitHub had: the ability to configure a metrics prefix in the client object and a convenience method for sending timing data between \"now\" and a \"start\" timestamp you already have. So they just implemented a simple StatsD client library from scratch with the same interface. This has the nice fringe benefit of not introducing another external library dependency into Object Storage."
+msgid "The development team of StatsD wanted to use the <link href=\"https://github.com/sivy/py-statsd\">pystatsd</link> client library (not to be confused with a <link href=\"https://github.com/sivy/py-statsd\">similar-looking project</link> also hosted on GitHub), but the released version on PyPI was missing two desired features the latest version in GitHub had: the ability to configure a meters prefix in the client object and a convenience method for sending timing data between \"now\" and a \"start\" timestamp you already have. So they just implemented a simple StatsD client library from scratch with the same interface. This has the nice fringe benefit of not introducing another external library dependency into Object Storage."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/section_object-storage-admin.xml:7(title)
@@ -6865,11 +6865,11 @@ msgid "Measurements"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:8(para)
-msgid "The Telemetry module collects metrics within an OpenStack deployment. This section provides a brief summary about metrics format and origin and also contains the list of available meters."
+msgid "The Telemetry module collects meters within an OpenStack deployment. This section provides a brief summary about meters format and origin and also contains the list of available meters."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:12(para)
-msgid "Telemetry collects metrics by polling the infrastructure elements and also by consuming the notifications emitted by other OpenStack services. For more information about the polling mechanism and notifications see <xref linkend=\"section_telemetry-data-collection\"/>. There are several meters which are collected by polling and by consuming. The origin for each meter is listed in the tables below."
+msgid "Telemetry collects meters by polling the infrastructure elements and also by consuming the notifications emitted by other OpenStack services. For more information about the polling mechanism and notifications see <xref linkend=\"section_telemetry-data-collection\"/>. There are several meters which are collected by polling and by consuming. The origin for each meter is listed in the tables below."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:20(para)
@@ -6877,11 +6877,11 @@ msgid "You may need to configure Telemetry or other OpenStack services in order 
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:30(para)
-msgid "Telemetry uses the following metric types:"
+msgid "Telemetry uses the following meter types:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:32(caption)
-msgid "Telemetry metric types"
+msgid "Telemetry meter types"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:43(td) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:426(para) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:43(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:51(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:59(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:67(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:75(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:83(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:91(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:99(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:107(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:115(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:123(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:131(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:195(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:203(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-kwapi.xml:27(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:99(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:107(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:115(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:123(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:131(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:139(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:147(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova-host.xml:35(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova-host.xml:43(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova-host.xml:51(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova-host.xml:59(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-lbaas.xml:59(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-lbaas.xml:75(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-lbaas.xml:83(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:66(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:93(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:111(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:129(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:147(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:183(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:201(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:219(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:237(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:314(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:332(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:350(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:368(td)
@@ -6933,7 +6933,7 @@ msgid "The list of measurements is grouped by services which are polled by Telem
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:90(para)
-msgid "The Telemetry module supports storing notifications as events. This functionality was added later, therefore the list of meters still contains existence type and other event related items. The proper way of using Telemetry is to configure it to use the event store and turn off the collection of the event related metrics. For further information about events see <link href=\"http://docs.openstack.org/developer/ceilometer/events.html\">Events section</link> in the Telemetry documentation. For further information about how to turn on and off meters see <xref linkend=\"section_telemetry-pipeline-configuration\"/>. Please also note that currently no migration is available to move the already existing event type samples to the event store."
+msgid "The Telemetry module supports storing notifications as events. This functionality was added later, therefore the list of meters still contains existence type and other event related items. The proper way of using Telemetry is to configure it to use the event store and turn off the collection of the event related meters. For further information about events see <link href=\"http://docs.openstack.org/developer/ceilometer/events.html\">Events section</link> in the Telemetry documentation. For further information about how to turn on and off meters see <xref linkend=\"section_telemetry-pipeline-configuration\"/>. Please also note that currently no migration is available to move the already existing event type samples to the event store."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:104(title) ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:77(td)
@@ -6945,7 +6945,7 @@ msgid "The following meters are collected for OpenStack Compute:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:107(para)
-msgid "The Telemetry module supports to create new meters by using transformers. For more details about transformers see <xref linkend=\"section_telemetry-pipeline-transformers\"/>. Among the metrics gathered from Libvirt and HyperV there are a few ones, which are generated from other meters. The list of meters that are created by using the <literal>rate_of_change</literal> transformer from the above table is the following:"
+msgid "The Telemetry module supports to create new meters by using transformers. For more details about transformers see <xref linkend=\"section_telemetry-pipeline-transformers\"/>. Among the meters gathered from Libvirt and HyperV there are a few ones, which are generated from other meters. The list of meters that are created by using the <literal>rate_of_change</literal> transformer from the above table is the following:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:116(para) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:74(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:286(td)
@@ -7005,7 +7005,7 @@ msgid "To enable the libvirt <literal>memory.usage</literal> support, you need t
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:164(para)
-msgid "OpenStack Compute is capable of collecting <literal>CPU</literal> related metrics from the compute host machines. In order to use that you need to set the <placeholder-1/> option to <literal>ComputeDriverCPUMonitor</literal> in the <filename>nova.conf</filename> configuration file. For further information see the Compute configuration section in the <link href=\"http://docs.openstack.org/trunk/config-reference/content/list-of-compute-config-options.html\"> Compute chapter</link> of the <citetitle>OpenStack Configuration Reference</citetitle>."
+msgid "OpenStack Compute is capable of collecting <literal>CPU</literal> related meters from the compute host machines. In order to use that you need to set the <placeholder-1/> option to <literal>ComputeDriverCPUMonitor</literal> in the <filename>nova.conf</filename> configuration file. For further information see the Compute configuration section in the <link href=\"http://docs.openstack.org/trunk/config-reference/content/list-of-compute-config-options.html\"> Compute chapter</link> of the <citetitle>OpenStack Configuration Reference</citetitle>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:173(para)
@@ -7028,12 +7028,12 @@ msgstr ""
 msgid "The following meters are recorded for the Bare metal module:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:193(title)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:193(title) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ipmi.xml:4(caption)
 msgid "IPMI based meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:194(para)
-msgid "Another way of gathering IPMI based data is to use IPMI sensors independently from the Bare metal module's components. Same meters as <xref linkend=\"section_telemetry-ironic-metrics\"/> could be fetched except that origin is <literal>Pollster</literal> instead of <literal>Notification</literal>."
+msgid "Another way of gathering IPMI based data is to use IPMI sensors independently from the Bare metal module's components. Same meters as <xref linkend=\"section_telemetry-ironic-meters\"/> could be fetched except that origin is <literal>Pollster</literal> instead of <literal>Notification</literal>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:200(para)
@@ -7048,12 +7048,12 @@ msgstr ""
 msgid "Besides generic IPMI sensor data, the following Intel Node Manager meters are recorded from capable platform:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:218(title)
+#: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:218(title) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:4(caption)
 msgid "SNMP based meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:219(para)
-msgid "Telemetry supports gathering SNMP based generic host metrics. In order to be able to collect this data you need to run <systemitem class=\"service\">smpd</systemitem> on each target host."
+msgid "Telemetry supports gathering SNMP based generic host meters. In order to be able to collect this data you need to run <systemitem class=\"service\">smpd</systemitem> on each target host."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:222(para)
@@ -7089,7 +7089,7 @@ msgid "Ceph Object Storage"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:243(para)
-msgid "In order to gather metrics from Ceph, you have to install and configure the Ceph Object Gateway (radosgw) as it is described in the <link href=\"http://docs.ceph.com/docs/master/radosgw/\"> Installation Manual</link>. You have to enable <link href=\"http://ceph.com/docs/master/man/8/radosgw/#usage-logging\">usage logging</link> in order to get the related meters from Ceph. You will also need an <literal>admin</literal> user with <literal>users</literal>, <literal>buckets</literal>, <literal>metadata</literal> and <literal>usage</literal><literal>caps</literal> configured."
+msgid "In order to gather meters from Ceph, you have to install and configure the Ceph Object Gateway (radosgw) as it is described in the <link href=\"http://docs.ceph.com/docs/master/radosgw/\"> Installation Manual</link>. You have to enable <link href=\"http://ceph.com/docs/master/man/8/radosgw/#usage-logging\">usage logging</link> in order to get the related meters from Ceph. You will also need an <literal>admin</literal> user with <literal>users</literal>, <literal>buckets</literal>, <literal>metadata</literal> and <literal>usage</literal><literal>caps</literal> configured."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-measurements.xml:252(para)
@@ -7345,7 +7345,7 @@ msgid "The sliding time window over which the alarm is evaluated is 30 minutes i
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-alarms.xml:114(para)
-msgid "The period length is set to 600s in this case to reflect the out-of-the-box default cadence for collection of the associated metric. This period matching illustrates an important general principal to keep in mind for alarms:"
+msgid "The period length is set to 600s in this case to reflect the out-of-the-box default cadence for collection of the associated meter. This period matching illustrates an important general principal to keep in mind for alarms:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-alarms.xml:116(para)
@@ -7441,7 +7441,7 @@ msgid "In this case, the state is reported as <literal>insufficient data</litera
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-alarms.xml:186(para)
-msgid "metrics have not yet been gathered about this instance over the evaluation window into the recent past (for example a brand-new instance)"
+msgid "meters have not yet been gathered about this instance over the evaluation window into the recent past (for example a brand-new instance)"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-alarms.xml:189(para)
@@ -7533,7 +7533,7 @@ msgid "ceilometer-polling"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:26(para)
-msgid "Polls for different kinds of metric data by using the polling plug-ins (pollsters) registered in different namespaces."
+msgid "Polls for different kinds of meter data by using the polling plug-ins (pollsters) registered in different namespaces."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:31(systemitem)
@@ -7685,19 +7685,19 @@ msgid "Telemetry is able to retrieve information from OpenStack Networking and e
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:199(para)
-msgid "Basic network metrics"
+msgid "Basic network meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:202(para)
-msgid "Firewall-as-a-Service (FWaaS) metrics"
+msgid "Firewall-as-a-Service (FWaaS) meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:205(para)
-msgid "Loadbalancer-as-a-Service (LBaaS) metrics"
+msgid "Loadbalancer-as-a-Service (LBaaS) meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:208(para)
-msgid "VPN-as-a-Service (VPNaaS) metrics"
+msgid "VPN-as-a-Service (VPNaaS) meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:196(para)
@@ -7713,7 +7713,7 @@ msgid "OpenContrail"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:214(para)
-msgid "SDN controller metrics: <placeholder-1/>"
+msgid "SDN controller meters: <placeholder-1/>"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-system-architecture.xml:230(title)
@@ -8081,7 +8081,7 @@ msgid "Middleware for OpenStack Object Storage service"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:165(para)
-msgid "A subset of Object Store statistics requires an additional middleware to be installed behind the proxy of Object Store. This additional component emits notifications containing data-flow-oriented meters, namely the storage.objects.(incoming|outgoing).bytes values. The list of these meters are listed in <xref linkend=\"section_telemetry-object-storage-metrics\"/>, marked with <literal>notification</literal> as origin."
+msgid "A subset of Object Store statistics requires an additional middleware to be installed behind the proxy of Object Store. This additional component emits notifications containing data-flow-oriented meters, namely the storage.objects.(incoming|outgoing).bytes values. The list of these meters are listed in <xref linkend=\"section_telemetry-object-storage-meters\"/>, marked with <literal>notification</literal> as origin."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:171(para)
@@ -8145,7 +8145,7 @@ msgid "Hardware resources via SNMP"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:256(para)
-msgid "Energy consumption metrics via <link href=\"https://launchpad.net/kwapi\"> Kwapi</link> framework"
+msgid "Energy consumption meters via <link href=\"https://launchpad.net/kwapi\"> Kwapi</link> framework"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:260(para)
@@ -8173,11 +8173,11 @@ msgid "Just like the central agent, this component also does not need a direct d
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:285(para)
-msgid "The list of supported hypervisors can be found in <xref linkend=\"section_telemetry-supported-hypervisors\"/>. The compute agent uses the API of the hypervisor installed on the compute hosts. Therefore the supported meters may be different in case of each virtualization back end, as each inspection tool provides a different set of metrics."
+msgid "The list of supported hypervisors can be found in <xref linkend=\"section_telemetry-supported-hypervisors\"/>. The compute agent uses the API of the hypervisor installed on the compute hosts. Therefore the supported meters may be different in case of each virtualization back end, as each inspection tool provides a different set of meters."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:290(para)
-msgid "The list of collected meters can be found in <xref linkend=\"section_telemetry-compute-metrics\"/>. The support column provides the information that which meter is available for each hypervisor supported by the Telemetry module."
+msgid "The list of collected meters can be found in <xref linkend=\"section_telemetry-compute-meters\"/>. The support column provides the information that which meter is available for each hypervisor supported by the Telemetry module."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:295(para)
@@ -8257,7 +8257,7 @@ msgid "Just like the central agent, this component also does not need direct dat
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:383(para)
-msgid "The list of collected meters can be found in <xref linkend=\"section_telemetry-ironic-metrics\"/>."
+msgid "The list of collected meters can be found in <xref linkend=\"section_telemetry-ironic-meters\"/>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:386(para)
@@ -8589,7 +8589,7 @@ msgid "Example configuration:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:760(para)
-msgid "To demonstrate the use of metadata, here is the implementation of a silly metric that shows average CPU time per core:"
+msgid "To demonstrate the use of metadata, here is the implementation of a silly meter that shows average CPU time per core:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-data-collection.xml:771(para)
@@ -8713,7 +8713,7 @@ msgid "Events"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:8(para)
-msgid "In addition to metrics, the Telemetry module collects events triggered within an OpenStack environment. This section provides a brief summary of the events format in the Telemetry module."
+msgid "In addition to meters, the Telemetry module collects events triggered within an OpenStack environment. This section provides a brief summary of the events format in the Telemetry module."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/section_telemetry-events.xml:11(para)
@@ -9329,7 +9329,7 @@ msgid "The default publisher is <literal>notifier</literal>, without any additio
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-vpnaas.xml:4(caption)
-msgid "VPN as a Service metrics"
+msgid "VPN as a Service meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-vpnaas.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-swift.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ironic.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-magnetodb.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ipmi.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-kwapi.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova-host.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-heat.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-neutron.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ceph.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-keystone.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sahara.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-lbaas.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-fwaas.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-glance.xml:15(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:16(td)
@@ -9485,7 +9485,7 @@ msgid "Ike policy was updated."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:4(caption)
-msgid "SDN metrics"
+msgid "SDN meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:23(th) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-swift.xml:23(th) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-kwapi.xml:23(th) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova-host.xml:23(th) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:23(th) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-heat.xml:23(th) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-neutron.xml:23(th) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-glance.xml:23(th) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:25(th)
@@ -9717,7 +9717,7 @@ msgid "Bytes received."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-swift.xml:4(caption)
-msgid "OpenStack Object Storage metrics"
+msgid "OpenStack Object Storage meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-swift.xml:26(td)
@@ -9873,7 +9873,7 @@ msgid "Voltage reading from sensor."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-magnetodb.xml:4(caption)
-msgid "Key Value Store module metrics"
+msgid "Key Value Store module meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-magnetodb.xml:26(td)
@@ -9906,10 +9906,6 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-magnetodb.xml:47(td)
 msgid "Number of indices created in a table."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ipmi.xml:4(caption)
-msgid "IPMI based metrics"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ipmi.xml:26(td)
@@ -10013,7 +10009,7 @@ msgid "New Name"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-kwapi.xml:4(caption)
-msgid "Energy metrics"
+msgid "Energy meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-kwapi.xml:26(td)
@@ -10038,10 +10034,6 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-kwapi.xml:39(td)
 msgid "Power consumption."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:4(caption)
-msgid "SNMP based metrics"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:26(td)
@@ -10201,7 +10193,7 @@ msgid "CPU idle percentage."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova-host.xml:4(caption)
-msgid "OpenStack Compute host metrics"
+msgid "OpenStack Compute host meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova-host.xml:26(td)
@@ -10285,7 +10277,7 @@ msgid "CPU utilisation."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:4(caption)
-msgid "OpenStack Block Storage metrics"
+msgid "OpenStack Block Storage meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:26(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:28(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:66(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:74(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:82(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:90(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:98(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:106(td)
@@ -10457,7 +10449,7 @@ msgid "Stack was successfully suspended."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-neutron.xml:4(caption)
-msgid "OpenStack Networking metrics"
+msgid "OpenStack Networking meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-neutron.xml:26(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-neutron.xml:28(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-neutron.xml:36(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-neutron.xml:44(td)
@@ -10641,7 +10633,7 @@ msgid "radosgw.containers.objects.size"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-keystone.xml:4(caption)
-msgid "OpenStack Identity metrics"
+msgid "OpenStack Identity meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-keystone.xml:26(td)
@@ -10877,7 +10869,7 @@ msgid "Cluster was successfully deleted."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-lbaas.xml:4(caption)
-msgid "LoadBalancer as a Service metrics"
+msgid "LoadBalancer as a Service meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-lbaas.xml:26(td)
@@ -11033,7 +11025,7 @@ msgid "LB health probe was updated."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-fwaas.xml:4(caption)
-msgid "Firewall as a Service metrics"
+msgid "Firewall as a Service meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-fwaas.xml:26(td)
@@ -11133,7 +11125,7 @@ msgid "Firewall rule was updated."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-glance.xml:4(caption)
-msgid "OpenStack Image Service metrics"
+msgid "OpenStack Image Service meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-glance.xml:26(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-glance.xml:28(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-glance.xml:36(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-glance.xml:44(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-glance.xml:52(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-glance.xml:60(td)
@@ -11185,7 +11177,7 @@ msgid "Image is served out."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:4(caption)
-msgid "OpenStack Compute metrics"
+msgid "OpenStack Compute meters"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:19(td)
@@ -13709,7 +13701,7 @@ msgid "Detect signal completion of some action, typically configuration of softw
 msgstr ""
 
 #: ./doc/admin-guide-cloud/orchestration/section_orchestration-stack-domain-users.xml:24(para)
-msgid "Provide application level status or metrics from inside the instance. For example, allow AutoScaling actions to be performed in response to some measure of performance or quality of service."
+msgid "Provide application level status or meters from inside the instance. For example, allow AutoScaling actions to be performed in response to some measure of performance or quality of service."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/orchestration/section_orchestration-stack-domain-users.xml:31(para)
