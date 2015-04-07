@@ -26,8 +26,9 @@ Contents
    dashboard.rst
    cli.rst
    enduser/sdk.rst
-   enduser/cli_cheat_sheet.rst
    enduser/hot-guide/hot.rst
+   enduser/cli_cheat_sheet.rst
+
 
 Indices and tables
 ~~~~~~~~~~~~~~~~~~
