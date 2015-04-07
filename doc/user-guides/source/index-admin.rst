@@ -26,10 +26,10 @@ Contents
    dashboard.rst
    cli.rst
 
+   common/app_support.rst
+
 Indices and tables
 ~~~~~~~~~~~~~~~~~~
 
-
 * :ref:`genindex`
 * :ref:`search`
-

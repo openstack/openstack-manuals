@@ -29,11 +29,10 @@ Contents
    enduser/hot-guide/hot.rst
    enduser/cli_cheat_sheet.rst
 
+   common/app_support.rst
 
 Indices and tables
 ~~~~~~~~~~~~~~~~~~
-
-
 * :ref:`genindex`
 * :ref:`search`
 
