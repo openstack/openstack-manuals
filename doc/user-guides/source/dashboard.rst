@@ -2,10 +2,21 @@
 OpenStack dashboard
 ===================
 
-As a cloud end user, you can use the OpenStack dashboard to provision
-your own resources within the limits set by administrators. You can
-modify the examples provided in this section to create other types and
-sizes of server instances.
+.. only:: admin_only
+
+   As a cloud administrative user, the OpenStack dashboard lets you
+   create and manage projects, users, images, and flavors. You can
+   also set quotas and create and manage services. For information
+   about using the dashboard to perform end user tasks, see the
+   `OpenStack End User Guide <http://docs.openstack.org/user-guide/>`__.
+
+.. only:: user_only
+
+   As a cloud end user, you can use the OpenStack dashboard to provision
+   your own resources within the limits set by administrators. You can
+   modify the examples provided in this section to create other types and
+   sizes of server instances.
+
 
 .. Files should be in order of current User Guides and then as following:
    Files currently in End User Guide
