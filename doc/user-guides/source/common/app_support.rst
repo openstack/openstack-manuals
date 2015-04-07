@@ -199,7 +199,7 @@ The OpenStack community lives in the #openstack IRC channel on the
 Freenode network. You can hang out, ask questions, or get immediate
 feedback for urgent and pressing issues. To install an IRC client or use
 a browser-based client, go to
-`http://webchat.freenode.net/ <http://webchat.freenode.net>`__. You can
+`https://webchat.freenode.net/ <https://webchat.freenode.net>`__. You can
 also use Colloquy (Mac OS X, http://colloquy.info/), mIRC (Windows,
 http://www.mirc.com/), or XChat (Linux). When you are in the IRC channel
 and want to share code or command output, the generally accepted method
