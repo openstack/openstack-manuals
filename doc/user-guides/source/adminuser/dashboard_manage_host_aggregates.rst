@@ -14,10 +14,10 @@ multiple aggregates.
 
 The scheduler uses this information to make scheduling decisions. For
 information, see
-`*Scheduling* <http://docs.openstack.org/trunk/config-reference/content/section_compute-scheduler.html>`__.
+`Scheduling <http://docs.openstack.org/trunk/config-reference/content/section_compute-scheduler.html>`__.
 
-Procedure: To create a host aggregate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To create a host aggregate
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Log in to the dashboard.
 
@@ -47,15 +47,15 @@ Procedure: To create a host aggregate
 
 #. Assign hosts to the aggregate on the Host within :guilabel:`Aggregate` tab.
 
-   To assign a host to the aggregate, click + for the host. The host
+   To assign a host to the aggregate, click **+** for the host. The host
    moves from the :guilabel:`All available hosts` list to the
    :guilabel:`Selected hosts` list.
 
 You can add one host to one or more aggregates. To add a host to an
 existing aggregate, edit the aggregate.
 
-Procedure: To manage host and aggregates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To manage host aggregates
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Choose the admin project from the drop-down list at the top of the
    page.
@@ -72,11 +72,10 @@ Procedure: To manage host and aggregates
    -  To manage hosts, locate the host aggregate that you want to edit
       in the table. Click :guilabel:`More` and select :guilabel:`Manage Hosts`.
 
-      In the :guilabel:`Add/Remove Hosts to Aggregate` dialog box, click + to
-      assign a host to an aggregate. Click - to remove a host that is assigned
+      In the :guilabel:`Add/Remove Hosts to Aggregate` dialog box, click **+** to
+      assign a host to an aggregate. Click **-** to remove a host that is assigned
       to an aggregate.
 
    -  To delete host aggregates, locate the host aggregate that you want
       to edit in the table. Click :guilabel:`More` and select
       :guilabel:`Delete Host Aggregate`.
-
