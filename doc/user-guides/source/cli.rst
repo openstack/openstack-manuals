@@ -31,6 +31,7 @@ OpenStack command-line clients
    enduser/cli_config_drive.rst
    common/cli_create_and_manage_networks.rst
    enduser/managing-openstack-object-storage-with-swift-cli.rst
+   enduser/cli_create_and_manage_stacks.rst
    enduser/trove-manage-db.rst
    adminuser/cli_manage_flavors.rst
    adminuser/cli_admin_manage_environment.rst
