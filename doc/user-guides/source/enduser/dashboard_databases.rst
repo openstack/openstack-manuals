@@ -95,7 +95,7 @@ create a database instance.
    If you do not specify a host, this user will be allowed to connect from
    anywhere.
 
-#. Click the :guilabel:`Launch button`. The new database instance appears in
+#. Click the :guilabel:`Launch` button. The new database instance appears in
    the databases list.
 
 Backup and restore a database
@@ -130,7 +130,7 @@ To backup the database instance
 
    Select the instance you want to back up.
 
-#. Click Backup. The new backup appears in the backup list.
+#. Click :guilabel:`Backup`. The new backup appears in the backup list.
 
 To restore a database instance
 ------------------------------
@@ -155,3 +155,49 @@ a new database instance.
 #. Click :guilabel:`Launch`.
 
    The new instance appears in the database instances list.
+
+Update a database instance
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can change various characteristics of a database instance,
+such as its volume size and flavor.
+
+To change the volume size of an instance
+----------------------------------------
+
+#. Log in to the dashboard, choose a project, and click
+   :guilabel:`Databases`.
+
+#. Click :guilabel:`Database Instances`. This displays the existing
+   instances in your system.
+
+#. Check the instance you want to work with.
+   In the :guilabel:`Actions` column, expand the drop down menu
+   and select :guilabel:`Resize Volume`.
+
+#. In the :guilabel:`Resize Database Volume` dialog box,
+   fill in the :guilabel:`New Size` field with an integer indicating
+   the new size you want for the instance. Express the size in GB, and
+   note that the new size must be larger than the current size.
+
+#. Click :guilabel:`Resize Database Volume`.
+
+To change the flavor of an instance
+-----------------------------------
+
+#. Log in to the dashboard, choose a project, and
+   click :guilabel:`Databases`.
+
+#. Click :guilabel:`Database Instances`. This displays the existing
+   instances in your system.
+
+#. Check the instance you want to work with. In the
+   :guilabel:`Actions` column, expand the drop down menu and
+   select :guilabel:`Resize Instance`.
+
+#. In the :guilabel:`Resize Database Instance` dialog box,
+   expand the drop down menu in the :guilabel:`New Flavor` field.
+   Select the new flavor you want for the instance.
+
+#. Click :guilabel:`Resize Database Instance`.
+
