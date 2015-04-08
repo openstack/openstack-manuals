@@ -34,8 +34,8 @@ OpenStack dashboard
    common/log_in_dashboard.rst
    enduser/dashboard_manage_images.rst
    enduser/configure_access_and_security_for_instances.rst
-   enduser/dashboard_create_networks.rst
    enduser/dashboard_launch_instances.rst
+   enduser/dashboard_create_networks.rst
    enduser/dashboard_manage_containers.rst
    enduser/dashboard_manage_volumes.rst
    enduser/dashboard_stacks.rst
