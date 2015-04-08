@@ -171,8 +171,8 @@ floating IP to the instance:
       association:
         type: OS::Nova::FloatingIPAssociation
         properties:
-          - floating_ip: { get_resource: floating_ip }
-          - server_id: { get_resource: instance }
+          floating_ip: { get_resource: floating_ip }
+          server_id: { get_resource: instance }
 
 OS::Neutron resources
 ~~~~~~~~~~~~~~~~~~~~~
