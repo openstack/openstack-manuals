@@ -4,7 +4,7 @@ OpenStack command-line clients
 
 .. Files should be in order of current User Guides and then as following:
    Files currently in End User Guide
-   Files currently only in Admn User Guide, marked with admin_only
+   Files currently only in Admin User Guide, marked with admin_only
 
    Since Sphinx does not allow comments below, empty lines are used
    for the three blocks
@@ -15,8 +15,8 @@ OpenStack command-line clients
    :maxdepth: 2
 
    common/cli_overview.rst
-   common/cli_discover_version_number_for_a_client.rst
    common/cli_install_openstack_command_line_clients.rst
+   common/cli_discover_version_number_for_a_client.rst
    common/cli_set_environment_variables_using_openstack_rc.rst
    adminuser/manage_projects_users_and_roles.rst
    adminuser/nova_cli_manage_projects_security.rst
@@ -32,6 +32,7 @@ OpenStack command-line clients
    common/cli_create_and_manage_networks.rst
    enduser/managing-openstack-object-storage-with-swift-cli.rst
    enduser/cli_create_and_manage_stacks.rst
+   enduser/cli_ceilometer.rst
    enduser/trove-manage-db.rst
    adminuser/cli_manage_flavors.rst
    adminuser/cli_admin_manage_environment.rst
