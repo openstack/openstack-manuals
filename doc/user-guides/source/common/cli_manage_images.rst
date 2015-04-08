@@ -88,33 +88,27 @@ list, as follows::
 
 .. note::
 
-  To store location metadata for images, which enables direct file
-  access for a client, update the ``/etc/glance/glance.conf`` file
-  with the following statements:
+   To store location metadata for images, which enables direct file access for a client, update the ``/etc/glance/glance.conf`` file with the following statements:
 
-    -  ``show_multiple_locations = True``
+   -  ``show_multiple_locations = True``
 
-    -  ``filesystem_store_metadata_file = filePath``, where
-       filePath points to a JSON file that defines the mount point for
-       OpenStack images on your system and a unique ID. For example:
+   -  ``filesystem_store_metadata_file = filePath``, where filePath points to a JSON file that defines the mount point for OpenStack images on your system and a unique ID. For example:
 
-       .. code:: json
+   .. code-block:: json
+      :linenos:
 
-           [{
-               "id": "2d9bb53f-70ea-4066-a68b-67960eaae673",
-               "mountpoint": "/var/lib/glance/images/"
-           }]
+      [{
+          "id": "2d9bb53f-70ea-4066-a68b-67960eaae673",
+          "mountpoint": "/var/lib/glance/images/"
+      }]
 
-  After you restart the Image Service, you can use the following
-  syntax to view the image's location information::
+   After you restart the Image Service, you can use the following syntax to view the image's location information::
 
-      $ glance --os-image-api-version 2 image-show imageID
+   $ glance --os-image-api-version 2 image-show imageID
 
-  For example, using the image ID shown above, you would issue the
-  command as follows::
+   For example, using the image ID shown above, you would issue the command as follows::
 
-      $ glance --os-image-api-version 2 image-show
-      2d9bb53f-70ea-4066-a68b-67960eaae673
+   $ glance --os-image-api-version 2 image-show 2d9bb53f-70ea-4066-a68b-67960eaae673
 
 Create or update an image (glance)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -223,6 +217,7 @@ in the following tables.
 |                         |                          |
 |                         | -  xen                   |
 +-------------------------+--------------------------+
+
 
 .. _VIF_model_values_table:
 
