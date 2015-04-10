@@ -38,13 +38,6 @@
     <itemizedlist>
         <listitem>
             <para>
-                <literal>token_format</literal> - Determines the
-                algorithm used to generate tokens. Can be either
-                    <literal>UUID</literal> or <literal>PKI</literal>.
-                Defaults to <literal>PKI</literal>.</para>
-        </listitem>
-        <listitem>
-            <para>
                 <literal>certfile</literal> - Location of certificate
                 used to verify tokens. Default is
                     <literal>/etc/keystone/ssl/certs/signing_cert.pem</literal>.</para>
@@ -81,9 +74,10 @@
         </listitem>
         <listitem>
             <para>
-                <literal>ca_password</literal> - Password required to
-                read the <literal>ca_file</literal>. Default is
-                    <literal>None</literal>.</para>
+                <literal>cert_subject</literal> - Certificate subject (auto
+                    generated certificate) for token signing. Default is
+                    <literal>/C=US/ST=Unset/L=Unset/O=Unset/CN=www.example.com</literal>.
+                    </para>
         </listitem>
     </itemizedlist>
     <para>When generating certificates with the
@@ -95,11 +89,13 @@
         is not used to generate certificates, or you are providing
         your own certificates, these values do not need
         to be set.</para>
-    <para>If <literal>token_format=UUID</literal>, a typical token
-        looks like
+    <para>If
+        <literal>provider=keystone.token.providers.uuid.Provider</literal> in
+        the <literal>[token]</literal> section of the keystone configuration, a
+        typical token looks like
         <literal>53f7f6ef0cc344b5be706bcc8b1479e1</literal>. If
-            <literal>token_format=PKI</literal>, a typical token is a
-        much longer string, such as:</para>
+        <literal>provider=keystone.token.providers.pki.Provider</literal>, a
+        typical token is a much longer string, such as:</para>
     <screen>MIIKtgYJKoZIhvcNAQcCoIIKpzCCCqMCAQExCTAHBgUrDgMCGjCCCY8GCSqGSIb3DQEHAaCCCYAEggl8eyJhY2Nlc3MiOiB7InRva2VuIjogeyJpc3N1ZWRfYXQiOiAiMjAxMy0wNS0z
 MFQxNTo1MjowNi43MzMxOTgiLCAiZXhwaXJlcyI6ICIyMDEzLTA1LTMxVDE1OjUyOjA2WiIsICJpZCI6ICJwbGFjZWhvbGRlciIsICJ0ZW5hbnQiOiB7ImRlc2NyaXB0aW9uIjogbnVs
 bCwgImVuYWJsZWQiOiB0cnVlLCAiaWQiOiAiYzJjNTliNGQzZDI4NGQ4ZmEwOWYxNjljYjE4MDBlMDYiLCAibmFtZSI6ICJkZW1vIn19LCAic2VydmljZUNhdGFsb2ciOiBbeyJlbmRw
