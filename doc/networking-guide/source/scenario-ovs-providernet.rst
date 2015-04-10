@@ -60,14 +60,14 @@ Requirements
    ``br-ex`` must contain a port on the external interface.
 
 .. figure:: figures/scenario-provider-hw.png
-   :alt: Provider OVS scenario - hardware requirements
+   :alt: Provider Open vSwitch scenario - hardware requirements
 
-   Provider OVS scenario - hardware requirements
+   Provider Open vSwitch scenario - hardware requirements
 
 .. figure:: figures/scenario-provider-networks.png
-   :alt: Provider OVS scenario - network layout
+   :alt: Provider Open vSwitch scenario - network layout
 
-   Provider OVS scenario - network layout
+   Provider Open vSwitch scenario - network layout
 
 Prerequisites
 -------------
@@ -112,9 +112,9 @@ The general provider network architecture uses physical network
 infrastructure to handle switching and routing of network traffic.
 
 .. figure:: figures/scenario-provider-general.png
-   :alt: Provider OVS scenario - architecture overview
+   :alt: Provider Open vSwitch scenario - architecture overview
 
-   Provider OVS scenario - architecture overview
+   Provider Open vSwitch scenario - architecture overview
 
 The network architecture for a provider networking from the OpenStack
 perspective is fairly simple since the OpenStack cluster is being
@@ -127,16 +127,16 @@ The controller node runs the Open vSwitch service, Open vSwitch agent,
 and DHCP agent.
 
 .. figure:: figures/scenario-provider-ovs-controller1.png
-   :alt: Provider OVS scenario - controller node overview
+   :alt: Provider Open vSwitch scenario - controller node overview
 
-   Provider OVS Scenario - Controller node overview
+   Provider Open vSwitch Scenario - Controller node overview
 
 The compute node runs the Open vSwitch service and Open vSwitch agent.
 
 .. figure:: figures/scenario-provider-ovs-compute1.png
-   :alt: Provider OVS scenario - network node overview
+   :alt: Provider Open vSwitch scenario - network node overview
 
-   Provider OVS Scenario - Network node overview
+   Provider Open vSwitch Scenario - Network node overview
 
 Components
 ~~~~~~~~~~
@@ -153,9 +153,9 @@ The controller node contains the following components:
    provider networks.
 
 .. figure:: figures/scenario-provider-ovs-controller2.png
-   :alt: Provider OVS scenario - controller node components
+   :alt: Provider Open vSwitch scenario - controller node components
 
-   Provider OVS scenario - controller node components
+   Provider Open vSwitch scenario - controller node components
 
 The compute nodes contain the following components:
 
@@ -169,15 +169,15 @@ The compute nodes contain the following components:
    service uses a Linux bridge to manage security groups for instances.
 
 .. figure:: figures/scenario-provider-ovs-compute2.png
-   :alt: Provider OVS scenario - compute node components
+   :alt: Provider Open vSwitch scenario - compute node components
 
-   Provider OVS scenario - compute node components
+   Provider Open vSwitch scenario - compute node components
 
-Packet Flow
+Packet flow
 -----------
 
 The flow of packets in a provider network scenario only contains
-complexity inside the compute node's OVS networking. Neutron allocates
+complexity inside the compute node's Open vSwitch networking. Neutron allocates
 internal VLAN tags for each Neutron Network and provides a mapping
 between the internal VLAN tag used for a Neutron network, and then
 inserts rules in the Open vSwitch switching infrastructure to rewrite
@@ -196,17 +196,17 @@ Case 1: North-south
 ~~~~~~~~~~~~~~~~~~~
 
 .. figure:: figures/scenario-provider-ovs-flowns1.png
-   :alt: Provider OVS scenario - network traffic flow - north/south
+   :alt: Provider Open vSwitch scenario - network traffic flow - north/south
 
-   Provider OVS scenario - network traffic flow - north/south
+   Provider Open vSwitch scenario - network traffic flow - north/south
 
 Case 2: East-west
 ~~~~~~~~~~~~~~~~~
 
 .. figure:: figures/scenario-provider-ovs-flowew1.png
-   :alt: Provider OVS scenario - network traffic flow - east/west
+   :alt: Provider Open vSwitch scenario - network traffic flow - east/west
 
-   Provider OVS Scenario - network traffic flow - east/west
+   Provider Open vSwitch Scenario - network traffic flow - east/west
 
 Example configuration template
 ------------------------------

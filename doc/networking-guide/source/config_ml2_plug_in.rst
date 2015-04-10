@@ -51,7 +51,7 @@ Mechanism
 
   * Option stanza/section
 
-* OVS
+* Open vSwitch
 
   * Option stanza/section
 
