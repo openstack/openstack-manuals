@@ -44,6 +44,7 @@ OpenStack dashboard
    adminuser/dashboard_manage_images.rst
    adminuser/dashboard_admin_manage_roles.rst
    adminuser/dashboard_manage_instances.rst
+   adminuser/dashboard_manage_volumes.rst
    adminuser/dashboard_manage_flavors.rst
    adminuser/dashboard_set_quotas
    adminuser/dashboard_manage_resources.rst
