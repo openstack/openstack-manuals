@@ -22,10 +22,7 @@
       <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install mariadb-server python-mysqldb</userinput></screen>
       <screen os="debian"><prompt>#</prompt> <userinput>apt-get install mysql-server python-mysqldb</userinput></screen>
       <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>yum install mariadb mariadb-server MySQL-python</userinput></screen>
-      <para os="sles;opensuse">On openSUSE:</para>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>zypper install mariadb-client mariadb python-mysql</userinput></screen>
-      <para os="sles;opensuse">On SLES:</para>
-      <screen os="sles"><prompt>#</prompt> <userinput>zypper install mysql-client mysql python-mysql</userinput></screen>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>zypper install mariadb-client mariadb python-mysql</userinput></screen>
     </step>
     <step os="ubuntu;debian">
       <para>Choose a suitable password for the database root account.</para>
@@ -34,7 +31,10 @@
       <para os="ubuntu;debian">Create and edit the
         <filename>/etc/mysql/conf.d/mysqld_openstack.cnf</filename> file and
         complete the following actions:</para>
-      <para os="rhel;centos;fedora;sles;opensuse">Edit the
+      <para os="opensuse;sles">Create and edit the
+        <filename>/etc/my.cnf.d/mariadb_openstack.cnf</filename> file and
+        complete the following actions:</para>
+      <para os="rhel;centos;fedora">Edit the
         <filename>/etc/my.cnf</filename> file and complete the following
         actions:</para>
       <substeps>
@@ -73,11 +73,7 @@ character-set-server = utf8</programlisting>
         system boots:</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable mariadb.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start mariadb.service</userinput></screen>
-      <para os="sles;opensuse">On SLES:</para>
-      <screen os="sles"><prompt>#</prompt> <userinput>service mysql start</userinput>
-<prompt>#</prompt> <userinput>chkconfig mysql on</userinput></screen>
-      <para os="sles;opensuse">On openSUSE:</para>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl start mysql.service</userinput>
+      <screen os="opensuse;sles"><prompt>#</prompt> <userinput>systemctl start mysql.service</userinput>
 <prompt>#</prompt> <userinput>systemctl enable mysql.service</userinput></screen>
     </step>
     <step>
