@@ -22,12 +22,14 @@
             has introduced the concept of "storage pools", in which a single
             OpenStack Block Storage back end may present one or more logical
             storage resource pools from which OpenStack Block Storage will
-            select as a storage location when provisioning volumes.</para>
+            select as a storage location when provisioning volumes.
+        </para>
         <para>In releases prior to Juno, the NetApp unified driver contained some
             "scheduling" logic that determined which NetApp storage container
             (namely, a FlexVol volume for Data ONTAP, or a dynamic disk pool for
             E-Series) that a new OpenStack Block Storage volume would be
-            placed into.</para>
+            placed into.
+        </para>
         <para>With the introduction of pools, all scheduling logic
             is performed completely within the OpenStack Block Storage scheduler,
             as each NetApp storage container is directly exposed to the OpenStack
@@ -35,7 +37,8 @@
             NetApp unified driver presented an aggregated view to the scheduler
             and made a final placement decision as to which NetApp storage
             container the OpenStack Block Storage volume would be provisioned
-            into.</para>
+            into.
+        </para>
     </note>
     <section xml:id="ontap-cluster-family">
         <title>NetApp clustered Data ONTAP storage family</title>
@@ -221,9 +224,9 @@ nfs_shares_config = <replaceable>/etc/cinder/nfs_shares</replaceable></programli
                             correct information about the NFS export
                             used by the Image Service, similar
                             to:</para>
-                <programlisting language="ini">{
-    "share_location": "<replaceable>nfs://192.168.0.1/myGlanceExport</replaceable>",
-    "mount_point": "<replaceable>/var/lib/glance/images</replaceable>",
+                <programlisting language="JSON">{
+    "share_location": "nfs://192.168.0.1/myGlanceExport",
+    "mount_point": "/var/lib/glance/images",
     "type": "nfs"
 }</programlisting>
                     </listitem>
