@@ -7,10 +7,10 @@
 Assign CORS headers to requests
 ===============================
 
-Cross-Origin Resource Sharing (CORS) is a specification that defines how
-browsers and servers communicate across origins by using HTTP headers,
-such as those assigned by Object Storage API requests. The Object
-Storage API supports the following headers:
+:term:`Cross-Origin Resource Sharing (CORS)` is a specification that
+defines how browsers and servers communicate across origins by using
+HTTP headers, such as those assigned by Object Storage API
+requests. The Object Storage API supports the following headers:
 
 - Access-Control-Allow-Credentials
 - Access-Control-Allow-Methods
