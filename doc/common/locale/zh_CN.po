@@ -11,9 +11,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-04-10 21:19+0000\n"
-"PO-Revision-Date: 2015-04-10 21:17+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
+"POT-Creation-Date: 2015-04-11 08:05+0000\n"
+"PO-Revision-Date: 2015-04-12 04:30+0000\n"
+"Last-Translator: johnwoo_lee <lijiangsheng1@gmail.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/openstack-manuals-i18n/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -139,7 +139,7 @@ msgstr ""
 
 #: ./doc/common/section_keystone-concepts-user-management.xml38(para)
 msgid "This example creates a domain named <literal>emea</literal>:"
-msgstr ""
+msgstr "此例创建了一个名为<literal>emea</literal>的域:"
 
 #: ./doc/common/section_keystone-concepts-user-management.xml43(para)
 msgid ""
@@ -162,7 +162,7 @@ msgid ""
 "The Identity Service assigns a tenant and a role to a user. You might assign"
 " the <literal>compute-user</literal> role to the <literal>alice</literal> "
 "user in the <literal>acme</literal> tenant:"
-msgstr ""
+msgstr "身份服务为用户分配一个租户和一个角色。用户也许会分配<literal>compute-user</literal> 角色给用户 <literal>李四</literal> 在租户 <literal>acme</literal>中:"
 
 #: ./doc/common/section_keystone-concepts-user-management.xml79(para)
 msgid ""
@@ -170,7 +170,7 @@ msgid ""
 "might also have the <literal>admin</literal> role in the "
 "<literal>Cyberdyne</literal> tenant. A user can also have multiple roles in "
 "the same tenant."
-msgstr ""
+msgstr "一个用户可以在不同的租户中有不同的角色。例如，Alice还是租户 <literal>Cyberdyne</literal>中的角色是<literal>admin</literal>。一个用户还可以是在同一个租户下用户多个角色。"
 
 #: ./doc/common/section_keystone-concepts-user-management.xml83(para)
 msgid ""
@@ -182,7 +182,7 @@ msgid ""
 " specifies the access policy for the Image Service, and "
 "<filename>/etc/keystone/policy.json</filename> specifies the access policy "
 "for the Identity Service."
-msgstr ""
+msgstr "文件<filename>/etc/<replaceable>[SERVICE_CODENAME]</replaceable>/policy.json</filename>控制着用户操作给定的服务的任务。举例来说，<filename>/etc/nova/policy.json</filename>为计算服务指定访问规则，<filename>/etc/glance/policy.json</filename>为镜像服务指定访问规则，以及<filename>/etc/keystone/policy.json</filename>为身份服务指定访问规则。"
 
 #: ./doc/common/section_keystone-concepts-user-management.xml93(para)
 msgid ""
@@ -190,7 +190,7 @@ msgid ""
 " and Image Service recognize only the <literal>admin</literal> role: all "
 "operations that do not require the <literal>admin</literal> role are "
 "accessible by any user that has any role in a tenant."
-msgstr ""
+msgstr "在计算、身份和镜像服务中默认的 <filename>policy.json</filename> 文件仅识别角色 <literal>admin</literal>，所有的操作，无须是 <literal>admin</literal>，在租户中的任何用户拥有何种角色都可以访问。"
 
 #: ./doc/common/section_keystone-concepts-user-management.xml98(para)
 msgid ""
@@ -198,7 +198,7 @@ msgid ""
 "Compute service, you need to create a role in the Identity Service and then "
 "modify <filename>/etc/nova/policy.json</filename> so that this role is "
 "required for Compute operations."
-msgstr ""
+msgstr "若用户希望限制用户执行某些操作，例如，计算服务，用户需要在身份服务中创建一个角色，然后修改文件<filename>/etc/nova/policy.json</filename> ，因为这个角色需要操作计算服务。"
 
 #: ./doc/common/section_keystone-concepts-user-management.xml104(para)
 msgid ""
@@ -206,20 +206,20 @@ msgid ""
 "specifies that there are no restrictions on which users can create volumes: "
 "if the user has any role in a tenant, they can create volumes in that "
 "tenant."
-msgstr ""
+msgstr "举例,在配置文件 <filename>/etc/nova/policy.json</filename>下面这行指出了用户创建卷没有任何的限制:如果用户在租户中拥有角色，他就可以在那个租户中创建卷。"
 
 #: ./doc/common/section_keystone-concepts-user-management.xml110(para)
 msgid ""
 "To restrict creation of volumes to users who had the <literal>compute-"
 "user</literal> role in a particular tenant, you would add <literal>\"role"
 ":compute-user\"</literal>, like so:"
-msgstr ""
+msgstr "欲限制拥有<literal>compute-user</literal>角色的用户在指点的租户创建卷，用户需要增加 <literal>\"role:compute-user\"</literal>，类似下面这样："
 
 #: ./doc/common/section_keystone-concepts-user-management.xml115(para)
 msgid ""
 "To restrict all Compute service requests to require this role, the resulting"
 " file would look like:"
-msgstr ""
+msgstr "要限制所有的计算服务请求，要求此角色，文件最终的结果是类似这样子的："
 
 #: ./doc/common/section_cli_nova_quotas.xml7(title)
 msgid "Manage Compute service quotas"
@@ -902,7 +902,7 @@ msgstr ""
 
 #: ./doc/common/section_cli_nova_quotas.xml207(replaceable)
 msgid "key"
-msgstr ""
+msgstr "键"
 
 #: ./doc/common/section_cli_nova_quotas.xml207(replaceable)
 msgid "value"
@@ -9924,76 +9924,76 @@ msgid ""
 "users to them. Then, rather than assign a role to each user individually, "
 "assign a role to the group. Every group is in a domain. Groups were "
 "introduced with the Identity API v3."
-msgstr ""
+msgstr "一个组就是一个用户的集合。系统管理员可以创建组，然后为其添加用户。再然后，分别为每个用户赋予一个角色，或者赋予组某个角色。每个组都在某个域中。组从身份API v3开始引入。"
 
 #. TODO: eventually remove the last sentence, when v3 is
 #.              commonplace
 #: ./doc/common/section_keystone-concepts-group-management.xml15(para)
 msgid "Identity API V3 provides the following group-related operations:"
-msgstr ""
+msgstr "身份 API V3提供了下列组相关的操作:"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml19(para)
 msgid "Create a group"
-msgstr ""
+msgstr "创建一个组"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml22(para)
 msgid "Delete a group"
-msgstr ""
+msgstr "删除一个组"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml25(para)
 msgid "Update a group (change its name or description)"
-msgstr ""
+msgstr "更新一个组(修改它的名称或描述)"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml29(para)
 msgid "Add a user to a group"
-msgstr ""
+msgstr "为组添加一个用户"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml32(para)
 msgid "Remove a user from a group"
-msgstr ""
+msgstr "从组中删除一个用户"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml35(para)
 msgid "List group members"
-msgstr ""
+msgstr "列出组成员"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml38(para)
 msgid "List groups for a user"
-msgstr ""
+msgstr "为用户列出组"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml41(para)
 msgid "Assign a role on a tenant to a group"
-msgstr ""
+msgstr "在租户中为一个组赋予角色"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml44(para)
 msgid "Assign a role on a domain to a group"
-msgstr ""
+msgstr "在一域中为一个组赋予某角色"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml47(para)
 msgid "Query role assignments to groups"
-msgstr ""
+msgstr "查询赋予组的角色"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml51(para)
 msgid ""
 "The Identity service server might not allow all operations. For example, if "
 "using the Identity server with the LDAP Identity back end and group updates "
 "are disabled, then a request to create, delete, or update a group fails."
-msgstr ""
+msgstr "身份服务也许不会允许所有的操作。举例来说，如果使用LDAP作为身份服务的后端，且组更新是禁用的，那么创建、删除或更新组的请求都会失败。"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml57(para)
 msgid "Here are a couple of examples:"
-msgstr ""
+msgstr "这里有两例子:"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml60(para)
 msgid ""
 "Group A is granted Role A on Tenant A. If User A is a member of Group A, "
 "when User A gets a token scoped to Tenant A, the token also includes Role A."
-msgstr ""
+msgstr "A组被赋予在A租户下的A角色。如果用户A是A组的成员，当A用户从A租户获得以令牌，此令牌也包含A角色。"
 
 #: ./doc/common/section_keystone-concepts-group-management.xml66(para)
 msgid ""
 "Group B is granted Role B on Domain B. If User B is a member of Domain B, if"
 " User B gets a token scoped to Domain B, the token also includes Role B."
-msgstr ""
+msgstr "B组被赋予在B域下的B角色。如果用户B是B域的成员，当B用户从B域获得令牌，此令牌也包含B角色。"
 
 #: ./doc/common/section_keystone_config_ldap-assignments.xml7(title)
 msgid "Integrate assignment back end with LDAP"
@@ -10072,17 +10072,17 @@ msgstr ""
 
 #: ./doc/common/section_cli_install.xml8(title)
 msgid "Install the OpenStack command-line clients"
-msgstr ""
+msgstr "安装OpenStack命令行客户端"
 
 #: ./doc/common/section_cli_install.xml9(para)
 msgid ""
 "Install the prerequisite software and the Python package for each OpenStack "
 "client."
-msgstr ""
+msgstr "为每个OpenStack客户端安装前提软件和Python包。"
 
 #: ./doc/common/section_cli_install.xml12(title)
 msgid "Install the prerequisite software"
-msgstr ""
+msgstr "安装前提软件"
 
 #: ./doc/common/section_cli_install.xml13(para)
 msgid ""
@@ -10100,15 +10100,15 @@ msgstr ""
 
 #: ./doc/common/section_cli_install.xml24(caption)
 msgid "Prerequisite software"
-msgstr ""
+msgstr "前提软件"
 
 #: ./doc/common/section_cli_install.xml29(th)
 msgid "Prerequisite"
-msgstr ""
+msgstr "先决条件"
 
 #: ./doc/common/section_cli_install.xml36(para)
 msgid "Python 2.6 or later"
-msgstr ""
+msgstr "Python 2.6 或后续版本"
 
 #: ./doc/common/section_cli_install.xml39(para)
 msgid "Interpreter for the Python programming language."
@@ -10116,11 +10116,11 @@ msgstr ""
 
 #: ./doc/common/section_cli_install.xml45(para)
 msgid "<package>setuptools</package> package"
-msgstr ""
+msgstr "<package>setuptools</package> 包"
 
 #: ./doc/common/section_cli_install.xml48(para)
 msgid "Installed by default on Mac OS X."
-msgstr ""
+msgstr "Mac OS X 默认安装"
 
 #: ./doc/common/section_cli_install.xml49(para)
 msgid ""
@@ -10144,7 +10144,7 @@ msgstr ""
 
 #: ./doc/common/section_cli_install.xml70(package)
 msgid "pip"
-msgstr ""
+msgstr "pip"
 
 #: ./doc/common/section_cli_install.xml70(td)
 msgid "<placeholder-1/> package"
@@ -10173,11 +10173,11 @@ msgstr ""
 
 #: ./doc/common/section_cli_install.xml87(title)
 msgid "MacOS"
-msgstr ""
+msgstr "MacOS"
 
 #: ./doc/common/section_cli_install.xml91(title)
 msgid "Microsoft Windows"
-msgstr ""
+msgstr "微软 Windows"
 
 #: ./doc/common/section_cli_install.xml92(para)
 msgid ""
@@ -10191,7 +10191,7 @@ msgstr ""
 
 #: ./doc/common/section_cli_install.xml109(title)
 msgid "Ubuntu and Debian"
-msgstr ""
+msgstr "Ubuntu 和 Debian"
 
 #: ./doc/common/section_cli_install.xml114(para)
 msgid ""
@@ -10201,7 +10201,7 @@ msgstr ""
 
 #: ./doc/common/section_cli_install.xml120(title)
 msgid "Red Hat Enterprise Linux, CentOS, or Fedora"
-msgstr ""
+msgstr "红帽企业Linux,CentOS,或者Fedora"
 
 #: ./doc/common/section_cli_install.xml121(para)
 msgid ""
@@ -10214,7 +10214,7 @@ msgstr ""
 
 #: ./doc/common/section_cli_install.xml133(title)
 msgid "SUSE Linux Enterprise Linux 11"
-msgstr ""
+msgstr "SUSE Linux企业版 11"
 
 #: ./doc/common/section_cli_install.xml134(para)
 msgid ""
@@ -10254,11 +10254,11 @@ msgstr ""
 
 #: ./doc/common/section_cli_install.xml173(para)
 msgid "<literal>ceilometer</literal> - Telemetry API"
-msgstr ""
+msgstr "<literal>ceilometer</literal> - Telemetry API"
 
 #: ./doc/common/section_cli_install.xml177(para)
 msgid "<literal>cinder</literal> - Block Storage API and extensions"
-msgstr ""
+msgstr "<literal>cinder</literal> - 块存储 API 及其扩展"
 
 #: ./doc/common/section_cli_install.xml181(para)
 msgid "<literal>glance</literal> - Image Service API"
