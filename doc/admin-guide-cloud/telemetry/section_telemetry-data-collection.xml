@@ -490,16 +490,17 @@
       <xref linkend="section_telemetry-publishers"/>.</para>
     <section xml:id="section_telemetry-pipeline-configuration">
       <title>Pipeline configuration</title>
-      <para>Pipeline configuration by default, is stored in a separate configuration
-        file, called <filename>pipeline.yaml</filename>, next to the
-        <filename>ceilometer.conf</filename> file. The pipeline
-        configuration file can be set in the <option>pipeline_cfg_file</option>
-        parameter listed in the <link xlink:href=
+      <para>Pipeline configuration by default, is stored in separate configuration
+        files, called <filename>pipeline.yaml</filename> and
+        <filename>event_pipeline.yaml</filename>, next to the
+        <filename>ceilometer.conf</filename> file. The meter pipeline and event pipeline
+        configuration files can be set by the <option>pipeline_cfg_file</option>
+        and <option>event_pipeline_cfg_file</option> parameters listed in the <link xlink:href=
         "http://docs.openstack.org/juno/config-reference/content/ch_configuring-openstack-telemetry.html"
         >Description of configuration options for api table</link> section in the
-        <citetitle>OpenStack Configuration Reference</citetitle>. Multiple chains
+        <citetitle>OpenStack Configuration Reference</citetitle> respectively. Multiple pipelines
         can be defined in one pipeline configuration file.</para>
-      <para>The chain definition looks like the following:</para>
+      <para>The meter pipeline definition looks like the following:</para>
       <programlisting>---
 sources:
   - name: 'source name'
@@ -610,9 +611,22 @@ sinks:
           <td>unit_conversion</td>
         </tr>
       </tbody>
-    </table>
+      </table>
       <para>The publishers section contains the list of publishers, where the samples data should
         be sent after the possible transformations.</para>
+      <para>Similarly, the event pipeline definition looks like the following:</para>
+      <programlisting>---
+sources:
+  - name: 'source name'
+    events:
+      - 'event filter'
+    sinks
+      - 'sink name'
+sinks:
+  - name: 'sink name'
+    publishers:
+      - 'list of publishers'</programlisting>
+      <para>The event filter uses the same filtering logic as the meter pipeline.</para>
       <section xml:id="section_telemetry-pipeline-transformers">
         <title>Transformers</title>
         <para>The definition of transformers can contain the following fields:</para>
