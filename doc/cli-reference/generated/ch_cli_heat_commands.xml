@@ -15,7 +15,7 @@
         interface (CLI) for the Orchestration API and its extensions.
 
        This chapter documents <command>heat</command> version
-        <literal>0.3.0</literal>.
+        <literal>0.4.0</literal>.
     </para>
 
     <para>For help on a specific <command>heat</command>
@@ -118,6 +118,13 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>deployment-create</command></term>
+    <listitem>
+      <para>
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>deployment-delete</command></term>
     <listitem>
       <para>
@@ -131,6 +138,14 @@
       <para>
       Get deployment configuration metadata for the
       specified server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>deployment-output-show</command></term>
+    <listitem>
+      <para>
+      Show a specific stack output.
       </para>
     </listitem>
   </varlistentry>
@@ -179,6 +194,14 @@
     <listitem>
       <para>
         <emphasis>DEPRECATED!</emphasis> Use template-show instead.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>hook-clear</command></term>
+    <listitem>
+      <para>
+        Clear hooks on a given stack.
       </para>
     </listitem>
   </varlistentry>
@@ -868,6 +891,97 @@ View details of a software configuration.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="heatclient_subcommand_deployment-create">
+        <title>heat deployment-create</title>
+        <screen><computeroutput>usage: heat deployment-create [-i &lt;KEY=VALUE&gt;] [-a &lt;ACTION&gt;] [-c &lt;CONFIG&gt;]
+                              [-s &lt;SERVER&gt;] [-t &lt;TRANSPORT&gt;]
+                              [--container &lt;CONTAINER_NAME&gt;]
+                              [--timeout &lt;TIMEOUT&gt;]
+                              &lt;DEPLOY_NAME&gt;</computeroutput></screen>
+        <para>
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;DEPLOY_NAME&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the derived config associated with this
+      deployment. This is used to apply a sort order to the
+      list of configurations currently deployed to the
+      server.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-i &lt;KEY=VALUE&gt;, --input-value &lt;KEY=VALUE&gt;</command></term>
+    <listitem>
+      <para>
+      Input value to set on the deployment. This can be
+      specified multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-a &lt;ACTION&gt;, --action &lt;ACTION&gt;</command></term>
+    <listitem>
+      <para>
+      Name of action for this deployment. Can be a custom
+      action, or one of: CREATE, UPDATE, DELETE, SUSPEND,
+      RESUME
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-c &lt;CONFIG&gt;, --config &lt;CONFIG&gt;</command></term>
+    <listitem>
+      <para>
+      ID of the configuration to deploy.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-s &lt;SERVER&gt;, --server &lt;SERVER&gt;</command></term>
+    <listitem>
+      <para>
+      ID of the server being deployed to.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-t &lt;TRANSPORT&gt;, --signal-transport &lt;TRANSPORT&gt;</command></term>
+    <listitem>
+      <para>
+      How the server should signal to heat with the
+      deployment output values. TEMP_URL_SIGNAL will create
+      a Swift TempURL to be signaled via HTTP PUT. NO_SIGNAL
+      will result in the resource going to the COMPLETE
+      state without waiting for any signal.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--container &lt;CONTAINER_NAME&gt;</command></term>
+    <listitem>
+      <para>
+      Optional name of container to store TEMP_URL_SIGNAL
+      objects in. If not specified a container will be
+      created with a name derived from the DEPLOY_NAME
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--timeout &lt;TIMEOUT&gt;</command></term>
+    <listitem>
+      <para>
+        Deployment timeout in minutes.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="heatclient_subcommand_deployment-delete">
         <title>heat deployment-delete</title>
         <screen><computeroutput>usage: heat deployment-delete &lt;ID&gt; [&lt;ID&gt; ...]</computeroutput></screen>
@@ -897,6 +1011,50 @@ Get deployment configuration metadata for the specified server.
     <listitem>
       <para>
         ID of the server to fetch deployments for.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_deployment-output-show">
+        <title>heat deployment-output-show</title>
+        <screen><computeroutput>usage: heat deployment-output-show [-a] [-F &lt;FORMAT&gt;] &lt;ID&gt; [&lt;OUTPUT NAME&gt;]</computeroutput></screen>
+        <para>
+Show a specific stack output.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID deployment to show the output for.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;OUTPUT NAME&gt;</command></term>
+    <listitem>
+      <para>
+        Name of an output to display.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-a, --all</command></term>
+    <listitem>
+      <para>
+        Display all deployment outputs.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-F &lt;FORMAT&gt;, --format &lt;FORMAT&gt;</command></term>
+    <listitem>
+      <para>
+      The output value format, one of: raw, json
       </para>
     </listitem>
   </varlistentry>
@@ -1004,6 +1162,55 @@ Describe the event.
     <listitem>
       <para>
         ID of event to display details for.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_hook-clear">
+        <title>heat hook-clear</title>
+        <screen><computeroutput>usage: heat hook-clear [--pre-create] [--pre-update]
+                       &lt;NAME or ID&gt; &lt;RESOURCE&gt; [&lt;RESOURCE&gt; ...]</computeroutput></screen>
+        <para>
+Clear hooks on a given stack.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAME or ID&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the stack these resources belong to.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;RESOURCE&gt;</command></term>
+    <listitem>
+      <para>
+        Resource names with hooks to clear. Resources in nested stacks
+      can be set using slash as a separator:
+      nested_stack/another/my_resource. You can use wildcards to
+      match multiple stacks or resources:
+      nested_stack/an*/*_resource
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--pre-create</command></term>
+    <listitem>
+      <para>
+        Clear the pre-create hooks
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--pre-update</command></term>
+    <listitem>
+      <para>
+        Clear the pre-update hooks
       </para>
     </listitem>
   </varlistentry>
@@ -1473,9 +1680,10 @@ Cancel currently running update of the stack.
     </section>
     <section xml:id="heatclient_subcommand_stack-create">
         <title>heat stack-create</title>
-        <screen><computeroutput>usage: heat stack-create [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
+        <screen><computeroutput>usage: heat stack-create [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;]
+                         [--pre-create &lt;RESOURCE&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
                          [-c &lt;TIMEOUT&gt;] [-t &lt;TIMEOUT&gt;] [-r]
-                         [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
+                         [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-Pf &lt;KEY=VALUE&gt;]
                          &lt;STACK_NAME&gt;</computeroutput></screen>
         <para>
 Create the stack.
@@ -1506,6 +1714,19 @@ Create the stack.
       <para>
       Path to the environment, it can be specified multiple
       times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--pre-create &lt;RESOURCE&gt;</command></term>
+    <listitem>
+      <para>
+      Name of a resource to set a pre-create hook to.
+      Resources in nested stacks can be set using slash as a
+      separator: nested_stack/another/my_resource. You can
+      use wildcards to match multiple stacks or resources:
+      nested_stack/an*/*_resource. This can be specified
+      multiple times
       </para>
     </listitem>
   </varlistentry>
@@ -1557,6 +1778,16 @@ Create the stack.
       Parameter values used to create the stack. This can be
       specified multiple times, or once with parameters
       separated by a semicolon.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-Pf &lt;KEY=VALUE&gt;, --parameter-file &lt;KEY=VALUE&gt;</command></term>
+    <listitem>
+      <para>
+      Parameter values from file used to create the stack.
+      This can be specified multiple times. Parameter value
+      would be the content of the file
       </para>
     </listitem>
   </varlistentry>
@@ -1655,7 +1886,7 @@ List the user's stacks.
         <title>heat stack-preview</title>
         <screen><computeroutput>usage: heat stack-preview [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
                           [-t &lt;TIMEOUT&gt;] [-r]
-                          [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
+                          [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-Pf &lt;KEY=VALUE&gt;]
                           &lt;STACK_NAME&gt;</computeroutput></screen>
         <para>
 Preview the stack.
@@ -1734,6 +1965,16 @@ Preview the stack.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>-Pf &lt;KEY=VALUE&gt;, --parameter-file &lt;KEY=VALUE&gt;</command></term>
+    <listitem>
+      <para>
+      Parameter values from file used to create the stack.
+      This can be specified multiple times. Parameter value
+      would be the content of the file
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="heatclient_subcommand_stack-restore">
@@ -1808,10 +2049,11 @@ Make a snapshot of a stack.
     </section>
     <section xml:id="heatclient_subcommand_stack-update">
         <title>heat stack-update</title>
-        <screen><computeroutput>usage: heat stack-update [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
+        <screen><computeroutput>usage: heat stack-update [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;]
+                         [--pre-update &lt;RESOURCE&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
                          [-t &lt;TIMEOUT&gt;] [-r] [--rollback &lt;VALUE&gt;]
-                         [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-x]
-                         [-c &lt;PARAMETER&gt;]
+                         [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-Pf &lt;KEY=VALUE&gt;]
+                         [-x] [-c &lt;PARAMETER&gt;]
                          &lt;NAME or ID&gt;</computeroutput></screen>
         <para>
 Update the stack.
@@ -1842,6 +2084,19 @@ Update the stack.
       <para>
       Path to the environment, it can be specified multiple
       times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--pre-update &lt;RESOURCE&gt;</command></term>
+    <listitem>
+      <para>
+      Name of a resource to set a pre-update hook to.
+      Resources in nested stacks can be set using slash as a
+      separator: nested_stack/another/my_resource. You can
+      use wildcards to match multiple stacks or resources:
+      nested_stack/an*/*_resource. This can be specified
+      multiple times
       </para>
     </listitem>
   </varlistentry>
@@ -1899,6 +2154,16 @@ Update the stack.
       Parameter values used to create the stack. This can be
       specified multiple times, or once with parameters
       separated by a semicolon.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-Pf &lt;KEY=VALUE&gt;, --parameter-file &lt;KEY=VALUE&gt;</command></term>
+    <listitem>
+      <para>
+      Parameter values from file used to create the stack.
+      This can be specified multiple times. Parameter value
+      would be the content of the file
       </para>
     </listitem>
   </varlistentry>
