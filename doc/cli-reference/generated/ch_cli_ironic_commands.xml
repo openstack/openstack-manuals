@@ -15,7 +15,7 @@
         interface (CLI) for the Bare metal and its extensions.
 
        This chapter documents <command>ironic</command> version
-        <literal>0.4.1</literal>.
+        <literal>0.5.0</literal>.
     </para>
 
     <para>For help on a specific <command>ironic</command>
@@ -65,7 +65,7 @@
     <term><command>chassis-list</command></term>
     <listitem>
       <para>
-        List chassis.
+        List the chassis.
       </para>
     </listitem>
   </varlistentry>
@@ -73,7 +73,7 @@
     <term><command>chassis-node-list</command></term>
     <listitem>
       <para>
-        List the nodes contained in the chassis.
+        List the nodes contained in a chassis.
       </para>
     </listitem>
   </varlistentry>
@@ -81,7 +81,7 @@
     <term><command>chassis-show</command></term>
     <listitem>
       <para>
-        Show a chassis.
+        Show detailed information about a chassis.
       </para>
     </listitem>
   </varlistentry>
@@ -89,7 +89,7 @@
     <term><command>chassis-update</command></term>
     <listitem>
       <para>
-        Update a chassis.
+        Update information about a chassis.
       </para>
     </listitem>
   </varlistentry>
@@ -113,7 +113,7 @@
     <term><command>node-get-boot-device</command></term>
     <listitem>
       <para>
-      Get the current boot device.
+      Get the current boot device for a node.
       </para>
     </listitem>
   </varlistentry>
@@ -121,8 +121,8 @@
     <term><command>node-get-console</command></term>
     <listitem>
       <para>
-        Return the connection information for the node's
-      console, if enabled.
+        Get the connection information for a node's console,
+      if enabled.
       </para>
     </listitem>
   </varlistentry>
@@ -130,7 +130,7 @@
     <term><command>node-get-supported-boot-devices</command></term>
     <listitem>
       <para>
-      Get the supported boot devices.
+      Get the supported boot devices for a node.
       </para>
     </listitem>
   </varlistentry>
@@ -138,7 +138,7 @@
     <term><command>node-list</command></term>
     <listitem>
       <para>
-        List nodes which are registered with the Ironic
+        List the nodes which are registered with the Ironic
       service.
       </para>
     </listitem>
@@ -147,7 +147,7 @@
     <term><command>node-port-list</command></term>
     <listitem>
       <para>
-        List the ports associated with the node.
+        List the ports associated with a node.
       </para>
     </listitem>
   </varlistentry>
@@ -163,7 +163,7 @@
     <term><command>node-set-console-mode</command></term>
     <listitem>
       <para>
-      Enable or disable serial console access for this node.
+      Enable or disable serial console access for a node.
       </para>
     </listitem>
   </varlistentry>
@@ -171,7 +171,7 @@
     <term><command>node-set-maintenance</command></term>
     <listitem>
       <para>
-      Enable or disable maintenance mode for this node.
+      Enable or disable maintenance mode for a node.
       </para>
     </listitem>
   </varlistentry>
@@ -179,7 +179,7 @@
     <term><command>node-set-power-state</command></term>
     <listitem>
       <para>
-      Power the node on or off or reboot.
+      Power a node on or off or reboot.
       </para>
     </listitem>
   </varlistentry>
@@ -187,7 +187,8 @@
     <term><command>node-set-provision-state</command></term>
     <listitem>
       <para>
-      Provision, rebuild or delete an instance.
+      Provision, rebuild, delete, inspect, provide or manage
+      an instance.
       </para>
     </listitem>
   </varlistentry>
@@ -195,7 +196,7 @@
     <term><command>node-show</command></term>
     <listitem>
       <para>
-        Show detailed information for a node.
+        Show detailed information about a node.
       </para>
     </listitem>
   </varlistentry>
@@ -211,7 +212,7 @@
     <term><command>node-validate</command></term>
     <listitem>
       <para>
-        Validate the node driver interfaces.
+        Validate a node's driver interfaces.
       </para>
     </listitem>
   </varlistentry>
@@ -243,7 +244,7 @@
     <term><command>port-list</command></term>
     <listitem>
       <para>
-        List ports.
+        List the ports.
       </para>
     </listitem>
   </varlistentry>
@@ -251,7 +252,7 @@
     <term><command>port-show</command></term>
     <listitem>
       <para>
-        Show a port.
+        Show detailed information about a port.
       </para>
     </listitem>
   </varlistentry>
@@ -259,7 +260,7 @@
     <term><command>port-update</command></term>
     <listitem>
       <para>
-        Update a port.
+        Update information about a port.
       </para>
     </listitem>
   </varlistentry>
@@ -267,7 +268,7 @@
     <term><command>driver-list</command></term>
     <listitem>
       <para>
-        List of enabled drivers.
+        List the enabled drivers.
       </para>
     </listitem>
   </varlistentry>
@@ -275,7 +276,7 @@
     <term><command>driver-properties</command></term>
     <listitem>
       <para>
-        Get properties of the driver.
+        Get properties of a driver.
       </para>
     </listitem>
   </varlistentry>
@@ -283,7 +284,7 @@
     <term><command>driver-show</command></term>
     <listitem>
       <para>
-        Show a driver.
+        Show information about a driver.
       </para>
     </listitem>
   </varlistentry>
@@ -434,6 +435,7 @@
     <term><command>--ironic-api-version IRONIC_API_VERSION</command></term>
     <listitem>
       <para>
+      Accepts 1.x (where "x" is microversion) or "latest",
       Defaults to <code>env[IRONIC_API_VERSION]</code> or 1
       </para>
     </listitem>
@@ -574,7 +576,7 @@ Create a new chassis.
     <term><command>-d &lt;description&gt;, --description &lt;description&gt;</command></term>
     <listitem>
       <para>
-      Free text description of the chassis
+      Description of the chassis.
       </para>
     </listitem>
   </varlistentry>
@@ -583,7 +585,7 @@ Create a new chassis.
     <listitem>
       <para>
       Record arbitrary key/value metadata. Can be specified
-      multiple times
+      multiple times.
       </para>
     </listitem>
   </varlistentry>
@@ -591,16 +593,16 @@ Create a new chassis.
     </section>
     <section xml:id="ironicclient_subcommand_chassis-delete">
         <title>ironic chassis-delete</title>
-        <screen><computeroutput>usage: ironic chassis-delete &lt;chassis id&gt; [&lt;chassis id&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: ironic chassis-delete &lt;chassis&gt; [&lt;chassis&gt; ...]</computeroutput></screen>
         <para>
 Delete a chassis.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;chassis id&gt;</command></term>
+    <term><command>&lt;chassis&gt;</command></term>
     <listitem>
       <para>
-        UUID of chassis
+        UUID of the chassis.
       </para>
     </listitem>
   </varlistentry>
@@ -608,17 +610,17 @@ Delete a chassis.
     </section>
     <section xml:id="ironicclient_subcommand_chassis-list">
         <title>ironic chassis-list</title>
-        <screen><computeroutput>usage: ironic chassis-list [--detail] [--limit &lt;limit&gt;] [--marker &lt;marker&gt;]
-                           [--sort-key &lt;sort_key&gt;] [--sort-dir &lt;sort_dir&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: ironic chassis-list [--detail] [--limit &lt;limit&gt;] [--marker &lt;chassis&gt;]
+                           [--sort-key &lt;field&gt;] [--sort-dir &lt;direction&gt;]</computeroutput></screen>
         <para>
-List chassis.
+List the chassis.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
     <term><command>--detail</command></term>
     <listitem>
       <para>
-        Show detailed information about chassis.
+        Show detailed information about the chassis.
       </para>
     </listitem>
   </varlistentry>
@@ -633,28 +635,28 @@ List chassis.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--marker &lt;marker&gt;</command></term>
+    <term><command>--marker &lt;chassis&gt;</command></term>
     <listitem>
       <para>
-        Chassis UUID (e.g of the last chassis in the list from
-      a previous request). Returns the list of chassis after
-      this UUID.
+        Chassis UUID (for example, of the last chassis in the
+      list from a previous request). Returns the list of
+      chassis after this UUID.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sort-key &lt;sort_key&gt;</command></term>
+    <term><command>--sort-key &lt;field&gt;</command></term>
     <listitem>
       <para>
-      Chassis field that will be used for sorting.
+        Chassis field that will be used for sorting.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sort-dir &lt;sort_dir&gt;</command></term>
+    <term><command>--sort-dir &lt;direction&gt;</command></term>
     <listitem>
       <para>
-      Sort direction: one of "asc" (the default) or "desc".
+      Sort direction: "asc" (the default) or "desc".
       </para>
     </listitem>
   </varlistentry>
@@ -662,19 +664,18 @@ List chassis.
     </section>
     <section xml:id="ironicclient_subcommand_chassis-node-list">
         <title>ironic chassis-node-list</title>
-        <screen><computeroutput>usage: ironic chassis-node-list [--detail] [--limit &lt;limit&gt;]
-                                [--marker &lt;marker&gt;] [--sort-key &lt;sort_key&gt;]
-                                [--sort-dir &lt;sort_dir&gt;]
-                                &lt;chassis id&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic chassis-node-list [--detail] [--limit &lt;limit&gt;] [--marker &lt;node&gt;]
+                                [--sort-key &lt;field&gt;] [--sort-dir &lt;direction&gt;]
+                                &lt;chassis&gt;</computeroutput></screen>
         <para>
-List the nodes contained in the chassis.
+List the nodes contained in a chassis.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;chassis id&gt;</command></term>
+    <term><command>&lt;chassis&gt;</command></term>
     <listitem>
       <para>
-        UUID of chassis
+        UUID of the chassis.
       </para>
     </listitem>
   </varlistentry>
@@ -685,7 +686,7 @@ List the nodes contained in the chassis.
     <term><command>--detail</command></term>
     <listitem>
       <para>
-        Show detailed information about nodes.
+        Show detailed information about the nodes.
       </para>
     </listitem>
   </varlistentry>
@@ -700,28 +701,28 @@ List the nodes contained in the chassis.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--marker &lt;marker&gt;</command></term>
+    <term><command>--marker &lt;node&gt;</command></term>
     <listitem>
       <para>
-        Node UUID (e.g of the last node in the list from a
-      previous request). Returns the list of nodes after
-      this UUID.
+        Node UUID (for example, of the last node in the list
+      from a previous request). Returns the list of nodes
+      after this UUID.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sort-key &lt;sort_key&gt;</command></term>
+    <term><command>--sort-key &lt;field&gt;</command></term>
     <listitem>
       <para>
-      Node field that will be used for sorting.
+        Node field that will be used for sorting.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sort-dir &lt;sort_dir&gt;</command></term>
+    <term><command>--sort-dir &lt;direction&gt;</command></term>
     <listitem>
       <para>
-      Sort direction: one of "asc" (the default) or "desc".
+      Sort direction: "asc" (the default) or "desc".
       </para>
     </listitem>
   </varlistentry>
@@ -729,16 +730,16 @@ List the nodes contained in the chassis.
     </section>
     <section xml:id="ironicclient_subcommand_chassis-show">
         <title>ironic chassis-show</title>
-        <screen><computeroutput>usage: ironic chassis-show &lt;chassis id&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic chassis-show &lt;chassis&gt;</computeroutput></screen>
         <para>
-Show a chassis.
+Show detailed information about a chassis.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;chassis id&gt;</command></term>
+    <term><command>&lt;chassis&gt;</command></term>
     <listitem>
       <para>
-        UUID of chassis
+        UUID of the chassis.
       </para>
     </listitem>
   </varlistentry>
@@ -746,16 +747,16 @@ Show a chassis.
     </section>
     <section xml:id="ironicclient_subcommand_chassis-update">
         <title>ironic chassis-update</title>
-        <screen><computeroutput>usage: ironic chassis-update &lt;chassis id&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: ironic chassis-update &lt;chassis&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
         <para>
-Update a chassis.
+Update information about a chassis.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;chassis id&gt;</command></term>
+    <term><command>&lt;chassis&gt;</command></term>
     <listitem>
       <para>
-        UUID of chassis
+        UUID of the chassis.
       </para>
     </listitem>
   </varlistentry>
@@ -763,7 +764,7 @@ Update a chassis.
     <term><command>&lt;op&gt;</command></term>
     <listitem>
       <para>
-        Operations: 'add', 'replace' or 'remove'
+        Operation: 'add', 'replace', or 'remove'.
       </para>
     </listitem>
   </varlistentry>
@@ -771,8 +772,8 @@ Update a chassis.
     <term><command>&lt;path=value&gt;</command></term>
     <listitem>
       <para>
-        Attributes to add/replace or remove (only PATH is necessary on
-      remove)
+        Attribute to add, replace, or remove. Can be specified
+      multiple times. For 'remove', only &lt;path&gt; is necessary.
       </para>
     </listitem>
   </varlistentry>
@@ -782,21 +783,21 @@ Update a chassis.
         <title>ironic driver-list</title>
         <screen><computeroutput>usage: ironic driver-list</computeroutput></screen>
         <para>
-List of enabled drivers.
+List the enabled drivers.
         </para>
     </section>
     <section xml:id="ironicclient_subcommand_driver-properties">
         <title>ironic driver-properties</title>
-        <screen><computeroutput>usage: ironic driver-properties &lt;driver name&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic driver-properties &lt;driver&gt;</computeroutput></screen>
         <para>
-Get properties of the driver.
+Get properties of a driver.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;driver name&gt;</command></term>
+    <term><command>&lt;driver&gt;</command></term>
     <listitem>
       <para>
-        name of a driver
+        Name of the driver.
       </para>
     </listitem>
   </varlistentry>
@@ -804,16 +805,16 @@ Get properties of the driver.
     </section>
     <section xml:id="ironicclient_subcommand_driver-show">
         <title>ironic driver-show</title>
-        <screen><computeroutput>usage: ironic driver-show &lt;driver_name&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic driver-show &lt;driver&gt;</computeroutput></screen>
         <para>
-Show a driver.
+Show information about a driver.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;driver_name&gt;</command></term>
+    <term><command>&lt;driver&gt;</command></term>
     <listitem>
       <para>
-        Name of the driver
+        Name of the driver.
       </para>
     </listitem>
   </varlistentry>
@@ -821,18 +822,18 @@ Show a driver.
     </section>
     <section xml:id="ironicclient_subcommand_driver-vendor-passthru">
         <title>ironic driver-vendor-passthru</title>
-        <screen><computeroutput>usage: ironic driver-vendor-passthru [--http_method &lt;http_method&gt;]
-                                     &lt;driver_name&gt; &lt;method&gt;
+        <screen><computeroutput>usage: ironic driver-vendor-passthru [--http-method &lt;http-method&gt;]
+                                     &lt;driver&gt; &lt;method&gt;
                                      [&lt;arg=value&gt; [&lt;arg=value&gt; ...]]</computeroutput></screen>
         <para>
 Call a vendor-passthru extension for a driver.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;driver_name&gt;</command></term>
+    <term><command>&lt;driver&gt;</command></term>
     <listitem>
       <para>
-        Name of the driver
+        Name of the driver.
       </para>
     </listitem>
   </varlistentry>
@@ -840,7 +841,7 @@ Call a vendor-passthru extension for a driver.
     <term><command>&lt;method&gt;</command></term>
     <listitem>
       <para>
-        vendor-passthru method to be called
+        Vendor-passthru method to be called.
       </para>
     </listitem>
   </varlistentry>
@@ -848,7 +849,8 @@ Call a vendor-passthru extension for a driver.
     <term><command>&lt;arg=value&gt;</command></term>
     <listitem>
       <para>
-        arguments to be passed to vendor-passthru method
+        Argument to be passed to the vendor-passthru method.
+      Can be specified multiple times.
       </para>
     </listitem>
   </varlistentry>
@@ -856,12 +858,12 @@ Call a vendor-passthru extension for a driver.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--http_method &lt;http_method&gt;</command></term>
+    <term><command>--http-method &lt;http-method&gt;</command></term>
     <listitem>
       <para>
       The HTTP method to use in the request. Valid HTTP
-      methods are: 'POST', 'PUT', 'GET', 'DELETE', 'PATCH'.
-      Defaults to 'POST'.
+      methods are: 'POST', 'PUT', 'GET', 'DELETE', and
+      'PATCH'. Defaults to 'POST'.
       </para>
     </listitem>
   </varlistentry>
@@ -869,17 +871,18 @@ Call a vendor-passthru extension for a driver.
     </section>
     <section xml:id="ironicclient_subcommand_node-create">
         <title>ironic node-create</title>
-        <screen><computeroutput>usage: ironic node-create [-c &lt;chassis uuid&gt;] [-d &lt;driver&gt;] [-i &lt;key=value&gt;]
-                          [-p &lt;key=value&gt;] [-e &lt;key=value&gt;] [-u &lt;uuid&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-create [-c &lt;chassis&gt;] -d &lt;driver&gt; [-i &lt;key=value&gt;]
+                          [-p &lt;key=value&gt;] [-e &lt;key=value&gt;] [-u &lt;uuid&gt;]
+                          [-n &lt;name&gt;]</computeroutput></screen>
         <para>
 Register a new node with the Ironic service.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>-c &lt;chassis uuid&gt;, --chassis_uuid &lt;chassis uuid&gt;</command></term>
+    <term><command>-c &lt;chassis&gt;, --chassis &lt;chassis&gt;</command></term>
     <listitem>
       <para>
-      UUID of the chassis that this node belongs to
+      UUID of the chassis that this node belongs to.
       </para>
     </listitem>
   </varlistentry>
@@ -887,17 +890,17 @@ Register a new node with the Ironic service.
     <term><command>-d &lt;driver&gt;, --driver &lt;driver&gt;</command></term>
     <listitem>
       <para>
-      Driver used to control the node [REQUIRED]
+      Driver used to control the node [REQUIRED].
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-i &lt;key=value&gt;, --driver_info &lt;key=value&gt;</command></term>
+    <term><command>-i &lt;key=value&gt;, --driver-info &lt;key=value&gt;</command></term>
     <listitem>
       <para>
-      Key/value pairs used by the driver, such as out-of-
-      band managementcredentials. Can be specified multiple
-      times
+      Key/value pair used by the driver, such as out-of-band
+      management credentials. Can be specified multiple
+      times.
       </para>
     </listitem>
   </varlistentry>
@@ -905,10 +908,9 @@ Register a new node with the Ironic service.
     <term><command>-p &lt;key=value&gt;, --properties &lt;key=value&gt;</command></term>
     <listitem>
       <para>
-      Key/value pairs describing the physical
-      characteristics of the node. This is exported to Nova
-      and used by the scheduler. Can be specified multiple
-      times
+      Key/value pair describing the physical characteristics
+      of the node. This is exported to Nova and used by the
+      scheduler. Can be specified multiple times.
       </para>
     </listitem>
   </varlistentry>
@@ -917,7 +919,7 @@ Register a new node with the Ironic service.
     <listitem>
       <para>
       Record arbitrary key/value metadata. Can be specified
-      multiple times
+      multiple times.
       </para>
     </listitem>
   </varlistentry>
@@ -925,7 +927,15 @@ Register a new node with the Ironic service.
     <term><command>-u &lt;uuid&gt;, --uuid &lt;uuid&gt;</command></term>
     <listitem>
       <para>
-      Unique UUID for the node
+      Unique UUID for the node.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-n &lt;name&gt;, --name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+      Unique name for the node.
       </para>
     </listitem>
   </varlistentry>
@@ -933,16 +943,16 @@ Register a new node with the Ironic service.
     </section>
     <section xml:id="ironicclient_subcommand_node-delete">
         <title>ironic node-delete</title>
-        <screen><computeroutput>usage: ironic node-delete &lt;node id&gt; [&lt;node id&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-delete &lt;node&gt; [&lt;node&gt; ...]</computeroutput></screen>
         <para>
 Unregister a node from the Ironic service.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node id&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
@@ -950,16 +960,16 @@ Unregister a node from the Ironic service.
     </section>
     <section xml:id="ironicclient_subcommand_node-get-boot-device">
         <title>ironic node-get-boot-device</title>
-        <screen><computeroutput>usage: ironic node-get-boot-device &lt;node uuid&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-get-boot-device &lt;node&gt;</computeroutput></screen>
         <para>
-Get the current boot device.
+Get the current boot device for a node.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node uuid&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
@@ -967,16 +977,16 @@ Get the current boot device.
     </section>
     <section xml:id="ironicclient_subcommand_node-get-console">
         <title>ironic node-get-console</title>
-        <screen><computeroutput>usage: ironic node-get-console &lt;node uuid&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-get-console &lt;node&gt;</computeroutput></screen>
         <para>
-Return the connection information for the node's console, if enabled.
+Get the connection information for a node's console, if enabled.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node uuid&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
@@ -984,16 +994,16 @@ Return the connection information for the node's console, if enabled.
     </section>
     <section xml:id="ironicclient_subcommand_node-get-supported-boot-devices">
         <title>ironic node-get-supported-boot-devices</title>
-        <screen><computeroutput>usage: ironic node-get-supported-boot-devices &lt;node uuid&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-get-supported-boot-devices &lt;node&gt;</computeroutput></screen>
         <para>
-Get the supported boot devices.
+Get the supported boot devices for a node.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node uuid&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
@@ -1001,12 +1011,12 @@ Get the supported boot devices.
     </section>
     <section xml:id="ironicclient_subcommand_node-list">
         <title>ironic node-list</title>
-        <screen><computeroutput>usage: ironic node-list [--limit &lt;limit&gt;] [--marker &lt;marker&gt;]
-                        [--sort-key &lt;sort_key&gt;] [--sort-dir &lt;sort_dir&gt;]
-                        [--maintenance &lt;maintenance&gt;] [--associated &lt;assoc&gt;]
+        <screen><computeroutput>usage: ironic node-list [--limit &lt;limit&gt;] [--marker &lt;node&gt;]
+                        [--sort-key &lt;field&gt;] [--sort-dir &lt;direction&gt;]
+                        [--maintenance &lt;boolean&gt;] [--associated &lt;boolean&gt;]
                         [--detail]</computeroutput></screen>
         <para>
-List nodes which are registered with the Ironic service.
+List the nodes which are registered with the Ironic service.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -1020,44 +1030,44 @@ List nodes which are registered with the Ironic service.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--marker &lt;marker&gt;</command></term>
+    <term><command>--marker &lt;node&gt;</command></term>
     <listitem>
       <para>
-        Node UUID (e.g of the last node in the list from a
-      previous request). Returns the list of nodes after
-      this UUID.
+        Node UUID (for example, of the last node in the list
+      from a previous request). Returns the list of nodes
+      after this UUID.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sort-key &lt;sort_key&gt;</command></term>
+    <term><command>--sort-key &lt;field&gt;</command></term>
     <listitem>
       <para>
-      Node field that will be used for sorting.
+        Node field that will be used for sorting.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sort-dir &lt;sort_dir&gt;</command></term>
+    <term><command>--sort-dir &lt;direction&gt;</command></term>
     <listitem>
       <para>
-      Sort direction: one of "asc" (the default) or "desc".
+      Sort direction: "asc" (the default) or "desc".
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--maintenance &lt;maintenance&gt;</command></term>
+    <term><command>--maintenance &lt;boolean&gt;</command></term>
     <listitem>
       <para>
-      List nodes in maintenance mode: 'true' or 'false'
+      List nodes in maintenance mode: 'true' or 'false'.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--associated &lt;assoc&gt;</command></term>
+    <term><command>--associated &lt;boolean&gt;</command></term>
     <listitem>
       <para>
-        List nodes by instance association: 'true' or 'false'
+      List nodes by instance association: 'true' or 'false'.
       </para>
     </listitem>
   </varlistentry>
@@ -1065,7 +1075,7 @@ List nodes which are registered with the Ironic service.
     <term><command>--detail</command></term>
     <listitem>
       <para>
-        Show detailed information about nodes
+        Show detailed information about the nodes.
       </para>
     </listitem>
   </varlistentry>
@@ -1073,18 +1083,18 @@ List nodes which are registered with the Ironic service.
     </section>
     <section xml:id="ironicclient_subcommand_node-port-list">
         <title>ironic node-port-list</title>
-        <screen><computeroutput>usage: ironic node-port-list [--detail] [--limit &lt;limit&gt;] [--marker &lt;marker&gt;]
-                             [--sort-key &lt;sort_key&gt;] [--sort-dir &lt;sort_dir&gt;]
-                             &lt;node id&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-port-list [--detail] [--limit &lt;limit&gt;] [--marker &lt;port&gt;]
+                             [--sort-key &lt;field&gt;] [--sort-dir &lt;direction&gt;]
+                             &lt;node&gt;</computeroutput></screen>
         <para>
-List the ports associated with the node.
+List the ports associated with a node.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node id&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        UUID of the node.
       </para>
     </listitem>
   </varlistentry>
@@ -1095,7 +1105,7 @@ List the ports associated with the node.
     <term><command>--detail</command></term>
     <listitem>
       <para>
-        Show detailed information about ports.
+        Show detailed information about the ports.
       </para>
     </listitem>
   </varlistentry>
@@ -1110,28 +1120,28 @@ List the ports associated with the node.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--marker &lt;marker&gt;</command></term>
+    <term><command>--marker &lt;port&gt;</command></term>
     <listitem>
       <para>
-        Port UUID (e.g of the last port in the list from a
-      previous request). Returns the list of ports after
-      this UUID.
+        Port UUID (for example, of the last port in the list
+      from a previous request). Returns the list of ports
+      after this UUID.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sort-key &lt;sort_key&gt;</command></term>
+    <term><command>--sort-key &lt;field&gt;</command></term>
     <listitem>
       <para>
-      Port field that will be used for sorting.
+        Port field that will be used for sorting.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sort-dir &lt;sort_dir&gt;</command></term>
+    <term><command>--sort-dir &lt;direction&gt;</command></term>
     <listitem>
       <para>
-      Sort direction: one of "asc" (the default) or "desc".
+      Sort direction: "asc" (the default) or "desc".
       </para>
     </listitem>
   </varlistentry>
@@ -1139,25 +1149,24 @@ List the ports associated with the node.
     </section>
     <section xml:id="ironicclient_subcommand_node-set-boot-device">
         <title>ironic node-set-boot-device</title>
-        <screen><computeroutput>usage: ironic node-set-boot-device [--persistent] &lt;node uuid&gt; &lt;boot device&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-set-boot-device [--persistent] &lt;node&gt; &lt;boot-device&gt;</computeroutput></screen>
         <para>
 Set the boot device for a node.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node uuid&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>&lt;boot device&gt;</command></term>
+    <term><command>&lt;boot-device&gt;</command></term>
     <listitem>
       <para>
-        Supported boot devices: 'pxe', 'disk', 'cdrom', 'bios',
-      'safe'
+        'pxe', 'disk', 'cdrom', 'bios', or 'safe'.
       </para>
     </listitem>
   </varlistentry>
@@ -1168,7 +1177,7 @@ Set the boot device for a node.
     <term><command>--persistent</command></term>
     <listitem>
       <para>
-        Make changes persistent for all future boots
+        Make changes persistent for all future boots.
       </para>
     </listitem>
   </varlistentry>
@@ -1176,16 +1185,16 @@ Set the boot device for a node.
     </section>
     <section xml:id="ironicclient_subcommand_node-set-console-mode">
         <title>ironic node-set-console-mode</title>
-        <screen><computeroutput>usage: ironic node-set-console-mode &lt;node uuid&gt; &lt;enabled&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-set-console-mode &lt;node&gt; &lt;enabled&gt;</computeroutput></screen>
         <para>
-Enable or disable serial console access for this node.
+Enable or disable serial console access for a node.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node uuid&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
@@ -1193,8 +1202,8 @@ Enable or disable serial console access for this node.
     <term><command>&lt;enabled&gt;</command></term>
     <listitem>
       <para>
-        Enable or disable the console access. Supported options are:
-      'true' or 'false'
+        Enable or disable console access for a node. Supported options
+      are: 'true' or 'false'.
       </para>
     </listitem>
   </varlistentry>
@@ -1203,24 +1212,24 @@ Enable or disable serial console access for this node.
     <section xml:id="ironicclient_subcommand_node-set-maintenance">
         <title>ironic node-set-maintenance</title>
         <screen><computeroutput>usage: ironic node-set-maintenance [--reason &lt;reason&gt;]
-                                   &lt;node id&gt; &lt;maintenance mode&gt;</computeroutput></screen>
+                                   &lt;node&gt; &lt;maintenance-mode&gt;</computeroutput></screen>
         <para>
-Enable or disable maintenance mode for this node.
+Enable or disable maintenance mode for a node.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node id&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>&lt;maintenance mode&gt;</command></term>
+    <term><command>&lt;maintenance-mode&gt;</command></term>
     <listitem>
       <para>
-        Supported states: 'true' or 'false'; 'on' or 'off'
+        'true' or 'false'; 'on' or 'off'.
       </para>
     </listitem>
   </varlistentry>
@@ -1231,8 +1240,8 @@ Enable or disable maintenance mode for this node.
     <term><command>--reason &lt;reason&gt;</command></term>
     <listitem>
       <para>
-        The reason for setting maintenance mode to "true" or
-      "on"; not valid when setting to "false" or "off".
+        Reason for setting maintenance mode to "true" or "on";
+      not valid when setting to "false" or "off".
       </para>
     </listitem>
   </varlistentry>
@@ -1240,24 +1249,24 @@ Enable or disable maintenance mode for this node.
     </section>
     <section xml:id="ironicclient_subcommand_node-set-power-state">
         <title>ironic node-set-power-state</title>
-        <screen><computeroutput>usage: ironic node-set-power-state &lt;node id&gt; &lt;power state&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-set-power-state &lt;node&gt; &lt;power-state&gt;</computeroutput></screen>
         <para>
-Power the node on or off or reboot.
+Power a node on or off or reboot.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node id&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>&lt;power state&gt;</command></term>
+    <term><command>&lt;power-state&gt;</command></term>
     <listitem>
       <para>
-        Supported states: 'on' or 'off' or 'reboot'
+        'on', 'off', or 'reboot'.
       </para>
     </listitem>
   </varlistentry>
@@ -1265,25 +1274,26 @@ Power the node on or off or reboot.
     </section>
     <section xml:id="ironicclient_subcommand_node-set-provision-state">
         <title>ironic node-set-provision-state</title>
-        <screen><computeroutput>usage: ironic node-set-provision-state [--config-drive &lt;config drive&gt;]
-                                       &lt;node id&gt; &lt;provision state&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-set-provision-state [--config-drive &lt;config-drive&gt;]
+                                       &lt;node&gt; &lt;provision-state&gt;</computeroutput></screen>
         <para>
-Provision, rebuild or delete an instance.
+Provision, rebuild, delete, inspect, provide or manage an instance.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node id&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>&lt;provision state&gt;</command></term>
+    <term><command>&lt;provision-state&gt;</command></term>
     <listitem>
       <para>
-        Supported states: 'active' or 'deleted' or 'rebuild'
+        Supported states: 'active', 'deleted', 'rebuild',
+      'inspect', 'provide' or 'manage'
       </para>
     </listitem>
   </varlistentry>
@@ -1291,12 +1301,15 @@ Provision, rebuild or delete an instance.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--config-drive &lt;config drive&gt;</command></term>
+    <term><command>--config-drive &lt;config-drive&gt;</command></term>
     <listitem>
       <para>
-      A gzipped base64 encoded config drive string or the
-      path to the config drive file; Only valid when setting
-      provision state to "active".
+      A gzipped, base64-encoded configuration drive string
+      OR the path to the configuration drive file OR the
+      path to a directory containing the config drive files.
+      In case it's a directory, a config drive will be
+      generated from it. This parameter is only valid when
+      setting provision state to 'active'.
       </para>
     </listitem>
   </varlistentry>
@@ -1306,14 +1319,15 @@ Provision, rebuild or delete an instance.
         <title>ironic node-show</title>
         <screen><computeroutput>usage: ironic node-show [--instance] &lt;id&gt;</computeroutput></screen>
         <para>
-Show detailed information for a node.
+Show detailed information about a node.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;id&gt;</command></term>
     <listitem>
       <para>
-        ID, UUID or instance UUID of node
+        Name or UUID of the node (or instance UUID if --instance is
+      specified).
       </para>
     </listitem>
   </varlistentry>
@@ -1321,10 +1335,10 @@ Show detailed information for a node.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--instance</command></term>
+    <term><command>--instance &lt;id&gt;</command></term>
     <listitem>
       <para>
-        The id is an instance UUID
+        is an instance UUID.
       </para>
     </listitem>
   </varlistentry>
@@ -1332,16 +1346,16 @@ Show detailed information for a node.
     </section>
     <section xml:id="ironicclient_subcommand_node-update">
         <title>ironic node-update</title>
-        <screen><computeroutput>usage: ironic node-update &lt;node id&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-update &lt;node&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
         <para>
 Update information about a registered node.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node id&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
@@ -1349,7 +1363,7 @@ Update information about a registered node.
     <term><command>&lt;op&gt;</command></term>
     <listitem>
       <para>
-        Operations: 'add', 'replace' or 'remove'
+        Operation: 'add', 'replace', or 'remove'.
       </para>
     </listitem>
   </varlistentry>
@@ -1357,8 +1371,8 @@ Update information about a registered node.
     <term><command>&lt;path=value&gt;</command></term>
     <listitem>
       <para>
-        Attributes to add/replace or remove (only PATH is necessary on
-      remove)
+        Attribute to add, replace, or remove. Can be specified
+      multiple times. For 'remove', only &lt;path&gt; is necessary.
       </para>
     </listitem>
   </varlistentry>
@@ -1366,16 +1380,16 @@ Update information about a registered node.
     </section>
     <section xml:id="ironicclient_subcommand_node-validate">
         <title>ironic node-validate</title>
-        <screen><computeroutput>usage: ironic node-validate &lt;node uuid&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-validate &lt;node&gt;</computeroutput></screen>
         <para>
-Validate the node driver interfaces.
+Validate a node's driver interfaces.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node uuid&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
@@ -1383,18 +1397,18 @@ Validate the node driver interfaces.
     </section>
     <section xml:id="ironicclient_subcommand_node-vendor-passthru">
         <title>ironic node-vendor-passthru</title>
-        <screen><computeroutput>usage: ironic node-vendor-passthru [--http_method &lt;http_method&gt;]
-                                   &lt;node id&gt; &lt;method&gt;
+        <screen><computeroutput>usage: ironic node-vendor-passthru [--http-method &lt;http-method&gt;]
+                                   &lt;node&gt; &lt;method&gt;
                                    [&lt;arg=value&gt; [&lt;arg=value&gt; ...]]</computeroutput></screen>
         <para>
 Call a vendor-passthru extension for a node.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;node id&gt;</command></term>
+    <term><command>&lt;node&gt;</command></term>
     <listitem>
       <para>
-        UUID of node
+        Name or UUID of the node.
       </para>
     </listitem>
   </varlistentry>
@@ -1402,7 +1416,7 @@ Call a vendor-passthru extension for a node.
     <term><command>&lt;method&gt;</command></term>
     <listitem>
       <para>
-        vendor-passthru method to be called
+        Vendor-passthru method to be called.
       </para>
     </listitem>
   </varlistentry>
@@ -1410,7 +1424,8 @@ Call a vendor-passthru extension for a node.
     <term><command>&lt;arg=value&gt;</command></term>
     <listitem>
       <para>
-        arguments to be passed to vendor-passthru method
+        Argument to be passed to the vendor-passthru method.
+      Can be specified mutiple times.
       </para>
     </listitem>
   </varlistentry>
@@ -1418,12 +1433,12 @@ Call a vendor-passthru extension for a node.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--http_method &lt;http_method&gt;</command></term>
+    <term><command>--http-method &lt;http-method&gt;</command></term>
     <listitem>
       <para>
       The HTTP method to use in the request. Valid HTTP
-      methods are: 'POST', 'PUT', 'GET', 'DELETE', 'PATCH'.
-      Defaults to 'POST'.
+      methods are: 'POST', 'PUT', 'GET', 'DELETE', and
+      'PATCH'. Defaults to 'POST'.
       </para>
     </listitem>
   </varlistentry>
@@ -1431,7 +1446,7 @@ Call a vendor-passthru extension for a node.
     </section>
     <section xml:id="ironicclient_subcommand_port-create">
         <title>ironic port-create</title>
-        <screen><computeroutput>usage: ironic port-create -a &lt;address&gt; -n &lt;node uuid&gt; [-e &lt;key=value&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: ironic port-create -a &lt;address&gt; -n &lt;node&gt; [-e &lt;key=value&gt;]</computeroutput></screen>
         <para>
 Create a new port.
         </para>  <variablelist wordsize="10">
@@ -1440,15 +1455,15 @@ Create a new port.
     <term><command>-a &lt;address&gt;, --address &lt;address&gt;</command></term>
     <listitem>
       <para>
-      MAC Address for this port
+      MAC address for this port.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-n &lt;node uuid&gt;, --node_uuid &lt;node uuid&gt;</command></term>
+    <term><command>-n &lt;node&gt;, --node &lt;node&gt;</command></term>
     <listitem>
       <para>
-      UUID of the node that this port belongs to
+      UUID of the node that this port belongs to.
       </para>
     </listitem>
   </varlistentry>
@@ -1457,7 +1472,7 @@ Create a new port.
     <listitem>
       <para>
       Record arbitrary key/value metadata. Can be specified
-      multiple times
+      multiple times.
       </para>
     </listitem>
   </varlistentry>
@@ -1465,16 +1480,16 @@ Create a new port.
     </section>
     <section xml:id="ironicclient_subcommand_port-delete">
         <title>ironic port-delete</title>
-        <screen><computeroutput>usage: ironic port-delete &lt;port id&gt; [&lt;port id&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: ironic port-delete &lt;port&gt; [&lt;port&gt; ...]</computeroutput></screen>
         <para>
 Delete a port.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;port id&gt;</command></term>
+    <term><command>&lt;port&gt;</command></term>
     <listitem>
       <para>
-        UUID of port
+        UUID of the port.
       </para>
     </listitem>
   </varlistentry>
@@ -1482,11 +1497,11 @@ Delete a port.
     </section>
     <section xml:id="ironicclient_subcommand_port-list">
         <title>ironic port-list</title>
-        <screen><computeroutput>usage: ironic port-list [--detail] [--address &lt;macaddress&gt;] [--limit &lt;limit&gt;]
-                        [--marker &lt;marker&gt;] [--sort-key &lt;sort_key&gt;]
-                        [--sort-dir &lt;sort_dir&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: ironic port-list [--detail] [--address &lt;mac-address&gt;] [--limit &lt;limit&gt;]
+                        [--marker &lt;port&gt;] [--sort-key &lt;field&gt;]
+                        [--sort-dir &lt;direction&gt;]</computeroutput></screen>
         <para>
-List ports.
+List the ports.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -1498,10 +1513,10 @@ List ports.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--address &lt;macaddress&gt;</command></term>
+    <term><command>--address &lt;mac-address&gt;</command></term>
     <listitem>
       <para>
-      MAC address of port, to get the port which has this
+      Only show information for the port with this MAC
       address.
       </para>
     </listitem>
@@ -1517,28 +1532,28 @@ List ports.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--marker &lt;marker&gt;</command></term>
+    <term><command>--marker &lt;port&gt;</command></term>
     <listitem>
       <para>
-        Port UUID (e.g of the last port in the list from a
-      previous request). Returns the list of ports after
-      this UUID.
+        Port UUID (for example, of the last port in the list
+      from a previous request). Returns the list of ports
+      after this UUID.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sort-key &lt;sort_key&gt;</command></term>
+    <term><command>--sort-key &lt;field&gt;</command></term>
     <listitem>
       <para>
-      Port field that will be used for sorting.
+        Port field that will be used for sorting.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sort-dir &lt;sort_dir&gt;</command></term>
+    <term><command>--sort-dir &lt;direction&gt;</command></term>
     <listitem>
       <para>
-      Sort direction: one of "asc" (the default) or "desc".
+      Sort direction: "asc" (the default) or "desc".
       </para>
     </listitem>
   </varlistentry>
@@ -1546,16 +1561,16 @@ List ports.
     </section>
     <section xml:id="ironicclient_subcommand_port-show">
         <title>ironic port-show</title>
-        <screen><computeroutput>usage: ironic port-show [--address] &lt;port id&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic port-show [--address] &lt;id&gt;</computeroutput></screen>
         <para>
-Show a port.
+Show detailed information about a port.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;port id&gt;</command></term>
+    <term><command>&lt;id&gt;</command></term>
     <listitem>
       <para>
-        UUID of port
+        UUID of the port (or MAC address if --address is specified).
       </para>
     </listitem>
   </varlistentry>
@@ -1563,10 +1578,10 @@ Show a port.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--address</command></term>
+    <term><command>--address &lt;id&gt;</command></term>
     <listitem>
       <para>
-        Get the port by it's MAC address instead of UUID.
+        is the MAC address (instead of the UUID) of the port.
       </para>
     </listitem>
   </varlistentry>
@@ -1574,16 +1589,16 @@ Show a port.
     </section>
     <section xml:id="ironicclient_subcommand_port-update">
         <title>ironic port-update</title>
-        <screen><computeroutput>usage: ironic port-update &lt;port id&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: ironic port-update &lt;port&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
         <para>
-Update a port.
+Update information about a port.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;port id&gt;</command></term>
+    <term><command>&lt;port&gt;</command></term>
     <listitem>
       <para>
-        UUID of port
+        UUID of the port.
       </para>
     </listitem>
   </varlistentry>
@@ -1591,7 +1606,7 @@ Update a port.
     <term><command>&lt;op&gt;</command></term>
     <listitem>
       <para>
-        Operations: 'add', 'replace' or 'remove'
+        Operation: 'add', 'replace', or 'remove'.
       </para>
     </listitem>
   </varlistentry>
@@ -1599,8 +1614,8 @@ Update a port.
     <term><command>&lt;path=value&gt;</command></term>
     <listitem>
       <para>
-        Attributes to add/replace or remove (only PATH is necessary on
-      remove)
+        Attribute to add, replace, or remove. Can be specified
+      multiple times. For 'remove', only &lt;path&gt; is necessary.
       </para>
     </listitem>
   </varlistentry>
