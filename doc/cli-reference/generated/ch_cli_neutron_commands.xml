@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Networking API and its extensions.
 
        This chapter documents <command>neutron</command> version
-        <literal>2.3.11</literal>.
+        <literal>2.4.0</literal>.
     </para>
 
     <para>For help on a specific <command>neutron</command>
@@ -357,7 +357,7 @@
     <term><command>cisco-credential-create</command></term>
     <listitem>
       <para>
-        Creates a credential.
+        Create a credential.
       </para>
     </listitem>
   </varlistentry>
@@ -365,7 +365,7 @@
     <term><command>cisco-credential-delete</command></term>
     <listitem>
       <para>
-        Delete a  given credential.
+        Delete a given credential.
       </para>
     </listitem>
   </varlistentry>
@@ -389,7 +389,7 @@
     <term><command>cisco-network-profile-create</command></term>
     <listitem>
       <para>
-        Creates a network profile.
+        Create a network profile.
       </para>
     </listitem>
   </varlistentry>
@@ -986,6 +986,14 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>lbaas-agent-hosting-loadbalancer</command></term>
+    <listitem>
+      <para>
+        Get lbaas v2 agent hosting a loadbalancer.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>lbaas-healthmonitor-create</command></term>
     <listitem>
       <para>
@@ -1086,6 +1094,14 @@
     <listitem>
       <para>
         LBaaS v2 List loadbalancers that belong to a given tenant.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>lbaas-loadbalancer-list-on-agent</command></term>
+    <listitem>
+      <para>
+        List the loadbalancers on a loadbalancer v2 agent.
       </para>
     </listitem>
   </varlistentry>
@@ -1746,6 +1762,46 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>subnetpool-create</command></term>
+    <listitem>
+      <para>
+        Create a subnetpool for a given tenant.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>subnetpool-delete</command></term>
+    <listitem>
+      <para>
+        Delete a given subnetpool.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>subnetpool-list</command></term>
+    <listitem>
+      <para>
+        List subnetpools that belong to a given tenant.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>subnetpool-show</command></term>
+    <listitem>
+      <para>
+        Show information of a given subnetpool.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>subnetpool-update</command></term>
+    <listitem>
+      <para>
+        Update subnetpool's information.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>vpn-ikepolicy-create</command></term>
     <listitem>
       <para>
@@ -2040,7 +2096,7 @@ Updates the admin status and description for a specified agent.
     <term><command>AGENT</command></term>
     <listitem>
       <para>
-        ID or name of agent to update.
+        ID of agent to update.
       </para>
     </listitem>
   </varlistentry>
@@ -2093,7 +2149,7 @@ Updates the admin status and description for a specified agent.
                                        [--password PASSWORD]
                                        credential_name credential_type</computeroutput></screen>
         <para>
-Creates a credential.
+Create a credential.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -2316,7 +2372,7 @@ Show information of a given credential.
                                             name
                                             {vlan,overlay,multi-segment,trunk}</computeroutput></screen>
         <para>
-Creates a network profile.
+Create a network profile.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -3005,7 +3061,7 @@ Show information of a given resource.
                                [--prefix PREFIX] [--request-format {json,xml}]
                                [--tenant-id TENANT_ID] [--name NAME]
                                [--description DESCRIPTION] [--shared]
-                               [--admin-state-down]
+                               [--admin-state-down] [--router ROUTER]
                                POLICY</computeroutput></screen>
         <para>
 Create a firewall.
@@ -3075,6 +3131,16 @@ Create a firewall.
     <listitem>
       <para>
         Set admin state up to false.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--router ROUTER</command></term>
+    <listitem>
+      <para>
+        Firewall associated router names or IDs (requires
+      FWaaS router insertion extension, this option can be
+      repeated)
       </para>
     </listitem>
   </varlistentry>
@@ -4012,6 +4078,7 @@ Show information of a given firewall.
         <title>neutron firewall-update</title>
         <screen><computeroutput>usage: neutron firewall-update [-h] [--request-format {json,xml}]
                                [--policy POLICY]
+                               [--router ROUTER | --no-routers]
                                FIREWALL</computeroutput></screen>
         <para>
 Update a given firewall.
@@ -4049,6 +4116,25 @@ Update a given firewall.
     <listitem>
       <para>
         Firewall policy name or ID.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--router ROUTER</command></term>
+    <listitem>
+      <para>
+        Firewall associated router names or IDs (requires
+      FWaaS router insertion extension, this option can be
+      repeated)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--no-routers</command></term>
+    <listitem>
+      <para>
+        Associate no routers with the firewall (requires FWaaS
+      router insertion extension)
       </para>
     </listitem>
   </varlistentry>
@@ -5709,7 +5795,7 @@ Update a given health monitor.
     <term><command>HEALTH_MONITOR</command></term>
     <listitem>
       <para>
-        ID or name of health_monitor to update.
+        ID of health_monitor to update.
       </para>
     </listitem>
   </varlistentry>
@@ -6770,6 +6856,68 @@ Update a given vip.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="neutronclient_subcommand_lbaas-agent-hosting-loadbalancer">
+        <title>neutron lbaas-agent-hosting-loadbalancer</title>
+        <screen><computeroutput>usage: neutron lbaas-agent-hosting-loadbalancer [-h]
+                                                [-f {csv,html,json,table,yaml}]
+                                                [-c COLUMN]
+                                                [--max-width &lt;integer&gt;]
+                                                [--quote {all,minimal,none,nonnumeric}]
+                                                [--request-format {json,xml}]
+                                                [-D] [-F FIELD]
+                                                loadbalancer</computeroutput></screen>
+        <para>
+Get lbaas v2 agent hosting a loadbalancer. Deriving from ListCommand though
+server will return only one agent to keep common output format for all agent
+schedulers
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>loadbalancer</command></term>
+    <listitem>
+      <para>
+        LoadBalancer to query.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--request-format {json,xml}</command></term>
+    <listitem>
+      <para>
+      The XML or JSON request format.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-D, --show-details</command></term>
+    <listitem>
+      <para>
+        Show detailed information.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-F FIELD, --field FIELD</command></term>
+    <listitem>
+      <para>
+      Specify the field(s) to be returned by server. You can
+      repeat this option.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="neutronclient_subcommand_lbaas-healthmonitor-create">
         <title>neutron lbaas-healthmonitor-create</title>
         <screen><computeroutput>usage: neutron lbaas-healthmonitor-create [-h]
@@ -6783,7 +6931,8 @@ Update a given vip.
                                           [--http-method HTTP_METHOD]
                                           [--url-path URL_PATH] --delay DELAY
                                           --max-retries MAX_RETRIES --timeout
-                                          TIMEOUT --type {PING,TCP,HTTP,HTTPS}</computeroutput></screen>
+                                          TIMEOUT --type {PING,TCP,HTTP,HTTPS}
+                                          --pool POOL</computeroutput></screen>
         <para>
 LBaaS v2 Create a healthmonitor.
         </para>  <variablelist wordsize="10">
@@ -6883,6 +7032,15 @@ LBaaS v2 Create a healthmonitor.
     <listitem>
       <para>
       One of the predefined health monitor types.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--pool POOL ID</command></term>
+    <listitem>
+      <para>
+        or name of the pool that this healthmonitor will
+      monitor.
       </para>
     </listitem>
   </varlistentry>
@@ -7074,7 +7232,7 @@ LBaaS v2 Update a given healthmonitor.
     <term><command>HEALTHMONITOR</command></term>
     <listitem>
       <para>
-        ID or name of healthmonitor to update.
+        ID of healthmonitor to update.
       </para>
     </listitem>
   </varlistentry>
@@ -7110,8 +7268,11 @@ LBaaS v2 Update a given healthmonitor.
                                      [--admin-state-down]
                                      [--connection-limit CONNECTION_LIMIT]
                                      [--description DESCRIPTION] [--name NAME]
+                                     [--default-tls-container-id DEFAULT_TLS_CONTAINER_ID]
+                                     [--sni-container-ids SNI_CONTAINER_IDS [SNI_CONTAINER_IDS ...]]
                                      --loadbalancer LOADBALANCER --protocol
-                                     {TCP,HTTP,HTTPS} --protocol-port PORT</computeroutput></screen>
+                                     {TCP,HTTP,HTTPS,TERMINATED_HTTPS}
+                                     --protocol-port PORT</computeroutput></screen>
         <para>
 LBaaS v2 Create a listener.
         </para>  <variablelist wordsize="10">
@@ -7175,6 +7336,22 @@ LBaaS v2 Create a listener.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--default-tls-container-id DEFAULT_TLS_CONTAINER_ID</command></term>
+    <listitem>
+      <para>
+      Default TLS container ID to retrieve TLS information.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sni-container-ids SNI_CONTAINER_IDS [SNI_CONTAINER_IDS ...]</command></term>
+    <listitem>
+      <para>
+      List of TLS container IDs for SNI.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--loadbalancer LOADBALANCER</command></term>
     <listitem>
       <para>
@@ -7183,7 +7360,7 @@ LBaaS v2 Create a listener.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--protocol {TCP,HTTP,HTTPS}</command></term>
+    <term><command>--protocol {TCP,HTTP,HTTPS,TERMINATED_HTTPS}</command></term>
     <listitem>
       <para>
       Protocol for the listener.
@@ -7385,7 +7562,7 @@ LBaaS v2 Update a given listener.
     <term><command>LISTENER</command></term>
     <listitem>
       <para>
-        ID or name of listener to update.
+        ID of listener to update.
       </para>
     </listitem>
   </varlistentry>
@@ -7612,6 +7789,66 @@ LBaaS v2 List loadbalancers that belong to a given tenant.
     <listitem>
       <para>
       Sorts the list in the specified direction. You can
+      repeat this option.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="neutronclient_subcommand_lbaas-loadbalancer-list-on-agent">
+        <title>neutron lbaas-loadbalancer-list-on-agent</title>
+        <screen><computeroutput>usage: neutron lbaas-loadbalancer-list-on-agent [-h]
+                                                [-f {csv,html,json,table,yaml}]
+                                                [-c COLUMN]
+                                                [--max-width &lt;integer&gt;]
+                                                [--quote {all,minimal,none,nonnumeric}]
+                                                [--request-format {json,xml}]
+                                                [-D] [-F FIELD]
+                                                lbaas_agent</computeroutput></screen>
+        <para>
+List the loadbalancers on a loadbalancer v2 agent.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>lbaas_agent</command></term>
+    <listitem>
+      <para>
+        ID of the loadbalancer agent to query.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--request-format {json,xml}</command></term>
+    <listitem>
+      <para>
+      The XML or JSON request format.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-D, --show-details</command></term>
+    <listitem>
+      <para>
+        Show detailed information.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-F FIELD, --field FIELD</command></term>
+    <listitem>
+      <para>
+      Specify the field(s) to be returned by server. You can
       repeat this option.
       </para>
     </listitem>
@@ -8077,27 +8314,14 @@ LBaaS v2 Update a given member.
                                  [--request-format {json,xml}]
                                  [--tenant-id TENANT_ID] [--admin-state-down]
                                  [--description DESCRIPTION]
-                                 [--healthmonitor-id HEALTHMONITOR_ID]
-                                 [--session-persistence TYPE:VALUE]
-                                 --lb-algorithm
+                                 [--session-persistence type=TYPE[,cookie_name=COOKIE_NAME]]
+                                 [--name NAME] --lb-algorithm
                                  {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}
                                  --listener LISTENER --protocol
-                                 {HTTP,HTTPS,TCP}
-                                 NAME</computeroutput></screen>
+                                 {HTTP,HTTPS,TCP}</computeroutput></screen>
         <para>
 LBaaS v2 Create a pool.
         </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>NAME</command></term>
-    <listitem>
-      <para>
-        The name of the pool.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
     <term><command>-h, --help</command></term>
@@ -8140,19 +8364,20 @@ LBaaS v2 Create a pool.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--healthmonitor-id HEALTHMONITOR_ID</command></term>
+    <term><command>--session-persistence</command></term>
     <listitem>
       <para>
-      ID of the health monitor to use.
+        type=TYPE[,cookie_name=COOKIE_NAME]
+      The type of session persistence to use and associated
+      cookie name
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--session-persistence</command></term>
+    <term><command>--name NAME</command></term>
     <listitem>
       <para>
-        TYPE:VALUE
-      The type of session persistence to use.
+        The name of the pool.
       </para>
     </listitem>
   </varlistentry>
@@ -9375,6 +9600,7 @@ Update packet filter's information.
                           [--provider:network_type &lt;network_type&gt;]
                           [--provider:physical_network &lt;physical_network_name&gt;]
                           [--provider:segmentation_id &lt;segmentation_id&gt;]
+                          [--vlan-transparent {True,False}]
                           NAME</computeroutput></screen>
         <para>
 Create a network for a given tenant.
@@ -9464,6 +9690,14 @@ Create a network for a given tenant.
       <para>
       VLAN ID for VLAN networks or tunnel-id for GRE/VXLAN
       networks.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--vlan-transparent {True,False}</command></term>
+    <listitem>
+      <para>
+      Create a vlan transparent network.
       </para>
     </listitem>
   </varlistentry>
@@ -10407,6 +10641,7 @@ Show information of a given netpartition.
                            [--device-id DEVICE_ID]
                            [--device-owner DEVICE_OWNER] [--admin-state-down]
                            [--mac-address MAC_ADDRESS]
+                           [--vnic-type &lt;direct | macvtap | normal&gt;]
                            [--security-group SECURITY_GROUP | --no-security-groups]
                            [--extra-dhcp-opt EXTRA_DHCP_OPTS]
                            NETWORK</computeroutput></screen>
@@ -10497,6 +10732,14 @@ Create a port for a given tenant.
     <listitem>
       <para>
       MAC address of this port.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--vnic-type &lt;direct | macvtap | normal&gt;</command></term>
+    <listitem>
+      <para>
+      VNIC type for this port.
       </para>
     </listitem>
   </varlistentry>
@@ -12551,7 +12794,7 @@ List service providers.
                              [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--prefix PREFIX] [--request-format {json,xml}]
                              [--tenant-id TENANT_ID] [--name NAME]
-                             [--gateway GATEWAY_IP] [--no-gateway]
+                             [--gateway GATEWAY_IP | --no-gateway]
                              [--allocation-pool start=IP_ADDR,end=IP_ADDR]
                              [--host-route destination=CIDR,nexthop=IP_ADDR]
                              [--dns-nameserver DNS_NAMESERVER]
@@ -12559,7 +12802,9 @@ List service providers.
                              [--ip-version {4,6}]
                              [--ipv6-ra-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
                              [--ipv6-address-mode {dhcpv6-stateful,dhcpv6-stateless,slaac}]
-                             NETWORK CIDR</computeroutput></screen>
+                             [--subnetpool SUBNETPOOL]
+                             [--prefixlen PREFIX_LENGTH]
+                             NETWORK [CIDR]</computeroutput></screen>
         <para>
 Create a subnet for a given tenant.
         </para>  <variablelist wordsize="10">
@@ -12696,6 +12941,23 @@ Create a subnet for a given tenant.
     <listitem>
       <para>
       IPv6 address mode.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--subnetpool SUBNETPOOL</command></term>
+    <listitem>
+      <para>
+      ID or name of subnetpool from which this subnet will
+      obtain a CIDR.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--prefixlen PREFIX_LENGTH</command></term>
+    <listitem>
+      <para>
+      Prefix length for subnet allocation from subnetpool.
       </para>
     </listitem>
   </varlistentry>
@@ -12874,7 +13136,7 @@ Show information of a given subnet.
     <section xml:id="neutronclient_subcommand_subnet-update">
         <title>neutron subnet-update</title>
         <screen><computeroutput>usage: neutron subnet-update [-h] [--request-format {json,xml}] [--name NAME]
-                             [--gateway GATEWAY_IP] [--no-gateway]
+                             [--gateway GATEWAY_IP | --no-gateway]
                              [--allocation-pool start=IP_ADDR,end=IP_ADDR]
                              [--host-route destination=CIDR,nexthop=IP_ADDR]
                              [--dns-nameserver DNS_NAMESERVER]
@@ -12976,6 +13238,350 @@ Update subnet's information.
     <listitem>
       <para>
         Enable DHCP for this subnet.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="neutronclient_subcommand_subnetpool-create">
+        <title>neutron subnetpool-create</title>
+        <screen><computeroutput>usage: neutron subnetpool-create [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width &lt;integer&gt;]
+                                 [--prefix PREFIX]
+                                 [--request-format {json,xml}]
+                                 [--tenant-id TENANT_ID]
+                                 [--min-prefixlen MIN_PREFIXLEN]
+                                 [--max-prefixlen MAX_PREFIXLEN]
+                                 [--default-prefixlen DEFAULT_PREFIXLEN]
+                                 [--pool-prefix PREFIXES] [--shared]
+                                 name</computeroutput></screen>
+        <para>
+Create a subnetpool for a given tenant.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>name</command></term>
+    <listitem>
+      <para>
+        Name of subnetpool to create.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--request-format {json,xml}</command></term>
+    <listitem>
+      <para>
+      The XML or JSON request format.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--tenant-id TENANT_ID</command></term>
+    <listitem>
+      <para>
+      The owner tenant ID.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--min-prefixlen MIN_PREFIXLEN</command></term>
+    <listitem>
+      <para>
+      Subnetpool minimum prefix length.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--max-prefixlen MAX_PREFIXLEN</command></term>
+    <listitem>
+      <para>
+      Subnetpool maximum prefix length.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--default-prefixlen DEFAULT_PREFIXLEN</command></term>
+    <listitem>
+      <para>
+      Subnetpool default prefix length.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--pool-prefix PREFIXES</command></term>
+    <listitem>
+      <para>
+      Subnetpool prefixes (This option can be repeated).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--shared</command></term>
+    <listitem>
+      <para>
+        Set the subnetpool as shared.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="neutronclient_subcommand_subnetpool-delete">
+        <title>neutron subnetpool-delete</title>
+        <screen><computeroutput>usage: neutron subnetpool-delete [-h] [--request-format {json,xml}] SUBNETPOOL</computeroutput></screen>
+        <para>
+Delete a given subnetpool.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>SUBNETPOOL</command></term>
+    <listitem>
+      <para>
+        ID or name of subnetpool to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--request-format {json,xml}</command></term>
+    <listitem>
+      <para>
+      The XML or JSON request format.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="neutronclient_subcommand_subnetpool-list">
+        <title>neutron subnetpool-list</title>
+        <screen><computeroutput>usage: neutron subnetpool-list [-h] [-f {csv,html,json,table,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--quote {all,minimal,none,nonnumeric}]
+                               [--request-format {json,xml}] [-D] [-F FIELD]
+                               [-P SIZE] [--sort-key FIELD]
+                               [--sort-dir {asc,desc}]</computeroutput></screen>
+        <para>
+List subnetpools that belong to a given tenant.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--request-format {json,xml}</command></term>
+    <listitem>
+      <para>
+      The XML or JSON request format.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-D, --show-details</command></term>
+    <listitem>
+      <para>
+        Show detailed information.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-F FIELD, --field FIELD</command></term>
+    <listitem>
+      <para>
+      Specify the field(s) to be returned by server. You can
+      repeat this option.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-P SIZE, --page-size SIZE</command></term>
+    <listitem>
+      <para>
+      Specify retrieve unit of each request, then split one
+      request to several requests.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort-key FIELD</command></term>
+    <listitem>
+      <para>
+        Sorts the list by the specified fields in the
+      specified directions. You can repeat this option, but
+      you must specify an equal number of sort_dir and
+      sort_key values. Extra sort_dir options are ignored.
+      Missing sort_dir options use the default asc value.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort-dir {asc,desc}</command></term>
+    <listitem>
+      <para>
+      Sorts the list in the specified direction. You can
+      repeat this option.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="neutronclient_subcommand_subnetpool-show">
+        <title>neutron subnetpool-show</title>
+        <screen><computeroutput>usage: neutron subnetpool-show [-h] [-f {html,json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--prefix PREFIX] [--request-format {json,xml}]
+                               [-D] [-F FIELD]
+                               SUBNETPOOL</computeroutput></screen>
+        <para>
+Show information of a given subnetpool.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>SUBNETPOOL</command></term>
+    <listitem>
+      <para>
+        ID or name of subnetpool to look up.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--request-format {json,xml}</command></term>
+    <listitem>
+      <para>
+      The XML or JSON request format.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-D, --show-details</command></term>
+    <listitem>
+      <para>
+        Show detailed information.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-F FIELD, --field FIELD</command></term>
+    <listitem>
+      <para>
+      Specify the field(s) to be returned by server. You can
+      repeat this option.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="neutronclient_subcommand_subnetpool-update">
+        <title>neutron subnetpool-update</title>
+        <screen><computeroutput>usage: neutron subnetpool-update [-h] [--request-format {json,xml}]
+                                 [--min-prefixlen MIN_PREFIXLEN]
+                                 [--max-prefixlen MAX_PREFIXLEN]
+                                 [--default-prefixlen DEFAULT_PREFIXLEN]
+                                 [--pool-prefix PREFIXES] [--name NAME]
+                                 SUBNETPOOL</computeroutput></screen>
+        <para>
+Update subnetpool's information.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>SUBNETPOOL</command></term>
+    <listitem>
+      <para>
+        ID or name of subnetpool to update.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--request-format {json,xml}</command></term>
+    <listitem>
+      <para>
+      The XML or JSON request format.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--min-prefixlen MIN_PREFIXLEN</command></term>
+    <listitem>
+      <para>
+      Subnetpool minimum prefix length.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--max-prefixlen MAX_PREFIXLEN</command></term>
+    <listitem>
+      <para>
+      Subnetpool maximum prefix length.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--default-prefixlen DEFAULT_PREFIXLEN</command></term>
+    <listitem>
+      <para>
+      Subnetpool default prefix length.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--pool-prefix PREFIXES</command></term>
+    <listitem>
+      <para>
+      Subnetpool prefixes (This option can be repeated).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--name NAME</command></term>
+    <listitem>
+      <para>
+        Name of subnetpool to update.
       </para>
     </listitem>
   </varlistentry>
