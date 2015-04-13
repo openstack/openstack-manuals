@@ -63,15 +63,7 @@ default = yes</programlisting>
       <para>On the controller node and any other nodes running the proxy
         service, start the Object Storage proxy service including its
         dependencies and configure them to start when the system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-swift-proxy.service memcached.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-swift-proxy.service memcached.service</userinput></screen>
-      <para os="sles">On SLES:</para>
-      <screen os="sles"><prompt>#</prompt> <userinput>service memcached start</userinput>
-<prompt>#</prompt> <userinput>service openstack-swift-proxy start</userinput>
-<prompt>#</prompt> <userinput>chkconfig memcached on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-swift-proxy on</userinput></screen>
-      <para os="opensuse">On openSUSE:</para>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-swift-proxy.service memcached.service</userinput>
+      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-swift-proxy.service memcached.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start openstack-swift-proxy.service memcached.service</userinput></screen>
     </step>
     <step os="ubuntu;debian">
@@ -84,40 +76,10 @@ default = yes</programlisting>
           storage node.</para>
       </note>
     </step>
-    <step os="rhel;centos;fedora">
+    <step os="rhel;centos;fedora;opensuse;sles">
       <para>On the storage nodes, start the Object Storage services and
         configure them to start when the system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-swift-account.service openstack-swift-account-auditor.service \
-  openstack-swift-account-reaper.service openstack-swift-account-replicator.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-swift-account.service openstack-swift-account-auditor.service \
-  openstack-swift-account-reaper.service openstack-swift-account-replicator.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-swift-container.service openstack-swift-container-auditor.service \
-  openstack-swift-container-replicator.service openstack-swift-container-updater.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-swift-container.service openstack-swift-container-auditor.service \
-  openstack-swift-container-replicator.service openstack-swift-container-updater.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-swift-object.service openstack-swift-object-auditor.service \
-  openstack-swift-object-replicator.service openstack-swift-object-updater.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-swift-object.service openstack-swift-object-auditor.service \
-  openstack-swift-object-replicator.service openstack-swift-object-updater.service</userinput></screen>
-    </step>
-    <step os="sles;opensuse">
-      <para>On the storage nodes, start the Object Storage services and
-        configure them to start when the system boots:</para>
-      <para os="sles">On SLES:</para>
-      <screen os="sles"><prompt>#</prompt> <userinput>for service in \
-  openstack-swift-account openstack-swift-account-auditor \
-  openstack-swift-account-reaper openstack-swift-account-replicator; do \
-  service $service start; chkconfig $service on; done</userinput>
-<prompt>#</prompt> <userinput>for service in \
-  openstack-swift-container openstack-swift-container-auditor \
-  openstack-swift-container-replicator openstack-swift-container-updater; do \
-  service $service start; chkconfig $service on; done</userinput>
-<prompt>#</prompt> <userinput>for service in \
-  openstack-swift-object openstack-swift-object-auditor \
-  openstack-swift-object-replicator openstack-swift-object-updater; do \
-  service $service start; chkconfig $service on; done</userinput></screen>
-      <para os="opensuse">On openSUSE:</para>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-swift-account.service openstack-swift-account-auditor.service \
+      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-swift-account.service openstack-swift-account-auditor.service \
   openstack-swift-account-reaper.service openstack-swift-account-replicator.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start openstack-swift-account.service openstack-swift-account-auditor.service \
   openstack-swift-account-reaper.service openstack-swift-account-replicator.service</userinput>
