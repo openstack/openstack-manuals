@@ -134,11 +134,12 @@ max_allowed_packet = 256M</programlisting>
   --adminurl http://<replaceable>controller</replaceable>:8386/v1.1/%\(tenant_id\)s \
   --region regionOne</userinput></screen>
     </para></step>
-    <step os="rhel;centos;fedora;opensuse;sles;ubuntu"><para>Start the sahara service:
-      <screen><prompt>#</prompt> <userinput>systemctl start openstack-sahara-all</userinput></screen>
-    </para></step>
-    <step os="rhel;centos;fedora;opensuse;sles;ubuntu"><para>(Optional) Enable the Data processing service to start on boot
-      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-sahara-all</userinput></screen>
+    <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
+
+      <para>Start the Data processing service and configure it to
+        start when the system boots:
+      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-sahara-all.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-sahara-all.service</userinput></screen>
     </para></step>
   </procedure>
 </section>
