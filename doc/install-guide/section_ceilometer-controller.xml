@@ -75,11 +75,7 @@ Key Expires: Sat Dec 20 20:08:39 2014</programlisting>
         <step os="centos;fedora;opensuse;rhel;sles">
           <para>Start the MongoDB services and configure them to start when
             the system boots:</para>
-          <para os="sles">On SLES:</para>
-          <screen os="sles"><prompt>#</prompt> <userinput>service mongodb start</userinput>
-<prompt>#</prompt> <userinput>chkconfig mongodb on</userinput></screen>
-          <para os="opensuse">On openSUSE:</para>
-          <screen os="sles"><prompt>#</prompt> <userinput>systemctl enable mongodb.service</userinput>
+          <screen os="opensuse;sles"><prompt>#</prompt> <userinput>systemctl enable mongodb.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start mongodb.service</userinput></screen>
       <!-- NB: The use of mongod, and not mongodb, in the below screen is
       intentional. -->
@@ -204,8 +200,7 @@ connecting to: controller:27017/test
     </step>
     <step>
       <para>Generate a random value to use as the telemetry secret:</para>
-      <screen os="ubuntu;rhel;centos;fedora"><prompt>$</prompt> <userinput>openssl rand -hex 10</userinput></screen>
-      <screen os="sles;opensuse"><prompt>$</prompt> <userinput>openssl rand 10 | hexdump -e '1/1 "%.2x"'</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>openssl rand -hex 10</userinput></screen>
     </step>
     <step>
       <para>Edit the <filename>/etc/ceilometer/ceilometer.conf</filename> file
@@ -366,38 +361,12 @@ os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the Telemetry services and configure them to start when the
         system boots:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-api.service openstack-ceilometer-notification.service \
+      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-api.service openstack-ceilometer-notification.service \
   openstack-ceilometer-central.service openstack-ceilometer-collector.service \
   openstack-ceilometer-alarm-evaluator.service openstack-ceilometer-alarm-notifier.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-api.service openstack-ceilometer-notification.service \
   openstack-ceilometer-central.service openstack-ceilometer-collector.service \
   openstack-ceilometer-alarm-evaluator.service openstack-ceilometer-alarm-notifier.service</userinput></screen>
-      <para os="sles">On SLES:</para>
-      <screen os="sles"><prompt>#</prompt> <userinput>service openstack-ceilometer-api start</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-agent-notification start</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-agent-central start</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-collector start</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-evaluator start</userinput>
-<prompt>#</prompt> <userinput>service openstack-ceilometer-alarm-notifier start</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-api on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-notification on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-agent-central on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-collector on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-evaluator on</userinput>
-<prompt>#</prompt> <userinput>chkconfig openstack-ceilometer-alarm-notifier on</userinput></screen>
-      <para os="opensuse">On openSUSE:</para>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-agent-notification.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-agent-central.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-collector.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-alarm-evaluator.service</userinput>
-<prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-alarm-notifier.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-api.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-agent-notification.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-agent-central.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-collector.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-alarm-evaluator.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-alarm-notifier.service</userinput></screen>
     </step>
   </procedure>
 </section>
