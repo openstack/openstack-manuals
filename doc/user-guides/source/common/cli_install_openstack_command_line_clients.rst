@@ -96,7 +96,7 @@ command-line clients, and provides installation instructions as needed.
 |                       |     # yum install python-devel python-pip           |
 |                       |                                                     |
 |                       | There are also packaged versions of the clients     |
-|                       | available in `RDO <http://openstack.redhat.com/>`__ |
+|                       | available in `RDO <https://www.rdoproject.org/>`__  |
 |                       | that enable yum to install the clients as described |
 |                       | in Installing_from_packages_.                       |
 |                       |                                                     |
@@ -206,7 +206,7 @@ installed without ``pip``.
 
 -  On Red Hat Enterprise Linux, CentOS, or Fedora, use ``yum`` to install
    the clients from the packaged versions available in
-   `RDO <http://openstack.redhat.com/>`__::
+   `RDO <https://www.rdoproject.org/>`__::
 
      # yum install python-PROJECTclient
 

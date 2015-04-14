@@ -229,7 +229,7 @@ for OpenStack:
 -  **Debian:** http://wiki.debian.org/OpenStack
 
 -  **CentOS, Fedora, and Red Hat Enterprise Linux:**
-   http://openstack.redhat.com/
+   https://www.rdoproject.org/
 
 -  **openSUSE and SUSE Linux Enterprise Server:**
    http://en.opensuse.org/Portal:OpenStack
