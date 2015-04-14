@@ -1,5 +1,10 @@
 #!/bin/sh -e
 
+echo "Generating Glossary"
+echo "==================="
+tools/glossary2rst.py doc/user-guides/source/glossary.rst
+echo "Done."
+echo ""
 echo "Building End User Guide"
 echo "======================="
 sphinx-build -t user_only -E -W doc/user-guides/source/ doc/user-guides/build/html

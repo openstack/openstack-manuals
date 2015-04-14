@@ -16,6 +16,8 @@ Contents:
    scenario-l3ha-ovs.rst
    scenario-ovs-providernet.rst
 
+   glossary.rst
+
 Indices and tables
 ==================
 

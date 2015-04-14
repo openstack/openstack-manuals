@@ -10,10 +10,7 @@ orchestrate multiple composite cloud applications. This
 service supports the use of both the Amazon Web Services (AWS)
 CloudFormation template format through both a Query API that
 is compatible with CloudFormation and the native OpenStack
-Heat Orchestration Template (HOT) format through a REST API.
-
-.. TODO: (OL) Once glossary is available for .RST, add a link
-   to <glossterm>Heat Orchestration Template (HOT)</glossterm>
+:term:`Heat Orchestration Template (HOT)` format through a REST API.
 
 These flexible template languages enable application
 developers to describe and automate the deployment of

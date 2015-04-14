@@ -31,6 +31,8 @@ Contents
 
    common/app_support.rst
 
+   glossary.rst
+
 Indices and tables
 ~~~~~~~~~~~~~~~~~~
 
