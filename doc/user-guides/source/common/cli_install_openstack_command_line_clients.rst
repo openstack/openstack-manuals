@@ -161,7 +161,7 @@ for each client. The following values are valid:
 
 -  ``swift`` - Object Storage API
 
--  ``trove`` - Database Service API
+-  ``trove`` - Database service API
 
 -  ``openstack`` - Common OpenStack client supporting multiple services
 

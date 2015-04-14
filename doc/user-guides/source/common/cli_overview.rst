@@ -38,7 +38,7 @@ service with its package name and description.
 |                |          |                       |images, instances, and  |
 |                |          |                       |flavors.                |
 +----------------+----------+-----------------------+------------------------+
-|Database Service|trove     |python-troveclient     |Create and manage       |
+|Database service|trove     |python-troveclient     |Create and manage       |
 |                |          |                       |databases.              |
 +----------------+----------+-----------------------+------------------------+
 |Identity        |keystone  |python-keystoneclient  |Create and manage users,|

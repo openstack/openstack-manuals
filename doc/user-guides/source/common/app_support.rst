@@ -176,7 +176,7 @@ The following Launchpad Bugs areas are available:
 -  `Bugs: Data Processing Service
    (sahara) <https://bugs.launchpad.net/sahara>`__
 
--  `Bugs: Database Service (trove) <https://bugs.launchpad.net/trove>`__
+-  `Bugs: Database service (trove) <https://bugs.launchpad.net/trove>`__
 
 -  `Bugs: Orchestration (heat) <https://bugs.launchpad.net/heat>`__
 
