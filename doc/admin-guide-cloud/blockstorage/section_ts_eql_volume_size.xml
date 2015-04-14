@@ -13,10 +13,10 @@
     <section xml:id="ts_eql_vol_size_problem">
     <title>Problem</title>
     <para>There is a discrepancy between both the actual volume size in EqualLogic (EQL)
-      storage and the image size in the Image Service, with what is reported
+      storage and the image size in the Image service, with what is reported
       OpenStack database. This could lead to confusion if a user is creating
       volumes from an image that was uploaded from an EQL volume (through the
-      Image Service). The image size is slightly larger than the target volume
+      Image service). The image size is slightly larger than the target volume
       size; this is because EQL size reporting accounts for additional storage
       used by EQL for internal volume metadata.</para>
 <para>To reproduce the issue follow the steps in the following procedure.</para>
@@ -95,7 +95,7 @@ ReplicationReserveSpace: 0MB</computeroutput></screen>
 +---------------------+---------------------------------------+</computeroutput></screen>
     </step>
     <step>
-        <para>When you uploaded the volume in the previous step, the Image Service
+        <para>When you uploaded the volume in the previous step, the Image service
           reported the volume's size as <literal>1</literal> (GB). However, when
           using <command>glance image-list</command> to list the image, the
           displayed size is 1085276160 bytes, or roughly 1.01&nbsp;GB:</para>
@@ -122,7 +122,7 @@ ReplicationReserveSpace: 0MB</computeroutput></screen>
             3020a21d-ba37-4495-8899-07fc201161b9</literal> in this example) as
           the source. Set the target volume size to 1&nbsp;GB; this is the size reported
           by the <command>cinder</command> tool when you uploaded the volume to
-          the Image Service:</para>
+          the Image service:</para>
 <screen><prompt>$</prompt> <userinput>cinder create --display-name volume2 \
   --image-id 3020a21d-ba37-4495-8899-07fc201161b9 1</userinput>
 <computeroutput>ERROR: Invalid input received: Size of specified image 2 is larger

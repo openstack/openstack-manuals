@@ -5,7 +5,7 @@
   version="5.0"
   xml:id="glance-install">
   <title>Install and configure</title>
-  <para>This section describes how to install and configure the Image Service,
+  <para>This section describes how to install and configure the Image service,
     code-named glance, on the controller node. For simplicity, this
     configuration stores images on the local file system.</para>
   <note>
@@ -16,7 +16,7 @@
   </note>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To configure prerequisites</title>
-    <para>Before you install and configure the Image Service, you must
+    <para>Before you install and configure the Image service, you must
       create a database, service credentials, and API endpoints.</para>
     <step>
       <para>To create the database, complete these steps:</para>
@@ -83,11 +83,11 @@ Repeat User Password:
         <step>
           <para>Create the <literal>glance</literal> service entity:</para>
           <screen><prompt>$</prompt> <userinput>openstack service create --type image \
-  --description "OpenStack Image Service" glance</userinput>
+  --description "OpenStack Image service" glance</userinput>
 <computeroutput>+-------------+----------------------------------+
 | Field       | Value                            |
 +-------------+----------------------------------+
-| description | OpenStack Image Service          |
+| description | OpenStack Image service          |
 | enabled     | True                             |
 | id          | 178124d6081c441b80d79972614149c6 |
 | name        | glance                           |
@@ -97,7 +97,7 @@ Repeat User Password:
       </substeps>
     </step>
     <step>
-      <para>Create the Image Service API endpoints:</para>
+      <para>Create the Image service API endpoints:</para>
       <screen><prompt>$</prompt> <userinput>openstack endpoint create \
   --publicurl http://<replaceable>controller</replaceable>:9292 \
   --internalurl http://<replaceable>controller</replaceable>:9292 \
@@ -119,7 +119,7 @@ Repeat User Password:
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
-    <title>To install and configure the Image Service components</title>
+    <title>To install and configure the Image service components</title>
     <note>
        <para>Default configuration files vary by distribution. You might need
          to add these sections and options rather than modifying existing
@@ -144,7 +144,7 @@ Repeat User Password:
 ...
 connection = mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</programlisting>
           <para>Replace <replaceable>GLANCE_DBPASS</replaceable> with the
-          password you chose for the Image Service database.</para>
+          password you chose for the Image service database.</para>
         </step>
         <step>
           <para>In the <literal>[keystone_authtoken]</literal> and
@@ -188,7 +188,7 @@ filesystem_store_datadir = /var/lib/glance/images/</programlisting>
           <programlisting language="ini">[DEFAULT]
 ...
 notification_driver = noop</programlisting>
-          <para>The Telemetry chapter provides an Image Service configuration
+          <para>The Telemetry chapter provides an Image service configuration
             that enables notifications.</para>
         </step>
         <step>
@@ -212,7 +212,7 @@ verbose = True</programlisting>
 ...
 connection = mysql://glance:<replaceable>GLANCE_DBPASS</replaceable>@<replaceable>controller</replaceable>/glance</programlisting>
           <para>Replace <replaceable>GLANCE_DBPASS</replaceable> with the
-          password you chose for the Image Service database.</para>
+          password you chose for the Image service database.</para>
         </step>
         <step>
           <para>In the <literal>[keystone_authtoken]</literal> and
@@ -248,7 +248,7 @@ flavor = keystone</programlisting>
           <programlisting language="ini">[DEFAULT]
 ...
 notification_driver = noop</programlisting>
-          <para>The Telemetry chapter provides an Image Service configuration
+          <para>The Telemetry chapter provides an Image service configuration
             that enables notifications.</para>
         </step>
         <step>
@@ -262,12 +262,12 @@ verbose = True</programlisting>
       </substeps>
     </step>
     <step os="rhel;centos;fedora;ubuntu">
-      <para>Populate the Image Service database:</para>
+      <para>Populate the Image service database:</para>
       <screen><prompt>#</prompt> <userinput>su -s /bin/sh -c "glance-manage db_sync" glance</userinput></screen>
     </step>
   </procedure>
   <procedure os="debian">
-    <title>To install and configure the Image Service components</title>
+    <title>To install and configure the Image service components</title>
     <step>
       <para>Install the packages:</para>
       <screen><prompt>#</prompt> <userinput>apt-get install glance python-glanceclient</userinput></screen>
@@ -284,7 +284,7 @@ verbose = True</programlisting>
     </step>
     <step>
       <para>Select the <literal>keystone</literal> pipeline to configure the
-        Image Service to use the Identity service:</para>
+        Image service to use the Identity service:</para>
       <mediaobject>
         <imageobject>
           <imagedata scale="50"
@@ -297,12 +297,12 @@ verbose = True</programlisting>
   <procedure>
     <title>To finalize installation</title>
     <step os="ubuntu;debian">
-      <para>Restart the Image Service services:</para>
+      <para>Restart the Image service services:</para>
       <screen><prompt>#</prompt> <userinput>service glance-registry restart</userinput>
 <prompt>#</prompt> <userinput>service glance-api restart</userinput></screen>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
-      <para>Start the Image Service services and configure them to start when
+      <para>Start the Image service services and configure them to start when
         the system boots:</para>
       <screen><prompt>#</prompt> <userinput>systemctl enable openstack-glance-api.service openstack-glance-registry.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start openstack-glance-api.service openstack-glance-registry.service</userinput></screen>
