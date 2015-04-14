@@ -58,7 +58,7 @@ source_suffix = '.rst'
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-# The master toctree document.
+# We need to use noqa here since tags is defined externally.
 if tags.has('admin_only'):  # noqa
     master_doc = 'index-admin'
 else:
