@@ -7,8 +7,8 @@ Set environment variables using the OpenStack RC file
 
 To set the required environment variables for the OpenStack command-line
 clients, you must create an environment file called an OpenStack rc
-file, or :file:`openrc.sh` file. If your OpenStack installation provides it,
-you can download the file from the OpenStack dashboard as an
+file, or :file:`openrc.sh` file. If your OpenStack installation provides
+it, you can download the file from the OpenStack dashboard as an
 administrative user or any other user. This project-specific environment
 file contains the credentials that all OpenStack services use.
 
@@ -29,12 +29,13 @@ Download and source the OpenStack RC file
 Log in to the OpenStack dashboard, choose the project for which you want
 to download the OpenStack RC file, and click :guilabel:`Access & Security`.
 
-On the API Access tab, click :guilabel:`Download OpenStack RC File` and save the
-file. The filename will be of the form :file:`PROJECT-openrc.sh` where
-``PROJECT`` is the name of the project for which you downloaded the file.
+On the API Access tab, click :guilabel:`Download OpenStack RC File` and
+save the file. The filename will be of the form :file:`PROJECT-openrc.sh`
+where ``PROJECT`` is the name of the project for which you downloaded the
+file.
 
-Copy the :file:`PROJECT-openrc.sh` file to the computer from which you want
-to run OpenStack commands.
+Copy the :file:`PROJECT-openrc.sh` file to the computer from which you
+want to run OpenStack commands.
 
 For example, copy the file to the computer from which you want to upload
 an image with a ``glance`` client command.
@@ -42,8 +43,8 @@ an image with a ``glance`` client command.
 On any shell from which you want to run OpenStack commands, source the
 :file:`PROJECT-openrc.sh` file for the respective project.
 
-In the following example, the :file:`demo-openrc.sh` file is sourced for the
-demo project::
+In the following example, the :file:`demo-openrc.sh` file is sourced for
+the demo project::
 
   $ source demo-openrc.sh
 
@@ -69,8 +70,9 @@ the following authentication information::
   export OS_CACERT=/path/to/cacertFile
 
 On any shell from which you want to run OpenStack commands, source the
-:file:`PROJECT-openrc.sh` file for the respective project. In this example,
-you source the :file:`admin-openrc.sh` file for the admin project::
+:file:`PROJECT-openrc.sh` file for the respective project. In this
+example, you source the :file:`admin-openrc.sh` file for the admin
+project::
 
   $ source admin-openrc.sh
 
@@ -86,10 +88,10 @@ you source the :file:`admin-openrc.sh` file for the admin project::
 .. note::
 
   You must set the ``OS\_CACERT`` environment variable when using the
-  https protocol in the ``OS\_AUTH\_URL`` environment setting because the
-  verification process for the TLS (HTTPS) server certificate uses the
-  one indicated in the environment. This certificate will be used when
-  verifying the TLS (HTTPS) server certificate.
+  https protocol in the ``OS\_AUTH\_URL`` environment setting because
+  the verification process for the TLS (HTTPS) server certificate uses
+  the one indicated in the environment. This certificate will be used
+  when verifying the TLS (HTTPS) server certificate.
 
 Override environment variable values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -98,8 +100,22 @@ When you run OpenStack client commands, you can override some
 environment variable settings by using the options that are listed at
 the end of the ``help`` output of the various client commands. For
 example, you can override the ``OS_PASSWORD`` setting in the
-:file:`PROJECT-openrc.sh` file by specifying a password on a :command:`keystone` command, as follows::
+:file:`PROJECT-openrc.sh` file by specifying a password on a
+:command:`keystone` command, as follows::
 
   $ keystone --os-password PASSWORD service-list
 
 Where ``PASSWORD`` is your password.
+
+A user specifies their username and password credentials to interact
+with OpenStack, using any client command. These credentials can be
+specified using various mechanisms, namely, the environment variable
+or command-line argument. It is not safe to specify the password using
+either of these methods.
+
+For example, when you specify your password using the command-line
+client with the ``--os-password`` argument, anyone with access to your
+computer can view it in plain text with the ``ps`` field.
+
+To avoid storing the password in plain text, you can prompt for the
+OpenStack password interactively.
