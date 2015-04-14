@@ -171,9 +171,9 @@ The following Launchpad Bugs areas are available:
 -  `Bugs: OpenStack Object Storage
    (swift) <https://bugs.launchpad.net/swift>`__
 
--  `Bugs: Bare Metal (ironic) <https://bugs.launchpad.net/ironic>`__
+-  `Bugs: Bare metal service (ironic) <https://bugs.launchpad.net/ironic>`__
 
--  `Bugs: Data Processing Service
+-  `Bugs: Data processing service
    (sahara) <https://bugs.launchpad.net/sahara>`__
 
 -  `Bugs: Database Service (trove) <https://bugs.launchpad.net/trove>`__
@@ -183,7 +183,7 @@ The following Launchpad Bugs areas are available:
 -  `Bugs: Telemetry
    (ceilometer) <https://bugs.launchpad.net/ceilometer>`__
 
--  `Bugs: Queue Service
+-  `Bugs: Messaging service
    (zaqar) <https://bugs.launchpad.net/zaqar>`__
 
 -  `Bugs: OpenStack API Documentation
