@@ -414,7 +414,7 @@ To delete a network:
 
 #. Import the following modules:
 
-    .. code-block:: python
+   .. code-block:: python
 
       from neutronclient.v2_0 import client
       from credentials import get_credentials
@@ -424,13 +424,13 @@ To delete a network:
 #. Instantiate the ``neutron`` client object by using the ``credentials``
    dictionary object:
 
-    .. code-block:: python
+   .. code-block:: python
 
       neutron = client.Client(**credentials)
 
 #. Delete the network:
 
-    .. code-block:: python
+   .. code-block:: python
       :linenos:
 
       body_sample = {'network': {'name': network_name,
@@ -494,7 +494,7 @@ This example queries OpenStack Networking to list all routers.
 
 #. Import the following modules:
 
-    .. code-block:: python
+   .. code-block:: python
       :linenos:
 
       from neutronclient.v2_0 import client
@@ -506,13 +506,13 @@ This example queries OpenStack Networking to list all routers.
 #. Instantiate the ``neutron`` client object by using the ``credentials``
    dictionary object:
 
-    .. code-block:: python
+   .. code-block:: python
 
       neutron = client.Client(**credentials)
 
 #. List the routers:
 
-    .. code-block:: python
+   .. code-block:: python
       :linenos:
 
       routers_list = neutron.list_routers(retrieve_all=True)
@@ -549,7 +549,7 @@ This example queries OpenStack Networking to list security groups.
 
 #. Import the following modules:
 
-    .. code-block:: python
+   .. code-block:: python
 
       from neutronclient.v2_0 import client
       from credentials import get_credentials
@@ -560,13 +560,13 @@ This example queries OpenStack Networking to list security groups.
 #. Instantiate the ``neutron`` client object by using the ``credentials``
    dictionary object:
 
-    .. code-block:: python
+   .. code-block:: python
 
       neutron = client.Client(**credentials)
 
 #. List Security groups
 
-    .. code-block:: python
+   .. code-block:: python
 
       sg = neutron.list_security_groups()
       print(sg)
@@ -599,7 +599,7 @@ This example queries OpenStack Networking to list subnets.
 
 #. Import the following modules:
 
-    .. code-block:: python
+   .. code-block:: python
 
       from neutronclient.v2_0 import client
       from credentials import get_credentials
@@ -608,15 +608,15 @@ This example queries OpenStack Networking to list subnets.
 #. Get credentials. See :ref:'Get credentials <get-credentials>'.
 
 #. Instantiate the ``neutron`` client object by using the ``credentials``
-dictionary object:
+   dictionary object:
 
-    .. code-block:: python
+   .. code-block:: python
 
       neutron = client.Client(**credentials)
 
 #. List subnets:
 
-    .. code-block:: python
+   .. code-block:: python
 
       subnets = neutron.list_subnets()
       print(subnets)
