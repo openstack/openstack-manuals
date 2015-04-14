@@ -184,7 +184,7 @@ The following Launchpad Bugs areas are available:
    (ceilometer) <https://bugs.launchpad.net/ceilometer>`__
 
 -  `Bugs: Queue Service
-   (marconi) <https://bugs.launchpad.net/marconi>`__
+   (zaqar) <https://bugs.launchpad.net/zaqar>`__
 
 -  `Bugs: OpenStack API Documentation
    (developer.openstack.org) <https://bugs.launchpad.net/openstack-api-site>`__
