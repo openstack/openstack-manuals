@@ -81,7 +81,7 @@
           <para>Install the supporting utility packages:</para>
           <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>apt-get install xfsprogs rsync</userinput></screen>
           <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install xfsprogs rsync</userinput></screen>
-          <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install xfsprogs rsync xinetd</userinput></screen>
+          <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install xfsprogs rsync</userinput></screen>
         </step>
         <step>
           <para>Format the <literal>/dev/sdb1</literal> and
@@ -147,31 +147,16 @@ lock file = /var/lock/object.lock</programlisting>
         the <systemitem role="service">rsync</systemitem> service:</para>
       <programlisting language="ini">RSYNC_ENABLE=true</programlisting>
     </step>
-    <step os="sles;opensuse">
-      <para>Edit the <filename>/etc/xinetd.d/rsync</filename> file and enable
-       the <systemitem role="service">rsync</systemitem> service:</para>
-      <programlisting language="ini">disable = no</programlisting>
-    </step>
     <step os="ubuntu;debian">
       <para>Start the <systemitem class="service">rsync</systemitem>
         service:</para>
       <screen><prompt>#</prompt> <userinput>service rsync start</userinput></screen>
     </step>
-    <step os="rhel;centos;fedora">
+    <step os="rhel;centos;fedora;opensuse;sles">
       <para>Start the <systemitem class="service">rsyncd</systemitem> service
         and configure it to start when the system boots:</para>
       <screen><prompt>#</prompt> <userinput>systemctl enable rsyncd.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start rsyncd.service</userinput></screen>
-    </step>
-    <step os="sles;opensuse">
-      <para>Start the <systemitem class="service">xinetd</systemitem> service
-        and configure it to start when the system boots:</para>
-      <para os="sles">On SLES:</para>
-      <screen os="sles"><prompt>#</prompt> <userinput>service xinetd start</userinput>
-<prompt>#</prompt> <userinput>chkconfig xinetd on</userinput></screen>
-      <para os="opensuse">On openSUSE:</para>
-      <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable xinetd.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start xinetd.service</userinput></screen>
     </step>
   </procedure>
   <procedure>
