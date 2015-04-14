@@ -259,10 +259,70 @@
                     the amount of bytes that can be burst at peak
                     speed (kilobytes). The rate is shared equally
                     within domains connected to the network.</para>
-                <para>The following example configures a bandwidth
-                    limit for instance network traffic:</para>
-                <screen><prompt>$</prompt> <userinput>nova flavor-key m1.small set quota:inbound_average=10240</userinput>
-<prompt>$</prompt> <userinput>nova flavor-key m1.small set quota:outbound_average=10240</userinput></screen>
+                <para>Below example sets network traffic bandwidth limits for
+                    existing flavor as follow:
+                </para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Outbound traffic:
+                            <itemizedlist>
+                                <listitem>
+                                    <para>
+                                        average: 256 Mbps
+                                        (32768 kilobytes/second)
+                                    </para>
+                                </listitem>
+                                <listitem>
+                                    <para>
+                                        peak: 512 Mbps
+                                        (65536 kilobytes/second)
+                                    </para>
+                                </listitem>
+                                <listitem>
+                                    <para>
+                                        burst: 100 ms
+                                    </para>
+                                </listitem>
+                            </itemizedlist>
+                        </para>
+                    </listitem>
+
+                    <listitem>
+                        <para>Inbound traffic:
+                            <itemizedlist>
+                                <listitem>
+                                    <para>
+                                        average: 256 Mbps
+                                        (32768 kilobytes/second)
+                                    </para>
+                                </listitem>
+                                <listitem>
+                                    <para>
+                                        peak: 512 Mbps
+                                        (65536 kilobytes/second)
+                                    </para>
+                                </listitem>
+                                <listitem>
+                                    <para>
+                                        burst: 100 ms
+                                    </para>
+                                </listitem>
+                            </itemizedlist>
+                        </para>
+                    </listitem>
+                </itemizedlist>
+                <screen><prompt>$</prompt> <userinput>nova flavor-key nlimit set quota:vif_outbound_average=32768</userinput>
+<prompt>$</prompt> <userinput>nova flavor-key nlimit set quota:vif_outbound_peak=65536</userinput>
+<prompt>$</prompt> <userinput>nova flavor-key nlimit set quota:vif_outbound_burst=6553</userinput>
+<prompt>$</prompt> <userinput>nova flavor-key nlimit set quota:vif_inbound_average=16384</userinput>
+<prompt>$</prompt> <userinput>nova flavor-key nlimit set quota:vif_inbound_peak=32768</userinput>
+<prompt>$</prompt> <userinput>nova flavor-key nlimit set quota:vif_inbound_burst=3276</userinput>
+                </screen>
+                <note>
+                    <para>All the speed limit values in above example are
+                    specified in kilobytes/second. And burst values are in
+                    kilobytes.</para>
+                </note>
             </listitem>
         </varlistentry>
         <varlistentry>
