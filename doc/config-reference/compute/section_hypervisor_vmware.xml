@@ -52,9 +52,9 @@
       interacts with the vCenter APIs to select an appropriate ESX host within
       the cluster. Internally, vCenter uses DRS for placement.</para>
     <para>The VMware vCenter driver also interacts with the OpenStack
-      Image Service to copy VMDK images from the Image Service back
-      end store. The dotted line in the figure represents VMDK images
-      being copied from the OpenStack Image Service to the vSphere
+      Image service to copy VMDK images from the Image service back-end
+      store. The dotted line in the figure represents VMDK images
+      being copied from the OpenStack Image service to the vSphere
       data store. VMDK images are cached in the data store so the copy
       operation is only required the first time that the VMDK image is
       used.</para>
@@ -636,29 +636,29 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
       environment. It is also possible to convert other formats, such
       as qcow2, to the VMDK format using the <option>qemu-img</option>
       utility. After a VMDK disk is available, load it into the
-      OpenStack Image Service. Then, you can use it with the VMware
+      OpenStack Image service. Then, you can use it with the VMware
       vCenter driver. The following sections provide additional
       details on the supported disks and the commands used for
       conversion and upload.</para>
     <section xml:id="VMware_supported_images">
       <title>Supported image types</title>
-      <para>Upload images to the OpenStack Image Service in VMDK
+      <para>Upload images to the OpenStack Image service in VMDK
         format. The following VMDK disk types are supported:</para>
       <itemizedlist>
         <listitem>
           <para><emphasis role="italic">VMFS Flat Disks</emphasis>
             (includes thin, thick, zeroedthick, and eagerzeroedthick).
             Note that once a VMFS thin disk is exported from VMFS to a
-            non-VMFS location, like the OpenStack Image Service, it
+            non-VMFS location, like the OpenStack Image service, it
             becomes a preallocated flat disk. This impacts the
-            transfer time from the OpenStack Image Service to the data
+            transfer time from the OpenStack Image service to the data
             store when the full preallocated flat disk, rather than
             the thin disk, must be transferred.</para>
         </listitem>
         <listitem>
           <para><emphasis role="italic">Monolithic Sparse
               disks</emphasis>. Sparse disks get imported from the
-            OpenStack Image Service into ESX as thin provisioned
+            OpenStack Image service into ESX as thin provisioned
             disks. Monolithic Sparse disks can be obtained from VMware
             Fusion or can be created by converting from other virtual
             disk formats using the <code>qemu-img</code>
@@ -669,7 +669,7 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
         property that applies to each of the supported VMDK disk
         types:</para>
       <table rules="all">
-        <caption>OpenStack Image Service disk type settings</caption>
+        <caption>OpenStack Image service disk type settings</caption>
         <thead>
           <tr>
             <th>vmware_disktype property</th>
@@ -699,7 +699,7 @@ datastore_regex=&lt;optional datastore regex&gt;</programlisting>
         </tbody>
       </table>
       <para>The <option>vmware_disktype</option> property is set when an
-        image is loaded into the OpenStack Image Service. For example,
+        image is loaded into the OpenStack Image service. For example,
         the following command creates a Monolithic Sparse image by
         setting <option>vmware_disktype</option> to
           <literal>sparse</literal>:</para>
@@ -794,7 +794,7 @@ trusty-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       <para>To avoid the conversion step (at the cost of longer
         download times) consider converting sparse disks to thin
         provisioned or preallocated disks before loading them into the
-        OpenStack Image Service.</para>
+        OpenStack Image service.</para>
       <para>Use one of the following tools to pre-convert sparse
         disks.</para>
       <variablelist>
@@ -848,20 +848,20 @@ trusty-server-cloudimg-amd64-disk1.vmdk</userinput></screen>
       <para>The ESX hypervisor requires a copy of the VMDK file in
         order to boot up a virtual machine. As a result, the vCenter
         OpenStack Compute driver must download the VMDK via HTTP from
-        the OpenStack Image Service to a data store that is visible to
+        the OpenStack Image service to a data store that is visible to
         the hypervisor. To optimize this process, the first time a
         VMDK file is used, it gets cached in the data store.
         A cached image is stored in a folder named after the image ID.
         Subsequent virtual machines that need the VMDK use the cached
         version and don't have to copy the file again from the
-        OpenStack Image Service.</para>
+        OpenStack Image service.</para>
       <para>Even with a cached VMDK, there is still a copy operation
         from the cache location to the hypervisor file directory in
         the shared data store. To avoid this copy, boot the image in
         linked_clone mode. To learn how to enable this mode, see <xref linkend="VMware_config"/>.</para>
       <note><para>You can also use
         the <code>vmware_linked_clone</code> property in the OpenStack
-        Image Service to
+        Image service to
         override the linked_clone mode on a per-image basis.</para></note>
 
 <para>If multiple compute nodes are running on the same host,
