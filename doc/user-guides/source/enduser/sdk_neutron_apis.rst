@@ -326,7 +326,7 @@ port to a subnet.
 #. Instantiate the ``nova_client`` client object by using the
    ``credentials`` dictionary object:
 
-    .. code-block:: python
+   .. code-block:: python
 
       nova_client = nvclient.Client(**credentials)
 
