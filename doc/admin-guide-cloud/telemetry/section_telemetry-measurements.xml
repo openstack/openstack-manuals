@@ -175,24 +175,24 @@
     <xi:include href="tables/ceilometer-measurements-nova-host.xml"/>
   </section>
   <section xml:id="section_telemetry-ironic-meters">
-    <title>Bare metal module for OpenStack</title>
+    <title>Bare metal service</title>
     <para>Telemetry captures notifications that are emitted by the
-      Bare metal module for OpenStack. The source of the notifications
+      Bare metal service. The source of the notifications
       are IPMI sensors that collect data from the host machine.</para>
     <note>
-      <para>The sensor data is not available in the Bare metal module
+      <para>The sensor data is not available in the Bare metal service
         by default. To enable the meters and configure this module to
         emit notifications about the measured values see the <link xlink:href=
         "http://docs.openstack.org/developer/ironic/deploy/install-guide.html">
         Installation Guide</link> for the Bare metal service.</para>
     </note>
-    <para>The following meters are recorded for the Bare metal module:</para>
+    <para>The following meters are recorded for the Bare metal service:</para>
     <xi:include href="tables/ceilometer-measurements-ironic.xml"/>
   </section>
   <section xml:id="section_telemetry-ipmi-meters">
     <title>IPMI based meters</title>
     <para>Another way of gathering IPMI based data is to use IPMI
-      sensors independently from the Bare metal module's components.
+      sensors independently from the Bare metal service's components.
       Same meters as <xref linkend="section_telemetry-ironic-meters"/>
       could be fetched except that origin is <literal>Pollster</literal>
       instead of <literal>Notification</literal>.
@@ -205,7 +205,7 @@
     <warning>
       <para>To avoid duplication of metering data and unnecessary load
         on the IPMI interface, do not deploy the IPMI agent
-        on nodes that are managed by the Bare metal module and keep
+        on nodes that are managed by the Bare metal service and keep
         the <option>conductor.send_sensor_data</option> option set to
         <literal>False</literal> in the <filename>ironic.conf</filename>
         configuration file.</para>
