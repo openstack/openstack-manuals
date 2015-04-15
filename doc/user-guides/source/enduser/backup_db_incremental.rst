@@ -10,7 +10,7 @@ start with a regular backup. Then, when you want to create a subsequent
 incremental backup, you specify the parent backup.
 
 Restoring a database instance from an incremental backup is the same as
-creating a database instance from a regular backup—the Database Service
+creating a database instance from a regular backup—the Database service
 handles the complexities of applying the chain of incremental backups.
 
 This example shows you how to use incremental backups with a MySQL
@@ -100,7 +100,7 @@ Create and use incremental backups
 
    To incorporate your incremental backups, you simply use the
    ``--backup`` parameter to pass in the ``BACKUP_ID`` of your most
-   recent incremental backup. The Database Service handles the
+   recent incremental backup. The Database service handles the
    complexities of applying the chain of all previous incremental
    backups.
 

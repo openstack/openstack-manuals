@@ -5,7 +5,7 @@
   version="5.0"
   xml:id="trove-install">
   <title>Install the Database service</title>
-  <para>This procedure installs the Database module on the controller
+  <para>This procedure installs the Database service on the controller
   node.</para>
   <formalpara>
     <title>Prerequisites</title>
@@ -21,7 +21,7 @@
       <para>If you want to provision datastores on block-storage volumes, you also need Block Storage.</para>
     </listitem>
   </itemizedlist>
-  <para>To install the Database module on the controller:</para>
+  <para>To install the Database service on the controller:</para>
   <procedure>
     <step>
       <para>Install required packages:</para>
@@ -94,7 +94,7 @@ notifier_queue_hostname = <replaceable>controller</replaceable></programlisting>
         </step>
 
         <step>
-          <para>Configure the Database module to use the RabbitMQ message broker by
+          <para>Configure the Database service to use the RabbitMQ message broker by
           setting the following options in the <literal>[DEFAULT]</literal>
           configuration group of each file:</para>
           <programlisting language="ini">[DEFAULT]
@@ -208,11 +208,11 @@ log_file = trove-guestagent.log</programlisting>
     </step>
 
     <step os="rhel;centos;fedora;opensuse;sles;ubuntu">
-      <para>You must register the Database module with the Identity service so
+      <para>You must register the Database service with the Identity service so
       that other OpenStack services can locate it. Register the
       service and specify the endpoint:</para>
       <screen><prompt>$</prompt> <userinput>keystone service-create --name trove --type database \
-  --description "OpenStack Database Service"</userinput>
+  --description "OpenStack Database service"</userinput>
 <prompt>$</prompt> <userinput>keystone endpoint-create \
   --service-id $(keystone service-list | awk '/ trove / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:8779/v1.0/%\(tenant_id\)s \
