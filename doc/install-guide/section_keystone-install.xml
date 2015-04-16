@@ -71,8 +71,14 @@
     <step>
       <para>Run the following command to install the packages:</para>
       <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install keystone python-openstackclient apache2 libapache2-mod-wsgi memcached python-memcache</userinput></screen>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-keystone python-openstackclient</userinput></screen>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-keystone python-openstackclient memcached python-memcached</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-keystone python-openstackclient</userinput></screen>
+    </step>
+    <step os="rhel;fedora;centos">
+      <para>Start the Memcached service and configure it to start when the
+        system boots:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl enable memcached.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start memcached.service</userinput></screen>
     </step>
     <step>
       <para>Edit the <filename>/etc/keystone/keystone.conf</filename> file and
