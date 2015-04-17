@@ -46,6 +46,7 @@ sys.path.append(os.path.abspath('../sphinx-ext/'))
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+# TODO(ajaeger): enable PDF building, for example add 'rst2pdf.pdfbuilder'
 extensions = ['os_doc_tools.sphinx.hotref', 'scope']
 
 # Add any paths that contain templates here, relative to this directory.
@@ -287,3 +288,15 @@ texinfo_documents = [
 
 # -- Options for Internationalization output ------------------------------
 locale_dirs = ['locale/']
+
+# -- Options for PDF output --------------------------------------------------
+
+if tags.has('admin_only'):  # noqa
+    pdf_documents = [
+        ('index-admin', u'AdminUserGuide', u'Admin User Guide',
+         u'OpenStack contributors')
+    ]
+else:
+    pdf_documents = [
+        ('index', u'UserGuides', u'End User Guide', u'OpenStack contributors')
+    ]
