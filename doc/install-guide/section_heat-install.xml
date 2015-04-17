@@ -48,30 +48,39 @@
       <substeps>
         <step>
           <para>Create the <literal>heat</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name heat --pass <replaceable>HEAT_PASS</replaceable></userinput>
-<computeroutput>+----------+----------------------------------+
-| Property |              Value               |
+          <screen><prompt>$</prompt> <userinput>openstack user create --password-prompt heat</userinput>
+<computeroutput>User Password:
+Repeat User Password:
 +----------+----------------------------------+
-|  email   |                                  |
-| enabled  |               True               |
-|    id    | 7fd67878dcd04d0393469ef825a7e005 |
-|   name   |               heat               |
-| username |               heat               |
+| Field    | Value                            |
++----------+----------------------------------+
+| email    | None                             |
+| enabled  | True                             |
+| id       | 7fd67878dcd04d0393469ef825a7e005 |
+| name     | heat                             |
+| username | heat                             |
 +----------+----------------------------------+</computeroutput></screen>
-          <para>Replace <replaceable>HEAT_PASS</replaceable> with a suitable
-            password.</para>
         </step>
         <step>
           <para>Add the <literal>admin</literal> role to the
             <literal>heat</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user heat --tenant service --role admin</userinput></screen>
-          <note>
-            <para>This command provides no output.</para>
-          </note>
+          <screen><prompt>$</prompt> <userinput>openstack role add --project service --user heat admin</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | cd2cb9a39e874ea69e5d4b896eb16128 |
+| name  | admin                            |
++-------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
           <para>Create the <literal>heat_stack_owner</literal> role:</para>
-          <screen><prompt>$</prompt> <userinput>keystone role-create --name heat_stack_owner</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>openstack role create heat_stack_owner</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | c0a1cbee7261446abc873392f616de87 |
+| name  | heat_stack_owner                 |
++-------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
           <para>Create the heat domain in Identity service:</para>
@@ -85,7 +94,13 @@
         <step>
           <para>Add the <literal>heat_stack_owner</literal> role to the
             <literal>demo</literal> tenant and user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user demo --tenant demo --role heat_stack_owner</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>openstack role add --project demo --user demo heat_stack_owner</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | c0a1cbee7261446abc873392f616de87 |
+| name  | heat_stack_owner                 |
++-------+----------------------------------+</computeroutput></screen>
           <note>
             <para>You must add the <literal>heat_stack_owner</literal>
               role to users that manage stacks.</para>
@@ -93,7 +108,13 @@
         </step>
         <step>
           <para>Create the <literal>heat_stack_user</literal> role:</para>
-          <screen><prompt>$</prompt> <userinput>keystone role-create --name heat_stack_user</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>openstack role create heat_stack_user</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | e01546b1a81c4e32a6d14a9259e60154 |
+| name  | heat_stack_user                  |
++-------+----------------------------------+</computeroutput></screen>
           <note>
             <para>The Orchestration service automatically assigns the
               <literal>heat_stack_user</literal> role to users that it
@@ -106,65 +127,69 @@
         <step>
           <para>Create the <literal>heat</literal> and
             <literal>heat-cfn</literal> service entities:</para>
-          <screen><prompt>$</prompt> <userinput>keystone service-create --name heat --type orchestration \
-  --description "Orchestration"</userinput>
+          <screen><prompt>$</prompt> <userinput>openstack service create --type orchestration \
+  --description "Orchestration" heat</userinput>
 <computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
+| Field       | Value                            |
 +-------------+----------------------------------+
-| description |          Orchestration           |
-|   enabled   |               True               |
-|      id     | 031112165cad4c2bb23e84603957de29 |
-|     name    |               heat               |
-|     type    |          orchestration           |
+| description | Orchestration                    |
+| enabled     | True                             |
+| id          | 031112165cad4c2bb23e84603957de29 |
+| name        | heat                             |
+| type        | orchestration                    |
 +-------------+----------------------------------+</computeroutput>
-<prompt>$</prompt> <userinput>keystone service-create --name heat-cfn --type cloudformation \
-  --description "Orchestration"</userinput>
+<prompt>$</prompt> <userinput>openstack service create --type cloudformation \
+  --description "Orchestration" heat-cfn</userinput>
 <computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
+| Field       | Value                            |
 +-------------+----------------------------------+
-| description |          Orchestration           |
-|   enabled   |               True               |
-|      id     | 297740d74c0a446bbff867acdccb33fa |
-|     name    |             heat-cfn             |
-|     type    |          cloudformation          |
+| description | Orchestration                    |
+| enabled     | True                             |
+| id          | 297740d74c0a446bbff867acdccb33fa |
+| name        | heat-cfn                         |
+| type        | cloudformation                   |
 +-------------+----------------------------------+</computeroutput></screen>
         </step>
       </substeps>
     </step>
     <step>
       <para>Create the Orchestration service API endpoints:</para>
-      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ orchestration / {print $2}') \
+      <screen><prompt>$</prompt> <userinput>openstack endpoint create \
   --publicurl http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
   --internalurl http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
   --adminurl http://<replaceable>controller</replaceable>:8004/v1/%\(tenant_id\)s \
-  --region regionOne</userinput>
-<computeroutput>+-------------+-----------------------------------------+
-|   Property  |                  Value                  |
-+-------------+-----------------------------------------+
-|   adminurl  | http://controller:8004/v1/%(tenant_id)s |
-|      id     |     f41225f665694b95a46448e8676b0dc2    |
-| internalurl | http://controller:8004/v1/%(tenant_id)s |
-|  publicurl  | http://controller:8004/v1/%(tenant_id)s |
-|    region   |                regionOne                |
-|  service_id |     031112165cad4c2bb23e84603957de29    |
-+-------------+-----------------------------------------+</computeroutput>
-<prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ cloudformation / {print $2}') \
+  --region regionOne \
+  orchestration</userinput>
+<computeroutput>+--------------+-----------------------------------------+
+|        Field | Value                                   |
++--------------+-----------------------------------------+
+| adminurl     | http://controller:8004/v1/%(tenant_id)s |
+| id           | f41225f665694b95a46448e8676b0dc2        |
+| internalurl  | http://controller:8004/v1/%(tenant_id)s |
+| publicurl    | http://controller:8004/v1/%(tenant_id)s |
+| region       | regionOne                               |
+| service_id   | 031112165cad4c2bb23e84603957de29        |
+| service_name | heat                                    |
+| service_type | orchestration                           |
++--------------+-----------------------------------------+</computeroutput>
+<prompt>$</prompt> <userinput>openstack endpoint create \
   --publicurl http://<replaceable>controller</replaceable>:8000/v1 \
   --internalurl http://<replaceable>controller</replaceable>:8000/v1 \
   --adminurl http://<replaceable>controller</replaceable>:8000/v1 \
-  --region regionOne</userinput>
-<computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
-+-------------+----------------------------------+
-|   adminurl  |    http://controller:8000/v1     |
-|      id     | f41225f665694b95a46448e8676b0dc2 |
-| internalurl |    http://controller:8000/v1     |
-|  publicurl  |    http://controller:8000/v1     |
-|    region   |            regionOne             |
-|  service_id | 297740d74c0a446bbff867acdccb33fa |
-+-------------+----------------------------------+</computeroutput></screen>
+  --region regionOne \
+  cloudformation</userinput>
+<computeroutput>+--------------+----------------------------------+
+| Field        | Value                            |
++--------------+----------------------------------+
+| adminurl     | http://controller:8000/v1        |
+| id           | f41225f665694b95a46448e8676b0dc2 |
+| internalurl  | http://controller:8000/v1        |
+| publicurl    | http://controller:8000/v1        |
+| region       | regionOne                        |
+| service_id   | 297740d74c0a446bbff867acdccb33fa |
+| service_name | heat-cfn                         |
+| service_type | cloudformation                   |
++--------------+----------------------------------+</computeroutput></screen>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">

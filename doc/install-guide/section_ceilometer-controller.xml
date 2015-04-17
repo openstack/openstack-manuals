@@ -117,31 +117,67 @@ connecting to: controller:27017/test
       <substeps>
         <step>
           <para>Create the <literal>ceilometer</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name ceilometer --pass <replaceable>CEILOMETER_PASS</replaceable></userinput></screen>
-          <para>Replace <replaceable>CEILOMETER_PASS</replaceable> with a
-            suitable password.</para>
+          <screen><prompt>$</prompt> <userinput>openstack user create --password-prompt ceilometer</userinput>
+<computeroutput>User Password:
+Repeat User Password:
++----------+----------------------------------+
+| Field    | Value                            |
++----------+----------------------------------+
+| email    | None                             |
+| enabled  | True                             |
+| id       | b7657c9ea07a4556aef5d34cf70713a3 |
+| name     | ceilometer                       |
+| username | ceilometer                       |
++----------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
           <para>Add the <literal>admin</literal> role to the
             <literal>ceilometer</literal> user.</para>
-         <screen><prompt>$</prompt> <userinput>keystone user-role-add --user ceilometer --tenant service --role admin</userinput></screen>
+         <screen><prompt>$</prompt> <userinput>openstack role add --project service --user ceilometer admin</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | cd2cb9a39e874ea69e5d4b896eb16128 |
+| name  | admin                            |
++-------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
           <para>Create the <literal>ceilometer</literal> service
             entity:</para>
-          <screen><prompt>$</prompt> <userinput>keystone service-create --name ceilometer --type metering \
-  --description "Telemetry"</userinput></screen>
+          <screen><prompt>$</prompt> <userinput>openstack service create --type metering \
+  --description "Telemetry" ceilometer</userinput>
+<computeroutput>+-------------+----------------------------------+
+| Field       | Value                            |
++-------------+----------------------------------+
+| description | Telemetry                        |
+| enabled     | True                             |
+| id          | 3405453b14da441ebb258edfeba96d83 |
+| name        | ceilometer                       |
+| type        | metering                         |
++-------------+----------------------------------+</computeroutput></screen>
         </step>
       </substeps>
     </step>
     <step>
       <para>Create the Telemetry module API endpoint:</para>
-      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ metering / {print $2}') \
+      <screen><prompt>$</prompt> <userinput>openstack endpoint create \
   --publicurl http://<replaceable>controller</replaceable>:8777 \
   --internalurl http://<replaceable>controller</replaceable>:8777 \
-  --adminurl http://<replaceable>controller</replaceable>:8777</userinput> \
-  --region regionOne</screen>
+  --adminurl http://<replaceable>controller</replaceable>:8777 \
+  --region regionOne \
+  metering</userinput>
+<computeroutput>+--------------+----------------------------------+
+| Field        | Value                            |
++--------------+----------------------------------+
+| adminurl     | http://controller:8777           |
+| id           | d3716d85b10d4e60a67a52c6af0068cd |
+| internalurl  | http://controller:8777           |
+| publicurl    | http://controller:8777           |
+| region       | regionOne                        |
+| service_id   | 3405453b14da441ebb258edfeba96d83 |
+| service_name | ceilometer                       |
+| service_type | metering                         |
++--------------+----------------------------------+</computeroutput></screen>
     </step>
   </procedure>
   <procedure os="debian">

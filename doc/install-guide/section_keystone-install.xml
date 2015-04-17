@@ -199,10 +199,10 @@ admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
         to automatically create an admin tenant and an admin user. This can
         later be used for other OpenStack services to contact the Identity
         service. This is the equivalent of running the below commands:</para>
-      <screen><prompt>#</prompt> <userinput>keystone tenant-create --name admin --description "Admin Tenant"</userinput>
-<prompt>#</prompt> <userinput>keystone user-create --name admin --pass <replaceable>ADMIN_PASS</replaceable> --email root@localhost</userinput>
-<prompt>#</prompt> <userinput>keystone role-create --name admin</userinput>
-<prompt>#</prompt> <userinput>keystone user-role-add user-role-add --user admin --role admin --tenant admin</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>openstack project create --description "Admin Tenant" admin</userinput>
+<prompt>#</prompt> <userinput>openstack user create --password <replaceable>ADMIN_PASS</replaceable> --email root@localhost admin</userinput>
+<prompt>#</prompt> <userinput>openstack role create admin</userinput>
+<prompt>#</prompt> <userinput>openstack role add --project demo --user demo _member_</userinput></screen>
       <informalfigure>
         <mediaobject>
           <imageobject>
@@ -252,13 +252,13 @@ admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
       <title>Create the Identity service endpoints</title>
       <para>In Debian, the Keystone package offers automatic registration of Keystone
         in the service catalogue. This is equivalent of running the below commands:</para>
-      <screen><prompt>#</prompt> <userinput>keystone service-create --name keystone --type identity --description "OpenStack Identity"</userinput>
+      <screen><prompt>#</prompt> <userinput>openstack service create --type identity --description "OpenStack Identity" keystone</userinput>
 <prompt>#</prompt> <userinput>keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ identity / {print $2}') \
   --publicurl http://<replaceable>controller</replaceable>:5000/v2.0 \
   --internalurl http://<replaceable>controller</replaceable>:5000/v2.0 \
   --adminurl http://<replaceable>controller</replaceable>:35357/v2.0 \
-  --region regionOne</userinput></screen>
+  --region regionOne \
+  identity</userinput></screen>
       <informalfigure>
         <mediaobject>
           <imageobject>
