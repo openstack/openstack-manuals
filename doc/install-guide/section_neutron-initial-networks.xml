@@ -82,9 +82,9 @@
       <title>To create a subnet on the external network</title>
       <step>
         <para>Create the subnet:</para>
-        <screen><prompt>$</prompt> <userinput>neutron subnet-create ext-net --name ext-subnet \
+        <screen><prompt>$</prompt> <userinput>neutron subnet-create ext-net <replaceable>EXTERNAL_NETWORK_CIDR</replaceable> --name ext-subnet \
   --allocation-pool start=<replaceable>FLOATING_IP_START</replaceable>,end=<replaceable>FLOATING_IP_END</replaceable> \
-  --disable-dhcp --gateway <replaceable>EXTERNAL_NETWORK_GATEWAY</replaceable> <replaceable>EXTERNAL_NETWORK_CIDR</replaceable></userinput></screen>
+  --disable-dhcp --gateway <replaceable>EXTERNAL_NETWORK_GATEWAY</replaceable></userinput></screen>
         <para>Replace <replaceable>FLOATING_IP_START</replaceable> and
           <replaceable>FLOATING_IP_END</replaceable> with the first and last
           IP addresses of the range that you want to allocate for floating IP
@@ -98,9 +98,9 @@
         <para>For example, using <literal>203.0.113.0/24</literal> with
           floating IP address range <literal>203.0.113.101</literal> to
           <literal>203.0.113.200</literal>:</para>
-        <screen><prompt>$</prompt> <userinput>neutron subnet-create ext-net --name ext-subnet \
+        <screen><prompt>$</prompt> <userinput>neutron subnet-create ext-net 203.0.113.0/24 --name ext-subnet \
   --allocation-pool start=203.0.113.101,end=203.0.113.200 \
-  --disable-dhcp --gateway 203.0.113.1 203.0.113.0/24</userinput>
+  --disable-dhcp --gateway 203.0.113.1</userinput>
 <computeroutput>Created a new subnet:
 +-------------------+------------------------------------------------------+
 | Field             | Value                                                |
@@ -164,15 +164,15 @@
       <title>To create a subnet on the tenant network</title>
       <step>
         <para>Create the subnet:</para>
-        <screen><prompt>$</prompt> <userinput>neutron subnet-create demo-net --name demo-subnet \
-  --gateway <replaceable>TENANT_NETWORK_GATEWAY</replaceable> <replaceable>TENANT_NETWORK_CIDR</replaceable></userinput></screen>
+        <screen><prompt>$</prompt> <userinput>neutron subnet-create demo-net <replaceable>TENANT_NETWORK_CIDR</replaceable> \
+  --name demo-subnet --gateway <replaceable>TENANT_NETWORK_GATEWAY</replaceable></userinput></screen>
         <para>Replace <replaceable>TENANT_NETWORK_CIDR</replaceable> with the
           subnet you want to associate with the tenant network and
           <replaceable>TENANT_NETWORK_GATEWAY</replaceable> with the gateway
           you want to associate with it, typically the ".1" IP address.</para>
         <para>Example using <literal>192.168.1.0/24</literal>:</para>
-        <screen><prompt>$</prompt> <userinput>neutron subnet-create demo-net --name demo-subnet \
-  --gateway 192.168.1.1 192.168.1.0/24</userinput>
+        <screen><prompt>$</prompt> <userinput>neutron subnet-create demo-net 192.168.1.0/24 \
+  --name demo-subnet --gateway 192.168.1.1</userinput>
 <computeroutput>Created a new subnet:
 +-------------------+------------------------------------------------------+
 | Field             | Value                                                |
