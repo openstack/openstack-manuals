@@ -1,5 +1,5 @@
 ﻿Welcome to the OpenStack Networking Guide
-===================================================
+=========================================
 
 Contents:
 
@@ -21,6 +21,5 @@ Contents:
 Indices and tables
 ==================
 
-* :ref:`genindex`
 * :ref:`search`
 

@@ -175,13 +175,13 @@ html_last_updated_fmt = '%Y-%m-%d %H:%M'
 # html_domain_indices = True
 
 # If false, no index is generated.
-# html_use_index = True
+html_use_index = False
 
 # If true, the index is split into individual pages for each letter.
 # html_split_index = False
 
 # If true, links to the reST sources are added to the pages.
-# html_show_sourcelink = True
+html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 # html_show_sphinx = True
@@ -200,6 +200,8 @@ html_last_updated_fmt = '%Y-%m-%d %H:%M'
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'networking-guide'
 
+# If true, publish source files
+# html_copy_source = True
 
 # -- Options for LaTeX output ---------------------------------------------
 
