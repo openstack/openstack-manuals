@@ -1,8 +1,8 @@
-========================================================
-Architecture 1a: Legacy implementation with Open vSwitch
-========================================================
+====================================================
+Scenario 1a: Legacy implementation with Open vSwitch
+====================================================
 
-This architecture describes a legacy (basic) implementation of the
+This scenario describes a legacy (basic) implementation of the
 OpenStack Networking service using the ML2 plug-in with Open vSwitch.
 The example configuration creates one flat external network and VXLAN
 tenant networks. However, this configuration also supports VLAN

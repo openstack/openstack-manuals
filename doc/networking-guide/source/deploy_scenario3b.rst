@@ -1,6 +1,6 @@
-===================================================
-Architecture 3b – High Availability (L3 HA and OVS)
-===================================================
+=======================================================
+Scenario 3b: High Availability (L3 HA and Linux bridge)
+=======================================================
 
 https://github.com/phil-hopkins-a/openstack-networking-guide
 

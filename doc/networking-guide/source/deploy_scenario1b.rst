@@ -1,6 +1,6 @@
-========================
-Architecture 1b - Legacy
-========================
+====================================================
+Scenario 1b: Legacy implementation with Linux bridge
+====================================================
 
 https://github.com/ionosphere80/openstack-networking-guide/blob/master/scenario-legacy-lb/scenario-legacy-lb.md
 

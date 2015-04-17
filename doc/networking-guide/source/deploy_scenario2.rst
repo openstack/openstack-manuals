@@ -1,6 +1,6 @@
-=========================================================
-Architecture 2 – High Availability (DVR and Open vSwitch)
-=========================================================
+====================================================
+Scenario 2: High Availability (DVR and Open vSwitch)
+====================================================
 
 https://github.com/ionosphere80/openstack-networking-guide/blob/master/scenario-dvr/scenario-dvr.md
 
