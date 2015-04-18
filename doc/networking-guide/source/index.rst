@@ -13,8 +13,6 @@ Contents:
    migration.rst
    miscellaneous.rst
    adv_config.rst
-   scenario-l3ha-ovs.rst
-   scenario-ovs-providernet.rst
 
    glossary.rst
 

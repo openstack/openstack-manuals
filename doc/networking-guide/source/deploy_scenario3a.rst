@@ -1,9 +1,9 @@
 .. highlight: ini
    :linenothreshold: 5
 
-=============================================================================
-Scenario: Basic implementation of Layer 3 High-Availability with Open vSwitch
-=============================================================================
+=======================================================
+Scenario 3a: High Availability (L3 HA and Open vSwitch)
+=======================================================
 
 This scenario describes a basic implementation of the OpenStack
 Networking Layer 3 High-Availabilty (L3 HA) feature using the modular layer

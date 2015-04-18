@@ -1,6 +1,6 @@
-=============================================
-Scenario: Provider networks with Open vSwitch
-=============================================
+=========================================================================================
+Scenario 4a: Provider networks handle L3 and DHCP services (bare pipes with Open vSwitch)
+=========================================================================================
 
 This scenario describes a basic implementation of OpenStack Networking,
 where the networking service integrates with legacy networks and
