@@ -1,7 +1,9 @@
-﻿Welcome to the OpenStack Networking Guide
-=========================================
+﻿==========================
+OpenStack Networking Guide
+==========================
 
-Contents:
+Contents
+~~~~~~~~
 
 .. toctree::
    :maxdepth: 2
@@ -16,8 +18,8 @@ Contents:
 
    glossary.rst
 
-Indices and tables
-==================
+Search in this guide
+~~~~~~~~~~~~~~~~~~~~
 
 * :ref:`search`
 
