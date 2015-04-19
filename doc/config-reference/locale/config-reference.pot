@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-04-18 06:06+0000\n"
+"POT-Creation-Date: 2015-04-19 06:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -155,6 +155,170 @@ msgstr ""
 
 #: ./doc/config-reference/ch_config-overview.xml:26(para) ./doc/config-reference/ch_orchestrationconfigure.xml:7(title)
 msgid "Orchestration"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:10(title)
+msgid "The policy.json file"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:12(para)
+msgid "Each OpenStack service, Identity, Compute, Networking and so on, has its own role-based access policies. They determine which user can access which objects in which way, and are defined in the service’s <filename>policy.json</filename> file."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:17(para)
+msgid "Whenever an API call to an OpenStack service is made, the service’s policy engine uses the appropriate policy definitions to determine if the call can be accepted. Any changes to <filename>policy.json</filename> are effective immediately, which allows new policies to be implemented while the service is running."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:23(para)
+msgid "As the name implies, <filename>policy.json</filename> files are in JSON (Javascript Object Notation) format. A policy is defined by a statement with the general form <code>\"&lt;target&gt;\" : \"&lt;rule&gt;\"</code>. A target, also named “action”, is an API call, such as “start an instance” or “attach a volume”. The rule determines under which circumstances the API call is permitted. In most cases, these circumstances involve the user who makes the call, thereafter named the “API user” for simplicity."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:33(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:130(title)
+msgid "Examples"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:35(para)
+msgid "A simple rule might look like this: <placeholder-1/> The target is <code>\"compute:get_all\"</code>, the “list all instances” API of the Compute service. The rule is an empty string meaning “always”. This policy allows anybody to list instances."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:43(para)
+msgid "You can also decline permission to use an API: <placeholder-1/> The exclamation mark stands for “never” or “nobody”, which effectively disables the Compute API “shelve an instance”."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:50(para)
+msgid "Many APIs can only be called by admin users. This can be expressed by the rule <code>\"role:admin\"</code>, which checks whether the API user has the admin role. The following policy ensures that only administrators can create new users in the Identity database: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:58(para)
+msgid "You can limit APIs to any role. For example, the Orchestration service defines a role named <code>heat_stack_user</code>. Whoever has this role isn't allowed to create stacks: <placeholder-1/> This rule makes use of the boolean operator <code>not</code>. More complex rules can be built using operators <code>and</code>, <code>or</code> and parentheses."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:67(para)
+msgid "You can define aliases for rules: <placeholder-1/> The policy engine understands that <code>\"deny_stack_user\"</code> is not an API and consequently interprets it as an alias. The stack creation policy above can then be written as: <placeholder-2/> This is taken verbatim from <filename>/etc/heat/policy.json</filename>."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:79(para)
+msgid "Rules can compare API attributes to object attributes. For example: <placeholder-1/> states that only the owner of an instance can start it up. The <code>user_id</code> string before the colon is an API attribute, namely the user ID of the API user. It is compared with the user ID of the object (in this case, an instance); more precisely, it is compared with the <code>user_id</code> field of that object in the database. If the two values are equal, permission is granted."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:91(para)
+msgid "An admin user always has permission to call APIs. This is how <filename>/etc/keystone/policy.json</filename> makes this policy explicit: <placeholder-1/> The first two lines define aliases for \"user is an admin user\" and \"user owns the object\", respectively. <code>is_admin</code> in line 1 is a flag that indicates an admin user. While it looks redundant to <code>role:admin</code>, it allows administrative users that don't have the admin role. The <code>owner</code> alias (line 2) compares the API's user ID with the object's user ID. Line 3 defines a third alias <code>admin_or_owner</code>, combining the two first aliases with the Boolean operator <code>or</code>. Line 4, then, sets up the policy that a password can only be modified by its owner or an admin user."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:111(para)
+msgid "As a final example, let's examine a more complex rule: <placeholder-1/> It determines who can use the Identity API “delete EC2 credential”. Here, boolean operators and parentheses combine three simpler rules. <code>admin_required</code> and <code>owner</code> are the same aliases as in the previous example. <code>user_id:%(target.credential.user_id)s</code> compares the API user with the user ID of the credential object associated with the target."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:126(title)
+msgid "Syntax"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:128(para)
+msgid "A <filename>policy.json</filename> file consists of policies and aliases of the form <code>target:rule</code> or <code>alias:definition</code>, separated by commas and enclosed in curly braces: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:143(para)
+msgid "Targets are APIs and are written <code>\"service:API\"</code> or simply <code>\"API\"</code>. For example, <code>\"compute:create\"</code> or <code>\"add_image\"</code>."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:147(para)
+msgid "Rules determine whether the API call is allowed."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:151(para)
+msgid "always true. The action is always permitted. This can be written as <code>\"\"</code> (empty string), <code>[]</code>, or <code>\"@\"</code>."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:153(para)
+msgid "always false. The action is never permitted. Written as <code>\"!\"</code>."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:154(para)
+msgid "a special check"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:155(para)
+msgid "a comparison of two values"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:156(para)
+msgid "boolean expressions based on simpler rules"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:148(para)
+msgid "Rules can be: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:163(para)
+msgid "<code>&lt;role&gt;:&lt;role name&gt;</code>, a test whether the API credentials contain this role."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:165(para)
+msgid "<code>&lt;rule&gt;:&lt;rule name&gt;</code>, the definition of an alias."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:167(para)
+msgid "<code>http:&lt;target URL&gt;</code>, which delegates the check to a remote server. The API is authorized when the server returns True."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:160(para)
+msgid "Special checks are <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:173(para)
+msgid "Developers can define additional special checks."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:175(para)
+msgid "Two values are compared in the following way: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:183(para)
+msgid "constants: Strings, numbers, <code>true</code>, <code>false</code>"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:184(para)
+msgid "API attributes"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:185(para)
+msgid "target object attributes"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:186(para)
+msgid "the flag <code>is_admin</code>"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:180(para)
+msgid "Possible values are <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:190(para)
+msgid "API attributes can be <code>project_id</code>, <code>user_id</code> or <code>domain_id</code>."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:193(para)
+msgid "Target object attributes are fields from the object description in the database. For example in the case of the <code>\"compute:start\"</code> API, the object is the instance to be started. The policy for starting instances could use the <code>%(project_id)s</code>attribute, that is the project that owns the instance. The trailing s indicates this is a string."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:199(para)
+msgid "<code>is_admin</code> tells whether the API user is an administrator, no matter if the user has the admin role or not."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:202(para)
+msgid "The alias construct exists for convenience. An alias is short name for a complex or hard to understand rule. It is defined in the same way as a policy: <placeholder-1/> Once an alias is defined, use the <code>rule</code> keyword to use it in a policy rule."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:213(title)
+msgid "Older syntax"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:215(para)
+msgid "You may encounter older <filename>policy.json</filename> files that feature a different syntax, where JavaScript arrays are used instead of boolean operators. For example, the EC2 credentials rule above would have been written as follows: <placeholder-1/> The rule is an array of arrays. The innermost arrays are or'ed together, whereas elements inside the innermost arrays are and'ed."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:226(para)
+msgid "While the old syntax is still supported, we recommend using the newer, more intuitive syntax."
 msgstr ""
 
 #: ./doc/config-reference/bk-config-ref.xml:8(title) ./doc/config-reference/bk-config-ref.xml:13(titleabbrev)
@@ -921,7 +1085,7 @@ msgstr ""
 msgid "Use the following options to alter Database-related settings."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:50(title) ./doc/config-reference/networking/section_networking-options-reference.xml:105(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:50(title) ./doc/config-reference/networking/section_networking-options-reference.xml:88(title)
 msgid "Logging"
 msgstr ""
 
@@ -942,163 +1106,131 @@ msgid "Use the following options to alter DVR-related settings."
 msgstr ""
 
 #: ./doc/config-reference/networking/section_networking-options-reference.xml:68(title)
-msgid "Embrane LBaaS driver"
-msgstr ""
-
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:69(para)
-msgid "Use the following options to alter Embrane Load-Balancer-as-a-Service related settings."
-msgstr ""
-
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:75(title)
 msgid "Firewall-as-a-Service driver"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:76(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:69(para)
 msgid "Use the following options in the <filename>fwaas_driver.ini</filename> file for the FWaaS driver."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:82(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:75(title)
 msgid "IPv6 router advertisement"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:83(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:76(para)
 msgid "Use the following options to alter IPv6 RA settings."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:88(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:81(title)
 msgid "L3 agent"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:89(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:82(para)
 msgid "Use the following options in the <filename>l3_agent.ini</filename> file for the L3 agent."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:95(title)
-msgid "Load-Balancer-as-a-Service agent"
-msgstr ""
-
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:96(para)
-msgid "Use the following options in the <filename>lbaas_agent.ini</filename> file for the LBaaS agent."
-msgstr ""
-
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:106(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:89(para)
 msgid "Use the following options to alter logging settings."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:111(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:94(title)
 msgid "Metadata Agent"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:112(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:95(para)
 msgid "Use the following options in the <filename>metadata_agent.ini</filename> file for the Metadata agent."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:116(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:99(para)
 msgid "Previously, neutron metadata agent connected to a neutron server via REST API using a neutron client. This is ineffective because keystone is then fully involved into the authentication process and gets overloaded."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:117(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:100(para)
 msgid "The neutron metadata agent has been reworked to use RPC by default to connect to a server since Kilo release. This is a typical way of interacting between neutron server and its agents. If neutron server does not support metadata RPC then neutron client will be used."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:120(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:103(para)
 msgid "Do not run the <literal>neutron-ns-metadata-proxy</literal> proxy namespace as root on a node with the L3 agent running. In OpenStack Kilo and newer, you can change the permissions of <literal>neutron-ns-metadata-proxy</literal> after the proxy installation using the <placeholder-1/> and <placeholder-2/> options."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:131(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:114(title)
 msgid "Metering Agent"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:132(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:115(para)
 msgid "Use the following options in the <filename>metering_agent.ini</filename> file for the Metering agent."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:138(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:121(title)
 msgid "Policy"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:139(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:122(para)
 msgid "Use the following options in the <filename>neutron.conf</filename> file to change policy settings."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:145(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:128(title)
 msgid "Quotas"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:146(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:129(para)
 msgid "Use the following options in the <filename>neutron.conf</filename> file for the quota system."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:152(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:135(title)
 msgid "Rootwrap"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:153(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:136(para)
 msgid "Use the following options in the <filename>neutron.conf</filename> file for the rootwrap settings"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:159(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:142(title)
 msgid "Scheduler"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:160(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:143(para)
 msgid "Use the following options in the <filename>neutron.conf</filename> file to change scheduler settings."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:166(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:149(title)
 msgid "Security Groups"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:167(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:150(para)
 msgid "Use the following options in the configuration file for your driver to change security group settings."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:171(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:154(para)
 msgid "Now Networking uses iptables to achieve security group functions. In L2 agent with <placeholder-1/> option enabled, it makes use of IPset to improve security group's performance, as it represents a hash set which is insensitive to the number of elements."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:175(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:158(para)
 msgid "When a port is created, L2 agent will add an additional IPset chain to it's iptables chain, if the security group that this port belongs to has rules between other security group, the member of that security group will be added to the ipset chain."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:179(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:162(para)
 msgid "If a member of a security group is changed, it used to reload iptables rules which is expensive. However, when IPset option is enabled on L2 agent, it does not need to reload iptables if only members of security group were changed, it should just update an IPset."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:185(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:168(para)
 msgid "A single default security group has been introduced in order to avoid race conditions when creating a tenant's default security group. The race conditions are caused by the uniqueness check of a new security group name. A table <literal>default_security_group</literal> implements such a group. It has <literal>tenant_id</literal> field as a primary key and <literal>security_group_id</literal>, which is an identifier of a default security group. The migration that introduces this table has a sanity check that verifies if a default security group is not duplicated in any tenant."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:198(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:181(title)
 msgid "SSL and Certification Authority"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:199(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:182(para)
 msgid "Use the following options in the <filename>neutron.conf</filename> file to enable SSL."
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:205(title)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:188(title)
 msgid "Testing"
 msgstr ""
 
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:206(para)
+#: ./doc/config-reference/networking/section_networking-options-reference.xml:189(para)
 msgid "Use the following options to alter testing-related features."
-msgstr ""
-
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:211(title)
-msgid "vArmour Firewall-as-a-Service driver"
-msgstr ""
-
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:212(para)
-msgid "Use the following options in the <filename>l3_agent.ini</filename> file for the vArmour FWaaS driver."
-msgstr ""
-
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:218(title)
-msgid "VPN"
-msgstr ""
-
-#: ./doc/config-reference/networking/section_networking-options-reference.xml:219(para)
-msgid "Use the following options in the <filename>vpn_agent.ini</filename> file for the VPN agent."
 msgstr ""
 
 #: ./doc/config-reference/networking/section_networking-sample-configuration-files.xml:6(title)
@@ -2326,7 +2458,7 @@ msgstr ""
 msgid "Dashboard/httpd log files"
 msgstr ""
 
-#: ./doc/config-reference/dashboard/section_dashboard-log-files.xml:22(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:127(th) ./doc/config-reference/block-storage/drivers/ibm-gpfs-volume-driver.xml:80(th) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:92(th) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:309(td) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:206(th) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:371(th) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:234(td) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:316(td) ./doc/config-reference/compute/section_compute-scheduler.xml:851(th) ./doc/config-reference/compute/section_compute-scheduler.xml:955(th)
+#: ./doc/config-reference/dashboard/section_dashboard-log-files.xml:22(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:127(th) ./doc/config-reference/block-storage/drivers/ibm-gpfs-volume-driver.xml:80(th) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:92(th) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:309(td) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:206(th) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:234(td) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:316(td) ./doc/config-reference/compute/section_compute-scheduler.xml:851(th) ./doc/config-reference/compute/section_compute-scheduler.xml:955(th)
 msgid "Description"
 msgstr ""
 
@@ -2762,7 +2894,7 @@ msgstr ""
 msgid "All the files in this section can be found in <systemitem>/etc/cinder</systemitem>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_block-storage-sample-configuration-files.xml:9(title) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:386(filename)
+#: ./doc/config-reference/block-storage/section_block-storage-sample-configuration-files.xml:9(title)
 msgid "cinder.conf"
 msgstr ""
 
@@ -2794,7 +2926,7 @@ msgstr ""
 msgid "The Huawei driver supports the iSCSI and Fibre Channel connections and enables OceanStor T series V200R002, OceanStor 18000 series V100R001 and OceanStor V3 series V300R002 storage to provide block storage services for OpenStack."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:9(title) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:168(title) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:24(title) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:92(title) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:16(title) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:25(title) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:15(title) ./doc/config-reference/block-storage/drivers/zfssa-volume-driver.xml:93(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:66(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:316(title) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:39(title) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:56(title) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:18(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:40(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:10(title) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:21(title) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:16(title) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:35(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:232(title) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:16(title)
+#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:9(title) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:168(title) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:24(title) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:92(title) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:16(title) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:25(title) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:15(title) ./doc/config-reference/block-storage/drivers/zfssa-volume-driver.xml:93(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:66(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:316(title) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:39(title) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:56(title) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:18(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:40(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:10(title) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:21(title) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:35(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:232(title) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:16(title)
 msgid "Supported operations"
 msgstr ""
 
@@ -2806,19 +2938,19 @@ msgstr ""
 msgid "Create and delete a snapshot."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:18(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:181(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:31(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:104(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:78(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:328(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:52(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:76(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:94(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:112(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:71(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:52(para) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:45(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:256(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:29(para)
+#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:18(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:181(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:31(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:104(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:78(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:328(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:52(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:76(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:94(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:112(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:71(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:52(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:45(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:256(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:29(para)
 msgid "Copy an image to a volume."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:184(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:34(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:107(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:81(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:331(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:55(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:79(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:97(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:115(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:68(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:48(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:269(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:32(para)
+#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:184(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:34(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:107(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:81(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:331(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:55(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:79(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:97(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:115(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:68(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:48(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:269(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:32(para)
 msgid "Copy a volume to an image."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:178(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:28(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:101(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:75(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:325(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:49(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:73(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:65(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:49(para) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:60(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:253(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:26(para)
+#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:178(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:28(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:101(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:75(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:325(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:49(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:73(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:65(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:49(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:60(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:253(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:26(para)
 msgid "Create a volume from a snapshot."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:187(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:42(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:37(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:110(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:84(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:58(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:82(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:74(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:55(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:18(para) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:51(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:284(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:35(para)
+#: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:187(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:42(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:37(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:110(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:84(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:58(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:82(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:74(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:55(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:18(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:51(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:284(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:35(para)
 msgid "Clone a volume."
 msgstr ""
 
@@ -3413,11 +3545,11 @@ msgstr ""
 msgid "These operations are supported:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:172(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:95(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:69(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:319(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:43(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:67(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:88(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:106(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:43(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:12(para) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:18(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:237(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:20(para)
+#: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:172(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:95(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:69(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:319(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:43(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:67(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:88(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:106(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:43(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:12(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:237(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:20(para)
 msgid "Create, delete, attach, and detach volumes."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:175(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:98(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:34(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:72(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:322(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:46(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:70(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:91(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:109(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:46(para) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:26(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:15(para) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:42(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:246(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:23(para)
+#: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:175(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:98(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:34(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:72(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:322(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:46(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:70(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:91(para) ./doc/config-reference/block-storage/drivers/fujitsu-dx-volume-driver.xml:109(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:46(para) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:26(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:15(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:42(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:246(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:23(para)
 msgid "Create, list, and delete volume snapshots."
 msgstr ""
 
@@ -3425,7 +3557,7 @@ msgstr ""
 msgid "Extend a volume."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:193(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:48(para) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:46(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:90(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:80(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:67(para) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:32(para) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:41(para)
+#: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:193(para) ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:48(para) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:46(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:90(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:80(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:67(para) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:32(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:41(para)
 msgid "Get volume statistics."
 msgstr ""
 
@@ -3606,7 +3738,7 @@ msgstr ""
 msgid "Platform: Ubuntu 12.04 LTS or newer."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:53(title) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:50(title) ./doc/config-reference/block-storage/drivers/zfssa-volume-driver.xml:14(title) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:85(title) ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:134(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:35(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:262(td) ./doc/config-reference/compute/section_hypervisor_vmware.xml:328(td)
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:53(title) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:50(title) ./doc/config-reference/block-storage/drivers/zfssa-volume-driver.xml:14(title) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:85(title) ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:134(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:35(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:257(td) ./doc/config-reference/compute/section_hypervisor_vmware.xml:323(td)
 msgid "Configuration"
 msgstr ""
 
@@ -4526,7 +4658,7 @@ msgstr ""
 msgid "The Oracle ZFS Storage Appliance (ZFSSA) NFS driver enables the ZFSSA to be used seamlessly as a block storage resource. The driver enables you to to create volumes on a ZFS share that is NFS mounted."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:11(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:11(title) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:85(title) ./doc/config-reference/compute/section_hypervisor_hyper-v.xml:192(title)
+#: ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:11(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:11(title) ./doc/config-reference/compute/section_hypervisor_hyper-v.xml:192(title)
 msgid "Requirements"
 msgstr ""
 
@@ -4654,11 +4786,11 @@ msgstr ""
 msgid "myhost"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:175(replaceable) ./doc/config-reference/block-storage/drivers/zfssa-volume-driver.xml:70(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:81(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:145(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:353(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:410(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:489(replaceable) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:314(replaceable)
+#: ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:175(replaceable) ./doc/config-reference/block-storage/drivers/zfssa-volume-driver.xml:70(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:81(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:145(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:353(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:410(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:489(replaceable)
 msgid "username"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:176(replaceable) ./doc/config-reference/block-storage/drivers/zfssa-volume-driver.xml:71(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:82(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:146(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:354(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:411(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:490(replaceable) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:316(replaceable) ./doc/config-reference/image-service/section_image-service-backend-vmware.xml:59(replaceable)
+#: ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:176(replaceable) ./doc/config-reference/block-storage/drivers/zfssa-volume-driver.xml:71(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:82(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:146(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:354(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:411(replaceable) ./doc/config-reference/block-storage/drivers/netapp-volume-driver.xml:490(replaceable) ./doc/config-reference/image-service/section_image-service-backend-vmware.xml:59(replaceable)
 msgid "password"
 msgstr ""
 
@@ -6214,7 +6346,7 @@ msgstr ""
 msgid "Configure the Storwize family and SVC system"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:13(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:275(td)
+#: ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:13(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:270(td)
 msgid "Network configuration"
 msgstr ""
 
@@ -7242,10 +7374,6 @@ msgstr ""
 msgid "OpenStack Block Storage uses volume types to help the administrator specify attributes for volumes. These attributes are called extra-specs. The X-IO volume driver support the following extra-specs.<table frame=\"all\"><placeholder-1/><tgroup cols=\"3\"><colspec colname=\"c1\" colnum=\"1\" colwidth=\"1.0*\"/><colspec colname=\"c2\" colnum=\"2\" colwidth=\"1.0*\"/><colspec colname=\"c3\" colnum=\"3\" colwidth=\"1.0*\"/><thead><row><entry>Extra-specs name</entry><entry>Valid values</entry><entry>Description</entry></row></thead><tbody><row><entry>Feature:Raid</entry><entry>1, 5</entry><entry>RAID level for volume.</entry></row><row><entry>Feature:Pool</entry><entry>1 - n (n being number of pools on ISE)</entry><entry>Pool to create volume in.</entry></row><row><entry>Affinity:Type</entry><entry>cadp, flash, hdd</entry><entry>Volume media affinity type.</entry></row><row><entry>Alloc:Type</entry><entry>0 (thick), 1 (thin)</entry><entry>Allocation type for volume. Thick or thin</entry></row><row><entry>QoS:minIOPS</entry><entry>n (value less than maxIOPS)</entry><entry>Minimum IOPS setting for volume.</entry></row><row><entry>QoS:maxIOPS</entry><entry>n (value bigger than minIOPS)</entry><entry>Maximum IOPS setting for volume.</entry></row><row><entry>QoS:burstIOPS</entry><entry>n (value bigger than minIOPS)</entry><entry>Burst IOPS setting for volume.</entry></row></tbody></tgroup></table>"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:130(title)
-msgid "Examples"
-msgstr ""
-
 #: ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:131(para)
 msgid "Create a volume type called xio1-flash for volumes that should reside on ssd storage: <placeholder-1/>"
 msgstr ""
@@ -7642,416 +7770,6 @@ msgstr ""
 msgid "XtremIOAFA"
 msgstr ""
 
-#. When image changes, this message will be marked fuzzy or untranslated for you.
-#. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:299(None)
-msgid "@@image: '../../../common/figures/coraid/Repository_Creation_Plan_screen.png'; md5=83038804978648c2db4001a46c11f8ba"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:10(title)
-msgid "Coraid AoE driver configuration"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:11(para)
-msgid "Coraid storage appliances can provide block-level storage to OpenStack instances. Coraid storage appliances use the low-latency ATA-over-Ethernet (ATA) protocol to provide high-bandwidth data transfer between hosts and data on the network."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:39(para)
-msgid "This document describes how to configure the OpenStack Block Storage service for use with Coraid storage appliances."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:42(title) ./doc/config-reference/compute/section_introduction-to-xen.xml:14(title)
-msgid "Terminology"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:43(para)
-msgid "These terms are used in this section:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:47(th)
-msgid "Term"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:48(th)
-msgid "Definition"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:53(td)
-msgid "AoE"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:54(td)
-msgid "ATA-over-Ethernet protocol"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:57(td)
-msgid "EtherCloud Storage Manager (ESM)"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:58(td)
-msgid "ESM provides live monitoring and management of EtherDrive appliances that use the AoE protocol, such as the SRX and VSX."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:63(td)
-msgid "Fully-Qualified Repository Name (FQRN)"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:66(replaceable)
-msgid "performance_class"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:66(replaceable)
-msgid "availability_class"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:66(replaceable)
-msgid "profile_name"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:66(replaceable)
-msgid "repository_name"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:64(td)
-msgid "The FQRN is the full identifier of a storage profile. FQRN syntax is: <placeholder-1/><placeholder-2/><placeholder-3/><placeholder-4/><placeholder-5/><placeholder-6/><placeholder-7/>"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:69(td)
-msgid "SAN"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:70(td)
-msgid "Storage Area Network"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:73(td)
-msgid "SRX"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:74(td)
-msgid "Coraid EtherDrive SRX block storage appliance"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:77(td)
-msgid "VSX"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:78(td)
-msgid "Coraid EtherDrive VSX storage virtualization appliance"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:86(para)
-msgid "To support the OpenStack Block Storage service, your SAN must include an SRX for physical storage, a VSX running at least CorOS v2.0.6 for snapshot support, and an ESM running at least v2.1.1 for storage repository orchestration. Ensure that all storage appliances are installed and connected to your network before you configure OpenStack volumes."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:92(para)
-msgid "In order for the node to communicate with the SAN, you must install the Coraid AoE Linux driver on each Compute node on the network that runs an OpenStack instance."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:97(title)
-msgid "Overview"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:98(para)
-msgid "To configure the OpenStack Block Storage for use with Coraid storage appliances, perform the following procedures:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:102(para)
-msgid "<link linkend=\"coraid_installing_aoe_driver\">Download and install the Coraid Linux AoE driver</link>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:106(para)
-msgid "<link linkend=\"coraid_creating_storage_profile\">Create a storage profile by using the Coraid ESM GUI</link>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:110(para)
-msgid "<link linkend=\"coraid_creating_storage_repository\">Create a storage repository by using the ESM GUI and record the FQRN</link>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:115(para)
-msgid "<link linkend=\"coraid_configuring_cinder.conf\">Configure the <filename>cinder.conf</filename> file</link>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:119(para)
-msgid "<link linkend=\"coraid_creating_associating_volume_type\">Create and associate a block storage volume type</link>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:126(title)
-msgid "Install the Coraid AoE driver"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:127(para)
-msgid "Install the Coraid AoE driver on every compute node that will require access to block storage."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:129(para)
-msgid "The latest AoE drivers will always be located at <link href=\"http://support.coraid.com/support/linux/\">http://support.coraid.com/support/linux/</link>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:132(para)
-msgid "To download and install the AoE driver, follow the instructions below, replacing \"aoeXXX\" with the AoE driver file name:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:137(para)
-msgid "Download the latest Coraid AoE driver."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:143(para)
-msgid "Unpack the AoE driver."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:146(para)
-msgid "Install the AoE driver."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:152(para)
-msgid "Initialize the AoE driver."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:158(para)
-msgid "Optionally, specify the Ethernet interfaces that the node can use to communicate with the SAN."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:160(para)
-msgid "The AoE driver may use every Ethernet interface available to the node unless limited with the <literal>aoe_iflist</literal> parameter. For more information about the <literal>aoe_iflist</literal> parameter, see the <filename>aoe readme</filename> file included with the AoE driver."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:167(replaceable)
-msgid "eth1 eth2 ..."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:173(title)
-msgid "Create a storage profile"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:174(para)
-msgid "To create a storage profile using the ESM GUI:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:177(para)
-msgid "Log in to the ESM."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:180(para)
-msgid "Click <guibutton>Storage Profiles</guibutton> in the <guilabel>SAN Domain</guilabel> pane."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:184(para)
-msgid "Choose <guimenuitem>Menu &gt; Create Storage Profile</guimenuitem>. If the option is unavailable, you might not have appropriate permissions. Make sure you are logged in to the ESM as the SAN administrator."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:190(para)
-msgid "Use the storage class selector to select a storage class."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:192(para)
-msgid "Each storage class includes performance and availability criteria (see the Storage Classes topic in the ESM Online Help for information on the different options)."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:197(para)
-msgid "Select a RAID type (if more than one is available) for the selected profile type."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:201(para)
-msgid "Type a <guilabel>Storage Profile</guilabel> name."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:202(para)
-msgid "The name is restricted to alphanumeric characters, underscore (_), and hyphen (-), and cannot exceed 32 characters."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:207(para)
-msgid "Select the drive size from the drop-down menu."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:210(para)
-msgid "Select the number of drives to be initialized for each RAID (LUN) from the drop-down menu (if the selected RAID type requires multiple drives)."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:215(para)
-msgid "Type the number of RAID sets (LUNs) you want to create in the repository by using this profile."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:219(para)
-msgid "Click <guibutton>Next</guibutton>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:224(title)
-msgid "Create a storage repository and get the FQRN"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:225(para)
-msgid "Create a storage repository and get its fully qualified repository name (FQRN):"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:229(para)
-msgid "Access the <guilabel>Create Storage Repository</guilabel> dialog box."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:233(para)
-msgid "Type a Storage Repository name."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:234(para)
-msgid "The name is restricted to alphanumeric characters, underscore (_), hyphen (-), and cannot exceed 32 characters."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:239(para)
-msgid "Click <guibutton>Limited</guibutton> or <guibutton>Unlimited</guibutton> to indicate the maximum repository size."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:242(para)
-msgid "<guibutton>Limited</guibutton> sets the amount of space that can be allocated to the repository. Specify the size in TB, GB, or MB."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:245(para)
-msgid "When the difference between the reserved space and the space already allocated to LUNs is less than is required by a LUN allocation request, the reserved space is increased until the repository limit is reached."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:250(para)
-msgid "The reserved space does not include space used for parity or space used for mirrors. If parity and/or mirrors are required, the actual space allocated to the repository from the SAN is greater than that specified in reserved space."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:256(para)
-msgid "<emphasis role=\"bold\">Unlimited</emphasis>Unlimited means that the amount of space allocated to the repository is unlimited and additional space is allocated to the repository automatically when space is required and available."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:262(para)
-msgid "Drives specified in the associated Storage Profile must be available on the SAN in order to allocate additional resources."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:268(para)
-msgid "Check the <guibutton>Resizeable LUN</guibutton> box."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:270(para)
-msgid "This is required for OpenStack volumes."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:272(para)
-msgid "If the Storage Profile associated with the repository has platinum availability, the Resizeable LUN box is automatically checked."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:278(para)
-msgid "Check the <guibutton>Show Allocation Plan API calls</guibutton> box. Click <guibutton>Next</guibutton>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:283(para)
-msgid "Record the FQRN and click <guibutton>Finish</guibutton>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:285(para)
-msgid "The FQRN is located in the first line of output following the <literal>Plan</literal> keyword in the <guilabel>Repository Creation Plan</guilabel> window. The FQRN syntax is <replaceable>performance_class</replaceable><placeholder-1/><replaceable>availability_class</replaceable><placeholder-2/><replaceable>profile_name</replaceable><placeholder-3/><replaceable>repository_name</replaceable>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:290(para)
-msgid "In this example, the FQRN is <literal>Bronze-Platinum:BP1000:OSTest</literal>, and is highlighted."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:294(title)
-msgid "Repository Creation Plan screen"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:303(para)
-msgid "Record the FQRN; it is a required parameter later in the configuration procedure."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:309(title)
-msgid "Configure options in the cinder.conf file"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:310(para)
-msgid "Edit or add the following lines to the file<filename> /etc/cinder/cinder.conf</filename>:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:313(replaceable)
-msgid "ESM_IP_address"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:315(replaceable)
-msgid "Access_Control_Group_name"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:317(replaceable) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:365(replaceable) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:383(replaceable)
-msgid "coraid_repository_key"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:319(para)
-msgid "Access to storage devices and storage repositories can be controlled using Access Control Groups configured in ESM. Configuring <filename>cinder.conf</filename> to log on to ESM as the SAN administrator (user name <literal>admin</literal>), will grant full access to the devices and repositories configured in ESM."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:325(para)
-msgid "Optionally, you can configure an ESM Access Control Group and user. Then, use the <filename>cinder.conf</filename> file to configure access to the ESM through that group, and user limits access from the OpenStack instance to devices and storage repositories that are defined in the group."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:330(para)
-msgid "To manage access to the SAN by using Access Control Groups, you must enable the Use Access Control setting in the <emphasis role=\"bold\">ESM System Setup</emphasis> &gt;<emphasis role=\"bold\"> Security</emphasis> screen."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:334(para)
-msgid "For more information, see the ESM Online Help."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:337(title)
-msgid "Create and associate a volume type"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:338(para)
-msgid "Create and associate a volume with the ESM storage repository."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:342(para)
-msgid "Restart Cinder."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:348(para)
-msgid "Create a volume."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:349(replaceable)
-msgid "volume_type_name"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:350(para)
-msgid "where <replaceable>volume_type_name</replaceable> is the name you assign the volume. You will see output similar to the following:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:358(para)
-msgid "Record the value in the ID field; you use this value in the next step."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:362(para)
-msgid "Associate the volume type with the Storage Repository."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:365(replaceable) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:376(replaceable)
-msgid "UUID"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:365(replaceable) ./doc/config-reference/block-storage/drivers/coraid-driver.xml:391(replaceable)
-msgid "FQRN"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:370(th)
-msgid "Variable"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:377(td)
-msgid "The ID returned from the <placeholder-1/> command. You can use the <placeholder-2/> command to recover the ID."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:388(literal)
-msgid "coraid_repository"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:384(td)
-msgid "The key name used to associate the Cinder volume type with the ESM in the <placeholder-1/> file. If no key name was defined, this is default value for <placeholder-2/>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/coraid-driver.xml:392(td)
-msgid "The FQRN recorded during the Create Storage Repository process."
-msgstr ""
-
 #: ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:8(title)
 msgid "EMC VMAX iSCSI and FC drivers"
 msgstr ""
@@ -8331,7 +8049,7 @@ msgstr ""
 msgid "The following table lists various options that the drivers support for the OpenStack Block Storage configuration (<filename>cinder.conf</filename>):"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:53(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:676(th)
+#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:53(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:671(th)
 msgid "VMDK disk type"
 msgstr ""
 
@@ -8355,7 +8073,7 @@ msgstr ""
 msgid "Extra spec value"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:74(td) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:76(td) ./doc/config-reference/compute/section_hypervisor_vmware.xml:687(td)
+#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:74(td) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:76(td) ./doc/config-reference/compute/section_hypervisor_vmware.xml:682(td)
 msgid "thin"
 msgstr ""
 
@@ -10237,6 +9955,10 @@ msgstr ""
 msgid "This section describes XAPI managed hypervisors, and how to use them with OpenStack."
 msgstr ""
 
+#: ./doc/config-reference/compute/section_introduction-to-xen.xml:14(title)
+msgid "Terminology"
+msgstr ""
+
 #: ./doc/config-reference/compute/section_introduction-to-xen.xml:16(title)
 msgid "Xen"
 msgstr ""
@@ -10784,606 +10506,602 @@ msgid "The VIB can be downloaded from <link href=\"https://github.com/openstack-
 msgstr ""
 
 #: ./doc/config-reference/compute/section_hypervisor_vmware.xml:163(para)
-msgid "<emphasis role=\"bold\">Ephemeral Disks</emphasis>. Ephemeral disks are not supported. A future major release will address this limitation."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:168(para)
 msgid "Injection of SSH keys into compute instances hosted by vCenter is not currently supported."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:173(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:168(para)
 msgid "To use multiple vCenter installations with OpenStack, each vCenter must be assigned to a separate availability zone. This is required as the OpenStack Block Storage VMDK driver does not currently work across multiple vCenter installations."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:182(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:177(title)
 msgid "VMware vCenter service account"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:183(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:178(para)
 msgid "OpenStack integration requires a vCenter service account with the following minimum permissions. Apply the permissions to the <systemitem>Datacenter</systemitem> root object, and select the <guibutton>Propagate to Child Objects</guibutton> option."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:187(caption)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:182(caption)
 msgid "vCenter permissions tree"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:194(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:189(td)
 msgid "All Privileges"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:201(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:196(td)
 msgid "Datastore"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:208(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:203(td)
 msgid "Allocate space"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:214(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:209(td)
 msgid "Browse datastore"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:220(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:215(td)
 msgid "Low level file operation"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:226(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:221(td)
 msgid "Remove file"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:231(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:226(td)
 msgid "Extension"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:238(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:233(td)
 msgid "Register extension"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:243(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:238(td)
 msgid "Folder"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:250(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:245(td)
 msgid "Create folder"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:255(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:250(td)
 msgid "Host"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:269(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:264(td)
 msgid "Maintenance"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:281(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:276(td)
 msgid "Storage partition configuration"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:285(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:280(td)
 msgid "Network"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:292(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:287(td)
 msgid "Assign network"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:297(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:292(td)
 msgid "Resource"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:304(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:299(td)
 msgid "Assign virtual machine to resource pool"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:310(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:305(td)
 msgid "Migrate powered off virtual machine"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:316(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:311(td)
 msgid "Migrate powered on virtual machine"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:321(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:316(td)
 msgid "Virtual Machine"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:335(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:330(td)
 msgid "Add existing disk"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:341(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:336(td)
 msgid "Add new disk"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:347(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:342(td)
 msgid "Add or remove device"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:353(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:348(td)
 msgid "Advanced"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:359(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:354(td)
 msgid "CPU count"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:365(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:360(td)
 msgid "Disk change tracking"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:371(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:366(td)
 msgid "Host USB device"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:377(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:372(td)
 msgid "Memory"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:383(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:378(td)
 msgid "Raw device"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:389(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:384(td)
 msgid "Remove disk"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:395(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:390(td)
 msgid "Rename"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:401(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:396(td)
 msgid "Swapfile placement"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:406(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:401(td)
 msgid "Interaction"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:413(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:408(td)
 msgid "Configure CD media"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:419(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:414(td)
 msgid "Power Off"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:425(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:420(td)
 msgid "Power On"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:431(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:426(td)
 msgid "Reset"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:437(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:432(td)
 msgid "Suspend"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:442(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:437(td)
 msgid "Inventory"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:449(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:444(td)
 msgid "Create from existing"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:455(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:450(td)
 msgid "Create new"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:461(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:456(td)
 msgid "Move"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:467(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:462(td)
 msgid "Remove"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:473(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:468(td)
 msgid "Unregister"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:478(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:473(td)
 msgid "Provisioning"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:485(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:480(td)
 msgid "Clone virtual machine"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:491(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:486(td)
 msgid "Customize"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:496(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:491(td)
 msgid "Sessions"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:503(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:498(td)
 msgid "Validate session"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:509(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:504(td)
 msgid "View and stop sessions"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:514(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:509(td)
 msgid "Snapshot management"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:521(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:516(td)
 msgid "Create snapshot"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:527(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:522(td)
 msgid "Remove snapshot"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:531(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:526(td)
 msgid "vApp"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:538(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:533(td)
 msgid "Export"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:544(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:539(td)
 msgid "Import"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:551(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:546(title)
 msgid "VMware vCenter driver"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:552(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:547(para)
 msgid "Use the VMware vCenter driver (VMwareVCDriver) to connect OpenStack Compute with vCenter. This recommended configuration enables access through vCenter to advanced vSphere features like vMotion, High Availability, and Dynamic Resource Scheduling (DRS)."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:558(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:553(title)
 msgid "VMwareVCDriver configuration options"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:559(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:554(para)
 msgid "When you use the VMwareVCDriver (vCenter versions 5.1 and later) with OpenStack Compute, add the following VMware-specific configuration options to the <filename>nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:575(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:570(para)
 msgid "vSphere vCenter versions 5.0 and earlier: You must specify the location of the WSDL files by adding the <code>wsdl_location=http://127.0.0.1:8080/vmware/SDK/wsdl/vim25/vimService.wsdl</code> setting to the above configuration. For more information, see <link linkend=\"VMware_additional_config\">vSphere 5.0 and earlier additional set up</link>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:584(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:579(para)
 msgid "Clusters: The vCenter driver can support multiple clusters. To use more than one cluster, simply add multiple <placeholder-1/> lines in <filename>nova.conf</filename> with the appropriate cluster name. Clusters and data stores used by the vCenter driver should not contain any VMs other than those created by the driver."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:593(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:588(para)
 msgid "Data stores: The <placeholder-1/> setting specifies the data stores to use with Compute. For example, <placeholder-2/> selects all the data stores that have a name starting with \"nas\". If this line is omitted, Compute uses the first data store returned by the vSphere API. It is recommended not to use this field and instead remove data stores that are not intended for OpenStack."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:603(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:598(para)
 msgid "Reserved host memory: The <placeholder-1/> option value is 512MB by default. However, VMware recommends that you set this option to 0MB because the vCenter driver reports the effective memory available to the virtual machines."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:611(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:606(para)
 msgid "The vCenter driver generates instance name by instance ID. Instance name template is ignored."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:616(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:611(para)
 msgid "A <systemitem class=\"service\">nova-compute</systemitem> service can control one or more clusters containing multiple ESX hosts, making <systemitem class=\"service\">nova-compute</systemitem> a critical service from a high availability perspective. Because the host that runs <systemitem class=\"service\">nova-compute</systemitem> can fail while the vCenter and ESX still run, you must protect the <systemitem class=\"service\">nova-compute</systemitem> service against host failures."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:625(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:620(para)
 msgid "Many <filename>nova.conf</filename> options are relevant to libvirt but do not apply to this driver."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:628(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:623(para)
 msgid "You must complete additional configuration for environments that use vSphere 5.0 and earlier. See <xref linkend=\"VMware_additional_config\"/>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:633(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:628(title)
 msgid "Images with VMware vSphere"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:634(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:629(para)
 msgid "The vCenter driver supports images in the VMDK format. Disks in this format can be obtained from VMware Fusion or from an ESX environment. It is also possible to convert other formats, such as qcow2, to the VMDK format using the <placeholder-1/> utility. After a VMDK disk is available, load it into the OpenStack Image service. Then, you can use it with the VMware vCenter driver. The following sections provide additional details on the supported disks and the commands used for conversion and upload."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:644(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:639(title)
 msgid "Supported image types"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:645(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:640(para)
 msgid "Upload images to the OpenStack Image service in VMDK format. The following VMDK disk types are supported:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:649(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:644(para)
 msgid "<emphasis role=\"italic\">VMFS Flat Disks</emphasis> (includes thin, thick, zeroedthick, and eagerzeroedthick). Note that once a VMFS thin disk is exported from VMFS to a non-VMFS location, like the OpenStack Image service, it becomes a preallocated flat disk. This impacts the transfer time from the OpenStack Image service to the data store when the full preallocated flat disk, rather than the thin disk, must be transferred."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:659(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:654(para)
 msgid "<emphasis role=\"italic\">Monolithic Sparse disks</emphasis>. Sparse disks get imported from the OpenStack Image service into ESX as thin provisioned disks. Monolithic Sparse disks can be obtained from VMware Fusion or can be created by converting from other virtual disk formats using the <code>qemu-img</code> utility."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:668(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:663(para)
 msgid "The following table shows the <placeholder-1/> property that applies to each of the supported VMDK disk types:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:672(caption)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:667(caption)
 msgid "OpenStack Image service disk type settings"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:675(th)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:670(th)
 msgid "vmware_disktype property"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:681(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:676(td)
 msgid "sparse"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:683(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:678(para)
 msgid "Monolithic Sparse"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:689(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:684(para)
 msgid "VMFS flat, thin provisioned"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:693(td)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:688(td)
 msgid "preallocated (default)"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:695(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:690(para)
 msgid "VMFS flat, thick/zeroedthick/eagerzeroedthick"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:701(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:696(para)
 msgid "The <placeholder-1/> property is set when an image is loaded into the OpenStack Image service. For example, the following command creates a Monolithic Sparse image by setting <placeholder-2/> to <literal>sparse</literal>:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:710(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:705(para)
 msgid "Specifying <literal>thin</literal> does not provide any advantage over <literal>preallocated</literal> with the current version of the driver. Future versions might restore the thin properties of the disk after it is downloaded to a vSphere data store."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:717(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:712(title)
 msgid "Convert and load images"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:718(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:713(para)
 msgid "Using the <code>qemu-img</code> utility, disk images in several formats (such as, qcow2) can be converted to the VMDK format."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:721(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:716(para)
 msgid "For example, the following command can be used to convert a <link href=\"http://cloud-images.ubuntu.com/trusty/current/trusty-server-cloudimg-amd64-disk1.img\">qcow2 Ubuntu Trusty cloud image</link>:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:726(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:721(para)
 msgid "VMDK disks converted through <code>qemu-img</code> are <emphasis role=\"italic\">always</emphasis> monolithic sparse VMDK disks with an IDE adapter type. Using the previous example of the Ubuntu Trusty image after the <code>qemu-img</code> conversion, the command to upload the VMDK disk should be something like:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:737(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:732(para)
 msgid "Note that the <placeholder-1/> is set to <emphasis role=\"italic\">sparse</emphasis> and the <code>vmware_adaptertype</code> is set to <emphasis role=\"italic\">ide</emphasis> in the previous command."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:740(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:735(para)
 msgid "If the image did not come from the <code>qemu-img</code> utility, the <code>vmware_disktype</code> and <code>vmware_adaptertype</code> might be different. To determine the image adapter type from an image file, use the following command and look for the <placeholder-1/> line:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:747(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:742(para)
 msgid "Assuming a preallocated disk type and an iSCSI lsiLogic adapter type, the following command uploads the VMDK disk:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:755(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:750(para)
 msgid "Currently, OS boot VMDK disks with an IDE adapter type cannot be attached to a virtual SCSI controller and likewise disks with one of the SCSI adapter types (such as, busLogic, lsiLogic, lsiLogicsas, paraVirtual) cannot be attached to the IDE controller. Therefore, as the previous examples show, it is important to set the <placeholder-1/> property correctly. The default adapter type is lsiLogic, which is SCSI, so you can omit the <placeholder-2/> property if you are certain that the image adapter type is lsiLogic."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:767(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:762(title)
 msgid "Tag VMware images"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:768(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:763(para)
 msgid "In a mixed hypervisor environment, OpenStack Compute uses the <placeholder-1/> tag to match images to the correct hypervisor type. For VMware images, set the hypervisor type to <literal>vmware</literal>. Other valid hypervisor types include: <literal>xen</literal>, <literal>qemu</literal>, <literal>lxc</literal>, <literal>uml</literal>, and <literal>hyperv</literal>. Note that <literal>qemu</literal> is used for both QEMU and KVM hypervisor types."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:785(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:780(title)
 msgid "Optimize images"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:786(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:781(para)
 msgid "Monolithic Sparse disks are considerably faster to download but have the overhead of an additional conversion step. When imported into ESX, sparse disks get converted to VMFS flat thin provisioned disks. The download and conversion steps only affect the first launched instance that uses the sparse disk image. The converted disk image is cached, so subsequent instances that use this disk image can simply use the cached version."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:794(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:789(para)
 msgid "To avoid the conversion step (at the cost of longer download times) consider converting sparse disks to thin provisioned or preallocated disks before loading them into the OpenStack Image service."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:798(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:793(para)
 msgid "Use one of the following tools to pre-convert sparse disks."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:802(emphasis)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:797(emphasis)
 msgid "vSphere CLI tools"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:805(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:800(para)
 msgid "Sometimes called the remote CLI or rCLI."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:806(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:801(para)
 msgid "Assuming that the sparse disk is made available on a data store accessible by an ESX host, the following command converts it to preallocated format:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:810(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:805(para)
 msgid "Note that the vifs tool from the same CLI package can be used to upload the disk to be converted. The vifs tool can also be used to download the converted disk if necessary."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:816(emphasis)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:811(emphasis)
 msgid "vmkfstools directly on the ESX host"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:818(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:813(para)
 msgid "If the SSH service is enabled on an ESX host, the sparse disk can be uploaded to the ESX data store through scp and the vmkfstools local to the ESX host can use used to perform the conversion. After you log in to the host through ssh, run this command:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:825(emphasis)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:820(emphasis)
 msgid "vmware-vdiskmanager"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:826(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:821(para)
 msgid "<code>vmware-vdiskmanager</code> is a utility that comes bundled with VMware Fusion and VMware Workstation. The following example converts a sparse disk to preallocated format:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:833(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:828(para)
 msgid "In the previous cases, the converted vmdk is actually a pair of files:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:835(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:830(para)
 msgid "The descriptor file <emphasis role=\"italic\">converted.vmdk</emphasis>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:839(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:834(para)
 msgid "The actual virtual disk data file <emphasis role=\"italic\">converted-flat.vmdk</emphasis>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:842(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:837(para)
 msgid "The file to be uploaded to the OpenStack Image Service is <emphasis role=\"italic\">converted-flat.vmdk</emphasis>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:847(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:842(title)
 msgid "Image handling"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:848(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:843(para)
 msgid "The ESX hypervisor requires a copy of the VMDK file in order to boot up a virtual machine. As a result, the vCenter OpenStack Compute driver must download the VMDK via HTTP from the OpenStack Image service to a data store that is visible to the hypervisor. To optimize this process, the first time a VMDK file is used, it gets cached in the data store. A cached image is stored in a folder named after the image ID. Subsequent virtual machines that need the VMDK use the cached version and don't have to copy the file again from the OpenStack Image service."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:858(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:853(para)
 msgid "Even with a cached VMDK, there is still a copy operation from the cache location to the hypervisor file directory in the shared data store. To avoid this copy, boot the image in linked_clone mode. To learn how to enable this mode, see <xref linkend=\"VMware_config\"/>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:862(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:857(para)
 msgid "You can also use the <code>vmware_linked_clone</code> property in the OpenStack Image service to override the linked_clone mode on a per-image basis."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:867(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:862(para)
 msgid "If multiple compute nodes are running on the same host, or have a shared file system, you can enable them to use the same cache folder on the back-end data store. To configure this action, set the <placeholder-1/> option in the <filename>nova.conf</filename> file. Its value stands for the name prefix of the folder where cached images are stored."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:873(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:868(para)
 msgid "This can take effect only if compute nodes are running on the same host, or have a shared file system."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:875(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:870(para)
 msgid "You can automatically purge unused images after a specified period of time. To configure this action, set these options in the <literal>DEFAULT</literal> section in the <filename>nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:882(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:877(para)
 msgid "Set this option to <placeholder-1/> to specify that unused images should be removed after the duration specified in the <placeholder-2/> option. The default is <placeholder-3/>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:889(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:884(para)
 msgid "Specifies the duration in seconds after which an unused image is purged from the cache. The default is <placeholder-1/> (24 hours)."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:897(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:892(title)
 msgid "Networking with VMware vSphere"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:898(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:893(para)
 msgid "The VMware driver supports networking with the <systemitem class=\"service\">nova-network</systemitem> service or the OpenStack Networking Service. Depending on your installation, complete these configuration steps before you provision VMs:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:904(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:899(para)
 msgid "<emphasis role=\"bold\"> The <systemitem class=\"service\">nova-network</systemitem> service with the FlatManager or FlatDHCPManager</emphasis>. Create a port group with the same name as the <literal>flat_network_bridge</literal> value in the <filename>nova.conf</filename> file. The default value is <literal>br100</literal>. If you specify another value, the new value must be a valid Linux bridge identifier that adheres to Linux bridge naming conventions."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:913(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:908(para)
 msgid "All VM NICs are attached to this port group."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:914(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:909(para)
 msgid "Ensure that the flat interface of the node that runs the <systemitem class=\"service\">nova-network</systemitem> service has a path to this network."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:918(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:913(para)
 msgid "When configuring the port binding for this port group in vCenter, specify <literal>ephemeral</literal> for the port binding type. For more information, see <link href=\"http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1022312\">Choosing a port binding type in ESX/ESXi</link> in the VMware Knowledge Base."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:926(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:921(para)
 msgid "<emphasis role=\"bold\">The <systemitem class=\"service\">nova-network</systemitem> service with the VlanManager</emphasis>. Set the <literal>vlan_interface</literal> configuration option to match the ESX host interface that handles VLAN-tagged VM traffic."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:931(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:926(para)
 msgid "OpenStack Compute automatically creates the corresponding port groups."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:935(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:930(para)
 msgid "If you are using the OpenStack Networking Service: Before provisioning VMs, create a port group with the same name as the <literal>vmware.integration_bridge</literal> value in <filename>nova.conf</filename> (default is <literal>br-int</literal>). All VM NICs are attached to this port group for management by the OpenStack Networking plug-in."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:946(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:941(title)
 msgid "Volumes with VMware vSphere"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:947(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:942(para)
 msgid "The VMware driver supports attaching volumes from the OpenStack Block Storage service. The VMware VMDK driver for OpenStack Block Storage is recommended and should be used for managing volumes based on vSphere data stores. For more information about the VMware VMDK driver, see <link href=\"http://docs.openstack.org/trunk/config-reference/content/vmware-vmdk-driver.html\">VMware VMDK Driver</link>. Also an iSCSI volume driver provides limited support and can be used only for attachments."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:956(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:951(title)
 msgid "vSphere 5.0 and earlier additional set up"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:957(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:952(para)
 msgid "Users of vSphere 5.0 or earlier must host their WSDL files locally. These steps are applicable for vCenter 5.0 or ESXi 5.0 and you can either mirror the WSDL from the vCenter or ESXi server that you intend to use or you can download the SDK directly from VMware. These workaround steps fix a <link href=\"http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=2010507\">known issue</link> with the WSDL that was resolved in later versions."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:963(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:958(para)
 msgid "When setting the VMwareVCDriver configuration options, you must include the <code>wsdl_location</code> option. For more information, see <link linkend=\"VMwareVCDriver_configuration_options\">VMwareVCDriver configuration options</link> above."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:969(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:964(title)
 msgid "To mirror WSDL from vCenter (or ESXi)"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:971(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:966(para)
 msgid "Set the <code>VMWAREAPI_IP</code> shell variable to the IP address for your vCenter or ESXi host from where you plan to mirror files. For example:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:977(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:972(para)
 msgid "Create a local file system directory to hold the WSDL files:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:982(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:977(para)
 msgid "Change into the new directory. <placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:986(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:981(para)
 msgid "Use your OS-specific tools to install a command-line tool that can download files like <placeholder-1/>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:991(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:986(para)
 msgid "Download the files to the local file cache:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1001(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:996(para)
 msgid "Because the <filename>reflect-types.xsd</filename> and <filename>reflect-messagetypes.xsd</filename> files do not fetch properly, you must stub out these files. Use the following XML listing to replace the missing file content. The XML parser underneath Python can be very particular and if you put a space in the wrong place, it can break the parser. Copy the following contents and formatting carefully."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1018(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1013(para)
 msgid "Now that the files are locally present, tell the driver to look for the SOAP service WSDLs in the local file system and not on the remote vSphere server. Add the following setting to the <filename>nova.conf</filename> file for your <systemitem class=\"service\">nova-compute</systemitem> node:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1028(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1023(para)
 msgid "Alternatively, download the version appropriate SDK from <link href=\"http://www.vmware.com/support/developer/vc-sdk/\">http://www.vmware.com/support/developer/vc-sdk/</link> and copy it to the <filename>/opt/stack/vmware</filename> file. Make sure that the WSDL is available, in for example <filename>/opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>. You must point <filename>nova.conf</filename> to fetch this WSDL file from the local file system by using a URL."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1035(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1030(para)
 msgid "When using the VMwareVCDriver (vCenter) with OpenStack Compute with vSphere version 5.0 or earlier, <filename>nova.conf</filename> must include the following extra config option:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1043(title) ./doc/config-reference/compute/section_compute-scheduler.xml:1023(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1038(title) ./doc/config-reference/compute/section_compute-scheduler.xml:1023(title)
 msgid "Configuration reference"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1044(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1039(para)
 msgid "To customize the VMware driver, use the configuration option settings documented in <xref linkend=\"config_table_nova_vmware\"/>."
 msgstr ""
 
@@ -11444,7 +11162,7 @@ msgid "<link href=\"http://doc.opensuse.org/documentation/html/openSUSE/opensuse
 msgstr ""
 
 #: ./doc/config-reference/compute/section_hypervisor_kvm.xml:72(para)
-msgid "<link href=\"http://doc.opensuse.org/products/draft/SLES/SLES-kvm_sd_draft/cha.kvm.requires.html#sec.kvm.requires.install\">SLES: Installing KVM</link> from the SUSE Linux Enterprise Server Virtualization with KVM manual."
+msgid "<link href=\"https://www.suse.com/documentation/sles-12/book_virt/data/sec_vt_installation_kvm.html\">SLES: Installing KVM</link> from the SUSE Linux Enterprise Server <citetitle>Virtualization Guide</citetitle>."
 msgstr ""
 
 #: ./doc/config-reference/compute/section_hypervisor_kvm.xml:82(title)
