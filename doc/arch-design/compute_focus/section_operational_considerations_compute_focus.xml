@@ -7,105 +7,118 @@
   <?dbhtml stop-chunking?>
   <title>Operational considerations</title>
   <para>Operationally, there are a number of considerations that affect the
-    design of compute-focused OpenStack clouds. Some examples might include
-    enforcing strict API availability requirements, understanding and dealing
-    with failure scenarios, or managing host maintenance schedules.</para>
-  <para>Service-level agreements (SLAs) are a contractual obligation that
-    gives assurances around the availability of a provided service. As such,
+    design of compute-focused OpenStack clouds. Some examples include:</para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Enforcing strict API availability requirements
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Understanding and dealing with failure scenarios
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Managing host maintenance schedules
+        </para>
+      </listitem>
+    </itemizedlist>
+  <para>Service-level agreements (SLAs) are contractual obligations that
+    ensure the availability of a service. When designing an OpenStack cloud,
     factoring in promises of availability implies a certain level of
-    redundancy and resiliency when designing an OpenStack cloud.</para>
+    redundancy and resiliency.</para>
   <itemizedlist>
     <listitem>
       <para>Guarantees for API availability imply multiple infrastructure
-        services combined with appropriately high available load
+        services combined with appropriate, highly available load
         balancers.</para>
     </listitem>
     <listitem>
-      <para>Network uptime guarantees will affect the switch design and might
+      <para>Network uptime guarantees affect the switch design and might
         require redundant switching and power.</para>
     </listitem>
     <listitem>
-      <para>Network security policy requirements need to be factored in to
-        deployments.</para>
+      <para>Factoring of network security policy requirements in to deployments.</para>
     </listitem>
   </itemizedlist>
-  <para>Knowing when and where to implement redundancy and high availability
-    (HA) is directly affected by the terms contained in any associated SLA, if
-    one is present.</para>
+
   <section xml:id="support-and-maintainability-compute-focus">
     <title>Support and maintainability</title>
-    <para>OpenStack cloud management requires operations staff to be
-      able to understand and comprehend design architecture content
-      on some level. The level of skills and the level of separation
-      of the operations and engineering staff is dependent on the
-      size and purpose of the installation. A large cloud service
-      provider or a telecom provider is more inclined to be managed
-      by a specially trained dedicated operations organization. A
-      smaller implementation is more inclined to rely on a smaller
-      support staff that might need to take on the combined
-      engineering, design and operations functions.</para>
-    <para>Maintaining OpenStack installations require a variety of
-      technical skills. Some of these skills may include the ability
-      to debug Python log output to a basic level as well as an
-      understanding of networking concepts.</para>
-    <para>Consider incorporating features into the architecture and
-      design that reduce the operational burden. Some examples
-      include automating some of the operations functions, or
-      alternatively exploring the possibility of using a third party
-      management company with special expertise in managing
-      OpenStack deployments.</para>
+    <para>OpenStack cloud management requires a certain level of
+      understanding and comprehension of design architecture. Specially trained,
+      dedicated operations organizations are more likely to manage larger
+      cloud service providers or telecom providers. Smaller implementations
+      are more inclined to rely on smaller support teams that need
+      to combine the engineering, design, and operation roles.</para>
+    <para>The maintenance of OpenStack installations require a variety
+      of technical skills. To ease the operational burden, consider
+      incorporating features into the architecture and
+      design. Some examples include:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Automating the operations functions</para>
+        </listitem>
+                <listitem>
+          <para>Utilising a third party management company</para>
+        </listitem>
+      </itemizedlist>
   </section>
+
   <section xml:id="montioring-compute-focus">
     <title>Monitoring</title>
-    <para>Like any other infrastructure deployment, OpenStack clouds
-      need an appropriate monitoring platform to ensure errors are
-      caught and managed appropriately. Consider leveraging any
-      existing monitoring system to see if it will be able to
-      effectively monitor an OpenStack environment. While there are
-      many aspects that need to be monitored, specific metrics that
-      are critically important to capture include image disk
-      utilization, or response time to the Compute API.</para>
+    <para>OpenStack clouds require appropriate monitoring platforms that
+      help to catch and manage errors adequately. Consider leveraging any
+      existing monitoring systems to see if they are able to
+      effectively monitor an OpenStack environment. Specific metrics that
+      are critically important to capture include:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Image disk utilization</para>
+        </listitem>
+        <listitem>
+          <para>Response time to the Compute API</para>
+        </listitem>
+      </itemizedlist>
   </section>
+
   <section xml:id="expected-unexpected-server-downtime">
     <title>Expected and unexpected server downtime</title>
-    <para>At some point, servers will fail. The SLAs in place affect
-      how the design has to address recovery time. Recovery of a
-      failed host may mean restoring instances from a snapshot, or
-      respawning that instance on another available host, which then
-      has consequences on the overall application design running on
-      the OpenStack cloud.</para>
-    <para>It might be acceptable to design a compute-focused cloud
+    <para>Unexpected server downtime is inevitable, and SLAs can
+      be used to address how long it takes to recover from failure.
+      Recovery of a failed host means restoring instances from a snapshot, or
+      respawning that instance on another available host.</para>
+    <para>It is acceptable to design a compute-focused cloud
       without the ability to migrate instances from one host to
-      another, because the expectation is that the application
+      another. The expectation is that the application
       developer must handle failure within the application itself.
-      Conversely, a compute-focused cloud might be provisioned to
-      provide extra resilience as a requirement of that business. In
-      this scenario, it is expected that extra supporting services
-      are also deployed, such as shared storage attached to hosts to
-      aid in recovery and resiliency of services in order to meet
-      strict SLAs.</para>
+      However, provisioning a compute-focused cloud
+      provides extra resilience. In this scenario, the
+      developer deploys extra support services.</para>
   </section>
+
   <section xml:id="capacity-planning-operational">
     <title>Capacity planning</title>
-    <para>Adding extra capacity to an OpenStack cloud is an easy
-      horizontally scaling process, as consistently configured nodes
-      automatically attach to an OpenStack cloud. Be mindful,
-      however, of any additional work to place the nodes into
-      appropriate Availability Zones and Host Aggregates if
-      necessary. The same (or very similar) CPUs are recommended
-      when adding extra nodes to the environment because it reduces
-      the chance to break any live-migration features if they are
+    <para>Adding extra capacity to an OpenStack cloud is a
+      horizontally scaling process.</para>
+      <note>
+        <para>Be mindful, however, of any additional work to place the nodes into
+      appropriate Availability Zones and Host Aggregates if necessary.</para>
+      </note>
+    <para>We recommend the same (or very similar) CPUs
+      when adding extra nodes to the environment because they reduce
+      the chance of breaking live-migration features if they are
       present. Scaling out hypervisor hosts also has a direct effect
-      on network and other data center resources, so factor in this
-      increase when reaching rack capacity or when extra network
-      switches are required.</para>
-    <para>Compute hosts can also have internal components changed to
-      account for increases in demand, a process also known as
-      vertical scaling. Swapping a CPU for one with more cores, or
+      on network and other data center resources. We recommend you
+      factor in this increase when reaching rack capacity or when requiring
+      extra network switches.</para>
+    <para>Changing the internal components of a Compute host to account for
+      increases in demand is a process known as vertical scaling.
+      Swapping a CPU for one with more cores, or
       increasing the memory in a server, can help add extra needed
       capacity depending on whether the running applications are
-      more CPU intensive or memory based (as would be expected in a
-      compute-focused OpenStack cloud).</para>
+      more CPU intensive or memory based.</para>
     <para>Another option is to assess the average workloads and
       increase the number of instances that can run within the
       compute environment by adjusting the overcommit ratio. While
@@ -113,9 +126,9 @@
       remember that changing the CPU overcommit ratio can have a
       detrimental effect and cause a potential increase in a noisy
       neighbor. The added risk of increasing the overcommit ratio is that
-      more instances will fail when a compute host fails. In a
-      compute-focused OpenStack design architecture, increasing the
-      CPU overcommit ratio increases the potential for noisy
-      neighbor issues and is not recommended.</para>
+      more instances fail when a compute host fails. We do not recommend
+      that you increase the CPU overcommit ratio in compute-focused
+      OpenStack design architecture, as it can increase the potential
+      for noisy neighbor issues.</para>
   </section>
 </section>
