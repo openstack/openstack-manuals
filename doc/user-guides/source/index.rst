@@ -33,8 +33,8 @@ Contents
 
    glossary.rst
 
-Indices and tables
-~~~~~~~~~~~~~~~~~~
+Search in this guide
+~~~~~~~~~~~~~~~~~~~~
 
 * :ref:`search`
 
