@@ -199,7 +199,8 @@ html_use_index = False
 # html_split_index = False
 
 # If true, links to the reST sources are added to the pages.
-html_show_sourcelink = False
+# This one is needed for "Report a bug".
+# html_show_sourcelink = True
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 # html_show_sphinx = True
