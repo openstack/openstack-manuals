@@ -206,39 +206,39 @@
             the <replaceable>ssd.large</replaceable> flavor called with an ID of
             6, 8&nbsp;GB of RAM, 80&nbsp;GB root disk, and four vCPUs.</para>
         <screen><prompt>$</prompt> <userinput>nova flavor-create <replaceable>ssd.large</replaceable> <replaceable>6</replaceable> <replaceable>8192</replaceable> <replaceable>80</replaceable> <replaceable>4</replaceable></userinput>
-<computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+-------------+
-| ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public | extra_specs |
-+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+-------------+
-| 6  | ssd.large | 8192      | 80   | 0         |      | 4     | 1           | True      | {}          |
-+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+-------------+</computeroutput></screen>
+<computeroutput>+----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+| ID | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
++----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+| 6  | ssd.large | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
++----+-----------+-----------+------+-----------+------+-------+-------------+-----------+</computeroutput></screen>
         <para>Once the flavor is created, specify one or more
             key-value pairs that match the key-value pairs on the host
-            aggregates. In this case, that is the
-            <replaceable>ssd=true</replaceable> key-value pair. Setting a
+            aggregates with scope aggregate_instance_extra_specs. In this case, that is the
+            <replaceable>aggregate_instance_extra_specs:ssd=true</replaceable> key-value pair. Setting a
             key-value pair on a flavor is done using the <command>nova
                 flavor-key</command> command.</para>
-        <screen><prompt>$</prompt> <userinput>nova flavor-key <replaceable>ssd.large</replaceable> set  <replaceable>ssd=true</replaceable></userinput></screen>
+        <screen><prompt>$</prompt> <userinput>nova flavor-key <replaceable>ssd.large</replaceable> set  <replaceable>aggregate_instance_extra_specs:ssd=true</replaceable></userinput></screen>
         <para>Once it is set, you should see the
                 <literal>extra_specs</literal> property of the
                 <literal>ssd.large</literal> flavor populated with a
             key of <literal>ssd</literal> and a corresponding value of
                 <literal>true</literal>.</para>
         <screen><prompt>$</prompt> <userinput>nova flavor-show ssd.large</userinput>
-<computeroutput>+----------------------------+-------------------+
-| Property                   | Value             |
-+----------------------------+-------------------+
-| OS-FLV-DISABLED:disabled   | False             |
-| OS-FLV-EXT-DATA:ephemeral  | 0                 |
-| disk                       | 80                |
-| extra_specs                | {u'ssd': u'true'} |
-| id                         | 6                 |
-| name                       | ssd.large         |
-| os-flavor-access:is_public | True              |
-| ram                        | 8192              |
-| rxtx_factor                | 1.0               |
-| swap                       |                   |
-| vcpus                      | 4                 |
-+----------------------------+-------------------+</computeroutput></screen>
+<computeroutput>+----------------------------+--------------------------------------------------+
+| Property                   | Value                                            |
++----------------------------+--------------------------------------------------+
+| OS-FLV-DISABLED:disabled   | False                                            |
+| OS-FLV-EXT-DATA:ephemeral  | 0                                                |
+| disk                       | 80                                               |
+| extra_specs                | {u'aggregate_instance_extra_specs:ssd': u'true'} |
+| id                         | 6                                                |
+| name                       | ssd.large                                        |
+| os-flavor-access:is_public | True                                             |
+| ram                        | 8192                                             |
+| rxtx_factor                | 1.0                                              |
+| swap                       |                                                  |
+| vcpus                      | 4                                                |
++----------------------------+--------------------------------------------------+</computeroutput></screen>
         <para>Now, when a user requests an instance with the
                 <literal>ssd.large</literal> flavor, the scheduler
             only considers hosts with the <literal>ssd=true</literal>
