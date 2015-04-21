@@ -104,7 +104,7 @@ in the stack. This can be done with the :code:`str_replace` intrinsic function:
                  # ...
                params:
                 $FOO: {get_param: foo}
- 
+
 .. warning:: If a stack-update is performed and there are any changes
     at all to the content of user_data then the server will be replaced
     (deleted and recreated) so that the modified boot configuration can be

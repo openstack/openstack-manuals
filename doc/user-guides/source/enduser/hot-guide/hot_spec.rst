@@ -209,7 +209,7 @@ the following syntax:
     constraints:
       - <constraint type>: <constraint definition>
         description: <constraint description>
- 
+
 constraint type
     Type of constraint to apply. The set of currently supported constraints is
     given below.
@@ -349,7 +349,7 @@ For example:
        constraints:
          - allowed_pattern: "[A-Z]+[a-zA-Z0-9]*"
           description: User name must start with an uppercase character
- 
+
 custom_constraint
 +++++++++++++++++
 The :code:`custom_constraint`` constraint adds an extra step of validation,
@@ -608,7 +608,7 @@ The following example demonstrates how to use the :code:`get_param` function:
       instance_private_ip:
         description: Private IP address of the deployed compute instance
        value: { get_attr: [my_instance, networks, private, 0] }
- 
+
 In this example, if the networks attribute contained the following data:
 
 .. code-block:: yaml
