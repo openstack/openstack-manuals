@@ -207,19 +207,40 @@ my_ip = <replaceable>MANAGEMENT_INTERFACE_IP_ADDRESS</replaceable></programlisti
             architecture</link>.</para>
         </step>
         <step>
+          <para>In the <literal>[lvm]</literal> section, configure the LVM
+            back end with the LVM driver, <literal>cinder-volumes</literal>
+            volume group, iSCSI protocol, and appropriate iSCSI
+            service:</para>
+          <programlisting os="ubuntu;sles;opensuse" language="ini">[lvm]
+...
+volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_group = cinder-volumes
+iscsi_protocol = iscsi
+iscsi_helper = tgtadm</programlisting>
+          <programlisting os="rhel;centos;fedora" language="ini">[lvm]
+...
+volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+volume_group = cinder-volumes
+iscsi_protocol = iscsi
+iscsi_helper = lioadm</programlisting>
+        </step>
+        <step>
+          <para>In the <literal>[DEFAULT]</literal> section, enable the LVM
+            back end:</para>
+          <programlisting language="ini">[DEFAULT]
+...
+enabled_backends = lvm</programlisting>
+          <note>
+            <para>Back-end names are arbitrary. As an example, this guide
+              uses the name of the driver as the name of the back end.</para>
+          </note>
+        </step>
+        <step>
           <para>In the <literal>[DEFAULT]</literal> section, configure the
             location of the Image service:</para>
           <programlisting language="ini">[DEFAULT]
 ...
 glance_host = <replaceable>controller</replaceable></programlisting>
-        </step>
-        <step os="rhel;centos;fedora">
-          <para>In the <literal>[DEFAULT]</literal> section, configure Block
-            Storage to use the <command>lioadm</command> iSCSI
-            service:</para>
-          <programlisting language="ini">[DEFAULT]
-...
-iscsi_helper = lioadm</programlisting>
         </step>
         <step>
           <para>(Optional) To assist with troubleshooting,
