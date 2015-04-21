@@ -32,43 +32,50 @@
 |      Binary      |    Host    | Zone |  Status | State |         Updated_at         | Disabled Reason |
 +------------------+------------+------+---------+-------+----------------------------+-----------------+
 | cinder-scheduler | controller | nova | enabled |   up  | 2014-10-18T01:30:54.000000 |       None      |
-|  cinder-volume   |   block1   | nova | enabled |   up  | 2014-10-18T01:30:57.000000 |       None      |
+| cinder-volume    | block1@lvm | nova | enabled |   up  | 2014-10-18T01:30:57.000000 |       None      |
 +------------------+------------+------+---------+-------+----------------------------+-----------------+</computeroutput></screen>
     </step>
     <step>
-      <para>Source the <literal>demo</literal> tenant credentials to perform
-        the following steps as a non-administrative tenant:</para>
+      <para>Source the <literal>demo</literal> credentials to perform
+        the following steps as a non-administrative project:</para>
       <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
     </step>
     <step>
       <para>Create a 1 GB volume:</para>
-      <screen><prompt>$</prompt> <userinput>cinder create --display-name demo-volume1 1</userinput>
-<computeroutput>+---------------------+--------------------------------------+
-|       Property      |                Value                 |
-+---------------------+--------------------------------------+
-|     attachments     |                  []                  |
-|  availability_zone  |                 nova                 |
-|       bootable      |                false                 |
-|      created_at     |      2014-10-14T23:11:50.870239      |
-| display_description |                 None                 |
-|     display_name    |             demo-volume1             |
-|      encrypted      |                False                 |
-|          id         | 158bea89-07db-4ac2-8115-66c0d6a4bb48 |
-|       metadata      |                  {}                  |
-|         size        |                  1                   |
-|     snapshot_id     |                 None                 |
-|     source_volid    |                 None                 |
-|        status       |               creating               |
-|     volume_type     |                 None                 |
-+---------------------+--------------------------------------+</computeroutput></screen>
+      <screen><prompt>$</prompt> <userinput>cinder create --name demo-volume1 1</userinput>
+<computeroutput>+---------------------------------------+--------------------------------------+
+|                Property               |                Value                 |
++---------------------------------------+--------------------------------------+
+|              attachments              |                  []                  |
+|           availability_zone           |                 nova                 |
+|                bootable               |                false                 |
+|          consistencygroup_id          |                 None                 |
+|               created_at              |      2015-04-21T23:46:08.000000      |
+|              description              |                 None                 |
+|               encrypted               |                False                 |
+|                   id                  | 6c7a3d28-e1ef-42a0-b1f7-8d6ce9218412 |
+|                metadata               |                  {}                  |
+|              multiattach              |                False                 |
+|                  name                 |             demo-volume1             |
+|      os-vol-tenant-attr:tenant_id     |   ab8ea576c0574b6092bb99150449b2d3   |
+|   os-volume-replication:driver_data   |                 None                 |
+| os-volume-replication:extended_status |                 None                 |
+|           replication_status          |               disabled               |
+|                  size                 |                  1                   |
+|              snapshot_id              |                 None                 |
+|              source_volid             |                 None                 |
+|                 status                |               creating               |
+|                user_id                |   3a81e6c8103b46709ef8d141308d4c72   |
+|              volume_type              |                 None                 |
++---------------------------------------+--------------------------------------+</computeroutput></screen>
     </step>
     <step>
       <para>Verify creation and availability of the volume:</para>
       <screen><prompt>$</prompt> <userinput>cinder list</userinput>
-<computeroutput>--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
-|                  ID                  |   Status  | Display Name | Size | Volume Type | Bootable | Attached to |
+<computeroutput>+--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |     Name     | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
-| 158bea89-07db-4ac2-8115-66c0d6a4bb48 | available | demo-volume1 |  1   |     None    |  false   |             |
+| 6c7a3d28-e1ef-42a0-b1f7-8d6ce9218412 | available | demo-volume1 |  1   |     None    |  false   |             |
 +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+</computeroutput></screen>
       <para>If the status does not indicate <literal>available</literal>,
         check the logs in the <filename>/var/log/cinder</filename> directory
