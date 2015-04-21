@@ -473,14 +473,32 @@
               This publisher records metering data into a file.</para>
             <note>
               <para>If a file name and location is not specified, this publisher
-                will not log any meters, instead it logs a warning message in
+                does not log any meters, instead it logs a warning message in
                 the configured log file for Telemetry.</para>
+            </note>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>kafka</term>
+          <listitem>
+            <para>It can be specified in the form of<literal>
+              kafka://<replaceable>kafka_broker_ip</replaceable>:
+              <replaceable>kafka_broker_port</replaceable>?topic=kafka_topic
+              &amp;option1=value1</literal>.
+              This publisher sends metering data to a kafka broker.</para>
+            <note>
+              <para>If the topic parameter is missing, this publisher brings out
+                metering data under a topic name, <literal>ceilometer</literal>.
+                When the port number is not specified, this publisher uses 9092
+                as the broker's port.
+              </para>
             </note>
           </listitem>
         </varlistentry>
       </variablelist></para>
     <para>The following options are available for <literal>rpc</literal> and
-      <literal>notifier</literal>:
+      <literal>notifier</literal>.
+      The policy option can be used by <literal>kafka</literal> publisher:
       <variablelist>
         <varlistentry>
           <term><option>per_meter_topic</option></term>
