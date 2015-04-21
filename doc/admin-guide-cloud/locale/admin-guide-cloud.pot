@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-04-17 06:08+0000\n"
+"POT-Creation-Date: 2015-04-21 06:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11820,99 +11820,111 @@ msgstr ""
 msgid "When you configure multiple-storage back ends, you can create several back-end storage solutions that serve the same OpenStack Compute configuration and one <systemitem class=\"service\">cinder-volume</systemitem> is launched for each back-end storage or back-end storage pool."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:12(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:13(para)
 msgid "In a multiple-storage back end configuration, each back end has a name (<literal>volume_backend_name</literal>). Several back ends can have the same name. In that case, the scheduler properly decides which back end the volume has to be created in."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:17(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:18(para)
 msgid "The name of the back end is declared as an extra-specification of a volume type (such as, <literal>volume_backend_name=LVM_iSCSI</literal>). When a volume is created, the scheduler chooses an appropriate back end to handle the request, according to the volume type specified by the user."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:24(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:25(title)
 msgid "Enable multiple-storage back ends"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:25(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:26(para)
 msgid "To enable a multiple-storage back ends, you must set the <placeholder-1/> flag in the <filename>cinder.conf</filename> file. This flag defines the names (separated by a comma) of the configuration groups for the different back ends: one name is associated to one configuration group for a back end (such as, <literal>[lvmdriver-1]</literal>)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:33(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:34(para)
 msgid "The configuration group name is not related to the <literal>volume_backend_name</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:36(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:43(replaceable) ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:43(replaceable)
+msgid "CURRENTNAME"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:43(replaceable)
+msgid "BACKEND"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:38(para)
+msgid "After setting the <placeholder-1/> flag on an existing cinder service, and restarting the Block Storage services, the original <literal>host</literal> service is replaced with a new host service. The new service appears with a name like <literal>host@backend</literal>. Use: <placeholder-2/> to convert current block devices to the new hostname."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:46(para)
 msgid "The options for a configuration group must be defined in the group (or default options are used). All the standard Block Storage configuration options (<literal>volume_group</literal>, <literal>volume_driver</literal>, and so on) might be used in a configuration group. Configuration values in the <literal>[DEFAULT]</literal> configuration group are not used."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:44(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:54(para)
 msgid "These examples show three back ends:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:58(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:68(para)
 msgid "In this configuration, <literal>lvmdriver-1</literal> and <literal>lvmdriver-2</literal> have the same <literal>volume_backend_name</literal>. If a volume creation requests the <literal>LVM_iSCSI</literal> back end name, the scheduler uses the capacity filter scheduler to choose the most suitable driver, which is either <literal>lvmdriver-1</literal> or <literal>lvmdriver-2</literal>. The capacity filter scheduler is enabled by default. The next section provides more information. In addition, this example presents a <literal>lvmdriver-3</literal> back end."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:71(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:81(title)
 msgid "Configure Block Storage scheduler multi back end"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:73(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:83(para)
 msgid "You must enable the <placeholder-1/> option to use multiple-storage back ends. The filter scheduler:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:77(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:87(para)
 msgid "Filters the available back ends. By default, <literal>AvailabilityZoneFilter</literal>, <literal>CapacityFilter</literal> and <literal>CapabilitiesFilter</literal> are enabled."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:85(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:95(para)
 msgid "Weights the previously filtered back ends. By default, the <placeholder-1/> option is enabled. When this option is enabled, the filter scheduler assigns the highest weight to back ends with the most available capacity."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:93(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:103(para)
 msgid "The scheduler uses filters and weights to pick the best back end to handle the request. The scheduler uses volume types to explicitly create volumes on specific back ends."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:100(title) ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:44(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:110(title) ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:44(title)
 msgid "Volume type"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:101(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:111(para)
 msgid "Before using it, a volume type has to be declared to Block Storage. This can be done by the following command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:105(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:115(para)
 msgid "Then, an extra-specification has to be created to link the volume type to a back end name. Run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:109(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:119(para)
 msgid "This example creates a <literal>lvm</literal> volume type with <literal>volume_backend_name=LVM_iSCSI</literal> as extra-specifications."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:112(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:122(para)
 msgid "Create another volume type:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:115(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:125(para)
 msgid "This second volume type is named <literal>lvm_gold</literal> and has <literal>LVM_iSCSI_b</literal> as back end name."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:120(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:130(para)
 msgid "To list the extra-specifications, use this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:125(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:135(para)
 msgid "If a volume type points to a <literal>volume_backend_name</literal> that does not exist in the Block Storage configuration, the <literal>filter_scheduler</literal> returns an error that it cannot find a valid host with the suitable back end."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:134(title) ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:55(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:144(title) ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:55(title)
 msgid "Usage"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:135(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:145(para)
 msgid "When you create a volume, you must specify the volume type. The extra-specifications of the volume type are used to determine which back end has to be used. <placeholder-1/> Considering the <literal>cinder.conf</literal> described previously, the scheduler creates this volume on <literal>lvmdriver-1</literal> or <literal>lvmdriver-2</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:144(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:154(para)
 msgid "This second volume is created on <literal>lvmdriver-3</literal>."
 msgstr ""
 
