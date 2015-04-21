@@ -123,7 +123,7 @@
     <xi:include href="../common/tables/nova-vnc.xml"/>
     <note>
       <para>To support <link
-          xlink:href="http://docs.openstack.org/trunk/config-reference/content/configuring-openstack-compute-basics.html#section_configuring-compute-migrations"
+          xlink:href="http://docs.openstack.org/admin-guide-cloud/content/section_configuring-compute-migrations.html"
           >live migration</link>, you cannot specify a specific IP
         address for <literal>vncserver_listen</literal>, because that
         IP address does not exist on the destination host.</para>
@@ -280,6 +280,19 @@ vncserver_listen=192.168.1.2</programlisting>
         <para>Modify the <option>width</option> and
             <option>height</option> options, as follows:</para>
         <programlisting language="bash" role="gutter: false">&lt;iframe src="{{ vnc_url }}" width="720" height="430"&gt;&lt;/iframe&gt;</programlisting>
+      </listitem>
+      <listitem>
+        <para>
+          <emphasis role="bold">Q: My noVNC connections failed with
+            ValidationError: Origin header protocol does not match.
+            Why?</emphasis>
+        </para>
+        <para>A: Make sure the <literal>base_url</literal> match your TLS
+            setting. If you are using https console connections, make sure
+            that the value of <literal>novncproxy_base_url</literal> is set
+            explicitly where the <systemitem class="service">nova-novncproxy</systemitem>
+            service is running.
+        </para>
       </listitem>
     </itemizedlist>
   </section>
