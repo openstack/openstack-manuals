@@ -27,7 +27,7 @@ Create a stack from an example template file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  To create a stack, or template, from an `example template
-   file <http://git.openstack.org/cgit/openstack/heat-templates>`__, run
+   file <https://git.openstack.org/cgit/openstack/heat-templates>`__, run
    the following command::
 
        $ heat stack-create mystack --template-file /PATH_TO_HEAT_TEMPLATES/WordPress_Single_Instance.template
