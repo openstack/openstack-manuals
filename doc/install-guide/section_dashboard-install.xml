@@ -15,11 +15,14 @@
     (nova-network). Environments with stand-alone services such as Object
     Storage cannot use the dashboard. For more information, see the
     <link xlink:href="http://docs.openstack.org/developer/horizon/topics/deployment.html">developer documentation</link>.</para>
+  <para>This section assumes proper installation, configuration, and
+      operation of the Identity service using the Apache HTTP server and
+      Memcached as described in <xref linkend="keystone-install"/>.</para>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">
     <title>To install the dashboard components</title>
     <step>
       <para>Install the packages:</para>
-      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install openstack-dashboard apache2 libapache2-mod-wsgi memcached python-memcache</userinput></screen>
+      <screen os="ubuntu"><prompt>#</prompt> <userinput>apt-get install openstack-dashboard</userinput></screen>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>yum install openstack-dashboard httpd mod_wsgi memcached python-memcached</userinput></screen>
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-dashboard apache2-mod_wsgi memcached python-python-memcached \
   openstack-dashboard-test</userinput></screen>
@@ -73,7 +76,7 @@
          </step>
          <step>
            <para>Allow all hosts to access the dashboard:</para>
-           <programlisting language="python">ALLOWED_HOSTS = ['*']</programlisting>
+           <programlisting language="python">ALLOWED_HOSTS = '*'</programlisting>
          </step>
          <step>
            <para>Configure the <application>memcached</application> session
@@ -121,9 +124,8 @@
         >bug report</link>.</para>
     </step>
     <step os="ubuntu;debian">
-      <para>Restart the web server and session storage service:</para>
-      <screen><prompt>#</prompt> <userinput>service apache2 restart</userinput>
-<prompt>#</prompt> <userinput>service memcached restart</userinput></screen>
+      <para>Reload the web server configuration:</para>
+      <screen><prompt>#</prompt> <userinput>service apache2 reload</userinput></screen>
     </step>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the web server and session storage service and configure
