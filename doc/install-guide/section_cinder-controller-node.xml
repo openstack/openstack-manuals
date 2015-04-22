@@ -76,6 +76,17 @@ Repeat User Password:
         </step>
         <step>
           <para>Create the <literal>cinder</literal> service entities:</para>
+          <screen><prompt>$</prompt> <userinput>openstack service create --type volume \
+  --description "OpenStack Block Storage" cinder</userinput>
+<computeroutput>+-------------+----------------------------------+
+| Field       | Value                            |
++-------------+----------------------------------+
+| description | OpenStack Block Storage          |
+| enabled     | True                             |
+| id          | 1e494c3e22a24baaafcaf777d4d467eb |
+| name        | cinder                           |
+| type        | volume                           |
++-------------+----------------------------------+</computeroutput></screen>
           <screen><prompt>$</prompt> <userinput>openstack service create --type volumev2 \
   --description "OpenStack Block Storage" cinderv2</userinput>
 <computeroutput>+-------------+----------------------------------+
@@ -87,11 +98,35 @@ Repeat User Password:
 | name        | cinderv2                         |
 | type        | volumev2                         |
 +-------------+----------------------------------+</computeroutput></screen>
+          <note>
+            <para>The Block Storage service requires both the
+              <literal>volume</literal> and <literal>volumev2</literal>
+              services. However, both services use the same API
+              endpoint that references the Block Storage version 2 API.</para>
+          </note>
         </step>
       </substeps>
     </step>
     <step>
-      <para>Create the Block Storage service API endpoint:</para>
+      <para>Create the Block Storage service API endpoints:</para>
+      <screen><prompt>$</prompt> <userinput>openstack endpoint create \
+  --publicurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
+  --internalurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
+  --adminurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
+  --region regionOne \
+  volume</userinput>
+<computeroutput>+--------------+-----------------------------------------+
+| Field        | Value                                   |
++--------------+-----------------------------------------+
+| adminurl     | http://controller:8776/v2/%(tenant_id)s |
+| id           | d1b7291a2d794e26963b322c7f2a55a4        |
+| internalurl  | http://controller:8776/v2/%(tenant_id)s |
+| publicurl    | http://controller:8776/v2/%(tenant_id)s |
+| region       | regionOne                               |
+| service_id   | 1e494c3e22a24baaafcaf777d4d467eb        |
+| service_name | cinder                                  |
+| service_type | volume                                  |
++--------------+-----------------------------------------+</computeroutput></screen>
       <screen><prompt>$</prompt> <userinput>openstack endpoint create \
   --publicurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
   --internalurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
