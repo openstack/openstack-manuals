@@ -19,20 +19,25 @@
     </step>
     <step>
       <para>Create the <literal>ResellerAdmin</literal> role:</para>
-      <screen><prompt>$</prompt> <userinput>keystone role-create --name ResellerAdmin</userinput>
-<computeroutput>+----------+----------------------------------+
-| Property |              Value               |
-+----------+----------------------------------+
-|    id    | 462fa46c13fd4798a95a3bfbe27b5e54 |
-|   name   |          ResellerAdmin           |
-+----------+----------------------------------+</computeroutput></screen>
+      <screen><prompt>$</prompt> <userinput>openstack role create ResellerAdmin</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | 462fa46c13fd4798a95a3bfbe27b5e54 |
+| name  | ResellerAdmin                    |
++-------+----------------------------------+</computeroutput></screen>
     </step>
     <step>
       <para>Add the <literal>ResellerAdmin</literal> role to the
         <literal>service</literal> tenant and <literal>ceilometer</literal>
         user:</para>
-      <screen><prompt>$</prompt> <userinput>keystone user-role-add --tenant service --user ceilometer \
-  --role 462fa46c13fd4798a95a3bfbe27b5e54</userinput></screen>
+      <screen><prompt>$</prompt> <userinput>openstack role add --project service --user ceilometer ResellerAdmin</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | 462fa46c13fd4798a95a3bfbe27b5e54 |
+| name  | ResellerAdmin                    |
++-------+----------------------------------+</computeroutput></screen>
     </step>
   </procedure>
   <procedure>

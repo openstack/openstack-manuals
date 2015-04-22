@@ -50,61 +50,66 @@
       <substeps>
         <step>
           <para>Create a <literal>cinder</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name cinder --pass <replaceable>CINDER_PASS</replaceable></userinput>
-<computeroutput>+----------+----------------------------------+
-| Property |              Value               |
+          <screen><prompt>$</prompt> <userinput>openstack user create --password-prompt cinder</userinput>
+<computeroutput>User Password:
+Repeat User Password:
 +----------+----------------------------------+
-|  email   |                                  |
-| enabled  |               True               |
-|    id    | 881ab2de4f7941e79504a759a83308be |
-|   name   |              cinder              |
-| username |              cinder              |
+| Field    | Value                            |
++----------+----------------------------------+
+| email    | None                             |
+| enabled  | True                             |
+| id       | 881ab2de4f7941e79504a759a83308be |
+| name     | cinder                           |
+| username | cinder                           |
 +----------+----------------------------------+</computeroutput></screen>
-          <para>Replace <replaceable>CINDER_PASS</replaceable> with a suitable
-            password.</para>
         </step>
         <step>
           <para>Add the <literal>admin</literal> role to the
             <literal>cinder</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user cinder --tenant service --role admin</userinput></screen>
-          <note>
-            <para>This command provides no output.</para>
-          </note>
+          <screen><prompt>$</prompt> <userinput>openstack role add --project service --user cinder admin</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | cd2cb9a39e874ea69e5d4b896eb16128 |
+| name  | admin                            |
++-------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
           <para>Create the <literal>cinder</literal> service entities:</para>
-          <screen><prompt>$</prompt> <userinput>keystone service-create --name cinderv2 --type volumev2 \
-  --description "OpenStack Block Storage"</userinput>
+          <screen><prompt>$</prompt> <userinput>openstack service create --type volumev2 \
+  --description "OpenStack Block Storage" cinderv2</userinput>
 <computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
+| Field       | Value                            |
 +-------------+----------------------------------+
-| description |     OpenStack Block Storage      |
-|   enabled   |               True               |
-|      id     | 16e038e449c94b40868277f1d801edb5 |
-|     name    |             cinderv2             |
-|     type    |             volumev2             |
+| description | OpenStack Block Storage          |
+| enabled     | True                             |
+| id          | 16e038e449c94b40868277f1d801edb5 |
+| name        | cinderv2                         |
+| type        | volumev2                         |
 +-------------+----------------------------------+</computeroutput></screen>
         </step>
       </substeps>
     </step>
     <step>
       <para>Create the Block Storage service API endpoint:</para>
-      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ volumev2 / {print $2}') \
+      <screen><prompt>$</prompt> <userinput>openstack endpoint create \
   --publicurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
   --internalurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
   --adminurl http://<replaceable>controller</replaceable>:8776/v2/%\(tenant_id\)s \
-  --region regionOne</userinput>
-<computeroutput>+-------------+-----------------------------------------+
-|   Property  |                  Value                  |
-+-------------+-----------------------------------------+
-|   adminurl  | http://controller:8776/v2/%(tenant_id)s |
-|      id     |    097b4a6fc8ba44b4b10d4822d2d9e076     |
-| internalurl | http://controller:8776/v2/%(tenant_id)s |
-|  publicurl  | http://controller:8776/v2/%(tenant_id)s |
-|    region   |                regionOne                |
-|  service_id |    16e038e449c94b40868277f1d801edb5     |
-+-------------+-----------------------------------------+</computeroutput></screen>
+  --region regionOne \
+  volumev2</userinput>
+<computeroutput>+--------------+-----------------------------------------+
+| Field        | Value                                   |
++--------------+-----------------------------------------+
+| adminurl     | http://controller:8776/v2/%(tenant_id)s |
+| id           | 097b4a6fc8ba44b4b10d4822d2d9e076        |
+| internalurl  | http://controller:8776/v2/%(tenant_id)s |
+| publicurl    | http://controller:8776/v2/%(tenant_id)s |
+| region       | regionOne                               |
+| service_id   | 16e038e449c94b40868277f1d801edb5        |
+| service_name | cinderv2                                |
+| service_type | volumev2                                |
++--------------+-----------------------------------------+</computeroutput></screen>
     </step>
   </procedure>
   <procedure os="ubuntu;rhel;centos;fedora;sles;opensuse">

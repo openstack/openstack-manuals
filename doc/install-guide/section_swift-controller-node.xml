@@ -34,61 +34,66 @@
       <substeps>
         <step>
           <para>Create the <literal>swift</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-create --name swift --pass <replaceable>SWIFT_PASS</replaceable></userinput>
-<computeroutput>+----------+----------------------------------+
-| Property |              Value               |
+          <screen><prompt>$</prompt> <userinput>openstack user create --password-prompt swift</userinput>
+<computeroutput>User Password:
+Repeat User Password:
 +----------+----------------------------------+
-|  email   |                                  |
-| enabled  |               True               |
-|    id    | d535e5cbd2b74ac7bfb97db9cced3ed6 |
-|   name   |              swift               |
-| username |              swift               |
+| Field    | Value                            |
++----------+----------------------------------+
+| email    | None                             |
+| enabled  | True                             |
+| id       | d535e5cbd2b74ac7bfb97db9cced3ed6 |
+| name     | swift                            |
+| username | swift                            |
 +----------+----------------------------------+</computeroutput></screen>
-          <para>Replace <replaceable>SWIFT_PASS</replaceable> with a suitable
-            password.</para>
         </step>
         <step>
           <para>Add the <literal>admin</literal> role to the
             <literal>swift</literal> user:</para>
-          <screen><prompt>$</prompt> <userinput>keystone user-role-add --user swift --tenant service --role admin</userinput></screen>
-          <note>
-            <para>This command provides no output.</para>
-          </note>
+          <screen><prompt>$</prompt> <userinput>openstack role add --project service --user swift admin</userinput>
+<computeroutput>+-------+----------------------------------+
+| Field | Value                            |
++-------+----------------------------------+
+| id    | cd2cb9a39e874ea69e5d4b896eb16128 |
+| name  | admin                            |
++-------+----------------------------------+</computeroutput></screen>
         </step>
         <step>
           <para>Create the <literal>swift</literal> service entity:</para>
-          <screen><prompt>$</prompt> <userinput>keystone service-create --name swift --type object-store \
-  --description "OpenStack Object Storage"</userinput>
+          <screen><prompt>$</prompt> <userinput>openstack service create --type object-store \
+  --description "OpenStack Object Storage" swift</userinput>
 <computeroutput>+-------------+----------------------------------+
-|   Property  |              Value               |
+| Field       | Value                            |
 +-------------+----------------------------------+
-| description |     OpenStack Object Storage     |
-|   enabled   |              True                |
-|      id     | 75ef509da2c340499d454ae96a2c5c34 |
-|     name    |              swift               |
-|     type    |           object-store           |
+| description | OpenStack Object Storage         |
+| enabled     | True                             |
+| id          | 75ef509da2c340499d454ae96a2c5c34 |
+| name        | swift                            |
+| type        | object-store                     |
 +-------------+----------------------------------+</computeroutput></screen>
         </step>
       </substeps>
     </step>
     <step>
       <para>Create the Object Storage service API endpoints:</para>
-      <screen><prompt>$</prompt> <userinput>keystone endpoint-create \
-  --service-id $(keystone service-list | awk '/ object-store / {print $2}') \
+      <screen><prompt>$</prompt> <userinput>openstack endpoint create \
   --publicurl 'http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
   --internalurl 'http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
   --adminurl http://<replaceable>controller</replaceable>:8080 \
-  --region regionOne</userinput>
-<computeroutput>+-------------+---------------------------------------------------+
-|   Property  |                       Value                       |
-+-------------+---------------------------------------------------+
-|   adminurl  |            http://controller:8080/                |
-|      id     |          af534fb8b7ff40a6acf725437c586ebe         |
-| internalurl | http://controller:8080/v1/AUTH_%(tenant_id)s      |
-|  publicurl  | http://controller:8080/v1/AUTH_%(tenant_id)s      |
-|    region   |                     regionOne                     |
-|  service_id |          75ef509da2c340499d454ae96a2c5c34         |
-+-------------+---------------------------------------------------+</computeroutput></screen>
+  --region regionOne \
+  object-store</userinput>
+<computeroutput>+--------------+----------------------------------------------+
+| Field        | Value                                        |
++--------------+----------------------------------------------+
+| adminurl     | http://controller:8080/                      |
+| id           | af534fb8b7ff40a6acf725437c586ebe             |
+| internalurl  | http://controller:8080/v1/AUTH_%(tenant_id)s |
+| publicurl    | http://controller:8080/v1/AUTH_%(tenant_id)s |
+| region       | regionOne                                    |
+| service_id   | 75ef509da2c340499d454ae96a2c5c34             |
+| service_name | swift                                        |
+| service_type | object-store                                 |
++--------------+----------------------------------------------+</computeroutput></screen>
     </step>
   </procedure>
   <procedure>
