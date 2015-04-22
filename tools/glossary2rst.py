@@ -75,9 +75,9 @@ def link(element):
     # Only handles the single link we need...
     href = element.attrib['{http://www.w3.org/1999/xlink}href']
     href = href.lstrip()
-    if href == "http://git.openstack.org/cgit/openstack/openstack-manuals":
+    if href == "https://git.openstack.org/cgit/openstack/openstack-manuals":
         s = ("`openstack/openstack-manuals repository " +
-             "<http://git.openstack.org/cgit/openstack/openstack-manuals>`__")
+             "<https://git.openstack.org/cgit/openstack/openstack-manuals>`__")
         return s
     print ("link not handled %s" % href)
     sys.exit(1)

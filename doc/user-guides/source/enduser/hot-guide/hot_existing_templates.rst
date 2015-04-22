@@ -12,12 +12,12 @@ The `OpenStack Heat Templates repository`_ is a collection of example
 templates which demonstrates core Heat functionality, related image-building
 templates, template-related scripts and conversion tools.
 
-.. _OpenStack Heat Templates Repository: http://git.openstack.org/cgit/openstack/heat-templates/tree/
+.. _OpenStack Heat Templates Repository: https://git.openstack.org/cgit/openstack/heat-templates/tree/
 
 The `OpenStack TripleO Heat Templates repository`_ contains a variety of
 heat templates that are included in the tripleo-heat-templates codebase.
 
-.. _OpenStack TripleO Heat Templates repository: http://git.openstack.org/cgit/openstack/tripleo-heat-templates/tree/
+.. _OpenStack TripleO Heat Templates repository: https://git.openstack.org/cgit/openstack/tripleo-heat-templates/tree/
 
 Rackspace has provided a set of Heat templates at the `RCB Ops repository`_
 that can be used by cloud operators to launch applications, templates for
