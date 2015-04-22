@@ -31,6 +31,9 @@
       <step>
         <para>Create the base <filename>account.builder</filename> file:</para>
         <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder create 10 3 1</userinput></screen>
+        <note>
+          <para>This command provides no output.</para>
+        </note>
       </step>
       <step>
         <para>Add each storage node to the ring:</para>
@@ -48,28 +51,31 @@
         <para>Repeat this command for each storage device on each storage
           node. In the example architecture, use the command in four variations:</para>
         <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder add r1z1-10.0.0.51:6002/sdb1 100</userinput>
+<computeroutput>Device d0r1z1-10.0.0.51:6002R10.0.0.51:6002/sdb1_"" with 100.0 weight got id 0</computeroutput>
 <prompt>#</prompt> <userinput>swift-ring-builder account.builder add r1z2-10.0.0.51:6002/sdc1 100</userinput>
+<computeroutput>Device d1r1z2-10.0.0.51:6002R10.0.0.51:6002/sdc1_"" with 100.0 weight got id 1</computeroutput>
 <prompt>#</prompt> <userinput>swift-ring-builder account.builder add r1z3-10.0.0.52:6002/sdb1 100</userinput>
-<prompt>#</prompt> <userinput>swift-ring-builder account.builder add r1z4-10.0.0.52:6002/sdc1 100</userinput></screen>
+<computeroutput>Device d2r1z3-10.0.0.52:6002R10.0.0.52:6002/sdb1_"" with 100.0 weight got id 2</computeroutput>
+<prompt>#</prompt> <userinput>swift-ring-builder account.builder add r1z4-10.0.0.52:6002/sdc1 100</userinput>
+<computeroutput>Device d3r1z4-10.0.0.52:6002R10.0.0.52:6002/sdc1_"" with 100.0 weight got id 3</computeroutput></screen>
       </step>
       <step>
         <para>Verify the ring contents:</para>
         <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder</userinput>
 <computeroutput>account.builder, build version 4
-1024 partitions, 3.000000 replicas, 1 regions, 1 zones, 4 devices, 0.00 balance
+1024 partitions, 3.000000 replicas, 1 regions, 4 zones, 4 devices, 100.00 balance, 0.00 dispersion
 The minimum number of hours before a partition can be reassigned is 1
-Devices:    id  region  zone      ip address  port  replication ip   replication port      name weight partitions balance meta
-             0       1     1       10.0.0.51  6002       10.0.0.51               6002      sdb1 100.00        768    0.00
-             1       1     1       10.0.0.51  6002       10.0.0.51               6002      sdc1 100.00        768    0.00
-             2       1     1       10.0.0.52  6002       10.0.0.52               6002      sdb1 100.00        768    0.00
-             3       1     1       10.0.0.52  6002       10.0.0.52               6002      sdc1 100.00        768    0.00</computeroutput></screen>
+The overload factor is 0.00% (0.000000)
+Devices:    id  region  zone      ip address  port  replication ip  replication port      name weight partitions balance meta
+             0       1     1       10.0.0.51  6002       10.0.0.51              6002      sdb1 100.00          0 -100.00
+             1       1     2       10.0.0.51  6002       10.0.0.51              6002      sdc1 100.00          0 -100.00
+             2       1     3       10.0.0.52  6002       10.0.0.52              6002      sdb1 100.00          0 -100.00
+             3       1     4       10.0.0.52  6002       10.0.0.52              6002      sdc1 100.00          0 -100.00</computeroutput></screen>
       </step>
       <step>
         <para>Rebalance the ring:</para>
-        <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder rebalance</userinput></screen>
-        <note>
-          <para>This process can take a while.</para>
-        </note>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder account.builder rebalance</userinput>
+<computeroutput>Reassigned 1024 (100.00%) partitions. Balance is now 0.00.  Dispersion is now 0.00</computeroutput></screen>
       </step>
     </procedure>
   </section>
@@ -89,6 +95,9 @@ Devices:    id  region  zone      ip address  port  replication ip   replication
         <para>Create the base <filename>container.builder</filename>
           file:</para>
         <screen><prompt>#</prompt> <userinput>swift-ring-builder container.builder create 10 3 1</userinput></screen>
+        <note>
+          <para>This command provides no output.</para>
+        </note>
       </step>
       <step>
         <para>Add each storage node to the ring:</para>
@@ -106,28 +115,31 @@ Devices:    id  region  zone      ip address  port  replication ip   replication
         <para>Repeat this command for each storage device on each storage
           node. In the example architecture, use the command in four variations:</para>
         <screen><prompt>#</prompt> <userinput>swift-ring-builder container.builder add r1z1-10.0.0.51:6001/sdb1 100</userinput>
+<computeroutput>Device d0r1z1-10.0.0.51:6001R10.0.0.51:6001/sdb1_"" with 100.0 weight got id 0</computeroutput>
 <prompt>#</prompt> <userinput>swift-ring-builder container.builder add r1z2-10.0.0.51:6001/sdc1 100</userinput>
+<computeroutput>Device d1r1z2-10.0.0.51:6001R10.0.0.51:6001/sdc1_"" with 100.0 weight got id 1</computeroutput>
 <prompt>#</prompt> <userinput>swift-ring-builder container.builder add r1z3-10.0.0.52:6001/sdb1 100</userinput>
-<prompt>#</prompt> <userinput>swift-ring-builder container.builder add r1z4-10.0.0.52:6001/sdc1 100</userinput></screen>
+<computeroutput>Device d2r1z3-10.0.0.52:6001R10.0.0.52:6001/sdb1_"" with 100.0 weight got id 2</computeroutput>
+<prompt>#</prompt> <userinput>swift-ring-builder container.builder add r1z4-10.0.0.52:6001/sdc1 100</userinput>
+<computeroutput>Device d3r1z4-10.0.0.52:6001R10.0.0.52:6001/sdc1_"" with 100.0 weight got id 3</computeroutput></screen>
       </step>
       <step>
         <para>Verify the ring contents:</para>
         <screen><prompt>#</prompt> <userinput>swift-ring-builder container.builder</userinput>
 <computeroutput>container.builder, build version 4
-1024 partitions, 3.000000 replicas, 1 regions, 1 zones, 4 devices, 0.00 balance
+1024 partitions, 3.000000 replicas, 1 regions, 4 zones, 4 devices, 100.00 balance, 0.00 dispersion
 The minimum number of hours before a partition can be reassigned is 1
-Devices:    id  region  zone      ip address  port  replication ip   replication port      name weight partitions balance meta
-             0       1     1       10.0.0.51  6001       10.0.0.51               6001      sdb1 100.00        768    0.00
-             1       1     1       10.0.0.51  6001       10.0.0.51               6001      sdc1 100.00        768    0.00
-             2       1     1       10.0.0.52  6001       10.0.0.52               6001      sdb1 100.00        768    0.00
-             3       1     1       10.0.0.52  6001       10.0.0.52               6001      sdc1 100.00        768    0.00</computeroutput></screen>
+The overload factor is 0.00% (0.000000)
+Devices:    id  region  zone      ip address  port  replication ip  replication port      name weight partitions balance meta
+             0       1     1       10.0.0.51  6001       10.0.0.51              6001      sdb1 100.00          0 -100.00
+             1       1     2       10.0.0.51  6001       10.0.0.51              6001      sdc1 100.00          0 -100.00
+             2       1     3       10.0.0.52  6001       10.0.0.52              6001      sdb1 100.00          0 -100.00
+             3       1     4       10.0.0.52  6001       10.0.0.52              6001      sdc1 100.00          0 -100.00</computeroutput></screen>
       </step>
       <step>
         <para>Rebalance the ring:</para>
-        <screen><prompt>#</prompt> <userinput>swift-ring-builder container.builder rebalance</userinput></screen>
-        <note>
-          <para>This process can take a while.</para>
-        </note>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder container.builder rebalance</userinput>
+<computeroutput>Reassigned 1024 (100.00%) partitions. Balance is now 0.00.  Dispersion is now 0.00</computeroutput></screen>
       </step>
     </procedure>
   </section>
@@ -146,6 +158,9 @@ Devices:    id  region  zone      ip address  port  replication ip   replication
       <step>
         <para>Create the base <filename>object.builder</filename> file:</para>
         <screen><prompt>#</prompt> <userinput>swift-ring-builder object.builder create 10 3 1</userinput></screen>
+        <note>
+          <para>This command provides no output.</para>
+        </note>
       </step>
       <step>
         <para>Add each storage node to the ring:</para>
@@ -163,28 +178,31 @@ Devices:    id  region  zone      ip address  port  replication ip   replication
         <para>Repeat this command for each storage device on each storage
           node. In the example architecture, use the command in four variations:</para>
         <screen><prompt>#</prompt> <userinput>swift-ring-builder object.builder add r1z1-10.0.0.51:6000/sdb1 100</userinput>
+<computeroutput>Device d0r1z1-10.0.0.51:6000R10.0.0.51:6000/sdb1_"" with 100.0 weight got id 0</computeroutput>
 <prompt>#</prompt> <userinput>swift-ring-builder object.builder add r1z2-10.0.0.51:6000/sdc1 100</userinput>
+<computeroutput>Device d1r1z2-10.0.0.51:6000R10.0.0.51:6000/sdc1_"" with 100.0 weight got id 1</computeroutput>
 <prompt>#</prompt> <userinput>swift-ring-builder object.builder add r1z3-10.0.0.52:6000/sdb1 100</userinput>
-<prompt>#</prompt> <userinput>swift-ring-builder object.builder add r1z4-10.0.0.52:6000/sdc1 100</userinput></screen>
+<computeroutput>Device d2r1z3-10.0.0.52:6000R10.0.0.52:6000/sdb1_"" with 100.0 weight got id 2</computeroutput>
+<prompt>#</prompt> <userinput>swift-ring-builder object.builder add r1z4-10.0.0.52:6000/sdc1 100</userinput>
+<computeroutput>Device d3r1z4-10.0.0.52:6000R10.0.0.52:6000/sdc1_"" with 100.0 weight got id 3</computeroutput></screen>
       </step>
       <step>
         <para>Verify the ring contents:</para>
         <screen><prompt>#</prompt> <userinput>swift-ring-builder object.builder</userinput>
 <computeroutput>object.builder, build version 4
-1024 partitions, 3.000000 replicas, 1 regions, 1 zones, 4 devices, 0.00 balance
+1024 partitions, 3.000000 replicas, 1 regions, 4 zones, 4 devices, 100.00 balance, 0.00 dispersion
 The minimum number of hours before a partition can be reassigned is 1
-Devices:    id  region  zone      ip address  port  replication ip   replication port      name weight partitions balance meta
-             0       1     1       10.0.0.51  6000       10.0.0.51               6000      sdb1 100.00        768    0.00
-             1       1     1       10.0.0.51  6000       10.0.0.51               6000      sdc1 100.00        768    0.00
-             2       1     1       10.0.0.52  6000       10.0.0.52               6000      sdb1 100.00        768    0.00
-             3       1     1       10.0.0.52  6000       10.0.0.52               6000      sdc1 100.00        768    0.00</computeroutput></screen>
+The overload factor is 0.00% (0.000000)
+Devices:    id  region  zone      ip address  port  replication ip  replication port      name weight partitions balance meta
+             0       1     1       10.0.0.51  6000       10.0.0.51              6000      sdb1 100.00          0 -100.00
+             1       1     2       10.0.0.51  6000       10.0.0.51              6000      sdc1 100.00          0 -100.00
+             2       1     3       10.0.0.52  6000       10.0.0.52              6000      sdb1 100.00          0 -100.00
+             3       1     4       10.0.0.52  6000       10.0.0.52              6000      sdc1 100.00          0 -100.00</computeroutput></screen>
       </step>
       <step>
         <para>Rebalance the ring:</para>
-        <screen><prompt>#</prompt> <userinput>swift-ring-builder object.builder rebalance</userinput></screen>
-        <note>
-          <para>This process can take a while.</para>
-        </note>
+        <screen><prompt>#</prompt> <userinput>swift-ring-builder object.builder rebalance</userinput>
+<computeroutput>Reassigned 1024 (100.00%) partitions. Balance is now 0.00.  Dispersion is now 0.00</computeroutput></screen>
       </step>
     </procedure>
   </section>

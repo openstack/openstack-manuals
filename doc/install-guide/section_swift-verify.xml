@@ -9,39 +9,46 @@
    Storage service.</para>
   <procedure>
     <note>
+      <para>The <literal>swift</literal> client requires the
+        <literal>-V 3</literal> parameter to use the Identity version 3
+        API.</para>
+    </note>
+    <note>
       <para>Perform these steps on the controller node.</para>
     </note>
     <step>
-      <para>Source the <literal>demo</literal> tenant credentials:</para>
+      <para>Source the <literal>demo</literal> credentials:</para>
       <screen><prompt>$</prompt> <userinput>source demo-openrc.sh</userinput></screen>
     </step>
     <step>
       <para>Show the service status:</para>
-      <screen><prompt>$</prompt> <userinput>swift stat</userinput>
-<computeroutput>Account: AUTH_11b9758b7049476d9b48f7a91ea11493
-Containers: 0
-   Objects: 0
-     Bytes: 0
-Content-Type: text/plain; charset=utf-8
-X-Timestamp: 1381434243.83760
-X-Trans-Id: txdcdd594565214fb4a2d33-0052570383
-X-Put-Timestamp: 1381434243.83760</computeroutput></screen>
+      <screen><prompt>$</prompt> <userinput>swift -V 3 stat</userinput>
+<computeroutput>Account: AUTH_c75cafb58f5049b8a976506737210756
+     Containers: 0
+        Objects: 0
+          Bytes: 0
+X-Put-Timestamp: 1429736713.92936
+    X-Timestamp: 1429736713.92936
+     X-Trans-Id: txdea07add01ca4dbdb49a2-0055380d09
+   Content-Type: text/plain; charset=utf-8</computeroutput></screen>
     </step>
     <step>
       <para>Upload a test file:</para>
-      <screen><prompt>$</prompt> <userinput>swift upload demo-container1 <replaceable>FILE</replaceable></userinput></screen>
+      <screen><prompt>$</prompt> <userinput>swift -V 3 upload demo-container1 <replaceable>FILE</replaceable></userinput>
+<computeroutput><replaceable>FILE</replaceable></computeroutput></screen>
       <para>Replace <replaceable>FILE</replaceable> with the name of a local
         file to upload to the <literal>demo-container1</literal>
         container.</para>
     </step>
     <step>
       <para>List containers:</para>
-      <screen><prompt>$</prompt> <userinput>swift list</userinput>
+      <screen><prompt>$</prompt> <userinput>swift -V 3 list</userinput>
 <computeroutput>demo-container1</computeroutput></screen>
     </step>
     <step>
       <para>Download a test file:</para>
-      <screen><prompt>$</prompt> <userinput>swift download demo-container1 <replaceable>FILE</replaceable></userinput></screen>
+      <screen><prompt>$</prompt> <userinput>swift -V 3 download demo-container1 <replaceable>FILE</replaceable></userinput>
+<computeroutput><replaceable>FILE</replaceable> [auth 0.295s, headers 0.339s, total 0.339s, 0.005 MB/s]</computeroutput></screen>
       <para>Replace <replaceable>FILE</replaceable> with the name of the
         file uploaded to the <literal>demo-container1</literal>
         container.</para>
