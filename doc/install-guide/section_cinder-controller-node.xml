@@ -156,6 +156,11 @@ Repeat User Password:
       <screen os="sles;opensuse"><prompt>#</prompt> <userinput>zypper install openstack-cinder-api openstack-cinder-scheduler python-cinderclient</userinput></screen>
     </step>
     <step>
+      <!-- Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1212900. -->
+      <para os="rhel;centos;fedora">Copy the <filename>/usr/share/cinder/cinder-dist.conf</filename> file
+        to <filename>/etc/cinder/cinder.conf</filename>.</para>
+      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>cp /usr/share/cinder/cinder-dist.conf /etc/cinder/cinder.conf</userinput>
+<prompt>#</prompt> <userinput>chown -R cinder:cinder /etc/cinder/cinder.conf</userinput></screen>
       <para>Edit the <filename>/etc/cinder/cinder.conf</filename> file and
         complete the following actions:</para>
       <substeps>
