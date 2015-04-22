@@ -17,5 +17,5 @@ Virtual extensible local area network (VXLAN)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A VXLAN, virtual extensible local area network, allows the creation of
-a logical network for virtual machines across various networks. VXLAN 
+a logical network for virtual machines across various networks. VXLAN
 encapsulates layer-2 Ethernet frames over layer-4 UDP packets.
