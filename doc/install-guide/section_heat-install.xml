@@ -74,15 +74,6 @@
           <screen><prompt>$</prompt> <userinput>keystone role-create --name heat_stack_owner</userinput></screen>
         </step>
         <step>
-          <para>Create the heat domain in Identity service:</para>
-          <screen><prompt>$</prompt> <userinput>heat-keystone-setup-domain \
-                  --stack-user-domain-name heat_user_domain \
-                  --stack-domain-admin heat_domain_admin \
-                  --stack-domain-admin-password <replaceable>HEAT_DOMAIN_PASS</replaceable></userinput></screen>
-          <para>Replace <replaceable>HEAT_DOMAIN_PASS</replaceable> with a suitable
-            password.</para>
-        </step>
-        <step>
           <para>Add the <literal>heat_stack_owner</literal> role to the
             <literal>demo</literal> tenant and user:</para>
           <screen><prompt>$</prompt> <userinput>keystone user-role-add --user demo --tenant demo --role heat_stack_owner</userinput></screen>
@@ -253,6 +244,24 @@ stack_user_domain_name = heat_user_domain</programlisting>
           <programlisting language="ini">[DEFAULT]
 ...
 verbose = True</programlisting>
+        </step>
+      </substeps>
+    </step>
+    <step>
+      <substeps>
+        <step>
+          <para>Source the <literal>admin</literal> credentials to gain access to
+            admin-only CLI commands:</para>
+          <screen><prompt>$</prompt> <userinput>source admin-openrc.sh</userinput></screen>
+        </step>
+        <step>
+          <para>Create the heat domain in Identity service:</para>
+          <screen><prompt>$</prompt> <userinput>heat-keystone-setup-domain \
+  --stack-user-domain-name heat_user_domain \
+  --stack-domain-admin heat_domain_admin \
+  --stack-domain-admin-password <replaceable>HEAT_DOMAIN_PASS</replaceable></userinput></screen>
+          <para>Replace <replaceable>HEAT_DOMAIN_PASS</replaceable> with a suitable
+            password.</para>
         </step>
       </substeps>
     </step>
