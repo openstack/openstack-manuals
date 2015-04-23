@@ -15,7 +15,7 @@
         interface (CLI) for the Bare metal and its extensions.
 
        This chapter documents <command>ironic</command> version
-        <literal>0.5.1</literal>.
+        <literal>0.6.0</literal>.
     </para>
 
     <para>For help on a specific <command>ironic</command>
@@ -33,9 +33,10 @@
               [--os-auth-token OS_AUTH_TOKEN] [--ironic-url IRONIC_URL]
               [--ironic-api-version IRONIC_API_VERSION]
               [--os-service-type OS_SERVICE_TYPE] [--os-endpoint OS_ENDPOINT]
-              [--os-endpoint-type OS_ENDPOINT_TYPE] [--insecure]
-              [--os-cacert &lt;ca-certificate&gt;] [--os-cert &lt;certificate&gt;]
-              [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;]
+              [--os-endpoint-type OS_ENDPOINT_TYPE]
+              [--max-retries MAX_RETRIES] [--retry-interval RETRY_INTERVAL]
+              [--insecure] [--os-cacert &lt;ca-certificate&gt;]
+              [--os-cert &lt;certificate&gt;] [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;]
               [--os-user-domain-id OS_USER_DOMAIN_ID]
               [--os-user-domain-name OS_USER_DOMAIN_NAME]
               [--os-project-id OS_PROJECT_ID]
@@ -463,6 +464,26 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_ENDPOINT_TYPE]</code> or "publicURL"
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--max-retries MAX_RETRIES</command></term>
+    <listitem>
+      <para>
+      Maximum number of retries in case of conflict error
+      (HTTP 409). Defaults to <code>env[IRONIC_MAX_RETRIES]</code> or 5.
+      Use 0 to disable retrying.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--retry-interval RETRY_INTERVAL</command></term>
+    <listitem>
+      <para>
+      Amount of time (in seconds) between retries in case of
+      conflict error (HTTP 409). Defaults to
+      <code>env[IRONIC_RETRY_INTERVAL]</code> or 2.
       </para>
     </listitem>
   </varlistentry>

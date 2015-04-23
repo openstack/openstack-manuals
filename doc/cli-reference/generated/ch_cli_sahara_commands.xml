@@ -15,7 +15,7 @@
         interface (CLI) for the Data processing API and its extensions.
 
        This chapter documents <command>sahara</command> version
-        <literal>0.8.0</literal>.
+        <literal>0.9.0</literal>.
     </para>
 
     <para>For help on a specific <command>sahara</command>
@@ -25,7 +25,7 @@
 
     <section xml:id="saharaclient_command_usage">
        <title>sahara usage</title>
-        <screen><computeroutput>usage: sahara [--version] [--debug] [--os-cache]
+        <screen><computeroutput>usage: sahara [--version] [--debug] [--os-cache] [--region-name &lt;region-name&gt;]
               [--service-type &lt;service-type&gt;]
               [--endpoint-type &lt;endpoint-type&gt;]
               [--sahara-api-version &lt;sahara-api-ver&gt;]
@@ -142,14 +142,6 @@
     <listitem>
       <para>
         Show details of a data source.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>event-list</command></term>
-    <listitem>
-      <para>
-        Show events of a cluster.
       </para>
     </listitem>
   </varlistentry>
@@ -324,6 +316,14 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>job-type-list</command></term>
+    <listitem>
+      <para>
+        Show supported job types.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>node-group-template-create</command></term>
     <listitem>
       <para>
@@ -418,6 +418,14 @@
       <para>
         Use the auth token cache. Defaults to False if
       <code>env[OS_CACHE]</code> is not set.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--region-name &lt;region-name&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_REGION_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -687,7 +695,8 @@ Print a list of available clusters.
     </section>
     <section xml:id="saharaclient_subcommand_cluster-show">
         <title>sahara cluster-show</title>
-        <screen><computeroutput>usage: sahara cluster-show [--name NAME] [--id &lt;cluster_id&gt;] [--json]</computeroutput></screen>
+        <screen><computeroutput>usage: sahara cluster-show [--name NAME] [--id &lt;cluster_id&gt;]
+                           [--show-progress SHOW_PROGRESS] [--json]</computeroutput></screen>
         <para>
 Show details of a cluster.
         </para>  <variablelist wordsize="10">
@@ -705,6 +714,14 @@ Show details of a cluster.
     <listitem>
       <para>
         of the cluster to show.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--show-progress SHOW_PROGRESS</command></term>
+    <listitem>
+      <para>
+      Show provision progress events of the cluster.
       </para>
     </listitem>
   </varlistentry>
@@ -912,40 +929,6 @@ Show details of a data source.
     <listitem>
       <para>
         of the data source.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="saharaclient_subcommand_event-list">
-        <title>sahara event-list</title>
-        <screen><computeroutput>usage: sahara event-list [--name &lt;cluster_name&gt;] [--id &lt;cluster_id&gt;]
-                         [--step &lt;step_id&gt;]</computeroutput></screen>
-        <para>
-Show events of a cluster.
-        </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
-  <varlistentry>
-    <term><command>--name &lt;cluster_name&gt;</command></term>
-    <listitem>
-      <para>
-      Name of the cluster to show events.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--id &lt;cluster_id&gt; ID</command></term>
-    <listitem>
-      <para>
-        of the cluster to show events.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--step &lt;step_id&gt; ID</command></term>
-    <listitem>
-      <para>
-        of provision step to show events.
       </para>
     </listitem>
   </varlistentry>
@@ -1161,7 +1144,7 @@ Record a job binary.
     </section>
     <section xml:id="saharaclient_subcommand_job-binary-data-create">
         <title>sahara job-binary-data-create</title>
-        <screen><computeroutput>usage: sahara job-binary-data-create [--file FILE]</computeroutput></screen>
+        <screen><computeroutput>usage: sahara job-binary-data-create [--file FILE] [--name NAME]</computeroutput></screen>
         <para>
 Store data in the internal DB. Use 'swift upload' instead of this command. Use
 this command only if Swift is not available.
@@ -1172,6 +1155,14 @@ this command only if Swift is not available.
     <listitem>
       <para>
         Data to store.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--name NAME</command></term>
+    <listitem>
+      <para>
+        Name of the job binary internal.
       </para>
     </listitem>
   </varlistentry>
@@ -1469,6 +1460,41 @@ Show details of a job template.
     <listitem>
       <para>
         of the job template.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="saharaclient_subcommand_job-type-list">
+        <title>sahara job-type-list</title>
+        <screen><computeroutput>usage: sahara job-type-list [--type &lt;job_type&gt;] [--plugin &lt;plugin&gt;]
+                            [--plugin-version &lt;plugin_version&gt;]</computeroutput></screen>
+        <para>
+Show supported job types.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--type &lt;job_type&gt;</command></term>
+    <listitem>
+      <para>
+        Report only on this job type
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--plugin &lt;plugin&gt;</command></term>
+    <listitem>
+      <para>
+        Report only job types supported by this plugin.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--plugin-version &lt;plugin_version&gt;</command></term>
+    <listitem>
+      <para>
+      Report only on job types supported by this version of
+      a specified plugin. Only valid with --plugin.
       </para>
     </listitem>
   </varlistentry>

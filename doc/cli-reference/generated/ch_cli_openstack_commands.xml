@@ -15,7 +15,7 @@
        OpenStack command-line interface (CLI).
 
        This chapter documents <command>openstack</command> version
-        <literal>1.0.3</literal>.
+        <literal>1.1.0</literal>.
     </para>
 
     <para>For help on a specific <command>openstack</command>
@@ -25,7 +25,8 @@
 
     <section xml:id="openstackclient_command_usage">
        <title>openstack usage</title>
-        <screen><computeroutput>usage: openstack [--version] [-v] [--log-file LOG_FILE] [-q] [--debug]
+        <screen><computeroutput>usage: openstack [--version] [-v] [--log-file LOG_FILE] [-q] [-h] [--debug]
+                 [--os-cloud &lt;cloud-config-name&gt;]
                  [--os-region-name &lt;auth-region-name&gt;]
                  [--os-cacert &lt;ca-bundle-file&gt;] [--verify | --insecure]
                  [--os-default-domain &lt;auth-domain&gt;] [--timing]
@@ -40,17 +41,18 @@
                  [--os-project-domain-id &lt;auth-project-domain-id&gt;]
                  [--os-project-name &lt;auth-project-name&gt;]
                  [--os-auth-url &lt;auth-auth-url&gt;]
+                 [--os-identity-provider-url &lt;auth-identity-provider-url&gt;]
                  [--os-trust-id &lt;auth-trust-id&gt;]
                  [--os-service-provider-endpoint &lt;auth-service-provider-endpoint&gt;]
                  [--os-user-domain-id &lt;auth-user-domain-id&gt;]
+                 [--os-url &lt;auth-url&gt;] [--os-token &lt;auth-token&gt;]
                  [--os-domain-name &lt;auth-domain-name&gt;]
-                 [--os-identity-provider-url &lt;auth-identity-provider-url&gt;]
-                 [--os-token &lt;auth-token&gt;] [--os-domain-id &lt;auth-domain-id&gt;]
-                 [--os-url &lt;auth-url&gt;]
                  [--os-user-domain-name &lt;auth-user-domain-name&gt;]
+                 [--os-domain-id &lt;auth-domain-id&gt;]
                  [--os-user-id &lt;auth-user-id&gt;] [--os-password &lt;auth-password&gt;]
+                 [--os-endpoint &lt;auth-endpoint&gt;]
                  [--os-project-id &lt;auth-project-id&gt;]
-                 [--os-object-api-version &lt;object-api-version&gt;] [-h]</computeroutput></screen>
+                 [--os-object-api-version &lt;object-api-version&gt;]</computeroutput></screen>
     </section>
     <section xml:id="openstackclient_command_optional">
         <title>openstack optional arguments</title>
@@ -100,6 +102,14 @@
     <listitem>
       <para>
         show tracebacks on errors
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cloud &lt;cloud-config-name&gt;</command></term>
+    <listitem>
+      <para>
+      Cloud name in clouds.yaml (Env: OS_CLOUD)
       </para>
     </listitem>
   </varlistentry>
@@ -202,11 +212,10 @@
     <listitem>
       <para>
       Select an auhentication type. Available types:
-      v2token, v2password, v3password, v3scopedsaml,
-      v3unscopedadfs, token, v3token, password,
-      v3unscopedsaml, osc_password, token_endpoint. Default:
-      selected based on --os-username/--os-token (Env:
-      OS_AUTH_TYPE)
+      osc_password, token_endpoint, v2token, v2password,
+      v3password, v3scopedsaml, v3unscopedadfs, token,
+      v3token, password, v3unscopedsaml. Default: selected
+      based on --os-username/--os-token (Env: OS_AUTH_TYPE)
       </para>
     </listitem>
   </varlistentry>
@@ -214,10 +223,10 @@
     <term><command>--os-username &lt;auth-username&gt;</command></term>
     <listitem>
       <para>
-      With v2password: Username to login with With
-      v3password: Username With v3unscopedadfs: Username
-      With password: Username With v3unscopedsaml: Username
-      With osc_password: Username (Env: OS_USERNAME)
+      With osc_password: Username With v2password: Username
+      to login with With v3password: Username With
+      v3unscopedadfs: Username With password: Username With
+      v3unscopedsaml: Username (Env: OS_USERNAME)
       </para>
     </listitem>
   </varlistentry>
@@ -235,14 +244,14 @@
     <term><command>--os-project-domain-name &lt;auth-project-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Domain name containing project With
+      With osc_password: Domain name containing project With
+      v3password: Domain name containing project With
       v3scopedsaml: Domain name containing project With
       v3unscopedadfs: Domain name containing project With
       token: Domain name containing project With v3token:
       Domain name containing project With password: Domain
       name containing project With v3unscopedsaml: Domain
-      name containing project With osc_password: Domain name
-      containing project (Env: OS_PROJECT_DOMAIN_NAME)
+      name containing project (Env: OS_PROJECT_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -250,13 +259,13 @@
     <term><command>--os-project-domain-id &lt;auth-project-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Domain ID containing project With
+      With osc_password: Domain ID containing project With
+      v3password: Domain ID containing project With
       v3scopedsaml: Domain ID containing project With
       v3unscopedadfs: Domain ID containing project With
       token: Domain ID containing project With v3token:
       Domain ID containing project With password: Domain ID
       containing project With v3unscopedsaml: Domain ID
-      containing project With osc_password: Domain ID
       containing project (Env: OS_PROJECT_DOMAIN_ID)
       </para>
     </listitem>
@@ -265,13 +274,13 @@
     <term><command>--os-project-name &lt;auth-project-name&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Project name to scope to With
+      With osc_password: Project name to scope to With
+      v3password: Project name to scope to With
       v3scopedsaml: Project name to scope to With
       v3unscopedadfs: Project name to scope to With token:
       Project name to scope to With v3token: Project name to
       scope to With password: Project name to scope to With
-      v3unscopedsaml: Project name to scope to With
-      osc_password: Project name to scope to (Env:
+      v3unscopedsaml: Project name to scope to (Env:
       OS_PROJECT_NAME)
       </para>
     </listitem>
@@ -280,14 +289,24 @@
     <term><command>--os-auth-url &lt;auth-auth-url&gt;</command></term>
     <listitem>
       <para>
-      With v2token: Authentication URL With v2password:
-      Authentication URL With v3password: Authentication URL
-      With v3scopedsaml: Authentication URL With
-      v3unscopedadfs: Authentication URL With token:
-      Authentication URL With v3token: Authentication URL
-      With password: Authentication URL With v3unscopedsaml:
-      Authentication URL With osc_password: Authentication
-      URL (Env: OS_AUTH_URL)
+      With osc_password: Authentication URL With v2token:
+      Authentication URL With v2password: Authentication URL
+      With v3password: Authentication URL With v3scopedsaml:
+      Authentication URL With v3unscopedadfs: Authentication
+      URL With token: Authentication URL With v3token:
+      Authentication URL With password: Authentication URL
+      With v3unscopedsaml: Authentication URL (Env:
+      OS_AUTH_URL)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-identity-provider-url &lt;auth-identity-provider-url&gt;</command></term>
+    <listitem>
+      <para>
+      With v3unscopedadfs: Identity Provider's URL With
+      v3unscopedsaml: Identity Provider's URL (Env:
+      OS_IDENTITY_PROVIDER_URL)
       </para>
     </listitem>
   </varlistentry>
@@ -295,12 +314,12 @@
     <term><command>--os-trust-id &lt;auth-trust-id&gt;</command></term>
     <listitem>
       <para>
-      With v2token: Trust ID With v2password: Trust ID With
-      v3password: Trust ID With v3scopedsaml: Trust ID With
-      v3unscopedadfs: Trust ID With token: Trust ID With
-      v3token: Trust ID With password: Trust ID With
-      v3unscopedsaml: Trust ID With osc_password: Trust ID
-      (Env: OS_TRUST_ID)
+      With osc_password: Trust ID With v2token: Trust ID
+      With v2password: Trust ID With v3password: Trust ID
+      With v3scopedsaml: Trust ID With v3unscopedadfs: Trust
+      ID With token: Trust ID With v3token: Trust ID With
+      password: Trust ID With v3unscopedsaml: Trust ID (Env:
+      OS_TRUST_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -317,61 +336,9 @@
     <term><command>--os-user-domain-id &lt;auth-user-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With v3password: User's domain id With password:
-      User's domain id With osc_password: User's domain id
-      (Env: OS_USER_DOMAIN_ID)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-domain-name &lt;auth-domain-name&gt;</command></term>
-    <listitem>
-      <para>
-      With v3password: Domain name to scope to With
-      v3scopedsaml: Domain name to scope to With
-      v3unscopedadfs: Domain name to scope to With token:
-      Domain name to scope to With v3token: Domain name to
-      scope to With password: Domain name to scope to With
-      v3unscopedsaml: Domain name to scope to With
-      osc_password: Domain name to scope to (Env:
-      OS_DOMAIN_NAME)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-identity-provider-url &lt;auth-identity-provider-url&gt;</command></term>
-    <listitem>
-      <para>
-      With v3unscopedadfs: Identity Provider's URL With
-      v3unscopedsaml: Identity Provider's URL (Env:
-      OS_IDENTITY_PROVIDER_URL)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-token &lt;auth-token&gt;</command></term>
-    <listitem>
-      <para>
-      With v2token: Token With v3scopedsaml: Token to
-      authenticate with With token: Token to authenticate
-      with With v3token: Token to authenticate with With
-      token_endpoint: Authentication token to use (Env:
-      OS_TOKEN)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-domain-id &lt;auth-domain-id&gt;</command></term>
-    <listitem>
-      <para>
-      With v3password: Domain ID to scope to With
-      v3scopedsaml: Domain ID to scope to With
-      v3unscopedadfs: Domain ID to scope to With token:
-      Domain ID to scope to With v3token: Domain ID to scope
-      to With password: Domain ID to scope to With
-      v3unscopedsaml: Domain ID to scope to With
-      osc_password: Domain ID to scope to (Env:
-      OS_DOMAIN_ID)
+      With osc_password: User's domain id With v3password:
+      User's domain id With password: User's domain id (Env:
+      OS_USER_DOMAIN_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -385,12 +352,53 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--os-token &lt;auth-token&gt;</command></term>
+    <listitem>
+      <para>
+      With token_endpoint: The token that will always be
+      used With token_endpoint: Authentication token to use
+      With v2token: Token With v3scopedsaml: Token to
+      authenticate with With token: Token to authenticate
+      with With v3token: Token to authenticate with (Env:
+      OS_TOKEN)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-name &lt;auth-domain-name&gt;</command></term>
+    <listitem>
+      <para>
+      With osc_password: Domain name to scope to With
+      v3password: Domain name to scope to With v3scopedsaml:
+      Domain name to scope to With v3unscopedadfs: Domain
+      name to scope to With token: Domain name to scope to
+      With v3token: Domain name to scope to With password:
+      Domain name to scope to With v3unscopedsaml: Domain
+      name to scope to (Env: OS_DOMAIN_NAME)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--os-user-domain-name &lt;auth-user-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With v3password: User's domain name With password:
-      User's domain name With osc_password: User's domain
-      name (Env: OS_USER_DOMAIN_NAME)
+      With osc_password: User's domain name With v3password:
+      User's domain name With password: User's domain name
+      (Env: OS_USER_DOMAIN_NAME)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-id &lt;auth-domain-id&gt;</command></term>
+    <listitem>
+      <para>
+      With osc_password: Domain ID to scope to With
+      v3password: Domain ID to scope to With v3scopedsaml:
+      Domain ID to scope to With v3unscopedadfs: Domain ID
+      to scope to With token: Domain ID to scope to With
+      v3token: Domain ID to scope to With password: Domain
+      ID to scope to With v3unscopedsaml: Domain ID to scope
+      to (Env: OS_DOMAIN_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -398,9 +406,9 @@
     <term><command>--os-user-id &lt;auth-user-id&gt;</command></term>
     <listitem>
       <para>
-      With v2password: User ID to longin with With
-      v3password: User ID With password: User id With
-      osc_password: User id (Env: OS_USER_ID)
+      With osc_password: User id With v2password: User ID to
+      longin with With v3password: User ID With password:
+      User id (Env: OS_USER_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -408,11 +416,20 @@
     <term><command>--os-password &lt;auth-password&gt;</command></term>
     <listitem>
       <para>
-      With v2password: Password to use With v3password:
-      User's password With v3unscopedadfs: Password With
-      password: User's password With v3unscopedsaml:
-      Password With osc_password: User's password (Env:
+      With osc_password: User's password With v2password:
+      Password to use With v3password: User's password With
+      v3unscopedadfs: Password With password: User's
+      password With v3unscopedsaml: Password (Env:
       OS_PASSWORD)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-endpoint &lt;auth-endpoint&gt;</command></term>
+    <listitem>
+      <para>
+      With token_endpoint: The endpoint that will always be
+      used (Env: OS_ENDPOINT)
       </para>
     </listitem>
   </varlistentry>
@@ -420,14 +437,13 @@
     <term><command>--os-project-id &lt;auth-project-id&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Project ID to scope to With
-      v3scopedsaml: Project ID to scope to With
-      v3unscopedadfs: Project ID to scope to With token:
-      Project ID to scope to With v3token: Project ID to
-      scope to With password: Project ID to scope to With
-      v3unscopedsaml: Project ID to scope to With
-      osc_password: Project ID to scope to (Env:
-      OS_PROJECT_ID)
+      With osc_password: Project ID to scope to With
+      v3password: Project ID to scope to With v3scopedsaml:
+      Project ID to scope to With v3unscopedadfs: Project ID
+      to scope to With token: Project ID to scope to With
+      v3token: Project ID to scope to With password: Project
+      ID to scope to With v3unscopedsaml: Project ID to
+      scope to (Env: OS_PROJECT_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -437,14 +453,6 @@
       <para>
       Object API version, default=1 (Env:
       OS_OBJECT_API_VERSION)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>-h, --help</command></term>
-    <listitem>
-      <para>
-        Show this help message and exit
       </para>
     </listitem>
   </varlistentry>
@@ -2004,6 +2012,46 @@ List flavors
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_flavor_set">
+        <title>openstack flavor set</title>
+        <screen><computeroutput>usage: openstack flavor set [-h] [-f {html,json,shell,table,value,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;]
+                            [--prefix PREFIX] [--property &lt;key=value&gt;]
+                            &lt;flavor&gt;</computeroutput></screen>
+        <para>
+Set flavor properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;flavor&gt;</command></term>
+    <listitem>
+      <para>
+        Flavor to modify (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Property to add or modify for this flavor (repeat
+      option to set multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_flavor_show">
         <title>openstack flavor show</title>
         <screen><computeroutput>usage: openstack flavor show [-h] [-f {html,json,shell,table,value,yaml}]
@@ -2030,6 +2078,46 @@ Display flavor details
     <listitem>
       <para>
         show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_flavor_unset">
+        <title>openstack flavor unset</title>
+        <screen><computeroutput>usage: openstack flavor unset [-h] [-f {html,json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
+                              [--prefix PREFIX] [--property &lt;key&gt;]
+                              &lt;flavor&gt;</computeroutput></screen>
+        <para>
+Unset flavor properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;flavor&gt;</command></term>
+    <listitem>
+      <para>
+        Flavor to modify (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Property to remove from flavor (repeat option to unset
+      multiple properties)
       </para>
     </listitem>
   </varlistentry>
@@ -3007,7 +3095,8 @@ Display public key details
         <screen><computeroutput>usage: openstack limits show [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
                              [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
-                             [--absolute | --rate] [--reserved]</computeroutput></screen>
+                             [--absolute | --rate] [--reserved]
+                             [--project &lt;project&gt;] [--domain &lt;domain&gt;]</computeroutput></screen>
         <para>
 Show compute and volume limits
         </para>  <variablelist wordsize="10">
@@ -3045,6 +3134,24 @@ Show compute and volume limits
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--project &lt;project&gt;</command></term>
+    <listitem>
+      <para>
+        Show limits for a specific project (name or ID) [only
+      valid with --absolute]
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--domain &lt;domain&gt;</command></term>
+    <listitem>
+      <para>
+        Domain that owns --project (name or ID) [only valid
+      with --absolute]
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_module_list">
@@ -3079,7 +3186,8 @@ List module versions
         <screen><computeroutput>usage: openstack network create [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--prefix PREFIX] [--enable | --disable]
-                                [--share | --no-share]
+                                [--share | --no-share] [--project &lt;project&gt;]
+                                [--domain &lt;domain&gt;]
                                 &lt;name&gt;</computeroutput></screen>
         <para>
 Create new network
@@ -3133,6 +3241,22 @@ Create new network
     <listitem>
       <para>
         Do not share the network between projects
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--project &lt;project&gt;</command></term>
+    <listitem>
+      <para>
+        Owner's project (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--domain &lt;domain&gt;</command></term>
+    <listitem>
+      <para>
+        Owner's domain (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -3843,6 +3967,7 @@ List resource usage per project
                            [--injected-path-size &lt;injected-path-size&gt;]
                            [--gigabytes &lt;gigabytes&gt;] [--volumes &lt;volumes&gt;]
                            [--snapshots &lt;snapshots&gt;]
+                           [--volume-type &lt;volume-type&gt;]
                            &lt;project/class&gt;</computeroutput></screen>
         <para>
 Set quotas for project or class
@@ -3992,6 +4117,14 @@ Set quotas for project or class
     <listitem>
       <para>
       New value for the snapshots quota
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--volume-type &lt;volume-type&gt;</command></term>
+    <listitem>
+      <para>
+      Set quotas for a specific &lt;volume-type&gt;
       </para>
     </listitem>
   </varlistentry>
@@ -4689,7 +4822,7 @@ Add volume to server
                                [--user-data &lt;user-data&gt;]
                                [--availability-zone &lt;zone-name&gt;]
                                [--block-device-mapping &lt;dev-name=mapping&gt;]
-                               [--nic &lt;nic-config-string&gt;]
+                               [--nic &lt;net-id=net-uuid,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid&gt;]
                                [--hint &lt;key=value&gt;]
                                [--config-drive &lt;config-drive-volume&gt;|True]
                                [--min &lt;count&gt;] [--max &lt;count&gt;] [--wait]
@@ -4804,10 +4937,16 @@ Create a new server
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--nic &lt;nic-config-string&gt;</command></term>
+    <term><command>--nic &lt;net-id=net-uuid,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid&gt;</command></term>
     <listitem>
       <para>
-      Specify NIC configuration (optional extension)
+      Create a NIC on the server. Specify option multiple
+      times to create multiple NICs. Either net-id or port-
+      id must be provided, but not both. net-id: attach NIC
+      to network with this UUID, port-id: attach NIC to port
+      with this UUID, v4-fixed-ip: IPv4 fixed address for
+      NIC (optional), v6-fixed-ip: IPv6 fixed address for
+      NIC (optional).
       </para>
     </listitem>
   </varlistentry>
