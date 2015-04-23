@@ -30,14 +30,21 @@ telemetry_secret = <replaceable>TELEMETRY_SECRET</replaceable></programlisting>
           the telemetry secret you chose for the Telemetry module.</para>
         </step>
         <step os="centos;fedora;opensuse;rhel;sles;ubuntu">
-          <para>In the <literal>[DEFAULT]</literal> section, configure
-            <application>RabbitMQ</application> message broker access:</para>
+          <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[oslo_messaging_rabbit]</literal> sections, configure
+            <application>RabbitMQ</application> message queue access:</para>
           <programlisting language="ini">[DEFAULT]
 ...
+rpc_backend = rabbit
+
+[oslo_messaging_rabbit]
+...
 rabbit_host = <replaceable>controller</replaceable>
+rabbit_userid = openstack
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
-          you chose for the guest account in RabbitMQ.</para>
+          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
+            password you chose for the <literal>openstack</literal> account in
+            <application>RabbitMQ</application>.</para>
         </step>
         <step>
           <para>In the <literal>[keystone_authtoken]</literal> section,

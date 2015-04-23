@@ -255,15 +255,20 @@ connection = mongodb://ceilometer:<replaceable>CEILOMETER_DBPASS</replaceable>@<
             in the connection string in accordance with RFC2396.</para>
         </step>
         <step>
-          <para>In the <literal>[DEFAULT]</literal> section, configure
-            <application>RabbitMQ</application> message broker access:</para>
+          <para>In the <literal>[DEFAULT]</literal> and
+            <literal>[oslo_messaging_rabbit]</literal> sections, configure
+            <application>RabbitMQ</application> message queue access:</para>
           <programlisting language="ini">[DEFAULT]
 ...
 rpc_backend = rabbit
+
+[oslo_messaging_rabbit]
+...
 rabbit_host = <replaceable>controller</replaceable>
+rabbit_userid = openstack
 rabbit_password = <replaceable>RABBIT_PASS</replaceable></programlisting>
-          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the password
-            you chose for the <literal>guest</literal> account in
+          <para>Replace <replaceable>RABBIT_PASS</replaceable> with the
+            password you chose for the <literal>openstack</literal> account in
             <application>RabbitMQ</application>.</para>
         </step>
         <step>
