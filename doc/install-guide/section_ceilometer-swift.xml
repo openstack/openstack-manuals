@@ -69,7 +69,7 @@ pipeline = authtoken cache healthcheck keystoneauth proxy-logging ceilometer pro
 ...
 paste.filter_factory = ceilometermiddleware.swift:filter_factory
 control_exchange = swift
-url = rabbit://openstack:<replaceable>RABBIT_PASS</replaceable>@<replaceable>controller></replaceable>:5672/
+url = rabbit://openstack:<replaceable>RABBIT_PASS</replaceable>@<replaceable>controller</replaceable>:5672/
 driver = messagingv2
 topic = notifications
 log_level = WARN</programlisting>
@@ -84,6 +84,11 @@ log_level = WARN</programlisting>
         <literal>ceilometer</literal> system group to permit access to the
         Telemetry configuration files by the Object Storage service:</para>
       <screen><prompt>#</prompt> <userinput>usermod -a -G ceilometer swift</userinput></screen>
+    </step>
+    <step os="fedora;centos;rhel">
+      <!-- Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1214928. -->
+      <para>Install the <package>ceilometermiddleware</package> package:</para>
+      <screen><prompt>#</prompt> <userinput>pip install ceilometermiddleware</userinput></screen>
     </step>
     <step>
       <para>Restart the Object Storage proxy service:</para>
