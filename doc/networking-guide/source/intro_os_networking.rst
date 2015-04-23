@@ -2,8 +2,6 @@
 Introduction to OpenStack Networking (neutron)
 ==============================================
 
-(Check existing source for status.)
-
 .. toctree::
    :maxdepth: 2
 
