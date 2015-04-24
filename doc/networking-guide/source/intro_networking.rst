@@ -12,7 +12,7 @@ routers for devices managed by the OpenStack Compute service
 networks (VPNs) can also be used.
 
 OpenStack Networking consists of the neutron-server, a database for
-persistent storage, and any number of plugin agents, which provide
+persistent storage, and any number of plug-in agents, which provide
 other services such as interfacing with native Linux networking
 mechanisms, external devices, or SDN controllers.
 
