@@ -22,16 +22,12 @@
         <td>(BoolOpt) Permit instance snapshot operations.</td>
       </tr>
       <tr>
-        <td><option>allow_migrate_to_same_host</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Allow migrate machine to the same host. Useful when testing in single-host environments.</td>
-      </tr>
-      <tr>
         <td><option>allow_resize_to_same_host</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Allow destination machine to match source for resize. Useful when testing in single-host environments.</td>
       </tr>
       <tr>
         <td><option>max_age</option> = <replaceable>0</replaceable></td>
-        <td>(IntOpt) Number of seconds between subsequent usage refreshes</td>
+        <td>(IntOpt) Number of seconds between subsequent usage refreshes. This defaults to 0(off) to avoid additional load but it is useful to turn on to help keep quota usage up to date and reduce the impact of out of sync usage issues. Note that quotas are not updated on a periodic task, they will update on a new reservation if max_age has passed since the last reservation</td>
       </tr>
       <tr>
         <td><option>max_local_block_devices</option> = <replaceable>3</replaceable></td>
@@ -55,7 +51,7 @@
       </tr>
       <tr>
         <td><option>policy_dirs</option> = <replaceable>['policy.d']</replaceable></td>
-        <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.</td>
+        <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.  Missing or empty directories are ignored.</td>
       </tr>
       <tr>
         <td><option>policy_file</option> = <replaceable>policy.json</replaceable></td>
@@ -71,7 +67,7 @@
       </tr>
       <tr>
         <td><option>until_refresh</option> = <replaceable>0</replaceable></td>
-        <td>(IntOpt) Count of reservations until usage is refreshed</td>
+        <td>(IntOpt) Count of reservations until usage is refreshed. This defaults to 0(off) to avoid additional load but it is useful to turn on to help keep quota usage up to date and reduce the impact of out of sync usage issues.</td>
       </tr>
     </tbody>
   </table>
