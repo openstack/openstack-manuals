@@ -27,11 +27,15 @@
       </tr>
       <tr>
         <td><option>vmware_datacenter_path</option> = <replaceable>ha-datacenter</replaceable></td>
-        <td>(StrOpt) Inventory path to a datacenter. If the vmware_server_host specified is an ESX/ESXi, the vmware_datacenter_path is optional. If specified, it should be "ha-datacenter".</td>
+        <td>(StrOpt) DEPRECATED. Inventory path to a datacenter. If the vmware_server_host specified is an ESX/ESXi, the vmware_datacenter_path is optional. If specified, it should be "ha-datacenter". This option is deprecated in favor of vmware_datastores and will be removed in the Liberty release.</td>
       </tr>
       <tr>
         <td><option>vmware_datastore_name</option> = <replaceable>None</replaceable></td>
-        <td>(StrOpt) Datastore associated with the datacenter.</td>
+        <td>(StrOpt) DEPRECATED. Datastore associated with the datacenter. This option is deprecated in favor of vmware_datastores and will be removed in the Liberty release.</td>
+      </tr>
+      <tr>
+        <td><option>vmware_datastores</option> = <replaceable>None</replaceable></td>
+        <td>(MultiStrOpt) A list of datastores where the image can be stored. This option may be specified multiple times for specifying multiple datastores. Either one of vmware_datastore_name or vmware_datastores is required. The datastore name should be specified after its datacenter path, seperated by ":". An optional weight may be given after the datastore name, seperated again by ":". Thus, the required format becomes &lt;datacenter_path&gt;:&lt;datastore_name&gt;:&lt;optional_weight&gt;. When adding an image, the datastore with highest weight will be selected, unless there is not enough free space available in cases where the image size is already known. If no weight is given, it is assumed to be zero and the directory will be considered for selection last. If multiple datastores have the same weight, then the one with the most free space available is selected.</td>
       </tr>
       <tr>
         <td><option>vmware_server_host</option> = <replaceable>None</replaceable></td>
