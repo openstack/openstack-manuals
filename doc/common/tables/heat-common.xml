@@ -18,7 +18,19 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td><option>deferred_auth_method</option> = <replaceable>password</replaceable></td>
+        <td><option>convergence_engine</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Enables engine with convergence architecture. All stacks with this option will be created using convergence engine .</td>
+      </tr>
+      <tr>
+        <td><option>default_deployment_signal_transport</option> = <replaceable>CFN_SIGNAL</replaceable></td>
+        <td>(StrOpt) Template default for how the server should signal to heat with the deployment output values. CFN_SIGNAL will allow an HTTP POST to a CFN keypair signed URL (requires enabled heat-api-cfn). TEMP_URL_SIGNAL will create a Swift TempURL to be signaled via HTTP PUT (requires object-store endpoint which supports TempURL). HEAT_SIGNAL will allow calls to the Heat API resource-signal using the provided keystone credentials</td>
+      </tr>
+      <tr>
+        <td><option>default_software_config_transport</option> = <replaceable>POLL_SERVER_CFN</replaceable></td>
+        <td>(StrOpt) Template default for how the server should receive the metadata required for software configuration. POLL_SERVER_CFN will allow calls to the cfn API action DescribeStackResource authenticated with the provided keypair (requires enabled heat-api-cfn). POLL_SERVER_HEAT will allow calls to the Heat API resource-show using the provided keystone credentials (requires keystone v3 API, and configured stack_user_* config options). POLL_TEMP_URL will create and populate a Swift TempURL with metadata for polling (requires object-store endpoint which supports TempURL).</td>
+      </tr>
+      <tr>
+        <td><option>deferred_auth_method</option> = <replaceable>trusts</replaceable></td>
         <td>(StrOpt) Select deferred auth method, stored password or trusts.</td>
       </tr>
       <tr>
@@ -31,15 +43,11 @@
       </tr>
       <tr>
         <td><option>event_purge_batch_size</option> = <replaceable>10</replaceable></td>
-        <td>(IntOpt) Controls how many events will be pruned whenever a  stack's events exceed max_events_per_stack. Set this lower to keep more events at the expense of more frequent purges.</td>
+        <td>(IntOpt) Controls how many events will be pruned whenever a stack's events exceed max_events_per_stack. Set this lower to keep more events at the expense of more frequent purges.</td>
       </tr>
       <tr>
         <td><option>host</option> = <replaceable>localhost</replaceable></td>
         <td>(StrOpt) Name of the engine node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address.</td>
-      </tr>
-      <tr>
-        <td><option>instance_driver</option> = <replaceable>heat.engine.nova</replaceable></td>
-        <td>(StrOpt) Driver to use for controlling instances.</td>
       </tr>
       <tr>
         <td><option>instance_user</option> = <replaceable>ec2-user</replaceable></td>
@@ -58,7 +66,7 @@
         <td>(IntOpt) Seconds between running periodic tasks.</td>
       </tr>
       <tr>
-        <td><option>plugin_dirs</option> = <replaceable>/usr/lib64/heat, /usr/lib/heat</replaceable></td>
+        <td><option>plugin_dirs</option> = <replaceable>/usr/lib64/heat, /usr/lib/heat, /usr/local/lib/heat, /usr/local/lib64/heat</replaceable></td>
         <td>(ListOpt) List of directories to search for plug-ins.</td>
       </tr>
       <tr>
