@@ -46,11 +46,15 @@
         <td>(StrOpt) URL of the Heat CloudWatch server.</td>
       </tr>
       <tr>
+        <td><option>hidden_stack_tags</option> = <replaceable></replaceable></td>
+        <td>(ListOpt) Stacks containing these tag names will be hidden. Multiple tags should be given in a comma-delimited list (eg. hidden_stack_tags=hide_me,me_too).</td>
+      </tr>
+      <tr>
         <td><option>max_json_body_size</option> = <replaceable>1048576</replaceable></td>
         <td>(IntOpt) Maximum raw byte size of JSON request body. Should be larger than max_template_size.</td>
       </tr>
       <tr>
-        <td><option>num_engine_workers</option> = <replaceable>1</replaceable></td>
+        <td><option>num_engine_workers</option> = <replaceable>4</replaceable></td>
         <td>(IntOpt) Number of heat-engine processes to fork and run.</td>
       </tr>
       <tr>
@@ -80,6 +84,10 @@
       <tr>
         <td><option>stack_domain_admin_password</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Keystone password for stack_domain_admin user.</td>
+      </tr>
+      <tr>
+        <td><option>stack_scheduler_hints</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) When this feature is enabled, scheduler hints identifying the heat stack context of a server resource are passed to the configured schedulers in nova, for server creates done using heat resource types OS::Nova::Server and AWS::EC2::Instance. heat_root_stack_id will be set to the id of the root stack of the resource, heat_stack_id will be set to the id of the resource's parent stack, heat_stack_name will be set to the name of the resource's parent stack, heat_path_in_stack will be set to a list of tuples, (stackresourcename, stackname) with list[0] being (None, rootstackname), and heat_resource_name will be set to the resource's name.</td>
       </tr>
       <tr>
         <td><option>stack_user_domain_id</option> = <replaceable>None</replaceable></td>
@@ -116,6 +124,22 @@
         <td>(StrOpt) Authentication Endpoint URI.</td>
       </tr>
       <tr>
+        <td><option>ca_file</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Optional CA cert file to use in SSL connections.</td>
+      </tr>
+      <tr>
+        <td><option>cert_file</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Optional PEM-formatted certificate chain file.</td>
+      </tr>
+      <tr>
+        <td><option>insecure</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) If set, then the server's certificate will not be verified.</td>
+      </tr>
+      <tr>
+        <td><option>key_file</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Optional PEM-formatted file that contains the private key.</td>
+      </tr>
+      <tr>
         <td><option>multi_cloud</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Allow orchestration of multiple clouds.</td>
       </tr>
@@ -149,6 +173,13 @@
       <tr>
         <td><option>workers</option> = <replaceable>0</replaceable></td>
         <td>(IntOpt) Number of workers for Heat service.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[oslo_versionedobjects]</th>
+      </tr>
+      <tr>
+        <td><option>fatal_exception_format_errors</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Make exception message format errors fatal</td>
       </tr>
       <tr>
         <th colspan="2">[paste_deploy]</th>
