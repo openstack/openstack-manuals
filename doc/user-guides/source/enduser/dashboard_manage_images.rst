@@ -4,12 +4,13 @@
 ========================
 Upload and manage images
 ========================
+
 A virtual machine image, referred to in this document simply
 as an image, is a single file that contains a virtual disk that
 has a bootable operating system installed on it. Images are used
-to create virtual machine instances within the cloud. For information about creating image
-files, see the `*OpenStack Virtual Machine Image
-Guide* <http://docs.openstack.org/image-guide/content/>`__.
+to create virtual machine instances within the cloud. For information
+about creating image files, see the `OpenStack Virtual Machine
+Image Guide <http://docs.openstack.org/image-guide/content/>`_.
 
 Depending on your role, you may have permission to upload and manage
 virtual machine images. Operators might restrict the upload and
@@ -18,12 +19,13 @@ have the appropriate privileges, you can use the dashboard to upload and
 manage images in the admin project.
 
 .. note:: You can also use the :command:`glance` and :command:`nova`
-   command-line clients or the Image Service and Compute APIs to manage images.
+   command-line clients or the Image service and Compute APIs to
+   manage images.
 
 Upload an image
 ~~~~~~~~~~~~~~~
 
-Follow this procedure to upload an image to a project.
+Follow this procedure to upload an image to a project:
 
 #. Log in to the dashboard.
 
@@ -38,11 +40,48 @@ Follow this procedure to upload an image to a project.
 
 #. Enter the following values:
 
-Name
-   Enter a name for the image
-
-Description
-   Optionally, enter a brief description of the image.
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Name`              | Enter a name for the image.     |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Description`       | Enter a brief description of    |
+   |                               | the image.                      |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Image Source`      | Choose the image source from    |
+   |                               | the dropdown list. Your choices |
+   |                               | are :guilabel:`Image Location`  |
+   |                               | and :guilabel:`Image File`.     |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Image File` or     | Based on your selection for     |
+   | :guilabel:`Image Location`    | :guilabel:`Image Source`, you   |
+   |                               | either enter the location URL   |
+   |                               | of the image in the             |
+   |                               | :guilabel:`Image Location`      |
+   |                               | field, or browse for the image  |
+   |                               | file on your file  system and   |
+   |                               | add it.                         |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Format`            | Select the image format (for    |
+   |                               | example, QCOW2) for the image.  |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Architecture`      | Specify the architecture. For   |
+   |                               | example, ``i386`` for a 32-bit  |
+   |                               | architecture or ``x86_64`` for  |
+   |                               | a 64-bit architecture.          |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Minimum Disk (GB)` | Leave these fields empty.       |
+   | and                           |                                 |
+   | :guilabel:`Minimum RAM (MB)`  |                                 |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Public`            | Select this check box to make   |
+   |                               | the image public to all users   |
+   |                               | with access to the current      |
+   |                               | project.                        |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Protected`         | Select this check box to ensure |
+   |                               | that only users with            |
+   |                               | permissions can delete the      |
+   |                               | image.                          |
+   +-------------------------------+---------------------------------+
 
 #. Click :guilabel:`Create Image`.
 
@@ -63,11 +102,11 @@ Follow this procedure to update an existing image.
 
 #. Select the image that you want to edit.
 
-#. In the :guilabel:`Actions` column, click :guilabel:`More` and then select
-   :guilabel:`Edit` from the list.
+#. In the :guilabel:`Actions` column, click :guilabel:`More` and then
+   select :guilabel:`Edit` from the list.
 
-#. In the :guilabel:`Update Image` dialog box, you can perform the following
-   actions:
+#. In the :guilabel:`Update Image` dialog box, you can perform the
+   following actions:
 
    -  Change the name of the image.
 
