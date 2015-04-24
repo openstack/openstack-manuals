@@ -26,6 +26,10 @@
         <td>(IntOpt) Interval between checks of provision timeouts, in seconds.</td>
       </tr>
       <tr>
+        <td><option>clean_nodes</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) Cleaning is a configurable set of steps, such as erasing disk drives, that are performed on the node to ensure it is in a baseline state and ready to be deployed to. This is done after instance deletion, and during the transition from a "managed" to "available" state. When enabled, the particular steps performed to clean a node depend on which driver that node is managed by; see the individual driver's documentation for details. NOTE: The introduction of the cleaning operation causes instance deletion to take significantly longer. In an environment where all tenants are trusted (eg, because there is only one tenant), this option could be safely disabled.</td>
+      </tr>
+      <tr>
         <td><option>configdrive_swift_container</option> = <replaceable>ironic_configdrive_container</replaceable></td>
         <td>(StrOpt) Name of the Swift container to store config drive data. Used when configdrive_use_swift is True.</td>
       </tr>
@@ -48,6 +52,10 @@
       <tr>
         <td><option>heartbeat_timeout</option> = <replaceable>60</replaceable></td>
         <td>(IntOpt) Maximum time (in seconds) since the last check-in of a conductor.</td>
+      </tr>
+      <tr>
+        <td><option>inspect_timeout</option> = <replaceable>1800</replaceable></td>
+        <td>(IntOpt) Timeout (seconds) for waiting for node inspection. 0 - unlimited.</td>
       </tr>
       <tr>
         <td><option>node_locked_retry_attempts</option> = <replaceable>3</replaceable></td>
@@ -75,7 +83,7 @@
       </tr>
       <tr>
         <td><option>send_sensor_data_types</option> = <replaceable>ALL</replaceable></td>
-        <td>(ListOpt) List of comma separated metric types which need to be sent to Ceilometer. The default value, "ALL", is a special value meaning send all the sensor data.</td>
+        <td>(ListOpt) List of comma separated meter types which need to be sent to Ceilometer. The default value, "ALL", is a special value meaning send all the sensor data.</td>
       </tr>
       <tr>
         <td><option>sync_local_state_interval</option> = <replaceable>180</replaceable></td>
