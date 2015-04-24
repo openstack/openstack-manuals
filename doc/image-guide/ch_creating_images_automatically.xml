@@ -8,7 +8,27 @@
     <?dbhtml stop-chunking?>
     <para>There are several tools that are designed to automate image
         creation.</para>
-    <section xml:id="oz">
+    <section xml:id="Diskimage-builder">
+        <title>Diskimage-builder</title>
+        <para><link xlink:href="http://docs.openstack.org/developer/diskimage-builder/"
+                >diskimage-builder</link> is an automated disk image creation
+           tool that supports a variety of distributions and architectures.
+           Diskimage-builder (DIB) can build images for Fedora, Redhat,
+           Ubuntu, Debian, CentOS, and openSUSE. DIB is organized in a series
+           of elements that build on top of each other to create specific
+           images.</para>
+           <para>To build an image, call the following script:</para>
+<screen><prompt>#</prompt> <userinput>disk-image-create ubuntu vm</userinput></screen>
+           <para>This example creates a generic, bootable Ubuntu image of the latest
+           release.</para>
+           <para>Further customization could be accomplished by setting
+           environment variables or adding elements to the command-line:</para>
+<screen><prompt>#</prompt> <userinput>disk-image-create -a armhf ubuntu vm</userinput></screen>
+           <para>This example creates the image as before, but for arm architecture.
+           More elements are available on <link xlink:href="https://github.com/openstack/diskimage-builder/tree/master/elements">github</link>.
+</para></section>
+
+        <section xml:id="oz">
         <title>Oz</title>
         <para><link xlink:href="https://github.com/clalancette/oz/wiki"
                 >Oz</link> is a command-line tool that automates the process of
@@ -17,11 +37,13 @@
             virtual machine. It uses a predefined set of kickstart (Red
             Hat-based systems) and preseed files (Debian-based systems) for
             operating systems that it supports, and it can also be used to
-            create Microsoft Windows images. On Fedora, install Oz with yum:<screen><prompt>#</prompt> <userinput>yum install oz</userinput></screen><note>
-                <para>As of this writing, there are no Oz packages for Ubuntu,
+            create Microsoft Windows images. On Fedora, install Oz with yum:</para>
+<screen><prompt>#</prompt> <userinput>yum install oz</userinput></screen>
+
+            <note><para>As of this writing, there are no Oz packages for Ubuntu,
                     so you will need to either install from source or build your
                     own .deb file.</para>
-            </note></para>
+            </note>
         <para>A full treatment of Oz is beyond the scope of this document, but
             we will provide an example. You can find additional examples of Oz
             template files on GitHub at <link
@@ -32,7 +54,8 @@
                 <filename>centos64.tdl</filename>) with the following contents.
             The only entry you will need to change is the
                 <literal>&lt;rootpw></literal>
-            contents.<programlisting language="xml">&lt;template>
+            contents.</para>
+<programlisting language="xml">&lt;template>
   &lt;name>centos64&lt;/name>
   &lt;os>
     &lt;name>CentOS-6&lt;/name>
@@ -65,7 +88,7 @@ echo -n > /lib/udev/rules.d/75-persistent-net-generator.rules
     &lt;/command>
   &lt;/commands>
 &lt;/template></programlisting>
-        </para>
+
         <para>This Oz template specifies where to download the Centos 6.4
             install ISO. Oz will use the version information to identify which
             kickstart file to use. In this case, it will be <link
@@ -81,7 +104,8 @@ echo -n > /lib/udev/rules.d/75-persistent-net-generator.rules
             specified in the <literal>command</literal> section of the XML
             file.</para>
         <para>To run this, do, as root:</para>
-        <para><screen><prompt>#</prompt> <userinput>oz-install -d3 -u centos64.tdl -x centos64-libvirt.xml</userinput></screen><itemizedlist>
+        <screen><prompt>#</prompt> <userinput>oz-install -d3 -u centos64.tdl -x centos64-libvirt.xml</userinput></screen>
+        <itemizedlist>
                 <listitem>
                     <para>The <literal>-d3</literal> flag tells Oz to show
                         status information as it runs.</para>
@@ -97,12 +121,13 @@ echo -n > /lib/udev/rules.d/75-persistent-net-generator.rules
                         (otherwise it will default to something like
                             <filename>centos64Apr_03_2013-12:39:42</filename>).</para>
                 </listitem>
-            </itemizedlist>If you leave out the <literal>-u</literal> flag, or
+            </itemizedlist>
+            <para>If you leave out the <literal>-u</literal> flag, or
             you want to edit the file to do additional customizations, you can
             use the <command>oz-customize</command> command, using the libvirt
-            XML file that <command>oz-install</command> creates. For example:
+            XML file that <command>oz-install</command> creates. For example:</para>
             <screen><prompt>#</prompt> <userinput>oz-customize -d3 centos64.tdl centos64-libvirt.xml</userinput></screen>
-            Oz will invoke libvirt to boot the image inside of KVM, then Oz will
+            <para>Oz will invoke libvirt to boot the image inside of KVM, then Oz will
             ssh into the instance and perform the customizations.</para>
     </section>
     <section xml:id="vmbuilder">
