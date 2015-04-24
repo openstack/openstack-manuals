@@ -23,10 +23,11 @@
       any other OpenStack services. However, for simplicity, this guide
       references the Identity service in <xref linkend="ch_keystone"/>. Before
       you configure the Object Storage service, you must create service
-      credentials and API endpoints.</para>
+      credentials and an API endpoint.</para>
     <note>
       <para>The Object Storage service does not use a SQL database on
-        the controller node.</para>
+        the controller node. Instead, it uses distributed SQLite databases
+        on each storage node.</para>
     </note>
     <step>
       <para>To create the Identity service credentials, complete these
@@ -75,7 +76,7 @@ Repeat User Password:
       </substeps>
     </step>
     <step>
-      <para>Create the Object Storage service API endpoints:</para>
+      <para>Create the Object Storage service API endpoint:</para>
       <screen><prompt>$</prompt> <userinput>openstack endpoint create \
   --publicurl 'http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
   --internalurl 'http://<replaceable>controller</replaceable>:8080/v1/AUTH_%(tenant_id)s' \
@@ -98,6 +99,13 @@ Repeat User Password:
   </procedure>
   <procedure>
     <title>To install and configure the controller node components</title>
+    <note>
+       <para>Default configuration files vary by distribution. You might need
+         to add these sections and options rather than modifying existing
+         sections and options. Also, an ellipsis (...) in the configuration
+         snippets indicates potential default configuration options that you
+         should retain.</para>
+    </note>
     <step>
       <para>Install the packages:</para>
       <note>
@@ -137,7 +145,7 @@ swift_dir = /etc/swift</programlisting>
           <para>In the <literal>[pipeline:main]</literal> section, enable
             the appropriate modules:</para>
           <programlisting language="ini">[pipeline:main]
-pipeline = authtoken cache healthcheck keystoneauth proxy-logging proxy-server</programlisting>
+pipeline = catch_errors gatekeeper healthcheck proxy-logging cache container_sync bulk ratelimit authtoken keystoneauth container-quotas account-quotas slo dlo proxy-logging proxy-server</programlisting>
           <note>
             <para>For more information on other modules that enable
              additional features, see the
@@ -147,10 +155,9 @@ pipeline = authtoken cache healthcheck keystoneauth proxy-logging proxy-server</
         </step>
         <step>
           <para>In the <literal>[app:proxy-server]</literal> section, enable
-            account management:</para>
+            automatic account creation:</para>
           <programlisting language="ini">[app:proxy-server]
 ...
-allow_account_management = true
 account_autocreate = true</programlisting>
         </step>
         <step>
@@ -160,9 +167,6 @@ account_autocreate = true</programlisting>
 use = egg:swift#keystoneauth
 ...
 operator_roles = admin,_member_</programlisting>
-          <note os="ubuntu;debian;rhel;centos;fedora">
-            <para>You might need to uncomment this section.</para>
-          </note>
         </step>
         <step>
           <para>In the <literal>[filter:authtoken]</literal> section,
@@ -170,23 +174,21 @@ operator_roles = admin,_member_</programlisting>
           <programlisting language="ini">[filter:authtoken]
 paste.filter_factory = keystonemiddleware.auth_token:filter_factory
 ...
-auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
-identity_uri = http://<replaceable>controller</replaceable>:35357
-admin_tenant_name = service
-admin_user = swift
-admin_password = <replaceable>SWIFT_PASS</replaceable>
+auth_uri = http://<replaceable>controller</replaceable>:5000
+auth_url = http://<replaceable>controller</replaceable>:35357
+auth_plugin = password
+project_domain_id = default
+user_domain_id = default
+project_name = service
+username = swift
+password = <replaceable>SWIFT_PASS</replaceable>
 delay_auth_decision = true</programlisting>
           <para>Replace <replaceable>SWIFT_PASS</replaceable> with the
             password you chose for the <literal>swift</literal> user in the
             Identity service.</para>
-          <note os="ubuntu;debian;rhel;centos;fedora">
-            <para>You might need to uncomment this section.</para>
-          </note>
           <note>
-            <para>Comment out any <literal>auth_host</literal>,
-              <literal>auth_port</literal>, and
-              <literal>auth_protocol</literal> options because the
-              <literal>identity_uri</literal> option replaces them.</para>
+            <para>Comment out or remove any other options in the
+              <literal>[filter:authtoken]</literal> section.</para>
           </note>
         </step>
         <step>
