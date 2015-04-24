@@ -70,20 +70,16 @@
         <td>(IntOpt) The port to bind to</td>
       </tr>
       <tr>
-        <td><option>ca_certs</option> = <replaceable>None</replaceable></td>
-        <td>(StrOpt) CA certificates</td>
-      </tr>
-      <tr>
         <td><option>core_plugin</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) The core plugin Neutron will use</td>
       </tr>
       <tr>
-        <td><option>ctl_cert</option> = <replaceable>None</replaceable></td>
-        <td>(StrOpt) controller certificate</td>
+        <td><option>default_ipv4_subnet_pool</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Default IPv4 subnet-pool to be used for automatic subnet CIDR allocation</td>
       </tr>
       <tr>
-        <td><option>ctl_privkey</option> = <replaceable>None</replaceable></td>
-        <td>(StrOpt) controller private key</td>
+        <td><option>default_ipv6_subnet_pool</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Default IPv6 subnet-pool to be used for automatic subnet CIDR allocation</td>
       </tr>
       <tr>
         <td><option>dhcp_agent_notification</option> = <replaceable>True</replaceable></td>
@@ -91,7 +87,7 @@
       </tr>
       <tr>
         <td><option>dhcp_agents_per_network</option> = <replaceable>1</replaceable></td>
-        <td>(IntOpt) Number of DHCP agents scheduled to host a network.</td>
+        <td>(IntOpt) Number of DHCP agents scheduled to host a tenant network. If this number is greater than 1, the scheduler automatically assigns multiple DHCP agents for a given tenant network, providing high availability for DHCP service.</td>
       </tr>
       <tr>
         <td><option>dhcp_broadcast_reply</option> = <replaceable>False</replaceable></td>
@@ -118,6 +114,18 @@
         <td>(IntOpt) DHCP lease duration (in seconds). Use -1 to tell dnsmasq to use infinite lease times.</td>
       </tr>
       <tr>
+        <td><option>dhcp_load_type</option> = <replaceable>networks</replaceable></td>
+        <td>(StrOpt) Representing the resource type whose load is being reported by the agent. This can be "networks", "subnets" or "ports". When specified (Default is networks), the server will extract particular load sent as part of its agent configuration object from the agent report state, which is the number of resources being consumed, at every report_interval.dhcp_load_type can be used in combination with network_scheduler_driver = neutron.scheduler.dhcp_agent_scheduler.WeightScheduler When the network_scheduler_driver is WeightScheduler, dhcp_load_type can be configured to represent the choice for the resource being balanced. Example: dhcp_load_type=networks</td>
+      </tr>
+      <tr>
+        <td><option>ebtables_path</option> = <replaceable>$state_path/ebtables-</replaceable></td>
+        <td>(StrOpt) Location of temporary ebtables table files.</td>
+      </tr>
+      <tr>
+        <td><option>enable_services_on_agents_with_admin_state_down</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Enable services on an agent with admin_state_up False. If this option is False, when admin_state_up of an agent is turned False, services on it will be disabled. Agents with admin_state_up False are not selected for automatic scheduling regardless of this option. But manual scheduling to such agents is available if this option is True.</td>
+      </tr>
+      <tr>
         <td><option>endpoint_type</option> = <replaceable>publicURL</replaceable></td>
         <td>(StrOpt) Network service endpoint type to pull from the keystone catalog</td>
       </tr>
@@ -127,7 +135,7 @@
       </tr>
       <tr>
         <td><option>host</option> = <replaceable>localhost</replaceable></td>
-        <td>(StrOpt) Hostname to be used by the neutron server, agents andservices running on this machine. All the agents and services running on this machine must use the same host value.</td>
+        <td>(StrOpt) Hostname to be used by the neutron server, agents and services running on this machine. All the agents and services running on this machine must use the same host value.</td>
       </tr>
       <tr>
         <td><option>interface_driver</option> = <replaceable>None</replaceable></td>
@@ -170,12 +178,20 @@
         <td>(IntOpt) Seconds between running periodic tasks</td>
       </tr>
       <tr>
+        <td><option>periodic_monitoring_interval</option> = <replaceable>5</replaceable></td>
+        <td>(IntOpt) Periodic interval at which the plugin checks for the monitoring L2 gateway agent</td>
+      </tr>
+      <tr>
         <td><option>report_interval</option> = <replaceable>300</replaceable></td>
         <td>(IntOpt) Interval between two metering reports</td>
       </tr>
       <tr>
         <td><option>state_path</option> = <replaceable>/var/lib/neutron</replaceable></td>
         <td>(StrOpt) Where to store Neutron state files. This directory must be writable by the agent.</td>
+      </tr>
+      <tr>
+        <td><option>vlan_transparent</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) If True, then allow plugins that support it to create VLAN transparent networks.</td>
       </tr>
       <tr>
         <th colspan="2">[AGENT]</th>
@@ -185,12 +201,16 @@
         <td>(StrOpt) Action to be executed when a child process dies</td>
       </tr>
       <tr>
-        <td><option>check_child_processes_interval</option> = <replaceable>0</replaceable></td>
+        <td><option>check_child_processes_interval</option> = <replaceable>60</replaceable></td>
         <td>(IntOpt) Interval between checks of child process liveness (seconds), use 0 to disable</td>
       </tr>
       <tr>
         <td><option>root_helper</option> = <replaceable>sudo</replaceable></td>
         <td>(StrOpt) Root helper application.</td>
+      </tr>
+      <tr>
+        <td><option>root_helper_daemon</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Root helper daemon application to use when possible.</td>
       </tr>
       <tr>
         <th colspan="2">[PROXY]</th>

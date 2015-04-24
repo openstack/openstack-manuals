@@ -109,6 +109,17 @@
         <td>(StrOpt) N1K VXLAN ID Ranges</td>
       </tr>
       <tr>
+        <th colspan="2">[cfg_agent]</th>
+      </tr>
+      <tr>
+        <td><option>device_connection_timeout</option> = <replaceable>30</replaceable></td>
+        <td>(IntOpt) Time in seconds for connecting to a hosting device</td>
+      </tr>
+      <tr>
+        <td><option>hosting_device_dead_timeout</option> = <replaceable>300</replaceable></td>
+        <td>(IntOpt) The time in seconds until a backlogged hosting device is presumed dead. This value should be set up high enough to recover from a period of connectivity loss or high load when the device may not be responding.</td>
+      </tr>
+      <tr>
         <th colspan="2">[general]</th>
       </tr>
       <tr>
@@ -151,15 +162,11 @@
         <td>(IntOpt) Booting time in seconds before a CSR1kv becomes operational.</td>
       </tr>
       <tr>
-        <td><option>csr1kv_cfgagent_router_driver</option> = <replaceable>neutron.plugins.cisco.cfg_agent.device_drivers.csr1kv.csr1kv_routing_driver.CSR1kvRoutingDriver</replaceable></td>
+        <td><option>csr1kv_cfgagent_router_driver</option> = <replaceable>networking_cisco.plugins.cisco.cfg_agent.device_drivers.csr1kv.csr1kv_routing_driver.CSR1kvRoutingDriver</replaceable></td>
         <td>(StrOpt) Config agent driver for CSR1kv.</td>
       </tr>
       <tr>
-        <td><option>csr1kv_configdrive_template</option> = <replaceable>csr1kv_cfg_template</replaceable></td>
-        <td>(StrOpt) CSR1kv configdrive template file.</td>
-      </tr>
-      <tr>
-        <td><option>csr1kv_device_driver</option> = <replaceable>neutron.plugins.cisco.l3.hosting_device_drivers.csr1kv_hd_driver.CSR1kvHostingDeviceDriver</replaceable></td>
+        <td><option>csr1kv_device_driver</option> = <replaceable>networking_cisco.plugins.cisco.l3.hosting_device_drivers.csr1kv_hd_driver.CSR1kvHostingDeviceDriver</replaceable></td>
         <td>(StrOpt) Hosting device driver for CSR1kv.</td>
       </tr>
       <tr>
@@ -175,35 +182,12 @@
         <td>(StrOpt) Password to use for CSR1kv configurations.</td>
       </tr>
       <tr>
-        <td><option>csr1kv_plugging_driver</option> = <replaceable>neutron.plugins.cisco.l3.plugging_drivers.n1kv_trunking_driver.N1kvTrunkingPlugDriver</replaceable></td>
+        <td><option>csr1kv_plugging_driver</option> = <replaceable>networking_cisco.plugins.cisco.l3.plugging_drivers.n1kv_trunking_driver.N1kvTrunkingPlugDriver</replaceable></td>
         <td>(StrOpt) Plugging driver for CSR1kv.</td>
       </tr>
       <tr>
         <td><option>csr1kv_username</option> = <replaceable>stack</replaceable></td>
         <td>(StrOpt) Username to use for CSR1kv configurations.</td>
-      </tr>
-      <tr>
-        <th colspan="2">[n1kv]</th>
-      </tr>
-      <tr>
-        <td><option>management_port_profile</option> = <replaceable>osn_mgmt_pp</replaceable></td>
-        <td>(StrOpt) Name of N1kv port profile for management ports.</td>
-      </tr>
-      <tr>
-        <td><option>t1_network_profile</option> = <replaceable>osn_t1_np</replaceable></td>
-        <td>(StrOpt) Name of N1kv network profile for T1 networks (i.e., trunk networks for VXLAN segmented traffic).</td>
-      </tr>
-      <tr>
-        <td><option>t1_port_profile</option> = <replaceable>osn_t1_pp</replaceable></td>
-        <td>(StrOpt) Name of N1kv port profile for T1 ports (i.e., ports carrying traffic from VXLAN segmented networks).</td>
-      </tr>
-      <tr>
-        <td><option>t2_network_profile</option> = <replaceable>osn_t2_np</replaceable></td>
-        <td>(StrOpt) Name of N1kv network profile for T2 networks (i.e., trunk networks for VLAN segmented traffic).</td>
-      </tr>
-      <tr>
-        <td><option>t2_port_profile</option> = <replaceable>osn_t2_pp</replaceable></td>
-        <td>(StrOpt) Name of N1kv port profile for T2 ports (i.e., ports carrying traffic from VLAN segmented networks).</td>
       </tr>
     </tbody>
   </table>

@@ -34,6 +34,10 @@
         <td>(BoolOpt) Allow running metadata proxy.</td>
       </tr>
       <tr>
+        <td><option>external_ingress_mark</option> = <replaceable>0x2</replaceable></td>
+        <td>(StrOpt) Iptables mangle mark used to mark ingress from external network</td>
+      </tr>
+      <tr>
         <td><option>external_network_bridge</option> = <replaceable>br-ex</replaceable></td>
         <td>(StrOpt) Name of bridge used for external network traffic.</td>
       </tr>
@@ -55,11 +59,15 @@
       </tr>
       <tr>
         <td><option>ha_vrrp_auth_type</option> = <replaceable>PASS</replaceable></td>
-        <td>(StrOpt) VRRP authentication type AH/PASS</td>
+        <td>(StrOpt) VRRP authentication type</td>
       </tr>
       <tr>
         <td><option>handle_internal_only_routers</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Agent should implement routers with no gateway</td>
+      </tr>
+      <tr>
+        <td><option>ipv6_gateway</option> = <replaceable></replaceable></td>
+        <td>(StrOpt) With IPv6, the network used for the external gateway does not need to have an associated subnet, since the automatically assigned link-local address (LLA) can be used. However, an IPv6 gateway address is needed for use as the next-hop for the default route. If no IPv6 gateway address is configured here, (and only then) the neutron router will be configured to get its default route from router advertisements (RAs) from the upstream router; in which case the upstream router must also be configured to send these RAs. The ipv6_gateway, when configured, should be the LLA of the interface on the upstream router. If a next-hop using a global unique address (GUA) is desired, it needs to be done via a subnet allocated to the network and not through this parameter.</td>
       </tr>
       <tr>
         <td><option>l3_ha</option> = <replaceable>False</replaceable></td>
