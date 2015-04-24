@@ -15,6 +15,29 @@
     </thead>
     <tbody>
       <tr>
+        <th colspan="2">[eventlet_server_ssl]</th>
+      </tr>
+      <tr>
+        <td><option>ca_certs</option> = <replaceable>/etc/keystone/ssl/certs/ca.pem</replaceable></td>
+        <td>(StrOpt) Path of the CA cert file for SSL.</td>
+      </tr>
+      <tr>
+        <td><option>cert_required</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Require client certificate.</td>
+      </tr>
+      <tr>
+        <td><option>certfile</option> = <replaceable>/etc/keystone/ssl/certs/keystone.pem</replaceable></td>
+        <td>(StrOpt) Path of the certfile for SSL. For non-production environments, you may be interested in using `keystone-manage ssl_setup` to generate self-signed certificates.</td>
+      </tr>
+      <tr>
+        <td><option>enable</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Toggle for SSL support on the Keystone eventlet servers.</td>
+      </tr>
+      <tr>
+        <td><option>keyfile</option> = <replaceable>/etc/keystone/ssl/private/keystonekey.pem</replaceable></td>
+        <td>(StrOpt) Path of the keyfile for SSL.</td>
+      </tr>
+      <tr>
         <th colspan="2">[signing]</th>
       </tr>
       <tr>
@@ -42,10 +65,6 @@
         <td>(StrOpt) Path of the keyfile for token signing.</td>
       </tr>
       <tr>
-        <td><option>token_format</option> = <replaceable>None</replaceable></td>
-        <td>(StrOpt) Deprecated in favor of provider in the [token] section.</td>
-      </tr>
-      <tr>
         <td><option>valid_days</option> = <replaceable>3650</replaceable></td>
         <td>(IntOpt) Days the token signing cert is valid for (auto generated certificate).</td>
       </tr>
@@ -53,36 +72,16 @@
         <th colspan="2">[ssl]</th>
       </tr>
       <tr>
-        <td><option>ca_certs</option> = <replaceable>/etc/keystone/ssl/certs/ca.pem</replaceable></td>
-        <td>(StrOpt) Path of the CA cert file for SSL.</td>
-      </tr>
-      <tr>
         <td><option>ca_key</option> = <replaceable>/etc/keystone/ssl/private/cakey.pem</replaceable></td>
         <td>(StrOpt) Path of the CA key file for SSL.</td>
-      </tr>
-      <tr>
-        <td><option>cert_required</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Require client certificate.</td>
       </tr>
       <tr>
         <td><option>cert_subject</option> = <replaceable>/C=US/ST=Unset/L=Unset/O=Unset/CN=localhost</replaceable></td>
         <td>(StrOpt) SSL certificate subject (auto generated certificate).</td>
       </tr>
       <tr>
-        <td><option>certfile</option> = <replaceable>/etc/keystone/ssl/certs/keystone.pem</replaceable></td>
-        <td>(StrOpt) Path of the certfile for SSL. For non-production environments, you may be interested in using `keystone-manage ssl_setup` to generate self-signed certificates.</td>
-      </tr>
-      <tr>
-        <td><option>enable</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Toggle for SSL support on the Keystone eventlet servers.</td>
-      </tr>
-      <tr>
         <td><option>key_size</option> = <replaceable>1024</replaceable></td>
         <td>(IntOpt) SSL key length (in bits) (auto generated certificate).</td>
-      </tr>
-      <tr>
-        <td><option>keyfile</option> = <replaceable>/etc/keystone/ssl/private/keystonekey.pem</replaceable></td>
-        <td>(StrOpt) Path of the keyfile for SSL.</td>
       </tr>
       <tr>
         <td><option>valid_days</option> = <replaceable>3650</replaceable></td>
