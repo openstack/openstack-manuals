@@ -25,6 +25,22 @@
         <td><option>driver</option> = <replaceable>keystone.contrib.federation.backends.sql.Federation</replaceable></td>
         <td>(StrOpt) Federation backend driver.</td>
       </tr>
+      <tr>
+        <td><option>federated_domain_name</option> = <replaceable>Federated</replaceable></td>
+        <td>(StrOpt) A domain name that is reserved to allow federated ephemeral users to have a domain concept. Note that an admin will not be able to create a domain with this name or update an existing domain to this name. You are not advised to change this value unless you really have to. Changing this option to empty string or None will not have any impact and default name will be used.</td>
+      </tr>
+      <tr>
+        <td><option>remote_id_attribute</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Value to be used to obtain the entity ID of the Identity Provider from the environment (e.g. if using the mod_shib plugin this value is `Shib-Identity-Provider`).</td>
+      </tr>
+      <tr>
+        <td><option>sso_callback_template</option> = <replaceable>/etc/keystone/sso_callback_template.html</replaceable></td>
+        <td>(StrOpt) Location of Single Sign-On callback handler, will return a token to a trusted dashboard host.</td>
+      </tr>
+      <tr>
+        <td><option>trusted_dashboard</option> = <replaceable>[]</replaceable></td>
+        <td>(MultiStrOpt) A list of trusted dashboard hosts. Before accepting a Single Sign-On request to return a token, the origin host must be a member of the trusted_dashboard list. This configuration option may be repeated for multiple values. For example: trusted_dashboard=http://acme.com trusted_dashboard=http://beta.com</td>
+      </tr>
     </tbody>
   </table>
 </para>
