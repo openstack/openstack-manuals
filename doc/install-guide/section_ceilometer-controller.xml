@@ -87,13 +87,22 @@ Key Expires: Sat Dec 20 20:08:39 2014</programlisting>
     </step>
     <step>
       <para>Create the <literal>ceilometer</literal> database:</para>
-      <screen><prompt>#</prompt> <userinput>mongo --host <replaceable>controller</replaceable> --eval '
+      <screen os="centos;fedora;rhel"><prompt>#</prompt> <userinput>mongo --host <replaceable>controller</replaceable> --eval '
+  db = db.getSiblingDB("ceilometer");
+  db.createUser({user: "ceilometer",
+  pwd: "<replaceable>CEILOMETER_DBPASS</replaceable>",
+  roles: [ "readWrite", "dbAdmin" ]})'</userinput>
+
+<computeroutput>MongoDB shell version: 2.6.x
+connecting to: controller:27017/test
+Successfully added user: { "user" : "ceilometer", "roles" : [ "readWrite", "dbAdmin" ] }</computeroutput></screen>
+      <screen os="ubuntu;opensuse;sles"><prompt>#</prompt> <userinput>mongo --host <replaceable>controller</replaceable> --eval '
   db = db.getSiblingDB("ceilometer");
   db.addUser({user: "ceilometer",
   pwd: "<replaceable>CEILOMETER_DBPASS</replaceable>",
   roles: [ "readWrite", "dbAdmin" ]})'</userinput>
 
-<computeroutput>MongoDB shell version: X.Y.Z
+<computeroutput>MongoDB shell version: 2.4.x
 connecting to: controller:27017/test
 {
  "user" : "ceilometer",
