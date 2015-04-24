@@ -158,9 +158,10 @@ redirect 301 /user-guide-admin/content/admin_cli_manage_projects_users.html /use
 redirect 301 /user-guide-admin/content/specify-host-to-boot-instances-on.html /user-guide-admin/adminuser/cli_nova_specify_host.html
 redirect 301 /user-guide-admin/content/nova_cli_migrate_single.html /user-guide-admin/adminuser/cli_nova_migrate.html
 
-# All the rest of the files should be a direct match, file name for file name,
-# Or they are not high in pageview count.
+# Since we don't have a direct match for all file, redirect to the index page.
 
-redirectmatch 301 /user-guide/content/(.*) /user-guide/enduser/$1
-redirectmatch 301 /user-guide-admin/content/(.*) /user-guide-admin/adminuser/$1
-redirectmatch 301 /hot-guide/content/(.*) /user-guide/hot-guide/$1
+redirectmatch 301 /user-guide/content/.*$ /user-guide/index.html
+redirectmatch 301 /user-guide-admin/content/.* /user-guide-admin/index.html
+
+# All these files should be a direct match, file name for file name.
+redirectmatch 301 /hot-guide/content/.* /user-guide/hot-guide/$1
