@@ -26,6 +26,10 @@
         <td>(BoolOpt) Allow unauthenticated users to access the API with read-only privileges. This only applies when using ContextMiddleware.</td>
       </tr>
       <tr>
+        <td><option>available_plugins</option> = <replaceable></replaceable></td>
+        <td>(ListOpt) A list of artifacts that are allowed in the format name or name-version. Empty list means that any artifact can be loaded.</td>
+      </tr>
+      <tr>
         <td><option>enable_v1_api</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Deploy the v1 OpenStack Images API.</td>
       </tr>
@@ -42,8 +46,20 @@
         <td>(BoolOpt) Deploy the v2 OpenStack Registry API.</td>
       </tr>
       <tr>
+        <td><option>http_keepalive</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) If False, server will return the header "Connection: close", If True, server will return "Connection: Keep-Alive" in its responses. In order to close the client socket connection explicitly after the response is sent and read successfully by the client, you simply have to set this option to False when you create a wsgi server.</td>
+      </tr>
+      <tr>
+        <td><option>http_timeout</option> = <replaceable>600</replaceable></td>
+        <td>(IntOpt) Timeout seconds for HTTP requests. Set it to None to disable timeout.</td>
+      </tr>
+      <tr>
         <td><option>image_size_cap</option> = <replaceable>1099511627776</replaceable></td>
-        <td>(IntOpt) Maximum size of image a user can upload in bytes. Defaults to 1099511627776 bytes (1 TB).</td>
+        <td>(IntOpt) Maximum size of image a user can upload in bytes. Defaults to 1099511627776 bytes (1 TB).WARNING: this value should only be increased after careful consideration and must be set to a value under 8 EB (9223372036854775808).</td>
+      </tr>
+      <tr>
+        <td><option>load_enabled</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) When false, no artifacts can be loaded regardless of available_plugins. When true, artifacts can be loaded.</td>
       </tr>
       <tr>
         <td><option>location_strategy</option> = <replaceable>location_order</replaceable></td>
@@ -67,7 +83,7 @@
       </tr>
       <tr>
         <td><option>show_multiple_locations</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Whether to include the backend image locations in image properties. Revealing storage location can be a security risk, so use this setting with caution!  The overrides show_image_direct_url.</td>
+        <td>(BoolOpt) Whether to include the backend image locations in image properties. For example, if using the file system store a URL of "file:///path/to/image" will be returned to the user in the 'direct_url' meta-data field. Revealing storage location can be a security risk, so use this setting with caution!  The overrides show_image_direct_url.</td>
       </tr>
       <tr>
         <td><option>tcp_keepidle</option> = <replaceable>600</replaceable></td>
