@@ -178,8 +178,8 @@ Packet flow
 
 The flow of packets in a provider network scenario only contains
 complexity inside the compute node's Open vSwitch networking. Neutron allocates
-internal VLAN tags for each Neutron Network and provides a mapping
-between the internal VLAN tag used for a Neutron network, and then
+internal VLAN tags for each neutron network and provides a mapping
+between the internal VLAN tag used for a neutron network, and then
 inserts rules in the Open vSwitch switching infrastructure to rewrite
 the internal VLAN tag back to the VLAN tag that is allocated on the
 hardware switch, as packets cross the br-ex device.
