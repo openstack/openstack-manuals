@@ -2,6 +2,10 @@
 Configuration
 =============
 
+This content currently under development. For general configuration, see
+the `Configuration Reference
+<http://docs.openstack.org/juno/config-reference/content/>`_.
+
 .. toctree::
    :maxdepth: 2
 
