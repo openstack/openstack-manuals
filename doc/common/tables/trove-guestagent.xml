@@ -26,6 +26,10 @@
         <td>(IntOpt) Maximum time (in seconds) to wait for Guest Agent 'quick'requests (such as retrieving a list of users or databases).</td>
       </tr>
       <tr>
+        <td><option>agent_heartbeat_expiry</option> = <replaceable>60</replaceable></td>
+        <td>(IntOpt) Time (in seconds) after which a guest is considered unreachable</td>
+      </tr>
+      <tr>
         <td><option>agent_heartbeat_time</option> = <replaceable>10</replaceable></td>
         <td>(IntOpt) Maximum time (in seconds) for the Guest Agent to reply to a heartbeat request.</td>
       </tr>
@@ -34,15 +38,19 @@
         <td>(IntOpt) Maximum time (in seconds) to wait for taking a Guest Agent replication snapshot.</td>
       </tr>
       <tr>
-        <td><option>guest_config</option> = <replaceable>$pybasedir/etc/trove/trove-guestagent.conf.sample</replaceable></td>
-        <td>(StrOpt) Path to the Guest Agent config file.</td>
+        <td><option>guest_config</option> = <replaceable>/etc/trove/trove-guestagent.conf</replaceable></td>
+        <td>(StrOpt) Path to the Guest Agent config file to be injected during instance creation.</td>
       </tr>
       <tr>
         <td><option>guest_id</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) ID of the Guest Instance.</td>
       </tr>
       <tr>
-        <td><option>ignore_dbs</option> = <replaceable>lost+found, mysql, information_schema</replaceable></td>
+        <td><option>guest_info</option> = <replaceable>guest_info.conf</replaceable></td>
+        <td>(StrOpt) The guest info filename found in the injected config location.  If a full path is specified then it will be used as the path to the guest info file</td>
+      </tr>
+      <tr>
+        <td><option>ignore_dbs</option> = <replaceable>lost+found, #mysql50#lost+found, mysql, information_schema</replaceable></td>
         <td>(ListOpt) Databases to exclude when listing databases.</td>
       </tr>
       <tr>
