@@ -114,8 +114,8 @@ Compute nodes
 
    L3 HA Open vSwitch scenario - service layout
 
-OpenVSwitch Layer 3 architecture for high availability
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Open vSwitch Layer 3 architecture for high availability
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The general L3 HA architecture augments the legacy networking architecture by
 providing failover for virtual routers under the L3 agent. The failover

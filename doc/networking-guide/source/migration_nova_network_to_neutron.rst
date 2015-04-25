@@ -80,7 +80,7 @@ Migration process overview
 #. Start neutron-server in intended final config, except with REST API restricted to
    read-write only by nova-api.
 #. Make the Compute REST API read-only.
-#. Run a DB dump/restore tool that creates Networking datastructures representing current
+#. Run a DB dump/restore tool that creates Networking data structures representing current
    legacy networking config.
 #. Enable a nova-api proxy that recreates internal Compute objects from Networking information
    (via the Networking REST API).
