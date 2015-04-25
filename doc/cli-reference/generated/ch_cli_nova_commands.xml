@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Compute API and its extensions.
 
        This chapter documents <command>nova</command> version
-        <literal>2.23.0</literal>.
+        <literal>2.24.1</literal>.
     </para>
 
     <para>For help on a specific <command>nova</command>
@@ -1460,11 +1460,60 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-servers-migrate</command></term>
+    <term><command>instance-action</command></term>
     <listitem>
       <para>
-        Migrate all instances of the specified host to
-      other available hosts.
+        Show an action.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action-list</command></term>
+    <listitem>
+      <para>
+        List actions on a server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-meta</command></term>
+    <listitem>
+      <para>
+        Set or Delete metadata on all instances of a
+      host.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-evacuate-live</command></term>
+    <listitem>
+      <para>
+        Live migrate all instances of the specified
+      host to other available hosts.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>force-delete</command></term>
+    <listitem>
+      <para>
+        Force delete a server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>restore</command></term>
+    <listitem>
+      <para>
+        Restore a soft-deleted server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>migration-list</command></term>
+    <listitem>
+      <para>
+        Print a list of migrations.
       </para>
     </listitem>
   </varlistentry>
@@ -1533,61 +1582,11 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-evacuate</command></term>
+    <term><command>list-extensions</command></term>
     <listitem>
       <para>
-        Evacuate all instances from failed host.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>cell-capacities</command></term>
-    <listitem>
-      <para>
-        Get cell capacities for all cells or a given
-      cell.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>cell-show</command></term>
-    <listitem>
-      <para>
-        Show details of a given cell.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-meta</command></term>
-    <listitem>
-      <para>
-        Set or Delete metadata on all instances of a
-      host.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-evacuate-live</command></term>
-    <listitem>
-      <para>
-        Live migrate all instances of the specified
-      host to other available hosts.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action</command></term>
-    <listitem>
-      <para>
-        Show an action.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action-list</command></term>
-    <listitem>
-      <para>
-        List actions on a server.
+        List all the os-api extensions that are
+      available.
       </para>
     </listitem>
   </varlistentry>
@@ -1651,35 +1650,36 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>migration-list</command></term>
+    <term><command>cell-capacities</command></term>
     <listitem>
       <para>
-        Print a list of migrations.
+        Get cell capacities for all cells or a given
+      cell.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>force-delete</command></term>
+    <term><command>cell-show</command></term>
     <listitem>
       <para>
-        Force delete a server.
+        Show details of a given cell.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>restore</command></term>
+    <term><command>host-servers-migrate</command></term>
     <listitem>
       <para>
-        Restore a soft-deleted server.
+        Migrate all instances of the specified host to
+      other available hosts.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>list-extensions</command></term>
+    <term><command>host-evacuate</command></term>
     <listitem>
       <para>
-        List all the os-api extensions that are
-      available.
+        Evacuate all instances from failed host.
       </para>
     </listitem>
   </varlistentry>
@@ -2791,15 +2791,15 @@ Boot a new server.
       (e.g. vda, xda, ...; if omitted, hypervisor
       driver chooses suitable device depending on
       selected bus), size=size of the block device
-      in GB (if omitted, hypervisor driver
-      calculates size), format=device will be
-      formatted (e.g. swap, ntfs, ...; optional),
-      bootindex=integer used for ordering the boot
-      disks (for image backed instances it is equal
-      to 0, for others need to be specified) and
-      shutdown=shutdown behaviour (either preserve
-      or remove, for local destination set to
-      remove).
+      in MB(for swap) and in GB(for other formats)
+      (if omitted, hypervisor driver calculates
+      size), format=device will be formatted (e.g.
+      swap, ntfs, ...; optional), bootindex=integer
+      used for ordering the boot disks (for image
+      backed instances it is equal to 0, for others
+      need to be specified) and shutdown=shutdown
+      behaviour (either preserve or remove, for
+      local destination set to remove).
       </para>
     </listitem>
   </varlistentry>

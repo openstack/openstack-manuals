@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Image Service API and its extensions.
 
        This chapter documents <command>glance</command> version
-        <literal>0.17.0</literal>.
+        <literal>0.18.0</literal>.
     </para>
 
     <para>For help on a specific <command>glance</command>
@@ -889,7 +889,8 @@ Update a specific image.
       example, if the image data is stored in swift, you
       could specify 'swift+http://tenant%3Aaccount:key@auth_
       url/v2.0/container/obj'. (Note: '%3A' is ':' URL
-      encoded.)
+      encoded.) This option only works for images in
+      'queued' status.
       </para>
     </listitem>
   </varlistentry>
@@ -918,7 +919,8 @@ Update a specific image.
       <para>
       Similar to '--location' in usage, but this indicates
       that the Glance server should immediately copy the
-      data and store it in its configured image store.
+      data and store it in its configured image store. This
+      option only works for images in 'queued' status.
       </para>
     </listitem>
   </varlistentry>
@@ -1300,7 +1302,8 @@ List images you can access.
     </section>
     <section xml:id="glanceclient_subcommand_image-show_v2">
         <title>glance image-show (v2)</title>
-        <screen><computeroutput>usage: glance --os-image-api-version 2 image-show [--max-column-width &lt;integer&gt;] &lt;IMAGE_ID&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-show [--human-readable] [--max-column-width &lt;integer&gt;]
+                         &lt;IMAGE_ID&gt;</computeroutput></screen>
         <para>
 Describe a specific image.
         </para>  <variablelist wordsize="10">
@@ -1316,6 +1319,14 @@ Describe a specific image.
  </variablelist>
   <variablelist wordsize="10">
     <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--human-readable</command></term>
+    <listitem>
+      <para>
+        Print image size in a human-friendly format.
+      </para>
+    </listitem>
+  </varlistentry>
   <varlistentry>
     <term><command>--max-column-width &lt;integer&gt;</command></term>
     <listitem>
