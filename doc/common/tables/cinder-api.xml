@@ -30,8 +30,16 @@
         <td>(IntOpt) Cache volume availability zones in memory for the provided duration in seconds</td>
       </tr>
       <tr>
+        <td><option>backend_host</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Backend override of host value.</td>
+      </tr>
+      <tr>
         <td><option>default_timeout</option> = <replaceable>525600</replaceable></td>
         <td>(IntOpt) Default timeout for CLI operations in minutes. For example, LUN migration is a typical long running operation, which depends on the LUN size and the load of the array. An upper bound in the specific deployment can be set to avoid unnecessary long wait. By default, it is 365 days long.</td>
+      </tr>
+      <tr>
+        <td><option>enable_force_upload</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Enables the Force option on upload_to_image. This enables running upload_volume on in-use volumes for backends that support it.</td>
       </tr>
       <tr>
         <td><option>enable_v1_api</option> = <replaceable>True</replaceable></td>
@@ -80,6 +88,10 @@
       <tr>
         <td><option>osapi_volume_workers</option> = <replaceable>None</replaceable></td>
         <td>(IntOpt) Number of workers for OpenStack Volume API service. The default is equal to the number of CPUs available.</td>
+      </tr>
+      <tr>
+        <td><option>public_endpoint</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Public url to use for versions endpoint. The default is None, which will use the request's host_url attribute to populate the URL base. If Cinder is operating behind a proxy, you will want to change this to represent the proxy's URL.</td>
       </tr>
       <tr>
         <td><option>transfer_api_class</option> = <replaceable>cinder.transfer.api.API</replaceable></td>
