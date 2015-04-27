@@ -11,36 +11,87 @@
         <title>To load an ISO image to an Image service data
             store</title>
         <step>
-            <para>Obtain the ISO image. For example,
-                <filename>ubuntu-13.04-server-amd64.iso</filename>.</para>
-        </step>
-        <step>
             <para>In the Image service, run the following
                 command:</para>
-            <screen><prompt>$</prompt> <userinput>glance image-create --name ubuntu.iso \
-   --is-public True --container-format bare \
-   --disk-format iso &lt; ubuntu-13.04-server-amd64.iso</userinput></screen>
+            <screen><prompt>$</prompt> <userinput>glance image-create --name "ubuntu-14.04.2-server-amd64.iso" \
+    --copy-from http://releases.ubuntu.com/14.04.2/ubuntu-14.04.2-server-amd64.iso \
+    --is-public True --container-format bare --disk-format iso</userinput></screen>
             <para>In this command, <literal>ubuntu.iso</literal> is
-                the name for the ISO image after it is loaded to the
-                Image service, and
-                    <literal>ubuntu-13.04-server-amd64.iso</literal>
+                the name for the ISO image after it is
+                loaded to the Image service, and
+                <replaceable>ubuntu-14.04.2-server-amd64.iso</replaceable>
                 is the name of the source ISO image.</para>
         </step>
         <step>
-            <para>Optionally, confirm the upload in Compute.</para>
-            <para>Run this command:</para>
-            <screen><prompt>$</prompt> <userinput>nova image-list</userinput></screen>
+            <para>Optionally, to confirm the upload in Image Service (glance), run this command:</para>            <para>Run this command:</para>
+            <screen><prompt>$</prompt> <userinput>glance image-list</userinput></screen>
         </step>
     </procedure>
     <procedure>
         <title>To boot an instance from an ISO image</title>
+            <para>OpenStack supports booting instances using ISO images,
+                but in order to make the instances created using ISO images
+                functional, follow a few more steps:</para>
         <step>
-            <para>Run this command:</para>
-            <screen><prompt>$</prompt> <userinput>nova boot --image ubuntu.iso \
-  --flavor 1 instance_name</userinput></screen>
-            <para>In this command, <literal>ubuntu.iso</literal> is
-                the ISO image, and <literal>instance_name</literal> is
-                the name of the new instance.</para>
+            <para>Boot instance with ISO image using the following command:</para>
+            <screen><prompt>$</prompt> <userinput>nova boot \
+    --image ubuntu-14.04.2-server-amd64.iso \
+    --block-device source=blank,dest=volume,size=10,shutdown=preserve \
+    --nic net-id=<replaceable>NETWORK_UUID</replaceable>
+    --flavor 3 <replaceable>INSTANCE_NAME</replaceable></userinput></screen>
+            <para>In this command, <filename>ubuntu-14.04.2-server-amd64.iso</filename> is
+                the ISO image, and <replaceable>INSTANCE_NAME</replaceable> is
+                the name of the new instance.
+                <replaceable>NETWORK_UUID</replaceable> is a valid network
+                id in your system</para>
+            <para>You need Block Storage service and the parameter
+            <literal>shutdown=preserve</literal> is also mandatory, thus
+            the volume will be preserved after the shutdown of the instance.</para>
+        </step>
+        <step>
+            <para>After the instance  is successfully launched,
+                connect to the instance using remote console and follow the
+                instructions to install the system as using ISO images on
+                regular computers. When the installation is finished and
+                system rebooted, the instance asks you again to you to
+                install the operating system, which means your instance
+                is not usable. If you have problems with image creating
+                please check the <link xlink:href="http://docs.openstack.org/image-guide/content/ch_creating_images_manually.html">
+                Virtual Machine Image Guide</link> for reference.</para>
+        </step>
+    </procedure>
+    <procedure>
+        <title>To make the instances booted from ISO image functional</title>
+            <para>Now you have to do the following actions to make your
+                instances created using ISO actually functional:</para>
+        <step>
+            <para>Delete the instance you just created:</para>
+            <screen><prompt>$</prompt> <userinput>nova delete <replaceable>INSTANCE_NAME</replaceable></userinput></screen>
+        </step>
+        <step>
+            <para>After you delete an instance, the system you just
+                installed using your ISO image remains because the parameter
+                <literal>shutdown=preserve</literal>
+                was set, run the following command:</para>
+            <screen><prompt>$</prompt> <userinput>cinder list</userinput></screen>
+            <para>You get a list with all the volumes
+                in your system. In this list, you can find the volume
+                that is attached to your ISO created instance, with the
+                <literal>false</literal> bootable property.</para>
+        </step>
+        <step>
+            <para>Upload the volume to glance:</para>
+            <screen><prompt>$</prompt> <userinput>cinder upload-to-image <replaceable>VOLUME_UUID</replaceable> <replaceable>IMAGE_NAME</replaceable></userinput></screen>
+            <para>The <replaceable>VOLUME_UUID</replaceable> is the uuid
+                of the volume that is attached to your ISO created instance,
+                and the <replaceable>IMAGE_NAME</replaceable> is the
+                name that you give to your new image.</para>
+        </step>
+        <step>
+            <para>After the image is successfully uploaded, you
+                can now use the new image to boot instances, the
+                instance launched using this image will contain the
+                system you just installed using the ISO image.</para>
         </step>
     </procedure>
 </section>
