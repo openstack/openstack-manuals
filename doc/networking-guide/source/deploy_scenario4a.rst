@@ -230,7 +230,7 @@ Controller node (controller)
        notify_nova_on_port_status_changes = True
        notify_nova_on_port_data_changes = True
        nova_url = http://controller:8774/v2
-       nova_region_name = regionOne
+       nova_region_name = RegionOne
        nova_admin_username = NOVA_ADMIN_USERNAME
        nova_admin_tenant_id = NOVA_ADMIN_TENANT_ID
        nova_admin_password =  NOVA_ADMIN_PASSWORD

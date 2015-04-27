@@ -578,7 +578,7 @@ other nodes.
       notify_nova_on_port_status_changes = True
       notify_nova_on_port_data_changes = True
       nova_url = http://controller:8774/v2
-      nova_region_name = regionOne
+      nova_region_name = RegionOne
       nova_admin_username = NOVA_ADMIN_USERNAME
       nova_admin_tenant_id = NOVA_ADMIN_TENANT_ID
       nova_admin_password =  NOVA_ADMIN_PASSWORD
@@ -746,7 +746,7 @@ The network node provides DHCP and NAT services to all instances.
       [DEFAULT]
       verbose = True
       auth_url = http://controller:5000/v2.0
-      auth_region = regionOne
+      auth_region = RegionOne
       admin_tenant_name = ADMIN_TENANT_NAME
       admin_user = ADMIN_USER
       admin_password = ADMIN_PASSWORD
