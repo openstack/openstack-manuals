@@ -269,8 +269,8 @@
       <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
     </tr>
     <tr>
-      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 60</td>
-      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat).</td>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 0</td>
+      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disables the heartbeat, &gt;0 enables it. Enabling heartbeats requires kombu&gt;=3.0.7 and amqp&gt;=1.4.0). EXPERIMENTAL</td>
     </tr>
     <tr>
       <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
@@ -452,6 +452,11 @@
       <td>/etc/trove/trove-guestagent.conf</td>
     </tr>
     <tr>
+      <td>[DEFAULT] ignore_dbs</td>
+      <td>lost+found, mysql, information_schema</td>
+      <td>lost+found, #mysql50#lost+found, mysql, information_schema</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] notification_service_id</td>
       <td>{'postgresql': 'ac277e0d-4f21-40aa-b347-1ea31e571720', 'couchbase': 'fa62fe68-74d9-4779-a24e-36f19602c415', 'mongodb': 'c8c907af-7375-456f-b929-b637ff9209ee', 'redis': 'b216ffc5-1947-456c-a4cf-70f94c05f7d0', 'mysql': '2f3ff068-2bfb-4f70-9a9d-a6bb65bc084b', 'cassandra': '459a230d-4e97-4344-9067-2a54a310b0ed'}</td>
       <td>{'vertica': 'a8d805ae-a3b2-c4fd-gb23-b62cee5201ae', 'db2': 'e040cd37-263d-4869-aaa6-c62aa97523b5', 'postgresql': 'ac277e0d-4f21-40aa-b347-1ea31e571720', 'mysql': '2f3ff068-2bfb-4f70-9a9d-a6bb65bc084b', 'couchbase': 'fa62fe68-74d9-4779-a24e-36f19602c415', 'mongodb': 'c8c907af-7375-456f-b929-b637ff9209ee', 'couchdb': 'f0a9ab7b-66f7-4352-93d7-071521d44c7c', 'redis': 'b216ffc5-1947-456c-a4cf-70f94c05f7d0', 'cassandra': '459a230d-4e97-4344-9067-2a54a310b0ed'}</td>
@@ -469,7 +474,7 @@
     <tr>
       <td>[DEFAULT] rpc_zmq_matchmaker</td>
       <td>trove.openstack.common.rpc.matchmaker.MatchMakerLocalhost</td>
-      <td>oslo_messaging._drivers.matchmaker.MatchMakerLocalhost</td>
+      <td>local</td>
     </tr>
     <tr>
       <td>[couchbase] backup_namespace</td>

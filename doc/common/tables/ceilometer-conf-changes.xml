@@ -241,8 +241,8 @@
       <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
     </tr>
     <tr>
-      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 60</td>
-      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat).</td>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 0</td>
+      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disables the heartbeat, &gt;0 enables it. Enabling heartbeats requires kombu&gt;=3.0.7 and amqp&gt;=1.4.0). EXPERIMENTAL</td>
     </tr>
     <tr>
       <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
@@ -317,6 +317,18 @@
       <td>(IntOpt) Size of RPC connection pool.</td>
     </tr>
     <tr>
+      <td>[oslo_policy] policy_default_rule = default</td>
+      <td>(StrOpt) Default rule. Enforced when a requested rule is not found.</td>
+    </tr>
+    <tr>
+      <td>[oslo_policy] policy_dirs = ['policy.d']</td>
+      <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.  Missing or empty directories are ignored.</td>
+    </tr>
+    <tr>
+      <td>[oslo_policy] policy_file = policy.json</td>
+      <td>(StrOpt) The JSON file that defines policies.</td>
+    </tr>
+    <tr>
       <td>[polling] partitioning_group_prefix = None</td>
       <td>(StrOpt) Work-load partitioning group prefix. Use only if you want to run multiple polling agents with different config files. For each sub-group of the agent pool with the same partitioning_group_prefix a disjoint subset of pollsters should be loaded.</td>
     </tr>
@@ -331,6 +343,18 @@
     <tr>
       <td>[publisher_notifier] telemetry_driver = messagingv2</td>
       <td>(StrOpt) The driver that ceilometer uses for metering notifications.</td>
+    </tr>
+    <tr>
+      <td>[rgw_admin_credentials] access_key = None</td>
+      <td>(StrOpt) Access key for Radosgw Admin.</td>
+    </tr>
+    <tr>
+      <td>[rgw_admin_credentials] secret_key = None</td>
+      <td>(StrOpt) Secret key for Radosgw Admin.</td>
+    </tr>
+    <tr>
+      <td>[service_types] radosgw = object-store</td>
+      <td>(StrOpt) Radosgw service type.</td>
     </tr>
     <tr>
       <td>[vmware] host_port = 443</td>
@@ -352,7 +376,7 @@
     <tr>
       <td>[DEFAULT] rpc_zmq_matchmaker</td>
       <td>oslo.messaging._drivers.matchmaker.MatchMakerLocalhost</td>
-      <td>oslo_messaging._drivers.matchmaker.MatchMakerLocalhost</td>
+      <td>local</td>
     </tr>
   </table>
   <table>
