@@ -112,10 +112,10 @@ The controller node contains the following network components:
       provider networks.
 
 .. image:: figures/scenario-provider-lb-controller1.png
-   :alt: Controller node - network components overview
+   :alt: Controller node components - overview
 
 .. image:: figures/scenario-provider-lb-controller2.png
-   :alt: Controller node - network components connectivity
+   :alt: Controller node components - connectivity
 
 .. note::
    The diagram contains two different provider networks.
@@ -127,10 +127,10 @@ The compute nodes contain the following network components:
    such as namespaces, security groups, and underlying interfaces.
 
 .. image:: figures/scenario-provider-lb-compute1.png
-   :alt: Compute node - network components overview
+   :alt: Compute node components - overview
 
 .. image:: figures/scenario-provider-lb-compute2.png
-   :alt: Compute node - network components connectivity
+   :alt: Compute node components - connectivity
 
 .. note::
    The diagram contains two different provider networks.
@@ -366,22 +366,16 @@ Controller node
 ---------------
 
 #. Configure the kernel to disable reverse path filtering. Edit the
-   :file:`/etc/sysctl.conf` file:
-
-   ::
+   :file:`/etc/sysctl.conf` file::
 
       net.ipv4.conf.default.rp_filter=0
       net.ipv4.conf.all.rp_filter=0
 
-#. Load the new kernel configuration:
-
-   ::
+#. Load the new kernel configuration::
 
       $ sysctl -p
 
-#. Configure base options. Edit the :file:`/etc/neutron/neutron.conf` file:
-
-   ::
+#. Configure base options. Edit the :file:`/etc/neutron/neutron.conf` file::
 
       [DEFAULT]
       core_plugin = ml2
@@ -393,9 +387,7 @@ Controller node
       routing.
 
 #. Configure the ML2 plug-in. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2\_conf.ini` file:
-
-   ::
+   :file:`/etc/neutron/plugins/ml2/ml2\_conf.ini` file::
 
       [ml2]
       type_drivers = flat,vlan
@@ -424,9 +416,7 @@ Controller node
       architecture does not support project (private) networks.
 
 #. Configure the DHCP agent. Edit the :file:`/etc/neutron/dhcp\_agent.ini`
-   file:
-
-   ::
+   file::
 
       [DEFAULT]
       verbose = True
@@ -444,22 +434,16 @@ Compute nodes
 -------------
 
 #. Configure the kernel to disable reverse path filtering. Edit the
-   :file:`/etc/sysctl.conf` file:
-
-   ::
+   :file:`/etc/sysctl.conf` file::
 
       net.ipv4.conf.default.rp_filter=0
       net.ipv4.conf.all.rp_filter=0
 
-#. Load the new kernel configuration:
-
-   ::
+#. Load the new kernel configuration::
 
       $ sysctl -p
 
-#. Configure base options. Edit the :file:`/etc/neutron/neutron.conf` file:
-
-   ::
+#. Configure base options. Edit the :file:`/etc/neutron/neutron.conf` file::
 
       [DEFAULT]
       core_plugin = ml2
@@ -471,9 +455,7 @@ Compute nodes
       routing.
 
 #. Configure the ML2 plug-in. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2\_conf.ini` file:
-
-   ::
+   :file:`/etc/neutron/plugins/ml2/ml2\_conf.ini` file::
 
       [ml2]
       type_drivers = flat,vlan
@@ -510,9 +492,7 @@ Verify service operation
 
 #. Source the administrative project credentials.
 
-#. Verify presence and operation of the agents:
-
-   ::
+#. Verify presence and operation of the agents::
 
       $ neutron agent-list
       +--------------------------------------+--------------------+------------+-------+----------------+---------------------------+
@@ -533,9 +513,7 @@ for your environment.
 
 #. Source the administrative project credentials.
 
-#. Create a provider network:
-
-   ::
+#. Create a provider network::
 
       $ neutron net-create provider-101 --shared \
       --provider:physical_network external --provider:network_type vlan \
@@ -559,9 +537,7 @@ for your environment.
 
    .. note:: The ``shared`` option allows any project to use this network.
 
-#. Create a subnet on the provider network:
-
-   ::
+#. Create a subnet on the provider network::
 
       $ neutron subnet-create provider-101 192.168.1.0/24 --gateway 192.168.1.1
       Created a new subnet:
@@ -586,9 +562,7 @@ for your environment.
 Verify operation
 ----------------
 
-#. On the controller node, verify creation of the ``qdhcp`` namespace:
-
-   ::
+#. On the controller node, verify creation of the ``qdhcp`` namespace::
 
       $ ip netns
       qdhcp-8b868082-e312-4110-8627-298109d4401c
@@ -604,9 +578,7 @@ Verify operation
 #. Launch an instance with an interface on the provider network.
 
 #. On the controller node, ping the IP address associated with the
-   instance:
-
-   ::
+   instance::
 
       $ ping -c 4 192.168.1.2
       PING 192.168.1.2 (192.168.1.2) 56(84) bytes of data.
@@ -621,9 +593,7 @@ Verify operation
 
 #. Obtain access to the instance.
 
-#. Test connectivity to the Internet from the instance:
-
-   ::
+#. Test connectivity to the Internet from the instance::
 
       $ ping -c 4 openstack.org
       PING openstack.org (174.143.194.225) 56(84) bytes of data.
