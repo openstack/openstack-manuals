@@ -188,9 +188,8 @@
                     <systemitem class="service"
                     >neutron-ovs-cleanup</systemitem> service runs
                 the <command>neutron-ovs-cleanup</command> command
-                automatically. However, on Debian-based systems
-                (including Ubuntu in releases earlier than
-                Icehouse), you must manually run this command or
+                automatically. However, on Debian-based systems,
+                you must manually run this command or
                 write your own system script that runs on boot
                 before the <systemitem class="service"
                     >neutron-dhcp-agent</systemitem> service
@@ -222,7 +221,7 @@
           configure the DHCP agent to automatically detach from a network
           when the agent is out of service, or no longer needed.</para>
         <para>This feature applies to all plugins that support DHCP scaling. For more information,
-          see the <link xlink:href="http://docs.openstack.org/juno/config-reference/content/networking-options-dhcp.html">
+          see the <link xlink:href="http://docs.openstack.org/kilo/config-reference/content/networking-options-dhcp.html">
           DHCP agent configuration options</link> listed in the OpenStack Configuration Reference.</para>
         <section xml:id="dhcp_agent_ovs">
             <title>DHCP agent setup: OVS plug-in</title>
@@ -370,8 +369,8 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                     <systemitem class="service"
                     >neutron-ovs-cleanup</systemitem> service runs
                 the <command>neutron-ovs-cleanup</command> command
-                automatically. However, on Debian-based systems
-                (including Ubuntu prior to Icehouse), you must
+                automatically. However, on Debian-based systems,
+                you must
                 manually run this command or write your own system
                 script that runs on boot before the <systemitem
                     class="service">neutron-l3-agent</systemitem>
@@ -380,8 +379,7 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
     </section>
     <section xml:id="install_neutron-metering-agent">
         <title>Configure metering agent</title>
-        <para>Starting with the Havana release, the Neutron
-            Metering resides beside
+        <para>The Neutron Metering agent resides beside
                 <systemitem class="service">neutron-l3-agent</systemitem>.</para>
         <procedure>
             <title>To install the metering agent and configure the
@@ -389,12 +387,6 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
             <step>
                 <para>Install the agent by running:</para>
                 <screen><prompt>#</prompt> <userinput>apt-get install neutron-metering-agent</userinput></screen>
-                <note>
-                    <title>Package name prior to Icehouse</title>
-                    <para>In releases of neutron prior to
-                        Icehouse, this package was named
-                            <package>neutron-plugin-metering-agent</package>.</para>
-                </note>
             </step>
             <step>
                 <para>If you use one of the following plugins, you
@@ -497,15 +489,6 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                     and
                     <systemitem class="service">neutron-lbaas-agent</systemitem>
                     services.</para>
-                <note>
-                    <title>Upgrade from Havana to Icehouse</title>
-                    <para>In the Icehouse release, LBaaS
-                        server-agent communications changed. If
-                        you transition from Havana to Icehouse,
-                        make sure to upgrade both server and agent
-                        sides before you use the load balancing
-                        service.</para>
-                </note>
             </step>
             <step>
                 <para>Enable load balancing in the
@@ -536,7 +519,7 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
     <para>Before you install the OpenStack Networking Hyper-V L2 agent on a
             Hyper-V compute node, ensure the compute node has been configured
             correctly using these <link
-                xlink:href="http://docs.openstack.org/juno/config-reference/content/hyper-v-virtualization-platform.html"
+                xlink:href="http://docs.openstack.org/kilo/config-reference/content/hyper-v-virtualization-platform.html"
                 >instructions</link>.</para>
     <procedure>
       <title>To install the OpenStack Networking Hyper-V agent and configure the node</title>
@@ -557,7 +540,7 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
       <step>
         <para>Create the <filename>C:\etc\neutron-hyperv-agent.conf</filename> file and add the
         proper configuration options and the <link
-        xlink:href="http://docs.openstack.org/juno/config-reference/content/networking-plugin-hyperv_agent.html">Hyper-V
+        xlink:href="http://docs.openstack.org/kilo/config-reference/content/networking-plugin-hyperv_agent.html">Hyper-V
         related options</link>. Here is a sample config file:</para>
         <programlisting><xi:include parse="text" href="../../common/samples/neutron-hyperv-agent.conf"/></programlisting>
       </step>

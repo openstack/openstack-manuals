@@ -73,7 +73,7 @@ The Virtual Private Network as a Service (VPNaaS) is a neutron extension that in
 LbaaS
 -----
 
-The Load-Balancer-as-a-Service (LBaaS) API provisions and configures load balancers. The Havana release offers a reference implementation that is based on the HAProxy software load balancer.
+The Load-Balancer-as-a-Service (LBaaS) API provisions and configures load balancers. The reference implementation is based on the HAProxy software load balancer.
 
 FwaaS
 -----

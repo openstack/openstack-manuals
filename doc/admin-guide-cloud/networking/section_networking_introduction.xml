@@ -499,21 +499,19 @@ enabled = True</programlisting>
             plug-ins, the cloud administrator must determine the right
             networking technology for the deployment.</para>
         <para>The <glossterm baseform="Modular Layer 2 (ML2) neutron plug-in"
-                >Modular Layer 2 (ML2) plug-in</glossterm> was introduced
-          in the Havana release, enabling a variety of layer 2 networking
-          technologies to be created and managed with less effort compared
-          to earlier plug-ins. It currently works with Open vSwitch, Linux
-          Bridge, and Hyper-v L2 agents.</para>
+                >Modular Layer 2 (ML2) plug-in</glossterm> enables a variety
+           of layer 2 networking technologies to be created and managed with
+          less effort compared to stand-alone plug-ins. It currently works
+          with Open vSwitch, Linux  Bridge, and Hyper-v L2 agents.</para>
         <para>The ML2 framework contains two types of drivers, type drivers and mechanism drivers. Type drivers maintain any needed type-specific network states, perform provider network validation and tenant network allocation. Mechanism drivers ensure the information established by the type driver is properly applied. Multiple mechanism drivers can access the same network simultaneously, which addresses complex requirements in large heterogeneous environments.</para>
         <para>You can enable the ML2 plug-in by editing the <literal>core-plugin</literal>
           parameter in the <filename>/etc/neutron/neutron.conf</filename>
           file:</para>
             <programlisting language = "ini">core_plugin = <replaceable>neutron.plugins.ml2.plugin.Ml2Plugin</replaceable></programlisting>
-        <note>
+       <note>
             <title>Plug-in deprecation notice</title>
-            <para>The Open vSwitch and Linux Bridge plug-ins are
-                deprecated in the Havana release and will be removed
-                in the Icehouse release. The features in these
+            <para>The Open vSwitch and Linux Bridge plug-ins were
+                removed in the Icehouse release. The features in these
                 plug-ins are now part of the ML2 plug-in in the form
                 of mechanism drivers.</para>
         </note>

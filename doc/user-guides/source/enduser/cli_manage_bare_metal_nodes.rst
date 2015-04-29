@@ -15,11 +15,6 @@ If you use the bare-metal driver, you must create a network interface
 and add it to a bare-metal node. Then, you can launch an instance from a
 bare-metal image.
 
-.. note::
-
-  Development efforts are focused on moving the driver out of the
-  Compute code base in the Icehouse release.
-
 You can list and delete bare-metal nodes. When you delete a node, any
 associated network interfaces are removed. You can list and remove
 network interfaces that are associated with a bare-metal node.
