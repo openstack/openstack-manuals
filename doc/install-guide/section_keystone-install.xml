@@ -355,21 +355,14 @@ Listen 35357
         remove the SQLite database file:</para>
       <screen><prompt>#</prompt> <userinput>rm -f /var/lib/keystone/keystone.db</userinput></screen>
     </step>
-    <step os="rhel;centos;fedora;sles;opensuse;debian">
+    <step os="sles;opensuse;debian">
       <para>By default, the Identity service stores expired tokens in the
         SQL database indefinitely. The accumulation of expired tokens
         considerably increases the database size and degrades performance
         over time, particularly in environments with limited resources.</para>
-      <para os="sles;opensuse;debian">The packages already contain a cron job
-        under <filename>/etc/cron.hourly/keystone</filename>, so it is not
-        necessary to manually configure a periodic task that purges expired
-        tokens.</para>
-      <para os="rhel;centos;fedora">We recommend that you use
-        <systemitem class="service">cron</systemitem> to configure a periodic
-        task that purges expired tokens hourly:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>(crontab -l -u keystone 2>&amp;1 | grep -q token_flush) || \
-  echo '@hourly /usr/bin/keystone-manage token_flush >/var/log/keystone/keystone-tokenflush.log 2>&amp;1' \
-  >> /var/spool/cron/keystone</userinput></screen>
+      <para>The packages already contain a cron job under
+        <filename>/etc/cron.hourly/keystone</filename>, so it is not necessary
+        to manually configure a periodic task that purges expired tokens.</para>
     </step>
   </procedure>
 </section>
