@@ -2,6 +2,15 @@
 OpenStack Networking Guide
 ==========================
 
+Abstract
+~~~~~~~~
+
+This guide targets OpenStack administrators seeking to deploy and
+manage OpenStack Networking (neutron).
+
+This guide documents OpenStack Kilo, OpenStack Juno, and OpenStack
+Icehouse releases.
+
 Contents
 ~~~~~~~~
 
@@ -15,6 +24,8 @@ Contents
    migration.rst
    miscellaneous.rst
    adv_config.rst
+
+   common/app_support.rst
 
    glossary.rst
 
