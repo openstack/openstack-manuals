@@ -23,9 +23,9 @@ The Static Web filter must be added to the pipeline in your
 middleware. You must also add a Static Web middleware configuration
 section.
 
-See the Cloud Administrator Guide for an example of the `static web configuration syntax <http://docs.openstack.org/juno/config-reference/content/object-storage-static-web.html>`_.
+See the Cloud Administrator Guide for an example of the `static web configuration syntax <http://docs.openstack.org/kilo/config-reference/content/object-storage-static-web.html>`_.
 
-See the Cloud Administrator Guide for a complete example of the `/etc/swift/proxy-server.conf file <http://docs.openstack.org/juno/config-reference/content/proxy-server-conf.html>`_ (including static web).
+See the Cloud Administrator Guide for a complete example of the `/etc/swift/proxy-server.conf file <http://docs.openstack.org/kilo/config-reference/content/proxy-server-conf.html>`_ (including static web).
 
 Your publicly readable containers are checked for two headers,
 ``X-Container-Meta-Web-Index`` and ``X-Container-Meta-Web-Error``. The

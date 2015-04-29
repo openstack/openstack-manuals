@@ -111,7 +111,7 @@ command-line clients, and provides installation instructions as needed.
 |                       | .. code::                                           |
 |                       |                                                     |
 |                       |     # zypper addrepo -f obs://Cloud:OpenStack: \    |
-|                       |     Icehouse/SLE_11_SP3 Icehouse                    |
+|                       |     Kilo/SLE_12 Kilo                                |
 |                       |                                                     |
 |                       | Then install pip and use it to manage client        |
 |                       | installation:                                       |
@@ -219,7 +219,7 @@ installed without ``pip``.
    the distribution packages in the Open Build Service. First, add the Open
    Build Service repository::
 
-     # zypper addrepo -f obs://Cloud:OpenStack:Icehouse/SLE_11_SP3 Icehouse
+     # zypper addrepo -f obs://Cloud:OpenStack:Kilo/SLE_12 Kilo
 
    Then you can install the packages::
 
