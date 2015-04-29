@@ -35,7 +35,7 @@
       </tr>
       <tr>
         <td><option>metadata_proxy_group</option> = <replaceable></replaceable></td>
-        <td>(StrOpt) Group (gid or name) running metadata proxy after its initialization (if empty: L3 agent effective group)</td>
+        <td>(StrOpt) Group (gid or name) running metadata proxy after its initialization (if empty: agent effective group).</td>
       </tr>
       <tr>
         <td><option>metadata_proxy_shared_secret</option> = <replaceable></replaceable></td>
@@ -43,15 +43,23 @@
       </tr>
       <tr>
         <td><option>metadata_proxy_socket</option> = <replaceable>$state_path/metadata_proxy</replaceable></td>
-        <td>(StrOpt) Location of Metadata Proxy UNIX domain socket</td>
+        <td>(StrOpt) Location for Metadata Proxy UNIX domain socket.</td>
+      </tr>
+      <tr>
+        <td><option>metadata_proxy_socket_mode</option> = <replaceable>deduce</replaceable></td>
+        <td>(StrOpt) Metadata Proxy UNIX domain socket mode, 3 values allowed: 'deduce': deduce mode from metadata_proxy_user/group values, 'user': set metadata proxy socket mode to 0o644, to use when metadata_proxy_user is agent effective user or root, 'group': set metadata proxy socket mode to 0o664, to use when metadata_proxy_group is agent effective group or root, 'all': set metadata proxy socket mode to 0o666, to use otherwise.</td>
       </tr>
       <tr>
         <td><option>metadata_proxy_user</option> = <replaceable></replaceable></td>
-        <td>(StrOpt) User (uid or name) running metadata proxy after its initialization (if empty: L3 agent effective user)</td>
+        <td>(StrOpt) User (uid or name) running metadata proxy after its initialization (if empty: agent effective user).</td>
       </tr>
       <tr>
-        <td><option>metadata_workers</option> = <replaceable>1</replaceable></td>
-        <td>(IntOpt) Number of separate worker processes for metadata server</td>
+        <td><option>metadata_proxy_watch_log</option> = <replaceable>None</replaceable></td>
+        <td>(BoolOpt) Enable/Disable log watch by metadata proxy. It should be disabled when metadata_proxy_user/group is not allowed to read/write its log file and copytruncate logrotate option must be used if logrotate is enabled on metadata proxy log files. Option default value is deduced from metadata_proxy_user: watch log is enabled if metadata_proxy_user is agent effective user id/name.</td>
+      </tr>
+      <tr>
+        <td><option>metadata_workers</option> = <replaceable>2</replaceable></td>
+        <td>(IntOpt) Number of separate worker processes for metadata server (defaults to half of the number of CPUs)</td>
       </tr>
       <tr>
         <td><option>nova_metadata_insecure</option> = <replaceable>False</replaceable></td>
