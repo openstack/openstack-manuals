@@ -201,6 +201,26 @@
       <td>(IntOpt) Default storage pool for volumes.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] log-config-append = None</td>
+      <td>(StrOpt) The name of a logging configuration file. This file is appended to any existing logging configuration files. For details about logging configuration files, see the Python logging module documentation.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] log-date-format = %Y-%m-%d %H:%M:%S</td>
+      <td>(StrOpt) Format string for %%(asctime)s in log records. Default: %(default)s .</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] log-dir = None</td>
+      <td>(StrOpt) (Optional) The base directory used for relative --log-file paths.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] log-file = None</td>
+      <td>(StrOpt) (Optional) Name of log file to output to. If no default is set, logging will go to stdout.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] log-format = None</td>
+      <td>(StrOpt) DEPRECATED. A logging.Formatter log message format string which may use any of the available logging.LogRecord attributes. This option is deprecated.  Please use logging_context_format_string and logging_default_format_string instead.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] lvm_conf_file = /etc/cinder/lvm.conf</td>
       <td>(StrOpt) LVM conf file to use for the LVM driver in Cinder; this setting is ignored if the specified file does not exist (You can also specify 'None' to not use a conf file even if one exists).</td>
     </tr>
@@ -305,6 +325,18 @@
       <td>(StrOpt) If this option is specified then the start time specified is used instead of the start time of the last completed audit period.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] syslog-log-facility = LOG_USER</td>
+      <td>(StrOpt) Syslog facility to receive log lines.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] use-syslog = False</td>
+      <td>(BoolOpt) Use syslog for logging. Existing syslog format is DEPRECATED during I, and will change in J to honor RFC5424.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] use-syslog-rfc-format = False</td>
+      <td>(BoolOpt) (Optional) Enables or disables syslog rfc5424 format for logging. If enabled, prefixes the MSG part of the syslog message with APP-NAME (RFC5424). The format without the APP-NAME is deprecated in I, and will be removed in J.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] use_chap_auth = False</td>
       <td>(BoolOpt) Option to enable/disable CHAP authentication for targets.</td>
     </tr>
@@ -319,6 +351,38 @@
     <tr>
       <td>[DEFAULT] xtremio_cluster_name = </td>
       <td>(StrOpt) XMS cluster id in multi-cluster environment</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] zfssa_data_ip = None</td>
+      <td>(StrOpt) Data path IP address</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] zfssa_https_port = 443</td>
+      <td>(StrOpt) HTTPS port number</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] zfssa_nfs_mount_options = </td>
+      <td>(StrOpt) Options to be passed while mounting share over nfs</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] zfssa_nfs_pool = </td>
+      <td>(StrOpt) Storage pool name.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] zfssa_nfs_project = NFSProject</td>
+      <td>(StrOpt) Project name.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] zfssa_nfs_share = nfs_share</td>
+      <td>(StrOpt) Share name.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] zfssa_nfs_share_compression = off</td>
+      <td>(StrOpt) Data compression.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] zfssa_nfs_share_logbias = latency</td>
+      <td>(StrOpt) Synchronous write bias-latency, throughput.</td>
     </tr>
     <tr>
       <td>[oslo_concurrency] disable_process_locking = False</td>
@@ -445,8 +509,8 @@
       <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
     </tr>
     <tr>
-      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 60</td>
-      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat).</td>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 0</td>
+      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disables the heartbeat, &gt;0 enables it. Enabling heartbeats requires kombu&gt;=3.0.7 and amqp&gt;=1.4.0). EXPERIMENTAL</td>
     </tr>
     <tr>
       <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
@@ -576,7 +640,7 @@
     <tr>
       <td>[DEFAULT] rpc_zmq_matchmaker</td>
       <td>oslo.messaging._drivers.matchmaker.MatchMakerLocalhost</td>
-      <td>oslo_messaging._drivers.matchmaker.MatchMakerLocalhost</td>
+      <td>local</td>
     </tr>
     <tr>
       <td>[keymgr] encryption_auth_url</td>
@@ -599,10 +663,6 @@
       <td>[DEFAULT] chap_password</td>
     </tr>
     <tr>
-      <td>[DEFAULT] eqlx_chap_login</td>
-      <td>[DEFAULT] chap_username</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] eqlx_use_chap</td>
       <td>[DEFAULT] use_chap_auth</td>
     </tr>
@@ -613,6 +673,10 @@
     <tr>
       <td>[DEFAULT] host</td>
       <td>[DEFAULT] backend_host</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] eqlx_chap_login</td>
+      <td>[DEFAULT] chap_username</td>
     </tr>
   </table>
 </section>

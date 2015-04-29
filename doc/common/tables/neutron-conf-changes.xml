@@ -21,6 +21,10 @@
       <td>(BoolOpt) Automatically remove networks from offline DHCP agents.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] default_device_name = Switch1</td>
+      <td>(StrOpt) default_device_name of the l2 gateway</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] default_ipv4_subnet_pool = None</td>
       <td>(StrOpt) Default IPv4 subnet-pool to be used for automatic subnet CIDR allocation</td>
     </tr>
@@ -49,16 +53,44 @@
       <td>(StrOpt) With IPv6, the network used for the external gateway does not need to have an associated subnet, since the automatically assigned link-local address (LLA) can be used. However, an IPv6 gateway address is needed for use as the next-hop for the default route. If no IPv6 gateway address is configured here, (and only then) the neutron router will be configured to get its default route from router advertisements (RAs) from the upstream router; in which case the upstream router must also be configured to send these RAs. The ipv6_gateway, when configured, should be the LLA of the interface on the upstream router. If a next-hop using a global unique address (GUA) is desired, it needs to be done via a subnet allocated to the network and not through this parameter.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] l2gw_callback_class = networking_l2gw.services.l2gateway.ovsdb.data.L2GatewayOVSDBCallbacks</td>
+      <td>(StrOpt) L2 gateway plugin callback class where theRPCs from the agent are going to get invoked</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] log-config-append = None</td>
+      <td>(StrOpt) The name of a logging configuration file. This file is appended to any existing logging configuration files. For details about logging configuration files, see the Python logging module documentation.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] log-date-format = %Y-%m-%d %H:%M:%S</td>
+      <td>(StrOpt) Format string for %%(asctime)s in log records. Default: %(default)s .</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] log-dir = None</td>
+      <td>(StrOpt) (Optional) The base directory used for relative --log-file paths.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] log-file = None</td>
+      <td>(StrOpt) (Optional) Name of log file to output to. If no default is set, logging will go to stdout.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] log-format = None</td>
+      <td>(StrOpt) DEPRECATED. A logging.Formatter log message format string which may use any of the available logging.LogRecord attributes. This option is deprecated.  Please use logging_context_format_string and logging_default_format_string instead.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] metadata_access_mark = 0x1</td>
       <td>(StrOpt) Iptables mangle mark used to mark metadata valid requests</td>
     </tr>
     <tr>
       <td>[DEFAULT] metadata_proxy_group = </td>
-      <td>(StrOpt) Group (gid or name) running metadata proxy after its initialization (if empty: agent effective group)</td>
+      <td>(StrOpt) Group (gid or name) running metadata proxy after its initialization (if empty: agent effective group).</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] metadata_proxy_socket_mode = deduce</td>
+      <td>(StrOpt) Metadata Proxy UNIX domain socket mode, 3 values allowed: 'deduce': deduce mode from metadata_proxy_user/group values, 'user': set metadata proxy socket mode to 0o644, to use when metadata_proxy_user is agent effective user or root, 'group': set metadata proxy socket mode to 0o664, to use when metadata_proxy_group is agent effective group or root, 'all': set metadata proxy socket mode to 0o666, to use otherwise.</td>
     </tr>
     <tr>
       <td>[DEFAULT] metadata_proxy_user = </td>
-      <td>(StrOpt) User (uid or name) running metadata proxy after its initialization (if empty: agent effective user)</td>
+      <td>(StrOpt) User (uid or name) running metadata proxy after its initialization (if empty: agent effective user).</td>
     </tr>
     <tr>
       <td>[DEFAULT] metadata_proxy_watch_log = None</td>
@@ -69,12 +101,32 @@
       <td>(StrOpt) The name of the admin nova tenant. Deprecated in favour of an auth plugin in [nova].</td>
     </tr>
     <tr>
+      <td>[DEFAULT] periodic_monitoring_interval = 5</td>
+      <td>(IntOpt) Periodic interval at which the plugin checks for the monitoring L2 gateway agent</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] policy_default_rule = default</td>
       <td>(StrOpt) Default rule. Enforced when a requested rule is not found.</td>
     </tr>
     <tr>
       <td>[DEFAULT] policy_dirs = ['policy.d']</td>
       <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.  Missing or empty directories are ignored.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] quota_l2_gateway = 5</td>
+      <td>(IntOpt) Number of l2 gateways allowed per tenant, -1 for unlimited</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] syslog-log-facility = LOG_USER</td>
+      <td>(StrOpt) Syslog facility to receive log lines.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] use-syslog = False</td>
+      <td>(BoolOpt) Use syslog for logging. Existing syslog format is DEPRECATED during I, and will change in J to honor RFC5424.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] use-syslog-rfc-format = False</td>
+      <td>(BoolOpt) (Optional) Enables or disables syslog rfc5424 format for logging. If enabled, prefixes the MSG part of the syslog message with APP-NAME (RFC5424). The format without the APP-NAME is deprecated in I, and will be removed in J.</td>
     </tr>
     <tr>
       <td>[DEFAULT] vlan_transparent = False</td>
@@ -93,6 +145,10 @@
       <td>(BoolOpt) Add comments to iptables rules.</td>
     </tr>
     <tr>
+      <td>[AGENT] prevent_arp_spoofing = False</td>
+      <td>(BoolOpt) Enable suppression of ARP responses that don't match an IP address that belongs to the port from which they originate. Note: This prevents the VMs attached to this agent from spoofing, it doesn't protect them from other devices which have the capability to spoof (e.g. bare metal or VMs attached to agents without this flag set to True). Spoofing rules will not be added to any ports that have port security disabled. This requires a version of OVS that supports matching ARP headers.</td>
+    </tr>
+    <tr>
       <td>[AGENT] root_helper_daemon = None</td>
       <td>(StrOpt) Root helper daemon application to use when possible.</td>
     </tr>
@@ -101,8 +157,172 @@
       <td>(BoolOpt) Use the root helper to read the namespaces from the operating system.</td>
     </tr>
     <tr>
+      <td>[MIDONET] cluster_ip = localhost</td>
+      <td>(StrOpt) IP that the cluster service can be reached on</td>
+    </tr>
+    <tr>
+      <td>[MIDONET] cluster_port = 8088</td>
+      <td>(StrOpt) Port that the cluster service can be reached on</td>
+    </tr>
+    <tr>
+      <td>[MIDONET] tunnel_protocol = vxlan</td>
+      <td>(StrOpt) Tunnel protocol used by Midonet</td>
+    </tr>
+    <tr>
+      <td>[MIDONET] use_cluster = False</td>
+      <td>(BoolOpt) Use the midonet plugin that interacts with the tasks-based architecture, rather than the plugin that interacts with the HTTP based architecture.</td>
+    </tr>
+    <tr>
       <td>[OFC] support_packet_filter_on_ofc_router = True</td>
       <td>(BoolOpt) Support packet filter on OFC router interface.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] agent_driver = networking_vsphere.agent.ovsvapp_agent.OVSvAppL2Agent</td>
+      <td>(StrOpt) OVSvApp Agent implementation.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] agent_maintenance = False</td>
+      <td>(BoolOpt) Turn on this flag during agent updates to help prevent datapath outage.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] bridge_mappings = </td>
+      <td>(ListOpt) Bridge mappings.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] integration_bridge = br-int</td>
+      <td>(StrOpt) Integration Bridge.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] network_manager = networking_vsphere.drivers.manager.VcenterManager</td>
+      <td>(StrOpt) Driver Manager implementation for NetworkDriver.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] polling_interval = 2</td>
+      <td>(IntOpt) The number of seconds the agent will wait between polling for local device changes.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] report_interval = 4</td>
+      <td>(IntOpt) Seconds between nodes reporting state to server.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] tenant_network_type = vlan</td>
+      <td>(StrOpt) Network type for tenant networks - vlan.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] veth_mtu = 1500</td>
+      <td>(IntOpt) MTU size of veth interfaces.</td>
+    </tr>
+    <tr>
+      <td>[SECURITYGROUP] defer_apply = True</td>
+      <td>(BoolOpt) Enable defer_apply on security bridge.</td>
+    </tr>
+    <tr>
+      <td>[SECURITYGROUP] ovsvapp_firewall_driver = networking_vsphere.drivers.ovs_firewall.OVSFirewallDriver</td>
+      <td>(StrOpt) DriverManager implementation for OVS based Firewall.</td>
+    </tr>
+    <tr>
+      <td>[SECURITYGROUP] security_bridge_mapping = br-sec</td>
+      <td>(StrOpt) &lt;security_bridge&gt;:&lt;phy_interface&gt;</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] cert_check = False</td>
+      <td>(BoolOpt) Enable SSL certificate check for vCenter.</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] cert_path = /etc/ssl/certs/certs.pem</td>
+      <td>(StrOpt) Certificate chain path containing cacert of vCenters.</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] cluster_dvs_mapping = ['']</td>
+      <td>(MultiStrOpt) vCenter cluster to DVS mapping.</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] esx_hostname = None</td>
+      <td>(StrOpt) ESX host name where this OVSvApp is hosted.</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] esx_maintenance_mode = True</td>
+      <td>(BoolOpt) Set host into maintenance mode.</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] https_port = 443</td>
+      <td>(IntOpt) Customized https_port for vCenter communication.</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] vcenter_api_retry_count = 5</td>
+      <td>(StrOpt) Number of retries while connecting to vcenter server.</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] vcenter_id = None</td>
+      <td>(StrOpt) Unique ID of the vCenter Server on which this OVSvApp ishosted</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] vcenter_ip = None</td>
+      <td>(StrOpt) vCenter server IP.</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] vcenter_password = None</td>
+      <td>(StrOpt) vCenter server password.</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] vcenter_username = None</td>
+      <td>(StrOpt) vCenter server user name.</td>
+    </tr>
+    <tr>
+      <td>[VMWARE] wsdl_location = None</td>
+      <td>(StrOpt) vCenter server wsdl location.</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] flavor = 2</td>
+      <td>(StrOpt) Nova VM flavor for instances of Vyatta vRouter.</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] image_id = None</td>
+      <td>(StrOpt) Nova image id for instances of Vyatta vRouter.</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] keystone_url = None</td>
+      <td>(StrOpt) Keystone URL.</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] management_network_id = None</td>
+      <td>(StrOpt) Vyatta vRouter management network id.</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] nova_poll_interval = 5</td>
+      <td>(IntOpt) Number of seconds between consecutive Nova queries when waiting for router instance status change.</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] nova_spawn_timeout = 300</td>
+      <td>(IntOpt) Number of seconds to wait for Nova to activate instance before setting resource to error state.</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] tenant_admin_name = None</td>
+      <td>(StrOpt) Name of tenant admin user.</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] tenant_admin_password = None</td>
+      <td>(StrOpt) Tenant admin password.</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] tenant_id = None</td>
+      <td>(StrOpt) UUID of tenant that holds Vyatta vRouter instances.</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] vrouter_boot_timeout = 300</td>
+      <td>(IntOpt) Number of seconds to wait for Vyatta vRouter to boot before setting resource to error state.</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] vrouter_credentials = vyatta:vyatta</td>
+      <td>(StrOpt) Vyatta vRouter login credentials</td>
+    </tr>
+    <tr>
+      <td>[VROUTER] vrouter_poll_interval = 5</td>
+      <td>(IntOpt) Number of seconds between consecutive Vyatta vRouter queries when waiting for router instance boot.</td>
+    </tr>
+    <tr>
+      <td>[l3_brocade_mlx] switch_names = </td>
+      <td>(StrOpt) Switches connected to the compute nodes</td>
     </tr>
     <tr>
       <td>[ml2] path_mtu = 0</td>
@@ -115,6 +335,110 @@
     <tr>
       <td>[ml2] segment_mtu = 0</td>
       <td>(IntOpt) The maximum permissible size of an unfragmented packet travelling a L2 network segment.  If &lt;= 0, the segment MTU is indeterminate.</td>
+    </tr>
+    <tr>
+      <td>[ml2_brocade] rbridge_id = 1</td>
+      <td>(StrOpt) Rbridge id of provider edge router(s)</td>
+    </tr>
+    <tr>
+      <td>[ml2_brocade_fi_ni] switch_names = </td>
+      <td>(StrOpt) Switches connected to the compute nodes</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco] host_key_checks = False</td>
+      <td>(BoolOpt) Enable strict host key checks when connecting to Nexus switches</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco] persistent_switch_config = False</td>
+      <td>(BoolOpt) To make Nexus configuration persistent</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco] provider_vlan_auto_create = True</td>
+      <td>(BoolOpt) Provider VLANs are automatically created as needed on the Nexus switch</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco] provider_vlan_auto_trunk = True</td>
+      <td>(BoolOpt) Provider VLANs are automatically trunked as needed on the ports of the Nexus switch</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco] provider_vlan_name_prefix = p-</td>
+      <td>(StrOpt) VLAN Name prefix for provider vlans</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco] switch_heartbeat_time = 0</td>
+      <td>(IntOpt) Periodic time to check switch connection. (0=disabled)</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco] switch_replay_count = 3</td>
+      <td>(IntOpt) Number of times to attempt config replay with switch.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco] vxlan_global_config = False</td>
+      <td>(BoolOpt) Create and delete Nexus switch VXLAN global settings; feature nv overlay, feature vn-segment-vlan-based, interface nve + source-interface loopback</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_n1kv] default_policy_profile = default-pp</td>
+      <td>(StrOpt) Cisco Nexus1000V default policy profile.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_n1kv] default_vlan_network_profile = default-vlan-np</td>
+      <td>(StrOpt) Cisco Nexus1000V default network profile for VLAN networks.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_n1kv] default_vxlan_network_profile = default-vxlan-np</td>
+      <td>(StrOpt) Cisco Nexus1000V default network profile for VXLAN networks.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_n1kv] http_pool_size = 4</td>
+      <td>(IntOpt) Number of threads to use to make HTTP requests.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_n1kv] http_timeout = 15</td>
+      <td>(IntOpt) HTTP timeout, in seconds, for connections to the Cisco Nexus1000V VSMs.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_n1kv] n1kv_vsm_ips = None</td>
+      <td>(ListOpt) Comma Separated IP Addresses of the Cisco Nexus1000V VSMs.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_n1kv] password = None</td>
+      <td>(StrOpt) Password for all configured Cisco Nexus1000V VSMs.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_n1kv] poll_duration = 60</td>
+      <td>(IntOpt) Cisco Nexus1000V policy profile polling duration in seconds.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_n1kv] restrict_policy_profiles = False</td>
+      <td>(BoolOpt) Restrict the visibility of policy profiles to the tenants.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_n1kv] sync_interval = 300</td>
+      <td>(IntOpt) Time interval between consecutive neutron-VSM syncs.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_n1kv] username = None</td>
+      <td>(StrOpt) Username for all configured Cisco Nexus1000V VSMs.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_ucsm] supported_pci_devs = 1137:0071, 8086:10c9</td>
+      <td>(ListOpt) List of comma separated vendor_id:product_id of SR_IOV capable devices supported by this MD. This MD supports both VM-FEX and SR-IOV devices.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_ucsm] ucsm_host_list = None</td>
+      <td>(ListOpt) List of comma separated Host:Service Profile tuples providing the Service Profile associated with each Host to be supported by this MD.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_ucsm] ucsm_ip = None</td>
+      <td>(StrOpt) Cisco UCS Manager IP address. This is a required field to communicate with a Cisco UCS Manager.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_ucsm] ucsm_password = None</td>
+      <td>(StrOpt) Password for UCS Manager. This is a required field to communicate with a Cisco UCS Manager.</td>
+    </tr>
+    <tr>
+      <td>[ml2_cisco_ucsm] ucsm_username = None</td>
+      <td>(StrOpt) Username for UCS Manager. This is a required field to communicate with a Cisco UCS Manager.</td>
     </tr>
     <tr>
       <td>[nova] auth_plugin = None</td>
@@ -273,8 +597,8 @@
       <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
     </tr>
     <tr>
-      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 60</td>
-      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat).</td>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold = 0</td>
+      <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disables the heartbeat, &gt;0 enables it. Enabling heartbeats requires kombu&gt;=3.0.7 and amqp&gt;=1.4.0). EXPERIMENTAL</td>
     </tr>
     <tr>
       <td>[oslo_messaging_rabbit] kombu_reconnect_delay = 1.0</td>
@@ -348,6 +672,30 @@
       <td>[oslo_messaging_rabbit] rpc_conn_pool_size = 30</td>
       <td>(IntOpt) Size of RPC connection pool.</td>
     </tr>
+    <tr>
+      <td>[ovsdb] l2_gw_agent_ca_cert_base_path = None</td>
+      <td>(StrOpt) Trusted issuer CA cert</td>
+    </tr>
+    <tr>
+      <td>[ovsdb] l2_gw_agent_cert_base_path = None</td>
+      <td>(StrOpt) L2 gateway agent public certificate</td>
+    </tr>
+    <tr>
+      <td>[ovsdb] l2_gw_agent_priv_key_base_path = None</td>
+      <td>(StrOpt) L2 gateway agent private key</td>
+    </tr>
+    <tr>
+      <td>[ovsdb] max_connection_retries = 10</td>
+      <td>(IntOpt) Maximum number of retries to open a socket with the OVSDB server</td>
+    </tr>
+    <tr>
+      <td>[ovsdb] ovsdb_hosts = host1:127.0.0.1:6632</td>
+      <td>(StrOpt) OVSDB server name:host/IP:port</td>
+    </tr>
+    <tr>
+      <td>[ovsdb] periodic_interval = 20</td>
+      <td>(IntOpt) Seconds between periodic task runs</td>
+    </tr>
   </table>
   <table>
     <caption>New default values</caption>
@@ -362,6 +710,11 @@
       </tr>
     </thead>
     <tr>
+      <td>[DEFAULT] default_interface_name</td>
+      <td>breth0</td>
+      <td>FortyGigE1/0/1</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] default_log_levels</td>
       <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN</td>
       <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, requests.packages.urllib3.util.retry=WARN, urllib3.util.retry=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN</td>
@@ -369,12 +722,17 @@
     <tr>
       <td>[DEFAULT] rpc_zmq_matchmaker</td>
       <td>oslo.messaging._drivers.matchmaker.MatchMakerLocalhost</td>
-      <td>oslo_messaging._drivers.matchmaker.MatchMakerLocalhost</td>
+      <td>local</td>
     </tr>
     <tr>
       <td>[CISCO_N1K] restrict_network_profiles</td>
       <td>False</td>
       <td>True</td>
+    </tr>
+    <tr>
+      <td>[NOVA] vif_type</td>
+      <td>ovs</td>
+      <td>ivs</td>
     </tr>
     <tr>
       <td>[OVS] local_ip</td>
@@ -387,6 +745,11 @@
       <td>vsctl</td>
     </tr>
     <tr>
+      <td>[RESTPROXYAGENT] virtual_switch_type</td>
+      <td>ovs</td>
+      <td>ivs</td>
+    </tr>
+    <tr>
       <td>[VXLAN] enable_vxlan</td>
       <td>False</td>
       <td>True</td>
@@ -397,9 +760,29 @@
       <td>None</td>
     </tr>
     <tr>
+      <td>[hosting_devices] csr1kv_cfgagent_router_driver</td>
+      <td>neutron.plugins.cisco.cfg_agent.device_drivers.csr1kv.csr1kv_routing_driver.CSR1kvRoutingDriver</td>
+      <td>networking_cisco.plugins.cisco.cfg_agent.device_drivers.csr1kv.csr1kv_routing_driver.CSR1kvRoutingDriver</td>
+    </tr>
+    <tr>
+      <td>[hosting_devices] csr1kv_device_driver</td>
+      <td>neutron.plugins.cisco.l3.hosting_device_drivers.csr1kv_hd_driver.CSR1kvHostingDeviceDriver</td>
+      <td>networking_cisco.plugins.cisco.l3.hosting_device_drivers.csr1kv_hd_driver.CSR1kvHostingDeviceDriver</td>
+    </tr>
+    <tr>
+      <td>[hosting_devices] csr1kv_plugging_driver</td>
+      <td>neutron.plugins.cisco.l3.plugging_drivers.n1kv_trunking_driver.N1kvTrunkingPlugDriver</td>
+      <td>networking_cisco.plugins.cisco.l3.plugging_drivers.n1kv_trunking_driver.N1kvTrunkingPlugDriver</td>
+    </tr>
+    <tr>
       <td>[ml2_sriov] supported_pci_vendor_devs</td>
       <td>15b3:1004, 8086:10c9</td>
       <td>15b3:1004, 8086:10ca</td>
+    </tr>
+    <tr>
+      <td>[plumgriddirector] driver</td>
+      <td>neutron.plugins.plumgrid.drivers.plumlib.Plumlib</td>
+      <td>networking_plumgrid.neutron.plugins.drivers.plumlib.Plumlib</td>
     </tr>
   </table>
   <table>
@@ -413,12 +796,12 @@
       </tr>
     </thead>
     <tr>
-      <td>[DEFAULT] nova_ca_certificates_file</td>
-      <td>[nova] cafile</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] nova_api_insecure</td>
       <td>[nova] insecure</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] nova_ca_certificates_file</td>
+      <td>[nova] cafile</td>
     </tr>
     <tr>
       <td>[DEFAULT] nova_region_name</td>

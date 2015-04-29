@@ -13,6 +13,18 @@
       </tr>
     </thead>
     <tr>
+      <td>container-server.conf: [container-sync] conn_timeout = 5</td>
+      <td>(StrOpt) Connection timeout to external services</td>
+    </tr>
+    <tr>
+      <td>container-server.conf: [container-sync] internal_client_conf_path = /etc/swift/internal-client.conf</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>container-server.conf: [container-sync] request_tries = 3</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
       <td>drive-audit.conf: [drive-audit] log_to_console = False</td>
       <td>(StrOpt) No help text available for this option.</td>
     </tr>
@@ -22,6 +34,85 @@
     </tr>
     <tr>
       <td>drive-audit.conf: [drive-audit] unmount_failed_device = True</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_address = /dev/log</td>
+      <td>(StrOpt) Location where syslog sends the logs to</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_custom_handlers = </td>
+      <td>(StrOpt) Comma-separated list of functions to call to setup custom log handlers.</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_facility = LOG_LOCAL0</td>
+      <td>(StrOpt) Syslog log facility</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_level = INFO</td>
+      <td>(StrOpt) Logging level</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_name = swift</td>
+      <td>(StrOpt) Label used when logging</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_statsd_default_sample_rate = 1.0</td>
+      <td>(StrOpt) Defines the probability of sending a sample for any given event or
+                    timing measurement.</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_statsd_host = localhost</td>
+      <td>(StrOpt) If not set, the StatsD feature is disabled.</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_statsd_metric_prefix = </td>
+      <td>(StrOpt) Value will be prepended to every metric sent to the StatsD server.</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_statsd_port = 8125</td>
+      <td>(StrOpt) Port value for the StatsD server.</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_statsd_sample_rate_factor = 1.0</td>
+      <td>(StrOpt) Not recommended to set this to a value less than 1.0, if frequency
+                    of logging is too high, tune the
+                    log_statsd_default_sample_rate instead.</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_udp_host = </td>
+      <td>(StrOpt) If not set, the UDP receiver for syslog is disabled.</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] log_udp_port = 514</td>
+      <td>(StrOpt) Port value for UDP receiver, if enabled.</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] swift_dir = /etc/swift</td>
+      <td>(StrOpt) Swift configuration directory</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [DEFAULT] user = swift</td>
+      <td>(StrOpt) User to run as</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [app-proxy-server] use = egg:swift#proxy</td>
+      <td>(StrOpt) Entry point of paste.deploy in the server</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [filter-cache] use = egg:swift#memcache</td>
+      <td>(StrOpt) Entry point of paste.deploy in the server</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [filter-catch_errors] use = egg:swift#catch_errors</td>
+      <td>(StrOpt) Entry point of paste.deploy in the server</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [filter-proxy-logging] use = egg:swift#proxy_logging</td>
+      <td>(StrOpt) Entry point of paste.deploy in the server</td>
+    </tr>
+    <tr>
+      <td>internal-client.conf: [pipeline-main] pipeline = catch_errors proxy-logging cache proxy-server</td>
       <td>(StrOpt) No help text available for this option.</td>
     </tr>
     <tr>
@@ -39,6 +130,66 @@
     <tr>
       <td>memcache.conf: [memcache] tries = 3</td>
       <td>(StrOpt) Number of servers to retry on failures getting a pooled connection</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] concurrency = 1</td>
+      <td>(StrOpt) Number of replication workers to spawn</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] daemonize = on</td>
+      <td>(StrOpt) Whether or not to run replication as a daemon</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] handoffs_first = False</td>
+      <td>(StrOpt) If set to True, partitions that are not supposed to be on the node will be replicated first.  The default setting should not be changed, except for extreme situations.</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] http_timeout = 60</td>
+      <td>(StrOpt) Maximum duration for an HTTP request</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] lockup_timeout = 1800</td>
+      <td>(StrOpt) Attempts to kill all workers if nothing replications for lockup_timeout seconds</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] log_address = /dev/log</td>
+      <td>(StrOpt) Location where syslog sends the logs to</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] log_facility = LOG_LOCAL0</td>
+      <td>(StrOpt) Syslog log facility</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] log_level = INFO</td>
+      <td>(StrOpt) Logging level</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] log_name = object-reconstructor</td>
+      <td>(StrOpt) Label used when logging</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] node_timeout = 10</td>
+      <td>(StrOpt) Request timeout to external services</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] reclaim_age = 604800</td>
+      <td>(StrOpt) Time elapsed in seconds before an object can be reclaimed</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] recon_cache_path = /var/cache/swift</td>
+      <td>(StrOpt) Directory where stats for a few items will be stored</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] ring_check_interval = 15</td>
+      <td>(StrOpt) How often (in seconds) to check the ring</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] run_pause = 30</td>
+      <td>(StrOpt) Time in seconds to wait between replication passes</td>
+    </tr>
+    <tr>
+      <td>object-server.conf: [object-reconstructor] stats_interval = 300</td>
+      <td>(StrOpt) Interval in seconds between logging replication statistics</td>
     </tr>
     <tr>
       <td>proxy-server.conf: [filter-authtoken] identity_uri = http://keystonehost:35357/</td>
@@ -73,6 +224,42 @@ prefix.</td>
       <td>proxy-server.conf: [filter-tempauth] user_test5_tester5 = testing5 service</td>
       <td>(StrOpt) No help text available for this option.</td>
     </tr>
+    <tr>
+      <td>swift.conf: [storage-policy-0] policy_type = replication</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>swift.conf: [storage-policy-1] policy_type = replication</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>swift.conf: [storage-policy-2] ec_num_data_fragments = 10</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>swift.conf: [storage-policy-2] ec_num_parity_fragments = 4</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>swift.conf: [storage-policy-2] ec_object_segment_size = 1048576</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>swift.conf: [storage-policy-2] ec_type = jerasure_rs_vand</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>swift.conf: [storage-policy-2] name = deepfreeze10-4</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>swift.conf: [storage-policy-2] policy_type = erasure_coding</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
+    <tr>
+      <td>swift.conf: [swift-constraints] valid_api_versions = v0,v1,v2</td>
+      <td>(StrOpt) No help text available for this option.</td>
+    </tr>
   </table>
   <table>
     <caption>New default values</caption>
@@ -90,6 +277,11 @@ prefix.</td>
       <td>object-server.conf: [app-object-server] keep_cache_size</td>
       <td>5424880</td>
       <td>5242880</td>
+    </tr>
+    <tr>
+      <td>proxy-server.conf: [DEFAULT] disallowed_sections</td>
+      <td>container_quotas, tempurl, bulk_delete.max_failed_deletes</td>
+      <td>swift.valid_api_versions, container_quotas, tempurl</td>
     </tr>
     <tr>
       <td>proxy-server.conf: [app-proxy-server] swift_owner_headers</td>
