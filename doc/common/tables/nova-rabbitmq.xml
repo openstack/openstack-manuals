@@ -15,7 +15,27 @@
     </thead>
     <tbody>
       <tr>
-        <th colspan="2">[DEFAULT]</th>
+        <th colspan="2">[oslo_messaging_rabbit]</th>
+      </tr>
+      <tr>
+        <td><option>amqp_auto_delete</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Auto-delete queues in AMQP.</td>
+      </tr>
+      <tr>
+        <td><option>amqp_durable_queues</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Use durable queues in AMQP.</td>
+      </tr>
+      <tr>
+        <td><option>fake_rabbit</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Deprecated, use rpc_backend=kombu+memory or rpc_backend=fake</td>
+      </tr>
+      <tr>
+        <td><option>heartbeat_rate</option> = <replaceable>2</replaceable></td>
+        <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
+      </tr>
+      <tr>
+        <td><option>heartbeat_timeout_threshold</option> = <replaceable>0</replaceable></td>
+        <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disables the heartbeat, &gt;0 enables it. Enabling heartbeats requires kombu&gt;=3.0.7 and amqp&gt;=1.4.0). EXPERIMENTAL</td>
       </tr>
       <tr>
         <td><option>kombu_reconnect_delay</option> = <replaceable>1.0</replaceable></td>
@@ -84,6 +104,10 @@
       <tr>
         <td><option>rabbit_virtual_host</option> = <replaceable>/</replaceable></td>
         <td>(StrOpt) The RabbitMQ virtual host.</td>
+      </tr>
+      <tr>
+        <td><option>rpc_conn_pool_size</option> = <replaceable>30</replaceable></td>
+        <td>(IntOpt) Size of RPC connection pool.</td>
       </tr>
     </tbody>
   </table>
