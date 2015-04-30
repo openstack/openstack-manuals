@@ -185,9 +185,7 @@ Resize a volume
 
    The ``volume-detach`` command does not return any output.
 
-#. List volumes:
-
-   .. code::
+#. List volumes::
 
      $ cinder list
 
@@ -203,9 +201,7 @@ Resize a volume
    Note that the volume is now available.
 
 #. Resize the volume by passing the volume ID and the new size (a value
-   greater than the old one) as parameters:
-
-   .. code::
+   greater than the old one) as parameters::
 
      $ cinder extend 573e024d-5235-49ce-8332-be1576d323f8 10
 
@@ -218,18 +214,14 @@ Delete a volume
    To detach the volume from your server and check for the list of existing
    volumes, see steps 1 and 2 in Resize_a_volume_.
 
-   Delete the volume using either the volume name or ID:
-
-   .. code::
+   Delete the volume using either the volume name or ID::
 
      $ cinder delete my-new-volume
 
    The delete command does not return any output.
 
 #. List the volumes again, and note that the status of your volume is
-   ``deleting``:
-
-   .. code::
+   ``deleting``::
 
      $ cinder list
 
@@ -243,9 +235,7 @@ Delete a volume
      +-----------------+-----------+-----------------+------+-------------+----------+-------------+
 
    When the volume is fully deleted, it disappears from the list of
-   volumes:
-
-   .. code::
+   volumes::
 
      $ cinder list
 
@@ -283,9 +273,7 @@ Use cases include:
 Create a volume transfer request
 --------------------------------
 
-#. While logged in as the volume donor, list the available volumes:
-
-   .. code::
+#. While logged in as the volume donor, list the available volumes::
 
      $ cinder list
 
@@ -299,18 +287,14 @@ Create a volume transfer request
      +-----------------+-----------+--------------+------+-------------+----------+-------------+
 
 #. As the volume donor, request a volume transfer authorization code for a
-   specific volume:
-
-   .. code::
+   specific volume::
 
      $ cinder transfer-create volumeID
 
    The volume must be in an ``available`` state or the request will be
    denied. If the transfer request is valid in the database (that is, it
    has not expired or been deleted), the volume is placed in an
-   ``awaiting transfer`` state. For example:
-
-   .. code::
+   ``awaiting transfer`` state. For example::
 
      $ cinder transfer-create a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f
 
@@ -343,9 +327,7 @@ Create a volume transfer request
 #. Send the volume transfer ID and authorization key to the new owner (for
    example, by email).
 
-#. View pending transfers:
-
-   .. code::
+#. View pending transfers::
 
      $ cinder transfer-list
 
@@ -358,9 +340,7 @@ Create a volume transfer request
      +--------------------------------------+--------------------------------------+------+
 
 #. After the volume recipient, or new owner, accepts the transfer, you can
-   see that the transfer is no longer available:
-
-   .. code::
+   see that the transfer is no longer available::
 
      $ cinder transfer-list
 
@@ -377,15 +357,11 @@ Accept a volume transfer request
 #. As the volume recipient, you must first obtain the transfer ID and
    authorization key from the original owner.
 
-#. Accept the request:
-
-   .. code::
+#. Accept the request::
 
      $ cinder transfer-accept transferID authKey
 
-   For example:
-
-   .. code::
+   For example::
 
      $ cinder transfer-accept 6e4e9aa4-bed5-4f94-8f76-df43232f44dc   b2c8e585cbc68a80
 
@@ -407,9 +383,7 @@ Accept a volume transfer request
 Delete a volume transfer
 ------------------------
 
-#. List available volumes and their statuses:
-
-   .. code::
+#. List available volumes and their statuses::
 
      $ cinder list
 
@@ -422,9 +396,7 @@ Delete a volume transfer
      | a1cdace0... |awaiting-transfer|     None     |  1   |     None    |  false   |             |
      +-------------+-----------------+--------------+------+-------------+----------+-------------+
 
-#. Find the matching transfer ID:
-
-   .. code::
+#. Find the matching transfer ID::
 
      $ cinder transfer-list
 
@@ -436,9 +408,7 @@ Delete a volume transfer
      | a6da6888-7cdf-4291-9c08-8c1f22426b8a | a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f | None |
      +--------------------------------------+--------------------------------------+------+
 
-#. Delete the volume:
-
-   .. code::
+#. Delete the volume::
 
      $ cinder transfer-delete transferID
 
@@ -449,9 +419,7 @@ Delete a volume transfer
      $ cinder transfer-delete a6da6888-7cdf-4291-9c08-8c1f22426b8a
 
 #. Verify that transfer list is now empty and that the volume is again
-   available for transfer:
-
-   .. code::
+   available for transfer::
 
      $ cinder transfer-list
 
