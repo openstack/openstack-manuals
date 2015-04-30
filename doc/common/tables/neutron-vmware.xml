@@ -18,8 +18,8 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td><option>default_interface_name</option> = <replaceable>FortyGigE1/0/1</replaceable></td>
-        <td>(StrOpt) default_interface_name of the l2 gateway</td>
+        <td><option>default_interface_name</option> = <replaceable>breth0</replaceable></td>
+        <td>(StrOpt) Name of the interface on a L2 Gateway transport nodewhich should be used by default when setting up a network connection</td>
       </tr>
       <tr>
         <th colspan="2">[OVSVAPP]</th>
@@ -37,8 +37,16 @@
         <td>(ListOpt) Bridge mappings.</td>
       </tr>
       <tr>
+        <td><option>dont_fragment</option> = <replaceable>True</replaceable></td>
+        <td>(IntOpt) Do not fragment.</td>
+      </tr>
+      <tr>
         <td><option>integration_bridge</option> = <replaceable>br-int</replaceable></td>
         <td>(StrOpt) Integration Bridge.</td>
+      </tr>
+      <tr>
+        <td><option>local_ip</option> = <replaceable></replaceable></td>
+        <td>(StrOpt) Local IP address of VXLAN tunnel endpoint.</td>
       </tr>
       <tr>
         <td><option>network_manager</option> = <replaceable>networking_vsphere.drivers.manager.VcenterManager</replaceable></td>
@@ -54,11 +62,23 @@
       </tr>
       <tr>
         <td><option>tenant_network_type</option> = <replaceable>vlan</replaceable></td>
-        <td>(StrOpt) Network type for tenant networks - vlan.</td>
+        <td>(StrOpt) Network type for tenant networks</td>
+      </tr>
+      <tr>
+        <td><option>tunnel_bridge</option> = <replaceable>br-tun</replaceable></td>
+        <td>(StrOpt) Tunnel Bridge for tunneling.</td>
+      </tr>
+      <tr>
+        <td><option>tunnel_types</option> = <replaceable>vxlan</replaceable></td>
+        <td>(ListOpt) Tunnel network types supported by the OVSvApp Agent.</td>
       </tr>
       <tr>
         <td><option>veth_mtu</option> = <replaceable>1500</replaceable></td>
         <td>(IntOpt) MTU size of veth interfaces.</td>
+      </tr>
+      <tr>
+        <td><option>vxlan_udp_port</option> = <replaceable>4789</replaceable></td>
+        <td>(IntOpt) The UDP port to use for VXLAN tunnels.</td>
       </tr>
       <tr>
         <th colspan="2">[VMWARE]</th>
@@ -72,7 +92,7 @@
         <td>(StrOpt) Certificate chain path containing cacert of vCenters.</td>
       </tr>
       <tr>
-        <td><option>cluster_dvs_mapping</option> = <replaceable>[]</replaceable></td>
+        <td><option>cluster_dvs_mapping</option> = <replaceable>['']</replaceable></td>
         <td>(MultiStrOpt) vCenter cluster to DVS mapping.</td>
       </tr>
       <tr>
@@ -90,6 +110,10 @@
       <tr>
         <td><option>vcenter_api_retry_count</option> = <replaceable>5</replaceable></td>
         <td>(StrOpt) Number of retries while connecting to vcenter server.</td>
+      </tr>
+      <tr>
+        <td><option>vcenter_id</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Unique ID of the vCenter Server on which this OVSvApp ishosted</td>
       </tr>
       <tr>
         <td><option>vcenter_ip</option> = <replaceable>None</replaceable></td>
