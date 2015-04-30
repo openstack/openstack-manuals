@@ -73,7 +73,7 @@ service with its package name and description.
 |                |          |                       |measurements across     |
 |                |          |                       |OpenStack.              |
 +----------------+----------+-----------------------+------------------------+
-|Data Processing |sahara    |python-saharaclient    |Create and manage       |
+|Data processing |sahara    |python-saharaclient    |Create and manage       |
 |                |          |                       |Hadoop clusters on      |
 |                |          |                       |OpenStack.              |
 +----------------+----------+-----------------------+------------------------+
