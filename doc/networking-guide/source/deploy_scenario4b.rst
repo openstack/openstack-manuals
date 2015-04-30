@@ -4,45 +4,51 @@ Scenario 4b: Provider networks with Linux bridge
 
 This scenario describes a provider networks implementation of the
 OpenStack Networking service using the ML2 plug-in with Linux bridge.
-Provider networks generally offer simplicity, performance, and reliability
-as the cost of flexibility. Contrary to other scenarios, only administrators
-can manage provider networks because they require configuration of physical
+
+Provider networks generally offer simplicity, performance, and reliability at
+the cost of flexibility. Unlike other scenarios, only administrators can
+manage provider networks because they require configuration of physical
 network infrastructure.
 
-In many cases, operators are already familiar with network architectures
-that involve physical (hardware) network infrastructure. In many cases,
-initially deploying OpenStack Networking utilizing existing physical
-network infrastructure requires less initial understanding of virtual
-networking and planning integration of it into the existing infrastructure.
-Over time, operators can test and implement cloud networking features in
-their environment.
+In many cases, operators who are already familiar with virtual networking
+architectures that rely on physical network infrastructure for layer-2,
+layer-3, or other services can seamlessly deploy the OpenStack Networking
+service. In particular, this scenario appeals to operators looking to
+migrate from the Compute networking service (nova-net) to the OpenStack
+Networking service. Over time, operators can build on this minimal
+deployment to enable more cloud networking features.
 
-Prior to the introduction of Distributed Virtual Routers (DVR) in OpenStack
-Networking, all network traffic traversed one or more dedicated network nodes
-that limit performance and reliability. Physical network infrastructure
-typically offers better performance and reliability than general-purpose
-hosts that perform various network operations in various software components
-running on top of Linux. In general, the software components in OpenStack
-Networking that handle layer-3 operations impact performance and reliability
-the most. Provider networks move layer-3 operations to the physical network
-infrastructure.
+Before OpenStack Networking introduced Distributed Virtual Routers (DVR), all
+network traffic traversed one or more dedicated network nodes, which limited
+performance and reliability. Physical network infrastructures typically offer
+better performance and reliability than general-purpose hosts that handle
+various network operations in software.
+
+In general, the OpenStack Networking software components that handle layer-3
+operations impact performance and reliability the most. To improve performance
+and reliability, provider networks move layer-3 operations to the physical
+network infrastructure.
 
 In one particular use case, the OpenStack deployment resides in a mixed
-environment with conventional virtualization and potentially bare-metal
-hosts that use a sizable physical network infrastructure. Applications
-that run inside the OpenStack deployment might require direct layer-2
-access, typically using VLANs, to applications outside of the deployment.
+environment with conventional virtualization and bare-metal hosts that use a
+sizable physical network infrastructure. Applications that run inside the
+OpenStack deployment might require direct layer-2 access, typically using
+VLANs, to applications outside of the deployment.
+
+In comparison to provider networks with Open vSwitch (OVS), this scenario
+relies completely on native Linux networking services which makes it the
+simplest of all scenarios in this guide.
 
 Prerequisites
 ~~~~~~~~~~~~~
 
-These prerequisites define the minimal physical infrastructure and immediate
-OpenStack service dependencies necessary to deploy this scenario. For example,
-the Networking service immediately depends on the Identity service and the
-Compute service immediately depends on the Networking service. These
-dependencies lack services such as the Image service because the Networking
-service does not immediately depend on it. However, the Compute service
-depends on the Image service to launch an instance.
+These prerequisites define the minimum physical infrastructure and OpenStack
+service dependencies that you need to deploy this scenario. For example, the
+Networking service immediately depends on the Identity service, and the Compute
+service immediately depends on the Networking service. These dependencies lack
+services such as the Image service because the Networking service does not
+immediately depend on it. However, the Compute service depends on the Image
+service to launch an instance.
 
 Infrastructure
 --------------
@@ -141,18 +147,23 @@ Packet flow
 For all cases, the physical network infrastructure handles routing and
 switching for *north-south* and *east-west* network traffic.
 
-.. note:: The term *north-south* generally defines network traffic that
-          travels between an instance and external network (typically the
-          Internet) and the term *east-west* generally defines network traffic
-          that travels between instances.
+.. note::
+   *North-south* network traffic travels between an instance and
+   external network, typically the Internet. *East-west* network
+   traffic travels between instances.
 
 Case 1: North-south
 -------------------
 
-Instance 1 resides on compute node 1 and uses provider network 1. The
-instance sends a packet to a host on the external network. The physical
-network infrastructure handles routing (and potentially SNAT/DNAT) between
-the provider and external network.
+Instance 1 resides on compute node 1 and uses provider network 1.
+
+The instance sends a packet to a host on the external network.
+
+The physical network infrastructure handles routing (and potentially SNAT/DNAT)
+between the provider and external network. In this example, external network
+1 contains a different IP network than the provider networks to illustrate
+that the physical network infrastructure can handle routing. However, provider
+networks also support switching to external networks.
 
 * External network 1
 
@@ -162,25 +173,25 @@ the provider and external network.
 
 * Provider network 1
 
-  * Network 192.168.1.0/24
+  * Network 192.0.2.0/24
 
-  * Gateway 192.168.1.1 with MAC address *TG1*
+  * Gateway 192.0.2.1 with MAC address *TG1*
 
 * Compute node 1
 
-  * Instance 1 192.168.1.11 with MAC address *I1*
+  * Instance 1 192.0.2.11 with MAC address *I1*
 
 The following steps involve compute node 1.
 
-#. Upon launch, instance 1 obtains an IP address from the DHCP server
-   on the controller node and receives metadata using Config Drive. After
+#. Upon launch, instance 1 gets an IP address from the DHCP server on the
+   controller node and gets metadata by using a configuration drive. After
    initial configuration, only DHCP renewal traffic interacts with the
    controller node.
 
    .. note::
       The lack of L3 agents in this scenario prevents operation of the
-      conventional metadata agent. You must use Config Drive to provide
-      instance metadata.
+      conventional metadata agent. You must use a configuration drive to
+      provide instance metadata.
 
 #. The instance 1 ``tap`` interface (1) forwards the packet to the tunnel
    bridge ``qbr``. The packet contains destination MAC address *TG1*
@@ -210,7 +221,8 @@ The following steps involve the physical network infrastructure:
 
 #. A switch (3) forwards the packet to the external network.
 
-.. note:: Return traffic follows similar steps in reverse.
+.. note::
+   Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-provider-lb-flowns1.png
    :alt: Network traffic flow - north/south
@@ -218,30 +230,33 @@ The following steps involve the physical network infrastructure:
 Case 2: East-west for instances on different networks
 -----------------------------------------------------
 
-Instance 1 resides on compute node 1 and uses provider network 1. Instance
-2 resides on compute node 2 and uses provider network 2. Instance 1 sends
-a packet to instance 2. The physical network infrastructure handles routing
-between the provider networks.
+Instance 1 resides on compute node 1 and uses provider network 1. Instance 2
+resides on compute node 2 and uses provider network 2.
+
+Instance 1 sends a packet to instance 2.
+
+The physical network infrastructure handles routing between the provider
+networks.
 
 * Provider network 1
 
-  * Network: 192.168.1.0/24
+  * Network: 192.0.2.0/24
 
-  * Gateway: 192.168.1.1 with MAC address *TG1*
+  * Gateway: 192.0.2.1 with MAC address *TG1*
 
 * Provider network 2
 
-  * Network: 192.168.2.0/24
+  * Network: 198.51.100.0/2
 
-  * Gateway: 192.168.2.1 with MAC address *TG2*
+  * Gateway: 198.51.100.1 with MAC address *TG2*
 
 * Compute node 1
 
-  * Instance 1: 192.168.1.11 with MAC address *I1*
+  * Instance 1: 192.0.2.11 with MAC address *I1*
 
 * Compute node 2
 
-  * Instance 2: 192.168.2.11 with MAC address *I2*
+  * Instance 2: 198.51.100.11 with MAC address *I2*
 
 The following steps involve compute node 1:
 
@@ -304,15 +319,15 @@ within the provider network.
 
 * Provider network 1
 
-  * Network: 192.168.1.0/24
+  * Network: 192.0.2.0/24
 
 * Compute node 1
 
-  * Instance 1: 192.168.1.11 with MAC address *I1*
+  * Instance 1: 192.0.2.11 with MAC address *I1*
 
 * Compute node 2
 
-  * Instance 2: 192.168.1.12 with MAC address *I2*
+  * Instance 2: 192.0.2.12 with MAC address *I2*
 
 The following steps involve compute node 1:
 
@@ -351,7 +366,8 @@ The following steps involve compute node 2:
 #. The provider bridge ``qbr`` forwards the packet to the instance 2 ``tap``
    interface (5).
 
-.. note:: Return traffic follows similar steps in reverse.
+.. note::
+   Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-provider-lb-flowew2.png
    :alt: Network traffic flow - east/west for instances on the same network
@@ -508,7 +524,7 @@ Create initial networks
 -----------------------
 
 This example creates a provider network using VLAN 101 and IP network
-192.168.1.0/24. Change the VLAN ID and IP network to values appropriate
+203.0.113.0/24. Change the VLAN ID and IP network to values appropriate
 for your environment.
 
 #. Source the administrative project credentials.
@@ -535,20 +551,21 @@ for your environment.
       | tenant_id                 | e0bddbc9210d409795887175341b7098     |
       +---------------------------+--------------------------------------+
 
-   .. note:: The ``shared`` option allows any project to use this network.
+   .. note::
+      The ``shared`` option allows any project to use this network.
 
 #. Create a subnet on the provider network::
 
-      $ neutron subnet-create provider-101 192.168.1.0/24 --gateway 192.168.1.1
+      $ neutron subnet-create provider-101 203.0.113.0/24 --gateway 203.0.113.1
       Created a new subnet:
       +-------------------+--------------------------------------------------+
       | Field             | Value                                            |
       +-------------------+--------------------------------------------------+
-      | allocation_pools  | {"start": "192.168.1.2", "end": "192.168.1.254"} |
-      | cidr              | 192.168.1.0/24                                   |
+      | allocation_pools  | {"start": "203.0.113.2", "end": "203.0.113.254"} |
+      | cidr              | 203.0.113.0/24                                   |
       | dns_nameservers   |                                                  |
       | enable_dhcp       | True                                             |
-      | gateway_ip        | 192.168.1.1                                      |
+      | gateway_ip        | 203.0.113.1                                      |
       | host_routes       |                                                  |
       | id                | ff6c9a0b-0c81-4ce4-94e6-c6617a059bab             |
       | ip_version        | 4                                                |
@@ -570,24 +587,24 @@ Verify operation
    .. note::
       The ``qdhcp`` namespace might not exist until launching an instance.
 
-#. Source the regular project credentials.
+#. Source the credentials for a non-privileged project. The following
+   steps use the ``demo`` project.
 
 #. Create the appropriate security group rules to allow ping and SSH
    access to the instance.
 
 #. Launch an instance with an interface on the provider network.
 
-#. On the controller node, ping the IP address associated with the
-   instance::
+#. Test connectivity to the instance::
 
-      $ ping -c 4 192.168.1.2
-      PING 192.168.1.2 (192.168.1.2) 56(84) bytes of data.
-      64 bytes from 192.168.1.2: icmp_req=1 ttl=63 time=3.18 ms
-      64 bytes from 192.168.1.2: icmp_req=2 ttl=63 time=0.981 ms
-      64 bytes from 192.168.1.2: icmp_req=3 ttl=63 time=1.06 ms
-      64 bytes from 192.168.1.2: icmp_req=4 ttl=63 time=0.929 ms
+      $ ping -c 4 203.0.113.2
+      PING 203.0.113.2 (203.0.113.2) 56(84) bytes of data.
+      64 bytes from 203.0.113.2: icmp_req=1 ttl=63 time=3.18 ms
+      64 bytes from 203.0.113.2: icmp_req=2 ttl=63 time=0.981 ms
+      64 bytes from 203.0.113.2: icmp_req=3 ttl=63 time=1.06 ms
+      64 bytes from 203.0.113.2: icmp_req=4 ttl=63 time=0.929 ms
 
-      --- 192.168.1.2 ping statistics ---
+      --- 203.0.113.2 ping statistics ---
       4 packets transmitted, 4 received, 0% packet loss, time 3002ms
       rtt min/avg/max/mdev = 0.929/1.539/3.183/0.951 ms
 
