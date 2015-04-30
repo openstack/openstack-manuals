@@ -211,7 +211,7 @@ Resources:
           <listitem>
             <para>The encoding format used to provide the payload data.</para>
             <para>Updates cause replacement.</para>
-            <para>Optional property, defaults to "base64".</para>
+            <para>Optional property.</para>
             <para>Allowed values: base64</para>
           </listitem>
         </varlistentry>
@@ -393,7 +393,7 @@ Resources:
           <term role="List">query</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>A list of query factors, each comparing a Sample attribute with a value. Implicitly combined with matching_metadata, if any.</para>
             <para>Can be updated without replacement.</para>
@@ -549,7 +549,9 @@ Resources:
   <section xml:id="OS__Ceilometer__CombinationAlarm">
     <?dbhtml stop-chunking?>
     <title>OS::Ceilometer::CombinationAlarm</title>
-    <para>Available since 2014.1 (Icehouse).</para>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <section xml:id="OS__Ceilometer__CombinationAlarm-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -680,11 +682,13 @@ Resources:
 }</programlisting>
     </section>
   </section>
-  <section xml:id="OS__Ceilometer__GnocchiMetricslarm">
+  <section xml:id="OS__Ceilometer__GnocchiAggregationByMetricsAlarm">
     <?dbhtml stop-chunking?>
-    <title>OS::Ceilometer::GnocchiMetricslarm</title>
-    <para>Available since 2015.1 (Kilo).</para>
-    <section xml:id="OS__Ceilometer__GnocchiMetricslarm-props">
+    <title>OS::Ceilometer::GnocchiAggregationByMetricsAlarm</title>
+    <note>
+      <para>Available since 2015.1 (Kilo)</para>
+    </note>
+    <section xml:id="OS__Ceilometer__GnocchiAggregationByMetricsAlarm-props">
       <title>Properties</title>
       <variablelist role="definition_list">
         <varlistentry>
@@ -787,14 +791,14 @@ Resources:
         </varlistentry>
       </variablelist>
     </section>
-    <section xml:id="OS__Ceilometer__GnocchiMetricslarm-hot">
+    <section xml:id="OS__Ceilometer__GnocchiAggregationByMetricsAlarm-hot">
       <title>HOT Syntax</title>
       <programlisting language="hot">heat_template_version: 2013-05-23
 ...
 resources:
   ...
   the_resource:
-    type: OS::Ceilometer::GnocchiMetricslarm
+    type: OS::Ceilometer::GnocchiAggregationByMetricsAlarm
     properties:
       aggregation_method: String
       alarm_actions: [Value, Value, ...]
@@ -809,14 +813,14 @@ resources:
       repeat_actions: Boolean
       threshold: Number</programlisting>
     </section>
-    <section xml:id="OS__Ceilometer__GnocchiMetricslarm-yaml">
+    <section xml:id="OS__Ceilometer__GnocchiAggregationByMetricsAlarm-yaml">
       <title>YAML Syntax</title>
       <programlisting language="yaml">HeatTemplateFormatVersion: '2012-12-12'
 ...
 Resources:
   ...
   TheResource:
-    Type: OS::Ceilometer::GnocchiMetricslarm
+    Type: OS::Ceilometer::GnocchiAggregationByMetricsAlarm
     Properties:
       aggregation_method: String
       alarm_actions: [Value, Value, ...]
@@ -831,14 +835,14 @@ Resources:
       repeat_actions: Boolean
       threshold: Number</programlisting>
     </section>
-    <section xml:id="OS__Ceilometer__GnocchiMetricslarm-json">
+    <section xml:id="OS__Ceilometer__GnocchiAggregationByMetricsAlarm-json">
       <title>JSON Syntax</title>
       <programlisting language="json">{
   "AWSTemplateFormatVersion" : "2010-09-09",
   ...
   "Resources" : {
     "TheResource": {
-      "Type": "OS::Ceilometer::GnocchiMetricslarm",
+      "Type": "OS::Ceilometer::GnocchiAggregationByMetricsAlarm",
       "Properties": {
         "aggregation_method": String,
         "alarm_actions": [Value, Value, ...],
@@ -858,10 +862,214 @@ Resources:
 }</programlisting>
     </section>
   </section>
+  <section xml:id="OS__Ceilometer__GnocchiAggregationByResourcesAlarm">
+    <?dbhtml stop-chunking?>
+    <title>OS::Ceilometer::GnocchiAggregationByResourcesAlarm</title>
+    <note>
+      <para>Available since 2015.1 (Kilo)</para>
+    </note>
+    <section xml:id="OS__Ceilometer__GnocchiAggregationByResourcesAlarm-props">
+      <title>Properties</title>
+      <variablelist role="definition_list">
+        <varlistentry>
+          <term role="String">aggregation_method</term>
+          <listitem>
+            <para>The aggregation method to compare to the threshold</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+            <para>Allowed values: mean, sum, last, max, min, std, median, first, count</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">alarm_actions</term>
+          <listitem>
+            <para>A list of URLs (webhooks) to invoke when state transitions to alarm.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">comparison_operator</term>
+          <listitem>
+            <para>Operator used to compare specified statistic with threshold.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+            <para>Allowed values: ge, gt, eq, ne, lt, le</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">description</term>
+          <listitem>
+            <para>Description for the alarm.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Boolean">enabled</term>
+          <listitem>
+            <para>True if alarm evaluation/actioning is enabled.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "true".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Integer">evaluation_periods</term>
+          <listitem>
+            <para>Number of periods to evaluate over.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Integer">granularity</term>
+          <listitem>
+            <para>The time range in seconds.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">insufficient_data_actions</term>
+          <listitem>
+            <para>A list of URLs (webhooks) to invoke when state transitions to insufficient-data.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">metric</term>
+          <listitem>
+            <para>Metric name watched by the alarm.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">ok_actions</term>
+          <listitem>
+            <para>A list of URLs (webhooks) to invoke when state transitions to ok.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">query</term>
+          <listitem>
+            <para>The query to filter the metrics</para>
+            <para>Can be updated without replacement.</para>
+            <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Boolean">repeat_actions</term>
+          <listitem>
+            <para>False to trigger actions when the threshold is reached AND the alarm's state has changed. By default, actions are called each time the threshold is reached.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "true".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">resource_type</term>
+          <listitem>
+            <para>Resource type</para>
+            <para>Can be updated without replacement.</para>
+            <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Number">threshold</term>
+          <listitem>
+            <para>Threshold to evaluate against.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section xml:id="OS__Ceilometer__GnocchiAggregationByResourcesAlarm-hot">
+      <title>HOT Syntax</title>
+      <programlisting language="hot">heat_template_version: 2013-05-23
+...
+resources:
+  ...
+  the_resource:
+    type: OS::Ceilometer::GnocchiAggregationByResourcesAlarm
+    properties:
+      aggregation_method: String
+      alarm_actions: [Value, Value, ...]
+      comparison_operator: String
+      description: String
+      enabled: Boolean
+      evaluation_periods: Integer
+      granularity: Integer
+      insufficient_data_actions: [Value, Value, ...]
+      metric: String
+      ok_actions: [Value, Value, ...]
+      query: String
+      repeat_actions: Boolean
+      resource_type: String
+      threshold: Number</programlisting>
+    </section>
+    <section xml:id="OS__Ceilometer__GnocchiAggregationByResourcesAlarm-yaml">
+      <title>YAML Syntax</title>
+      <programlisting language="yaml">HeatTemplateFormatVersion: '2012-12-12'
+...
+Resources:
+  ...
+  TheResource:
+    Type: OS::Ceilometer::GnocchiAggregationByResourcesAlarm
+    Properties:
+      aggregation_method: String
+      alarm_actions: [Value, Value, ...]
+      comparison_operator: String
+      description: String
+      enabled: Boolean
+      evaluation_periods: Integer
+      granularity: Integer
+      insufficient_data_actions: [Value, Value, ...]
+      metric: String
+      ok_actions: [Value, Value, ...]
+      query: String
+      repeat_actions: Boolean
+      resource_type: String
+      threshold: Number</programlisting>
+    </section>
+    <section xml:id="OS__Ceilometer__GnocchiAggregationByResourcesAlarm-json">
+      <title>JSON Syntax</title>
+      <programlisting language="json">{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  ...
+  "Resources" : {
+    "TheResource": {
+      "Type": "OS::Ceilometer::GnocchiAggregationByResourcesAlarm",
+      "Properties": {
+        "aggregation_method": String,
+        "alarm_actions": [Value, Value, ...],
+        "comparison_operator": String,
+        "description": String,
+        "enabled": Boolean,
+        "evaluation_periods": Integer,
+        "granularity": Integer,
+        "insufficient_data_actions": [Value, Value, ...],
+        "metric": String,
+        "ok_actions": [Value, Value, ...],
+        "query": String,
+        "repeat_actions": Boolean,
+        "resource_type": String,
+        "threshold": Number
+      }
+    }
+  }
+}</programlisting>
+    </section>
+  </section>
   <section xml:id="OS__Ceilometer__GnocchiResourcesAlarm">
     <?dbhtml stop-chunking?>
     <title>OS::Ceilometer::GnocchiResourcesAlarm</title>
-    <para>Available since 2015.1 (Kilo).</para>
+    <note>
+      <para>Available since 2015.1 (Kilo)</para>
+    </note>
     <section xml:id="OS__Ceilometer__GnocchiResourcesAlarm-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -956,9 +1164,9 @@ Resources:
           </listitem>
         </varlistentry>
         <varlistentry>
-          <term role="String">resource_constraint</term>
+          <term role="String">resource_id</term>
           <listitem>
-            <para>Id of a resource or expression to select multiple resources</para>
+            <para>Id of a resource</para>
             <para>Can be updated without replacement.</para>
             <para>Required property.</para>
           </listitem>
@@ -1001,7 +1209,7 @@ resources:
       metric: String
       ok_actions: [Value, Value, ...]
       repeat_actions: Boolean
-      resource_constraint: String
+      resource_id: String
       resource_type: String
       threshold: Number</programlisting>
     </section>
@@ -1025,7 +1233,7 @@ Resources:
       metric: String
       ok_actions: [Value, Value, ...]
       repeat_actions: Boolean
-      resource_constraint: String
+      resource_id: String
       resource_type: String
       threshold: Number</programlisting>
     </section>
@@ -1049,7 +1257,7 @@ Resources:
         "metric": String,
         "ok_actions": [Value, Value, ...],
         "repeat_actions": Boolean,
-        "resource_constraint": String,
+        "resource_id": String,
         "resource_type": String,
         "threshold": Number
       }
@@ -1117,7 +1325,7 @@ Resources:
           <term role="Map">scheduler_hints</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>Arbitrary key-value pairs specified by the client to help the Cinder scheduler creating a volume.</para>
             <para>Updates cause replacement.</para>
@@ -1410,10 +1618,12 @@ Resources:
   <section xml:id="OS__Cinder__VolumeType">
     <?dbhtml stop-chunking?>
     <title>OS::Cinder::VolumeType</title>
+    <note>
+      <para>Available since 2015.1 (Kilo)</para>
+    </note>
     <para>A resource for creating OpenStack virtual hardware templates.</para>
     <para>Note that default cinder security policy usage of this resource
 is limited to being used by administrators only.</para>
-    <para>Available since 2015.1 (Kilo).</para>
     <section xml:id="OS__Cinder__VolumeType-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -1479,8 +1689,10 @@ Resources:
   <section xml:id="OS__Glance__Image">
     <?dbhtml stop-chunking?>
     <title>OS::Glance::Image</title>
+    <note>
+      <para>Available since 2014.2 (Juno)</para>
+    </note>
     <para>A resource managing for image in Glance.</para>
-    <para>Available since 2014.2 (Juno).</para>
     <section xml:id="OS__Glance__Image-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -1681,8 +1893,10 @@ Resources:
   <section xml:id="OS__Heat__AutoScalingGroup">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::AutoScalingGroup</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>An autoscaling group that can scale arbitrary resources.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Heat__AutoScalingGroup-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -1733,7 +1947,7 @@ Resources:
           <listitem>
             <para>Policy for rolling updates for this scaling group.</para>
             <para>Can be updated without replacement.</para>
-            <para>Optional property.</para>
+            <para>Optional property, defaults to "{'min_in_service': 0, 'pause_time': 0, 'max_batch_size': 1}".</para>
             <para>
               <emphasis>Map properties:</emphasis>
             </para>
@@ -2041,6 +2255,9 @@ Resources:
   <section xml:id="OS__Heat__CloudConfig">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::CloudConfig</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>A configuration resource for representing cloud-init cloud-config.</para>
     <para>This resource allows cloud-config YAML to be defined and stored by the
 config API. Any intrinsic functions called in the config will be resolved
@@ -2049,7 +2266,6 @@ before storing the result.</para>
 or OS::Heat::MultipartMime parts config. Since cloud-config is boot-only
 configuration, any changes to the definition will result in the
 replacement of all servers which reference it.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Heat__CloudConfig-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -2324,6 +2540,9 @@ Resources:
   <section xml:id="OS__Heat__MultipartMime">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::MultipartMime</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>A resource which assembles a collection of software configurations
 as a multi-part mime message.</para>
     <para>Parts in the message can be populated with inline configuration or
@@ -2336,7 +2555,6 @@ and can be referenced in properties such as OS::Nova::Server user_data.</para>
 configuration elements including scripts and cloud-config. Since
 cloud-init is boot-only configuration, any changes to the definition
 will result in the replacement of all servers which reference it.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Heat__MultipartMime-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -2452,9 +2670,11 @@ Resources:
   <section xml:id="OS__Heat__RandomString">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::RandomString</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>A resource which generates a random string.</para>
     <para>This is useful for configuring passwords and secrets on services.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Heat__RandomString-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -2635,6 +2855,9 @@ Resources:
   <section xml:id="OS__Heat__ResourceGroup">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::ResourceGroup</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>A resource that creates one or more identically configured nested
 resources.</para>
     <para>In addition to the <citetitle>refs</citetitle> attribute, this resource implements synthetic
@@ -2664,7 +2887,6 @@ of the resources in the group. For example:</para>
     <para>would result in a group of three servers having the same image and flavor,
 but names of <citetitle>my_server_0</citetitle>, <citetitle>my_server_1</citetitle>, and <citetitle>my_server_2</citetitle>. The variable
 used for substitution can be customized by using the <citetitle>index_var</citetitle> property.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Heat__ResourceGroup-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -2681,7 +2903,7 @@ used for substitution can be customized by using the <citetitle>index_var</citet
           <term role="String">index_var</term>
           <listitem>
             <note>
-              <para>Available since 2014.2 (Juno).</para>
+              <para>Available since 2014.2 (Juno)</para>
             </note>
             <para>A variable that this resource will use to replace with the current index of a given resource in the group. Can be used, for example, to customize the name property of grouped servers in order to differentiate them when listed with nova client.</para>
             <para>Updates cause replacement.</para>
@@ -2693,7 +2915,7 @@ used for substitution can be customized by using the <citetitle>index_var</citet
           <term role="List">removal_policies</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>Policies for removal of resources on update</para>
             <para>Can be updated without replacement.</para>
@@ -2763,6 +2985,9 @@ used for substitution can be customized by using the <citetitle>index_var</citet
         <varlistentry>
           <term>attributes</term>
           <listitem>
+            <note>
+              <para>Available since 2014.2 (Juno)</para>
+            </note>
             <para>A map of resource names to the specified attribute of each individual resource.  Requires heat_template_version: 2014-10-16.</para>
           </listitem>
         </varlistentry>
@@ -2927,6 +3152,9 @@ Resources:
   <section xml:id="OS__Heat__SoftwareComponent">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::SoftwareComponent</title>
+    <note>
+      <para>Available since 2014.2 (Juno)</para>
+    </note>
     <para>A resource for describing and storing a software component.</para>
     <para>This resource is similar to OS::Heat::SoftwareConfig. In contrast to
 SoftwareConfig which allows for storing only one configuration (e.g. one
@@ -2936,7 +3164,6 @@ DELETE) for a software component in one place.</para>
     <para>This resource is backed by the persistence layer and the API of the
 SoftwareConfig resource, and only adds handling for the additional
 'configs' property and attribute.</para>
-    <para>Available since 2014.2 (Juno).</para>
     <section xml:id="OS__Heat__SoftwareComponent-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -2965,7 +3192,7 @@ SoftwareConfig resource, and only adds handling for the additional
                       <listitem>
                         <para>Lifecycle actions to which the configuration applies. The string values provided for this property can include the standard resource actions CREATE, DELETE, UPDATE, SUSPEND and RESUME supported by Heat.</para>
                         <para>Updates cause replacement.</para>
-                        <para>Required property.</para>
+                        <para>Optional property, defaults to "['CREATE', 'UPDATE']".</para>
                         <para>The length must be at least 1.</para>
                         <para>
                           <emphasis>List contents:</emphasis>
@@ -3190,6 +3417,9 @@ Resources:
   <section xml:id="OS__Heat__SoftwareConfig">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::SoftwareConfig</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>A resource for describing and storing software configuration.</para>
     <para>The software_configs API which backs this resource creates immutable
 configs, so any change to the template resource definition will result
@@ -3204,7 +3434,6 @@ config.</para>
 inputs and outputs which the config script is expected to consume and
 produce. Inputs and outputs are optional and will map to concepts which
 are specific to the configuration tool being used.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Heat__SoftwareConfig-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -3414,6 +3643,9 @@ Resources:
   <section xml:id="OS__Heat__SoftwareDeployment">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::SoftwareDeployment</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>This resource associates a server with some configuration which
 is to be deployed to that server.</para>
     <para>A deployment allows input values to be specified which map to the inputs
@@ -3436,7 +3668,6 @@ DELETE. A config could be designed to only work with some specific
 actions, or a config can read the value of the deploy_action input to
 allow conditional logic to perform different configuration for different
 actions.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Heat__SoftwareDeployment-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -3572,7 +3803,9 @@ Resources:
   <section xml:id="OS__Heat__SoftwareDeployments">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::SoftwareDeployments</title>
-    <para>Available since 2014.2 (Juno).</para>
+    <note>
+      <para>Available since 2014.2 (Juno)</para>
+    </note>
     <section xml:id="OS__Heat__SoftwareDeployments-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -3826,12 +4059,14 @@ Resources:
   <section xml:id="OS__Heat__StructuredConfig">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::StructuredConfig</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>This resource is like OS::Heat::SoftwareConfig except that the config
 property is represented by a Map rather than a String.</para>
     <para>This is useful for configuration tools which use YAML or JSON as their
 configuration syntax. The resulting configuration is transferred,
 stored and returned by the software_configs API as parsed JSON.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Heat__StructuredConfig-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -4041,6 +4276,9 @@ Resources:
   <section xml:id="OS__Heat__StructuredDeployment">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::StructuredDeployment</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>A deployment resource like OS::Heat::SoftwareDeployment, but which
 performs input value substitution on the config defined by a
 OS::Heat::StructuredConfig resource.</para>
@@ -4051,7 +4289,6 @@ is the JSON metadata consumed by the cfn-init tool.</para>
 with the value of input_name in this resource's input_values. If get_input
 needs to be passed through to the substituted configuration then a
 different input_key property value can be specified.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Heat__StructuredDeployment-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -4210,7 +4447,9 @@ Resources:
   <section xml:id="OS__Heat__StructuredDeployments">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::StructuredDeployments</title>
-    <para>Available since 2014.2 (Juno).</para>
+    <note>
+      <para>Available since 2014.2 (Juno)</para>
+    </note>
     <section xml:id="OS__Heat__StructuredDeployments-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -4368,7 +4607,9 @@ Resources:
   <section xml:id="OS__Heat__SwiftSignal">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::SwiftSignal</title>
-    <para>Available since 2014.2 (Juno).</para>
+    <note>
+      <para>Available since 2014.2 (Juno)</para>
+    </note>
     <section xml:id="OS__Heat__SwiftSignal-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -4458,7 +4699,9 @@ Resources:
   <section xml:id="OS__Heat__SwiftSignalHandle">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::SwiftSignalHandle</title>
-    <para>Available since 2014.2 (Juno).</para>
+    <note>
+      <para>Available since 2014.2 (Juno)</para>
+    </note>
     <section xml:id="OS__Heat__SwiftSignalHandle-attrs">
       <title>Attributes</title>
       <variablelist role="definition_list">
@@ -4516,13 +4759,15 @@ Resources:
   <section xml:id="OS__Heat__UpdateWaitConditionHandle">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::UpdateWaitConditionHandle</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>This works identically to a regular WaitConditionHandle, except that
 on update it clears all signals received and changes the handle. Using
 this handle means that you must setup the signal senders to send their
 signals again any time the update handle changes. This allows us to roll
 out new configurations and be confident that they are rolled out once
 UPDATE COMPLETE is reached.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Heat__UpdateWaitConditionHandle-hot">
       <title>HOT Syntax</title>
       <programlisting language="hot">heat_template_version: 2013-05-23
@@ -4557,7 +4802,9 @@ Resources:
   <section xml:id="OS__Heat__WaitCondition">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::WaitCondition</title>
-    <para>Available since 2014.2 (Juno).</para>
+    <note>
+      <para>Available since 2014.2 (Juno)</para>
+    </note>
     <section xml:id="OS__Heat__WaitCondition-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -4647,7 +4894,9 @@ Resources:
   <section xml:id="OS__Heat__WaitConditionHandle">
     <?dbhtml stop-chunking?>
     <title>OS::Heat::WaitConditionHandle</title>
-    <para>Available since 2014.2 (Juno).</para>
+    <note>
+      <para>Available since 2014.2 (Juno)</para>
+    </note>
     <section xml:id="OS__Heat__WaitConditionHandle-attrs">
       <title>Attributes</title>
       <variablelist role="definition_list">
@@ -4702,9 +4951,385 @@ Resources:
 }</programlisting>
     </section>
   </section>
+  <section xml:id="OS__Keystone__Group">
+    <?dbhtml stop-chunking?>
+    <title>OS::Keystone::Group</title>
+    <note>
+      <para>Available since 2015.1 (Kilo) - Supported versions: keystone v3</para>
+    </note>
+    <para>Heat Template Resource for Keystone Group.</para>
+    <para>heat_template_version: 2013-05-23</para>
+    <para>description: Sample Keystone Group template</para>
+    <variablelist role="definition_list">
+      <varlistentry>
+        <term>parameters:</term>
+        <listitem>
+          <variablelist role="definition_list">
+            <varlistentry>
+              <term>group_name:</term>
+              <listitem>
+                <para>type: string
+description: Keystone group name</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>group_description:</term>
+              <listitem>
+                <para>type: string
+description: Keystone group description</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>group_domain:</term>
+              <listitem>
+                <para>type: string
+description: Keystone group domain name</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>group_role:</term>
+              <listitem>
+                <para>type: string
+description: role</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>group_role_domain:</term>
+              <listitem>
+                <para>type: string
+description: group role domain</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>group_role_project:</term>
+              <listitem>
+                <para>type: string
+description: group role project</para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>resources:</term>
+        <listitem>
+          <variablelist role="definition_list">
+            <varlistentry>
+              <term>admin_group:</term>
+              <listitem>
+                <para>type: OS::Keystone::Group
+properties:</para>
+                <blockquote>
+                  <para>name: {get_param: group_name}
+domain: {get_param: group_domain}
+description: {get_param: group_description}
+roles:</para>
+                  <blockquote>
+                    <itemizedlist>
+                      <listitem>
+                        <para>role: {get_param: group_role}
+domain: {get_param: group_role_domain}</para>
+                      </listitem>
+                      <listitem>
+                        <para>role: {get_param: group_role}
+project: {get_param: group_role_project}</para>
+                      </listitem>
+                    </itemizedlist>
+                  </blockquote>
+                </blockquote>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <section xml:id="OS__Keystone__Group-props">
+      <title>Properties</title>
+      <variablelist role="definition_list">
+        <varlistentry>
+          <term role="String">description</term>
+          <listitem>
+            <para>Description of keystone group.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">domain</term>
+          <listitem>
+            <para>Name or id of keystone domain.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "default".</para>
+            <para>Value must be of type keystone.domain</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">name</term>
+          <listitem>
+            <para>Name of keystone group.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">roles</term>
+          <listitem>
+            <para>List of role assignments.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+            <para>
+              <emphasis>List contents:</emphasis>
+            </para>
+            <variablelist role="definition_list">
+              <varlistentry>
+                <term role="Map">*</term>
+                <listitem>
+                  <para>Map between role with either project or domain.</para>
+                  <para>Updates cause replacement.</para>
+                  <para>Optional property.</para>
+                  <para>
+                    <emphasis>Map properties:</emphasis>
+                  </para>
+                  <variablelist role="definition_list">
+                    <varlistentry>
+                      <term role="String">domain</term>
+                      <listitem>
+                        <para>Keystone domain</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                        <para>Value must be of type keystone.domain</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">project</term>
+                      <listitem>
+                        <para>Keystone project</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                        <para>Value must be of type keystone.project</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">role</term>
+                      <listitem>
+                        <para>Keystone role</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Required property.</para>
+                        <para>Value must be of type keystone.role</para>
+                      </listitem>
+                    </varlistentry>
+                  </variablelist>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section xml:id="OS__Keystone__Group-hot">
+      <title>HOT Syntax</title>
+      <programlisting language="hot">heat_template_version: 2013-05-23
+...
+resources:
+  ...
+  the_resource:
+    type: OS::Keystone::Group
+    properties:
+      description: String
+      domain: String
+      name: String
+      roles: [{"project": String, "domain": String, "role": String}, {"project": String, "domain": String, "role": String}, ...]</programlisting>
+    </section>
+    <section xml:id="OS__Keystone__Group-yaml">
+      <title>YAML Syntax</title>
+      <programlisting language="yaml">HeatTemplateFormatVersion: '2012-12-12'
+...
+Resources:
+  ...
+  TheResource:
+    Type: OS::Keystone::Group
+    Properties:
+      description: String
+      domain: String
+      name: String
+      roles: [{"project": String, "domain": String, "role": String}, {"project": String, "domain": String, "role": String}, ...]</programlisting>
+    </section>
+    <section xml:id="OS__Keystone__Group-json">
+      <title>JSON Syntax</title>
+      <programlisting language="json">{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  ...
+  "Resources" : {
+    "TheResource": {
+      "Type": "OS::Keystone::Group",
+      "Properties": {
+        "description": String,
+        "domain": String,
+        "name": String,
+        "roles": [{"project": String, "domain": String, "role": String}, {"project": String, "domain": String, "role": String}, ...]
+      }
+    }
+  }
+}</programlisting>
+    </section>
+  </section>
+  <section xml:id="OS__Keystone__Project">
+    <?dbhtml stop-chunking?>
+    <title>OS::Keystone::Project</title>
+    <note>
+      <para>Available since 2015.1 (Kilo) - Supported versions: keystone v3</para>
+    </note>
+    <para>Heat Template Resource for Keystone Project.</para>
+    <para>heat_template_version: 2013-05-23</para>
+    <para>description: Sample Keystone Project template</para>
+    <variablelist role="definition_list">
+      <varlistentry>
+        <term>parameters:</term>
+        <listitem>
+          <variablelist role="definition_list">
+            <varlistentry>
+              <term>project_name:</term>
+              <listitem>
+                <para>type: string
+description: Keystone project name</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>project_description:</term>
+              <listitem>
+                <para>type: string
+description: Keystone project description</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>project_enabled:</term>
+              <listitem>
+                <para>type: boolean
+description: Keystone project is enabled or disabled</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>project_domain:</term>
+              <listitem>
+                <para>type: string
+description: Keystone project domain name or id</para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>resources:</term>
+        <listitem>
+          <variablelist role="definition_list">
+            <varlistentry>
+              <term>admin_project:</term>
+              <listitem>
+                <para>type: OS::Keystone::Project
+properties:</para>
+                <blockquote>
+                  <para>name: {get_param: project_name}
+domain: {get_param: project_domain}
+description: {get_param: project_description}
+enabled: {get_param: project_enabled}</para>
+                </blockquote>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <section xml:id="OS__Keystone__Project-props">
+      <title>Properties</title>
+      <variablelist role="definition_list">
+        <varlistentry>
+          <term role="String">description</term>
+          <listitem>
+            <para>Description of keystone project.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">domain</term>
+          <listitem>
+            <para>Name or id of keystone domain.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "default".</para>
+            <para>Value must be of type keystone.domain</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Boolean">enabled</term>
+          <listitem>
+            <para>This project is enabled or disabled.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "True".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">name</term>
+          <listitem>
+            <para>Name of keystone project.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section xml:id="OS__Keystone__Project-hot">
+      <title>HOT Syntax</title>
+      <programlisting language="hot">heat_template_version: 2013-05-23
+...
+resources:
+  ...
+  the_resource:
+    type: OS::Keystone::Project
+    properties:
+      description: String
+      domain: String
+      enabled: Boolean
+      name: String</programlisting>
+    </section>
+    <section xml:id="OS__Keystone__Project-yaml">
+      <title>YAML Syntax</title>
+      <programlisting language="yaml">HeatTemplateFormatVersion: '2012-12-12'
+...
+Resources:
+  ...
+  TheResource:
+    Type: OS::Keystone::Project
+    Properties:
+      description: String
+      domain: String
+      enabled: Boolean
+      name: String</programlisting>
+    </section>
+    <section xml:id="OS__Keystone__Project-json">
+      <title>JSON Syntax</title>
+      <programlisting language="json">{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  ...
+  "Resources" : {
+    "TheResource": {
+      "Type": "OS::Keystone::Project",
+      "Properties": {
+        "description": String,
+        "domain": String,
+        "enabled": Boolean,
+        "name": String
+      }
+    }
+  }
+}</programlisting>
+    </section>
+  </section>
   <section xml:id="OS__Keystone__Role">
     <?dbhtml stop-chunking?>
     <title>OS::Keystone::Role</title>
+    <note>
+      <para>Available since 2015.1 (Kilo) - Supported versions: keystone v3</para>
+    </note>
     <para>Heat Template Resource for Keystone Role.</para>
     <para>heat_template_version: 2013-05-23</para>
     <variablelist role="definition_list">
@@ -4740,7 +5365,6 @@ properties:</para>
         </listitem>
       </varlistentry>
     </variablelist>
-    <para>Available since 2015.1 (Kilo).</para>
     <section xml:id="OS__Keystone__Role-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -4792,6 +5416,338 @@ Resources:
 }</programlisting>
     </section>
   </section>
+  <section xml:id="OS__Keystone__User">
+    <?dbhtml stop-chunking?>
+    <title>OS::Keystone::User</title>
+    <note>
+      <para>Available since 2015.1 (Kilo) - Supported versions: keystone v3</para>
+    </note>
+    <para>Heat Template Resource for Keystone User.</para>
+    <para>heat_template_version: 2013-05-23</para>
+    <para>description: Sample Keystone User template</para>
+    <variablelist role="definition_list">
+      <varlistentry>
+        <term>parameters:</term>
+        <listitem>
+          <variablelist role="definition_list">
+            <varlistentry>
+              <term>user_name:</term>
+              <listitem>
+                <para>type: string
+description: Keystone user name</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>user_description:</term>
+              <listitem>
+                <para>type: string
+description: Keystone user description</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>user_enabled:</term>
+              <listitem>
+                <para>type: boolean
+description: Keystone user is enabled or disabled</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>user_domain:</term>
+              <listitem>
+                <para>type: string
+description: Keystone user domain name</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>user_email:</term>
+              <listitem>
+                <para>type: string
+description: Keystone user email address</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>user_password:</term>
+              <listitem>
+                <para>type: string
+description: Keystone user password</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>user_default_project:</term>
+              <listitem>
+                <para>type: string
+description: Keystone user default project id</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>user_groups:</term>
+              <listitem>
+                <para>type: comma_delimited_list
+description: Keystone groups, where this user is part of</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>group_role:</term>
+              <listitem>
+                <para>type: string
+description: role</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>group_role_domain:</term>
+              <listitem>
+                <para>type: string
+description: group role domain</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>group_role_project:</term>
+              <listitem>
+                <para>type: string
+description: group role project</para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>resources:</term>
+        <listitem>
+          <variablelist role="definition_list">
+            <varlistentry>
+              <term>admin_user:</term>
+              <listitem>
+                <para>type: OS::Keystone::User
+properties:</para>
+                <blockquote>
+                  <para>name: {get_param: user_name}
+domain: {get_param: user_domain}
+description: {get_param: user_description}
+enabled: {get_param: user_enabled}
+email: {get_param: user_email}
+password: {get_param: user_password}
+default_project: {get_param: user_default_project}
+groups: {get_param: user_groups}
+roles:</para>
+                  <blockquote>
+                    <itemizedlist>
+                      <listitem>
+                        <para>role: {get_param: group_role}
+domain: {get_param: group_role_domain}</para>
+                      </listitem>
+                      <listitem>
+                        <para>role: {get_param: group_role}
+project: {get_param: group_role_project}</para>
+                      </listitem>
+                    </itemizedlist>
+                  </blockquote>
+                </blockquote>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <section xml:id="OS__Keystone__User-props">
+      <title>Properties</title>
+      <variablelist role="definition_list">
+        <varlistentry>
+          <term role="String">default_project</term>
+          <listitem>
+            <para>Default project of keystone user.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+            <para>Value must be of type keystone.project</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">description</term>
+          <listitem>
+            <para>Description of keystone user.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">domain</term>
+          <listitem>
+            <para>Name of keystone domain.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "default".</para>
+            <para>Value must be of type keystone.domain</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">email</term>
+          <listitem>
+            <para>Email address of keystone user.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="Boolean">enabled</term>
+          <listitem>
+            <para>Keystone user is enabled or disabled</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property, defaults to "True".</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">groups</term>
+          <listitem>
+            <para>keystone user groups.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+            <para>
+              <emphasis>List contents:</emphasis>
+            </para>
+            <variablelist role="definition_list">
+              <varlistentry>
+                <term role="String">*</term>
+                <listitem>
+                  <para>keystone user group.</para>
+                  <para>Updates cause replacement.</para>
+                  <para>Optional property.</para>
+                  <para>Value must be of type keystone.group</para>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">name</term>
+          <listitem>
+            <para>Name of keystone user.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">password</term>
+          <listitem>
+            <para>Password of keystone user.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">roles</term>
+          <listitem>
+            <para>List of role assignments.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+            <para>
+              <emphasis>List contents:</emphasis>
+            </para>
+            <variablelist role="definition_list">
+              <varlistentry>
+                <term role="Map">*</term>
+                <listitem>
+                  <para>Map between role with either project or domain.</para>
+                  <para>Updates cause replacement.</para>
+                  <para>Optional property.</para>
+                  <para>
+                    <emphasis>Map properties:</emphasis>
+                  </para>
+                  <variablelist role="definition_list">
+                    <varlistentry>
+                      <term role="String">domain</term>
+                      <listitem>
+                        <para>Keystone domain</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                        <para>Value must be of type keystone.domain</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">project</term>
+                      <listitem>
+                        <para>Keystone project</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                        <para>Value must be of type keystone.project</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">role</term>
+                      <listitem>
+                        <para>Keystone role</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Required property.</para>
+                        <para>Value must be of type keystone.role</para>
+                      </listitem>
+                    </varlistentry>
+                  </variablelist>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section xml:id="OS__Keystone__User-hot">
+      <title>HOT Syntax</title>
+      <programlisting language="hot">heat_template_version: 2013-05-23
+...
+resources:
+  ...
+  the_resource:
+    type: OS::Keystone::User
+    properties:
+      default_project: String
+      description: String
+      domain: String
+      email: String
+      enabled: Boolean
+      groups: [String, String, ...]
+      name: String
+      password: String
+      roles: [{"project": String, "domain": String, "role": String}, {"project": String, "domain": String, "role": String}, ...]</programlisting>
+    </section>
+    <section xml:id="OS__Keystone__User-yaml">
+      <title>YAML Syntax</title>
+      <programlisting language="yaml">HeatTemplateFormatVersion: '2012-12-12'
+...
+Resources:
+  ...
+  TheResource:
+    Type: OS::Keystone::User
+    Properties:
+      default_project: String
+      description: String
+      domain: String
+      email: String
+      enabled: Boolean
+      groups: [String, String, ...]
+      name: String
+      password: String
+      roles: [{"project": String, "domain": String, "role": String}, {"project": String, "domain": String, "role": String}, ...]</programlisting>
+    </section>
+    <section xml:id="OS__Keystone__User-json">
+      <title>JSON Syntax</title>
+      <programlisting language="json">{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  ...
+  "Resources" : {
+    "TheResource": {
+      "Type": "OS::Keystone::User",
+      "Properties": {
+        "default_project": String,
+        "description": String,
+        "domain": String,
+        "email": String,
+        "enabled": Boolean,
+        "groups": [String, String, ...],
+        "name": String,
+        "password": String,
+        "roles": [{"project": String, "domain": String, "role": String}, {"project": String, "domain": String, "role": String}, ...]
+      }
+    }
+  }
+}</programlisting>
+    </section>
+  </section>
   <section xml:id="OS__Neutron__ExtraRoute">
     <?dbhtml stop-chunking?>
     <title>OS::Neutron::ExtraRoute</title>
@@ -4820,6 +5776,7 @@ Resources:
             <para>The router id.</para>
             <para>Updates cause replacement.</para>
             <para>Required property.</para>
+            <para>Value must be of type neutron.router</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -4911,7 +5868,7 @@ Resources:
           <term role="Boolean">shared</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>Whether this firewall should be shared across all tenants. NOTE: The default policy setting in Neutron restricts usage of this property to administrative users only.</para>
             <para>Can be updated without replacement.</para>
@@ -5438,7 +6395,7 @@ Resources:
           <term role="String">floating_network</term>
           <listitem>
             <note>
-              <para>Available since 2014.2 (Juno).</para>
+              <para>Available since 2014.2 (Juno)</para>
             </note>
             <para>Network to allocate floating IP from.</para>
             <para>Updates cause replacement.</para>
@@ -6686,8 +7643,10 @@ Resources:
   <section xml:id="OS__Neutron__MeteringLabel">
     <?dbhtml stop-chunking?>
     <title>OS::Neutron::MeteringLabel</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>A resource for creating neutron metering label.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Neutron__MeteringLabel-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -6711,7 +7670,7 @@ Resources:
           <term role="Boolean">shared</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>Whether the metering label should be shared across all tenants.</para>
             <para>Updates cause replacement.</para>
@@ -6790,8 +7749,10 @@ Resources:
   <section xml:id="OS__Neutron__MeteringRule">
     <?dbhtml stop-chunking?>
     <title>OS::Neutron::MeteringRule</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>A resource to create rule for some label.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Neutron__MeteringRule-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -7059,8 +8020,10 @@ Resources:
   <section xml:id="OS__Neutron__NetworkGateway">
     <?dbhtml stop-chunking?>
     <title>OS::Neutron::NetworkGateway</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>A resource for the Network Gateway resource in Neutron Network Gateway.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Neutron__NetworkGateway-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -7087,7 +8050,7 @@ Resources:
                       <term role="String">network</term>
                       <listitem>
                         <note>
-                          <para>Available since 2014.2 (Juno).</para>
+                          <para>Available since 2014.2 (Juno)</para>
                         </note>
                         <para>The internal network to connect on the network gateway.</para>
                         <para>Updates cause replacement.</para>
@@ -7304,11 +8267,12 @@ Resources:
           <term role="String">subnet</term>
           <listitem>
             <note>
-              <para>Available since 2014.2 (Juno).</para>
+              <para>Available since 2014.2 (Juno)</para>
             </note>
             <para>The subnet for the port on which the members of the pool will be connected.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.subnet</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -7405,6 +8369,7 @@ Resources:
                   <para>Subnet of the vip.</para>
                   <para>Updates cause replacement.</para>
                   <para>Optional property.</para>
+                  <para>Value must be of type neutron.subnet</para>
                 </listitem>
               </varlistentry>
             </variablelist>
@@ -7418,6 +8383,7 @@ Resources:
             </note>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.subnet</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -7537,8 +8503,10 @@ Resources:
   <section xml:id="OS__Neutron__PoolMember">
     <?dbhtml stop-chunking?>
     <title>OS::Neutron::PoolMember</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>A resource to handle load balancer members.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Neutron__PoolMember-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -7741,6 +8709,9 @@ Resources:
         <varlistentry>
           <term role="String">binding:vnic_type</term>
           <listitem>
+            <note>
+              <para>Available since 2015.1 (Kilo)</para>
+            </note>
             <para>The vnic type to be bound on the neutron port. To support SR-IOV PCI passthrough networking, you can request that the neutron port to be realized as normal (virtual nic), direct (pci passthrough), or macvtap (virtual interface with a tap-like software interface). Note that this only works for Neutron deployments that support the bindings extension.</para>
             <para>Can be updated without replacement.</para>
             <para>Optional property.</para>
@@ -7794,11 +8765,12 @@ Resources:
                       <term role="String">subnet</term>
                       <listitem>
                         <note>
-                          <para>Available since 2014.2 (Juno).</para>
+                          <para>Available since 2014.2 (Juno)</para>
                         </note>
                         <para>Subnet in which to allocate the IP address for this port.</para>
                         <para>Updates cause replacement.</para>
                         <para>Optional property.</para>
+                        <para>Value must be of type neutron.subnet</para>
                       </listitem>
                     </varlistentry>
                     <varlistentry>
@@ -7809,6 +8781,7 @@ Resources:
                         </note>
                         <para>Updates cause replacement.</para>
                         <para>Optional property.</para>
+                        <para>Value must be of type neutron.subnet</para>
                       </listitem>
                     </varlistentry>
                   </variablelist>
@@ -7837,9 +8810,9 @@ Resources:
           <term role="String">network</term>
           <listitem>
             <note>
-              <para>Available since 2014.2 (Juno).</para>
+              <para>Available since 2014.2 (Juno)</para>
             </note>
-            <para>Network this port belongs to.</para>
+            <para>Network this port belongs to. If you plan to use current port to assign Floating IP, you should specify fixed_ips with subnet</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
             <para>Value must be of type neutron.network</para>
@@ -7850,7 +8823,7 @@ Resources:
           <listitem>
             <para>Policy on how to respond to a stack-update for this resource. REPLACE_ALWAYS will replace the port regardless of any property changes. AUTO will update the existing port for any changed update-allowed property.</para>
             <para>Can be updated without replacement.</para>
-            <para>Optional property, defaults to "REPLACE_ALWAYS".</para>
+            <para>Optional property, defaults to "AUTO".</para>
             <para>Allowed values: REPLACE_ALWAYS, AUTO</para>
           </listitem>
         </varlistentry>
@@ -8040,7 +9013,9 @@ Resources:
   <section xml:id="OS__Neutron__ProviderNet">
     <?dbhtml stop-chunking?>
     <title>OS::Neutron::ProviderNet</title>
-    <para>Available since 2014.1 (Icehouse).</para>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <section xml:id="OS__Neutron__ProviderNet-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -8189,7 +9164,7 @@ Resources:
           <term role="Boolean">distributed</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>Indicates whether or not to create a distributed router. NOTE: The default policy setting in Neutron restricts usage of this property to administrative users only. This property can not be used in conjunction with the L3 agent ID.</para>
             <para>Updates cause replacement.</para>
@@ -8229,7 +9204,7 @@ Resources:
           <term role="Boolean">ha</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>Indicates whether or not to create a highly available router. NOTE: The default policy setting in Neutron restricts usage of this property to administrative users only. And now neutron do not support distributed and ha at the same time.</para>
             <para>Updates cause replacement.</para>
@@ -8240,7 +9215,7 @@ Resources:
           <term role="List">l3_agent_ids</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>ID list of the L3 agent. User can specify multi-agents for highly available router. NOTE: The default policy setting in Neutron restricts usage of this property to administrative users only.</para>
             <para>Can be updated without replacement.</para>
@@ -8409,6 +9384,7 @@ Resources:
             <para>ID of the router.</para>
             <para>Updates cause replacement.</para>
             <para>Required property.</para>
+            <para>Value must be of type neutron.router</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -8475,7 +9451,7 @@ Resources:
           <term role="String">port</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>The port, either subnet or port should be specified.</para>
             <para>Updates cause replacement.</para>
@@ -8489,6 +9465,7 @@ Resources:
             <para>The router.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.router</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -8497,6 +9474,7 @@ Resources:
             <para>The subnet, either subnet or port should be specified.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.subnet</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -8520,6 +9498,7 @@ Resources:
             <para>ID of the router.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.router</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -8530,6 +9509,7 @@ Resources:
             </note>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.subnet</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -8581,7 +9561,9 @@ Resources:
   <section xml:id="OS__Neutron__SecurityGroup">
     <?dbhtml stop-chunking?>
     <title>OS::Neutron::SecurityGroup</title>
-    <para>Available since 2014.1 (Icehouse).</para>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <section xml:id="OS__Neutron__SecurityGroup-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -8867,7 +9849,7 @@ Resources:
           <term role="String">ipv6_address_mode</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>IPv6 address mode. dhcpv6-stateful, dhcpv6-stateless, or slaac.</para>
             <para>Updates cause replacement.</para>
@@ -8879,7 +9861,7 @@ Resources:
           <term role="String">ipv6_ra_mode</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>IPv6 RA (Router Advertisement) mode. dhcpv6-stateful, dhcpv6-stateless, or slaac.</para>
             <para>Updates cause replacement.</para>
@@ -9115,17 +10097,19 @@ Resources:
             <para>The router to which the vpn service will be inserted.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.router</para>
           </listitem>
         </varlistentry>
         <varlistentry>
           <term role="String">subnet</term>
           <listitem>
             <note>
-              <para>Available since 2014.2 (Juno).</para>
+              <para>Available since 2014.2 (Juno)</para>
             </note>
             <para>Subnet in which the vpn service will be created.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.subnet</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -9137,6 +10121,7 @@ Resources:
             <para>Unique identifier for the router to which the vpn service will be inserted.</para>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.router</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -9147,6 +10132,7 @@ Resources:
             </note>
             <para>Updates cause replacement.</para>
             <para>Optional property.</para>
+            <para>Value must be of type neutron.subnet</para>
           </listitem>
         </varlistentry>
       </variablelist>
@@ -9385,7 +10371,9 @@ Resources:
   <section xml:id="OS__Nova__FloatingIP">
     <?dbhtml stop-chunking?>
     <title>OS::Nova::FloatingIP</title>
-    <para>Available since 2014.1 (Icehouse).</para>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <section xml:id="OS__Nova__FloatingIP-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -9457,7 +10445,9 @@ Resources:
   <section xml:id="OS__Nova__FloatingIPAssociation">
     <?dbhtml stop-chunking?>
     <title>OS::Nova::FloatingIPAssociation</title>
-    <para>Available since 2014.1 (Icehouse).</para>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <section xml:id="OS__Nova__FloatingIPAssociation-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -9524,6 +10514,9 @@ Resources:
   <section xml:id="OS__Nova__KeyPair">
     <?dbhtml stop-chunking?>
     <title>OS::Nova::KeyPair</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>A resource for creating Nova key pairs.</para>
     <para><emphasis role="Note"/> that if a new key is generated setting <citetitle>save_private_key</citetitle> to
 <citetitle>True</citetitle> results in the system saving the private key which can then be
@@ -9532,7 +10525,6 @@ retrieved via the <citetitle>private_key</citetitle> attribute of this resource.
 of this resource will always return an empty string regardless of the
 <citetitle>save_private_key</citetitle> setting since there will be no private key data to
 save.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Nova__KeyPair-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -9715,6 +10707,116 @@ Resources:
           </listitem>
         </varlistentry>
         <varlistentry>
+          <term role="List">block_device_mapping_v2</term>
+          <listitem>
+            <para>Block device mappings v2 for this server.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+            <para>
+              <emphasis>List contents:</emphasis>
+            </para>
+            <variablelist role="definition_list">
+              <varlistentry>
+                <term role="Map">*</term>
+                <listitem>
+                  <para>Updates cause replacement.</para>
+                  <para>Optional property.</para>
+                  <para>
+                    <emphasis>Map properties:</emphasis>
+                  </para>
+                  <variablelist role="definition_list">
+                    <varlistentry>
+                      <term role="Integer">boot_index</term>
+                      <listitem>
+                        <para>Integer used for ordering the boot disks.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="Boolean">delete_on_termination</term>
+                      <listitem>
+                        <para>Indicate whether the volume should be deleted when the server is terminated.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">device_name</term>
+                      <listitem>
+                        <para>A device name where the volume will be attached in the system at /dev/device_name. This value is typically vda.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">device_type</term>
+                      <listitem>
+                        <para>Device type: at the moment we can make distinction only between disk and cdrom.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                        <para>Allowed values: cdrom, disk</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">disk_bus</term>
+                      <listitem>
+                        <para>Bus of the device: hypervisor driver chooses a suitable default if omitted.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                        <para>Allowed values: ide, lame_bus, scsi, usb, virtio</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">image_id</term>
+                      <listitem>
+                        <para>The ID of the image to create a volume from.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                        <para>Value must be of type glance.image</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">snapshot_id</term>
+                      <listitem>
+                        <para>The ID of the snapshot to create a volume from.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                        <para>Value must be of type cinder.snapshot</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="Integer">swap_size</term>
+                      <listitem>
+                        <para>The size of the swap, in MB.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="String">volume_id</term>
+                      <listitem>
+                        <para>The volume_id can be boot or non-boot device to the server.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                        <para>Value must be of type cinder.volume</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="Integer">volume_size</term>
+                      <listitem>
+                        <para>Size of the block device in GB. If it is omitted, hypervisor driver calculates size.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Optional property.</para>
+                      </listitem>
+                    </varlistentry>
+                  </variablelist>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
           <term role="Boolean">config_drive</term>
           <listitem>
             <para>If True, enable config drive on the server.</para>
@@ -9763,7 +10865,7 @@ Resources:
           <listitem>
             <para>Policy on how to apply an image-id update; either by requesting a server rebuild or by replacing the entire server</para>
             <para>Can be updated without replacement.</para>
-            <para>Optional property, defaults to "REPLACE".</para>
+            <para>Optional property, defaults to "REBUILD".</para>
             <para>Allowed values: REBUILD, REPLACE, REBUILD_PRESERVE_EPHEMERAL</para>
           </listitem>
         </varlistentry>
@@ -9950,6 +11052,9 @@ Resources:
         <varlistentry>
           <term>console_urls</term>
           <listitem>
+            <note>
+              <para>Available since 2015.1 (Kilo)</para>
+            </note>
             <para>URLs of server's consoles. To get a specific console type, the requested type can be specified as parameter to the get_attr function, e.g. get_attr: [ &lt;server&gt;, console_urls, novnc ]. Currently supported types are novnc, xvpvnc, spice-html5, rdp-html5, serial.</para>
           </listitem>
         </varlistentry>
@@ -10000,6 +11105,7 @@ resources:
       admin_pass: String
       availability_zone: String
       block_device_mapping: [{"volume_size": Integer, "volume_id": String, "snapshot_id": String, "delete_on_termination": Boolean, "device_name": String}, {"volume_size": Integer, "volume_id": String, "snapshot_id": String, "delete_on_termination": Boolean, "device_name": String}, ...]
+      block_device_mapping_v2: [{"disk_bus": String, "image_id": String, "boot_index": Integer, "device_type": String, "swap_size": Integer, "volume_id": String, "delete_on_termination": Boolean, "snapshot_id": String, "volume_size": Integer, "device_name": String}, {"disk_bus": String, "image_id": String, "boot_index": Integer, "device_type": String, "swap_size": Integer, "volume_id": String, "delete_on_termination": Boolean, "snapshot_id": String, "volume_size": Integer, "device_name": String}, ...]
       config_drive: Boolean
       diskConfig: String
       flavor: String
@@ -10030,6 +11136,7 @@ Resources:
       admin_pass: String
       availability_zone: String
       block_device_mapping: [{"volume_size": Integer, "volume_id": String, "snapshot_id": String, "delete_on_termination": Boolean, "device_name": String}, {"volume_size": Integer, "volume_id": String, "snapshot_id": String, "delete_on_termination": Boolean, "device_name": String}, ...]
+      block_device_mapping_v2: [{"disk_bus": String, "image_id": String, "boot_index": Integer, "device_type": String, "swap_size": Integer, "volume_id": String, "delete_on_termination": Boolean, "snapshot_id": String, "volume_size": Integer, "device_name": String}, {"disk_bus": String, "image_id": String, "boot_index": Integer, "device_type": String, "swap_size": Integer, "volume_id": String, "delete_on_termination": Boolean, "snapshot_id": String, "volume_size": Integer, "device_name": String}, ...]
       config_drive: Boolean
       diskConfig: String
       flavor: String
@@ -10060,6 +11167,7 @@ Resources:
         "admin_pass": String,
         "availability_zone": String,
         "block_device_mapping": [{"volume_size": Integer, "volume_id": String, "snapshot_id": String, "delete_on_termination": Boolean, "device_name": String}, {"volume_size": Integer, "volume_id": String, "snapshot_id": String, "delete_on_termination": Boolean, "device_name": String}, ...],
+        "block_device_mapping_v2": [{"disk_bus": String, "image_id": String, "boot_index": Integer, "device_type": String, "swap_size": Integer, "volume_id": String, "delete_on_termination": Boolean, "snapshot_id": String, "volume_size": Integer, "device_name": String}, {"disk_bus": String, "image_id": String, "boot_index": Integer, "device_type": String, "swap_size": Integer, "volume_id": String, "delete_on_termination": Boolean, "snapshot_id": String, "volume_size": Integer, "device_name": String}, ...],
         "config_drive": Boolean,
         "diskConfig": String,
         "flavor": String,
@@ -10086,8 +11194,10 @@ Resources:
   <section xml:id="OS__Nova__ServerGroup">
     <?dbhtml stop-chunking?>
     <title>OS::Nova::ServerGroup</title>
+    <note>
+      <para>Available since 2014.2 (Juno)</para>
+    </note>
     <para>A resource for managing a Nova server group.</para>
-    <para>Available since 2014.2 (Juno).</para>
     <section xml:id="OS__Nova__ServerGroup-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -10318,7 +11428,9 @@ Resources:
   <section xml:id="OS__Sahara__ClusterTemplate">
     <?dbhtml stop-chunking?>
     <title>OS::Sahara::ClusterTemplate</title>
-    <para>Available since 2014.2 (Juno).</para>
+    <note>
+      <para>Available since 2014.2 (Juno)</para>
+    </note>
     <section xml:id="OS__Sahara__ClusterTemplate-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -10519,7 +11631,9 @@ Resources:
   <section xml:id="OS__Sahara__NodeGroupTemplate">
     <?dbhtml stop-chunking?>
     <title>OS::Sahara::NodeGroupTemplate</title>
-    <para>Available since 2014.2 (Juno).</para>
+    <note>
+      <para>Available since 2014.2 (Juno)</para>
+    </note>
     <section xml:id="OS__Sahara__NodeGroupTemplate-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -10778,7 +11892,7 @@ Resources:
           <term role="Boolean">PurgeOnDelete</term>
           <listitem>
             <note>
-              <para>Available since 2015.1 (Kilo).</para>
+              <para>Available since 2015.1 (Kilo)</para>
             </note>
             <para>If True, delete any objects in the container when the container is deleted. Otherwise, deleting a non-empty container will result in an error.</para>
             <para>Updates cause replacement.</para>
@@ -10921,11 +12035,158 @@ Resources:
 }</programlisting>
     </section>
   </section>
+  <section xml:id="OS__Trove__Cluster">
+    <?dbhtml stop-chunking?>
+    <title>OS::Trove::Cluster</title>
+    <note>
+      <para>Available since 2015.1 (Kilo)</para>
+    </note>
+    <section xml:id="OS__Trove__Cluster-props">
+      <title>Properties</title>
+      <variablelist role="definition_list">
+        <varlistentry>
+          <term role="String">datastore_type</term>
+          <listitem>
+            <para>Name of registered datastore type.</para>
+            <para>Updates cause replacement.</para>
+            <para>Required property.</para>
+            <para>The length must be no greater than 255.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">datastore_version</term>
+          <listitem>
+            <para>Name of the registered datastore version. It must exist for provided datastore type. Defaults to using single active version. If several active versions exist for provided datastore type, explicit value for this parameter must be specified.</para>
+            <para>Updates cause replacement.</para>
+            <para>Required property.</para>
+            <para>The length must be no greater than 255.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="List">instances</term>
+          <listitem>
+            <para>List of database instances.</para>
+            <para>Updates cause replacement.</para>
+            <para>Required property.</para>
+            <para>
+              <emphasis>List contents:</emphasis>
+            </para>
+            <variablelist role="definition_list">
+              <varlistentry>
+                <term role="Map">*</term>
+                <listitem>
+                  <para>Updates cause replacement.</para>
+                  <para>Optional property.</para>
+                  <para>
+                    <emphasis>Map properties:</emphasis>
+                  </para>
+                  <variablelist role="definition_list">
+                    <varlistentry>
+                      <term role="String">flavor</term>
+                      <listitem>
+                        <para>Flavor of the instance.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Required property.</para>
+                        <para>Value must be of type trove.flavor</para>
+                      </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                      <term role="Integer">volume_size</term>
+                      <listitem>
+                        <para>Size of the instance disk volume in GB.</para>
+                        <para>Updates cause replacement.</para>
+                        <para>Required property.</para>
+                        <para>The value must be in the range 1 to 150.</para>
+                      </listitem>
+                    </varlistentry>
+                  </variablelist>
+                </listitem>
+              </varlistentry>
+            </variablelist>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">name</term>
+          <listitem>
+            <para>Name of the cluster to create.</para>
+            <para>Updates cause replacement.</para>
+            <para>Optional property.</para>
+            <para>The length must be no greater than 255.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section xml:id="OS__Trove__Cluster-attrs">
+      <title>Attributes</title>
+      <variablelist role="definition_list">
+        <varlistentry>
+          <term>instances</term>
+          <listitem>
+            <para>A list of instances ids.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>ip</term>
+          <listitem>
+            <para>IP of the cluster.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section xml:id="OS__Trove__Cluster-hot">
+      <title>HOT Syntax</title>
+      <programlisting language="hot">heat_template_version: 2013-05-23
+...
+resources:
+  ...
+  the_resource:
+    type: OS::Trove::Cluster
+    properties:
+      datastore_type: String
+      datastore_version: String
+      instances: [{"volume_size": Integer, "flavor": String}, {"volume_size": Integer, "flavor": String}, ...]
+      name: String</programlisting>
+    </section>
+    <section xml:id="OS__Trove__Cluster-yaml">
+      <title>YAML Syntax</title>
+      <programlisting language="yaml">HeatTemplateFormatVersion: '2012-12-12'
+...
+Resources:
+  ...
+  TheResource:
+    Type: OS::Trove::Cluster
+    Properties:
+      datastore_type: String
+      datastore_version: String
+      instances: [{"volume_size": Integer, "flavor": String}, {"volume_size": Integer, "flavor": String}, ...]
+      name: String</programlisting>
+    </section>
+    <section xml:id="OS__Trove__Cluster-json">
+      <title>JSON Syntax</title>
+      <programlisting language="json">{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  ...
+  "Resources" : {
+    "TheResource": {
+      "Type": "OS::Trove::Cluster",
+      "Properties": {
+        "datastore_type": String,
+        "datastore_version": String,
+        "instances": [{"volume_size": Integer, "flavor": String}, {"volume_size": Integer, "flavor": String}, ...],
+        "name": String
+      }
+    }
+  }
+}</programlisting>
+    </section>
+  </section>
   <section xml:id="OS__Trove__Instance">
     <?dbhtml stop-chunking?>
     <title>OS::Trove::Instance</title>
+    <note>
+      <para>Available since 2014.1 (Icehouse)</para>
+    </note>
     <para>OpenStack cloud database instance resource.</para>
-    <para>Available since 2014.1 (Icehouse).</para>
     <section xml:id="OS__Trove__Instance-props">
       <title>Properties</title>
       <variablelist role="definition_list">
@@ -11012,6 +12273,7 @@ Resources:
             <para>Reference to a flavor for creating DB instance.</para>
             <para>Updates cause replacement.</para>
             <para>Required property.</para>
+            <para>Value must be of type trove.flavor</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -11242,6 +12504,91 @@ Resources:
         "restore_point": String,
         "size": Integer,
         "users": [{"host": String, "password": String, "name": String, "databases": [String, String, ...]}, {"host": String, "password": String, "name": String, "databases": [String, String, ...]}, ...]
+      }
+    }
+  }
+}</programlisting>
+    </section>
+  </section>
+  <section xml:id="OS__Zaqar__Queue">
+    <?dbhtml stop-chunking?>
+    <title>OS::Zaqar::Queue</title>
+    <section xml:id="OS__Zaqar__Queue-props">
+      <title>Properties</title>
+      <variablelist role="definition_list">
+        <varlistentry>
+          <term role="Map">metadata</term>
+          <listitem>
+            <para>Arbitrary key/value metadata to store contextual information about this queue.</para>
+            <para>Can be updated without replacement.</para>
+            <para>Optional property.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term role="String">name</term>
+          <listitem>
+            <para>Name of the queue instance to create.</para>
+            <para>Updates cause replacement.</para>
+            <para>Required property.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section xml:id="OS__Zaqar__Queue-attrs">
+      <title>Attributes</title>
+      <variablelist role="definition_list">
+        <varlistentry>
+          <term>href</term>
+          <listitem>
+            <para>The resource href of the queue.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>queue_id</term>
+          <listitem>
+            <note>
+              <para>DEPRECATED - Deprecated in kilo. Use get_resource|Ref command instead. For example: { get_resource : &lt;resource_name&gt; }</para>
+            </note>
+            <para>ID of the queue.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </section>
+    <section xml:id="OS__Zaqar__Queue-hot">
+      <title>HOT Syntax</title>
+      <programlisting language="hot">heat_template_version: 2013-05-23
+...
+resources:
+  ...
+  the_resource:
+    type: OS::Zaqar::Queue
+    properties:
+      metadata: {...}
+      name: String</programlisting>
+    </section>
+    <section xml:id="OS__Zaqar__Queue-yaml">
+      <title>YAML Syntax</title>
+      <programlisting language="yaml">HeatTemplateFormatVersion: '2012-12-12'
+...
+Resources:
+  ...
+  TheResource:
+    Type: OS::Zaqar::Queue
+    Properties:
+      metadata: {...}
+      name: String</programlisting>
+    </section>
+    <section xml:id="OS__Zaqar__Queue-json">
+      <title>JSON Syntax</title>
+      <programlisting language="json">{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  ...
+  "Resources" : {
+    "TheResource": {
+      "Type": "OS::Zaqar::Queue",
+      "Properties": {
+        "metadata": {...},
+        "name": String
       }
     }
   }
