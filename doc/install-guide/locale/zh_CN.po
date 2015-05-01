@@ -22,8 +22,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenStack Manuals\n"
-"POT-Creation-Date: 2015-04-30 05:50+0000\n"
-"PO-Revision-Date: 2015-04-30 05:48+0000\n"
+"POT-Creation-Date: 2015-05-01 04:01+0000\n"
+"PO-Revision-Date: 2015-05-01 04:03+0000\n"
 "Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/"
 "openstack-manuals-i18n/language/zh_CN/)\n"
@@ -108,6 +108,16 @@ msgstr ""
 msgid "Install and configure"
 msgstr "安装和配置"
 
+msgid ""
+"This section describes how to install and configure the OpenStack Identity "
+"service, code-named keystone, on the controller node. For performance, this "
+"configuration deploys the Apache HTTP server to handle requests and "
+"Memcached to store tokens instead of a SQL database."
+msgstr ""
+"本章节描述如何在控制节点上安装与配置代号名为keystone的OpenStack身份认证服务。"
+"为了性能，这个配置中部署Apache HTTP服务器来处理请求，部署Memcached来存储令牌"
+"而不是通过SQL数据库。"
+
 msgid "To configure prerequisites"
 msgstr "配置前的准备"
 
@@ -145,6 +155,9 @@ msgid ""
 "configuration:"
 msgstr "生成一个随机值在初始的配置中作为管理员的令牌。"
 
+msgid "To install and configure the Identity service components"
+msgstr "安装与配置身份认证服务的部件"
+
 msgid ""
 "Default configuration files vary by distribution. You might need to add "
 "these sections and options rather than modifying existing sections and "
@@ -154,6 +167,18 @@ msgstr ""
 "默认的配置文件根据不同发行版本而不同。有可能需要增加这些部分或是选项，而不是"
 "修改现有的部分或是选项。另外，配置文件代码段中的省略号(...)表明这可能是你需要"
 "保留的默认配置选项。"
+
+msgid ""
+"By default, the <systemitem class=\"service\">keystone</systemitem> service "
+"listens on ports 5000 and 35357. However, this guide configures the Apache "
+"HTTP server to listen on those ports. To avoid port conflicts, disable the "
+"<systemitem class=\"service\">keystone</systemitem> service from starting "
+"automatically after installation:"
+msgstr ""
+"默认情况下，<systemitem class=\"service\">keystone</systemitem>服务在端口5000"
+"和35357上进行监听。但是，本指南配置Apache HTTP服务器来监听这些端口。为了避免"
+"端口冲突，在安装后禁止 <systemitem class=\"service\">keystone</systemitem>服"
+"务的自动启动："
 
 msgid "Run the following command to install the packages:"
 msgstr "运行以下命令来安装包。"
@@ -297,6 +322,13 @@ msgstr ""
 
 msgid "To configure the Apache HTTP server"
 msgstr "配置 Apache HTTP 服务器"
+
+msgid ""
+"Edit the <filename>/etc/apache2/apache2.conf</filename> file and configure "
+"the <literal>ServerName</literal> option to reference the controller node:"
+msgstr ""
+"编辑文件 <filename>/etc/apache2/apache2.conf</filename> 配置选项 "
+"<literal>ServerName</literal> 指向控制节点："
 
 msgid "Disable the default virtual host:"
 msgstr "关闭默认虚拟主机："
@@ -1579,6 +1611,79 @@ msgstr ""
 "html#dashboard-sessions\">为仪表盘设置会话存储</link>部分，以获取用户会话数据"
 "的相关信息。"
 
+msgid ""
+"Verify operation of the Identity service before installing other services."
+msgstr "在安装其他服务之前确认身份认证服务的操作。"
+
+msgid ""
+"For security reasons, disable the temporary authentication token mechanism:"
+msgstr "因为安全性的原因，关闭临时认证令牌机制："
+
+msgid ""
+"Edit the <filename>/etc/keystone/keystone-paste.ini</filename> file and "
+"remove <literal>admin_token_auth</literal> from the <literal>[pipeline:"
+"public_api]</literal>, <literal>[pipeline:admin_api]</literal>, and <literal>"
+"[pipeline:api_v3]</literal> sections."
+msgstr ""
+"编辑文件<filename>/etc/keystone/keystone-paste.ini</filename>，从 <literal>"
+"[pipeline:public_api]</literal>, <literal>[pipeline:admin_api]</literal>, 和"
+"<literal>[pipeline:api_v3]</literal> 各部分中删除 <literal>admin_token_auth</"
+"literal>。"
+
+msgid ""
+"Unset the temporary <envar>OS_TOKEN</envar> and <envar>OS_URL</envar> "
+"environment variables:"
+msgstr ""
+"取消临时的<envar>OS_TOKEN</envar> 和<envar>OS_URL</envar> 环境变量的设置："
+
+msgid ""
+"As the <literal>admin</literal> user, request an authentication token from "
+"the Identity version 2.0 API:"
+msgstr ""
+"作为<literal>admin</literal>用户，通过Identity2.0版API请求一个认证令牌："
+
+msgid "This command uses the password for the <literal>admin</literal> user."
+msgstr "这个命令使用<literal>admin</literal>用户的密码。"
+
+msgid ""
+"The Identity version 3 API adds support for domains that contain projects "
+"and users. Projects and users can use the same names in different domains. "
+"Therefore, in order to use the version 3 API, requests must also explicitly "
+"contain at least the <literal>default</literal> domain or use IDs. For "
+"simplicity, this guide explicitly uses the <literal>default</literal> domain "
+"so examples can use names instead of IDs."
+msgstr ""
+"Identity 3.0版API增加了对包含项目与用户的域的支持。项目与用户可以再不同的域中"
+"使用相同的名字。因此，要使用3.0版的API，请求中至少必须显性包含 "
+"<literal>default</literal> 域或者是用户ID。为简化起见，本指南中显性指定"
+"<literal>default</literal>域，这样示例中可以使用用户名而不是ID。"
+
+msgid ""
+"As the <literal>admin</literal> user, list projects to verify that the "
+"<literal>admin</literal> user can execute admin-only CLI commands and that "
+"the Identity service contains the projects that you created in <xref linkend="
+"\"keystone-users\"/>:"
+msgstr ""
+"作为<literal>admin</literal>用户，列出各项目来验证<literal>admin</literal>用"
+"户可以执行限admin用户使用的命令行接口命令，还有身份认证服务中包含有你在 "
+"<xref linkend=\"keystone-users\"/>中生成的项目："
+
+msgid ""
+"As the <literal>admin</literal> user, list projects to verify that the "
+"<literal>admin</literal> user can execute CLI commands and that the Identity "
+"service contains the projects created by the configuration tool:"
+msgstr ""
+"作为<literal>admin</literal>用户，列出各项目来验证<literal>admin</literal>用"
+"户可以执行命令行接口命令，还有身份认证服务中包含有通过配置工具生成的项目："
+
+msgid ""
+"As the <literal>admin</literal> user, list users to verify that the Identity "
+"service contains the users that you created in <xref linkend=\"keystone-users"
+"\"/>:"
+msgstr ""
+"作为<literal>admin</literal>用户，列出各用户来验证身份认证服务包含有你在"
+"<xref linkend=\"keystone-users\"/>生成的用户："
+
 msgid "OpenStack packages"
 msgstr "OpenStack包"
 
@@ -1600,13 +1705,6 @@ msgstr "启用 OpenStack 仓库"
 
 msgid "Install the Ubuntu Cloud archive keyring and repository:"
 msgstr "安装 Ubuntu Cloud 档案认证环和仓库："
-
-msgid ""
-"Install the <package>yum-plugin-priorities</package> package to enable "
-"assignment of relative priorities within repositories:"
-msgstr ""
-"安装 <package>yum-plugin-priorities</package> 包，以启用仓库中相对优先级的分"
-"配："
 
 msgid ""
 "On RHEL and CentOS, enable the <link href=\"http://download.fedoraproject."
@@ -4473,16 +4571,6 @@ msgstr "您需要采用上游的 <filename>api-paste.ini</filename> 并修改以
 msgid "TROVE_PASS"
 msgstr "TROVE_PASS"
 
-msgid ""
-"Edit the <literal>[DEFAULT]</literal> section of each file (except "
-"<filename>api-paste.ini</filename>) and set appropriate values for the "
-"OpenStack service URLs (can be handled by Keystone service catalog), logging "
-"and messaging configuration, and SQL connections:"
-msgstr ""
-"修改每个文件 (<filename>api-paste.ini</filename> 除外) 中的 <literal>"
-"[DEFAULT]</literal> 部分，并为 OpenStack 的服务 URLs (可由身份认证服务目录处"
-"理)、logging 和 messaging 配置和 SQL 连接设置合适的值："
-
 msgid "TROVE_DBPASS"
 msgstr "TROVE_DBPASS"
 
@@ -5598,95 +5686,6 @@ msgstr "OpenStack安装指南"
 
 msgid "Copyright details are filled in by the template."
 msgstr "版权信息来自于模板"
-
-msgid "2014-10-15"
-msgstr "2014-10-15"
-
-msgid ""
-"For the Juno release, this guide contains these updates: Replace openstack-"
-"config commands with general configuration file editing. Standardize on a "
-"single message queue system (RabbitMQ). Reference generic SQL database, "
-"enabling MySQL or MariaDB where appropriate. Replace auth_port and "
-"auth_protocol with identity_uri, and auth_host with auth_uri. Multiple edits "
-"for consistency. It has been updated for Juno and new distribution versions."
-msgstr ""
-"对于 Juno 的发布版本，本指南包含了一些更新：以一般的配置文件修改替换了 "
-"openstack-config 命令。规范化单个消息队列系统 (RabbitMQ)。关联通用 SQL 数据"
-"库，在合适的地方启用 MySQL 或 MariaDB。以 identity_uri 替换 auth_port 和 "
-"auth_protocol，以 auth_uri 替换 auth_host。多个修改的一致性。已经将其更新为 "
-"Juno 和更新的发布版本。"
-
-msgid "2014-06-03"
-msgstr "2014-06-03"
-
-msgid "Start documentation for Juno."
-msgstr "开始使用 Juno 文档。"
-
-msgid "2014-04-16"
-msgstr "2014-04-16"
-
-msgid "2013-10-25"
-msgstr "2013-10-25"
-
-msgid "Added initial Debian support."
-msgstr "增加最初的Debian支持。"
-
-msgid "2013-10-17"
-msgstr "2013-10-17"
-
-msgid "Havana release."
-msgstr "Havana发行版。"
-
-msgid "2013-10-16"
-msgstr "2013-10-16"
-
-msgid "Add support for SUSE Linux Enterprise."
-msgstr "增加SUSE 系统企业版支持"
-
-msgid "2013-10-08"
-msgstr "2013-10-08"
-
-msgid "Complete reorganization for Havana."
-msgstr "为Havana版本完成改编。"
-
-msgid "2013-09-09"
-msgstr "2013-09-09"
-
-msgid "Build also for openSUSE."
-msgstr "为openSUSE建造"
-
-msgid "2013-08-01"
-msgstr "2013-08-01"
-
-msgid ""
-"Fixes to Object Storage verification steps. Fix bug <link href=\"https://"
-"bugs.launchpad.net/openstack-manuals/+bug/1207347\">1207347</link>."
-msgstr ""
-"对象存储验证步骤的改进。 更正错误<link href=\"https://bugs.launchpad.net/"
-"openstack-manuals/+bug/1207347\">1207347</link>。"
-
-msgid "2013-07-25"
-msgstr "2013-07-25"
-
-msgid ""
-"Adds creation of cinder user and addition to the service tenant. Fix bug "
-"<link href=\"https://bugs.launchpad.net/openstack-manuals/"
-"+bug/1205057\">1205057</link>."
-msgstr ""
-"添加创建cinder用户和服务租户的更多功能。 更正错误<link href=\"https://bugs."
-"launchpad.net/openstack-manuals/+bug/1205057\">1205057</link>."
-
-msgid "2013-05-08"
-msgstr "2013-05-08"
-
-msgid "Updated the book title for consistency."
-msgstr "为了统一更新了书的标题。"
-
-msgid "2013-05-02"
-msgstr "2013-05-02"
-
-msgid "Updated cover and fixed small errors in appendix."
-msgstr "更新了封面并修正了附录中的一些小错误。"
 
 msgid "Message queue"
 msgstr "消息队列"
