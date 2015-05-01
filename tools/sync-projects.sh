@@ -19,8 +19,24 @@ if [ -z "$PROJECT_DIR" ] ; then
     exit 1
 fi
 
+function copy_rst {
+    target=$1
+    # Copy over some RST files
+    mkdir -p $target
+    tools/glossary2rst.py $PROJECT_DIR/$target
+
+    for filename in doc/users-guides/source/common/app_support.rst; do
+        cp $filename $PROJECT_DIR/$target
+    done
+    (cd $PROJECT_DIR; git add $target)
+}
+
 case "$PROJECT_DIR" in
+    api-site)
+        copy_rst firstapp/source/imported/
+        ;;
     ha-guide)
+        copy_rst doc/ha-guide/source/imported
         GLOSSARY_SUB_DIR="doc/glossary"
         ENT_DIR="high-availability-guide"
         CHECK_MARK_DIR="figures"
@@ -40,23 +56,26 @@ case "$PROJECT_DIR" in
         exit 1
         ;;
 esac
-GLOSSARY_DIR="$PROJECT_DIR/$GLOSSARY_SUB_DIR"
 
-cp doc/glossary/glossary-terms.xml $GLOSSARY_DIR/
-# Copy only Japanese and zh_CN translations since ha-guide,
-# security-guide, and operations-guide are only translated to Japanese
-# currently while the ha-guide is additionally translated to zh_CN.
-# Training-guides is not translated at all.
-cp doc/glossary/locale/{ja,zh_CN}.po $GLOSSARY_DIR/locale/
-sed -i -e "s|\"../common/entities/openstack.ent\"|\"../$ENT_DIR/openstack.ent\"|" \
-    $GLOSSARY_DIR/glossary-terms.xml
-(cd $PROJECT_DIR;git add $GLOSSARY_SUB_DIR)
+if [[ "$PROJECT" != "api-site" ]] ; then
+    GLOSSARY_DIR="$PROJECT_DIR/$GLOSSARY_SUB_DIR"
 
-# Sync entitites file
-cp doc/common/entities/openstack.ent $GLOSSARY_DIR/../$ENT_DIR/
-sed -i -e "s|imagedata fileref=\"../common/figures|imagedata fileref=\"$CHECK_MARK_DIR|" \
-    $GLOSSARY_DIR/../$ENT_DIR/openstack.ent
+    cp doc/glossary/glossary-terms.xml $GLOSSARY_DIR/
+    # Copy only Japanese and zh_CN translations since ha-guide,
+    # security-guide, and operations-guide are only translated to Japanese
+    # currently while the ha-guide is additionally translated to zh_CN.
+    # Training-guides is not translated at all.
+    cp doc/glossary/locale/{ja,zh_CN}.po $GLOSSARY_DIR/locale/
+    sed -i -e "s|\"../common/entities/openstack.ent\"|\"../$ENT_DIR/openstack.ent\"|" \
+        $GLOSSARY_DIR/glossary-terms.xml
+    (cd $PROJECT_DIR; git add $GLOSSARY_SUB_DIR)
 
-# Add files
-(cd $PROJECT_DIR;git add $GLOSSARY_SUB_DIR \
-    $GLOSSARY_SUB_DIR/../$ENT_DIR/openstack.ent)
+    # Sync entitites file
+    cp doc/common/entities/openstack.ent $GLOSSARY_DIR/../$ENT_DIR/
+    sed -i -e "s|imagedata fileref=\"../common/figures|imagedata fileref=\"$CHECK_MARK_DIR|" \
+        $GLOSSARY_DIR/../$ENT_DIR/openstack.ent
+
+    # Add files
+    (cd $PROJECT_DIR; git add $GLOSSARY_SUB_DIR \
+        $GLOSSARY_SUB_DIR/../$ENT_DIR/openstack.ent)
+fi
