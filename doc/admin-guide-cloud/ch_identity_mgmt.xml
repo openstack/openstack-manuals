@@ -76,8 +76,12 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
       example in Compute, you can remove the middleware parameters
       from <filename>api-paste.ini</filename>, as follows:</para>
     <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken]
-paste.filter_factory =
-keystoneclient.middleware.auth_token:filter_factory</programlisting>
+paste.filter_factory = keystonemiddleware.auth_token:filter_factory</programlisting>
+    <note><para>Prior to the Juno release, the auth_token middleware was in
+        python-keystoneclient. The filter_factory must be set to
+        <literal>keystoneclient.middleware.auth_token:filter_factory</literal>
+        in those releases.
+    </para></note>
     <para>Set these values in the <filename>nova.conf</filename>
       file:</para>
     <programlisting language="ini"><?db-font-size 75%?>[DEFAULT]
@@ -160,8 +164,12 @@ openstack --os-username admin --os-password secrete --os-project-name admin proj
       Compute, for example, you can remove the middleware parameters
       from <filename>api-paste.ini</filename>, as follows:</para>
     <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken]
-paste.filter_factory =
-keystoneclient.middleware.auth_token:filter_factory</programlisting>
+paste.filter_factory = keystonemiddleware.auth_token:filter_factory</programlisting>
+    <note><para>Prior to the Juno release, the auth_token middleware was in
+        python-keystoneclient. The filter_factory must be set to
+        <literal>keystoneclient.middleware.auth_token:filter_factory</literal>
+        in those releases.
+    </para></note>
     <para>And set the following values in
         <filename>nova.conf</filename> as follows:</para>
     <programlisting language="ini"><?db-font-size 75%?>[DEFAULT]
@@ -189,7 +197,7 @@ admin_tenant_name = service</programlisting>
         <option>admin_user</option> and
         <option>admin_password</option> options:</para>
     <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken]
-paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+paste.filter_factory = keystonemiddleware.auth_token:filter_factory
 auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
 identity_uri = http://<replaceable>controller</replaceable>:35357
 auth_token = 012345SECRET99TOKEN012345
@@ -206,6 +214,11 @@ admin_password = keystone123</programlisting>
         <literal>auth_protocol</literal> options because the
         <literal>identity_uri</literal> option replaces them.</para>
     </note>
+    <note><para>Prior to the Juno release, the auth_token middleware was in
+        python-keystoneclient. The filter_factory must be set to
+        <literal>keystoneclient.middleware.auth_token:filter_factory</literal>
+        in those releases.
+    </para></note>
   </section>
    <section xml:id="identity-service-api-protection-with-role-based-access-control">
       <title>Identity API protection with role-based access control (RBAC)
