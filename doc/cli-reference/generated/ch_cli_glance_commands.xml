@@ -9,10 +9,10 @@
 
     <?dbhtml stop-chunking?>
 
-    <title>Image Service command-line client</title>
+    <title>Image service command-line client</title>
 
     <para>The <command>glance</command> client is the command-line
-        interface (CLI) for the OpenStack Image Service API and its extensions.
+        interface (CLI) for the OpenStack Image service API and its extensions.
 
        This chapter documents <command>glance</command> version
         <literal>0.18.0</literal>.
@@ -420,7 +420,7 @@
     </section>
 
     <section xml:id="glance_cli_v1">
-       <title>Image Service API v1 commands</title>
+       <title>Image service API v1 commands</title>
     <section xml:id="glanceclient_subcommand_image-create">
         <title>glance image-create</title>
         <screen><computeroutput>usage: glance image-create [--id &lt;IMAGE_ID&gt;] [--name &lt;NAME&gt;] [--store &lt;STORE&gt;]
@@ -611,6 +611,43 @@ Delete specified image(s).
     <listitem>
       <para>
         Name or ID of image(s) to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_image-download">
+        <title>glance image-download</title>
+        <screen><computeroutput>usage: glance image-download [--file &lt;FILE&gt;] [--progress] &lt;IMAGE&gt;</computeroutput></screen>
+        <para>
+Download a specific image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of image to download.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--file &lt;FILE&gt;</command></term>
+    <listitem>
+      <para>
+        Local file to save downloaded image data to. If this is not
+      specified the image data will be written to stdout.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--progress</command></term>
+    <listitem>
+      <para>
+        Show download progress bar.
       </para>
     </listitem>
   </varlistentry>
@@ -1066,10 +1103,10 @@ Describe sharing permissions by image or tenant.
     </section>
 
     <section xml:id="glance_cli_v2">
-       <title>Image Service API v2 commands</title>
+       <title>Image service API v2 commands</title>
     <para>
        You can select an API version to use by adding the
-       <parameter>--os-image-api-version</parameter> option or by setting
+       <parameter>--os-image-api-version</parameter> parameter or by setting
        the corresponding environment variable:
 <screen><prompt>$</prompt> <userinput>export OS_IMAGE_API_VERSION=2</userinput></screen>
 </para>
@@ -2339,6 +2376,100 @@ Update the status of a member for a given image.
       <para>
         Updated status of member. Valid Values: accepted, rejected,
       pending
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_task-create_v2">
+        <title>glance task-create (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 task-create [--type &lt;TYPE&gt;] [--input &lt;STRING&gt;]</computeroutput></screen>
+        <para>
+Create a new task.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--type &lt;TYPE&gt;</command></term>
+    <listitem>
+      <para>
+        Type of Task. Please refer to Glance schema or
+      documentation to see which tasks are supported.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--input &lt;STRING&gt;</command></term>
+    <listitem>
+      <para>
+        Parameters of the task to be launched
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_task-list_v2">
+        <title>glance task-list (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 task-list [--sort-key {id,type,status}] [--sort-dir {asc,desc}]
+                        [--page-size &lt;SIZE&gt;] [--type &lt;TYPE&gt;]
+                        [--status &lt;STATUS&gt;]</computeroutput></screen>
+        <para>
+List tasks you can access.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--sort-key {id,type,status}</command></term>
+    <listitem>
+      <para>
+      Sort task list by specified field.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort-dir {asc,desc}</command></term>
+    <listitem>
+      <para>
+      Sort task list in specified direction.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--page-size &lt;SIZE&gt;</command></term>
+    <listitem>
+      <para>
+        Number of tasks to request in each paginated request.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--type &lt;TYPE&gt;</command></term>
+    <listitem>
+      <para>
+        Filter tasks to those that have this type.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--status &lt;STATUS&gt;</command></term>
+    <listitem>
+      <para>
+        Filter tasks to those that have this status.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_task-show_v2">
+        <title>glance task-show (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 task-show &lt;TASK_ID&gt;</computeroutput></screen>
+        <para>
+Describe a specific task.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;TASK_ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of task to describe.
       </para>
     </listitem>
   </varlistentry>
