@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-05-01 06:09+0000\n"
+"POT-Creation-Date: 2015-05-02 06:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12088,7 +12088,7 @@ msgstr ""
 msgid "You can, however, export the metadata of a volume backup. To do so, run this command as an OpenStack <literal>admin</literal> user (presumably, after creating a volume backup):"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml:15(replaceable) ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:12(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml:15(replaceable) ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:15(replaceable)
 msgid "BACKUP_ID"
 msgstr ""
 
@@ -12124,44 +12124,84 @@ msgstr ""
 msgid "Once you have imported the backup metadata into a Block Storage database, restore the volume (<xref linkend=\"volume-backup-restore\"/>)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:4(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:7(title)
 msgid "Back up and restore volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:5(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:8(para)
 msgid "The <placeholder-1/> command-line interface provides the tools for creating a volume backup. You can restore a volume from a backup as long as the backup's associated database information (or backup metadata) is intact in the Block Storage database."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:8(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:11(para)
 msgid "Run this command to create a backup of a volume:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:9(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:12(replaceable)
 msgid "VOLUME"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:10(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:13(para)
 msgid "Where <replaceable>VOLUME</replaceable> is the name or ID of the volume."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:11(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:14(para)
 msgid "This command also returns a backup ID. Use this backup ID when restoring the volume:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:13(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:16(para)
 msgid "Because volume backups are dependent on the Block Storage database, you must also back up your Block Storage database regularly to ensure data recovery."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:16(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:19(para)
 msgid "Alternatively, you can export and save the metadata of selected volume backups. Doing so precludes the need to back up the entire Block Storage database. This is useful if you need only a small subset of volumes to survive a catastrophic database failure."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:19(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:22(para)
 msgid "If you specify a UUID encryption key when setting up the volume specifications, the backup metadata ensures that the key will remain valid when you back up and restore the volume."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:22(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:25(para)
 msgid "For more information about how to export and import volume backup metadata, see <xref linkend=\"volume-backup-restore-export-import\"/>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:28(para)
+msgid "By default, the swift object store is used for the backup repository."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:29(para)
+msgid "If instead you want to use an NFS export as the backup repository, add the following configuration options to the <literal>[DEFAULT]</literal> section of the <filename>cinder.conf</filename> file and restart the Block Storage services:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:37(replaceable) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:105(replaceable) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:121(replaceable) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:53(replaceable)
+msgid "HOST"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:37(replaceable)
+msgid "EXPORT_PATH"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:38(para)
+msgid "For the <placeholder-1/> option, replace <replaceable>HOST</replaceable> with the DNS resolvable host name or the IP address of the storage server for the NFS share, and <replaceable>EXPORT_PATH</replaceable> with the path to that share. If your environment requires that non-default mount options be specified for the share, set these as follows:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:46(replaceable)
+msgid "MOUNT_OPTIONS"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:47(para)
+msgid "<replaceable>MOUNT_OPTIONS</replaceable> is a comma-separated string of NFS mount options as detailed in the NFS man page."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:51(para)
+msgid "There are several other options whose default values may be overriden as appropriate for your environment:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:56(para)
+msgid "The option <placeholder-1/> can be set to <literal>bz2</literal> or <literal>None</literal>. The latter can be a useful setting when the server providing the share for the backup repository itself performs deduplication or compression on the backup data."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:63(para)
+msgid "The option <placeholder-1/> must be a multiple of <placeholder-2/>. It is effectively the maximum file size to be used, given your environment, to hold backup data. Volumes larger than this will be stored in multiple files in the backup repository. The <placeholder-3/> option determines the size of blocks from the cinder volume being backed up on which digital signatures are calculated in order to enable incremental backup capability."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:4(title)
@@ -12286,10 +12326,6 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:102(para)
 msgid "Add an entry to <filename>/etc/cinder/glusterfs</filename> for each GlusterFS share that OpenStack Block Storage should use for back end storage. Each entry should be a separate line, and should use the following format:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:105(replaceable) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:121(replaceable) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:53(replaceable)
-msgid "HOST"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:109(para)
