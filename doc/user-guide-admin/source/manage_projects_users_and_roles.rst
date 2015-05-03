@@ -30,76 +30,16 @@ source an OpenStack RC file. See `Download and source the OpenStack RC
 file
 <http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html>`__.
 
-Services
+Projects
 ~~~~~~~~
 
-To look at your service catalog, use the OpenStack common client commands.
+A project is a group of zero or more users. In Compute, a project owns
+virtual machines. In Object Storage, a project owns containers. Users
+can be associated with more than one project. Each project and user
+pairing can have a role associated with it.
 
-``service create``
-^^^^^^^^^^^^^^^^^^
-
-Keyword arguments:
-
--  Name
-
--  Description
-
-Positional argument:
-
--  Type, name or ID
-
-Example:
-
-.. code::
-
-    $ openstack service create \
-    --name nova \
-    --description "Nova Compute Service" \
-    compute
-
-``service list``
+Create a project
 ^^^^^^^^^^^^^^^^
-
-Example:
-
-.. code::
-
-    $ openstack service list
-
-``service show``
-^^^^^^^^^^^^^^^^
-
-Positional argument:
-
--  Type, name or ID
-
-Example:
-
-.. code::
-
-    $ openstack service show 08741d8ed88242ca88d1f61484a0fe3b
-
-``service delete``
-^^^^^^^^^^^^^^^^^^
-
-Positional argument:
-
--  Type, name or ID
-
-Example:
-
-.. code::
-
-    $ openstack service delete 08741d8ed88242ca88d1f61484a0fe3b
-
-Create a tenant (project)
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-A tenant is a group of zero or more users. In nova, a tenant owns
-virtual machines. In swift, a tenant owns containers. In the Dashboard,
-tenants are represented as projects. Users can be associated with more
-than one tenant. Each tenant and user pairing can have a role associated
-with it.
 
 #. To list all projects with their ID, name, and whether they are
    enabled or disabled:
@@ -193,6 +133,9 @@ Delete a project
 
        $ openstack project delete PROJECT_ID
 
+User
+~~~~
+
 Create a user
 ^^^^^^^^^^^^^
 
@@ -277,6 +220,9 @@ Delete a user
    .. code::
 
        $ openstack user delete USER_NAME
+
+Roles and role assignments
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Create and assign a role
 ^^^^^^^^^^^^^^^^^^^^^^^^

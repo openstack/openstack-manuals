@@ -151,3 +151,9 @@ Delete a service
 To delete a specified service, specify its ID::
 
 $ keystone service-delete SERVICE_ID
+
+For example:
+
+.. code::
+
+   $ keystone service-delete 84c23f4b942c44c38b9c42c5e517cd9a
