@@ -30,25 +30,25 @@
   <xi:include href="identity/section_caching-layer.xml"/>
   <section xml:id="user-crud">
     <title>User CRUD</title>
-    <para>Identity provides a user CRUD filter that can
-      be added to the public_api pipeline. This user CRUD filter
-      enables users to use a HTTP PATCH to change their own password.
-      To enable this extension you should define a
-        <literal>user_crud_extension</literal> filter, insert it after
+    <para>Identity provides a user CRUD (Create, Read, Update, and Delete)
+      filter that can be added to the <literal>public_api</literal> pipeline.
+      The user CRUD filter enables users to use a HTTP PATCH to change their
+      own password. To enable this extension you should define a
+      <literal>user_crud_extension</literal> filter, insert it after
       the <literal>*_body</literal> middleware and before the
-        <literal>public_service</literal> application in the
-      public_api WSGI pipeline in <filename>keystone.conf</filename>.
-      For example:</para>
+      <literal>public_service</literal> application in the
+      <literal>public_api</literal> WSGI pipeline in
+      <filename>keystone-paste.ini</filename>. For example:</para>
     <programlisting language="ini"><?db-font-size 75%?>[filter:user_crud_extension]
 paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory
 
 [pipeline:public_api]
-pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body json_body debug ec2_extension user_crud_extension public_service</programlisting>
+pipeline = sizelimit url_normalize request_id build_auth_context token_auth admin_token_auth json_body ec2_extension user_crud_extension public_service</programlisting>
     <para>Each user can then change their own password with a HTTP PATCH:</para>
     <screen><prompt>$</prompt> <userinput>curl -X PATCH http://localhost:5000/v2.0/OS-KSCRUD/users/<replaceable>USERID</replaceable> -H &quot;Content-type: application/json&quot;  \
   -H &quot;X_Auth_Token: <replaceable>AUTHTOKENID</replaceable>&quot; -d '{&quot;user&quot;: {&quot;password&quot;: &quot;ABCD&quot;, &quot;original_password&quot;: &quot;DCBA&quot;}}'</userinput></screen>
     <para>In addition to changing their password, all current
-      tokens for the user are deleted (if the back end is KVS or SQL).</para>
+      tokens for the user are invalidated.</para>
     <note><para>Only use a KVS back end for tokens when testing.</para></note>
   </section>
   <section xml:id="keystone-logging">
