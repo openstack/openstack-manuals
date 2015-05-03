@@ -64,47 +64,6 @@ pipeline = stats_monitoring url_normalize token_auth admin_token_auth xml_body j
       other OpenStack projects, Identity uses the Python
       logging module, which includes extensive configuration options
       that let you define the output levels and formats.</para>
-    <para>Review the <filename>etc/keystone.conf</filename> sample
-      configuration files that are distributed with the Identity
-      Service. For example, each server application has its own
-      configuration file.</para>
-    <para>For services that have separate paste-deploy
-        <filename>.ini</filename> files, you can configure
-        <literal>auth_token</literal> middleware in the
-        <literal>[keystone_authtoken]</literal> section in the main
-      configuration file, such as <filename>nova.conf</filename>. For
-      example in Compute, you can remove the middleware parameters
-      from <filename>api-paste.ini</filename>, as follows:</para>
-    <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken]
-paste.filter_factory = keystonemiddleware.auth_token:filter_factory</programlisting>
-    <note><para>Prior to the Juno release, the auth_token middleware was in
-        python-keystoneclient. The filter_factory must be set to
-        <literal>keystoneclient.middleware.auth_token:filter_factory</literal>
-        in those releases.
-    </para></note>
-    <para>Set these values in the <filename>nova.conf</filename>
-      file:</para>
-    <programlisting language="ini"><?db-font-size 75%?>[DEFAULT]
-...
-auth_strategy=keystone
-
-[keystone_authtoken]
-auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
-identity_uri = http://<replaceable>controller</replaceable>:35357
-admin_user = admin
-admin_password = SuperSekretPassword
-admin_tenant_name = service</programlisting>
-    <note>
-      <para>Middleware parameters in paste config take priority. You
-        must remove them to use values in the
-          <literal>[keystone_authtoken]</literal> section.</para>
-    </note>
-    <note>
-      <para>Comment out any <literal>auth_host</literal>,
-        <literal>auth_port</literal>, and
-        <literal>auth_protocol</literal> options because the
-        <literal>identity_uri</literal> option replaces them.</para>
-    </note>
   </section>
   <section xml:id="running-keystone">
     <title>Start the Identity services</title>
