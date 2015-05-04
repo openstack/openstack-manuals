@@ -46,22 +46,57 @@ Building
 The different manuals are in subdirectories of the
 ``openstack-manuals/doc/`` directory.
 
-For example, the root directory of the *OpenStack User Guide*
-is ``openstack-manuals/doc/user-guide``.
+DocBook guides
+--------------
+* Normal guides
+For example, the root directory of the *OpenStack Virtual Machine Image Guide*
+is ``openstack-manuals/doc/image-guide``.
 
 To build a specific guide, look for a ``pom.xml`` file within a subdirectory,
 then run the ``mvn`` command in that directory. For example::
 
-    cd openstack-manuals/doc/user-guide/
+    cd openstack-manuals/doc/image-guide/
     mvn clean generate-sources
 
 The generated PDF documentation file is::
 
-    openstack-manuals/doc/user-guide/target/docbkx/webhelp/user-guide.pdf
+    openstack-manuals/doc/image-guide/target/docbkx/webhelp/image-guide/image-guide.pdf
 
 The root of the generated HTML documentation is::
 
-    openstack-manuals/doc/user-guide/target/docbkx/webhelp/user-guide/content/index.html
+    openstack-manuals/doc/image-guide/target/docbkx/webhelp/image-guide/content/index.html
+
+* Installation guides
+The root directory of the *OpenStack Install Guides*
+is ``openstack-manuals/doc/install-guide``, you can get different operating system's guides::
+
+    cd openstack-manuals/doc/install-guide/
+    mvn clean generate-sources -Dprofile.os="ubuntu" -Doperating.system="apt"
+    mvn clean generate-sources -Dprofile.os="rhel;centos;fedora" -Doperating.system="yum"
+    mvn clean generate-sources -Dprofile.os="opensuse" -Doperating.system="zypper"
+
+The generated PDF documentation file is::
+
+    openstack-manuals/doc/install-guide/target/docbkx/webhelp/local/install-guide/install/${operating.system}/openstack-install-guide-${operating.system}-local.pdf
+
+The root of the generated HTML documentation is::
+
+    openstack-manuals/doc/install-guide/target/docbkx/webhelp/local/install-guide/install/${operating.system}/content/index.html
+
+RST guides
+----------
+Then, you can see that the openstack-manuals/doc/user-guides is the RST based guide, So we can't use mvn command.
+You can use tox to prepare virtual environment and build it::
+
+    tox -e docs
+
+The root of the generated *End User Guide* HTML documentation is::
+
+    openstack-manuals/doc/user-guides/build/html/index.html
+
+The root of the generated *Admin User Guide* HTML documentation is::
+
+    openstack-manuals/doc/user-guides/build-admin/html/index.html
 
 Testing of changes and building of the manual
 =============================================
