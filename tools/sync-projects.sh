@@ -22,7 +22,7 @@ fi
 function copy_rst {
     target=$1
     # Copy over some RST files
-    mkdir -p $target
+    mkdir -p $PROJECT_DIR/$target
     tools/glossary2rst.py $PROJECT_DIR/$target
 
     for filename in doc/users-guides/source/common/app_support.rst; do
