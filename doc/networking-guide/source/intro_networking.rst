@@ -30,7 +30,7 @@ components:
 * OpenStack Compute (nova) is used to plug each virtual
   NIC on the VM into a particular network.
 
-* OpenStack dashboard (horizon) for administrators and tenant users to
+* OpenStack dashboard (horizon) is used by administrators and tenant users to
   create and manage network services through a web-based graphical
   interface.
 
