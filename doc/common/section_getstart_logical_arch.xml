@@ -6,30 +6,39 @@
   xml:id="logical-architecture">
   <title>Logical architecture</title>
   <para>To design, deploy, and configure OpenStack, administrators must understand the logical architecture.</para>
-  <para>OpenStack modules are one of the following types:</para>
-  <variablelist>
-   <varlistentry><term>Daemon</term>
-    <listitem>
-      <para>Runs as a background process. On Linux platforms, a daemon is
-        usually installed as a service.</para>
-    </listitem>
-   </varlistentry>
-   <varlistentry><term>Script</term>
-    <listitem>
-      <para>Installs a virtual environment and runs tests. For
-        example, the <code>run_tests.sh</code> script installs a virtual environment and runs unit tests on a service.</para>
-    </listitem>
-   </varlistentry>
-   <varlistentry><term>Command-line interface (CLI)</term>
-    <listitem>
-      <para>Enables users to submit API
-        calls to OpenStack services through easy-to-use
-        commands.</para>
-    </listitem>
-   </varlistentry>
-  </variablelist>
-  <para>The following diagram shows the most common, but not the only,
-    architecture for an OpenStack cloud:</para>
+
+  <para>As shown in <xref linkend="concept_arch"/>, OpenStack consists of
+  several
+  independent parts, named the OpenStack services.
+  All services authenticate
+  through a common Identity service. Individual services interact
+  with each other through public APIs, except where privileged
+  administrator commands are necessary.</para>
+
+  <para>Internally, OpenStack services are composed of several processes.
+  All services have at least one
+  API process, which listens for API requests, preprocesses them and
+  passes them on to other parts of the service. With the exception of
+  the Identity service, the actual work is done by distinct processes.</para>
+
+  <para>For communication between the processes of one service, an AMQP <glossterm>message
+  broker</glossterm> is used. The service's state is stored in a database.
+  When deploying and configuring your OpenStack cloud, you can choose among
+  several message broker and database solutions, such as
+  RabbitMQ, Qpid, MySQL, MariaDB, and SQLite.</para>
+
+  <para>Users can access OpenStack via the web-based user interface implemented
+  by the <link linkend="ch_install-dashboard">dashboard service</link>,
+  via <link xlink:href="http://docs.openstack.org/cli-reference/content">command-line clients</link>
+  and by issuing API requests through tools like
+  browser plug-ins or <command>curl</command>. For applications,
+  <link xlink:href="http://developer.openstack.org/#sdk">several SDKs</link>
+  are available. Ultimately, all these access methods issue REST API
+  calls to the various OpenStack services.</para>
+
+  <para>The following diagram shows the most common, but not the only
+    possible, architecture for an OpenStack cloud:</para>
+
   <figure xml:id="os-logical-arch">
     <title>Logical architecture</title>
     <mediaobject>
@@ -40,9 +49,4 @@
       </imageobject>
     </mediaobject>
   </figure>
-  <para>As in <xref linkend="concept_arch"/>, end users can interact
-    through the dashboard, CLIs, and APIs. All services authenticate
-    through a common Identity Service and individual services interact
-    with each other through public APIs, except where privileged
-    administrator commands are necessary.</para>
 </section>
