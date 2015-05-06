@@ -31,33 +31,12 @@ function copy_rst {
     (cd $PROJECT_DIR; git add $target)
 }
 
-case "$PROJECT_DIR" in
-    api-site)
-        copy_rst firstapp/source/imported/
-        ;;
-    ha-guide)
-        copy_rst doc/ha-guide/source/imported
-        GLOSSARY_SUB_DIR="doc/glossary"
-        ENT_DIR="high-availability-guide"
-        CHECK_MARK_DIR="figures"
-        ;;
-    operations-guide)
-        GLOSSARY_SUB_DIR="doc/glossary"
-        ENT_DIR="openstack-ops"
-        CHECK_MARK_DIR="figures"
-        ;;
-    security-doc)
-        GLOSSARY_SUB_DIR="glossary"
-        ENT_DIR="security-guide"
-        CHECK_MARK_DIR="static"
-        ;;
-    *)
-        echo "$PROJECT_DIR not handled"
-        exit 1
-        ;;
-esac
 
-if [[ "$PROJECT" != "api-site" ]] ; then
+function copy_glossary_xml {
+    GLOSSARY_SUB_DIR=$1
+    ENT_DIR=$2
+    CHECK_MARK_DIR=$3
+
     GLOSSARY_DIR="$PROJECT_DIR/$GLOSSARY_SUB_DIR"
 
     cp doc/glossary/glossary-terms.xml $GLOSSARY_DIR/
@@ -78,4 +57,24 @@ if [[ "$PROJECT" != "api-site" ]] ; then
     # Add files
     (cd $PROJECT_DIR; git add $GLOSSARY_SUB_DIR \
         $GLOSSARY_SUB_DIR/../$ENT_DIR/openstack.ent)
-fi
+}
+
+case "$PROJECT_DIR" in
+    api-site)
+        copy_rst firstapp/source/imported
+        ;;
+    ha-guide)
+        copy_rst doc/ha-guide/source/imported
+        copy_glossary_xml "doc/glossary" "high-availability-guide" "figures"
+        ;;
+    operations-guide)
+        copy_glossary_xml "doc/glossary" "openstack-ops" "figures"
+        ;;
+    security-doc)
+        copy_glossary_xml "glossary" "security-guide" "static"
+        ;;
+    *)
+        echo "$PROJECT_DIR not handled"
+        exit 1
+        ;;
+esac
