@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-05-01 06:10+0000\n"
+"POT-Creation-Date: 2015-05-07 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,162 +166,198 @@ msgid "The policy.json file"
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:12(para)
-msgid "Each OpenStack service, Identity, Compute, Networking and so on, has its own role-based access policies. They determine which user can access which objects in which way, and are defined in the service’s <filename>policy.json</filename> file."
+msgid "Each OpenStack service, Identity, Compute, Networking and so on, has its own role-based access policies. They determine which user can access which objects in which way, and are defined in the service's <filename>policy.json</filename> file."
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:17(para)
-msgid "Whenever an API call to an OpenStack service is made, the service’s policy engine uses the appropriate policy definitions to determine if the call can be accepted. Any changes to <filename>policy.json</filename> are effective immediately, which allows new policies to be implemented while the service is running."
+msgid "Whenever an API call to an OpenStack service is made, the service's policy engine uses the appropriate policy definitions to determine if the call can be accepted. Any changes to <filename>policy.json</filename> are effective immediately, which allows new policies to be implemented while the service is running."
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:23(para)
-msgid "As the name implies, <filename>policy.json</filename> files are in JSON (Javascript Object Notation) format. A policy is defined by a statement with the general form <code>\"&lt;target&gt;\" : \"&lt;rule&gt;\"</code>. A target, also named “action”, is an API call, such as “start an instance” or “attach a volume”. The rule determines under which circumstances the API call is permitted. In most cases, these circumstances involve the user who makes the call, thereafter named the “API user” for simplicity."
+msgid "A <filename>policy.json</filename> file is a text file in JSON (Javascript Object Notation) format. Each policy is defined by a one-line statement in the form <literal>\"&lt;target&gt;\" : \"&lt;rule&gt;\"</literal>."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:33(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:130(title)
+#: ./doc/config-reference/app_policy_json.xml:27(para)
+msgid "The policy target, also named \"action\", represents an API call like \"start an instance\" or \"attach a volume\"."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:32(para)
+msgid "Action names are usually qualified. Example: OpenStack Compute features API calls to list instances, volumes and networks. In <filename>/etc/nova/policy.json</filename>, these APIs are represented by <literal>compute:get_all</literal>, <literal>volume:get_all</literal> and <literal>network:get_all</literal>, respectively."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:38(para)
+msgid "The mapping between API calls and actions is not generally documented."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:40(para)
+msgid "The policy rule determines under which circumstances the API call is permitted. Usually this involves the user who makes the call (hereafter named the \"API user\") and often the object on which the API call operates. A typical rule checks if the API user is the object's owner."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:45(title)
+msgid "Modifying the policy"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:46(para)
+msgid "While recipes for editing <filename>policy.json</filename> files are found on blogs, modifying the policy can have unexpected side effects and is not encouraged."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:54(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:130(title)
 msgid "Examples"
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:35(para)
-msgid "A simple rule might look like this: <placeholder-1/> The target is <code>\"compute:get_all\"</code>, the “list all instances” API of the Compute service. The rule is an empty string meaning “always”. This policy allows anybody to list instances."
+#: ./doc/config-reference/app_policy_json.xml:56(para)
+msgid "A simple rule might look like this: <placeholder-1/> The target is <literal>\"compute:get_all\"</literal>, the \"list all instances\" API of the Compute service. The rule is an empty string meaning \"always\". This policy allows anybody to list instances."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:43(para)
-msgid "You can also decline permission to use an API: <placeholder-1/> The exclamation mark stands for “never” or “nobody”, which effectively disables the Compute API “shelve an instance”."
+#: ./doc/config-reference/app_policy_json.xml:64(para)
+msgid "You can also decline permission to use an API: <placeholder-1/> The exclamation mark stands for \"never\" or \"nobody\", which effectively disables the Compute API \"shelve an instance\"."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:50(para)
-msgid "Many APIs can only be called by admin users. This can be expressed by the rule <code>\"role:admin\"</code>, which checks whether the API user has the admin role. The following policy ensures that only administrators can create new users in the Identity database: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/config-reference/app_policy_json.xml:58(para)
-msgid "You can limit APIs to any role. For example, the Orchestration service defines a role named <code>heat_stack_user</code>. Whoever has this role isn't allowed to create stacks: <placeholder-1/> This rule makes use of the boolean operator <code>not</code>. More complex rules can be built using operators <code>and</code>, <code>or</code> and parentheses."
-msgstr ""
-
-#: ./doc/config-reference/app_policy_json.xml:67(para)
-msgid "You can define aliases for rules: <placeholder-1/> The policy engine understands that <code>\"deny_stack_user\"</code> is not an API and consequently interprets it as an alias. The stack creation policy above can then be written as: <placeholder-2/> This is taken verbatim from <filename>/etc/heat/policy.json</filename>."
+#: ./doc/config-reference/app_policy_json.xml:71(para)
+msgid "Many APIs can only be called by admin users. This can be expressed by the rule <literal>\"role:admin\"</literal>. The following policy ensures that only administrators can create new users in the Identity database: <placeholder-1/>"
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:79(para)
-msgid "Rules can compare API attributes to object attributes. For example: <placeholder-1/> states that only the owner of an instance can start it up. The <code>user_id</code> string before the colon is an API attribute, namely the user ID of the API user. It is compared with the user ID of the object (in this case, an instance); more precisely, it is compared with the <code>user_id</code> field of that object in the database. If the two values are equal, permission is granted."
+msgid "You can limit APIs to any role. For example, the Orchestration service defines a role named <literal>heat_stack_user</literal>. Whoever has this role isn't allowed to create stacks: <placeholder-1/> This rule makes use of the boolean operator <literal>not</literal>. More complex rules can be built using operators <literal>and</literal>, <literal>or</literal> and parentheses."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:91(para)
-msgid "An admin user always has permission to call APIs. This is how <filename>/etc/keystone/policy.json</filename> makes this policy explicit: <placeholder-1/> The first two lines define aliases for \"user is an admin user\" and \"user owns the object\", respectively. <code>is_admin</code> in line 1 is a flag that indicates an admin user. While it looks redundant to <code>role:admin</code>, it allows administrative users that don't have the admin role. The <code>owner</code> alias (line 2) compares the API's user ID with the object's user ID. Line 3 defines a third alias <code>admin_or_owner</code>, combining the two first aliases with the Boolean operator <code>or</code>. Line 4, then, sets up the policy that a password can only be modified by its owner or an admin user."
+#: ./doc/config-reference/app_policy_json.xml:88(para)
+msgid "You can define aliases for rules: <placeholder-1/> The policy engine understands that <literal>\"deny_stack_user\"</literal> is not an API and consequently interprets it as an alias. The stack creation policy above can then be written as: <placeholder-2/> This is taken verbatim from <filename>/etc/heat/policy.json</filename>."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:111(para)
-msgid "As a final example, let's examine a more complex rule: <placeholder-1/> It determines who can use the Identity API “delete EC2 credential”. Here, boolean operators and parentheses combine three simpler rules. <code>admin_required</code> and <code>owner</code> are the same aliases as in the previous example. <code>user_id:%(target.credential.user_id)s</code> compares the API user with the user ID of the credential object associated with the target."
+#: ./doc/config-reference/app_policy_json.xml:100(para)
+msgid "Rules can compare API attributes to object attributes. For example: <placeholder-1/> states that only the owner of an instance can start it up. The <literal>user_id</literal> string before the colon is an API attribute, namely the user ID of the API user. It is compared with the user ID of the object (in this case, an instance); more precisely, it is compared with the <literal>user_id</literal> field of that object in the database. If the two values are equal, permission is granted."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:126(title)
-msgid "Syntax"
+#: ./doc/config-reference/app_policy_json.xml:112(para)
+msgid "An admin user always has permission to call APIs. This is how <filename>/etc/keystone/policy.json</filename> makes this policy explicit: <placeholder-1/> The first line defines an alias for \"user is an admin user\". The <literal>is_admin</literal> flag is only used when setting up the Identity service for the first time. It indicates that the user has admin privileges granted by the service token (<parameter>--os-token</parameter> parameter of the <placeholder-2/> command line client)."
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:128(para)
-msgid "A <filename>policy.json</filename> file consists of policies and aliases of the form <code>target:rule</code> or <code>alias:definition</code>, separated by commas and enclosed in curly braces: <placeholder-1/>"
+msgid "The second line creates an alias for \"user owns the object\" by comparing the API's user ID with the object's user ID."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:143(para)
-msgid "Targets are APIs and are written <code>\"service:API\"</code> or simply <code>\"API\"</code>. For example, <code>\"compute:create\"</code> or <code>\"add_image\"</code>."
+#: ./doc/config-reference/app_policy_json.xml:132(para)
+msgid "Line 3 defines a third alias <literal>admin_or_owner</literal>, combining the two first aliases with the Boolean operator <literal>or</literal>."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:147(para)
-msgid "Rules determine whether the API call is allowed."
+#: ./doc/config-reference/app_policy_json.xml:136(para)
+msgid "Line 4 sets up the policy that a password can only be modified by its owner or an admin user."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:151(para)
-msgid "always true. The action is always permitted. This can be written as <code>\"\"</code> (empty string), <code>[]</code>, or <code>\"@\"</code>."
+#: ./doc/config-reference/app_policy_json.xml:141(para)
+msgid "As a final example, let's examine a more complex rule: <placeholder-1/> This rule determines who can use the Identity API \"delete EC2 credential\". Here, boolean operators and parentheses combine three simpler rules. <literal>admin_required</literal> and <literal>owner</literal> are the same aliases as in the previous example. <literal>user_id:%(target.credential.user_id)s</literal> compares the API user with the user ID of the credential object associated with the target."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:153(para)
-msgid "always false. The action is never permitted. Written as <code>\"!\"</code>."
-msgstr ""
-
-#: ./doc/config-reference/app_policy_json.xml:154(para)
-msgid "a special check"
-msgstr ""
-
-#: ./doc/config-reference/app_policy_json.xml:155(para)
-msgid "a comparison of two values"
-msgstr ""
-
-#: ./doc/config-reference/app_policy_json.xml:156(para)
-msgid "boolean expressions based on simpler rules"
-msgstr ""
-
-#: ./doc/config-reference/app_policy_json.xml:148(para)
-msgid "Rules can be: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/config-reference/app_policy_json.xml:163(para)
-msgid "<code>&lt;role&gt;:&lt;role name&gt;</code>, a test whether the API credentials contain this role."
-msgstr ""
-
-#: ./doc/config-reference/app_policy_json.xml:165(para)
-msgid "<code>&lt;rule&gt;:&lt;rule name&gt;</code>, the definition of an alias."
-msgstr ""
-
-#: ./doc/config-reference/app_policy_json.xml:167(para)
-msgid "<code>http:&lt;target URL&gt;</code>, which delegates the check to a remote server. The API is authorized when the server returns True."
+#: ./doc/config-reference/app_policy_json.xml:158(title)
+msgid "Syntax"
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:160(para)
-msgid "Special checks are <placeholder-1/>"
-msgstr ""
-
-#: ./doc/config-reference/app_policy_json.xml:173(para)
-msgid "Developers can define additional special checks."
+msgid "A <filename>policy.json</filename> file consists of policies and aliases of the form <literal>target:rule</literal> or <literal>alias:definition</literal>, separated by commas and enclosed in curly braces: <placeholder-1/>"
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:175(para)
-msgid "Two values are compared in the following way: <placeholder-1/>"
+msgid "Targets are APIs and are written <literal>\"service:API\"</literal> or simply <literal>\"API\"</literal>. For example, <literal>\"compute:create\"</literal> or <literal>\"add_image\"</literal>."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:179(para)
+msgid "Rules determine whether the API call is allowed."
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:183(para)
-msgid "constants: Strings, numbers, <code>true</code>, <code>false</code>"
-msgstr ""
-
-#: ./doc/config-reference/app_policy_json.xml:184(para)
-msgid "API attributes"
+msgid "always true. The action is always permitted. This can be written as <literal>\"\"</literal> (empty string), <literal>[]</literal>, or <literal>\"@\"</literal>."
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:185(para)
-msgid "target object attributes"
+msgid "always false. The action is never permitted. Written as <literal>\"!\"</literal>."
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:186(para)
-msgid "the flag <code>is_admin</code>"
+msgid "a special check"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:187(para)
+msgid "a comparison of two values"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:188(para)
+msgid "boolean expressions based on simpler rules"
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:180(para)
-msgid "Possible values are <placeholder-1/>"
+msgid "Rules can be: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:190(para)
-msgid "API attributes can be <code>project_id</code>, <code>user_id</code> or <code>domain_id</code>."
+#: ./doc/config-reference/app_policy_json.xml:195(para)
+msgid "<literal>&lt;role&gt;:&lt;role name&gt;</literal>, a test whether the API credentials contain this role."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:193(para)
-msgid "Target object attributes are fields from the object description in the database. For example in the case of the <code>\"compute:start\"</code> API, the object is the instance to be started. The policy for starting instances could use the <code>%(project_id)s</code>attribute, that is the project that owns the instance. The trailing s indicates this is a string."
+#: ./doc/config-reference/app_policy_json.xml:197(para)
+msgid "<literal>&lt;rule&gt;:&lt;rule name&gt;</literal>, the definition of an alias."
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:199(para)
-msgid "<code>is_admin</code> tells whether the API user is an administrator, no matter if the user has the admin role or not."
+msgid "<literal>http:&lt;target URL&gt;</literal>, which delegates the check to a remote server. The API is authorized when the server returns True."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:202(para)
-msgid "The alias construct exists for convenience. An alias is short name for a complex or hard to understand rule. It is defined in the same way as a policy: <placeholder-1/> Once an alias is defined, use the <code>rule</code> keyword to use it in a policy rule."
+#: ./doc/config-reference/app_policy_json.xml:192(para)
+msgid "Special checks are <placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:213(title)
-msgid "Older syntax"
+#: ./doc/config-reference/app_policy_json.xml:205(para)
+msgid "Developers can define additional special checks."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:207(para)
+msgid "Two values are compared in the following way: <placeholder-1/>"
 msgstr ""
 
 #: ./doc/config-reference/app_policy_json.xml:215(para)
+msgid "constants: Strings, numbers, <literal>true</literal>, <literal>false</literal>"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:216(para)
+msgid "API attributes"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:217(para)
+msgid "target object attributes"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:218(para)
+msgid "the flag <literal>is_admin</literal>"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:212(para)
+msgid "Possible values are <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:222(para)
+msgid "API attributes can be <literal>project_id</literal>, <literal>user_id</literal> or <literal>domain_id</literal>."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:225(para)
+msgid "Target object attributes are fields from the object description in the database. For example in the case of the <literal>\"compute:start\"</literal> API, the object is the instance to be started. The policy for starting instances could use the <literal>%(project_id)s</literal>attribute, that is the project that owns the instance. The trailing s indicates this is a string."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:231(para)
+msgid "<literal>is_admin</literal> indicates that administrative privileges are granted via the admin token mechanism (the <parameter>--os-token</parameter> option of the <placeholder-1/> command). The admin token allows initialisation of the identity database before the admin role exists."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:237(para)
+msgid "The alias construct exists for convenience. An alias is short name for a complex or hard to understand rule. It is defined in the same way as a policy: <placeholder-1/> Once an alias is defined, use the <literal>rule</literal> keyword to use it in a policy rule."
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:248(title)
+msgid "Older syntax"
+msgstr ""
+
+#: ./doc/config-reference/app_policy_json.xml:250(para)
 msgid "You may encounter older <filename>policy.json</filename> files that feature a different syntax, where JavaScript arrays are used instead of boolean operators. For example, the EC2 credentials rule above would have been written as follows: <placeholder-1/> The rule is an array of arrays. The innermost arrays are or'ed together, whereas elements inside the innermost arrays are and'ed."
 msgstr ""
 
-#: ./doc/config-reference/app_policy_json.xml:226(para)
+#: ./doc/config-reference/app_policy_json.xml:261(para)
 msgid "While the old syntax is still supported, we recommend using the newer, more intuitive syntax."
 msgstr ""
 
@@ -5789,7 +5825,7 @@ msgid "Storage group automatic deletion"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:552(para)
-msgid "For volume attaching, the driver has a storage group on VNX for each compute node hosting the vm instances that are going to consume VNX Block Storage (using the compute node's hostname as the storage group's name). All the volumes attched to the vm instances in a computer node will be put into the corresponding Storage Group. If <literal>destroy_empty_storage_group=True</literal>, the driver will remove the empty storage group when its last volume is detached. For data safety, it does not suggest to set the option <literal>destroy_empty_storage_group=True</literal> unless the VNX is exclusively managed by one Block Storage node because consistent <literal>lock_path</literal> is required for operation synchronization for this behavior."
+msgid "For volume attaching, the driver has a storage group on VNX for each compute node hosting the vm instances that are going to consume VNX Block Storage (using the compute node's hostname as the storage group's name). All the volumes attached to the vm instances in a computer node will be put into the corresponding Storage Group. If <literal>destroy_empty_storage_group=True</literal>, the driver will remove the empty storage group when its last volume is detached. For data safety, it does not suggest to set the option <literal>destroy_empty_storage_group=True</literal> unless the VNX is exclusively managed by one Block Storage node because consistent <literal>lock_path</literal> is required for operation synchronization for this behavior."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:566(title)
