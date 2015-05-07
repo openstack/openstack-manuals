@@ -1,4 +1,4 @@
-.. meta:
+.. meta::
     :scope: admin_only
 
 =================

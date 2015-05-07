@@ -23,8 +23,8 @@ Contents
    :maxdepth: 2
 
    adminuser/intro-admin.rst
-   dashboard.rst
-   cli.rst
+   dashboard-admin.rst
+   cli-admin.rst
 
    common/app_support.rst
 
