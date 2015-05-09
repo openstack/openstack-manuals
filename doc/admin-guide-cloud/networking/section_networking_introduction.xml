@@ -279,13 +279,20 @@
                 OpenStack dashboard.</para>
             <step>
                 <para>Enable the FWaaS plug-in in the
-                        <filename>neutron.conf</filename> file:</para>
+                    <filename>/etc/neutron/neutron.conf</filename> file:</para>
                 <programlisting language="ini">service_plugins = firewall
 [service_providers]
+...
 service_provider = FIREWALL:Iptables:neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver:default
+
 [fwaas]
 driver = neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver
 enabled = True</programlisting>
+            <note>
+                <para>On Ubuntu, modify the <literal>[fwaas]</literal> section
+                    in the <filename>/etc/neutron/fwaas_driver.ini</filename>
+                    file instead of <filename>/etc/neutron/neutron.conf</filename>.</para>
+            </note>
             </step>
             <step>
                 <para>Enable the option in the
@@ -295,7 +302,8 @@ enabled = True</programlisting>
                 <programlisting language="ini">'enable_firewall' = True</programlisting>
             </step>
             <step>
-                <para>Restart the <systemitem class="service">neutron-l3-agent</systemitem> service
+                <para>Restart the <systemitem class="service">neutron-l3-agent</systemitem> and
+                    <systemitem class="service">neutron-server</systemitem> services
                     to apply the settings.</para>
             </step>
         </procedure>
