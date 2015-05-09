@@ -21,8 +21,8 @@
       <td>(BoolOpt) Automatically remove networks from offline DHCP agents.</td>
     </tr>
     <tr>
-      <td>[DEFAULT] default_device_name = Switch1</td>
-      <td>(StrOpt) default_device_name of the l2 gateway</td>
+      <td>[DEFAULT] conn_idle_timeout = 900</td>
+      <td>(IntOpt) Reconnect connection to nsx if not used within this amount of time.</td>
     </tr>
     <tr>
       <td>[DEFAULT] default_ipv4_subnet_pool = None</td>
@@ -51,10 +51,6 @@
     <tr>
       <td>[DEFAULT] ipv6_gateway = </td>
       <td>(StrOpt) With IPv6, the network used for the external gateway does not need to have an associated subnet, since the automatically assigned link-local address (LLA) can be used. However, an IPv6 gateway address is needed for use as the next-hop for the default route. If no IPv6 gateway address is configured here, (and only then) the neutron router will be configured to get its default route from router advertisements (RAs) from the upstream router; in which case the upstream router must also be configured to send these RAs. The ipv6_gateway, when configured, should be the LLA of the interface on the upstream router. If a next-hop using a global unique address (GUA) is desired, it needs to be done via a subnet allocated to the network and not through this parameter.</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] l2gw_callback_class = networking_l2gw.services.l2gateway.ovsdb.data.L2GatewayOVSDBCallbacks</td>
-      <td>(StrOpt) L2 gateway plugin callback class where theRPCs from the agent are going to get invoked</td>
     </tr>
     <tr>
       <td>[DEFAULT] log-config-append = None</td>
@@ -101,20 +97,12 @@
       <td>(StrOpt) The name of the admin nova tenant. Deprecated in favour of an auth plugin in [nova].</td>
     </tr>
     <tr>
-      <td>[DEFAULT] periodic_monitoring_interval = 5</td>
-      <td>(IntOpt) Periodic interval at which the plugin checks for the monitoring L2 gateway agent</td>
-    </tr>
-    <tr>
       <td>[DEFAULT] policy_default_rule = default</td>
       <td>(StrOpt) Default rule. Enforced when a requested rule is not found.</td>
     </tr>
     <tr>
       <td>[DEFAULT] policy_dirs = ['policy.d']</td>
       <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.  Missing or empty directories are ignored.</td>
-    </tr>
-    <tr>
-      <td>[DEFAULT] quota_l2_gateway = 5</td>
-      <td>(IntOpt) Number of l2 gateways allowed per tenant, -1 for unlimited</td>
     </tr>
     <tr>
       <td>[DEFAULT] syslog-log-facility = LOG_USER</td>
@@ -157,6 +145,10 @@
       <td>(BoolOpt) Use the root helper to read the namespaces from the operating system.</td>
     </tr>
     <tr>
+      <td>[MIDONET] client = midonet.neutron.client.api.MidonetApiClient</td>
+      <td>(StrOpt) MidoNet client used to access MidoNet data storage.</td>
+    </tr>
+    <tr>
       <td>[MIDONET] cluster_ip = localhost</td>
       <td>(StrOpt) IP that the cluster service can be reached on</td>
     </tr>
@@ -167,10 +159,6 @@
     <tr>
       <td>[MIDONET] tunnel_protocol = vxlan</td>
       <td>(StrOpt) Tunnel protocol used by Midonet</td>
-    </tr>
-    <tr>
-      <td>[MIDONET] use_cluster = False</td>
-      <td>(BoolOpt) Use the midonet plugin that interacts with the tasks-based architecture, rather than the plugin that interacts with the HTTP based architecture.</td>
     </tr>
     <tr>
       <td>[OFC] support_packet_filter_on_ofc_router = True</td>
@@ -189,8 +177,16 @@
       <td>(ListOpt) Bridge mappings.</td>
     </tr>
     <tr>
+      <td>[OVSVAPP] dont_fragment = True</td>
+      <td>(IntOpt) Do not fragment.</td>
+    </tr>
+    <tr>
       <td>[OVSVAPP] integration_bridge = br-int</td>
       <td>(StrOpt) Integration Bridge.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] local_ip = </td>
+      <td>(StrOpt) Local IP address of VXLAN tunnel endpoint.</td>
     </tr>
     <tr>
       <td>[OVSVAPP] network_manager = networking_vsphere.drivers.manager.VcenterManager</td>
@@ -206,11 +202,23 @@
     </tr>
     <tr>
       <td>[OVSVAPP] tenant_network_type = vlan</td>
-      <td>(StrOpt) Network type for tenant networks - vlan.</td>
+      <td>(StrOpt) Network type for tenant networks</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] tunnel_bridge = br-tun</td>
+      <td>(StrOpt) Tunnel Bridge for tunneling.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] tunnel_types = vxlan</td>
+      <td>(ListOpt) Tunnel network types supported by the OVSvApp Agent.</td>
     </tr>
     <tr>
       <td>[OVSVAPP] veth_mtu = 1500</td>
       <td>(IntOpt) MTU size of veth interfaces.</td>
+    </tr>
+    <tr>
+      <td>[OVSVAPP] vxlan_udp_port = 4789</td>
+      <td>(IntOpt) The UDP port to use for VXLAN tunnels.</td>
     </tr>
     <tr>
       <td>[SECURITYGROUP] defer_apply = True</td>
@@ -473,6 +481,106 @@
       <td>(IntOpt) Timeout value for http requests</td>
     </tr>
     <tr>
+      <td>[nsx_v3] default_edge_cluster_uuid = None</td>
+      <td>(StrOpt) Default edge cluster identifier</td>
+    </tr>
+    <tr>
+      <td>[nsxv] backup_edge_pool = service:large:4:10, service:compact:4:10, vdr:large:4:10</td>
+      <td>(ListOpt) Defines edge pool using the format: &lt;edge_type&gt;:[edge_size]:&lt;min_edges&gt;:&lt;max_edges&gt;.edge_type: service,vdr. edge_size: compact, large, xlarge, quadlarge and default is large.</td>
+    </tr>
+    <tr>
+      <td>[nsxv] cluster_moid = </td>
+      <td>(ListOpt) Parameter listing the IDs of the clusters which are used by OpenStack.</td>
+    </tr>
+    <tr>
+      <td>[nsxv] datacenter_moid = None</td>
+      <td>(StrOpt) Optional parameter identifying the ID of datacenter to deploy NSX Edges</td>
+    </tr>
+    <tr>
+      <td>[nsxv] datastore_id = None</td>
+      <td>(StrOpt) Optional parameter identifying the ID of datastore to deploy NSX Edges</td>
+    </tr>
+    <tr>
+      <td>[nsxv] deployment_container_id = None</td>
+      <td>(StrOpt) Optional parameter identifying the ID of datastore to deploy NSX Edges</td>
+    </tr>
+    <tr>
+      <td>[nsxv] dvs_id = None</td>
+      <td>(StrOpt) DVS ID for VLANs</td>
+    </tr>
+    <tr>
+      <td>[nsxv] external_network = None</td>
+      <td>(StrOpt) Network ID for physical network connectivity</td>
+    </tr>
+    <tr>
+      <td>[nsxv] manager_uri = None</td>
+      <td>(StrOpt) uri for vsm</td>
+    </tr>
+    <tr>
+      <td>[nsxv] maximum_tunnels_per_vnic = 20</td>
+      <td>(IntOpt) Maximum number of sub interfaces supported per vnic in edge. The value should be in 1-110.</td>
+    </tr>
+    <tr>
+      <td>[nsxv] metadata_shared_secret = None</td>
+      <td>(StrOpt) Shared secret to sign metadata requests</td>
+    </tr>
+    <tr>
+      <td>[nsxv] mgt_net_default_gateway = None</td>
+      <td>(StrOpt) Management network default gateway for metadata proxy</td>
+    </tr>
+    <tr>
+      <td>[nsxv] mgt_net_moid = None</td>
+      <td>(StrOpt) Network ID for management network connectivity</td>
+    </tr>
+    <tr>
+      <td>[nsxv] mgt_net_proxy_ips = None</td>
+      <td>(ListOpt) Management network IP address for metadata proxy</td>
+    </tr>
+    <tr>
+      <td>[nsxv] mgt_net_proxy_netmask = None</td>
+      <td>(StrOpt) Management network netmask for metadata proxy</td>
+    </tr>
+    <tr>
+      <td>[nsxv] nova_metadata_ips = None</td>
+      <td>(ListOpt) IP addresses used by Nova metadata service</td>
+    </tr>
+    <tr>
+      <td>[nsxv] nova_metadata_port = 8775</td>
+      <td>(IntOpt) TCP Port used by Nova metadata server</td>
+    </tr>
+    <tr>
+      <td>[nsxv] password = default</td>
+      <td>(StrOpt) Password for vsm</td>
+    </tr>
+    <tr>
+      <td>[nsxv] resource_pool_id = None</td>
+      <td>(StrOpt) Optional parameter identifying the ID of resource to deploy NSX Edges</td>
+    </tr>
+    <tr>
+      <td>[nsxv] retries = 10</td>
+      <td>(IntOpt) Maximum number of API retries on endpoint.</td>
+    </tr>
+    <tr>
+      <td>[nsxv] spoofguard_enabled = True</td>
+      <td>(BoolOpt) If True then plugin will use NSXV spoofguard component for port-security feature.</td>
+    </tr>
+    <tr>
+      <td>[nsxv] task_status_check_interval = 2000</td>
+      <td>(IntOpt) Task status check interval</td>
+    </tr>
+    <tr>
+      <td>[nsxv] tenant_router_types = shared, distributed, exclusive</td>
+      <td>(ListOpt) Ordered list of router_types to allocate as tenant routers.</td>
+    </tr>
+    <tr>
+      <td>[nsxv] user = admin</td>
+      <td>(StrOpt) User name for vsm</td>
+    </tr>
+    <tr>
+      <td>[nsxv] vdn_scope_id = None</td>
+      <td>(StrOpt) Network scope ID for VXLAN virtual wires</td>
+    </tr>
+    <tr>
       <td>[oslo_concurrency] disable_process_locking = False</td>
       <td>(BoolOpt) Enables or disables inter-process locks.</td>
     </tr>
@@ -673,28 +781,8 @@
       <td>(IntOpt) Size of RPC connection pool.</td>
     </tr>
     <tr>
-      <td>[ovsdb] l2_gw_agent_ca_cert_base_path = None</td>
-      <td>(StrOpt) Trusted issuer CA cert</td>
-    </tr>
-    <tr>
-      <td>[ovsdb] l2_gw_agent_cert_base_path = None</td>
-      <td>(StrOpt) L2 gateway agent public certificate</td>
-    </tr>
-    <tr>
-      <td>[ovsdb] l2_gw_agent_priv_key_base_path = None</td>
-      <td>(StrOpt) L2 gateway agent private key</td>
-    </tr>
-    <tr>
-      <td>[ovsdb] max_connection_retries = 10</td>
-      <td>(IntOpt) Maximum number of retries to open a socket with the OVSDB server</td>
-    </tr>
-    <tr>
-      <td>[ovsdb] ovsdb_hosts = host1:127.0.0.1:6632</td>
-      <td>(StrOpt) OVSDB server name:host/IP:port</td>
-    </tr>
-    <tr>
-      <td>[ovsdb] periodic_interval = 20</td>
-      <td>(IntOpt) Seconds between periodic task runs</td>
+      <td>[oslo_middleware] max_request_body_size = 114688</td>
+      <td>(IntOpt) The maximum body size for each  request, in bytes.</td>
     </tr>
   </table>
   <table>
@@ -709,11 +797,6 @@
         <td>New default value</td>
       </tr>
     </thead>
-    <tr>
-      <td>[DEFAULT] default_interface_name</td>
-      <td>breth0</td>
-      <td>FortyGigE1/0/1</td>
-    </tr>
     <tr>
       <td>[DEFAULT] default_log_levels</td>
       <td>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN</td>
@@ -796,8 +879,24 @@
       </tr>
     </thead>
     <tr>
+      <td>[DEFAULT] use-syslog</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] use_syslog</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] max_request_body_size</td>
+      <td>[oslo_middleware] max_request_body_size</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] nova_api_insecure</td>
       <td>[nova] insecure</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] log-format</td>
+      <td>None</td>
     </tr>
     <tr>
       <td>[DEFAULT] nova_ca_certificates_file</td>
@@ -806,6 +905,10 @@
     <tr>
       <td>[DEFAULT] nova_region_name</td>
       <td>[nova] region_name</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] log_format</td>
+      <td>None</td>
     </tr>
   </table>
 </section>
