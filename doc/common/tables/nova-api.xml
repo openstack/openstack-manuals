@@ -26,6 +26,10 @@
         <td>(BoolOpt) Whether to use per-user rate limiting for the api. This option is only used by v2 api. Rate limiting is removed from v3 api.</td>
       </tr>
       <tr>
+        <td>client_socket_timeout = 0</td>
+        <td>(IntOpt) Timeout for client connections' socket operations. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.</td>
+      </tr>
+      <tr>
         <td>enable_new_services = True</td>
         <td>(BoolOpt) Services to be added to the available pool on create</td>
       </tr>
@@ -104,6 +108,10 @@
       <tr>
         <td>wsgi_default_pool_size = 1000</td>
         <td>(IntOpt) Size of the pool of greenthreads used by wsgi</td>
+      </tr>
+      <tr>
+        <td>wsgi_keep_alive = True</td>
+        <td>(BoolOpt) If False, closes the client socket connection explicitly.</td>
       </tr>
       <tr>
         <td>wsgi_log_format = %(client_ip)s "%(request_line)s" status: %(status_code)s len: %(body_length)s time: %(wall_seconds).7f</td>
