@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Block Storage API and its extensions.
 
        This chapter documents <command>cinder</command> version
-        <literal>1.2.0</literal>.
+        <literal>1.2.1</literal>.
     </para>
 
     <para>For help on a specific <command>cinder</command>
@@ -1278,7 +1278,7 @@ Attempts force-delete of volume, regardless of state.
         <screen><computeroutput>usage: cinder list [--all-tenants [&lt;0|1&gt;]] [--display-name &lt;display-name&gt;]
                    [--status &lt;status&gt;]
                    [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
-                   [--tenant [&lt;tenant&gt;]]</computeroutput></screen>
+                   [--tenant [&lt;tenant&gt;]] [--limit &lt;limit&gt;]</computeroutput></screen>
         <para>
 Lists all volumes.
         </para>  <variablelist wordsize="10">
@@ -1321,6 +1321,15 @@ Lists all volumes.
     <listitem>
       <para>
         Display information from single tenant (Admin only).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of volumes to return. OPTIONAL:
+      Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -2627,7 +2636,7 @@ Lists all availability zones.
     <section xml:id="cinderclient_subcommand_backup-create_v2">
         <title>cinder backup-create (v2)</title>
         <screen><computeroutput>usage: cinder --os-volume-api-version 2 backup-create [--container &lt;container&gt;] [--name &lt;name&gt;]
-                            [--description &lt;description&gt;]
+                            [--description &lt;description&gt;] [--incremental]
                             &lt;volume&gt;</computeroutput></screen>
         <para>
 Creates a volume backup.
@@ -2665,6 +2674,14 @@ Creates a volume backup.
     <listitem>
       <para>
       Backup description. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--incremental</command></term>
+    <listitem>
+      <para>
+        Incremental backup. Default=False.
       </para>
     </listitem>
   </varlistentry>
@@ -2933,6 +2950,41 @@ Creates a consistency group.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="cinderclient_subcommand_consisgroup-create-from-src_v2">
+        <title>cinder consisgroup-create-from-src (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 consisgroup-create-from-src [--cgsnapshot &lt;cgsnapshot&gt;]
+                                          [--name &lt;name&gt;]
+                                          [--description &lt;description&gt;]</computeroutput></screen>
+        <para>
+Creates a consistency group from a cgsnapshot.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--cgsnapshot &lt;cgsnapshot&gt;</command></term>
+    <listitem>
+      <para>
+      Name or ID of a cgsnapshot. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Name of a consistency group. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+      Description of a consistency group. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="cinderclient_subcommand_consisgroup-delete_v2">
         <title>cinder consisgroup-delete (v2)</title>
         <screen><computeroutput>usage: cinder --os-volume-api-version 2 consisgroup-delete [--force]
@@ -2995,6 +3047,63 @@ Shows details of a consistency group.
     <listitem>
       <para>
         Name or ID of a consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_consisgroup-update_v2">
+        <title>cinder consisgroup-update (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 consisgroup-update [--name &lt;name&gt;] [--description &lt;description&gt;]
+                                 [--add-volumes &lt;uuid1,uuid2,......&gt;]
+                                 [--remove-volumes &lt;uuid3,uuid4,......&gt;]
+                                 &lt;consistencygroup&gt;</computeroutput></screen>
+        <para>
+Updates a consistencygroup.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;consistencygroup&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of a consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        New name for consistency group. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+      New description for consistency group. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--add-volumes &lt;uuid1,uuid2,......&gt;</command></term>
+    <listitem>
+      <para>
+      UUID of one or more volumes to be added to the
+      consistency group, separated by commas. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--remove-volumes &lt;uuid3,uuid4,......&gt;</command></term>
+    <listitem>
+      <para>
+      UUID of one or more volumes to be removed from the
+      consistency group, separated by commas. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -3350,7 +3459,7 @@ Lists all volumes.
     <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-        Filters results by a name. OPTIONAL: Default=None.
+        Filters results by a name. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -3358,7 +3467,7 @@ Lists all volumes.
     <term><command>--status &lt;status&gt;</command></term>
     <listitem>
       <para>
-        Filters results by a status. OPTIONAL: Default=None.
+        Filters results by a status. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -3367,7 +3476,7 @@ Lists all volumes.
     <listitem>
       <para>
       Filters results by a metadata key and value pair.
-      OPTIONAL: Default=None.
+      Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -3377,7 +3486,7 @@ Lists all volumes.
       <para>
         Begin returning volumes that appear later in the
       volume list than that represented by this volume id.
-      OPTIONAL: Default=None.
+      Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -3385,8 +3494,7 @@ Lists all volumes.
     <term><command>--limit &lt;limit&gt;</command></term>
     <listitem>
       <para>
-        Maximum number of volumes to return. OPTIONAL:
-      Default=None.
+        Maximum number of volumes to return. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -3397,7 +3505,7 @@ Lists all volumes.
       Comma-separated list of sort keys and directions in
       the form of &lt;key&gt;[:&lt;asc|desc&gt;]. Valid keys: id,
       status, size, availability_zone, name, bootable,
-      created_at. OPTIONAL: Default=None.
+      created_at. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -3588,7 +3696,7 @@ Updates volume metadata.
     </section>
     <section xml:id="cinderclient_subcommand_migrate_v2">
         <title>cinder migrate (v2)</title>
-        <screen><computeroutput>usage: cinder --os-volume-api-version 2 migrate [--force-host-copy &lt;True|False&gt;] &lt;volume&gt; &lt;host&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 migrate [--force-host-copy [&lt;True|False&gt;]] &lt;volume&gt; &lt;host&gt;</computeroutput></screen>
         <para>
 Migrates volume to a new host.
         </para>  <variablelist wordsize="10">
@@ -3613,7 +3721,7 @@ Migrates volume to a new host.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--force-host-copy &lt;True|False&gt;</command></term>
+    <term><command>--force-host-copy [&lt;True|False&gt;]</command></term>
     <listitem>
       <para>
       Enables or disables generic host-based force-
@@ -3677,7 +3785,7 @@ Creates a qos specs.
     </section>
     <section xml:id="cinderclient_subcommand_qos-delete_v2">
         <title>cinder qos-delete (v2)</title>
-        <screen><computeroutput>usage: cinder --os-volume-api-version 2 qos-delete [--force &lt;True|False&gt;] &lt;qos_specs&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 qos-delete [--force [&lt;True|False&gt;]] &lt;qos_specs&gt;</computeroutput></screen>
         <para>
 Deletes a specified qos specs.
         </para>  <variablelist wordsize="10">
@@ -3694,10 +3802,10 @@ Deletes a specified qos specs.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--force &lt;True|False&gt;</command></term>
+    <term><command>--force [&lt;True|False&gt;]</command></term>
     <listitem>
       <para>
-        Enables or disables deletion of in-use QoS
+      Enables or disables deletion of in-use QoS
       specifications. Default=False.
       </para>
     </listitem>
@@ -4352,7 +4460,7 @@ Shows volume details.
     </section>
     <section xml:id="cinderclient_subcommand_snapshot-create_v2">
         <title>cinder snapshot-create (v2)</title>
-        <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-create [--force &lt;True|False&gt;] [--name &lt;name&gt;]
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-create [--force [&lt;True|False&gt;]] [--name &lt;name&gt;]
                               [--description &lt;description&gt;]
                               [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
                               &lt;volume&gt;</computeroutput></screen>
@@ -4372,10 +4480,10 @@ Creates a snapshot.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--force &lt;True|False&gt;</command></term>
+    <term><command>--force [&lt;True|False&gt;]</command></term>
     <listitem>
       <para>
-        Allows or disallows snapshot of a volume when the
+      Allows or disallows snapshot of a volume when the
       volume is attached to an instance. If set to True,
       ignores the current status of the volume when
       attempting to snapshot it rather than forcing it to be
@@ -4977,7 +5085,7 @@ Stop managing a volume.
     </section>
     <section xml:id="cinderclient_subcommand_upload-to-image_v2">
         <title>cinder upload-to-image (v2)</title>
-        <screen><computeroutput>usage: cinder --os-volume-api-version 2 upload-to-image [--force &lt;True|False&gt;]
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 upload-to-image [--force [&lt;True|False&gt;]]
                               [--container-format &lt;container-format&gt;]
                               [--disk-format &lt;disk-format&gt;]
                               &lt;volume&gt; &lt;image-name&gt;</computeroutput></screen>
@@ -5005,10 +5113,10 @@ Uploads volume to Image Service as an image.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--force &lt;True|False&gt;</command></term>
+    <term><command>--force [&lt;True|False&gt;]</command></term>
     <listitem>
       <para>
-        Enables or disables upload of a volume that is
+      Enables or disables upload of a volume that is
       attached to an instance. Default=False.
       </para>
     </listitem>
