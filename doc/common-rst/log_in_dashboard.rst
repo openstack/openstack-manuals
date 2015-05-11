@@ -63,7 +63,7 @@ From the :guilabel:`Project` tab, you can view and manage the resources in a
 selected project, including instances and images. You select the project
 from the CURRENT PROJECT list at the top of the tab.
 
-   .. figure:: ../figures/dashboard-project-tab.png
+   .. figure:: figures/dashboard-project-tab.png
 
     **Figure: Project tab**
 
@@ -138,7 +138,7 @@ manage instances, volumes, flavors, images, projects, users, services, and
 quotas.
 
 
-    .. figure:: ../figures/dashboard_admin_project_tab.png
+    .. figure:: figures/dashboard_admin_project_tab.png
 
     **Figure: Admin tab**
 
