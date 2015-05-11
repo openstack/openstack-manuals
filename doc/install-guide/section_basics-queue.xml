@@ -47,29 +47,6 @@
   </procedure>
   <procedure>
     <title>To configure the message queue service</title>
-    <step os="sles;opensuse"><para>Configure access to epmd on the controller IP:</para>
-    <screen><prompt>#</prompt> <userinput>cp /usr/lib/systemd/system/epmd.socket /etc/systemd/system/</userinput></screen>
-
-    <para>Edit <filename>/etc/systemd/system/epmd.socket</filename>
-    and add a second <code>ListenStream</code> line:</para>
-    <programlisting>ListenStream=10.0.0.11:4369</programlisting>
-    <para>Reload systemd files:</para>
-    <screen><prompt>#</prompt> <userinput>systemctl daemon-reload</userinput></screen>
-      <note>
-        <para>
-          This is discussed in <link
-          xlink:href="https://bugzilla.opensuse.org/show_bug.cgi?id=927301">openSUSE
-          bug#927301</link>.
-        </para>
-        <para>The epmd.socket service should be listening on the controller
-            management interface. Restart the service if required.
-        </para>
-        <para>
-            <screen><prompt>#</prompt> <userinput>systemctl status epmd.socket</userinput>
-<prompt>#</prompt> <userinput>systemctl restart epmd.socket</userinput></screen>
-        </para>
-      </note>
-    </step>
     <step os="rhel;centos;fedora;sles;opensuse">
       <para>Start the message queue service and configure it to start when the
           system boots:</para>
