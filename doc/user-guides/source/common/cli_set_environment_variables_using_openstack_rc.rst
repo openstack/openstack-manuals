@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 =====================================================
 Set environment variables using the OpenStack RC file
 =====================================================
