@@ -1,6 +1,3 @@
-.. meta::
-   :scope: admin_only
-
 ========================
 Launch and manage stacks
 ========================

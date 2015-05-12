@@ -1,6 +1,3 @@
-.. meta::
-    :scope: admin_only
-
 =================================
 Create and manage host aggregates
 =================================

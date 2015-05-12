@@ -1,6 +1,3 @@
-.. meta::
-   :scope: admin_only
-
 =========================================
 Select hosts where instances are launched
 =========================================

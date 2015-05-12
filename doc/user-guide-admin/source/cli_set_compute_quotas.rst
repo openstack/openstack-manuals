@@ -1,6 +1,3 @@
-.. meta::
-   :scope: admin_only
-
 =============================
 Manage Compute service quotas
 =============================

@@ -1,6 +1,3 @@
-.. meta:
-    :scope: admin_only
-
 ========================================
 How can I administer an OpenStack cloud?
 ========================================

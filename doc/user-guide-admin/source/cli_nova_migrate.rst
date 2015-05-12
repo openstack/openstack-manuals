@@ -1,6 +1,3 @@
-.. meta::
-   :scope: admin_only
-
 .. highlight: bash
    :linenothreshold: 5
 
