@@ -1,16 +1,8 @@
 #!/bin/sh -e
 
-echo "Generating Glossary"
-echo "==================="
-tools/glossary2rst.py doc/user-guides/source/glossary.rst
-echo "Done."
-echo ""
-echo "Building End User Guide"
-echo "======================="
-sphinx-build -t user_only -E -W doc/user-guides/source/ doc/user-guides/build/html
-echo "Building Admin User Guide"
-echo "========================="
-sphinx-build -t admin_only -E -W doc/user-guides/source/ doc/user-guides/build-admin/html
+tools/build-rst.sh doc/user-guides --glossary --tag user_only --build build
+# No need to build the glossary again here.
+tools/build-rst.sh doc/user-guides --tag admin_only --build build-admin
 
 # Cleanup: Rename index-html to index everywhere
 mv doc/user-guides/build-admin/html/index-admin.html doc/user-guides/build-admin/html/index.html
