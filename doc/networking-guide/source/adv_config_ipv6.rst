@@ -468,6 +468,17 @@ To enable prefix delegation, edit the :file:`etc/neutron.conf` file::
 
     default_ipv6_subnet_pool = prefix_delegation
 
+.. Note::
+
+    If you are not using the default dibbler-based driver for prefix
+    delegation, then you also need to set the driver in
+    :file:`etc/neutron.conf`::
+
+      pd_dhcp_driver = <class path to driver>
+
+    Drivers other than the default one may require extra configuration,
+    please refer to :ref:`extra-driver-conf`
+
 This tells OpenStack Networking to use the prefix delegation mechanism for
 subnet allocation when the user does not provide a CIDR or subnet pool id when
 creating a subnet.
@@ -662,3 +673,10 @@ References
 
 The following link provides a great step by step tutorial on setting up IPv6
 with OpenStack: http://www.debug-all.com/?p=52
+
+.. _extra-driver-conf:
+
+Extra configuration
+-------------------
+
+None
