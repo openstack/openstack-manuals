@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 ==========================================
 Install the OpenStack command-line clients
 ==========================================
