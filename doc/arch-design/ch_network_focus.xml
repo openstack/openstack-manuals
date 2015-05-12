@@ -5,167 +5,141 @@
   version="5.0"
   xml:id="network_focus">
     <title>Network focused</title>
-
-    <para>All OpenStack deployments are dependent, to some extent, on
-        network communication in order to function properly due to a
-        service-based nature. In some cases, however, use cases
-        dictate that the network is elevated beyond simple
-        infrastructure. This chapter is a discussion of architectures
-        that are more reliant or focused on network services. These
-        architectures are heavily dependent on the network
-        infrastructure and need to be architected so that the network
-        services perform and are reliable in order to satisfy user and
-        application requirements.</para>
+    <para>All OpenStack deployments depend on network communication in order
+    to function properly due to its service-based nature. In some cases,
+    however, the network elevates beyond simple
+    infrastructure. This chapter discusses architectures that are more
+    reliant or focused on network services. These architectures depend
+    on the network infrastructure and require
+    network services that perform reliably in order to satisfy user and
+    application requirements.</para>
     <para>Some possible use cases include:</para>
     <variablelist>
       <varlistentry>
         <term>Content delivery network</term>
         <listitem>
-            <para>This could include
-                streaming video, photographs or any other cloud based
-                repository of data that is distributed to a large
-                number of end users. Mass market streaming video will
-                be very heavily affected by the network configurations
-                that would affect latency, bandwidth, and the
-                distribution of instances. Not all video streaming is
-                consumer focused. For example, multicast videos (used
-                for media, press conferences, corporate presentations,
-                web conferencing services, and so on) can also utilize a
-                content delivery network. Content delivery will be
-                affected by the location of the video repository and
-                its relationship to end users. Performance is also
-                affected by network throughput of the back-end systems,
-                as well as the WAN architecture and the cache
-                methodology.</para>
+            <para>This includes streaming video, viewing photographs, or
+            accessing any other cloud-based data repository distributed to
+            a large number of end users. Network configuration affects
+            latency, bandwidth, and the distribution of instances. Therefore,
+            it impacts video streaming. Not all video streaming is
+            consumer-focused. For example, multicast videos (used for media,
+            press conferences, corporate presentations, and web conferencing
+            services) can also use a content delivery network.
+            The location of the video repository and its relationship to end
+            users affects content delivery. Network throughput of the back-end
+            systems, as well as the WAN architecture and the cache methodology,
+            also affect performance.</para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>Network management functions</term>
         <listitem>
-            <para>A cloud that provides
-                network service functions would be built to support
-                the delivery of back-end network services such as DNS,
-                NTP or SNMP and would be used by a company for
-                internal network management.</para>
+            <para>Use this cloud to provide network service functions built to
+            support the delivery of back-end network services such as DNS,
+            NTP, or SNMP. A company can use these services for internal
+            network management.</para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>Network service offerings</term>
         <listitem>
-            <para>A cloud can be used to
-                run customer facing network tools to support services.
-                For example, VPNs, MPLS private networks, GRE tunnels
-                and others.</para>
+            <para>Use this cloud to run customer-facing network tools to
+            support services. Examples include VPNs, MPLS private networks,
+            and GRE tunnels.</para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>Web portals or web services</term>
         <listitem>
-            <para>Web servers are a common
-                application for cloud services and we recommend
-                 an understanding of the network requirements.
-                The network will need to be able to scale out to meet
-                user demand and deliver webpages with a minimum of
-                latency. Internal east-west and north-south network
-                bandwidth must be considered depending on the details
-                of the portal architecture.</para>
+            <para>Web servers are a common application for cloud services,
+            and we recommend an understanding of their network requirements.
+            The network requires scaling out to meet user demand and deliver
+            web pages with a minimum latency. Depending on the details of
+            the portal architecture, consider the internal east-west and
+            north-south network bandwidth.</para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>High speed and high volume transactional systems</term>
         <listitem>
             <para>
-                These types of applications are very sensitive to
-                network configurations. Examples include many
-                financial systems, credit card transaction
-                applications, trading and other extremely high volume
-                systems. These systems are sensitive to network jitter
-                and latency. They also have a high volume of both
-                east-west and north-south network traffic that needs
-                to be balanced to maximize efficiency of the data
-                delivery. Many of these systems have large high
-                performance database back ends that need to be
-                accessed.</para>
+                These types of applications are sensitive to network
+                configurations. Examples include financial systems,
+                credit card transaction applications, and trading and other
+                extremely high volume systems. These systems are sensitive
+                to network jitter and latency. They must balance a high volume
+                of East-West and North-South network traffic to
+                maximize efficiency of the data delivery.
+                Many of these systems must access large, high performance
+                database back ends.</para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>High availability</term>
         <listitem>
-            <para>These types of use cases are
-                highly dependent on the proper sizing of the network
-                to maintain replication of data between sites for high
-                availability. If one site becomes unavailable, the
-                extra sites will be able to serve the displaced load
-                until the original site returns to service. It is
-                important to size network capacity to handle the loads
-                that are desired.</para>
+            <para>These types of use cases are dependent on the proper sizing
+            of the network to maintain replication of data between sites for
+            high availability. If one site becomes unavailable, the extra
+            sites can serve the displaced load until the original site
+            returns to service. It is important to size network capacity
+            to handle the desired loads.</para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>Big data</term>
         <listitem>
-            <para>Clouds that will be used for the
-                management and collection of big data (data ingest)
-                will have a significant demand on network resources.
-                Big data often uses partial replicas of the data to
-                maintain data integrity over large distributed clouds.
-                Other big data applications that require a large
-                amount of network resources are Hadoop, Cassandra,
-                NuoDB, RIAK and other No-SQL and distributed
-                databases.</para>
+            <para>Clouds used for the management and collection of big data
+            (data ingest) have a significant demand on network resources.
+            Big data often uses partial replicas of the data to maintain
+            integrity over large distributed clouds. Other big data
+            applications that require a large amount of network resources
+            are Hadoop, Cassandra, NuoDB, Riak, and other NoSQL and
+            distributed databases.</para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>Virtual desktop infrastructure (VDI)</term>
         <listitem>
-            <para>This use case
-                is very sensitive to network congestion, latency,
-                jitter and other network characteristics. Like video
-                streaming, the user experience is very important
-                however, unlike video streaming, caching is not an
-                option to offset the network issues. VDI requires both
-                upstream and downstream traffic and cannot rely on
-                caching for the delivery of the application to the end
-                user.</para>
+            <para>This use case is sensitive to network congestion, latency,
+            jitter, and other network characteristics. Like video streaming,
+            the user experience is important. However, unlike video
+            streaming, caching is not an option to offset the network issues.
+            VDI requires both upstream and downstream traffic and cannot rely
+            on caching for the delivery of the application to the end user.</para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>Voice over IP (VoIP)</term>
         <listitem>
-            <para>This is extremely sensitive to
-                network congestion, latency, jitter and other network
-                characteristics. VoIP has a symmetrical traffic
-                pattern and it requires network quality of service
-                (QoS) for best performance. It may also require an
-                active queue management implementation to ensure
-                delivery. Users are very sensitive to latency and
-                jitter fluctuations and can detect them at very low
-                levels.</para>
+            <para>This is sensitive to network congestion, latency, jitter,
+            and other network characteristics. VoIP has a symmetrical traffic
+            pattern and it requires network quality of service (QoS) for best
+            performance. In addition, you can implement active queue management
+            to deliver voice and multimedia content. Users are sensitive to
+            latency and jitter fluctuations and can detect them at very low
+            levels.</para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>Video Conference or web conference</term>
         <listitem>
-            <para>This also is
-                extremely sensitive to network congestion, latency,
-                jitter and other network flaws. Video Conferencing has
-                a symmetrical traffic pattern, but unless the network
-                is on an MPLS private network, it cannot use network
-                quality of service (QoS) to improve performance.
-                Similar to VOIP, users will be sensitive to network
-                performance issues even at low levels.</para>
+            <para>This is sensitive to network congestion, latency, jitter,
+            and other network characteristics. Video Conferencing has a
+            symmetrical traffic pattern, but unless the network is on an
+            MPLS private network, it cannot use network quality of service
+            (QoS) to improve performance. Similar to VoIP, users are
+            sensitive to network performance issues even at low levels.</para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>High performance computing (HPC)</term>
         <listitem>
-            <para>This is a complex
-                use case that requires careful consideration of the
-                traffic flows and usage patterns to address the needs
-                of cloud clusters. It has high East-West traffic
-                patterns for distributed computing, but there can be
-                substantial North-South traffic depending on the
-                specific application.</para>
+            <para>This is a complex use case that requires careful
+            consideration of the traffic flows and usage patterns to address
+            the needs of cloud clusters. It has high east-west traffic
+            patterns for distributed computing, but there can be substantial
+            north-south traffic depending on the specific application.</para>
         </listitem>
       </varlistentry>
     </variablelist>
