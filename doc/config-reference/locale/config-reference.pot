@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-05-09 06:08+0000\n"
+"POT-Creation-Date: 2015-05-12 06:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2600,7 +2600,7 @@ msgstr ""
 msgid "openstack-cinder-volume"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_cinder-log-files.xml:72(systemitem) ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:179(systemitem)
+#: ./doc/config-reference/block-storage/section_cinder-log-files.xml:72(systemitem)
 msgid "cinder-volume"
 msgstr ""
 
@@ -3772,7 +3772,7 @@ msgstr ""
 msgid "Platform: Ubuntu 12.04 LTS or newer."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:53(title) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:50(title) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:85(title) ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:134(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:35(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:257(td) ./doc/config-reference/compute/section_hypervisor_vmware.xml:323(td)
+#: ./doc/config-reference/block-storage/drivers/hds-hus-driver.xml:53(title) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:50(title) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:85(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:35(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:257(td) ./doc/config-reference/compute/section_hypervisor_vmware.xml:323(td)
 msgid "Configuration"
 msgstr ""
 
@@ -6776,138 +6776,6 @@ msgstr ""
 msgid "Use the following options to configure for the iSER transport:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:4(title)
-msgid "XenAPI Storage Manager volume driver"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:5(para)
-msgid "The Xen Storage Manager volume driver (xensm) is a XenAPI hypervisor specific volume driver, and can be used to provide basic storage functionality, including volume creation and destruction, on a number of different storage back-ends. It also enables the capability of using more sophisticated storage back-ends for operations like cloning/snapshots, and so on. Some of the storage plug-ins that are already supported in Citrix XenServer and Xen Cloud Platform (XCP) are:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:15(para)
-msgid "NFS VHD: Storage repository (SR) plug-in that stores disks as Virtual Hard Disk (VHD) files on a remote Network File System (NFS)."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:20(para)
-msgid "Local VHD on LVM: SR plug-in that represents disks as VHD disks on Logical Volumes (LVM) within a locally-attached Volume Group."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:25(para)
-msgid "HBA LUN-per-VDI driver: SR plug-in that represents Logical Units (LUs) as Virtual Disk Images (VDIs) sourced by host bus adapters (HBAs). For example, hardware-based iSCSI or FC support."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:31(para)
-msgid "NetApp: SR driver for mapping of LUNs to VDIs on a NETAPP server, providing use of fast snapshot and clone features on the filer."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:36(para)
-msgid "LVHD over FC: SR plug-in that represents disks as VHDs on Logical Volumes within a Volume Group created on an HBA LUN. For example, hardware-based iSCSI or FC support."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:42(para)
-msgid "iSCSI: Base ISCSI SR driver, provides a LUN-per-VDI. Does not support creation of VDIs but accesses existing LUNs on a target."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:47(para)
-msgid "LVHD over iSCSI: SR plug-in that represents disks as Logical Volumes within a Volume Group created on an iSCSI LUN."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:52(para)
-msgid "EqualLogic: SR driver for mapping of LUNs to VDIs on a EQUALLOGIC array group, providing use of fast snapshot and clone features on the array."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:58(title)
-msgid "Design and operation"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:60(title)
-msgid "Definitions"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:63(para)
-msgid "<emphasis role=\"bold\">Back-end:</emphasis> A term for a particular storage back-end. This could be iSCSI, NFS, NetApp, and so on."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:68(para)
-msgid "<emphasis role=\"bold\">Back-end-config:</emphasis> All the parameters required to connect to a specific back-end. For example, for NFS, this would be the server, path, and so on."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:75(para)
-msgid "<emphasis role=\"bold\">Flavor:</emphasis> This term is equivalent to volume \"types\". A user friendly term to specify some notion of quality of service. For example, \"gold\" might mean that the volumes use a back-end where backups are possible. A flavor can be associated with multiple back-ends. The volume scheduler, with the help of the driver, decides which back-end is used to create a volume of a particular flavor. Currently, the driver uses a simple \"first-fit\" policy, where the first back-end that can successfully create this volume is the one that is used."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:93(title)
-msgid "Operation"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:94(para)
-msgid "The admin uses the nova-manage command detailed below to add flavors and back-ends."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:96(para)
-msgid "One or more <systemitem class=\"service\">cinder-volume</systemitem> service instances are deployed for each availability zone. When an instance is started, it creates storage repositories (SRs) to connect to the back-ends available within that zone. All <systemitem class=\"service\">cinder-volume</systemitem> instances within a zone can see all the available back-ends. These instances are completely symmetric and hence should be able to service any <literal>create_volume</literal> request within the zone."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:108(title)
-msgid "On XenServer, PV guests required"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:109(para)
-msgid "Note that when using XenServer you can only attach a volume to a PV guest."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:115(title)
-msgid "Configure XenAPI Storage Manager"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:117(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:335(title)
-msgid "Prerequisites"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:120(para)
-msgid "xensm requires that you use either Citrix XenServer or XCP as the hypervisor. The NetApp and EqualLogic back-ends are not supported on XCP."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:126(para)
-msgid "Ensure all <emphasis role=\"bold\">hosts</emphasis> running volume and Compute services have connectivity to the storage system."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:141(systemitem) ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:181(systemitem) ./doc/config-reference/compute/section_nova-log-files.xml:66(systemitem)
-msgid "nova-compute"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:138(emphasis)
-msgid "Set the following configuration options for the nova volume service: (<placeholder-1/> also requires the volume_driver configuration option.)"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:152(emphasis)
-msgid "You must create the back-end configurations that the volume driver uses before you start the volume service."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:161(para)
-msgid "SR type and configuration connection parameters are in keeping with the <link href=\"http://support.citrix.com/article/CTX124887\">XenAPI Command Line Interface</link>."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:168(para)
-msgid "Example: For the NFS storage manager plug-in, run these commands:"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:177(emphasis)
-msgid "Start <placeholder-1/> and <placeholder-2/> with the new configuration options."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:188(title)
-msgid "Create and access the volumes from VMs"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:189(para)
-msgid "Currently, the flavors have not been tied to the volume types API. As a result, we simply end up creating volumes in a \"first fit\" order on the given back-ends."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/xen-sm-driver.xml:193(para)
-msgid "Use the standard <placeholder-1/> or OpenStack API commands (such as volume extensions) to create, destroy, attach, or detach volumes."
-msgstr ""
-
 #: ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:4(title)
 msgid "X-IO volume driver"
 msgstr ""
@@ -7836,6 +7704,10 @@ msgstr ""
 msgid "In a vSphere OpenStack deployment, SPBM enables you to delegate several data stores for storage, which reduces the risk of running out of storage space. The policy logic selects the data store based on accessibility and available storage space."
 msgstr ""
 
+#: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:335(title)
+msgid "Prerequisites"
+msgstr ""
+
 #: ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:338(para)
 msgid "Determine the data stores to be used by the SPBM policy."
 msgstr ""
@@ -8282,6 +8154,10 @@ msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/smbfs-volume-driver.xml:7(para)
 msgid "There is a volume back-end for Samba filesystems. Set the following in your <filename>cinder.conf</filename>, and use the following options to configure it."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/smbfs-volume-driver.xml:11(para)
+msgid "The SambaFS driver requires <placeholder-1/> version 1.7 or higher on Linux nodes, and <placeholder-2/> version 1.6 or higher on Windows nodes."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/backup/tsm-backup-driver.xml:6(title)
@@ -10950,6 +10826,10 @@ msgstr ""
 
 #: ./doc/config-reference/compute/section_nova-log-files.xml:63(systemitem)
 msgid "openstack-nova-compute"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_nova-log-files.xml:66(systemitem)
+msgid "nova-compute"
 msgstr ""
 
 #: ./doc/config-reference/compute/section_nova-log-files.xml:71(filename)
