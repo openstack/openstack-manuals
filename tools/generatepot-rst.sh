@@ -26,8 +26,11 @@ fi
 OPTS=""
 # We need to build guides with all tags so that all strings get
 # extracted.
-if [ "$DOCNAME" = "user-guides" ] ; then
-    OPTS="-t user_only -t admin_only"
+if [ "$DOCNAME" = "user-guide" ] ; then
+    OPTS="-t user_only"
+fi
+if [ "$DOCNAME" = "user-guide-admin" ] ; then
+    OPTS="-t admin_only"
 fi
 
 # Build Glossary

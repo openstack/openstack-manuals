@@ -16,12 +16,12 @@ OpenStack dashboard
 
    common/log_in_dashboard.rst
 
-   adminuser/dashboard_manage_images.rst
-   adminuser/dashboard_admin_manage_roles.rst
-   adminuser/dashboard_manage_instances.rst
-   adminuser/dashboard_manage_flavors.rst
-   adminuser/dashboard_manage_volumes.rst
-   adminuser/dashboard_set_quotas
-   adminuser/dashboard_manage_resources.rst
-   adminuser/dashboard_manage_host_aggregates.rst
-   adminuser/dashboard_admin_manage_stacks.rst
+   dashboard_manage_images.rst
+   dashboard_admin_manage_roles.rst
+   dashboard_manage_instances.rst
+   dashboard_manage_flavors.rst
+   dashboard_manage_volumes.rst
+   dashboard_set_quotas
+   dashboard_manage_resources.rst
+   dashboard_manage_host_aggregates.rst
+   dashboard_admin_manage_stacks.rst
