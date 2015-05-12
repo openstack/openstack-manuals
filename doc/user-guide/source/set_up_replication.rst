@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 ===========================
 Set up database replication
 ===========================

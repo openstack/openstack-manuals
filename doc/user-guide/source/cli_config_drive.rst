@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 =======================================
 Store metadata on a configuration drive
 =======================================

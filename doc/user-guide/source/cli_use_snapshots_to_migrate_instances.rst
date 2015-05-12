@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 ==================================
 Use snapshots to migrate instances
 ==================================

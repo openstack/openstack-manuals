@@ -1,7 +1,3 @@
-.. meta::
-    :scope: user_only
-
-
 ===========================
 Launch and manage instances
 ===========================

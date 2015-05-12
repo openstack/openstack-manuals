@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 =============================
 Backup and restore a database
 =============================

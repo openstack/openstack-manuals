@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 ============================================
 OpenStack command-line interface cheat sheet
 ============================================

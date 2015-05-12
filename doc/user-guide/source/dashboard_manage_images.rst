@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 ========================
 Upload and manage images
 ========================

@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 =============================================
 Show usage statistics for hosts and instances
 =============================================

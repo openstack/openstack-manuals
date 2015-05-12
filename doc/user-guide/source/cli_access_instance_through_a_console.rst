@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 ====================================
 Access an instance through a console
 ====================================

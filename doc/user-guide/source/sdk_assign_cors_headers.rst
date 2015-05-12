@@ -1,8 +1,3 @@
-.. meta::
-    :scope: user_only
-
-:orphan:
-
 ===============================
 Assign CORS headers to requests
 ===============================

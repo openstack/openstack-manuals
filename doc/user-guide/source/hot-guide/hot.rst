@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 =========
 HOT Guide
 =========
@@ -16,3 +13,5 @@ HOT Guide
    hot_composition.rst
 
 .. hot_existing_templates.rst
+.. hot_advanced_topics.rst
+

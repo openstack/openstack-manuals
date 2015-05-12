@@ -1,8 +1,3 @@
-.. meta::
-    :scope: user_only
-
-:orphan:
-
 .. highlight: python
    :linenothreshold: 5
 

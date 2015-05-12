@@ -1,6 +1,3 @@
-.. meta:
-    :scope: user_only
-
 =================================
 How can I use an OpenStack cloud?
 =================================

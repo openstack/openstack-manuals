@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 ================================
 Launch an instance from a volume
 ================================

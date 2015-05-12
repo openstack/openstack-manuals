@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 ==============================
 Change the size of your server
 ==============================

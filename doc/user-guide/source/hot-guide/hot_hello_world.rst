@@ -1,6 +1,3 @@
-.. meta::
-    :scope: user_only
-
 .. highlight: yaml
    :linenothreshold: 5
 
