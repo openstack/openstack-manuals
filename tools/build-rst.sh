@@ -56,7 +56,7 @@ done
 
 if [ "$GLOSSARY" -eq "1" ] ; then
     echo "Generating Glossary"
-    tools/glossary2rst.py $DIRECTORY/source/glossary.rst
+    tools/glossary2rst.py doc/common-rst/glossary.rst
 fi
 
 if [ -z "BUILD" ] ; then

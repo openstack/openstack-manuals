@@ -31,7 +31,7 @@ if [ "$DOCNAME" = "user-guides" ] ; then
 fi
 
 # Build Glossary
-tools/glossary2rst.py > doc/user-guides/source/glossary.rst
+tools/glossary2rst.py doc/common-rst/glossary.rst
 # First remove the old pot file, otherwise the new file will contain
 # old references
 rm -f doc/$DOCNAME/source/locale/$DOCNAME.pot
