@@ -25,7 +25,7 @@ function copy_rst {
     mkdir -p $PROJECT_DIR/$target
     tools/glossary2rst.py $PROJECT_DIR/$target/glossary.rst
 
-    for filename in doc/user-guides/source/common/app_support.rst; do
+    for filename in doc/common-rst/app_support.rst; do
         cp $filename $PROJECT_DIR/$target
     done
     (cd $PROJECT_DIR; git add $target)
