@@ -31,7 +31,7 @@ Contents
 
    common/app_support.rst
 
-   glossary.rst
+   common/glossary.rst
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
