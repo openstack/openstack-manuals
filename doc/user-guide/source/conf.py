@@ -59,17 +59,10 @@ source_suffix = '.rst'
 # source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-# We need to use noqa here since tags is defined externally.
-if tags.has('admin_only'):  # noqa
-    master_doc = 'index-admin'
-else:
-    master_doc = 'index'
+master_doc = 'index'
 
 # General information about the project.
-if tags.has('admin_only'):  # noqa
-    project = u'Admin User Guide'
-else:
-    project = u'End User Guide'
+project = u'End User Guide'
 
 copyright = u'2015, OpenStack contributors'
 
@@ -307,12 +300,6 @@ locale_dirs = ['locale/']
 
 # -- Options for PDF output --------------------------------------------------
 
-if tags.has('admin_only'):  # noqa
-    pdf_documents = [
-        ('index-admin', u'AdminUserGuide', u'Admin User Guide',
-         u'OpenStack contributors')
-    ]
-else:
-    pdf_documents = [
-        ('index', u'UserGuides', u'End User Guide', u'OpenStack contributors')
-    ]
+pdf_documents = [
+    ('index', u'UserGuides', u'End User Guide', u'OpenStack contributors')
+]
