@@ -125,13 +125,6 @@ driver = keystone.token.persistence.backends.memcache.Token</programlisting>
 driver = keystone.contrib.revoke.backends.sql.Revoke</programlisting>
         </step>
         <step>
-          <para>In the <literal>[DEFAULT]</literal> section, configure the
-            log directory:</para>
-          <programlisting language="ini">[DEFAULT]
-...
-log_dir = /var/log/keystone</programlisting>
-        </step>
-        <step>
           <para>(Optional) To assist with troubleshooting,
             enable verbose logging in the <literal>[DEFAULT]</literal> section:</para>
           <programlisting language="ini">[DEFAULT]
@@ -202,7 +195,7 @@ admin_token = <replaceable>ADMIN_TOKEN</replaceable></programlisting>
       <screen><prompt>#</prompt> <userinput>openstack project create --description "Admin Tenant" admin</userinput>
 <prompt>#</prompt> <userinput>openstack user create --password <replaceable>ADMIN_PASS</replaceable> --email root@localhost admin</userinput>
 <prompt>#</prompt> <userinput>openstack role create admin</userinput>
-<prompt>#</prompt> <userinput>openstack role add --project demo --user demo _member_</userinput></screen>
+<prompt>#</prompt> <userinput>openstack role add --project demo --user demo user</userinput></screen>
       <informalfigure>
         <mediaobject>
           <imageobject>
@@ -396,9 +389,12 @@ Listen 35357
         in it:</para>
       <screen os="ubuntu;fedora;centos;rhel"><prompt>#</prompt> <userinput>chown -R keystone:keystone /var/www/cgi-bin/keystone</userinput>
 <prompt>#</prompt> <userinput>chmod 755 /var/www/cgi-bin/keystone/*</userinput></screen>
-      <screen os="rhel;fedora;centos"><prompt>#</prompt> <userinput>restorecon /var/www/cgi-bin</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>chown -R keystone:keystone /srv/www/cgi-bin/keystone</userinput>
 <prompt>#</prompt> <userinput>chmod 755 /srv/www/cgi-bin/keystone/*</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora">
+      <para>Restore the default SELinux security context:</para>
+      <screen><prompt>#</prompt> <userinput>restorecon /var/www/cgi-bin</userinput></screen>
     </step>
     <step os="opensuse;sles">
       <para>
