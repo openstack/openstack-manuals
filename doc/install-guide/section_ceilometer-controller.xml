@@ -411,15 +411,25 @@ os_password = <replaceable>CEILOMETER_PASS</replaceable></programlisting>
 <prompt>#</prompt> <userinput>service ceilometer-alarm-evaluator restart</userinput>
 <prompt>#</prompt> <userinput>service ceilometer-alarm-notifier restart</userinput></screen>
     </step>
-    <step os="rhel;centos;fedora;sles;opensuse">
+    <step os="sles;opensuse">
+      <para>Start the Telemetry services and configure them to start when the
+        system boots:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-api.service openstack-ceilometer-agent-notification.service \
+openstack-ceilometer-agent-central.service openstack-ceilometer-collector.service \
+openstack-ceilometer-alarm-evaluator.service openstack-ceilometer-alarm-notifier.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-api.service openstack-ceilometer-agent-notification.service \
+openstack-ceilometer-agent-central.service openstack-ceilometer-collector.service \
+openstack-ceilometer-alarm-evaluator.service openstack-ceilometer-alarm-notifier.service</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora">
       <para>Start the Telemetry services and configure them to start when the
         system boots:</para>
       <screen><prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-api.service openstack-ceilometer-notification.service \
-  openstack-ceilometer-central.service openstack-ceilometer-collector.service \
-  openstack-ceilometer-alarm-evaluator.service openstack-ceilometer-alarm-notifier.service</userinput>
+openstack-ceilometer-central.service openstack-ceilometer-collector.service \
+openstack-ceilometer-alarm-evaluator.service openstack-ceilometer-alarm-notifier.service</userinput>
 <prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-api.service openstack-ceilometer-notification.service \
-  openstack-ceilometer-central.service openstack-ceilometer-collector.service \
-  openstack-ceilometer-alarm-evaluator.service openstack-ceilometer-alarm-notifier.service</userinput></screen>
+openstack-ceilometer-central.service openstack-ceilometer-collector.service \
+openstack-ceilometer-alarm-evaluator.service openstack-ceilometer-alarm-notifier.service</userinput></screen>
     </step>
   </procedure>
 </section>

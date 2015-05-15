@@ -113,7 +113,13 @@ notification_driver = messagingv2</programlisting>
       <para>Restart the agent:</para>
       <screen><prompt>#</prompt> <userinput>service ceilometer-agent-compute restart</userinput></screen>
     </step>
-    <step os="rhel;centos;fedora;sles;opensuse">
+    <step os="sles;opensuse">
+      <para>Start the Telemetry agent and configure it to start when the
+        system boots:</para>
+      <screen><prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-agent-compute.service</userinput>
+<prompt>#</prompt> <userinput>systemctl start openstack-ceilometer-agent-compute.service</userinput></screen>
+    </step>
+    <step os="rhel;centos;fedora">
       <para>Start the Telemetry agent and configure it to start when the
         system boots:</para>
       <screen><prompt>#</prompt> <userinput>systemctl enable openstack-ceilometer-compute.service</userinput>
