@@ -23,22 +23,12 @@ if [ -z "$DOCNAME" ] ; then
     exit 1
 fi
 
-OPTS=""
-# We need to build guides with all tags so that all strings get
-# extracted.
-if [ "$DOCNAME" = "user-guide" ] ; then
-    OPTS="-t user_only"
-fi
-if [ "$DOCNAME" = "user-guide-admin" ] ; then
-    OPTS="-t admin_only"
-fi
-
 # Build Glossary
 tools/glossary2rst.py doc/common-rst/glossary.rst
 # First remove the old pot file, otherwise the new file will contain
 # old references
 rm -f doc/$DOCNAME/source/locale/$DOCNAME.pot
-sphinx-build $OPTS -b gettext doc/$DOCNAME/source/ doc/$DOCNAME/source/locale/
+sphinx-build -b gettext doc/$DOCNAME/source/ doc/$DOCNAME/source/locale/
 
 # Take care of deleting all temporary files so that git add
 # doc/$DOCNAME/source/locale will only add the single pot file.

@@ -40,18 +40,13 @@ function copy_to_branch {
 
 mkdir -p publish-docs
 
-# Build End User Guide
-tools/build-rst.sh doc/user-guide --glossary --tag user_only --build build \
-    --target user-guide
-
-# Build Admin User Guide
-# No need to build the glossary again here.
-tools/build-rst.sh doc/user-guide-admin --tag admin_only --build build \
-    --target user-guide-admin
-
-# Build Networking Guide
-tools/build-rst.sh doc/networking-guide --build build \
-    --target networking-guide
+GLOSSARY="--glossary"
+for guide in user-guide user-guide-admin networking-guide; do
+    tools/build-rst.sh doc/$guide $GLOSSARY --build build \
+        --target $guide
+    # Build it only the first time
+    GLOSSARY=""
+done
 
 # Build the www pages so that openstack-doc-test creates a link to
 # www/www-index.html.

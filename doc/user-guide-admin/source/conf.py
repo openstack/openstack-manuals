@@ -21,7 +21,7 @@
 # serve to show the default.
 
 import os
-import sys
+# import sys
 
 
 import openstackdocstheme
@@ -30,13 +30,6 @@ import openstackdocstheme
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 # sys.path.insert(0, os.path.abspath('.'))
-
-# Defines conditions for end user guide and admin user guide
-# When a piece of content has an "admin" indicator, it will be
-# output with the admin guide. Otherwise it's output for both
-# the end user guide and the admin user guide.
-# This is the path where you find the scope.py file that does conditional TOCs.
-sys.path.append(os.path.abspath('../sphinx-ext/'))
 
 # -- General configuration ------------------------------------------------
 
@@ -47,7 +40,7 @@ sys.path.append(os.path.abspath('../sphinx-ext/'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 # TODO(ajaeger): enable PDF building, for example add 'rst2pdf.pdfbuilder'
-extensions = ['os_doc_tools.sphinx.hotref', 'scope']
+extensions = []
 
 # Add any paths that contain templates here, relative to this directory.
 # templates_path = ['_templates']
