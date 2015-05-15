@@ -10,11 +10,11 @@
     configurable subsystems (for example, token, assignment). OpenStack Identity
     uses the <link xlink:href="http://dogpilecache.readthedocs.org/en/latest/">
     <literal>dogpile.cache</literal></link> library which allows flexible
-    cache backends. The majority of the caching configuration options are set in
+    cache back ends. The majority of the caching configuration options are set in
     the <literal>[cache]</literal> section of the <filename>keystone.conf</filename>
     file. However, each section that has the capability to be cached usually
     has a caching boolean value that toggles caching.</para>
-  <para>So to enable only the token backend caching, set the values as follows:</para>
+  <para>So to enable only the token back end caching, set the values as follows:</para>
 <programlisting language="ini">[cache]
 enabled=true
 
@@ -83,20 +83,20 @@ caching=true</programlisting>
           the <literal>[assignment]</literal> section of the configuration file)
           or the global <literal>expiration_time</literal> (set in the <literal>[cache]</literal>
           section of the configuration file) before it is reflected. If this type
-          of delay (when using a read-only <literal>assignment</literal> backend)
+          of delay (when using a read-only <literal>assignment</literal> back end)
           is an issue, it is recommended that caching be disabled on
           <literal>assignment</literal>. To disable caching specifically on
           <literal>assignment</literal>, in the <literal>[assignment]</literal>
           section of the configuration set <literal>caching</literal> to
           <literal>False</literal>.</para>
       </note>
-      <para>For more information about the different backends (and configuration options), see:</para>
+      <para>For more information about the different back ends (and configuration options), see:</para>
         <itemizedlist>
           <listitem><para><link xlink:href="http://dogpilecache.readthedocs.org/en/latest/api.html#memory-backend">
                 <literal>dogpile.cache.backends.memory</literal></link></para></listitem>
           <listitem><para><link xlink:href="http://dogpilecache.readthedocs.org/en/latest/api.html#memcached-backends">
                 <literal>dogpile.cache.backends.memcached</literal></link></para>
-            <note><para>The memory backend is not suitable for use in a production environment.</para></note></listitem>
+            <note><para>The memory back end is not suitable for use in a production environment.</para></note></listitem>
           <listitem><para><link xlink:href="http://dogpilecache.readthedocs.org/en/latest/api.html#redis-backends">
                 <literal>dogpile.cache.backends.redis</literal></link></para></listitem>
           <listitem><para><link xlink:href="http://dogpilecache.readthedocs.org/en/latest/api.html#file-backends">
@@ -104,8 +104,8 @@ caching=true</programlisting>
           <listitem><para><literal>keystone.common.cache.backends.mongo</literal></para></listitem>
         </itemizedlist>
         <example>
-          <title>Configure the Memcached backend</title>
-          <para>The following example shows how to configure the memcached backend:</para>
+          <title>Configure the Memcached back end</title>
+          <para>The following example shows how to configure the memcached back end:</para>
 <programlisting language="ini">[cache]
 
 enabled = true
