@@ -74,5 +74,5 @@ sphinx-build -E -W $TAG_OPT $DIRECTORY/source $BUILD_DIR
 # Copy RST
 if [ "$TARGET" != "" ] ; then
     mkdir -p publish-docs/$TARGET
-    rsync -a $BUILD_DIR publish-docs/$TARGET
+    rsync -a $BUILD_DIR/ publish-docs/$TARGET/
 fi
