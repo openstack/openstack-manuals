@@ -13,6 +13,8 @@ in various projects. You can create and delete volume types, and you can view
 and delete volumes. Note that a volume can be encrypted by using the steps
 outlined below.
 
+.. _create-a-volume-type:
+
 Create a volume type
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -28,6 +30,87 @@ Create a volume type
 #. Click :guilabel:`Create Volume Type` button to confirm your changes.
 
 .. note:: A message indicates whether the action succeeded.
+
+Create an encrypted volume type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. Create a volume type using the steps above for :ref:`create-a-volume-type`.
+
+#. Click :guilabel:`Create Encryption` in the Actions column of the newly
+   created volume type.
+
+#. Configure the encrypted volume by setting the parameters below from available options (see table):
+
+   Provider
+     Specifies the class responsible for configuring the encryption.
+   Control Location
+     Specifies whether the encryption is from the front end (nova) or the
+     back end (cinder).
+   Cipher
+     Specifies the encryption algorithm.
+   Key Size
+     Specifies the encryption key size.
+
+#. Click :guilabel:`Create Volume Type Encryption`
+
+   .. note::
+      Once a volume type is updated by the :guilabel:`Create
+      Encryption` option, the volume type cannot be deleted.
+
+**Encryption Options**
+
+The table below provides a few alternatives available for creating encrypted
+volumes.
+
++--------------------+-----------------------+----------------------------+
+|      Encryption    |      Parameter        |   Comments                 |
+|      parameters    |      options          |                            |
++====================+=======================+============================+
+|   Provider         |nova.volume.encryptors.|Allows easier import and    |
+|                    |luks.LuksEncryptor     |migration of imported       |
+|                    |(Recommended)          |encrypted volumes, and      |
+|                    |                       |allows access key to be     |
+|                    |                       |changed without             |
+|                    |                       |re-encrypting the volume    |
++                    +-----------------------+----------------------------+
+|                    |nova.volume.encryptors.|Less disk overhead than     |
+|                    |cryptsetup.            |LUKS                        |
+|                    |CryptsetupEncryptor    |                            |
++--------------------+-----------------------+----------------------------+
+| Control Location   | front-end             |The encryption occurs within|
+|                    | (Recommended)         |nova so that the data       |
+|                    |                       |transmitted over the network|
+|                    |                       |is encrypted                |
+|                    |                       |                            |
++                    +-----------------------+----------------------------+
+|                    | back-end              |This could be selected if a |
+|                    |                       |cinder plug-in supporting   |
+|                    |                       |an encrypted back-end block |
+|                    |                       |storage device becomes      |
+|                    |                       |available in the future.    |
+|                    |                       |TLS or other network        |
+|                    |                       |encryption would also be    |
+|                    |                       |needed to protect data as it|
+|                    |                       |traverses the network       |
++--------------------+-----------------------+----------------------------+
+|      Cipher        | aes-xts-plain64       |See NIST reference below    |
+|                    | (Recommended)         |to see advantages*          |
++                    +-----------------------+----------------------------+
+|                    | aes-cbc-essiv         |Note: On the command line,  |
+|                    |                       |type 'cryptsetup benchmark' |
+|                    |                       |for additional options      |
++--------------------+-----------------------+----------------------------+
+|     Key Size (bits)| 512 (Recommended for  |Using this selection for    |
+|                    | aes-xts-plain64. 256  |aes-xts, the underlying key |
+|                    | should be used for    |size would only be 256-bits*|
+|                    | aes-cbc-essiv)        |                            |
++                    +-----------------------+----------------------------+
+|                    | 256                   |Using this selection for    |
+|                    |                       |aes-xts, the underlying key |
+|                    |                       |size would only be 128-bits*|
++--------------------+-----------------------+----------------------------+
+
+`*` Source `NIST SP 800-38E <http://csrc.nist.gov/publications/nistpubs/800-38E/nist-sp-800-38E.pdf>`_
 
 Delete volume types
 ~~~~~~~~~~~~~~~~~~~
