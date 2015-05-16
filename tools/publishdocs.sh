@@ -27,7 +27,10 @@ function copy_to_branch {
     if [ -e publish-docs/draft ] ; then
 
         # Copy files over
-        cp -a publish-docs/draft publish-docs/$BRANCH
+        mkdir -p publish-docs/$BRANCH
+        cp -a publish-docs/draft/* publish-docs/$BRANCH/
+        # We don't need this file
+        rm -f publish-docs/$BRANCH/draft-index.html
 
         for f in $(find publish-docs/$BRANCH -name "atom.xml"); do
             sed -i -e "s|/draft/|/$BRANCH/|g" $f
