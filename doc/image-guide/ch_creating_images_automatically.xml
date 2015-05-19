@@ -41,7 +41,7 @@
 <screen><prompt>#</prompt> <userinput>yum install oz</userinput></screen>
 
             <note><para>As of this writing, there are no Oz packages for Ubuntu,
-                    so you will need to either install from source or build your
+                    so you will need to either install from the source or build your
                     own .deb file.</para>
             </note>
         <para>A full treatment of Oz is beyond the scope of this document, but
@@ -97,13 +97,12 @@ echo -n > /lib/udev/rules.d/75-persistent-net-generator.rules
                 <literal>epel-release</literal>, <literal>cloud-utils</literal>,
             and <literal>cloud-init</literal> packages, as specified in the
                 <literal>packages</literal> section of the file.</para>
-        <para>After Oz does the initial OS install using the kickstart file, it
-            updates the image's install packages with <command>yum
-                update</command>. It also removes any reference to the eth0
+        <para>After Oz completes the initial OS install using the kickstart file,
+            it customizes the image with an update. It also removes any reference to the eth0
             device that libvirt creates while Oz does the customizing, as
             specified in the <literal>command</literal> section of the XML
             file.</para>
-        <para>To run this, do, as root:</para>
+        <para>To run this:</para>
         <screen><prompt>#</prompt> <userinput>oz-install -d3 -u centos64.tdl -x centos64-libvirt.xml</userinput></screen>
         <itemizedlist>
                 <listitem>
@@ -164,7 +163,7 @@ echo -n > /lib/udev/rules.d/75-persistent-net-generator.rules
     </section>
     <section xml:id="packer">
         <title>Packer</title>
-        <para><link xlink:href="http://www.packer.io/">
+        <para><link xlink:href="https://packer.io">
                 Packer</link> is a tool for creating machine images for multiple platforms
                 from a single source configuration.
         </para>
