@@ -167,7 +167,7 @@ To install and configure Compute controller components
 
         [database]
         ...
-        connection = mysql://nova:NOVA_DBPASS@controller/nova
+        connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
 
      Replace ``NOVA_DBPASS`` with the password you chose for
      the Compute database.

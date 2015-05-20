@@ -191,7 +191,7 @@ Install and configure Block Storage volume components
       .. code-block:: console
 
          # yum install openstack-cinder targetcli python-oslo-db \
-           python-oslo-log MySQL-python
+           python-oslo-log PyMySQL
 
       .. Temporary workaround for bug:
          https://bugzilla.redhat.com/show_bug.cgi?id=1212899
@@ -213,7 +213,7 @@ Install and configure Block Storage volume components
 
          [database]
          ...
-         connection = mysql://cinder:CINDER_DBPASS@controller/cinder
+         connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
 
       Replace ``CINDER_DBPASS`` with the password you chose for
       the Block Storage database.

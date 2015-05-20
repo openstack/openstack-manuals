@@ -211,7 +211,7 @@ To install and configure Block Storage controller components
 
          [database]
          ...
-         connection = mysql://cinder:CINDER_DBPASS@controller/cinder
+         connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
 
       Replace ``CINDER_DBPASS`` with the password you chose for the
       Block Storage database.

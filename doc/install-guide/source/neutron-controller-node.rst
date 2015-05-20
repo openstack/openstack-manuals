@@ -187,7 +187,7 @@ must create a database, service credentials, and API endpoint.
 
          [database]
          ...
-         connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron
+         connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron
 
          Replace ``NEUTRON_DBPASS`` with the password you chose for the
          database.
