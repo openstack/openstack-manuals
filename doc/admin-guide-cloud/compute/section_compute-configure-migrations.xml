@@ -276,15 +276,18 @@ HostA:               921515008 101921792 772783104  12% /var/lib/nova/instances 
       </section>
       <section xml:id="true-live-migration-kvm-libvirt">
         <title>Enabling true live migration</title>
-        <para>By default, the Compute service does not use the libvirt live
-        migration function. To enable this function, add the following line to
-        the <filename>nova.conf</filename> file:
+        <para>Prior to the Kilo release, the Compute service did not use the
+            libvirt live migration function by default. To enable this
+            function, add the following line to the
+            <literal>[libvirt]</literal> section of the
+            <filename>nova.conf</filename> file:
         </para>
-        <programlisting>live_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE, VIR_MIGRATE_TUNNELLED</programlisting>
-        <para>The Compute service does not use libvirt's live migration by
-        default because there is a risk that the migration process will never
-        end. This can happen if the guest operating system uses blocks on the
-        disk faster than they can be migrated.
+        <programlisting>live_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_TUNNELLED</programlisting>
+        <para>On versions older than Kilo, the Compute service does not use
+            libvirt's live migration by default because there is a risk that
+            the migration process will never end. This can happen if the guest
+            operating system uses blocks on the disk faster than they can be
+            migrated.
         </para>
       </section>
     </section>
