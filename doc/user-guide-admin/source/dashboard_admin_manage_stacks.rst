@@ -16,17 +16,14 @@ high availability.
 
 For information about:
 
-* administrative tasks on the command line, see the section called
-  “Launch and manage stacks”;
+* administrative tasks on the command line, see
+  :doc:`cli_admin_manage_stacks`.
 
   .. note::
     There are no administration-specific tasks that can be done through
     the dashboard.
 
-* the basic creation and deletion of Orchestration stacks, refer to the
-  `End User Guide`.
+* the basic creation and deletion of Orchestration stacks, refer to
+  the `End User Guide
+  <http://docs.openstack.org/user-guide/dashboard_stacks.html>`__.
 
-.. TODO: add link to the new End User Guide on line 30 (old link: <http://docs.
-   openstack.org/user-guide/content/dashboard_stacks.html>`_), and reference
-   to Launch and manage stacks on the line 23 (old link: <http://docs.openstack.
-   org/user-guide-admin/content/section_cli_admin_manage_stacks.html>`_) (OL)

@@ -257,10 +257,7 @@ the key pair to use to enable SSH remote access:
           key_name: my_key
 
 .. note::
-   For more information about key pairs, see the `Configure access and
-   security for instances`_ section of the OpenStack user guide.
-
-.. _`Configure access and security for instances`: http://docs.openstack.org/user-guide/content/cli_configure_instances.html
+   For more information about key pairs, see the :doc:`../cli_nova_configure_access_security_for_instances`.
 
 Create a key pair
 -----------------
