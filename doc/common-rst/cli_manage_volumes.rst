@@ -70,7 +70,7 @@ This example creates a my-new-volume volume based on an image.
      | nova | available |
      +------+-----------+
 
-#. Create a volume with 8 GB of space, and specify the availability zone
+#. Create a volume with 8 gibibytes (GiB) of space, and specify the availability zone
    and image::
 
      $ cinder create 8 --display-name my-new-volume --image-id 397e713c-b95b-4186-ad46-6126863ea0a9 --availability-zone nova

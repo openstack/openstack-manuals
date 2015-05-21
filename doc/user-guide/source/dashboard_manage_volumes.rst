@@ -24,7 +24,7 @@ Create a volume
 
    :guilabel:`Type`: Leave this field blank.
 
-   :guilabel:`Size (GB)`: The size of the volume in gigabytes.
+   :guilabel:`Size (GB)`: The size of the volume in gibibytes (GiB).
 
    :guilabel:`Volume Source`: Select one of the following options:
 
