@@ -14,7 +14,7 @@ libvirt).
    :command:`ceilometer` command-line interface (CLI).
 
    For basic administration information, refer to the "Measure Cloud Resources"
-   chapter in the `OpenStack End User Guide <http://docs.openstack.org/user-guide/content/>`_.
+   chapter in the `OpenStack End User Guide <http://docs.openstack.org/user-guide/>`_.
 
 .. _dashboard-view-resource-stats:
 

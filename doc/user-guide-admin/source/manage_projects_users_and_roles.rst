@@ -27,7 +27,8 @@ from its primary project.
 
 Before you can run keystone client commands, you must download and
 source an OpenStack RC file. See `Download and source the OpenStack RC
-file <http://docs.openstack.org/user-guide/content/cli_openrc.html>`__.
+file
+<http://docs.openstack.org/user-guide/common/cli_set_environment_variables_using_openstack_rc.html>`__.
 
 Services
 ~~~~~~~~

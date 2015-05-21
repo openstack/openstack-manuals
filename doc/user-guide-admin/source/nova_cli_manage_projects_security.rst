@@ -30,7 +30,7 @@ If set to:
 Additionally, the number of maximum rules per security group is
 controlled by the ``security_group_rules`` and the number of allowed
 security groups per project is controlled by the ``security_groups``
-quota (see the `Manage quotas <http://docs.openstack.org/user-guide-admin/content/cli_set_quotas.html>`_
+quota (see the `Manage quotas <http://docs.openstack.org/user-guide-admin/cli_set_quotas.html>`_
 section).
 
 List and view current security groups
