@@ -16,11 +16,11 @@ Guide <http://docs.openstack.org/admin-guide-cloud/content/ch_networking.html>`_
 Create a network
 ~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click Networks.
+#. Log in to the dashboard, choose a project, and click :guilabel:`Networks`.
 
-#. Click Create Network.
+#. Click :guilabel:`Create Network`.
 
-#. In the Create Network dialog box, specify the following values.
+#. In the :guilabel:`Create Network` dialog box, specify the following values.
 
    :guilabel:`Network` tab
 
