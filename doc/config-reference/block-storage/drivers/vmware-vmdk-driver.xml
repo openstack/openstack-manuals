@@ -23,13 +23,17 @@
             visible from the ESX hosts in the managed cluster.</para>
         <para>When you create a volume, the VMDK driver creates a VMDK
             file on demand. The VMDK file creation completes only when
-            the volume is subsequently attached to an instance,
-            because the set of data stores visible to the instance
-            determines where to place the volume.</para>
+            the volume is subsequently attached to an instance. The
+            reason for this requirement is that data stores visible
+            to the instance determine where to place
+            the volume. Before the service creates the VMDK file,
+            attach a volume to the target instance.</para>
         <para>The running vSphere VM is automatically reconfigured to
             attach the VMDK file as an extra disk. Once attached, you
             can log in to the running vSphere VM to rescan and
             discover this extra disk.</para>
+        <para>With the update to ESX version 6.0, the VMDK driver
+            now supports NFS version 4.1.</para>
     </section>
     <section xml:id="vmdk_configuration">
         <title>Configuration</title>
