@@ -70,7 +70,8 @@ Manage an object
 
 #. Click :guilabel:`Update Object`.
 
-.. note: To delete an object, click the More button and select Delete Object.
+.. note: To delete an object, click the :guilabel:`More` button and select
+   :guilabel:`Delete Object`.
 
 **Procedure To copy an object from one container to another**
 

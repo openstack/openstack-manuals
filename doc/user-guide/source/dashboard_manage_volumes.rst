@@ -83,11 +83,11 @@ Now you can log in to the instance and mount, format, and use the disk.
 Detach a volume from an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click Volumes.
+#. Log in to the dashboard, choose a project, and click :guilabel:`Volumes`.
 
-#. Select the volume and click Edit Attachments.
+#. Select the volume and click :guilabel:`Edit Attachments`.
 
-#. Click Detach Volume and confirm your changes.
+#. Click :guilabel:`Detach Volume` and confirm your changes.
 
 A message indicates whether the action was successful.
 

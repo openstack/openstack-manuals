@@ -61,7 +61,7 @@ group rules to a project, if your cloud requires them.
 +--------------------------------------+--------------------------------------+
 
 .. note:: To accept requests from a particular range of IP addresses, specify
-   the IP address block in the CIDR box.
+   the IP address block in the :guilabel:`CIDR` box.
 
 #. Click :guilabel:`Add`.
 
@@ -89,16 +89,16 @@ Add a key pair
 
 Create at least one key pair for each project.
 
-#. Log in to the dashboard, choose a project, and click Access &
-   Security.
+#. Log in to the dashboard, choose a project, and click
+   :guilabel:`Access & Security`.
 
-#. Click the Keypairs tab, which shows the key pairs that are available
-   for this project.
+#. Click the :guilabel:`Keypairs` tab, which shows the key pairs that
+   are available for this project.
 
-#. Click Create Keypair.
+#. Click :guilabel:`Create Keypair`.
 
-#. In the Create Keypair dialog box, enter a name for your key pair, and
-   click Create Keypair.
+#. In the :guilabel:`Create Keypair` dialog box, enter a name for your
+   key pair, and click :guilabel:`Create Keypair`.
 
 #. Respond to the prompt to download the key pair.
 
@@ -107,17 +107,17 @@ Create at least one key pair for each project.
 Import a key pair
 ~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click Access &
-   Security.
+#. Log in to the dashboard, choose a project, and click
+   :guilabel:`Access & Security`.
 
-#. Click the Keypairs tab, which shows the key pairs that are available
-   for this project.
+#. Click the :guilabel:`Keypairs` tab, which shows the key pairs that
+   are available for this project.
 
-#. Click Import Keypair.
+#. Click :guilabel:`Import Keypair`.
 
-#. In the Import Keypair dialog box, enter the name of your key pair,
-   copy the public key into the Public Key box, and then click Import
-   Keypair.
+#. In the :guilabel:`Import Keypair` dialog box, enter the name of your
+   key pair, copy the public key into the :guilabel:`Public Key` box,
+   and then click :guilabel:`Import Keypair`.
 
 #. Save the ``*.pem`` file locally.
 
@@ -158,31 +158,31 @@ of the state of the instances involved. This procedure details the
 reservation of a floating IP address from an existing pool of addresses
 and the association of that address with a specific instance.
 
-#. Log in to the dashboard, choose a project, and click Access &
-   Security.
+#. Log in to the dashboard, choose a project, and click
+   :guilabel:`Access & Security`.
 
-#. Click the Floating IPs tab, which shows the floating IP addresses
-   allocated to instances.
+#. Click the :guilabel:`Floating IPs` tab, which shows the floating IP
+   addresses allocated to instances.
 
-#. Click Allocate IP to Project.
+#. Click :guilabel:`Allocate IP to Project`.
 
 #. Choose the pool from which to pick the IP address.
 
-#. Click Allocate IP.
+#. Click :guilabel:`Allocate IP`.
 
-#. In the Floating IPs list, click Associate.
+#. In the :guilabel:`Floating IPs` list, click :guilabel:`Associate`.
 
-#. In the Manage Floating IP Associations dialog box, choose the
-   following options:
+#. In the :guilabel:`Manage Floating IP Associations` dialog box,
+   choose the following options:
 
    -  The IP Address field is filled automatically, but you can add a
-      new IP address by clicking the + button.
+      new IP address by clicking the :guilabel:`+` button.
 
    -  In the Ports to be associated field, select a port from the list.
 
       The list shows all the instances with their fixed IP addresses.
 
-#. Click Associate.
+#. Click :guilabel:`Associate`.
 
 .. note:: To disassociate an IP address from an instance, click the
    :guilabel:`Disassociate` button.
