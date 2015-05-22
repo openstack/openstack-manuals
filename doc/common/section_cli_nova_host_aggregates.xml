@@ -8,18 +8,31 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
   xml:id="host-aggregates">
-    <title>Host aggregates</title>
-    <para>Host aggregates are a mechanism to further partition an
-        availability zone; while availability zones are visible to
-        users, host aggregates are only visible to administrators.
-        Host Aggregates provide a mechanism to allow administrators to
-        assign key-value pairs to groups of machines. Each node can
-        have multiple aggregates, each aggregate can have multiple
-        key-value pairs, and the same key-value pair can be assigned
-        to multiple aggregates. This information can be used in the
-        scheduler to enable advanced scheduling, to set up hypervisor
-        resource pools or to define logical groups for
-        migration.</para>
+    <title>Host aggregates and availability zones</title>
+    <para>
+      Host aggregates are a mechanism for partitioning hosts in an OpenStack
+      cloud, or a region of an OpenStack cloud, based on arbitrary
+      characteristics. Examples where an administrator may want to do this
+      include where a group of hosts have additional hardware or performance
+      characteristics.
+    </para>
+    <para>
+      Host aggregates are not explicitly exposed to users.
+      Instead administrators map flavors to host aggregates. Administrators
+      do this by setting metadata on a host aggregate, and matching flavor
+      extra specifications. The scheduler then endeavors to match user
+      requests for instance of the given flavor to a host aggregate with the
+      same key-value pair in its metadata. Compute nodes can be in more than
+      one host aggregate.
+    </para>
+    <para>
+      Administrators are able to optionally expose a host aggregate as an
+      availability zone. Availability zones are different to host aggregates
+      in that they are explicitly exposed to the user, and hosts can only be
+      in a single availability zone. Administrators can configure a default
+      availability zone where instances will be scheduled when the user
+      fails to specify one.
+    </para>
     <simplesect>
         <title>Command-line interface</title>
         <para>The <command>nova</command> command-line tool supports
@@ -34,19 +47,18 @@
                 <varlistentry>
                     <term><command>nova aggregate-create
                                 <replaceable>&lt;name></replaceable>
-                            <replaceable>&lt;availability-zone></replaceable></command></term>
+                            <replaceable>[availability-zone]</replaceable></command></term>
                     <listitem>
                         <para>Create a new aggregate named
-                                <replaceable>&lt;name></replaceable>
-                            in availability zone
-                                <replaceable>&lt;availability-zone></replaceable>.
-                            Returns the ID of the newly created
-                            aggregate. Hosts can be made available to
-                            multiple availability zones, but
-                            administrators should be careful when
-                            adding the host to a different host
-                            aggregate within the same availability
-                            zone and pay attention when using the
+                                <replaceable>&lt;name></replaceable>, and
+                            optionally in availability zone
+                            <replaceable>[availability-zone]</replaceable>
+                            if specified. The command returns the ID of the
+                            newly created aggregate. Hosts can be made
+                            available to multiple host aggregates. Be careful
+                            when adding a host to an additional host
+                            aggregate when the host is also in an availability
+                            zone. Pay attention when using the
                                 <command>aggregate-set-metadata</command>
                             and <command>aggregate-update</command>
                             commands to avoid user confusion when they
