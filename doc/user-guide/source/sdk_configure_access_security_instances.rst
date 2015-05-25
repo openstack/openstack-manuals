@@ -167,8 +167,8 @@ _groups.html#novaclient.v1_1.security_groups.SecurityGroup>`__ object:
     print group.rules
 
 To add a rule to a security group, call the
-`novaclient.v1\_1.security\_group\_rules.SecurityGroupRuleManager.
-create <http://docs.openstack.org/developer/python-novaclient/api/
+`novaclient.v1\_1.security\_group\_rules.SecurityGroupRuleManager.create
+<http://docs.openstack.org/developer/python-novaclient/api/
 novaclient.v1_1.security_group_rules.html#novaclient.v1_1.
 security_group_rules.SecurityGroupRuleManager.create>`__ method:
 
