@@ -247,12 +247,12 @@ Launch an instance from an image
    public) IP addresses for all instances in the project to which you
    belong::
 
-    +-----------------------------+-----------------+--------+------------+-------------+----------+
-    | ID                          | Name            | Status | Task State | Power State | Networks |
-    +-----------------------------+-----------------+--------+------------+-------------+----------+
-    | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
-    | 8a99547e-7385-4ad1-ae50-4ecfaaad5f42 | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
-    +-----------------------------+-----------------+--------+------------+-------------+----------+
+    +-------------+----------------------+--------+------------+-------------+------------------+
+    | ID          | Name                 | Status | Task State | Power State | Networks         |
+    +-------------+----------------------+--------+------------+-------------+------------------+
+    | 84c6e57d... | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
+    | 8a99547e... | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
+    +-------------+----------------------+--------+------------+-------------+------------------+
 
    If the status for the instance is ACTIVE, the instance is online.
 
