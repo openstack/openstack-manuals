@@ -131,7 +131,7 @@ Import a key pair
 .. note:: If you are using the dashboard from a Windows computer, use PuTTYgen
    to load the ``*.pem`` file and convert and save it as ``*.ppk``. For
    more information see the `WinSCP web page for
-   PuTTYgen <http://winscp.net/eng/docs/ui-puttygen>`__.
+   PuTTYgen <http://winscp.net/eng/docs/ui_puttygen>`__.
 
 #. To make the key pair known to SSH, run the **ssh-add** command.
 
