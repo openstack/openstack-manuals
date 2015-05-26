@@ -59,13 +59,18 @@
          snippets indicates potential default configuration options that you
          should retain.</para>
     </note>
+    <note>
+      <para>In Kilo, the keystone project deprecates Eventlet in favor of
+        a WSGI server. This guide uses the Apache HTTP server with
+        <literal>mod_wsgi</literal> to serve keystone requests on ports
+        5000 and 35357. By default, the
+        <systemitem class="service">keystone</systemitem> service still
+        listens on ports 5000 and 35357. Therefore, this guide disables the
+        <systemitem class="service">keystone</systemitem> service.</para>
+    </note>
     <step os="ubuntu">
-      <para>By default, the <systemitem class="service">keystone</systemitem>
-        service listens on ports 5000 and 35357. However, this guide
-        configures the Apache HTTP server to listen on those ports. To avoid
-        port conflicts, disable the
-        <systemitem class="service">keystone</systemitem> service from starting
-        automatically after installation:</para>
+      <para>Disable the <systemitem class="service">keystone</systemitem>
+        service from starting automatically after installation:</para>
       <screen><prompt>#</prompt> <userinput>echo "manual" > /etc/init/keystone.override</userinput></screen>
     </step>
     <step>
@@ -132,14 +137,6 @@ driver = keystone.contrib.revoke.backends.sql.Revoke</programlisting>
 verbose = True</programlisting>
         </step>
       </substeps>
-    </step>
-    <step os="rhel;centos;fedora">
-      <para>Create generic certificates and keys and restrict access to the
-        associated files:</para>
-      <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>keystone-manage pki_setup --keystone-user keystone --keystone-group keystone</userinput>
-<prompt>#</prompt> <userinput>chown -R keystone:keystone /var/log/keystone</userinput>
-<prompt>#</prompt> <userinput>chown -R keystone:keystone /etc/keystone/ssl</userinput>
-<prompt>#</prompt> <userinput>chmod -R o-rwx /etc/keystone/ssl</userinput></screen>
     </step>
     <step os="ubuntu;rhel;centos;fedora">
       <para>Populate the Identity service database:</para>
@@ -318,7 +315,7 @@ Listen 35357
 Listen 35357
 
 &lt;VirtualHost *:5000&gt;
-    WSGIDaemonProcess keystone-public processes=5 threads=1 user=keystone display-name=%{GROUP}
+    WSGIDaemonProcess keystone-public processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
     WSGIProcessGroup keystone-public
     WSGIScriptAlias / /var/www/cgi-bin/keystone/main
     WSGIApplicationGroup %{GLOBAL}
@@ -330,7 +327,7 @@ Listen 35357
 &lt;/VirtualHost&gt;
 
 &lt;VirtualHost *:35357&gt;
-    WSGIDaemonProcess keystone-admin processes=5 threads=1 user=keystone display-name=%{GROUP}
+    WSGIDaemonProcess keystone-admin processes=5 threads=1 user=keystone group=keystone display-name=%{GROUP}
     WSGIProcessGroup keystone-admin
     WSGIScriptAlias / /var/www/cgi-bin/keystone/admin
     WSGIApplicationGroup %{GLOBAL}
@@ -392,10 +389,6 @@ Listen 35357
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>chown -R keystone:keystone /srv/www/cgi-bin/keystone</userinput>
 <prompt>#</prompt> <userinput>chmod 755 /srv/www/cgi-bin/keystone/*</userinput></screen>
     </step>
-    <step os="rhel;centos;fedora">
-      <para>Restore the default SELinux security context:</para>
-      <screen><prompt>#</prompt> <userinput>restorecon /var/www/cgi-bin</userinput></screen>
-    </step>
     <step os="opensuse;sles">
       <para>
         Change the ownership of
@@ -403,12 +396,6 @@ Listen 35357
         <literal>keystone</literal> system access to it:
       </para>
       <screen><prompt>#</prompt> <userinput>chown keystone /etc/keystone/keystone.conf</userinput></screen>
-    </step>
-    <step os="rhel;fedora;centos">
-      <para>Add the <literal>apache</literal> system user to the
-        <literal>keystone</literal> system group to permit access to the
-        Identity service configuration files by the Apache HTTP server:</para>
-      <screen><prompt>#</prompt> <userinput>usermod -a -G keystone apache</userinput></screen>
     </step>
   </procedure>
   <procedure>
