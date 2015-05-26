@@ -29,7 +29,7 @@ Follow this procedure to upload an image to a project:
 #. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
    appropriate project.
 
-#. On the :guilabel:`Project tab`, click :guilabel:`Images`.
+#. On the :guilabel:`Project` tab, click :guilabel:`Images`.
 
 #. Click :guilabel:`Create Image`.
 
