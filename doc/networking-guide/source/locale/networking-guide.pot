@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-19 06:10+0000\n"
+"POT-Creation-Date: 2015-05-27 06:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1258,7 +1258,7 @@ msgstr ""
 msgid "API version"
 msgstr ""
 
-#: ../intro_basic_networking.rst:12
+#: ../intro_basic_networking.rst:57
 msgid "ARP"
 msgstr ""
 
@@ -4148,7 +4148,7 @@ msgstr ""
 msgid "ICMP"
 msgstr ""
 
-#: ../intro_basic_networking.rst:18
+#: ../intro_basic_networking.rst:63
 msgid "ICMP/TCP/UDP"
 msgstr ""
 
@@ -4179,7 +4179,7 @@ msgid ""
 "drives, solid state drives, and storage area networks."
 msgstr ""
 
-#: ../intro_basic_networking.rst:15
+#: ../intro_basic_networking.rst:60
 msgid "IP"
 msgstr ""
 
@@ -4257,6 +4257,16 @@ msgstr ""
 msgid ""
 "If the service detects a failure, it elects a new master and moves the VIPs "
 "into the new master namespace."
+msgstr ""
+
+#: ../intro_basic_networking.rst:39
+msgid ""
+"If two switches are to be connected together, and the switches are "
+"configured for VLANs, then the switchports used for cross-connecting the "
+"switches must be configured to allow Ethernet frames from any VLAN to be "
+"forwarded to the other switch. In addition, the sending switch must tag each "
+"Ethernet frame with the VLAN ID so that the receiving switch can ensure that "
+"only hosts on the matching VLAN are eligible to receive the frame."
 msgstr ""
 
 #: ../common/glossary.rst:1813
@@ -5442,6 +5452,13 @@ msgstr ""
 msgid "Node requirements"
 msgstr ""
 
+#: ../intro_basic_networking.rst:51
+msgid ""
+"Note that if you are using VLANs on your physical switches to implement "
+"tenant isolation in your OpenStack cloud, you will need to ensure that all "
+"of your switchports are configured as trunk ports."
+msgstr ""
+
 #: ../deploy_scenario1b.rst:159
 msgid ""
 "Note: The term *north-south* generally defines network traffic that travels "
@@ -5450,6 +5467,18 @@ msgstr ""
 
 #: ../common/glossary.rst:2490
 msgid "Nova API"
+msgstr ""
+
+#: ../intro_basic_networking.rst:30
+msgid ""
+"Now consider the scenario that all of the switchports in the first switch "
+"become occupied, and so the organization buys a second switch and connects "
+"it to the first switch to expand the available number of switchports. The "
+"second switch is also configured to support VLAN IDs 10, 11, and 12. Now "
+"imagine host A connected to switch 1 on a port configured for VLAN ID 10 "
+"sends an Ethernet frame intended for host B connected to switch 2 on a port "
+"configured for VLAN ID 10. When switch 1 forwards the Ethernet frame to "
+"switch 2, it must communicate that the frame is associated with VLAN ID 10."
 msgstr ""
 
 #: ../common/glossary.rst:1962
@@ -10051,6 +10080,21 @@ msgid ""
 "an odd quantity of network nodes with a minimum of three nodes."
 msgstr ""
 
+#: ../intro_basic_networking.rst:19
+msgid ""
+"To understand how VLANs work, let's consider VLAN applications in a "
+"traditional IT environment, where physical hosts are attached to a physical "
+"switch, and no virtualization is involved. Imagine a scenario where you want "
+"three isolated networks, but you only have a single physical switch. The "
+"network administrator would choose three VLAN IDs, say, 10, 11, and 12, and "
+"would configure the switch to associate switchports with VLAN IDs. For "
+"example, switchport 2 might be associated with VLAN 10, switchport 3 might "
+"be associated with VLAN 11, and so forth. When a switchport is configured "
+"for a specific VLAN, it is called an *access port*. The switch is "
+"responsible for ensuring that the network traffic is isolated across the "
+"VLANs."
+msgstr ""
+
 #: ../common/glossary.rst:254
 msgid ""
 "Tool used for maintaining Address Resolution Protocol packet filter rules in "
@@ -10383,6 +10427,18 @@ msgstr ""
 msgid "VLAN"
 msgstr ""
 
+#: ../intro_basic_networking.rst:11
+msgid ""
+"VLAN is a networking technology that enables a single switch to act as if it "
+"was multiple independent switches. Specifically, two hosts that are "
+"connected to the same switch but on different VLANs will not see each "
+"other's traffic. OpenStack is able to take advantage of VLANs to isolate the "
+"traffic of different tenants, even if the tenants happen to have instances "
+"running on the same compute host. Each VLAN has an associated numerical ID, "
+"between 1 and 4095. We say \"VLAN 15\" to refer to the VLAN with numerical "
+"ID of 15."
+msgstr ""
+
 #: ../common/glossary.rst:3654
 msgid "VLAN manager"
 msgstr ""
@@ -10557,6 +10613,14 @@ msgstr ""
 msgid ""
 "WSGI middleware component of Object Storage that serves container data as a "
 "static web page."
+msgstr ""
+
+#: ../intro_basic_networking.rst:46
+msgid ""
+"When a switchport is configured to pass frames from all VLANs and tag them "
+"with the VLAN IDs it is called a *trunk port*. IEEE 802.1Q is the network "
+"standard that describes how VLAN tags are encoded in Ethernet frames when "
+"trunking is being used."
 msgstr ""
 
 #: ../common/glossary.rst:1423
