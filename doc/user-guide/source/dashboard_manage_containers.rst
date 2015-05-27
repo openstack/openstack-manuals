@@ -73,7 +73,7 @@ Manage an object
 .. note: To delete an object, click the :guilabel:`More` button and select
    :guilabel:`Delete Object`.
 
-**Procedure To copy an object from one container to another**
+**To copy an object from one container to another**
 
 #. Log in to the dashboard, choose a project, and click :guilabel:`Containers`.
 
@@ -93,7 +93,7 @@ Manage an object
 
 #. Click :guilabel:`Copy Object`.
 
-**Procedure: To create a metadata-only object without a file**
+**To create a metadata-only object without a file**
 
 You can create a new object in container without a file available and
 can upload the file later when it is ready. This temporary object acts a
@@ -116,7 +116,7 @@ metadata and URL info in advance.
 
 #. Click :guilabel:`Update Object`.
 
-**Procedure: To create a pseudo-folder**
+**To create a pseudo-folder**
 
 Pseudo-folders are similar to folders in your desktop operating system.
 They are virtual collections defined by a common prefix on the object's
