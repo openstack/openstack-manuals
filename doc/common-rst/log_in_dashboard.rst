@@ -133,7 +133,7 @@ applications.
 OpenStack dashboard—:guilabel:`Admin` tab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Administrative users can use the :guilabel:`Admin tab` to view usage and to
+Administrative users can use the :guilabel:`Admin` tab to view usage and to
 manage instances, volumes, flavors, images, projects, users, services, and
 quotas.
 
