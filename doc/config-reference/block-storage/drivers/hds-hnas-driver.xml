@@ -8,10 +8,11 @@
          xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>HDS HNAS iSCSI and NFS driver</title>
     <?dbhtml stop-chunking?>
-    <para>This Block Storage volume driver provides iSCSI and NFS support for
+    <para>This OpenStack Block Storage volume driver provides iSCSI and NFS
+      support for
       <link xlink:href="http://www.hds.com/products/file-and-content/network-attached-storage/"
-            >HNAS (Hitachi Network-attached Storage)</link>
-        arrays such as, HNAS 3000 and 4000 family.</para>
+            >Hitachi NAS Platform</link>  Models 3080, 3090, 4040, 4060, 4080
+            and 4100.</para>
     <section xml:id="hds-hnas-supported-operations">
        <title>Supported operations</title>
        <para>The NFS and iSCSI drivers support these operations:</para>
@@ -45,10 +46,10 @@
     <section xml:id="hds-hnas-storage-reqs">
        <title>HNAS storage requirements</title>
        <para>
-          Before using iSCSI and NFS services, use the HNAS Web
-          Interface to create storage pool(s), file system(s), and assign
-          an EVS. Make sure that the file system used is not created as
-          <literal>replication targets</literal>. Additionally:
+          Before using iSCSI and NFS services, use the HNAS configuration and
+          management GUI (SMU) or SSC CLI to create storage pool(s), file system(s),
+          and assign an EVS. Make sure that the file system used is not
+          created as <literal>replication targets</literal>. Additionally:
         </para>
        <variablelist>
            <varlistentry><term><emphasis>For NFS:</emphasis></term>
@@ -83,22 +84,27 @@
    <section xml:id="hds-hnas-cinder-reqs">
        <title>Block storage host requirements</title>
        <variablelist>
-           <varlistentry><term><emphasis>All versions:</emphasis></term>
+           <varlistentry><term>The HNAS driver is supported for Red Hat, SUSE Cloud
+            and Ubuntu Cloud. The following packages must be installed:</term>
                <listitem>
                  <orderedlist>
                     <listitem>
-                      <para><package>nfs-utils</package> for RPM packages</para>
+                      <para><package>nfs-utils</package> for Red Hat</para>
+                    </listitem>
+                    <listitem>
+                      <para><package>nfs-client</package> for SUSE</para>
                     </listitem>
                     <listitem>
                       <para>
                         <package>nfs-common</package>, <package>libc6-i386</package>
-                        for DEB packages (<package>libc6-i386</package> only required on
+                        for Ubuntu (<package>libc6-i386</package> only required on
                         Ubuntu 12.04)
                       </para>
                     </listitem>
                     <listitem>
                       <para>
-                       HDS SSC package (<package>hds-ssc-v1.0-1</package>) to
+                       If you are not using SSH, you need the HDS SSC package
+                       (<package>hds-ssc-v1.0-1</package>) to
                        communicate with an HNAS array using the <command>SSC
                        </command> command. This utility package is available
                        in the RPM package distributed with the hardware
@@ -109,43 +115,31 @@
                  </orderedlist>
                </listitem>
            </varlistentry>
-           <varlistentry><term><emphasis>Version: 2.2-1:</emphasis></term>
-           <listitem>
-               <orderedlist>
-                  <listitem>
-                    <para>
-                      Icehouse OpenStack deployment for RHOSP 5
-                      (RH 7.0), SUSE Cloud 4, and Mirantis Fuel (Ubuntu or
-                      CentOS hosts)
-                    </para>
-                  </listitem>
-                  <listitem>
-                    <para><package>hds-ssc-v1.0-1</package> package if not using SSH auth
-                    </para>
-                  </listitem>
-               </orderedlist>
-           </listitem>
-     </varlistentry>
    </variablelist>
    </section>
    <section xml:id="hds-hnas-pkg-install">
        <title>Package installation</title>
        <procedure>
-           <para>If you are installing the driver from an RPM or DEB package,
+           <para>If you are installing the driver from a RPM or DEB package,
             follow the steps bellow:</para>
            <step><para>Install SSC:</para>
-           <screen><prompt>$</prompt> <userinput>rpm -i hds-ssc-v1.0-1.rpm</userinput></screen>
+           <para>In Red Hat:</para>
+           <screen><prompt>#</prompt> <userinput>rpm -i hds-ssc-v1.0-1.rpm</userinput></screen>
+           <para>Or in SUSE:</para>
+           <screen><prompt>#</prompt> <userinput>zypper hds-ssc-v1.0-1.rpm</userinput></screen>
            <para>Or in Ubuntu:</para>
-           <screen><prompt>$</prompt> <userinput>dpkg -i hds-ssc_1.0-1_all.deb</userinput></screen>
+           <screen><prompt>#</prompt> <userinput>dpkg -i hds-ssc_1.0-1_all.deb</userinput></screen>
            </step>
            <step><para>Install the dependencies:</para>
+           <para>In Red Hat:</para>
            <screen><prompt>#</prompt> <userinput>yum install nfs-utils nfs-utils-lib</userinput></screen>
            <para>Or in Ubuntu:</para>
            <screen><prompt>#</prompt> <userinput>apt-get install nfs-common</userinput></screen>
-           <para>Or in openSUSE and SUSE Linux Enterprise Server:</para>
+           <para>Or in SUSE:</para>
            <screen><prompt>#</prompt> <userinput>zypper install nfs-client</userinput></screen>
            <para>If you are using Ubuntu 12.04, you also need to install
-            <package>libc6-i386</package></para>
+           <package>libc6-i386</package></para>
+           <screen><prompt>#</prompt> <userinput>apt-get install libc6-i386</userinput></screen>
            </step>
            <step><para>Configure the driver as described in the "Driver
             Configuration" section.</para></step>
@@ -156,7 +150,7 @@
    <section xml:id="hds-hnas-drive-config">
            <title>Driver configuration</title>
            <para>The HDS driver supports the concept of differentiated
-              services (also referred to as quality of service) by mapping
+              services (also referred as quality of service) by mapping
               volume types to services provided through HNAS.</para>
            <para>HNAS supports a variety of storage options and file
               system capabilities, which are selected through the definition
@@ -461,22 +455,20 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
        </section>
        <section xml:id="hds-hnas-service-labels">
    <title>Service labels</title>
-   <para>
-     HNAS driver supports differentiated types of service using the service
-          labels. It is possible to create up to four types of them, as gold,
-          platinun, silver and ssd, for example.
-           </para>
-           <para>
-               Each service is treated by OpenStack Block Storage as a unit of
-               scheduling (pool). After creating the services in the XML
-               configuration file, you must configure one
-               <literal>volume_type</literal> per service. Each <literal>
-               volume_type</literal> must have the metadata <literal>
-               service_label</literal> with the same name configured in the
-               <literal>&lt;volume_type&gt; </literal> section of that
-               service. If this is not set, OpenStack Block Storage will
-               schedule the volume creation to the pool with largest available
-               free space or other criteria configured in volume filters.
+      <para>
+        HNAS driver supports differentiated types of service using the service
+        labels. It is possible to create up to four types of them, as gold,
+        platinun, silver and ssd, for example.
+       </para>
+       <para>
+           After creating the services in the XML configuration file, you
+           must configure one <literal>volume_type</literal> per service.
+           Each <literal>volume_type</literal> must have the metadata <literal>
+           service_label</literal> with the same name configured in the
+           <literal>&lt;volume_type&gt;</literal> section of that
+           service. If this is not set, OpenStack Block Storage will
+           schedule the volume creation to the pool with largest available
+           free space or other criteria configured in volume filters.
        </para>
        <screen><prompt>$</prompt> <userinput>cinder type-create 'default'</userinput>
 <prompt>$</prompt> <userinput>cinder type-key 'default' set service_label = 'default'</userinput>
@@ -516,8 +508,9 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
        <procedure>
            <step>
                <para>
-                   Create a pair of public keys in the Block Storage host
-                   (leave the pass-phrase empty):
+                   If you don't have a pair of public keys already generated,
+                   create it in the Block Storage host (leave the pass-phrase
+                   empty):
               </para>
               <screen><prompt>$</prompt> <userinput>mkdir -p <replaceable>/opt/hds/ssh</replaceable></userinput>
 <prompt>$</prompt> <userinput>ssh-keygen -f <replaceable>/opt/hds/ssh/hnaskey</replaceable></userinput></screen>
@@ -531,15 +524,33 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
            </step>
            <step>
                <para>
-                    Export your pubkey to SMU (HNAS):
+                  Create the directory "ssh_keys" in the SMU server:
                </para>
-               <screen><prompt>$</prompt> <userinput>ssh-copy-id -i <replaceable>/opt/hds/ssh/hnaskey.pub</replaceable> [manager|supervisor]@&lt;smu-ip&gt;</userinput></screen>
+               <screen><prompt>$</prompt> <userinput>ssh [manager|supervisor]@&lt;smu-ip&gt; 'mkdir -p /var/opt/mercury-main/home/[manager|supervisor]/ssh_keys/'</userinput></screen>
            </step>
            <step>
                <para>
-                   Check the communication with HNAS:
+                  Copy the public key to the "ssh_keys" directory:
+               </para>
+               <screen><prompt>$</prompt> <userinput>scp<replaceable> /opt/hds/ssh/hnaskey.pub </replaceable>[manager|supervisor]@&lt;smu-ip&gt;:/var/opt/mercury-main/home/[manager|supervisor]/ssh_keys/</userinput></screen>
+           </step>
+           <step>
+               <para>
+                    Access the SMU server:
+               </para>
+               <screen><prompt>$</prompt> <userinput>ssh [manager|supervisor]@&lt;smu-ip&gt;</userinput></screen>
+           </step>
+           <step>
+               <para>
+                    Run the command to register the SSH keys:
+               </para>
+               <screen><prompt>$</prompt> <userinput>ssh-register-public-key -u [manager|supervisor] -f ssh_keys/hnaskey.pub</userinput></screen>
+           </step>
+           <step>
+               <para>
+                   Check the communication with HNAS in the Block Storage host:
               </para>
-              <screen><prompt>$</prompt> <userinput>ssh [manager|supervisor]@&lt;smu-ip&gt; 'ssc &lt;cluster_admin_ip0&gt; df -a'</userinput></screen>
+              <screen><prompt>$</prompt> <userinput>ssh -i<replaceable> /opt/hds/ssh/hnaskey</replaceable> [manager|supervisor]@&lt;smu-ip&gt; 'ssc &lt;cluster_admin_ip0&gt; df -a'</userinput></screen>
            </step>
        </procedure>
        <para>
