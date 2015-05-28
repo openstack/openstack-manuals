@@ -51,6 +51,12 @@ for guide in user-guide user-guide-admin networking-guide; do
     GLOSSARY=""
 done
 
+# Draft guides
+for guide in admin-guide-cloud-rst; do
+    tools/build-rst.sh doc/$guide --build build \
+        --target "draft/$guide"
+done
+
 # Build the www pages so that openstack-doc-test creates a link to
 # www/www-index.html.
 if [ "$PUBLISH" = "build" ] ; then
