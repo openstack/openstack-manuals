@@ -5,7 +5,7 @@ Create and manage object containers
 OpenStack Object Storage provides a distributed, API-accessible storage
 platform that can be integrated directly into an application or used to
 store any type of file, including VM images, backups, archives, or media
-files. In the OpenStack Dashboard, you can only manage containers and
+files. In the OpenStack dashboard, you can only manage containers and
 objects.
 
 In OpenStack Object Storage, containers provide storage for objects in a
