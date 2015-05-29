@@ -611,17 +611,14 @@ storage_vnx_authentication_type = ldap</programlisting>
     </section>
     <section xml:id="emc-vnx-direct-multipool">
         <title>Multiple pools support</title>
-        <para>Normally a storage pool is configured for a Block Storage back end (named
-            as pool-based back end), so that only that storage pool will be used
-            by that Block Storage back end.</para>
+        <para>The user configures a storage pool for a Block Storage back end (named
+            as pool-based back end), so that the Block Storage back end uses only that
+            storage pool.</para>
         <para>If <literal>storage_vnx_pool_name</literal> is not given in the
-            configuration file, the driver will allow user to use the extra spec key
-            <literal>storagetype:pool</literal> in the volume type to specify the
-            storage pool for volume creation. If <literal>storagetype:pool</literal>
-            is not specified in the volume type and <literal>storage_vnx_pool_name</literal>
-            is not found in the configuration file, the driver will randomly
-            choose a pool to create the volume. This kind of Block Storage back end is
-            named as array-based back end.</para>
+            configuration file, the Block Storage back end uses all the pools on the VNX array,
+            and the scheduler chooses the pool to place the volume based on its capacities and
+            capabilities. This kind of Block Storage back end is named as
+            array-based back end.</para>
         <para>Here is an example about configuration of array-based back end:</para>
         <programlisting language="ini">san_ip = 10.10.72.41
 #Directory path that contains the VNX security file. Make sure the security file is generated first
@@ -639,12 +636,7 @@ volume_backend_name = vnx_41</programlisting>
         <para>Here is an example about creating the volume type:</para>
         <screen><prompt>$</prompt> <userinput
             >cinder type-create "HighPerf"</userinput>
-<prompt>$</prompt> <userinput>cinder type-key "HighPerf" set storagetype:pool=Pool_02_SASFLASH volume_backend_name=vnx_41</userinput></screen>
-        <para>Multiple pool support is still an experimental workaround before
-            blueprint pool-aware-cinder-scheduler is introduced. It is NOT recommended
-            to enable this feature since Juno just supports pool-aware-cinder-scheduler.
-            In later driver update, the driver side change which cooperates with
-            pool-aware-cinder-scheduler will be introduced.</para>
+<prompt>$</prompt> <userinput>cinder type-key "HighPerf" set pool_name=Pool_02_SASFLASH volume_backend_name=vnx_41</userinput></screen>
     </section>
         <section xml:id="emc-vnx-direct-vol-num-threshold">
         <title>Volume number threshold</title>
