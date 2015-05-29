@@ -5,8 +5,8 @@
   version="5.0"
   xml:id="volume-migration">
     <title>Migrate volumes</title>
-    <para>OpenStack has the ability to
-        migrate volumes between back-ends. Migrating a volume
+    <para>OpenStack has the ability to migrate volumes between
+        back-ends which support its volume-type. Migrating a volume
         transparently moves its data from the current back-end for the
         volume to a new one. This is an administrator function, and
         can be used for functions including storage evacuation (for
@@ -47,9 +47,26 @@
         migrates an attached volume from one to the other. This
         scenario uses the third migration flow.</para>
     <para>First, list the available back-ends:</para>
+    <screen><prompt>#</prompt> <userinput>cinder get-pools</userinput>
+<computeroutput>+----------+----------------------------------------------------+
+| Property |                       Value                        |
++----------+----------------------------------------------------+
+|   name   |           server1@lvmstorage-1#lvmstorage-1        |
++----------+----------------------------------------------------+
++----------+----------------------------------------------------+
+| Property |                      Value                         |
++----------+----------------------------------------------------+
+|   name   |           server2@lvmstorage-2#lvmstorage-2        |
++----------+----------------------------------------------------+
+</computeroutput></screen>
+    <note>
+        <para>Only Block Storage V2 API supports <command>get-pools</command>.</para>
+    </note>
+    <para>You can also get available back-ends like following:</para>
     <screen><prompt>#</prompt> <userinput>cinder-manage host list</userinput>
 <computeroutput>server1@lvmstorage-1    zone1
 server2@lvmstorage-2    zone1</computeroutput></screen>
+    <para>But it needs to add pool name in the end. For example, <literal>server1@lvmstorage-1#zone1</literal>.</para>
     <para>Next, as the admin user, you can see the current status of
         the volume (replace the example ID with your own):</para>
     <screen><prompt>$</prompt> <userinput>cinder show 6088f80a-f116-4331-ad48-9afb0dfb196c</userinput>
@@ -64,7 +81,7 @@ server2@lvmstorage-2    zone1</computeroutput></screen>
 |          display_name          |                 test                 |
 |               id               | 6088f80a-f116-4331-ad48-9afb0dfb196c |
 |            metadata            |                  {}                  |
-|     os-vol-host-attr:host      |         server1@lvmstorage-1         |
+|     os-vol-host-attr:host      | server1@lvmstorage-1#lvmstorage-1    |
 | os-vol-mig-status-attr:migstat |                 None                 |
 | os-vol-mig-status-attr:name_id |                 None                 |
 |  os-vol-tenant-attr:tenant_id  |   6bdd8f41203e4149b5d559769307365e   |
@@ -141,7 +158,7 @@ server2@lvmstorage-2    zone1</computeroutput></screen>
 |          display_name          |                 test                 |
 |               id               | 6088f80a-f116-4331-ad48-9afb0dfb196c |
 |            metadata            |                  {}                  |
-|     os-vol-host-attr:host      |         server2@lvmstorage-2         |
+|     os-vol-host-attr:host      |  server2@lvmstorage-2#lvmstorage-2   |
 | os-vol-mig-status-attr:migstat |                 None                 |
 | os-vol-mig-status-attr:name_id | 133d1f56-9ffc-4f57-8798-d5217d851862 |
 |  os-vol-tenant-attr:tenant_id  |   6bdd8f41203e4149b5d559769307365e   |
