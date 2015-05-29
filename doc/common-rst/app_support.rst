@@ -121,10 +121,10 @@ The `OpenStack wiki <http://wiki.openstack.org/>`__ contains a broad
 range of topics but some of the information can be difficult to find or
 is a few pages deep. Fortunately, the wiki search feature enables you to
 search by title or content. If you search for specific information, such
-as about networking or nova, you can find a large amount of relevant
-material. More is being added all the time, so be sure to check back
-often. You can find the search box in the upper-right corner of any
-OpenStack wiki page.
+as about networking or OpenStack Compute, you can find a large amount
+of relevant material. More is being added all the time, so be sure to
+check back often. You can find the search box in the upper-right corner
+of any OpenStack wiki page.
 
 The Launchpad Bugs area
 ~~~~~~~~~~~~~~~~~~~~~~~
