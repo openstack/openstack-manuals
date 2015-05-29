@@ -26,16 +26,16 @@ bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`__.
 The following books explain how to install an OpenStack cloud and its
 associated components:
 
--  `Installation Guide for openSUSE 13.1 and SUSE Linux Enterprise
-   Server 11
-   SP3 <http://docs.openstack.org/juno/install-guide/install/zypper/content/>`__
+-  `Installation Guide for openSUSE 13.2 and SUSE Linux Enterprise
+   Server 12
+   <http://docs.openstack.org/kilo/install-guide/install/zypper/content/>`__
 
 -  `Installation Guide for Red Hat Enterprise Linux 7, CentOS 7, and
    Fedora
-   20 <http://docs.openstack.org/juno/install-guide/install/yum/content/>`__
+   21 <http://docs.openstack.org/kilo/install-guide/install/yum/content/>`__
 
 -  `Installation Guide for Ubuntu
-   14.04 <http://docs.openstack.org/juno/install-guide/install/apt/content/>`__
+   14.04 <http://docs.openstack.org/kilo/install-guide/install/apt/content/>`__
 
 The following books explain how to configure and run an OpenStack cloud:
 
