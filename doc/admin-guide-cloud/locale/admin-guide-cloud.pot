@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-05-28 06:09+0000\n"
+"POT-Creation-Date: 2015-05-29 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11953,7 +11953,7 @@ msgid "Migrate volumes"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:8(para)
-msgid "OpenStack has the ability to migrate volumes between back-ends. Migrating a volume transparently moves its data from the current back-end for the volume to a new one. This is an administrator function, and can be used for functions including storage evacuation (for maintenance or decommissioning), or manual optimizations (for example, performance, reliability, or cost)."
+msgid "OpenStack has the ability to migrate volumes between back-ends which support its volume-type. Migrating a volume transparently moves its data from the current back-end for the volume to a new one. This is an administrator function, and can be used for functions including storage evacuation (for maintenance or decommissioning), or manual optimizations (for example, performance, reliability, or cost)."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:15(para)
@@ -11984,59 +11984,71 @@ msgstr ""
 msgid "First, list the available back-ends:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:53(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:63(para)
+msgid "Only Block Storage V2 API supports <placeholder-1/>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:65(para)
+msgid "You can also get available back-ends like following:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:69(para)
+msgid "But it needs to add pool name in the end. For example, <literal>server1@lvmstorage-1#zone1</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:70(para)
 msgid "Next, as the admin user, you can see the current status of the volume (replace the example ID with your own):"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:77(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:94(para)
 msgid "Note these attributes:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:80(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:97(para)
 msgid "<literal>os-vol-host-attr:host</literal> - the volume's current back-end."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:84(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:101(para)
 msgid "<literal>os-vol-mig-status-attr:migstat</literal> - the status of this volume's migration (<literal>None</literal> means that a migration is not currently in progress)."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:89(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:106(para)
 msgid "<literal>os-vol-mig-status-attr:name_id</literal> - the volume ID that this volume's name on the back-end is based on. Before a volume is ever migrated, its name on the back-end storage may be based on the volume's ID (see the <placeholder-1/> configuration parameter). For example, if <placeholder-2/> is kept as the default value (<literal>volume-%s</literal>), your first LVM back-end has a logical volume named <literal>volume-6088f80a-f116-4331-ad48-9afb0dfb196c</literal>. During the course of a migration, if you create a volume and copy over the data, the volume get the new name but keeps its original ID. This is exposed by the <literal>name_id</literal> attribute."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:107(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:124(para)
 msgid "If you plan to decommission a block storage node, you must stop the <systemitem class=\"service\">cinder</systemitem> volume service on the node after performing the migration."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:110(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:127(para)
 msgid "On nodes that run CentOS, Fedora, openSUSE, Red Hat Enterprise Linux, or SUSE Linux Enterprise, run:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:115(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:132(para)
 msgid "On nodes that run Ubuntu or Debian, run:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:119(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:136(para)
 msgid "Stopping the <systemitem>cinder</systemitem> volume service will prevent volumes from being allocated to the node."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:122(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:139(para)
 msgid "Migrate this volume to the second LVM back-end:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:124(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:141(para)
 msgid "You can use the <placeholder-1/> command to see the status of the migration. While migrating, the <literal>migstat</literal> attribute shows states such as <literal>migrating</literal> or <literal>completing</literal>. On error, <literal>migstat</literal> is set to <literal>None</literal> and the <literal>host</literal> attribute shows the original host. On success, in this example, the output looks like:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:154(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:171(para)
 msgid "Note that <literal>migstat</literal> is None, <literal>host</literal> is the new host, and <literal>name_id</literal> holds the ID of the volume created by the migration. If you look at the second LVM back end, you find the logical volume <literal>volume-133d1f56-9ffc-4f57-8798-d5217d851862</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:161(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:178(para)
 msgid "The migration is not visible to non-admin users (for example, through the volume <literal>status</literal>). However, some operations are not allowed while a migration is taking place, such as attaching/detaching a volume and deleting a volume. If a user performs such an action during a migration, an error is returned."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:169(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-migration.xml:186(para)
 msgid "Migrating volumes that have snapshots are currently not allowed."
 msgstr ""
 
