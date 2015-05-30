@@ -20,7 +20,7 @@ Environment file format
 The environment is a yaml text file that contains two main sections:
 
 ``parameters``
-    A map of key/pair values.
+    A list of key/value pairs.
 
 ``resource_registry``
     Definition of custom resources.
