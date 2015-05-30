@@ -227,16 +227,16 @@
              <para>A persistent volume is represented by a persistent virtualized block device
                  independent of any particular instance, and provided by OpenStack Block Storage.</para>
 
-             <para>A persistent volume is created by a user, and its size
-                 is limited only by a user's quota and availability
-                 limits. Upon initial creation, a volume is a raw block
-                 device without a partition table or a file system. To
-                 partition or format a volume, you must attach it to an
-                 instance. Once it is attached, it can be used
-                 the same way as an external hard disk drive.
-                 A single volume can be attached to one instance at a time,
-                 though you can detach and reattach it to other instances
-                 as many times as required.</para>
+             <para>Only a single configured instance can access a persistent
+                 volume. Multiple instances cannot access a persistent
+                 volume. This type of configuration requires a traditional
+                 network file system to allow multiple instances
+                 accessing the persistent volume. It also requires a
+                 traditional network file system like NFS, CIFS, or a
+                 cluster file system such as GlusterFS. These systems can be
+                 built within an OpenStack cluster, or provisioned outside
+                 of it, but OpenStack software does not provide these
+                 features.</para>
 
              <para>You can configure a persistent volume as bootable and use
                  it to provide a persistent virtual instance similar to
@@ -343,11 +343,12 @@
                  instance that starts from a known template state and loses
                  all accumulated states on virtual machine deletion. It is
                  also possible to put an operating system on a persistent
-                 volume in the Cinder volume system. This gives a more
-                 traditional persistent system that accumulates states,
-                 which are preserved on the Cinder volume across the
-                 deletion and re-creation of the virtual machine. To get a
-                 list of available images on your system run:
+                 volume in the OpenStack Block Storage volume system. This
+                 gives a more traditional persistent system that
+                 accumulates states which are preserved on the OpenStack
+                 Block Storage volume across the deletion and re-creation
+                 of the virtual machine. To get a list of available images
+                 on your system, run:
                  <screen><prompt>$</prompt> <userinput>nova image-list</userinput>
 <?db-font-size 50%?><computeroutput>+--------------------------------------+-------------------------------+--------+--------------------------------------+
 | ID                                   | Name                          | Status | Server                               |
