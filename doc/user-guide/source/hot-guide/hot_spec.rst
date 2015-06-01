@@ -384,7 +384,7 @@ In addition to parameters defined by a template author, the Orchestration
 module also creates two parameters for every stack that allow referential
 access to the stack's name and identifier. These parameters are named
 ``OS::stack_name`` for the stack name and ``OS::stack_id`` for the stack
-identifier. These values are accessible via the `:code:`get_param` intrinsic
+identifier. These values are accessible via the :code:`get_param` intrinsic
 function, just like user-defined parameters.
 
 .. _hot_spec_resources:
