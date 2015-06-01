@@ -84,8 +84,8 @@ project::
 
 .. note::
 
-  You must set the ``OS\_CACERT`` environment variable when using the
-  https protocol in the ``OS\_AUTH\_URL`` environment setting because
+  You must set the ``OS_CACERT`` environment variable when using the
+  https protocol in the ``OS_AUTH_URL`` environment setting because
   the verification process for the TLS (HTTPS) server certificate uses
   the one indicated in the environment. This certificate will be used
   when verifying the TLS (HTTPS) server certificate.
