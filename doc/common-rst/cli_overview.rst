@@ -46,7 +46,7 @@ service with its package name and description.
 |                |          |                       |endpoints, and          |
 |                |          |                       |credentials.            |
 +----------------+----------+-----------------------+------------------------+
-|Image Service   |glance    |python-glanceclient    |Create and manage       |
+|Image service   |glance    |python-glanceclient    |Create and manage       |
 |                |          |                       |images.                 |
 +----------------+----------+-----------------------+------------------------+
 |Networking      |neutron   |python-neutronclient   |Configure networks for  |

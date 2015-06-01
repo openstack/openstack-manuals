@@ -65,7 +65,7 @@ Before you can launch an instance, gather the following parameters:
 After you gather the parameters that you need to launch an instance, you
 can launch it from an image_ or a :ref:`volume`. You can launch an instance directly
 from one of the available OpenStack images or from an image that you have
-copied to a persistent volume. The OpenStack Image Service provides a
+copied to a persistent volume. The OpenStack Image service provides a
 pool of images that are accessible to members of different projects.
 
 Gather parameters to launch an instance
