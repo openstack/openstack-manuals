@@ -4,7 +4,7 @@ Launch and manage instances
 Instances are virtual machines that run inside the cloud. You can launch
 an instance from the following sources:
 
--  Images uploaded to the OpenStack Image Service.
+-  Images uploaded to the OpenStack Image service.
 
 -  Image that you have copied to a persistent volume. The instance
    launches from the volume, which is provided by the ``cinder-volume``
@@ -33,7 +33,7 @@ copy of the image on the compute node where the instance starts.
 #. Log in to the dashboard, choose a project, and click :guilabel:`Images`.
 
    The dashboard shows the images that have been uploaded to OpenStack
-   Image Service and are available for this project.
+   Image service and are available for this project.
 
    For details on creating images, see `Creating images
    manually <http://docs.openstack.org/image-guide/content/ch_creating_images_manually.html>`__

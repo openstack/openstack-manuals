@@ -146,7 +146,7 @@ for each client. The following values are valid:
 
 -  ``cinder`` - Block Storage API and extensions
 
--  ``glance`` - Image Service API
+-  ``glance`` - Image service API
 
 -  ``heat`` - Orchestration API
 

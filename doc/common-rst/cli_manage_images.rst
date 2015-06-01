@@ -6,7 +6,7 @@ The cloud operator assigns roles to users. Roles determine who can
 upload and manage images. The operator might restrict image upload and
 management to only cloud administrators or operators.
 
-You can upload images through the ``glance`` client or the Image Service
+You can upload images through the ``glance`` client or the Image service
 API. Besides, you can use the ``nova`` client for the image management.
 The latter provides mechanisms to list and delete images, set and delete
 image metadata, and create images of a running instance of snapshot and
@@ -102,7 +102,7 @@ list, as follows::
           "mountpoint": "/var/lib/glance/images/"
       }]
 
-   After you restart the Image Service, you can use the following syntax to view the image's location information::
+   After you restart the Image service, you can use the following syntax to view the image's location information::
 
    $ glance --os-image-api-version 2 image-show imageID
 
@@ -127,7 +127,7 @@ To update an image by name or ID, use ``glance image-update``:
 
 The following table lists the optional arguments that you can use with
 the ``create`` and ``update`` commands to modify image properties. For
-more information, refer to Image Service chapter in the `OpenStack
+more information, refer to Image service chapter in the `OpenStack
 Command-Line Interface
 Reference <http://docs.openstack.org/cli-reference/content/index.html>`__.
 
@@ -256,7 +256,7 @@ in the following tables.
 Troubleshoot image creation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you encounter problems in creating an image in Image Service or
+If you encounter problems in creating an image in Image service or
 Compute, the following information may help you troubleshoot the
 creation process.
 

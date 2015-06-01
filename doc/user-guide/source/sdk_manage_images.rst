@@ -102,7 +102,7 @@ To retrieve an image object from its ID, call the
 Get image by name
 ~~~~~~~~~~~~~~~~~
 
-The Image Service Python bindings do not support the retrieval of an
+The Image service Python bindings do not support the retrieval of an
 image object by name. However, the Compute Python bindings enable you to
 get an image object by name. To get an image object by name, call the
 ``novaclient.v1\_1.images.ImageManager.find`` method:

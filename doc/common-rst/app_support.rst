@@ -164,7 +164,7 @@ The following Launchpad Bugs areas are available:
 -  `Bugs: OpenStack Identity
    (keystone) <https://bugs.launchpad.net/keystone>`__
 
--  `Bugs: OpenStack Image Service
+-  `Bugs: OpenStack Image service
    (glance) <https://bugs.launchpad.net/glance>`__
 
 -  `Bugs: OpenStack Networking
