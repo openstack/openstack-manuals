@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-05-29 06:09+0000\n"
+"POT-Creation-Date: 2015-06-01 06:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1255,7 +1255,7 @@ msgid "A persistent volume is represented by a persistent virtualized block devi
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:230(para)
-msgid "A persistent volume is created by a user, and its size is limited only by a user's quota and availability limits. Upon initial creation, a volume is a raw block device without a partition table or a file system. To partition or format a volume, you must attach it to an instance. Once it is attached, it can be used the same way as an external hard disk drive. A single volume can be attached to one instance at a time, though you can detach and reattach it to other instances as many times as required."
+msgid "Only a single configured instance can access a persistent volume. Multiple instances cannot access a persistent volume. This type of configuration requires a traditional network file system to allow multiple instances accessing the persistent volume. It also requires a traditional network file system like NFS, CIFS, or a cluster file system such as GlusterFS. These systems can be built within an OpenStack cluster, or provisioned outside of it, but OpenStack software does not provide these features."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:241(para)
@@ -1323,134 +1323,134 @@ msgid "Building blocks"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_compute.xml:340(para)
-msgid "In OpenStack the base operating system is usually copied from an image stored in the OpenStack Image service. This is the most common case and results in an ephemeral instance that starts from a known template state and loses all accumulated states on virtual machine deletion. It is also possible to put an operating system on a persistent volume in the Cinder volume system. This gives a more traditional persistent system that accumulates states, which are preserved on the Cinder volume across the deletion and re-creation of the virtual machine. To get a list of available images on your system run: <placeholder-1/>"
+msgid "In OpenStack the base operating system is usually copied from an image stored in the OpenStack Image service. This is the most common case and results in an ephemeral instance that starts from a known template state and loses all accumulated states on virtual machine deletion. It is also possible to put an operating system on a persistent volume in the OpenStack Block Storage volume system. This gives a more traditional persistent system that accumulates states which are preserved on the OpenStack Block Storage volume across the deletion and re-creation of the virtual machine. To get a list of available images on your system, run: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:360(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:25(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:361(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:25(para)
 msgid "The displayed image attributes are:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:363(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:28(literal) ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:572(replaceable)
+#: ./doc/admin-guide-cloud/ch_compute.xml:364(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:28(literal) ./doc/admin-guide-cloud/compute/section_compute-networking-nova.xml:572(replaceable)
 msgid "ID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:365(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:366(para)
 msgid "Automatically generated UUID of the image"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:370(literal) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-vpnaas.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-swift.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ironic.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-magnetodb.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ipmi.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-kwapi.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova-host.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-heat.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-neutron.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ceph.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-keystone.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sahara.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-lbaas.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-fwaas.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-glance.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:14(td) ./doc/admin-guide-cloud/blockstorage/section_ts_eql_volume_size.xml:111(entry) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:34(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:371(literal) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-vpnaas.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sdn.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-swift.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ironic.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-magnetodb.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ipmi.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-kwapi.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-snmp.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova-host.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-cinder.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-heat.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-neutron.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-ceph.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-keystone.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-sahara.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-lbaas.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-fwaas.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-glance.xml:13(td) ./doc/admin-guide-cloud/telemetry/tables/ceilometer-measurements-nova.xml:14(td) ./doc/admin-guide-cloud/blockstorage/section_ts_eql_volume_size.xml:111(entry) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:34(literal)
 msgid "Name"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:372(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:373(para)
 msgid "Free form, human-readable name for image"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:377(literal) ./doc/admin-guide-cloud/blockstorage/section_ts_eql_volume_size.xml:112(entry) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:40(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:378(literal) ./doc/admin-guide-cloud/blockstorage/section_ts_eql_volume_size.xml:112(entry) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:40(literal)
 msgid "Status"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:379(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:42(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:380(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:42(para)
 msgid "The status of the image. Images marked <literal>ACTIVE</literal> are available for use."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:385(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:48(literal)
+#: ./doc/admin-guide-cloud/ch_compute.xml:386(literal) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:48(literal)
 msgid "Server"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:387(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:50(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:388(para) ./doc/admin-guide-cloud/compute/section_compute-instance-building-blocks.xml:50(para)
 msgid "For images that are created as snapshots of running instances, this is the UUID of the instance the snapshot derives from. For uploaded images, this field is blank."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:394(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:395(para)
 msgid "Virtual hardware templates are called <literal>flavors</literal>. The default installation provides five flavors. By default, these are configurable by admin users, however that behavior can be changed by redefining the access controls for <literal>compute_extension:flavormanage</literal> in <filename>/etc/nova/policy.json</filename> on the <filename>compute-api</filename> server."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:402(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:403(para)
 msgid "For a list of flavors that are available on your system:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:416(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:417(title)
 msgid "Compute service architecture"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:417(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:418(para)
 msgid "These basic categories describe the service architecture and information about the cloud controller."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:420(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:421(title)
 msgid "API server"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:421(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:422(para)
 msgid "At the heart of the cloud framework is an API server, which makes command and control of the hypervisor, storage, and networking programmatically available to users."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:424(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:425(para)
 msgid "The API endpoints are basic HTTP web services which handle authentication, authorization, and basic command and control functions using various API interfaces under the Amazon, Rackspace, and related models. This enables API compatibility with multiple existing tool sets created for interaction with offerings from other vendors. This broad compatibility prevents vendor lock-in."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:435(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:436(title)
 msgid "Message queue"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:436(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:437(para)
 msgid "A messaging queue brokers the interaction between compute nodes (processing), the networking controllers (software which controls network infrastructure), API endpoints, the scheduler (determines which physical hardware to allocate to a virtual resource), and similar components. Communication to and from the cloud controller is handled by HTTP requests through multiple API endpoints."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:445(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:446(para)
 msgid "A typical message passing event begins with the API server receiving a request from a user. The API server authenticates the user and ensures that they are permitted to issue the subject command. The availability of objects implicated in the request is evaluated and, if available, the request is routed to the queuing engine for the relevant workers. Workers continually listen to the queue based on their role, and occasionally their type host name. When an applicable work request arrives on the queue, the worker takes assignment of the task and begins executing it. Upon completion, a response is dispatched to the queue which is received by the API server and relayed to the originating user. Database entries are queried, added, or removed as necessary during the process."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:461(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:462(title)
 msgid "Compute worker"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:462(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:463(para)
 msgid "Compute workers manage computing instances on host machines. The API dispatches commands to compute workers to complete these tasks:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:467(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:468(para)
 msgid "Run instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:470(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:471(para)
 msgid "Terminate instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:473(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:474(para)
 msgid "Reboot instances"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:476(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:477(para)
 msgid "Attach volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:479(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:480(para)
 msgid "Detach volumes"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:482(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:483(para)
 msgid "Get console output"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:487(title)
+#: ./doc/admin-guide-cloud/ch_compute.xml:488(title)
 msgid "Network Controller"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:488(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:489(para)
 msgid "The Network Controller manages the networking resources on host machines. The API server dispatches commands through the message queue, which are subsequently processed by Network Controllers. Specific operations include:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:495(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:496(para)
 msgid "Allocate fixed IP addresses"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:498(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:499(para)
 msgid "Configuring VLANs for projects"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/ch_compute.xml:501(para)
+#: ./doc/admin-guide-cloud/ch_compute.xml:502(para)
 msgid "Configuring networks for compute nodes"
 msgstr ""
 
