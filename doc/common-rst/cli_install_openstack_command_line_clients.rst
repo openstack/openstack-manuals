@@ -35,8 +35,9 @@ command-line clients, and provides installation instructions as needed.
 |                       | (https://pypi.python.org/pypi/setuptools#windows).  |
 |                       | Another option is to use the unofficial binary      |
 |                       | installer maintained by Christoph Gohlke            |
-|                       | (http://www.lfd.uci.edu/~gohlke/pythonlibs/         |
-|                       | #setuptools).                                       |
+|                       | (`http://www.lfd.uci.edu/~gohlke/pythonlibs/        |
+|                       | #setuptools <http://www.lfd.uci.edu/~gohlke/        |
+|                       | pythonlibs/#setuptools>`__).                        |
 +-----------------------+-----------------------------------------------------+
 | pip package           | To install the clients on a Linux, Mac OS X, or     |
 |                       | Microsoft Windows system, use pip. It is easy to    |
@@ -100,8 +101,10 @@ command-line clients, and provides installation instructions as needed.
 |                       | **SUSE Linux Enterprise Linux 11**                  |
 |                       |                                                     |
 |                       | A packaged version available in the Open Build      |
-|                       | Service (https://build.opensuse.org/package/show?   |
-|                       | package=python-pip&project=Cloud:OpenStack:Master)  |
+|                       | Service (`https://build.opensuse.org/package/show?  |
+|                       | package=python-pip&project=Cloud:OpenStack:Master   |
+|                       | <https://build.opensuse.org/package/show?package=pyt|
+|                       | hon-pip&project=Cloud:OpenStack:Master>`__)         |
 |                       | enables you to use or zypper to install the package.|
 |                       | First, add the Open Build Service repository:       |
 |                       |                                                     |
