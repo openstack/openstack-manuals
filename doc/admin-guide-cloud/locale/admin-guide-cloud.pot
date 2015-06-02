@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-06-01 06:10+0000\n"
+"POT-Creation-Date: 2015-06-02 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12112,7 +12112,7 @@ msgstr ""
 msgid "You can, however, export the metadata of a volume backup. To do so, run this command as an OpenStack <literal>admin</literal> user (presumably, after creating a volume backup):"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml:15(replaceable) ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:15(replaceable)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups-export-import.xml:15(replaceable) ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:39(replaceable)
 msgid "BACKUP_ID"
 msgstr ""
 
@@ -12165,66 +12165,94 @@ msgid "VOLUME"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:13(para)
-msgid "Where <replaceable>VOLUME</replaceable> is the name or ID of the volume."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:14(para)
-msgid "This command also returns a backup ID. Use this backup ID when restoring the volume:"
+msgid "Where <replaceable>VOLUME</replaceable> is the name or ID of the volume, and <placeholder-1/> is a flag that indicates whether an incremental backup should be performed."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:16(para)
-msgid "Because volume backups are dependent on the Block Storage database, you must also back up your Block Storage database regularly to ensure data recovery."
+msgid "Without the <placeholder-1/> flag, a full backup is created by default. With the <placeholder-2/> flag, an incremental backup is created."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:19(para)
-msgid "Alternatively, you can export and save the metadata of selected volume backups. Doing so precludes the need to back up the entire Block Storage database. This is useful if you need only a small subset of volumes to survive a catastrophic database failure."
+msgid "The <placeholder-1/> flag is only available for block storage API v2. You have to specify [--os-volume-api-version 2] in the <placeholder-2/> command-line interface to use this parameter."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:22(para)
-msgid "If you specify a UUID encryption key when setting up the volume specifications, the backup metadata ensures that the key will remain valid when you back up and restore the volume."
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:23(para)
+msgid "The incremental backup is based on a parent backup which is an existing backup with the latest timestamp. The parent backup can be a full backup or an incremental backup depending on the timestamp."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:25(para)
-msgid "For more information about how to export and import volume backup metadata, see <xref linkend=\"volume-backup-restore-export-import\"/>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:28(para)
-msgid "By default, the swift object store is used for the backup repository."
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:26(para)
+msgid "The first backup of a volume has to be a full backup. Attempting to do an incremental backup without any existing backups will fail."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:29(para)
-msgid "If instead you want to use an NFS export as the backup repository, add the following configuration options to the <literal>[DEFAULT]</literal> section of the <filename>cinder.conf</filename> file and restart the Block Storage services:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:37(replaceable) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:105(replaceable) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:121(replaceable) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:53(replaceable)
-msgid "HOST"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:37(replaceable)
-msgid "EXPORT_PATH"
+msgid "A new configure option <placeholder-1/> is introduced into <filename>cinder.conf</filename> for the default Swift backup driver. This is the size in bytes that changes are tracked for incremental backups. The existing <placeholder-2/> option, the size in bytes of Swift backup objects, has to be a multiple of <placeholder-3/>. The default is 32768 for <placeholder-4/>, and the default is 52428800 for <placeholder-5/>."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:38(para)
-msgid "For the <placeholder-1/> option, replace <replaceable>HOST</replaceable> with the DNS resolvable host name or the IP address of the storage server for the NFS share, and <replaceable>EXPORT_PATH</replaceable> with the path to that share. If your environment requires that non-default mount options be specified for the share, set these as follows:"
+msgid "This command also returns a backup ID. Use this backup ID when restoring the volume:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:46(replaceable)
-msgid "MOUNT_OPTIONS"
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:40(para)
+msgid "When restoring from a full backup, it is a full restore."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:47(para)
-msgid "<replaceable>MOUNT_OPTIONS</replaceable> is a comma-separated string of NFS mount options as detailed in the NFS man page."
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:41(para)
+msgid "When restoring from an incremental backup, a list of backups is built based on the IDs of the parent backups. A full restore is performed based on the full backup first, then restore is done based on the incremental backup, laying on top of it in order."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:45(para)
+msgid "Because volume backups are dependent on the Block Storage database, you must also back up your Block Storage database regularly to ensure data recovery."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:48(para)
+msgid "Alternatively, you can export and save the metadata of selected volume backups. Doing so precludes the need to back up the entire Block Storage database. This is useful if you need only a small subset of volumes to survive a catastrophic database failure."
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:51(para)
+msgid "If you specify a UUID encryption key when setting up the volume specifications, the backup metadata ensures that the key will remain valid when you back up and restore the volume."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:54(para)
+msgid "For more information about how to export and import volume backup metadata, see <xref linkend=\"volume-backup-restore-export-import\"/>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:57(para)
+msgid "By default, the swift object store is used for the backup repository."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:58(para)
+msgid "If instead you want to use an NFS export as the backup repository, add the following configuration options to the <literal>[DEFAULT]</literal> section of the <filename>cinder.conf</filename> file and restart the Block Storage services:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:66(replaceable) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:105(replaceable) ./doc/admin-guide-cloud/blockstorage/section_glusterfs_backend.xml:121(replaceable) ./doc/admin-guide-cloud/blockstorage/section_nfs_backend.xml:53(replaceable)
+msgid "HOST"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:66(replaceable)
+msgid "EXPORT_PATH"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:67(para)
+msgid "For the <placeholder-1/> option, replace <replaceable>HOST</replaceable> with the DNS resolvable host name or the IP address of the storage server for the NFS share, and <replaceable>EXPORT_PATH</replaceable> with the path to that share. If your environment requires that non-default mount options be specified for the share, set these as follows:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:75(replaceable)
+msgid "MOUNT_OPTIONS"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:76(para)
+msgid "<replaceable>MOUNT_OPTIONS</replaceable> is a comma-separated string of NFS mount options as detailed in the NFS man page."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:80(para)
 msgid "There are several other options whose default values may be overriden as appropriate for your environment:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:56(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:85(para)
 msgid "The option <placeholder-1/> can be set to <literal>bz2</literal> or <literal>None</literal>. The latter can be a useful setting when the server providing the share for the backup repository itself performs deduplication or compression on the backup data."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:63(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume-backups.xml:92(para)
 msgid "The option <placeholder-1/> must be a multiple of <placeholder-2/>. It is effectively the maximum file size to be used, given your environment, to hold backup data. Volumes larger than this will be stored in multiple files in the backup repository. The <placeholder-3/> option determines the size of blocks from the cinder volume being backed up on which digital signatures are calculated in order to enable incremental backup capability."
 msgstr ""
 

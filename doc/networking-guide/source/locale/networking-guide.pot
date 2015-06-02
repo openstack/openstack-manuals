@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-30 06:11+0000\n"
+"POT-Creation-Date: 2015-06-02 06:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3192,6 +3192,18 @@ msgstr ""
 msgid "DHCP agents"
 msgstr ""
 
+#: ../intro_basic_networking.rst:205
+msgid ""
+"DHCP clients locate the DHCP server by sending a UDP_ packet from port 68 to "
+"address ``255.255.255.255`` on port 67. Address ``255.255.255.255`` is the "
+"local network broadcast address: all hosts on the local network will see the "
+"UDP packets sent to this address. However, such packets will not be "
+"forwarded to other networks. Consequently, the DHCP server must be on the "
+"same local network as the client, or the server will not receive the "
+"broadcast. The DHCP server will respond by sending a UDP packet from port 67 "
+"to port 68 on the client. The exchange looks like this:"
+msgstr ""
+
 #: ../common/glossary.rst:1152
 msgid "DNS"
 msgstr ""
@@ -4170,6 +4182,13 @@ msgstr ""
 msgid "Host Bus Adapter (HBA)"
 msgstr ""
 
+#: ../intro_basic_networking.rst:201
+msgid ""
+"Hosts connected to a network use the Dynamic Host Configuration Protocol (:"
+"term:`DHCP`) to dynamically obtain IP addresses. A DHCP server hands out the "
+"IP addresses to network hosts, which are the DHCP clients."
+msgstr ""
+
 #: ../adv_config_group_policy.rst:9
 msgid "How it differs from legacy neutron data model"
 msgstr ""
@@ -4209,7 +4228,7 @@ msgstr ""
 msgid "ICMP"
 msgstr ""
 
-#: ../intro_basic_networking.rst:205
+#: ../intro_basic_networking.rst:243
 msgid "ICMP/TCP/UDP"
 msgstr ""
 
@@ -4240,7 +4259,7 @@ msgid ""
 "drives, solid state drives, and storage area networks."
 msgstr ""
 
-#: ../intro_basic_networking.rst:202
+#: ../intro_basic_networking.rst:238
 msgid "IP"
 msgstr ""
 
@@ -6325,6 +6344,13 @@ msgstr ""
 msgid ""
 "OpenStack supports encryption technologies such as HTTPS, SSH, SSL, TLS, "
 "digital certificates, and data encryption."
+msgstr ""
+
+#: ../intro_basic_networking.rst:220
+msgid ""
+"OpenStack uses a third-party program called dnsmasq_ to implement the DHCP "
+"server. Dnsmasq writes to the syslog (normally found at /var/log/syslog), "
+"where you can observe the DHCP request and replies::"
 msgstr ""
 
 #: ../common/glossary.rst:3520
@@ -8745,6 +8771,18 @@ msgid ""
 "Object Storage, local file system, S3, or HTTP."
 msgstr ""
 
+#: ../intro_basic_networking.rst:214
+msgid ""
+"The client sends a discover (\"I’m a client at MAC address ``08:00:27:"
+"b9:88:74``, I need an IP address\")"
+msgstr ""
+
+#: ../intro_basic_networking.rst:216
+msgid ""
+"The client sends a request (\"Server ``10.10.0.131``, I would like to have "
+"IP ``10.10.0.112``\")"
+msgstr ""
+
 #: ../common/glossary.rst:1635
 msgid ""
 "The code name for the eighth release of OpenStack. The design summit took "
@@ -9844,6 +9882,18 @@ msgid ""
 "*TG2*."
 msgstr ""
 
+#: ../intro_basic_networking.rst:217
+msgid ""
+"The server sends an acknowledgement (\"OK ``08:00:27:b9:88:74``, IP "
+"``10.10.0.112`` is yours\")"
+msgstr ""
+
+#: ../intro_basic_networking.rst:215
+msgid ""
+"The server sends an offer (\"OK ``08:00:27:b9:88:74``, I’m offering IP "
+"address ``10.10.0.112``\")"
+msgstr ""
+
 #: ../common/glossary.rst:2260
 msgid ""
 "The software package used to provide AMQP messaging capabilities within "
@@ -10792,6 +10842,13 @@ msgid ""
 "trunking is being used."
 msgstr ""
 
+#: ../intro_basic_networking.rst:229
+msgid ""
+"When troubleshooting an instance that is not reachable over the network, it "
+"can be helpful to examine this log to verify that all four steps of the DHCP "
+"protocol were carried out for the instance in question."
+msgstr ""
+
 #: ../intro_basic_networking.rst:126
 msgid ""
 "While NICs use MAC addresses to address network hosts, TCP/IP applications "
@@ -10929,7 +10986,7 @@ msgstr ""
 
 #: ../common/app_support.rst:167
 msgid ""
-"`Bugs: OpenStack Image Service (glance) <https://bugs.launchpad.net/"
+"`Bugs: OpenStack Image service (glance) <https://bugs.launchpad.net/"
 "glance>`__"
 msgstr ""
 
