@@ -6,6 +6,7 @@ Launch instances
    :maxdepth: 2
 
    cli_nova_launch_instance_from_volume.rst
+   cli_nova_launch_instance_using_ISO_image.rst
 
 Instances are virtual machines that run inside the cloud.
 
