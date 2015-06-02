@@ -141,7 +141,7 @@ Import a key pair
 
 The Compute database registers the public key of the key pair.
 
-The dashboard lists the key pair on the Access & Security tab.
+The dashboard lists the key pair on the :guilabel:`Access & Security` tab.
 
 Allocate a floating IP address to an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -175,10 +175,12 @@ and the association of that address with a specific instance.
 #. In the :guilabel:`Manage Floating IP Associations` dialog box,
    choose the following options:
 
-   -  The IP Address field is filled automatically, but you can add a
-      new IP address by clicking the :guilabel:`+` button.
+   -  The :guilabel:`IP Address` field is filled automatically,
+      but you can add a new IP address by clicking the
+      :guilabel:`+` button.
 
-   -  In the Ports to be associated field, select a port from the list.
+   -  In the :guilabel:`Port to be associated` field, select a port
+      from the list.
 
       The list shows all the instances with their fixed IP addresses.
 
