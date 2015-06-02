@@ -123,14 +123,15 @@ physical_interface_mappings = physnet1:eth0</programlisting>
                                 <filename>/etc/nova/nova.conf</filename>:</para>
                         <programlisting language="ini">[DEFAULT]
 network_api_class=nova.network.neutronv2.api.API
+firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
-neutron_admin_username=neutron
-neutron_admin_password=servicepassword
-neutron_admin_auth_url=http://controlnode:35357/v2.0/
-neutron_auth_strategy=keystone
-neutron_admin_tenant_name=servicetenant
-neutron_url=http://100.1.1.10:9696/
-firewall_driver=nova.virt.firewall.NoopFirewallDriver</programlisting>
+[neutron]
+admin_username=neutron
+admin_password=servicepassword
+admin_auth_url=http://controlnode:35357/v2.0/
+auth_strategy=keystone
+admin_tenant_name=servicetenant
+url=http://100.1.1.10:9696/</programlisting>
                     </step>
             </procedure>
             <procedure>
