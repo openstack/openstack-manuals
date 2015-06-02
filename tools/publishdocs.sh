@@ -68,7 +68,7 @@ fi
 if [ "$PUBLISH" = "publish" ] ; then
     openstack-doc-test --check-build --publish
     # For publishing to both /draft and /BRANCH
-    copy_to_branch kilo
+    # copy_to_branch kilo
 else
     openstack-doc-test --check-build
 fi
