@@ -19,56 +19,12 @@ if [[ -z "$PUBLISH" ]] ; then
     exit 1
 fi
 
-# Copy files from draft to named branch and replace all links from
-# draft with links to the branch
-function copy_to_branch {
-    BRANCH=$1
-
-    if [ -e publish-docs/draft ] ; then
-
-        # Copy files over
-        mkdir -p publish-docs/$BRANCH
-        cp -a publish-docs/draft/* publish-docs/$BRANCH/
-        # We don't need this file
-        rm -f publish-docs/$BRANCH/draft-index.html
-
-        for f in $(find publish-docs/$BRANCH -name "atom.xml"); do
-            sed -i -e "s|/draft/|/$BRANCH/|g" $f
-        done
-        for f in $(find publish-docs/$BRANCH -name "*.html"); do
-            sed -i -e "s|/draft/|/$BRANCH/|g" $f
-        done
-    fi
-}
-
 mkdir -p publish-docs
 
-# Build all RST guides
-tools/build-all-rst.sh
-
-# Build the www pages so that openstack-doc-test creates a link to
-# www/www-index.html.
-if [ "$PUBLISH" = "build" ] ; then
-    python tools/www-generator.py --source-directory www/ \
-        --output-directory publish-docs/www/
-    rsync -a www/static/ publish-docs/www/
-    # publish-docs/www-index.html is the trigger for openstack-doc-test
-    # to include the file.
-    mv publish-docs/www/www-index.html publish-docs/www-index.html
-fi
-if [ "$PUBLISH" = "publish" ] ; then
-    python tools/www-generator.py --source-directory www/ \
-        --output-directory publish-docs
-    rsync -a www/static/ publish-docs/
-    # Don't publish this file
-    rm publish-docs/www-index.html
-fi
-
 # We only publish changed manuals.
+# For kilo, only publish Install Guide and Config Reference
 if [ "$PUBLISH" = "publish" ] ; then
-    openstack-doc-test --check-build --publish
-    # For publishing to both /draft and /BRANCH
-    copy_to_branch kilo
+    openstack-doc-test --check-build --publish --only-book install-guide --only-book config-reference
 else
-    openstack-doc-test --check-build
+    openstack-doc-test --check-build --only-book install-guide --only-book config-reference
 fi
