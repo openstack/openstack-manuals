@@ -9,10 +9,39 @@
     volume backup. You can restore a volume from a backup as long as the backup's associated
     database information (or backup metadata) is intact in the Block Storage database.</para>
   <para>Run this command to create a backup of a volume:</para>
-  <screen><prompt>$</prompt> <userinput>cinder backup-create <replaceable>VOLUME</replaceable></userinput></screen>
-  <para>Where <replaceable>VOLUME</replaceable> is the name or ID of the volume.</para>
+  <screen><prompt>$</prompt> <userinput>cinder backup-create [--incremental] <replaceable>VOLUME</replaceable></userinput></screen>
+  <para>Where <replaceable>VOLUME</replaceable> is the name or ID of the volume,
+    and <option>incremental</option> is a flag that indicates whether an
+    incremental backup should be performed.</para>
+  <para>Without the <option>incremental</option> flag, a full backup is
+    created by default. With the <option>incremental</option> flag, an
+    incremental backup is created.</para>
+  <note><para>The <option>incremental</option> flag is only available for
+    block storage API v2. You have to specify [--os-volume-api-version 2]
+    in the <command>cinder</command> command-line interface to use this
+    parameter.</para></note>
+  <para>The incremental backup is based on a parent backup which is an
+    existing backup with the latest timestamp. The parent backup can be a full
+    backup or an incremental backup depending on the timestamp.</para>
+  <note><para>The first backup of a volume has to be a full backup. Attempting
+    to do an incremental backup without any existing backups will fail.
+  </para></note>
+  <para>A new configure option <option>backup_swift_block_size</option>
+    is introduced into <filename>cinder.conf</filename> for the default Swift
+    backup driver. This is the size in bytes that changes are tracked for
+    incremental backups. The existing <option>backup_swift_object_size
+    </option> option, the size in bytes of Swift backup objects, has to be a
+    multiple of <option>backup_swift_block_size</option>. The default is 32768
+    for <option>backup_swift_block_size</option>, and the default is 52428800
+    for <option>backup_swift_object_size</option>.
+  </para>
   <para>This command also returns a backup ID. Use this backup ID when restoring the volume:</para>
   <screen><prompt>$</prompt> <userinput>cinder backup-restore <replaceable>BACKUP_ID</replaceable></userinput></screen>
+  <para>When restoring from a full backup, it is a full restore.</para>
+  <para>When restoring from an incremental backup, a list of backups is
+    built based on the IDs of the parent backups. A full restore is
+    performed based on the full backup first, then restore is done based
+    on the incremental backup, laying on top of it in order.</para>
   <para>Because volume backups are dependent on the Block Storage database, you must also back up
     your Block Storage database regularly to ensure data recovery.</para>
   <note>
