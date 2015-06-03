@@ -93,7 +93,7 @@ copy of the image on the compute node where the instance starts.
       Boot from image (creates a new volume)
           With this option, you can boot from an image and create a volume
           by entering the Device Size and Device Name for your volume.
-          Click the :guilabel:`Delete` on Terminate option to delete the volume on
+          Click the :guilabel:`Delete on Terminate` option to delete the volume on
           terminating the instance.
 
       Boot from volume snapshot (creates a new volume)
