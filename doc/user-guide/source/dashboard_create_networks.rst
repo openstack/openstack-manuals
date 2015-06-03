@@ -49,7 +49,7 @@ Create a network
 
    :guilabel:`Enable DHCP`: Select this check box to enable DHCP.
 
-   :guilabel:`Allocation Pools` Specify IP address pools.
+   :guilabel:`Allocation Pools`: Specify IP address pools.
 
    :guilabel:`DNS Name Servers`: Specify a name for the DNS server.
 

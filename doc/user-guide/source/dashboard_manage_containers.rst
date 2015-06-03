@@ -81,7 +81,7 @@ Manage an object
 
 #. Click :guilabel:`More` and choose :guilabel:`Copy` from the dropdown list.
 
-#. In the :guilabel:`Copy Object:` launch dialog box, enter the following
+#. In the :guilabel:`Copy Object` launch dialog box, enter the following
    values:
 
 * :guilabel:`Destination Container`: Choose the destination container from the
