@@ -149,7 +149,7 @@ catalog.$Region.network.name = Network Service</programlisting>
       </thead>
       <tbody>
         <tr>
-          <td><para><literal>network_api_class</literal></para></td>
+          <td><para><literal>[DEFAULT] network_api_class</literal></para></td>
           <td>
             <para>Modify from the default to
             <literal>nova.network.neutronv2.api.API</literal>, to
@@ -159,40 +159,40 @@ catalog.$Region.network.name = Network Service</programlisting>
           </td>
         </tr>
         <tr>
-          <td><para><literal>neutron_url</literal></para></td>
+          <td><para><literal>[neutron] url</literal></para></td>
           <td><para>Update to the hostname/IP and port of the
                 <systemitem class="service"
                 >neutron-server</systemitem> instance for this
               deployment.</para></td>
         </tr>
         <tr>
-          <td><para><literal>neutron_auth_strategy</literal></para></td>
+          <td><para><literal>[neutron] auth_strategy</literal></para></td>
           <td><para>Keep the default <literal>keystone</literal> value
               for all production deployments.</para></td>
         </tr>
         <tr>
-          <td><para><literal>neutron_admin_tenant_name</literal></para></td>
+          <td><para><literal>[neutron] admin_tenant_name</literal></para></td>
           <td>
             <para>Update to the name of the service tenant created in
             the above section on Identity configuration.</para>
           </td>
         </tr>
         <tr>
-          <td><para><literal>neutron_admin_username</literal></para></td>
+          <td><para><literal>[neutron] admin_username</literal></para></td>
           <td>
           <para>Update to the name of the user created in the above
           section on Identity configuration.</para>
           </td>
         </tr>
         <tr>
-          <td><para><literal>neutron_admin_password</literal></para></td>
+          <td><para><literal>[neutron] admin_password</literal></para></td>
           <td>
           <para>Update to the password of the user created in the
           above section on Identity configuration.</para>
           </td>
         </tr>
         <tr>
-          <td><para><literal>neutron_admin_auth_url</literal></para></td>
+          <td><para><literal>[neutron] admin_auth_url</literal></para></td>
           <td>
             <para>Update to the Identity server IP and port. This is
             the Identity (keystone) admin API server IP and port
@@ -246,7 +246,8 @@ catalog.$Region.network.name = Network Service</programlisting>
         <systemitem class="service">nova-api</systemitem>, even when the requests are made from
       isolated networks, or from multiple networks that use overlapping IP addresses.</para>
     <para>To enable proxying the requests, you must update the
-      following fields in <filename>nova.conf</filename>.</para>
+      following fields in <literal>[neutron]</literal> section in
+      <filename>nova.conf</filename>.</para>
     <table rules="all">
       <caption>nova.conf metadata settings</caption>
       <col width="45%"/>
@@ -259,7 +260,7 @@ catalog.$Region.network.name = Network Service</programlisting>
       </thead>
       <tbody>
         <tr>
-          <td><para><literal>service_neutron_metadata_proxy</literal>
+          <td><para><literal>service_metadata_proxy</literal>
             </para></td>
           <td><para>Update to <literal>true</literal>, otherwise
                 <systemitem class="service">nova-api</systemitem> will
@@ -268,7 +269,7 @@ catalog.$Region.network.name = Network Service</programlisting>
             </para></td>
         </tr>
         <tr>
-          <td><para><literal>neutron_metadata_proxy_shared_secret</literal>
+          <td><para><literal>metadata_proxy_shared_secret</literal>
             </para></td>
           <td><para>Update to a string "password" value. You must also
               configure the same value in the
@@ -284,7 +285,7 @@ catalog.$Region.network.name = Network Service</programlisting>
     </table>
     <note>
       <para>As a precaution, even when using
-          <literal>neutron_metadata_proxy_shared_secret</literal>, it
+          <literal>metadata_proxy_shared_secret</literal>, it
         is recommended that you do not expose metadata using the same
           <systemitem class="service">nova-api</systemitem> instances
         that are used for tenants. Instead, you should run a dedicated
@@ -303,19 +304,20 @@ catalog.$Region.network.name = Network Service</programlisting>
         >nova-api</systemitem>)</title>
     <para>Example values for the above settings, assuming a cloud controller node running Compute
       and Networking with an IP address of 192.168.1.2:</para>
-<programlisting language="ini">network_api_class=nova.network.neutronv2.api.API
-neutron_url=http://192.168.1.2:9696
-neutron_auth_strategy=keystone
-neutron_admin_tenant_name=service
-neutron_admin_username=neutron
-neutron_admin_password=password
-neutron_admin_auth_url=http://192.168.1.2:35357/v2.0
-
+<programlisting language="ini">[DEFAULT]
 security_group_api=neutron
+network_api_class=nova.network.neutronv2.api.API
 firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
-service_neutron_metadata_proxy=true
-neutron_metadata_proxy_shared_secret=foo
+[neutron]
+url=http://192.168.1.2:9696
+auth_strategy=keystone
+admin_tenant_name=service
+admin_username=neutron
+admin_password=password
+admin_auth_url=http://192.168.1.2:35357/v2.0
+service_metadata_proxy=true
+metadata_proxy_shared_secret=foo
 </programlisting>
   </section>
 </section>
