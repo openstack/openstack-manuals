@@ -9,7 +9,7 @@ Ethernet is a networking protocol, specified by the IEEE 802.3 standard. Most
 wired network interface cards (NICs) communicate using Ethernet.
 
 In the `OSI model`_ of networking protocols, Ethernet occupies the second layer,
-which is known as the data link layer. When discussing Ethernet, you'll often
+which is known as the data link layer. When discussing Ethernet, you will often
 hear terms such as *local network*, *layer 2*, *L2*, *link layer* and *data link
 layer*.
 
@@ -29,7 +29,7 @@ using the ``ip`` command::
         link/ether 08:00:27:b9:88:74 brd ff:ff:ff:ff:ff:ff
 
 Conceptually, you can think of an Ethernet network as a single bus that each of the
-networked hosts connects to. In early implementations, an Ethernet
+network hosts connects to. In early implementations, an Ethernet
 network consisted of a single coaxial cable that hosts would tap into to connect
 to the network. Modern Ethernet networks do not use this approach, and instead
 each network host connects directly to a network device called a *switch*.
@@ -56,7 +56,7 @@ system, even if the MAC address does not match. Compute hosts should always have
 the appropriate NICs configured for promiscuous mode.
 
 As mentioned earlier, modern Ethernet networks use switches to interconnect the
-networked hosts. A switch is a box of networking hardware with a large number of ports,
+network hosts. A switch is a box of networking hardware with a large number of ports,
 that forwards Ethernet frames from one connected host to another. When hosts first send
 frames over the switch, the switch doesn’t know which MAC address is associated
 with which port. If an Ethernet frame is destined for an unknown MAC address,
@@ -236,6 +236,83 @@ protocol were carried out for the instance in question.
 
 IP
 ~~
+
+The Internet Protocol (IP) specifies how to route packets between hosts that are
+connected to different local networks. IP relies on special network hosts
+called *routers* or *gateways*. A router is a host that is connected to at least
+two local networks and can forward IP packets from one local network to another.
+A router has multiple IP addresses: one for each of the networks it is connected
+to.
+
+In the OSI model of networking protocols, IP occupies the third layer, which is
+known as the network layer. When discussing IP, you will often hear terms such as
+*layer 3*, *L3*, and *network layer*.
+
+A host sending a packet to an IP address will consult its *routing table* to
+determine which machine on the local network(s) the packet should be sent to. The
+routing table maintains a list of the subnets associated with each local network
+that the host is directly connected to, as well as a list of routers that are
+on these local networks.
+
+On a Linux machine, any of the following commands will display the routing table::
+
+    $ ip route show
+    $ route -n
+    $ netstat -rn
+
+Here is an example of output from ``ip route show``::
+
+    $ ip route show
+    default via 10.0.2.2 dev eth0
+    10.0.2.0/24 dev eth0  proto kernel  scope link  src 10.0.2.15
+    192.168.27.0/24 dev eth1  proto kernel  scope link  src 192.168.27.100
+    192.168.122.0/24 dev virbr0  proto kernel  scope link  src 192.168.122.1
+
+Line 1 of the output specifies the location of the default route, which is the effective
+routing rule if none of the other rules match. The router associated with the
+default route (``10.0.2.2`` in the example above) is sometimes referred to as
+the *default gateway*. A DHCP_ server typically transmits the IP address of the
+default gateway to the DHCP client along with the client's IP address and
+a netmask.
+
+Line 2 of the output specifies that IPs in the 10.0.2.0/24 subnet are on the
+local network associated with the network interface eth0.
+
+Line 3 of the output specifies that IPs in the 192.168.27.0/24 subnet are on the
+local network associated with the network interface eth1.
+
+Line 4 of the output specifies that IPs in the 192.168.122/24 subnet are on the
+local network associated with the network interface virbr0.
+
+The output of the ``route -n`` and ``netsat -rn`` commands are formatted in a
+slightly different way. This example shows how the same routes would be formatted
+using these commands::
+
+    $ route -n
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+    0.0.0.0         10.0.2.2        0.0.0.0         UG        0 0          0 eth0
+    10.0.2.0        0.0.0.0         255.255.255.0   U         0 0          0 eth0
+    192.168.27.0    0.0.0.0         255.255.255.0   U         0 0          0 eth1
+    192.168.122.0   0.0.0.0         255.255.255.0   U         0 0          0 virbr0
+
+The ``ip route get`` command will output the route for a destination IP address.
+From the above example, destination IP address 10.0.2.14 is on the local network
+of eth0 and would be sent directly::
+
+    $ ip route get 10.0.2.14
+    10.0.2.14 dev eth0  src 10.0.2.15
+
+The destination IP address 93.184.216.34 is not on any of the connected local
+networks and would be forwarded to the default gateway at 10.0.2.2::
+
+    $ ip route get 93.184.216.34
+    93.184.216.34 via 10.0.2.2 dev eth0  src 10.0.2.15
+
+It is common for a packet to hop across multiple routers to reach its final
+destination. On a Linux machine, the ``traceroute`` and more recent ``mtr``
+programs will print out the IP address of each router that an IP packet
+traverses along its path to its destination.
 
 .. _UDP:
 
