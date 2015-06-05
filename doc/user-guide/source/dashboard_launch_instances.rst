@@ -66,10 +66,11 @@ copy of the image on the compute node where the instance starts.
    Flavor
       Specify the size of the instance to launch.
 
-      .. note:: The flavor is selected based on the size of the image selected for
-         launching an instance. For example, while creating an image, if you
-         have entered the value in the Minimum RAM (MB) field as 2048, then on
-         selecting the image, the default flavor is ``m1.small``.
+      .. note:: The flavor is selected based on the size of the image selected
+         for launching an instance. For example, while creating an image, if
+         you have entered the value in the :guilabel:`Minimum RAM (MB)` field
+         as 2048, then on selecting the image, the default flavor is
+         ``m1.small``.
 
    Instance Count
       To launch multiple instances, enter a value greater than ``1``. The
@@ -79,36 +80,37 @@ copy of the image on the compute node where the instance starts.
       Your options are:
 
       Boot from image
-          If you choose this option, a new field for Image Name displays.
-          You can select the image from the list.
+          If you choose this option, a new field for :guilabel:`Image Name`
+          displays. You can select the image from the list.
 
       Boot from snapshot
-          If you choose this option, a new field for Instance Snapshot
-          displays. You can select the snapshot from the list.
+          If you choose this option, a new field for :guilabel:`Instance
+          Snapshot` displays. You can select the snapshot from the list.
 
       Boot from volume
-          If you choose this option, a new field for Volume displays. You
-          can select the volume from the list.
+          If you choose this option, a new field for :guilabel:`Volume`
+          displays. You can select the volume from the list.
 
       Boot from image (creates a new volume)
           With this option, you can boot from an image and create a volume
-          by entering the Device Size and Device Name for your volume.
-          Click the :guilabel:`Delete on Terminate` option to delete the volume on
-          terminating the instance.
+          by entering the :guilabel:`Device Size` and :guilabel:`Device
+          Name` for your volume. Click the :guilabel:`Delete on Terminate`
+          option to delete the volume on terminating the instance.
 
       Boot from volume snapshot (creates a new volume)
           Using this option, you can boot from a volume snapshot and create
-          a new volume by choosing Volume Snapshot from a list and adding a
-          Device Name for your volume. Click the :guilabel:`Delete` on Terminate option
-          to delete the volume on terminating the instance.
+          a new volume by choosing :guilabel:`Volume Snapshot` from a list
+          and adding a :guilabel:`Device Name` for your volume. Click the
+          :guilabel:`Delete on Terminate` option to delete the volume on
+          terminating the instance.
 
-      Since you are launching an instance from an image, Boot from image is
-      chosen by default.
+      Since you are launching an instance from an image, :guilabel:`Boot
+      from image` is chosen by default.
 
    Image Name
       This field changes based on your previous selection. Since you have
-      chosen to launch an instance using an image, the Image Name field
-      displays. Select the image name from the dropdown list.
+      chosen to launch an instance using an image, the :guilabel:`Image Name`
+      field displays. Select the image name from the dropdown list.
 
    :guilabel:`Access & Security` tab
 
@@ -132,7 +134,7 @@ copy of the image on the compute node where the instance starts.
 
    Selected Networks
       To add a network to the instance, click the :guilabel:`+` in the
-      Available Networks field.
+      :guilabel:`Available Networks` field.
 
    :guilabel:`Post-Creation` tab
 
