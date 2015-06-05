@@ -26,8 +26,8 @@ See the Cloud Administrator Guide for a complete example of the `/etc/swift/prox
 
 Your publicly readable containers are checked for two headers,
 ``X-Container-Meta-Web-Index`` and ``X-Container-Meta-Web-Error``. The
-``X-Container-Meta-Web-Error`` header is discussed below, in `the
-section called :ref:`set_error_static_website`..
+``X-Container-Meta-Web-Error`` header is discussed below, in the
+section called :ref:`set_error_static_website`.
 
 Use ``X-Container-Meta-Web-Index`` to determine the index file (or
 default page served, such as ``index.html``) for your website. When
