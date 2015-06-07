@@ -13,6 +13,8 @@ Generic routing encapsulation (GRE)
 GRE carries IP packets with private IP addresses over the Internet
 using delivery packets with public IP addresses.
 
+.. _VXLAN:
+
 Virtual extensible local area network (VXLAN)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -17,7 +17,7 @@ In an Ethernet network, the hosts connected to the network communicate by
 exchanging *frames*, which is the Ethernet terminology for packets. Every host on
 an Ethernet network is uniquely identified by an address called the media access
 control (MAC) address. In particular, in an OpenStack environment, every virtual
-machine instance will have a unique MAC address, which is different from the MAC
+machine instance has a unique MAC address, which is different from the MAC
 address of the compute host. A MAC address has 48 bits and is typically represented
 as a hexadecimal string, such as ``08:00:27:b9:88:74``. The MAC address is
 hard-coded into the NIC by the manufacturer, although modern NICs allow you to change the MAC
@@ -46,12 +46,12 @@ are two notable protocols that use Ethernet broadcasts. Because Ethernet
 networks support broadcasts, you will sometimes hear an Ethernet network
 referred to as a *broadcast domain*.
 
-When a NIC receives an Ethernet frame, by default the NIC will check to see if the
+When a NIC receives an Ethernet frame, by default the NIC checks to see if the
 destination MAC address matches the address of the NIC (or the broadcast
-address), and the Ethernet frame will be discarded if the MAC address
+address), and the Ethernet frame is discarded if the MAC address
 does not match. For a compute host, this behavior is undesirable because the
 frame may be intended for one of the instances. NICs can be configured for
-*promiscuous mode*, where they will pass all Ethernet frames to the operating
+*promiscuous mode*, where they pass all Ethernet frames to the operating
 system, even if the MAC address does not match. Compute hosts should always have
 the appropriate NICs configured for promiscuous mode.
 
@@ -75,7 +75,7 @@ VLANs
 
 VLAN is a networking technology that enables a single switch to act as
 if it was multiple independent switches. Specifically, two hosts that are
-connected to the same switch but on different VLANs will not see each other's
+connected to the same switch but on different VLANs do not see each other's
 traffic. OpenStack is able to take advantage of VLANs to isolate the traffic of
 different tenants, even if the tenants happen to have instances running on the
 same compute host. Each VLAN has an associated numerical ID, between 1 and 4095.
@@ -114,7 +114,7 @@ that describes how VLAN tags are encoded in Ethernet frames when trunking is
 being used.
 
 Note that if you are using VLANs on your physical switches to implement tenant
-isolation in your OpenStack cloud, you will need to ensure that all of your
+isolation in your OpenStack cloud, you must ensure that all of your
 switchports are configured as trunk ports.
 
 
@@ -134,7 +134,7 @@ they are on the same local network. ARP assumes that all machines that are in
 the same subnet are on the same local network. Network administrators must
 take care when assigning IP addresses and netmasks to hosts so that any two
 hosts that are in the same subnet are on the same local network, otherwise ARP
-will not work properly.
+does not work properly.
 
 To calculate the network number of an IP address, you must know the *netmask*
 associated with the address. A netmask indicates how many of the bits in
@@ -162,16 +162,16 @@ with an IP address of ``192.168.1.7``. Note that the network number is the same
 for both hosts, so host *A* is able to send frames directly to host *B*.
 
 The first time host *A* attempts to communicate with host *B*, the destination MAC
-address is not known. Host *A* will make an ARP request to the local network.
+address is not known. Host *A* makes an ARP request to the local network.
 The request is a broadcast with a message like this:
 
 *To: everybody (ff:ff:ff:ff:ff:ff). I am looking for the computer who has IP address 192.168.1.7. Signed: MAC address fc:99:47:49:d4:a0*.
 
-Host *B* would respond with a response like this:
+Host *B* responds with a response like this:
 
 *To: fc:99:47:49:d4:a0. I have IP address 192.168.1.7. Signed: MAC address 54:78:1a:86:00:a5.*
 
-Host *A* would then send Ethernet frames to host *B*.
+Host *A* then sends Ethernet frames to host *B*.
 
 You can initiate an ARP request manually using the *arping* command. For
 example, to send an ARP request to IP address ``10.30.0.132``::
@@ -204,11 +204,11 @@ network hosts, which are the DHCP clients.
 
 DHCP clients locate the DHCP server by sending a UDP_ packet from port 68 to
 address ``255.255.255.255`` on port 67. Address ``255.255.255.255`` is the local
-network broadcast address: all hosts on the local network will see the UDP
-packets sent to this address. However, such packets will not be forwarded to
+network broadcast address: all hosts on the local network see the UDP
+packets sent to this address. However, such packets are not forwarded to
 other networks. Consequently, the DHCP server must be on the same local network
 as the client, or the server will not receive the broadcast. The DHCP server
-will respond by sending a UDP packet from port 67 to port 68 on the client. The
+responds by sending a UDP packet from port 67 to port 68 on the client. The
 exchange looks like this:
 
 1. The client sends a discover ("I’m a client at MAC address ``08:00:27:b9:88:74``, I need an IP address")
@@ -248,13 +248,13 @@ In the OSI model of networking protocols, IP occupies the third layer, which is
 known as the network layer. When discussing IP, you will often hear terms such as
 *layer 3*, *L3*, and *network layer*.
 
-A host sending a packet to an IP address will consult its *routing table* to
+A host sending a packet to an IP address consults its *routing table* to
 determine which machine on the local network(s) the packet should be sent to. The
 routing table maintains a list of the subnets associated with each local network
 that the host is directly connected to, as well as a list of routers that are
 on these local networks.
 
-On a Linux machine, any of the following commands will display the routing table::
+On a Linux machine, any of the following commands displays the routing table::
 
     $ ip route show
     $ route -n
@@ -296,7 +296,7 @@ using these commands::
     192.168.27.0    0.0.0.0         255.255.255.0   U         0 0          0 eth1
     192.168.122.0   0.0.0.0         255.255.255.0   U         0 0          0 virbr0
 
-The ``ip route get`` command will output the route for a destination IP address.
+The ``ip route get`` command outputs the route for a destination IP address.
 From the above example, destination IP address 10.0.2.14 is on the local network
 of eth0 and would be sent directly::
 
@@ -311,10 +311,117 @@ networks and would be forwarded to the default gateway at 10.0.2.2::
 
 It is common for a packet to hop across multiple routers to reach its final
 destination. On a Linux machine, the ``traceroute`` and more recent ``mtr``
-programs will print out the IP address of each router that an IP packet
+programs prints out the IP address of each router that an IP packet
 traverses along its path to its destination.
 
 .. _UDP:
 
-ICMP/TCP/UDP
+TCP/UDP/ICMP
 ~~~~~~~~~~~~
+
+For networked software applications to communicate over an IP network, they
+must use a protocol layered atop IP. These protocols occupy the fourth
+layer of the OSI model known as the *transport layer* or *layer 4*. See
+the `Protocol Numbers`_ web page maintained by the Internet Assigned Numbers
+Authority (IANA) for a list of protocols that layer atop IP and their
+associated numbers.
+
+.. _Protocol Numbers: http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml
+
+The *Transmission Control Protocol* (TCP) is the most
+commonly used layer 4 protocol in networked applications. TCP is a
+*connection-oriented* protocol: it uses a client-server model where a client
+connects to a server, where *server* refers to the application that receives
+connections. The typical interaction in a TCP-based application proceeds as
+follows:
+
+
+1. Client connects to server.
+2. Client and server exchange data.
+3. Client or server disconnects.
+
+Because a network host may have multiple TCP-based applications running, TCP
+uses an addressing scheme called *ports* to uniquely identify TCP-based
+applications. A TCP port is associated with a number in the range 1-65535, and
+only one application on a host can be associated with a TCP port at a time, a
+restriction that is enforced by the operating system.
+
+A TCP server is said to *listen* on a port. For example, an SSH server typically
+listens on port 22.  For a client to connect to a server using TCP, the client
+must know both the IP address of a server's host and the server's TCP port.
+
+The operating system of the TCP client application automatically
+assigns a port number to the client. The client owns this port number until
+the TCP connection is terminated, after which time the operating system
+reclaims the port number. These types of ports are referred to as *ephemeral ports*.
+
+IANA maintains a `registry of port numbers`_ for many TCP-based services, as
+well as services that use other layer 4 protocols that employ ports. Registering
+a TCP port number is not required, but registering a port number is helpful to
+avoid collisions with other services. See `Appendix B. Firewalls and default
+ports`_ of the `OpenStack Configuration Reference`_ for the default TCP ports
+used by various services involved in an OpenStack deployment.
+
+.. _registry of port numbers: http://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
+.. _Appendix B. Firewalls and default ports: http://docs.openstack.org/kilo/config-reference/content/firewalls-default-ports.html
+.. _OpenStack Configuration Reference: http://docs.openstack.org/kilo/config-reference/content/index.html
+
+
+The most common application programming interface (API) for writing TCP-based
+applications is called *Berkeley sockets*, also known as *BSD sockets* or,
+simply, *sockets*. The sockets API exposes a *stream oriented* interface for
+writing TCP applications: from the perspective of a programmer, sending data
+over a TCP connection is similar to writing a stream of bytes to a file. It is
+the responsibility of the operating system's TCP/IP implementation to break up
+the stream of data into IP packets. The operating system is also responsible for
+automatically retransmitting dropped packets, and for handling flow control to
+enusre that transmitted data does not overrun the sender's data buffers,
+receiver's data buffers, and network capacity. Finally, the operating system is
+responsible for re-assembling the packets in the correct order into a stream of
+data on the receiver's side. Because TCP detects and retransmits lost packets,
+it is said to be a *reliable* protocol.
+
+The *User Datagram Protocol* (UDP) is another layer 4 protocol that is the basis
+of several well-known networking protocols. UDP is a *connectionless* protocol:
+two applications that communicate over UDP do not need to establish a connection
+before exchanging data. UDP is also an *unreliable* protocol. The operating
+system does not attempt to retransmit or even detect lost UDP packets. The
+operating system also does not provide any guarantee that the receiving
+application sees the UDP packets in the same order that they were sent in.
+
+UDP, like TCP, uses the notion of ports to distinguish between different
+applications running on the same system. Note, however, that operating systems
+treat UDP ports separately from TCP ports. For example, it is possible for one
+application to be associated with TCP port 16543 and a separate application to
+be associated with UDP port 16543.
+
+Like TCP, the sockets API is the most common API for writing UDP-based
+applications. The sockets API provides a *message-oriented* interface for
+writing UDP applications: a programmer sends data over UDP by transmitting a
+fixed-sized message. If an application requires retransmissions of lost packets
+or a well-defined ordering of received packets, the programmer is responsible
+for implementing this functionality in the application code.
+
+DHCP_, the Domain Name System (DNS), the Network Time Protocol (NTP), and
+:ref:`VXLAN` are examples of UDP-based protocols used in OpenStack deployments.
+
+UDP has support for one-to-many communication: sending a single packet to multiple
+hosts. An application can broadcast a UDP packet to all of the network
+hosts on a local network by setting the receiver IP address as the special IP
+broadcast address ``255.255.255.255``. An application can also send a UDP packet to a
+set of receivers using *IP multicast*. The intended receiver applications join a
+multicast group by binding a UDP socket to a special IP address that is one of
+the valid multicast group addresses. The receiving hosts do not have to be on the
+same local network as the sender, but the intervening routers must be configured
+to support IP multicast routing. VXLAN is an example of a UDP-based protocol
+that uses IP multicast.
+
+The *Internet Control Message Protocol* (ICMP) is a protocol used for sending
+control messages over an IP network. For example, a router that receives an IP
+packet may send an ICMP packet back to the source if there is no route in the
+router's routing table that corresponds to the destination address (ICMP code 1,
+destination host unreachable) or if the IP packet is too large for the router to
+handle (ICMP code 4, fragmentation required and "don't fragment" flag is set).
+
+The *ping* and *mtr* Linux command-line tools are two examples of network
+utilities that use ICMP.
