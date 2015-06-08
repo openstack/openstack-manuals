@@ -41,7 +41,7 @@ sub-directory return a 404 error.
 You also have the option of displaying a list of files in your
 pseudo-directory instead of a web page. To do this, set the
 ``X-Container-Meta-Web-Listings`` header to ``TRUE``. You may add styles
-to your file listing by setting ``X-Container-Meta-Web-Listings-CSS:``
+to your file listing by setting ``X-Container-Meta-Web-Listings-CSS``
 to a style sheet (for example, ``lists.css``).
 
 Static Web middleware through Object Storage
