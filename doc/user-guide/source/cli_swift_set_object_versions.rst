@@ -11,7 +11,7 @@ implement version control, which you can use with any type of content.
    You cannot version a large-object manifest file, but the large-object
    manifest file can point to versioned segments.
 
-We strongly recommended that you put non-current objects in a different
+We strongly recommend that you put non-current objects in a different
 container than the container where current object versions reside.
 
 To enable and use object versioning
