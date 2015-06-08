@@ -1,6 +1,6 @@
-========================
-Launch and manage stacks
-========================
+======================================
+Launch and manage stacks using the CLI
+======================================
 
 The Orchestration service provides a template-based
 orchestration engine for the OpenStack cloud, which
@@ -19,7 +19,7 @@ high availability.
 For information about the:
 
 -  Basic creation and deletion of Orchestration stacks, refer
-   to the `End User Guide <http://docs.openstack.org/user-guide/dashboard_stacks.html>`_
+   to the `OpenStack End User Guide <http://docs.openstack.org/user-guide/dashboard_stacks.html>`_
 
 -  **heat** CLI commands, see the `OpenStack Command Line Interface Reference <http://docs.openstack.org/cli-reference/content/>`_
 

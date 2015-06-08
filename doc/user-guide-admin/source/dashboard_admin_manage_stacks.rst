@@ -1,6 +1,6 @@
-========================
-Launch and manage stacks
-========================
+============================================
+Launch and manage stacks using the Dashboard
+============================================
 
 The Orchestration service provides a template-based orchestration
 engine for the OpenStack cloud, which can be used to create and manage
@@ -24,6 +24,6 @@ For information about:
     the dashboard.
 
 * the basic creation and deletion of Orchestration stacks, refer to
-  the `End User Guide
+  the `OpenStack End User Guide
   <http://docs.openstack.org/user-guide/dashboard_stacks.html>`__.
 
