@@ -41,8 +41,8 @@ service with its package name and description.
 |Database service|trove     |python-troveclient     |Create and manage       |
 |                |          |                       |databases.              |
 +----------------+----------+-----------------------+------------------------+
-|Identity        |keystone  |python-keystoneclient  |Create and manage users,|
-|                |          |                       |tenants, roles,         |
+|Identity        |keystone  |python-keystoneclient  |Create and manage       |
+|                |          |                       |users, tenants, roles,  |
 |                |          |                       |endpoints, and          |
 |                |          |                       |credentials.            |
 +----------------+----------+-----------------------+------------------------+

@@ -18,6 +18,7 @@ Contents
 
    identity_management.rst
    dashboard.rst
+   objectstorage.rst
    orchestration.rst
    common/app_support.rst
    common/glossary.rst
