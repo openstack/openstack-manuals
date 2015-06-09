@@ -21,7 +21,7 @@ Create a role
 
 #. Log in to the dashboard and choose the :guilabel:`admin` project from
    the :guilabel:`CURRENT PROJECT` drop-down list.
-#. On the :guilabel:`Admin tab`, click the :guilabel:`Roles` category.
+#. On the :guilabel:`Admin` tab, click the :guilabel:`Roles` category.
 #. Click the :guilabel:`Create Role` button.
 
    In the :guilabel:`Create Role` window, enter a name for the role.
@@ -32,7 +32,7 @@ Edit a role
 
 #. Log in to the dashboard and choose the :guilabel:`admin` project from
    the :guilabel:`CURRENT PROJECT` drop-down list.
-#. On the :guilabel:`Admin tab`, click the :guilabel:`Roles` category.
+#. On the :guilabel:`Admin` tab, click the :guilabel:`Roles` category.
 #. Click the :guilabel:`Edit` button.
 
    In the :guilabel:`Update Role` window, enter a new name for the role.
