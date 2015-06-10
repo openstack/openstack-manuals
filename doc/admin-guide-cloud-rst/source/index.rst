@@ -20,6 +20,7 @@ Contents
    dashboard.rst
    objectstorage.rst
    orchestration.rst
+   blockstorage.rst
    common/app_support.rst
    common/glossary.rst
 
