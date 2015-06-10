@@ -17,6 +17,7 @@ Contents
    :maxdepth: 2
 
    identity_management.rst
+   orchestration.rst
    common/app_support.rst
    common/glossary.rst
 
