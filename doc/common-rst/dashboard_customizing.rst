@@ -126,7 +126,7 @@ Logo link
 Help URL
 ~~~~~~~~
 #. By default the help URL points to http://docs.openstack.org. Change this
-   by editing the following arritbute to the URL of your choice in
+   by editing the following attribute to the URL of your choice in
    :file:`local_settings.py`::
 
      'help_url': "http://openstack.mycompany.org"
