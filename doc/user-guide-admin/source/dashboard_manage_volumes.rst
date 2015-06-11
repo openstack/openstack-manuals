@@ -51,7 +51,7 @@ Create an encrypted volume type
    Key Size
      Specifies the encryption key size.
 
-#. Click :guilabel:`Create Volume Type Encryption`
+#. Click :guilabel:`Create Volume Type Encryption`.
 
    .. note::
       Once a volume type is updated by the :guilabel:`Create
