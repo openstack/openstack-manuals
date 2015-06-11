@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-06-10 06:12+0000\n"
+"POT-Creation-Date: 2015-06-11 06:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -255,7 +255,7 @@ msgstr ""
 msgid "Change the ownership of <filename>/etc/keystone/keystone.conf</filename> to give the <literal>keystone</literal> system access to it:"
 msgstr ""
 
-#: ./doc/install-guide/section_keystone-install.xml:402(title) ./doc/install-guide/section_basics-database.xml:63(title) ./doc/install-guide/section_ceilometer-nova.xml:111(title) ./doc/install-guide/section_basics-packages.xml:142(title) ./doc/install-guide/section_cinder-storage-node.xml:295(title) ./doc/install-guide/section_cinder-controller-node.xml:267(title) ./doc/install-guide/section_nova-controller-install.xml:273(title) ./doc/install-guide/section_glance-install.xml:302(title) ./doc/install-guide/section_dashboard-install.xml:117(title) ./doc/install-guide/section_neutron-controller-node.xml:371(title) ./doc/install-guide/section_nova-compute-install.xml:202(title) ./doc/install-guide/section_heat-install.xml:339(title) ./doc/install-guide/section_ceilometer-controller.xml:404(title)
+#: ./doc/install-guide/section_keystone-install.xml:402(title) ./doc/install-guide/section_basics-database.xml:63(title) ./doc/install-guide/section_ceilometer-nova.xml:111(title) ./doc/install-guide/section_basics-packages.xml:147(title) ./doc/install-guide/section_cinder-storage-node.xml:295(title) ./doc/install-guide/section_cinder-controller-node.xml:267(title) ./doc/install-guide/section_nova-controller-install.xml:273(title) ./doc/install-guide/section_glance-install.xml:302(title) ./doc/install-guide/section_dashboard-install.xml:117(title) ./doc/install-guide/section_neutron-controller-node.xml:371(title) ./doc/install-guide/section_nova-compute-install.xml:202(title) ./doc/install-guide/section_heat-install.xml:339(title) ./doc/install-guide/section_ceilometer-controller.xml:404(title)
 msgid "To finalize installation"
 msgstr ""
 
@@ -1371,78 +1371,82 @@ msgid "On openSUSE 13.2:"
 msgstr ""
 
 #: ./doc/install-guide/section_basics-packages.xml:61(para)
+msgid "The openSUSE distribution uses the concept of patterns to represent collections of packages. If you selected 'Minimal Server Selection (Text Mode)' during initial installation, you may be presented with a dependency conflict when you attempt to install the OpenStack packages. To avoid this, remove the minimal_base-conflicts package:"
+msgstr ""
+
+#: ./doc/install-guide/section_basics-packages.xml:66(para)
 msgid "On SLES 12:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:64(para)
+#: ./doc/install-guide/section_basics-packages.xml:69(para)
 msgid "The packages are signed by GPG key 893A90DAD85F9316. You should verify the fingerprint of the imported GPG key before using it."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:76(title)
+#: ./doc/install-guide/section_basics-packages.xml:81(title)
 msgid "To use the Debian Wheezy backports archive for Juno"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:78(para)
+#: ./doc/install-guide/section_basics-packages.xml:83(para)
 msgid "The <glossterm>Juno</glossterm> release is available only in Debian Experimental (otherwise called rc-buggy), as Jessie is frozen soon, and will contain Icehouse. However, the Debian maintainers of OpenStack also maintain a non-official Debian repository for OpenStack containing Wheezy backports."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:85(para)
+#: ./doc/install-guide/section_basics-packages.xml:90(para)
 msgid "On all nodes, install the Debian Wheezy backport repository Juno:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:90(para)
+#: ./doc/install-guide/section_basics-packages.xml:95(para)
 msgid "Install the Debian Wheezy OpenStack repository for Juno:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:95(para)
+#: ./doc/install-guide/section_basics-packages.xml:100(para)
 msgid "Update the repository database and install the key:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:99(para)
+#: ./doc/install-guide/section_basics-packages.xml:104(para)
 msgid "Update the package database, upgrade your system, and reboot for all changes to take effect:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:105(para)
+#: ./doc/install-guide/section_basics-packages.xml:110(para)
 msgid "Numerous archive.gplhost.com mirrors are available around the world. All are available with both FTP and HTTP protocols (you should use the closest mirror). The list of mirrors is available at <link href=\"http://archive.gplhost.com/readme.mirrors\">http://archive.gplhost.com/readme.mirrors</link>."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:112(title)
+#: ./doc/install-guide/section_basics-packages.xml:117(title)
 msgid "Manually install python-argparse"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:113(para)
+#: ./doc/install-guide/section_basics-packages.xml:118(para)
 msgid "The Debian OpenStack packages are maintained on Debian Sid (also known as Debian Unstable) - the current development version. Backported packages run correctly on Debian Wheezy with one caveat:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:117(para)
+#: ./doc/install-guide/section_basics-packages.xml:122(para)
 msgid "All OpenStack packages are written in Python. All packages support version 2.7; porting to Python version 3 is ongoing. Note that Debian Wheezy uses Python 2.6 and 2.7, with Python 2.7 as the default interpreter; Sid has only Python 2.7. There is one packaging change between these two. In Python 2.6, you installed the <package>python-argparse</package> package separately. In Python 2.7, this package is installed by default. Unfortunately, in Python 2.7, this package does not include <code>Provides: python-argparse</code> directive."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:128(para)
+#: ./doc/install-guide/section_basics-packages.xml:133(para)
 msgid "Because the packages are maintained in Sid where the <code>Provides: python-argparse</code> directive causes an error, and the Debian OpenStack maintainer wants to maintain one version of the OpenStack packages, you must manually install the <package>python-argparse</package> on each OpenStack system that runs Debian Wheezy before you install the other OpenStack packages. Use the following command to install the package:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:137(para)
+#: ./doc/install-guide/section_basics-packages.xml:142(para)
 msgid "This caveat applies to most OpenStack packages in Wheezy."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:144(para)
+#: ./doc/install-guide/section_basics-packages.xml:149(para)
 msgid "Upgrade the packages on your system:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:149(para)
+#: ./doc/install-guide/section_basics-packages.xml:154(para)
 msgid "If the upgrade process includes a new kernel, reboot your system to activate it."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:154(para)
+#: ./doc/install-guide/section_basics-packages.xml:159(para)
 msgid "RHEL and CentOS enable <glossterm>SELinux</glossterm> by default. Install the <package>openstack-selinux</package> package to automatically manage security policies for OpenStack services:"
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:160(para)
+#: ./doc/install-guide/section_basics-packages.xml:165(para)
 msgid "Fedora does not require this package."
 msgstr ""
 
-#: ./doc/install-guide/section_basics-packages.xml:163(para)
+#: ./doc/install-guide/section_basics-packages.xml:168(para)
 msgid "The installation process for this package can take a while."
 msgstr ""
 
