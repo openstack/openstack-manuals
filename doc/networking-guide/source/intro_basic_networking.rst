@@ -129,7 +129,7 @@ Ethernet and IP by translating IP addresses into MAC addresses.
 
 IP addresses are broken up into two parts: a *network number* and a *host
 identifier*. Two hosts are on the same *subnet* if they have the same network
-number. Recall that two hosts can only commnunicate directly over Ethernet if
+number. Recall that two hosts can only communicate directly over Ethernet if
 they are on the same local network. ARP assumes that all machines that are in
 the same subnet are on the same local network. Network administrators must
 take care when assigning IP addresses and netmasks to hosts so that any two
@@ -151,7 +151,7 @@ are the network number. In dotted quad notation, the netmask would be written as
 and this example would be written as ``192.168.1.5/24``.
 
 Sometimes we want to refer to a subnet, but not any particular IP address on
-the subnet. A common convention is to set the host identifer to all zeros to make
+the subnet. A common convention is to set the host identifier to all zeros to make
 reference to a subnet. For example, if a host's IP address is ``10.10.53.24/16``, then
 we would say the subnet is ``10.10.0.0/16``.
 
@@ -375,7 +375,7 @@ over a TCP connection is similar to writing a stream of bytes to a file. It is
 the responsibility of the operating system's TCP/IP implementation to break up
 the stream of data into IP packets. The operating system is also responsible for
 automatically retransmitting dropped packets, and for handling flow control to
-enusre that transmitted data does not overrun the sender's data buffers,
+ensure that transmitted data does not overrun the sender's data buffers,
 receiver's data buffers, and network capacity. Finally, the operating system is
 responsible for re-assembling the packets in the correct order into a stream of
 data on the receiver's side. Because TCP detects and retransmits lost packets,
