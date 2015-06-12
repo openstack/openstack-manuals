@@ -132,11 +132,11 @@ SrWY8lF3HrTcJT23sZIleg==</screen>
             following conditions:</para>
         <itemizedlist>
             <listitem>
-                <para>all certificate and key files must be in Privacy
+                <para>All certificate and key files must be in Privacy
                     Enhanced Mail (PEM) format</para>
             </listitem>
             <listitem>
-                <para>private key files must not be protected by a
+                <para>Private key files must not be protected by a
                     password</para>
             </listitem>
         </itemizedlist>
@@ -252,5 +252,54 @@ emailAddress            = keystone@openstack.org
             default <filename>/etc/keystone/ssl/certs</filename>, make
             sure it is reflected in the <literal>[signing]</literal>
             section of the configuration file.</para>
+    </section>
+    <section xml:id="switching-expired-signing-certs">
+        <title>Switching out expired signing certificates</title>
+          <para>The following procedure details how to switch out
+              expired signing certificates with no cloud outages.</para>
+            <procedure>
+              <step>
+                <para>
+                   Generate a new signing key.
+                </para>
+              </step>
+              <step>
+                <para>
+                   Generate a new certificate request.
+                </para>
+              </step>
+              <step>
+                <para>
+                   Sign the new certificate with the existing CA to generate a new
+                   <filename>signing_cert</filename>.
+                </para>
+              </step>
+              <step>
+                <para>
+                   Append the new <filename>signing_cert</filename> to
+                   the old <filename>signing_cert</filename>. Ensure
+                   the old certificate is in the file first.
+                </para>
+              </step>
+              <step>
+                <para>
+                    Remove all signing certificates from all your hosts to force OpenStack
+                    Compute to download the new <filename>signing_cert</filename>.
+                </para>
+              </step>
+              <step>
+                <para>
+                    Replace the old signing key with the new signing key.
+                    Move the new signing certificate above the old certificate
+                    in the <filename>signing_cert</filename> file.
+                </para>
+              </step>
+              <step>
+                <para>
+                    After the old certificate reads as expired, you can safely remove
+                    the old signing certificate from the file.
+                </para>
+              </step>
+            </procedure>
     </section>
 </section>
