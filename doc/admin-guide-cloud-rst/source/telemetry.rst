@@ -1,0 +1,58 @@
+.. _telemetry:
+
+=========
+Telemetry
+=========
+
+Introduction
+~~~~~~~~~~~~
+
+Even in the cloud industry, providers must use a multi-step process
+for billing. The required steps to bill for usage in a cloud
+environment are metering, rating, and billing. Because the provider's
+requirements may be far too specific for a shared solution, rating
+and billing solutions cannot be designed a common module that
+satisfies all. Providing users with measurements on cloud services is
+required to meet the "measured service" definition of cloud computing.
+
+The Telemetry module was originally designed to support billing
+systems for OpenStack cloud resources. This project only covers the
+metering portion of the required processing for billing. This module
+collects information about the system and stores it in the form of
+samples in order to provide data about anything that can be billed.
+
+In addition to system measurements, the Telemetry module also
+captures event notifications triggered when various actions are
+executed in the OpenStack system. This data is captured as Events and
+stored alongside metering data.
+
+The list of meters is continuously growing, which makes it possible
+to use the data collected by Telemetry for different purposes, other
+than billing. For example, the autoscaling feature in the
+Orchestration module can be triggered by alarms this module sets and
+then gets notified within Telemetry.
+
+The sections in this document contain information about the
+architecture and usage of Telemetry. The first section contains a
+brief summary about the system architecture used in a typical
+OpenStack deployment. The second section describes the data
+collection mechanisms. You can also read about alarming to understand
+how alarm definitions can be posted to Telemetry and what actions can
+happen if an alarm is raised. The last section contains a
+troubleshooting guide, which mentions error situations and possible
+solutions to the problems.
+
+You can retrieve the collected samples in three different ways: with
+the REST API, with the command line interface, or with the Metering
+tab on an OpenStack dashboard.
+
+
+.. TODO (OL) Translate and add the below files with new name
+   include: telemetry/section_telemetry-system-architecture.xml
+   include: telemetry/section_telemetry-data-collection.xml
+   include: telemetry/section_telemetry-data-retrieval.xml
+   include: telemetry/section_telemetry-alarms.xml
+   include: telemetry/section_telemetry-measurements.xml
+   include: telemetry/section_telemetry-events.xml
+   include: telemetry/section_telemetry-troubleshooting-guide.xml
+   include: telemetry/section_telemetry-best-practices.xml
