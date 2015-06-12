@@ -21,6 +21,7 @@ Contents
    objectstorage.rst
    orchestration.rst
    blockstorage.rst
+   telemetry.rst
    common/app_support.rst
    common/glossary.rst
 
