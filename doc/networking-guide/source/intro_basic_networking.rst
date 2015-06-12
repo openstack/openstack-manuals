@@ -145,15 +145,17 @@ There are two syntaxes for expressing a netmask:
 * dotted quad
 * classless inter-domain routing (CIDR)
 
-Consider an IP address of 192.168.1.5, where the first 24 bits of the address
-are the network number. In dotted quad notation, the netmask would be written as
-``255.255.255.0``. CIDR notation includes both the IP address and netmask,
-and this example would be written as ``192.168.1.5/24``.
+Consider an IP address of 192.168.1.5, where the first 24 bits of the
+address are the network number. In dotted quad notation, the netmask
+would be written as ``255.255.255.0``. CIDR notation includes both the
+IP address and netmask, and this example would be written as
+``192.168.1.5/24``.
 
-Sometimes we want to refer to a subnet, but not any particular IP address on
-the subnet. A common convention is to set the host identifier to all zeros to make
-reference to a subnet. For example, if a host's IP address is ``10.10.53.24/16``, then
-we would say the subnet is ``10.10.0.0/16``.
+Sometimes we want to refer to a subnet, but not any particular IP
+address on the subnet. A common convention is to set the host
+identifier to all zeros to make reference to a subnet. For example, if
+a host's IP address is ``10.10.53.24/16``, then we would say the
+subnet is ``10.10.0.0/16``.
 
 To understand how ARP translates IP addresses to MAC addresses, consider the
 following example. Assume host *A* has an IP address of ``192.168.1.5/24`` and a
@@ -161,15 +163,18 @@ MAC address of ``fc:99:47:49:d4:a0``, and wants to send a packet to host *B*
 with an IP address of ``192.168.1.7``. Note that the network number is the same
 for both hosts, so host *A* is able to send frames directly to host *B*.
 
-The first time host *A* attempts to communicate with host *B*, the destination MAC
-address is not known. Host *A* makes an ARP request to the local network.
-The request is a broadcast with a message like this:
+The first time host *A* attempts to communicate with host *B*, the
+destination MAC address is not known. Host *A* makes an ARP request to
+the local network. The request is a broadcast with a message like
+this:
 
-*To: everybody (ff:ff:ff:ff:ff:ff). I am looking for the computer who has IP address 192.168.1.7. Signed: MAC address fc:99:47:49:d4:a0*.
+*To: everybody (ff:ff:ff:ff:ff:ff). I am looking for the computer who
+has IP address 192.168.1.7. Signed: MAC address fc:99:47:49:d4:a0*.
 
 Host *B* responds with a response like this:
 
-*To: fc:99:47:49:d4:a0. I have IP address 192.168.1.7. Signed: MAC address 54:78:1a:86:00:a5.*
+*To: fc:99:47:49:d4:a0. I have IP address 192.168.1.7. Signed: MAC
+address 54:78:1a:86:00:a5.*
 
 Host *A* then sends Ethernet frames to host *B*.
 
@@ -198,9 +203,10 @@ you can view the contents of the ARP cache by using the *arp* command::
 DHCP
 ~~~~
 
-Hosts connected to a network use the Dynamic Host Configuration Protocol (:term:`DHCP`)
-to dynamically obtain IP addresses. A DHCP server hands out the IP addresses to
-network hosts, which are the DHCP clients.
+Hosts connected to a network use the Dynamic Host Configuration
+Protocol (:term:`DHCP`) to dynamically obtain IP addresses. A DHCP
+server hands out the IP addresses to network hosts, which are the DHCP
+clients.
 
 DHCP clients locate the DHCP server by sending a UDP_ packet from port 68 to
 address ``255.255.255.255`` on port 67. Address ``255.255.255.255`` is the local
@@ -211,15 +217,20 @@ as the client, or the server will not receive the broadcast. The DHCP server
 responds by sending a UDP packet from port 67 to port 68 on the client. The
 exchange looks like this:
 
-1. The client sends a discover ("I’m a client at MAC address ``08:00:27:b9:88:74``, I need an IP address")
-2. The server sends an offer ("OK ``08:00:27:b9:88:74``, I’m offering IP address ``10.10.0.112``")
-3. The client sends a request ("Server ``10.10.0.131``, I would like to have IP ``10.10.0.112``")
-4. The server sends an acknowledgement ("OK ``08:00:27:b9:88:74``, IP ``10.10.0.112`` is yours")
+1. The client sends a discover ("I’m a client at MAC address
+   ``08:00:27:b9:88:74``, I need an IP address")
+2. The server sends an offer ("OK ``08:00:27:b9:88:74``, I’m offering
+   IP address ``10.10.0.112``")
+3. The client sends a request ("Server ``10.10.0.131``, I would like
+   to have IP ``10.10.0.112``")
+4. The server sends an acknowledgement ("OK ``08:00:27:b9:88:74``, IP
+   ``10.10.0.112`` is yours")
 
 
-OpenStack uses a third-party program called dnsmasq_ to implement the DHCP server.
-Dnsmasq writes to the syslog (normally found at /var/log/syslog), where you can observe the DHCP
-request and replies::
+OpenStack uses a third-party program called dnsmasq_ to implement the
+DHCP server.
+Dnsmasq writes to the syslog (normally found at /var/log/syslog),
+where you can observe the DHCP request and replies::
 
     Apr 23 15:53:46 c100-1 dhcpd: DHCPDISCOVER from 08:00:27:b9:88:74 via eth2
     Apr 23 15:53:46 c100-1 dhcpd: DHCPOFFER on 10.10.0.112 to 08:00:27:b9:88:74 via eth2

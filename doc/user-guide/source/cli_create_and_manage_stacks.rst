@@ -122,8 +122,9 @@ Update a stack
 To update an existing stack from a modified template file, run a command
 like the following command::
 
-   $ heat stack-update mystack --template-file /path/to/heat/templates/WordPress_Single_Instance_v2.template
-        --parameters "InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"
+   $ heat stack-update mystack --template-file \
+       /path/to/heat/templates/WordPress_Single_Instance_v2.template \
+       --parameters "InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"
    +--------------------------------------+---------------+-----------------+----------------------+
    | id                                   | stack_name    | stack_status    | creation_time        |
    +--------------------------------------+---------------+-----------------+----------------------+

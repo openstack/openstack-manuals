@@ -39,7 +39,8 @@ Create an encrypted volume type
 #. Click :guilabel:`Create Encryption` in the Actions column of the newly
    created volume type.
 
-#. Configure the encrypted volume by setting the parameters below from available options (see table):
+#. Configure the encrypted volume by setting the parameters below from
+   available options (see table):
 
    Provider
      Specifies the class responsible for configuring the encryption.

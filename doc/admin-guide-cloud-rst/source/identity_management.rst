@@ -122,7 +122,8 @@ in a tenant.
 
 To restrict users from performing operations in, for example, the
 Compute service, you need to create a role in the Identity service and
-then modify the :file:`/etc/nova/policy.json` file so that this role is required for Compute operations.
+then modify the :file:`/etc/nova/policy.json` file so that this role
+is required for Compute operations.
 
 For example, the following line in the :file:`/etc/nova/policy.json` file
 specifies that there are no restrictions on which users can create volumes:
@@ -384,7 +385,8 @@ To start the services for Identity, run the following command:
 
 This command starts two wsgi.Server instances configured by the
 :file:`keystone.conf` file as described previously. One of these wsgi
-servers is :code:`admin` (the administration API) and the other is :code:`main` (the primary/public API interface). Both run in a single
+servers is :code:`admin` (the administration API) and the other is
+:code:`main` (the primary/public API interface). Both run in a single
 process.
 
 Example usage

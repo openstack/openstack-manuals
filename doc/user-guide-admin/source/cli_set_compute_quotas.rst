@@ -9,12 +9,14 @@ tenant user, as well as update the quota defaults for a new tenant.
 
 **Compute quota descriptions**
 
-===============================   ===================================================================
+===============================   ========================================================
   Quota name                        Description
-===============================   ===================================================================
-  cores                             Number of instance cores (VCPUs) allowed per tenant.
-  fixed-ips                         Number of fixed IP addresses allowed per tenant. This number must
-                                    be equal to or greater than the number of allowed instances.
+===============================   ========================================================
+  cores                             Number of instance cores (VCPUs)
+                                    allowed per tenant.
+  fixed-ips                         Number of fixed IP addresses allowed per tenant.
+                                    This number must be equal to or
+                                    greater than the number of allowed instances.
   floating-ips                      Number of floating IP addresses allowed per tenant.
   injected-file-content-bytes       Number of content bytes allowed per injected file.
   injected-file-path-bytes          Length of injected file path.
@@ -25,7 +27,7 @@ tenant user, as well as update the quota defaults for a new tenant.
   ram                               Megabytes of instance ram allowed per tenant.
   security-groups                   Number of security groups per tenant.
   security-group-rules              Number of rules per security group.
-===============================   ===================================================================
+===============================   ========================================================
 
 View and update Compute quotas for a tenant (project)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

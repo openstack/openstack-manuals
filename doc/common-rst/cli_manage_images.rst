@@ -125,45 +125,71 @@ To update an image by name or ID, use ``glance image-update``:
 
   $ glance image-update imageName
 
-The following table lists the optional arguments that you can use with
+The following list explains the optional arguments that you can use with
 the ``create`` and ``update`` commands to modify image properties. For
 more information, refer to Image service chapter in the `OpenStack
 Command-Line Interface
 Reference <http://docs.openstack.org/cli-reference/content/index.html>`__.
 
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--name NAME``                           | The name of the image.                                                                                                                                                   |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--disk-format DISK_FORMAT``             | The disk format of the image. Acceptable formats are ami, ari, aki, vhd, vmdk, raw, qcow2, vdi, and iso.                                                                 |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--container-format CONTAINER_FORMAT``   | The container format of the image. Acceptable formats are ami, ari, aki, bare, and ovf.                                                                                  |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--owner TENANT_ID``                     | The tenant who should own the image.                                                                                                                                     |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--size SIZE``                           | The size of image data, in bytes.                                                                                                                                        |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--min-disk DISK_GB``                    | The minimum size of the disk needed to boot the image, in gigabytes.                                                                                                     |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--min-ram DISK_RAM``                    | The minimum amount of RAM needed to boot the image, in megabytes.                                                                                                        |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--location IMAGE_URL``                  | The URL where the data for this image resides. For example, if the image data is stored in swift, you could specify ``swift://account:key@example.com/container/obj``.   |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--file FILE``                           | Local file that contains the disk image to be uploaded during the update. Alternatively, you can pass images to the client through stdin.                                |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--checksum CHECKSUM``                   | Hash of image data to use for verification.                                                                                                                              |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--copy-from IMAGE_URL``                 | Similar to ``--location`` in usage, but indicates that the image server should immediately copy the data and store it in its configured image store.                     |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--is-public [True|False]``              | Makes an image accessible for all the tenants (admin-only by default).                                                                                                   |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--is-protected [True|False]``           | Prevents an image from being deleted.                                                                                                                                    |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--property KEY=VALUE``                  | Arbitrary property to associate with image. This option can be used multiple times.                                                                                      |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--purge-props``                         | Deletes all image properties that are not explicitly set in the update request. Otherwise, those properties not referenced are preserved.                                |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``--human-readable``                      | Prints the image size in a human-friendly format.                                                                                                                        |
-+-------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+``--name NAME``
+  The name of the image.
+
+``--disk-format DISK_FORMAT``
+  The disk format of the image. Acceptable formats are ami, ari, aki,
+  vhd, vmdk, raw, qcow2, vdi, and iso.
+
+``--container-format CONTAINER_FORMAT``
+  The container format of the image. Acceptable formats are ami, ari,
+  aki, bare, and ovf.
+
+``--owner TENANT_ID --size SIZE``
+  The tenant who should own the image. The size of image data, in
+  bytes.
+
+``--min-disk DISK_GB``
+  The minimum size of the disk needed to boot the image, in
+  gigabytes.
+
+``--min-ram DISK_RAM``
+  The minimum amount of RAM needed to boot the image, in megabytes.
+
+``--location IMAGE_URL``
+  The URL where the data for this image resides. For example, if the
+  image data is stored in swift, you could specify
+  ``swift://account:key@example.com/container/obj``.
+
+``--file FILE``
+  Local file that contains the disk image to be uploaded during the
+  update. Alternatively, you can pass images to the client through
+  stdin.
+
+``--checksum CHECKSUM``
+  Hash of image data to use for verification.
+
+``--copy-from IMAGE_URL``
+  Similar to ``--location`` in usage, but indicates that the image
+  server should immediately copy the data and store it in its
+  configured image store.
+
+``--is-public [True|False]``
+  Makes an image accessible for all the tenants (admin-only by
+  default).
+
+``--is-protected [True|False]``
+  Prevents an image from being deleted.
+
+``--property KEY=VALUE``
+  Arbitrary property to associate with image. This option can be used
+  multiple times.
+
+``--purge-props``
+  Deletes all image properties that are not explicitly set in the
+  update request. Otherwise, those properties not referenced are
+  preserved.
+
+``--human-readable``
+  Prints the image size in a human-friendly format.
+
 
 The following example shows the command that you would use to upload a
 CentOS 6.3 image in qcow2 format and configure it for public access:
@@ -193,7 +219,8 @@ performance, libvirt defaults to using virtio for both disk and VIF
 possible to run operating systems that lack virtio drivers, for example,
 BSD, Solaris, and older versions of Linux and Windows.
 
-If you specify a disk or CD-ROM bus model that is not supported, see the Disk_and_CD-ROM_bus_model_values_table_.
+If you specify a disk or CD-ROM bus model that is not supported, see
+the Disk_and_CD-ROM_bus_model_values_table_.
 If you specify a VIF model that is not supported, the instance fails to
 launch. See the VIF_model_values_table_.
 
