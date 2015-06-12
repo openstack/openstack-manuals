@@ -8,13 +8,12 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   objectstorage_characteristics.rst
-
-.. TODO (karenb)
    objectstorage_intro.rst
    objectstorage_features.rst
    objectstorage_characteristics.rst
    objectstorage_components.rst
+
+.. TODO (karenb)
    objectstorage_ringbuilder.rst
    objectstorage_arch.rst
    objectstorage_replication.rst
