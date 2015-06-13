@@ -12,7 +12,7 @@ for guide in user-guide user-guide-admin networking-guide; do
 done
 
 # Draft guides
-for guide in admin-guide-cloud-rst; do
+for guide in admin-guide-cloud-rst install-guide-rst; do
     tools/build-rst.sh doc/$guide --build build \
         --target "draft/$guide"
 done
