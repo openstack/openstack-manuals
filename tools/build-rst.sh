@@ -59,7 +59,7 @@ if [ "$GLOSSARY" -eq "1" ] ; then
     tools/glossary2rst.py doc/common-rst/glossary.rst
 fi
 
-if [ -z "BUILD" ] ; then
+if [ -z "$BUILD" ] ; then
     if [ -z "$TAG" ] ; then
         BUILD_DIR="$DIRECTORY/build/html"
     else
