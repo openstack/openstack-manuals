@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-12 06:13+0000\n"
+"POT-Creation-Date: 2015-06-14 06:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1582,6 +1582,17 @@ msgstr ""
 msgid "Alternative term for the Image service registry."
 msgstr ""
 
+#: ../misc_libvirt.rst:76
+msgid ""
+"Although OpenStack does not make use of libvirt's networking, this "
+"networking will not interfere with OpenStack's behavior, and can be safely "
+"left enabled. However, libvirt's networking can be a nuisance when debugging "
+"OpenStack networking issues. Because libvirt creates an additional bridge, "
+"dnsmasq process, and iptables ruleset, these may distract an operator "
+"engaged in network troubleshooting. Unless you need to start up virtual "
+"machines using libvirt directly, you can safely disable libvirt's network."
+msgstr ""
+
 #: ../deploy_scenario1b.rst:191 ../deploy_scenario1b.rst:310
 msgid ""
 "Although the diagram shows both VXLAN and VLAN tenant networks, the packet "
@@ -2402,6 +2413,20 @@ msgid ""
 "By default the help URL points to http://docs.openstack.org. Change this by "
 "editing the following attribute to the URL of your choice in :file:"
 "`local_settings.py`::"
+msgstr ""
+
+#: ../misc_libvirt.rst:34
+msgid ""
+"By default, libvirt creates a network named *default*. The details of this "
+"network may vary by distribution; on Ubuntu this network involves:"
+msgstr ""
+
+#: ../misc_libvirt.rst:24
+msgid ""
+"By default, libvirt's networking functionality is enabled, and libvirt "
+"creates a network when the system boots. To implement this network, libvirt "
+"leverages some of the same technologies that OpenStack Network does. In "
+"particular, libvirt uses:"
 msgstr ""
 
 #: ../common/glossary.rst:531
@@ -3354,6 +3379,12 @@ msgstr ""
 msgid "Database service"
 msgstr ""
 
+#: ../misc_libvirt.rst:95
+msgid ""
+"Deactivating the network will remove the ``virbr0`` bridge, terminate the "
+"dnsmasq process, and remove the iptables rules."
+msgstr ""
+
 #: ../common/glossary.rst:1001
 msgid "Debian"
 msgstr ""
@@ -3463,6 +3494,10 @@ msgstr ""
 msgid ""
 "Disables server-side message acknowledgment in the Compute RabbitMQ. "
 "Increases performance but decreases reliability."
+msgstr ""
+
+#: ../misc_libvirt.rst:3
+msgid "Disabling libvirt networking"
 msgstr ""
 
 #: ../common/glossary.rst:954
@@ -4312,6 +4347,19 @@ msgstr ""
 
 #: ../adv_config_group_policy.rst:9
 msgid "How it differs from legacy neutron data model"
+msgstr ""
+
+#: ../misc_libvirt.rst:74
+msgid "How to disable libvirt networks"
+msgstr ""
+
+#: ../misc_libvirt.rst:15
+msgid ""
+"However, libvirt is capable of providing networking services to the virtual "
+"machines that it manages. In particular, libvirt can be configured to "
+"provide networking functionality akin to a simplified, single-node version "
+"of OpenStack. Users can use libvirt to create layer 2 networks that are "
+"similar to OpenStack Networking's networks, confined to a single node."
 msgstr ""
 
 #: ../common/glossary.rst:1715
@@ -5273,6 +5321,10 @@ msgid ""
 "groups for instances."
 msgstr ""
 
+#: ../misc_libvirt.rst:28
+msgid "Linux bridging for implementing a layer 2 network"
+msgstr ""
+
 #: ../common/glossary.rst:2146
 msgid "Linux containers (LXC)"
 msgstr ""
@@ -5572,6 +5624,17 @@ msgstr ""
 
 #: ../common/glossary.rst:2325
 msgid "Monitor (Mon)"
+msgstr ""
+
+#: ../misc_libvirt.rst:5
+msgid ""
+"Most OpenStack deployments use the libvirt_ toolkit for interacting with the "
+"hypervisor. Specifically, OpenStack Compute uses libvirt for tasks such as "
+"booting and terminating virtual machine instances. When OpenStack Compute "
+"boots a new instance, libvirt provides OpenStack with the VIF associated "
+"with the instance, and OpenStack Compute plugs the VIF into a virtual device "
+"provided by OpenStack Network. The libvirt toolkit itself does not provide "
+"any networking functionality in OpenStack deployments."
 msgstr ""
 
 #: ../common/glossary.rst:2336
@@ -5918,6 +5981,12 @@ msgstr ""
 
 #: ../common/dashboard_customizing.rst:96
 msgid "On Fedora, RHEL, CentOS::"
+msgstr ""
+
+#: ../misc_libvirt.rst:45
+msgid ""
+"On Ubuntu, the iptables ruleset that libvirt creates includes the following "
+"rules::"
 msgstr ""
 
 #: ../common/dashboard_customizing.rst:92
@@ -9543,6 +9612,12 @@ msgid ""
 "installations."
 msgstr ""
 
+#: ../misc_libvirt.rst:68
+msgid ""
+"The following shows the dnsmasq process that libvirt manages as it appears "
+"in the output of :command:`ps`::"
+msgstr ""
+
 #: ../deploy_scenario2.rst:312
 msgid ""
 "The following steps involve a packet inbound from the external network to an "
@@ -10656,6 +10731,10 @@ msgid ""
 "both Networking and Compute."
 msgstr ""
 
+#: ../misc_libvirt.rst:102
+msgid "To activate the network afer it has been deactivated::"
+msgstr ""
+
 #: ../common/glossary.rst:11
 msgid ""
 "To add to OpenStack glossary, clone the `openstack/openstack-manuals "
@@ -10695,6 +10774,10 @@ msgid ""
 "overlap with those that other tenants use."
 msgstr ""
 
+#: ../misc_libvirt.rst:91
+msgid "To deactivate the libvirt network named *default*::"
+msgstr ""
+
 # #-#-#-#-#  deploy_scenario1a.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  deploy_scenario3a.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../deploy_scenario1a.rst:11 ../deploy_scenario3a.rst:15
@@ -10711,6 +10794,10 @@ msgid ""
 "To improve understanding of network traffic flow, the network and compute "
 "nodes contain a separate network interface for tenant VLAN networks. In "
 "production environments, tenant VLAN networks can use any network interface."
+msgstr ""
+
+#: ../misc_libvirt.rst:98
+msgid "To prevent the network from automatically starting on boot::"
 msgstr ""
 
 #: ../common/app_support.rst:19 ../common/app_support.rst:218
@@ -10758,6 +10845,10 @@ msgid ""
 "for a specific VLAN, it is called an *access port*. The switch is "
 "responsible for ensuring that the network traffic is isolated across the "
 "VLANs."
+msgstr ""
+
+#: ../misc_libvirt.rst:84
+msgid "To view the defined libvirt networks and their state::"
 msgstr ""
 
 #: ../common/dashboard_customizing.rst:104
@@ -11334,6 +11425,12 @@ msgid ""
 "trunking is being used."
 msgstr ""
 
+#: ../misc_libvirt.rst:42
+msgid ""
+"When libvirt boots a virtual machine, it places the machine's VIF in the "
+"bridge ``virbr0`` unless explicitly told not to."
+msgstr ""
+
 #: ../intro_network_address_translation.rst:55
 msgid ""
 "When the router receives a packet with the matching IP address and port, it "
@@ -11592,6 +11689,21 @@ msgstr ""
 
 #: ../intro_network_address_translation.rst:33
 msgid "``192.168.0.0/16``"
+msgstr ""
+
+#: ../misc_libvirt.rst:37
+msgid ""
+"a Linux bridge named ``virbr0`` with an IP address of ``192.168.122.1/24``"
+msgstr ""
+
+#: ../misc_libvirt.rst:38
+msgid ""
+"a dnsmasq process that listens on the ``virbr0`` interface and hands out IP "
+"addresses in the range ``192.168.122.2-192.168.122.254``"
+msgstr ""
+
+#: ../misc_libvirt.rst:40
+msgid "a set of iptables rules"
 msgstr ""
 
 #: ../common/glossary.rst:22
@@ -12106,6 +12218,10 @@ msgstr ""
 msgid "dnsmasq"
 msgstr ""
 
+#: ../misc_libvirt.rst:29
+msgid "dnsmasq for providing IP addresses to virtual machines using DHCP"
+msgstr ""
+
 #: ../common/glossary.rst:1176
 msgid "domain"
 msgstr ""
@@ -12473,6 +12589,13 @@ msgstr ""
 msgid "iptables"
 msgstr ""
 
+#: ../misc_libvirt.rst:30
+msgid ""
+"iptables to implement SNAT so instances can connect out to the public "
+"internet, and to ensure that virtual machines are permitted to communicate "
+"with dnsmasq using DHCP"
+msgstr ""
+
 #: ../common/glossary.rst:1947
 msgid "ironic"
 msgstr ""
@@ -12499,6 +12622,10 @@ msgstr ""
 
 #: ../common/glossary.rst:2131
 msgid "libvirt"
+msgstr ""
+
+#: ../misc_libvirt.rst:22
+msgid "libvirt network implementation"
 msgstr ""
 
 #: ../common/glossary.rst:2150
