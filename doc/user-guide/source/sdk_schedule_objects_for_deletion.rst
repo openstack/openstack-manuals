@@ -3,7 +3,8 @@ Schedule objects for deletion
 =============================
 
 To determine whether your Object Storage system supports this feature,
-see :doc:`managing-openstack-object-storage-with-swift-cli`. Alternatively, check with your service provider.
+see :doc:`managing-openstack-object-storage-with-swift-cli`.
+Alternatively, check with your service provider.
 
 Scheduling an object for deletion is helpful for managing objects that
 you do not want to permanently store, such as log files, recurring full

@@ -34,9 +34,11 @@ Logo and site colors
    - Login screen: 365 x 50
    - Logged in banner: 216 x 35
 
-#. Upload your new images to :file:`/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/img/`.
+#. Upload your new images to
+   :file:`/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/img/`.
 
-#. Create a CSS style sheet in :file:`/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/css/`.
+#. Create a CSS style sheet in
+   :file:`/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/css/`.
 
 #. Change the colors and image file names as appropriate, though the
    relative directory paths should be the same. The following example file

@@ -7,19 +7,33 @@ You can boot instances from a volume instead of an image.
 To complete these tasks, use these parameters on the nova :command:`boot`
 command:
 
-+------------------------------------------------------------------------+-----------------------+-------------------------------------------------------------------+
-| Task                                                                   | nova boot parameter   | Information                                                       |
-+========================================================================+=======================+===================================================================+
-| Boot an instance from an image and attach a non-bootable volume.       | ``--block-device``    | :ref:`Boot_instance_from_image_and_attach_non-bootable_volume`    |
-+------------------------------------------------------------------------+-----------------------+-------------------------------------------------------------------+
-| Create a volume from an image and boot an instance from that volume.   | ``--block-device``    | :ref:`Create_volume_from_image_and_boot_instance`                 |
-+------------------------------------------------------------------------+-----------------------+-------------------------------------------------------------------+
-| Boot from an existing source image, volume, or snapshot.               | ``--block-device``    | :ref:`Create_volume_from_image_and_boot_instance`                 |
-+------------------------------------------------------------------------+-----------------------+-------------------------------------------------------------------+
-| Attach a swap disk to an instance.                                     | ``--swap``            | :ref:`Attach_swap_or_ephemeral_disk_to_an_instance`               |
-+------------------------------------------------------------------------+-----------------------+-------------------------------------------------------------------+
-| Attach an ephemeral disk to an instance.                               | ``--ephemeral``       | :ref:`Attach_swap_or_ephemeral_disk_to_an_instance`               |
-+------------------------------------------------------------------------+-----------------------+-------------------------------------------------------------------+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 10 30
+
+   * - Task
+     - nova boot parameter
+     - Information
+   * - Boot an instance from an image and attach a non-bootable
+       volume.
+     - ``--block-device``
+     -  :ref:`Boot_instance_from_image_and_attach_non-bootable_volume`
+   * - Attach a swap disk to an instance.
+     - ``--swap``
+     - :ref:`Attach_swap_or_ephemeral_disk_to_an_instance`
+   * - Create a volume from an image and boot an instance from that
+       volume.
+     - ``--block-device``
+     - :ref:`Create_volume_from_image_and_boot_instance`
+   * - Boot from an existing source image, volume, or snapshot.
+     - ``--block-device``
+     - :ref:`Create_volume_from_image_and_boot_instance`
+   * - Attach a swap disk to an instance.
+     - ``--swap``
+     - :ref:`Attach_swap_or_ephemeral_disk_to_an_instance`
+   * - Attach an ephemeral disk to an instance.
+     - ``--ephemeral``
+     - :ref:`Attach_swap_or_ephemeral_disk_to_an_instance`
 
 .. note::
 

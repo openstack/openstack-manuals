@@ -54,9 +54,11 @@ run::
   | 172.24.4.226 | None                                 | None     | public |
   +--------------+--------------------------------------+----------+--------+
 
-For each floating IP address that is allocated to the current project, the
-command outputs the floating IP address, the ID for the instance to which
-the floating IP address is assigned, the associated fixed IP address, and the pool from which the floating IP address was allocated.
+For each floating IP address that is allocated to the current project,
+the command outputs the floating IP address, the ID for the instance
+to which the floating IP address is assigned, the associated fixed IP
+address, and the pool from which the floating IP address was
+allocated.
 
 Associate floating IP addresses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
