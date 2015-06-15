@@ -14,7 +14,7 @@ the OpenStack Compute service, the OpenStack Block Storage service,
 and the OpenStack Networking service.
 
 The cloud operator typically changes default values because a
-tenant requires more than ten volumes or :guilabel:`&1 TB` on a compute
+tenant requires more than ten volumes or 1 TB on a compute
 node.
 
 .. note::
