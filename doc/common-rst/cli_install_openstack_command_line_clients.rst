@@ -233,7 +233,7 @@ command::
 
   # pip install --upgrade python-PROJECTclient
 
-To remove the a client, run the ``pip uninstall`` command::
+To remove the client, run the ``pip uninstall`` command::
 
   # pip uninstall python-PROJECTclient
 
