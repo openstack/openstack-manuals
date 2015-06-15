@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Block Storage API and its extensions.
 
        This chapter documents <command>cinder</command> version
-        <literal>1.2.1</literal>.
+        <literal>1.2.2</literal>.
     </para>
 
     <para>For help on a specific <command>cinder</command>
@@ -29,6 +29,7 @@
               [--service-type &lt;service-type&gt;] [--service-name &lt;service-name&gt;]
               [--volume-service-name &lt;volume-service-name&gt;]
               [--endpoint-type &lt;endpoint-type&gt;]
+              [--os-endpoint-type &lt;os-endpoint-type&gt;]
               [--os-volume-api-version &lt;volume-api-ver&gt;]
               [--bypass-url &lt;bypass-url&gt;] [--retries &lt;retries&gt;]
               [--os-auth-strategy &lt;auth-strategy&gt;]
@@ -670,8 +671,17 @@
     <term><command>--endpoint-type &lt;endpoint-type&gt;</command></term>
     <listitem>
       <para>
+      <emphasis>DEPRECATED!</emphasis> Use --os-endpoint-type.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-endpoint-type &lt;os-endpoint-type&gt;</command></term>
+    <listitem>
+      <para>
       Endpoint type, which is publicURL or internalURL.
-      Default=nova <code>env[CINDER_ENDPOINT_TYPE]</code> or publicURL.
+      Default=<code>env[OS_ENDPOINT_TYPE]</code> or nova
+      <code>env[CINDER_ENDPOINT_TYPE]</code> or publicURL.
       </para>
     </listitem>
   </varlistentry>
