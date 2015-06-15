@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Compute API and its extensions.
 
        This chapter documents <command>nova</command> version
-        <literal>2.24.1</literal>.
+        <literal>2.26.0</literal>.
     </para>
 
     <para>For help on a specific <command>nova</command>
@@ -54,7 +54,7 @@
     <term><command>absolute-limits</command></term>
     <listitem>
       <para>
-        Print a list of absolute limits for a user
+        <emphasis>DEPRECATED</emphasis>, use limits instead.
       </para>
     </listitem>
   </varlistentry>
@@ -725,6 +725,14 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>limits</command></term>
+    <listitem>
+      <para>
+        Print rate and absolute limits.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>list</command></term>
     <listitem>
       <para>
@@ -893,7 +901,7 @@
     <term><command>rate-limits</command></term>
     <listitem>
       <para>
-        Print a list of rate limits for a user
+        <emphasis>DEPRECATED</emphasis>, use limits instead.
       </para>
     </listitem>
   </varlistentry>
@@ -1324,7 +1332,7 @@
     <term><command>volume-create</command></term>
     <listitem>
       <para>
-        Add a new volume.
+        <emphasis>DEPRECATED</emphasis>: Add a new volume.
       </para>
     </listitem>
   </varlistentry>
@@ -1332,7 +1340,7 @@
     <term><command>volume-delete</command></term>
     <listitem>
       <para>
-        Remove volume(s).
+        <emphasis>DEPRECATED</emphasis>: Remove volume(s).
       </para>
     </listitem>
   </varlistentry>
@@ -1348,7 +1356,7 @@
     <term><command>volume-list</command></term>
     <listitem>
       <para>
-        List all the volumes.
+        <emphasis>DEPRECATED</emphasis>: List all the volumes.
       </para>
     </listitem>
   </varlistentry>
@@ -1356,7 +1364,7 @@
     <term><command>volume-show</command></term>
     <listitem>
       <para>
-        Show details about a volume.
+        <emphasis>DEPRECATED</emphasis>: Show details about a volume.
       </para>
     </listitem>
   </varlistentry>
@@ -1364,7 +1372,7 @@
     <term><command>volume-snapshot-create</command></term>
     <listitem>
       <para>
-        Add a new snapshot.
+        <emphasis>DEPRECATED</emphasis>: Add a new snapshot.
       </para>
     </listitem>
   </varlistentry>
@@ -1372,7 +1380,7 @@
     <term><command>volume-snapshot-delete</command></term>
     <listitem>
       <para>
-        Remove a snapshot.
+        <emphasis>DEPRECATED</emphasis>: Remove a snapshot.
       </para>
     </listitem>
   </varlistentry>
@@ -1380,7 +1388,7 @@
     <term><command>volume-snapshot-list</command></term>
     <listitem>
       <para>
-        List all the snapshots.
+        <emphasis>DEPRECATED</emphasis>: List all the snapshots.
       </para>
     </listitem>
   </varlistentry>
@@ -1388,7 +1396,7 @@
     <term><command>volume-snapshot-show</command></term>
     <listitem>
       <para>
-        Show details about a snapshot.
+        <emphasis>DEPRECATED</emphasis>: Show details about a snapshot.
       </para>
     </listitem>
   </varlistentry>
@@ -1396,7 +1404,7 @@
     <term><command>volume-type-create</command></term>
     <listitem>
       <para>
-        Create a new volume type.
+        <emphasis>DEPRECATED</emphasis>: Create a new volume type.
       </para>
     </listitem>
   </varlistentry>
@@ -1404,7 +1412,7 @@
     <term><command>volume-type-delete</command></term>
     <listitem>
       <para>
-        Delete a specific volume type.
+        <emphasis>DEPRECATED</emphasis>: Delete a specific volume type.
       </para>
     </listitem>
   </varlistentry>
@@ -1412,7 +1420,8 @@
     <term><command>volume-type-list</command></term>
     <listitem>
       <para>
-        Print a list of available 'volume types'.
+        <emphasis>DEPRECATED</emphasis>: Print a list of available 'volume
+      types'.
       </para>
     </listitem>
   </varlistentry>
@@ -1460,40 +1469,6 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>instance-action</command></term>
-    <listitem>
-      <para>
-        Show an action.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action-list</command></term>
-    <listitem>
-      <para>
-        List actions on a server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-meta</command></term>
-    <listitem>
-      <para>
-        Set or Delete metadata on all instances of a
-      host.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-evacuate-live</command></term>
-    <listitem>
-      <para>
-        Live migrate all instances of the specified
-      host to other available hosts.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>force-delete</command></term>
     <listitem>
       <para>
@@ -1510,10 +1485,36 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>migration-list</command></term>
+    <term><command>host-servers-migrate</command></term>
     <listitem>
       <para>
-        Print a list of migrations.
+        Migrate all instances of the specified host to
+      other available hosts.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-evacuate-live</command></term>
+    <listitem>
+      <para>
+        Live migrate all instances of the specified
+      host to other available hosts.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action</command></term>
+    <listitem>
+      <para>
+        Show an action.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action-list</command></term>
+    <listitem>
+      <para>
+        List actions on a server.
       </para>
     </listitem>
   </varlistentry>
@@ -1578,15 +1579,6 @@
     <listitem>
       <para>
         Show a tenant network.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>list-extensions</command></term>
-    <listitem>
-      <para>
-        List all the os-api extensions that are
-      available.
       </para>
     </listitem>
   </varlistentry>
@@ -1667,11 +1659,28 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-servers-migrate</command></term>
+    <term><command>migration-list</command></term>
     <listitem>
       <para>
-        Migrate all instances of the specified host to
-      other available hosts.
+        Print a list of migrations.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-meta</command></term>
+    <listitem>
+      <para>
+        Set or Delete metadata on all instances of a
+      host.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>list-extensions</command></term>
+    <listitem>
+      <para>
+        List all the os-api extensions that are
+      available.
       </para>
     </listitem>
   </varlistentry>
@@ -1798,7 +1807,7 @@
     <term><command>--os-compute-api-version &lt;compute-api-ver&gt;</command></term>
     <listitem>
       <para>
-      Accepts 1.1 or 3, defaults to
+      Accepts number of API version, defaults to
       <code>env[OS_COMPUTE_API_VERSION]</code>.
       </para>
     </listitem>
@@ -1960,31 +1969,6 @@
     <listitem>
       <para>
         User's password
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="novaclient_subcommand_absolute-limits">
-        <title>nova absolute-limits</title>
-        <screen><computeroutput>usage: nova absolute-limits [--tenant [&lt;tenant&gt;]] [--reserved]</computeroutput></screen>
-        <para>
-Print a list of absolute limits for a user
-        </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
-  <varlistentry>
-    <term><command>--tenant [&lt;tenant&gt;]</command></term>
-    <listitem>
-      <para>
-        Display information from single tenant (Admin only).
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--reserved</command></term>
-    <listitem>
-      <para>
-        Include reservations count.
       </para>
     </listitem>
   </varlistentry>
@@ -3013,7 +2997,7 @@ Show user credentials returned from auth.
     </section>
     <section xml:id="novaclient_subcommand_delete">
         <title>nova delete</title>
-        <screen><computeroutput>usage: nova delete &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: nova delete [--all-tenants] &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
         <para>
 Immediately shut down and delete specified server(s).
         </para>  <variablelist wordsize="10">
@@ -3023,6 +3007,17 @@ Immediately shut down and delete specified server(s).
     <listitem>
       <para>
         Name or ID of server(s).
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--all-tenants</command></term>
+    <listitem>
+      <para>
+        Delete server(s) in another tenant by name (Admin only).
       </para>
     </listitem>
   </varlistentry>
@@ -4573,6 +4568,31 @@ Show details about the given keypair.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="novaclient_subcommand_limits">
+        <title>nova limits</title>
+        <screen><computeroutput>usage: nova limits [--tenant [&lt;tenant&gt;]] [--reserved]</computeroutput></screen>
+        <para>
+Print rate and absolute limits.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--tenant [&lt;tenant&gt;]</command></term>
+    <listitem>
+      <para>
+        Display information from single tenant (Admin only).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--reserved</command></term>
+    <listitem>
+      <para>
+        Include reservations count.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="novaclient_subcommand_list">
         <title>nova list</title>
         <screen><computeroutput>usage: nova list [--reservation-id &lt;reservation-id&gt;] [--ip &lt;ip-regexp&gt;]
@@ -5673,13 +5693,6 @@ Update the quotas for a tenant/user.
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="novaclient_subcommand_rate-limits">
-        <title>nova rate-limits</title>
-        <screen><computeroutput>usage: nova rate-limits</computeroutput></screen>
-        <para>
-Print a list of rate limits for a user
-        </para>
-    </section>
     <section xml:id="novaclient_subcommand_reboot">
         <title>nova reboot</title>
         <screen><computeroutput>usage: nova reboot [--hard] [--poll] &lt;server&gt;</computeroutput></screen>
@@ -6589,10 +6602,20 @@ Get a specific server group.
     </section>
     <section xml:id="novaclient_subcommand_server-group-list">
         <title>nova server-group-list</title>
-        <screen><computeroutput>usage: nova server-group-list</computeroutput></screen>
+        <screen><computeroutput>usage: nova server-group-list [--all-projects]</computeroutput></screen>
         <para>
 Print a list of all server groups.
-        </para>
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--all-projects</command></term>
+    <listitem>
+      <para>
+        Display server groups from all projects (Admin only).
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="novaclient_subcommand_service-delete">
         <title>nova service-delete</title>
@@ -7131,100 +7154,6 @@ Attach a volume to a server.
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="novaclient_subcommand_volume-create">
-        <title>nova volume-create</title>
-        <screen><computeroutput>usage: nova volume-create [--snapshot-id &lt;snapshot-id&gt;]
-                          [--image-id &lt;image-id&gt;]
-                          [--display-name &lt;display-name&gt;]
-                          [--display-description &lt;display-description&gt;]
-                          [--volume-type &lt;volume-type&gt;]
-                          [--availability-zone &lt;availability-zone&gt;]
-                          &lt;size&gt;</computeroutput></screen>
-        <para>
-Add a new volume.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;size&gt;</command></term>
-    <listitem>
-      <para>
-        Size of volume in GB
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-  <variablelist wordsize="10">
-    <title>Optional arguments</title>
-  <varlistentry>
-    <term><command>--snapshot-id &lt;snapshot-id&gt;</command></term>
-    <listitem>
-      <para>
-        Optional snapshot id to create the volume
-      from. (Default=None)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--image-id &lt;image-id&gt;</command></term>
-    <listitem>
-      <para>
-        Optional image id to create the volume from.
-      (Default=None)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--display-name &lt;display-name&gt;</command></term>
-    <listitem>
-      <para>
-      Optional volume name. (Default=None)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--display-description &lt;display-description&gt;</command></term>
-    <listitem>
-      <para>
-      Optional volume description. (Default=None)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--volume-type &lt;volume-type&gt;</command></term>
-    <listitem>
-      <para>
-        Optional volume type. (Default=None)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--availability-zone &lt;availability-zone&gt;</command></term>
-    <listitem>
-      <para>
-      Optional Availability Zone for volume.
-      (Default=None)
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="novaclient_subcommand_volume-delete">
-        <title>nova volume-delete</title>
-        <screen><computeroutput>usage: nova volume-delete &lt;volume&gt; [&lt;volume&gt; ...]</computeroutput></screen>
-        <para>
-Remove volume(s).
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;volume&gt;</command></term>
-    <listitem>
-      <para>
-        Name or ID of the volume(s) to delete.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
     <section xml:id="novaclient_subcommand_volume-detach">
         <title>nova volume-detach</title>
         <screen><computeroutput>usage: nova volume-detach &lt;server&gt; &lt;volume&gt;</computeroutput></screen>
@@ -7249,171 +7178,6 @@ Detach a volume from a server.
     </listitem>
   </varlistentry>
  </variablelist>
-    </section>
-    <section xml:id="novaclient_subcommand_volume-list">
-        <title>nova volume-list</title>
-        <screen><computeroutput>usage: nova volume-list [--all-tenants [&lt;0|1&gt;]]</computeroutput></screen>
-        <para>
-List all the volumes.
-        </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
-  <varlistentry>
-    <term><command>--all-tenants [&lt;0|1&gt;]</command></term>
-    <listitem>
-      <para>
-        Display information from all tenants (Admin only).
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="novaclient_subcommand_volume-show">
-        <title>nova volume-show</title>
-        <screen><computeroutput>usage: nova volume-show &lt;volume&gt;</computeroutput></screen>
-        <para>
-Show details about a volume.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;volume&gt;</command></term>
-    <listitem>
-      <para>
-        Name or ID of the volume.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="novaclient_subcommand_volume-snapshot-create">
-        <title>nova volume-snapshot-create</title>
-        <screen><computeroutput>usage: nova volume-snapshot-create [--force &lt;True|False&gt;]
-                                   [--display-name &lt;display-name&gt;]
-                                   [--display-description &lt;display-description&gt;]
-                                   &lt;volume-id&gt;</computeroutput></screen>
-        <para>
-Add a new snapshot.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;volume-id&gt;</command></term>
-    <listitem>
-      <para>
-        ID of the volume to snapshot
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-  <variablelist wordsize="10">
-    <title>Optional arguments</title>
-  <varlistentry>
-    <term><command>--force &lt;True|False&gt;</command></term>
-    <listitem>
-      <para>
-        Optional flag to indicate whether to snapshot
-      a volume even if its attached to a server.
-      (Default=False)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--display-name &lt;display-name&gt;</command></term>
-    <listitem>
-      <para>
-      Optional snapshot name. (Default=None)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--display-description &lt;display-description&gt;</command></term>
-    <listitem>
-      <para>
-      Optional snapshot description. (Default=None)
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="novaclient_subcommand_volume-snapshot-delete">
-        <title>nova volume-snapshot-delete</title>
-        <screen><computeroutput>usage: nova volume-snapshot-delete &lt;snapshot&gt;</computeroutput></screen>
-        <para>
-Remove a snapshot.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;snapshot&gt;</command></term>
-    <listitem>
-      <para>
-        Name or ID of the snapshot to delete.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="novaclient_subcommand_volume-snapshot-list">
-        <title>nova volume-snapshot-list</title>
-        <screen><computeroutput>usage: nova volume-snapshot-list</computeroutput></screen>
-        <para>
-List all the snapshots.
-        </para>
-    </section>
-    <section xml:id="novaclient_subcommand_volume-snapshot-show">
-        <title>nova volume-snapshot-show</title>
-        <screen><computeroutput>usage: nova volume-snapshot-show &lt;snapshot&gt;</computeroutput></screen>
-        <para>
-Show details about a snapshot.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;snapshot&gt;</command></term>
-    <listitem>
-      <para>
-        Name or ID of the snapshot.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="novaclient_subcommand_volume-type-create">
-        <title>nova volume-type-create</title>
-        <screen><computeroutput>usage: nova volume-type-create &lt;name&gt;</computeroutput></screen>
-        <para>
-Create a new volume type.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;name&gt;</command></term>
-    <listitem>
-      <para>
-        Name of the new volume type
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="novaclient_subcommand_volume-type-delete">
-        <title>nova volume-type-delete</title>
-        <screen><computeroutput>usage: nova volume-type-delete &lt;id&gt;</computeroutput></screen>
-        <para>
-Delete a specific volume type.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;id&gt;</command></term>
-    <listitem>
-      <para>
-        Unique ID of the volume type to delete
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="novaclient_subcommand_volume-type-list">
-        <title>nova volume-type-list</title>
-        <screen><computeroutput>usage: nova volume-type-list</computeroutput></screen>
-        <para>
-Print a list of available 'volume types'.
-        </para>
     </section>
     <section xml:id="novaclient_subcommand_volume-update">
         <title>nova volume-update</title>
