@@ -9,13 +9,13 @@
 
     <?dbhtml stop-chunking?>
 
-    <title>OpenStack client</title>
+    <title>OpenStack</title>
 
     <para>The <command>openstack</command> client is a common
        OpenStack command-line interface (CLI).
 
        This chapter documents <command>openstack</command> version
-        <literal>1.2.0</literal>.
+        <literal>1.4.0</literal>.
     </para>
 
     <para>For help on a specific <command>openstack</command>
@@ -41,14 +41,14 @@
                  [--os-project-domain-id &lt;auth-project-domain-id&gt;]
                  [--os-project-name &lt;auth-project-name&gt;]
                  [--os-auth-url &lt;auth-auth-url&gt;]
-                 [--os-identity-provider-url &lt;auth-identity-provider-url&gt;]
                  [--os-trust-id &lt;auth-trust-id&gt;]
                  [--os-service-provider-endpoint &lt;auth-service-provider-endpoint&gt;]
                  [--os-user-domain-id &lt;auth-user-domain-id&gt;]
-                 [--os-url &lt;auth-url&gt;] [--os-token &lt;auth-token&gt;]
                  [--os-domain-name &lt;auth-domain-name&gt;]
+                 [--os-identity-provider-url &lt;auth-identity-provider-url&gt;]
+                 [--os-token &lt;auth-token&gt;] [--os-domain-id &lt;auth-domain-id&gt;]
+                 [--os-url &lt;auth-url&gt;]
                  [--os-user-domain-name &lt;auth-user-domain-name&gt;]
-                 [--os-domain-id &lt;auth-domain-id&gt;]
                  [--os-user-id &lt;auth-user-id&gt;] [--os-password &lt;auth-password&gt;]
                  [--os-endpoint &lt;auth-endpoint&gt;]
                  [--os-project-id &lt;auth-project-id&gt;]
@@ -212,10 +212,11 @@
     <listitem>
       <para>
       Select an auhentication type. Available types:
-      osc_password, token_endpoint, v2token, v2password,
-      v3password, v3scopedsaml, v3unscopedadfs, token,
-      v3token, password, v3unscopedsaml. Default: selected
-      based on --os-username/--os-token (Env: OS_AUTH_TYPE)
+      v2token, v2password, v3password, v3scopedsaml,
+      v3unscopedadfs, token, v3token, password,
+      v3unscopedsaml, osc_password, token_endpoint. Default:
+      selected based on --os-username/--os-token (Env:
+      OS_AUTH_TYPE)
       </para>
     </listitem>
   </varlistentry>
@@ -223,10 +224,10 @@
     <term><command>--os-username &lt;auth-username&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Username With v2password: Username
-      to login with With v3password: Username With
-      v3unscopedadfs: Username With password: Username With
-      v3unscopedsaml: Username (Env: OS_USERNAME)
+      With v2password: Username to login with With
+      v3password: Username With v3unscopedadfs: Username
+      With password: Username With v3unscopedsaml: Username
+      With osc_password: Username (Env: OS_USERNAME)
       </para>
     </listitem>
   </varlistentry>
@@ -244,14 +245,14 @@
     <term><command>--os-project-domain-name &lt;auth-project-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Domain name containing project With
-      v3password: Domain name containing project With
+      With v3password: Domain name containing project With
       v3scopedsaml: Domain name containing project With
       v3unscopedadfs: Domain name containing project With
       token: Domain name containing project With v3token:
       Domain name containing project With password: Domain
       name containing project With v3unscopedsaml: Domain
-      name containing project (Env: OS_PROJECT_DOMAIN_NAME)
+      name containing project With osc_password: Domain name
+      containing project (Env: OS_PROJECT_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -259,13 +260,13 @@
     <term><command>--os-project-domain-id &lt;auth-project-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Domain ID containing project With
-      v3password: Domain ID containing project With
+      With v3password: Domain ID containing project With
       v3scopedsaml: Domain ID containing project With
       v3unscopedadfs: Domain ID containing project With
       token: Domain ID containing project With v3token:
       Domain ID containing project With password: Domain ID
       containing project With v3unscopedsaml: Domain ID
+      containing project With osc_password: Domain ID
       containing project (Env: OS_PROJECT_DOMAIN_ID)
       </para>
     </listitem>
@@ -274,13 +275,13 @@
     <term><command>--os-project-name &lt;auth-project-name&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Project name to scope to With
-      v3password: Project name to scope to With
+      With v3password: Project name to scope to With
       v3scopedsaml: Project name to scope to With
       v3unscopedadfs: Project name to scope to With token:
       Project name to scope to With v3token: Project name to
       scope to With password: Project name to scope to With
-      v3unscopedsaml: Project name to scope to (Env:
+      v3unscopedsaml: Project name to scope to With
+      osc_password: Project name to scope to (Env:
       OS_PROJECT_NAME)
       </para>
     </listitem>
@@ -289,24 +290,14 @@
     <term><command>--os-auth-url &lt;auth-auth-url&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Authentication URL With v2token:
-      Authentication URL With v2password: Authentication URL
-      With v3password: Authentication URL With v3scopedsaml:
-      Authentication URL With v3unscopedadfs: Authentication
-      URL With token: Authentication URL With v3token:
-      Authentication URL With password: Authentication URL
-      With v3unscopedsaml: Authentication URL (Env:
-      OS_AUTH_URL)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-identity-provider-url &lt;auth-identity-provider-url&gt;</command></term>
-    <listitem>
-      <para>
-      With v3unscopedadfs: Identity Provider's URL With
-      v3unscopedsaml: Identity Provider's URL (Env:
-      OS_IDENTITY_PROVIDER_URL)
+      With v2token: Authentication URL With v2password:
+      Authentication URL With v3password: Authentication URL
+      With v3scopedsaml: Authentication URL With
+      v3unscopedadfs: Authentication URL With token:
+      Authentication URL With v3token: Authentication URL
+      With password: Authentication URL With v3unscopedsaml:
+      Authentication URL With osc_password: Authentication
+      URL (Env: OS_AUTH_URL)
       </para>
     </listitem>
   </varlistentry>
@@ -314,12 +305,12 @@
     <term><command>--os-trust-id &lt;auth-trust-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Trust ID With v2token: Trust ID
-      With v2password: Trust ID With v3password: Trust ID
-      With v3scopedsaml: Trust ID With v3unscopedadfs: Trust
-      ID With token: Trust ID With v3token: Trust ID With
-      password: Trust ID With v3unscopedsaml: Trust ID (Env:
-      OS_TRUST_ID)
+      With v2token: Trust ID With v2password: Trust ID With
+      v3password: Trust ID With v3scopedsaml: Trust ID With
+      v3unscopedadfs: Trust ID With token: Trust ID With
+      v3token: Trust ID With password: Trust ID With
+      v3unscopedsaml: Trust ID With osc_password: Trust ID
+      (Env: OS_TRUST_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -336,9 +327,62 @@
     <term><command>--os-user-domain-id &lt;auth-user-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User's domain id With v3password:
-      User's domain id With password: User's domain id (Env:
-      OS_USER_DOMAIN_ID)
+      With v3password: User's domain id With password:
+      User's domain id With osc_password: User's domain id
+      (Env: OS_USER_DOMAIN_ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-name &lt;auth-domain-name&gt;</command></term>
+    <listitem>
+      <para>
+      With v3password: Domain name to scope to With
+      v3scopedsaml: Domain name to scope to With
+      v3unscopedadfs: Domain name to scope to With token:
+      Domain name to scope to With v3token: Domain name to
+      scope to With password: Domain name to scope to With
+      v3unscopedsaml: Domain name to scope to With
+      osc_password: Domain name to scope to (Env:
+      OS_DOMAIN_NAME)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-identity-provider-url &lt;auth-identity-provider-url&gt;</command></term>
+    <listitem>
+      <para>
+      With v3unscopedadfs: Identity Provider's URL With
+      v3unscopedsaml: Identity Provider's URL (Env:
+      OS_IDENTITY_PROVIDER_URL)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-token &lt;auth-token&gt;</command></term>
+    <listitem>
+      <para>
+      With v2token: Token With v3scopedsaml: Token to
+      authenticate with With token: Token to authenticate
+      with With v3token: Token to authenticate with With
+      token_endpoint: The token that will always be used
+      With token_endpoint: Authentication token to use (Env:
+      OS_TOKEN)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-id &lt;auth-domain-id&gt;</command></term>
+    <listitem>
+      <para>
+      With v3password: Domain ID to scope to With
+      v3scopedsaml: Domain ID to scope to With
+      v3unscopedadfs: Domain ID to scope to With token:
+      Domain ID to scope to With v3token: Domain ID to scope
+      to With password: Domain ID to scope to With
+      v3unscopedsaml: Domain ID to scope to With
+      osc_password: Domain ID to scope to (Env:
+      OS_DOMAIN_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -352,53 +396,12 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-token &lt;auth-token&gt;</command></term>
-    <listitem>
-      <para>
-      With token_endpoint: The token that will always be
-      used With token_endpoint: Authentication token to use
-      With v2token: Token With v3scopedsaml: Token to
-      authenticate with With token: Token to authenticate
-      with With v3token: Token to authenticate with (Env:
-      OS_TOKEN)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-domain-name &lt;auth-domain-name&gt;</command></term>
-    <listitem>
-      <para>
-      With osc_password: Domain name to scope to With
-      v3password: Domain name to scope to With v3scopedsaml:
-      Domain name to scope to With v3unscopedadfs: Domain
-      name to scope to With token: Domain name to scope to
-      With v3token: Domain name to scope to With password:
-      Domain name to scope to With v3unscopedsaml: Domain
-      name to scope to (Env: OS_DOMAIN_NAME)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--os-user-domain-name &lt;auth-user-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User's domain name With v3password:
-      User's domain name With password: User's domain name
-      (Env: OS_USER_DOMAIN_NAME)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-domain-id &lt;auth-domain-id&gt;</command></term>
-    <listitem>
-      <para>
-      With osc_password: Domain ID to scope to With
-      v3password: Domain ID to scope to With v3scopedsaml:
-      Domain ID to scope to With v3unscopedadfs: Domain ID
-      to scope to With token: Domain ID to scope to With
-      v3token: Domain ID to scope to With password: Domain
-      ID to scope to With v3unscopedsaml: Domain ID to scope
-      to (Env: OS_DOMAIN_ID)
+      With v3password: User's domain name With password:
+      User's domain name With osc_password: User's domain
+      name (Env: OS_USER_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -406,9 +409,9 @@
     <term><command>--os-user-id &lt;auth-user-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User id With v2password: User ID to
-      longin with With v3password: User ID With password:
-      User id (Env: OS_USER_ID)
+      With v2password: User ID to login with With
+      v3password: User ID With password: User id With
+      osc_password: User id (Env: OS_USER_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -416,10 +419,10 @@
     <term><command>--os-password &lt;auth-password&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User's password With v2password:
-      Password to use With v3password: User's password With
-      v3unscopedadfs: Password With password: User's
-      password With v3unscopedsaml: Password (Env:
+      With v2password: Password to use With v3password:
+      User's password With v3unscopedadfs: Password With
+      password: User's password With v3unscopedsaml:
+      Password With osc_password: User's password (Env:
       OS_PASSWORD)
       </para>
     </listitem>
@@ -437,13 +440,14 @@
     <term><command>--os-project-id &lt;auth-project-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Project ID to scope to With
-      v3password: Project ID to scope to With v3scopedsaml:
-      Project ID to scope to With v3unscopedadfs: Project ID
-      to scope to With token: Project ID to scope to With
-      v3token: Project ID to scope to With password: Project
-      ID to scope to With v3unscopedsaml: Project ID to
-      scope to (Env: OS_PROJECT_ID)
+      With v3password: Project ID to scope to With
+      v3scopedsaml: Project ID to scope to With
+      v3unscopedadfs: Project ID to scope to With token:
+      Project ID to scope to With v3token: Project ID to
+      scope to With password: Project ID to scope to With
+      v3unscopedsaml: Project ID to scope to With
+      osc_password: Project ID to scope to (Env:
+      OS_PROJECT_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -578,7 +582,7 @@ Delete an existing aggregate
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_list">
         <title>openstack aggregate list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token aggregate list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token aggregate list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--long]</computeroutput></screen>
@@ -735,7 +739,8 @@ Display aggregate details
     </section>
     <section xml:id="openstackclient_subcommand_availability_zone_list">
         <title>openstack availability zone list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token availability zone list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token availability zone list [-h]
+                                        [-f {csv,html,json,table,value,yaml}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
                                         [--quote {all,minimal,none,nonnumeric}]
                                         [--long]</computeroutput></screen>
@@ -847,8 +852,8 @@ Delete backup(s)
     </section>
     <section xml:id="openstackclient_subcommand_backup_list">
         <title>openstack backup list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token backup list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token backup list [-h] [-f {csv,html,json,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
         <para>
 List backups
@@ -941,8 +946,8 @@ Display backup details
     </section>
     <section xml:id="openstackclient_subcommand_catalog_list">
         <title>openstack catalog list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token catalog list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token catalog list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List services in the service catalog
@@ -991,8 +996,8 @@ Display service catalog details
     </section>
     <section xml:id="openstackclient_subcommand_command_list">
         <title>openstack command list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token command list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token command list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List recognized commands by group
@@ -1111,7 +1116,7 @@ Delete compute agent command
     </section>
     <section xml:id="openstackclient_subcommand_compute_agent_list">
         <title>openstack compute agent list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token compute agent list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token compute agent list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--quote {all,minimal,none,nonnumeric}]
                                     [--hypervisor &lt;hypervisor&gt;]</computeroutput></screen>
@@ -1195,7 +1200,8 @@ Set compute agent command
     </section>
     <section xml:id="openstackclient_subcommand_compute_service_list">
         <title>openstack compute service list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token compute service list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token compute service list [-h]
+                                      [-f {csv,html,json,table,value,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--quote {all,minimal,none,nonnumeric}]
                                       [--host &lt;host&gt;] [--service &lt;service&gt;]</computeroutput></screen>
@@ -1231,7 +1237,8 @@ List service command
     </section>
     <section xml:id="openstackclient_subcommand_compute_service_set">
         <title>openstack compute service set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token compute service set [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token compute service set [-h]
+                                     [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--enable | --disable]
@@ -1380,7 +1387,7 @@ Show server's remote console URL
     </section>
     <section xml:id="openstackclient_subcommand_container_create">
         <title>openstack container create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token container create [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token container create [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--quote {all,minimal,none,nonnumeric}]
                                   &lt;container-name&gt; [&lt;container-name&gt; ...]</computeroutput></screen>
@@ -1439,7 +1446,7 @@ Delete container
     </section>
     <section xml:id="openstackclient_subcommand_container_list">
         <title>openstack container list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token container list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token container list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--prefix &lt;prefix&gt;] [--marker &lt;marker&gt;]
@@ -1589,8 +1596,8 @@ Create EC2 credentials
     <term><command>--project &lt;project&gt;</command></term>
     <listitem>
       <para>
-        Specify an alternate project (default: current
-      authenticated project)
+        Create credentials in project (name or ID; default:
+      current authenticated project)
       </para>
     </listitem>
   </varlistentry>
@@ -1598,8 +1605,8 @@ Create EC2 credentials
     <term><command>--user &lt;user&gt;</command></term>
     <listitem>
       <para>
-        Specify an alternate user (default: current
-      authenticated user)
+        Create credentials for user (name or ID; default:
+      current authenticated user)
       </para>
     </listitem>
   </varlistentry>
@@ -1635,7 +1642,7 @@ Delete EC2 credentials
     <term><command>--user &lt;user&gt;</command></term>
     <listitem>
       <para>
-        Specify a user
+        Delete credentials for user (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -1643,7 +1650,8 @@ Delete EC2 credentials
     </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_list">
         <title>openstack ec2 credentials list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token ec2 credentials list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token ec2 credentials list [-h]
+                                      [-f {csv,html,json,table,value,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--quote {all,minimal,none,nonnumeric}]
                                       [--user &lt;user&gt;]</computeroutput></screen>
@@ -1663,7 +1671,7 @@ List EC2 credentials
     <term><command>--user &lt;user&gt;</command></term>
     <listitem>
       <para>
-        Specify a user
+        Filter list by user (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -1703,7 +1711,7 @@ Display EC2 credentials details
     <term><command>--user &lt;user&gt;</command></term>
     <listitem>
       <para>
-        Specify a user
+        Show credentials for user (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -1804,7 +1812,7 @@ Delete endpoint
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_list">
         <title>openstack endpoint list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token endpoint list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token endpoint list [-h] [-f {csv,html,json,table,value,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--quote {all,minimal,none,nonnumeric}]
                                [--long]</computeroutput></screen>
@@ -1863,7 +1871,7 @@ Display endpoint details
     </section>
     <section xml:id="openstackclient_subcommand_extension_list">
         <title>openstack extension list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token extension list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token extension list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--compute] [--identity] [--network]
@@ -2059,8 +2067,8 @@ Delete flavor
     </section>
     <section xml:id="openstackclient_subcommand_flavor_list">
         <title>openstack flavor list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token flavor list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token flavor list [-h] [-f {csv,html,json,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--public | --private | --all] [--long]</computeroutput></screen>
         <para>
@@ -2222,8 +2230,8 @@ Unset flavor properties
     </section>
     <section xml:id="openstackclient_subcommand_host_list">
         <title>openstack host list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token host list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token host list [-h] [-f {csv,html,json,table,value,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--zone &lt;zone&gt;]</computeroutput></screen>
         <para>
@@ -2250,8 +2258,8 @@ List host command
     </section>
     <section xml:id="openstackclient_subcommand_host_show">
         <title>openstack host show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token host show [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token host show [-h] [-f {csv,html,json,table,value,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;]
                            [--quote {all,minimal,none,nonnumeric}]
                            &lt;host&gt;</computeroutput></screen>
         <para>
@@ -2281,7 +2289,7 @@ Show host command
     </section>
     <section xml:id="openstackclient_subcommand_hypervisor_list">
         <title>openstack hypervisor list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token hypervisor list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token hypervisor list [-h] [-f {csv,html,json,table,value,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--quote {all,minimal,none,nonnumeric}]
                                  [--matching &lt;hostname&gt;]</computeroutput></screen>
@@ -2584,8 +2592,8 @@ Delete image(s)
     </section>
     <section xml:id="openstackclient_subcommand_image_list">
         <title>openstack image list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token image list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token image list [-h] [-f {csv,html,json,table,value,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;]
                             [--quote {all,minimal,none,nonnumeric}]
                             [--public | --private] [--property &lt;key=value&gt;]
                             [--long] [--sort &lt;key&gt;[:&lt;direction&gt;]]</computeroutput></screen>
@@ -2688,6 +2696,8 @@ Save an image locally
                            [--prefix PREFIX] [--name &lt;name&gt;]
                            [--owner &lt;project&gt;] [--min-disk &lt;disk-gb&gt;]
                            [--min-ram &lt;disk-ram&gt;]
+                           [--container-format &lt;container-format&gt;]
+                           [--disk-format &lt;disk-format&gt;] [--size &lt;size&gt;]
                            [--protected | --unprotected]
                            [--public | --private] [--property &lt;key=value&gt;]
                            &lt;image&gt;</computeroutput></screen>
@@ -2743,6 +2753,33 @@ Set image properties
     <listitem>
       <para>
         Minimum RAM size needed to boot image, in megabytes
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--container-format &lt;container-format&gt;</command></term>
+    <listitem>
+      <para>
+      Container format of image. Acceptable formats: ['ami',
+      'ari', 'aki', 'bare', 'ovf']
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--disk-format &lt;disk-format&gt;</command></term>
+    <listitem>
+      <para>
+      Disk format of image. Acceptable formats: ['ami',
+      'ari', 'aki', 'vhd', 'vmdk', 'raw', 'qcow2', 'vdi',
+      'iso']
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--size &lt;size&gt;</command></term>
+    <listitem>
+      <para>
+        Size of image data (in bytes)
       </para>
     </listitem>
   </varlistentry>
@@ -2990,7 +3027,7 @@ Delete a floating-ip
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_list">
         <title>openstack ip floating list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token ip floating list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token ip floating list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
@@ -3009,7 +3046,8 @@ List floating-ips
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_pool_list">
         <title>openstack ip floating pool list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token ip floating pool list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token ip floating pool list [-h]
+                                       [-f {csv,html,json,table,value,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
                                        [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
@@ -3131,8 +3169,8 @@ Delete public key
     </section>
     <section xml:id="openstackclient_subcommand_keypair_list">
         <title>openstack keypair list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token keypair list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token keypair list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List public key fingerprints
@@ -3189,8 +3227,8 @@ Display public key details
     </section>
     <section xml:id="openstackclient_subcommand_limits_show">
         <title>openstack limits show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token limits show [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token limits show [-h] [-f {csv,html,json,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--absolute | --rate] [--reserved]
                              [--project &lt;project&gt;] [--domain &lt;domain&gt;]</computeroutput></screen>
@@ -3389,8 +3427,8 @@ Delete network(s)
     </section>
     <section xml:id="openstackclient_subcommand_network_list">
         <title>openstack network list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token network list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token network list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--external] [--dhcp &lt;dhcp-id&gt;] [--long]</computeroutput></screen>
         <para>
@@ -3534,7 +3572,7 @@ Show network details
     </section>
     <section xml:id="openstackclient_subcommand_object_create">
         <title>openstack object create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token object create [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token object create [-h] [-f {csv,html,json,table,value,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--quote {all,minimal,none,nonnumeric}]
                                &lt;container&gt; &lt;filename&gt; [&lt;filename&gt; ...]</computeroutput></screen>
@@ -3609,8 +3647,8 @@ Delete object from container
     </section>
     <section xml:id="openstackclient_subcommand_object_list">
         <title>openstack object list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token object list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token object list [-h] [-f {csv,html,json,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--prefix &lt;prefix&gt;] [--delimiter &lt;delimiter&gt;]
                              [--marker &lt;marker&gt;] [--end-marker &lt;end-marker&gt;]
@@ -3885,8 +3923,8 @@ Delete project(s)
     </section>
     <section xml:id="openstackclient_subcommand_project_list">
         <title>openstack project list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token project list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token project list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
         <para>
 List projects
@@ -4015,7 +4053,7 @@ Display project details
     </section>
     <section xml:id="openstackclient_subcommand_project_usage_list">
         <title>openstack project usage list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token project usage list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token project usage list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--quote {all,minimal,none,nonnumeric}]
                                     [--start &lt;start&gt;] [--end &lt;end&gt;]</computeroutput></screen>
@@ -4390,8 +4428,8 @@ Delete role(s)
     </section>
     <section xml:id="openstackclient_subcommand_role_list">
         <title>openstack role list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token role list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token role list [-h] [-f {csv,html,json,table,value,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--project &lt;project&gt;] [--user &lt;user&gt;]</computeroutput></screen>
         <para>
@@ -4570,7 +4608,8 @@ Delete a security group
     </section>
     <section xml:id="openstackclient_subcommand_security_group_list">
         <title>openstack security group list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token security group list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token security group list [-h]
+                                     [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--all-projects]</computeroutput></screen>
@@ -4659,19 +4698,16 @@ Create a new security group rule
     </section>
     <section xml:id="openstackclient_subcommand_security_group_rule_delete">
         <title>openstack security group rule delete</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token security group rule delete [-h] [--proto &lt;proto&gt;]
-                                            [--src-ip &lt;ip-address&gt;]
-                                            [--dst-port &lt;port-range&gt;]
-                                            &lt;group&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token security group rule delete [-h] &lt;rule&gt;</computeroutput></screen>
         <para>
 Delete a security group rule
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;group&gt;</command></term>
+    <term><command>&lt;rule&gt;</command></term>
     <listitem>
       <para>
-        Security group rule to delete (name or ID)
+        Security group rule ID to delete
       </para>
     </listitem>
   </varlistentry>
@@ -4686,36 +4722,12 @@ Delete a security group rule
       </para>
     </listitem>
   </varlistentry>
-  <varlistentry>
-    <term><command>--proto &lt;proto&gt; IP</command></term>
-    <listitem>
-      <para>
-        protocol (icmp, tcp, udp; default: tcp)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--src-ip &lt;ip-address&gt;</command></term>
-    <listitem>
-      <para>
-      Source IP (may use CIDR notation; default: 0.0.0.0/0)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--dst-port &lt;port-range&gt;</command></term>
-    <listitem>
-      <para>
-      Destination port, may be a range: 137:139 (default: 0;
-      only required for proto tcp and udp)
-      </para>
-    </listitem>
-  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="openstackclient_subcommand_security_group_rule_list">
         <title>openstack security group rule list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token security group rule list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token security group rule list [-h]
+                                          [-f {csv,html,json,table,value,yaml}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
                                           [--quote {all,minimal,none,nonnumeric}]
                                           &lt;group&gt;</computeroutput></screen>
@@ -5092,7 +5104,7 @@ Create a new server
     </section>
     <section xml:id="openstackclient_subcommand_server_delete">
         <title>openstack server delete</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token server delete [-h] &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token server delete [-h] [--wait] &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
         <para>
 Delete server(s)
         </para>  <variablelist wordsize="10">
@@ -5113,6 +5125,14 @@ Delete server(s)
     <listitem>
       <para>
         show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--wait</command></term>
+    <listitem>
+      <para>
+        Wait for delete to complete
       </para>
     </listitem>
   </varlistentry>
@@ -5169,8 +5189,8 @@ Create a new disk image from a running server
     </section>
     <section xml:id="openstackclient_subcommand_server_list">
         <title>openstack server list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token server list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token server list [-h] [-f {csv,html,json,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--reservation-id &lt;reservation-id&gt;]
                              [--ip &lt;ip-address-regex&gt;]
@@ -6145,8 +6165,8 @@ Delete service
     </section>
     <section xml:id="openstackclient_subcommand_service_list">
         <title>openstack service list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token service list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token service list [-h] [-f {csv,html,json,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
         <para>
 List services
@@ -6296,7 +6316,7 @@ Delete snapshot(s)
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_list">
         <title>openstack snapshot list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token snapshot list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token snapshot list [-h] [-f {csv,html,json,table,value,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--quote {all,minimal,none,nonnumeric}]
                                [--long]</computeroutput></screen>
@@ -6495,8 +6515,8 @@ Revoke existing token
     </section>
     <section xml:id="openstackclient_subcommand_usage_list">
         <title>openstack usage list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token usage list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token usage list [-h] [-f {csv,html,json,table,value,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;]
                             [--quote {all,minimal,none,nonnumeric}]
                             [--start &lt;start&gt;] [--end &lt;end&gt;]</computeroutput></screen>
         <para>
@@ -6697,8 +6717,8 @@ Delete user(s)
     </section>
     <section xml:id="openstackclient_subcommand_user_list">
         <title>openstack user list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token user list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token user list [-h] [-f {csv,html,json,table,value,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--project &lt;project&gt;] [--long]</computeroutput></screen>
         <para>
@@ -6733,7 +6753,7 @@ List users
     </section>
     <section xml:id="openstackclient_subcommand_user_role_list">
         <title>openstack user role list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token user role list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token user role list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--project &lt;project&gt;]
@@ -7047,8 +7067,8 @@ Delete volume(s)
     </section>
     <section xml:id="openstackclient_subcommand_volume_list">
         <title>openstack volume list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token volume list [-h] [-f {csv,html,json,table,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token volume list [-h] [-f {csv,html,json,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--status &lt;status&gt;] [--name &lt;name&gt;]
                              [--all-projects] [--long]</computeroutput></screen>
@@ -7263,7 +7283,7 @@ Delete volume type
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_list">
         <title>openstack volume type list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token volume type list [-h] [-f {csv,html,json,table,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token volume type list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--quote {all,minimal,none,nonnumeric}]
                                   [--long]</computeroutput></screen>
