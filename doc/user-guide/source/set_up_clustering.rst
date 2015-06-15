@@ -128,7 +128,7 @@ Set up clustering
 
    -  **Instance name. **\ This name consists of the replication set
       name followed by the string -*n*, where *n* is 1 for the
-      first instance in a replication set, 2 for the the second
+      first instance in a replication set, 2 for the second
       instance, and so on. In this example, the instance names are
       ``cluster1-rs1-1``, ``cluster1-rs1-2``, and ``cluster1-rs1-3``.
 
