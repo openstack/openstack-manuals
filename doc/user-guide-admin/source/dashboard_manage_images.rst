@@ -24,7 +24,7 @@ Guide <http://docs.openstack.org/image-guide/content/>`_.
 
    Choose the :guilabel:`admin` project from the drop-down list
    at the top of the page.
-#. On the :guilabel:`Admin tab`, open the :guilabel:`System Panel`
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System Panel`
    and click the :guilabel:`Images` category. The images that you
    can administer for cloud users appear on this page.
 #. Click :guilabel:`Create Image`.
@@ -76,7 +76,7 @@ Update images
 
    Choose the :guilabel:`admin` project from the drop-down list
    at the top of the page.
-#. On the :guilabel:`Admin tab`, open the :guilabel:`System Panel`
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System Panel`
    and click the :guilabel:`Images` category.
 #. Select the images that you want to edit. Click :guilabel:`Edit`.
 #. In the :guilabel:`Update Image` window, you can change the image name.
