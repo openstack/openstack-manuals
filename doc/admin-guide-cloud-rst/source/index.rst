@@ -19,6 +19,7 @@ Contents
 
    identity_management.rst
    dashboard.rst
+   compute.rst
    objectstorage.rst
    orchestration.rst
    blockstorage.rst
