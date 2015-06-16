@@ -532,6 +532,9 @@ Controller node
       tenant_network_types = vxlan
       mechanism_drivers = openvswitch,l2population
 
+      [ml2_type_flat]
+      flat_networks = external
+
       [ml2_type_vlan]
       network_vlan_ranges = external:1001:2000
 
@@ -607,7 +610,7 @@ Network node
       bridge_mappings = external:br-ex
 
       [agent]
-      l2population = True
+      l2_population = True
       tunnel_types = vxlan
       enable_distributed_routing = True
       arp_responder = True
@@ -684,6 +687,8 @@ Compute nodes
       net.ipv4.ip_forward=1
       net.ipv4.conf.default.rp_filter=0
       net.ipv4.conf.all.rp_filter=0
+      net.bridge.bridge-nf-call-iptables=1
+      net.bridge.bridge-nf-call-ip6tables=1
 
 #. Load the new kernel configuration::
 
@@ -732,7 +737,7 @@ Compute nodes
       bridge_mappings = external:br-ex
 
       [agent]
-      l2population = True
+      l2_population = True
       tunnel_types = vxlan
       enable_distributed_routing = True
       arp_responder = True
@@ -750,7 +755,7 @@ Compute nodes
       use_namespaces = True
       external_network_bridge =
       router_delete_namespaces = True
-      agent_mode = dvr_snat
+      agent_mode = dvr
 
    .. note::
       The ``external_network_bridge`` option intentionally contains
