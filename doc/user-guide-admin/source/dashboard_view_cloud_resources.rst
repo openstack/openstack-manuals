@@ -39,5 +39,5 @@ View resource statistics
      networks, subnets, routers, ports, and floating IPs, per tenant (project).
 
    * :guilabel:`Stats` tab to view a multi-series line chart with user-defined
-     metrics. You group by project, define the value type (min, max, avg, or sum),
+     meters. You group by project, define the value type (min, max, avg, or sum),
      and specify the time period (or even use a calendar to define a date range).
