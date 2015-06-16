@@ -341,7 +341,7 @@ to an instance on compute node 1:
 #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
    the Linux bridge ``qbr``.
 
-#. Security group rules (9) on the Linux bridge ``qbr`` handle firewalling
+#. Security group rules (8) on the Linux bridge ``qbr`` handle firewalling
    and state tracking for the packet.
 
 #. The Linux bridge ``qbr`` forwards the packet to the instance ``tap``
