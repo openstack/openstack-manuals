@@ -260,7 +260,7 @@ describes their differences:
      - Dynamic large object
    * - End-to-end integrity
      - Assured. The list of segments includes the MD5 checksum
-       (``ETag``) of each segment. You cannot upload the the manifest
+       (``ETag``) of each segment. You cannot upload the manifest
        object if the ``ETag`` in the list differs from the uploaded
        segment object. If a segment is somehow lost, an attempt to
        download the manifest object results in an error.
