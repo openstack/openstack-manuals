@@ -265,7 +265,7 @@ run::
     | aee1d242-730f-431f-88c1-87630c0f07ba | Ubuntu 14.04 cloudimg amd64 | ACTIVE |         |
     | 0b27baa1-0ca6-49a7-b3f4-48388e440245 | Ubuntu 14.10 cloudimg amd64 | ACTIVE |         |
     | df8d56fc-9cea-4dfd-a8d3-28764de3cb08 | jenkins                     | ACTIVE |         |
-    +--------------------------------------+-----------------------------+--------+---------|
+    +--------------------------------------+-----------------------------+--------+---------+
 
 The displayed image attributes are:
 
