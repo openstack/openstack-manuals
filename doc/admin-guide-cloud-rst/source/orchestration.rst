@@ -38,14 +38,20 @@ Orchestration can be accessed via the CLI, and using RESTful queries.
 Orchestration module provides both an OpenStack-native REST API and a
 CloudFormation-compatible Query API. Orchestration is also integrated
 with OpenStack dashboard in order to launch stacks from templates
-through a web-interface.
+through a web interface.
 
-For more details on how to use Orchestration module command-line, see
-`OpenStack Command-Line Interface Reference`_.
+For more details on how to use Orchestration module through a command
+line, see `OpenStack Command-Line Interface Reference`_.
 
 .. Links
 .. _`OpenStack Command-Line Interface Reference`: http://docs.openstack.org/cli-reference
 
+.. include:: orchestration-auth-model.rst
+
+.. toctree::
+   :hidden:
+
+   orchestration-auth-model.rst
+
 .. TODO (OL) Convert and include the below sections
-  include: orchestration/section_orchestration-auth-model.xml
-  include: orchestration/section_orchestration-stack-domain-users.xml
+   include: orchestration/section_orchestration-stack-domain-users.xml

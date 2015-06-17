@@ -1,3 +1,5 @@
+.. _identity_management:
+
 ===================
 Identity management
 ===================
