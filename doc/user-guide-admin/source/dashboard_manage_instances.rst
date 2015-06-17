@@ -57,7 +57,7 @@ Track usage
 
 Use the Overview category to track usage of instances for each project.
 
-You can track costs per month by showing metrics like number of VCPUs,
+You can track costs per month by showing meters like number of VCPUs,
 disks, RAM, and uptime of all your instances.
 
 #. Log in to the dashboard and choose the admin project from the CURRENT

@@ -185,7 +185,7 @@ Track usage for instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can track usage for instances for each project. You can track costs
-per month by showing metrics like number of vCPUs, disks, RAM, and
+per month by showing meters like number of vCPUs, disks, RAM, and
 uptime for all your instances.
 
 #. Log in to the dashboard, choose a project, and click :guilabel:`Overview`.
