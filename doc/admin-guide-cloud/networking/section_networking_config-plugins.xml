@@ -79,58 +79,6 @@ ostype   = NOS</programlisting>
             </step>
         </procedure>
     </section>
-    <section xml:id="openvswitch_plugin">
-        <title>Configure OVS plug-in</title>
-        <para>If you use the Open vSwitch (OVS) plug-in in a deployment with multiple hosts, you
-            must use either tunneling or VLANs to isolate traffic from multiple networks. Tunneling
-            is easier to deploy because it does not require that you configure VLANs on network
-            switches.</para>
-        <para>This procedure uses tunneling:</para>
-        <procedure>
-            <title>To configure OpenStack Networking to use the OVS plug-in</title>
-            <step>
-                <para>Edit
-                        <filename>/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini</filename>
-                    file to specify these values:</para>
-                <programlisting language="ini">enable_tunneling=True
-tenant_network_type=gre
-tunnel_id_ranges=1:1000
-# only required for nodes running agents
-local_ip=<replaceable>DATA_NET_IP_NODE_ADDRESS</replaceable></programlisting>
-                <note>
-                     <para>Since the Kilo release you can set the
-                      <option>quitting_rpc_timeout</option> option
-                      with a timeout value for RPC API objects. This prevents
-                      a long waiting for RPC calls after <literal>SIGTERM</literal> is
-                      received which results in decreasing the amount of time needed to
-                      successfully stop the OVS agent.</para>
-                </note>
-                <para>For database configuration, see <link
-                        xlink:href="http://docs.openstack.org/kilo/install-guide/install/apt/content/neutron-controller-node.html"
-                        >Install Networking Services</link> in the <citetitle>Installation
-                        Guide</citetitle>.</para>
-            </step>
-            <step>
-                <para>If you use the neutron DHCP agent, add these lines to the
-                        <filename>/etc/neutron/dhcp_agent.ini</filename> file:</para>
-                <programlisting language="ini">dnsmasq_config_file=/etc/neutron/dnsmasq/dnsmasq-neutron.conf</programlisting>
-                <para>Restart the DHCP service to apply the settings:</para>
-                <screen><prompt>#</prompt> <userinput>service neutron-dhcp-agent restart</userinput></screen>
-            </step>
-            <step>
-                <para>To lower the MTU size on instances and prevent packet fragmentation over the
-                    GRE tunnel, create the
-                        <filename>/etc/neutron/dnsmasq/dnsmasq-neutron.conf</filename> file and add
-                    these values:</para>
-                <programlisting language="ini">dhcp-option-force=26,1400</programlisting>
-            </step>
-            <step>
-                <para>Restart the <systemitem class="service">neutron-server</systemitem> service to
-                    apply the settings:</para>
-                <screen><prompt>#</prompt> <userinput>service neutron-server restart</userinput></screen>
-            </step>
-        </procedure>
-    </section>
     <section xml:id="nsx_plugin">
         <title>Configure NSX plug-in</title>
         <procedure>
