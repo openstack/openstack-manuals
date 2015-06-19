@@ -55,14 +55,31 @@
     </section>
     <section xml:id="vmdk_disk_type">
         <title>VMDK disk type</title>
-        <para>The VMware VMDK drivers support the creation of VMDK
-            disk files of type <literal>thin</literal>,
-                <literal>lazyZeroedThick</literal>, or
-                <literal>eagerZeroedThick</literal>. Use the
-                <code>vmware:vmdk_type</code> extra spec key with the
-            appropriate value to specify the VMDK disk file type. The
-            following table captures the mapping between the extra
-            spec entry and the VMDK disk file type:</para>
+        <para>The VMware VMDK drivers support the creation of VMDK disk file
+          types <literal>thin</literal>, <literal>lazyZeroedThick</literal>
+          (sometimes called thick or flat), or <literal>eagerZeroedThick</literal>.
+        </para>
+        <para>
+          A thin virtual disk is allocated and zeroed on demand as the space
+          is used. Unused space on a Thin disk is available to other users.
+        </para>
+        <para>
+          A lazy zeroed thick virtual disk will have all space allocated at
+          disk creation. This reserves the entire disk space, so it is not
+          available to other users at any time.
+        </para>
+        <para>
+          An eager zeroed thick virtual disk is similar to a lazy zeroed thick
+          disk, in that the entire disk is allocated at creation. However, in
+          this type, any previous data will be wiped clean on the disk before
+          the write. This can mean that the disk will take longer to create,
+          but can also prevent issues with stale data on physical media.
+        </para>
+        <para>
+          Use the <literal>vmware:vmdk_type</literal> extra spec key with the
+          appropriate value to specify the VMDK disk file type. This table
+          shows the mapping between the extra spec entry and the VMDK disk
+          file type:</para>
         <table rules="all">
             <caption>Extra spec entry to VMDK disk file type
                 mapping</caption>
@@ -91,9 +108,8 @@
                 </tr>
             </tbody>
         </table>
-        <para>If you do not specify a <code>vmdk_type</code> extra
-            spec entry, the default disk file type is
-                <literal>thin</literal>.</para>
+        <para>If you do not specify a <code>vmdk_type</code> extra spec entry,
+          the disk file type will default to <literal>thin</literal>.</para>
         <para>The following example shows how to create a
                 <code>lazyZeroedThick</code> VMDK volume by using the
             appropriate <code>vmdk_type</code>:</para>
