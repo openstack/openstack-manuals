@@ -24,7 +24,7 @@ Contents
    dashboard.rst
    cli.rst
    sdk.rst
-   hot-guide/hot.rst
+   hot.rst
    cli_cheat_sheet.rst
 
    common/app_support.rst
