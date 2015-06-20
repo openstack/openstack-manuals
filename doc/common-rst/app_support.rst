@@ -93,8 +93,8 @@ ask.openstack.org
 During the set up or testing of OpenStack, you might have questions
 about how a specific task is completed or be in a situation where a
 feature does not work correctly. Use the
-`ask.openstack.org <http://ask.openstack.org>`__ site to ask questions
-and get answers. When you visit the http://ask.openstack.org site, scan
+`ask.openstack.org <https://ask.openstack.org>`__ site to ask questions
+and get answers. When you visit the https://ask.openstack.org site, scan
 the recently asked questions to see whether your question has already
 been answered. If not, ask a new question. Be sure to give a clear,
 concise summary in the title and provide as much detail as possible in
@@ -111,13 +111,13 @@ archives, go to
 http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack. You might
 be interested in the other mailing lists for specific projects or
 development, which you can find `on the
-wiki <http://wiki.openstack.org/MailingLists>`__. A description of all
-mailing lists is available at http://wiki.openstack.org/MailingLists.
+wiki <https://wiki.openstack.org/wiki/MailingLists>`__. A description of all
+mailing lists is available at https://wiki.openstack.org/wiki/MailingLists.
 
 The OpenStack wiki
 ~~~~~~~~~~~~~~~~~~
 
-The `OpenStack wiki <http://wiki.openstack.org/>`__ contains a broad
+The `OpenStack wiki <https://wiki.openstack.org/>`__ contains a broad
 range of topics but some of the information can be difficult to find or
 is a few pages deep. Fortunately, the wiki search feature enables you to
 search by title or content. If you search for specific information, such
@@ -228,13 +228,13 @@ OpenStack distribution packages
 The following Linux distributions provide community-supported packages
 for OpenStack:
 
--  **Debian:** http://wiki.debian.org/OpenStack
+-  **Debian:** https://wiki.debian.org/OpenStack
 
 -  **CentOS, Fedora, and Red Hat Enterprise Linux:**
    https://www.rdoproject.org/
 
 -  **openSUSE and SUSE Linux Enterprise Server:**
-   http://en.opensuse.org/Portal:OpenStack
+   https://en.opensuse.org/Portal:OpenStack
 
 -  **Ubuntu:** https://wiki.ubuntu.com/ServerTeam/CloudArchive
 

@@ -68,7 +68,7 @@ ports in a table called a *forwarding table* or *forwarding information base*
 (FIB). Switches can be daisy-chained together, and the resulting connection of
 switches and hosts behaves like a single network.
 
-.. _OSI model: http://en.wikipedia.org/wiki/OSI_model
+.. _OSI model: https://en.wikipedia.org/wiki/OSI_model
 
 VLANs
 ~~~~~
