@@ -289,8 +289,9 @@ including ensuring a set of instances run on different compute nodes for
 service resiliency or on the same node for high performance
 inter-instance communications.
 
-Administrative users can specify which compute node their instances run
-on. To do this, specify the ``--availability-zone AVAILABILITY_ZONE:COMPUTE_HOST`` parameter.
+Administrative users can specify which compute node their instances
+run on. To do this, specify the ``--availability-zone
+AVAILABILITY_ZONE:COMPUTE_HOST`` parameter.
 
 .. |Base image state with no running instances| image:: ../../common/figures/instance-life-1.png
 .. |Instance creation from image and runtime state| image:: ../../common/figures/instance-life-2.png

@@ -2,19 +2,22 @@
 View cloud usage statistics
 ===========================
 
-The Telemetry module provides user-level usage data for OpenStack-based clouds,
-which can be used for customer billing, system monitoring, or alerts. Data can be
-collected by notifications sent by existing OpenStack components (for example,
-usage events emitted from Compute) or by polling the infrastructure (for example,
-libvirt).
+The Telemetry module provides user-level usage data for
+OpenStack-based clouds, which can be used for customer billing, system
+monitoring, or alerts. Data can be collected by notifications sent by
+existing OpenStack components (for example, usage events emitted from
+Compute) or by polling the infrastructure (for example, libvirt).
 
 .. note::
-   You can only view metering statistics on the dashboard (available only to administrators).
+
+   You can only view metering statistics on the dashboard (available
+   only to administrators).
    The Telemetry service must be set up and administered through the
    :command:`ceilometer` command-line interface (CLI).
 
-   For basic administration information, refer to the "Measure Cloud Resources"
-   chapter in the `OpenStack End User Guide <http://docs.openstack.org/user-guide/>`_.
+   For basic administration information, refer to the "Measure Cloud
+   Resources" chapter in the `OpenStack End User Guide
+   <http://docs.openstack.org/user-guide/>`_.
 
 .. _dashboard-view-resource-stats:
 
@@ -29,15 +32,17 @@ View resource statistics
 
    * :guilabel:`Global Disk Usage` tab to view disk usage per tenant (project).
 
-   * :guilabel:`Global Network Traffic Usage` tab to view ingress or egress usage
-     per tenant (project).
+   * :guilabel:`Global Network Traffic Usage` tab to view ingress or
+     egress usage per tenant (project).
 
    * :guilabel:`Global Object Storage Usage` tab to view incoming and outgoing
      storage bytes per tenant (project).
 
-   * :guilabel:`Global Network Usage` tab to view duration and creation requests for
-     networks, subnets, routers, ports, and floating IPs, per tenant (project).
+   * :guilabel:`Global Network Usage` tab to view duration and
+     creation requests for networks, subnets, routers, ports, and
+     floating IPs, per tenant (project).
 
-   * :guilabel:`Stats` tab to view a multi-series line chart with user-defined
-     meters. You group by project, define the value type (min, max, avg, or sum),
-     and specify the time period (or even use a calendar to define a date range).
+   * :guilabel:`Stats` tab to view a multi-series line chart with
+     user-defined meters. You group by project, define the value type
+     (min, max, avg, or sum), and specify the time period (or even use
+     a calendar to define a date range).

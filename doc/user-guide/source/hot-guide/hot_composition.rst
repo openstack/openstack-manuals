@@ -66,8 +66,8 @@ The following template defines the :file:`my_nova.yaml` file as value for the
        properties:
          key_name: my_key
 
-The :code:`key_name` argument of the ``my_nova.yaml`` template gets its value from
-the :code:`key_name` property of the new template.
+The :code:`key_name` argument of the ``my_nova.yaml`` template gets
+its value from the :code:`key_name` property of the new template.
 
 .. note::
 

@@ -54,8 +54,8 @@ Create a snapshot of the instance
     $ nova image-create --poll myInstance myInstanceSnapshot
     Instance snapshotting... 50% complete
 
-#. Use the :command:`nova image-list` command to check the status until the status is
-   ``ACTIVE``::
+#. Use the :command:`nova image-list` command to check the status
+   until the status is ``ACTIVE``::
 
     $ nova image-list
     +--------------------------------------+---------------------------------+--------+--------+

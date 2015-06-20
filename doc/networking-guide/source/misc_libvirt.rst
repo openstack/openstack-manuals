@@ -21,9 +21,10 @@ OpenStack Networking's networks, confined to a single node.
 libvirt network implementation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, libvirt's networking functionality is enabled, and libvirt creates a
-network when the system boots. To implement this network, libvirt leverages some of
-the same technologies that OpenStack Network does. In particular, libvirt uses:
+By default, libvirt's networking functionality is enabled, and libvirt
+creates a network when the system boots. To implement this network,
+libvirt leverages some of the same technologies that OpenStack Network
+does. In particular, libvirt uses:
 
 * Linux bridging for implementing a layer 2 network
 * dnsmasq for providing IP addresses to virtual machines using DHCP
@@ -73,11 +74,12 @@ the output of :command:`ps`::
 How to disable libvirt networks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Although OpenStack does not make use of libvirt's networking, this networking
-will not interfere with OpenStack's behavior, and can be safely left enabled.
-However, libvirt's networking can be a nuisance when debugging OpenStack
-networking issues. Because libvirt creates an additional bridge, dnsmasq process, and
-iptables ruleset, these may distract an operator engaged in network troubleshooting.
+Although OpenStack does not make use of libvirt's networking, this
+networking will not interfere with OpenStack's behavior, and can be
+safely left enabled. However, libvirt's networking can be a nuisance
+when debugging OpenStack networking issues. Because libvirt creates an
+additional bridge, dnsmasq process, and iptables ruleset, these may
+distract an operator engaged in network troubleshooting.
 Unless you need to start up virtual machines using libvirt directly, you can
 safely disable libvirt's network.
 
@@ -92,8 +94,8 @@ To deactivate the libvirt network named *default*::
 
     # virsh net-destroy default
 
-Deactivating the network will remove the ``virbr0`` bridge, terminate the dnsmasq process, and
-remove the iptables rules.
+Deactivating the network will remove the ``virbr0`` bridge, terminate
+the dnsmasq process, and remove the iptables rules.
 
 To prevent the network from automatically starting on boot::
 

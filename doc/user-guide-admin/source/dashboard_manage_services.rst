@@ -29,9 +29,10 @@ As an administrative user, you can view information for OpenStack services.
    * :guilabel:`Default Quotas`:
      Displays the quotas that have been configured for the cluster.
 
-   * :guilabel:`Availability Zones`: Displays the availability zones that have been configured
-     for the cluster. It is only available when multiple availability zones have been defined.
+   * :guilabel:`Availability Zones`: Displays the availability zones
+     that have been configured for the cluster. It is only available
+     when multiple availability zones have been defined.
 
-   * :guilabel:`Host Aggregates`: Displays the host aggregates that have been
-     defined for the cluster. It is only available when multiple host aggregates
-     have been defined.
+   * :guilabel:`Host Aggregates`: Displays the host aggregates that
+     have been defined for the cluster. It is only available when
+     multiple host aggregates have been defined.

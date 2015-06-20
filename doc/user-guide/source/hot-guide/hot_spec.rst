@@ -250,8 +250,10 @@ with the syntax for each type.
 
 length
 ++++++
-The :code:`length` constraint applies to parameters of type ``string``. It defines
-a lower and upper limit for the length of the string value.
+
+The :code:`length` constraint applies to parameters of type
+``string``. It defines a lower and upper limit for the length of the
+string value.
 
 The syntax of the :code:`length` constraint is:
 
@@ -264,8 +266,10 @@ upper limit. However, at least one of ``min`` or ``max`` must be specified.
 
 range
 +++++
-The :code:`range` constraint applies to parameters of type ``number``. It defines a
-lower and upper limit for the numeric value of the parameter.
+
+The :code:`range` constraint applies to parameters of type ``number``.
+It defines a lower and upper limit for the numeric value of the
+parameter.
 
 The syntax of the :code:`range` constraint is:
 
@@ -285,10 +289,11 @@ following range constraint would allow for all numeric values between 0 and 10:
 
 allowed_values
 ++++++++++++++
-The :code:`allowed_values` constraint applies to parameters of type ``string`` or
-``number``. It specifies a set of possible values for a parameter. At
-deployment time, the user-provided value for the respective parameter must
-match one of the elements of the list.
+
+The :code:`allowed_values` constraint applies to parameters of type
+``string`` or ``number``. It specifies a set of possible values for a
+parameter. At deployment time, the user-provided value for the
+respective parameter must match one of the elements of the list.
 
 The syntax of the :code:`allowed_values` constraint is:
 
@@ -323,9 +328,10 @@ For example:
 
 allowed_pattern
 +++++++++++++++
-The :code:`allowed_pattern` constraint applies to parameters of type ``string``.
-It specifies a regular expression against which a user-provided parameter value
-must evaluate at deployment.
+
+The :code:`allowed_pattern` constraint applies to parameters of type
+``string``. It specifies a regular expression against which a
+user-provided parameter value must evaluate at deployment.
 
 The syntax of the :code:`allowed_pattern` constraint is:
 
@@ -760,7 +766,9 @@ For example:
 
 list_join
 ---------
-The :code:`list_join` function joins a list of strings with the given delimiter.
+
+The :code:`list_join` function joins a list of strings with the given
+delimiter.
 
 The syntax of the :code:`list_join` function is:
 
@@ -780,7 +788,9 @@ This resolve to the string ``one, two, and three``.
 
 resource_facade
 ---------------
-The :code:`resource_facade` function retrieves data in a parent provider template.
+
+The :code:`resource_facade` function retrieves data in a parent
+provider template.
 
 A provider template provides a custom definition of a resource, called its
 facade. For more information about custom templates, see :ref:`composition`.
@@ -838,8 +848,8 @@ application:
             params:
               host: { get_attr: [ my_instance, first_address ] }
 
-The following examples show the use of the :code:`str_replace` function to build an
-instance initialization script:
+The following examples show the use of the :code:`str_replace`
+function to build an instance initialization script:
 
 .. code-block:: yaml
    :linenos:

@@ -14,7 +14,8 @@ created image:
 
 **To configure tenant-specific image locations**
 
-#. Configure swift as your ``default_store`` in the :file:`glance-api.conf` file.
+#. Configure swift as your ``default_store`` in the
+   :file:`glance-api.conf` file.
 
 #. Set these configuration options in the :file:`glance-api.conf` file:
 

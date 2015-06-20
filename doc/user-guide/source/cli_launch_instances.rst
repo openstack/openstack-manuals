@@ -63,11 +63,12 @@ Before you can launch an instance, gather the following parameters:
   make it accessible from outside the cloud. See
   :doc:`cli_manage_ip_addresses`.
 
-After you gather the parameters that you need to launch an instance, you
-can launch it from an image_ or a :ref:`volume`. You can launch an instance directly
-from one of the available OpenStack images or from an image that you have
-copied to a persistent volume. The OpenStack Image service provides a
-pool of images that are accessible to members of different projects.
+After you gather the parameters that you need to launch an instance,
+you can launch it from an image_ or a :ref:`volume`. You can launch an
+instance directly from one of the available OpenStack images or from
+an image that you have copied to a persistent volume. The OpenStack
+Image service provides a pool of images that are accessible to members
+of different projects.
 
 Gather parameters to launch an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

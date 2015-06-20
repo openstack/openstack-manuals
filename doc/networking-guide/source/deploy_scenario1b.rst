@@ -361,8 +361,8 @@ The following steps involve compute node 1.
    #. Security group rules (6) on the tunnel bridge ``qbr`` handle firewalling
       and state tracking for the packet.
 
-   #. The tunnel bridge ``qbr`` forwards the packet to the ``tap`` interface (7)
-      on instance 1.
+   #. The tunnel bridge ``qbr`` forwards the packet to the ``tap``
+      interface (7) on instance 1.
 
 #. For VLAN tenant networks:
 
@@ -435,8 +435,8 @@ The following steps involve compute node 1:
       bridge ``qbr``. The packet contains destination MAC address *TG1*
       because the destination resides on another network.
 
-   #. Security group rules (2) on the tunnel bridge ``qbr`` handle state tracking
-      for the packet.
+   #. Security group rules (2) on the tunnel bridge ``qbr`` handle
+      state tracking for the packet.
 
    #. The tunnel bridge ``qbr`` forwards the packet to the logical tunnel
       interface ``vxlan-sid`` (3) where *sid* contains the tenant network
@@ -473,9 +473,10 @@ The following steps involve the network node.
    #. The logical tunnel interface ``vxlan-sid`` forwards the packet to the
       tunnel bridge ``qbr``.
 
-   #. The tunnel bridge ``qbr`` forwards the packet to the ``qr-1`` interface (5)
-      in the router namespace ``qrouter``. The ``qr-1`` interface contains the
-      tenant network 1 gateway IP address *TG1*.
+   #. The tunnel bridge ``qbr`` forwards the packet to the ``qr-1``
+      interface (5) in the router namespace ``qrouter``. The ``qr-1``
+      interface contains the tenant network 1 gateway IP address
+      *TG1*.
 
 #. For VLAN tenant networks:
 

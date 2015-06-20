@@ -69,9 +69,9 @@ To manage host aggregates
    -  To manage hosts, locate the host aggregate that you want to edit
       in the table. Click :guilabel:`More` and select :guilabel:`Manage Hosts`.
 
-      In the :guilabel:`Add/Remove Hosts to Aggregate` dialog box, click **+** to
-      assign a host to an aggregate. Click **-** to remove a host that is assigned
-      to an aggregate.
+      In the :guilabel:`Add/Remove Hosts to Aggregate` dialog box,
+      click **+** to assign a host to an aggregate. Click **-** to
+      remove a host that is assigned to an aggregate.
 
    -  To delete host aggregates, locate the host aggregate that you want
       to edit in the table. Click :guilabel:`More` and select
