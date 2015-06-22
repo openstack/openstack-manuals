@@ -25,4 +25,4 @@ building a multi-node OpenStack cluster, as well as templates for CI
 development. Heat templates for deployment of Magento, Hadoop, MongoDB,
 ELK, Drupal and more can be found here.
 
-.. _RCB Ops repository: http://github.com/rcbops/
+.. _RCB Ops repository: https://github.com/rcbops/

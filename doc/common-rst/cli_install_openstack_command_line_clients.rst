@@ -27,12 +27,12 @@ command-line clients, and provides installation instructions as needed.
 |                       | manager for setuptools to find an installation      |
 |                       | package. If you cannot find one, download the       |
 |                       | setuptools package directly from                    |
-|                       | http://pypi.python.org/pypi/setuptools.             |
+|                       | https://pypi.python.org/pypi/setuptools.            |
 |                       |                                                     |
 |                       | The recommended way to install setuptools on        |
 |                       | Microsoft Windows is to follow the documentation    |
 |                       | provided on the setuptools website                  |
-|                       | (https://pypi.python.org/pypi/setuptools#windows).  |
+|                       | (https://pypi.python.org/pypi/setuptools).          |
 |                       | Another option is to use the unofficial binary      |
 |                       | installer maintained by Christoph Gohlke            |
 |                       | (`http://www.lfd.uci.edu/~gohlke/pythonlibs/        |
@@ -43,7 +43,7 @@ command-line clients, and provides installation instructions as needed.
 |                       | Microsoft Windows system, use pip. It is easy to    |
 |                       | use, ensures that you get the latest version of the |
 |                       | clients from the                                    |
-|                       | `Python Package Index <http://pypi.python.org/>`__, |
+|                       | `Python Package Index <https://pypi.python.org/>`__,|
 |                       | and lets you update or remove the packages later on.|
 |                       |                                                     |
 |                       | Since the installation process compiles source      |
@@ -183,7 +183,7 @@ Installing with pip
 Use pip to install the OpenStack clients on a Linux, Mac OS X, or
 Microsoft Windows system. It is easy to use and ensures that you get the
 latest version of the client from the `Python Package
-Index <http://pypi.python.org/pypi>`__. Also, pip enables you to update
+Index <https://pypi.python.org/pypi>`__. Also, pip enables you to update
 or remove a package.
 
 Install each client separately by using the following command:

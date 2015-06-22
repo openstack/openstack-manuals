@@ -78,7 +78,7 @@ service quotas.
    update the property in the :guilabel:`cinder.quota`
    section of the :file:`/etc/cinder/cinder.conf` file.
    For more information, see the `Block Storage
-   Configuration Reference <http://docs.openstack.org/trunk/config-reference/content/ch_configuring-openstack-block-storage.html>`_.
+   Configuration Reference <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-block-storage.html>`_.
 
 #. To update Block Storage service quotas, place
    the tenant ID in a variable::

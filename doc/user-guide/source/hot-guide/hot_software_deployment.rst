@@ -801,4 +801,4 @@ contents of the file ``example-puppet-manifest.pp``, containing:
 .. _os-apply-config: https://github.com/openstack/os-apply-config
 .. _tripleo-heat-templates: https://github.com/openstack/tripleo-heat-templates
 .. _tripleo-image-elements: https://github.com/openstack/tripleo-image-elements
-.. _puppet: http://puppetlabs.com/
+.. _puppet: https://puppetlabs.com/
