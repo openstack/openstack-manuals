@@ -2,11 +2,11 @@
 OpenStack dashboard
 ===================
 
-   As a cloud administrative user, the OpenStack dashboard lets you
-   create and manage projects, users, images, and flavors. You can
-   also set quotas and create and manage services. For information
-   about using the dashboard to perform end user tasks, see the
-   `OpenStack End User Guide <http://docs.openstack.org/user-guide/>`__.
+As a cloud administrative user, the OpenStack dashboard lets you
+create and manage projects, users, images, and flavors. You can also
+set quotas and create and manage services. For information about using
+the dashboard to perform end user tasks, see the `OpenStack End User
+Guide <http://docs.openstack.org/user-guide/>`__.
 
 .. toctree::
    :maxdepth: 2
