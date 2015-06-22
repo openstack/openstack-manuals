@@ -328,6 +328,19 @@ Here are a couple of examples:
   Domain B, if User B gets a token scoped to Domain B, the token also
   includes Role B.
 
+.. include:: keystone_certificates_for_pki.rst
+
+.. include:: keystone_configure_with_SSL.rst
+
+.. include:: keystone_external_authentication.rst
+
+.. toctree::
+   :hidden:
+
+   keystone_certificates_for_pki.rst
+   keystone_configure_with_SSL.rst
+   keystone_external_authentication.rst
+
 User CRUD
 ~~~~~~~~~
 
