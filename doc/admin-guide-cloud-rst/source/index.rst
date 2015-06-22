@@ -21,6 +21,7 @@ Contents
    dashboard.rst
    compute.rst
    objectstorage.rst
+   database.rst
    orchestration.rst
    blockstorage.rst
    telemetry.rst
