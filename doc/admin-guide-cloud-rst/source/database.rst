@@ -69,8 +69,7 @@ datastore version.
    In this example, you use the glance :command:`image-create`
    command to register a ``mysql-5.5.qcow2`` image::
 
-     $ glance image-create --name mysql-5.5 --disk-format qcow2 --container-format bare/
-     --is-public True < mysql-5.5.qcow2
+     $ glance image-create --name mysql-5.5 --disk-format qcow2 --container-format bare --is-public True < mysql-5.5.qcow2
      +------------------+--------------------------------------+
      | Property         | Value                                |
      +------------------+--------------------------------------+
@@ -176,7 +175,7 @@ datastore version.
         - The ID of the guest image you just added to the Identity
           service. You can get this ID by using the glance
           :command:`image-show` IMAGE_NAME command.
-        - :option:`bb75f870-0c33-4907-8467-1367f8cb15b6`
+        - bb75f870-0c33-4907-8467-1367f8cb15b6
 
       * - packages
         - If you want to put additional packages on each guest that
@@ -191,14 +190,13 @@ datastore version.
         - Set this to either 1 or 0:
            * ``1`` = active
            * ``0`` = disabled
-        - :option:`1`
+        - 1
 
    |
 
    Example::
 
-    $ trove-manage --config-file=/etc/trove/trove.conf datastore_version_update \
-      mysql mysql-5.5 mysql GLANCE_ID "" 1
+    $ trove-manage --config-file=/etc/trove/trove.conf datastore_version_update mysql mysql-5.5 mysql GLANCE_ID "" 1
 
    **Optional.** Set your new version as the default version. To do
    this, use the trove-manage :command:`datastore_update` command again,
@@ -206,7 +204,7 @@ datastore version.
 
    ::
 
-    $ trove-manage --config-file=/etc/trove/trove.conf datastore_update mysql "mysql-5.5"
+    $ trove-manage --config-file=/etc/trove/trove.conf datastore_update mysql mysql-5.5
 
 #. **Load validation rules for configuration groups**
 
@@ -263,8 +261,7 @@ datastore version.
    This example loads the :file:`validation-rules.json` file for a MySQL
    database on Ubuntu 14.04::
 
-     $ trove-manage db_load_datastore_config_parameters mysql "mysql-5.5" \
-     /usr/lib/python2.7/dist-packages/trove/templates/mysql/validation-rules.json
+     $ trove-manage db_load_datastore_config_parameters mysql mysql-5.5 /usr/lib/python2.7/dist-packages/trove/templates/mysql/validation-rules.json
 
 #. **Validate datastore**
 
@@ -314,8 +311,8 @@ the :file:`/etc/trove/trove.conf` file. These settings are in the
    * - Setting
      - Valid values are:
 
-   * - :option:`num_config_servers_per_cluster`
+   * - num_config_servers_per_cluster
      - 1 or 3
 
-   * - :option:`num_query_routers_per_cluster`
+   * - num_query_routers_per_cluster
      - 1 or 3
