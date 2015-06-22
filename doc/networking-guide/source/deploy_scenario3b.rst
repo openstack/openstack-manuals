@@ -148,7 +148,8 @@ The compute nodes contain the following network components:
 Packet flow
 ~~~~~~~~~~~
 
-During normal operation, packet flow with HA routers mirrors the legacy scenario with Linux bridge.
+During normal operation, packet flow with HA routers mirrors the
+legacy scenario with Linux bridge.
 
 Case 1: HA failover operation
 -----------------------------

@@ -165,9 +165,9 @@ in ``self.logger``, has these new methods:
    "proxy-server.Container", or "proxy-server.Object" as soon as the
    Controller object is determined and instantiated for the request.
 
--  ``update_stats(self, metric, amount, sample_rate=1)`` Increments the supplied
-   meter by the given amount. This is used when you need to add or
-   subtract more that one from a counter, like incrementing
+-  ``update_stats(self, metric, amount, sample_rate=1)`` Increments
+   the supplied meter by the given amount. This is used when you need
+   to add or subtract more that one from a counter, like incrementing
    "suffix.hashes" by the number of computed hashes in the object
    replicator.
 
@@ -177,11 +177,12 @@ in ``self.logger``, has these new methods:
 -  ``decrement(self, metric, sample_rate=1)`` Lowers the given counter
    meter by one.
 
--  ``timing(self, metric, timing_ms, sample_rate=1)`` Record that the given meter
-   took the supplied number of milliseconds.
+-  ``timing(self, metric, timing_ms, sample_rate=1)`` Record that the
+   given meter took the supplied number of milliseconds.
 
--  ``timing_since(self, metric, orig_time, sample_rate=1)`` Convenience method to record
-   a timing meter whose value is "now" minus an existing timestamp.
+-  ``timing_since(self, metric, orig_time, sample_rate=1)``
+   Convenience method to record a timing meter whose value is "now"
+   minus an existing timestamp.
 
 Note that these logging methods may safely be called anywhere you have a
 logger object. If StatsD logging has not been configured, the methods

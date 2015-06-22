@@ -157,8 +157,8 @@ copy of the image on the compute node where the instance starts.
 
    The instance starts on a compute node in the cloud.
 
-The :guilabel:`Instances` tab shows the instance's name, its private and public IP
-addresses, size, status, task, and power state.
+The :guilabel:`Instances` tab shows the instance's name, its private
+and public IP addresses, size, status, task, and power state.
 
 If you did not provide a key pair, security groups, or rules, users can
 access the instance only from inside the cloud through VNC. Even pinging

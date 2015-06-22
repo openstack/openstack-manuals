@@ -236,7 +236,8 @@ Create ports
      | f7a08fe4-e7... |      | fa:16:3e:97:e0:fc | {"subnet_id"... ..."ip_address": "192.168.2.40"}|
      +----------------+------+-------------------+-------------------------------------------------+
 
-``--fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40`` is one unknown option.
+``--fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40`` is one
+unknown option.
 
 **How to find unknown options**
 The unknown options can be easily found by watching the output of

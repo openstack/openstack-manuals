@@ -356,8 +356,8 @@ The following steps involve compute node 1:
    bridge ``qbr``. The packet contains destination MAC address *I2*
    because the destination resides on the same network.
 
-#. Security group rules (2) on the provider bridge ``qbr`` handle state tracking
-   for the packet.
+#. Security group rules (2) on the provider bridge ``qbr`` handle
+   state tracking for the packet.
 
 #. The Linux bridge ``qbr`` forwards the packet to the Open vSwitch
    integration bridge ``br-int``.

@@ -2,10 +2,11 @@
 Manage IP addresses
 ===================
 
-Each instance has a private, fixed IP address (assigned when launched) and can also have a
-public, or floating, address. Private IP addresses are used for communication between
-instances, and public addresses are used for communication with networks outside the cloud,
-including the Internet.
+Each instance has a private, fixed IP address (assigned when launched)
+and can also have a public, or floating, address. Private IP addresses
+are used for communication between instances, and public addresses are
+used for communication with networks outside the cloud, including the
+Internet.
 
 - By default, both administrative and end users can associate floating IP
   addresses with projects and instances. You can change user permissions for
@@ -19,8 +20,9 @@ including the Internet.
   floating IP addresses are created by default in OpenStack Networking.
 
 As an administrator using legacy networking (``nova-network``), you
-can use the following bulk commands to list, create, and delete ranges of floating IP
-addresses. These addresses can then be associated with instances by end users.
+can use the following bulk commands to list, create, and delete ranges
+of floating IP addresses. These addresses can then be associated with
+instances by end users.
 
 List addresses for all projects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

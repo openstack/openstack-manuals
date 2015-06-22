@@ -177,12 +177,14 @@ data, and metadata is derived from any associated
 
 Signals and wait conditions
 ---------------------------
-Often it is necessary to pause further creation of stack resources until the
-boot configuration script has notified that it has reached a certain state.
-This is usually either to notify that a service is now active, or to pass out
-some generated data which is needed by another resource. The resources
-:hotref:`OS::Heat::WaitCondition` and :hotref:`OS::Heat::SwiftSignal` both perform
-this function using different techniques and tradeoffs.
+
+Often it is necessary to pause further creation of stack resources
+until the boot configuration script has notified that it has reached a
+certain state. This is usually either to notify that a service is now
+active, or to pass out some generated data which is needed by another
+resource. The resources :hotref:`OS::Heat::WaitCondition` and
+:hotref:`OS::Heat::SwiftSignal` both perform this function using
+different techniques and tradeoffs.
 
 :hotref:`OS::Heat::WaitCondition` is implemented as a call to the
 `Orchestration API`_ resource signal. The token is created using credentials
@@ -529,10 +531,11 @@ The `Custom image script`_ already includes the ``heat-config-script`` element
 so the built image will already have the ability to configure using shell
 scripts.
 
-Config inputs are mapped to shell environment variables. The script can
-communicate outputs to heat by writing to the :file:`$heat_outputs_path.{output name}`
-file. See the following example for a script
-which expects inputs ``foo``, ``bar`` and generates an output ``result``.
+Config inputs are mapped to shell environment variables. The script
+can communicate outputs to heat by writing to the
+:file:`$heat_outputs_path.{output name}` file. See the following
+example for a script which expects inputs ``foo``, ``bar`` and
+generates an output ``result``.
 
 .. code-block:: yaml
   :linenos:

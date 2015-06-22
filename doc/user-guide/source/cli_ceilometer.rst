@@ -59,8 +59,8 @@ Alarm
   The comparison operator compares a selected meter statistic against
   an evaluation window of configurable length into the recent past.
 
-This example uses the :command:`heat` client to create an auto-scaling stack and the
-:command:`ceilometer` client to measure resources.
+This example uses the :command:`heat` client to create an auto-scaling
+stack and the :command:`ceilometer` client to measure resources.
 
 #. Create an auto-scaling stack by running the following command.
    The :option:`-f` option specifies the name of the stack template
