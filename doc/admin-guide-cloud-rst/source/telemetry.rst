@@ -46,6 +46,13 @@ You can retrieve the collected samples in three different ways: with
 the REST API, with the command line interface, or with the Metering
 tab on an OpenStack dashboard.
 
+.. include:: telemetry-best-practices.rst
+
+.. toctree::
+   :hidden:
+
+   telemetry-best-practices.rst
+
 
 .. TODO (OL) Translate and add the below files with new name
    include: telemetry/section_telemetry-system-architecture.xml
@@ -55,4 +62,3 @@ tab on an OpenStack dashboard.
    include: telemetry/section_telemetry-measurements.xml
    include: telemetry/section_telemetry-events.xml
    include: telemetry/section_telemetry-troubleshooting-guide.xml
-   include: telemetry/section_telemetry-best-practices.xml
