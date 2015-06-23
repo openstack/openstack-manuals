@@ -1,0 +1,173 @@
+.. _integrate-identity-with-ldap:
+
+.. :orphan:
+
+Integrate Identity with LDAP
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The OpenStack Identity service supports integration with existing LDAP
+directories for authentication and authorization services.
+
+When the OpenStack Identity service is configured to use LDAP back ends,
+you can split authentication (using the *identity* feature) and
+authorization (using the *assignment* feature).
+
+The *identity* feature enables administrators to manage users and groups
+by each domain or the OpenStack Identity service entirely.
+
+The *assignment* feature enables administrators to manage project role
+authorization using the OpenStack Identity service SQL database, while
+providing user authentication through the LDAP directory.
+
+.. important::
+
+   For OpenStack Identity service to access LDAP servers, you must
+   enable the ``authlogin_nsswitch_use_ldap`` boolean value for SELinux
+   on the Openstack Identity server. To enable and make the option
+   persistent across reboots::
+
+      # setsebool -P authlogin_nsswitch_use_ldap on
+
+Identity configuration is split into two separate back ends; identity
+(back end for users and groups), and assignments (back end for domains,
+projects, roles, role assignments). To configure Identity, set options
+in the :file:`/etc/keystone/keystone.conf` file. See ? for Identity back end
+configuration examples and ? for assignment back end configuration examples.
+Modify these examples as needed.
+
+.. TODO (DC) Add links to keystone_integrate_identity_backend_ldap.rst and
+   keystone_integrate_assignment_backend_ldap.rst
+
+.. note::
+
+   Multiple back ends are supported. You can integrate the OpenStack
+   Identity service with a single LDAP server (configure both identity
+   and assignments to LDAP, or set identity and assignments back end
+   with SQL or LDAP), or multiple back ends using domain-specific
+   configuration files.
+
+To define the destination LDAP server
+-------------------------------------
+
+Define the destination LDAP server in the  :file:`keystone.conf` file:
+
+.. code-block:: ini
+   :linenos:
+
+   [ldap]
+   url = ldap://localhost
+   user = dc=Manager,dc=example,dc=org
+   password = samplepassword
+   suffix = dc=example,dc=org
+   use_dumb_member = False
+   allow_subtree_delete = False
+
+.. note::
+
+   Configure ``dumb_member`` if you set ``use_dumb_member`` to true.
+
+   .. code-block:: ini
+      :linenos:
+
+      [ldap]
+      dumb_member = cn=dumb,dc=nonexistent
+
+Additional LDAP integration settings
+------------------------------------
+
+Set these options in the :file:`/etc/keystone/keystone.conf` file for a
+single LDAP server, or :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf`
+files for multiple back ends.
+
+**Query option**
+
+Use ``query_scope`` to control the scope level of data presented
+(search only the first level or search an entire sub-tree) through LDAP.
+
+Use ``page_size`` to control the maximum results per page. A value of zero
+disables paging.
+
+Use ``alias_dereferencing`` to control the LDAP dereferencing option for
+queries.
+
+Use ``chase_referrals`` to override the system's default referral chasing
+behavior for queries.
+
+.. code-block:: ini
+   :linenos:
+
+   [ldap]
+   query_scope = sub
+   page_size = 0
+   alias_dereferencing = default
+   chase_referrals =
+
+**Debug**
+
+Use ``debug_level`` to set the LDAP debugging level for LDAP calls.
+A value of zero means that debugging is not enabled.
+
+.. code-block:: ini
+   :linenos:
+
+   [ldap]
+   debug_level = 0
+
+.. warning::
+
+   This value is a bitmask, consult your LDAP documentation for
+   possible values.
+
+**Connection pooling**
+
+Use ``use_pool`` to enable LDAP connection pooling. Configure
+connection pool size, maximum retry, reconnect trials, timeout (-1
+indicates indefinite wait) and lifetime in seconds.
+
+.. code-block:: ini
+   :linenos:
+
+      [ldap]
+      use_pool = true
+      pool_size = 10
+      pool_retry_max = 3
+      pool_retry_delay = 0.1
+      pool_connection_timeout = -1
+      pool_connection_lifetime = 600
+
+**Connection pooling for end user authentication**
+
+Use ``use_auth_pool`` to enable LDAP connection pooling for end user
+authentication. Configure connection pool size and lifetime in
+seconds.
+
+.. code-block:: ini
+   :linenos:
+
+   [ldap]
+   use_auth_pool = false
+   auth_pool_size = 100
+   auth_pool_connection_lifetime = 60
+
+When you have finished configuration, restart the OpenStack Identity
+service::
+
+   # service keystone restart
+
+.. warning::
+
+   During service restart, authentication and authorization are
+   unavailable.
+
+.. include:: keystone_integrate_identity_backend_ldap.rst
+
+.. include:: keystone_integrate_assignment_backend_ldap.rst
+
+.. include:: keystone_secure_identity_to_ldap_backend.rst
+
+.. toctree::
+   :hidden:
+
+   keystone_integrate_identity_backend_ldap.rst
+   keystone_integrate_assignment_backend_ldap.rst
+   keystone_secure_identity_to_ldap_backend.rst
