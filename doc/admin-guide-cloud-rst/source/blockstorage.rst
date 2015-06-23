@@ -114,7 +114,7 @@ installed along with ``lvm2``. This guide describes how to
 troubleshoot your installation and back up your Compute volumes.
 
 Boot from volume
-~~~~~~~~~~~~~~~~
+----------------
 
 In some cases, you can store and run instances from inside volumes.
 For information, see the `Launch an instance from a volume`_ section
@@ -127,14 +127,15 @@ in the `OpenStack End User Guide`_.
 .. _`OpenStack Operations Guide`: http://docs.openstack.org/ops/
 
 .. include:: blockstorage_nfs_backend.rst
+.. include:: blockstorage_glusterfs_backend.rst
 
 .. toctree::
    :hidden:
 
    blockstorage_nfs_backend.rst
+   blockstorage_glusterfs_backend.rst
 
 .. TODO (MZ) Convert and include the following sections
-   include: blockstorage/section_glusterfs_backend.xml
    include: blockstorage/section_multi_backend.xml
    include: blockstorage/section_backup-block-storage-disks.xml
    include: blockstorage/section_volume-migration.xml
@@ -143,7 +144,7 @@ in the `OpenStack End User Guide`_.
    include: blockstorage/section_volume-backups-export-import.xml
 
 Use LIO iSCSI support
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 The default mode for the ``iscsi_helper`` tool is ``tgtadm``.
 To use LIO iSCSI, install the ``python-rtslib`` package, and set

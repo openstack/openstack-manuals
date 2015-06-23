@@ -3,7 +3,7 @@
 .. :orphan:
 
 Configure an NFS storage back end
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 This section explains how to configure OpenStack Block Storage to use
 NFS storage. You must be able to access the NFS shares from the server
