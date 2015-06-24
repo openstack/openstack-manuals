@@ -417,6 +417,12 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
                 <para>Or, enable the Linux Bridge LBaaS
                     driver:</para>
                 <programlisting language="ini">interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver</programlisting>
+            </step>
+            <step>
+                <para>Create the required tables in the database:</para>
+                <screen><prompt>#</prompt> <userinput>neutron-db-manage --service lbaas upgrade head</userinput></screen>
+            </step>
+            <step>
                 <para>Apply the settings by restarting the
                     <systemitem class="service">neutron-server</systemitem>
                     and
