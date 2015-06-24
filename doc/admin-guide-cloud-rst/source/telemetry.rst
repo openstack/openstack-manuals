@@ -47,12 +47,15 @@ the REST API, with the command line interface, or with the Metering
 tab on an OpenStack dashboard.
 
 .. include:: telemetry-system-architecture.rst
+.. include:: telemetry-troubleshooting-guide.rst
 .. include:: telemetry-best-practices.rst
+
 
 .. toctree::
    :hidden:
 
    telemetry-system-architecture.rst
+   telemetry-troubleshooting-guide.rst
    telemetry-best-practices.rst
 
 
@@ -62,4 +65,3 @@ tab on an OpenStack dashboard.
    include: telemetry/section_telemetry-alarms.xml
    include: telemetry/section_telemetry-measurements.xml
    include: telemetry/section_telemetry-events.xml
-   include: telemetry/section_telemetry-troubleshooting-guide.xml
