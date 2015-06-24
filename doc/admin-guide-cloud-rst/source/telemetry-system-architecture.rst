@@ -1,5 +1,8 @@
+.. _telemetry-system-architecture:
+
+===================
 System architecture
-~~~~~~~~~~~~~~~~~~~
+===================
 
 The Telemetry module uses an agent-based architecture. Several modules
 combine their responsibilities to collect data, store samples in a
@@ -61,8 +64,10 @@ communication.
 
 |
 
+.. _telemetry-supported-databases:
+
 Supported databases
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 The other key external component of Telemetry is the database, where
 events, samples, alarm definitions and alarms are stored.
@@ -88,8 +93,10 @@ The list of supported database back ends:
 
 |
 
+.. _telemetry-supported-hypervisors:
+
 Supported hypervisors
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 The Telemetry module collects information about the virtual machines,
 which requires close connection to the hypervisor that runs on the
@@ -125,7 +132,7 @@ The list of supported hypervisors is:
 |
 
 Supported networking services
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Telemetry is able to retrieve information from OpenStack Networking and
 external networking services:
@@ -148,8 +155,10 @@ external networking services:
 
 |
 
+.. _telemetry-users-roles-tenants:
+
 Users, roles and tenants
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 This module of OpenStack uses OpenStack Identity for authenticating and
 authorizing users. The required configuration options are listed in the
@@ -157,10 +166,9 @@ authorizing users. The required configuration options are listed in the
 section <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html>`__
 in the *OpenStack Configuration Reference*.
 
-Two roles are used in the system basically, which are the 'admin' and
-'non-admin'. The authorization happens before processing each API
-request. The amount of returned data depends on the role the requestor
-owns.
+The system uses two roles:`admin` and `non-admin`. The authorization happens
+before processing each API request. The amount of returned data depends on the
+role the requestor owns.
 
 The creation of alarm definitions also highly depends on the role of the
 user, who initiated the action. Further details about alarm handling can
