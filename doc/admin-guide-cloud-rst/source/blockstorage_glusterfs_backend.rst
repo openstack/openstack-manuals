@@ -1,7 +1,5 @@
 .. glusterfs_backend:
 
-.. orphan:
-
 Configure a GlusterFS back end
 ------------------------------
 
