@@ -47,11 +47,10 @@ line, see `OpenStack Command-Line Interface Reference`_.
 .. _`OpenStack Command-Line Interface Reference`: http://docs.openstack.org/cli-reference
 
 .. include:: orchestration-auth-model.rst
+.. include:: orchestration-stack-domain-users.rst
 
 .. toctree::
    :hidden:
 
    orchestration-auth-model.rst
-
-.. TODO (OL) Convert and include the below sections
-   include: orchestration/section_orchestration-stack-domain-users.xml
+   orchestration-stack-domain-users.rst
