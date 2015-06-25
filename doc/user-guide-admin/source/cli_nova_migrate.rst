@@ -41,7 +41,7 @@ target host.
 
      # Migrate the VM to an alternate hypervisor
      echo -n "Migrating instance to alternate host"
-     $VM_ID=$1
+     VM_ID=$1
      nova migrate $VM_ID
      VM_OUTPUT=`nova show $VM_ID`
      VM_STATUS=`echo "$VM_OUTPUT" | grep status | awk '{print $4}'`
