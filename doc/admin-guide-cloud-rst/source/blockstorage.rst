@@ -169,6 +169,11 @@ Troubleshoot your installation
 This section provides useful tips to help you troubleshoot your Block
 Storage installation.
 
+.. toctree::
+   :maxdepth: 2
+
+   ts_cinder_config.rst
+
 .. TODO (MZ) Convert and include the following sections
    include: blockstorage/section_ts_cinder_config.xml
    include: blockstorage/section_ts_multipath_warn.xml
