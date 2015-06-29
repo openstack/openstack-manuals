@@ -72,6 +72,20 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   basic_environment.rst
+   keystone.rst
+   glance.rst
+   nova.rst
+   networking.rst
+   horizon.rst
+   cinder.rst
+   swift.rst
+   heat.rst
+   ceilometer.rst
+   trove.rst
+   sahara.rst
+   launch-instance.rst
+
    common/app_support.rst
    common/glossary.rst
 
