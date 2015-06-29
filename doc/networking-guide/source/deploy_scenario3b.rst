@@ -74,8 +74,8 @@ OpenStack services - network node
 #. Operational OpenStack Identity service with appropriate configuration
    in the :file:`neutron-server.conf` file.
 
-#. Open vSwitch service, ML2 plug-in, Linux bridge agent, L3 agent,
-   DHCP agent, metadata agent, and any dependencies.
+#. ML2 plug-in, Linux bridge agent, L3 agent, DHCP agent, metadata agent,
+   and any dependencies.
 
 OpenStack services - compute nodes
 ----------------------------------
@@ -86,8 +86,7 @@ OpenStack services - compute nodes
 #. Operational OpenStack Compute hypervisor service with appropriate
    configuration to use neutron in the :file:`nova.conf` file.
 
-#. Open vSwitch service, ML2 plug-in, Linux bridge agent, and any
-   dependencies.
+#. ML2 plug-in, Linux bridge agent, and any dependencies.
 
 Architecture
 ~~~~~~~~~~~~
@@ -271,32 +270,10 @@ Network nodes
 
       [DEFAULT]
       verbose = True
-      core_plugin = ml2
-      service_plugins = router
       allow_overlapping_ips = True
-      dhcp_agents_per_network = 2
-      router_distributed = False
-      l3_ha = True
-      max_l3_agents_per_router = 3
-      min_l3_agents_per_router = 2
 
-#. Configure the ML2 plug-in. Edit the
+#. Configure the Linux Bridge agent. Edit the
    :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file::
-
-      [ml2]
-      type_drivers = flat,vlan,vxlan
-      tenant_network_types = vxlan,vlan
-      mechanism_drivers = linuxbridge
-
-      [ml2_type_flat]
-      flat_networks = external
-
-      [ml2_type_vlan]
-      network_vlan_ranges = vlan:1001:2000
-
-      [ml2_type_vxlan]
-      vni_ranges = 1001:2000
-      vxlan_group = 239.1.1.1
 
       [securitygroup]
       enable_security_group = True
@@ -306,15 +283,9 @@ Network nodes
       [linux_bridge]
       physical_interface_mappings = vxlan:PROJECT_TUNNEL_NETWORK_INTERFACE,vlan:PROJECT_VLAN_NETWORK_INTERFACE,external:EXTERNAL_NETWORK_INTERFACE
 
-      [vlans]
-      tenant_network_type = vlan
-      network_vlan_ranges = vlan:1001:2000
-
       [vxlan]
       enable_vxlan = True
       local_ip = PROJECT_NETWORK_TUNNELS_INTERFACE_IP_ADDRESS
-
-   Adjust the VLAN tag and VXLAN tunnel ID ranges for your environment.
 
    Replace ``PROJECT_TUNNEL_NETWORK_INTERFACE``,
    ``PROJECT_VLAN_NETWORK_INTERFACE``, and ``EXTERNAL_NETWORK_INTERFACE``
@@ -323,10 +294,6 @@ Network nodes
 
    Replace ``PROJECT_NETWORK_TUNNELS_INTERFACE_IP_ADDRESS`` with the IP
    address of the project network tunnels interface.
-
-   .. note::
-      The first value in the ``tenant_network_types`` option becomes the
-      default project network type when a non-privileged user creates a network.
 
 #. Configure the L3 agent. Edit the :file:`/etc/neutron/l3_agent.ini` file::
 
@@ -402,29 +369,9 @@ Compute nodes
 
       [DEFAULT]
       verbose = True
-      core_plugin = ml2
-      service_plugins = router
-      allow_overlapping_ips = True
-      dhcp_agents_per_network = 2
-      router_distributed = False
-      l3_ha = True
-      max_l3_agents_per_router = 3
-      min_l3_agents_per_router = 2
 
-#. Configure the ML2 plug-in. Edit the
+#. Configure the Linux Bridge agent. Edit the
    :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file::
-
-      [ml2]
-      type_drivers = flat,vlan,vxlan
-      tenant_network_types = vxlan,vlan
-      mechanism_drivers = linuxbridge
-
-      [ml2_type_vlan]
-      network_vlan_ranges = vlan:1001:2000
-
-      [ml2_type_vxlan]
-      vni_ranges = 1001:2000
-      vxlan_group = 239.1.1.1
 
       [securitygroup]
       enable_security_group = True
@@ -434,15 +381,9 @@ Compute nodes
       [linux_bridge]
       physical_interface_mappings = vxlan:PROJECT_TUNNEL_NETWORK_INTERFACE,vlan:PROJECT_VLAN_NETWORK_INTERFACE
 
-      [vlans]
-      tenant_network_type = vlan
-      network_vlan_ranges = vlan:1001:2000
-
       [vxlan]
       enable_vxlan = True
       local_ip = PROJECT_NETWORK_TUNNELS_INTERFACE_IP_ADDRESS
-
-   Adjust the VLAN tag and VXLAN tunnel ID ranges for your environment.
 
    Replace ``PROJECT_TUNNEL_NETWORK_INTERFACE`` and
    ``PROJECT_VLAN_NETWORK_INTERFACE`` with the respective underlying network
@@ -450,10 +391,6 @@ Compute nodes
 
    Replace ``PROJECT_NETWORK_TUNNELS_INTERFACE_IP_ADDRESS`` with the IP
    address of the project network tunnels interface.
-
-   .. note::
-      The first value in the ``tenant_network_types`` option becomes the
-      default project network type when a non-privileged user creates a network.
 
 #. Start the following services:
 
