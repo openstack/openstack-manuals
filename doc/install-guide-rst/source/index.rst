@@ -82,8 +82,6 @@ Contents
    swift.rst
    heat.rst
    ceilometer.rst
-   trove.rst
-   sahara.rst
    launch-instance.rst
 
    common/app_support.rst
