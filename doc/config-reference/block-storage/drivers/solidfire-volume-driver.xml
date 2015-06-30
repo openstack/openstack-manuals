@@ -18,32 +18,20 @@
 san_ip = 172.17.1.182         # the address of your MVIP
 san_login = sfadmin           # your cluster admin login
 san_password = sfpassword     # your cluster admin password
-sf_account_prefix = ''        # prefix for tenant account creation on solidfire cluster (see warning below)</programlisting>
+sf_account_prefix = ''        # prefix for tenant account creation on solidfire cluster</programlisting>
     <warning>
-        <para>The SolidFire driver creates a unique account prefixed
-            with
+        <para>Older versions of the  SolidFire driver (prior to Icehouse)
+              created a unique account prefixed with
                 <literal>$cinder-volume-service-hostname-$tenant-id</literal>
-            on the SolidFire cluster for each tenant that accesses the
-            cluster through the Volume API. Unfortunately, this
-            account formation results in issues for High Availability
+            on the SolidFire cluster for each tenant. Unfortunately, this
+            account formation resulted in issues for High Availability
             (HA) installations and installations where the <systemitem
                 class="service">cinder-volume</systemitem> service can
-            move to a new node. HA installations can return an
-                <errortext>Account Not Found</errortext> error because
-            the call to the SolidFire cluster is not always going to
-            be sent from the same node. In installations where the
-                <systemitem class="service">cinder-volume</systemitem>
-            service moves to a new node, the same issue can occur when
-            you perform operations on existing volumes, such as clone,
-            extend, delete, and so on.</para>
+            move to a new node. The current default implementation does
+            not experience this issue as no prefix is used.  For installations
+            created on a prior release, the OLD default behavior can be
+            configured by using the keyword "hostname" in sf_account_prefix.
+            </para>
     </warning>
-    <note>
-        <para>Set the <option>sf_account_prefix</option> option to an empty string ('') in the
-                <filename>cinder.conf</filename> file. This setting results in unique accounts being
-            created on the SolidFire cluster, but the accounts are prefixed with the
-                <systemitem>tenant-id</systemitem> or any unique identifier that you choose and are
-            independent of the host where the <systemitem class="service">cinder-volume</systemitem>
-            service resides.</para>
-    </note>
     <xi:include href="../../../common/tables/cinder-solidfire.xml"/>
 </section>
