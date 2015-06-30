@@ -297,39 +297,12 @@ instances.
 
      [DEFAULT]
      verbose = True
-     core_plugin = ml2
-     service_plugins = router
      allow_overlapping_ips = True
 
-     dhcp_agents_per_network = 2
-
-     l3_ha = True
-     max_l3_agents_per_router = 3
-     min_l3_agents_per_router = 2
-     l3_ha_net_cidr = 169.254.192.0/18
-
-#. Configure the ML2 plug-in. Edit the
+#. Configure the OVS agent. Edit the
    :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
 
    ::
-
-     [ml2]
-     type_drivers = flat,vlan,gre,vxlan
-     tenant_network_types = vlan,gre,vxlan
-     mechanism_drivers = openvswitch
-
-     [ml2_type_flat]
-     flat_networks = external
-
-     [ml2_type_vlan]
-     network_vlan_ranges = vlan:MIN_VLAN_ID:MAX_VLAN_ID
-
-     [ml2_type_gre]
-     tunnel_id_ranges = MIN_GRE_SESSION:MAX_GRE_SESSION
-
-     [ml2_type_vxlan]
-     vni_ranges = MIN_VNI:MAX_VNI
-     vxlan_group = 239.1.1.1
 
      [securitygroup]
      enable_security_group = True
@@ -344,17 +317,7 @@ instances.
      tunnel_types = gre,vxlan
 
    Replace ``TENANT_TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address
-   of the tenant tunnel network interface. Replace ``MIN_VLAN_ID`` and
-   ``MAX_VLAN_ID`` with the VLAN ID range available for tenant networks.
-   Replace ``MIN_GRE_SESSION`` and ``MAX_GRE_SESSION`` with a suitable GRE
-   tunnel session range. Replace ``MIN_VNI`` and ``MAX_VNI`` with a suitable
-   VXLAN network ID range.
-
-   .. note::
-
-      The first value in the 'tenant_network_types' option becomes the
-      default tenant network type when a non-privileged user creates a
-      network.
+   of the tenant tunnel network interface
 
 #. Configure the L3 agent. Edit the :file:`/etc/neutron/l3_agent.ini` file:
 
@@ -441,29 +404,11 @@ for instances.
 
      [DEFAULT]
      verbose = True
-     core_plugin = ml2
-     service_plugins = router
-     allow_overlapping_ips = True
 
-#. Configure the ML2 plug-in. Edit the
+#. Configure the OVS agent. Edit the
    :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
 
    ::
-
-     [ml2]
-     type_drivers = flat,vlan,gre,vxlan
-     tenant_network_types = vlan,gre,vxlan
-     mechanism_drivers = openvswitch
-
-     [ml2_type_vlan]
-     network_vlan_ranges = vlan:MIN_VLAN_ID:MAX_VLAN_ID
-
-     [ml2_type_gre]
-     tunnel_id_ranges = MIN_GRE_SESSION:MAX_GRE_SESSION
-
-     [ml2_type_vxlan]
-     vni_ranges = MIN_VNI:MAX_VNI
-     vxlan_group = 239.1.1.1
 
      [securitygroup]
      enable_security_group = True
@@ -478,17 +423,7 @@ for instances.
      tunnel_types = gre,vxlan
 
    Replace ``TENANT_TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address
-   of the tenant tunnel network interface. Replace ``MIN_VLAN_ID`` and
-   ``MAX_VLAN_ID`` with the VLAN ID range available for tenant networks.
-   Replace ``MIN_GRE_SESSION`` and ``MAX_GRE_SESSION`` with a suitable GRE
-   tunnel session range. Replace ``MIN_VNI`` and ``MAX_VNI`` with a suitable
-   VXLAN network ID range.
-
-   .. note::
-
-      The first value in the 'tenant_network_types' option becomes the
-      default tenant network type when a non-privileged user creates a
-      network.
+   of the tenant tunnel network interface.
 
 #. Start the following services:
 
