@@ -6,7 +6,7 @@ Deployment scenarios
    :maxdepth: 2
 
    scenario_legacy_ovs.rst
-   deploy_scenario1b.rst
+   scenario_legacy_lb.rst
    deploy_scenario2.rst
    deploy_scenario3a.rst
    deploy_scenario3b.rst
