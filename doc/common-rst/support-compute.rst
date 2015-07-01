@@ -1,0 +1,228 @@
+
+:orphan:
+
+.. _support-compute:
+
+Troubleshoot Compute
+~~~~~~~~~~~~~~~~~~~~
+
+Common problems for Compute typically involve misconfigured
+networking or credentials that are not sourced properly in the
+environment. Also, most flat networking configurations do not
+enable :command:`ping` or :command:`ssh` from a compute node
+to the instances that run on that node. Another common problem
+is trying to run 32-bit images on a 64-bit compute node.
+This section shows you how to troubleshoot Compute.
+
+
+.. _log-files-for-openstack-compute:
+
+Compute service logging
+-----------------------
+
+Compute stores a log file for each service in
+:file:`/var/log/nova`. For example, :file:`nova-compute.log`
+is the log for the ``nova-compute`` service. You can set the
+following options to format log strings for the ``nova.log``
+module in the :file:`nova.conf` file:
+
+* ``logging_context_format_string``
+
+* ``logging_default_format_string``
+
+If the log level is set to ``debug``, you can also specify
+``logging_debug_format_suffix`` to append extra formatting.
+For information about what variables are available for the
+formatter see http://docs.python.org/library/logging.html#formatter.
+
+You have two options for logging for OpenStack Compute based on
+configuration settings. In :file:`nova.conf`, include the
+``logfile`` option to enable logging. Alternatively you can set
+``use_syslog = 1`` so that the nova daemon logs to syslog.
+
+
+.. _section_compute-GuruMed-reports:
+
+Guru Meditation reports
+-----------------------
+
+A Guru Meditation report is sent by the Compute Service upon receipt of the
+``SIGUSR1`` signal. This report is a general-purpose error report,
+including a complete report of the service's current state, and is sent to
+``stderr``.
+
+For example, if you redirect error output to ``nova-api-err.log``
+using :command:`nova-api 2>/var/log/nova/nova-api-err.log`,
+resulting in the process ID 8675, you can then run::
+
+  # kill -USR1 8675
+
+This command triggers the Guru Meditation report to be printed to
+:file:`/var/log/nova/nova-api-err.log`.
+
+The report has the following sections:
+
+* Package: Displays information about the package to which the process
+  belongs, including version information.
+
+* Threads: Displays stack traces and thread IDs for each of the threads
+  within the process.
+
+* Green Threads: Displays stack traces for each of the green threads
+  within the process (green threads do not have thread IDs).
+
+* Configuration: Lists all configuration options currently accessible
+  through the CONF object for the current process.
+
+For more information, see `Guru Meditation Reports <http://docs.openstack.org/developer/nova/devref/gmr.html>`_.
+
+
+.. _compute-common-errors-and-fixes:
+
+Common errors and fixes for Compute
+-----------------------------------
+
+The `ask.openstack.org <http://ask.openstack.org>`_ site offers a place to ask
+and answer questions, and you can also mark questions as frequently asked
+questions. This section describes some errors people have posted previously.
+Bugs are constantly being fixed, so online resources are a great way to get
+the most up-to-date errors and fixes.
+
+**Credential errors, 401, and 403 forbidden errors**
+
+Missing credentials cause a ``403 forbidden`` error. To resolve
+this issue, use one of these methods:
+
+#. Manual method
+    Gets the :file:`novarc` file from the project ZIP file, save existing
+    credentials in case of override. and manually source the :file:`novarc`
+    file.
+
+#. Script method
+    Generates :file:`novarc` from the project ZIP file and sources it for you.
+
+When you run ``nova-api`` the first time, it generates the certificate
+authority information, including :file:`openssl.cnf`. If you
+start the CA services before this, you might not be
+able to create your ZIP file. Restart the services.
+When your CA information is available, create your ZIP file.
+
+Also, check your HTTP proxy settings to see whether they cause problems with
+:file:`novarc` creation.
+
+**Instance errors**
+
+Sometimes a particular instance shows ``pending`` or you cannot SSH to
+it. Sometimes the image itself is the problem. For example, when you
+use flat manager networking, you do not have a DHCP server and certain
+images do not support interface injection; you cannot connect to
+them. The fix for this problem is to use an image that does support
+this method, such as Ubuntu, which obtains an IP address correctly
+with FlatManager network settings.
+
+To troubleshoot other possible problems with an instance, such as
+an instance that stays in a spawning state, check the directory for
+the particular instance under :file:`/var/lib/nova/instances` on
+the ``nova-compute`` host and make sure that these files are present:
+
+* :file:`libvirt.xml`
+* :file:`disk`
+* :file:`disk-raw`
+* :file:`kernel`
+* :file:`ramdisk`
+* :file:`console.log`, after the instance starts.
+
+If any files are missing, empty, or very small, the ``nova-compute``
+service did not successfully download the images from the Image Service.
+
+Also check :file:`nova-compute.log` for exceptions. Sometimes they do not
+appear in the console output.
+
+Next, check the log file for the instance in the :file:`/var/log/libvirt/qemu`
+directory to see if it exists and has any useful error messages in it.
+
+Finally, from the :file:`/var/lib/nova/instances` directory for the instance,
+see if this command returns an error::
+
+  # virsh create libvirt.xml
+
+**Empty log output for Linux instances**
+
+You can view the log output of running instances
+from either the :guilabel:`Log` tab of the dashboard or the output of
+:command:`nova console-log`. In some cases, the log output of a running
+Linux instance will be empty or only display a single character (for example,
+the `?` character).
+
+This occurs when the Compute service attempts to retrieve the log output
+of the instance via a serial console while the instance itself is not
+configured to send output to the console. To rectify this, append the
+following parameters to kernel arguments specified in the instance's boot
+loader::
+
+  console=tty0 console=ttyS0,115200n8
+
+Upon rebooting, the instance will be configured to send output to the Compute
+service.
+
+
+.. _reset-state:
+
+Reset the state of an instance
+------------------------------
+
+If an instance remains in an intermediate state, such as ``deleting``, you
+can use the :command:`nova reset-state` command to manually reset the state
+of an instance to an error state. You can then delete the instance. For example::
+
+  $ nova reset-state c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
+  $ nova delete c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
+
+You can also use the :option:`--active` parameter to force the instance back
+to an active state instead of an error state. For example::
+
+  $ nova reset-state --active c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
+
+
+.. _problems-with-injection:
+
+Injection problems
+------------------
+
+If instances do not boot or boot slowly, investigate file injection as a cause.
+
+To disable injection in libvirt, set the following in :file:`nova.conf`:
+
+.. code-block:: ini
+   :linenos:
+
+   [libvirt]
+   inject_partition = -2
+
+.. note:: If you have not enabled the configuration drive and
+         you want to make user-specified files available from
+         the metadata server for to improve performance and
+         avoid boot failure if injection fails, you must
+         disable injection.
+
+
+.. _live-snapshotting-fail:
+
+Disable live snapshotting
+-------------------------
+
+If you use libvirt version ``1.2.2``, you may experience problems with live
+snapshots creation. Occasionally, libvirt of the specified version fails
+to perform the live snapshotting under load that presupposes a concurrent
+creation of multiple snapshots.
+
+To effectively disable the libvirt live snapshotting, until the problem
+is resolved, configure the ``disable_libvirt_livesnapshot`` option.
+You can turn off the live snapshotting mechanism by setting up its value to
+``True`` in the ``[workarounds]`` section of the :file:`nova.conf` file:
+
+.. code-block:: ini
+   :linenos:
+
+   [workarounds]
+   disable_libvirt_livesnapshot = True
