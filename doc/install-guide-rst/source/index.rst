@@ -72,6 +72,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   overview.rst
    basic_environment.rst
    keystone.rst
    glance.rst
