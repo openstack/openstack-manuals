@@ -1,0 +1,145 @@
+.. :orphan:
+
+OpenStack Compute
+-----------------
+
+Use OpenStack Compute to host and manage cloud computing systems.
+OpenStack Compute is a major part of an Infrastructure-as-a-Service
+(IaaS) system. The main modules are implemented in Python.
+
+OpenStack Compute interacts with OpenStack Identity for authentication,
+OpenStack Image Service for disk and server images, and OpenStack
+dashboard for the user and administrative interface. Image access is
+limited by projects, and by users; quotas are limited per project (the
+number of instances, for example). OpenStack Compute can scale
+horizontally on standard hardware, and download images to launch
+instances.
+
+OpenStack Compute consists of the following areas and their components:
+
+``nova-api`` service
+  Accepts and responds to end user compute API calls. The service
+  supports the OpenStack Compute API, the Amazon EC2 API, and a
+  special Admin API for privileged users to perform administrative
+  actions. It enforces some policies and initiates most orchestration
+  activities, such as running an instance.
+
+``nova-api-metadata`` service
+  Accepts metadata requests from instances. The nova-api-metadata
+  service is generally used when you run in multi-host mode with
+  nova-network installations. For details, see `Metadata
+  service <http://docs.openstack.org/admin-guide-cloud/content/section_metadata-service.html>`__
+  in the OpenStack Cloud Administrator Guide.
+
+.. TODO Fix the link above when the file is converted.
+
+  On Debian systems, it is included in the nova-api package, and can
+  be selected through debconf.
+
+``nova-compute`` service
+  A worker daemon that creates and terminates virtual machine
+  instances through hypervisor APIs. For example:
+
+  - XenAPI for XenServer/XCP
+
+  - libvirt for KVM or QEMU
+
+  - VMwareAPI for VMware
+
+  Processing is fairly complex. Basically, the daemon accepts actions
+  from the queue and performs a series of system commands such as
+  launching a KVM instance and updating its state in the database.
+
+``nova-scheduler`` service
+  Takes a virtual machine instance request from the queue and
+  determines on which compute server host it runs.
+
+``nova-conductor`` module
+  Mediates interactions between the nova-compute service and the
+  database. It eliminates direct accesses to the cloud database made
+  by the nova-compute service. The nova-conductor module scales
+  horizontally. However, do not deploy it on nodes where the
+  nova-compute service runs. For more information, see `A new Nova
+  service:
+  nova-conductor <http://russellbryantnet.wordpress.com/2012/11/19/a-new-nova-service-nova-conductor/>`__.
+
+``nova-cert`` module
+  A server daemon that serves the Nova Cert service for X509
+  certificates. Used to generate certificates for
+  ``euca-bundle-image``. Only needed for the EC2 API.
+
+``nova-network worker`` daemon
+  Similar to the nova-compute service, accepts networking tasks from
+  the queue and manipulates the network. Performs tasks such as
+  setting up bridging interfaces or changing IPtables rules.
+
+``nova-consoleauth`` daemon
+  Authorizes tokens for users that console proxies provide. See
+  nova-novncproxy and nova-xvpvncproxy. This service must be running
+  for console proxies to work. You can run proxies of either type
+  against a single nova-consoleauth service in a cluster
+  configuration. For information, see `About
+  nova-consoleauth <http://docs.openstack.org/admin-guide-cloud/content/about-nova-consoleauth.html>`__.
+
+``nova-novncproxy`` daemon
+  Provides a proxy for accessing running instances through a VNC
+  connection. Supports browser-based novnc clients.
+
+``nova-spicehtml5proxy`` daemon
+  Provides a proxy for accessing running instances through a SPICE
+  connection. Supports browser-based HTML5 client.
+
+``nova-xvpvncproxy`` daemon
+  Provides a proxy for accessing running instances through a VNC
+  connection. Supports an OpenStack-specific Java client.
+
+``nova-cert`` daemon
+  x509 certificates.
+
+In Debian, a unique nova-consoleproxy package provides the
+nova-novncproxy, nova-spicehtml5proxy, and nova-xvpvncproxy packages. To
+select packages, edit the :file:`/etc/default/nova-consoleproxy` file or use
+the debconf interface. You can also manually edit the
+:file:`/etc/default/nova-consoleproxy` file, and stop and start the console
+daemons.
+
+nova-objectstore daemon
+  An S3 interface for registering images with the OpenStack Image
+  service. Used primarily for installations that must support
+  euca2ools. The euca2ools tools talk to nova-objectstore in *S3
+  language*, and nova-objectstore translates S3 requests into Image
+  service requests.
+
+euca2ools client
+  A set of command-line interpreter commands for managing cloud
+  resources. Although it is not an OpenStack module, you can configure
+  nova-api to support this EC2 interface. For more information, see
+  the `Eucalyptus 3.4
+  Documentation <https://www.eucalyptus.com/docs/eucalyptus/3.4/index.html>`__.
+
+nova client
+  Enables users to submit commands as a tenant administrator or end
+  user.
+
+The queue
+  A central hub for passing messages between daemons. Usually
+  implemented with `RabbitMQ <http://www.rabbitmq.com/>`__, but can be
+  implemented with an AMQP message queue, such as `Apache
+  Qpid <http://qpid.apache.org/>`__ or `Zero
+  MQ <http://www.zeromq.org/>`__.
+
+SQL database
+  Stores most build-time and run-time states for a cloud
+  infrastructure, including:
+
+  -  Available instance types
+
+  -  Instances in use
+
+  -  Available networks
+
+  -  Projects
+
+  Theoretically, OpenStack Compute can support any database that
+  SQL-Alchemy supports. Common databases are SQLite3 for test and
+  development work, MySQL, and PostgreSQL.
