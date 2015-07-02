@@ -835,9 +835,9 @@ This example creates a flat external network and a VXLAN project network.
 
    .. code-block:: console
 
-      $ keystone tenant-get demo
+      $ openstack project show demo
       +-------------+----------------------------------+
-      |   Property  |              Value               |
+      |   Field     |              Value               |
       +-------------+----------------------------------+
       | description |           Demo Project           |
       |   enabled   |               True               |

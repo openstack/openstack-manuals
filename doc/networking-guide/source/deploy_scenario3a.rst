@@ -530,9 +530,9 @@ Tenant (VXLAN) network
 
    ::
 
-     $ keystone tenant-get demo
+     $ openstack project show demo
      +-------------+----------------------------------+
-     |   Property  |              Value               |
+     |   Field     |              Value               |
      +-------------+----------------------------------+
      | description |           Demo Tenant            |
      |   enabled   |               True               |
