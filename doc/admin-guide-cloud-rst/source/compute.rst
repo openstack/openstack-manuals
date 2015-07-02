@@ -18,7 +18,20 @@ web-based API.
    compute_arch.rst
    compute-images-instances.rst
    common/support-compute.rst
+   compute-system-admin.rst
+   compute_config-firewalls.rst
+   compute-rootwrap.rst
+   compute-configure-migrations.rst
+   compute-configure-service-groups.rst
+   compute-security.rst
+   compute-recover-nodes.rst
 
 .. TODO (bmoss)
    compute/section_compute-networking-nova.xml
    compute/section_compute-system-admin.xml
+   ../common/section_support-compute.xml
+   ../common/section_cli_nova_usage_statistics.xml
+   ../common/section_cli_nova_volumes.xml
+   ../common/section_cli_nova_customize_flavors.xml
+   ../common/section_compute-configure-console.xml
+
