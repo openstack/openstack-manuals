@@ -165,6 +165,8 @@ administrative user can view and set the provider extended attributes
 through Networking API calls. See the section called
 :ref:`Authentication and authorization` for details on policy configuration.
 
+.. _L3-routing-and-NAT:
+
 L3 routing and NAT
 ~~~~~~~~~~~~~~~~~~
 
