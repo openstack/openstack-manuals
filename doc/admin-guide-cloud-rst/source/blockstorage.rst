@@ -10,9 +10,6 @@ persistently on the host machine or machines. The binaries can all be
 run from a single node, or spread across multiple nodes. They can
 also be run on the same node as other OpenStack services.
 
-Introduction to Block Storage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 To administer the OpenStack Block Storage service, it is helpful to
 understand a number of concepts. You must make certain choices when
 you configure the Block Storage service in OpenStack. The bulk of the
@@ -24,167 +21,12 @@ OpenStack Block Storage enables you to add extra block-level storage
 to your OpenStack Compute instances. This service is similar to the
 Amazon EC2 Elastic Block Storage (EBS) offering.
 
-.. _increase_api_throughput:
+.. toctree::
+   :maxdepth: 1
 
-Increase Block Storage API service throughput
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   blockstorage-api-throughput.rst
+   blockstorage-manage-volumes.rst
+   blockstorage-troubleshoot.rst
 
-By default, the Block Storage API service runs in one process. This
-limits the number of API requests that the Block Storage service can
-process at any given time. In a production environment, you should
-increase the Block Storage API throughput by allowing the Block Storage
-API service to run in as many processes as the machine capacity allows.
-
-.. note::
-
-   The Block Storage API service is named ``openstack-cinder-api`` on
-   the following distributions: CentOS, Fedora, openSUSE, Red Hat
-   Enterprise Linux, and SUSE Linux Enterprise. In Ubuntu and Debian
-   distributions, the Block Storage API service is named ``cinder-api``.
-
-To do so, use the Block Storage API service option ``osapi_volume_workers``.
-This option allows you to specify the number of API service workers
-(or OS processes) to launch for the Block Storage API service.
-
-To configure this option, open the :file:`/etc/cinder/cinder.conf`
-configuration file and set the ``osapi_volume_workers`` configuration
-key to the number of CPU cores/threads on a machine.
-
-On distributions that include ``openstack-config``, you can configure
-this by running the following command instead::
-
-  # openstack-config --set /etc/cinder/cinder.conf \
-    DEFAULT osapi_volume_workers CORES
-
-Replace CORES with the number of CPU cores/threads on a machine.
-
-Manage volumes
-~~~~~~~~~~~~~~
-
-The default OpenStack Block Storage service implementation is an
-iSCSI solution that uses Logical Volume Manager (LVM) for Linux.
-
-.. note::
-
-   The OpenStack Block Storage service is not a shared storage
-   solution like a Network Attached Storage (NAS) of NFS volumes,
-   where you can attach a volume to multiple servers. With the
-   OpenStack Block Storage service, you can attach a volume to only
-   one instance at a time.
-
-   The OpenStack Block Storage service also provides drivers that
-   enable you to use several vendors' back-end storage devices, in
-   addition to or instead of the base LVM implementation.
-
-This high-level procedure shows you how to create and attach a volume
-to a server instance.
-
-**To create and attach a volume to an instance**
-
-#. Configure the OpenStack Compute and the OpenStack Block Storage
-   services through the :file:`cinder.conf` file.
-#. Use the :command:`cinder create` command to create a volume. This
-   command creates an LV into the volume group (VG) ``cinder-volumes``.
-#. Use the nova :command:`volume-attach` command to attach the volume
-   to an instance. This command creates a unique iSCSI IQN that is
-   exposed to the compute node.
-
-   * The compute node, which runs the instance, now has an active
-     iSCSI session and new local storage (usually a :file:`/dev/sdX`
-     disk).
-   * Libvirt uses that local storage as storage for the instance. The
-     instance gets a new disk (usually a :file:`/dev/vdX` disk).
-
-For this particular walk through, one cloud controller runs
-``nova-api``, ``nova-scheduler``, ``nova-objectstore``,
-``nova-network`` and ``cinder-*`` services. Two additional compute
-nodes run ``nova-compute``. The walk through uses a custom
-partitioning scheme that carves out 60 GB of space and labels it as
-LVM. The network uses the ``FlatManager`` and ``NetworkManager``
-settings for OpenStack Compute.
-
-The network mode does not interfere with OpenStack Block Storage
-operations, but you must set up networking for Block Storage to work.
-For details, see Chapter 7, Networking.
-
-.. TODO (MZ) Add ch_networking as a reference to the sentence above.
-
-To set up Compute to use volumes, ensure that Block Storage is
-installed along with ``lvm2``. This guide describes how to
-troubleshoot your installation and back up your Compute volumes.
-
-Boot from volume
-----------------
-
-In some cases, you can store and run instances from inside volumes.
-For information, see the `Launch an instance from a volume`_ section
-in the `OpenStack End User Guide`_.
-
-.. Links
 .. _`Storage Decisions`: http://docs.openstack.org/openstack-ops/content/storage_decision.html
-.. _`Launch an instance from a volume`: http://docs.openstack.org/user-guide/cli_nova_launch_instance_from_volume.html
-.. _`OpenStack End User Guide`: http://docs.openstack.org/user-guide/
 .. _`OpenStack Operations Guide`: http://docs.openstack.org/ops/
-
-.. include:: blockstorage_nfs_backend.rst
-.. include:: blockstorage_glusterfs_backend.rst
-.. include:: blockstorage_multi_backend.rst
-.. include:: blockstorage_backup_disks.rst
-
-.. toctree::
-   :hidden:
-
-   blockstorage_nfs_backend.rst
-   blockstorage_glusterfs_backend.rst
-   blockstorage_multi_backend.rst
-   blockstorage_backup_disks.rst
-
-.. TODO (MZ) Convert and include the following sections
-   include: blockstorage/section_volume-migration.xml
-   include: blockstorage/section_glusterfs_removal.xml
-   include: blockstorage/section_volume-backups.xml
-   include: blockstorage/section_volume-backups-export-import.xml
-
-Use LIO iSCSI support
----------------------
-
-The default mode for the ``iscsi_helper`` tool is ``tgtadm``.
-To use LIO iSCSI, install the ``python-rtslib`` package, and set
-``iscsi_helper=lioadm`` in the :file:`cinder.conf` file.
-
-Once configured, you can use the :command:`cinder-rtstool` command to
-manage the volumes. This command enables you to create, delete, and
-verify volumes and determine targets and add iSCSI initiators to the
-system.
-
-.. TODO (MZ) Convert and include the following sections
-   include: blockstorage/section_volume_number_weighter.xml
-   include: blockstorage/section_consistency_groups.xml
-   include: blockstorage/section_driver_filter_weighing.xml
-   include: blockstorage/section_ratelimit-volume-copy-bandwidth.xml
-   include: blockstorage/section_over_subscription.xml
-
-Troubleshoot your installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This section provides useful tips to help you troubleshoot your Block
-Storage installation.
-
-.. toctree::
-   :maxdepth: 2
-
-   ts_cinder_config.rst
-   ts_vol_attach_miss_sg_scan.rst
-   ts_non_existent_host.rst
-   ts_non_existent_vlun.rst
-
-
-.. TODO (MZ) Convert and include the following sections
-   include: blockstorage/section_ts_multipath_warn.xml
-   include: blockstorage/section_ts_eql_volume_size.xml
-   include: blockstorage/section_ts_HTTP_bad_req_in_cinder_vol_log.xml
-   include: blockstorage/section_ts_duplicate_3par_host.xml
-   include: blockstorage/section_ts_failed_attach_vol_after_detach.xml
-   include: blockstorage/section_ts_failed_attach_vol_no_sysfsutils.xml
-   include: blockstorage/section_ts_failed_connect_vol_FC_SAN.xml
-   include: blockstorage/section_ts_no_emulator_x86_64.xml

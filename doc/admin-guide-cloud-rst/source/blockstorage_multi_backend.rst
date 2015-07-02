@@ -4,7 +4,7 @@
    :linenothreshold: 5
 
 Configure multiple-storage back ends
-------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you configure multiple-storage back ends, you can create several
 back-end storage solutions that serve the same OpenStack Compute
