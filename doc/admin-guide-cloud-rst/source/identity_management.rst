@@ -247,16 +247,6 @@ resulting file would look like:
       "network:delete_dns_domain": "role:compute-user"
    }
 
-.. TODO (DC) Convert the following common files and include(?) them as
-   sections:
-   /common/section_keystone_certificates-for-pki.xml
-   /common/section_keystone-ssl-config.xml
-   /common/section_keystone-external-auth.xml
-   /common/section_keystone_config_ldap.xml
-   identity/section_keystone-token-binding.xml
-   identity/section_keystone-trusts.xml
-   identity/section_caching-layer.xml
-
 Service management
 ------------------
 
@@ -330,11 +320,20 @@ Here are a couple of examples:
   Domain B, if User B gets a token scoped to Domain B, the token also
   includes Role B.
 
+
 .. include:: keystone_certificates_for_pki.rst
 
 .. include:: keystone_configure_with_SSL.rst
 
 .. include:: keystone_external_authentication.rst
+
+.. include:: keystone_integrate_with_ldap.rst
+
+.. include:: keystone_token-binding.rst
+
+.. include:: keystone_use_trusts.rst
+
+.. include:: keystone_caching_layer.rst
 
 .. toctree::
    :hidden:
@@ -342,6 +341,10 @@ Here are a couple of examples:
    keystone_certificates_for_pki.rst
    keystone_configure_with_SSL.rst
    keystone_external_authentication.rst
+   keystone_integrate_with_ldap.rst
+   keystone_token-binding.rst
+   keystone_use_trusts.rst
+   keystone_caching_layer.rst
 
 User CRUD
 ~~~~~~~~~
