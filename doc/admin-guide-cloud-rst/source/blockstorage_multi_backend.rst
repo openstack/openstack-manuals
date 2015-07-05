@@ -77,6 +77,26 @@ The capacity filter scheduler is enabled by default. The next section
 provides more information. In addition, this example presents a
 ``lvmdriver-3`` back end.
 
+.. note::
+
+   For Fiber Channel drivers that support multipath, the configuration group
+   requires the ``use_multipath_for_image_xfer=true`` option. In
+   the example below, you can see details for HP 3PAR and EMC Fiber
+   Channel drivers.
+
+.. code-block:: ini
+   :linenos:
+
+   [3par]
+   use_multipath_for_image_xfer = true
+   volume_driver = cinder.volume.drivers.san.hp.hp_3par_fc.HP3PARFCDriver
+   volume_backend_name = 3parfc
+
+   [emc]
+   use_multipath_for_image_xfer = true
+   volume_driver = cinder.volume.drivers.emc.emc_smis_fc.EMCSMISFCDriver
+   volume_backend_name = emcfc
+
 **Configure Block Storage scheduler multi back end**
 
 You must enable the `filter_scheduler` option to use

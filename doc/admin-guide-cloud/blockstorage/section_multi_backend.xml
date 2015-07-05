@@ -76,6 +76,21 @@ volume_backend_name=LVM_iSCSI_b</programlisting>
             scheduler is enabled by default. The next section provides
             more information. In addition, this example presents a
                 <literal>lvmdriver-3</literal> back end.</para>
+        <note>
+        <para>For Fiber Channel drivers that support multipath, the configuration group
+            requires the <literal>use_multipath_for_image_xfer=true</literal> option.
+            In the example below, you can see details for HP 3PAR and EMC Fiber Channel
+             drivers.</para>
+        <programlisting language="ini">[3par]
+use_multipath_for_image_xfer = true
+volume_driver = cinder.volume.drivers.san.hp.hp_3par_fc.HP3PARFCDriver
+volume_backend_name = 3parfc
+
+[emc]
+use_multipath_for_image_xfer = true
+volume_driver = cinder.volume.drivers.emc.emc_smis_fc.EMCSMISFCDriver
+volume_backend_name = emcfc</programlisting>
+        </note>
     </simplesect>
     <simplesect>
         <title>Configure Block Storage scheduler multi back
