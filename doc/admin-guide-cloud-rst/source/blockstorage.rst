@@ -129,6 +129,7 @@ in the `OpenStack End User Guide`_.
 .. include:: blockstorage_nfs_backend.rst
 .. include:: blockstorage_glusterfs_backend.rst
 .. include:: blockstorage_multi_backend.rst
+.. include:: blockstorage_backup_disks.rst
 
 .. toctree::
    :hidden:
@@ -136,9 +137,9 @@ in the `OpenStack End User Guide`_.
    blockstorage_nfs_backend.rst
    blockstorage_glusterfs_backend.rst
    blockstorage_multi_backend.rst
+   blockstorage_backup_disks.rst
 
 .. TODO (MZ) Convert and include the following sections
-   include: blockstorage/section_backup-block-storage-disks.xml
    include: blockstorage/section_volume-migration.xml
    include: blockstorage/section_glusterfs_removal.xml
    include: blockstorage/section_volume-backups.xml
