@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-07-02 06:14+0000\n"
+"POT-Creation-Date: 2015-07-06 06:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7299,11 +7299,7 @@ msgid "To configure the use of a SolidFire cluster with Block Storage, modify yo
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/solidfire-volume-driver.xml:23(para)
-msgid "The SolidFire driver creates a unique account prefixed with <literal>$cinder-volume-service-hostname-$tenant-id</literal> on the SolidFire cluster for each tenant that accesses the cluster through the Volume API. Unfortunately, this account formation results in issues for High Availability (HA) installations and installations where the <systemitem class=\"service\">cinder-volume</systemitem> service can move to a new node. HA installations can return an <errortext>Account Not Found</errortext> error because the call to the SolidFire cluster is not always going to be sent from the same node. In installations where the <systemitem class=\"service\">cinder-volume</systemitem> service moves to a new node, the same issue can occur when you perform operations on existing volumes, such as clone, extend, delete, and so on."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/solidfire-volume-driver.xml:41(para)
-msgid "Set the <placeholder-1/> option to an empty string ('') in the <filename>cinder.conf</filename> file. This setting results in unique accounts being created on the SolidFire cluster, but the accounts are prefixed with the <systemitem>tenant-id</systemitem> or any unique identifier that you choose and are independent of the host where the <systemitem class=\"service\">cinder-volume</systemitem> service resides."
+msgid "Older versions of the SolidFire driver (prior to Icehouse) created a unique account prefixed with <literal>$cinder-volume-service-hostname-$tenant-id</literal> on the SolidFire cluster for each tenant. Unfortunately, this account formation resulted in issues for High Availability (HA) installations and installations where the <systemitem class=\"service\">cinder-volume</systemitem> service can move to a new node. The current default implementation does not experience this issue as no prefix is used. For installations created on a prior release, the OLD default behavior can be configured by using the keyword \"hostname\" in sf_account_prefix."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:4(title)
