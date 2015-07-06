@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-07-02 06:13+0000\n"
+"POT-Creation-Date: 2015-07-06 06:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1898,7 +1898,7 @@ msgstr ""
 msgid "This configuration defines two LVM volume groups: <literal>stack-volumes</literal> with 10GB capacity and stack-volumes-1 with 60GB capacity. This example configuration defines two back ends:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:44(title) ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:110(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:44(title) ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:125(title)
 msgid "Volume type"
 msgstr ""
 
@@ -1914,7 +1914,7 @@ msgstr ""
 msgid "This example creates a <literal>lvm</literal> volume type with <literal>volume_backend_name=LVM_iSCSI</literal> as extra specifications."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:55(title) ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:144(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:55(title) ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:159(title)
 msgid "Usage"
 msgstr ""
 
@@ -3158,59 +3158,63 @@ msgstr ""
 msgid "In this configuration, <literal>lvmdriver-1</literal> and <literal>lvmdriver-2</literal> have the same <literal>volume_backend_name</literal>. If a volume creation requests the <literal>LVM_iSCSI</literal> back end name, the scheduler uses the capacity filter scheduler to choose the most suitable driver, which is either <literal>lvmdriver-1</literal> or <literal>lvmdriver-2</literal>. The capacity filter scheduler is enabled by default. The next section provides more information. In addition, this example presents a <literal>lvmdriver-3</literal> back end."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:81(title)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:80(para)
+msgid "For Fiber Channel drivers that support multipath, the configuration group requires the <literal>use_multipath_for_image_xfer=true</literal> option. In the example below, you can see details for HP 3PAR and EMC Fiber Channel drivers."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:96(title)
 msgid "Configure Block Storage scheduler multi back end"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:83(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:98(para)
 msgid "You must enable the <placeholder-1/> option to use multiple-storage back ends. The filter scheduler:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:87(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:102(para)
 msgid "Filters the available back ends. By default, <literal>AvailabilityZoneFilter</literal>, <literal>CapacityFilter</literal> and <literal>CapabilitiesFilter</literal> are enabled."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:95(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:110(para)
 msgid "Weights the previously filtered back ends. By default, the <placeholder-1/> option is enabled. When this option is enabled, the filter scheduler assigns the highest weight to back ends with the most available capacity."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:103(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:118(para)
 msgid "The scheduler uses filters and weights to pick the best back end to handle the request. The scheduler uses volume types to explicitly create volumes on specific back ends."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:111(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:126(para)
 msgid "Before using it, a volume type has to be declared to Block Storage. This can be done by the following command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:115(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:130(para)
 msgid "Then, an extra-specification has to be created to link the volume type to a back end name. Run this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:119(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:134(para)
 msgid "This example creates a <literal>lvm</literal> volume type with <literal>volume_backend_name=LVM_iSCSI</literal> as extra-specifications."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:122(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:137(para)
 msgid "Create another volume type:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:125(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:140(para)
 msgid "This second volume type is named <literal>lvm_gold</literal> and has <literal>LVM_iSCSI_b</literal> as back end name."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:130(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:145(para)
 msgid "To list the extra-specifications, use this command:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:135(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:150(para)
 msgid "If a volume type points to a <literal>volume_backend_name</literal> that does not exist in the Block Storage configuration, the <literal>filter_scheduler</literal> returns an error that it cannot find a valid host with the suitable back end."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:145(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:160(para)
 msgid "When you create a volume, you must specify the volume type. The extra-specifications of the volume type are used to determine which back end has to be used. <placeholder-1/> Considering the <literal>cinder.conf</literal> described previously, the scheduler creates this volume on <literal>lvmdriver-1</literal> or <literal>lvmdriver-2</literal>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:154(para)
+#: ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:169(para)
 msgid "This second volume is created on <literal>lvmdriver-3</literal>."
 msgstr ""
 
@@ -5967,7 +5971,7 @@ msgstr ""
 msgid "Edit the <filename>/etc/neutron/plugins/brocade/brocade.ini</filename> file for the Brocade plug-in and specify the admin user name, password, and IP address of the Brocade switch:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:64(replaceable) ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:216(replaceable) ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:217(replaceable) ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:227(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:64(replaceable)
 msgid "ADMIN"
 msgstr ""
 
@@ -5983,80 +5987,84 @@ msgstr ""
 msgid "For database configuration, see <link xlink:href=\"http://docs.openstack.org/kilo/install-guide/install/apt/content/neutron-controller-node.html\">Install Networking Services</link> in any of the <citetitle>Installation Guides</citetitle> in the <link xlink:href=\"http://docs.openstack.org\">OpenStack Documentation index</link>. (The link defaults to the Ubuntu version.)"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:76(para) ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:242(para) ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:274(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:76(para) ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:204(para)
 msgid "Restart the <systemitem class=\"service\">neutron-server</systemitem> service to apply the settings:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:83(title)
-msgid "Configure NSX plug-in"
+msgid "Configure NSX-mh plug-in"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:85(title)
-msgid "To configure OpenStack Networking to use the NSX plug-in"
+msgid "Configuring OpenStack Networking to use the NSX multi hypervisor plug-in"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:86(para)
-msgid "While the instructions in this section refer to the VMware NSX platform, this is formerly known as Nicira NVP."
+msgid "The instructions in this section refer to the VMware NSX-mh platform, formerly known as Nicira NVP."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:89(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:88(para)
 msgid "Install the NSX plug-in:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:93(para) ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:254(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:92(para) ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:184(para)
 msgid "Edit the <filename>/etc/neutron/neutron.conf</filename> file and set this line:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:96(para)
-msgid "Example <filename>neutron.conf</filename> file for NSX:"
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:95(para)
+msgid "Example <filename>neutron.conf</filename> file for NSX-mh integration:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:102(para)
-msgid "To configure the NSX controller cluster for OpenStack Networking, locate the <literal>[default]</literal> section in the <filename>/etc/neutron/plugins/vmware/nsx.ini</filename> file and add the following entries:"
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:101(para)
+msgid "To configure the NSX-mh controller cluster for OpenStack Networking, locate the <literal>[default]</literal> section in the <filename>/etc/neutron/plugins/vmware/nsx.ini</filename> file and add the following entries:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:108(para)
-msgid "To establish and configure the connection with the controller cluster you must set some parameters, including NSX API endpoints, access credentials, and settings for HTTP redirects and retries in case of connection failures:"
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:107(para)
+msgid "To establish and configure the connection with the controller cluster you must set some parameters, including NSX-mh API endpoints, access credentials, and optionally specify settings for HTTP timeouts, redirects and retries in case of connection failures:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:112(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:111(replaceable)
 msgid "ADMIN_USER_NAME"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:113(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:112(replaceable)
 msgid "NSX_USER_PASSWORD"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:114(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:113(replaceable)
 msgid "HTTP_REQUEST_TIMEOUT"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:115(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:114(replaceable)
 msgid "HTTP_REQUEST_RETRIES"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:116(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:115(replaceable)
 msgid "HTTP_REQUEST_MAX_REDIRECTS"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:117(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:116(replaceable)
 msgid "API_ENDPOINT_LIST"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:118(para)
-msgid "To ensure correct operations, the <literal>nsx_user</literal> user must have administrator credentials on the NSX platform."
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:117(para)
+msgid "To ensure correct operations, the <literal>nsx_user</literal> user must have administrator credentials on the NSX-mh platform."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:120(para)
-msgid "A controller API endpoint consists of the IP address and port for the controller; if you omit the port, port 443 is used. If multiple API endpoints are specified, it is up to the user to ensure that all these endpoints belong to the same controller cluster. The OpenStack Networking VMware NSX plug-in does not perform this check, and results might be unpredictable."
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:119(para)
+msgid "A controller API endpoint consists of the IP address and port for the controller; if you omit the port, port 443 is used. If multiple API endpoints are specified, it is up to the user to ensure that all these endpoints belong to the same controller cluster. The OpenStack Networking VMware NSX-mh plug-in does not perform this check, and results might be unpredictable."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:126(para)
-msgid "When you specify multiple API endpoints, the plug-in load-balances requests on the various API endpoints."
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:125(para)
+msgid "When you specify multiple API endpoints, the plug-in takes care of load balancing requests on the various API endpoints."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:130(para)
-msgid "The UUID of the NSX transport zone that should be used by default when a tenant creates a network. You can get this value from the <guilabel>Transport Zones</guilabel> page for the NSX Manager:"
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:129(para)
+msgid "The UUID of the NSX-mh transport zone that should be used by default when a tenant creates a network. You can get this value from the <guilabel>Transport Zones</guilabel> page for the NSX-mh manager:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:132(para)
+msgid "Alternatively the transport zone identfier can be retrieved by query the NSX-mh API: <literal>/ws.v1/transport-zone</literal>"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:134(replaceable)
@@ -6068,10 +6076,10 @@ msgid "GATEWAY_SERVICE_UUID"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:139(para)
-msgid "Ubuntu packaging currently does not update the Neutron init script to point to the NSX configuration file. Instead, you must manually update <filename>/etc/default/neutron-server</filename> to add this line:"
+msgid "Ubuntu packaging currently does not update the neutron init script to point to the NSX-mh configuration file. Instead, you must manually update <filename>/etc/default/neutron-server</filename> to add this line:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:147(para) ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:268(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:147(para) ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:198(para)
 msgid "For database configuration, see <link xlink:href=\"http://docs.openstack.org/kilo/install-guide/install/apt/content/neutron-controller-node.html\">Install Networking Services</link> in the <citetitle>Installation Guide</citetitle>."
 msgstr ""
 
@@ -6079,95 +6087,35 @@ msgstr ""
 msgid "Restart <systemitem class=\"service\">neutron-server</systemitem> to apply settings:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:158(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:157(para)
+msgid "The neutron NSX-mh plug-in does not implement initial re-synchronization of Neutron resources. Therefore resources that might already exist in the database when Neutron is switched to the NSX-mh plug-in will not be created on the NSX-mh backend upon restart."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:163(para)
 msgid "Example <filename>nsx.ini</filename> file:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:166(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:171(para)
 msgid "To debug <filename>nsx.ini</filename> configuration issues, run this command from the host that runs <systemitem class=\"service\">neutron-server</systemitem>:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:168(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:173(replaceable)
 msgid "PATH_TO_NSX.INI"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:169(para)
-msgid "This command tests whether <systemitem class=\"service\">neutron-server</systemitem> can log into all of the NSX Controllers and the SQL server, and whether all UUID values are correct."
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:174(para)
+msgid "This command tests whether <systemitem class=\"service\">neutron-server</systemitem> can log into all of the NSX-mh controllers and the SQL server, and whether all UUID values are correct."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:174(title)
-msgid "Load-Balancer-as-a-Service and Firewall-as-a-Service"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:175(para)
-msgid "The NSX LBaaS and FWaaS services use the standard OpenStack API with the exception of requiring routed-insertion extension support."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:177(para)
-msgid "The NSX implementation and the community reference implementation of these services differ, as follows:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:181(para)
-msgid "The NSX LBaaS and FWaaS plug-ins require the routed-insertion extension, which adds the <code>router_id</code> attribute to the VIP (Virtual IP address) and firewall resources and binds these services to a logical router."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:187(para)
-msgid "The community reference implementation of LBaaS only supports a one-arm model, which restricts the VIP to be on the same subnet as the back-end servers. The NSX LBaaS plug-in only supports a two-arm model between north-south traffic, which means that you can create the VIP on only the external (physical) network."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:194(para)
-msgid "The community reference implementation of FWaaS applies firewall rules to all logical routers in a tenant, while the NSX FWaaS plug-in applies firewall rules only to one logical router according to the <code>router_id</code> of the firewall entity."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:201(title)
-msgid "To configure Load-Balancer-as-a-Service and Firewall-as-a-Service with NSX"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:204(para)
-msgid "Edit the <filename>/etc/neutron/neutron.conf</filename> file:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:210(para)
-msgid "Edit the <filename>/etc/neutron/plugins/vmware/nsx.ini</filename> file:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:212(para)
-msgid "In addition to the original NSX configuration, the <code>default_l3_gw_service_uuid</code> is required for the NSX Advanced plug-in and you must add a <code>vcns</code> section:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:218(replaceable)
-msgid "10.37.1.137:443"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:219(replaceable)
-msgid "aae63e9b-2e4e-4efe-81a1-92cf32e308bf"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:220(replaceable)
-msgid "2702f27a-869a-49d1-8781-09331a0f6b9e"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:224(replaceable)
-msgid "https://10.24.106.219"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:230(replaceable)
-msgid "DEFAULT"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:233(replaceable)
-msgid "f2c023cf-76e2-4625-869b-d0dabcfcc638"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:250(title)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:180(title)
 msgid "Configure PLUMgrid plug-in"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:252(title)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:182(title)
 msgid "To use the PLUMgrid plug-in with OpenStack Networking"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:259(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_config-plugins.xml:189(para)
 msgid "Edit the <systemitem>[PLUMgridDirector]</systemitem> section in the <filename>/etc/neutron/plugins/plumgrid/plumgrid.ini</filename> file and specify the IP address, port, admin user name, and password of the PLUMgrid Director:"
 msgstr ""
 
