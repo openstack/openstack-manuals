@@ -971,14 +971,14 @@ This example creates a flat external network and a VXLAN project network.
 
    .. code-block:: console
 
-      $ keystone tenant-get demo
+      $ openstack project show demo
       +-------------+----------------------------------+
-      |   Property  |              Value               |
+      | Field       | Value                            |
       +-------------+----------------------------------+
-      | description |           Demo Project           |
-      |   enabled   |               True               |
-      |      id     | 443cd1596b2e46d49965750771ebbfe1 |
-      |     name    |               demo               |
+      | description | Demo Project                     |
+      | enabled     | True                             |
+      | id          | 443cd1596b2e46d49965750771ebbfe1 |
+      | name        | demo                             |
       +-------------+----------------------------------+
 
 #. Create the project network:

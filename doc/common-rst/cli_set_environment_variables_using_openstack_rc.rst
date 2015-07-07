@@ -98,9 +98,9 @@ environment variable settings by using the options that are listed at
 the end of the ``help`` output of the various client commands. For
 example, you can override the ``OS_PASSWORD`` setting in the
 :file:`PROJECT-openrc.sh` file by specifying a password on a
-:command:`keystone` command, as follows::
+:command:`openstack` command, as follows::
 
-  $ keystone --os-password PASSWORD service-list
+  $ openstack --os-password PASSWORD service list
 
 Where ``PASSWORD`` is your password.
 
