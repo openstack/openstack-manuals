@@ -186,6 +186,13 @@ images.
 
 :guilabel:`Routers`: View, create, edit properties for, and delete routers.
 
+:guilabel:`Defaults`: View default quota values. Quotas are hard-coded in
+OpenStack Compute and define the maximum allowable size and number of
+resources.
+
+:guilabel:`Metadata Definitions`: Import namespace and view the metadata
+information.
+
 :guilabel:`System Information`: Use the following tabs to view the service
 information:
 
@@ -193,11 +200,13 @@ information:
 
 * :guilabel:`Compute Services`: View a list of all Compute services.
 
-:guilabel:`Network Agents`: View the network agents.
+* :guilabel:`Block Storage Services`: View a list of all Block Storage
+  services.
 
-:guilabel:`Default Quotas`: View default quota values. Quotas are hard-coded in
-OpenStack Compute and define the maximum allowable size and number of
-resources.
+* :guilabel:`Network Agents`: View the network agents.
+
+* :guilabel:`Orchestration Services`: View a list of all Orchestration
+  services.
 
 ------------------------------
 :guilabel:`Identity Panel` tab
