@@ -192,7 +192,7 @@ also requires a websocket client to access the serial console.
 #. Use the :command:`nova get-serial-proxy` command to retrieve the websocket
    URL for the serial console on the instance:
 
-   .. code: console
+   .. code-block:: console
 
       $ nova get-serial-proxy INSTANCE_NAME
 
