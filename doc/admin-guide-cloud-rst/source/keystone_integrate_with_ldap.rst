@@ -24,15 +24,18 @@ providing user authentication through the LDAP directory.
    For OpenStack Identity service to access LDAP servers, you must
    enable the ``authlogin_nsswitch_use_ldap`` boolean value for SELinux
    on the Openstack Identity server. To enable and make the option
-   persistent across reboots::
+   persistent across reboots:
 
-      # setsebool -P authlogin_nsswitch_use_ldap on
+.. code-block:: console
+
+   # setsebool -P authlogin_nsswitch_use_ldap on
 
 Identity configuration is split into two separate back ends; identity
 (back end for users and groups), and assignments (back end for domains,
 projects, roles, role assignments). To configure Identity, set options
-in the :file:`/etc/keystone/keystone.conf` file. See ? for Identity back end
-configuration examples and ? for assignment back end configuration examples.
+in the :file:`/etc/keystone/keystone.conf` file. See Integrate Identity back
+end with LDAP for Identity back end configuration examples and Integrate
+Assignment back end with LDAP for assignment back end configuration examples.
 Modify these examples as needed.
 
 .. TODO (DC) Add links to keystone_integrate_identity_backend_ldap.rst and
@@ -46,8 +49,7 @@ Modify these examples as needed.
    with SQL or LDAP), or multiple back ends using domain-specific
    configuration files.
 
-To define the destination LDAP server
--------------------------------------
+**To define the destination LDAP server**
 
 Define the destination LDAP server in the  :file:`keystone.conf` file:
 
@@ -72,8 +74,8 @@ Define the destination LDAP server in the  :file:`keystone.conf` file:
       [ldap]
       dumb_member = cn=dumb,dc=nonexistent
 
-Additional LDAP integration settings
-------------------------------------
+**Additional LDAP integration settings**
+
 
 Set these options in the :file:`/etc/keystone/keystone.conf` file for a
 single LDAP server, or :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf`
