@@ -1,7 +1,5 @@
-.. glusterfs_backend:
-
 Configure a GlusterFS back end
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This section explains how to configure OpenStack Block Storage to use
 GlusterFS as a back end. You must be able to access the GlusterFS shares
