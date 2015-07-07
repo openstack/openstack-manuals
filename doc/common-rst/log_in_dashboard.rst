@@ -89,9 +89,9 @@ reboot instances, or connect to them through VNC.
 * :guilabel:`Volume Snapshots`: View, create, edit, and delete volume
   snapshots.
 
-* :guilabel:`Images`: View images and instance snapshots created by project
-  users, plus any images that are publicly available. Create, edit, and delete
-  images, and launch instances from images and snapshots.
+:guilabel:`Images`: View images and instance snapshots created by project
+users, plus any images that are publicly available. Create, edit, and delete
+images, and launch instances from images and snapshots.
 
 :guilabel:`Access & Security`: Use the following tabs to complete these tasks:
 
@@ -186,7 +186,7 @@ images.
 
 :guilabel:`Routers`: View, create, edit properties for, and delete routers.
 
-:guilabel:`System Info`: Use the following tabs to view the service
+:guilabel:`System Information`: Use the following tabs to view the service
 information:
 
 * :guilabel:`Services`: View a list of the services.
