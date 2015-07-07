@@ -906,7 +906,7 @@ This example creates a flat external network and a VXLAN project network.
 #. Add a gateway to the external network for the project network on the
    router:
 
-   .. code-block: console
+   .. code-block:: console
 
       $ neutron router-gateway-set demo-router ext-net
       Set gateway for router demo-router
@@ -963,7 +963,7 @@ Verify network operation
 #. On the compute node with the instance, verify creation of the ``qrouter``
    namespace:
 
-   .. code-block: console
+   .. code-block:: console
 
       $ ip netns
       qrouter-4d7928a0-4a3c-4b99-b01b-97da2f97e279
