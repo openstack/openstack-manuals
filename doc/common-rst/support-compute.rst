@@ -94,8 +94,8 @@ Missing credentials cause a ``403 forbidden`` error. To resolve
 this issue, use one of these methods:
 
 #. Manual method
-    Gets the :file:`novarc` file from the project ZIP file, save existing
-    credentials in case of override. and manually source the :file:`novarc`
+    Gets the :file:`novarc` file from the project ZIP file, saves existing
+    credentials in case of override, and manually sources the :file:`novarc`
     file.
 
 #. Script method
