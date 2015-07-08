@@ -24,6 +24,7 @@ Contents
    database.rst
    orchestration.rst
    blockstorage.rst
+   networking.rst
    telemetry.rst
    common/app_support.rst
    common/glossary.rst
