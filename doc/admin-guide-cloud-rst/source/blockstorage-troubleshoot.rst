@@ -9,13 +9,13 @@ Storage installation.
    :maxdepth: 2
 
    ts_cinder_config.rst
+   ts_multipath_warn.rst
    ts_vol_attach_miss_sg_scan.rst
    ts_non_existent_host.rst
    ts_non_existent_vlun.rst
 
 
 .. TODO (MZ) Convert and include the following sections
-   include: blockstorage/section_ts_multipath_warn.xml
    include: blockstorage/section_ts_eql_volume_size.xml
    include: blockstorage/section_ts_HTTP_bad_req_in_cinder_vol_log.xml
    include: blockstorage/section_ts_duplicate_3par_host.xml
