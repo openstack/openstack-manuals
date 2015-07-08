@@ -5,7 +5,7 @@ mkdir -p publish-docs
 title_org=$(grep "title::" doc/install-guide-rst/source/index.rst | \
               awk '{print substr($0, index($0, "::")+3)}')
 
-for tag in obs rdo ubuntu; do
+for tag in obs rdo ubuntu debian; do
     GLOSSARY=""
     if [[ ! -e doc/common-rst/glossary.rst ]] ; then
         GLOSSARY="--glossary"
