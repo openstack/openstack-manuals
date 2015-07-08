@@ -83,6 +83,74 @@ Update flavors
    name, VCPUs, RAM, root disk, ephemeral disk, and swap disk values.
 #. Click :guilabel:`Save`.
 
+Update Metadata
+~~~~~~~~~~~~~~~~
+
+#. Log in to the dashboard.
+
+   Choose the :guilabel:`admin` project from the drop-down list at
+   the top of the page.
+#. In the :guilabel:`Admin` tab, open the :guilabel:`System Panel`
+   and click the :guilabel:`Flavors` category.
+#. Select the flavor that you want to update. In the drop-down
+   list, click :guilabel:`Update Metadata` or click :guilabel:`No` or
+   :guilabel:`Yes` in the :guilabel:`Metadata` column.
+#. In the :guilabel:`Update Flavor Metadata` window, you can customize
+   some metadata keys, then add it to this flavor and set them values.
+#. Click :guilabel:`Save`.
+
+   **Optional metadata keys**
+
+   +-------------------------------+-------------------------------+
+   |                               | quota:cpu_shares              |
+   |                               +-------------------------------+
+   | **CPU limits**                | quota:cpu_period              |
+   |                               +-------------------------------+
+   |                               | quota:cpu_limit               |
+   |                               +-------------------------------+
+   |                               | quota:cpu_reservation         |
+   |                               +-------------------------------+
+   |                               | quota:cpu_quota               |
+   +-------------------------------+-------------------------------+
+   |                               | quota:disk_read_bytes_sec     |
+   |                               +-------------------------------+
+   | **Disk tuning**               | quota:disk_read_iops_sec      |
+   |                               +-------------------------------+
+   |                               | quota:disk_write_bytes_sec    |
+   |                               +-------------------------------+
+   |                               | quota:disk_write_iops_sec     |
+   |                               +-------------------------------+
+   |                               | quota:disk_total_bytes_sec    |
+   |                               +-------------------------------+
+   |                               | quota:disk_total_iops_sec     |
+   |                               +-------------------------------+
+   |                               | quota:disk_total_iops_sec     |
+   +-------------------------------+-------------------------------+
+   |                               | quota:vif_inbound_average     |
+   |                               +-------------------------------+
+   | **Bandwidth I/O**             | quota:vif_inbound_burst       |
+   |                               +-------------------------------+
+   |                               | quota:vif_inbound_peak        |
+   |                               +-------------------------------+
+   |                               | quota:vif_outbound_average    |
+   |                               +-------------------------------+
+   |                               | quota:vif_outbound_burst      |
+   |                               +-------------------------------+
+   |                               | quota:vif_outbound_peak       |
+   +-------------------------------+-------------------------------+
+   | **Watchdog behavior**         | hw:watchdog_action            |
+   +-------------------------------+-------------------------------+
+   |                               | hw_rng:allowed                |
+   |                               +-------------------------------+
+   | **Random-number generator**   | hw_rng:rate_bytes             |
+   |                               +-------------------------------+
+   |                               | hw_rng:rate_period            |
+   +-------------------------------+-------------------------------+
+
+   For information about supporting metadata keys, see the
+   `OpenStack Cloud Administrator Guide
+   <http://docs.openstack.org/admin-guide-cloud/content/customize-flavors.html>`__.
+
 Delete flavors
 ~~~~~~~~~~~~~~
 

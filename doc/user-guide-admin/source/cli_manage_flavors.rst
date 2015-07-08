@@ -110,6 +110,22 @@ Create a flavor
 
    $ nova flavor-access-add FLAVOR TENANT_ID
 
+#. In addition, you can set or unset ``extra_spec`` for the existing flavor.
+   The ``extra_spec`` metadata keys can influence the instance directly when
+   it is launched. If a flavor sets the
+   ``extra_spec key/value quota:vif_outbound_peak=65536``, the instance's
+   out bound peak bandwidth I/O should be LTE 512 Mbps. There are several
+   aspects that can work for an instance including **CPU limits**,
+   **Disk tuning**, **Bandwidth I/O**, **Watchdog behavior**, and
+   **Random-number generator**.
+   For information about supporting metadata keys, see the
+   `OpenStack Cloud Administrator Guide
+   <http://docs.openstack.org/admin-guide-cloud/content/customize-flavors.html>`__.
+
+   For a list of optional parameters, run this command::
+
+   $ nova help flavor-key
+
 Delete a flavor
 ~~~~~~~~~~~~~~~
 Delete a specified flavor, as follows::
