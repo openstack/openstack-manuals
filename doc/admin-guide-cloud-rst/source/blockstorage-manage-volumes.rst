@@ -62,6 +62,7 @@ troubleshoot your installation and back up your Compute volumes.
 .. include:: blockstorage-lio-iscsi-support.rst
 .. include:: blockstorage-consistency-groups.rst
 .. include:: blockstorage-driver-filter-weighing.rst
+.. include:: blockstorage_ratelimit_volume_copy_bandwidth.rst
 
 .. toctree::
    :hidden:
@@ -74,6 +75,7 @@ troubleshoot your installation and back up your Compute volumes.
    blockstorage-lio-iscsi-support.rst
    blockstorage-consistency-groups.rst
    blockstorage-driver-filter-weighing.rst
+   blockstorage_ratelimit_volume_copy_bandwidth.rst
 
 .. TODO (MZ) Convert and include the following sections
    include: blockstorage/section_volume-migration.xml
@@ -81,5 +83,4 @@ troubleshoot your installation and back up your Compute volumes.
    include: blockstorage/section_volume-backups.xml
    include: blockstorage/section_volume-backups-export-import.xml
    include: blockstorage/section_volume_number_weighter.xml
-   include: blockstorage/section_ratelimit-volume-copy-bandwidth.xml
    include: blockstorage/section_over_subscription.xml
