@@ -31,12 +31,15 @@ Infrastructure
 --------------
 
 #. One controller node with one network interface: management.
-
 #. One network node with four network interfaces: management, project tunnel
    networks, VLAN project networks, and external (typically the Internet).
-
 #. At least one compute nodes with three network interfaces: management,
    project tunnel networks, and VLAN project networks.
+
+In the example configuration, the management network uses 10.0.0.0/24,
+the tunnel network uses 10.0.1.0/24, and the external network uses
+203.0.113.0/24. The VLAN network does not require an IP address range
+because it only handles layer 2 connectivity.
 
 .. image:: figures/scenario-legacy-hw.png
    :alt: Hardware layout
@@ -59,25 +62,20 @@ OpenStack services - controller node
 ------------------------------------
 
 #. Operational SQL server with ``neutron`` database and appropriate
-   configuration in the :file:`neutron-server.conf` file.
-
+   configuration in the :file:`neutron.conf` file.
 #. Operational message queue service with appropriate configuration
-   in the :file:`neutron-server.conf` file.
-
+   in the :file:`neutron.conf` file.
 #. Operational OpenStack Identity service with appropriate configuration
-   in the :file:`neutron-server.conf` file.
-
+   in the :file:`neutron.conf` file.
 #. Operational OpenStack Compute controller/management service with
    appropriate configuration to use neutron in the :file:`nova.conf` file.
-
 #. Neutron server service, ML2 plug-in, and any dependencies.
 
 OpenStack services - network node
 ---------------------------------
 
 #. Operational OpenStack Identity service with appropriate configuration
-   in the :file:`neutron-server.conf` file.
-
+   in the :file:`neutron.conf` file.
 #. ML2 plug-in, Linux bridge agent, L3 agent, DHCP agent, metadata agent,
    and any dependencies.
 
@@ -85,11 +83,9 @@ OpenStack services - compute nodes
 ----------------------------------
 
 #. Operational OpenStack Identity service with appropriate configuration
-   in the :file:`neutron-server.conf` file.
-
+   in the :file:`neutron.conf` file.
 #. Operational OpenStack Compute controller/management service with
    appropriate configuration to use neutron in the :file:`nova.conf` file.
-
 #. ML2 plug-in, Linux bridge agent, and any dependencies.
 
 Architecture
@@ -107,20 +103,17 @@ requires Open vSwitch.
 .. image:: figures/scenario-legacy-general.png
    :alt: Architecture overview
 
-The network node contains the following components:
+The network node contains the following network components:
 
 #. Linux bridge agent managing virtual switches, connectivity among
    them, and interaction via virtual ports with other network components
    such as namespaces and underlying interfaces.
-
 #. DHCP agent managing the ``qdhcp`` namespaces. The ``qdhcp`` namespaces
    provide DHCP services for instances using project networks.
-
 #. L3 agent managing the ``qrouter`` namespaces. The ``qrouter`` namespaces
    provide routing between project and external networks and among project
    networks. They also route metadata traffic between instances and the
    metadata agent.
-
 #. Metadata agent handling metadata operations for instances.
 
 .. image:: figures/scenario-legacy-lb-network1.png
@@ -129,7 +122,7 @@ The network node contains the following components:
 .. image:: figures/scenario-legacy-lb-network2.png
    :alt: Network node components - connectivity
 
-The compute nodes contain the following components:
+The compute nodes contain the following network components:
 
 #. Linux bridge agent managing virtual switches, connectivity among
    them, and interaction via virtual ports with other network components
@@ -155,29 +148,24 @@ Case 1: North-south for instances with a fixed IP address
 For instances with a fixed IP address, the network node routes *north-south*
 network traffic between project and external networks.
 
-Instance 1 resides on compute node 1 and uses a project network.
-
-The instance sends a packet to a host on the external network.
-
 * External network
 
   * Network 203.0.113.0/24
-
   * Gateway 203.0.113.1 with MAC address *EG*
-
   * Floating IP range 203.0.113.101 to 203.0.113.200
-
   * Project network router interface 203.0.113.101 *TR*
 
 * Project network
 
   * Network 192.168.1.0/24
-
   * Gateway 192.168.1.1 with MAC address *TG*
 
 * Compute node 1
 
   * Instance 1 192.168.1.11 with MAC address *I1*
+
+* Instance 1 resides on compute node 1 and uses a project network.
+* The instance sends a packet to a host on the external network.
 
 .. note::
    Although the diagram shows both VXLAN and VLAN project networks, the packet
@@ -190,14 +178,11 @@ The following steps involve compute node 1:
    #. The instance 1 ``tap`` interface (1) forwards the packet to the tunnel
       bridge ``qbr``. The packet contains destination MAC address *TG*
       because the destination resides on another network.
-
    #. Security group rules (2) on the tunnel bridge ``qbr`` handle state
       tracking for the packet.
-
    #. The tunnel bridge ``qbr`` forwards the packet to the logical tunnel
       interface ``vxlan-sid`` (3) where *sid* contains the project network
       segmentation ID.
-
    #. The physical tunnel interface forwards the packet to the network
       node.
 
@@ -206,15 +191,12 @@ The following steps involve compute node 1:
    #. The instance 1 ``tap`` interface forwards the packet to the VLAN
       bridge ``qbr``. The packet contains destination MAC address *TG*
       because the destination resides on another network.
-
    #. Security group rules on the VLAN bridge ``qbr`` handle state tracking
       for the packet.
-
    #. The VLAN bridge ``qbr`` forwards the packet to the logical VLAN
       interface ``device.sid`` where *device* references the underlying
       physical VLAN interface and *sid* contains the project network
       segmentation ID.
-
    #. The logical VLAN interface ``device.sid`` forwards the packet to the
       network node via the physical VLAN interface.
 
@@ -225,10 +207,8 @@ The following steps involve the network node:
    #. The physical tunnel interface forwards the packet to the logical
       tunnel interface ``vxlan-sid`` (4) where *sid* contains the project
       network segmentation ID.
-
    #. The logical tunnel interface ``vxlan-sid`` forwards the packet to the
       tunnel bridge ``qbr``.
-
    #. The tunnel bridge ``qbr`` forwards the packet to the ``qr`` interface (5)
       in the router namespace ``qrouter``. The ``qr`` interface contains the
       project network router interface IP address *TG*.
@@ -239,10 +219,8 @@ The following steps involve the network node:
       interface ``device.sid`` where *device* references the underlying
       physical VLAN interface and *sid* contains the project network
       segmentation ID.
-
    #. The logical VLAN interface ``device.sid`` forwards the packet to the
       VLAN bridge ``qbr``.
-
    #. The VLAN bridge ``qbr`` forwards the packet to the ``qr`` interface in
       the router namespace ``qrouter``. The ``qr`` interface contains the
       project network 1 gateway IP address *TG*.
@@ -250,14 +228,13 @@ The following steps involve the network node:
 #. The *iptables* service (6) performs SNAT on the packet using the ``qg``
    interface (7) as the source IP address. The ``qg`` interface contains
    the project network router interface IP address *TR*.
-
 #. The router namespace ``qrouter`` forwards the packet to the external
    bridge ``qbr``.
-
 #. The external bridge ``qbr`` forwards the packet to the external network
    via the physical external interface.
 
-.. note:: Return traffic follows similar steps in reverse.
+.. note::
+   Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-legacy-lb-flowns1.png
    :alt: Network traffic flow - north/south with fixed IP address
@@ -268,30 +245,25 @@ Case 2: North-south for instances with a floating IP address
 For instances with a floating IP address, the network node routes
 *north-south* network traffic between project and external networks.
 
-Instance 1 resides on compute node 1 and uses a project network.
-
-The instance receives a packet from a host on the external network.
-
 * External network
 
   * Network 203.0.113.0/24
-
   * Gateway 203.0.113.1 with MAC address *EG*
-
   * Floating IP range 203.0.113.101 to 203.0.113.200
-
   * Project network router interface 203.0.113.101 *TR*
 
 * Project network
 
   * Network 192.168.1.0/24
-
   * Gateway 192.168.1.1 with MAC address *TG*
 
 * Compute node 1
 
   * Instance 1 192.168.1.11 with MAC address *I1* and floating
     IP address 203.0.113.102 *F1*
+
+* Instance 1 resides on compute node 1 and uses a project network.
+* The instance receives a packet from a host on the external network.
 
 .. note::
    Although the diagram shows both VXLAN and VLAN project networks, the packet
@@ -301,36 +273,29 @@ The following steps involve the network node:
 
 #. The physical external interface forwards the packet to the external
    bridge ``qbr``.
-
 #. The external bridge ``qbr`` forwards the packet to the ``qg`` interface (1)
    in the router namespace ``qrouter``. The ``qg`` interface contains the
    instance floating IP address *F1*.
-
 #. The *iptables* service (2) performs DNAT on the packet using the ``qr``
    interface (3) as the source IP address. The ``qr`` interface contains the
    project network gateway IP address *TR*.
-
 #. For VXLAN project networks:
 
    #. The router namespace ``qrouter`` forwards the packet to the tunnel
       bridge ``qbr``.
-
    #. The tunnel bridge ``qbr`` forwards the packet to the logical tunnel
       interface ``vxlan-sid`` (4) where *sid* contains the project network
       segmentation ID.
-
    #. The physical tunnel interface forwards the packet to compute node 1.
 
 #. For VLAN project networks:
 
    #. The router namespace ``qrouter`` forwards the packet to the VLAN
       bridge ``qbr``.
-
    #. The VLAN bridge ``qbr`` forwards the packet to the logical VLAN
       interface ``device.sid`` where *device* references the underlying
       physical VLAN interface and *sid* contains the project network
       segmentation ID.
-
    #. The physical VLAN interface forwards the packet to compute node 1.
 
 The following steps involve compute node 1:
@@ -340,13 +305,10 @@ The following steps involve compute node 1:
    #. The physical tunnel interface forwards the packet to the logical
       tunnel interface ``vxlan-sid`` (5) where *sid* contains the project
       network segmentation ID.
-
    #. The logical tunnel interface ``vxlan-sid`` forwards the packet to the
       tunnel bridge ``qbr``.
-
    #. Security group rules (6) on the tunnel bridge ``qbr`` handle firewalling
       and state tracking for the packet.
-
    #. The tunnel bridge ``qbr`` forwards the packet to the ``tap``
       interface (7) on instance 1.
 
@@ -356,17 +318,15 @@ The following steps involve compute node 1:
       VLAN interface ``device.sid`` where *device* references the underlying
       physical VLAN interface and *sid* contains the project network
       segmentation ID.
-
    #. The logical VLAN interface ``device.sid`` forwards the packet to the
       VLAN bridge ``qbr``.
-
    #. Security group rules on the VLAN bridge ``qbr`` handle firewalling
       and state tracking for the packet.
-
    #. The VLAN bridge ``qbr`` forwards the packet to the ``tap`` interface
       on instance 1.
 
-.. note:: Return traffic follows similar steps in reverse.
+.. note::
+   Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-legacy-lb-flowns2.png
    :alt: Network traffic flow - north/south with a floating IP address
@@ -378,22 +338,14 @@ For instances with a fixed or floating IP address, the network node
 routes *east-west* network traffic among project networks using the
 same project router.
 
-Instance 1 resides on compute node 1 and uses VXLAN project network 1.
-Instance 2 resides on compute node 2 and uses VLAN project network 2. Both
-project networks reside on the same project router.
-
-Instance 1 sends a packet to instance 2.
-
 * Project network 1
 
   * Network: 192.168.1.0/24
-
   * Gateway: 192.168.1.1 with MAC address *TG1*
 
 * Project network 2
 
   * Network: 192.168.2.0/24
-
   * Gateway: 192.168.2.1 with MAC address *TG2*
 
 * Compute node 1
@@ -404,19 +356,21 @@ Instance 1 sends a packet to instance 2.
 
   * Instance 2: 192.168.2.11 with MAC address *I2*
 
+* Instance 1 resides on compute node 1 and uses VXLAN project network 1.
+* Instance 2 resides on compute node 2 and uses VLAN project network 2.
+* Both project networks reside on the same router.
+* Instance 1 sends a packet to instance 2.
+
 The following steps involve compute node 1:
 
 #. The instance 1 ``tap`` interface (1) forwards the packet to the tunnel
    bridge ``qbr``. The packet contains destination MAC address *TG1*
    because the destination resides on another network.
-
 #. Security group rules (2) on the tunnel bridge ``qbr`` handle
    state tracking for the packet.
-
 #. The tunnel bridge ``qbr`` forwards the packet to the logical tunnel
    interface ``vxlan-sid`` (3) where *sid* contains the project network
    segmentation ID.
-
 #. The physical tunnel interface forwards the packet to the network
    node.
 
@@ -425,26 +379,20 @@ The following steps involve the network node:
 #. The physical tunnel interface forwards the packet to the logical
    tunnel interface ``vxlan-sid`` (4) where *sid* contains the project
    network segmentation ID.
-
 #. The logical tunnel interface ``vxlan-sid`` forwards the packet to the
    tunnel bridge ``qbr``.
-
 #. The tunnel bridge ``qbr`` forwards the packet to the ``qr-1``
    interface (5) in the router namespace ``qrouter``. The ``qr-1``
    interface contains the project network 1 gateway IP address
    *TG1*.
-
 #. The router namespace ``qrouter`` routes the packet (6) to the ``qr-2``
    interface (7). The The ``qr-2`` interface contains the project network 2
    gateway IP address *TG2*.
-
 #. The router namespace ``qrouter`` forwards the packet to the VLAN
    bridge ``qbr``.
-
 #. The VLAN bridge ``qbr`` forwards the packet to the logical VLAN
    interface ``vlan.sid`` (8) where *sid* contains the project network
    segmentation ID.
-
 #. The physical VLAN interface forwards the packet to compute node 2.
 
 The following steps involve compute node 2:
@@ -452,17 +400,15 @@ The following steps involve compute node 2:
 #. The physical VLAN interface forwards the packet to the logical VLAN
    interface ``vlan.sid`` (9) where *sid* contains the project network
    segmentation ID.
-
 #. The logical VLAN interface ``vlan.sid`` forwards the packet to the
    VLAN bridge ``qbr``.
-
 #. Security group rules (10) on the VLAN bridge ``qbr`` handle firewalling
    and state tracking for the packet.
-
 #. The VLAN bridge ``qbr`` forwards the packet to the ``tap`` interface (11)
    on instance 2.
 
-.. note:: Return traffic follows similar steps in reverse.
+.. note::
+   Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-legacy-lb-flowew1.png
    :alt: Network traffic flow - east/west for instances on different networks
@@ -473,13 +419,6 @@ Case 4: East-west for instances on the same network
 For instances with a fixed or floating IP address, the project network
 switches *east-west* network traffic among instances without using a
 project router on the network node.
-
-Instance 1 resides on compute node 1 and and instance 2 resides on compute
-node 2. Both instances use the same VXLAN project network.
-
-Instance 1 sends a packet to instance 2.
-
-The Linux bridge agent handles switching within the project network.
 
 * Project network
 
@@ -493,19 +432,22 @@ The Linux bridge agent handles switching within the project network.
 
   * Instance 2: 192.168.1.12 with MAC address *I2*
 
+* Instance 1 resides on compute node 1.
+* Instance 2 resides on compute node 2.
+* Both instances use the same VXLAN project network.
+* Instance 1 sends a packet to instance 2.
+* The Linux bridge agent handles switching within the project network.
+
 The following steps involve compute node 1:
 
 #. The instance 1 ``tap`` interface (1) forwards the packet to the tunnel
    bridge ``qbr``. The packet contains destination MAC address *TG1*
    because the destination resides on another network.
-
 #. Security group rules (2) on the tunnel bridge ``qbr`` handle
    state tracking for the packet.
-
 #. The tunnel bridge ``qbr`` forwards the packet to the logical tunnel
    interface ``vxlan-sid`` (3) where *sid* contains the project network
    segmentation ID.
-
 #. The physical tunnel interface forwards the packet to the network
    node.
 
@@ -514,17 +456,15 @@ The following steps involve compute node 2:
 #. The physical tunnel interface forwards the packet to the logical
    tunnel interface ``vxlan-sid`` (4) where *sid* contains the project network
    segmentation ID.
-
 #. The logical tunnel interface ``vxlan-sid`` forwards the packet to the
    tunnel bridge ``qbr``.
-
 #. Security group rules (5) on the tunnel bridge ``qbr`` handle firewalling
    and state tracking for the packet.
-
 #. The tunnel bridge ``qbr`` forwards the packet to the ``tap`` interface (6)
    on instance 2.
 
-.. note:: Return traffic follows similar steps in reverse.
+.. note::
+   Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-legacy-lb-flowew2.png
    :alt: Network traffic flow - east/west for instances on the same network
@@ -752,7 +692,6 @@ Verify service operation
 ------------------------
 
 #. Source the administrative project credentials.
-
 #. Verify presence and operation of the agents:
 
    .. code-block:: console
@@ -775,7 +714,6 @@ Create initial networks
 This example creates a flat external network and a VXLAN project network.
 
 #. Source the administrative project credentials.
-
 #. Create the external network:
 
    .. code-block:: console
@@ -831,18 +769,18 @@ This example creates a flat external network and a VXLAN project network.
    VXLAN. The following commands use the ``admin`` project credentials to
    create a VXLAN project network.
 
-#. Obtain the ``demo`` project ID:
+#. Obtain the ID of a regular project. For example, using the ``demo`` project:
 
    .. code-block:: console
 
       $ openstack project show demo
       +-------------+----------------------------------+
-      |   Field     |              Value               |
+      | Field       | Value                            |
       +-------------+----------------------------------+
-      | description |           Demo Project           |
-      |   enabled   |               True               |
-      |      id     | 8dbcb34c59a741b18e71c19073a47ed5 |
-      |     name    |               demo               |
+      | description | Demo Project                     |
+      | enabled     | True                             |
+      | id          | 8dbcb34c59a741b18e71c19073a47ed5 |
+      | name        | demo                             |
       +-------------+----------------------------------+
 
 #. Create the project network:
@@ -869,7 +807,6 @@ This example creates a flat external network and a VXLAN project network.
       +---------------------------+--------------------------------------+
 
 #. Source the regular project credentials.
-
 #. Create a subnet on the project network:
 
    .. code-block:: console
@@ -941,9 +878,22 @@ Verify network operation
    .. note::
       The ``qdhcp`` namespace might not exist until launching an instance.
 
-#. On the controller node, ping the project router gateway IP address,
-   typically the lowest IP address in the external network subnet
+#. Determine the external network gateway IP address for the project network
+   on the router, typically the lowest IP address in the external subnet IP
    allocation range:
+
+   .. code-block:: console
+
+      $ neutron router-port-list demo-router
+      +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------+
+      | id                                   | name | mac_address       | fixed_ips                                                                            |
+      +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------+
+      | b1a894fd-aee8-475c-9262-4342afdc1b58 |      | fa:16:3e:c1:20:55 | {"subnet_id": "1d5ab804-8925-46b0-a7b4-e520dc247284", "ip_address": "192.168.1.1"}   |
+      | ff5f93c6-3760-4902-a401-af78ff61ce99 |      | fa:16:3e:54:d7:8c | {"subnet_id": "020bb28d-0631-4af2-aa97-7374d1d33557", "ip_address": "203.0.113.101"} |
+      +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------+
+
+#. On the controller node or any host with access to the external network,
+   ping the external network gateway IP address on the project router:
 
    .. code-block:: console
 
@@ -959,9 +909,7 @@ Verify network operation
       rtt min/avg/max/mdev = 0.165/0.297/0.619/0.187 ms
 
 #. Source the regular project credentials.
-
 #. Launch an instance with an interface on the project network.
-
 #. Obtain console access to the instance.
 
    #. Test connectivity to the project router:
