@@ -62,6 +62,7 @@ troubleshoot your installation and back up your Compute volumes.
 .. include:: blockstorage_glusterfs_removal.rst
 .. include:: blockstorage_volume_backups.rst
 .. include:: blockstorage-lio-iscsi-support.rst
+.. include:: blockstorage_volume_number_weighter.rst
 .. include:: blockstorage-consistency-groups.rst
 .. include:: blockstorage-driver-filter-weighing.rst
 .. include:: blockstorage_ratelimit_volume_copy_bandwidth.rst
@@ -78,6 +79,7 @@ troubleshoot your installation and back up your Compute volumes.
    blockstorage_glusterfs_removal.rst
    blockstorage_volume_backups.rst
    blockstorage-lio-iscsi-support.rst
+   blockstorage_volume_number_weighter.rst
    blockstorage-consistency-groups.rst
    blockstorage-driver-filter-weighing.rst
    blockstorage_ratelimit_volume_copy_bandwidth.rst
@@ -86,4 +88,3 @@ troubleshoot your installation and back up your Compute volumes.
 .. TODO (MZ) Convert and include the following sections
    include: blockstorage/section_volume-migration.xml
    include: blockstorage/section_volume-backups-export-import.xml
-   include: blockstorage/section_volume_number_weighter.xml
