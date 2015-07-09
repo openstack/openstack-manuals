@@ -1,0 +1,71 @@
+=================================
+Verify the Telemetry installation
+=================================
+
+This section describes how to verify operation of the Telemetry module.
+
+.. note::
+
+   Perform these steps on the controller node.
+
+#. Source the ``admin`` credentials to gain access to
+   admin-only CLI commands:
+
+   .. code-block:: console
+
+      $ source admin-openrc.sh
+
+#. List available meters:
+
+   .. code-block:: console
+
+      $ ceilometer meter-list
+      +--------------+-------+-------+--------------------------------------+---------+------------+
+      | Name         | Type  | Unit  | Resource ID                          | User ID | Project ID |
+      +--------------+-------+-------+--------------------------------------+---------+------------+
+      | image        | gauge | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
+      | image.size   | gauge | B     | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
+      | image.update | delta | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
+      | image.upload | delta | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
+      +--------------+-------+-------+--------------------------------------+---------+------------+
+
+#. Download an image from the Image service:
+
+   .. code-block:: console
+
+      $ IMAGE_ID=$(glance image-list | grep 'cirros-0.3.4-x86_64' | awk '{ print $2 }')
+      $ glance image-download $IMAGE_ID > /tmp/cirros.img
+
+#. List available meters again to validate detection of the image
+   download:
+
+   .. code-block:: console
+
+      $ ceilometer meter-list
+      +----------------+-------+-------+--------------------------------------+---------+------------+
+      | Name           | Type  | Unit  | Resource ID                          | User ID | Project ID |
+      +----------------+-------+-------+--------------------------------------+---------+------------+
+      | image          | gauge | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
+      | image.download | delta | B     | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
+      | image.serve    | delta | B     | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
+      | image.size     | gauge | B     | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
+      | image.update   | delta | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
+      | image.upload   | delta | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
+      +----------------+-------+-------+--------------------------------------+---------+------------+
+
+#. Retrieve usage statistics from the ``image.download`` meter:
+
+   .. code-block:: console
+
+      $ ceilometer statistics -m image.download -p 60
+      +--------+---------------------+---------------------+------------+------------+------------+------------+-------+----------+----------------------------+----------------------------+
+      | Period | Period Start        | Period End          | Max        | Min        | Avg        | Sum        | Count | Duration | Duration Start             | Duration End               |
+      +--------+---------------------+---------------------+------------+------------+------------+------------+-------+----------+----------------------------+----------------------------+
+      | 60     | 2015-04-21T12:21:45 | 2015-04-21T12:22:45 | 13200896.0 | 13200896.0 | 13200896.0 | 13200896.0 | 1     | 0.0      | 2015-04-21T12:22:12.983000 | 2015-04-21T12:22:12.983000 |
+      +--------+---------------------+---------------------+------------+------------+------------+------------+-------+----------+----------------------------+----------------------------+
+
+#. Remove the previously downloaded image file :file:`/tmp/cirros.img`:
+
+   .. code-block:: console
+
+      $ rm /tmp/cirros.img
