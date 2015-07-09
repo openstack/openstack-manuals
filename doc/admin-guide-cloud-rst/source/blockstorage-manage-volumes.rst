@@ -64,6 +64,7 @@ troubleshoot your installation and back up your Compute volumes.
 .. include:: blockstorage-consistency-groups.rst
 .. include:: blockstorage-driver-filter-weighing.rst
 .. include:: blockstorage_ratelimit_volume_copy_bandwidth.rst
+.. include:: blockstorage_over_subscription.rst
 
 .. toctree::
    :hidden:
@@ -78,10 +79,10 @@ troubleshoot your installation and back up your Compute volumes.
    blockstorage-consistency-groups.rst
    blockstorage-driver-filter-weighing.rst
    blockstorage_ratelimit_volume_copy_bandwidth.rst
+   blockstorage_over_subscription.rst
 
 .. TODO (MZ) Convert and include the following sections
    include: blockstorage/section_volume-migration.xml
    include: blockstorage/section_volume-backups.xml
    include: blockstorage/section_volume-backups-export-import.xml
    include: blockstorage/section_volume_number_weighter.xml
-   include: blockstorage/section_over_subscription.xml
