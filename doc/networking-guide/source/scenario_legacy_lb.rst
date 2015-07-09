@@ -650,7 +650,7 @@ Compute nodes
 
 #. Load the new kernel configuration:
 
-   .. code-block: console
+   .. code-block:: console
 
       $ sysctl -p
 
@@ -945,7 +945,7 @@ Verify network operation
 #. Create the appropriate security group rules to allow ping and SSH access
    to the instance. For example:
 
-   .. code-block: console
+   .. code-block:: console
 
      $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
       +-------------+-----------+---------+-----------+--------------+
