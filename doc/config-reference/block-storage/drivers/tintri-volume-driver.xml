@@ -3,15 +3,20 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
     <title>Tintri</title>
-    <para>Tintri VMstore is a smart storage that sees, learns and adapts for cloud and virtualization. Tintri Cinder driver will interact with configured VMstore running Tintri OS 4.0 and above. It supports various operations using Tintri REST APIs and NFS protocol.
-        </para>
-    <para>To configure the use of a Tintri VMstore  with Block
-        Storage, modify your <filename>cinder.conf</filename> file as
-        follows:</para>
-    <programlisting language="ini">volume_driver = cinder.volume.drivers.tintri.TintriDriver
+    <para>Tintri VMstore is a smart storage that sees, learns and adapts
+      for cloud and virtualization. The Tintri Cinder driver will interact
+      with configured VMstore running Tintri OS 4.0 and above. It supports
+      various operations using Tintri REST APIs and NFS protocol.</para>
+    <procedure>
+    <para>To configure the use of a Tintri VMstore with Block
+      Storage, perform the following actions:</para>
+    <step>
+      <para>Edit the <filename>etc/cinder/cinder.conf</filename> file
+        and set the cinder.volume.drivers.tintri options:</para>
+    <programlisting language="ini">volume_driver=cinder.volume.drivers.tintri.TintriDriver
 # Mount options passed to the nfs client. See section of the
 # nfs man page for details. (string value)
-nfs_mount_options=vers=3,lookupcache=none
+nfs_mount_options=vers=3,lookupcache=pos
 
 #
 # Options defined in cinder.volume.drivers.tintri
@@ -32,25 +37,21 @@ tintri_server_password={password}
 
 # Following options needed for NFS configuration
 # File with the list of available nfs shares (string value)
-#nfs_shares_config=/etc/cinder/nfs_shares
-</programlisting>
-
-<para>Following changes are needed in /etc/cinder/nfs_shares</para>
-
-<programlisting language="ini">
-# Edit /etc/cinder/nfs_shares to add one or more Tintri VMstore mount points
-# associated with already configured VMstore management IP in cinder.conf
-{vmstore_data_ip}:/tintri/{submount1}
-{vmstore_data_ip}:/tintri/{submount2}
-
-
-</programlisting>
-
-<para>Following changes are needed in <filename>nova.conf</filename> file:</para>
-
-<programlisting language="ini">
-# Edit /etc/nova/nova.conf
-nfs_mount_options=vers=3
-</programlisting>
-<xi:include href="../../../common/tables/cinder-tintri.xml"/>
+#nfs_shares_config=/etc/cinder/nfs_shares</programlisting>
+    </step>
+    <step>
+      <para>Edit the <filename>etc/nova/nova.conf</filename> file, and
+        set the <option>nfs_mount_options</option>:</para>
+      <programlisting language="ini">nfs_mount_options=vers=3</programlisting>
+    </step>
+    <step>
+      <para>Edit the <filename>/etc/cinder/nfs_shares</filename> file,
+        and add the Tintri VMstore mount points associated with
+        the configured VMstore management IP in the <filename>cinder.conf</filename>
+        file:</para>
+    <programlisting language="ini">{vmstore_data_ip}:/tintri/{submount1}
+{vmstore_data_ip}:/tintri/{submount2}</programlisting>
+    </step>
+    </procedure>
+    <xi:include href="../../../common/tables/cinder-tintri.xml"/>
 </section>
