@@ -16,7 +16,8 @@ Create instance snapshots
 #. Log in to the dashboard and choose the admin project from the
    drop-down list at the top of the page.
 
-#. On the :guilabel:`Admin` tab, click the :guilabel:`Instances` category.
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
+   and click the :guilabel:`Instances` category.
 
 #. Select an instance to create a snapshot from it. From the
    :guilabel:`Actions` drop-down list, select :guilabel:`Create Snapshot`.
@@ -36,7 +37,8 @@ Control the state of an instance
 #. Log in to the dashboard and choose the admin project from the
    drop-down list at the top of the page.
 
-#. On the :guilabel:`Admin` tab, click the :guilabel:`Instances` category.
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
+   and click the :guilabel:`Instances` category.
 
 #. Select the instance for which you want to change the state.
 

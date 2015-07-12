@@ -78,8 +78,8 @@ View default project quotas
 
 #. Log in to the OpenStack dashboard.
 
-#. On the :guilabel:`Admin` tab, click the
-   :guilabel:`Defaults` category.
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
+   and click the :guilabel:`Defaults` category.
 
 #. The default quota values are displayed.
 
@@ -94,8 +94,8 @@ Update project quotas
 
 #. Log in to the OpenStack dashboard.
 
-#. On the :guilabel:`Admin` tab, click the
-   :guilabel:`Defaults` category.
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
+   and click the :guilabel:`Defaults` category.
 
 #. Click the :guilabel:`Update Defaults` button.
 
