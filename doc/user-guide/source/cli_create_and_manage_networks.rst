@@ -226,8 +226,8 @@ Create ports
 
 #. Query ports with specified fixed IP addresses::
 
-     $ neutron port-list --fixed-ips ip_address=192.168.2.2
-     ip_address=192.168.2.40
+     $ neutron port-list --fixed-ips ip_address=192.168.2.2 \
+       ip_address=192.168.2.40
 
      +----------------+------+-------------------+-------------------------------------------------+
      | id             | name | mac_address       | fixed_ips                                       |
