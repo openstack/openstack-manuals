@@ -30,7 +30,13 @@ When you launch an instance from a volume, note the following steps:
 When you launch an instance from an image, OpenStack creates a local
 copy of the image on the compute node where the instance starts.
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Images`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Images` category.
 
    The dashboard shows the images that have been uploaded to OpenStack
    Image service and are available for this project.
@@ -188,7 +194,13 @@ You can track usage for instances for each project. You can track costs
 per month by showing meters like number of vCPUs, disks, RAM, and
 uptime for all your instances.
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Overview`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Overview` category.
 
 #. To query the instance usage for a month, select a month and click
    :guilabel:`Submit`.
@@ -215,7 +227,13 @@ To launch an instance from the snapshot, select the snapshot and click
 Manage an instance
 ~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Instances`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Instances` category.
 
 #. Select an instance.
 

@@ -16,7 +16,13 @@ Guide <http://docs.openstack.org/admin-guide-cloud/networking.html>`__.
 Create a network
 ~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Networks`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Network` tab and
+   click :guilabel:`Networks` category.
 
 #. Click :guilabel:`Create Network`.
 
@@ -62,7 +68,13 @@ Create a network
 Create a router
 ~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Routers`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Network` tab and
+   click :guilabel:`Routers` category.
 
 #. Click :guilabel:`Create Router`.
 

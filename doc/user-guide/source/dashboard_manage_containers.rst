@@ -16,7 +16,13 @@ stored in the container and any accompanying metadata.
 Create a container
 ~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Containers`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
+   click :guilabel:`Containers` category.
 
 #. Click :guilabel:`Create Container`.
 
@@ -31,7 +37,13 @@ You have successfully created a container.
 Upload an object
 ~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Containers`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
+   click :guilabel:`Containers` category.
 
 #. Select the container in which you want to store your object.
 
@@ -58,7 +70,13 @@ Manage an object
 
 **To edit an object**
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Containers`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
+   click :guilabel:`Containers` category.
 
 #. Select the container in which you want to store your object.
 
@@ -75,7 +93,13 @@ Manage an object
 
 **To copy an object from one container to another**
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Containers`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
+   click :guilabel:`Containers` category.
 
 #. Select the container in which you want to store your object.
 
@@ -100,7 +124,13 @@ can upload the file later when it is ready. This temporary object acts a
 place-holder for a new object, and enables the user to share object
 metadata and URL info in advance.
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Containers`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
+   click :guilabel:`Containers` category.
 
 #. Select the container in which you want to store your object.
 
@@ -122,7 +152,13 @@ Pseudo-folders are similar to folders in your desktop operating system.
 They are virtual collections defined by a common prefix on the object's
 name.
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Containers`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
+   click :guilabel:`Containers` category.
 
 #. Select the container in which you want to store your object.
 

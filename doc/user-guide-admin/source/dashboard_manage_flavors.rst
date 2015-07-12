@@ -25,8 +25,8 @@ Create flavors
 
    Choose the :guilabel:`admin` project from the drop-down
    list at the top of the page.
-#. In the :guilabel:`Admin` tab, open the :guilabel:`System
-   Panel` and click the :guilabel:`Flavors` category.
+#. In the :guilabel:`Admin` tab, open the :guilabel:`System`
+   tab and click the :guilabel:`Flavors` category.
 #. Click :guilabel:`Create Flavor`.
 #. In the :guilabel:`Create Flavor` window, enter or select
    the parameters for the flavor.
