@@ -27,8 +27,8 @@ Create a stack from an example template file
    file <https://git.openstack.org/cgit/openstack/heat-templates>`__, run
    the following command::
 
-       $ heat stack-create mystack --template-file /PATH_TO_HEAT_TEMPLATES/WordPress_Single_Instance.template
-          --parameters "InstanceType=m1.large;DBUsername=USERNAME;DBPassword=PASSWORD;KeyName=HEAT_KEY;LinuxDistribution=F17"
+       $ heat stack-create mystack --template-file /PATH_TO_HEAT_TEMPLATES/WordPress_Single_Instance.template \
+         --parameters "InstanceType=m1.large;DBUsername=USERNAME;DBPassword=PASSWORD;KeyName=HEAT_KEY;LinuxDistribution=F17"
 
    The :option:`--parameters` values that you specify depend on the parameters
    that are defined in the template. If a website hosts the template
@@ -123,8 +123,8 @@ To update an existing stack from a modified template file, run a command
 like the following command::
 
    $ heat stack-update mystack --template-file \
-       /path/to/heat/templates/WordPress_Single_Instance_v2.template \
-       --parameters "InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"
+     /path/to/heat/templates/WordPress_Single_Instance_v2.template \
+     --parameters "InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"
    +--------------------------------------+---------------+-----------------+----------------------+
    | id                                   | stack_name    | stack_status    | creation_time        |
    +--------------------------------------+---------------+-----------------+----------------------+
