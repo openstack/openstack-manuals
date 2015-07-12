@@ -92,13 +92,13 @@ Create at least one key pair for each project.
 #. Log in to the dashboard, choose a project, and click
    :guilabel:`Access & Security`.
 
-#. Click the :guilabel:`Keypairs` tab, which shows the key pairs that
+#. Click the :guilabel:`Key Pairs` tab, which shows the key pairs that
    are available for this project.
 
-#. Click :guilabel:`Create Keypair`.
+#. Click :guilabel:`Create Key Pair`.
 
-#. In the :guilabel:`Create Keypair` dialog box, enter a name for your
-   key pair, and click :guilabel:`Create Keypair`.
+#. In the :guilabel:`Create Key Pair` dialog box, enter a name for your
+   key pair, and click :guilabel:`Create Key Pair`.
 
 #. Respond to the prompt to download the key pair.
 
@@ -110,14 +110,14 @@ Import a key pair
 #. Log in to the dashboard, choose a project, and click
    :guilabel:`Access & Security`.
 
-#. Click the :guilabel:`Keypairs` tab, which shows the key pairs that
+#. Click the :guilabel:`Key Pairs` tab, which shows the key pairs that
    are available for this project.
 
-#. Click :guilabel:`Import Keypair`.
+#. Click :guilabel:`Import Key Pair`.
 
-#. In the :guilabel:`Import Keypair` dialog box, enter the name of your
+#. In the :guilabel:`Import Key Pair` dialog box, enter the name of your
    key pair, copy the public key into the :guilabel:`Public Key` box,
-   and then click :guilabel:`Import Keypair`.
+   and then click :guilabel:`Import Key Pair`.
 
 #. Save the ``*.pem`` file locally.
 
