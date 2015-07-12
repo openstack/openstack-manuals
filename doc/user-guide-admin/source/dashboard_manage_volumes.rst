@@ -24,7 +24,8 @@ Create a volume type
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Volumes` category.
 
-#. Click :guilabel:`Create Volume Type` button. In the
+#. Click the :guilabel:`Volume Types` tab, and click
+   :guilabel:`Create Volume Type` button. In the
    :guilabel:`Create Volume Type` window, enter a name for the volume type.
 
 #. Click :guilabel:`Create Volume Type` button to confirm your changes.
@@ -124,7 +125,8 @@ When you delete a volume type, volumes of that type are not deleted.
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Volumes` category.
 
-#. Select the volume type or types that you want to delete.
+#. Click the :guilabel:`Volume Types` tab, select the volume type
+   or types that you want to delete.
 
 #. Click :guilabel:`Delete Volume Types` button.
 
