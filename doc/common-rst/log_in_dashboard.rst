@@ -42,12 +42,14 @@ server role.
    The visible tabs and functions in the dashboard depend on the access
    permissions, or roles, of the user you are logged in as.
 
-   * If you are logged in as an end user, the :guilabel:`Project` tab is
-     displayed.
+   * If you are logged in as an end user, the :guilabel:`Project` tab
+     (:ref:`dashboard-project-tab`) and :guilabel:`Identity` tab
+     (:ref:`dashboard-identity-tab`) are displayed.
 
    * If you are logged in as an administrator, the :guilabel:`Project` tab
      (:ref:`dashboard-project-tab`) and :guilabel:`Admin` tab
-     (:ref:`dashboard-admin-tab`) are displayed.
+     (:ref:`dashboard-admin-tab`) and :guilabel:`Identity` tab
+     (:ref:`dashboard-identity-tab`) are displayed.
 
 
 .. _dashboard-project-tab:
@@ -204,6 +206,8 @@ information:
 
 * :guilabel:`Orchestration Services`: View a list of all Orchestration
   services.
+
+.. _dashboard-identity-tab:
 
 OpenStack dashboard—:guilabel:`Identity` tab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
