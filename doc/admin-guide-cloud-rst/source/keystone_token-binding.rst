@@ -1,7 +1,6 @@
-.. :orphan:
-
+============================================
 Configure Identity service for token binding
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================
 
 Token binding embeds information from an external authentication
 mechanism, such as a Kerberos server or X.509 certificate, inside a

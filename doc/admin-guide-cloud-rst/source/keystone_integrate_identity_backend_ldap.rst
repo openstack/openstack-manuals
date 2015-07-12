@@ -1,5 +1,5 @@
 Integrate Identity back end with LDAP
--------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Identity back end contains information for users, groups, and group
 member lists. Integrating the Identity back end with LDAP allows

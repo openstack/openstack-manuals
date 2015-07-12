@@ -1,7 +1,6 @@
-.. :orphan:
-
+=====================================
 External authentication with Identity
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=====================================
 
 When Identity runs in ``apache-httpd``, you can use external
 authentication methods that differ from the authentication provided by
@@ -10,7 +9,7 @@ back end together with X.509 authentication and Kerberos, instead of
 using the user name and password combination.
 
 Use HTTPD authentication
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Web servers, like Apache HTTP, support many methods of authentication.
 Identity can allow the web server to perform the authentication. The web
@@ -20,7 +19,7 @@ the Identity back end to get a token from the controller. To use this
 method, Identity should run on ``apache-httpd``.
 
 Use X.509
----------
+~~~~~~~~~
 
 The following Apache configuration snippet authenticates the user based
 on a valid X.509 certificate from a known CA::
