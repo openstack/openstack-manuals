@@ -40,7 +40,7 @@
     <para>To use this middleware, first download the latest
         version from its repository to your proxy
         server(s).</para>
-    <screen><prompt>$</prompt> <userinput>git clone https://git.openstack.org/cgit/stackforge/swift3/</userinput></screen>
+    <screen><prompt>$</prompt> <userinput>git clone https://git.openstack.org/stackforge/swift3</userinput></screen>
     <para>Then, install it using standard python mechanisms, such
         as:</para>
     <screen><prompt>#</prompt> <userinput>python setup.py install</userinput></screen>
@@ -54,7 +54,7 @@
             <systemitem>swift3</systemitem> in the pipeline and the <code>[filter:swift3]</code>
         section, as shown below:</para>
     <programlisting language="ini">[pipeline:main]
-pipeline = healthcheck cache swift3 swauth proxy-server
+pipeline = catch_errors healthcheck cache swift3 swauth proxy-server
 
 [filter:swift3]
 use = egg:swift3#swift3</programlisting>
