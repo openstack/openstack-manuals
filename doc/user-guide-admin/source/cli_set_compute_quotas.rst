@@ -83,7 +83,7 @@ To view quota values for an existing tenant (project)
 
 #. Place the tenant ID in a usable variable, as follows::
 
-   $ tenant=$(keystone tenant-list | awk '/TENANT_NAME/ {print $2}')
+   $ tenant=$(openstack project show -f value -c id TENANT_NAME)
 
 #. List the currently set quota values for a tenant, as follows::
 
@@ -113,7 +113,7 @@ To update quota values for an existing tenant (project)
 -------------------------------------------------------
 #. Obtain the tenant ID, as follows::
 
-   $ tenant=$(keystone tenant-list | awk '/TENANT_NAME/ {print $2}')
+   $ tenant=$(openstack project show -f value -c id TENANT_NAME)
 
 #. Update a particular quota value, as follows::
 
@@ -150,11 +150,11 @@ To view quota values for a tenant user
 --------------------------------------
 #. Place the user ID in a usable variable, as follows::
 
-    $ tenantUser=$(keystone user-list | awk '/USER_NAME/ {print $2}')
+    $ tenantUser=$(openstack user show -f value -c id USER_NAME)
 
 #. Place the user's tenant ID in a usable variable, as follows::
 
-    $ tenant=$(keystone tenant-list | awk '/TENANT_NAME/ {print $2}')
+    $ tenant=$(openstack project show -f value -c id TENANT_NAME)
 
 #. List the currently set quota values for a tenant user, as follows::
 
@@ -184,11 +184,11 @@ To update quota values for a tenant user
 ----------------------------------------
 #. Place the user ID in a usable variable, as follows::
 
-    $ tenantUser=$(keystone user-list | awk '/USER_NAME/ {print $2}')
+    $ tenantUser=$(openstack user show -f value -c id USER_NAME)
 
 #. Place the user's tenant ID in a usable variable, as follows::
 
-    $ tenant=$(keystone tenant-list | awk '/USER_NAME/ {print $2}')
+    $ tenant=$(openstack project show -f value -c id TENANT_NAME)
 
 #. Update a particular quota value, as follows::
 

@@ -39,21 +39,24 @@ Create a service
 
    .. code::
 
-      $ keystone service-list
-      +----------------------------------+----------+----------+---------------------------+
-      |                id                |   name   |   type   |        description        |
-      +----------------------------------+----------+----------+---------------------------+
-      | 9816f1faaa7c4842b90fb4821cd09223 |  cinder  |  volume  |   Cinder Volume Service   |
-      | da8cf9f8546b4a428c43d5e032fe4afc |   ec2    |   ec2    |  EC2 Compatibility Layer  |
-      | 5f105eeb55924b7290c8675ad7e294ae |  glance  |  image   |    Glance Image Service   |
-      | dcaa566e912e4c0e900dc86804e3dde0 | keystone | identity | Keystone Identity Service |
-      | 4a715cfbc3664e9ebf388534ff2be76a |   nova   | compute  |    Nova Compute Service   |
-      | 6feb2e0b98874d88bee221974770e372 |    s3    |    s3    |             S3            |
-      +----------------------------------+----------+----------+---------------------------+
+      $ openstack service list
+      +----------------------------------+----------+------------+
+      | ID                               | Name     | Type       |
+      +----------------------------------+----------+------------+
+      | 9816f1faaa7c4842b90fb4821cd09223 | cinder   | volume     |
+      | 1250f64f31e34dcd9a93d35a075ddbe1 | cinderv2 | volumev2   |
+      | da8cf9f8546b4a428c43d5e032fe4afc | ec2      | ec2        |
+      | 5f105eeb55924b7290c8675ad7e294ae | glance   | image      |
+      | dcaa566e912e4c0e900dc86804e3dde0 | keystone | identity   |
+      | 4a715cfbc3664e9ebf388534ff2be76a | nova     | compute    |
+      | 1aed4a6cf7274297ba4026cf5d5e96c5 | novav21  | computev21 |
+      | bed063c790634c979778551f66c8ede9 | neutron  | network    |
+      | 6feb2e0b98874d88bee221974770e372 |    s3    |    s3      |
+      +----------------------------------+----------+------------+
 
 #. To create a service, run this command::
 
-   $ keystone service-create --name SERVICE_NAME --type SERVICE_TYPE --description SERVICE-DESCRIPTION
+   $ openstack service create --name SERVICE_NAME --description SERVICE_DESCRIPTION SERVICE_TYPE
 
    The arguments are:
       - ``service_name``: the unique name of the new service.
@@ -67,34 +70,34 @@ Create a service
 
    .. code::
 
-      $ keystone service-create --name swift --type object-store --description "object store service"
+      $ openstack service create --name swift --description "object store service" object-store
       +-------------+----------------------------------+
-      |   Property  |              Value               |
+      | Field       | Value                            |
       +-------------+----------------------------------+
-      | description |       object store service       |
-      |   enabled   |               True               |
-      |      id     | 84c23f4b942c44c38b9c42c5e517cd9a |
-      |     name    |              swift               |
-      |     type    |           object-store           |
+      | description | object store service             |
+      | enabled     | True                             |
+      | id          | 84c23f4b942c44c38b9c42c5e517cd9a |
+      | name        | swift                            |
+      | type        | object-store                     |
       +-------------+----------------------------------+
 
 #. To get details for a service, run this command::
 
-      $ keystone service-get SERVICE_ID
+      $ openstack service show SERVICE_TYPE|SERVICE_NAME|SERVICE_ID
 
    For example:
 
    .. code::
 
-      $ keystone service-get 84c23f4b942c44c38b9c42c5e517cd9a
+      $ openstack service show object-store
       +-------------+----------------------------------+
-      |   Property  |              Value               |
+      | Field       | Value                            |
       +-------------+----------------------------------+
-      | description |       object store service       |
-      |   enabled   |               True               |
-      |      id     | 84c23f4b942c44c38b9c42c5e517cd9a |
-      |     name    |              swift               |
-      |     type    |           object-store           |
+      | description | object store service             |
+      | enabled     | True                             |
+      | id          | 84c23f4b942c44c38b9c42c5e517cd9a |
+      | name        | swift                            |
+      | type        | object-store                     |
       +-------------+----------------------------------+
 
 Create service users
@@ -104,56 +107,43 @@ Create service users
    Typically, this project is named ``service``,
    but choose any name you like::
 
-   $ keystone tenant-create --name service
-
-   The output shows the ID for the project.
-
-   Make a note of this ID. You need it to create
-   service users and assign roles.
+      $ openstack project create service
 
    .. code::
 
       +-------------+----------------------------------+
-      |   Property  |              Value               |
+      | Field       | Value                            |
       +-------------+----------------------------------+
-      | description |                                  |
-      |   enabled   |               True               |
-      |      id     | 3e9f3f5399624b2db548d7f871bd5322 |
-      |     name    |              service             |
+      | description | None                             |
+      | enabled     | True                             |
+      | id          | 3e9f3f5399624b2db548d7f871bd5322 |
+      | name        | service                          |
       +-------------+----------------------------------+
 
 #. Create service users for the relevant services for your
    deployment.
 
-#. To assign the admin role to the service user-project pairs,
-   run this command to get the ID of the admin role:
+#. Assign the admin role to the user-project pair::
+
+      $ openstack role add --project service --user SERVICE_USER_NAME admin
 
    .. code::
 
-      $ keystone role-list
-      +----------------------------------+---------------+
-      |                id                |      name     |
-      +----------------------------------+---------------+
-      | 71ccc37d41c8491c975ae72676db687f |     Member    |
-      | 149f50a1fe684bfa88dae76a48d26ef7 | ResellerAdmin |
-      | 9fe2ff9ee4384b1894a90878d3e92bab |    _member_   |
-      | 6ecf391421604da985db2f141e46a7c8 |     admin     |
-      | deb4fffd123c4d02a907c2c74559dccf |  anotherrole  |
-      | bef1f95537914b1295da6aa038ef4de6 |    new-role   |
-      +----------------------------------+---------------+
-
-#. Assign the admin role to the user-project pair::
-
-   $ keystone user-role-add --user SERVICE_USER_ID --role ADMIN_ROLE_ID --tenant SERVICE_PROJECT_ID
+      +-------+----------------------------------+
+      | Field | Value                            |
+      +-------+----------------------------------+
+      | id    | 233109e756c1465292f31e7662b429b1 |
+      | name  | admin                            |
+      +-------+----------------------------------+
 
 Delete a service
 ~~~~~~~~~~~~~~~~
 To delete a specified service, specify its ID::
 
-$ keystone service-delete SERVICE_ID
+$ openstack service delete SERVICE_TYPE|SERVICE_NAME|SERVICE_ID
 
 For example:
 
 .. code::
 
-   $ keystone service-delete 84c23f4b942c44c38b9c42c5e517cd9a
+   $ openstack service delete object-store

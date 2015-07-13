@@ -83,7 +83,7 @@ service quotas.
 #. To update Block Storage service quotas, place
    the tenant ID in a variable::
 
-      $ tenant=$(keystone tenant-list | awk '/tenantName/ {print $2}')
+      $ tenant=$(openstack project show -f value -c id tenantName)
 
 #. Update a particular quota value::
 
