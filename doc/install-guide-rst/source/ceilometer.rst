@@ -4,7 +4,7 @@ Add the Telemetry module
 
 .. toctree::
 
-   ceilometer-controller.rst
+   ceilometer-controller-install.rst
    ceilometer-nova.rst
    ceilometer-glance.rst
    ceilometer-cinder.rst
