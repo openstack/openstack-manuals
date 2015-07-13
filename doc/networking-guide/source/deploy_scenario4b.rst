@@ -59,7 +59,6 @@ assumes basic configuration knowledge of Networking service components.
 For illustration purposes, the management network uses 10.0.0.0/24 and
 provider networks use 192.0.2.0/24, 198.51.100.0/24, and 203.0.113.0/24.
 
-
 Infrastructure
 --------------
 
@@ -118,11 +117,8 @@ The controller node contains the following network components:
 #. Linux bridge agent managing virtual switches, connectivity among
    them, and interaction via virtual ports with other network components
    such as namespaces and underlying interfaces.
-
-#. DHCP agent managing the ``qdhcp`` namespaces.
-
-   #. The ``qdhcp`` namespaces provide DHCP services for instances using
-      provider networks.
+#. DHCP agent managing the ``qdhcp`` namespaces. The ``qdhcp`` namespaces
+   provide DHCP services for instances using provider networks.
 
 .. image:: figures/scenario-provider-lb-controller1.png
    :alt: Controller node components - overview
@@ -187,11 +183,11 @@ Internet.
 
 The following steps involve compute node 1.
 
-#. The instance 1 ``tap`` interface (1) forwards the packet to the VLAN
+#. The instance 1 ``tap`` interface (1) forwards the packet to the provider
    bridge ``qbr``. The packet contains destination MAC address *TG*
    because the destination resides on another network.
-#. Security group rules (2) on the provider bridge ``qbr`` handle state
-   tracking for the packet.
+#. Security group rules (2) on the provider bridge ``qbr`` handle firewalling
+   and tracking for the packet.
 #. The provider bridge ``qbr`` forwards the packet to the logical VLAN
    interface ``device.sid`` where *device* references the underlying
    physical provider interface and *sid* contains the provider network
@@ -245,11 +241,11 @@ networks.
 
 The following steps involve compute node 1:
 
-#. The instance 1 ``tap`` interface forwards the packet to the VLAN
+#. The instance 1 ``tap`` interface forwards the packet to the provider
    bridge ``qbr``. The packet contains destination MAC address *TG1*
    because the destination resides on another network.
-#. Security group rules on the provider bridge ``qbr`` handle state tracking
-   for the packet.
+#. Security group rules on the provider bridge ``qbr`` handle firewalling
+   and state tracking for the packet.
 #. The provider bridge ``qbr`` forwards the packet to the logical VLAN
    interface ``device.sid`` where *device* references the underlying
    physical provider interface and *sid* contains the provider network
@@ -310,11 +306,11 @@ network.
 
 The following steps involve compute node 1:
 
-#. The instance 1 ``tap`` interface (1) forwards the packet to the VLAN
+#. The instance 1 ``tap`` interface (1) forwards the packet to the provider
    bridge ``qbr``. The packet contains destination MAC address *I2*
    because the destination resides on the same network.
-#. Security group rules (2) on the provider bridge ``qbr`` handle
-   state tracking for the packet.
+#. Security group rules (2) on the provider bridge ``qbr`` handle firewalling
+   and state tracking for the packet.
 #. The provider bridge ``qbr`` forwards the packet to the logical VLAN
    interface ``device.sid`` where *device* references the underlying
    physical provider interface and *sid* contains the provider network
@@ -387,7 +383,7 @@ Controller node
       Networking service does not provide layer-3 services such as
       routing.
 
-#. Configure the ML2 plug-in. Edit the
+#. Configure the ML2 plug-in and Linux bridge agent. Edit the
    :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
 
    .. code-block:: ini
@@ -415,7 +411,7 @@ Controller node
       enable_ipset = True
 
    Replace ``PROVIDER_INTERFACE`` with the name of the underlying interface
-   that handles provider networks. For example, ``eth1``.`
+   that handles provider networks. For example, ``eth1``.
 
    .. note::
       The ``tenant_network_types`` option contains no value because the
@@ -459,7 +455,7 @@ Compute nodes
 
       $ sysctl -p
 
-#. Configure base options. Edit the :file:`/etc/neutron/neutron.conf` file:
+#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
 
    .. code-block:: ini
 
@@ -483,7 +479,7 @@ Compute nodes
       enable_ipset = True
 
    Replace ``PROVIDER_INTERFACE`` with the name of the underlying interface
-   that handles provider networks. For example, ``eth1``.`
+   that handles provider networks. For example, ``eth1``.
 
 #. Start the following services:
 

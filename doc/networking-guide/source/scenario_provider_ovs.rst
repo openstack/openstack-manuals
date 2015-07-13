@@ -1,6 +1,6 @@
-================================================
-Scenario 4a: Provider networks with Open vSwitch
-================================================
+=============================================
+Scenario: Provider networks with Open vSwitch
+=============================================
 
 This scenario describes a provider networks implementation of the
 OpenStack Networking service using the ML2 plug-in with Open vSwitch (OVS).
@@ -8,7 +8,9 @@ OpenStack Networking service using the ML2 plug-in with Open vSwitch (OVS).
 Provider networks generally offer simplicity, performance, and reliability at
 the cost of flexibility. Unlike other scenarios, only administrators can
 manage provider networks because they require configuration of physical
-network infrastructure.
+network infrastructure. Also, provider networks lack the concept of fixed
+and floating IP addresses because they only handle layer-2 connectivity for
+instances.
 
 In many cases, operators who are already familiar with network architectures
 that rely on the physical network infrastructure can easily deploy OpenStack
@@ -32,6 +34,9 @@ sizable physical network infrastructure. Applications that run inside the
 OpenStack deployment might require direct layer-2 access, typically using
 VLANs, to applications outside of the deployment.
 
+The example configuration creates a VLAN provider network. However, it also
+supports flat (untagged or native) provider networks.
+
 Prerequisites
 ~~~~~~~~~~~~~
 
@@ -41,18 +46,25 @@ Networking service immediately depends on the Identity service and the Compute
 service immediately depends on the Networking service. These dependencies lack
 services such as the Image service because the Networking service does not
 immediately depend on it. However, the Compute service depends on the Image
-service to launch an instance.
+service to launch an instance. The example configuration in this scenario
+assumes basic configuration knowledge of Networking service components.
+
+For illustration purposes, the management network uses 10.0.0.0/24 and
+provider networks use 192.0.2.0/24, 198.51.100.0/24, and 203.0.113.0/24.
 
 Infrastructure
 --------------
 
 #. One controller node with two network interfaces: management and
-   external (typically the Internet). The Open vSwitch bridge ``br-ex``
-   must contain an port on the external network interface.
-
+   provider. The provider interface connects to a generic network that
+   physical network infrastructure switches/routes to external networks
+   (typically the Internet). The Open vSwitch bridge ``br-provider``
+   must contain an port on the provider network interface.
 #. At least two compute nodes with two network interfaces: management
-   and external (typically the Internet). The Open vSwitch bridge
-   ``br-ex`` must contain a port on the external network interface.
+   and provider. The provider interface connects to a generic network that
+   the pysical network infrastructure switches/routes to external networks
+   (typically the Internet). The Open vSwitch bridge ``br-provider``
+   must contain a port on the provider network interface.
 
 .. figure:: figures/scenario-provider-hw.png
    :alt: Hardware layout
@@ -67,17 +79,13 @@ OpenStack services - controller node
 ------------------------------------
 
 #.  Operational SQL server with ``neutron`` database and appropriate
-    configuration in the :file:`neutron-server.conf` file.
-
+    configuration in the :file:`neutron.conf` file.
 #.  Operational message queue service with appropriate configuration in
-    the :file:`neutron-server.conf` file.
-
+    the :file:`neutron.conf` file.
 #.  Operational OpenStack Identity service with appropriate
-    configuration in the :file:`neutron-server.conf` file.
-
+    configuration in the :file:`neutron.conf` file.
 #.  Operational OpenStack Compute controller/management service with
     appropriate configuration to use neutron in the :file:`nova.conf` file.
-
 #.  Neutron server service, Open vSwitch service, ML2 plug-in, Open
     vSwitch agent, DHCP agent, and any dependencies.
 
@@ -85,11 +93,9 @@ OpenStack services - compute nodes
 ----------------------------------
 
 #.  Operational OpenStack Identity service with appropriate
-    configuration in the :file:`neutron-server.conf` file.
-
+    configuration in the :file:`neutron.conf` file.
 #.  Operational OpenStack Compute controller/management service with
     appropriate configuration to use neutron in the :file:`nova.conf` file.
-
 #.  Open vSwitch service, ML2 plug-in, Open vSwitch agent, and any
     dependencies.
 
@@ -107,11 +113,8 @@ The controller node contains the following network components:
 #. Open vSwitch agent managing virtual switches, connectivity among
    them, and interaction via virtual ports with other network components
    such as namespaces and underlying interfaces.
-
-#. DHCP agent managing the ``qdhcp`` namespaces.
-
-#. The ``qdhcp`` namespaces provide DHCP services for instances using
-   provider networks.
+#. DHCP agent managing the ``qdhcp`` namespaces. The ``qdhcp`` namespaces
+   provide DHCP services for instances using provider networks.
 
 .. figure:: figures/scenario-provider-ovs-controller1.png
    :alt: Controller node components - overview
@@ -120,14 +123,14 @@ The controller node contains the following network components:
    :alt: Controller node components - connectivity
 
 .. note::
-   The diagram contains two different provider networks.
+   For illustration purposes, the diagram contains two different provider
+   networks.
 
 The compute nodes contain the following network components:
 
 #. Open vSwitch agent managing virtual switches, connectivity among
    them, and interaction via virtual ports with other network components
    such as Linux bridges and underlying interfaces.
-
 #. Linux bridges handling security groups.
 
    .. note::
@@ -141,94 +144,79 @@ The compute nodes contain the following network components:
    :alt: Compute node components - connectivity
 
 .. note::
-   The diagram contains two different provider networks.
+   For illustration purposes, the diagram contains two different provider
+   networks.
 
 Packet flow
 ~~~~~~~~~~~
-
-For all cases, the physical network infrastructure handles routing and
-switching for *north-south* and *east-west* network traffic.
 
 .. note::
    *North-south* network traffic travels between an instance and
    external network, typically the Internet. *East-west* network
    traffic travels between instances.
 
+.. note::
+   Open vSwitch uses VLANs internally to segregate networks that traverse
+   bridges. The VLAN ID usually differs from the segmentation ID of the
+   virtual network.
+
 Case 1: North-south
 -------------------
 
-Instance 1 resides on compute node 1 and uses provider network 1.
+The physical network infrastructure handles routing and potentially other
+services between the provider and external network. In this case, *provider*
+and *external* simply differentiate between a network available to instances
+and a network only accessible via router, respectively, to illustrate that
+the physical network infrastructure handles routing. However, provider
+networks support direct connection to *external* networks such as the
+Internet.
 
-The instance sends a packet to a host on the external network.
-
-The physical network infrastructure handles routing (and potentially SNAT/DNAT)
-between the provider and external network. In this example, external network
-1 contains a different IP network than the provider networks to illustrate
-that the physical network infrastructure can handle routing. However, provider
-networks also support switching to external networks.
-
-* External network 1
+* External network
 
   * Network 203.0.113.0/24
 
-  * Gateway 203.0.113.1 with MAC address *EG1*
-
-* Provider network 1
+* Provider network (VLAN)
 
   * Network 192.0.2.0/24
-
-  * Gateway 192.0.2.1 with MAC address *TG1*
+  * Gateway 192.0.2.1 with MAC address *TG*
 
 * Compute node 1
 
   * Instance 1 192.0.2.11 with MAC address *I1*
 
+* Instance 1 resides on compute node 1 and uses a provider network.
+* The instance sends a packet to a host on the external network.
+
 The following steps involve compute node 1.
 
-#. Upon launch, instance 1 gets an IP address from the DHCP server on the
-   controller node and gets metadata by using a configuration drive. After
-   initial configuration, only DHCP renewal traffic interacts with the
-   controller node.
-
-   .. note::
-      The lack of L3 agents in this scenario prevents operation of the
-      conventional metadata agent. You must use a configuration drive to
-      provide instance metadata.
-
 #. The instance 1 ``tap`` interface (1) forwards the packet to the Linux
-   bridge ``qbr``. The packet contains destination MAC address *TG1*
+   bridge ``qbr``. The packet contains destination MAC address *TG*
    because the destination resides on another network.
-
-#. Security group rules (2) on the provider bridge ``qbr`` handle state
-   tracking for the packet.
-
+#. Security group rules (2) on the Linux bridge ``qbr`` handle firewalling
+   and state tracking for the packet.
 #. The Linux bridge ``qbr`` forwards the packet to the Open vSwitch integration
    bridge ``br-int``.
-
 #. The Open vSwitch integration bridge ``br-int`` adds the internal tag for
-   provider network 1.
-
+   the provider network.
 #. The Open vSwitch integration bridge ``br-int`` forwards the packet to the
-   Open vSwitch provider bridge ``br-ex``.
-
-#. The Open vSwitch provider bridge ``br-ex`` replaces the internal tag with
-   the actual VLAN tag (segmentation ID) of provider network 1.
-
-#. The Open vSwitch provider bridge ``br-ex`` forwards the packet to the
-   physical network via the external network interface.
+   Open vSwitch provider bridge ``br-provider``.
+#. The Open vSwitch provider bridge ``br-provider`` replaces the internal tag
+   with the actual VLAN tag (segmentation ID) of the provider network.
+#. The Open vSwitch provider bridge ``br-provider`` forwards the packet to the
+   physical network via the provider network interface.
 
 The following steps involve the physical network infrastructure:
 
 #. A switch (3) handles any VLAN tag operations between provider network 1
    and the router (4).
-
 #. A router (4) routes the packet from provider network 1 to the external
    network.
-
 #. A switch (3) handles any VLAN tag operations between the router (4) and
    the external network.
-
 #. A switch (3) forwards the packet to the external network.
+
+.. note::
+   Return traffic follows similar steps in reverse.
 
 .. figure:: figures/scenario-provider-ovs-flowns1.png
    :alt: Network traffic flow - north/south
@@ -236,24 +224,17 @@ The following steps involve the physical network infrastructure:
 Case 2: East-west for instances on different networks
 -----------------------------------------------------
 
-Instance 1 resides on compute node 1 and uses provider network 1. Instance 2
-resides on compute node 2 and uses provider network 2.
-
-Instance 1 sends a packet to instance 2.
-
 The physical network infrastructure handles routing between the provider
 networks.
 
 * Provider network 1
 
   * Network: 192.0.2.0/24
-
   * Gateway: 192.0.2.1 with MAC address *TG1*
 
 * Provider network 2
 
   * Network: 198.51.100.0/24
-
   * Gateway: 198.51.100.1 with MAC address *TG2*
 
 * Compute node 1
@@ -264,60 +245,50 @@ networks.
 
   * Instance 2: 198.51.100.11 with MAC address *I2*
 
+* Instance 1 resides on compute node 1 and uses provider network 1.
+* Instance 2 resides on compute node 2 and uses provider network 2.
+* Instance 1 sends a packet to instance 2.
+
 The following steps involve compute node 1:
 
 #. The instance 1 ``tap`` interface (1) forwards the packet to the Linux
    bridge ``qbr``. The packet contains destination MAC address *TG1*
    because the destination resides on another network.
-
-#. Security group rules (2) on the Linux bridge ``qbr`` handle state tracking
-   for the packet.
-
+#. Security group rules (2) on the Linux bridge ``qbr`` handle firewalling
+   and state tracking for the packet.
 #. The Linux bridge ``qbr`` forwards the packet to the Open vSwitch
    integration bridge ``br-int``.
-
 #. The Open vSwitch integration bridge ``br-int`` adds the internal tag for
    provider network 1.
-
 #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-   the Open vSwitch provider bridge ``br-ex``.
-
-#. The Open vSwitch provider bridge ``br-ex`` replaces the internal tag
+   the Open vSwitch provider bridge ``br-provider``.
+#. The Open vSwitch provider bridge ``br-provider`` replaces the internal tag
    with the actual VLAN tag (segmentation ID) of provider network 1.
-
-#. The Open vSwitch VLAN bridge ``br-ex`` forwards the packet to the
-   physical network infrastructure via the external network interface.
+#. The Open vSwitch VLAN bridge ``br-provider`` forwards the packet to the
+   physical network infrastructure via the provider network interface.
 
 The following steps involve the physical network infrastructure:
 
 #. A switch (3) handles any VLAN tag operations between provider network 1
    and the router (4).
-
 #. A router (4) routes the packet from provider network 1 to provider
    network 2.
-
 #. A switch (3) handles any VLAN tag operations between the router (4) and
    provider network 2.
-
 #. A switch (3) forwards the packet to compute node 2.
 
 The following steps involve compute node 2:
 
-#. The external network interface forwards the packet to the Open vSwitch
-   provider bridge ``br-ex``.
-
-#. The Open vSwitch provider bridge ``br-ex`` forwards the packet to the
+#. The provider network interface forwards the packet to the Open vSwitch
+   provider bridge ``br-provider``.
+#. The Open vSwitch provider bridge ``br-provider`` forwards the packet to the
    Open vSwitch integration bridge ``br-int``.
-
 #. The Open vSwitch integration bridge ``br-int`` replaces the actual
    VLAN tag (segmentation ID) of provider network 2 with the internal tag.
-
 #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
    the Linux bridge ``qbr``.
-
 #. Security group rules (5) on the Linux bridge ``qbr`` handle firewalling
    and state tracking for the packet.
-
 #. The Linux bridge ``qbr`` forwards the packet to the ``tap`` interface (6)
    on instance 2.
 
@@ -330,15 +301,10 @@ The following steps involve compute node 2:
 Case 3: East-west for instances on the same network
 ---------------------------------------------------
 
-Instance 1 resides on compute node 1 and uses provider network 1. Instance 2
-resides on compute node 2 and uses provider network 1.
-
-Instance 1 sends a packet to instance 2.
-
 The physical network infrastructure handles switching within the provider
 network.
 
-* Provider network 1
+* Provider network
 
   * Network: 192.0.2.0/24
 
@@ -350,29 +316,28 @@ network.
 
   * Instance 2: 192.0.2.12 with MAC address *I2*
 
+* Instance 1 resides on compute node 1.
+* Instance 2 resides on compute node 2.
+* Both instances use the same provider network.
+* Instance 1 sends a packet to instance 2.
+
 The following steps involve compute node 1:
 
-#. The instance 1 ``tap`` interface (1) forwards the packet to the VLAN
+#. The instance 1 ``tap`` interface (1) forwards the packet to the Linux
    bridge ``qbr``. The packet contains destination MAC address *I2*
    because the destination resides on the same network.
-
-#. Security group rules (2) on the provider bridge ``qbr`` handle
-   state tracking for the packet.
-
+#. Security group rules (2) on the Linux bridge ``qbr`` handle firewalling
+   and state tracking for the packet.
 #. The Linux bridge ``qbr`` forwards the packet to the Open vSwitch
    integration bridge ``br-int``.
-
 #. The Open vSwitch integration bridge ``br-int`` adds the internal tag for
-   provider network 1.
-
+   the provider network.
 #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-   the Open vSwitch provider bridge ``br-ex``.
-
-#. The Open vSwitch provider bridge ``br-ex`` replaces the internal tag
-   with the actual VLAN tag (segmentation ID) of provider network 1.
-
-#. The Open vSwitch VLAN bridge ``br-ex`` forwards the packet to the
-   physical network infrastructure via the external network interface.
+   the Open vSwitch provider bridge ``br-provider``.
+#. The Open vSwitch provider bridge ``br-provider`` replaces the internal tag
+   with the actual VLAN tag (segmentation ID) of the provider network.
+#. The Open vSwitch VLAN bridge ``br-provider`` forwards the packet to the
+   physical network infrastructure via the provider network interface.
 
 The following steps involve the physical network infrastructure:
 
@@ -380,21 +345,16 @@ The following steps involve the physical network infrastructure:
 
 The following steps involve compute node 2:
 
-#. The external network interface forwards the packet to the Open vSwitch
-   provider bridge ``br-ex``.
-
-#. The Open vSwitch provider bridge ``br-ex`` forwards the packet to the
+#. The provider network interface forwards the packet to the Open vSwitch
+   provider bridge ``br-provider``.
+#. The Open vSwitch provider bridge ``br-provider`` forwards the packet to the
    Open vSwitch integration bridge ``br-int``.
-
 #. The Open vSwitch integration bridge ``br-int`` replaces the actual
    VLAN tag (segmentation ID) of provider network 1 with the internal tag.
-
 #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
    the Linux bridge ``qbr``.
-
 #. Security group rules (4) on the Linux bridge ``qbr`` handle firewalling
    and state tracking for the packet.
-
 #. The Linux bridge ``qbr`` forwards the packet to the ``tap`` interface (5)
    on instance 2.
 
@@ -410,22 +370,34 @@ Example configuration
 Use the following example configuration as a template to deploy this
 scenario in your environment.
 
+.. note::
+   The lack of L3 agents in this scenario prevents operation of the
+   conventional metadata agent. You must use a configuration drive to
+   provide instance metadata.
+
 Controller node
 ---------------
 
 #. Configure the kernel to disable reverse path filtering. Edit the
-   :file:`/etc/sysctl.conf` file::
+   :file:`/etc/sysctl.conf` file:
+
+   .. code-block:: ini
 
       net.ipv4.conf.default.rp_filter=0
       net.ipv4.conf.all.rp_filter=0
 
-#. Load the new kernel configuration::
+#. Load the new kernel configuration:
+
+   .. code-block:: console
 
       $ sysctl -p
 
-#. Configure base options. Edit the :file:`/etc/neutron/neutron.conf` file::
+#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+
+   .. code-block:: ini
 
       [DEFAULT]
+      verbose = True
       core_plugin = ml2
       service_plugins =
 
@@ -434,8 +406,10 @@ Controller node
       Networking service does not provide layer-3 services such as
       routing.
 
-#. Configure the ML2 plug-in. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2\_conf.ini` file::
+#. Configure the ML2 plug-in and Open vSwitch agent. Edit the
+   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
+
+   .. code-block:: ini
 
       [ml2]
       type_drivers = flat,vlan
@@ -443,25 +417,31 @@ Controller node
       mechanism_drivers = openvswitch
 
       [ml2_type_flat]
-      flat_networks = external
+      flat_networks = provider
 
       [ml2_type_vlan]
-      network_vlan_ranges = external
+      network_vlan_ranges = provider
+
+      [ovs]
+      bridge_mappings = provider:br-provider
 
       [securitygroup]
       firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
       enable_security_group = True
       enable_ipset = True
 
-      [ovs]
-      bridge_mappings = external:br-ex
-
    .. note::
       The ``tenant_network_types`` option contains no value because the
       architecture does not support project (private) networks.
 
-#. Configure the DHCP agent. Edit the :file:`/etc/neutron/dhcp\_agent.ini`
-   file::
+   .. note::
+      The ``provider`` value in the ``network_vlan_ranges`` option lacks VLAN
+      ID ranges to support use of arbitrary VLAN IDs.
+
+#. Configure the DHCP agent. Edit the :file:`/etc/neutron/dhcp_agent.ini`
+   file:
+
+   .. code-block:: ini
 
       [DEFAULT]
       verbose = True
@@ -471,107 +451,104 @@ Controller node
 
 #. Start the following service:
 
-   - Open vSwitch
+   * Open vSwitch
 
-#. Create the Open vSwitch provider bridge ``br-ex``::
+#. Create the Open vSwitch provider bridge ``br-provider``:
 
-      $ ovs-vsctl add-br br-ex
+   .. code-block:: console
 
-#. Add the external network interface as a port on the Open vSwitch provider
-   bridge ``br-ex``::
+      $ ovs-vsctl add-br br-provider
 
-      $ ovs-vsctl add-port br-ex EXTERNAL_NETWORK_INTERFACE
+#. Add the provider network interface as a port on the Open vSwitch provider
+   bridge ``br-provider``:
 
-   Replace ``EXTERNAL_NETWORK_INTERFACE`` with the respective
-   underlying network interface name. For example, ``eth1``.
+   .. code-block:: console
+
+      $ ovs-vsctl add-port br-provider PROVIDER_INTERFACE
+
+   Replace ``PROVIDER_INTERFACE`` with the name of the underlying interface
+   that handles provider networks. For example, ``eth1``.
 
 #. Start the following services:
 
-   -  Server
-   -  Open vSwitch agent
-   -  DHCP agent
+   *  Server
+   *  Open vSwitch agent
+   *  DHCP agent
 
 Compute nodes
 -------------
 
 #. Configure the kernel to disable reverse path filtering. Edit the
-   :file:`/etc/sysctl.conf` file::
+   :file:`/etc/sysctl.conf` file:
+
+   .. code-block:: ini
 
       net.ipv4.conf.default.rp_filter=0
       net.ipv4.conf.all.rp_filter=0
 
-#. Load the new kernel configuration::
+#. Load the new kernel configuration:
+
+   .. code-block:: console
 
       $ sysctl -p
 
-#. Configure base options. Edit the :file:`/etc/neutron/neutron.conf` file::
+#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+
+   .. code-block:: ini
 
       [DEFAULT]
-      core_plugin = ml2
-      service_plugins =
+      verbose = True
 
-   .. note::
-      The ``service_plugins`` option contains no value because the
-      Networking service does not provide layer-3 services such as
-      routing.
+#. Configure the Open vSwitch agent. Edit the
+   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
 
-#. Configure the ML2 plug-in. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2\_conf.ini` file::
+   .. code-block:: ini
 
-      [ml2]
-      type_drivers = flat,vlan
-      tenant_network_types =
-      mechanism_drivers = openvswitch
-
-      [ml2_type_flat]
-      flat_networks = external
-
-      [ml2_type_vlan]
-      network_vlan_ranges = external
+      [ovs]
+      bridge_mappings = provider:br-provider
 
       [securitygroup]
       firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
       enable_security_group = True
       enable_ipset = True
 
-      [ovs]
-      bridge_mappings = external:br-ex
-
-   .. note::
-      The ``tenant_network_types`` option contains no value because the
-      architecture does not support project (private) networks.
-
 #. Start the following service:
 
-   - Open vSwitch
+   * Open vSwitch
 
-#. Create the Open vSwitch provider bridge ``br-ex``::
+#. Create the Open vSwitch provider bridge ``br-provider``:
 
-      $ ovs-vsctl add-br br-ex
+   .. code-block:: console
 
-#. Add the external network interface as a port on the Open vSwitch provider
-   bridge ``br-ex``::
+      $ ovs-vsctl add-br br-provider
 
-      $ ovs-vsctl add-port br-ex EXTERNAL_NETWORK_INTERFACE
+#. Add the provider network interface as a port on the Open vSwitch provider
+   bridge ``br-provider``:
 
-   Replace ``EXTERNAL_NETWORK_INTERFACE`` with the respective
-   underlying network interface name. For example, ``eth1``.
+   .. code-block:: console
+
+      $ ovs-vsctl add-port br-provider PROVIDER_INTERFACE
+
+   Replace ``PROVIDER_INTERFACE`` with the name of the underlying interface
+   that handles provider networks. For example, ``eth1``.
 
 #. Start the following services:
 
-   -  Open vSwitch agent
+   *  Open vSwitch agent
 
 Verify service operation
 ------------------------
 
 #. Source the administrative project credentials.
+#. Verify presence and operation of the agents:
 
-#. Verify presence and operation of the agents::
+   .. code-block:: console
 
       $ neutron agent-list
       +--------------------------------------+--------------------+------------+-------+----------------+---------------------------+
       | id                                   | agent_type         | host       | alive | admin_state_up | binary                    |
       +--------------------------------------+--------------------+------------+-------+----------------+---------------------------+
+      | 09de6af6-c5f1-4548-8b09-18801f068c57 | Open vSwitch agent | controller | :-)   | True           | neutron-openvswitch-agent |
       | 1c5eca1c-3672-40ae-93f1-6bde214fa303 | DHCP agent         | controller | :-)   | True           | neutron-dhcp-agent        |
       | 6129b1ec-9946-4ec5-a4bd-460ca83a40cb | Open vSwitch agent | compute1   | :-)   | True           | neutron-openvswitch-agent |
       | 8a3fc26a-9268-416d-9d29-6d44f0e4a24f | Open vSwitch agent | compute2   | :-)   | True           | neutron-openvswitch-agent |
@@ -580,17 +557,17 @@ Verify service operation
 Create initial networks
 -----------------------
 
-This example creates a provider network using VLAN 101 and IP network
-203.0.113.0/24. Change the VLAN ID and IP network to values that are
-appropriate for your environment.
+This example creates a VLAN provider network. Change the VLAN ID and IP
+address range to values suitable for your environment.
 
 #. Source the administrative project credentials.
+#. Create a provider network:
 
-#. Create a provider network::
+   .. code-block:: console
 
       $ neutron net-create provider-101 --shared \
-      --provider:physical_network external --provider:network_type vlan \
-      --provider:segmentation_id 101
+        --provider:physical_network provider --provider:network_type vlan \
+        --provider:segmentation_id 101
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
@@ -599,7 +576,7 @@ appropriate for your environment.
       | id                        | 8b868082-e312-4110-8627-298109d4401c |
       | name                      | provider-101                         |
       | provider:network_type     | vlan                                 |
-      | provider:physical_network | external                             |
+      | provider:physical_network | provider                             |
       | provider:segmentation_id  | 101                                  |
       | router:external           | False                                |
       | shared                    | True                                 |
@@ -611,9 +588,12 @@ appropriate for your environment.
    .. note::
       The ``shared`` option allows any project to use this network.
 
-#. Create a subnet on the provider network::
+#. Create a subnet on the provider network:
 
-      $ neutron subnet-create provider-101 203.0.113.0/24 --gateway 203.0.113.1
+   .. code-block:: console
+
+      $ neutron subnet-create provider-101 203.0.113.0/24 \
+        --name provider-101-subnet --gateway 203.0.113.1
       Created a new subnet:
       +-------------------+--------------------------------------------------+
       | Field             | Value                                            |
@@ -628,15 +608,17 @@ appropriate for your environment.
       | ip_version        | 4                                                |
       | ipv6_address_mode |                                                  |
       | ipv6_ra_mode      |                                                  |
-      | name              |                                                  |
+      | name              | provider-101-subnet                              |
       | network_id        | 8b868082-e312-4110-8627-298109d4401c             |
       | tenant_id         | e0bddbc9210d409795887175341b7098                 |
       +-------------------+--------------------------------------------------+
 
-Verify operation
-----------------
+Verify network operation
+------------------------
 
-#. On the controller node, verify creation of the ``qdhcp`` namespace::
+#. On the controller node, verify creation of the ``qdhcp`` namespace:
+
+   .. code-block:: console
 
       $ ip netns
       qdhcp-8b868082-e312-4110-8627-298109d4401c
@@ -644,15 +626,34 @@ Verify operation
    .. note::
       The ``qdhcp`` namespace might not exist until launching an instance.
 
-#. Source the credentials for a non-privileged project. The following
-   steps use the ``demo`` project.
-
+#. Source the regular project credentials. The following steps use the
+   ``demo`` project.
 #. Create the appropriate security group rules to allow ping and SSH
-   access to the instance.
+   access to the instance. For example:
+
+   .. code-block:: console
+
+      $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+      +-------------+-----------+---------+-----------+--------------+
+      | IP Protocol | From Port | To Port | IP Range  | Source Group |
+      +-------------+-----------+---------+-----------+--------------+
+      | icmp        | -1        | -1      | 0.0.0.0/0 |              |
+      +-------------+-----------+---------+-----------+--------------+
+
+      $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
+      +-------------+-----------+---------+-----------+--------------+
+      | IP Protocol | From Port | To Port | IP Range  | Source Group |
+      +-------------+-----------+---------+-----------+--------------+
+      | tcp         | 22        | 22      | 0.0.0.0/0 |              |
+      +-------------+-----------+---------+-----------+--------------+
 
 #. Launch an instance with an interface on the provider network.
+#. Determine the IP address of the instance. The following step uses
+   203.0.113.2.
+#. On the controller node or any host with access to the provider network,
+   ping the IP address of the instance:
 
-#. Test connectivity to the instance::
+   .. code-block:: console
 
       $ ping -c 4 203.0.113.2
       PING 203.0.113.2 (203.0.113.2) 56(84) bytes of data.
@@ -666,8 +667,9 @@ Verify operation
       rtt min/avg/max/mdev = 0.929/1.539/3.183/0.951 ms
 
 #. Obtain access to the instance.
+#. Test connectivity to the Internet:
 
-#. Test connectivity to the Internet from the instance::
+   .. code-block:: console
 
       $ ping -c 4 openstack.org
       PING openstack.org (174.143.194.225) 56(84) bytes of data.
