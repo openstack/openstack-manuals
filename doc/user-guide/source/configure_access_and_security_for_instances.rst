@@ -164,7 +164,7 @@ and the association of that address with a specific instance.
 #. Click the :guilabel:`Floating IPs` tab, which shows the floating IP
    addresses allocated to instances.
 
-#. Click :guilabel:`Allocate IP to Project`.
+#. Click :guilabel:`Allocate IP To Project`.
 
 #. Choose the pool from which to pick the IP address.
 
