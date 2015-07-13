@@ -30,3 +30,66 @@ Amazon EC2 Elastic Block Storage (EBS) offering.
 
 .. _`Storage Decisions`: http://docs.openstack.org/openstack-ops/content/storage_decision.html
 .. _`OpenStack Operations Guide`: http://docs.openstack.org/ops/
+
+.. include:: blockstorage_nfs_backend.rst
+.. include:: blockstorage_glusterfs_backend.rst
+.. include:: blockstorage_multi_backend.rst
+.. include:: blockstorage_backup_disks.rst
+
+.. toctree::
+   :hidden:
+
+   blockstorage_nfs_backend.rst
+   blockstorage_glusterfs_backend.rst
+   blockstorage_multi_backend.rst
+   blockstorage_backup_disks.rst
+
+.. TODO (MZ) Convert and include the following sections
+   include: blockstorage/section_volume-migration.xml
+   include: blockstorage/section_glusterfs_removal.xml
+   include: blockstorage/section_volume-backups.xml
+   include: blockstorage/section_volume-backups-export-import.xml
+
+Use LIO iSCSI support
+---------------------
+
+The default mode for the ``iscsi_helper`` tool is ``tgtadm``.
+To use LIO iSCSI, install the ``python-rtslib`` package, and set
+``iscsi_helper=lioadm`` in the :file:`cinder.conf` file.
+
+Once configured, you can use the :command:`cinder-rtstool` command to
+manage the volumes. This command enables you to create, delete, and
+verify volumes and determine targets and add iSCSI initiators to the
+system.
+
+.. TODO (MZ) Convert and include the following sections
+   include: blockstorage/section_consistency_groups.xml
+   include: blockstorage/section_driver_filter_weighing.xml
+   include: blockstorage/section_ratelimit-volume-copy-bandwidth.xml
+   include: blockstorage/section_over_subscription.xml
+
+Troubleshoot your installation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This section provides useful tips to help you troubleshoot your Block
+Storage installation.
+
+.. toctree::
+   :maxdepth: 2
+
+   ts_cinder_config.rst
+   ts_vol_attach_miss_sg_scan.rst
+   ts_non_existent_host.rst
+   ts_non_existent_vlun.rst
+   ts_no_emulator_x86_64.rst
+
+
+.. TODO (MZ) Convert and include the following sections
+   include: blockstorage/section_ts_multipath_warn.xml
+   include: blockstorage/section_ts_eql_volume_size.xml
+   include: blockstorage/section_ts_HTTP_bad_req_in_cinder_vol_log.xml
+   include: blockstorage/section_ts_duplicate_3par_host.xml
+   include: blockstorage/section_ts_failed_attach_vol_after_detach.xml
+   include: blockstorage/section_ts_failed_attach_vol_no_sysfsutils.xml
+   include: blockstorage/section_ts_failed_connect_vol_FC_SAN.xml
+
