@@ -1,0 +1,77 @@
+==============================
+Advanced configuration options
+==============================
+
+This section describes advanced configuration options for various system
+components. For example, configuration options where the default works
+but that the user wants to customize options. After installing from
+packages, ``$NEUTRON_CONF_DIR`` is :file:`/etc/neutron`.
+
+L3 metering agent
+~~~~~~~~~~~~~~~~~
+
+You can run an L3 metering agent that enables layer-3 traffic metering.
+In general, you should launch the metering agent on all nodes that run
+the L3 agent:
+
+::
+
+    neutron-metering-agent --config-file NEUTRON_CONFIG_FILE
+    --config-file L3_METERING_CONFIG_FILE
+
+You must configure a driver that matches the plug-in that runs on the
+service. The driver adds metering to the routing interface.
+
++------------------------------------------+---------------------------------+
+| Option                                   | Value                           |
++==========================================+=================================+
+| **Open vSwitch**                         |                                 |
++------------------------------------------+---------------------------------+
+| interface\_driver                        |                                 |
+| ($NEUTRON\_CONF\_DIR/metering\_agent.ini)| neutron.agent.linux.interface.  |
+|                                          | OVSInterfaceDriver              |
++------------------------------------------+---------------------------------+
+| **Linux Bridge**                         |                                 |
++------------------------------------------+---------------------------------+
+| interface\_driver                        |                                 |
+| ($NEUTRON\_CONF\_DIR/metering\_agent.ini)| neutron.agent.linux.interface.  |
+|                                          | BridgeInterfaceDriver           |
++------------------------------------------+---------------------------------+
+
+Namespace
+---------
+
+The metering agent and the L3 agent must have the same network
+namespaces configuration.
+
+.. note::
+
+    If the Linux installation does not support network namespaces, you
+    must disable network namespaces in the L3 metering configuration
+    file. The default value of the ``use_namespaces`` option is
+    ``True``.
+
+.. code:: ini
+
+    use_namespaces = False
+
+L3 metering driver
+------------------
+
+You must configure any driver that implements the metering abstraction.
+Currently the only available implementation uses iptables for metering.
+
+.. code:: ini
+
+    driver = neutron.services.metering.drivers.
+    iptables.iptables_driver.IptablesMeteringDriver
+
+L3 metering service driver
+--------------------------
+
+To enable L3 metering, you must set the following option in the
+:file:`neutron.conf` file on the host that runs neutron-server:
+
+.. code:: ini
+
+    service_plugins = metering
