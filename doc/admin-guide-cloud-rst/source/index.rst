@@ -17,6 +17,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   common/get_started_with_openstack.rst
    identity_management.rst
    dashboard.rst
    compute.rst
@@ -30,7 +31,6 @@ Contents
    common/glossary.rst
 
 .. TODO (DC)
-   Add get_started_with_openstack.rst and format the table :/
    Add preface.rst
    Add chapter files
 
