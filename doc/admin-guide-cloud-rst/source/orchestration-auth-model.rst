@@ -1,12 +1,12 @@
-.. _orchestration-auth-model:
-
 .. highlight: ini
    :linenothreshold: 3
 
-   :orphan:
+.. _orchestration-auth-model:
 
+=================================
 Orchestration authorization model
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=================================
+
 
 Orchestration authorization model defines the process of authorization
 that orchestration module uses to authorize requests during so called
@@ -22,7 +22,7 @@ Currently, Orchestration provides two kinds of authorization models:
 * Authorization with OpenStack Identity trusts.
 
 Password authorization
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Password authorization is the initial authorization model that was
 supported by Orchestration module. This kind of authorization requires
@@ -51,7 +51,7 @@ The following steps are executed for password authorization:
    owner.
 
 Keystone trusts authorization
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack Identity trusts is a new authorization method available
 since the IceHouse release.
@@ -109,7 +109,7 @@ The following steps are executed for trusts authorization:
    AutoScaling event.
 
 Authorization model configuration
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Password authorization model had been the default authorization model
 enabled for the Orchestration module before the Kilo release. Since

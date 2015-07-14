@@ -1,9 +1,10 @@
-.. _orchestration-stack-domain-users:
-
 .. highlight: ini
 
+.. _orchestration-stack-domain-users:
+
+==================
 Stack domain users
-~~~~~~~~~~~~~~~~~~
+==================
 
 Orchestration stack domain users allows Orchestration module to
 authorize inside VMs booted and execute the following operations:
@@ -37,7 +38,7 @@ the *domain admin*, and Orchestration uses that user to manage the
 lifecycle of the users in the stack *user domain*.
 
 Stack domain users configuration
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To configure stack domain users the following steps shall be executed:
 
@@ -102,7 +103,7 @@ You must complete the following steps to setup stack domain users:
        stack_user_domain = domain id returned from domain create above
 
 Usage workflow
---------------
+~~~~~~~~~~~~~~
 
 The following steps will be executed during stack creation:
 
