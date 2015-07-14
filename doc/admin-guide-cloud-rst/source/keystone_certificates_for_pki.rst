@@ -10,10 +10,10 @@ public key must be signed in an X509 certificate, and the certificate
 used to sign it must be available as a Certificate Authority (CA)
 certificate. These files can be generated either using the
 ``keystone-manage`` utility, or externally generated. The files need to
-be in the locations specified by the top level Identity Service
+be in the locations specified by the top level Identity service
 configuration file :file:`keystone.conf` as specified in the above section.
 Additionally, the private key should only be readable by the system user
-that will run the Identity Service.
+that will run the Identity service.
 
 
 .. warning::

@@ -1,9 +1,9 @@
 .. :orphan:
 
-OpenStack Image Service
+OpenStack Image service
 -----------------------
 
-The OpenStack Image Service is central to Infrastructure-as-a-Service
+The OpenStack Image service is central to Infrastructure-as-a-Service
 (IaaS) as shown in Conceptual architecture. It accepts API requests for disk
 or server images, and image metadata from end users or OpenStack Compute
 components. It also supports the storage of disk or server images on various
@@ -11,12 +11,12 @@ repository types, including OpenStack Object Storage.
 
 .. TODO (DC) On line 7, add link to get_started_conceptual_architecture.rst
 
-A number of periodic processes run on the OpenStack Image Service to
+A number of periodic processes run on the OpenStack Image service to
 support caching. Replication services ensure consistency and
 availability through the cluster. Other periodic processes include
 auditors, updaters, and reapers.
 
-The OpenStack Image Service includes the following components:
+The OpenStack Image service includes the following components:
 
 glance-api
   Accepts Image API calls for image discovery, retrieval, and storage.
@@ -28,7 +28,7 @@ glance-registry
   .. note::
 
      The registry is a private internal service meant for use by
-     OpenStack Image Service. Do not disclose it to users.
+     OpenStack Image service. Do not disclose it to users.
 
 Database
   Stores image metadata and you can choose your database depending on

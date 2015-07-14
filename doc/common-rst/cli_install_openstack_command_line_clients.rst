@@ -211,7 +211,7 @@ installed without ``pip``.
      # yum install python-PROJECTclient
 
 -  For openSUSE, use zypper to install the clients from the distribution
-   packages Service::
+   packages service::
 
      # zypper install python-PROJECT
 

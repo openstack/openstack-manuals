@@ -7,7 +7,7 @@ Rate-limit volume copy bandwidth
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you create a new volume from an image or an existing volume, or
-when you upload a volume image to the Image Service, large data copy
+when you upload a volume image to the Image service, large data copy
 may stress disk and network bandwidth. To mitigate slow down of data
 access from the instances, OpenStack Block Storage supports rate-limiting
 of volume data copy bandwidth.

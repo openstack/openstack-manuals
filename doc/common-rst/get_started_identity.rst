@@ -28,7 +28,7 @@ User
 Credentials
   Data that confirms the user's identity. For example: user name and
   password, user name and API key, or an authentication token provided
-  by the Identity Service.
+  by the Identity service.
 
 Authentication
   The process of confirming the identity of a user. OpenStack Identity

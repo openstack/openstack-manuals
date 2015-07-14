@@ -2,15 +2,15 @@
 Authentication and authorization
 ================================
 
-Networking uses the Identity Service as the default authentication
-service. When the Identity Service is enabled, users who submit requests
+Networking uses the Identity service as the default authentication
+service. When the Identity service is enabled, users who submit requests
 to the Networking service must provide an authentication token in
 ``X-Auth-Token`` request header. Users obtain this token by
-authenticating with the Identity Service endpoint. For more information
-about authentication with the Identity Service, see `OpenStack Identity
-Service API v2.0
+authenticating with the Identity service endpoint. For more information
+about authentication with the Identity service, see `OpenStack Identity
+service API v2.0
 Reference <http://developer.openstack.org/api-ref-identity-v2.html>`__.
-When the Identity Service is enabled, it is not mandatory to specify the
+When the Identity service is enabled, it is not mandatory to specify the
 tenant ID for resources in create requests because the tenant ID is
 derived from the authentication token.
 
