@@ -8,7 +8,7 @@ OpenStack Compute is a major part of an Infrastructure-as-a-Service
 (IaaS) system. The main modules are implemented in Python.
 
 OpenStack Compute interacts with OpenStack Identity for authentication,
-OpenStack Image Service for disk and server images, and OpenStack
+OpenStack Image service for disk and server images, and OpenStack
 dashboard for the user and administrative interface. Image access is
 limited by projects, and by users; quotas are limited per project (the
 number of instances, for example). OpenStack Compute can scale

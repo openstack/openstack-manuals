@@ -46,7 +46,7 @@ configuration settings. In :file:`nova.conf`, include the
 Guru Meditation reports
 -----------------------
 
-A Guru Meditation report is sent by the Compute Service upon receipt of the
+A Guru Meditation report is sent by the Compute service upon receipt of the
 ``SIGUSR1`` signal. This report is a general-purpose error report,
 including a complete report of the service's current state, and is sent to
 ``stderr``.
@@ -133,7 +133,7 @@ the ``nova-compute`` host and make sure that these files are present:
 * :file:`console.log`, after the instance starts.
 
 If any files are missing, empty, or very small, the ``nova-compute``
-service did not successfully download the images from the Image Service.
+service did not successfully download the images from the Image service.
 
 Also check :file:`nova-compute.log` for exceptions. Sometimes they do not
 appear in the console output.

@@ -10,7 +10,7 @@ Overview
 
 Networking is a standalone component in the OpenStack modular
 architecture. It's positioned alongside OpenStack components such as
-Compute, Image service, Identity, or the Dashboard. Like those
+Compute, Image service, Identity, or dashboard. Like those
 components, a deployment of Networking often involves deploying several
 services to a variety of hosts.
 
