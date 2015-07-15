@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-07-13 06:17+0000\n"
+"POT-Creation-Date: 2015-07-15 06:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -145,7 +145,7 @@ msgstr ""
 msgid "Cloud end users can find out how to resize a server by reading the <link xlink:href=\"http://docs.openstack.org/user-guide/cli_change_the_size_of_your_server.html\">OpenStack End User Guide</link>."
 msgstr ""
 
-#: ./doc/config-reference/ch_computeconfigure.xml:77(title) ./doc/config-reference/compute/section_introduction-to-xen.xml:59(title)
+#: ./doc/config-reference/ch_computeconfigure.xml:77(title) ./doc/config-reference/compute/section_hypervisor_xen_api.xml:59(title)
 msgid "XenServer"
 msgstr ""
 
@@ -1893,188 +1893,6 @@ msgstr ""
 msgid "To customize the Compute scheduler, use the configuration option settings documented in <xref linkend=\"config_table_nova_scheduler\"/>."
 msgstr ""
 
-#. When image changes, this message will be marked fuzzy or untranslated for you.
-#. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:156(None)
-msgid "@@image: '../../common/figures/xenserver_architecture.png'; md5=99792432daf7f0302672fb8f03cb63bb"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:8(title)
-msgid "Xen, XAPI, XenServer"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:9(para)
-msgid "This section describes XAPI managed hypervisors, and how to use them with OpenStack."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:14(title)
-msgid "Terminology"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:16(title)
-msgid "Xen"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:17(para)
-msgid "A hypervisor that provides the fundamental isolation between virtual machines. Xen is open source (GPLv2) and is managed by Xen.org, a cross-industry organization and a Linux Foundation Collaborative project."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:23(para)
-msgid "Xen is a component of many different products and projects. The hypervisor itself is very similar across all these projects, but the way that it is managed can be different, which can cause confusion if you're not clear which toolstack you are using. Make sure you know what toolstack you want before you get started."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:33(title)
-msgid "XAPI"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:34(para)
-msgid "XAPI is one of the toolstacks that could control a Xen based hypervisor. XAPI's role is similar to libvirt's in the KVM world. The API provided by XAPI is called XenAPI. To learn more about the provided interface, look at <link xlink:href=\"http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/sdk.html#object_model_overview\"> XenAPI Object Model Overview </link> for definitions of XAPI specific terms such as SR, VDI, VIF and PIF."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:46(para)
-msgid "OpenStack has a compute driver which talks to XAPI, therefore all XAPI managed servers could be used with OpenStack."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:52(title)
-msgid "XenAPI"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:53(para)
-msgid "XenAPI is the API provided by XAPI. This name is also used by the python library that is a client for XAPI."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:60(para)
-msgid "An Open Source virtualization platform that delivers all features needed for any server and datacenter implementation including the Xen hypervisor and XAPI for the management. For more information and product downloads, visit <link xlink:href=\"http://xenserver.org/\"> xenserver.org </link>."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:72(title)
-msgid "XCP"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:73(para)
-msgid "XCP is not supported anymore. XCP project recommends all XCP users to upgrade to the latest version of XenServer by visiting <link xlink:href=\"http://xenserver.org/\"> xenserver.org </link>."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:83(title)
-msgid "XenServer-core"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:84(para)
-msgid "This is a method for building the core packages in a XenServer installation on an existing RPM-based system. Initial support for this configuration (notably running Compute services in domain 0) was added in Havana. XenServer-core for Debian/Ubuntu is built from the main branch and, therefore, is continuously up to date."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:93(title)
-msgid "Kronos"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:94(para)
-msgid "This is a project initiated to provide the ability to install XAPI toolstack onto an existing Debian-based deployment. For more information, visit the Xen wiki <link xlink:href=\"http://wiki.xen.org/wiki/Project_Kronos\"> wiki.xen.org/wiki/Project_Kronos </link>."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:105(title)
-msgid "Privileged and unprivileged domains"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:106(para)
-msgid "A Xen host runs a number of virtual machines, VMs, or domains (the terms are synonymous on Xen). One of these is in charge of running the rest of the system, and is known as domain 0, or dom0. It is the first domain to boot after Xen, and owns the storage and networking hardware, the device drivers, and the primary control software. Any other VM is unprivileged, and is known as a domU or guest. All customer VMs are unprivileged, but you should note that on Xen, the OpenStack Compute service (<systemitem class=\"service\">nova-compute</systemitem>) also runs in a domU. This gives a level of security isolation between the privileged system software and the OpenStack software (much of which is customer-facing). This architecture is described in more detail later."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:123(title)
-msgid "Paravirtualized versus hardware virtualized domains"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:124(para)
-msgid "A Xen virtual machine can be paravirtualized (PV) or hardware virtualized (HVM). This refers to the interaction between Xen, domain 0, and the guest VM's kernel. PV guests are aware of the fact that they are virtualized and will co-operate with Xen and domain 0; this gives them better performance characteristics. HVM guests are not aware of their environment, and the hardware has to pretend that they are running on an unvirtualized machine. HVM guests do not need to modify the guest operating system, which is essential when running Windows."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:136(para)
-msgid "In OpenStack, customer VMs may run in either PV or HVM mode. However, the OpenStack domU (that's the one running <systemitem class=\"service\">nova-compute</systemitem>) must be running in PV mode."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:145(title)
-msgid "XenAPI deployment architecture"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:148(para)
-msgid "A basic OpenStack deployment on a XAPI-managed server, assuming that the network provider is nova-network, looks like this: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:165(para)
-msgid "The hypervisor: Xen"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:170(para)
-msgid "Domain 0: runs XAPI and some small pieces from OpenStack, the XAPI plug-ins."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:176(para)
-msgid "OpenStack VM: The <systemitem class=\"service\">Compute</systemitem> service runs in a paravirtualized virtual machine, on the host under management. Each host runs a local instance of <systemitem class=\"service\">Compute</systemitem>. It is also running an instance of nova-network."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:187(para)
-msgid "OpenStack Compute uses the XenAPI Python library to talk to XAPI, and it uses the Management Network to reach from the OpenStack VM to Domain 0."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:161(para)
-msgid "Key things to note: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:199(para)
-msgid "The above diagram assumes FlatDHCP networking."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:208(para)
-msgid "Management network: RabbitMQ, MySQL, inter-host communication, and compute-XAPI communication. Please note that the VM images are downloaded by the XenAPI plug-ins, so make sure that the OpenStack Image service is accessible through this network. It usually means binding those services to the management interface."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:220(para)
-msgid "Tenant network: controlled by nova-network, this is used for tenant traffic."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:227(para)
-msgid "Public network: floating IPs, public API endpoints."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:204(para)
-msgid "There are three main OpenStack networks: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:236(para)
-msgid "The networks shown here must be connected to the corresponding physical networks within the data center. In the simplest case, three individual physical network cards could be used. It is also possible to use VLANs to separate these networks. Please note, that the selected configuration must be in line with the networking model selected for the cloud. (In case of VLAN networking, the physical channels have to be able to forward the tagged traffic.)"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:195(para)
-msgid "Some notes on the networking: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:252(title)
-msgid "Further reading"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:258(para)
-msgid "Citrix XenServer official documentation: <link xlink:href=\"http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/\"> http://docs.vmd.citrix.com/XenServer </link>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:267(para)
-msgid "What is Xen? by Xen.org: <link xlink:href=\"http://xen.org/files/Marketing/WhatisXen.pdf\"> http://xen.org/files/Marketing/WhatisXen.pdf </link>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:276(para)
-msgid "Xen Hypervisor project: <link xlink:href=\"http://www.xenproject.org/developers/teams/hypervisor.html\"> http://www.xenproject.org/developers/teams/hypervisor.html </link>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:285(para)
-msgid "Xapi project: <link xlink:href=\"http://www.xenproject.org/developers/teams/xapi.html\"> http://www.xenproject.org/developers/teams/xapi.html </link>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:294(para)
-msgid "Further XenServer and OpenStack information: <link xlink:href=\"http://wiki.openstack.org/XenServer\"> http://wiki.openstack.org/XenServer </link>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_introduction-to-xen.xml:253(para)
-msgid "Here are some of the resources available to learn more about Xen: <placeholder-1/>"
-msgstr ""
-
 #: ./doc/config-reference/compute/section_compute-configure-backing-storage.xml:6(title)
 msgid "Configure Compute backing storage"
 msgstr ""
@@ -3310,31 +3128,95 @@ msgid "<link xlink:href=\"http://www.vmware.com/products/vsphere-hypervisor/supp
 msgstr ""
 
 #: ./doc/config-reference/compute/section_compute-hypervisors.xml:52(para)
-msgid "<link xlink:href=\"http://www.xen.org\">Xen</link> - XenServer, Xen Cloud Platform (XCP), use to run Linux or Windows virtual machines. You must install the <systemitem class=\"service\">nova-compute</systemitem> service in a para-virtualized VM."
+msgid "<link xlink:href=\"http://www.xenproject.org\">Xen (using libvirt)</link> - Xen Project Hypervisor using libvirt as management interface into <systemitem class=\"service\">nova-compute</systemitem> to run Linux, Windows, FreeBSD and NetBSD virtual machines."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-hypervisors.xml:60(para)
+#: ./doc/config-reference/compute/section_compute-hypervisors.xml:57(para)
+msgid "<link xlink:href=\"http://www.xenserver.org\">XenServer</link> - XenServer, Xen Cloud Platform (XCP) and other XAPI based Xen variants runs Linux or Windows virtual machines. You must install the <systemitem class=\"service\">nova-compute</systemitem> service in a para-virtualized VM."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-hypervisors.xml:65(para)
 msgid "<link xlink:href=\"http://www.microsoft.com/en-us/server-cloud/windows-server/server-virtualization-features.aspx\"> Hyper-V</link> - Server virtualization with Microsoft's Hyper-V, use to run Windows, Linux, and FreeBSD virtual machines. Runs <systemitem class=\"service\">nova-compute</systemitem> natively on the Windows virtualization platform."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-hypervisors.xml:70(title)
+#: ./doc/config-reference/compute/section_compute-hypervisors.xml:75(title)
 msgid "Hypervisor configuration basics"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-hypervisors.xml:71(para)
+#: ./doc/config-reference/compute/section_compute-hypervisors.xml:76(para)
 msgid "The node where the <systemitem class=\"service\">nova-compute</systemitem> service is installed and operates on the same node that runs all of the virtual machines. This is referred to as the compute node in this guide."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-hypervisors.xml:75(para)
+#: ./doc/config-reference/compute/section_compute-hypervisors.xml:80(para)
 msgid "By default, the selected hypervisor is KVM. To change to another hypervisor, change the <literal>virt_type</literal> option in the <literal>[libvirt]</literal> section of <filename>nova.conf</filename> and restart the <systemitem class=\"service\">nova-compute</systemitem> service."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-hypervisors.xml:79(para)
+#: ./doc/config-reference/compute/section_compute-hypervisors.xml:84(para)
 msgid "Here are the general <filename>nova.conf</filename> options that are used to configure the compute node's hypervisor: <xref linkend=\"config_table_nova_hypervisor\"/>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-hypervisors.xml:82(para)
+#: ./doc/config-reference/compute/section_compute-hypervisors.xml:87(para)
 msgid "Specific options for particular hypervisors can be found in the following sections."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:6(title) ./doc/config-reference/compute/section_compute-configure-xapi.xml:75(title)
+msgid "XenAPI configuration reference"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:7(para)
+msgid "The following section discusses some commonly changed options when using the XenAPI driver. The table below provides a complete reference of all configuration options available for configuring XAPI with OpenStack."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:13(para)
+msgid "The recommended way to use XAPI with OpenStack is through the XenAPI driver. To enable the XenAPI driver, add the following configuration options to <filename>/etc/nova/nova.conf</filename> and restart <systemitem class=\"service\">OpenStack Compute</systemitem>:"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:21(replaceable)
+msgid "your_xenapi_management_ip_address"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:23(replaceable)
+msgid "your_password"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:24(para)
+msgid "These connection details are used by OpenStack Compute service to contact your hypervisor and are the same details you use to connect XenCenter, the XenServer management console, to your XenServer node."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:30(para)
+msgid "The <literal>connection_url</literal> is generally the management network IP address of the XenServer."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:36(title) ./doc/config-reference/networking/section_networking-options-reference.xml:20(title)
+msgid "Agent"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:37(para)
+msgid "The agent is a piece of software that runs on the instances, and communicates with OpenStack. In case of the XenAPI driver, the agent communicates with OpenStack through XenStore (see <link xlink:href=\"http://wiki.xenproject.org/wiki/XenStore\">the Xen Project Wiki</link> for more information on XenStore)."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:44(para)
+msgid "If you don't have the guest agent on your VMs, it takes a long time for OpenStack Compute to detect that the VM has successfully started. Generally a large timeout is required for Windows instances, but you may want to adjust: <literal>agent_version_timeout</literal> within the <literal>[xenserver]</literal> section."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:54(title)
+msgid "VNC proxy address"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:55(para)
+msgid "Assuming you are talking to XAPI through a management network, and XenServer is on the address: 10.10.1.34 specify the same address for the vnc proxy address: <literal>vncserver_proxyclient_address=<replaceable>10.10.1.34</replaceable></literal>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:63(title)
+msgid "Storage"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:64(para)
+msgid "You can specify which Storage Repository to use with nova by editing the following flag. To use the local-storage setup by the default installer: <placeholder-1/> Another alternative is to use the \"default\" storage (for example if you have attached NFS or any other shared storage): <placeholder-2/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_compute-configure-xapi.xml:76(para)
+msgid "To customize the XenAPI driver, use the configuration option settings documented in <xref linkend=\"config_table_nova_xen\"/>."
 msgstr ""
 
 #: ./doc/config-reference/compute/section_xapi-ami-setup.xml:8(title)
@@ -3507,6 +3389,182 @@ msgstr ""
 
 #: ./doc/config-reference/compute/section_compute-options-reference.xml:10(para)
 msgid "For a complete list of all available configuration options for each OpenStack Compute service, run bin/nova-&lt;servicename&gt; --help."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:8(title)
+msgid "Xen via Libvirt"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:9(para)
+msgid "OpenStack Compute supports the Xen Project Hypervisor (or Xen). Xen can be integrated with OpenStack Compute via the <link xlink:href=\"http://libvirt.org/\">libvirt</link><link xlink:href=\"http://wiki.xen.org/wiki/Choice_of_Toolstacks\">toolstack</link> or via the <link xlink:href=\"http://xenproject.org/developers/teams/xapi.html\">XAPI</link><link xlink:href=\"http://wiki.xen.org/wiki/Choice_of_Toolstacks\">toolstack</link>. This section describes how to set up OpenStack Compute with Xen and libvirt. For information on how to set up Xen with XAPI refer to <xref linkend=\"section_hypervisor_xen_xapi\"/>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:17(title)
+msgid "Installing Xen with Libvirt"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:18(para)
+msgid "At this stage we recommend to use the baseline that we use for the <link xlink:href=\"http://wiki.xenproject.org/wiki/OpenStack_CI_Loop_for_Xen-Libvirt\">Xen Project OpenStack CI Loop</link>, which contains the most recent stability fixes to both Xen and Libvirt."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:22(para)
+msgid "<link xlink:href=\"http://www.xenproject.org/downloads/xen-archives/xen-45-series/xen-451.html\">Xen 4.5.1</link> (or newer) and <link xlink:href=\"http://libvirt.org/sources/\">Libvirt 1.2.15</link> (or newer) contain the most recent OpenStack improvements for Xen. The necessary Xen changes have also been backported to the Xen 4.4.3 stable branch (not yet released at this stage). Please check with the Linux and FreeBSD distros you are intending to use as <link xlink:href=\"http://wiki.xenproject.org/wiki/Category:Host_Install\">Dom 0</link>, whether the relevant version of Xen and Libvirt are available as installable packages."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:32(para)
+msgid "The latest releases of Xen and libvirt packages that fulfil the above minimum requirements for the various openSUSE distributions can always be found and installed from the <link xlink:href=\"https://build.opensuse.org/project/show/Virtualization\">Open Build Service</link> Virtualization project. To install these latest packages, add the Virtualization repository to your software management stack and get the newest packages from there. More information about the latest Xen and Libvirt packages are avalable <link xlink:href=\"https://build.opensuse.org/package/show/Virtualization/xen\">here</link> and <link xlink:href=\"https://build.opensuse.org/package/show/Virtualization/libvirt\">here</link>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:42(para)
+msgid "Alternatively, it is possible to use the Ubuntu LTS 14.04 Xen Package <emphasis>4.4.1-0ubuntu0.14.04.4</emphasis> (Xen 4.4.1) and apply the patches outlined <link xlink:href=\"http://wiki.xenproject.org/wiki/OpenStack_CI_Loop_for_Xen-Libvirt#Baseline\">here</link>. You can also use the Ubuntu LTS 14.04 libvirt package <emphasis>1.2.2 libvirt_1.2.2-0ubuntu13.1.7</emphasis> as baseline and update it to libvirt version 1.2.15, or 1.2.14 with the patches outlined <link xlink:href=\"http://wiki.xenproject.org/wiki/OpenStack_CI_Loop_for_Xen-Libvirt#Baseline\">here</link> applied. Note that this will require re-build these packages partly from source."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:52(para)
+msgid "For further information and latest developments, you may want to consult the Xen Project's <link xlink:href=\"http://lists.xenproject.org/cgi-bin/mailman/listinfo/wg-openstack\">mailing lists for OpenStack related issues and questions</link>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:58(title)
+msgid "Configuring Xen with Libvirt"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:59(para)
+msgid "To enable Xen via libvirt, ensure the following options are set in <filename>/etc/nova/nova.conf</filename> on all hosts running the <systemitem class=\"service\">nova-compute</systemitem> service.<placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:68(title)
+msgid "Additional configuration options"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:69(para)
+msgid "Use the following as a guideline for configuring Xen for use in OpenStack:"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:72(para)
+msgid "<emphasis role=\"bold\">Dom0 Memory:</emphasis> Set it between 1GB and 4GB by adding the following parameter to the Xen Boot Options in the <filename><link xlink:href=\"http://xenbits.xen.org/docs/unstable/misc/xen-command-line.html\">grub.conf</link></filename> file. <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:77(para)
+msgid "Note that the above memory limits are suggestions and should be based on the available compute host resources. For large hosts, that will run many hundred of instances,the chosen values may need to be higher."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:80(para)
+msgid "The location of the grub.conf file depends on the host Linux distribution that you are using. Please refer to the distro documentation for more details (see <link xlink:href=\"http://wiki.xenproject.org/wiki/Category:Host_Install\">Dom 0</link> for more resources)."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:86(para)
+msgid "<emphasis role=\"bold\">Dom0 vcpus:</emphasis> Set the virtual CPUs to 4 and employ CPU pinning by adding the following parameters to the Xen Boot Options in the <filename><link xlink:href=\"http://xenbits.xen.org/docs/unstable/misc/xen-command-line.html\">grub.conf</link></filename> file. <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:92(para)
+msgid "Note that the above virtual CPU limits are suggestions and should be based on the available compute host resources. For large hosts, that will run many hundred of instances, the suggested values may need to be higher."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:97(para)
+msgid "<emphasis role=\"bold\">PV vs HVM guests:</emphasis> A Xen virtual machine can be paravirtualized (PV) or hardware virtualized (HVM). The virtualization mode determines the interaction between Xen, Dom 0, and the guest VM's kernel. PV guests are aware of the fact that they are virtualized and will co-operate with Xen and Dom 0. The choice of virtualization mode determines performance characteristics. For an overview of Xen virtualization modes, see <link xlink:href=\"http://wiki.xen.org/wiki/Xen_Overview#Guest_Types\"> Xen Guest Types</link>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:105(para)
+msgid "In OpenStack, customer VMs may run in either PV or HVM mode. The mode is a property of the operating system image used by the VM, and is changed by adjusting the image metadata stored in the glance image service. The image metadata can be changed using the nova or glance commands."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:110(para)
+msgid "To choose one of the HVM modes (HVM, HVM with PV Drivers or PVHVM) use nova or glance to set the vm_mode property to hvm"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:115(replaceable) ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:116(replaceable) ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:119(replaceable) ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:120(replaceable) ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:141(replaceable) ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:142(replaceable)
+msgid "img-uuid"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:113(para)
+msgid "To choose one of the HVM modes (HVM, HVM with PV Drivers or PVHVM) use one of the following two commands <placeholder-1/><placeholder-2/> To chose PV mode, which is supported by NetBSD, FreeBSD and Linux, useone of the following two commands <placeholder-3/><placeholder-4/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:122(para)
+msgid "The default for virtualization mode in nova is PV mode."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:125(para)
+msgid "<emphasis role=\"bold\">Image Formats:</emphasis> Xen supports raw, qcow2 and vhd image formats. For more information on image formats, refer to the <link xlink:href=\"http://docs.openstack.org/image-guide/content/ch_introduction.html\">OpenStack Virtual Image Guide</link> and the <link xlink:href=\"http://wiki.xenproject.org/wiki/Storage_options\">Storage Options Guide on the Xen Project Wiki</link>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:133(para)
+msgid "<emphasis role=\"bold\">Image Metadata:</emphasis> In addition to the vm_mode property discussed above, the hypervisor_type property is another important component of the image metadata, especially if your cloud contains mixed hypervisor compute nodes. Setting the hypervisor_type property allows the nova scheduler to select a compute node running the specified hypervisor when launching instances of the image. Image metadata such as vm_mode, hypervisor_type, architecture, and others can be set when importing the image to glance. The metatdata can also be changed using the nova or glance commands: <placeholder-1/><placeholder-2/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:144(para)
+msgid "For more more information on image metadata, refer to the <link xlink:href=\"http://docs.openstack.org/image-guide/content/image-metadata.html\">OpenStack Virtual Image Guide</link>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:150(para)
+msgid "To customize the libvirt driver, use the configuration option settings documented in <xref linkend=\"config_table_nova_xen\"/>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:155(title)
+msgid "Troubleshoot Xen with Libvirt"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:161(para)
+msgid "<filename>/var/log/nova/compute.log</filename> (for more information refer to <xref linkend=\"section_nova-logs\"/>)."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:163(para)
+msgid "<filename>/var/log/libvirt/libxl/libxl-driver.log</filename>,"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:164(para)
+msgid "<filename>/var/log/xen/qemu-dm-${instancename}.log</filename>,"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:165(para)
+msgid "<filename>/var/log/xen/xen-hotplug.log</filename>,"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:166(para)
+msgid "<filename>/var/log/xen/console/guest-${instancename}</filename> (to enable see <link xlink:href=\"http://wiki.xen.org/wiki/Reporting_Bugs_against_Xen#Guest_console_logs\">Enabling Guest Console Logs</link>) and"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:170(para)
+msgid "Host Console Logs (read <link xlink:href=\"http://wiki.xen.org/wiki/Reporting_Bugs_against_Xen#Host_console_logs\">Enabling and Retrieving Host Console Logs</link>)."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:158(para)
+msgid "<emphasis role=\"bold\">Important Log Files:</emphasis> When an instance fails to start, or when you come across other issues, you should first consult the following log files: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:176(para)
+msgid "If you need further help you can ask questions on the mailing lists <link xlink:href=\"http://lists.xenproject.org/cgi-bin/mailman/listinfo/xen-users\">xen-users@</link>, <link xlink:href=\"http://lists.xenproject.org/cgi-bin/mailman/listinfo/wg-openstack\">wg-openstack@</link> or <link xlink:href=\"http://wiki.xen.org/wiki/Reporting_Bugs_against_Xen\">raise a bug</link> against Xen."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:187(title)
+msgid "Known issues"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:190(para)
+msgid "Xen via libvirt is currently only supported with nova networking. A number of bugs are currently worked on to make sure that Xen via libvirt will also work with Neutron."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:196(title)
+msgid "Additional information and resources"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:197(para)
+msgid "The following section contains links to other useful resources"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:200(para)
+msgid "<link xlink:href=\"http://wiki.xenproject.org/wiki/OpenStack\">wiki.xenproject.org/wiki/OpenStack</link> - OpenStack Documentation on the Xen Project wiki"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:205(para)
+msgid "<link xlink:href=\"http://wiki.xenproject.org/wiki/OpenStack_CI_Loop_for_Xen-Libvirt\">wiki.xenproject.org/wiki/OpenStack_CI_Loop_for_Xen-Libvirt</link> - Information about the Xen Project OpenStack CI Loop"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:211(para)
+msgid "<link xlink:href=\"http://wiki.xenproject.org/wiki/OpenStack_via_DevStack\">wiki.xenproject.org/wiki/OpenStack_via_DevStack</link> - How to set up OpenStack via DevStack"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:216(para)
+msgid "<link xlink:href=\"http://lists.xenproject.org/cgi-bin/mailman/listinfo/wg-openstack\">Mailing lists for OpenStack related issues and questions</link> - This list is dedicated to coordinating bug fixes and issues across Xen, libvirt and OpenStack and the CI loop."
 msgstr ""
 
 #: ./doc/config-reference/compute/section_nova-log-files.xml:7(title)
@@ -3821,66 +3879,6 @@ msgstr ""
 msgid "The scheme can be either <literal>qpid</literal> or <literal>rabbit</literal>, as shown previously. The following sample shows this optional configuration:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_xen-install.xml:7(title)
-msgid "Install XenServer"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:8(para)
-msgid "Before you can run OpenStack with XenServer, you must install the hypervisor on <link xlink:href=\"http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/installation.html#sys_requirements\"> an appropriate server </link> ."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:18(para)
-msgid "Xen is a type 1 hypervisor: When your server starts, Xen is the first software that runs. Consequently, you must install XenServer before you install the operating system where you want to run OpenStack code. You then install <systemitem class=\"service\">nova-compute</systemitem> into a dedicated virtual machine on the host."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:33(link)
-msgid "http://xenserver.org/open-source-virtualization-download.html"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:27(para)
-msgid "Use the following link to download XenServer's installation media: <placeholder-1/>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:40(para)
-msgid "When you install many servers, you might find it easier to perform <link xlink:href=\"http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/installation.html#pxe_boot_install\"> PXE boot installations </link> . You can also package any post-installation changes that you want to make to your XenServer by following the instructions of <link xlink:href=\"http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/supplemental_pack_ddk.html\"> creating your own XenServer supplemental pack </link> ."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:55(para)
-msgid "Make sure you use the EXT type of storage repository (SR). Features that require access to VHD files (such as copy on write, snapshot and migration) do not work when you use the LVM SR. Storage repository (SR) is a XAPI-specific term relating to the physical storage where virtual disks are stored."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:62(para)
-msgid "On the XenServer installation screen, choose the <guilabel>XenDesktop Optimized</guilabel> option. If you use an answer file, make sure you use <literal>srtype=\"ext\"</literal> in the <literal>installation</literal> tag of the answer file."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:73(title)
-msgid "Post-installation steps"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:74(para)
-msgid "The following steps need to be completed after the hypervisor's installation:"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:80(para)
-msgid "For resize and migrate functionality, enable password-less SSH authentication and set up the <literal>/images</literal> directory on dom0."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:88(para)
-msgid "Install the XAPI plug-ins."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:93(para)
-msgid "To support AMI type images, you must set up <literal>/boot/guest</literal> symlink/directory in dom0."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:100(para)
-msgid "Create a paravirtualized virtual machine that can run <systemitem class=\"service\">nova-compute</systemitem>."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_xen-install.xml:106(para)
-msgid "Install and configure <systemitem class=\"service\">nova-compute</systemitem> in the above virtual machine."
-msgstr ""
-
 #: ./doc/config-reference/compute/section_nova-conf.xml:7(title)
 msgid "Overview of nova.conf"
 msgstr ""
@@ -4169,70 +4167,6 @@ msgstr ""
 msgid "Use these options to configure the <application>RabbitMQ</application> and <application>Qpid</application> messaging drivers."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:6(title)
-msgid "Xen configuration reference"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:7(para)
-msgid "The following section discusses some commonly changed options when using the XenAPI driver. The table below provides a complete reference of all configuration options available for configuring XAPI with OpenStack."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:13(para)
-msgid "The recommended way to use XAPI with OpenStack is through the XenAPI driver. To enable the XenAPI driver, add the following configuration options to <filename>/etc/nova/nova.conf</filename> and restart <systemitem class=\"service\">OpenStack Compute</systemitem>:"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:21(replaceable)
-msgid "your_xenapi_management_ip_address"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:23(replaceable)
-msgid "your_password"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:24(para)
-msgid "These connection details are used by OpenStack Compute service to contact your hypervisor and are the same details you use to connect XenCenter, the XenServer management console, to your XenServer node."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:30(para)
-msgid "The <literal>connection_url</literal> is generally the management network IP address of the XenServer."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:36(title) ./doc/config-reference/networking/section_networking-options-reference.xml:20(title)
-msgid "Agent"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:37(para)
-msgid "The agent is a piece of software that runs on the instances, and communicates with OpenStack. In case of the XenAPI driver, the agent communicates with OpenStack through XenStore (see <link xlink:href=\"http://wiki.xen.org/wiki/XenStore\">the Xen Wiki</link> for more information on XenStore)."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:44(para)
-msgid "If you don't have the guest agent on your VMs, it takes a long time for OpenStack Compute to detect that the VM has successfully started. Generally a large timeout is required for Windows instances, but you may want to adjust: <literal>agent_version_timeout</literal> within the <literal>[xenserver]</literal> section."
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:54(title)
-msgid "VNC proxy address"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:55(para)
-msgid "Assuming you are talking to XAPI through a management network, and XenServer is on the address: 10.10.1.34 specify the same address for the vnc proxy address: <literal>vncserver_proxyclient_address=<replaceable>10.10.1.34</replaceable></literal>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:63(title)
-msgid "Storage"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:64(para)
-msgid "You can specify which Storage Repository to use with nova by editing the following flag. To use the local-storage setup by the default installer: <placeholder-1/> Another alternative is to use the \"default\" storage (for example if you have attached NFS or any other shared storage): <placeholder-2/>"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:75(title)
-msgid "XenAPI configuration reference"
-msgstr ""
-
-#: ./doc/config-reference/compute/section_compute-configure-xen.xml:76(para)
-msgid "To customize the XenAPI driver, use the configuration option settings documented in <xref linkend=\"config_table_nova_xen\"/>."
-msgstr ""
-
 #: ./doc/config-reference/compute/section_compute-iscsioffload.xml:7(title)
 msgid "iSCSI interface and offload support in Compute"
 msgstr ""
@@ -4473,6 +4407,188 @@ msgstr ""
 msgid "If it is not set to <systemitem>kvm</systemitem>, run:"
 msgstr ""
 
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:156(None)
+msgid "@@image: '../../common/figures/xenserver_architecture.png'; md5=99792432daf7f0302672fb8f03cb63bb"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:8(title)
+msgid "XenServer (and other XAPI based Xen variants)"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:9(para)
+msgid "This section describes XAPI managed hypervisors, and how to use them with OpenStack."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:14(title)
+msgid "Terminology"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:16(title)
+msgid "Xen"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:17(para)
+msgid "A hypervisor that provides the fundamental isolation between virtual machines. Xen is open source (GPLv2) and is managed by <link xlink:href=\"http://www.xenproject.org\">XenProject.org</link>, a cross-industry organization and a Linux Foundation Collaborative project."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:24(para)
+msgid "Xen is a component of many different products and projects. The hypervisor itself is very similar across all these projects, but the way that it is managed can be different, which can cause confusion if you're not clear which toolstack you are using. Make sure you know what <link xlink:href=\"http://wiki.xen.org/wiki/Choice_of_Toolstacks\">toolstack</link> you want before you get started. If you want to use Xen with libvirt in OpenStack Compute refer to <xref linkend=\"xen_libvirt\"/>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:33(title)
+msgid "XAPI"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:34(para)
+msgid "XAPI is one of the toolstacks that could control a Xen based hypervisor. XAPI's role is similar to libvirt's in the KVM world. The API provided by XAPI is called XenAPI. To learn more about the provided interface, look at <link xlink:href=\"http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/sdk.html#object_model_overview\"> XenAPI Object Model Overview </link> for definitions of XAPI specific terms such as SR, VDI, VIF and PIF."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:46(para)
+msgid "OpenStack has a compute driver which talks to XAPI, therefore all XAPI managed servers could be used with OpenStack."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:52(title)
+msgid "XenAPI"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:53(para)
+msgid "XenAPI is the API provided by XAPI. This name is also used by the python library that is a client for XAPI."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:60(para)
+msgid "An Open Source virtualization platform that delivers all features needed for any server and datacenter implementation including the Xen hypervisor and XAPI for the management. For more information and product downloads, visit <link xlink:href=\"http://xenserver.org/\"> xenserver.org </link>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:72(title)
+msgid "XCP"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:73(para)
+msgid "XCP is not supported anymore. XCP project recommends all XCP users to upgrade to the latest version of XenServer by visiting <link xlink:href=\"http://xenserver.org/\"> xenserver.org </link>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:83(title)
+msgid "XenServer-core"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:84(para)
+msgid "This is a method for building the core packages in a XenServer installation on an existing RPM-based system. Initial support for this configuration (notably running Compute services in domain 0) was added in Havana. XenServer-core for Debian/Ubuntu is built from the main branch and, therefore, is continuously up to date."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:93(title)
+msgid "Kronos"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:94(para)
+msgid "This is a project initiated to provide the ability to install XAPI toolstack onto an existing Debian-based deployment. For more information, visit the Xen wiki <link xlink:href=\"http://wiki.xenproject.org/wiki/Project_Kronos\"> wiki.xenproject.org/wiki/Project_Kronos </link>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:105(title)
+msgid "Privileged and unprivileged domains"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:106(para)
+msgid "A Xen host runs a number of virtual machines, VMs, or domains (the terms are synonymous on Xen). One of these is in charge of running the rest of the system, and is known as domain 0, or dom0. It is the first domain to boot after Xen, and owns the storage and networking hardware, the device drivers, and the primary control software. Any other VM is unprivileged, and is known as a domU or guest. All customer VMs are unprivileged, but you should note that on Xen, the OpenStack Compute service (<systemitem class=\"service\">nova-compute</systemitem>) also runs in a domU. This gives a level of security isolation between the privileged system software and the OpenStack software (much of which is customer-facing). This architecture is described in more detail later."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:123(title)
+msgid "Paravirtualized versus hardware virtualized domains"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:124(para)
+msgid "A Xen virtual machine can be paravirtualized (PV) or hardware virtualized (HVM). This refers to the interaction between Xen, domain 0, and the guest VM's kernel. PV guests are aware of the fact that they are virtualized and will co-operate with Xen and domain 0; this gives them better performance characteristics. HVM guests are not aware of their environment, and the hardware has to pretend that they are running on an unvirtualized machine. HVM guests do not need to modify the guest operating system, which is essential when running Windows."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:136(para)
+msgid "In OpenStack, customer VMs may run in either PV or HVM mode. However, the OpenStack domU (that's the one running <systemitem class=\"service\">nova-compute</systemitem>) must be running in PV mode."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:145(title)
+msgid "XenAPI deployment architecture"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:148(para)
+msgid "A basic OpenStack deployment on a XAPI-managed server, assuming that the network provider is nova-network, looks like this: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:165(para)
+msgid "The hypervisor: Xen"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:170(para)
+msgid "Domain 0: runs XAPI and some small pieces from OpenStack, the XAPI plug-ins."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:176(para)
+msgid "OpenStack VM: The <systemitem class=\"service\">Compute</systemitem> service runs in a paravirtualized virtual machine, on the host under management. Each host runs a local instance of <systemitem class=\"service\">Compute</systemitem>. It is also running an instance of nova-network."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:187(para)
+msgid "OpenStack Compute uses the XenAPI Python library to talk to XAPI, and it uses the Management Network to reach from the OpenStack VM to Domain 0."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:161(para)
+msgid "Key things to note: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:199(para)
+msgid "The above diagram assumes FlatDHCP networking."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:208(para)
+msgid "Management network: RabbitMQ, MySQL, inter-host communication, and compute-XAPI communication. Please note that the VM images are downloaded by the XenAPI plug-ins, so make sure that the OpenStack Image service is accessible through this network. It usually means binding those services to the management interface."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:220(para)
+msgid "Tenant network: controlled by nova-network, this is used for tenant traffic."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:227(para)
+msgid "Public network: floating IPs, public API endpoints."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:204(para)
+msgid "There are three main OpenStack networks: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:236(para)
+msgid "The networks shown here must be connected to the corresponding physical networks within the data center. In the simplest case, three individual physical network cards could be used. It is also possible to use VLANs to separate these networks. Please note, that the selected configuration must be in line with the networking model selected for the cloud. (In case of VLAN networking, the physical channels have to be able to forward the tagged traffic.)"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:195(para)
+msgid "Some notes on the networking: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:252(title)
+msgid "Further reading"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:258(para)
+msgid "Citrix XenServer official documentation: <link xlink:href=\"http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/\"> http://docs.vmd.citrix.com/XenServer </link>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:267(para)
+msgid "What is Xen? by XenProject.org: <link xlink:href=\"http://www.xenproject.org/users/cloud.html\"> XenProject.org &gt; Users &gt; Cloud </link>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:276(para)
+msgid "Xen Hypervisor project: <link xlink:href=\"http://www.xenproject.org/developers/teams/hypervisor.html\"> http://www.xenproject.org/developers/teams/hypervisor.html </link>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:285(para)
+msgid "Xapi project: <link xlink:href=\"http://www.xenproject.org/developers/teams/xapi.html\"> http://www.xenproject.org/developers/teams/xapi.html </link>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:294(para)
+msgid "Further XenServer and OpenStack information: <link xlink:href=\"http://wiki.openstack.org/XenServer\"> http://wiki.openstack.org/XenServer </link>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_xen_api.xml:253(para)
+msgid "Here are some of the resources available to learn more about Xen: <placeholder-1/>"
+msgstr ""
+
 #: ./doc/config-reference/compute/section_compute-sample-configuration-files.xml:6(title) ./doc/config-reference/dashboard/section_dashboard-sample-configuration-files.xml:7(title)
 msgid "Additional sample configuration files"
 msgstr ""
@@ -4539,6 +4655,66 @@ msgstr ""
 
 #: ./doc/config-reference/compute/section_xapi-install-plugins.xml:49(para)
 msgid "Remove temporary files/directories:"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:7(title)
+msgid "Install XenServer"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:8(para)
+msgid "Before you can run OpenStack with XenServer, you must install the hypervisor on <link xlink:href=\"http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/installation.html#sys_requirements\"> an appropriate server </link> ."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:18(para)
+msgid "Xen is a type 1 hypervisor: When your server starts, Xen is the first software that runs. Consequently, you must install XenServer before you install the operating system where you want to run OpenStack code. You then install <systemitem class=\"service\">nova-compute</systemitem> into a dedicated virtual machine on the host."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:33(link)
+msgid "http://xenserver.org/open-source-virtualization-download.html"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:27(para)
+msgid "Use the following link to download XenServer's installation media: <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:40(para)
+msgid "When you install many servers, you might find it easier to perform <link xlink:href=\"http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/installation.html#pxe_boot_install\"> PXE boot installations </link> . You can also package any post-installation changes that you want to make to your XenServer by following the instructions of <link xlink:href=\"http://docs.vmd.citrix.com/XenServer/6.2.0/1.0/en_gb/supplemental_pack_ddk.html\"> creating your own XenServer supplemental pack </link> ."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:55(para)
+msgid "Make sure you use the EXT type of storage repository (SR). Features that require access to VHD files (such as copy on write, snapshot and migration) do not work when you use the LVM SR. Storage repository (SR) is a XAPI-specific term relating to the physical storage where virtual disks are stored."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:62(para)
+msgid "On the XenServer installation screen, choose the <guilabel>XenDesktop Optimized</guilabel> option. If you use an answer file, make sure you use <literal>srtype=\"ext\"</literal> in the <literal>installation</literal> tag of the answer file."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:73(title)
+msgid "Post-installation steps"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:74(para)
+msgid "The following steps need to be completed after the hypervisor's installation:"
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:80(para)
+msgid "For resize and migrate functionality, enable password-less SSH authentication and set up the <literal>/images</literal> directory on dom0."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:88(para)
+msgid "Install the XAPI plug-ins."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:93(para)
+msgid "To support AMI type images, you must set up <literal>/boot/guest</literal> symlink/directory in dom0."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:100(para)
+msgid "Create a paravirtualized virtual machine that can run <systemitem class=\"service\">nova-compute</systemitem>."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_xapi-install.xml:106(para)
+msgid "Install and configure <systemitem class=\"service\">nova-compute</systemitem> in the above virtual machine."
 msgstr ""
 
 #: ./doc/config-reference/compute/section_compute-conductor.xml:7(title)
