@@ -1,7 +1,7 @@
 .. :orphan:
 
-Data processing service
------------------------
+OpenStack Data processing service
+---------------------------------
 
 The Data processing service for OpenStack (sahara) aims to provide users
 with a simple means to provision data processing (Hadoop, Spark)
