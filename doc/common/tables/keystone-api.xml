@@ -26,10 +26,6 @@
         <td>(StrOpt) A "shared secret" that can be used to bootstrap Keystone. This "token" does not represent a user, and carries no explicit authorization. To disable in production (highly recommended), remove AdminTokenAuthMiddleware from your paste application pipelines (for example, in keystone-paste.ini).</td>
       </tr>
       <tr>
-        <td><option>compute_port</option> = <replaceable>8774</replaceable></td>
-        <td>(IntOpt) (Deprecated) The port which the OpenStack Compute service listens on. This option was only used for string replacement in the templated catalog backend. Templated catalogs should replace the "$(compute_port)s" substitution with the static port of the compute service. As of Juno, this option is deprecated and will be removed in the L release.</td>
-      </tr>
-      <tr>
         <td><option>domain_id_immutable</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Set this to false if you want to enable the ability for user, group and project entities to be moved between domains by updating their domain_id. Allowing such movement is not recommended if the scope of a domain admin is being restricted by use of an appropriate policy file (see policy.v3cloudsample as an example).</td>
       </tr>
@@ -73,8 +69,8 @@
         <th colspan="2">[endpoint_filter]</th>
       </tr>
       <tr>
-        <td><option>driver</option> = <replaceable>keystone.contrib.endpoint_filter.backends.sql.EndpointFilter</replaceable></td>
-        <td>(StrOpt) Endpoint Filter backend driver</td>
+        <td><option>driver</option> = <replaceable>sql</replaceable></td>
+        <td>(StrOpt) Entrypoint for the endpoint filter backend driver in the keystone.endpoint_filter namespace.</td>
       </tr>
       <tr>
         <td><option>return_all_endpoints_if_no_filter</option> = <replaceable>True</replaceable></td>
@@ -84,8 +80,12 @@
         <th colspan="2">[endpoint_policy]</th>
       </tr>
       <tr>
-        <td><option>driver</option> = <replaceable>keystone.contrib.endpoint_policy.backends.sql.EndpointPolicy</replaceable></td>
-        <td>(StrOpt) Endpoint policy backend driver</td>
+        <td><option>driver</option> = <replaceable>sql</replaceable></td>
+        <td>(StrOpt) Entrypoint for the endpoint policy backend driver in the keystone.endpoint_policy namespace.</td>
+      </tr>
+      <tr>
+        <td><option>enabled</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) Enable endpoint_policy functionality.</td>
       </tr>
       <tr>
         <th colspan="2">[eventlet_server]</th>
@@ -101,6 +101,10 @@
       <tr>
         <td><option>admin_workers</option> = <replaceable>None</replaceable></td>
         <td>(IntOpt) The number of worker processes to serve the admin eventlet application. Defaults to number of CPUs (minimum of 2).</td>
+      </tr>
+      <tr>
+        <td><option>client_socket_timeout</option> = <replaceable>900</replaceable></td>
+        <td>(IntOpt) Timeout for socket operations on a client connection. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.</td>
       </tr>
       <tr>
         <td><option>public_bind_host</option> = <replaceable>0.0.0.0</replaceable></td>
@@ -123,6 +127,21 @@
         <td>(IntOpt) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Only applies if tcp_keepalive is true.</td>
       </tr>
       <tr>
+        <td><option>wsgi_keep_alive</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) If set to false, disables keepalives on the server; all connections will be closed after serving one request.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[oslo_middleware]</th>
+      </tr>
+      <tr>
+        <td><option>max_request_body_size</option> = <replaceable>114688</replaceable></td>
+        <td>(IntOpt) The maximum body size for each  request, in bytes.</td>
+      </tr>
+      <tr>
+        <td><option>secure_proxy_ssl_header</option> = <replaceable>X-Forwarded-Proto</replaceable></td>
+        <td>(StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.</td>
+      </tr>
+      <tr>
         <th colspan="2">[paste_deploy]</th>
       </tr>
       <tr>
@@ -142,7 +161,7 @@
       </tr>
       <tr>
         <td><option>driver</option> = <replaceable>None</replaceable></td>
-        <td>(StrOpt) Resource backend driver. If a resource driver is not specified, the assignment driver will choose the resource driver.</td>
+        <td>(StrOpt) Entrypoint for the resource backend driver in the keystone.resource namespace. If a resource driver is not specified, the assignment driver will choose the resource driver.</td>
       </tr>
       <tr>
         <td><option>list_limit</option> = <replaceable>None</replaceable></td>
