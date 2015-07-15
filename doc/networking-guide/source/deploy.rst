@@ -10,5 +10,5 @@ Deployment scenarios
    scenario_dvr_ovs.rst
    deploy_scenario3a.rst
    deploy_scenario3b.rst
-   deploy_scenario4a.rst
+   scenario_provider_ovs.rst
    deploy_scenario4b.rst
