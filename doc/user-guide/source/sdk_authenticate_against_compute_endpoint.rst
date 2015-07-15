@@ -26,7 +26,7 @@ and pass the version number:
    :linenos:
 
    from os import environ as env
-   import novaclient
+   import novaclient.client
    nova = novaclient.client.Client("1.1", auth_url=env['OS_AUTH_URL'],
                                    username=env['OS_USERNAME'],
                                    api_key=env['OS_PASSWORD'],
