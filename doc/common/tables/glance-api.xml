@@ -30,6 +30,10 @@
         <td>(ListOpt) A list of artifacts that are allowed in the format name or name-version. Empty list means that any artifact can be loaded.</td>
       </tr>
       <tr>
+        <td><option>client_socket_timeout</option> = <replaceable>900</replaceable></td>
+        <td>(IntOpt) Timeout for client connections' socket operations. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.</td>
+      </tr>
+      <tr>
         <td><option>enable_v1_api</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Deploy the v1 OpenStack Images API.</td>
       </tr>
@@ -44,6 +48,10 @@
       <tr>
         <td><option>enable_v2_registry</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Deploy the v2 OpenStack Registry API.</td>
+      </tr>
+      <tr>
+        <td><option>enable_v3_api</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) Deploy the v3 OpenStack Objects API.</td>
       </tr>
       <tr>
         <td><option>http_keepalive</option> = <replaceable>True</replaceable></td>
@@ -91,7 +99,7 @@
       </tr>
       <tr>
         <td><option>use_user_token</option> = <replaceable>True</replaceable></td>
-        <td>(BoolOpt) Whether to pass through the user token when making requests to the registry.</td>
+        <td>(BoolOpt) Whether to pass through the user token when making requests to the registry. To prevent failures with token expiration during big files upload, it is recommended to set this parameter to False.If "use_user_token" is not in effect, then admin credentials can be specified.</td>
       </tr>
       <tr>
         <th colspan="2">[glance_store]</th>
@@ -107,6 +115,17 @@
       <tr>
         <td><option>stores</option> = <replaceable>file, http</replaceable></td>
         <td>(ListOpt) List of stores enabled</td>
+      </tr>
+      <tr>
+        <th colspan="2">[oslo_middleware]</th>
+      </tr>
+      <tr>
+        <td><option>max_request_body_size</option> = <replaceable>114688</replaceable></td>
+        <td>(IntOpt) The maximum body size for each  request, in bytes.</td>
+      </tr>
+      <tr>
+        <td><option>secure_proxy_ssl_header</option> = <replaceable>X-Forwarded-Proto</replaceable></td>
+        <td>(StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.</td>
       </tr>
       <tr>
         <th colspan="2">[paste_deploy]</th>
