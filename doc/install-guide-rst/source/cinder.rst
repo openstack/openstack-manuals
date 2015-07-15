@@ -4,12 +4,11 @@ Add the Block Storage service
 
 .. toctree::
 
+   common/get_started_block_storage.rst
    cinder-controller-node.rst
    cinder-storage-node.rst
    cinder-verify.rst
    cinder-next-steps.rst
-
-.. TODO(katomo): add getstart-cinder to toctree after creation.
 
 The OpenStack Block Storage service provides block storage devices
 to guest instances. The method in which the storage is provisioned and
