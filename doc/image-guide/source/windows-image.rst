@@ -8,7 +8,7 @@ using the :command:`virt-install` command and the KVM hypervisor.
 #. Follow these steps to prepare the installation:
 
    #. Download a Windows Server 2012 installation ISO.
-      Evaluation images are available on `the Microsoft website
+      Evaluation images are available on the `Microsoft website
       <http://www.microsoft.com/en-us/evalcenter/
       evaluate-windows-server-2012>`_ (registration required).
    #. Download the signed VirtIO drivers ISO from the
@@ -43,7 +43,7 @@ using the :command:`virt-install` command and the KVM hypervisor.
    :guilabel:`Load driver` and browse the file system to select
    the ``E:\WIN8\AMD64`` folder. The Windows installer displays
    a list of drivers to install. Select the :guilabel:`VirtIO SCSI` and
-   :guilabel:`network drivers`, and continue the installation.
+   :guilabel:`network drivers` and continue the installation.
 
    Once the installation is completed, the VM restarts.
    Define a password for the administrator when prompted.
@@ -91,5 +91,4 @@ Your image is ready to upload to the Image service:
 .. code-block:: console
 
    $ glance image-create --name WS2012 --disk-format qcow2 \
-     --container-format bare --property visibility=public \
-     --file ws2012.qcow2
+     --container-format bare --file ws2012.qcow2
