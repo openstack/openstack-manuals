@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-07-15 06:15+0000\n"
+"POT-Creation-Date: 2015-07-16 06:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1093,7 +1093,7 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:833(None)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:840(None)
 msgid "@@image: '../../common/figures/nova-weighting-hosts.png'; md5=000eab4cf0deb1da2e692e023065a6ae"
 msgstr ""
 
@@ -1290,606 +1290,606 @@ msgid "AggregateTypeAffinityFilter"
 msgstr ""
 
 #: ./doc/config-reference/compute/section_compute-scheduler.xml:300(para)
-msgid "Filters host by per-aggregate <literal>instance_type</literal> value. For information about how to use this filter, see <xref linkend=\"host-aggregates\"/>. See also <xref linkend=\"typeaffinityfilter\"/>."
+msgid "This filter passes hosts if no <literal>instance_type</literal> key is set or the <literal>instance_type</literal> aggregate metadata value contains the name of the <literal>instance_type</literal> requested. The value of the <literal>instance_type</literal> metadata entry is a string that may contain either a single <literal>instance_type</literal> name or a comma-separated list of <literal>instance_type</literal> names, such as 'm1.nano' or \"m1.nano,m1.small.\" For information about how to use this filter, see <xref linkend=\"host-aggregates\"/>. See also <xref linkend=\"typeaffinityfilter\"/>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:309(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:316(title)
 msgid "AllHostsFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:310(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:317(para)
 msgid "This is a no-op filter. It does not eliminate any of the available hosts."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:314(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:321(title)
 msgid "AvailabilityZoneFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:315(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:322(para)
 msgid "Filters hosts by availability zone. You must enable this filter for the scheduler to respect availability zones in requests."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:320(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:327(title)
 msgid "ComputeCapabilitiesFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:321(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:328(para)
 msgid "Matches properties defined in extra specs for an instance type against compute capabilities."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:323(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:330(para)
 msgid "If an extra specs key contains a colon (<literal>:</literal>), anything before the colon is treated as a namespace and anything after the colon is treated as the key to be matched. If a namespace is present and is not <literal>capabilities</literal>, the filter ignores the namespace. For backward compatibility, also treats the extra specs key as the key to be matched if no namespace is present; this action is highly discouraged because it conflicts with <link linkend=\"aggregate-instanceextraspecsfilter\"> AggregateInstanceExtraSpecsFilter</link> filter when you enable both filters."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:337(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:344(title)
 msgid "ComputeFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:338(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:345(para)
 msgid "Passes all hosts that are operational and enabled."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:340(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:347(para)
 msgid "In general, you should always enable this filter."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:343(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:350(title)
 msgid "CoreFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:344(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:351(para)
 msgid "Only schedules instances on hosts if sufficient CPU cores are available. If this filter is not set, the scheduler might over-provision a host based on cores. For example, the virtual cores running on an instance may exceed the physical cores."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:349(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:356(para)
 msgid "You can configure this filter to enable a fixed amount of vCPU overcommitment by using the <placeholder-1/> configuration option in <filename>nova.conf</filename>. The default setting is:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:356(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:363(para)
 msgid "With this setting, if 8 vCPUs are on a node, the scheduler allows instances up to 128 vCPU to be run on that node."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:359(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:366(para)
 msgid "To disallow vCPU overcommitment set:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:362(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:369(para)
 msgid "The Compute API always returns the actual number of CPU cores available on a compute node regardless of the value of the <placeholder-1/> configuration key. As a result changes to the <placeholder-2/> are not reflected via the command line clients or the dashboard. Changes to this configuration key are only taken into account internally in the scheduler."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:375(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:382(title)
 msgid "NUMATopologyFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:376(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:383(para)
 msgid "Filters hosts based on the NUMA topology that was specified for the instance through the use of flavor <literal>extra_specs</literal>in combination with the image properties, as described in detail in the related nova-spec document: <placeholder-1/> Filter will try to match the exact NUMA cells of the instance to those of the host. It will consider the standard over-subscription limits each cell, and provide limits to the compute host accordingly."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:388(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:395(para)
 msgid "If instance has no topology defined, it will be considered for any host. If instance has a topology defined, it will be considered only for NUMA capable hosts."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:396(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:403(title)
 msgid "DifferentHostFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:397(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:404(para)
 msgid "Schedules the instance on a different host from a set of instances. To take advantage of this filter, the requester must pass a scheduler hint, using <literal>different_host</literal> as the key and a list of instance UUIDs as the value. This filter is the opposite of the <literal>SameHostFilter</literal>. Using the <placeholder-1/> command-line tool, use the <literal>--hint</literal> flag. For example:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:409(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:416(para)
 msgid "With the API, use the <literal>os:scheduler_hints</literal> key. For example:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:415(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:422(title)
 msgid "DiskFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:416(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:423(para)
 msgid "Only schedules instances on hosts if there is sufficient disk space available for root and ephemeral storage."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:419(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:426(para)
 msgid "You can configure this filter to enable a fixed amount of disk overcommitment by using the <literal>disk_allocation_ratio</literal> configuration option in the <filename>nova.conf</filename> configuration file. The default setting disables the possibility of the overcommitment and allows launching a VM only if there is a sufficient amount of disk space available on a host:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:429(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:436(para)
 msgid "DiskFilter always considers the value of the <placeholder-1/> property and not the one of the <placeholder-2/> property of a hypervisor's statistics:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:450(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:457(para)
 msgid "As it can be viewed from the command output above, the amount of the available disk space can be less than the amount of the free disk space. It happens because the <placeholder-1/> property accounts for the virtual size rather than the actual size of images. If you use an image format that is sparse or copy on write so that each virtual instance does not require a 1:1 allocation of a virtual disk to a physical storage, it may be useful to allow the overcommitment of disk space."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:460(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:467(para)
 msgid "To enable scheduling instances while overcommitting disk resources on the node, adjust the value of the <literal>disk_allocation_ratio</literal> configuration option to greater than <literal>1.0</literal>:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:466(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:473(para)
 msgid "If the value is set to <literal>&gt;1</literal>, we recommend keeping track of the free disk space, as the value approaching <literal>0</literal> may result in the incorrect functioning of instances using it at the moment."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:473(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:480(title)
 msgid "GroupAffinityFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:475(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:482(para)
 msgid "This filter is deprecated in favor of <link linkend=\"servergroupantiaffinityfilter\">ServerGroupAffinityFilter</link>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:479(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:486(para)
 msgid "The GroupAffinityFilter ensures that an instance is scheduled on to a host from a set of group hosts. To take advantage of this filter, the requester must pass a scheduler hint, using <literal>group</literal> as the key and an arbitrary name as the value. Using the <placeholder-1/> command-line tool, use the <literal>--hint</literal> flag. For example:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:487(replaceable) ./doc/config-reference/compute/section_compute-scheduler.xml:508(replaceable) ./doc/config-reference/compute/section_compute-scheduler.xml:745(replaceable) ./doc/config-reference/compute/section_compute-scheduler.xml:760(replaceable)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:494(replaceable) ./doc/config-reference/compute/section_compute-scheduler.xml:515(replaceable) ./doc/config-reference/compute/section_compute-scheduler.xml:752(replaceable) ./doc/config-reference/compute/section_compute-scheduler.xml:767(replaceable)
 msgid "IMAGE_ID"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:488(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:495(para)
 msgid "This filter should not be enabled at the same time as <link linkend=\"groupantiaffinityfilter\">GroupAntiAffinityFilter</link> or neither filter will work properly."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:494(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:501(title)
 msgid "GroupAntiAffinityFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:496(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:503(para)
 msgid "This filter is deprecated in favor of <link linkend=\"servergroupantiaffinityfilter\">ServerGroupAntiAffinityFilter</link>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:500(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:507(para)
 msgid "The GroupAntiAffinityFilter ensures that each instance in a group is on a different host. To take advantage of this filter, the requester must pass a scheduler hint, using <literal>group</literal> as the key and an arbitrary name as the value. Using the <placeholder-1/> command-line tool, use the <literal>--hint</literal> flag. For example:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:509(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:516(para)
 msgid "This filter should not be enabled at the same time as <link linkend=\"groupaffinityfilter\">GroupAffinityFilter</link> or neither filter will work properly."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:515(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:522(title)
 msgid "ImagePropertiesFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:516(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:523(para)
 msgid "Filters hosts based on properties defined on the instance's image. It passes hosts that can support the specified image properties contained in the instance. Properties include the architecture, hypervisor type, hypervisor version (for Xen hypervisor type only), and virtual machine mode."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:522(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:529(para)
 msgid "For example, an instance might require a host that runs an ARM-based processor, and QEMU as the hypervisor. You can decorate an image with these properties by using:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:527(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:534(para)
 msgid "The image properties that the filter checks for are:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:530(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:537(para)
 msgid "<literal>architecture</literal>: describes the machine architecture required by the image. Examples are <literal>i686</literal>, <literal>x86_64</literal>, <literal>arm</literal>, and <literal>ppc64</literal>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:537(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:544(para)
 msgid "<literal>hypervisor_type</literal>: describes the hypervisor required by the image. Examples are <literal>xen</literal>, <literal>qemu</literal>, and <literal>xenapi</literal>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:541(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:548(para)
 msgid "<literal>qemu</literal> is used for both QEMU and KVM hypervisor types."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:545(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:552(para)
 msgid "<literal>hypervisor_version_requires</literal>: describes the hypervisor version required by the image. The property is supported for Xen hypervisor type only. It can be used to enable support for multiple hypervisor versions, and to prevent instances with newer Xen tools from being provisioned on an older version of a hypervisor. If available, the property value is compared to the hypervisor version of the compute host."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:554(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:561(para)
 msgid "To filter the hosts by the hypervisor version, add the <literal>hypervisor_version_requires</literal> property on the image as metadata and pass an operator and a required hypervisor version as its value:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:561(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:568(para)
 msgid "<literal>vm_mode</literal>: describes the hypervisor application binary interface (ABI) required by the image. Examples are <literal>xen</literal> for Xen 3.0 paravirtual ABI, <literal>hvm</literal> for native ABI, <literal>uml</literal> for User Mode Linux paravirtual ABI, <literal>exe</literal> for container virt executable ABI."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:572(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:579(title)
 msgid "IsolatedHostsFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:573(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:580(para)
 msgid "Allows the admin to define a special (isolated) set of images and a special (isolated) set of hosts, such that the isolated images can only run on the isolated hosts, and the isolated hosts can only run isolated images. The flag <literal>restrict_isolated_hosts_to_isolated_images</literal> can be used to force isolated hosts to only run isolated images."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:581(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:588(para)
 msgid "The admin must specify the isolated set of images and hosts in the <filename>nova.conf</filename> file using the <literal>isolated_hosts</literal> and <literal>isolated_images</literal> configuration options. For example:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:590(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:597(title)
 msgid "IoOpsFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:591(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:598(para)
 msgid "The IoOpsFilter filters hosts by concurrent I/O operations on it. Hosts with too many concurrent I/O operations will be filtered out. The <placeholder-1/> option specifies the maximum number of I/O intensive instances allowed to run on a host. A host will be ignored by the scheduler if more than <placeholder-2/> instances in build, resize, snapshot, migrate, rescue or unshelve task states are running on it."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:604(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:611(title)
 msgid "JsonFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:609(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:616(para)
 msgid "="
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:612(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:619(para)
 msgid "&lt;"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:615(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:622(para)
 msgid "&gt;"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:618(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:625(para)
 msgid "in"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:621(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:628(para)
 msgid "&lt;="
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:624(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:631(para)
 msgid "&gt;="
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:627(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:634(para)
 msgid "not"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:630(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:637(para)
 msgid "or"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:633(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:640(para)
 msgid "and"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:637(code)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:644(code)
 msgid "$free_ram_mb"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:640(code)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:647(code)
 msgid "$free_disk_mb"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:643(code)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:650(code)
 msgid "$total_usable_ram_mb"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:646(code)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:653(code)
 msgid "$vcpus_total"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:649(code)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:656(code)
 msgid "$vcpus_used"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:605(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:612(para)
 msgid "The JsonFilter allows a user to construct a custom filter by passing a scheduler hint in JSON format. The following operators are supported:<placeholder-1/>The filter supports the following variables:<placeholder-2/>Using the <placeholder-3/> command-line tool, use the <literal>--hint</literal> flag:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:656(para) ./doc/config-reference/compute/section_compute-scheduler.xml:728(para) ./doc/config-reference/compute/section_compute-scheduler.xml:792(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:663(para) ./doc/config-reference/compute/section_compute-scheduler.xml:735(para) ./doc/config-reference/compute/section_compute-scheduler.xml:799(para)
 msgid "With the API, use the <literal>os:scheduler_hints</literal> key:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:661(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:668(title)
 msgid "MetricsFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:662(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:669(para)
 msgid "Filters hosts based on meters <literal>weight_setting</literal>. Only hosts with the available meters are passed so that the metrics weigher will not fail due to these hosts."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:669(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:676(title)
 msgid "NumInstancesFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:670(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:677(para)
 msgid "Hosts that have more instances running than specified by the <placeholder-1/> option are filtered out when this filter is in place."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:677(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:684(title)
 msgid "PciPassthroughFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:678(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:685(para)
 msgid "The filter schedules instances on a host if the host has devices that meet the device requests in the <literal>extra_specs</literal> attribute for the flavor."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:685(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:692(title)
 msgid "RamFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:686(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:693(para)
 msgid "Only schedules instances on hosts that have sufficient RAM available. If this filter is not set, the scheduler may over provision a host based on RAM (for example, the RAM allocated by virtual machine instances may exceed the physical RAM)."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:691(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:698(para)
 msgid "You can configure this filter to enable a fixed amount of RAM overcommitment by using the <literal>ram_allocation_ratio</literal> configuration option in <filename>nova.conf</filename>. The default setting is:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:698(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:705(para)
 msgid "This setting enables 1.5GB instances to run on any compute node with 1GB of free RAM."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:702(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:709(title)
 msgid "RetryFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:703(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:710(para)
 msgid "Filters out hosts that have already been attempted for scheduling purposes. If the scheduler selects a host to respond to a service request, and the host fails to respond to the request, this filter prevents the scheduler from retrying that host for the service request."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:709(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:716(para)
 msgid "This filter is only useful if the <literal>scheduler_max_attempts</literal> configuration option is set to a value greater than zero."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:715(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:722(title)
 msgid "SameHostFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:716(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:723(para)
 msgid "Schedules the instance on the same host as another instance in a set of instances. To take advantage of this filter, the requester must pass a scheduler hint, using <literal>same_host</literal> as the key and a list of instance UUIDs as the value. This filter is the opposite of the <literal>DifferentHostFilter</literal>. Using the <placeholder-1/> command-line tool, use the <literal>--hint</literal> flag:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:733(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:740(title)
 msgid "ServerGroupAffinityFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:734(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:741(para)
 msgid "The ServerGroupAffinityFilter ensures that an instance is scheduled on to a host from a set of group hosts. To take advantage of this filter, the requester must create a server group with an <literal>affinity</literal> policy, and pass a scheduler hint, using <literal>group</literal> as the key and the server group UUID as the value. Using the <placeholder-1/> command-line tool, use the <literal>--hint</literal> flag. For example:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:745(replaceable) ./doc/config-reference/compute/section_compute-scheduler.xml:760(replaceable)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:752(replaceable) ./doc/config-reference/compute/section_compute-scheduler.xml:767(replaceable)
 msgid "SERVER_GROUP_UUID"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:748(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:755(title)
 msgid "ServerGroupAntiAffinityFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:749(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:756(para)
 msgid "The ServerGroupAntiAffinityFilter ensures that each instance in a group is on a different host. To take advantage of this filter, the requester must create a server group with an <literal>anti-affinity</literal> policy, and pass a scheduler hint, using <literal>group</literal> as the key and the server group UUID as the value. Using the <placeholder-1/> command-line tool, use the <literal>--hint</literal> flag. For example:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:763(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:770(title)
 msgid "SimpleCIDRAffinityFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:764(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:771(para)
 msgid "Schedules the instance based on host IP subnet range. To take advantage of this filter, the requester must specify a range of valid IP address in CIDR format, by passing two scheduler hints:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:770(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:777(literal)
 msgid "build_near_host_ip"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:772(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:779(para)
 msgid "The first IP address in the subnet (for example, <literal>192.168.1.1</literal>)"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:778(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:785(literal)
 msgid "cidr"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:780(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:787(para)
 msgid "The CIDR that corresponds to the subnet (for example, <literal>/24</literal>)"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:786(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:793(para)
 msgid "Using the <placeholder-1/> command-line tool, use the <literal>--hint</literal> flag. For example, to specify the IP subnet <literal>192.168.1.1/24</literal>"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:797(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:804(title)
 msgid "TrustedFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:798(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:805(para)
 msgid "Filters hosts based on their trust. Only passes hosts that meet the trust requirements specified in the instance properties."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:805(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:812(title)
 msgid "TypeAffinityFilter"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:806(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:813(para)
 msgid "Dynamically limits hosts to one instance type. An instance can only be launched on a host, if no instance with different instances types are running on it, or if the host has no running instances at all."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:815(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:822(title)
 msgid "Weights"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:817(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:824(para)
 msgid "When resourcing instances, the filter scheduler filters and weights each host in the list of acceptable hosts. Each time the scheduler selects a host, it virtually consumes resources on it, and subsequent selections are adjusted accordingly. This process is useful when the customer asks for the same large amount of instances, because weight is computed for each requested instance."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:824(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:831(para)
 msgid "All weights are normalized before being summed up; the host with the largest weight is given the highest priority."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:828(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:835(title)
 msgid "Weighting hosts"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:837(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:844(para)
 msgid "If cells are used, cells are weighted by the scheduler in the same manner as hosts."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:839(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:846(para)
 msgid "Hosts and cells are weighted based on the following options in the <filename>/etc/nova/nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:843(caption)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:850(caption)
 msgid "Host weighting options"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:849(th) ./doc/config-reference/compute/section_compute-scheduler.xml:961(th)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:856(th) ./doc/config-reference/compute/section_compute-scheduler.xml:968(th)
 msgid "Section"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:850(th) ./doc/config-reference/compute/section_compute-scheduler.xml:962(th) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:225(td) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:307(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:857(th) ./doc/config-reference/compute/section_compute-scheduler.xml:969(th) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:225(td) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:307(td)
 msgid "Option"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:851(th) ./doc/config-reference/compute/section_compute-scheduler.xml:963(th) ./doc/config-reference/dashboard/section_dashboard-log-files.xml:22(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:127(th) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:206(th) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:228(td) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:310(td) ./doc/config-reference/block-storage/drivers/ibm-gpfs-volume-driver.xml:80(th) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:90(th) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:191(th)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:858(th) ./doc/config-reference/compute/section_compute-scheduler.xml:970(th) ./doc/config-reference/dashboard/section_dashboard-log-files.xml:22(td) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:127(th) ./doc/config-reference/block-storage/drivers/ibm-storwize-svc-driver.xml:206(th) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:228(td) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:310(td) ./doc/config-reference/block-storage/drivers/ibm-gpfs-volume-driver.xml:80(th) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:90(th) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:191(th)
 msgid "Description"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:856(td) ./doc/config-reference/compute/section_compute-scheduler.xml:866(td) ./doc/config-reference/compute/section_compute-scheduler.xml:878(td) ./doc/config-reference/compute/section_compute-scheduler.xml:887(td) ./doc/config-reference/compute/section_nova-conf.xml:32(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:863(td) ./doc/config-reference/compute/section_compute-scheduler.xml:873(td) ./doc/config-reference/compute/section_compute-scheduler.xml:885(td) ./doc/config-reference/compute/section_compute-scheduler.xml:894(td) ./doc/config-reference/compute/section_nova-conf.xml:32(literal)
 msgid "[DEFAULT]"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:857(literal) ./doc/config-reference/compute/section_compute-scheduler.xml:994(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:864(literal) ./doc/config-reference/compute/section_compute-scheduler.xml:1001(literal)
 msgid "ram_weight_multiplier"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:858(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:865(td)
 msgid "By default, the scheduler spreads instances across all hosts evenly. Set the <placeholder-1/> option to a negative number if you prefer stacking instead of spreading. Use a floating-point value."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:867(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:874(literal)
 msgid "scheduler_host_subset_size"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:868(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:875(td)
 msgid "New instances are scheduled on a host that is chosen randomly from a subset of the N best hosts. This property defines the subset size from which a host is chosen. A value of 1 chooses the first host returned by the weighting functions. This value must be at least 1. A value less than 1 is ignored, and 1 is used instead. Use an integer value."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:879(literal) ./doc/config-reference/compute/section_compute-scheduler.xml:1004(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:886(literal) ./doc/config-reference/compute/section_compute-scheduler.xml:1011(literal)
 msgid "scheduler_weight_classes"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:881(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:888(literal)
 msgid "nova.scheduler.weights.all_weighers"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:880(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:887(td)
 msgid "Defaults to <placeholder-1/>, which selects the RamWeigher and MetricsWeigher. Hosts are then weighted and sorted with the largest weight winning."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:888(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:895(literal)
 msgid "io_ops_weight_multiplier"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:889(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:896(td)
 msgid "Multiplier used for weighing host I/O operations. A negative value means a preference to choose light workload compute hosts."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:894(td) ./doc/config-reference/compute/section_compute-scheduler.xml:900(td) ./doc/config-reference/compute/section_compute-scheduler.xml:910(td) ./doc/config-reference/compute/section_compute-scheduler.xml:932(td) ./doc/config-reference/compute/section_nova-conf.xml:142(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:901(td) ./doc/config-reference/compute/section_compute-scheduler.xml:907(td) ./doc/config-reference/compute/section_compute-scheduler.xml:917(td) ./doc/config-reference/compute/section_compute-scheduler.xml:939(td) ./doc/config-reference/compute/section_nova-conf.xml:142(literal)
 msgid "[metrics]"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:895(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:902(literal)
 msgid "weight_multiplier"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:896(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:903(td)
 msgid "Multiplier for weighting meters. Use a floating-point value."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:901(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:908(literal)
 msgid "weight_setting"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:905(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:912(literal)
 msgid "name1.value * 1.0 + name2.value * -1.0"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:902(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:909(td)
 msgid "Determines how meters are weighted. Use a comma-separated list of metricName=ratio. For example: \"name1=1.0, name2=-1.0\" results in: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:911(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:918(literal)
 msgid "required"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:914(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:921(para)
 msgid "TrueRaises an exception. To avoid the raised exception, you should use the scheduler filter MetricFilter to filter out hosts with unavailable meters."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:923(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:930(para)
 msgid "FalseTreated as a negative factor in the weighting process (uses the option)."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:912(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:919(para)
 msgid "Specifies how to treat unavailable meters:<placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:933(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:940(literal)
 msgid "weight_of_unavailable"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:934(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:941(td)
 msgid "If <placeholder-1/> is set to False, and any one of the meters set by <placeholder-2/> is unavailable, the <placeholder-3/> value is returned to the scheduler."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:943(para) ./doc/config-reference/compute/section_compute-scheduler.xml:1013(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:950(para) ./doc/config-reference/compute/section_compute-scheduler.xml:1020(para)
 msgid "For example:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:955(caption)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:962(caption)
 msgid "Cell weighting options"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:968(td) ./doc/config-reference/compute/section_compute-scheduler.xml:976(td) ./doc/config-reference/compute/section_compute-scheduler.xml:986(td) ./doc/config-reference/compute/section_compute-scheduler.xml:993(td) ./doc/config-reference/compute/section_compute-scheduler.xml:1003(td) ./doc/config-reference/compute/section_nova-conf.xml:49(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:975(td) ./doc/config-reference/compute/section_compute-scheduler.xml:983(td) ./doc/config-reference/compute/section_compute-scheduler.xml:993(td) ./doc/config-reference/compute/section_compute-scheduler.xml:1000(td) ./doc/config-reference/compute/section_compute-scheduler.xml:1010(td) ./doc/config-reference/compute/section_nova-conf.xml:49(literal)
 msgid "[cells]"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:969(literal) ./doc/config-reference/compute/section_compute-scheduler.xml:982(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:976(literal) ./doc/config-reference/compute/section_compute-scheduler.xml:989(literal)
 msgid "mute_weight_multiplier"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:970(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:977(td)
 msgid "Multiplier to weight mute children (hosts which have not sent capacity or capacity updates for some time). Use a negative, floating-point value."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:977(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:984(literal)
 msgid "mute_weight_value"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:977(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:984(td)
 msgid "<placeholder-1/> (deprecated)"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:978(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:985(td)
 msgid "Weight value assigned to mute children. Use a positive, floating-point value with a maximum of '1.0'. This option is deprecated, use <placeholder-1/> instead."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:987(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:994(literal)
 msgid "offset_weight_multiplier"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:988(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:995(td)
 msgid "Multiplier to weight cells, so you can specify a preferred cell. Use a floating point value."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:995(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:1002(td)
 msgid "By default, the scheduler spreads instances across all cells evenly. Set the <placeholder-1/> option to a negative number if you prefer stacking instead of spreading. Use a floating-point value."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:1006(literal)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:1013(literal)
 msgid "nova.cells.weights.all_weighers"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:1005(td)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:1012(td)
 msgid "Defaults to <placeholder-1/>, which maps to all cell weighers included with Compute. Cells are then weighted and sorted with the largest weight winning."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:1021(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:1028(title)
 msgid "Chance scheduler"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:1023(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:1030(para)
 msgid "As an administrator, you work with the filter scheduler. However, the Compute service also uses the Chance Scheduler, <literal>nova.scheduler.chance.ChanceScheduler</literal>, which randomly selects from lists of filtered hosts."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:1033(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:1040(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:1040(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:1040(title)
 msgid "Configuration reference"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:1034(para)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:1041(para)
 msgid "To customize the Compute scheduler, use the configuration option settings documented in <xref linkend=\"config_table_nova_scheduler\"/>."
 msgstr ""
 
