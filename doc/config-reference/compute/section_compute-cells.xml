@@ -145,24 +145,35 @@ cell_type = compute</programlisting></para>
         <para>Use the <command>nova-manage cell create</command>
             command to add this information to the database in each
             cell:<screen><prompt>#</prompt> <userinput>nova-manage cell create -h</userinput>
-<computeroutput>Options:
+<computeroutput>usage: nova-manage cell create [-h] [--name &lt;name>]
+                               [--cell_type &lt;parent|api|child|compute>]
+                               [--username &lt;username>] [--password &lt;password>]
+                               [--broker_hosts &lt;broker_hosts>]
+                               [--hostname &lt;hostname>] [--port &lt;number>]
+                               [--virtual_host &lt;virtual_host>]
+                               [--woffset &lt;float>] [--wscale &lt;float>]
+
+optional arguments:
   -h, --help            show this help message and exit
-  --name=&lt;name>         Name for the new cell
-  --cell_type=&lt;parent|child>
-                        Whether the cell is a parent or child
-  --username=&lt;username>
+  --name &lt;name>         Name for the new cell
+  --cell_type &lt;parent|api|child|compute>
+                        Whether the cell is parent/api or child/compute
+  --username &lt;username>
                         Username for the message broker in this cell
-  --password=&lt;password>
+  --password &lt;password>
                         Password for the message broker in this cell
-  --hostname=&lt;hostname>
+  --broker_hosts &lt;broker_hosts>
+                        Comma separated list of message brokers in this cell.
+                        Each Broker is specified as hostname:port with both
+                        mandatory. This option overrides the --hostname and
+                        --port options (if provided).
+  --hostname &lt;hostname>
                         Address of the message broker in this cell
-  --port=&lt;number>       Port number of the message broker in this cell
-  --virtual_host=&lt;virtual_host>
+  --port &lt;number>       Port number of the message broker in this cell
+  --virtual_host &lt;virtual_host>
                         The virtual host of the message broker in this cell
-  --woffset=&lt;float>
-                        (weight offset) It might be used by some cell scheduling code in the future
-  --wscale=&lt;float>
-                        (weight scale) It might be used by some cell scheduling code in the future</computeroutput></screen></para>
+  --woffset &lt;float>
+  --wscale &lt;float></computeroutput></screen></para>
         <para>As an example, assume an API cell named
                 <literal>api</literal> and a child cell named
                 <literal>cell1</literal>.</para>
