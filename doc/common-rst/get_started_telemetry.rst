@@ -1,7 +1,7 @@
 .. :orphan:
 
-Telemetry module
-----------------
+OpenStack Telemetry module
+--------------------------
 
 The Telemetry module performs the following functions:
 

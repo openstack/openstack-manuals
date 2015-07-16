@@ -1,7 +1,7 @@
 .. :orphan:
 
-Orchestration module concepts
------------------------------
+OpenStack Orchestration module
+------------------------------
 
 The Orchestration module provides a template-based orchestration for
 describing a cloud application, by running OpenStack API calls to
