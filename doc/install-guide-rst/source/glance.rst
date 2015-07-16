@@ -4,10 +4,9 @@ Add the Image service
 
 .. toctree::
 
+   common/get_started_image_service.rst
    glance-install.rst
    glance-verify.rst
-
-.. TODO(katomo): add getstart_image to toctree after creation
 
 The OpenStack Image service (glance) enables users to discover,
 register, and retrieve virtual machine images. It offers a REST
