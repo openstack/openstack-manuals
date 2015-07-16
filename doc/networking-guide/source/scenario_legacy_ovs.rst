@@ -3,16 +3,60 @@ Scenario: Legacy with Open vSwitch
 ==================================
 
 This scenario describes a legacy (basic) implementation of the
-OpenStack Networking service using the ML2 plug-in with Open vSwitch.
+OpenStack Networking service using the ML2 plug-in with Open vSwitch (OVS).
+
+The legacy implementation contributes the networking portion of self-service
+virtual data center infrastructure by providing a method for regular
+(non-privileged) users to manage virtual networks within a project and
+includes the following components:
+
+* Project (tenant) networks
+
+  Project networks provide connectivity to instances for a particular
+  project. Regular (non-privileged) users can manage project networks
+  within the allocation that an administrator or operator defines for
+  for them. Project networks can use VLAN, GRE, or VXLAN transport methods
+  depending on the allocation. Project networks generally use private
+  IP address ranges (RFC1918) and lack connectivity to external networks
+  such as the Internet. Networking refers to IP addresses on project
+  networks as *fixed* IP addresses.
+
+* External networks
+
+  External networks provide connectivity to external networks such as
+  the Internet. Only administrative (privileged) users can manage external
+  networks because they interface with the physical network infrastructure.
+  External networks can use flat or VLAN transport methods depending on the
+  physical network infrastructure and generally use public IP address
+  ranges.
+
+  .. note::
+     A flat network essentially uses the untagged or native VLAN. Similar to
+     layer-2 properties of physical networks, only one flat network can exist
+     per external bridge. In most cases, production deployments should use
+     VLAN transport for external networks.
+
+* Routers
+
+  Routers typically connect project and external networks. By default, they
+  implement SNAT to provide outbound external connectivity for instances on
+  project networks. Each router uses an IP address in the external network
+  allocation for SNAT. Routers also use DNAT to provide inbound external
+  connectivity for instances on project networks. Networking refers to IP
+  addresses on routers that provide inbound external connectivity for
+  instances on project networks as *floating* IP addresses. Routers can also
+  connect project networks that belong to the same project.
+
+* Supporting services
+
+  Other supporting services include DHCP and metadata. The DHCP service
+  manages IP addresses for instances on project networks. The metadata
+  service provides an API for instances on project networks to obtain
+  metadata such as SSH keys.
+
 The example configuration creates one flat external network and one VXLAN
 project (tenant) network. However, this configuration also supports VLAN
 external networks, VLAN project networks, and GRE project networks.
-
-To improve understanding of network traffic flow, the network and compute
-nodes contain a separate network interface for VLAN project networks. In
-production environments, VLAN project networks can use any Open vSwitch
-bridge with access to a network interface. For example, the ``br-tun``
-bridge.
 
 Prerequisites
 ~~~~~~~~~~~~~
@@ -40,10 +84,16 @@ Infrastructure
    project tunnel networks, and VLAN project networks. The Open vSwitch
    bridge ``br-vlan`` must contain a port on the VLAN interface.
 
+To improve understanding of network traffic flow, the network and compute
+nodes contain a separate network interface for VLAN project networks. In
+production environments, VLAN project networks can use any Open vSwitch
+bridge with access to a network interface. For example, the ``br-tun``
+bridge.
+
 In the example configuration, the management network uses 10.0.0.0/24,
 the tunnel network uses 10.0.1.0/24, and the external network uses
 203.0.113.0/24. The VLAN network does not require an IP address range
-because it only handles layer 2 connectivity.
+because it only handles layer-2 connectivity.
 
 .. image:: figures/scenario-legacy-hw.png
    :alt: Hardware layout
@@ -55,7 +105,7 @@ because it only handles layer 2 connectivity.
    :alt: Service layout
 
 .. note::
-   For VLAN external and project networks, the network infrastructure
+   For VLAN external and project networks, the physical network infrastructure
    must support VLAN tagging. For best performance with VXLAN and GRE
    project networks, the network infrastructure should support jumbo frames.
 
@@ -160,8 +210,7 @@ For instances with a fixed IP address, the network node routes
 * External network
 
   * Network 203.0.113.0/24
-  * Gateway 203.0.113.1 with MAC address *EG*
-  * Floating IP range 203.0.113.101 to 203.0.113.200
+  * IP address allocation from 203.0.113.101 to 203.0.113.200
   * Project network router interface 203.0.113.101 *TR*
 
 * Project network
@@ -253,8 +302,7 @@ For instances with a floating IP address, the network node routes
 * External network
 
   * Network 203.0.113.0/24
-  * Gateway 203.0.113.1 with MAC address *EG*
-  * Floating IP range 203.0.113.101 to 203.0.113.200
+  * IP address allocation from 203.0.113.101 to 203.0.113.200
   * Project network router interface 203.0.113.101 *TR*
 
 * Project network
@@ -378,7 +426,6 @@ The following steps involve compute node 1:
    integration bridge ``br-int``.
 #. The Open vSwitch integration bridge ``br-int`` adds the internal tag for
    project network 1.
-
 #. For VLAN project networks:
 
    #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
@@ -427,7 +474,6 @@ The following steps involve the network node:
    integration bridge ``br-int``.
 #. The Open vSwitch integration bridge ``br-int`` adds the internal tag for
    project network 2.
-
 #. For VLAN project networks:
 
    #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
@@ -619,12 +665,11 @@ Controller node
 
    .. note::
       The first value in the ``tenant_network_types`` option becomes the
-      default project network type when a non-privileged user creates a
-      network.
+      default project network type when a regular user creates a network.
 
    .. note::
       The ``external`` value in the ``network_vlan_ranges`` option lacks VLAN
-      ID ranges to support use of arbitrary VLAN IDs by privileged users.
+      ID ranges to support use of arbitrary VLAN IDs by administrative users.
 
 #. Start the following services:
 
@@ -869,7 +914,7 @@ This example creates a flat external network and a VXLAN project network.
 
 .. note::
    The example configuration contains ``vlan`` as the first project network
-   type. Only a privileged user can create other types of networks such as
+   type. Only an administrative user can create other types of networks such as
    GRE or VXLAN. The following commands use the ``admin`` project credentials
    to create a VXLAN project network.
 
@@ -910,7 +955,8 @@ This example creates a flat external network and a VXLAN project network.
       | tenant_id                 | 443cd1596b2e46d49965750771ebbfe1     |
       +---------------------------+--------------------------------------+
 
-#. Source the regular project credentials.
+#. Source the regular project credentials. The following steps use the
+   ``demo`` project.
 #. Create a subnet on the project network:
 
    .. code-block:: console
@@ -1013,7 +1059,8 @@ Verify network operation
       4 packets transmitted, 4 received, 0% packet loss, time 2999ms
       rtt min/avg/max/mdev = 0.165/0.297/0.619/0.187 ms
 
-#. Source the regular project credentials.
+#. Source the regular project credentials. The following steps use the
+   ``demo`` project.
 #. Launch an instance with an interface on the project network.
 #. Obtain console access to the instance.
 
