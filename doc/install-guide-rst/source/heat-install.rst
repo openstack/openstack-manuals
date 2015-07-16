@@ -119,8 +119,8 @@ database, service credentials, and API endpoints.
         The Orchestration service automatically assigns the
         ``heat_stack_user`` role to users that it creates
         during stack deployment. By default, this role restricts
-        API operations. To avoid conflicts, do not add this role
-        to users with the ``heat_stack_owner`` role.
+        :term:`API` operations. To avoid conflicts, do not add
+        this role to users with the ``heat_stack_owner`` role.
 
    * Create the ``heat`` and ``heat-cfn`` service entities:
 
