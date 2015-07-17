@@ -38,20 +38,23 @@ and three-node architecture with OpenStack Networking
    files. This warning can be ignored.
 
 
+.. include:: basics-prerequisites.rst
 .. include:: basics-security.rst
+.. include:: basics-packages.rst
 .. include:: basics-database.rst
 .. include:: basics-queue.rst
+
 
 .. toctree::
    :hidden:
 
+   basics-prerequisites.rst
    basics-security.rst
+   basics-packages.rst
    basics-database.rst
    basics-queue.rst
 
 
 .. TODO(karenb)
-   section_basics-prerequisites.xml
    section_basics-networking.xml
    section_basics-ntp.xml
-   section_basics-packages.xml
