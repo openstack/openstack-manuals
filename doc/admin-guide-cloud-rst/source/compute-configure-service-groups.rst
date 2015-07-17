@@ -63,11 +63,9 @@ guide (for more information, see `Apache Zookeeper <http://zookeeper.apache.org/
 Python libraries must be installed on every compute node:
 
 **python-zookeeper**
-
   The official Zookeeper Python binding
 
 **evzookeeper**
-
   This library makes the binding work with the eventlet threading model.
 
 This example assumes the ZooKeeper server addresses and ports are

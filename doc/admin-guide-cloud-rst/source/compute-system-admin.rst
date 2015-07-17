@@ -251,9 +251,9 @@ Logging behavior can be changed by creating a configuration file. To
 specify the configuration file, add this line to the
 :file:`/etc/nova/nova.conf` file:
 
-   .. code:: ini
+.. code:: ini
 
-      log-config=/etc/nova/logging.conf
+   log-config=/etc/nova/logging.conf
 
 To change the logging level, add ``DEBUG``, ``INFO``, ``WARNING``, or
 ``ERROR`` as a parameter.
@@ -263,12 +263,12 @@ must contain a section called ``logger_nova``. This controls the
 behavior of the logging facility in the ``nova-*`` services. For
 example:
 
-   .. code:: ini
+.. code:: ini
 
-      [logger_nova]
-      level = INFO
-      handlers = stderr
-      qualname = nova
+   [logger_nova]
+   level = INFO
+   handlers = stderr
+   qualname = nova
 
 This example sets the debugging level to ``INFO`` (which is less verbose
 than the default ``DEBUG`` setting).
@@ -472,12 +472,12 @@ also requires a websocket client to access the serial console.
 
 Alternatively, use a `Python websocket client <https://github.com/larsks/novaconsole/>`__.
 
-   ..  note::
+.. note::
 
-       When you enable the serial console, typical instance logging using
-       the :command:`nova console-log` command is disabled. Kernel output
-       and other system messages will not be visible unless you are
-       actively viewing the serial console.
+   When you enable the serial console, typical instance logging using
+   the :command:`nova console-log` command is disabled. Kernel output
+   and other system messages will not be visible unless you are
+   actively viewing the serial console.
 
 .. TODO/source/compute_rootwrap.rst - convert this file, add to toc tree
 .. TODO/source/compute_configure_migrations.rst - convert this file - toc tree
