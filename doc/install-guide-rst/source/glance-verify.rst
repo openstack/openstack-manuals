@@ -41,10 +41,8 @@ For information about how to manage images, see the
       $ wget -P /tmp/images http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
 
 #. Upload the image to the Image service using the
-   QCOW2 disk format, bare container format, and
-   public visibility so all projects can access it:
-
-   .. TODO(katomo): add link to glossterm QCOW2
+   :term:`QCOW2 <QEMU Copy On Write 2 (QCOW2)>` disk format, :term:`bare`
+   container format, and public visibility so all projects can access it:
 
    .. code-block:: console
 

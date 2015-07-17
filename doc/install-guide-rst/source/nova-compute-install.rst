@@ -3,8 +3,10 @@ Install and configure a compute node
 
 This section describes how to install and configure the Compute
 service on a compute node. The service supports several
-hypervisors to deploy instances or VMs. For simplicity,
-this configuration uses the QEMU hypervisor with the KVM extension
+:term:`hypervisors <hypervisor>` to deploy :term:`instances <instance>`
+or :term:`VMs <virtual machine (VM)>`. For simplicity, this configuration
+uses the :term:`QEMU <Quick EMUlator (QEMU)>` hypervisor with the
+:term:`KVM <kernel-based VM (KVM)>` extension
 on compute nodes that support hardware acceleration for virtual machines.
 On legacy hardware, this configuration uses the generic QEMU hypervisor.
 You can follow these instructions with minor modifications to horizontally

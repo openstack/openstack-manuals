@@ -1,10 +1,10 @@
 Message queue
 ~~~~~~~~~~~~~
 
-OpenStack uses a message queue to coordinate operations and status
-information among services. The message queue service typically runs on
-the controller node. OpenStack supports several message queue services
-including `RabbitMQ <http://www.rabbitmq.com>`__,
+OpenStack uses a :term:`message queue` to coordinate operations and
+status information among services. The message queue service typically
+runs on the controller node. OpenStack supports several message queue
+services including `RabbitMQ <http://www.rabbitmq.com>`__,
 `Qpid <http://qpid.apache.org>`__, and `ZeroMQ <http://zeromq.org>`__.
 However, most distributions that package OpenStack support a particular
 message queue service. This guide implements the RabbitMQ message queue
