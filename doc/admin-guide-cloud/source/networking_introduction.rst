@@ -217,6 +217,8 @@ FWaaS management options are also available in the OpenStack dashboard.
             ...
         }
 
+   Apply the settings by restarting the web server.
+
 #. Restart the neutron-l3-agent and neutron-server services to apply the
    settings.
 
