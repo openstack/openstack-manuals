@@ -1,15 +1,12 @@
-.. :orphan:
-
+=======================
 OpenStack Image service
------------------------
+=======================
 
 The OpenStack Image service is central to Infrastructure-as-a-Service
-(IaaS) as shown in Conceptual architecture. It accepts API requests for disk
-or server images, and image metadata from end users or OpenStack Compute
-components. It also supports the storage of disk or server images on various
-repository types, including OpenStack Object Storage.
-
-.. TODO (DC) On line 7, add link to get_started_conceptual_architecture.rst
+(IaaS) as shown in :ref:`get_started_conceptual_architecture`. It accepts API
+requests for disk or server images, and image metadata from end users or
+OpenStack Compute components. It also supports the storage of disk or server
+images on various repository types, including OpenStack Object Storage.
 
 A number of periodic processes run on the OpenStack Image service to
 support caching. Replication services ensure consistency and

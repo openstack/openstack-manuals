@@ -1,10 +1,9 @@
-.. :orphan:
-
+==============================
 OpenStack Orchestration module
-------------------------------
+==============================
 
 The Orchestration module provides a template-based orchestration for
-describing a cloud application, by running OpenStack API calls to
+describing a cloud application by running OpenStack API calls to
 generate running cloud applications. The software integrates other core
 components of OpenStack into a one-file template system. The templates
 allow you to create most OpenStack resource types, such as instances,

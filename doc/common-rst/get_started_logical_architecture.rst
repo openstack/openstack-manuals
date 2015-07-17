@@ -1,18 +1,15 @@
-.. :orphan:
-
+====================
 Logical architecture
-~~~~~~~~~~~~~~~~~~~~
+====================
 
 To design, deploy, and configure OpenStack, administrators must
 understand the logical architecture.
 
-As shown in Conceptual architecture, OpenStack consists of several
-independent parts, named the OpenStack services. All services authenticate
-through a common Identity service. Individual services interact with each
-other through public APIs, except where privileged administrator commands
-are necessary.
-
-.. TODO (DC) Add link to figure in get_started_conceptual_architecture.rst
+As shown in :ref:`get_started_conceptual_architecture`, OpenStack consists of
+several independent parts, named the OpenStack services. All services
+authenticate through a common Identity service. Individual services interact
+with each other through public APIs, except where privileged administrator
+commands are necessary.
 
 Internally, OpenStack services are composed of several processes. All
 services have at least one API process, which listens for API requests,
@@ -27,7 +24,7 @@ several message broker and database solutions, such as RabbitMQ, Qpid,
 MySQL, MariaDB, and SQLite.
 
 Users can access OpenStack via the web-based user interface implemented
-by the OpenStack dashboard, via `command-line
+by the :ref:`get_started_dashboard`, via `command-line
 clients <http://docs.openstack.org/cli-reference/content>`__ and by
 issuing API requests through tools like browser plug-ins or :command:`curl`.
 For applications, `several SDKs <http://developer.openstack.org/#sdk>`__

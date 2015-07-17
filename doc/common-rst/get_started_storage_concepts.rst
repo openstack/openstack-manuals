@@ -1,7 +1,6 @@
-.. :orphan:
-
+================
 Storage concepts
-----------------
+================
 
 The OpenStack stack uses the following storage types:
 

@@ -4,6 +4,14 @@
 Get started with OpenStack
 ==========================
 
+.. toctree::
+   :maxdepth: 2
+
+   get_started_conceptual_architecture.rst
+   get_started_logical_architecture.rst
+   get_started_openstack_services.rst
+   get_started_feedback.rst
+
 The OpenStack project is an open source cloud computing platform for all
 types of clouds, which aims to be simple to implement, massively
 scalable, and feature rich. Developers and cloud computing technologists
@@ -83,66 +91,3 @@ OpenStack architecture:
        by specifying parameters like Hadoop version, cluster topology and nodes
        hardware details.
 
-.. include:: get_started_conceptual_architecture.rst
-.. include:: get_started_logical_architecture.rst
-
-.. toctree::
-   :hidden:
-
-   get_started_conceptual_architecture.rst
-   get_started_logical_architecture.rst
-
-OpenStack services
-~~~~~~~~~~~~~~~~~~
-
-This section describes OpenStack services in detail.
-
-.. include:: get_started_compute.rst
-
-.. include:: get_started_storage_concepts.rst
-
-.. include:: get_started_object_storage.rst
-
-.. include:: get_started_block_storage.rst
-
-.. include:: get_started_openstack_networking.rst
-
-.. include:: get_started_dashboard.rst
-
-.. include:: get_started_identity.rst
-
-.. include:: get_started_image_service.rst
-
-.. include:: get_started_telemetry.rst
-
-.. include:: get_started_orchestration.rst
-
-.. include:: get_started_database_service.rst
-
-.. include:: get_started_sahara.rst
-
-.. toctree::
-   :hidden:
-
-   get_started_compute.rst
-   get_started_storage_concepts.rst
-   get_started_object_storage.rst
-   get_started_block_storage.rst
-   get_started_openstack_networking.rst
-   get_started_dashboard.rst
-   get_started_identity.rst
-   get_started_image_service.rst
-   get_started_telemetry.rst
-   get_started_orchestration.rst
-   get_started_database_service.rst
-   get_started_sahara.rst
-
-Feedback
-~~~~~~~~
-
-To provide feedback on documentation, join and use the
-openstack-docs@lists.openstack.org mailing list at `OpenStack
-Documentation Mailing
-List <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs>`__,
-or `report a
-bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`__.
