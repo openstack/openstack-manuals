@@ -57,7 +57,7 @@ that hosts the ``cinder`` volume service.
 
 #. Configure the cinder volume service to use the
    :file:`/etc/cinder/nfsshares` file created earlier. To do so, open
-   the :file`/etc/cinder/cinder.conf` configuration file and set
+   the :file:`/etc/cinder/cinder.conf` configuration file and set
    the ``nfs_shares_config`` configuration key
    to :file:`/etc/cinder/nfsshares`.
 
