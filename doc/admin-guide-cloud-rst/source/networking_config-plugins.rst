@@ -161,20 +161,20 @@ formerly known as Nicira NVP.
 
           default_tz_uuid = TRANSPORT_ZONE_UUID
 
-   -     .. code:: ini
+   -  .. code:: ini
 
-          default_l3_gw_service_uuid = GATEWAY_SERVICE_UUID
+         default_l3_gw_service_uuid = GATEWAY_SERVICE_UUID
 
       .. Warning::
 
-          Ubuntu packaging currently does not update the neutron init
-          script to point to the NSX-mh configuration file. Instead, you
-          must manually update :file:`/etc/default/neutron-server` to add this
-          line:
+         Ubuntu packaging currently does not update the neutron init
+         script to point to the NSX-mh configuration file. Instead, you
+         must manually update :file:`/etc/default/neutron-server` to add this
+         line:
 
-          .. code:: ini
+         .. code:: ini
 
-               NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/vmware/nsx.ini
+            NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/vmware/nsx.ini
 
       For database configuration, see `Install Networking
       Services <http://docs.openstack.org/kilo/install-guide/install/

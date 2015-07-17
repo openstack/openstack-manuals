@@ -104,10 +104,10 @@ This procedure runs on nova-compute hosts, based on the KVM hypervisor:
 #. Set the nova UID in :file:`/etc/passwd` to the same number on all hosts (for
    example, 112).
 
-    .. note::
+   .. note::
 
-       Make sure you choose UIDs or GIDs that are not in use for other
-       users or groups.
+      Make sure you choose UIDs or GIDs that are not in use for other
+      users or groups.
 
 #. Set the ``libvirt-qemu`` UID in :file:`/etc/passwd` to the same number on
    all hosts (for example, 119).
@@ -122,11 +122,11 @@ This procedure runs on nova-compute hosts, based on the KVM hypervisor:
 
 #. Change all the files owned by user or group nova. For example:
 
-    .. code:: console
+   .. code:: console
 
-       # find / -uid 108 -exec chown nova {} \;
-       # note the 108 here is the old nova UID before the change
-       # find / -gid 120 -exec chgrp nova {} \;
+      # find / -uid 108 -exec chown nova {} \;
+      # note the 108 here is the old nova UID before the change
+      # find / -gid 120 -exec chgrp nova {} \;
 
 #. Repeat all steps for the :file:`libvirt-qemu` files, if required.
 
