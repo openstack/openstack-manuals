@@ -8,7 +8,7 @@ Even in the cloud industry, providers must use a multi-step process
 for billing. The required steps to bill for usage in a cloud
 environment are metering, rating, and billing. Because the provider's
 requirements may be far too specific for a shared solution, rating
-and billing solutions cannot be designed a common module that
+and billing solutions cannot be designed in a common module that
 satisfies all. Providing users with measurements on cloud services is
 required to meet the "measured service" definition of cloud computing.
 
