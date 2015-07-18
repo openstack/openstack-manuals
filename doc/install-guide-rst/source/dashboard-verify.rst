@@ -1,5 +1,6 @@
+================
 Verify operation
-~~~~~~~~~~~~~~~~
+================
 
 This section describes how to verify operation of the dashboard.
 

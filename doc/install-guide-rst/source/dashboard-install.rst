@@ -1,5 +1,6 @@
+=====================
 Install and configure
-~~~~~~~~~~~~~~~~~~~~~
+=====================
 
 This section describes how to install and configure the dashboard
 on the controller node.
@@ -19,7 +20,7 @@ Memcached as described in keystone-install.
 .. TODO: add link to keystone-install after creation.
 
 To install the dashboard components
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. only:: obs
 
@@ -51,7 +52,7 @@ To install the dashboard components
       remove this package to restore the original OpenStack theme.
 
 To configure the dashboard
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. only:: obs
 
@@ -122,7 +123,7 @@ To configure the dashboard
   <http://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`__.
 
 To finalize installation
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. only:: rdo
 
