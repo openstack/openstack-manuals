@@ -89,15 +89,19 @@
       </tr>
       <tr>
         <td><option>destroy_after_evacuate</option> = <replaceable>True</replaceable></td>
-        <td>(BoolOpt) Whether to destroy instances on startup when we suspect they have previously been evacuated. This can result in data loss if undesired. See https://launchpad.net/bugs/1419785</td>
+        <td>(BoolOpt) DEPRECATED: Whether to destroy instances on startup when we suspect they have previously been evacuated. This can result in data loss if undesired. See https://launchpad.net/bugs/1419785</td>
       </tr>
       <tr>
         <td><option>disable_libvirt_livesnapshot</option> = <replaceable>True</replaceable></td>
-        <td>(BoolOpt) When using libvirt 1.2.2 fails live snapshots intermittently under load.  This config option provides mechanism to disable livesnapshot while this is resolved.  See https://bugs.launchpad.net/nova/+bug/1334398</td>
+        <td>(BoolOpt) When using libvirt 1.2.2 live snapshots fail intermittently under load.  This config option provides a mechanism to enable live snapshot while this is resolved.  See https://bugs.launchpad.net/nova/+bug/1334398</td>
       </tr>
       <tr>
         <td><option>disable_rootwrap</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) This option allows a fallback to sudo for performance reasons. For example see https://bugs.launchpad.net/nova/+bug/1415106</td>
+      </tr>
+      <tr>
+        <td><option>handle_virt_lifecycle_events</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) Whether or not to handle events raised from the compute driver's 'emit_event' method. These are lifecycle events raised from compute drivers that implement the method. An example of a lifecycle event is an instance starting or stopping. If the instance is going through task state changes due to an API operation, like resize, the events are ignored. However, this is an advanced feature which allows the hypervisor to signal to the compute service that an unexpected state change has occurred in an instance and the instance can be shutdown automatically - which can inherently race in reboot operations or when the compute service or host is rebooted, either planned or due to an unexpected outage. Care should be taken when using this and sync_power_state_interval is negative since then if any instances are out of sync between the hypervisor and the Nova database they will have to be synchronized manually. See https://bugs.launchpad.net/bugs/1444630</td>
       </tr>
     </tbody>
   </table>
