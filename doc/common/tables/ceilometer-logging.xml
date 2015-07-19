@@ -22,7 +22,7 @@
         <td>(BoolOpt) Print debugging output (set logging level to DEBUG instead of default WARNING level).</td>
       </tr>
       <tr>
-        <td><option>default_log_levels</option> = <replaceable>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN</replaceable></td>
+        <td><option>default_log_levels</option> = <replaceable>amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, requests.packages.urllib3.util.retry=WARN, urllib3.util.retry=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN</replaceable></td>
         <td>(ListOpt) List of logger=LEVEL pairs.</td>
       </tr>
       <tr>
@@ -70,7 +70,7 @@
         <td>(StrOpt) Format string to use for log messages without context.</td>
       </tr>
       <tr>
-        <td><option>logging_exception_prefix</option> = <replaceable>%(asctime)s.%(msecs)03d %(process)d TRACE %(name)s %(instance)s</replaceable></td>
+        <td><option>logging_exception_prefix</option> = <replaceable>%(asctime)s.%(msecs)03d %(process)d ERROR %(name)s %(instance)s</replaceable></td>
         <td>(StrOpt) Prefix each line of exception output with this format.</td>
       </tr>
       <tr>
@@ -87,11 +87,11 @@
       </tr>
       <tr>
         <td><option>use_syslog</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Use syslog for logging. Existing syslog format is DEPRECATED during I, and will change in J to honor RFC5424.</td>
+        <td>(BoolOpt) Use syslog for logging. Existing syslog format is DEPRECATED and will be changed later to honor RFC5424.</td>
       </tr>
       <tr>
-        <td><option>use_syslog_rfc_format</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) (Optional) Enables or disables syslog rfc5424 format for logging. If enabled, prefixes the MSG part of the syslog message with APP-NAME (RFC5424). The format without the APP-NAME is deprecated in I, and will be removed in J.</td>
+        <td><option>use_syslog_rfc_format</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) (Optional) Enables or disables syslog rfc5424 format for logging. If enabled, prefixes the MSG part of the syslog message with APP-NAME (RFC5424). The format without the APP-NAME is deprecated in K, and will be removed in M, along with this option.</td>
       </tr>
       <tr>
         <td><option>verbose</option> = <replaceable>False</replaceable></td>
