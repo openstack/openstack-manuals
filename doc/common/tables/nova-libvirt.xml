@@ -66,7 +66,7 @@
       </tr>
       <tr>
         <td><option>hw_disk_discard</option> = <replaceable>None</replaceable></td>
-        <td>(StrOpt) Discard option for nova managed disks (valid options are: ignore, unmap). Need Libvirt(1.0.6) Qemu1.5 (raw format) Qemu1.6(qcow2 format)</td>
+        <td>(StrOpt) Discard option for nova managed disks. Need Libvirt(1.0.6) Qemu1.5 (raw format) Qemu1.6(qcow2 format)</td>
       </tr>
       <tr>
         <td><option>hw_machine_type</option> = <replaceable>None</replaceable></td>
@@ -86,7 +86,7 @@
       </tr>
       <tr>
         <td><option>images_type</option> = <replaceable>default</replaceable></td>
-        <td>(StrOpt) VM Images format. Acceptable values are: raw, qcow2, lvm, rbd, default. If default is specified, then use_cow_images flag is used instead of this one.</td>
+        <td>(StrOpt) VM Images format. If default is specified, then use_cow_images flag is used instead of this one.</td>
       </tr>
       <tr>
         <td><option>images_volume_group</option> = <replaceable>None</replaceable></td>
@@ -106,7 +106,7 @@
       </tr>
       <tr>
         <td><option>iscsi_iface</option> = <replaceable>None</replaceable></td>
-        <td>(StrOpt) The iSCSI transport iface to use to connect to target in case offload support is desired. Supported transports are be2iscsi, bnx2i, cxgb3i, cxgb4i, qla4xxx and ocs. Default format is transport_name.hwaddress and can be generated manually or via iscsiadm -m iface</td>
+        <td>(StrOpt) The iSCSI transport iface to use to connect to target in case offload support is desired. Default format is of the form &lt;transport_name&gt;.&lt;hwaddress&gt; where &lt;transport_name&gt; is one of (be2iscsi, bnx2i, cxgb3i, cxgb4i, qla4xxx, ocs) and &lt;hwadress&gt; is the MAC address of the interface and can be generated via the iscsiadm -m iface command. Do not confuse the iscsi_iface parameter to be provided here with the actual transport name.</td>
       </tr>
       <tr>
         <td><option>iscsi_use_multipath</option> = <replaceable>False</replaceable></td>
@@ -121,8 +121,8 @@
         <td>(IntOpt) A number of seconds to memory usage statistics period. Zero or negative value mean to disable memory usage statistics.</td>
       </tr>
       <tr>
-        <td><option>remove_unused_kernels</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Should unused kernel images be removed? This is only safe to enable if all compute nodes have been updated to support this option. This will be enabled by default in future.</td>
+        <td><option>remove_unused_kernels</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) DEPRECATED: Should unused kernel images be removed? This is only safe to enable if all compute nodes have been updated to support this option (running Grizzly or newer level compute). This will be the default behavior in the 13.0.0 release.</td>
       </tr>
       <tr>
         <td><option>remove_unused_resized_minimum_age_seconds</option> = <replaceable>3600</replaceable></td>
@@ -150,7 +150,7 @@
       </tr>
       <tr>
         <td><option>snapshot_image_format</option> = <replaceable>None</replaceable></td>
-        <td>(StrOpt) Snapshot image format (valid options are : raw, qcow2, vmdk, vdi). Defaults to same as source image</td>
+        <td>(StrOpt) Snapshot image format. Defaults to same as source image</td>
       </tr>
       <tr>
         <td><option>snapshots_directory</option> = <replaceable>$instances_path/snapshots</replaceable></td>
@@ -162,7 +162,7 @@
       </tr>
       <tr>
         <td><option>sysinfo_serial</option> = <replaceable>auto</replaceable></td>
-        <td>(StrOpt) The data source used to the populate the host "serial" UUID exposed to guest in the virtual BIOS. Permitted options are "hardware", "os", "none" or "auto" (default).</td>
+        <td>(StrOpt) The data source used to the populate the host "serial" UUID exposed to guest in the virtual BIOS.</td>
       </tr>
       <tr>
         <td><option>uid_maps</option> = <replaceable></replaceable></td>
@@ -178,11 +178,11 @@
       </tr>
       <tr>
         <td><option>virt_type</option> = <replaceable>kvm</replaceable></td>
-        <td>(StrOpt) Libvirt domain type (valid options are: kvm, lxc, qemu, uml, xen and parallels)</td>
+        <td>(StrOpt) Libvirt domain type</td>
       </tr>
       <tr>
         <td><option>volume_clear</option> = <replaceable>zero</replaceable></td>
-        <td>(StrOpt) Method used to wipe old volumes (valid options are: none, zero, shred)</td>
+        <td>(StrOpt) Method used to wipe old volumes.</td>
       </tr>
       <tr>
         <td><option>volume_clear_size</option> = <replaceable>0</replaceable></td>
