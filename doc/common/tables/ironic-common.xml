@@ -43,11 +43,11 @@
       </tr>
       <tr>
         <td><option>hash_partition_exponent</option> = <replaceable>5</replaceable></td>
-        <td>(IntOpt) Exponent to determine number of hash partitions to use when distributing load across conductors. Larger values will result in more even distribution of load and less load when rebalancing the ring, but more memory usage. Number of partitions per conductor is (2^hash_partition_exponent). This determines the granularity of rebalancing: given 10 hosts, and an exponent of the 2, there are 40 partitions in the ring. A few thousand partitions should make rebalancing smooth in most cases. The default is suitable for up to a few hundred conductors. Too many partitions has a CPU impact.</td>
+        <td>(IntOpt) Exponent to determine number of hash partitions to use when distributing load across conductors. Larger values will result in more even distribution of load and less load when rebalancing the ring, but more memory usage. Number of partitions per conductor is (2^hash_partition_exponent). This determines the granularity of rebalancing: given 10 hosts, and an exponent of the 2, there are 40 partitions in the ring.A few thousand partitions should make rebalancing smooth in most cases. The default is suitable for up to a few hundred conductors. Too many partitions has a CPU impact.</td>
       </tr>
       <tr>
-        <td><option>host</option> = <replaceable>localhost</replaceable></td>
-        <td>(StrOpt) Name of this node.  This can be an opaque identifier.  It is not necessarily a hostname, FQDN, or IP address. However, the node name must be valid within an AMQP key, and if using ZeroMQ, a valid hostname, FQDN, or IP address.</td>
+        <td><option>host</option> = <replaceable>sd-52009.dedibox.fr</replaceable></td>
+        <td>(StrOpt) Name of this node.  This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address. However, the node name must be valid within an AMQP key, and if using ZeroMQ, a valid hostname, FQDN, or IP address.</td>
       </tr>
       <tr>
         <td><option>isolinux_bin</option> = <replaceable>/usr/lib/syslinux/isolinux.bin</replaceable></td>
@@ -82,16 +82,12 @@
         <td>(StrOpt) Path to the rootwrap configuration file to use for running commands as root.</td>
       </tr>
       <tr>
-        <td><option>run_external_periodic_tasks</option> = <replaceable>True</replaceable></td>
-        <td>(BoolOpt) Some periodic tasks can be run in a separate process. Should we run them here?</td>
-      </tr>
-      <tr>
         <td><option>state_path</option> = <replaceable>$pybasedir</replaceable></td>
         <td>(StrOpt) Top-level directory for maintaining ironic's state.</td>
       </tr>
       <tr>
-        <td><option>tempdir</option> = <replaceable>None</replaceable></td>
-        <td>(StrOpt) Explicitly specify the temporary working directory.</td>
+        <td><option>tempdir</option> = <replaceable>/tmp</replaceable></td>
+        <td>(StrOpt) Temporary working directory, default is Python temp dir.</td>
       </tr>
     </tbody>
   </table>
