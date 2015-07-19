@@ -1,7 +1,6 @@
-.. :orphan:
-
+==========
 Use trusts
-~~~~~~~~~~
+==========
 
 OpenStack Identity manages authentication and authorization. A trust is
 an OpenStack Identity extension that enables delegation and, optionally,

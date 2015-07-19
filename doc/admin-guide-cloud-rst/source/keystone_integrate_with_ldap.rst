@@ -1,9 +1,8 @@
 .. _integrate-identity-with-ldap:
 
-.. :orphan:
-
+============================
 Integrate Identity with LDAP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================
 
 The OpenStack Identity service supports integration with existing LDAP
 directories for authentication and authorization services.
@@ -49,6 +48,7 @@ Modify these examples as needed.
    with SQL or LDAP), or multiple back ends using domain-specific
    configuration files.
 
+
 **To define the destination LDAP server**
 
 Define the destination LDAP server in the  :file:`keystone.conf` file:
@@ -75,7 +75,6 @@ Define the destination LDAP server in the  :file:`keystone.conf` file:
       dumb_member = cn=dumb,dc=nonexistent
 
 **Additional LDAP integration settings**
-
 
 Set these options in the :file:`/etc/keystone/keystone.conf` file for a
 single LDAP server, or :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf`

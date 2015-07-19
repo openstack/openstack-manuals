@@ -1,7 +1,6 @@
-.. :orphan:
-
+=======================================
 Configure the Identity service with SSL
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=======================================
 
 You can configure the Identity service to support two-way SSL.
 
@@ -33,7 +32,7 @@ ssl\_key.pem
    provided as an example.
 
 Client authentication with keystone-all
----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When running ``keystone-all``, the server can be configured to enable SSL
 with client authentication using the following instructions. Modify the
