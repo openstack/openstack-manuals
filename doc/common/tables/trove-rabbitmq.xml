@@ -34,12 +34,16 @@
         <td>(IntOpt) How often times during the heartbeat_timeout_threshold we check the heartbeat.</td>
       </tr>
       <tr>
-        <td><option>heartbeat_timeout_threshold</option> = <replaceable>0</replaceable></td>
-        <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disables the heartbeat, &gt;0 enables it. Enabling heartbeats requires kombu&gt;=3.0.7 and amqp&gt;=1.4.0). EXPERIMENTAL</td>
+        <td><option>heartbeat_timeout_threshold</option> = <replaceable>60</replaceable></td>
+        <td>(IntOpt) Number of seconds after which the Rabbit broker is considered down if heartbeat's keep-alive fails (0 disable the heartbeat). EXPERIMENTAL</td>
       </tr>
       <tr>
         <td><option>kombu_reconnect_delay</option> = <replaceable>1.0</replaceable></td>
         <td>(FloatOpt) How long to wait before reconnecting in response to an AMQP consumer cancel notification.</td>
+      </tr>
+      <tr>
+        <td><option>kombu_reconnect_timeout</option> = <replaceable>60</replaceable></td>
+        <td>(IntOpt) How long to wait before considering a reconnect attempt to have failed. This value should not be longer than rpc_response_timeout.</td>
       </tr>
       <tr>
         <td><option>kombu_ssl_ca_certs</option> = <replaceable></replaceable></td>
@@ -106,8 +110,8 @@
         <td>(StrOpt) The RabbitMQ virtual host.</td>
       </tr>
       <tr>
-        <td><option>rpc_conn_pool_size</option> = <replaceable>30</replaceable></td>
-        <td>(IntOpt) Size of RPC connection pool.</td>
+        <td><option>send_single_reply</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Send a single AMQP reply to call message. The current behaviour since oslo-incubator is to send two AMQP replies - first one with the payload, a second one to ensure the other have finish to send the payload. We are going to remove it in the N release, but we must keep backward compatible at the same time. This option provides such compatibility - it defaults to False in Liberty and can be turned on for early adopters with a new installations or for testing. Please note, that this option will be removed in M release.</td>
       </tr>
     </tbody>
   </table>

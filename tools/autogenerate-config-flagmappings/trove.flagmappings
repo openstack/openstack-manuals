@@ -114,7 +114,7 @@ nova_compute_endpoint_type compute
 nova_compute_service_type compute
 nova_compute_url compute
 nova_proxy_admin_pass nova
-nova_proxy_admin_tenant_name nova
+nova_proxy_admin_tenant_id nova
 nova_proxy_admin_user nova
 num_tries rpc
 os_region_name api
@@ -142,6 +142,7 @@ root_grant compute
 root_grant_option compute
 rpc_backend rpc
 rpc_cast_timeout rpc
+rpc_conn_pool_size rpc
 rpc_response_timeout rpc
 rpc_thread_pool_size rpc
 rpc_zmq_bind_address zeromq
@@ -280,8 +281,10 @@ mongodb/backup_incremental_strategy db_mongodb
 mongodb/backup_namespace db_mongodb
 mongodb/backup_strategy db_mongodb
 mongodb/cluster_support db_mongodb
+mongodb/configsvr_port db_mongodb
 mongodb/device_path db_mongodb
 mongodb/guestagent_strategy db_mongodb
+mongodb/mongodb_port db_mongodb
 mongodb/mount_point db_mongodb
 mongodb/num_config_servers_per_cluster db_mongodb
 mongodb/num_query_routers_per_cluster db_mongodb
@@ -304,6 +307,8 @@ mysql/tcp_ports db_mysql
 mysql/udp_ports db_mysql
 mysql/usage_timeout db_mysql
 mysql/volume_support db_mysql
+oslo_concurrency/disable_process_locking rpc
+oslo_concurrency/lock_path rpc
 oslo_messaging_amqp/allow_insecure_clients rpc
 oslo_messaging_amqp/broadcast_prefix rpc
 oslo_messaging_amqp/container_name rpc
@@ -328,13 +333,14 @@ oslo_messaging_qpid/qpid_sasl_mechanisms qpid
 oslo_messaging_qpid/qpid_tcp_nodelay qpid
 oslo_messaging_qpid/qpid_topology_version qpid
 oslo_messaging_qpid/qpid_username qpid
-oslo_messaging_qpid/rpc_conn_pool_size qpid
+oslo_messaging_qpid/send_single_reply qpid
 oslo_messaging_rabbit/amqp_auto_delete rabbitmq
 oslo_messaging_rabbit/amqp_durable_queues rabbitmq
 oslo_messaging_rabbit/fake_rabbit rabbitmq
 oslo_messaging_rabbit/heartbeat_rate rabbitmq
 oslo_messaging_rabbit/heartbeat_timeout_threshold rabbitmq
 oslo_messaging_rabbit/kombu_reconnect_delay rabbitmq
+oslo_messaging_rabbit/kombu_reconnect_timeout rabbitmq
 oslo_messaging_rabbit/kombu_ssl_ca_certs rabbitmq
 oslo_messaging_rabbit/kombu_ssl_certfile rabbitmq
 oslo_messaging_rabbit/kombu_ssl_keyfile rabbitmq
@@ -351,7 +357,7 @@ oslo_messaging_rabbit/rabbit_retry_interval rabbitmq
 oslo_messaging_rabbit/rabbit_use_ssl rabbitmq
 oslo_messaging_rabbit/rabbit_userid rabbitmq
 oslo_messaging_rabbit/rabbit_virtual_host rabbitmq
-oslo_messaging_rabbit/rpc_conn_pool_size rabbitmq
+oslo_messaging_rabbit/send_single_reply rabbitmq
 percona/backup_incremental_strategy db_percona
 percona/backup_namespace db_percona
 percona/backup_strategy db_percona
