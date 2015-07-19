@@ -22,8 +22,12 @@
         <td>(StrOpt) This option is only utilized when the storage family is configured to eseries. This option is used to restrict provisioning to the specified controllers. Specify the value of this option to be a comma separated list of controller hostnames or IP addresses to be used for provisioning.</td>
       </tr>
       <tr>
-        <td><option>netapp_eseries_host_type</option> = <replaceable>linux_dm_mp</replaceable></td>
-        <td>(StrOpt) This option is used to define how the controllers in the E-Series storage array will work with the particular operating system on the hosts that are connected to it.</td>
+        <td><option>netapp_enable_multiattach</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) This option specifies whether the driver should allow operations that require multiple attachments to a volume. An example would be live migration of servers that have volumes attached. When enabled, this backend is limited to 256 total volumes in order to guarantee volumes can be accessed by more than one host.</td>
+      </tr>
+      <tr>
+        <td><option>netapp_host_type</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) This option defines the type of operating system for all initiators that can access a LUN. This information is used when mapping LUNs to individual hosts or groups of hosts.</td>
       </tr>
       <tr>
         <td><option>netapp_login</option> = <replaceable>None</replaceable></td>
