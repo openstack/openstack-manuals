@@ -1,12 +1,4 @@
-.. only:: nonsense
-
-   .. TODO(ajaeger): Sphinx uses the first title it finds - ignoring
-      the only - to create the top most title. Therefore use this
-      version. This needs to be revised.
-
-   ============================
-   OpenStack Installation Guide
-   ============================
+.. title:: OpenStack Installation Guide
 
 .. only:: rdo
 
@@ -15,9 +7,6 @@
    =============================================================================
 
 .. only:: obs
-
-   .. title: OpenStack Installation Guide for openSUSE and SUSE Linux
-      Enterprise
 
    ===================================================================
    OpenStack Installation Guide for openSUSE and SUSE Linux Enterprise
@@ -28,7 +17,6 @@
    =======================================
    OpenStack Installation Guide for Ubuntu
    =======================================
-
 
 Abstract
 ~~~~~~~~
