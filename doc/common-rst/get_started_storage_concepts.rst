@@ -24,6 +24,9 @@ The OpenStack stack uses the following storage types:
    * - Implemented as a filesystem underlying OpenStack Compute
      - Mounted via OpenStack Block Storage controlled protocol (for example, iSCSI)
      - REST API
+   * - Encryption is available
+     - Encryption is available
+     - Work in progress - expected for the Mitaka release
    * - Administrator configures size setting, based on flavors
      - Sizings based on need
      - Easily scalable for future growth
