@@ -71,6 +71,7 @@ case "$PROJECT_DIR" in
         copy_glossary_xml "doc/glossary" "openstack-ops" "figures"
         ;;
     security-doc)
+        copy_rst security-guide-rst/source/imported
         copy_glossary_xml "glossary" "security-guide" "static"
         ;;
     *)
