@@ -94,7 +94,5 @@ For more information about how to manage volumes, see the
 
    .. note::
 
-      The launch an instance chapter includes instructions for
-      attaching this volume to an instance.
-
-.. TODO(katomo): add link to launch an instance after creation.
+      The :doc:`launch an instance <launch-instance>` chapter includes
+      instructions for attaching this volume to an instance.
