@@ -50,6 +50,24 @@ You can run the following shelving tasks:
 
   $ nova shelve SERVERNAME
 
+.. note::
+
+   By default, the :command:`nova shelve` command gives the guest operating
+   system a chance to perform a controlled shutdown before the instance
+   is powered off. The shutdown behavior is configured by the
+   ``shutdown_timeout`` parameter that can be set in the
+   :file:`nova.conf` file. Its value stands for the overall
+   period (in seconds) a guest operation system is allowed
+   to complete the shutdown. The default timeout is 60 seconds.
+   See `Description of Compute configuration options
+   <http://docs.openstack.org/kilo/config-reference/content/list-of-compute-config-options.html>`_
+   for details.
+
+   The timeout value can be overridden on a per image basis
+   by means of ``os_shutdown_timeout`` that is an image metadata
+   setting allowing different types of operating systems to specify
+   how much time they need to shut down cleanly.
+
 - Unshelve an instance - Restores the instance.
 
 .. code::
