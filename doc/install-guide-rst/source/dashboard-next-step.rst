@@ -3,13 +3,11 @@ Next steps
 ==========
 
 Your OpenStack environment now includes the dashboard. You can
-launch an instance or add
+:doc:`launch an instance <launch-instance>` or add
 more services to your environment in the following chapters.
 
 After you install and configure the dashboard, you can
 complete the following tasks:
-
-.. TODO: add link to "launch an instance" after creation.
 
 * Provide users with a public IP address, a username, and a password
   so they can access the dashboard through a web browser. In case of

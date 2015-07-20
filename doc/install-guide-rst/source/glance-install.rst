@@ -9,12 +9,10 @@ configuration stores images on the local file system.
 .. note::
 
    This section assumes proper installation, configuration, and
-   operation of the Identity service as described in
-   keystone-install and keystone-verify as well as setup of the
-   :file:`admin-openrc.sh` script as described in
-   keystone-client-environment-scripts.
-
-.. TODO(katomo): add links to keystone after creation.
+   operation of the Identity service as described in the
+   ":doc:`keystone-install`" section and the ":doc:`keystone-verify`"
+   section as well as setup of the :file:`admin-openrc.sh` script
+   as described in the ":doc:`keystone-openrc`" section.
 
 To configure prerequisites
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

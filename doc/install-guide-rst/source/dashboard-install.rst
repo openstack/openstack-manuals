@@ -15,9 +15,7 @@ horizon/topics/deployment.html>`__.
 
 This section assumes proper installation, configuration, and
 operation of the Identity service using the Apache HTTP server and
-Memcached as described in keystone-install.
-
-.. TODO: add link to keystone-install after creation.
+Memcached as described in the ":doc:`keystone-install`" section.
 
 To install the dashboard components
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
