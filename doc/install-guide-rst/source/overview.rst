@@ -202,6 +202,8 @@ optional services. This guide uses the following example architectures:
 
 |
 
+.. _figure-neutron-networks:
+
 .. figure:: figures/installguidearch-neutron-networks.png
    :alt: Minimal architecture example with OpenStack Networking
          (neutron)—Network layout
@@ -284,6 +286,8 @@ optional services. This guide uses the following example architectures:
    (nova-network)—Hardware requirements
 
 |
+
+.. _figure-nova-networks:
 
 .. figure:: figures/installguidearch-nova-networks.png
    :alt: Minimal architecture example with legacy networking
