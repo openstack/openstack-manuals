@@ -1,7 +1,6 @@
-.. :orphan:
-
+========================
 OpenStack Object Storage
-------------------------
+========================
 
 The OpenStack Object Storage is a multi-tenant object storage system. It
 is highly scalable and can manage large amounts of unstructured data at

@@ -1,7 +1,8 @@
-.. :orphan:
+.. _get_started_dashboard:
 
+===================
 OpenStack dashboard
--------------------
+===================
 
 The OpenStack dashboard is a modular `Django web
 application <https://www.djangoproject.com/>`__ that provides a
@@ -18,5 +19,4 @@ accessible to customers and the public API for each OpenStack service.
 To use the administrator functionality for other services, it must also
 connect to Admin API endpoints, which should not be accessible by
 customers.
-
 

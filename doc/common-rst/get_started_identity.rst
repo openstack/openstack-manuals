@@ -1,7 +1,6 @@
-.. :orphan:
-
+==================
 OpenStack Identity
-------------------
+==================
 
 The OpenStack Identity service performs the following functions:
 

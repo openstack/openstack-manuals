@@ -1,7 +1,8 @@
 .. :orphan:
 
+=================================
 OpenStack Data processing service
----------------------------------
+=================================
 
 The Data processing service for OpenStack (sahara) aims to provide users
 with a simple means to provision data processing (Hadoop, Spark)
@@ -9,7 +10,7 @@ clusters by specifying several parameters like Hadoop version, cluster
 topology, node hardware details and a few more. After a user fills in
 all the parameters, the Data processing service deploys the cluster in a
 few minutes. Sahara also provides a means to scale already provisioned
-clusters by adding/removing worker nodes on demand.
+clusters by adding or removing worker nodes on demand.
 
 The solution addresses the following use cases:
 
