@@ -50,10 +50,8 @@ tab on an OpenStack dashboard.
    telemetry-system-architecture.rst
    telemetry-data-collection.rst
    telemetry-data-retrieval.rst
+   telemetry-alarms.rst
    telemetry-measurements.rst
    telemetry-events.rst
    telemetry-troubleshooting-guide.rst
    telemetry-best-practices.rst
-
-.. TODO (OL) Translate and add the below files with new name
-   include: telemetry/section_telemetry-alarms.xml
