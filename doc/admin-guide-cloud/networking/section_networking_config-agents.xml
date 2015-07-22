@@ -277,19 +277,22 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver</programlist
             </step>
         </procedure>
         <note>
-            <para>By default, networking namespaces are configured
-                to not be deleted. This behavior can be changed
-                for both DHCP and L3 agents. The configuration files
-                are <filename>/etc/neutron/dhcp_agent.ini</filename> and
-                <filename>/etc/neutron/l3_agent.ini</filename> respectively.</para>
-            <para>For DHCP namespace the configuration key is:
-                    <literal>dhcp_delete_namespaces</literal>. This parameter
-                should be set to <replaceable>True</replaceable> to change the
-                default behaviour.</para>
-            <para>For L3 namespace, the configuration key is:
-                    <literal>router_delete_namespaces</literal>. This parameter
-                should be set to <replaceable>True</replaceable> to change the
-                default behaviour.</para>
+            <para>For iproute version 3.12.0 and above, networking
+                namespaces are configured to be deleted by default.
+                This behavior can be changed for both DHCP and L3 agents.
+                The configuration files are <filename>/etc/neutron/dhcp_agent.ini
+                </filename> and <filename>/etc/neutron/l3_agent.ini</filename>
+                respectively.</para>
+            <para>For DHCP namespace the configuration key:
+                <literal>dhcp_delete_namespaces = True</literal>. You
+                can set it to <replaceable>False</replaceable> in case
+                namespaces cannot be deleted cleanly on the host
+                running the DHCP agent.</para>
+            <para>For L3 namespace, the configuration key:
+                <literal>router_delete_namespaces = True</literal>. You
+                can set it to <replaceable>False</replaceable> in case
+                namespaces cannot be deleted cleanly on the host
+                running the L3 agent.</para>
         </note>
         <important>
             <para>If you reboot a node that runs the L3 agent, you

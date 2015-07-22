@@ -238,18 +238,21 @@ capabilities:
 
    .. Note::
 
-       By default, networking namespaces are configured to not be deleted.
-       This behavior can be changed for both DHCP and L3 agents. The
-       configuration files are :file:`/etc/neutron/dhcp_agent.ini` and
+       For iproute version 3.12.0 and above, networking namespaces
+       are configured to be deleted by default. This behavior can be
+       changed for both DHCP and L3 agents. The configuration files are
+       :file:`/etc/neutron/dhcp_agent.ini` and
        :file:`/etc/neutron/l3_agent.ini` respectively.
 
-       For DHCP namespace the configuration key is:
-       ``dhcp_delete_namespaces``. This parameter should be set to True to
-       change the default behaviour.
+       For DHCP namespace the configuration key:
+       ``dhcp_delete_namespaces = True``. You can set it to False
+       in case namespaces cannot be deleted cleanly on the host running the
+       DHCP agent.
 
-       For L3 namespace, the configuration key is:
-       ``router_delete_namespaces``. This parameter should be set to True
-       to change the default behaviour.
+       For L3 namespace, the configuration key:
+       ``router_delete_namespaces = True``. You can set it to False
+       in case namespaces cannot be deleted cleanly on the host running the
+       L3 agent.
 
    .. Important::
 
