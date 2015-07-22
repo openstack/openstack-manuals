@@ -37,9 +37,10 @@ and three-node architecture with OpenStack Networking
    when the service uses SysV Init scripts instead of native systemd
    files. This warning can be ignored.
 
-
 .. include:: basics-prerequisites.rst
 .. include:: basics-security.rst
+.. include:: basics-networking.rst
+.. include:: basics-ntp.rst
 .. include:: basics-packages.rst
 .. include:: basics-database.rst
 .. include:: basics-queue.rst
@@ -50,11 +51,8 @@ and three-node architecture with OpenStack Networking
 
    basics-prerequisites.rst
    basics-security.rst
+   basics-networking.rst
+   basics-ntp.rst
    basics-packages.rst
    basics-database.rst
    basics-queue.rst
-
-
-.. TODO(karenb)
-   section_basics-networking.xml
-   section_basics-ntp.xml
