@@ -1,3 +1,6 @@
+.. highlight:: ini
+
+
 OpenStack Networking (neutron)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -92,6 +95,7 @@ Controller node
 #. Edit the :file:`/etc/hosts:` file to contain the following:
 
    .. code-block:: ini
+      :linenos:
 
       # controller
       10.0.0.11       controller
@@ -142,6 +146,7 @@ Network node
       a. Edit the :file:`/etc/network/interfaces` file to contain the following:
 
          .. code-block:: ini
+            :linenos:
 
             # The external network interface
             auto INTERFACE_NAME
@@ -157,6 +162,7 @@ Network node
          Do not change the ``HWADDR`` and ``UUID`` keys.
 
          .. code-block:: ini
+            :linenos:
 
             DEVICE= INTERFACE_NAME
             TYPE=Ethernet
@@ -169,6 +175,7 @@ Network node
          to contain the following:
 
          .. code-block:: ini
+            :linenos:
 
             STARTMODE='auto'
             BOOTPROTO='static'
@@ -184,6 +191,7 @@ Network node
 #. Edit the :file:`/etc/hosts` file to contain the following:
 
    .. code-block:: ini
+      :linenos:
 
       # network
       10.0.0.21       network
@@ -241,6 +249,7 @@ Compute node
 #. Edit the :file:`/etc/hosts` file to contain the following:
 
    .. code-block:: ini
+      :linenos:
 
       # compute1
       10.0.0.31       compute1

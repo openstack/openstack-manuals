@@ -1,3 +1,6 @@
+.. highlight:: ini
+
+
 Legacy networking (nova-network)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -80,6 +83,7 @@ Controller node
 #. Edit the :file:`/etc/hosts` file to contain the following:
 
    .. code-block:: ini
+      :linenos:
 
       # controller
       10.0.0.11       controller
@@ -125,6 +129,7 @@ Compute node
       a. Edit the :file:`/etc/network/interfaces` file to contain the following:
 
          .. code-block:: ini
+            :linenos:
 
             # The external network interface
             auto INTERFACE_NAME
@@ -140,6 +145,7 @@ Compute node
          Do not change the ``HWADDR`` and ``UUID`` keys.
 
          .. code-block:: ini
+            :linenos:
 
             DEVICE=INTERFACE_NAME
             TYPE=Ethernet
@@ -152,6 +158,7 @@ Compute node
          contain the following:
 
          .. code-block:: ini
+            :linenos:
 
             STARTMODE='auto'
             BOOTPROTO='static'
@@ -167,6 +174,7 @@ Compute node
 #. Edit the :file:`/etc/hosts` file to contain the following:
 
    .. code-block:: ini
+      :linenos:
 
       # compute1
       10.0.0.31       compute1
