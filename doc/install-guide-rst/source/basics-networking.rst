@@ -1,29 +1,41 @@
 Networking
 ~~~~~~~~~~
 
-After installing the operating system on each node for the architecture
-that you choose to deploy, you must configure the network interfaces. We
-recommend that you disable any automated network management tools and
-manually edit the appropriate configuration files for your distribution.
-For more information on how to configure networking on your
-distribution, see the
-
 .. only:: ubuntu
 
-   `documentation. <https://help.ubuntu.com/lts/serverguide/network-configuration.html>`__
+   After installing the operating system on each node for the architecture
+   that you choose to deploy, you must configure the network interfaces. We
+   recommend that you disable any automated network management tools and
+   manually edit the appropriate configuration files for your distribution.
+   For more information on how to configure networking on your
+   distribution, see the `documentation <https://help.ubuntu.com/lts/serverguide/network-configuration.html>`__ .
 
 .. only:: debian
 
-   `documentation. <https://wiki.debian.org/NetworkConfiguration>`__
+   After installing the operating system on each node for the architecture
+   that you choose to deploy, you must configure the network interfaces. We
+   recommend that you disable any automated network management tools and
+   manually edit the appropriate configuration files for your distribution.
+   For more information on how to configure networking on your
+   distribution, see the `documentation <https://wiki.debian.org/NetworkConfiguration>`__ .
 
 .. only:: rdo
 
-   `documentation. <https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-interfaces.html>`__
+   After installing the operating system on each node for the architecture
+   that you choose to deploy, you must configure the network interfaces. We
+   recommend that you disable any automated network management tools and
+   manually edit the appropriate configuration files for your distribution.
+   For more information on how to configure networking on your
+   distribution, see the `documentation <https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-interfaces.html>`__ .
 
 .. only:: obs
 
-   `SLES 12 <https://www.suse.com/documentation/sles-12/book_sle_admin/data/sec_basicnet_manconf.html>`__
-   or `openSUSE <http://activedoc.opensuse.org/book/opensuse-reference/chapter-13-basic-networking>`__ documentation.
+   After installing the operating system on each node for the architecture
+   that you choose to deploy, you must configure the network interfaces. We
+   recommend that you disable any automated network management tools and
+   manually edit the appropriate configuration files for your distribution.
+   For more information on how to configure networking on your
+   distribution, see the `SLES 12 <https://www.suse.com/documentation/sles-12/book_sle_admin/data/sec_basicnet_manconf.html>`__ or `openSUSE <http://activedoc.opensuse.org/book/opensuse-reference/chapter-13-basic-networking>`__ documentation.
 
 All nodes require Internet access for administrative purposes such as
 package installation, security updates, :term:`DNS`, and
