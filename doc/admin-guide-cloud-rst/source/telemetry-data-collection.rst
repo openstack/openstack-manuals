@@ -305,6 +305,8 @@ each hypervisor supported by the Telemetry module.
 
     Telemetry supports Libvirt, which hides the hypervisor under it.
 
+.. _ha-deploy-services:
+
 Support for HA deployment of the central and compute agent services
 -------------------------------------------------------------------
 Both the central and the compute agent can run in an HA deployment,
