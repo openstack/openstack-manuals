@@ -119,16 +119,7 @@ openstack --os-username admin --os-password secrete --os-project-name admin proj
     <para>For services that have a separate paste-deploy .ini file,
       you can configure the authentication middleware in the
         <literal>[keystone_authtoken]</literal> section of the main
-      configuration file, such as <filename>nova.conf</filename>. In
-      Compute, for example, you can remove the middleware parameters
-      from <filename>api-paste.ini</filename>, as follows:</para>
-    <programlisting language="ini"><?db-font-size 75%?>[filter:authtoken]
-paste.filter_factory = keystonemiddleware.auth_token:filter_factory</programlisting>
-    <note><para>Prior to the Juno release, the auth_token middleware was in
-        python-keystoneclient. The filter_factory must be set to
-        <literal>keystoneclient.middleware.auth_token:filter_factory</literal>
-        in those releases.
-    </para></note>
+      configuration file, such as <filename>nova.conf</filename>.</para>
     <para>And set the following values in
         <filename>nova.conf</filename> as follows:</para>
     <programlisting language="ini"><?db-font-size 75%?>[DEFAULT]
@@ -173,11 +164,6 @@ admin_password = keystone123</programlisting>
         <literal>auth_protocol</literal> options because the
         <literal>identity_uri</literal> option replaces them.</para>
     </note>
-    <note><para>Prior to the Juno release, the auth_token middleware was in
-        python-keystoneclient. The filter_factory must be set to
-        <literal>keystoneclient.middleware.auth_token:filter_factory</literal>
-        in those releases.
-    </para></note>
   </section>
    <section xml:id="identity-service-api-protection-with-role-based-access-control">
       <title>Identity API protection with role-based access control (RBAC)
