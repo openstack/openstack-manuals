@@ -72,6 +72,7 @@ Contents
    heat.rst
    ceilometer.rst
    launch-instance.rst
+   app_reserved_uids.rst
 
    common/app_support.rst
    common/glossary.rst
