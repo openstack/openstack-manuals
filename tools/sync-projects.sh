@@ -19,6 +19,18 @@ if [ -z "$PROJECT_DIR" ] ; then
     exit 1
 fi
 
+function copy_rst_trans {
+    target=$1
+    # Copy over some RST files
+    mkdir -p $PROJECT_DIR/$target/source/locale
+    for lang in ja ; do
+        TARGET=$PROJECT_DIR/$target/source/locale/$lang/LC_MESSAGES
+        mkdir $TARGET
+        cp doc/common-rst/source/locale/$lang/LC_MESSAGES/common-rst.po \
+            $TARGET
+    done
+    (cd $PROJECT_DIR; git add $target/source/locale/)
+
 function copy_rst {
     target=$1
     # Copy over some RST files
@@ -62,9 +74,13 @@ function copy_glossary_xml {
 case "$PROJECT_DIR" in
     api-site)
         copy_rst common-rst
+        # TODO(jaegerandi): Copy over once translations are ready
+        #copy_rst_trans common-rst
         ;;
     ha-guide)
         copy_rst doc/common-rst
+        # TODO(jaegerandi): Copy over once translations are ready
+        #copy_rst_trans doc/common-rst
         copy_glossary_xml "doc/glossary" "high-availability-guide" "figures"
         ;;
     operations-guide)
@@ -72,6 +88,7 @@ case "$PROJECT_DIR" in
         ;;
     security-doc)
         copy_rst common-rst
+        copy_rst_trans common-rst
         copy_glossary_xml "glossary" "security-guide" "static"
         ;;
     *)
