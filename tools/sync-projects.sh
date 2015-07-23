@@ -61,17 +61,17 @@ function copy_glossary_xml {
 
 case "$PROJECT_DIR" in
     api-site)
-        copy_rst firstapp/source/imported
+        copy_rst common-rst
         ;;
     ha-guide)
-        copy_rst doc/ha-guide/source/imported
+        copy_rst doc/common-rst
         copy_glossary_xml "doc/glossary" "high-availability-guide" "figures"
         ;;
     operations-guide)
         copy_glossary_xml "doc/glossary" "openstack-ops" "figures"
         ;;
     security-doc)
-        copy_rst security-guide-rst/source/imported
+        copy_rst common-rst
         copy_glossary_xml "glossary" "security-guide" "static"
         ;;
     *)
