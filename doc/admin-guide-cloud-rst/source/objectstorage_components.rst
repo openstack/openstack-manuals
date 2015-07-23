@@ -130,7 +130,7 @@ outages of storage servers without losing all replicas of the data.
 As mentioned earlier, everything in Object Storage is stored, by
 default, three times. Swift will place each replica
 "as-uniquely-as-possible" to ensure both high availability and high
-durability. This means that when chosing a replica location, Object
+durability. This means that when choosing a replica location, Object
 Storage chooses a server in an unused zone before an unused server in a
 zone that already has a replica of the data.
 
