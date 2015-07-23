@@ -1,5 +1,6 @@
+==========================
 Add a networking component
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+==========================
 
 This chapter explains how to install and configure either OpenStack
 Networking (neutron), or the legacy ``nova-network`` component. The
@@ -13,21 +14,25 @@ For more information, see the
 `Networking <http://docs.openstack.org/admin-guide-cloud/content/ch_networking.html>`__
 chapter of the OpenStack Cloud Administrator Guide.
 
-.. include:: neutron-concepts.rst
-
+OpenStack Networking (neutron)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
-   :hidden:
 
    neutron-concepts.rst
+   neutron-controller-node.rst
 
-
-.. todo(karenb)
+.. todo
    section_getstart_networking.xml
-   section_neutron-controller-node.xml
    section_neutron-network-node.xml
    section_neutron-compute-node.xml
    section_neutron-initial-networks.xml
+
+
+Legacy networking (nova-network)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. todo
    section_nova-networking.xml
    section_nova-networking-controller-node.xml
    section_nova-networking-compute-node.xml
