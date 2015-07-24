@@ -34,8 +34,8 @@
         <td>(IntOpt) Seconds to regard the agent is down; should be at least twice report_interval, to be sure the agent is down for good.</td>
       </tr>
       <tr>
-        <td><option>api_workers</option> = <replaceable>0</replaceable></td>
-        <td>(IntOpt) Number of separate API worker processes for service</td>
+        <td><option>api_workers</option> = <replaceable>None</replaceable></td>
+        <td>(IntOpt) Number of separate API worker processes for service. If not specified, the default is equal to the number of CPUs available for best performance.</td>
       </tr>
       <tr>
         <td><option>auth_ca_cert</option> = <replaceable>None</replaceable></td>
@@ -82,12 +82,16 @@
         <td>(StrOpt) Default IPv6 subnet-pool to be used for automatic subnet CIDR allocation</td>
       </tr>
       <tr>
+        <td><option>device_driver</option> = <replaceable>['neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver']</replaceable></td>
+        <td>(MultiStrOpt) Drivers used to manage loadbalancing devices</td>
+      </tr>
+      <tr>
         <td><option>dhcp_agent_notification</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Allow sending resource operation notification to DHCP agent</td>
       </tr>
       <tr>
         <td><option>dhcp_agents_per_network</option> = <replaceable>1</replaceable></td>
-        <td>(IntOpt) Number of DHCP agents scheduled to host a network.</td>
+        <td>(IntOpt) Number of DHCP agents scheduled to host a tenant network. If this number is greater than 1, the scheduler automatically assigns multiple DHCP agents for a given tenant network, providing high availability for DHCP service.</td>
       </tr>
       <tr>
         <td><option>dhcp_broadcast_reply</option> = <replaceable>False</replaceable></td>
@@ -98,8 +102,8 @@
         <td>(StrOpt) Location to store DHCP server config files</td>
       </tr>
       <tr>
-        <td><option>dhcp_delete_namespaces</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Delete namespace after removing a dhcp server.</td>
+        <td><option>dhcp_delete_namespaces</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) Delete namespace after removing a dhcp server.This option is deprecated and will be removed in a future release.</td>
       </tr>
       <tr>
         <td><option>dhcp_domain</option> = <replaceable>openstacklocal</replaceable></td>
@@ -140,6 +144,10 @@
       <tr>
         <td><option>ip_lib_force_root</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Force ip_lib calls to use the root helper</td>
+      </tr>
+      <tr>
+        <td><option>ipam_driver</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) IPAM driver to use.</td>
       </tr>
       <tr>
         <td><option>mac_generation_retries</option> = <replaceable>16</replaceable></td>
@@ -201,6 +209,10 @@
         <td>(IntOpt) Interval between checks of child process liveness (seconds), use 0 to disable</td>
       </tr>
       <tr>
+        <td><option>log_agent_heartbeats</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Log agent heartbeats</td>
+      </tr>
+      <tr>
         <td><option>root_helper</option> = <replaceable>sudo</replaceable></td>
         <td>(StrOpt) Root helper application.</td>
       </tr>
@@ -234,6 +246,17 @@
       <tr>
         <td><option>auth_url</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Authentication URL</td>
+      </tr>
+      <tr>
+        <th colspan="2">[certificates]</th>
+      </tr>
+      <tr>
+        <td><option>cert_manager_class</option> = <replaceable>neutron_lbaas.common.cert_manager.barbican_cert_manager</replaceable></td>
+        <td>(StrOpt) Certificate Manager plugin. Defaults to neutron_lbaas.common.cert_manager.barbican_cert_manager.</td>
+      </tr>
+      <tr>
+        <td><option>storage_path</option> = <replaceable>/var/lib/neutron-lbaas/certificates/</replaceable></td>
+        <td>(StrOpt) Absolute path to the certificate storage directory. Defaults to env[OS_LBAAS_TLS_STORAGE].</td>
       </tr>
       <tr>
         <th colspan="2">[heleos]</th>

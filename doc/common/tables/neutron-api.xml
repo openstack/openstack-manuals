@@ -58,10 +58,6 @@
         <td>(IntOpt) Number of seconds to keep retrying to listen</td>
       </tr>
       <tr>
-        <td><option>run_external_periodic_tasks</option> = <replaceable>True</replaceable></td>
-        <td>(BoolOpt) Some periodic tasks can be run in a separate process. Should we run them here?</td>
-      </tr>
-      <tr>
         <td><option>service_plugins</option> = <replaceable></replaceable></td>
         <td>(ListOpt) The service plugins Neutron will use</td>
       </tr>
@@ -72,6 +68,32 @@
       <tr>
         <td><option>wsgi_keep_alive</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Determines if connections are allowed to be held open by clients after a request is fulfilled. A value of False will ensure that the socket connection will be explicitly closed once a response has been sent to the client.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[oslo_middleware]</th>
+      </tr>
+      <tr>
+        <td><option>max_request_body_size</option> = <replaceable>114688</replaceable></td>
+        <td>(IntOpt) The maximum body size for each  request, in bytes.</td>
+      </tr>
+      <tr>
+        <td><option>secure_proxy_ssl_header</option> = <replaceable>X-Forwarded-Proto</replaceable></td>
+        <td>(StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[oslo_policy]</th>
+      </tr>
+      <tr>
+        <td><option>policy_default_rule</option> = <replaceable>default</replaceable></td>
+        <td>(StrOpt) Default rule. Enforced when a requested rule is not found.</td>
+      </tr>
+      <tr>
+        <td><option>policy_dirs</option> = <replaceable>['policy.d']</replaceable></td>
+        <td>(MultiStrOpt) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched.  Missing or empty directories are ignored.</td>
+      </tr>
+      <tr>
+        <td><option>policy_file</option> = <replaceable>policy.json</replaceable></td>
+        <td>(StrOpt) The JSON file that defines policies.</td>
       </tr>
       <tr>
         <th colspan="2">[service_providers]</th>
