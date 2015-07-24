@@ -476,7 +476,7 @@ Linux Enterprise Server, it is
 
 .. code:: ini
 
-    OPENSTACK_HYPERVISOR_FEATURE = {
+    OPENSTACK_HYPERVISOR_FEATURES = {
     ...
         'can_set_password': False,
     }
