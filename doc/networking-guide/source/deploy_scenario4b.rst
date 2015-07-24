@@ -597,21 +597,73 @@ Verify network operation
       +-------------+-----------+---------+-----------+--------------+
 
 #. Launch an instance with an interface on the provider network.
+
+   .. note::
+      This example uses a CirrOS image that was manually uploaded into the Image Service
+
+   .. code-block:: console
+
+      $ nova boot --flavor m1.tiny --image cirros-0.3.3-x86_64-disk test_server
+      +--------------------------------------+-----------------------------------------------------------------+
+      | Property                             | Value                                                           |
+      +--------------------------------------+-----------------------------------------------------------------+
+      | OS-DCF:diskConfig                    | MANUAL                                                          |
+      | OS-EXT-AZ:availability_zone          | nova                                                            |
+      | OS-EXT-SRV-ATTR:host                 | -                                                               |
+      | OS-EXT-SRV-ATTR:hypervisor_hostname  | -                                                               |
+      | OS-EXT-SRV-ATTR:instance_name        | instance-00000001                                               |
+      | OS-EXT-STS:power_state               | 0                                                               |
+      | OS-EXT-STS:task_state                | scheduling                                                      |
+      | OS-EXT-STS:vm_state                  | building                                                        |
+      | OS-SRV-USG:launched_at               | -                                                               |
+      | OS-SRV-USG:terminated_at             | -                                                               |
+      | accessIPv4                           |                                                                 |
+      | accessIPv6                           |                                                                 |
+      | adminPass                            | h7CkMdkRXuuh                                                    |
+      | config_drive                         |                                                                 |
+      | created                              | 2015-07-22T20:40:16Z                                            |
+      | flavor                               | m1.tiny (1)                                                     |
+      | hostId                               |                                                                 |
+      | id                                   | dee2a9f4-e24c-444d-8c94-386f11f74af5                            |
+      | image                                | cirros-0.3.3-x86_64-disk (2b6bb38f-f69f-493c-a1c0-264dfd4188d8) |
+      | key_name                             | -                                                               |
+      | metadata                             | {}                                                              |
+      | name                                 | test_server                                                     |
+      | os-extended-volumes:volumes_attached | []                                                              |
+      | progress                             | 0                                                               |
+      | security_groups                      | default                                                         |
+      | status                               | BUILD                                                           |
+      | tenant_id                            | 5f2db133e98e4bc2999ac2850ce2acd1                                |
+      | updated                              | 2015-07-22T20:40:16Z                                            |
+      | user_id                              | ea417ebfa86741af86f84a5dbcc97cd2                                |
+      +--------------------------------------+-----------------------------------------------------------------+
+
 #. Determine the IP address of the instance. The following step uses
-   203.0.113.2.
+   203.0.113.3.
+
+   .. code-block:: console
+
+      $ nova list
+      +--------------------------------------+-------------+--------+------------+-------------+--------------------------+
+      | ID                                   | Name        | Status | Task State | Power State | Networks                 |
+      +--------------------------------------+-------------+--------+------------+-------------+--------------------------+
+      | dee2a9f4-e24c-444d-8c94-386f11f74af5 | test_server | ACTIVE | -          | Running     | provider-101=203.0.113.3 |
+      +--------------------------------------+-------------+--------+------------+-------------+--------------------------+
+
+
 #. On the controller node or any host with access to the provider network,
    ping the IP address of the instance:
 
    .. code-block:: console
 
-      $ ping -c 4 203.0.113.2
-      PING 203.0.113.2 (203.0.113.2) 56(84) bytes of data.
-      64 bytes from 203.0.113.2: icmp_req=1 ttl=63 time=3.18 ms
-      64 bytes from 203.0.113.2: icmp_req=2 ttl=63 time=0.981 ms
-      64 bytes from 203.0.113.2: icmp_req=3 ttl=63 time=1.06 ms
-      64 bytes from 203.0.113.2: icmp_req=4 ttl=63 time=0.929 ms
+      $ ping -c 4 203.0.113.3
+      PING 203.0.113.3 (203.0.113.3) 56(84) bytes of data.
+      64 bytes from 203.0.113.3: icmp_req=1 ttl=63 time=3.18 ms
+      64 bytes from 203.0.113.3: icmp_req=2 ttl=63 time=0.981 ms
+      64 bytes from 203.0.113.3: icmp_req=3 ttl=63 time=1.06 ms
+      64 bytes from 203.0.113.3: icmp_req=4 ttl=63 time=0.929 ms
 
-      --- 203.0.113.2 ping statistics ---
+      --- 203.0.113.3 ping statistics ---
       4 packets transmitted, 4 received, 0% packet loss, time 3002ms
       rtt min/avg/max/mdev = 0.929/1.539/3.183/0.951 ms
 
