@@ -1,8 +1,9 @@
+========================================
 Failed to Attach Volume, Missing sg_scan
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+========================================
 
 Problem
--------
+~~~~~~~
 
 Failed to attach volume to an instance, ``sg_scan`` file not found. This
 warning and error occur when the sg3-utils package is not installed on
@@ -18,7 +19,8 @@ the compute node. The IDs in your message are unique to your system:
 
 
 Solution
---------
+~~~~~~~~
+
 
 Run this command on the compute node to install the sg3-utils package:
 

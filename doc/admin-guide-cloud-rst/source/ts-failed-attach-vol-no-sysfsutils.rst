@@ -1,11 +1,12 @@
 .. highlight:: console
    :linenothreshold: 5
 
+=================================================
 Failed to attach volume, systool is not installed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=================================================
 
 Problem
--------
+~~~~~~~
 
 This warning and error occurs if you do not have the required
 ``sysfsutils`` package installed on the compute node::
@@ -20,7 +21,7 @@ This warning and error occurs if you do not have the required
     Failed to attach volume 13d5c633-903a-4764-a5a0-3336945b1db1 at /dev/vdk.
 
 Solution
---------
+~~~~~~~~
 
 Run the following command on the compute node to install the
 ``sysfsutils`` packages::

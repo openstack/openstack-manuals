@@ -1,11 +1,12 @@
 .. highlight:: console
    :linenothreshold: 5
 
+==================================
 Failed to connect volume in FC SAN
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==================================
 
 Problem
--------
+~~~~~~~
 
 Compute node failed to connect to a volume in a Fibre Channel (FC) SAN
 configuration. The WWN may not be zoned correctly in your FC SAN that
@@ -23,7 +24,7 @@ links the compute host to the storage array::
     operation.(HTTP 500)(Request-ID: req-71e5132b-21aa-46ee-b3cc-19b5b4ab2f00)
 
 Solution
---------
+~~~~~~~~
 
 The network administrator must configure the FC SAN fabric by correctly
 zoning the WWN (port names) from your compute node HBAs.

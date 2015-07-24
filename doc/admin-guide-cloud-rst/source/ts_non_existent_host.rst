@@ -1,8 +1,9 @@
+=================
 Non-existent host
-~~~~~~~~~~~~~~~~~
+=================
 
 Problem
--------
+~~~~~~~
 
 This error could be caused by a volume being exported outside of
 OpenStack using a host name different from the system name that
@@ -15,7 +16,7 @@ host was exported using iSCSI.
   NON_EXISTENT_HOST - HOST '10' was not found to caller.
 
 Solution
---------
+~~~~~~~~
 
 Host names constructed by the driver use just the local hostname, not
 the fully qualified domain name (FQDN) of the Compute host. For example,

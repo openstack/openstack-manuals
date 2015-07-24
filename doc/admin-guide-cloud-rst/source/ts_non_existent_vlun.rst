@@ -1,8 +1,9 @@
+=================
 Non-existent VLUN
-~~~~~~~~~~~~~~~~~
+=================
 
 Problem
--------
+~~~~~~~
 
 This error occurs if the 3PAR host exists with the correct host name
 that the OpenStack Block Storage drivers expect but the volume was
@@ -14,7 +15,7 @@ created in a different Domain.
 
 
 Solution
---------
+~~~~~~~~
 
 The ``hp3par_domain`` configuration items either need to be updated to
 use the domain the 3PAR host currently resides in, or the 3PAR host
