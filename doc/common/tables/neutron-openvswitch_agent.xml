@@ -57,8 +57,8 @@
         <td>(IntOpt) The number of seconds to wait before respawning the ovsdb monitor after losing communication with it.</td>
       </tr>
       <tr>
-        <td><option>prevent_arp_spoofing</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Enable suppression of ARP responses that don't match an IP address that belongs to the port from which they originate. Note: This prevents the VMs attached to this agent from spoofing, it doesn't protect them from other devices which have the capability to spoof (e.g. bare metal or VMs attached to agents without this flag set to True). Spoofing rules will not be added to any ports that have port security disabled. This requires a version of OVS that supports matching ARP headers.</td>
+        <td><option>prevent_arp_spoofing</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) Enable suppression of ARP responses that don't match an IP address that belongs to the port from which they originate. Note: This prevents the VMs attached to this agent from spoofing, it doesn't protect them from other devices which have the capability to spoof (e.g. bare metal or VMs attached to agents without this flag set to True). Spoofing rules will not be added to any ports that have port security disabled. For LinuxBridge, this requires ebtables. For OVS, it requires a version that supports matching ARP headers.</td>
       </tr>
       <tr>
         <td><option>quitting_rpc_timeout</option> = <replaceable>10</replaceable></td>
@@ -101,6 +101,14 @@
       <tr>
         <td><option>local_ip</option> = <replaceable>None</replaceable></td>
         <td>(IPOpt) Local IP address of tunnel endpoint.</td>
+      </tr>
+      <tr>
+        <td><option>of_interface</option> = <replaceable>ovs-ofctl</replaceable></td>
+        <td>(StrOpt) OpenFlow interface to use.</td>
+      </tr>
+      <tr>
+        <td><option>ovsdb_connection</option> = <replaceable>tcp:127.0.0.1:6640</replaceable></td>
+        <td>(StrOpt) The connection string for the native OVSDB backend</td>
       </tr>
       <tr>
         <td><option>ovsdb_interface</option> = <replaceable>vsctl</replaceable></td>
