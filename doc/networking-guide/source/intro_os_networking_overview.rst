@@ -143,7 +143,7 @@ security group rules. When a port is created in Networking it is associated
 with a security group. If a security group is not specified the port is
 associated with a 'default' security group. By default, this group drops all
 ingress traffic and allows all egress. Rules can be added to this group in
-order to change the behaviour.
+order to change the behavior.
 
 Extensions
 ----------

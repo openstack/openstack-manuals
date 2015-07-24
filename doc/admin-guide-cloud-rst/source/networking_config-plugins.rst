@@ -154,7 +154,7 @@ formerly known as Nicira NVP.
       when a tenant creates a network. You can get this value from the
       Transport Zones page for the NSX-mh manager:
 
-      Alternatively the transport zone identfier can be retrieved by query
+      Alternatively the transport zone identifier can be retrieved by query
       the NSX-mh API: ``/ws.v1/transport-zone``
 
       .. code:: ini

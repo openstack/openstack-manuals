@@ -22,7 +22,7 @@ property to determine the best back end, but that is not always perfect.
 If a back end has the ability to provide a more accurate back-end
 specific value you can use that as part of the weighing. Another example
 of when the driver filter and weigher can prove useful is if a back end
-exists where there is a hard limit of 1000 volumes. The maxmimum volume
+exists where there is a hard limit of 1000 volumes. The maximum volume
 size is 500 GB. Once 75% of the total space is occupied the performance
 of the back end degrades. The driver filter and weigher can provide a
 way for these limits to be checked for.
@@ -338,7 +338,7 @@ properties::
     goodness_function = "55"
 
 The above is an example of how back-end specific properties can be used
-in the fitler and goodness functions. In this example the LVM driver's
+in the filter and goodness functions. In this example the LVM driver's
 ``total\_volumes`` capability is being used to determine which host gets
 used during a volume request. In the above example, lvm-1 and lvm-2 will
 handle volume requests for all volumes with a size less than 5 GB. The
