@@ -3,8 +3,9 @@
 .. highlight: ini
    :linenothreshold: 5
 
+================================
 Rate-limit volume copy bandwidth
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+================================
 
 When you create a new volume from an image or an existing volume, or
 when you upload a volume image to the Image service, large data copy
@@ -13,7 +14,7 @@ access from the instances, OpenStack Block Storage supports rate-limiting
 of volume data copy bandwidth.
 
 Configure volume copy bandwidth limit
--------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To configure the volume copy bandwidth limit, set the
 ``volume_copy_bps_limit`` option in the configuration groups for each

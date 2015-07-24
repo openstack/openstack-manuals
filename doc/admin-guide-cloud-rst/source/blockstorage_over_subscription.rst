@@ -3,8 +3,9 @@
 .. highlight: ini
    :linenothreshold: 5
 
+=====================================
 Oversubscription in thin provisioning
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=====================================
 
 OpenStack Block Storage enables you to choose a volume back end based on
 virtual capacities for thin provisioning using the oversubscription ratio.
@@ -13,7 +14,8 @@ A reference implementation is provided for the default LVM driver. The
 illustration below uses the LVM driver as an example.
 
 Configure oversubscription settings
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 To support oversubscription in thin provisioning, a flag
 ``max_over_subscription_ratio`` is introduced into :file:`cinder.conf`.
 This is a float representation of the oversubscription ratio when thin
@@ -45,7 +47,7 @@ This flag represents the percentage of the back-end capacity that is reserved.
     capacity.
 
 Capabilities
-------------
+~~~~~~~~~~~~
 
 Drivers can report the following capabilities for a back end or a pool:
 
@@ -71,7 +73,7 @@ The LVM driver reports ``thin_provisioning_support=True`` and
 ``thin_provisioning_support=False`` and ``thick_provisioning_support=True``.
 
 Volume type extra specs
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 If volume type is provided as part of the volume creation request, it can
 have the following extra specs defined:
@@ -98,14 +100,14 @@ supports thin provisioning, thick provisioning, or both to match the needs
 of a specific volume type.
 
 Capacity filter
----------------
+~~~~~~~~~~~~~~~
 
 In the capacity filter, ``max_over_subscription_ratio`` is used when
 choosing a back end if ``thin_provisioning_support`` is True and
 ``max_over_subscription_ratio`` is greater than 1.0.
 
 Capacity weigher
-----------------
+~~~~~~~~~~~~~~~~
 
 In the capacity weigher, virtual free capacity is used for ranking if
 ``thin_provisioning_support`` is True. Otherwise, real free capacity

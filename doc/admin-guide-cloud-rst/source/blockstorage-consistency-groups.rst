@@ -1,8 +1,9 @@
 .. highlight:: console
    :linenothreshold: 5
 
+==================
 Consistency groups
-~~~~~~~~~~~~~~~~~~
+==================
 
 Consistency group support is available in OpenStack Block Storage. The
 support is added for creating snapshots of consistency groups. This

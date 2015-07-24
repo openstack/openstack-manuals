@@ -1,5 +1,6 @@
+================
 Boot from volume
-~~~~~~~~~~~~~~~~
+================
 
 In some cases, you can store and run instances from inside volumes.
 For information, see the `Launch an instance from a volume`_ section

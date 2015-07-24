@@ -3,8 +3,10 @@
 .. highlight: ini
    :linenothreshold: 5
 
+=================================
 Export and import backup metadata
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=================================
+
 
 A volume backup can only be restored on the same Block Storage service. This
 is because restoring a volume from a backup requires metadata available on
