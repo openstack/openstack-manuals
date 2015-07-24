@@ -212,7 +212,7 @@ List the available roles:
 
 .. code:: console
 
-   $ openstack user list
+   $ openstack role list
    +----------------------------------+---------------+
    | id                               | name          |
    +----------------------------------+---------------+
