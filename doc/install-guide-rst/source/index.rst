@@ -18,6 +18,13 @@
    OpenStack Installation Guide for Ubuntu
    =======================================
 
+.. only:: debian
+
+   =======================================
+   OpenStack Installation Guide for Debian
+   =======================================
+
+
 Abstract
 ~~~~~~~~
 
@@ -44,6 +51,11 @@ separately and configure them stand-alone or as connected entities.
    This guide shows you how to install OpenStack by using packages on
    openSUSE 13.2 and SUSE Linux Enterprise Server 12 through the Open
    Build Service Cloud repository.
+
+.. only:: debian
+
+   This guide walks through an installation by using packages
+   available through Debian 8 (code name: Jessie).
 
 Explanations of configuration options and sample configuration files
 are included.
