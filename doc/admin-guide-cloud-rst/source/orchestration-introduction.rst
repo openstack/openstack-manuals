@@ -31,4 +31,5 @@ For more details on how to use Orchestration module through a command
 line, see `OpenStack Command-Line Interface Reference`_.
 
 .. Links
-.. _`OpenStack Command-Line Interface Reference`: http://docs.openstack.org/cli-reference
+.. _`OpenStack Command-Line Interface Reference`: http://docs.openstack.org/
+   cli-reference/content/heatclient_commands.html
