@@ -1,5 +1,11 @@
+==========
 Networking
-~~~~~~~~~~
+==========
+
+.. toctree::
+
+   basics-networking-neutron.rst
+   basics-networking-nova.rst
 
 .. only:: ubuntu
 
@@ -84,12 +90,3 @@ Internet access for OpenStack services.
       by default. For more information about securing your environment,
       refer to the
       `OpenStack Security Guide <http://docs.openstack.org/sec/>`__.
-
-.. include:: basics-networking-neutron.rst
-.. include:: basics-networking-nova.rst
-
-.. toctree::
-   :hidden:
-
-   basics-networking-neutron.rst
-   basics-networking-nova.rst

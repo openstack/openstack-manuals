@@ -1,5 +1,12 @@
+.. highlight:: ini
+   :linenothreshold: 1
+
+==============================
+OpenStack service dependencies
+==============================
+
 OpenStack packages
-~~~~~~~~~~~~~~~~~~
+------------------
 
 Distributions release OpenStack packages as part of the distribution or
 using other methods because of differing release schedules. Perform
@@ -235,3 +242,222 @@ these procedures on all nodes.
       .. note::
 
          The installation process for this package can take a while.
+
+|
+
+SQL database
+------------
+
+Most OpenStack services use an SQL database to store information. The
+database typically runs on the controller node. The procedures in this
+guide use MariaDB or MySQL depending on the distribution. OpenStack
+services also support other SQL databases including
+`PostgreSQL <http://www.postgresql.org/>`__.
+
+
+**To install and configure the database server**
+
+1. Install the packages:
+
+   .. only:: rdo or ubuntu or obs
+
+      .. note::
+
+         The Python MySQL library is compatible with MariaDB.
+
+   .. only:: ubuntu
+
+      .. code-block:: console
+
+         # apt-get install mariadb-server python-mysqldb
+
+   .. only:: debian
+
+      .. code-block:: console
+
+         # apt-get install mysql-server python-mysqldb
+
+   .. only:: rdo
+
+      .. code-block:: console
+
+         # yum install mariadb mariadb-server MySQL-python
+
+   .. only:: obs
+
+      .. code-block:: console
+
+         # zypper install mariadb-client mariadb python-mysql
+
+.. only:: ubuntu or debian
+
+   2. Choose a suitable password for the database root account.
+
+   3. Create and edit the :file:`/etc/mysql/conf.d/mysqld_openstack.cnf` file
+      and complete the following actions:
+
+      - In the ``[mysqld]`` section, set the
+        ``bind-address`` key to the management IP
+        address of the controller node to enable access by other
+        nodes via the management network:
+
+        .. code:: ini
+
+           [mysqld]
+           ...
+           bind-address = 10.0.0.11
+
+      - In the ``[mysqld]`` section, set the following keys to enable
+        useful options and the UTF-8 character set:
+
+        .. code:: ini
+
+           [mysqld]
+           ...
+           default-storage-engine = innodb
+           innodb_file_per_table
+           collation-server = utf8_general_ci
+           init-connect = 'SET NAMES utf8'
+           character-set-server = utf8
+
+
+.. only:: obs or rdo
+
+   2. Create and edit the :file:`/etc/my.cnf.d/mariadb_openstack.cnf` file
+      and complete the following actions:
+
+      - In the ``[mysqld]`` section, set the
+        ``bind-address`` key to the management IP
+        address of the controller node to enable access by other
+        nodes via the management network:
+
+        .. code:: ini
+
+           [mysqld]
+           ...
+           bind-address = 10.0.0.11
+
+      - In the ``[mysqld]`` section, set the following keys to enable
+        useful options and the UTF-8 character set:
+
+        .. code:: ini
+
+           [mysqld]
+           ...
+           default-storage-engine = innodb
+           innodb_file_per_table
+           collation-server = utf8_general_ci
+           init-connect = 'SET NAMES utf8'
+           character-set-server = utf8
+
+**To finalize installation**
+
+.. only:: ubuntu or debian
+
+   1. Restart the database service:
+
+      .. code-block:: console
+
+         # service mysql restart
+
+.. only:: rdo or obs
+
+   1. Start the database service and configure it to start when the system
+      boots:
+
+      .. only:: rdo
+
+         .. code-block:: console
+
+            # systemctl enable mariadb.service
+            # systemctl start mariadb.service
+
+      .. only:: obs
+
+         .. code-block:: console
+
+            # systemctl enable mysql.service
+            # systemctl start mysql.service
+
+.. only:: ubuntu or debian
+
+   2. Secure the database service:
+
+      .. literalinclude:: mariadb_output.txt
+
+.. only:: rdo or obs
+
+   2. Secure the database service including choosing a suitable
+      password for the root account:
+
+      .. literalinclude:: mariadb_output.txt
+
+|
+
+Message queue
+-------------
+
+OpenStack uses a :term:`message queue` to coordinate operations and
+status information among services. The message queue service typically
+runs on the controller node. OpenStack supports several message queue
+services including `RabbitMQ <http://www.rabbitmq.com>`__,
+`Qpid <http://qpid.apache.org>`__, and `ZeroMQ <http://zeromq.org>`__.
+However, most distributions that package OpenStack support a particular
+message queue service. This guide implements the RabbitMQ message queue
+service because most distributions support it. If you prefer to
+implement a different message queue service, consult the documentation
+associated with it.
+
+**To install the message queue service**
+
+* Install the package:
+
+  .. only:: ubuntu or debian
+
+     .. code-block:: console
+
+        # apt-get install rabbitmq-server
+
+  .. only:: rdo
+
+     .. code-block:: console
+
+        # yum install rabbitmq-server
+
+  .. only:: obs
+
+     .. code-block:: console
+
+        # zypper install rabbitmq-server
+
+
+**To configure the message queue service**
+
+#. Start the message queue service and configure it to start when the
+   system boots:
+
+   .. only:: rdo or obs
+
+      .. code-block:: console
+
+         # systemctl enable rabbitmq-server.service
+         # systemctl start rabbitmq-server.service
+
+#. Add the ``openstack`` user:
+
+   .. code-block:: console
+
+      # rabbitmqctl add_user openstack `RABBIT_PASS`
+        Creating user "openstack" ...
+        ...done.
+
+   Replace `RABBIT_PASS` with a suitable password.
+
+#. Permit configuration, write, and read access for the
+   ``openstack`` user:
+
+   .. code-block:: console
+
+      # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
+        Setting permissions for user "openstack" in vhost "/" ...
+        ...done.
