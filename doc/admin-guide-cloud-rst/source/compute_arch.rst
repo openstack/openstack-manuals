@@ -51,7 +51,7 @@ http://wiki.openstack.org/HypervisorSupportMatrix.
 You can also orchestrate clouds using multiple hypervisors in different
 availability zones. Compute supports the following hypervisors:
 
--  `Baremetal <https://wiki.openstack.org/wiki/Baremetal>`__
+-  `Baremetal <https://wiki.openstack.org/wiki/Ironic>`__
 
 -  `Docker <https://www.docker.io>`__
 
