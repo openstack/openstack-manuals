@@ -5,6 +5,9 @@ mkdir -p publish-docs
 title_org=$(grep "title::" doc/install-guide-rst/source/index.rst | \
               awk '{print substr($0, index($0, "::")+3)}')
 
+trap "sed -i -e \"s/\.\. title::.*/.. title:: ${title_org}/\" \
+  doc/install-guide-rst/source/index.rst" EXIT
+
 for tag in obs rdo ubuntu debian; do
     GLOSSARY=""
     if [[ ! -e doc/common-rst/glossary.rst ]] ; then
@@ -18,6 +21,3 @@ for tag in obs rdo ubuntu debian; do
     tools/build-rst.sh doc/install-guide-rst  \
         $GLOSSARY --tag ${tag} --target "draft/install-guide-rst-${tag}"
 done
-
-sed -i -e "s/\.\. title::.*/.. title:: ${title_org}/" \
-  doc/install-guide-rst/source/index.rst
