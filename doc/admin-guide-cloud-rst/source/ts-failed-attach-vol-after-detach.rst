@@ -1,16 +1,17 @@
 .. highlight:: console
    :linenothreshold: 5
 
+=======================================
 Failed to attach volume after detaching
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=======================================
 
 Problem
--------
+~~~~~~~
 
 Failed to attach a volume after detaching the same volume.
 
 Solution
---------
+~~~~~~~~
 
 You must change the device name on the ``nova-attach`` command. The VM
 might not clean up after a ``nova-detach`` command runs. This example

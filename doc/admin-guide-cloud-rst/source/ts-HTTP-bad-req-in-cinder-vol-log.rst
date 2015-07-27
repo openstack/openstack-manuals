@@ -1,11 +1,12 @@
 .. highlight:: console
    :linenothreshold: 5
 
+=====================================
 HTTP bad request in cinder volume log
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=====================================
 
 Problem
--------
+~~~~~~~
 
 These errors appear in the :file:`cinder-volume.log` file::
 
@@ -40,7 +41,7 @@ These errors appear in the :file:`cinder-volume.log` file::
     HTTPBadRequest: Bad request (HTTP 400)
 
 Solution
---------
+~~~~~~~~
 
 You need to update your copy of the :file:`hp_3par_fc.py` driver which
 contains the synchronization code.

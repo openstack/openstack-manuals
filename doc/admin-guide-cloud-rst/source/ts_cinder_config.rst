@@ -1,8 +1,9 @@
 .. highlight:: ini
    :linenothreshold: 1
 
+============================================
 Troubleshoot the Block Storage configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================
 
 Most Block Storage errors are caused by incorrect volume configurations
 that result in volume creation failures. To resolve these failures,

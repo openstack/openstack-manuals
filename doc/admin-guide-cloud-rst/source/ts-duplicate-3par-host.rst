@@ -1,11 +1,12 @@
 .. highlight:: console
    :linenothreshold: 5
 
+===================
 Duplicate 3PAR host
-~~~~~~~~~~~~~~~~~~~
+===================
 
 Problem
--------
+~~~~~~~
 
 This error may be caused by a volume being exported outside of OpenStack
 using a host name different from the system name that OpenStack expects.
@@ -17,7 +18,7 @@ using iSCSI::
     'cld4b5ubuntu'.
 
 Solution
---------
+~~~~~~~~
 
 Change the 3PAR host name to match the one that OpenStack expects. The
 3PAR host constructed by the driver uses just the local hostname, not

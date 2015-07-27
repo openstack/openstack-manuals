@@ -1,11 +1,12 @@
 .. highlight:: console
    :linenothreshold: 5
 
+========================================================================
 Addressing discrepancies in reported volume sizes for EqualLogic storage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+========================================================================
 
 Problem
--------
+~~~~~~~
 
 There is a discrepancy between both the actual volume size in EqualLogic
 (EQL) storage and the image size in the Image service, with what is
@@ -131,7 +132,7 @@ The attempt to create a new volume based on the size reported by the
 ``cinder`` tool will then fail.
 
 Solution
---------
+~~~~~~~~
 
 To work around this problem, increase the target size of the new image
 to the next whole number. In the problem example, you created a 1 GB
