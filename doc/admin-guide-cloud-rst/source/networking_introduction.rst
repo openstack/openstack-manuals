@@ -205,7 +205,11 @@ FWaaS management options are also available in the OpenStack dashboard.
 
    .. code:: ini
 
-        'enable_firewall' = True
+        OPENSTACK_NEUTRON_NETWORK = {
+            ...
+            'enable_firewall' = True,
+            ...
+        }
 
 #. Restart the neutron-l3-agent and neutron-server services to apply the
    settings.
