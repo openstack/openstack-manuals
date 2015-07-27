@@ -17,17 +17,16 @@ scale your environment with additional compute nodes.
    This section assumes that you are following the instructions in
    this guide step-by-step to configure the first compute node. If you
    want to configure additional compute nodes, prepare them in a similar
-   fashion to the first compute node in the example architectures
-   section using the same networking service as your existing
-   environment. For either networking service, follow the NTP
-   configuration and OpenStack packages instructions.
-   For OpenStack Networking (neutron), also follow the OpenStack
-   Networking compute node instructions. For legacy networking
-   (nova-network), also follow the legacy networking compute node
-   instructions. Each additional compute node requires unique IP
-   addresses.
-
-.. TODO: add link to each section after migration.
+   fashion to the first compute node in the :ref:`example architectures
+   <overview-example-architectures>` section using the same networking
+   service as your existing environment. For either networking service,
+   follow the :ref:`NTP configuration <basics-ntp-other-nodes>` and
+   :doc:`OpenStack packages <basics-packages>` instructions.
+   For OpenStack Networking (neutron), also follow the
+   :doc:`OpenStack Networking compute node <basics-networking-neutron>`
+   instructions. For legacy networking (nova-network), also follow the
+   :doc:`legacy networking compute node <basics-networking-nova>`
+   instructions. Each additional compute node requires unique IP addresses.
 
 To install and configure the Compute hypervisor components
 ----------------------------------------------------------
@@ -127,9 +126,7 @@ To install and configure the Compute hypervisor components
      Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address
      of the management network interface on your compute node,
      typically 10.0.0.31 for the first node in the
-     example architecture.
-
-     .. TODO: add link to architecture section atfer migration
+     :ref:`example architecture <overview-example-architectures>`.
 
    * In the ``[DEFAULT]`` section, enable and configure remote console
      access:
@@ -153,9 +150,7 @@ To install and configure the Compute hypervisor components
      Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with
      the IP address of the management network interface on your
      compute node, typically 10.0.0.31 for the first node in the
-     example architecture.
-
-     .. TODO: add link to architecture section atfer migration
+     :ref:`example architecture <overview-example-architectures>`.
 
      .. note::
 

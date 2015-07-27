@@ -86,6 +86,8 @@ organization.
 
 |
 
+.. _basics-ntp-other-nodes:
+
 Other nodes
 -----------
 
