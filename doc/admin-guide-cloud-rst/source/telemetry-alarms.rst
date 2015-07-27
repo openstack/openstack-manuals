@@ -114,7 +114,7 @@ information about this approach, see the section called
 <ha-deploy-services>`.
 
 To use this workload partitioning solution set the
-:option:`evaluation_service` option to ``default``. For more
+``evaluation_service`` option to ``default``. For more
 information, see the alarm section in the
 `OpenStack Configuration Reference <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html>`_.
 
