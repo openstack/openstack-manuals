@@ -30,6 +30,7 @@ function copy_rst_trans {
             $TARGET
     done
     (cd $PROJECT_DIR; git add $target/source/locale/)
+}
 
 function copy_rst {
     target=$1
