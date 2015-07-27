@@ -25,7 +25,7 @@ function copy_rst_trans {
     mkdir -p $PROJECT_DIR/$target/source/locale
     for lang in ja ; do
         TARGET=$PROJECT_DIR/$target/source/locale/$lang/LC_MESSAGES
-        mkdir $TARGET
+        mkdir -p $TARGET
         cp doc/common-rst/source/locale/$lang/LC_MESSAGES/common-rst.po \
             $TARGET
     done
