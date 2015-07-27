@@ -1,8 +1,8 @@
 .. highlight:: ini
 
-
+================================
 Legacy networking (nova-network)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+================================
 
 The example architecture with legacy networking (nova-network) requires
 a controller node and at least one compute node. The controller node
@@ -40,7 +40,12 @@ network infrastructure.
 
 |
 
-:ref:`figure-nova-networks`
+.. figure:: figures/installguidearch-nova-networks.png
+   :alt: Minimal architecture example with legacy networking
+         (nova-network)—Network layout
+
+   **Minimal architecture example with legacy networking
+   (nova-network)—Network layout**
 
 |
 

@@ -1,8 +1,8 @@
 .. highlight:: ini
 
-
+==============================
 OpenStack Networking (neutron)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==============================
 
 The example architecture with OpenStack Networking (neutron) requires
 one controller node, one network node, and at least one compute node.
@@ -52,7 +52,12 @@ network infrastructure.
 
 |
 
-:ref:`figure-neutron-networks`
+.. figure:: figures/installguidearch-neutron-networks.png
+   :alt: Minimal architecture example with OpenStack Networking
+         (neutron)—Network layout
+
+   **Minimal architecture example with OpenStack Networking
+   (neutron)—Network layout**
 
 |
 
