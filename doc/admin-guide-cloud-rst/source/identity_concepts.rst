@@ -42,7 +42,7 @@ The main components of Identity user management are:
 
     .. code::
 
-       $ openstack domain create emea
+       $ openstack --os-identity-api-version=3 domain create emea
 
 * Role
     Captures the operations that a user can perform in a given
