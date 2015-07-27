@@ -3,8 +3,9 @@
 .. highlight: ini
    :linenothreshold: 5
 
+===========================
 Back up and restore volumes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===========================
 
 The **cinder** command-line interface provides the tools for creating a
 volume backup. You can restore a volume from a backup as long as the

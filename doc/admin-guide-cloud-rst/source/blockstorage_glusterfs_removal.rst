@@ -3,8 +3,9 @@
 .. highlight: ini
    :linenothreshold: 5
 
+===============================================
 Gracefully remove a GlusterFS volume from usage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================
 
 Configuring the ``cinder`` volume service to use GlusterFS involves creating a
 shares file (for example, :file:`/etc/cinder/glusterfs`). This shares file

@@ -3,8 +3,9 @@
 .. highlight: ini
    :linenothreshold: 5
 
+========================================
 Configure and use volume number weighter
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+========================================
 
 OpenStack Block Storage enables you to choose a volume back end according
 to ``free_capacity`` and ``allocated_capacity``. The volume number weighter
@@ -13,7 +14,7 @@ number in the volume back end. This can provide another means to improve
 the volume back ends' I/O balance and the volumes' I/O performance.
 
 Enable volume number weighter
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To enable a volume number weighter, set the
 ``scheduler_default_weighters`` to ``VolumeNumberWeigher`` flag in the
@@ -21,7 +22,8 @@ To enable a volume number weighter, set the
 as the selected weighter.
 
 Configure multiple-storage back ends
-------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 To configure ``VolumeNumberWeigher``, use ``LVMISCSIDriver``
 as the volume driver.
@@ -46,7 +48,7 @@ This example configuration defines two back ends:
    volume_backend_name=LVM_iSCSI
 
 Volume type
------------
+~~~~~~~~~~~
 
 Define a volume type in Block Storage::
 
@@ -60,7 +62,7 @@ This example creates a lvm volume type with
 ``volume_backend_name=LVM_iSCSI`` as extra specifications.
 
 Usage
------
+~~~~~
 
 To create six 1-GB volumes, run the
 :command:`cinder create --volume-type lvm 1` command six times::

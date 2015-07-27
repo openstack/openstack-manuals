@@ -1,5 +1,6 @@
+=====================
 Use LIO iSCSI support
-~~~~~~~~~~~~~~~~~~~~~
+=====================
 
 The default mode for the ``iscsi_helper`` tool is ``tgtadm``.
 To use LIO iSCSI, install the ``python-rtslib`` package, and set

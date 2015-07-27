@@ -1,8 +1,9 @@
 .. highlight:: ini
    :linenothreshold: 5
 
+==========================================================
 Configure and use driver filter and weighing for scheduler
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==========================================================
 
 OpenStack Block Storage enables you to choose a volume back end based on
 back-end specific properties by using the DriverFilter and
@@ -12,7 +13,8 @@ based on requested volume properties as well as various back-end
 specific properties.
 
 What is driver filter and weigher and when to use it
-----------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The driver filter and weigher gives you the ability to more finely
 control how the OpenStack Block Storage scheduler chooses the best back
 end to use when handling a volume request. One example scenario where
@@ -28,7 +30,8 @@ of the back end degrades. The driver filter and weigher can provide a
 way for these limits to be checked for.
 
 Enable driver filter and weighing
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 To enable the driver filter, set the ``scheduler_default_filters`` option in
 the :file:`cinder.conf` file to ``DriverFilter`` or add it to the list if
 other filters are already present.
@@ -63,7 +66,8 @@ Example :file:`cinder.conf` configuration file::
     these.
 
 Defining your own filter and goodness functions
------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 You can define your own filter and goodness functions through the use of
 various properties that OpenStack Block Storage has exposed. Properties
 exposed include information about the volume request being made,
@@ -88,7 +92,8 @@ highest).
 
 
 Supported operations in filter and goodness functions
------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Below is a table of all the operations currently usable in custom filter
 and goodness functions created by you:
 
@@ -114,7 +119,8 @@ and goodness functions created by you:
     cause errors to be thrown at volume request time.
 
 Available properties when creating custom functions
----------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 There are various properties that can be used in either the
 ``filter_function`` or the ``goodness_function`` strings. The properties allow
 access to volume info, qos settings, extra specs, and so on.
@@ -123,7 +129,7 @@ The following properties and their sub-properties are currently
 available for use:
 
 Host stats for a back end
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
 host
     The host's name
 
@@ -152,13 +158,15 @@ reserved\_percentage
     The reserved storage percentage
 
 Capabilities specific to a back end
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------------
+
 These properties are determined by the specific back end
 you are creating filter and goodness functions for. Some back ends
 may not have any properties available here.
 
 Requested volume properties
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------
+
 status
     Status for the requested volume
 
@@ -216,13 +224,15 @@ metadata
 The property most used from here will most likely be the ``size`` sub-property.
 
 Extra specs for the requested volume type
------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 View the available properties for volume types by running::
 
     $ cinder extra-specs-list
 
 Current QoS specs for the requested volume type
------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 View the available properties for volume types by running::
 
     $ cinder qos-list
@@ -233,7 +243,8 @@ format:
 ``<property>.<sub_property>``
 
 Diver filter and weigher usage examples
----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Below are examples for using the filter and weigher separately,
 together, and using driver-specific properties.
 

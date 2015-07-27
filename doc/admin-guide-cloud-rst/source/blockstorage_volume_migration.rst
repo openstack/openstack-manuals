@@ -3,8 +3,9 @@
 .. highlight: ini
    :linenothreshold: 5
 
+===============
 Migrate volumes
-~~~~~~~~~~~~~~~
+===============
 
 OpenStack has the ability to migrate volumes between back-ends which support
 its volume-type. Migrating a volume transparently moves its data from the

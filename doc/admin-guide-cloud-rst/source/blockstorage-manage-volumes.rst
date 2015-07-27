@@ -54,24 +54,7 @@ To set up Compute to use volumes, ensure that Block Storage is
 installed along with ``lvm2``. This guide describes how to
 troubleshoot your installation and back up your Compute volumes.
 
-.. include:: blockstorage-boot-from-volume.rst
-.. include:: blockstorage_nfs_backend.rst
-.. include:: blockstorage_glusterfs_backend.rst
-.. include:: blockstorage_multi_backend.rst
-.. include:: blockstorage_backup_disks.rst
-.. include:: blockstorage_volume_migration.rst
-.. include:: blockstorage_glusterfs_removal.rst
-.. include:: blockstorage_volume_backups.rst
-.. include:: blockstorage_volume_backups_export_import.rst
-.. include:: blockstorage-lio-iscsi-support.rst
-.. include:: blockstorage_volume_number_weighter.rst
-.. include:: blockstorage-consistency-groups.rst
-.. include:: blockstorage-driver-filter-weighing.rst
-.. include:: blockstorage_ratelimit_volume_copy_bandwidth.rst
-.. include:: blockstorage_over_subscription.rst
-
 .. toctree::
-   :hidden:
 
    blockstorage-boot-from-volume.rst
    blockstorage_nfs_backend.rst
