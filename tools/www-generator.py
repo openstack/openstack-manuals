@@ -81,7 +81,7 @@ def main():
 
         try:
             output = template.render()
-            soup = BeautifulSoup(output)
+            soup = BeautifulSoup(output, "lxml")
             output = soup.prettify()
         except Exception as e:
             logger.error("rendering template %s failed: %s" %
