@@ -69,25 +69,50 @@ This guide documents OpenStack Liberty release.
 Contents
 ~~~~~~~~
 
-.. toctree::
-   :maxdepth: 2
+.. only:: obs or rdo or ubuntu
 
-   overview.rst
-   basic_environment.rst
-   keystone.rst
-   glance.rst
-   nova.rst
-   networking.rst
-   horizon.rst
-   cinder.rst
-   swift.rst
-   heat.rst
-   ceilometer.rst
-   launch-instance.rst
-   app_reserved_uids.rst
+   .. toctree::
+      :maxdepth: 2
 
-   common/app_support.rst
-   common/glossary.rst
+      overview.rst
+      basic_environment.rst
+      keystone.rst
+      glance.rst
+      nova.rst
+      networking.rst
+      horizon.rst
+      cinder.rst
+      swift.rst
+      heat.rst
+      ceilometer.rst
+      launch-instance.rst
+      app_reserved_uids.rst
+
+      common/app_support.rst
+      common/glossary.rst
+
+.. only:: debian
+
+   .. toctree::
+      :maxdepth: 2
+
+      overview.rst
+      basic_environment.rst
+      debconf/debconf.rst
+      keystone.rst
+      glance.rst
+      nova.rst
+      networking.rst
+      horizon.rst
+      cinder.rst
+      swift.rst
+      heat.rst
+      ceilometer.rst
+      launch-instance.rst
+      app_reserved_uids.rst
+
+      common/app_support.rst
+      common/glossary.rst
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
