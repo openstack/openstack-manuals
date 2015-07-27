@@ -5,14 +5,14 @@ Architecture
 Overview
 ~~~~~~~~
 
-The OpenStack project is an open source cloud computing platform that
+The :term:`OpenStack` project is an open source cloud computing platform that
 supports all types of cloud environments. The project aims for simple
 implementation, massive scalability, and a rich set of features. Cloud
 computing experts from around the world contribute to the project.
 
-OpenStack provides an Infrastructure-as-a-Service (IaaS) solution
+OpenStack provides an :term:`Infrastructure-as-a-Service (IaaS)<IaaS>` solution
 through a variety of complemental services. Each service offers an
-application programming interface (API) that facilitates this
+:term:`application programming interface (API)<API>` that facilitates this
 integration. The following table provides a list of OpenStack services:
 
 .. list-table:: **OpenStack services**
@@ -48,7 +48,7 @@ integration. The following table provides a list of OpenStack services:
    * - `Object Storage <http://www.openstack.org/software/openstack-storage/>`_
      - `Swift <http://docs.openstack.org/developer/swift/>`_
      - Stores and retrieves arbitrary unstructured
-       data objects via a RESTful, HTTP based API.
+       data objects via a :term:`RESTful`, HTTP based API.
        It is highly fault tolerant with its data replication and
        scale-out architecture. Its implementation is not like a
        file server with mountable directories. In this case,
@@ -82,8 +82,8 @@ integration. The following table provides a list of OpenStack services:
    * - `Orchestration <http://www.openstack.org/software/openstack-shared-services/>`_
      - `Heat <http://docs.openstack.org/developer/heat/>`_
      - Orchestrates multiple composite cloud applications by using
-       either the native HOT template format or the
-       AWS CloudFormation template format, through both an
+       either the native :term:`HOT <Heat Orchestration Template (HOT)>` template
+       format or the AWS CloudFormation template format, through both an
        OpenStack-native REST API and a CloudFormation-compatible
        Query API.
    * - `Database service <http://www.openstack.org/software/openstack-shared-services/>`_
@@ -136,10 +136,11 @@ optional services. This guide uses the following example architectures:
 -  Three-node architecture with OpenStack Networking (neutron) and
    optional nodes for Block Storage and Object Storage services.
 
-   -  The controller node runs the Identity service, Image Service,
-      management portions of Compute and Networking, Networking plug-in,
-      and the dashboard. It also includes supporting services such as a
-      SQL database, message queue, and Network Time Protocol (NTP).
+   -  The :term:`controller node <cloud controller node>` runs the
+      Identity service, Image Service, management portions of Compute
+      and Networking, Networking plug-in, and the dashboard. It also
+      includes supporting services such as a SQL database,
+      :term:`message queue`, and :term:`Network Time Protocol (NTP)`.
 
       Optionally, the controller node runs portions of Block Storage,
       Object Storage, Orchestration, Telemetry, Database, and Data
@@ -148,15 +149,18 @@ optional services. This guide uses the following example architectures:
 
    -  The network node runs the Networking plug-in and several agents
       that provision tenant networks and provide switching, routing,
-      NAT, and DHCP services. This node also handles external (Internet)
+      :term:`NAT<Network Address Translation (NAT)>`, and
+      :term:`DHCP` services. This node also handles external (Internet)
       connectivity for tenant virtual machine instances.
 
-   -  The compute node runs the hypervisor portion of Compute that
-      operates tenant virtual machines or instances. By default, Compute
-      uses KVM as the hypervisor. The compute node also runs the
-      Networking plug-in and an agent that connect tenant networks to
-      instances and provide firewalling (security groups) services. You
-      can run more than one compute node.
+   -  The :term:`compute node` runs the :term:`hypervisor` portion of
+      Compute that operates :term:`tenant`
+      :term:`virtual machines <virtual machine (VM)>` or instances. By
+      default, Compute uses :term:`KVM <kernel-based VM (KVM)>` as the
+      :term:`hypervisor`. The compute node also runs the Networking
+      plug-in and an agent that connect tenant networks to instances and
+      provide firewalling (:term:`security groups <security group>`)
+      services. You can run more than one compute node.
 
       Optionally, the compute node runs a Telemetry agent to collect
       meters. Also, it can contain a third network interface on a
@@ -181,13 +185,10 @@ optional services. This guide uses the following example architectures:
       a separate storage network to improve performance of storage
       services.
 
-      .. note:: When you implement this architecture, skip <TODO>.
-
-         .. todo(karenb)
-            section_nova-networking in
-            ch_networking. Optional services might
-            require additional nodes or additional resources on existing
-            nodes.
+      .. note::
+         When you implement this architecture, skip the section
+         :doc:`networking-nova`. Optional services might require
+         additional nodes or additional resources on existing nodes.
 
 |
 
@@ -225,21 +226,24 @@ optional services. This guide uses the following example architectures:
 -  Two-node architecture with legacy networking (nova-network) and
    optional nodes for Block Storage and Object Storage services.
 
-   -  The controller node runs the Identity service, Image service,
-      management portion of Compute, and the dashboard. It also includes
-      supporting services such as a SQL database, message queue, and
-      Network Time Protocol (NTP).
+   -  The :term:`controller node <cloud controller node>` runs the
+      Identity service, Image service, management portion of Compute,
+      and the dashboard. It also includes supporting services such as a
+      SQL database, :term:`message queue`, and :term:`Network Time
+      Protocol (NTP)`.
 
       Optionally, the controller node runs portions of Block Storage,
       Object Storage, Orchestration, Telemetry, Database, and Data
       processing services. These components provide additional features
       for your environment.
 
-   -  The compute node runs the hypervisor portion of Compute that
-      operates tenant virtual machines or instances. By default, Compute
-      uses KVM as the hypervisor. Compute also provisions tenant
-      networks and provides firewalling (security groups) services. You
-      can run more than one compute node.
+   -  The :term:`compute node` runs the :term:`hypervisor` portion of
+      Compute that operates :term:`tenant` :term:`virtual machines
+      <virtual machine (VM)>` or instances. By default, Compute uses
+      :term:`KVM <kernel-based VM (KVM)>` as the :term:`hypervisor`.
+      Compute also provisions tenant networks and provides firewalling
+      (:term:`security groups <security group>`) services. You can run
+      more than one compute node.
 
       Optionally, the compute node runs a Telemetry agent to collect
       meters. Also, it can contain a third network interface on a
@@ -266,13 +270,9 @@ optional services. This guide uses the following example architectures:
 
       .. note::
 
-         When you implement this architecture, skip <TODO>
-
-         .. todo(karen)
-            section_neutron-networking in
-            ch_networking. To use optional services, you
-            might need to build additional nodes, as
-            described in subsequent chapters.
+         When you implement this architecture, skip the section
+         :doc:`networking-neutron`. To use optional services, you might need to
+         build additional nodes.
 
 |
 
