@@ -1,25 +1,25 @@
-.. _volume_number_weighter:
+.. _volume_number_weigher:
 
 .. highlight: ini
    :linenothreshold: 5
 
-========================================
-Configure and use volume number weighter
-========================================
+=======================================
+Configure and use volume number weigher
+=======================================
 
 OpenStack Block Storage enables you to choose a volume back end according
-to ``free_capacity`` and ``allocated_capacity``. The volume number weighter
+to ``free_capacity`` and ``allocated_capacity``. The volume number weigher
 feature lets the scheduler choose a volume back end based on its volume
 number in the volume back end. This can provide another means to improve
 the volume back ends' I/O balance and the volumes' I/O performance.
 
-Enable volume number weighter
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Enable volume number weigher
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To enable a volume number weighter, set the
-``scheduler_default_weighters`` to ``VolumeNumberWeigher`` flag in the
+To enable a volume number weigher, set the
+``scheduler_default_weighers`` to ``VolumeNumberWeigher`` flag in the
 :file:`cinder.conf` file to define ``VolumeNumberWeigher``
-as the selected weighter.
+as the selected weigher.
 
 Configure multiple-storage back ends
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

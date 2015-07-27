@@ -66,7 +66,7 @@ troubleshoot your installation and back up your Compute volumes.
    blockstorage_volume_backups.rst
    blockstorage_volume_backups_export_import.rst
    blockstorage-lio-iscsi-support.rst
-   blockstorage_volume_number_weighter.rst
+   blockstorage_volume_number_weigher.rst
    blockstorage-consistency-groups.rst
    blockstorage-driver-filter-weighing.rst
    blockstorage_ratelimit_volume_copy_bandwidth.rst
