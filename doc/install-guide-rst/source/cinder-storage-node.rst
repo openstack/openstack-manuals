@@ -44,9 +44,7 @@ environment. For more information, see :doc:`basic_environment`.
 
 4. Install and configure :term:`NTP
    <Network Time Protocol (NTP)>` using the instructions in
-   basics-ntp-other-nodes".
-
-   .. TODO(katomo): add link to basics-ntp-other-nodes after creation.
+   :ref:`the section called "Other nodes" <basics-ntp-other-nodes>`.
 
 .. only:: obs
 
@@ -277,9 +275,7 @@ Install and configure Block Storage volume components
       Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address
       of the management network interface on your storage node,
       typically 10.0.0.41 for the first node in the
-      example architecture.
-
-      .. TODO(katomo): add link to example architecture after creation.
+      :ref:`example architecture <overview-example-architectures>`.
 
    .. only:: obs or ubuntu
 
