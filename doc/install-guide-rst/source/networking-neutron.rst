@@ -8,9 +8,7 @@ OpenStack Networking (neutron)
    neutron-controller-node.rst
    neutron-network-node.rst
    neutron-compute-node.rst
-
-.. todo(karenb)
-   section_neutron-initial-networks.xml
+   neutron-initial-networks.rst
 
 OpenStack Networking allows you to create and attach interface devices
 managed by other OpenStack services to networks. Plug-ins can be
