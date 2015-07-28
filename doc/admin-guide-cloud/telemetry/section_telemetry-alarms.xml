@@ -109,6 +109,11 @@
       <para>This creates an alarm that will fire when the average CPU utilization for an individual instance exceeds 70% for three consecutive 10 minute periods. The notification in this case is simply a log message, though it could alternatively be a webhook URL.</para>
       <note>
         <para>Alarm names must be unique for the alarms associated with an individual project.</para>
+        <para>The cloud administrator can limit the maximum resulting actions
+          for three different states, and the ability for a normal user to
+          create <literal>log://</literal> and <literal>test://</literal>
+          notifiers is disabled. This prevents unintentional consumption of
+          disk and memory resources by the Telemetry service.</para>
       </note>
       <para>The sliding time window over which the alarm is evaluated is 30 minutes in this example. This window is not clamped to wall-clock time boundaries, rather it's anchored on the current time for each evaluation cycle, and continually creeps forward as each evaluation cycle rolls around (by default, this occurs every minute).</para>
       <para>The period length is set to 600s in this case to reflect the out-of-the-box default cadence for collection of the associated meter. This period matching illustrates an important general principal to keep in mind for alarms:</para>
