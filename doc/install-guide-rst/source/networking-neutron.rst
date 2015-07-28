@@ -6,9 +6,9 @@ OpenStack Networking (neutron)
 
    neutron-concepts.rst
    neutron-controller-node.rst
+   neutron-network-node.rst
 
 .. todo(karenb)
-   section_neutron-network-node.xml
    section_neutron-compute-node.xml
    section_neutron-initial-networks.xml
 
