@@ -27,6 +27,7 @@ Contents
    blockstorage.rst
    networking.rst
    telemetry.rst
+   cross_project.rst
    common/app_support.rst
    common/glossary.rst
 
