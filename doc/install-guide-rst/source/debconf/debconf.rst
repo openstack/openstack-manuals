@@ -6,9 +6,7 @@ Configure OpenStack with debconf
    :maxdepth: 2
 
    debconf-concepts.rst
-
-.. todo(karenb)
    debconf-dbconfig-common.rst
    debconf-rabbitmq.rst
-   debconf-keystone_authtoken.rst
+   debconf-keystone-authtoken.rst
    debconf-api-endpoints.rst
