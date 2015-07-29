@@ -404,6 +404,31 @@ Random-number generator
 
     -  RATE-PERIOD—(Integer) Duration of the read period in seconds.
 
+CPU toplogy
+    For the libvirt driver, you can define the topology of the processors
+    in the virtual machine using properties. The properties with ``max``
+    limit the number that can be selected by the user with image properties.
+
+    .. code:: console
+
+        $ nova flavor-key FLAVOR-NAME set hw:cpu_sockets=FLAVOR-SOCKETS
+        $ nova flavor-key FLAVOR-NAME set hw:cpu_cores=FLAVOR-CORES
+        $ nova flavor-key FLAVOR-NAME set hw:cpu_threads=FLAVOR-THREADS
+        $ nova flavor-key FLAVOR-NAME set hw:cpu_max_sockets=FLAVOR-SOCKETS
+        $ nova flavor-key FLAVOR-NAME set hw:cpu_max_cores=FLAVOR-CORES
+        $ nova flavor-key FLAVOR-NAME set hw:cpu_max_threads=FLAVOR-THREADS
+
+    Where:
+
+    -  FLAVOR-SOCKETS—(Integer) The number of sockets for the guest VM. By
+       this is set to the number of vCPUs requested.
+
+    -  FLAVOR-CORES—(Integer) The number of cores per socket for the guest VM. By
+       this is set to 1.
+
+    -  FLAVOR-THREADS—(Integer) The number of threads per core for the guest VM. By
+       this is set to 1.
+
 Project private flavors
     Flavors can also be assigned to particular projects. By default, a
     flavor is public and available to all projects. Private flavors are
