@@ -1,5 +1,7 @@
 .. title:: OpenStack Installation Guide
 
+.. Don't remove or change title tag manually, which is used by the build tool.
+
 .. only:: rdo
 
    =============================================================================
