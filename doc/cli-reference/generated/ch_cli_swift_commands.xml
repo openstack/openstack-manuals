@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Object Storage API and its extensions.
 
        This chapter documents <command>swift</command> version
-        <literal>2.4.0</literal>.
+        <literal>2.5.0</literal>.
     </para>
 
     <para>For help on a specific <command>swift</command>
@@ -110,7 +110,15 @@
     <term><command>tempurl</command></term>
     <listitem>
       <para>
-        Create a temporary URL
+        Create a temporary URL.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>auth</command></term>
+    <listitem>
+      <para>
+        Display auth related environment variables.
       </para>
     </listitem>
   </varlistentry>
@@ -397,12 +405,31 @@ Download objects from containers.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--remove-prefix</command></term>
+    <listitem>
+      <para>
+        An optional flag for --prefix &lt;prefix&gt;, use this
+      option to download items without &lt;prefix&gt;
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--output &lt;out_file&gt;</command></term>
     <listitem>
       <para>
         For a single file download, stream the output to
       &lt;out_file&gt;. Specifying "-" as &lt;out_file&gt; will
       redirect to stdout.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--output-dir &lt;out_directory&gt;</command></term>
+    <listitem>
+      <para>
+      An optional directory to which to store objects.
+      By default, all objects are recreated in the current
+      directory.
       </para>
     </listitem>
   </varlistentry>
@@ -645,17 +672,46 @@ Displays information for the account, container, or object.
         <screen><computeroutput>Usage: swift tempurl</computeroutput></screen>
         <para>
 Generates a temporary URL for a Swift object.
-Positions arguments:
-  [method]              An HTTP method to allow for this temporary URL.
-                        Usually 'GET' or 'PUT'.
-  [seconds]             The amount of time in seconds the temporary URL will
-                        be valid for.
-  [path]                The full path to the Swift object. Example:
-                        /v1/AUTH_account/c/o.
-  [key]                 The secret temporary URL key set on the Swift cluster.
-                        To set a key, run 'swift post -m
-                        "Temp-URL-Key:b3968d0207b54ece87cccc06515a89d4"'
-        </para>
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;method&gt;</command></term>
+    <listitem>
+      <para>
+        An HTTP method to allow for this temporary URL.
+      Usually 'GET' or 'PUT'.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;seconds&gt;</command></term>
+    <listitem>
+      <para>
+        The amount of time in seconds the temporary URL will
+      be valid for.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;path&gt;</command></term>
+    <listitem>
+      <para>
+        The full path to the Swift object. Example:
+      /v1/AUTH_account/c/o.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        The secret temporary URL key set on the Swift cluster.
+      To set a key, run 'swift post -m
+      "Temp-URL-Key:b3968d0207b54ece87cccc06515a89d4"'
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_upload">
         <title>swift upload</title>
