@@ -41,16 +41,16 @@
     <step>
       <para>Get the installer ISO:</para>
       <screen><prompt>$</prompt> <userinput>curl ftp://ftp.freebsd.org/pub/FreeBSD/releases\
-/amd64/amd64/ISO-IMAGES/10.0/FreeBSD-10.0-RELEASE-amd64-bootonly.iso &gt;\
-FreeBSD-10.0-RELEASE-amd64-bootonly.iso</userinput></screen>
+/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-bootonly.iso &gt;\
+FreeBSD-10.1-RELEASE-amd64-bootonly.iso</userinput></screen>
     </step>
     <step>
       <para>Launch a VM on your local workstation. Use the same
         hypervisor, virtual disk, and virtual network drivers as you
         use in your production environment.</para>
       <para>The following command uses the minimum amount of RAM,
-        which is 128&nbsp;MB:</para>
-      <screen><prompt>$</prompt> <userinput>kvm -smp 1 -m 128 -cdrom FreeBSD-10.0-RELEASE-amd64-bootonly.iso \
+        which is 256&nbsp;MB:</para>
+      <screen><prompt>$</prompt> <userinput>kvm -smp 1 -m 256 -cdrom FreeBSD-10.1-RELEASE-amd64-bootonly.iso \
 -drive if=virtio,file=freebsd.qcow2 \
 -net nic,model=virtio -net user</userinput></screen>
       <para>You can specify up to 1&nbsp;GB additional RAM to make the
@@ -227,15 +227,15 @@ FreeBSD-10.0-RELEASE-amd64-bootonly.iso</userinput></screen>
         <step>
           <para>Download the latest
               <application>bsd-cloudinit-installer</application>. The
-            download commands differ between FreeBSD 10.0 and 9.2
+            download commands differ between FreeBSD 10.1 and 9.2
             because of differences in how the <command>fetch</command>
             command handles HTTPS URLs.</para>
-          <para>In FreeBSD 10.0 the <command>fetch</command> command
+          <para>In FreeBSD 10.1 the <command>fetch</command> command
             verifies SSL peers by default, so you need to install the
               <package>ca_root_nss</package> package that contains
             certificate authority root certificates and tell
               <command>fetch</command> where to find them. For FreeBSD
-            10.0 run these commands:</para>
+            10.1 run these commands:</para>
           <screen><prompt>#</prompt> <userinput>pkg install ca_root_nss</userinput>
 <prompt>#</prompt> <userinput>fetch --ca-cert=/usr/local/share/certs/ca-root-nss.crt \
 https://raw.github.com/pellaeon/bsd-cloudinit-installer/master/installer.sh</userinput></screen>
@@ -262,7 +262,7 @@ https://raw.github.com/pellaeon/bsd-cloudinit-installer/master/installer.sh</use
     </step>
     <step>
       <para>Power off the system:</para>
-      <screen><prompt>#</prompt> <userinput>shutdown -s now</userinput></screen>
+      <screen><prompt>#</prompt> <userinput>shutdown -h now</userinput></screen>
     </step>
   </procedure>
 </section>
