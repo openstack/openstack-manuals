@@ -22,7 +22,8 @@ volume type (such as, ``volume_backend_name=LVM_iSCSI``). When a volume
 is created, the scheduler chooses an appropriate back end to handle the
 request, according to the volume type specified by the user.
 
-**Enable multiple-storage back ends**
+Enable multiple-storage back ends
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To enable a multiple-storage back ends, you must set the
 `enabled_backends` flag in the :file:`cinder.conf` file.
@@ -98,7 +99,8 @@ provides more information. In addition, this example presents a
    volume_driver = cinder.volume.drivers.emc.emc_smis_fc.EMCSMISFCDriver
    volume_backend_name = emcfc
 
-**Configure Block Storage scheduler multi back end**
+Configure Block Storage scheduler multi back end
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You must enable the `filter_scheduler` option to use
 multiple-storage back ends. The filter scheduler:
@@ -118,7 +120,8 @@ volumes on specific back ends.
 .. TODO: when filter/weighing scheduler documentation will be up, a ref
          should be added here
 
-**Volume type**
+Volume type
+~~~~~~~~~~~
 
 Before using it, a volume type has to be declared to Block Storage.
 This can be done by the following command::
@@ -157,7 +160,8 @@ back end name.
    returns an error that it cannot find a valid host with the suitable
    back end.
 
-**Usage**
+Usage
+~~~~~
 
 When you create a volume, you must specify the volume type.
 The extra-specifications of the volume type are used to determine which
