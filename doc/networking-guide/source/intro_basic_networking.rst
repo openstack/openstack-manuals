@@ -125,6 +125,16 @@ Note that if you are using VLANs on your physical switches to implement tenant
 isolation in your OpenStack cloud, you must ensure that all of your
 switchports are configured as trunk ports.
 
+It is important that you select a VLAN range that your current network
+infrastructure is not using. For example, if you estimate that your cloud must
+support a maximum of 100 projects, pick a VLAN range outside of that value,
+such as VLAN 200–299. OpenStack and all physical network infrastructure that
+handles tenant networks must then support this VLAN range.
+
+Trunking is used to connect between different switches. Each trunk uses a tag
+to identify which VLAN is in use. This ensures that switches on the same VLAN
+can communicate.
+
 
 .. _ARP:
 
