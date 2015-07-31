@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Block Storage API and its extensions.
 
        This chapter documents <command>cinder</command> version
-        <literal>1.2.2</literal>.
+        <literal>1.3.1</literal>.
     </para>
 
     <para>For help on a specific <command>cinder</command>
@@ -3130,7 +3130,7 @@ Updates a consistencygroup.
                      [--volume-type &lt;volume-type&gt;]
                      [--availability-zone &lt;availability-zone&gt;]
                      [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
-                     [--hint &lt;key=value&gt;]
+                     [--hint &lt;key=value&gt;] [--allow-multiattach]
                      [&lt;size&gt;]</computeroutput></screen>
         <para>
 Creates a volume.
@@ -3244,6 +3244,15 @@ Creates a volume.
     <listitem>
       <para>
         Scheduler hint, like in nova.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--allow-multiattach</command></term>
+    <listitem>
+      <para>
+        Allow volume to be attached more than once.
+      Default=False
       </para>
     </listitem>
   </varlistentry>
@@ -3369,6 +3378,69 @@ Shows encryption type details for a volume type. Admin only.
     <listitem>
       <para>
         Name or ID of volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_encryption-type-update_v2">
+        <title>cinder encryption-type-update (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 encryption-type-update [--provider &lt;provider&gt;]
+                                     [--cipher [&lt;cipher&gt;]]
+                                     [--key-size [&lt;key-size&gt;]]
+                                     [--control-location &lt;control-location&gt;]
+                                     &lt;volume-type&gt;</computeroutput></screen>
+        <para>
+Update encryption type information for a volume type (Admin Only).
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume-type&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the volume type
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--provider &lt;provider&gt;</command></term>
+    <listitem>
+      <para>
+      Class providing encryption support (e.g.
+      LuksEncryptor) (Optional)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--cipher [&lt;cipher&gt;]</command></term>
+    <listitem>
+      <para>
+        Encryption algorithm/mode to use (e.g., aes-xts-
+      plain64). Provide parameter without value to set to
+      provider default. (Optional)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--key-size [&lt;key-size&gt;]</command></term>
+    <listitem>
+      <para>
+      Size of the encryption key, in bits (e.g., 128, 256).
+      Provide parameter without value to set to provider
+      default. (Optional)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--control-location &lt;control-location&gt;</command></term>
+    <listitem>
+      <para>
+      Notional service where encryption is performed (e.g.,
+      front-end=Nova). Values: 'front-end', 'back-end'
+      (Optional)
       </para>
     </listitem>
   </varlistentry>
@@ -3963,13 +4035,13 @@ Lists quotas for a quota class.
                                  [--snapshots &lt;snapshots&gt;]
                                  [--gigabytes &lt;gigabytes&gt;]
                                  [--volume-type &lt;volume_type_name&gt;]
-                                 &lt;class-name&gt;</computeroutput></screen>
+                                 &lt;class_name&gt;</computeroutput></screen>
         <para>
 Updates quotas for a quota class.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
-    <term><command>&lt;class-name&gt;</command></term>
+    <term><command>&lt;class_name&gt;</command></term>
     <listitem>
       <para>
         Name of quota class for which to set quotas.
@@ -4071,6 +4143,7 @@ Lists quotas for a tenant.
                            [--backup-gigabytes &lt;backup_gigabytes&gt;]
                            [--consistencygroups &lt;consistencygroups&gt;]
                            [--volume-type &lt;volume_type_name&gt;]
+                           [--per-volume-gigabytes &lt;per_volume_gigabytes&gt;]
                            &lt;tenant_id&gt;</computeroutput></screen>
         <para>
 Updates quotas for a tenant.
@@ -4140,6 +4213,14 @@ Updates quotas for a tenant.
     <listitem>
       <para>
       Volume type. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--per-volume-gigabytes &lt;per_volume_gigabytes&gt;</command></term>
+    <listitem>
+      <para>
+      Set max volume size limit. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -5025,20 +5106,10 @@ Sets or unsets extra_spec for a volume type.
     </section>
     <section xml:id="cinderclient_subcommand_type-list_v2">
         <title>cinder type-list (v2)</title>
-        <screen><computeroutput>usage: cinder --os-volume-api-version 2 type-list [--all]</computeroutput></screen>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 type-list</computeroutput></screen>
         <para>
-Lists available 'volume types'.
-        </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
-  <varlistentry>
-    <term><command>--all</command></term>
-    <listitem>
-      <para>
-        Display all volume types (Admin only).
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
+Lists available 'volume types'. (Admin only will see private types)
+        </para>
     </section>
     <section xml:id="cinderclient_subcommand_type-update_v2">
         <title>cinder type-update (v2)</title>
