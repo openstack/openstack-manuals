@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-07-25 06:11+0000\n"
+"POT-Creation-Date: 2015-07-31 06:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -763,7 +763,7 @@ msgid "Orchestration can be accessed via the CLI, and using RESTful queries. Orc
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_orchestration.xml:38(para)
-msgid "For more details how to use Orchestration module command-line see <link xlink:href=\"http://docs.openstack.org/cli-reference/content/\"> OpenStack Command line interface reference</link>"
+msgid "For more details how to use Orchestration module command-line see <link xlink:href=\"http://docs.openstack.org/cli-reference/content/heatclient_commands.html\"> OpenStack Command line interface reference</link>"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/ch_objectstorage.xml:7(title) ./doc/admin-guide-cloud/compute/section_compute-image-mgt.xml:42(term)
@@ -1474,6 +1474,66 @@ msgstr ""
 msgid "Host names constructed by the driver use just the local hostname, not the fully qualified domain name (FQDN) of the Compute host. For example, if the FQDN was <emphasis>myhost.example.com</emphasis>, just <emphasis>myhost</emphasis> would be used as the 3PAR hostname. IP addresses are not allowed as host names on the 3PAR storage server."
 msgstr ""
 
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:11(title)
+msgid "Configure and use volume number weigher"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:12(para)
+msgid "OpenStack Block Storage enables you to choose a volume back end according to <placeholder-1/> and <placeholder-2/>. The volume number weigher feature lets the scheduler choose a volume back end based on its volume number in the volume back end. This can provide another means to improve the volume back ends' I/O balance and the volumes' I/O performance."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:19(title)
+msgid "Enable volume number weigher"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:20(para)
+msgid "To enable a volume number weigher, set the <placeholder-1/> to <literal>VolumeNumberWeigher</literal> flag in the <filename>cinder.conf</filename> file to define <literal>VolumeNumberWeigher</literal> as the selected weigher."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:26(title) ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:7(title)
+msgid "Configure multiple-storage back ends"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:27(para)
+msgid "To configure <literal>VolumeNumberWeigher</literal>, use <literal>LVMISCSIDriver</literal> as the volume driver."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:28(para)
+msgid "This configuration defines two LVM volume groups: <literal>stack-volumes</literal> with 10GB capacity and stack-volumes-1 with 60GB capacity. This example configuration defines two back ends:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:44(title) ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:125(title)
+msgid "Volume type"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:45(para)
+msgid "Define a volume type in Block Storage:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:47(para)
+msgid "Create an extra specification that links the volume type to a back-end name:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:50(para)
+msgid "This example creates a <literal>lvm</literal> volume type with <literal>volume_backend_name=LVM_iSCSI</literal> as extra specifications."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:55(title) ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:159(title)
+msgid "Usage"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:56(para)
+msgid "To create six 1-GB volumes, run the <placeholder-1/> command six times:"
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:59(para)
+msgid "This command creates three volumes in <literal>stack-volumes</literal> and three volumes in <literal>stack-volumes-1</literal>."
+msgstr ""
+
+#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weigher.xml:60(para)
+msgid "List the available volumes:"
+msgstr ""
+
 #: ./doc/admin-guide-cloud/blockstorage/section_ts_HTTP_bad_req_in_cinder_vol_log.xml:8(title) ./doc/admin-guide-cloud/blockstorage/section_ts_failed_attach_vol_after_detach.xml:8(title)
 msgid "Failed to attach volume after detaching"
 msgstr ""
@@ -1868,66 +1928,6 @@ msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_ts_cinder_config.xml:184(para)
 msgid "Restart <systemitem class=\"service\">tgt</systemitem> and <systemitem class=\"service\">cinder-*</systemitem> services so they pick up the new configuration."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:11(title)
-msgid "Configure and use volume number weighter"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:12(para)
-msgid "OpenStack Block Storage enables you to choose a volume back end according to <placeholder-1/> and <placeholder-2/>. The volume number weighter feature lets the scheduler choose a volume back end based on its volume number in the volume back end. This can provide another means to improve the volume back ends' I/O balance and the volumes' I/O performance."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:19(title)
-msgid "Enable volume number weighter"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:20(para)
-msgid "To enable a volume number weighter, set the <placeholder-1/> to <literal>VolumeNumberWeigher</literal> flag in the <filename>cinder.conf</filename> file to define <literal>VolumeNumberWeigher</literal> as the selected weighter."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:26(title) ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:7(title)
-msgid "Configure multiple-storage back ends"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:27(para)
-msgid "To configure <literal>VolumeNumberWeigher</literal>, use <literal>LVMISCSIDriver</literal> as the volume driver."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:28(para)
-msgid "This configuration defines two LVM volume groups: <literal>stack-volumes</literal> with 10GB capacity and stack-volumes-1 with 60GB capacity. This example configuration defines two back ends:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:44(title) ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:125(title)
-msgid "Volume type"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:45(para)
-msgid "Define a volume type in Block Storage:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:47(para)
-msgid "Create an extra specification that links the volume type to a back-end name:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:50(para)
-msgid "This example creates a <literal>lvm</literal> volume type with <literal>volume_backend_name=LVM_iSCSI</literal> as extra specifications."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:55(title) ./doc/admin-guide-cloud/blockstorage/section_multi_backend.xml:159(title)
-msgid "Usage"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:56(para)
-msgid "To create six 1-GB volumes, run the <placeholder-1/> command six times:"
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:59(para)
-msgid "This command creates three volumes in <literal>stack-volumes</literal> and three volumes in <literal>stack-volumes-1</literal>."
-msgstr ""
-
-#: ./doc/admin-guide-cloud/blockstorage/section_volume_number_weighter.xml:60(para)
-msgid "List the available volumes:"
 msgstr ""
 
 #: ./doc/admin-guide-cloud/blockstorage/section_driver_filter_weighing.xml:11(title)
@@ -6417,107 +6417,107 @@ msgstr ""
 msgid "Enable the option in the <filename>/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py</filename> file, which is typically located on the controller node:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:309(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:312(para)
 msgid "Restart the <systemitem class=\"service\">neutron-l3-agent</systemitem> and <systemitem class=\"service\">neutron-server</systemitem> services to apply the settings."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:315(title)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:318(title)
 msgid "To configure Firewall-as-a-Service"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:316(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:319(para)
 msgid "Create the firewall rules and create a policy that contains them. Then, create a firewall that applies the policy."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:320(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:323(para)
 msgid "Create a firewall rule:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:321(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:324(replaceable)
 msgid "PORT_RANGE"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:322(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:325(para)
 msgid "The Networking client requires a protocol value; if the rule is protocol agnostic, you can use the <literal>any</literal> value."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:327(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:330(para)
 msgid "Create a firewall policy:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:328(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:331(replaceable)
 msgid "FIREWALL_RULE_IDS_OR_NAMES"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:329(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:332(para)
 msgid "Separate firewall rule IDs or names with spaces. The order in which you specify the rules is important."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:334(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:337(para)
 msgid "To add multiple rules, use the update operation."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:338(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:341(para)
 msgid "To add a single rule, use the insert-rule operation."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:331(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:334(para)
 msgid "You can create a firewall policy without any rules and add rules later, as follows:<placeholder-1/> For more details, see <link xlink:href=\"http://docs.openstack.org/cli-reference/content/neutronclient_commands.html#neutronclient_subcommand_firewall-policy-create\">Networking command-line client</link> in the <citetitle>OpenStack Command-Line Interface Reference</citetitle>."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:347(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:350(para)
 msgid "FWaaS always adds a default <placeholder-1/> rule at the lowest precedence of each policy. Consequently, a firewall policy with no rules blocks all traffic by default."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:355(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:358(para)
 msgid "Create a firewall:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:356(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:359(replaceable)
 msgid "FIREWALL_POLICY_UUID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:358(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:361(para)
 msgid "The firewall remains in <guilabel>PENDING_CREATE</guilabel> state until you create a Networking router and attach an interface to it."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:366(title)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:369(title)
 msgid "Allowed-address-pairs"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:367(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:370(para)
 msgid "<placeholder-1/> enable you to specify mac_address/ip_address(cidr) pairs that pass through a port regardless of subnet. This enables the use of protocols such as VRRP, which floats an IP address between two instances to enable fast data plane failover."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:375(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:378(para)
 msgid "Currently, only the ML2, Open vSwitch, and VMware NSX plug-ins support the allowed-address-pairs extension."
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:380(title)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:383(title)
 msgid "Basic allowed-address-pairs operations"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:384(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:387(para)
 msgid "Create a port with a specified allowed address pairs:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:386(replaceable) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:391(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:389(replaceable) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:394(replaceable)
 msgid "MAC_ADDRESS"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:386(replaceable) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:391(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:389(replaceable) ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:394(replaceable)
 msgid "IP_CIDR"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:389(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:392(para)
 msgid "Update a port by adding allowed address pairs:"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:391(replaceable)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:394(replaceable)
 msgid "PORT_UUID"
 msgstr ""
 
-#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:396(para)
+#: ./doc/admin-guide-cloud/networking/section_networking_introduction.xml:399(para)
 msgid "In releases earlier than Juno, OpenStack Networking prevents setting an allowed address pair on a port that matches the MAC address and one of the fixed IP addresses of the port."
 msgstr ""
 
