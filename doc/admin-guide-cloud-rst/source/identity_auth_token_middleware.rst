@@ -20,12 +20,6 @@ Compute, for example, you can remove the middleware parameters from
     [filter:authtoken]
     paste.filter_factory = keystonemiddleware.auth_token:filter_factory
 
-.. note::
-
-    Prior to the Juno release, ``the auth_token`` middleware was in
-    ``python-keystoneclient``. The ``filter_factory`` must be set to
-    ``keystoneclient.middleware.auth_token:filter_factory`` in those
-    releases.
 
 And set the following values in :file:`nova.conf` as follows:
 
@@ -78,9 +72,3 @@ This sample paste config filter makes use of the :code:`admin_user` and
     ``auth_protocol`` options because the ``identity_uri`` option
     replaces them.
 
-.. note::
-
-    Prior to the Juno release, the ``auth_token middleware`` was in
-    ``python-keystoneclient``. The ``filter_factory`` must be set to
-    ``keystoneclient.middleware.auth_token:filter_factory`` in those
-    releases.

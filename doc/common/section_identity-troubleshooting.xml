@@ -37,18 +37,6 @@ auth_uri = http://<replaceable>controller</replaceable>:5000/v2.0
 identity_uri = http://<replaceable>controller</replaceable>:35357
 admin_tenant_name = service
 admin_user = glance</programlisting>
-        <para>If your service lacks this stanza, the <link
-                xlink:href="https://github.com/openstack/python-keystoneclient/blob/master/keystoneclient/middleware/auth_token.py#L198"
-                >keystoneclient/middleware/auth_token.py</link> file
-            specifies the defaults. If no value is specified for this
-            directory, it <link
-                xlink:href="https://github.com/openstack/python-keystoneclient/blob/master/keystoneclient/middleware/auth_token.py#L299"
-                >defaults to a secure temporary directory.</link>
-            Initialization code for the service checks that the
-            directory exists and is writable. If it does not exist,
-            the code tries to create it. If this fails, the service
-            fails to start. However, it often succeeds but problems
-            occur later.</para>
         <para>The first thing to check is that the
                 <literal>signing_dir</literal> does, in fact, exist.
             If it does, check for the presence of the certificate

@@ -40,14 +40,6 @@ section like this:
     admin_tenant_name = service
     admin_user = glance
 
-If your service lacks this stanza, the
-`keystoneclient/middleware/auth\_token.py <https://github.com/openstack/python-keystoneclient/blob/master/keystoneclient/middleware/auth_token.py#L198>`__
-file specifies the defaults. If no value is specified for this directory, it `defaults to a secure temporary directory. <https://github.com/openstack/python-keystoneclient/blob/master/keystoneclient/middleware/auth_token.py#L299>`__
-Initialization code for the service checks that the directory exists and
-is writable. If it does not exist, the code tries to create it. If this
-fails, the service fails to start. However, it often succeeds but
-problems occur later.
-
 The first thing to check is that the ``signing_dir`` does, in fact,
 exist. If it does, check for certificate files:
 
