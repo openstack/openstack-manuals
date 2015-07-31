@@ -136,9 +136,9 @@ Create a certificate request configuration file. For example, create the
    :linenos:
 
    [ req ]
-   default_bits            = 1024
+   default_bits            = 4096
    default_keyfile         = keystonekey.pem
-   default_md              = sha1
+   default_md              = sha256
 
    prompt                  = no
    distinguished_name      = distinguished_name
