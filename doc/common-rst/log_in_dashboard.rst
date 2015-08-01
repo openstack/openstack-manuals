@@ -113,7 +113,7 @@ reboot instances, or connect to them through VNC.
 
 :guilabel:`Networks`: Create and manage public and private networks.
 
-:guilabel:`Routers`: Create and manage subnets.
+:guilabel:`Routers`: Create and manage routers.
 
 ----------------------------
 :guilabel:`Object Store` tab
