@@ -128,6 +128,9 @@ reboot instances, or connect to them through VNC.
 :guilabel:`Stacks`: Use the REST API to orchestrate multiple composite cloud
 applications.
 
+:guilabel:`Resource Types`: Show a list of all the supported resource types
+for HOT templates.
+
 .. _dashboard-admin-tab:
 
 OpenStack dashboard—:guilabel:`Admin` tab
