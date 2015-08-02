@@ -49,3 +49,7 @@ Delete a role
 #. On the :guilabel:`Admin` tab, click the :guilabel:`Roles` category.
 #. Select the role you want to delete and click the :guilabel:`Delete
    Roles` button.
+#. In the :guilabel:`Confirm Delete Roles` window, click :guilabel:`Delete
+   Roles` to confirm the deletion.
+
+   You cannot undo this action.
