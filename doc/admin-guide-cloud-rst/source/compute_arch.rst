@@ -207,7 +207,7 @@ Euca2ools
     API. This is convenient for multi-cloud environments where EC2 is
     the common API, or for transitioning from EC2-based clouds to
     OpenStack. For more information, see the `euca2ools
-    site <http://open.eucalyptus.com/wiki/Euca2oolsGuide>`__.
+    site <https://www.eucalyptus.com/docs/eucalyptus/4.1.2/index.html#shared/euca2ools_section.html>`__.
 
 Hybridfox
     A Firefox browser add-on that provides a graphical interface to many
