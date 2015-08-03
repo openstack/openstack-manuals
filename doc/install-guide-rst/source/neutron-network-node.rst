@@ -3,7 +3,7 @@ Install and configure network node
 ==================================
 
 The network node primarily handles internal and external routing and
-DHCP services for virtual networks.
+:term:`DHCP` services for virtual networks.
 
 **To configure prerequisites**
 
@@ -167,13 +167,14 @@ configure certain kernel networking parameters.
 
 **To configure the Modular Layer 2 (ML2) plug-in**
 
-The ML2 plug-in uses the Open vSwitch (OVS) mechanism (agent) to build
-the virtual networking framework for instances.
+The ML2 plug-in uses the :term:`Open vSwitch (OVS) <Open vSwitch>` mechanism
+(agent) to build the virtual networking framework for instances.
 
 #. Open the :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file and edit the
-   ``[ml2]`` section. Enable the flat, VLAN, generic routing
-   encapsulation (GRE), and virtual extensible LAN (VXLAN) network type
-   drivers, GRE tenant networks, and the OVS mechanism driver:
+   ``[ml2]`` section. Enable the :term:`flat <flat network>`, :term:`VLAN <VLAN
+   network>`, :term:`generic routing encapsulation (GRE)`, and
+   :term:`virtual extensible LAN (VXLAN)` network type drivers, GRE tenant
+   networks, and the OVS mechanism driver:
 
    .. code-block:: ini
 
@@ -202,7 +203,7 @@ the virtual networking framework for instances.
       tunnel_id_ranges = 1:1000
 
 #. In the ``[securitygroup]`` section, enable security groups, enable
-   ipset, and configure the OVS iptables firewall driver:
+   :term:`ipset`, and configure the OVS :term:`iptables` firewall driver:
 
    .. code-block:: ini
 
@@ -236,7 +237,7 @@ the virtual networking framework for instances.
 
 **To configure the Layer-3 (L3) agent**
 
-The Layer-3 (L3) agent provides routing services for virtual networks.
+The :term:`Layer-3 (L3) agent` provides routing services for virtual networks.
 
 #. Open the :file:`/etc/neutron/l3_agent.ini` file edit the ``[DEFAULT]``
    section. Configure the interface driver, external
@@ -266,7 +267,7 @@ The Layer-3 (L3) agent provides routing services for virtual networks.
 
 **To configure the DHCP agent**
 
-The DHCP agent provides DHCP services for virtual networks.
+The :term:`DHCP agent` provides DHCP services for virtual networks.
 
 #. Open the :file:`/etc/neutron/dhcp_agent.ini` file and edit the ``[DEFAULT]``
    section, configure the interface and DHCP drivers and enable deletion of
@@ -293,19 +294,19 @@ The DHCP agent provides DHCP services for virtual networks.
    Tunneling protocols such as GRE include additional packet headers that
    increase overhead and decrease space available for the payload or user
    data. Without knowledge of the virtual network infrastructure, instances
-   attempt to send packets using the default Ethernet maximum transmission
-   unit (MTU) of 1500 bytes. Internet protocol (IP) networks contain the
-   path MTU discovery (PMTUD) mechanism to detect end-to-end MTU and adjust
-   packet size accordingly. However, some operating systems and networks
-   block or otherwise lack support for PMTUD causing performance
-   degradation or connectivity failure.
+   attempt to send packets using the default Ethernet :term:`maximum
+   transmission unit (MTU)` of 1500 bytes. :term:`Internet protocol (IP)`
+   networks contain the :term:`path MTU discovery (PMTUD)` mechanism to detect
+   end-to-end MTU and adjust packet size accordingly. However, some operating
+   systems and networks block or otherwise lack support for PMTUD causing
+   performance degradation or connectivity failure.
 
-   Ideally, you can prevent these problems by enabling jumbo frames on the
-   physical network that contains your tenant virtual networks. Jumbo
-   frames support MTUs up to approximately 9000 bytes which negates the
-   impact of GRE overhead on virtual networks. However, many network
-   devices lack support for jumbo frames and OpenStack administrators often
-   lack control over network infrastructure. Given the latter
+   Ideally, you can prevent these problems by enabling :term:`jumbo frames
+   <jumbo frame>` on the physical network that contains your tenant virtual
+   networks. Jumbo frames support MTUs up to approximately 9000 bytes which
+   negates the impact of GRE overhead on virtual networks. However, many
+   network devices lack support for jumbo frames and OpenStack administrators
+   often lack control over network infrastructure. Given the latter
    complications, you can also prevent MTU problems by reducing the
    instance MTU to account for GRE overhead. Determining the proper MTU
    value often takes experimentation, but 1454 bytes works in most
@@ -319,7 +320,7 @@ The DHCP agent provides DHCP services for virtual networks.
       method.
 
    #. Open the :file:`/etc/neutron/dhcp_agent.ini` file and edit the
-      ``[DEFAULT]`` section. Enable the dnsmasq configuration file:
+      ``[DEFAULT]`` section. Enable the :term:`dnsmasq` configuration file:
 
       .. code-block:: ini
 
@@ -342,8 +343,8 @@ The DHCP agent provides DHCP services for virtual networks.
 
 **To configure the metadata agent**
 
-The metadata agent provides configuration information such as
-credentials to instances.
+The :term:`metadata agent <Metadata agent>` provides configuration information
+such as credentials to instances.
 
 #. Open the :file:`/etc/neutron/metadata_agent.ini` file and edit the
    ``[DEFAULT]`` section, configure access parameters:
@@ -408,7 +409,7 @@ credentials to instances.
    Replace ``METADATA_SECRET`` with the secret you chose for the metadata
    proxy.
 
-#. On the *controller* node, restart the Compute API service:
+#. On the *controller* node, restart the Compute :term:`API` service:
 
    .. only:: rdo or obs
 
@@ -466,8 +467,8 @@ the virtual and physical external networks in your environment.
    .. note::
 
       Depending on your network interface driver, you may need to disable
-      generic receive offload (GRO) to achieve suitable throughput between
-      your instances and the external network.
+      :term:`generic receive offload (GRO)` to achieve suitable throughput
+      between your instances and the external network.
 
       To temporarily disable GRO on the external network interface while
       testing your environment:
