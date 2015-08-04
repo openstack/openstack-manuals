@@ -330,7 +330,7 @@ NEC, and NSX.
 
    .. code:: console
 
-       # apt-get install neutron-lbaas-agent
+       # apt-get install neutron-lbaas-agent haproxy
 
 #. Enable the HAProxy plug-in by using the ``service_provider`` option in
    the :file:`/etc/neutron/neutron.conf` file:
