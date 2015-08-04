@@ -17,7 +17,6 @@ discusses node management tasks.
   cli_manage_ip_addresses.rst
   cli_change_the_size_of_your_server.rst
   cli_stop_and_start_an_instance.rst
-  cli_nova_show_usage_statistics_for_hosts_instances.rst
   cli_search_instance_with_ip_address.rst
   cli_reboot_an_instance.rst
   cli_delete_an_instance.rst
