@@ -64,11 +64,11 @@ The following examples show the host usage statistics for a host called
    shows the sum of the resources allocated to the instances that run on
    the host.
 
-    .. note::
+   .. note::
 
-     These values are computed by using information about the flavors of
-     the instances that run on the hosts. This command does not query the
-     CPU usage, memory usage, or hard disk usage of the physical host.
+      These values are computed by using information about the flavors of
+      the instances that run on the hosts. This command does not query the
+      CPU usage, memory usage, or hard disk usage of the physical host.
 
 Show instance usage statistics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

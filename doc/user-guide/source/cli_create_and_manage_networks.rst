@@ -191,11 +191,11 @@ Create ports
    positional argument. ``--fixed-ip ip_address=192.168.2.40`` is an option,
    which specifies the port's fixed IP address we wanted.
 
-   ..note::
+   .. note::
 
-     When creating a port, you can specify any unallocated IP in the
-     subnet even if the address is not in a pre-defined pool of allocated
-     IP addresses (set by your cloud provider).
+      When creating a port, you can specify any unallocated IP in the
+      subnet even if the address is not in a pre-defined pool of allocated
+      IP addresses (set by your cloud provider).
 
 #. Create a port without specified IP address::
 
