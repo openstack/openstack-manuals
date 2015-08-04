@@ -204,10 +204,8 @@ database and an administration token.
          python-keystoneclient will automatically be installed as it is a
          dependency of the keystone package.
 
-   #. Respond to prompts for ?, which will fill the below database access
-      directive.
-
-      .. todo(karenb) Add link to file, debconf-dbconfig-common
+   #. Respond to prompts for :doc:`debconf/debconf-dbconfig-common`,
+      which will fill the below database access directive.
 
       .. code-block:: ini
          :linenos:
