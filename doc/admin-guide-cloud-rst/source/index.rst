@@ -31,10 +31,6 @@ Contents
    common/app_support.rst
    common/glossary.rst
 
-.. TODO (DC)
-   Add preface.rst
-   Add chapter files
-
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
 
