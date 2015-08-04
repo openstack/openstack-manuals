@@ -43,7 +43,6 @@ Change the size of a server by changing its flavor.
 
 #. List the available flavors with the following command::
 
-
     $ nova flavor-list
     +-----+-----------+-----------+------+-----------+------+-------+-------------+----------+
     | ID  | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public|
@@ -59,11 +58,29 @@ Change the size of a server by changing its flavor.
    ID or name and the new flavor. Include the ``--poll`` parameter to display
    the resize progress. For example::
 
-
     $ nova resize myCirrosServer 4 --poll
 
     Instance resizing... 100% complete
     Finished
+
+   .. note::
+
+      By default, the :command:`nova resize` command gives the guest operating
+      system a chance to perform a controlled shutdown before the instance
+      is powered off and the instance is resized.
+      The shutdown behavior is configured by the
+      ``shutdown_timeout`` parameter that can be set in the
+      :file:`nova.conf` file. Its value stands for the overall
+      period (in seconds) a guest operation system is allowed
+      to complete the shutdown. The default timeout is 60 seconds.
+      See `Description of Compute configuration options
+      <http://docs.openstack.org/kilo/config-reference/content/list-of-compute-config-options.html>`_
+      for details.
+
+      The timeout value can be overridden on a per image basis
+      by means of ``os_shutdown_timeout`` that is an image metadata
+      setting allowing different types of operating systems to specify
+      how much time they need to shut down cleanly.
 
 #. Show the status for your server::
 
