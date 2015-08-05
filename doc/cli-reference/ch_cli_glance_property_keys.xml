@@ -268,15 +268,22 @@
                 <td><para><literal>virtio</literal>, or other supported device.</para></td>
             </tr>
             <tr valign="top">
-                <td>libvirt API driver</td>
+                <td>libvirt API driver, Hyper-V driver</td>
                 <td>hw_machine_type</td>
-                <td>Enables booting an ARM system using the specified machine type. By default, if
+                <td><emphasis>libvirt:</emphasis> Enables booting an ARM system using the specified machine type. By default, if
                     an ARM image is used and its type is not specified, Compute uses
                     <literal>vexpress-a15</literal> (for ARMv7) or <literal>virt</literal> (for AArch64) machine types.
+
+
+                    <emphasis>Hyper-V:</emphasis> Specifies whether the Hyper-V instance will be a generation 1 or generation 2 VM.
+                    By default, if the property is not provided, the instances will be generation 1 VMs. If the image is specific
+                    for generation 2 VMs but the property is not provided accordingly, the instance will fail to boot.
                 </td>
-                <td>Libvirt machine type. Valid types can be viewed by using the
+                <td><emphasis>Libvirt machine type.</emphasis> Valid types can be viewed by using the
                             <command>virsh capabilities</command> command (machine types are
                         displayed in the <tag>machine</tag> tag).
+                    <emphasis>Hyper-V machine type.</emphasis> Acceptable values are: <literal>hyperv-gen1</literal>
+                    or <literal>hyperv-gen2</literal>.
                 </td>
             </tr>
             <tr valign="top">
