@@ -83,9 +83,6 @@ for the OpenStack APIs:
 -  `API Complete Reference
    (PDF) <http://developer.openstack.org/api-ref-guides/bk-api-ref.pdf>`__
 
-The `Training
-Guides <http://docs.openstack.org/training-guides/content/>`__ offer
-software training for cloud administration and management.
 
 ask.openstack.org
 ~~~~~~~~~~~~~~~~~
