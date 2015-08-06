@@ -572,28 +572,28 @@ SNMP:
 | hardware.cpu.load.\ | Gauge | proc\| host ID  | Pollster | CPU load in the  |
 | 10min               |       | ess  |          |          | past 10 minutes  |
 +---------------------+-------+------+----------+----------+------------------+
-| hardware.disk.size\ | Gauge | B    | disk ID  | Pollster | Total disk size  |
+| hardware.disk.size\ | Gauge | KB   | disk ID  | Pollster | Total disk size  |
 | .total              |       |      |          |          |                  |
 +---------------------+-------+------+----------+----------+------------------+
-| hardware.disk.size\ | Gauge | B    | disk ID  | Pollster | Used disk size   |
+| hardware.disk.size\ | Gauge | KB   | disk ID  | Pollster | Used disk size   |
 | .used               |       |      |          |          |                  |
 +---------------------+-------+------+----------+----------+------------------+
-| hardware.memory.to\ | Gauge | B    | host ID  | Pollster | Total physical   |
+| hardware.memory.to\ | Gauge | KB   | host ID  | Pollster | Total physical   |
 | tal                 |       |      |          |          | memory size      |
 +---------------------+-------+------+----------+----------+------------------+
-| hardware.memory.us\ | Gauge | B    | host ID  | Pollster | Used physical m\ |
+| hardware.memory.us\ | Gauge | KB   | host ID  | Pollster | Used physical m\ |
 | ed                  |       |      |          |          | emory size       |
 +---------------------+-------+------+----------+----------+------------------+
-| hardware.memory.bu\ | Gauge | B    | host ID  | Pollster | Physical memory  |
+| hardware.memory.bu\ | Gauge | KB   | host ID  | Pollster | Physical memory  |
 | ffer                |       |      |          |          | buffer size      |
 +---------------------+-------+------+----------+----------+------------------+
-| hardware.memory.ca\ | Gauge | B    | host ID  | Pollster | Cached physical  |
+| hardware.memory.ca\ | Gauge | KB   | host ID  | Pollster | Cached physical  |
 | ched                |       |      |          |          | memory size      |
 +---------------------+-------+------+----------+----------+------------------+
-| hardware.memory.sw\ | Gauge | B    | host ID  | Pollster | Total swap space |
+| hardware.memory.sw\ | Gauge | KB   | host ID  | Pollster | Total swap space |
 | ap.total            |       |      |          |          | size             |
 +---------------------+-------+------+----------+----------+------------------+
-| hardware.memory.sw\ | Gauge | B    | host ID  | Pollster | Available swap   |
+| hardware.memory.sw\ | Gauge | KB   | host ID  | Pollster | Available swap   |
 | ap.avail            |       |      |          |          | space size       |
 +---------------------+-------+------+----------+----------+------------------+
 | hardware.network.i\ | Cumul\| B    | interface| Pollster | Bytes received   |
