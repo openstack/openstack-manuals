@@ -204,7 +204,7 @@ the volume to boot an instance.
          **bootindex=INDEX**
              Orders the boot disks. Use ``0`` to boot from this volume.
 
--  ``NAME``. The name for the server.
+   -  ``NAME``. The name for the server.
 
 #. Create a bootable volume from an image, before the instance boots. The
    volume is not deleted when the instance is terminated::
