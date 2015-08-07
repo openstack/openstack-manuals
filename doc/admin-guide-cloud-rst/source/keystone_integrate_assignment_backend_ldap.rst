@@ -20,9 +20,7 @@ assignments in LDAP.
 
    For OpenStack Identity assignments to access LDAP servers, you must
    define the destination LDAP server in the :file:`keystone.conf` file.
-   For more information, see ?.
-
-.. TODO (DC) Add link to keystone_integrate_identity_with_ldap.rst
+   For more information, see :ref:`integrate-identity-with-ldap`.
 
 **Integrating assignment back ends with LDAP**
 
