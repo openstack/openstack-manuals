@@ -401,7 +401,7 @@ To install and configure the Telemetry module components
          admin_password = CEILOMETER_PASS
 
       Replace ``CEILOMETER_PASS`` with the password you chose for
-      the ``celiometer`` user in the Identity service.
+      the ``ceilometer`` user in the Identity service.
 
       .. note::
 
