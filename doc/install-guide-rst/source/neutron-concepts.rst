@@ -43,7 +43,7 @@ network through the gateway for the router.
 
 Additionally, you can allocate IP addresses on external networks to
 ports on the internal network. Whenever something is connected to a
-subnet, that connection is called a port.You can associate external
+subnet, that connection is called a port. You can associate external
 network IP addresses with ports to VMs. This way, entities on the
 outside network can access VMs.
 
