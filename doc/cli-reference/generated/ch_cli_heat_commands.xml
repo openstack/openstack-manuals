@@ -15,7 +15,7 @@
         interface (CLI) for the Orchestration API and its extensions.
 
        This chapter documents <command>heat</command> version
-        <literal>0.5.0</literal>.
+        <literal>0.6.0</literal>.
     </para>
 
     <para>For help on a specific <command>heat</command>
@@ -170,6 +170,14 @@
     <listitem>
       <para>
         Clear hooks on a given stack.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>hook-poll</command></term>
+    <listitem>
+      <para>
+        List resources with pending hook for a stack.
       </para>
     </listitem>
   </varlistentry>
@@ -1016,7 +1024,7 @@ Show the details of a software deployment.
     <section xml:id="heatclient_subcommand_event-list">
         <title>heat event-list</title>
         <screen><computeroutput>usage: heat event-list [-r &lt;RESOURCE&gt;] [-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
-                       [-l &lt;LIMIT&gt;] [-m &lt;ID&gt;]
+                       [-l &lt;LIMIT&gt;] [-m &lt;ID&gt;] [-n &lt;DEPTH&gt;]
                        &lt;NAME or ID&gt;</computeroutput></screen>
         <para>
 List events for a stack.
@@ -1065,6 +1073,15 @@ List events for a stack.
       <para>
       Only return events that appear after the given event
       ID.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-n &lt;DEPTH&gt;, --nested-depth &lt;DEPTH&gt;</command></term>
+    <listitem>
+      <para>
+      Depth of nested stacks from which to display events.
+      Note this cannot be specified with --resource.
       </para>
     </listitem>
   </varlistentry>
@@ -1138,7 +1155,7 @@ Clear hooks on a given stack.
     <term><command>--pre-create</command></term>
     <listitem>
       <para>
-        Clear the pre-create hooks
+        Clear the pre-create hooks (optional)
       </para>
     </listitem>
   </varlistentry>
@@ -1146,7 +1163,35 @@ Clear hooks on a given stack.
     <term><command>--pre-update</command></term>
     <listitem>
       <para>
-        Clear the pre-update hooks
+        Clear the pre-update hooks (optional)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_hook-poll">
+        <title>heat hook-poll</title>
+        <screen><computeroutput>usage: heat hook-poll [-n &lt;DEPTH&gt;] &lt;NAME or ID&gt;</computeroutput></screen>
+        <para>
+List resources with pending hook for a stack.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;NAME or ID&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of stack to show the pending hooks for.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-n &lt;DEPTH&gt;, --nested-depth &lt;DEPTH&gt;</command></term>
+    <listitem>
+      <para>
+      Depth of nested stacks from which to display hooks.
       </para>
     </listitem>
   </varlistentry>
@@ -1363,7 +1408,8 @@ Show the resource type.
     </section>
     <section xml:id="heatclient_subcommand_resource-type-template">
         <title>heat resource-type-template</title>
-        <screen><computeroutput>usage: heat resource-type-template [-F &lt;FORMAT&gt;] &lt;RESOURCE_TYPE&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: heat resource-type-template [-t &lt;TEMPLATE_TYPE&gt;] [-F &lt;FORMAT&gt;]
+                                   &lt;RESOURCE_TYPE&gt;</computeroutput></screen>
         <para>
 Generate a template based on a resource type.
         </para>  <variablelist wordsize="10">
@@ -1379,6 +1425,14 @@ Generate a template based on a resource type.
  </variablelist>
   <variablelist wordsize="10">
     <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-t &lt;TEMPLATE_TYPE&gt;, --template-type &lt;TEMPLATE_TYPE&gt;</command></term>
+    <listitem>
+      <para>
+      Template type to generate, hot or cfn.
+      </para>
+    </listitem>
+  </varlistentry>
   <varlistentry>
     <term><command>-F &lt;FORMAT&gt;, --format &lt;FORMAT&gt;</command></term>
     <listitem>
@@ -1720,7 +1774,7 @@ Delete the stack(s).
     </section>
     <section xml:id="heatclient_subcommand_stack-list">
         <title>heat stack-list</title>
-        <screen><computeroutput>usage: heat stack-list [-s] [-n] [-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
+        <screen><computeroutput>usage: heat stack-list [-s] [-n] [-a] [-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
                        [-l &lt;LIMIT&gt;] [-m &lt;ID&gt;] [-g] [-o]</computeroutput></screen>
         <para>
 List the user's stacks.
@@ -1739,6 +1793,14 @@ List the user's stacks.
     <listitem>
       <para>
         Include nested stacks in the stack listing.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-a, --show-hidden</command></term>
+    <listitem>
+      <para>
+        Include hidden stacks in the stack listing.
       </para>
     </listitem>
   </varlistentry>
