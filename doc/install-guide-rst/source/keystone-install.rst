@@ -397,7 +397,7 @@ database and an administration token.
 .. only:: obs
 
    #. Edit the :file:`/etc/sysconfig/apache2` file and configure the
-      APACHE_SERVERNAME`` option to reference the controller node:
+      ``APACHE_SERVERNAME`` option to reference the controller node:
 
       .. code-block:: apache
          :linenos:
