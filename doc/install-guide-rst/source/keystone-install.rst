@@ -514,12 +514,12 @@ database and an administration token.
 
 .. only:: obs
 
-   6. Change the ownership of :file:`/etc/keystone/keystone.conf` to give the
+   6. Change the ownership of :file:`/etc/keystone` to give the
       ``keystone`` system access to it:
 
       .. code-block:: console
 
-         # chown keystone /etc/keystone/keystone.conf
+         # chown -R keystone:keystone /etc/keystone
 
 |
 
