@@ -33,8 +33,8 @@ of ``lvmdriver-1`` up to 100 MiB/s:
 
    [lvmdriver-1]
    volume_group=cinder-volumes-1
-   volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
-   volume_backend_name=LVM_iSCSI
+   volume_driver=cinder.volume.drivers.lvm.LVMVolumeDriver
+   volume_backend_name=LVM
    volume_copy_bps_limit=104857600
 
 .. note::

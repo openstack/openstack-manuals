@@ -25,7 +25,7 @@ Configure multiple-storage back ends
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-To configure ``VolumeNumberWeigher``, use ``LVMISCSIDriver``
+To configure ``VolumeNumberWeigher``, use ``LVMVolumeDriver``
 as the volume driver.
 
 This configuration defines two LVM volume groups: ``stack-volumes`` with
@@ -39,13 +39,13 @@ This example configuration defines two back ends:
    enabled_backends=lvmdriver-1,lvmdriver-2
    [lvmdriver-1]
    volume_group=stack-volumes
-   volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
-   volume_backend_name=LVM_iSCSI
+   volume_driver=cinder.volume.drivers.lvm.LVMVolumeDriver
+   volume_backend_name=LVM
 
    [lvmdriver-2]
    volume_group=stack-volumes-1
-   volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
-   volume_backend_name=LVM_iSCSI
+   volume_driver=cinder.volume.drivers.lvm.LVMVolumeDriver
+   volume_backend_name=LVM
 
 Volume type
 ~~~~~~~~~~~
@@ -56,10 +56,10 @@ Define a volume type in Block Storage::
 
 Create an extra specification that links the volume type to a back-end name::
 
-   $ cinder type-key lvm set volume_backend_name=LVM_iSCSI
+   $ cinder type-key lvm set volume_backend_name=LVM
 
 This example creates a lvm volume type with
-``volume_backend_name=LVM_iSCSI`` as extra specifications.
+``volume_backend_name=LVM`` as extra specifications.
 
 Usage
 ~~~~~
