@@ -30,7 +30,7 @@ keypair created via OpenStack Identity, which is then used to sign
 requests to the Orchestration CloudFormation and CloudWatch compatible
 APIs, which are authenticated by Orchestration via signature validation
 (which uses the OpenStack Identity ec2tokens extension). Stack domain
-users allow to encapuslate all stack-defined users (users created as
+users allow to encapsulate all stack-defined users (users created as
 a result of things contained in an Orchestration template) in a
 separate domain which is created specifically to contain things
 related only to the Orchestration stacks. A user is created which is

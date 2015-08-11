@@ -208,7 +208,7 @@ There are three types of agents supporting the polling mechanism, the
 compute agent, the central agent, and the IPMI agent. Under the hood,
 all the types of polling agents are the same ``ceilometer-polling`` agent,
 except that they load different polling plug-ins (pollsters) from
-differernt namespaces to gather data. The following subsections give
+different namespaces to gather data. The following subsections give
 further information regarding the architectural and configuration
 details of these components.
 
