@@ -54,7 +54,7 @@ Keystone trusts authorization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack Identity trusts is a new authorization method available
-since the IceHouse release.
+since the Icehouse release.
 
 A trust is an OpenStack Identity extension that provides a method
 to enable delegation, and optionally impersonation via OpenStack
