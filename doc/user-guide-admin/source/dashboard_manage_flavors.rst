@@ -123,8 +123,6 @@ Update Metadata
    |                               | quota:disk_total_bytes_sec    |
    |                               +-------------------------------+
    |                               | quota:disk_total_iops_sec     |
-   |                               +-------------------------------+
-   |                               | quota:disk_total_iops_sec     |
    +-------------------------------+-------------------------------+
    |                               | quota:vif_inbound_average     |
    |                               +-------------------------------+
