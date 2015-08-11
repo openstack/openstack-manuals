@@ -2,10 +2,6 @@
 Images and instances
 ====================
 
-.. TODO (bmoss)
-
-   instance-scheduling-constraints.rst
-
 
 Disk images provide templates for virtual machine file systems. The
 Image service controls storage and management of images.

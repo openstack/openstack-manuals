@@ -635,7 +635,7 @@ Managing the cloud with euca2ools
 
 The ``euca2ools`` command-line tool provides a command line interface to
 EC2 API calls. For more information about ``euca2ools``, see
-`http://open.eucalyptus.com/wiki/Euca2oolsGuide\_v1.3 <http://open.eucalyptus.com/wiki/Euca2oolsGuide_v1.3>`__.
+`https://www.eucalyptus.com/docs/eucalyptus/4.1.2/index.html <https://www.eucalyptus.com/docs/eucalyptus/4.1.2/index.html>`__.
 
 .. TODOcommon/cli_nova_usage_statistics.rst
 

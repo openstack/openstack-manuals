@@ -9,9 +9,7 @@ administrators to use users and groups in LDAP.
 
    For OpenStack Identity service to access LDAP servers, you must
    define the destination LDAP server in the ``keystone.conf`` file.
-   For more information, see Integrate Identity with LDAP.
-
-.. TODO (DC) Add link to keystone_integrate_identity_with_ldap.rst
+   For more information, see :ref:`integrate-identity-with-ldap`.
 
 **Integrating an Identity back end with LDAP**
 

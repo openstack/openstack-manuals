@@ -171,7 +171,5 @@ before processing each API request. The amount of returned data depends on the
 role the requestor owns.
 
 The creation of alarm definitions also highly depends on the role of the
-user, who initiated the action. Further details about alarm handling can
-be found in this guide.
-
-.. TODO: (karenb) Add reference to telemetry-alarms.
+user, who initiated the action. Further details about :ref:`telemetry-alarms`
+handling can be found in this guide.
