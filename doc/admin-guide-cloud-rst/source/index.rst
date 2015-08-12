@@ -22,11 +22,11 @@ Contents
    dashboard.rst
    compute.rst
    objectstorage.rst
-   database.rst
-   orchestration.rst
    blockstorage.rst
    networking.rst
    telemetry.rst
+   database.rst
+   orchestration.rst
    cross_project.rst
    common/app_support.rst
    common/glossary.rst
