@@ -36,7 +36,7 @@ The following examples show the host usage statistics for a host called
    the host::
 
      $ nova host-describe devstack
-     +-----------+----------------------------------+-----+-----------+---------+
+     +----------+----------------------------------+-----+-----------+---------+
      | HOST     | PROJECT                          | cpu | memory_mb | disk_gb |
      +----------+----------------------------------+-----+-----------+---------+
      | devstack | (total)                          | 2   | 4003      | 157     |

@@ -22,6 +22,5 @@ web-based API.
    common/support-compute.rst
 
 .. TODO (bmoss)
-   ../common/section_cli_nova_usage_statistics.xml
    ../common/section_compute-configure-console.xml
 

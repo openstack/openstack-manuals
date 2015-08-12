@@ -90,7 +90,7 @@ html_context = {"pwd": pwd, "gitsha": gitsha, "bug_tag": bug_tag}
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = []
+exclude_patterns = ['common/nova*']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
