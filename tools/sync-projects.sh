@@ -90,7 +90,6 @@ case "$PROJECT_DIR" in
     security-doc)
         copy_rst common-rst
         copy_rst_trans common-rst
-        copy_glossary_xml "glossary" "security-guide" "static"
         ;;
     *)
         echo "$PROJECT_DIR not handled"
