@@ -1,4 +1,9 @@
-﻿==========================
+﻿.. meta::
+   :description: This guide targets OpenStack administrators seeking
+                 to deploy and manage OpenStack Networking (neutron).
+   :keywords: neutron, networking, OpenStack
+
+==========================
 OpenStack Networking Guide
 ==========================
 
