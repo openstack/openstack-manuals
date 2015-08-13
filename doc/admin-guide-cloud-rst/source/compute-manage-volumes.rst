@@ -1,5 +1,5 @@
 ==============
-Manage Volumes
+Manage volumes
 ==============
 
 Depending on the setup of your cloud provider, they may give you an
