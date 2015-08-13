@@ -12,7 +12,7 @@ section discusses manual recovery.
 
 .. _nova-compute-node-down-manual-recovery:
 
-Manual Recovery
+Manual recovery
 ~~~~~~~~~~~~~~~
 
 To recover a KVM or libvirt compute node, see
