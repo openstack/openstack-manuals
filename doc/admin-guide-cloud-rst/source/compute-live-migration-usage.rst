@@ -200,7 +200,7 @@ Before starting a migration, review the Configure migrations section.
    used resources. The third line shows the maximum used resources. The
    fourth line and below shows the resources available for each project.
 
-#. Migrate the instances using the :command:`nova live-migration` command:
+#. Migrate the instance using the :command:`nova live-migration` command:
 
    .. code:: console
 
@@ -214,15 +214,15 @@ Before starting a migration, review the Configure migrations section.
       $ nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC
       Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.
 
-..   warning::
+   .. warning::
 
-     When using live migration to move workloads between
-     Icehouse and Juno compute nodes, it may cause data loss
-     because libvirt live migration with shared block storage
-     was buggy (potential loss of data) before version 3.32.
-     This issue can be solved when we upgrade to RPC API version 4.0.
+      When using live migration to move workloads between
+      Icehouse and Juno compute nodes, it may cause data loss
+      because libvirt live migration with shared block storage
+      was buggy (potential loss of data) before version 3.32.
+      This issue can be solved when we upgrade to RPC API version 4.0.
 
-#. Check the instances have been migrated successfully, using
-   :command:`nova list`. If instances are still running on ``HostB``,
-   check the log files at :file:`src/dest` for nova-compute and nova-scheduler)
+#. Check that the instance has been migrated successfully, using
+   :command:`nova list`. If the instance is still running on ``HostB``,
+   check the log files at :file:`src/dest` for nova-compute and nova-scheduler
    to determine why.
