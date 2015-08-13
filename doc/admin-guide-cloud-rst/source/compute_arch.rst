@@ -11,18 +11,18 @@ OpenStack Compute contains several main components.
    Compute service.
 
 -  The ``object store`` is an optional component that provides storage
-   services; you can also instead use OpenStack Object Storage.
+   services; you can also use OpenStack Object Storage instead.
 
 -  An ``auth manager`` provides authentication and authorization
-   services when used with the Compute system; you can also instead use
-   OpenStack Identity as a separate authentication service.
+   services when used with the Compute system; you can also use
+   OpenStack Identity as a separate authentication service instead.
 
 -  A ``volume controller`` provides fast and permanent block-level
    storage for the compute servers.
 
 -  The ``network controller`` provides virtual networks to enable
    compute servers to interact with each other and with the public
-   network. You can also instead use OpenStack Networking.
+   network. You can also use OpenStack Networking instead.
 
 -  The ``scheduler`` is used to select the most suitable compute
    controller to host an instance.
@@ -123,12 +123,12 @@ resources.
 
 Block storage
 ~~~~~~~~~~~~~
-OpenStack provides two classes of the block storage: ephemeral storage
+OpenStack provides two classes of block storage: ephemeral storage
 and persistent volume.
 
 **Ephemeral storage**
 
-An ephemeral storage includes a root ephemeral volume and an additional
+Ephemeral storage includes a root ephemeral volume and an additional
 ephemeral volume.
 
 The root disk is associated with an instance, and exists only for the
@@ -355,7 +355,7 @@ machines. The API server dispatches commands through the message queue,
 which are subsequently processed by Network Controllers. Specific
 operations include:
 
--  Allocate fixed IP addresses
+-  Allocating fixed IP addresses
 
 -  Configuring VLANs for projects
 
