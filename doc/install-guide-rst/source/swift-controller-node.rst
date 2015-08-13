@@ -23,7 +23,7 @@ create service credentials and an API endpoint.
 
 .. note::
 
-   The Object Storage service does not use a SQL database on the controller
+   The Object Storage service does not use an SQL database on the controller
    node. Instead, it uses distributed SQLite databases on each storage node.
 
 #. Source the ``admin`` credentials to gain access to admin-only CLI commands:

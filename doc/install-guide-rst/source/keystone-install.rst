@@ -5,7 +5,7 @@ Install and configure
 This section describes how to install and configure the OpenStack
 Identity service, code-named keystone, on the controller node. For
 performance, this configuration deploys the Apache HTTP server to handle
-requests and Memcached to store tokens instead of a SQL database.
+requests and Memcached to store tokens instead of an SQL database.
 
 |
 
@@ -533,9 +533,9 @@ database and an administration token.
 
          # service apache2 restart
 
-   #. By default, the Ubuntu packages create a SQLite database.
+   #. By default, the Ubuntu packages create an SQLite database.
 
-      Because this configuration uses a SQL database server, you can remove
+      Because this configuration uses an SQL database server, you can remove
       the SQLite database file:
 
       .. code-block:: console
