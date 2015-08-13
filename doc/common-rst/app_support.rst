@@ -1,7 +1,5 @@
-:orphan:
-
 =================
-Community Support
+Community support
 =================
 
 The following resources are available to help you run and use OpenStack.
