@@ -31,19 +31,12 @@
       functions that it cannot provide. For many of these, you may require
       external systems or equipment to fill in the functional gaps. Hardware
       load balancers are an example of equipment that may be necessary to
-      distribute workloads or offload certain functions. As of the Icehouse
-      release, dynamic routing is currently in its infancy within OpenStack and
-      you may require an external device or a specialized service instance
-      within OpenStack to implement it. OpenStack Networking provides a
-      tunneling feature, however it is constrained to a Networking-managed
-      region. If the need arises to extend a tunnel beyond the OpenStack region
-      to either another region or an external system, implement the tunnel
-      itself outside OpenStack or use a tunnel management system to map the
-      tunnel or overlay to an external tunnel. OpenStack does not currently
-      provide quotas for network resources. Where network quotas are required,
-      implement quality of service management outside of OpenStack. In many of
-      these instances, similar solutions for traffic shaping or other network
-      functions are needed.
+      distribute workloads or offload certain functions. OpenStack Networking
+      provides a tunneling feature, however it is constrained to a
+      Networking-managed region. If the need arises to extend a tunnel beyond
+      the OpenStack region to either another region or an external system,
+      implement the tunnel itself outside OpenStack or use a tunnel management
+      system to map the tunnel or overlay to an external tunnel.
     </para>
     <para>
       Depending on the selected design, Networking itself might not
@@ -125,10 +118,7 @@
       <para>Many people overlook an important design decision: The choice of
         layer-3 protocols. While OpenStack was initially built with only IPv4
         support, Networking now supports IPv6 and dual-stacked networks.
-        As of the Icehouse release, this only includes stateless
-        address auto configuration but work is in progress to support stateless
-        and stateful DHCPv6 as well as IPv6 floating IPs without NAT. Some
-        workloads are possible through the use of IPv6 and IPv6 to IPv4
+        Some workloads are possible through the use of IPv6 and IPv6 to IPv4
         reverse transition mechanisms such as NAT64 and DNS64 or
         <glossterm>6to4</glossterm>.
         This alters the requirements for any address plan as single-stacked and
