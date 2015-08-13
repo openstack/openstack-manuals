@@ -343,8 +343,29 @@ The following meters are collected for OpenStack Compute:
 |           |       |      |          |          |         | iner on the hos\ |
 |           |       |      |          |          |         | t per device     |
 +-----------+-------+------+----------+----------+---------+------------------+
+| **Meters deprecated in the Kilo release**                                   |
++-----------+-------+------+----------+----------+---------+------------------+
+| instance\ | Gauge | ins\ | instance | Notific\ | Libvirt,| Existence of     |
+| :<type>   |       | tance| ID       | ation,   | Hyper-V,| instance <type>  |
+|           |       |      |          | Pollster | vSphere,| (OpenStack types)|
+|           |       |      |          |          | XenAPI  |                  |
++-----------+-------+------+----------+----------+---------+------------------+
 
 |
+
+.. note::
+
+    The ``instance:<type>`` meter can be replaced by using extra parameters in
+    both the samples and statistics queries. Sample queries look like the
+    following::
+
+      statistics:
+
+        ceilometer statistics -m instance -g resource_metadata.instance_type
+
+      samples:
+
+        ceilometer sample-list -m instance -q metadata.instance_type=<value>
 
 The Telemetry module supports to create new meters by using
 transformers. For more details about transformers see
