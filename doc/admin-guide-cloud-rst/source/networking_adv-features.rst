@@ -314,7 +314,7 @@ When a port is created in Networking it is associated with a security
 group. If a security group is not specified the port is associated with
 a 'default' security group. By default, this group drops all ingress
 traffic and allows all egress. Rules can be added to this group in order
-to change the behaviour.
+to change the behavior.
 
 To use the Compute security group APIs or use Compute to orchestrate the
 creation of ports for instances on specific security groups, you must
