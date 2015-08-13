@@ -25,7 +25,7 @@ security advisory below for more information.
    implementations:
 
    * `CORS in Object Storage <http://docs.openstack.org/kilo/config-reference/content/object-storage-cores.html>`_
-   * `CORS in dashboard <http://docs.openstack.org/security-guide/content/dashboard.html>`_
+   * `CORS in dashboard <http://docs.openstack.org/security-guide/dashboard/cross-origin-resource-sharing-cors.html>`_
 
 
 Enabling CORS with configuration

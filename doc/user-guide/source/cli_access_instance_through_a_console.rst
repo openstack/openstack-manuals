@@ -48,5 +48,5 @@ command can be used with it, as well, by returning a token-authenticated
 address, as in the example above.
 
 For further information and comparisons (including security
-considerations), see the `security
-guide <http://docs.openstack.org/security-guide/content/compute.html>`__.
+considerations), see the `Security
+Guide <http://docs.openstack.org/security-guide/compute.html>`__.
