@@ -20,7 +20,7 @@ providing user authentication through the LDAP directory.
 
 .. important::
 
-   For OpenStack Identity service to access LDAP servers, you must
+   For the OpenStack Identity service to access LDAP servers, you must
    enable the ``authlogin_nsswitch_use_ldap`` boolean value for SELinux
    on the Openstack Identity server. To enable and make the option
    persistent across reboots:
