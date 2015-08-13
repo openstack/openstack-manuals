@@ -259,7 +259,7 @@ uses blocks on the disk faster than they can be migrated.
 
 .. _configuring-migrations-kvm-block-migration:
 
-Block Migration
+Block migration
 ---------------
 
 Configuring KVM for block migration is exactly the same as the above
