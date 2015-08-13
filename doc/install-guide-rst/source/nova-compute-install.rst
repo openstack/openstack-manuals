@@ -276,7 +276,7 @@ To finalize installation
 
    3. By default, the Ubuntu packages create an SQLite database.
 
-      Because this configuration uses a SQL database server, you can
+      Because this configuration uses an SQL database server, you can
       remove the SQLite database file:
 
       .. code-block:: console

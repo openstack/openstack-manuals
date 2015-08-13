@@ -103,7 +103,7 @@ To configure the dashboard
 
    .. note::
 
-      By default, SLES and openSUSE use a SQL database for session
+      By default, SLES and openSUSE use an SQL database for session
       storage. For simplicity, we recommend changing the configuration
       to use ``memcached`` for session storage.
 
