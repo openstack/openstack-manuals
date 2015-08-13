@@ -228,7 +228,7 @@ optional services. This guide uses the following example architectures:
 
    -  The :term:`controller node <cloud controller node>` runs the
       Identity service, Image service, management portion of Compute,
-      and the dashboard. It also includes supporting services such as a
+      and the dashboard. It also includes supporting services such as an
       SQL database, :term:`message queue`, and :term:`Network Time
       Protocol (NTP)`.
 
