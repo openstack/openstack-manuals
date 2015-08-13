@@ -512,7 +512,7 @@ where nova-api is running.
      - (IntOpt) Time in seconds to cache metadata; 0 to disable metadata
        caching entirely (not recommended). Increasing this should improve
        response times of the metadata API when under heavy load. Higher values
-       may increase memoryusage and result in longer times for host metadata
+       may increase memory usage and result in longer times for host metadata
        changes to take effect.
    * - metadata_host = $my_ip
      - (StrOpt) The IP address for the metadata API server
