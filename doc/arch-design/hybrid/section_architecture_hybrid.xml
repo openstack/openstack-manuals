@@ -6,18 +6,13 @@
   xml:id="arch-guide-architecture-hybrid">
     <?dbhtml stop-chunking?>
     <title>Architecture</title>
-    <para>As a first step, map out the dependencies of the expected workloads
-         and the cloud infrastructures that are required to support them.
-        Mapping the applications to targeted cloud
-        environments allows you to architect a solution for the
-        broadest compatibility between cloud platforms, minimizing
-        the need to create workarounds and processes to fill
+    <para>Map out the dependencies of the expected workloads
+        and the cloud infrastructures required to support them to architect a
+        solution for the broadest compatibility between cloud platforms,
+        minimizing the need to create workarounds and processes to fill
         identified gaps.</para>
-      <note>
-        <para>For your chosen cloud management platform,
-        note the relative levels of support for both monitoring
-        and orchestration.</para>
-      </note>
+    <para>For your chosen cloud management platform, note the relative
+          levels of support for both monitoring and orchestration.</para>
     <mediaobject>
         <imageobject>
             <imagedata contentwidth="4in"
@@ -28,46 +23,32 @@
     <section xml:id="image-portability">
       <title>Image portability</title>
     <para>The majority of cloud workloads currently run on instances
-        using hypervisor technologies such as KVM, Xen, or ESXi. The
-        challenge is that each of these hypervisors uses an image
-        format that may or may not be compatible with one
-        another. Mitigation in a private or hybrid cloud solution can be
-        standardized on the same hypervisor and instance image format. However
-        this is not always feasible. This is
-        particularly evident if one of the clouds in the architecture
-        is a public cloud that is outside of the control of the
-        designers.</para>
-    <para>Examples of available conversion tools:</para>
-      <itemizedlist>
-        <listitem>
-          <para><link
-        xlink:href="http://libguestfs.org/virt-v2v">virt-p2v and virt-v2v</link>
-          </para>
-        </listitem>
-        <listitem>
-          <para><link
+        using hypervisor technologies. The challenge is that each of these
+        hypervisors uses an image format that may not be compatible with the
+        others. When possible, standardize on a single hypervisor and instance
+        image format. This may not be possible when using externally-managed
+        public clouds.</para>
+    <para>Conversion tools exist to address image format compatibility.
+        Examples include <link
+        xlink:href="http://libguestfs.org/virt-v2v">virt-p2v/virt-v2v</link>
+        and <link
         xlink:href="http://libguestfs.org/virt-edit.1.html">
-        virt-edit - Edit a file in a virtual machine</link>
-          </para>
-        </listitem>
-      </itemizedlist>
-    <para>The listed
-        tools cannot serve beyond basic cloud instance specifications.
-        Alternatively, build a thin operating system image as the base for
-        new instances.
-        This facilitates rapid creation of cloud instances using cloud
-        orchestration or configuration management tools for more specific
-        templating. Use a commercial image migration tool as another option.
-        If you intend to use the portable images for disaster recovery,
-        application diversity, or high availability, your users could move
-        the images and instances between cloud platforms regularly.</para>
+        virt-edit</link>. These tools cannot serve beyond basic cloud instance
+        specifications.</para>
+    <para>Alternatively, build a thin operating system image as
+        the base for new instances. This facilitates rapid creation of cloud
+        instances using cloud orchestration or configuration management tools
+        for more specific templating. Remember if you intend to use portable
+        images for disaster recovery, application diversity, or high
+        availability, your users could move the images and instances between
+        cloud platforms regularly.</para>
     </section>
 
     <section xml:id="upper-layer-services">
       <title>Upper-layer services</title>
-    <para>Many clouds offer complementary services over and above the
+    <para>Many clouds offer complementary services beyond the
         basic compute, network, and storage components. These
-        additional services are often used to simplify the deployment
+        additional services often simplify the deployment
         and management of applications on a cloud platform.</para>
     <para>When moving workloads from the source to the destination
         cloud platforms, consider that the destination cloud platform
@@ -80,15 +61,15 @@
         the hybrid cloud use case:</para>
     <itemizedlist>
         <listitem>
-            <para>Creating a baseline of upper-layer services that are
-                implemented across all of the cloud platforms. For
+            <para>Implementing a baseline of upper-layer services
+                across all of the cloud platforms. For
                 platforms that do not support a given service, create
                 a service on top of that platform and apply it to the
                 workloads as they are launched on that cloud.</para>
             <para>For example, through the <glossterm>Database service</glossterm>
                 for OpenStack (<glossterm>trove</glossterm>),
                 OpenStack supports MySQL as a service but not NoSQL
-                databases in production. To either move from or run
+                databases in production. To move from or run
                 alongside AWS, a NoSQL workload must use an automation
                 tool, such as the Orchestration module (heat), to
                 recreate the NoSQL database on top of OpenStack.
@@ -96,7 +77,7 @@
         </listitem>
         <listitem>
             <para>Deploying a <glossterm>Platform-as-a-Service (PaaS)</glossterm>
-                technology such as Cloud Foundry or OpenShift that abstracts the
+                technology that abstracts the
                 upper-layer services from the underlying cloud
                 platform. The unit of application deployment and
                 migration is the PaaS. It leverages the services of
@@ -104,12 +85,12 @@
                 services of the cloud platform.</para>
         </listitem>
         <listitem>
-            <para>Use automation tools to create the required upper-layer services
+            <para>Using automation tools to create the required upper-layer services
                 that are portable across all cloud platforms.</para>
-            <para>For example, instead of using any database services that
+            <para>For example, instead of using database services that
                 are inherent in the cloud platforms, launch cloud
                 instances and deploy the databases on those
-                instances using scripts or various configuration and
+                instances using scripts or configuration and
                 application deployment tools.</para>
         </listitem>
     </itemizedlist>
@@ -117,11 +98,10 @@
 
     <section xml:id="network-services">
       <title>Network services</title>
-    <para>Network services functionality is a barrier for
-        multiple cloud architectures. It could be an important factor
+    <para>Network services functionality is a critical component of
+        multiple cloud architectures. It is an important factor
         to assess when choosing a CMP and cloud provider.
-        Some considerations you should take into account:</para>
-
+        Considerations include:</para>
       <itemizedlist>
         <listitem>
           <para>
@@ -174,8 +154,8 @@
         </listitem>
         <listitem>
             <para>It is imperative to address security considerations.
-                For example, addressing how data is secured between client and endpoint
-                and any traffic that traverses the multiple clouds.
+                For example, addressing how data is secured between client and
+                endpoint and any traffic that traverses the multiple clouds.
                 Business and regulatory requirements dictate what security
                 approach to take.</para>
         </listitem>
@@ -186,26 +166,23 @@
       <title>Data</title>
     <para>Traditionally, replication has been the best method of protecting
         object store implementations. A variety of replication methods exist
-        in storage architectures, for example synchronous and asynchronous mirroring.
-        Most object stores and back-end storage
-        systems implement methods for replication at the storage subsystem layer.
+        in storage architectures, for example synchronous and asynchronous
+        mirroring. Most object stores and back-end storage systems implement
+        methods for replication at the storage subsystem layer.
         Object stores also tailor replication techniques
         to fit a cloud's requirements.</para>
     <para>Organizations must find the right balance between
         data integrity and data availability. Replication strategy may
-        also influence the disaster recovery methods.</para>
+        also influence disaster recovery methods.</para>
     <para>Replication across different racks, data centers, and
-        geographical regions has led to the increased focus of
+        geographical regions increases focus on
         determining and ensuring data locality. The ability to
         guarantee data is accessed from the nearest or fastest storage
-        can be necessary for applications to perform well,
-        for example, Hadoop running in a cloud. The user either runs with
-        a native HDF or on a separate parallel file
-        system. Examples would be Hitachi and IBM.</para>
+        can be necessary for applications to perform well.</para>
       <note>
-        <para>Take special consideration when running embedded object
-            store methods to not cause extra data replication, which can
-            create unnecessary performance issues.</para>
+        <para>When running embedded object store methods, ensure that you do
+            not instigate extra data replication as this can cause performance
+            issues.</para>
       </note>
     </section>
 </section>
