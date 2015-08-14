@@ -6,9 +6,9 @@
   xml:id="operational-considerations-storage-focus">
     <?dbhtml stop-chunking?>
     <title>Operational considerations</title>
-    <para>Operational factors affect the design choices for a general
-        purpose cloud, and operations staff receive tasks regarding the
-        maintenance of cloud environments for larger installations.</para>
+    <para>Several operational factors affect the design choices for a general
+        purpose cloud. Operations staff receive tasks regarding the
+        maintenance of cloud environments for larger installations, including:</para>
     <variablelist>
       <varlistentry>
        <term>Maintenance tasks</term>
@@ -32,17 +32,15 @@
         <listitem>
             <para>Organizations need to have the
                 flexibility to choose between off-premise and
-                on-premise cloud storage options. This concept relies
-                on relevant decision criteria that is complementary to
-                initial direct cost savings potential. For example,
-                continuity of operations, disaster recovery, security,
-                and records retention laws, regulations, and
-                policies.</para>
+                on-premise cloud storage options. This relies
+                on relevant decision criterias with potential cost savings.
+                For example, continuity of operations, disaster recovery,
+                security, records retention laws, regulations, and policies.</para>
         </listitem>
       </varlistentry>
     </variablelist>
     <para>Monitoring and alerting services
-        are vitally important in cloud environments with high demands
+        are vital in cloud environments with high demands
         on storage resources. These services provide a real-time view
         into the health and performance of the storage systems. An
         integrated management console, or other dashboards capable of
@@ -108,7 +106,7 @@
     <section xml:id="application-awareness">
       <title>Application awareness</title>
     <para>Well-designed applications should be aware of underlying storage
-        subsystems, in order to use cloud storage solutions effectively.</para>
+        subsystems in order to use cloud storage solutions effectively.</para>
     <para>If natively available replication is not available, operations personnel
         must be able to modify the application so that they
         can provide their own replication service. In the event that
@@ -136,8 +134,8 @@
           with advanced RAID controllers and high performance disks to
           provide fault tolerance at the hardware level.</para>
        <para>Deploy high performing storage solutions
-          such as SSD disk drives or flash storage systems in cases where applications
-          require extreme performance out of Block Storage devices.</para>
+          such as SSD disk drives or flash storage systems for applications
+          requiring extreme performance out of Block Storage devices.</para>
         <para>In environments that place extreme demands on Block Storage,
           we recommend using multiple storage pools.
           In this case, each pool of devices should have a similar
@@ -155,7 +153,7 @@
           distributed across multiple availability zones.</para>
       <para>In addition to the Block Storage resource nodes, it is
           important to design for high availability and redundancy of
-          the APIs and related services that are responsible for
+          the APIs, and related services that are responsible for
           provisioning and providing access to storage. We
           recommend designing a layer of hardware or software load
           balancers in order to achieve high availability of the
@@ -165,9 +163,9 @@
           back-end database services responsible for servicing and
           storing the state of Block Storage volumes. We also recommend
           designing a highly available database solution to store the Block
-          Storage databases. A number of highly available database
-          solutions such as Galera and MariaDB can be leveraged to help
-          keep database services online to provide uninterrupted access
+          Storage databases. Leverage highly available database
+          solutions such as Galera and MariaDB to help
+          keep database services online for uninterrupted access,
           so that tenants can manage Block Storage volumes.</para>
       <para>In a cloud with extreme demands on Block Storage, the network
           architecture should take into account the amount of East-West
@@ -194,7 +192,7 @@
           defined. For example, with three replicas configured in the
           Swift cluster, the recommended number of zones to configure
           within the Object Storage cluster in order to achieve quorum
-          is 5. While it is possible to deploy a solution with fewer
+          is five. While it is possible to deploy a solution with fewer
           zones, the implied risk of doing so is that some data may not
           be available and API requests to certain objects stored in the
           cluster might fail. For this reason, ensure you properly account
@@ -210,7 +208,7 @@
           resources facilitate access to objects wherever
           possible. We recommend deploying upstream load balancing to ensure
           that proxy services are distributed across the multiple zones and,
-          in some cases, it may be necessary to make use of third party
+          in some cases, it may be necessary to make use of third-party
           solutions to aid with geographical distribution of services.</para>
       <para>A zone within an Object Storage cluster is a logical
           division. Any of the following may represent a zone:</para>
@@ -262,13 +260,13 @@
       <section xml:id="scaling-block-storage">
         <title>Scaling Block Storage</title>
       <para>You can upgrade Block Storage pools to add storage capacity
-          without interruption to the overall Block
+          without interrupting the overall Block
           Storage service. Add nodes to the pool by
           installing and configuring the appropriate hardware and
           software and then allowing that node to report in to the
           proper storage pool via the message bus. This is because Block
           Storage nodes report into the scheduler service advertising
-          their availability. Once the node is online and available
+          their availability. After the node is online and available,
           tenants can make use of those storage resources
           instantly.</para>
       <para>In some cases, the demand on Block Storage from instances
@@ -286,7 +284,7 @@
         <title>Scaling Object Storage</title>
       <para>Adding back-end storage capacity to an Object Storage
           cluster requires careful planning and consideration. In the
-          design phase it is important to determine the maximum
+          design phase, it is important to determine the maximum
           partition power required by the Object Storage service, which
           determines the maximum number of partitions which can exist.
           Object Storage distributes data among all available storage,
@@ -307,7 +305,7 @@
           using back-end replication links that do not
           contend with tenants' access to data.</para>
       <para>As more tenants begin to access data within the cluster and
-          their data sets grow it is necessary to add front-end
+          their data sets grow, it is necessary to add front-end
           bandwidth to service data access requests. Adding front-end
           bandwidth to an Object Storage cluster requires careful
           planning and design of the Object Storage proxies that tenants
