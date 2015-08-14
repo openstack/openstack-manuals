@@ -10,7 +10,7 @@
   xml:id="technical-considerations-general-purpose">
     <?dbhtml stop-chunking?>
     <title>Technical considerations</title>
-    <para>General purpose clouds are often expected to
+    <para>General purpose clouds are expected to
       include these base services:</para>
       <itemizedlist>
         <listitem>
@@ -31,138 +31,99 @@
       </itemizedlist>
     <para>Each of these services have different resource requirements.
         As a result, you must make design decisions relating directly
-        to the service, as well as provide a balanced infrastructure for all services.</para>
-    <para>Take into consideration the unique aspects of each service, as individual characteristics and
-         service mass can impact the hardware selection process. Hardware designs should be
-         generated for each of the services.</para>
+        to the service, as well as provide a balanced infrastructure for
+        all services.</para>
+    <para>Take into consideration the unique aspects of each service, as
+      individual characteristics and service mass can impact the hardware
+      selection process. Hardware designs should be generated for each of the
+      services.</para>
     <para>Hardware decisions are also made in relation to network architecture
         and facilities planning. These factors play heavily into
         the overall architecture of an OpenStack cloud.</para>
 
     <section xml:id="designing-compute-resources-tech-considerations">
-      <title>Designing compute resources</title>
+      <title>Compute resource design</title>
       <para>When designing compute resource pools, a number of factors
-        can impact your design decisions.
-        For example, decisions related to processors, memory, and
-        storage within each hypervisor are just one element of designing
-        compute resources. In addition, decide whether to provide compute
-        resources in a single pool or in multiple pools.
-        We recommend the compute design allocates multiple pools of resources to
-        be addressed on-demand.</para>
-    <para>A compute design that allocates multiple pools of resources makes best
-        use of application resources running in the cloud.
-        Each independent resource pool should be designed to provide service for specific
-        flavors of instances or groupings of flavors.
-        Designing multiple resource pools helps to ensure that, as instances are
-        scheduled onto compute hypervisors, each independent node's
-        resources will be allocated to make the most efficient use of available
-        hardware. This is commonly referred to as bin packing.</para>
-    <para>Using a consistent hardware design among the nodes that are
-        placed within a resource pool also helps support bin packing.
-        Hardware nodes selected for being a part of a compute resource
-        pool should share a common processor, memory, and storage
-        layout. By choosing a common hardware design, it becomes
-        easier to deploy, support and maintain those nodes throughout
-        their life cycle in the cloud.</para>
+        can impact your design decisions. Factors such as number of processors,
+        amount of memory, and the quantity of storage required for each hypervisor
+        must be taken into account.</para>
+    <para>You will also need to decide whether to provide compute resources
+    in a single pool or in multiple pools. In most cases, multiple pools
+    of resources can be allocated and addressed on demand. A compute design
+    that allocates multiple pools of resources makes best use of application
+    resources, and is commonly referred to as
+    <firstterm>bin packing</firstterm>.</para>
+    <para>In a bin packing design, each independent resource pool provides service
+      for specific flavors. This helps to ensure that, as instances are scheduled
+      onto compute hypervisors, each independent node's resources will be allocated
+      in a way that makes the most efficient use of the available hardware. Bin
+      packing also requires a common hardware design, with all hardware nodes within
+      a compute resource pool sharing a common processor, memory, and storage layout.
+      This makes it easier to deploy, support, and maintain nodes throughout their
+      life cycle.</para>
     <para>An <firstterm>overcommit ratio</firstterm> is the ratio of available
-        virtual resources, compared to the available physical resources.
-        OpenStack is able to configure the overcommit ratio for CPU and memory.
-        The default CPU overcommit ratio is 16:1 and the default memory
-        overcommit ratio is 1.5:1. Determining the tuning of the overcommit
-        ratios for both of these options during the design phase is important
-        as it has a direct impact on the hardware layout of your compute nodes.</para>
-    <para>For example, consider a m1.small instance uses 1
-        vCPU, 20&nbsp;GB of ephemeral storage and 2,048&nbsp;MB of RAM. When
-        designing a hardware node as a compute resource pool to
-        service instances, take into consideration the number of
-        processor cores available on the node as well as the required
-        disk and memory to service instances running at capacity. For
-        a server with 2 CPUs of 10 cores each, with hyperthreading
-        turned on, the default CPU overcommit ratio of 16:1 would
-        allow for 640 (2 &times; 10 &times; 2 &times; 16) total <literal>m1.small</literal> instances. By
-        the same reasoning, using the default memory overcommit ratio
-        of 1.5:1 you can determine that the server will need at least
-        853&nbsp;GB (640 &times; 2,048&nbsp;MB / 1.5) of RAM. When sizing nodes for
-        memory, it is also important to consider the additional memory
-        required to service operating system and service needs.</para>
-    <para>Processor selection is an extremely important consideration
-        in hardware design, especially when comparing the features and
-        performance characteristics of different processors. Processors
-        can include features specific to virtualized compute hosts including
-        hardware assisted virtualization and technology related to memory paging (also
-        known as EPT shadowing). These types of features can have a significant impact on the
-        performance of your virtual machine running in the cloud.</para>
-    <para>It is also important to consider the compute requirements of
-        resource nodes within the cloud. Resource nodes refer to
-        non-hypervisor nodes providing the following in the cloud:</para>
-      <itemizedlist>
-        <listitem>
-          <para>
-            Controller
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Object storage
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Block storage
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Networking services
-          </para>
-        </listitem>
-      </itemizedlist>
-    <para>The number of processor cores and threads has a direct correlation to the
-        number of worker threads which can be run on a resource node.
-        As a result, you must make design decisions relating directly to
-        the service, as well as provide a balanced infrastructure for all services.</para>
-    <para>Workload profiles are unpredictable in a general purpose
-        cloud. Additional compute resource pools can be added to the cloud
-        later, reducing the stress of unpredictability. In some cases, the demand on certain
-        instance types or flavors may not justify individual
-        hardware design. In either of these cases, initiate the design by
-        allocating hardware designs that are capable of servicing the most
-        common instances requests. If you are looking to add additional
-        hardware designs to the overall architecture, this can be done at
-        a later time.</para>
+      virtual resources to available physical resources. This ratio is
+      configurable for CPU and memory. The default CPU overcommit ratio is 16:1, and
+      the default memory overcommit ratio is 1.5:1. Determining the tuning of the
+      overcommit ratios during the design phase is important as it has a direct
+      impact on the hardware layout of your compute nodes.</para>
+    <para>For example, if you wanted to design a hardware node as a compute resource
+      pool to service instances, consider the number of processor cores available
+      on the node as well as the required disk and memory to service instances
+      running at capacity. For a server with 2 CPUs of 10 cores each, with
+      hyperthreading turned on, the default CPU overcommit ratio of 16:1 would allow
+      for 640 (2 &times; 10 &times; 2 &times; 16) total <literal>m1.small</literal>
+      instances, where each instance uses 1 vCPU, 20&nbsp;GB of ephemeral storage
+      and 2,048&nbsp;MB of RAM.  By the same reasoning, using the default memory
+      overcommit ratio of 1.5:1 you can determine that the server will need at least
+      853&nbsp;GB (640 &times; 2,048&nbsp;MB / 1.5) of RAM. When sizing nodes for
+      memory, it is also important to consider the additional memory required to
+      service operating system and service needs.</para>
+    <para>When selecting a processor, compare features and performance
+      characteristics. Some processors include features specific to virtualized
+      compute hosts, such as hardware-assisted virtualization, and technology
+      related to memory paging (also known as EPT shadowing). These types of features
+      can have a significant impact on the performance of your virtual machine.</para>
+    <para>You will also need to consider the compute requirements of non-hypervisor
+      nodes (sometimes referred to as resource nodes). This includes controller, object
+      storage, and block storage nodes, and networking services.</para>
+    <para>The number of processor cores and threads impacts the number of worker
+      threads which can be run on a resource node. Design decisions must relate
+      directly to the service being run on it, as well as provide a balanced
+      infrastructure for all services.</para>
+    <para>Workload can be unpredictable in a general purpose cloud, so consider
+      including the ability to add additional compute resource pools on demand.
+      In some cases, however, the demand for certain instance types or flavors may not
+      justify individual hardware design. In either case, start by allocating
+      hardware designs that are capable of servicing the most common instance
+      requests. If you want to add additional hardware to the overall architecture,
+      this can be done later.</para>
     </section>
 
     <section xml:id="designing-network-resources-tech-considerations">
       <title>Designing network resources</title>
-      <para>OpenStack clouds traditionally have multiple network
-        segments, each of which provides access to resources within
-        the cloud to both operators and tenants. The network services
+      <para>OpenStack clouds generally have multiple network segments, with
+        each segment providing access to particular resources. The network services
         themselves also require network communication paths which should
         be separated from the other networks. When designing network services
-        for a general purpose cloud, we recommend planning for a physical or
-        logical separation of network segments that will be used by operators
-        and tenants. We further suggest the creation of an additional network
-        segment for access to internal services such as the message bus and
-        databse used by the various cloud services.
-        Segregating these services onto separate networks helps to protect
-        sensitive data and protects against unauthorized access to services.</para>
-    <para>Based on the requirements of instances being serviced in the cloud,
-        the choice of network service will be the next decision that affects
-        your design architecture.</para>
-    <para>The choice between legacy networking (nova-network), as a
-        part of OpenStack Compute, and OpenStack Networking
-        (neutron), has a huge impact on the architecture and design of the cloud
-        network infrastructure.</para>
+        for a general purpose cloud, plan for either a physical or logical
+        separation of network segments used by operators and tenants. You can also
+        create an additional network segment for access to internal services such as
+        the message bus and database used by various services. Segregating these
+        services onto separate networks helps to protect sensitive data and protects
+        against unauthorized access to services.</para>
+    <para>Choose a networking service based on the requirements of your instances.
+       The architecture and design of your cloud will impact whether you choose
+       OpenStack Networking(neutron), or legacy networking (nova-network).</para>
       <variablelist>
         <varlistentry>
           <term>Legacy networking (nova-network)</term>
             <listitem>
               <para>The legacy networking (nova-network) service is primarily a
-                  layer-2 networking service that functions in two modes. In
-                  legacy networking, the two modes differ in their use of VLANs.
-                  When using legacy networking in a flat network mode, all network
-                  hardware nodes and devices throughout the cloud are connected to
-                  a single layer-2 network segment that provides access to
+                  layer-2 networking service that functions in two modes, which
+                  use VLANs in different ways. In a flat network mode, all
+                  network hardware nodes and devices throughout the cloud are connected
+                  to a single layer-2 network segment that provides access to
                   application data.</para>
               <para>When the network devices in the cloud support segmentation
                   using VLANs, legacy networking can operate in the second mode. In
@@ -170,7 +131,7 @@
                   network subnet which is mapped to a VLAN on the physical
                   network. It is especially important to remember the maximum
                   number of 4096 VLANs which can be used within a spanning tree
-                  domain. These limitations place hard limits on the amount of
+                  domain. This places a hard limit on the amount of
                   growth possible within the data center. When designing a
                   general purpose cloud intended to support multiple tenants, we
                   recommend the use of legacy networking with VLANs, and
@@ -201,34 +162,26 @@
             </listitem>
         </varlistentry>
       </variablelist>
-    <para>Initially, it is suggested to design at least three network
-        segments, the first of which will be used for access to the
-        cloud's REST APIs by tenants and operators. This is
-        referred to as a public network. In most cases, the controller
-        nodes and swift proxies within the cloud will be the only
-        devices necessary to connect to this network segment. In some
-        cases, this network might also be serviced by hardware load
-        balancers and other network devices.</para>
-    <para>The next segment is used by cloud administrators to manage
-        hardware resources and is also used by configuration
-        management tools when deploying software and services onto new
-        hardware. In some cases, this network segment might also be
-        used for internal services, including the message bus and
-        database services, to communicate with each other. Due to the
-        highly secure nature of this network segment, it may be
-        desirable to secure this network from unauthorized access.
-        This network will likely need to communicate with every
-        hardware node within the cloud.</para>
-    <para>The last network segment is used by applications and
-        consumers to provide access to the physical network and also
-        for users accessing applications running within the cloud.
-        This network is generally segregated from the one used to
-        access the cloud APIs and is not capable of communicating
-        directly with the hardware resources in the cloud. Compute
-        resource nodes will need to communicate on this network
-        segment, as will any network gateway services which allow
-        application data to access the physical network outside of the
-        cloud.</para>
+    <para>Initially, we recommend you design at least three network segments.</para>
+    <para>The first segment is a public network, used for access to REST APIs
+        by tenants and operators. Generally, the controller nodes and swift
+        proxies will be the only devices connecting to this network segment. In some
+        cases, this network might also be serviced by hardware load balancers
+        and other network devices.</para>
+    <para>The second segment is used by administrators to manage hardware resources.
+        It is also used by configuration management tools for deploying software and
+        services onto new hardware. In some cases, this network segment might also be
+        used for internal services, including the message bus and database services.
+        This network will probably need to communicate with every hardware node.
+        Due to the highly secure nature of this network segment, you will also need to
+        secure this network from unauthorized access.</para>
+    <para>The third network segment is used by applications and consumers to access
+        the physical network, and for users to access applications. This network is
+        generally segregated from the one used to access the cloud APIs and is not
+        capable of communicating directly with the hardware resources in the cloud.
+        Compute resource nodes will need to communicate on this network segment, as
+        will any network gateway services which allow application data to access the
+        physical network from outside of the cloud.</para>
     </section>
 
     <section xml:id="designing-storage-resources-tech-considerations">
