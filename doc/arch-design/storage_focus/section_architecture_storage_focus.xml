@@ -9,7 +9,7 @@
   version="5.0"
   xml:id="architecture-storage-hardware">
     <title>Architecture</title>
-    <para>There are three areas to consider when selecting storage hardware:</para>
+    <para>Consider the following factors when selecting storage hardware:</para>
     <itemizedlist>
         <listitem>
             <para>Cost</para>
@@ -21,15 +21,15 @@
             <para>Reliability</para>
         </listitem>
     </itemizedlist>
-    <para>Storage-focused OpenStack clouds must reflect that the workloads are storage
-        intensive. These workloads are not compute intensive, nor are
-        they consistently network intensive. The network may be
+    <para>Storage-focused OpenStack clouds must address I/O
+        intensive workloads. These workloads are not CPU intensive,
+        nor are they consistently network intensive. The network may be
         heavily utilized to transfer storage, but they are not
         otherwise network intensive.</para>
-    <para>For a storage-focused OpenStack design architecture, the
-        selection of storage hardware determines the overall
-        performance and scalability of the design architecture. Several factors
-        impact the design process:</para>
+    <para>The selection of storage hardware determines the overall
+        performance and scalability of a storage-focused OpenStack design
+        architecture.
+        Several factors impact the design process, including:</para>
     <variablelist>
       <varlistentry>
         <term>Cost</term>
@@ -57,50 +57,35 @@
                 that performs well as it expands.</para>
         </listitem>
       </varlistentry>
-      <varlistentry>
-        <term>Expandability</term>
-        <listitem>
-            <para>Expandability is the overall ability of the solution
-                to grow. A storage solution that expands to 50 PB is
-                more expandable than a solution that only scales to 10 PB.</para>
-              <note>
-                <para>This meter is related to scalability.
-                </para>
-              </note>
-        </listitem>
-      </varlistentry>
     </variablelist>
-    <para>Latency is a key consideration in a
-        storage-focused OpenStack cloud. Using solid-state disks
-        (SSDs) to minimize latency for instance storage, and to reduce
-        CPU delays caused by waiting for the storage, increases
-        performance. We recommend evaluating the
-        gains from using RAID controller cards in compute hosts to
-        improve the performance of the underlying disk
-        subsystem.</para>
-    <para>The selection of storage architecture determines if a scale-out
-        solution should be used or if a single, highly expandable and
-        scalable centralized storage array would be a better choice.
-        If a centralized storage array is the right fit for the requirements
-        then the array vendor determines the hardware selection. It is possible
-        to build a storage array using commodity hardware with Open Source
-        software, but requires people with expertise to build such a system.</para>
+    <para>Latency is a key consideration in a storage-focused OpenStack cloud.
+    Using solid-state disks (SSDs) to minimize latency and, to reduce CPU
+    delays caused by waiting for the storage, increases performance. Use RAID
+    controller cards in compute hosts to improve the performance of the
+    underlying disk subsystem.</para>
+    <para>Depending on the storage architecture, you can adopt a scale-out
+    solution, or use a highly expandable and scalable centralized storage
+    array. If a centralized storage array is the right fit for
+    your requirements, then the array vendor determines the hardware
+    selection. It is possible to build a storage array using commodity
+    hardware with Open Source software, but requires people with expertise
+    to build such a system.</para>
     <para>On the other hand, a scale-out storage solution that
         uses direct-attached storage (DAS) in the servers may be an
         appropriate choice. This requires configuration of the server
         hardware to support the storage solution.</para>
     <para>Considerations affecting storage architecture (and corresponding
-        storage hardware) of a Storage-focused OpenStack cloud:</para>
+        storage hardware) of a Storage-focused OpenStack cloud include:</para>
     <variablelist>
       <varlistentry>
         <term>Connectivity</term>
         <listitem>
             <para>Based on the selected storage solution, ensure the
                 connectivity matches the storage solution requirements.
-                If selecting centralized storage array, determine how the
-                hypervisors connect to the storage array.
-                Connectivity can affect latency and thus performance.
-                We recommended confirming that the network
+                For example, if you select a centralized storage array,
+                determine how the hypervisors connect to the storage
+                array. Connectivity can affect latency and thus
+                performance. We recommended confirming that the network
                 characteristics minimize latency to boost the
                 overall performance of the design.</para>
         </listitem>
@@ -116,7 +101,7 @@
         <term>Throughput</term>
         <listitem>
             <para>Ensure that the storage solution
-                throughput is optimized based on application
+                throughput is optimized for your application
                 requirements.</para>
         </listitem>
       </varlistentry>
@@ -133,8 +118,8 @@
 
     <section xml:id="compute-server-hardware-selection">
         <title>Compute (server) hardware selection</title>
-    <para>Evaluate Compute (server) hardware four
-        opposing dimensions:</para>
+    <para>Four opposing factors determine the compute (server)
+    hardware selection:</para>
     <variablelist>
       <varlistentry>
         <term>Server density</term>
@@ -161,7 +146,7 @@
       <varlistentry>
         <term>Cost</term>
         <listitem>
-            <para>The relative of the hardware weighted against
+            <para>The relative cost of the hardware weighed against
                 the level of design effort needed to build the
                 system.</para>
         </listitem>
@@ -215,8 +200,8 @@
                 (ODMs) or second-tier manufacturers.</para>
               <warning>
                 <para>This may cause issues for organizations that have
-                preferred vendor policies or concerns with support and hardware
-                warranties of non-tier 1 vendors.
+                preferred vendor policies or concerns with support and
+                hardware warranties of non-tier 1 vendors.
                 </para>
               </warning>
         </listitem>
@@ -237,8 +222,8 @@
         <listitem>
             <para>Rack-mounted servers
                 that support multiple independent servers in a single
-                2U or 3U enclosure, "sled servers", deliver increased density as
-                compared to a typical 1U-2U rack-mounted servers.</para>
+                2U or 3U enclosure, "sled servers", deliver increased
+                density as compared to a typical 1U-2U rack-mounted servers.</para>
             <para>For example, many sled servers offer four independent
                 dual-socket nodes in 2U for a total of 8 CPU sockets
                 in 2U. However, the dual-socket limitation on
@@ -246,9 +231,9 @@
                 additional cost and configuration complexity.</para>
         </listitem>
     </itemizedlist>
-    <para>Other factors strongly influence server hardware
+    <para>Other factors that influence server hardware
         selection for a storage-focused OpenStack design
-        architecture. The following is a list of these factors:</para>
+        architecture include:</para>
     <variablelist>
       <varlistentry>
         <term>Instance density</term>
@@ -264,7 +249,7 @@
         <term>Host density</term>
         <listitem>
             <para>Another option to address the higher
-                host count is to use a quad socket platform. Taking
+                host count is to use a quad-socket platform. Taking
                 this approach decreases host density which also
                 increases rack count. This configuration affects the
                 number of power connections and also impacts network
@@ -284,10 +269,10 @@
       </varlistentry>
     </variablelist>
     <para>Storage-focused OpenStack design architecture server
-        hardware selection should focus on a "scale up" versus "scale
-        out" solution. The determination of which is the best
-        solution, a smaller number of larger hosts or a larger number of
-        smaller hosts, depends on a combination of factors
+        hardware selection should focus on a "scale-up" versus
+        "scale-out" solution. The determination of which is the best
+        solution (a smaller number of larger hosts or a larger number of
+        smaller hosts), depends on a combination of factors
         including cost, power, cooling, physical rack and floor space,
         support-warranty, and manageability.</para>
     </section>
@@ -368,8 +353,8 @@
 
     <section xml:id="software-selection-arch-storage">
       <title>Software selection</title>
-    <para>Selecting software for a storage-focused
-        OpenStack architecture design includes three areas:</para>
+    <para>Factors that influence the software selection for a storage-focused
+        OpenStack architecture design include:</para>
     <itemizedlist>
         <listitem>
             <para>Operating system (OS) and hypervisor</para>
@@ -387,19 +372,20 @@
 
     <section xml:id="operating-system-and-hypervisor-arch-storage">
         <title>Operating system and hypervisor</title>
-    <para>Selecting the OS and hypervisor has a significant impact
-        on the overall design and also affects server hardware
-        selection. Ensure that the selected operating system and
+    <para>Operating system (OS) and hypervisor have a significant impact
+        on the overall design and also affect server hardware
+        selection. Ensure the selected operating system and
         hypervisor combination support the storage hardware and work
         with the networking hardware selection and topology.
         For example, Link Aggregation Control Protocol (LACP) requires
-        support from both the OS and hypervisor.</para>
-    <para>OS and hypervisor selection affect the following areas:</para>
+        support from both the operating system and hypervisor.</para>
+    <para>Operating system and hypervisor selection affect the following
+    areas:</para>
     <variablelist>
       <varlistentry>
         <term>Cost</term>
         <listitem>
-            <para>Selection of a commercially supported
+            <para>Selecting a commercially supported
                 hypervisor, such as Microsoft Hyper-V, results in
                 a different cost model than a
                 community-supported open source hypervisor like
@@ -436,7 +422,7 @@
       <varlistentry>
         <term>Scale and performance</term>
         <listitem>
-            <para>Ensure that the selected OS
+            <para>Ensure the selected OS
                 and hypervisor combination meet the appropriate scale
                 and performance requirements needed for this storage
                 focused OpenStack cloud. The chosen architecture must
@@ -447,7 +433,7 @@
       <varlistentry>
         <term>Security</term>
         <listitem>
-            <para>Ensure that the design can accommodate
+            <para>Ensure the design can accommodate
                 the regular periodic installation of application
                 security patches while maintaining the required
                 workloads. The frequency of security patches for the
@@ -459,19 +445,17 @@
       <varlistentry>
         <term>Supported features</term>
         <listitem>
-            <para>Determine the required features of
-                OpenStack. This often determines the
-                selection of the OS-hypervisor combination. Certain
-                features are only available with specific OSes or
-                hypervisors. For example, if certain features are not
-                available, you might need to modify the design to
-                meet user requirements.</para>
+            <para>Selecting the OS-hypervisor combination often determines
+            the required features of OpenStack. Certain features are only
+            available with specific OSes or hypervisors. For example,
+            if certain features are not available, you might need to modify
+            the design to meet user requirements.</para>
         </listitem>
       </varlistentry>
       <varlistentry>
         <term>Interoperability</term>
         <listitem>
-            <para>Any chosen OS/hypervisor combination should be chosen
+            <para>The OS-hypervisor combination should be chosen
                 based on the interoperability with one another, and other
                 OS-hyervisor combinations. Operational and troubleshooting
                 tools for one OS-hypervisor combination may differ
@@ -486,19 +470,19 @@
 
     <section xml:id="openstack-components-arch-storage">
       <title>OpenStack components</title>
-    <para>Which OpenStack components you choose can have a significant
+    <para>The OpenStack components you choose can have a significant
         impact on the overall design. While there are certain
-        components that are always present, Compute and Image service, for
-        example, there are other services that may not need to be
-        present. As an example, a certain design may not require
-        the Orchestration module. Omitting Orchestration would not typically have a
-        significant impact on the overall design, however, if the
-        architecture uses a replacement for OpenStack Object Storage for its
-        storage component, this could potentially have significant
-        impacts on the rest of the design.</para>
+        components that are always present
+        (Compute and Image service, for example), there are other services
+        that may not be required. As an example, a certain design
+        may not require the Orchestration module. Omitting Orchestration would
+        not typically have a significant impact on the overall design,
+        however, if the architecture uses a replacement for OpenStack Object
+        Storage for its storage component, this could potentially have
+        significant impacts on the rest of the design.</para>
     <para>A storage-focused design might require the ability to use
-        Orchestration to launch instances with Block Storage volumes to perform
-        storage-intensive processing.</para>
+        Orchestration to launch instances with Block Storage volumes to
+        perform storage-intensive processing.</para>
     <para>A storage-focused OpenStack design architecture typically uses the
         following components:</para>
     <itemizedlist>
@@ -509,11 +493,12 @@
             <para>OpenStack dashboard (horizon)</para>
         </listitem>
         <listitem>
-            <para>OpenStack Compute (nova) (including the use of multiple hypervisor
-                drivers)</para>
+            <para>OpenStack Compute (nova) (including the use of multiple
+            hypervisor drivers)</para>
         </listitem>
         <listitem>
-            <para>OpenStack Object Storage (swift) (or another object storage solution)</para>
+            <para>OpenStack Object Storage (swift) (or another object
+            storage solution)</para>
         </listitem>
         <listitem>
             <para>OpenStack Block Storage (cinder)</para>
@@ -522,7 +507,8 @@
             <para>OpenStack Image service (glance)</para>
         </listitem>
         <listitem>
-            <para>OpenStack Networking (neutron) or legacy networking (nova-network)</para>
+            <para>OpenStack Networking (neutron) or legacy networking
+            (nova-network)</para>
         </listitem>
     </itemizedlist>
     <para>Excluding certain OpenStack components may limit or
@@ -549,7 +535,7 @@
         services for instances. There are many additional networking
         software packages that may be useful to manage the OpenStack
         components themselves. Some examples include HAProxy,
-        keepalived, and various routing daemons (like Quagga). The
+        Keepalived, and various routing daemons (like Quagga). The
         <citetitle>OpenStack High Availability Guide</citetitle> describes
         some of these software packages, HAProxy in particular. See the <link
         xlink:href="http://docs.openstack.org/high-availability-guide/content/ch-network.html">Network
