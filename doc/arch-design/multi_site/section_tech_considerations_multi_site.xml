@@ -135,67 +135,6 @@
         method for replicating data across multiple regions, so
         applications that depend on available block storage need
         to manually cope with this limitation by creating duplicate
-        block storage entries in each region.</para></section>
-    <section xml:id="security-multi-site"><title>Security</title>
-    <para>Securing a multi-site OpenStack installation also brings
-        extra challenges. Tenants may expect a tenant-created network
-        to be secure. In a multi-site installation the use of a
-        non-private connection between sites may be required. This may
-        mean that traffic would be visible to third parties and, in
-        cases where an application requires security, this issue
-        requires mitigation. Installing a VPN or encrypted connection
-        between sites is recommended in such instances.</para>
-    <para>Another security consideration with regard to multi-site
-        deployments is Identity. Authentication in a multi-site
-        deployment should be centralized. Centralization provides a
-        single authentication point for users across the deployment,
-        as well as a single point of administration for traditional
-        create, read, update and delete operations. Centralized
-        authentication is also useful for auditing purposes because
-        all authentication tokens originate from the same
-        source.</para>
-    <para>Just as tenants in a single-site deployment need isolation
-        from each other, so do tenants in multi-site installations.
-        The extra challenges in multi-site designs revolve around
-        ensuring that tenant networks function across regions.
-        Unfortunately, OpenStack Networking does not presently support
-        a mechanism to provide this functionality, therefore an
-        external system may be necessary to manage these mappings.
-        Tenant networks may contain sensitive information requiring
-        that this mapping be accurate and consistent to ensure that a
-        tenant in one site does not connect to a different tenant in
-        another site.</para></section>
-    <section xml:id="openstack-components-multi-site">
-      <title>OpenStack components</title>
-    <para>Most OpenStack installations require a bare minimum set of
-        pieces to function. These include the OpenStack Identity
-        (keystone) for authentication, OpenStack Compute
-        (nova) for compute, OpenStack Image service (glance) for image
-        storage, OpenStack Networking (neutron) for networking, and
-        potentially an object store in the form of OpenStack Object
-        Storage (swift). Bringing multi-site into play also demands extra
-        components in order to coordinate between regions. Centralized
-        Identity service is necessary to provide the single authentication
-        point. Centralized dashboard is also recommended to provide a
-        single login point and a mapped experience to the API and CLI
-        options available. If necessary, a centralized Object Storage
-        service may be used and will require the installation of the
-        swift proxy service.</para>
-    <para>It may also be helpful to install a few extra options in
-        order to facilitate certain use cases. For instance,
-        installing designate may assist in automatically generating
-        DNS domains for each region with an automatically-populated
-        zone full of resource records for each instance. This
-        facilitates using DNS as a mechanism for determining which
-        region would be selected for certain applications.</para>
-    <para>Another useful tool for managing a multi-site installation
-        is Orchestration (heat). The Orchestration module allows the
-        use of templates to define a set of instances to be launched
-        together or for scaling existing sets. It can also be used to
-        setup matching or differentiated groupings based on
-        regions. For instance, if an application requires an equally
-        balanced number of nodes across sites, the same heat template
-        can be used to cover each site with small alterations to only
-        the region name.</para>
-    </section>
+        block storage entries in each region.</para>
+      </section>
 </section>
