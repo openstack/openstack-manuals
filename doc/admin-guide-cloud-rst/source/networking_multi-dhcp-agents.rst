@@ -24,7 +24,7 @@ scalability and HA.
         | agent           | agent                    |
         | provider        | Provider Network         |
         | router          | Neutron L3 Router        |
-        | lbaas           | LoadBalancing service    |
+        | lbaas           | Load Balancing service    |
         | extraroute      | Neutron Extra Route      |
         +-----------------+--------------------------+
 

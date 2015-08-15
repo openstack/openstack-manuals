@@ -143,13 +143,13 @@ external networking services:
 
    -  Firewall-as-a-Service (FWaaS) meters
 
-   -  Loadbalancer-as-a-Service (LBaaS) meters
+   -  Load-Balancer-as-a-Service (LBaaS) meters
 
    -  VPN-as-a-Service (VPNaaS) meters
 
 -  SDN controller meters:
 
-   -  `OpenDaylight <http://www.opendaylight.org/software>`__
+   -  `OpenDaylight <http://www.opendaylight.org/>`__
 
    -  `OpenContrail <http://opencontrail.org/>`__
 
