@@ -1045,8 +1045,8 @@ The following meters are collected for SDN:
 These meters are available for OpenFlow based switches. In order to
 enable these meters, each driver needs to be properly configured.
 
-LoadBalancer as a Service (LBaaS)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Load-Balancer-as-a-Service (LBaaS)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The following meters are collected for LBaaS:
 
 +---------------+---------+---------+-----------+-----------+-----------------+
