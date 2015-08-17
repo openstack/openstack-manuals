@@ -94,77 +94,94 @@ ipv6_ra_mode and ipv6_address_mode combinations
 
 .. list-table::
    :header-rows: 1
-   :widths: 10 10 10 70
+   :widths: 10 10 10 10 60
 
    * - ipv6 ra mode
      - ipv6 address mode
      - radvd A,M,O
+     - External Router A,M,O
      - Description
    * - *N/S*
      - *N/S*
      - Off
+     - Not Defined
      - Backwards compatibility with pre-Juno IPv6 behavior.
    * - *N/S*
      - slaac
+     - Off
      - 1,0,0
      - Guest instance obtains IPv6 address from non-OpenStack router using SLAAC.
    * - *N/S*
      - dhcpv6-stateful
      - Off
-     - Not currently implemented.
+     - 0,1,1
+     - Not currently implemented in the reference implementation.
    * - *N/S*
      - dhcpv6-stateless
      - Off
-     - Not currently implemented.
+     - 1,0,1
+     - Not currently implemented in the reference implementation.
    * - slaac
      - *N/S*
      - 1,0,0
-     - Not currently implemented.
+     - Off
+     - Not currently implemented in the reference implementation.
    * - dhcpv6-statefull
      - *N/S*
      - 0,1,1
-     - Not currently implemented.
+     - Off
+     - Not currently implemented in the reference implementation.
    * - dhcpv6-stateless
      - *N/S*
      - 1,0,1
-     - Not currently implemented.
+     - Off
+     - Not currently implemented in the reference implementation.
    * - slaac
      - slaac
      - 1,0,0
+     - Off
      - Guest instance obtains IPv6 address from OpenStack managed radvd using SLAAC.
    * - dhcpv6-stateful
      - dhcpv6-stateful
      - 0,1,1
+     - Off
      - Guest instance obtains IPv6 address from dnsmasq using DHCPv6
        stateful and optional info from dnsmasq using DHCPv6.
    * - dhcpv6-stateless
      - dhcpv6-stateless
      - 1,0,1
+     - Off
      - Guest instance obtains IPv6 address from OpenStack managed
        radvd using SLAAC and optional info from dnsmasq using
        DHCPv6.
    * - slaac
      - dhcpv6-stateful
      -
+     -
      - *Invalid combination.*
    * - slaac
      - dhcpv6-stateless
      -
+     -
      - *Invalid combination.*
    * - dhcpv6-stateful
      - slaac
+     -
      -
      - *Invalid combination.*
    * - dhcpv6-stateful
      - dhcpv6-stateless
      -
+     -
      - *Invalid combination.*
    * - dhcpv6-stateless
      - slaac
      -
+     -
      - *Invalid combination.*
    * - dhcpv6-stateless
      - dhcpv6-statefull
+     -
      -
      - *Invalid combination.*
 
@@ -382,8 +399,7 @@ TODO
 FWaaS
 ~~~~~
 
-FWaaS does not allow creation of any IPv6 based rules as such the feature can
-not be considered IPv6 enabled.
+FWaaS allows creation of IPv6 based rules.
 
 NAT & Floating IPs
 ~~~~~~~~~~~~~~~~~~
