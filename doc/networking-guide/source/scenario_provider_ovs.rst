@@ -59,10 +59,10 @@ Infrastructure
    provider. The provider interface connects to a generic network that
    physical network infrastructure switches/routes to external networks
    (typically the Internet). The Open vSwitch bridge ``br-provider``
-   must contain an port on the provider network interface.
+   must contain a port on the provider network interface.
 #. At least two compute nodes with two network interfaces: management
    and provider. The provider interface connects to a generic network that
-   the pysical network infrastructure switches/routes to external networks
+   the physical network infrastructure switches/routes to external networks
    (typically the Internet). The Open vSwitch bridge ``br-provider``
    must contain a port on the provider network interface.
 

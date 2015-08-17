@@ -37,9 +37,9 @@ Layer 2 (Ethernet and Switching)
 
   * Overview and concepts
 
-  * OVS
+* OVS
 
-    * Overview and concepts
+  * Overview and concepts
 
 Layer 3 (IP and Routing)
 ------------------------
