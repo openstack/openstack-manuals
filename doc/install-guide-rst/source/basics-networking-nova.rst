@@ -100,8 +100,9 @@ Controller node
 
       Some distributions add an extraneous entry in the :file:`/etc/hosts`
       file that resolves the actual hostname to another loopback IP
-      address such as ``127.0.1.1``. You must comment out or remove this
-      entry to prevent name resolution problems.
+      address such as ``127.0.1.1``. Note it's ``127.0.*1.1*``, do not
+      remove the required ``127.0.0.1`` entry. You must comment out or
+      remove this entry to prevent name resolution problems.
 
 |
 
@@ -191,8 +192,9 @@ Compute node
 
       Some distributions add an extraneous entry in the :file:`/etc/hosts`
       file that resolves the actual hostname to another loopback IP
-      address such as ``127.0.1.1``. You must comment out or remove this
-      entry to prevent name resolution problems.
+      address such as ``127.0.1.1``. Note it's ``127.0.*1.1*``, do not
+      remove the required ``127.0.0.1`` entry. You must comment out or
+      remove this entry to prevent name resolution problems.
 
 |
 
