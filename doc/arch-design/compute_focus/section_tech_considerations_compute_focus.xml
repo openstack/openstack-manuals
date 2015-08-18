@@ -12,10 +12,7 @@
     <title>Technical considerations</title>
     <para>In a compute-focused OpenStack cloud, the type of instance
         workloads you provision heavily influences technical
-        decision making. For example, specific use cases that demand
-        multiple, short-running jobs present different requirements
-        than those that specify long-running jobs, even though both
-        situations are compute focused.</para>
+        decision making.</para>
     <para>Public and private clouds require deterministic capacity
         planning to support elastic growth in order to meet user SLA
         expectations. Deterministic capacity planning is the path to
@@ -23,21 +20,19 @@
         perform consistently. This process is important because,
         when a service becomes a critical part of a user's
         infrastructure, the user's experience links directly to the SLAs of
-        the cloud itself. In cloud computing, it is not average speed but
-        speed consistency that determines a service's performance.
-        There are two aspects of capacity planning to consider:</para>
+        the cloud itself.</para>
+    <para>There are two aspects of capacity planning to consider:</para>
     <itemizedlist>
       <listitem>
-        <para>planning the initial deployment footprint</para>
+        <para>Planning the initial deployment footprint</para>
       </listitem>
       <listitem>
-        <para>planning expansion of it to stay ahead of the demands of cloud
-        users</para>
+        <para>Planning expansion of the environment to stay ahead of the
+        demands of cloud users</para>
       </listitem>
     </itemizedlist>
-    <para>Plan the initial footprint for an OpenStack deployment
-        based on existing infrastructure workloads
-        and estimates based on expected uptake.</para>
+    <para>Begin planning an initial OpenStack deployment footprint with
+      estimations of expected uptake, and existing infrastructure workloads.</para>
     <para>The starting point is the core count of the cloud. By
         applying relevant ratios, the user can gather information
         about:</para>
@@ -50,7 +45,7 @@
             <para>Required storage: flavor disk size × number of instances</para>
         </listitem>
     </itemizedlist>
-    <para>Use these ratios to determine the amount of
+    <para>These ratios determine the amount of
         additional infrastructure needed to support the cloud. For
         example, consider a situation in which you require 1600
         instances, each with 2 vCPU and 50 GB of storage. Assuming the
@@ -61,7 +56,7 @@
             <para>1600 = (16 &times; (number of physical cores)) / 2</para>
         </listitem>
         <listitem>
-            <para>storage required = 50&nbsp;GB &times; 1600</para>
+            <para>Storage required = 50&nbsp;GB &times; 1600</para>
         </listitem>
     </itemizedlist>
     <para>On the surface, the equations reveal the need for 200
@@ -71,19 +66,10 @@
         look at patterns of usage to estimate the load that the API
         services, database servers, and queue servers are likely to
         encounter.</para>
-    <para>Consider, for example, the differences between a cloud that
-        supports a managed web-hosting platform and one running
-        integration tests for a development project that creates one
-        instance per code commit. In the former, the heavy work of
-        creating an instance happens only every few months, whereas
-        the latter puts constant heavy load on the cloud controller.
-        The average instance lifetime is significant, as a larger
-        number generally means less load on the cloud
-        controller.</para>
     <para>Aside from the creation and termination of instances, consider the
         impact of users accessing the service,
         particularly on nova-api and its associated database. Listing
-        instances gathers a great deal of information and, given the
+        instances gathers a great deal of information and given the
         frequency with which users run this operation, a cloud with a
         large number of users can increase the load significantly.
         This can even occur unintentionally. For example, the
@@ -104,17 +90,12 @@
         the impacts of different hardware and instance load outs. See:
         <link xlink:href="https://github.com/noslzzp/cloud-resource-calculator/blob/master/cloud-resource-calculator.ods">https://github.com/noslzzp/cloud-resource-calculator/blob/master/cloud-resource-calculator.ods</link>
     </para>
+
     <section xml:id="expansion-planning-compute-focus">
         <title>Expansion planning</title>
     <para>A key challenge for planning the expansion of cloud
         compute services is the elastic nature of cloud infrastructure
-        demands. Previously, new users or customers had to
-        plan for and request the infrastructure they required ahead of
-        time, allowing time for reactive procurement processes. Cloud
-        computing users have come to expect the agility of having
-        instant access to new resources as required.
-        Consequently, plan for typical usage and for sudden bursts in
-        usage.</para>
+        demands.</para>
     <para>Planning for expansion is a balancing act.
         Planning too conservatively can lead to unexpected
         oversubscription of the cloud and dissatisfied users. Planning
@@ -127,31 +108,11 @@
         average speed or capacity of the cloud. Using this information
         to model capacity performance enables users to more
         accurately determine the current and future capacity of the
-        cloud.</para></section>
-    <section xml:id="cpu-and-ram-compute-focus"><title>CPU and RAM</title>
-    <para>Adapted from:
-        <link xlink:href="http://docs.openstack.org/openstack-ops/content/compute_nodes.html#cpu_choice">http://docs.openstack.org/openstack-ops/content/compute_nodes.html#cpu_choice</link></para>
-    <para>In current generations, CPUs have up to 12 cores. If an
-        Intel CPU supports Hyper-Threading, those 12 cores double
-        to 24 cores. A server that supports multiple CPUs multiplies
-        the number of available cores.
-        Hyper-Threading is Intel's proprietary simultaneous
-        multi-threading implementation, used to improve
-        parallelization on their CPUs. Consider enabling
-        Hyper-Threading to improve the performance of multithreaded
-        applications.</para>
-    <para>Whether the user should enable Hyper-Threading on a CPU
-        depends on the use case. For example, disabling
-        Hyper-Threading can be beneficial in intense computing
-        environments. Running performance tests using local
-        workloads with and without Hyper-Threading can help
-        determine which option is more appropriate in any particular
-        case.</para>
-    <para>If they must run the Libvirt or KVM hypervisor drivers,
-        then the compute node CPUs must support
-        virtualization by way of the VT-x extensions for Intel chips
-        and AMD-v extensions for AMD chips to provide full
-        performance.</para>
+        cloud.</para>
+    </section>
+
+    <section xml:id="cpu-and-ram-compute-focus">
+      <title>CPU and RAM</title>
     <para>OpenStack enables users to overcommit CPU and RAM on
         compute nodes. This allows an increase in the number of
         instances running on the cloud at the cost of reducing the
@@ -176,13 +137,10 @@
         long as the total amount of RAM associated with the instances
         is less than 1.5 times the amount of RAM available on the
         physical node.</para>
-    <para>For example, if a physical node has 48 GB of RAM, the
-        scheduler allocates instances to that node until the sum of
-        the RAM associated with the instances reaches 72 GB (such as
-        nine instances, in the case where each instance has 8 GB of
-        RAM).</para>
     <para>You must select the appropriate CPU and RAM allocation ratio
-        based on particular use cases.</para></section>
+        based on particular use cases.</para>
+    </section>
+
     <section xml:id="additional-hardware-compute-focus">
       <title>Additional hardware</title>
     <para>Certain use cases may benefit from exposure to additional
@@ -193,8 +151,6 @@
                 the availability of graphics processing units (GPUs)
                 for general-purpose computing.</para>
         </listitem>
-    </itemizedlist>
-    <itemizedlist>
         <listitem>
             <para>Cryptographic routines that benefit from the
                 availability of hardware random number generators to
@@ -210,11 +166,14 @@
         characteristics, which can include hardware similarities. The
         addition of specialized hardware to a cloud deployment is
         likely to add to the cost of each node, so consider carefully
-        consideration whether all compute nodes, or
+        whether all compute nodes, or
         just a subset targeted by flavors, need the
         additional customization to support the desired
-        workloads.</para></section>
-    <section xml:id="utilization"><title>Utilization</title>
+        workloads.</para>
+    </section>
+
+    <section xml:id="utilization">
+      <title>Utilization</title>
     <para>Infrastructure-as-a-Service offerings, including OpenStack,
         use flavors to provide standardized views of virtual machine
         resource requirements that simplify the problem of scheduling
@@ -253,107 +212,9 @@
         different ratios of CPU versus RAM versus HDD
         requirements.</para>
     <para>For more information on Flavors see:
-        <link xlink:href="http://docs.openstack.org/openstack-ops/content/flavors.html">http://docs.openstack.org/openstack-ops/content/flavors.html</link></para>
+        <link xlink:href="http://docs.openstack.org/openstack-ops/content/flavors.html">OpenStack Operations Guide: Flavors</link></para>
     </section>
-    <section xml:id="performance-compute-focus"><title>Performance</title>
-    <para>So that workloads can consume as many resources
-        as are available, do not share cloud infrastructure. Ensure you accommodate
-        large scale workloads.</para>
-    <para>The duration of batch processing differs depending on
-        individual workloads. Time limits range from
-        seconds to hours, and as a result it is difficult to predict resource
-        use.</para>
-    </section>
-    <section xml:id="security-compute-focus"><title>Security</title>
-    <para>The security considerations for this scenario are
-        similar to those of the other scenarios in this guide.</para>
-    <para>A security domain comprises users, applications, servers,
-        and networks that share common trust requirements and
-        expectations within a system. Typically they have the same
-        authentication and authorization requirements and
-        users.</para>
-    <para>These security domains are:</para>
-    <orderedlist>
-        <listitem>
-            <para>Public</para>
-        </listitem>
-        <listitem>
-            <para>Guest</para>
-        </listitem>
-        <listitem>
-            <para>Management</para>
-        </listitem>
-        <listitem>
-            <para>Data</para>
-        </listitem>
-    </orderedlist>
-    <para>You can map these security domains individually to the
-        installation, or combine them. For example, some
-        deployment topologies combine both guest and data domains onto
-        one physical network, whereas in other cases these networks
-        are physically separate. In each case, the cloud operator
-        should be aware of the appropriate security concerns. Map out
-        security domains against specific OpenStack
-        deployment topology. The domains and their trust requirements
-        depend on whether the cloud instance is public, private, or
-        hybrid.</para>
-    <para>The public security domain is an untrusted area of
-        the cloud infrastructure. It can refer to the Internet as a
-        whole or simply to networks over which the user has no
-        authority. Always consider this domain untrusted.</para>
-    <para>Typically used for compute instance-to-instance traffic, the
-        guest security domain handles compute data generated by
-        instances on the cloud. It does not handle services that support the
-        operation of the cloud, for example API calls. Public cloud
-        providers and private cloud providers who do not have
-        stringent controls on instance use or who allow unrestricted
-        Internet access to instances should consider this an untrusted domain.
-        Private cloud providers may want to consider this
-        an internal network and therefore trusted only if they have
-        controls in place to assert that they trust instances and all
-        their tenants.</para>
-    <para>The management security domain is where services interact.
-        Sometimes referred to as the "control plane", the networks in
-        this domain transport confidential data such as configuration
-        parameters, user names, and passwords. In most deployments this
-        is a trusted domain.</para>
-    <para>The data security domain deals with
-        information pertaining to the storage services within
-        OpenStack. Much of the data that crosses this network has high
-        integrity and confidentiality requirements and depending on
-        the type of deployment there may also be strong availability
-        requirements. The trust level of this network is heavily
-        dependent on deployment decisions and as such we do not assign
-        this a default level of trust.</para>
-    <para>When deploying OpenStack in an enterprise as a private cloud, you can
-        generally assume it is behind a firewall and within the trusted
-        network alongside existing systems. Users of the cloud are
-        typically employees or trusted individuals that are bound by
-        the security requirements set forth by the company. This tends
-        to push most of the security domains towards a more trusted
-        model. However, when deploying OpenStack in a public-facing
-        role, you cannot make these assumptions and the number of attack vectors
-        significantly increases. For example, the API endpoints and the
-        software behind it become vulnerable to hostile
-        entities attempting to gain unauthorized access or prevent access
-        to services. This can result in loss of reputation and you must
-        protect against it through auditing and appropriate
-        filtering.</para>
-    <para>Take care when managing the users of the
-        system, whether in public or private
-        clouds. The identity service enables LDAP to be part of the
-        authentication process, and includes such systems as an
-        OpenStack deployment that may ease user management if
-        integrated into existing systems.</para>
-    <para>We recommend placing API services behind hardware that
-        performs SSL termination. API services
-        transmit user names, passwords, and generated tokens between
-        client machines and API endpoints and therefore must be
-        secure.</para>
-    <para>For more information on OpenStack Security, see
-      <link xlink:href="http://docs.openstack.org/security-guide/">http://docs.openstack.org/security-guide/</link>
-    </para>
-    </section>
+
     <section xml:id="openstack-components-compute-focus">
       <title>OpenStack components</title>
     <para>Due to the nature of the workloads in this
@@ -376,47 +237,40 @@
         <listitem>
             <para><glossterm>Orchestration</glossterm> module
             (<glossterm>heat</glossterm>)</para>
+                  <para>Given the nature of the
+                    applications involved in this scenario, these are heavily
+                    automated deployments. Making use of Orchestration is highly
+                    beneficial in this case. You can script the deployment of a
+                    batch of instances and the running of tests, but it
+                    makes sense to use the Orchestration module
+                    to handle all these actions.</para>
         </listitem>
-    </itemizedlist>
-    <para>It is safe to assume that, given the nature of the
-        applications involved in this scenario, these are heavily
-        automated deployments. Making use of Orchestration is highly
-        beneficial in this case. You can script the deployment of a
-        batch of instances and the running of tests, but it
-        makes sense to use the Orchestration module
-        to handle all these actions.</para>
-    <itemizedlist>
         <listitem>
             <para>Telemetry module (ceilometer)</para>
+                <para>Telemetry and the alarms it generates support autoscaling
+                  of instances using Orchestration. Users that are not using the
+                  Orchestration module do not need to deploy the Telemetry module and
+                  may choose to use external solutions to fulfill their
+                  metering and monitoring requirements.</para>
         </listitem>
-    </itemizedlist>
-    <para>Telemetry and the alarms it generates support autoscaling
-        of instances using Orchestration. Users that are not using the
-        Orchestration module do not need to deploy the Telemetry module and
-        may choose to use external solutions to fulfill their
-        metering and monitoring requirements.</para>
-    <para>See also:
-        <link xlink:href="http://docs.openstack.org/openstack-ops/content/logging_monitoring.html">http://docs.openstack.org/openstack-ops/content/logging_monitoring.html</link></para>
-    <itemizedlist>
         <listitem>
             <para>OpenStack Block Storage (cinder)</para>
+                <para>Due to the burst-able nature of the workloads and the
+                  applications and instances that perform batch
+                  processing, this cloud mainly uses memory or CPU, so
+                  the need for add-on storage to each instance is not a likely
+                  requirement. This does not mean that you do not use
+                  OpenStack Block Storage (cinder) in the infrastructure, but
+                  typically it is not a central component.</para>
         </listitem>
-    </itemizedlist>
-    <para>Due to the burst-able nature of the workloads and the
-        applications and instances that perform batch
-        processing, this cloud mainly uses memory or CPU, so
-        the need for add-on storage to each instance is not a likely
-        requirement. This does not mean that you do not use
-        OpenStack Block Storage (cinder) in the infrastructure, but
-        typically it is not a central component.</para>
-    <itemizedlist>
         <listitem>
             <para>Networking</para>
+                <para>When choosing a networking platform, ensure that it either
+                  works with all desired hypervisor and container technologies
+                  and their OpenStack drivers, or that it includes an implementation of
+                  an ML2 mechanism driver. You can mix networking platforms
+                  that provide ML2 mechanisms drivers.</para>
         </listitem>
     </itemizedlist>
-    <para>When choosing a networking platform, ensure that it either
-        works with all desired hypervisor and container technologies
-        and their OpenStack drivers, or that it includes an implementation of
-        an ML2 mechanism driver. You can mix networking platforms
-        that provide ML2 mechanisms drivers.</para></section>
+  </section>
 </section>
