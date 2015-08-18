@@ -16,6 +16,4 @@ Object Storage
    objectstorage_tenant_specific_image_storage.rst
    objectstorage-monitoring.rst
    objectstorage-admin.rst
-
-.. TODO (karenb)
-   objectstorage_troubleshoot.rst
+   objectstorage-troubleshoot.rst
