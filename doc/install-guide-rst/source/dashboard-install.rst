@@ -40,6 +40,20 @@ To install the dashboard components
 
        # apt-get install openstack-dashboard
 
+.. only:: debian
+
+   * Install the packages::
+
+       # apt-get install openstack-dashboard-apache
+
+   * Respond to prompts for web server configuration.
+
+     .. note::
+
+        The automatic configuration process generates a self-signed
+        SSL certificate. Consider obtaining an official certificate
+        for production environments.
+
 .. only:: ubuntu
 
    .. note::
@@ -72,7 +86,7 @@ To configure the dashboard
      :file:`/etc/openstack-dashboard/local_settings.py`
      file and complete the following actions:
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    * Edit the :file:`/etc/openstack-dashboard/local_settings`
      file and complete the following actions:
