@@ -80,23 +80,31 @@
     </mediaobject>
     <para>There is also some customization of the filter scheduler
         that handles placement within the cells:</para>
-    <itemizedlist>
-        <listitem><para>ImagePropertiesFilter - To provide special handling
+    <variablelist>
+      <varlistentry><term>ImagePropertiesFilter</term>
+        <listitem>
+          <para>Provides special handling
                 depending on the guest operating system in use
                 (Linux-based or Windows-based).</para>
         </listitem>
-        <listitem><para>ProjectsToAggregateFilter - To provide special
-                handling depending on the project the instance is
+      </varlistentry>
+      <varlistentry><term>ProjectsToAggregateFilter</term>
+        <listitem><para>Provides special
+                handling depending on which project the instance is
                 associated with.</para>
         </listitem>
-        <listitem><para>default_schedule_zones - Allows the selection of
+      </varlistentry>
+      <varlistentry><term>default_schedule_zones</term>
+        <listitem><para>Allows the selection of
                 multiple default availability zones, rather than a
-                single default.
-        </para></listitem>
-    </itemizedlist>
+                single default.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
     <para>A central database team manages the MySQL database server in each cell
         in an active/passive configuration with a NetApp storage back end.
         Backups run every 6 hours.</para>
+
     <section xml:id="network-architecture">
       <title>Network architecture</title>
     <para>To integrate with existing networking infrastructure, CERN
@@ -110,7 +118,9 @@
         placed an instance and selects a MAC address and IP
         from the pre-registered list associated with that node in the
         database. The database updates to reflect the address assignment to
-        that instance.</para></section>
+        that instance.</para>
+    </section>
+
     <section xml:id="storage-architecture">
       <title>Storage architecture</title>
     <para>CERN deploys the OpenStack Image service in the API cell and
@@ -119,7 +129,9 @@
         use is a 3 PB Ceph cluster.</para>
     <para>CERN maintains a small set of Scientific Linux 5 and 6 images onto
         which orchestration tools can place applications. Puppet manages
-        instance configuration and customization.</para></section>
+        instance configuration and customization.</para>
+    </section>
+
     <section xml:id="monitoring">
       <title>Monitoring</title>
     <para>CERN does not require direct billing, but uses the Telemetry module
@@ -147,18 +159,4 @@
         project.
     </para>
     </section>
-    <section xml:id="references-cern-resources"><title>References</title>
-    <para>The authors of the Architecture Design Guide would like to
-        thank CERN for publicly documenting their OpenStack deployment
-        in these resources, which formed the basis for this
-        chapter:</para>
-    <itemizedlist>
-        <listitem><para><link xlink:href="http://openstack-in-production.blogspot.fr">http://openstack-in-production.blogspot.fr</link>
-        </para></listitem>
-        <listitem><para>
-              <link
-              xlink:href="http://www.openstack.org/assets/presentation-media/Deep-Dive-into-the-CERN-Cloud-Infrastructure.pdf">Deep
-              dive into the CERN Cloud Infrastructure</link></para>
-        </listitem>
-    </itemizedlist></section>
 </section>
