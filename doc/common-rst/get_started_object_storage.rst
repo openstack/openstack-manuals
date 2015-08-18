@@ -22,7 +22,7 @@ Container servers (swift-container-server)
   Manages the mapping of containers or folders, within Object Storage.
 
 Object servers (swift-object-server)
-  Manages actual objects,such as files, on the storage nodes.
+  Manages actual objects, such as files, on the storage nodes.
 
 Various periodic processes
   Performs housekeeping tasks on the large data store. The replication
