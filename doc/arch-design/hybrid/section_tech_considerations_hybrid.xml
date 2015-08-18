@@ -11,311 +11,186 @@
     <?dbhtml stop-chunking?>
     <title>Technical considerations</title>
     <para>A hybrid cloud environment requires inspection and
-        understanding of technical issues that are not only outside of
-        an organization's data center, but potentially outside of an
-        organization's control. In many cases, it is necessary to
-        ensure that the architecture and CMP chosen are adaptable.
-        All of these factors influence
-        and add complexity to the design of the hybrid cloud architecture.</para>
-    <para>Incompatibilities with other cloud platforms are inevitable,
-        however, clouds using the same version and distribution
-        of OpenStack are unlikely to experience any issues.</para>
+        understanding of technical issues in external data centers that may
+        not be in your control. Ideally, select an architecture
+        and CMP that are adaptable to changing environments.</para>
+    <para>Using diverse cloud platforms increases the risk of compatibility
+        issues, but clouds using the same version and distribution
+        of OpenStack are less likely to experience problems.</para>
     <para>Clouds that exclusively use the same versions of OpenStack should
-        have no issues, regardless of distribution. The newer the distribution in
-        question, the less likely it is that there will be
-        incompatibilities between versions. An OpenStack community initiative defines
-        core functions that need to remain backward compatible between supported
-        versions.</para>
-      <note>
-        <para>For example, the DefCore initiative defines
-           basic functions that every distribution must support in order
-           to bear the name <productname>OpenStack</productname>.</para>
-      </note>
+        have no issues, regardless of distribution. More recent distributions
+        are less likely to encounter incompatibility between versions. An
+        OpenStack community initiative defines core functions that need to
+        remain backward compatible between supported versions. For example, the
+        DefCore initiative defines basic functions that every distribution must
+        support in order to use the name <productname>OpenStack</productname>.
+    </para>
     <para>Vendors can add proprietary customization to their distributions. If
-        an application or architecture makes use of these features, it will be
+        an application or architecture makes use of these features, it can be
         difficult to migrate to or use other types of environments.</para>
     <para>If an environment includes non-OpenStack clouds, it may experience
-        compatibility problems. CMP tools must account for the differences in the
-        handling of operations and implementation of services. Some situations in which these
-        incompatibilities can arise include differences between the way in which a
-        cloud:</para>
+        compatibility problems. CMP tools must account for the differences in
+        the handling of operations and the implementation of services.</para>
     <itemizedlist>
+      <title>Possible cloud incompatibilities</title>
         <listitem>
-            <para>Deploys instances</para>
+            <para>Instance deployment</para>
         </listitem>
         <listitem>
-            <para>Manages networks</para>
+            <para>Network management</para>
         </listitem>
         <listitem>
-            <para>Treats applications</para>
+            <para>Application management</para>
         </listitem>
         <listitem>
-            <para>Implements services</para>
+            <para>Services implementation</para>
         </listitem>
     </itemizedlist>
 
     <section xml:id="capacity-planning-hybrid">
       <title>Capacity planning</title>
-    <para>One of the primary reasons many organizations turn to a
-        hybrid cloud system is to increase capacity without having to
-        make large capital investments.</para>
-    <para>Capacity, and the placement of workloads,
-        accounts for the design of a mostly
-        internally-operated cloud.
-        The long-term capacity plan for this design must incorporate
-        growth over time to prevent permanent consumption of a more
-        expensive external cloud. In order to avoid this scenario, we
-        recommend accounting for the future applications' capacity
-        requirements and plan growth appropriately.</para>
-    <para>Unpredictability is a consideration for capacity planning. It is
-        difficult to predict the amount of load a particular application
-        might incur if the number of users fluctuate, or the application
-        experiences an unexpected increase in popularity. It is possible
-        to define application requirements in terms of vCPU, RAM, bandwidth
-        or other resources and plan appropriately. However, other clouds
-        might not use the same meter or even the same oversubscription rates.</para>
+    <para>One of the primary reasons many organizations use a
+        hybrid cloud is to increase capacity without making large capital
+        investments.</para>
+    <para>Capacity and the placement of workloads are key design considerations
+        for hybrid clouds. The long-term capacity plan for these
+        designs must incorporate growth over time to prevent permanent
+        consumption of more expensive external clouds. To avoid this scenario,
+        account for future applications' capacity requirements and plan growth
+        appropriately.</para>
+    <para>It is difficult to predict the amount of load a particular
+        application might incur if the number of users fluctuates, or the
+        application experiences an unexpected increase in use. It is
+        possible to define application requirements in terms of vCPU, RAM,
+        bandwidth, or other resources and plan appropriately. However, other
+        clouds might not use the same meter or even the same oversubscription
+        rates.</para>
     <para>Oversubscription is a method to emulate more capacity than
         may physically be present. For example, a physical
         hypervisor node with 32&nbsp;GB RAM may host 24
         instances, each provisioned with 2&nbsp;GB RAM. As long
-        as all 24 instances are not concurrently utilizing 2 full
-        gigabytes, this arrangement is a non-issue. However, some
+        as all 24 instances do not concurrently use 2 full
+        gigabytes, this arrangement works well. However, some
         hosts take oversubscription to extremes and, as a result,
-        performance can frequently be inconsistent. If at all
+        performance can be inconsistent. If at all
         possible, determine what the oversubscription rates of each
         host are and plan capacity accordingly.</para>
     </section>
-
-    <section xml:id="security-hybrid">
-      <title>Security</title>
-    <para>Security domains are an important distinction when planning for a hybrid
-        cloud environment and its capabilities. A security domain
-        comprises users, applications, servers or networks that share
-        common trust requirements and expectations within a
-        system.</para>
-    <para>The security domains are:</para>
-    <orderedlist>
-        <listitem>
-            <para>Public</para>
-        </listitem>
-        <listitem>
-            <para>Guest</para>
-        </listitem>
-        <listitem>
-            <para>Management</para>
-        </listitem>
-        <listitem>
-            <para>Data</para>
-        </listitem>
-    </orderedlist>
-    <para>You can map the security domains individually to the
-        organization's installation or combine them. For example, some
-        deployment topologies combine both guest and data domains onto
-        one physical network, whereas other topologies physically
-        separate the networks. In each case, the cloud operator
-        should be aware of the appropriate security concerns.  We recommend
-        mapping security domains against the specific OpenStack
-        deployment topology. The domains and their trust requirements
-        depend upon whether the cloud instance is public, private, or
-        hybrid.</para>
-    <para>The public security domain is an entirely untrusted area of
-        the cloud infrastructure. It can refer to the internet as a
-        whole, or simply to networks over which an organization has no
-        authority. Do not trust this domain.
-        For example, in a hybrid cloud deployment, any information traversing
-        between and beyond the clouds is of the public domain and untrustworthy.</para>
-    <para>The guest security domain handles compute
-        data. Instances on the cloud generate the data, but not services that
-        support the operation of the cloud, such as API calls. We recommend not
-        to trust this domain if you are a public cloud provider that
-        uses hybrid cloud configurations, or a private cloud provider who does
-        not have controls on instance use and allows unrestricted internet access
-        to instances. Private cloud providers, however, can use this network as
-        an internally trusted network if controls are in place.</para>
-    <para>The management security domain is where services interact.
-        The networks in this domain transport confidential data such as configuration
-        parameters, user names, and passwords. Trust this domain when it is
-        behind an organization's firewall in deployments.</para>
-    <para>The data security domain is concerned primarily with
-        information pertaining to the storage services within
-        OpenStack. The data that crosses this network has integrity and
-        confidentiality requirements. Depending on the type of deployment there
-        may also be availability requirements. The trust level of this network
-        is heavily dependent on deployment decisions and does not have a default
-        level of trust.</para>
-    <para>When operating or utilizing public or private clouds, consider the management
-        of the users. The identity service allows for LDAP to be part of the
-        authentication process. Including these systems in your
-        OpenStack deployments may ease user management if integrating
-        into existing systems.</para>
-      <warning>
-        <para>Be mindful of consistency when utilizing third party
-        clouds to explore authentication options.</para>
-      </warning>
-    <para>Due to the passing of user names, passwords, and tokens between
-        client machines and API endpoints, we recommend the placement of API
-        services behind hardware to perform SSL termination.</para>
-    <para>The hypervisor also requires a security assessment. In a public cloud,
-        organizations typically do not have control over the choice of
-        hypervisor. For example, Amazon uses its own particular version of Xen.
-        Properly securing your hypervisor is important. Attacks made upon the
-        unsecured hypervisor are called a "hypervisor breakout".
-        Hypervisor breakout describes the event of a
-        compromised or malicious instance breaking out of the resource
-        controls of the hypervisor and gaining access to the bare
-        metal operating system and hardware resources.</para>
-    <para>There is not an issue if the security of instances is not important.
-        However, enterprises need to avoid vulnerability. The only way to
-        do this is to avoid the situation where the instances are running
-        on a public cloud. That does not mean that there is a
-        need to own all of the infrastructure on which an OpenStack
-        installation operates; it suggests avoiding situations in which
-        sharing hardware with others occurs.</para>
-    <para>There are other services worth considering that provide a
-        bare metal instance instead of a cloud. In other cases, it is
-        possible to replicate a second private cloud by integrating
-        with a private Cloud-as-a-Service deployment. The
-        organization does not buy the hardware, but also does not share
-        with other tenants. It is also possible to use a provider that
-        hosts a bare-metal "public" cloud instance for which the
-        hardware is dedicated only to one customer, or a provider that
-        offers private Cloud-as-a-Service.</para>
-    <para>It is important to realize that each cloud
-        implements services differently. What keeps data secure in one
-        cloud may not do the same in another. Be sure to know the
-        security requirements of every cloud that handles the
-        organization's data or workloads.</para>
-    <para>More information on OpenStack Security can be found in the
-        <link
-        xlink:href="http://docs.openstack.org/security-guide"><citetitle>OpenStack
-        Security Guide</citetitle></link>.
-        </para>
-      </section>
-
     <section xml:id="utilization-hybrid">
       <title>Utilization</title>
-    <para>When it comes to utilization, it is important that the CMP
-        understands what workloads are running, where they are
+    <para>A CMP must be aware of what workloads are running, where they are
         running, and their preferred utilizations. For example, in
         most cases it is desirable to run as many workloads internally
         as possible, utilizing other resources only when necessary. On
         the other hand, situations exist in which the opposite is
-        true. The internal cloud may only be for development and
-        stressing it is undesirable. In most cases, a cost model of
-        various scenarios helps with this decision. However, internal
-        priorities influence this analysis. To improve efficiency,
-        make these decisions programmatically.</para>
-    <para>The Telemetry module (ceilometer)
-        provides information on the usage of various OpenStack
-        components. There are two limitations to consider:</para>
+        true, such as when an internal cloud is only for development and
+        stressing it is undesirable. A cost model of various scenarios and
+        consideration of internal priorities helps with this decision. To
+        improve efficiency, automate these decisions when possible.</para>
+    <para>The Telemetry module (ceilometer) provides information on the usage
+        of various OpenStack components. Note the following:</para>
       <itemizedlist>
         <listitem>
           <para>
-          If there is to be a large amount of data (for example, if
-        monitoring a large cloud, or a very active one) it is
-        desirable to use a NoSQL back end for Ceilometer, such as
-        MongoDB.</para>
+            If Telemetry must retain a large amount of data, for
+            example when monitoring a large or active cloud, we recommend
+            using a NoSQL back end such as MongoDB.</para>
         </listitem>
         <listitem>
           <para>
-          You must monitor connections to non-OpenStack clouds
-         and report this information to the CMP.</para>
+            You must monitor connections to non-OpenStack clouds
+            and report this information to the CMP.</para>
         </listitem>
       </itemizedlist>
     </section>
 
     <section xml:id="performance-hybrid">
       <title>Performance</title>
-    <para>Performance is of the upmost importance in the design of a
-        cloud. When it comes to a hybrid cloud deployment, many of the
-        same issues for multi-site deployments apply, such as network
-        latency between sites. It is also important to think about the
-        speed at which a workload can be spun up in another cloud, and
-        how to reduce the time necessary to accomplish the task.
-        This may mean moving data closer to applications
-        or applications closer to the data they process, including a
+    <para>Performance is critical to hybrid cloud deployments, and they are
+        affected by many of the same issues as multi-site deployments,
+        such as network latency between sites. Also consider the time required
+        to run a workload in different clouds and methods for reducing this
+        time. This may require moving data closer to applications
+        or applications closer to the data they process, and
         grouping functionality so that connections that
         require low latency take place over a single cloud rather than
-        spanning clouds. This may also mean ensuring that the CMP has
-        the intelligence to know which cloud can most efficiently run
-        which types of workloads.</para>
-    <para>As with utilization, native OpenStack tools are available to
-        assist. Ceilometer can measure performance and, if necessary,
-        the Orchestration (heat) module can
-        react to changes in demand by spinning up more resources.</para>
+        spanning clouds. This may also require a CMP that can determine which
+        cloud can most efficiently run which types of workloads.</para>
+    <para>As with utilization, native OpenStack tools help improve performance.
+        For example, you can use Telemetry to measure performance and the
+        Orchestration module (heat) to react to changes in demand.</para>
       <note>
-        <para>It is important to note, however, that Orchestration requires
-        special configurations in the client to enable functioning
-        with solution offerings from Amazon Web Services. When dealing
-        with other types of clouds, it is necessary to rely on the
-        features of the CMP.
+        <para>Orchestration requires special client configurations to integrate
+          with Amazon Web Services. For other types of clouds, use CMP
+          features.
         </para>
       </note>
     </section>
 
     <section xml:id="components">
       <title>Components</title>
-    <para>The number and types of native OpenStack components that are
-        available for use is dependent on whether the deployment is
-        exclusively an OpenStack cloud or not.</para>
-    <para>Using more than one cloud in any situation requires
-        consideration of four OpenStack tools:</para>
-    <itemizedlist>
+    <para>Using more than one cloud in any design requires consideration of
+        four OpenStack tools:</para>
+    <variablelist>
+      <varlistentry>
+        <term>OpenStack Compute (nova)</term>
         <listitem>
-            <para>OpenStack Compute (nova): Regardless of deployment
-                location, hypervisor choice has a direct effect on how
-                difficult it is to integrate with one or more
-                additional clouds. For example, integrating a Hyper-V
-                based OpenStack cloud with Azure has less
-                compatibility issues than if KVM is used.</para>
+            <para>Regardless of deployment location, hypervisor choice has a
+                direct effect on how difficult it is to integrate with
+                additional clouds.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Networking (neutron)</term>
         <listitem>
-            <para>Networking (neutron): Whether OpenStack Networking
-                or legacy networking (nova-network) is used, the network is one place
-                where understanding integration capabilities is necessary
-                in order to connect between clouds.</para>
+            <para>Whether using OpenStack Networking (neutron) or legacy
+                networking (nova-network), it is necessary to understand
+                network integration capabilities in order to
+                connect between clouds.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Telemetry module (ceilometer)</term>
         <listitem>
-            <para>Telemetry module (ceilometer): Use of Telemetry
-                depends, in large part, on what the other parts of the
-                cloud are using.</para>
+            <para>Use of Telemetry depends, in large part, on what the other
+                parts of the cloud you are using.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Orchestration module (heat)</term>
         <listitem>
-            <para>Orchestration module (heat): Similarly, Orchestration can
-                be a valuable tool in orchestrating tasks a CMP
-                decides are necessary in an OpenStack-based
-                cloud.</para>
+            <para>Orchestration can be a valuable tool in orchestrating tasks a
+                CMP decides are necessary in an OpenStack-based cloud.</para>
         </listitem>
-    </itemizedlist>
+      </varlistentry>
+    </variablelist>
     </section>
 
     <section xml:id="special-considerations-hybrid">
       <title>Special considerations</title>
-    <para>Hybrid cloud deployments also involve two more issues that
+    <para>Hybrid cloud deployments require consideration of two issues that
         are not common in other situations:</para>
-      <itemizedlist>
+    <variablelist>
+      <varlistentry>
+        <term>Image portability</term>
         <listitem>
-          <para>Image portability: Note that, as of the Kilo release,
-        there is no single common image format that is usable by all
-        clouds. Conversion or the recreation of images is necessary
-        if porting between clouds. To make things simpler,
-        launch the smallest and simplest images feasible, installing
-        only what is necessary preferably using a deployment manager
-        such as Chef or Puppet. Do not use golden images for speeding up
-        the process. However, if you repeat the deployment of the same
-        images, we recommend utilizing this technique instead of provisioning
-        applications on lighter images each time.</para>
+          <para>As of the Kilo release, there is no common image format that is
+          usable by all clouds. Conversion or recreation of images is necessary
+          if migrating between clouds. To simplify deployment, use the smallest
+          and simplest images feasible, install only what is necessary, and
+          use a deployment manager such as Chef or Puppet. Do not use golden
+          images to speed up the process unless you repeatedly deploy the same
+          images on the same cloud.</para>
         </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>API differences</term>
         <listitem>
-          <para>API differences: Avoid using a hybrid cloud deployment with more than
-        just OpenStack (or with different versions of OpenStack).
-        The APIs need to perform certain functions that are different.
-        The CMP needs to know how to handle all necessary
-        versions. To get around this issue, some implementers build
-        portals to achieve a hybrid cloud environment, but a heavily
-        developer-focused organization may benefit more from a hybrid
-        cloud broker SDK such as jClouds.</para>
+          <para>Avoid using a hybrid cloud deployment with more than just
+          OpenStack (or with different versions of OpenStack) as API changes
+          can cause compatibility issues.</para>
         </listitem>
-      </itemizedlist>
+      </varlistentry>
+      </variablelist>
     </section>
 </section>
