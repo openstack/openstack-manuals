@@ -123,7 +123,13 @@ By default in Debian, you can access the MySQL server from either
 localhost through the socket file or 127.0.0.1. To access it over the
 network, you must edit the :file:`/etc/mysql/my.cnf` file, and the
 ``mysql.user`` table. To do so, Debian provides a helper script in the
-``openstack-deploy`` package. To use it, install the package and run:
+``openstack-deploy`` package. To use it, install the package:
+
+.. code-block:: console
+
+   # apt-get install openstack-deploy
+
+and run the helper script:
 
 .. code-block:: console
 
