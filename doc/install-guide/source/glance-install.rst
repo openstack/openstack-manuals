@@ -14,128 +14,132 @@ configuration stores images on the local file system.
    section as well as setup of the :file:`admin-openrc.sh` script
    as described in the ":doc:`keystone-openrc`" section.
 
-To configure prerequisites
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. only:: obs or rdo or ubuntu
 
-Before you install and configure the Image service, you must
-create a database, service credentials, and API endpoint.
+   To configure prerequisites
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. To create the database, complete these steps:
+   Before you install and configure the Image service, you must
+   create a database, service credentials, and API endpoint.
 
-   a. Use the database access client to connect to the database
-      server as the ``root`` user:
+   #. To create the database, complete these steps:
 
-      .. code-block:: console
+      a. Use the database access client to connect to the database
+         server as the ``root`` user:
 
-         $ mysql -u root -p
+         .. code-block:: console
 
-   b. Create the ``glance`` database:
+            $ mysql -u root -p
 
-      .. code-block:: console
+      b. Create the ``glance`` database:
 
-         CREATE DATABASE glance;
+         .. code-block:: console
 
-   c. Grant proper access to the ``glance`` database:
+            CREATE DATABASE glance;
 
-      .. code-block:: console
+      c. Grant proper access to the ``glance`` database:
 
-         GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
-           IDENTIFIED BY 'GLANCE_DBPASS';
-         GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
-           IDENTIFIED BY 'GLANCE_DBPASS';
+         .. code-block:: console
 
-      Replace ``GLANCE_DBPASS`` with a suitable password.
+            GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' \
+              IDENTIFIED BY 'GLANCE_DBPASS';
+            GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' \
+              IDENTIFIED BY 'GLANCE_DBPASS';
 
-   d. Exit the database access client.
+         Replace ``GLANCE_DBPASS`` with a suitable password.
 
-#. Source the ``admin`` credentials to gain access to
-   admin-only CLI commands:
+      d. Exit the database access client.
 
-   .. code-block:: console
-
-        $ source admin-openrc.sh
-
-#. To create the service credentials, complete these steps:
-
-   a. Create the ``glance`` user:
+   #. Source the ``admin`` credentials to gain access to
+      admin-only CLI commands:
 
       .. code-block:: console
 
-         $ openstack user create --password-prompt glance
-         User Password:
-         Repeat User Password:
-         +----------+----------------------------------+
-         | Field    | Value                            |
-         +----------+----------------------------------+
-         | email    | None                             |
-         | enabled  | True                             |
-         | id       | 1dc206e084334db2bee88363745da014 |
-         | name     | glance                           |
-         | username | glance                           |
-         +----------+----------------------------------+
+         $ source admin-openrc.sh
 
-   b. Add the ``admin`` role to the ``glance`` user and
-      ``service`` project:
+   #. To create the service credentials, complete these steps:
+
+      a. Create the ``glance`` user:
+
+         .. code-block:: console
+
+            $ openstack user create --password-prompt glance
+            User Password:
+            Repeat User Password:
+            +----------+----------------------------------+
+            | Field    | Value                            |
+            +----------+----------------------------------+
+            | email    | None                             |
+            | enabled  | True                             |
+            | id       | 1dc206e084334db2bee88363745da014 |
+            | name     | glance                           |
+            | username | glance                           |
+            +----------+----------------------------------+
+
+      b. Add the ``admin`` role to the ``glance`` user and
+         ``service`` project:
+
+         .. code-block:: console
+
+            $ openstack role add --project service --user glance admin
+            +-------+----------------------------------+
+            | Field | Value                            |
+            +-------+----------------------------------+
+            | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
+            | name  | admin                            |
+            +-------+----------------------------------+
+
+      c. Create the ``glance`` service entity:
+
+         .. code-block:: console
+
+            $ openstack service create --name glance \
+              --description "OpenStack Image service" image
+            +-------------+----------------------------------+
+            | Field       | Value                            |
+            +-------------+----------------------------------+
+            | description | OpenStack Image service          |
+            | enabled     | True                             |
+            | id          | 178124d6081c441b80d79972614149c6 |
+            | name        | glance                           |
+            | type        | image                            |
+            +-------------+----------------------------------+
+
+   #. Create the Image service API endpoint:
 
       .. code-block:: console
 
-         $ openstack role add --project service --user glance admin
-         +-------+----------------------------------+
-         | Field | Value                            |
-         +-------+----------------------------------+
-         | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
-         | name  | admin                            |
-         +-------+----------------------------------+
-
-   c. Create the ``glance`` service entity:
-
-      .. code-block:: console
-
-         $ openstack service create --name glance \
-           --description "OpenStack Image service" image
-         +-------------+----------------------------------+
-         | Field       | Value                            |
-         +-------------+----------------------------------+
-         | description | OpenStack Image service          |
-         | enabled     | True                             |
-         | id          | 178124d6081c441b80d79972614149c6 |
-         | name        | glance                           |
-         | type        | image                            |
-         +-------------+----------------------------------+
-
-#. Create the Image service API endpoint:
-
-   .. code-block:: console
-
-      $ openstack endpoint create \
-        --publicurl http://controller:9292 \
-        --internalurl http://controller:9292 \
-        --adminurl http://controller:9292 \
-        --region RegionOne \
-        image
-      +--------------+----------------------------------+
-      | Field        | Value                            |
-      +--------------+----------------------------------+
-      | adminurl     | http://controller:9292           |
-      | id           | 805b1dbc90ab47479111102bc6423313 |
-      | internalurl  | http://controller:9292           |
-      | publicurl    | http://controller:9292           |
-      | region       | RegionOne                        |
-      | service_id   | 178124d6081c441b80d79972614149c6 |
-      | service_name | glance                           |
-      | service_type | image                            |
-      +--------------+----------------------------------+
+         $ openstack endpoint create \
+           --publicurl http://controller:9292 \
+           --internalurl http://controller:9292 \
+           --adminurl http://controller:9292 \
+           --region RegionOne \
+           image
+         +--------------+----------------------------------+
+         | Field        | Value                            |
+         +--------------+----------------------------------+
+         | adminurl     | http://controller:9292           |
+         | id           | 805b1dbc90ab47479111102bc6423313 |
+         | internalurl  | http://controller:9292           |
+         | publicurl    | http://controller:9292           |
+         | region       | RegionOne                        |
+         | service_id   | 178124d6081c441b80d79972614149c6 |
+         | service_name | glance                           |
+         | service_type | image                            |
+         +--------------+----------------------------------+
 
 To install and configure the Image service components
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. note::
+.. only:: obs or rdo or ubuntu
 
-   Default configuration files vary by distribution. You might need
-   to add these sections and options rather than modifying existing
-   sections and options. Also, an ellipsis (...) in the configuration
-   snippets indicates potential default configuration options that you
-   should retain.
+   .. note::
+
+      Default configuration files vary by distribution. You might need
+      to add these sections and options rather than modifying existing
+      sections and options. Also, an ellipsis (...) in the configuration
+      snippets indicates potential default configuration options that you
+      should retain.
 
 .. only:: obs
 
@@ -164,152 +168,154 @@ To install and configure the Image service components
 
          # apt-get install glance python-glanceclient
 
-2. Edit the :file:`/etc/glance/glance-api.conf` file and complete
-   the following actions:
+.. only:: obs or rdo or ubuntu
 
-   a. In the ``[database]`` section, configure database access:
+   2. Edit the :file:`/etc/glance/glance-api.conf` file and complete
+      the following actions:
 
-      .. code-block:: ini
-         :linenos:
+      a. In the ``[database]`` section, configure database access:
 
-         [database]
-         ...
-         connection = mysql://glance:GLANCE_DBPASS@controller/glance
+         .. code-block:: ini
+            :linenos:
 
-      Replace ``GLANCE_DBPASS`` with the password you chose for the
-      Image service database.
+            [database]
+            ...
+            connection = mysql://glance:GLANCE_DBPASS@controller/glance
 
-   b. In the ``[keystone_authtoken]`` and ``[paste_deploy]`` sections,
-      configure Identity service access:
+         Replace ``GLANCE_DBPASS`` with the password you chose for the
+         Image service database.
 
-      .. code-block:: ini
-         :linenos:
+      b. In the ``[keystone_authtoken]`` and ``[paste_deploy]`` sections,
+         configure Identity service access:
 
-         [keystone_authtoken]
-         ...
-         auth_uri = http://controller:5000
-         auth_url = http://controller:35357
-         auth_plugin = password
-         project_domain_id = default
-         user_domain_id = default
-         project_name = service
-         username = glance
-         password = GLANCE_PASS
+         .. code-block:: ini
+            :linenos:
 
-         [paste_deploy]
-         ...
-         flavor = keystone
+            [keystone_authtoken]
+            ...
+            auth_uri = http://controller:5000
+            auth_url = http://controller:35357
+            auth_plugin = password
+            project_domain_id = default
+            user_domain_id = default
+            project_name = service
+            username = glance
+            password = GLANCE_PASS
 
-      Replace ``GLANCE_PASS`` with the password you chose for the
-      ``glance`` user in the Identity service.
+            [paste_deploy]
+            ...
+            flavor = keystone
 
-      .. note::
+         Replace ``GLANCE_PASS`` with the password you chose for the
+         ``glance`` user in the Identity service.
 
-         Comment out or remove any other options in the
-         ``[keystone_authtoken]`` section.
+         .. note::
 
-   c. In the ``[glance_store]`` section, configure the local file
-      system store and location of image files:
+            Comment out or remove any other options in the
+            ``[keystone_authtoken]`` section.
 
-      .. code-block:: ini
-         :linenos:
+      c. In the ``[glance_store]`` section, configure the local file
+         system store and location of image files:
 
-         [glance_store]
-         ...
-         default_store = file
-         filesystem_store_datadir = /var/lib/glance/images/
+         .. code-block:: ini
+            :linenos:
 
-   d. In the ``[DEFAULT]`` section, configure the ``noop``
-      notification driver to disable notifications because
-      they only pertain to the optional Telemetry service:
+            [glance_store]
+            ...
+            default_store = file
+            filesystem_store_datadir = /var/lib/glance/images/
 
-      .. code-block:: ini
-         :linenos:
+      d. In the ``[DEFAULT]`` section, configure the ``noop``
+         notification driver to disable notifications because
+         they only pertain to the optional Telemetry service:
 
-         [DEFAULT]
-         ...
-         notification_driver = noop
+         .. code-block:: ini
+            :linenos:
 
-      The Telemetry chapter provides an Image service configuration
-      that enables notifications.
+            [DEFAULT]
+            ...
+            notification_driver = noop
 
-   e. (Optional) To assist with troubleshooting,
-      enable verbose logging in the ``[DEFAULT]`` section:
+         The Telemetry chapter provides an Image service configuration
+         that enables notifications.
 
-      .. code-block:: ini
-         :linenos:
+      e. (Optional) To assist with troubleshooting,
+         enable verbose logging in the ``[DEFAULT]`` section:
 
-         [DEFAULT]
-         ...
-         verbose = True
+         .. code-block:: ini
+            :linenos:
 
-3. Edit the :file:`/etc/glance/glance-registry.conf` file and
-   complete the following actions:
+            [DEFAULT]
+            ...
+            verbose = True
 
-   a. In the ``[database]`` section, configure database access:
+   3. Edit the :file:`/etc/glance/glance-registry.conf` file and
+      complete the following actions:
 
-      .. code-block:: ini
-         :linenos:
+      a. In the ``[database]`` section, configure database access:
 
-         [database]
-         ...
-         connection = mysql://glance:GLANCE_DBPASS@controller/glance
+         .. code-block:: ini
+            :linenos:
 
-      Replace ``GLANCE_DBPASS`` with the password you chose for the
-      Image service database.
+            [database]
+            ...
+            connection = mysql://glance:GLANCE_DBPASS@controller/glance
 
-   b. In the ``[keystone_authtoken]`` and ``[paste_deploy]`` sections,
-      configure Identity service access:
+         Replace ``GLANCE_DBPASS`` with the password you chose for the
+         Image service database.
 
-      .. code-block:: ini
-         :linenos:
+      b. In the ``[keystone_authtoken]`` and ``[paste_deploy]`` sections,
+         configure Identity service access:
 
-         [keystone_authtoken]
-         ...
-         auth_uri = http://controller:5000
-         auth_url = http://controller:35357
-         auth_plugin = password
-         project_domain_id = default
-         user_domain_id = default
-         project_name = service
-         username = glance
-         password = GLANCE_PASS
+         .. code-block:: ini
+            :linenos:
 
-         [paste_deploy]
-         ...
-         flavor = keystone
+            [keystone_authtoken]
+            ...
+            auth_uri = http://controller:5000
+            auth_url = http://controller:35357
+            auth_plugin = password
+            project_domain_id = default
+            user_domain_id = default
+            project_name = service
+            username = glance
+            password = GLANCE_PASS
 
-      Replace ``GLANCE_PASS`` with the password you chose for the
-      ``glance`` user in the Identity service.
+            [paste_deploy]
+            ...
+            flavor = keystone
 
-      .. note::
+         Replace ``GLANCE_PASS`` with the password you chose for the
+         ``glance`` user in the Identity service.
 
-         Comment out or remove any other options in the
-         ``[keystone_authtoken]`` section.
+         .. note::
 
-   c. In the ``[DEFAULT]`` section, configure the ``noop`` notification
-      driver to disable notifications because they only pertain to the
-      optional Telemetry service:
+            Comment out or remove any other options in the
+            ``[keystone_authtoken]`` section.
 
-      .. code-block:: ini
-         :linenos:
+      c. In the ``[DEFAULT]`` section, configure the ``noop`` notification
+         driver to disable notifications because they only pertain to the
+         optional Telemetry service:
 
-         [DEFAULT]
-         ...
-         notification_driver = noop
+         .. code-block:: ini
+            :linenos:
 
-      The Telemetry chapter provides an Image service configuration
-      that enables notifications.
+            [DEFAULT]
+            ...
+            notification_driver = noop
 
-   d. (Optional) To assist with troubleshooting,
-      enable verbose logging in the ``[DEFAULT]`` section:
+         The Telemetry chapter provides an Image service configuration
+         that enables notifications.
 
-      .. code-block:: ini
-         :linenos:
+      d. (Optional) To assist with troubleshooting,
+         enable verbose logging in the ``[DEFAULT]`` section:
 
-         [DEFAULT]
-         ...
-         verbose = True
+         .. code-block:: ini
+            :linenos:
+
+            [DEFAULT]
+            ...
+            verbose = True
 
 .. only:: rdo or ubuntu
 
@@ -319,12 +325,32 @@ To install and configure the Image service components
 
          # su -s /bin/sh -c "glance-manage db_sync" glance
 
+.. only:: debian
+
+   1. Install the packages:
+
+      .. code-block:: console
+
+         # apt-get install glance python-glanceclient
+
+   2. Respond to prompts for
+      :doc:`database management <debconf/debconf-dbconfig-common>`,
+      :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
+      :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
+      and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
+
+   3. Select the ``keystone`` pipeline to configure the Image service
+      to use the Identity service:
+
+      .. image:: figures/debconf-screenshots/glance-common_pipeline_flavor.png
+         :width: 100%
+
 To finalize installation
 ------------------------
 
 .. only:: obs or rdo
 
-   #. Start the Image service services and configure them to start when
+   1. Start the Image service services and configure them to start when
       the system boots:
 
       .. code-block:: console
@@ -332,16 +358,18 @@ To finalize installation
          # systemctl enable openstack-glance-api.service openstack-glance-registry.service
          # systemctl start openstack-glance-api.service openstack-glance-registry.service
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
-   #. Restart the Image service services:
+   1. Restart the Image service services:
 
       .. code-block:: console
 
          # service glance-registry restart
          # service glance-api restart
 
-   #. By default, the Ubuntu packages create an SQLite database.
+.. only:: ubuntu
+
+   2. By default, the Ubuntu packages create an SQLite database.
 
       Because this configuration uses an SQL database server, you can
       remove the SQLite database file:
