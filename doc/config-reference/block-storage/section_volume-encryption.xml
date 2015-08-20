@@ -8,62 +8,78 @@
      xmlns:xlink="http://www.w3.org/1999/xlink"
      version="5.0"
      xml:id="section_volume-encryption">
-    <title>Volume encryption with static key</title>
-    <para>This is an implementation of a key manager that reads its key from the project's
-        configuration options.</para>
+    <title>Volume encryption supported by the key manager</title>
     <para>
-        This key manager implementation provides limited security, assuming that the
-        key remains secret. Volume encryption provides protection against a lost or
-        stolen disk, assuming that the configuration file that contains the key is
-        not stored on the disk.  Encryption also protects the confidentiality of data
-        as it is transmitted via iSCSI from the compute host to the storage host
-        as long as an attacker who intercepts the data does not know the secret key.</para>
-    <para>
-        Because this implementation uses a single, fixed key, it does not provide
-        protection if that key is compromised. In particular, different volumes
-        encrypted with a key provided by this key manager actually share the same
-        encryption key so <emphasis>any</emphasis> volume can be decrypted once the fixed key is known.</para>
-    <para>Updates are in the pipeline which will provide true key manager support via the key management service.
-        This will provide much better security once complete.</para>
+        We recommend the Key management service (barbican) for storing
+        encryption keys used by the OpenStack volume encryption feature. It
+        can be enabled by updating
+        <filename>cinder.conf</filename> and <filename>nova.conf</filename>.
+    </para>
+
     <section xml:id="section_initial-configuration">
         <title>Initial configuration</title>
         <procedure>
-          <para>Configuration changes need to be made to any nodes running the <systemitem class="service">cinder-volume</systemitem> or
-              <systemitem class="service">nova-compute</systemitem> services.</para>
-          <para>Update <systemitem class="service">cinder-volume</systemitem> servers:</para>
-          <step>
-            <para>Edit the <filename>/etc/cinder/cinder.conf</filename> file and add or update the value of the option
-                <option>fixed_key</option> in the <literal>[keymgr]</literal> section:</para>
-            <programlisting>[keymgr]
-# Fixed key returned by key manager, specified in hex (string
-# value)
-fixed_key = 0000000000000000000000000000000000000000000000000000000000000000</programlisting>
+          <para>Configuration changes need to be made to any nodes running the
+              <systemitem class="service">cinder-volume</systemitem> or
+              <systemitem class="service">nova-compute</systemitem>
+               server.</para>
+          <para>Steps to
+               update <systemitem class="service">cinder-volume</systemitem>
+                  servers:</para>
+          <step><para>Edit the <filename>/etc/cinder/cinder.conf</filename> file to
+                use Key management service as follows:</para>
+            <substeps>
+                  <step>
+                  <para>Look for the <literal>[keymgr]</literal> section.</para>
+                  </step>
+                  <step>
+                  <para>Enter a new line directly below
+                      <literal>[keymgr]</literal> with the following:
+                      api_class=cinder.keymgr.barbican.BarbicanKeyManager</para>
+                  <note>
+                       <para>Use a '#' prefix to comment out the line in this
+                             section that begins with 'fixed_key'.</para>
+                  </note>
+                  </step>
+            </substeps>
           </step>
-            <step>
-                <para>Restart <systemitem class="service">cinder-volume</systemitem>.</para>
-            </step>
-          </procedure>
-          <procedure>
-          <para>Update <systemitem class="service">nova-compute</systemitem> servers:</para>
           <step>
-            <para>Edit the <filename>/etc/nova/nova.conf</filename> file and add or update the value of the option
-                <option>fixed_key</option> in the <literal>[keymgr]</literal> section (add a keymgr section as shown if needed):</para>
-            <programlisting>[keymgr]
-# Fixed key returned by key manager, specified in hex (string
-# value)
-fixed_key = 0000000000000000000000000000000000000000000000000000000000000000</programlisting>
-          </step>
-          <step>
-              <para>Restart <systemitem class="service">nova-compute</systemitem>.</para>
+             <para>Restart <systemitem
+                   class="service">cinder-volume</systemitem>.</para>
           </step>
         </procedure>
+        <procedure>
+          <para>Update <systemitem class="service">nova-compute</systemitem>
+                  servers:</para>
+          <step>
+            <para>Repeat the same steps above to set up the Key management
+                  service by editing <filename>/etc/nova/nova.conf</filename>
+            </para>
+          </step>
+          <step>
+              <para>Restart <systemitem
+                  class="service">nova-compute</systemitem>.</para>
+          </step>
+        </procedure>
+        <para>Follow the instructions in the OpenStack Admin User Guide under the heading
+<link xlink:href="http://docs.openstack.org/user-guide-admin/dashboard_manage_volumes.html">
+Create an encrypted volume type</link>
+              or alternatively, see
+              <xref linkend="section_create-encrypted-volume-type"/>
+              in this manual to do this via the command line.</para>
+        <para><emphasis>Create</emphasis> an encrypted volume by typing the command:</para>
+        <screen><prompt>$</prompt> <userinput>cinder create --name encryptedVolume
+ --volume-type LUKS 1</userinput></screen>
+        <para>For alternate instructions and details, including the console output, see the
+              <xref linkend="section_create_volume"/> in this document.</para>
     </section>
     <section xml:id="section_create-encrypted-volume-type">
-    <title>Create encrypted volume type</title>
+    <title>Create an encrypted volume type</title>
+
         <para>Block Storage volume type assignment provides scheduling to a specific back-end,
             and can be used to specify actionable information for a back-end storage device.</para>
-        <para>This example creates a volume type called LUKS and provides configuration information for the storage system to
-            encrypt or decrypt the volume.</para>
+        <para>This example creates a volume type called LUKS and provides configuration information
+            for the storage system to encrypt or decrypt the volume.</para>
         <procedure>
           <step>
               <para>Source your admin credentials:</para>
