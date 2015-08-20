@@ -110,4 +110,23 @@ Allow from all
                 browser redirects you to the HTTPS page.</para>
         </step>
     </procedure>
+  <note>
+        <para>Configuring the dashboard for HTTPS also requires enabling SSL
+            for the noVNC proxy service.
+            On the controller node, add the following additional options to the
+                    <filename>[DEFAULT]</filename>
+                section of the
+                    <filename>/etc/nova/nova.conf</filename>
+                file:
+            <programlisting language="python">[DEFAULT]
+...
+ssl_only = true
+cert = /etc/apache2/SSL/openstack.example.com.crt
+key = /etc/apache2/SSL/openstack.example.com.key</programlisting></para>
+        <para>On the compute nodes, ensure the <code>nonvncproxy_base_url</code>
+            option points to a URL with an HTTPS scheme:</para>
+            <programlisting language="python">[DEFAULT]
+...
+novncproxy_base_url = https://controller:6080/vnc_auto.html</programlisting>
+</note>
 </section>
