@@ -60,11 +60,9 @@ guide (for more information, see `Apache Zookeeper <http://zookeeper.apache.org/
 Python libraries must be installed on every compute node:
 
 **python-zookeeper**
-
   The official Zookeeper Python binding
 
 **evzookeeper**
-
   This library makes the binding work with the eventlet threading model.
 
 This example assumes the ZooKeeper server addresses and ports are
@@ -81,10 +79,9 @@ node for the ZooKeeper driver:
    [zookeeper]
    address="192.168.2.1:2181,192.168.2.2:2181,192.168.2.3:2181"
 
-To customize the Compute Service groups, use these configuration option
-settings:
-
-.. TODO ../../common/tables/nova-zookeeper.xml
+For Compute Service groups customization options, see the `OpenStack
+Configuration Reference Guide <http://docs.openstack.org/kilo/config-reference/
+content/list-of-compute-config-options.html#config_table_nova_zookeeper>`_.
 
 .. _memcache-servicegroup-driver:
 
