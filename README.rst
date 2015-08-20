@@ -48,7 +48,7 @@ The different manuals are in subdirectories of the
 
 DocBook guides
 --------------
-* Normal guides
+
 For example, the root directory of the *OpenStack Virtual Machine Image Guide*
 is ``openstack-manuals/doc/image-guide``.
 
@@ -66,22 +66,6 @@ The root of the generated HTML documentation is::
 
     openstack-manuals/doc/image-guide/target/docbkx/webhelp/image-guide/content/index.html
 
-* Installation guides
-The root directory of the *OpenStack Install Guides*
-is ``openstack-manuals/doc/install-guide``, you can get different operating system's guides::
-
-    cd openstack-manuals/doc/install-guide/
-    mvn clean generate-sources -Dprofile.os="ubuntu" -Doperating.system="apt"
-    mvn clean generate-sources -Dprofile.os="rhel;centos;fedora" -Doperating.system="yum"
-    mvn clean generate-sources -Dprofile.os="opensuse" -Doperating.system="zypper"
-
-The generated PDF documentation file is::
-
-    openstack-manuals/doc/install-guide/target/docbkx/webhelp/local/install-guide/install/${operating.system}/openstack-install-guide-${operating.system}-local.pdf
-
-The root of the generated HTML documentation is::
-
-    openstack-manuals/doc/install-guide/target/docbkx/webhelp/local/install-guide/install/${operating.system}/content/index.html
 
 RST guides
 ----------
