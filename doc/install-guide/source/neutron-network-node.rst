@@ -251,7 +251,7 @@ The :term:`Layer-3 (L3) agent` provides routing services for virtual networks.
       external_network_bridge =
       router_delete_namespaces = True
 
-   .. note:
+   .. note::
 
       The ``external_network_bridge`` option intentionally lacks a value
       to enable multiple external networks on a single agent.
