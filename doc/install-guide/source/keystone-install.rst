@@ -29,7 +29,7 @@ database and an administration token.
 
          CREATE DATABASE keystone;
 
-   c. Grant proper access to the :file:`keystone` database:
+   c. Grant proper access to the ``keystone`` database:
 
       .. code-block:: console
 
