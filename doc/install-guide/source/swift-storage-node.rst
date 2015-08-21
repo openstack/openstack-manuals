@@ -98,7 +98,7 @@ a separate network for replication. For more information, see
         # mkdir -p /srv/node/sdb1
         # mkdir -p /srv/node/sdc1
 
-   * Edit the :file:`etc/fstab` file and add the following to it:
+   * Edit the :file:`/etc/fstab` file and add the following to it:
 
      .. code-block:: ini
         :linenos:
