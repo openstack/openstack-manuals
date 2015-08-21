@@ -16,7 +16,7 @@ Bulk delete request
 To perform a bulk delete operation, add the ``bulk-delete`` query
 parameter to the path of a ``POST`` or ``DELETE`` operation.
 
-.. note:
+.. note::
 
   The ``DELETE`` operation is supported for backwards compatibility.
 

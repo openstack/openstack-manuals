@@ -25,7 +25,7 @@ Create a container
 
 You have successfully created a container.
 
-.. note: To delete a container, click the :guilabel:`More` button and select
+.. note:: To delete a container, click the :guilabel:`More` button and select
    :guilabel:`Delete Container`.
 
 Upload an object
@@ -50,7 +50,7 @@ Upload an object
 
 You have successfully uploaded an object to the container.
 
-.. note: To delete an object, click the :guilabel:`More button` and select
+.. note:: To delete an object, click the :guilabel:`More button` and select
    :guilabel:`Delete Object`.
 
 Manage an object
@@ -70,7 +70,7 @@ Manage an object
 
 #. Click :guilabel:`Update Object`.
 
-.. note: To delete an object, click the :guilabel:`More` button and select
+.. note:: To delete an object, click the :guilabel:`More` button and select
    :guilabel:`Delete Object`.
 
 **To copy an object from one container to another**

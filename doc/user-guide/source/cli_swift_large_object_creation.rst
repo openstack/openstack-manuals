@@ -41,7 +41,7 @@ object. The large object is comprised of two types of objects:
     ``PREFIX`` is a string that all segment objects have in common.
     See :ref:`dynamic_large_objects`.
 
-.. note:
+.. note::
 
    If you make a ``COPY`` request by using a manifest object as the source,
    the new object is a normal, and not a segment, object. If the total size

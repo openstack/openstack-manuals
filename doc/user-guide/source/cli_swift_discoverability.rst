@@ -41,7 +41,7 @@ This example shows a truncated response body:
 This output shows that the Object Storage system has enabled the static
 website and temporary URL features.
 
-.. note:
+.. note::
 
    In some cases, the ``/info`` request will return an error. This could be
    because your service provider has disabled the ``/info`` request
