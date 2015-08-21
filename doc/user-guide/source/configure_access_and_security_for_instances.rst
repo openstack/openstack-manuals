@@ -41,7 +41,7 @@ access to the instances.
 This procedure can be adjusted as necessary to add additional security
 group rules to a project, if your cloud requires them.
 
-.. note: When adding a rule, you must specify the protocol used with the
+.. note:: When adding a rule, you must specify the protocol used with the
    destination port or source port.
 
 #. Log in to the dashboard, choose a project, and click :guilabel:`Access &
@@ -54,14 +54,14 @@ group rules to a project, if your cloud requires them.
 
 #. In the :guilabel:`Add Rule` dialog box, enter the following values:
 
-+--------------------------------------+--------------------------------------+
-| Rule                                 | Remote                               |
-|                                      |                                      |
-| ``SSH``                              | ``CIDR``                             |
-+--------------------------------------+--------------------------------------+
+   +------------------------------------+------------------------------------+
+   | Rule                               | Remote                             |
+   |                                    |                                    |
+   | ``SSH``                            | ``CIDR``                           |
+   +------------------------------------+------------------------------------+
 
-.. note:: To accept requests from a particular range of IP addresses, specify
-   the IP address block in the :guilabel:`CIDR` box.
+   .. note:: To accept requests from a particular range of IP addresses, specify
+      the IP address block in the :guilabel:`CIDR` box.
 
 #. Click :guilabel:`Add`.
 
@@ -72,11 +72,11 @@ group rules to a project, if your cloud requires them.
 
 #. In the :guilabel:`Add Rule` dialog box, enter the following values:
 
-+--------------------------------------+--------------------------------------+
-| Rule                                 | Direction                            |
-|                                      |                                      |
-| ``All ICMP``                         | ``Ingress``                          |
-+--------------------------------------+--------------------------------------+
+   +------------------------------------+------------------------------------+
+   | Rule                               | Direction                          |
+   |                                    |                                    |
+   | ``All ICMP``                       | ``Ingress``                        |
+   +------------------------------------+------------------------------------+
 
 #. Click :guilabel:`Add`.
 
@@ -128,10 +128,10 @@ Import a key pair
 
        $ chmod 0600 yourPrivateKey.pem
 
-.. note:: If you are using the dashboard from a Windows computer, use PuTTYgen
-   to load the ``*.pem`` file and convert and save it as ``*.ppk``. For
-   more information see the `WinSCP web page for
-   PuTTYgen <http://winscp.net/eng/docs/ui_puttygen>`__.
+   .. note:: If you are using the dashboard from a Windows computer, use PuTTYgen
+      to load the ``*.pem`` file and convert and save it as ``*.ppk``. For
+      more information see the `WinSCP web page for
+      PuTTYgen <http://winscp.net/eng/docs/ui_puttygen>`__.
 
 #. To make the key pair known to SSH, run the **ssh-add** command.
 
