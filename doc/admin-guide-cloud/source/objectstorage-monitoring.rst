@@ -146,7 +146,7 @@ method (see the list below) overrides it. Currently, no logging calls
 override the sample rate, but it is conceivable that some meters may
 require accuracy (sample\_rate == 1) while others may not.
 
-.. code:
+.. code::
 
     [DEFAULT]
          ...
