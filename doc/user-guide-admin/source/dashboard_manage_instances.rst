@@ -8,7 +8,7 @@ create a snapshot from, and migrate instances. You can also view the
 logs for instances or launch a VNC console for an instance.
 
 For information about using the dashboard to launch instances as an end
-user, see the `OpenStack End User Guide <http://docs.openstack.org/user-guide/>`__.
+user, see the `OpenStack End User Guide <http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__.
 
 Create instance snapshots
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -28,7 +28,7 @@ Create instance snapshots
 
 #. To launch an instance from the snapshot, select the snapshot and
    click Launch. For information about launching instances, see the
-   `OpenStack End User Guide <http://docs.openstack.org/user-guide/>`__.
+   `OpenStack End User Guide <http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__.
 
 Control the state of an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
