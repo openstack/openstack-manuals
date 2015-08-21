@@ -48,11 +48,10 @@ Launch a stack
    |                                       | additional settings for the   |
    |                                       | stack.                        |
    +---------------------------------------+-------------------------------+
-   | :guilabel:`Environment URL/File/Data` | Depending on the source that  |
-   |                                       | you select, enter the URL,    |
-   |                                       | browse to the file location,  |
-   |                                       | directly include the          |
-   |                                       | environment.                  |
+   | :guilabel:`Environment File/Data`     | Depending on the source that  |
+   |                                       | you select, browse to the     |
+   |                                       | file location, directly       |
+   |                                       | include the environment       |
    +---------------------------------------+-------------------------------+
 
 #. Click :guilabel:`Next`.
@@ -119,8 +118,8 @@ Events
 Manage a stack
 ~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click :guilabel:
-   `Stacks`.
+#. Log in to the dashboard, choose a project, and click
+   :guilabel:`Stacks`.
 #. Select the stack that you want to update.
 #. Click :guilabel:`Change Stack Template`.
 #. In the :guilabel:`Select Template` dialog box, select the
