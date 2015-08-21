@@ -13,3 +13,4 @@ Advanced configuration
    adv_config_group_policy.rst
    adv_config_debugging.rst
    adv_config_ipv6.rst
+   adv_config_sriov.rst
