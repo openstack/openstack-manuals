@@ -88,7 +88,7 @@ list, as follows::
 
 .. note::
 
-   To store location metadata for images, which enables direct file access for a client, update the ``/etc/glance/glance.conf`` file with the following statements:
+   To store location metadata for images, which enables direct file access for a client, update the ``/etc/glance/glance-api.conf`` file with the following statements:
 
    -  ``show_multiple_locations = True``
 
