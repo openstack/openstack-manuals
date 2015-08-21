@@ -256,7 +256,7 @@ creates a transfer request and sends the created transfer ID and
 authorization key to the volume recipient. The volume recipient, or new
 owner, accepts the transfer by using the ID and key.
 
-.. note:
+.. note::
 
   The procedure for volume transfer is intended for tenants (both the
   volume donor and recipient) within the same cloud.
