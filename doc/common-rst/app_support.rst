@@ -41,7 +41,7 @@ The following books explain how to configure and run an OpenStack cloud:
    Guide <http://docs.openstack.org/arch-design/content/>`__
 
 -  `Cloud Administrator
-   Guide <http://docs.openstack.org/admin-guide-cloud/content/>`__
+   Guide <http://docs.openstack.org/admin-guide-cloud/>`__
 
 -  `Configuration
    Reference <http://docs.openstack.org/juno/config-reference/content/>`__
