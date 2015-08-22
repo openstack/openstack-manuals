@@ -126,7 +126,7 @@ ipv6_ra_mode and ipv6_address_mode combinations
      - 1,0,0
      - Off
      - Not currently implemented in the reference implementation.
-   * - dhcpv6-statefull
+   * - dhcpv6-stateful
      - *N/S*
      - 0,1,1
      - Off
@@ -180,7 +180,7 @@ ipv6_ra_mode and ipv6_address_mode combinations
      -
      - *Invalid combination.*
    * - dhcpv6-stateless
-     - dhcpv6-statefull
+     - dhcpv6-stateful
      -
      -
      - *Invalid combination.*
