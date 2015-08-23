@@ -9,7 +9,7 @@ access.
 
 To create and manage images in specified projects as an end
 user, see the `OpenStack End User Guide
-<http://docs.openstack.org/user-guide/content/>`_.
+<http://docs.openstack.org/user-guide/>`_.
 
 To create and manage images as an administrator for other
 users, use the following procedures.
