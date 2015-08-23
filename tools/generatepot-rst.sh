@@ -32,7 +32,13 @@ tools/glossary2rst.py doc/common-rst/glossary.rst
 # old references
 
 rm -f doc/$DOCNAME/source/locale/$DOCNAME.pot
-sphinx-build -b gettext doc/$DOCNAME/source/ doc/$DOCNAME/source/locale/
+
+# We need to extract all strings, so add all supported tags
+TAG=""
+if [ ${DOCNAME} = "install-guide" ] ; then
+    TAG="-t obs -t rdo -t ubuntu -t debian"
+fi
+sphinx-build -b gettext $TAG doc/$DOCNAME/source/ doc/$DOCNAME/source/locale/
 
 # Update common
 sed -i -e 's/^"Project-Id-Version: [a-zA-Z0-9\. ]+\\n"$/"Project-Id-Version: \\n"/' \
