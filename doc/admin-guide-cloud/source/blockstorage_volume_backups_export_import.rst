@@ -1,7 +1,7 @@
-.. _volume_backups_export_import:
-
 .. highlight: ini
    :linenothreshold: 5
+
+.. _volume_backups_export_import:
 
 =================================
 Export and import backup metadata
@@ -15,10 +15,7 @@ the database used by the Block Storage service.
 .. note::
 
     For information about how to back up and restore a volume, see
-    `the section called “Back up and restore volumes”
-    <http://docs.openstack.org/admin-guide-cloud/content/volume-backup-restore.html>`__.
-
-.. TODO (zhangguoqing) I will replace the url to :ref:
+    the section called :ref:`volume_backups`.
 
 You can, however, export the metadata of a volume backup. To do so, run
 this command as an OpenStack ``admin`` user (presumably, after creating
@@ -57,7 +54,4 @@ To import backup metadata, run the following command as an OpenStack
 Where *METADATA* is the backup metadata exported earlier.
 
 Once you have imported the backup metadata into a Block Storage database,
-restore the volume (`the section called “Back up and restore volumes”
-<http://docs.openstack.org/admin-guide-cloud/content/volume-backup-restore.html>`__).
-
-.. TODO (zhangguoqing) I will replace the url to :ref:
+restore the volume (see the section called :ref:`volume_backups`).

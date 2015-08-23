@@ -46,9 +46,7 @@ settings for OpenStack Compute.
 
 The network mode does not interfere with OpenStack Block Storage
 operations, but you must set up networking for Block Storage to work.
-For details, see Chapter 7, Networking.
-
-.. TODO (MZ) Add ch_networking as a reference to the sentence above.
+For details, see :ref:`networking`.
 
 To set up Compute to use volumes, ensure that Block Storage is
 installed along with ``lvm2``. This guide describes how to
