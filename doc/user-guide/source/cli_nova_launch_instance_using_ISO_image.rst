@@ -14,7 +14,7 @@ with the following parameters to boot an instance::
     $ nova boot \
         --image ubuntu-14.04.2-server-amd64.iso \
         --block-device source=blank,dest=volume,size=10,shutdown=preserve \
-        --nic net-id = NETWORK_UUID
+        --nic net-id = NETWORK_UUID \
         --flavor 2 INSTANCE_NAME
     +--------------------------------------+--------------------------------------------+
     | Property                             | Value                                      |
