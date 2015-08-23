@@ -157,7 +157,7 @@ for each client. The following values are valid:
 
 -  ``nova`` - Compute API and extensions
 
--  ``sahara`` - Database Processing API
+-  ``sahara`` - Data Processing API
 
 -  ``swift`` - Object Storage API
 
