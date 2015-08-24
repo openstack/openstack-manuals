@@ -2,6 +2,13 @@
 
 mkdir -p publish-docs
 
+LINKCHECK=""
+if [[ $# > 0 ]] ; then
+    if [ "$1" = "--linkcheck" ] ; then
+        LINKCHECK="$1"
+    fi
+fi
+
 title_org=$(grep "title::" doc/install-guide/source/index.rst | \
               awk '{print substr($0, index($0, "::")+3)}')
 
@@ -19,5 +26,6 @@ for tag in obs rdo ubuntu debian; do
     sed -i -e "s/\.\. title::.*/.. title:: ${title}/" \
       doc/install-guide/source/index.rst
     tools/build-rst.sh doc/install-guide  \
-        $GLOSSARY --tag ${tag} --target "draft/install-guide-${tag}"
+        $GLOSSARY --tag ${tag} --target "draft/install-guide-${tag}" \
+        $LINKCHECK
 done
