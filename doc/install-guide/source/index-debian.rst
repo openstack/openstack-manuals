@@ -1,30 +1,6 @@
-.. title:: OpenStack Installation Guide
-
-.. Don't remove or change title tag manually, which is used by the build tool.
-
-.. only:: rdo
-
-   =============================================================================
-   OpenStack Installation Guide for Red Hat Enterprise Linux, CentOS, and Fedora
-   =============================================================================
-
-.. only:: obs
-
-   ===================================================================
-   OpenStack Installation Guide for openSUSE and SUSE Linux Enterprise
-   ===================================================================
-
-.. only:: ubuntu
-
-   =======================================
-   OpenStack Installation Guide for Ubuntu
-   =======================================
-
-.. only:: debian
-
-   =======================================
-   OpenStack Installation Guide for Debian
-   =======================================
+=======================================
+OpenStack Installation Guide for Debian
+=======================================
 
 
 Abstract
@@ -76,6 +52,7 @@ Contents
 
    overview.rst
    basic_environment.rst
+   debconf/debconf.rst
    keystone.rst
    glance.rst
    nova.rst
