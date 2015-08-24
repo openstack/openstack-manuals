@@ -40,7 +40,7 @@ import openstackdocstheme
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 # TODO(ajaeger): enable PDF building, for example add 'rst2pdf.pdfbuilder'
-extensions = ['os_doc_tools.sphinx.hotref']
+extensions = []
 
 # Add any paths that contain templates here, relative to this directory.
 # templates_path = ['_templates']
