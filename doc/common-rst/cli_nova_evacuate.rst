@@ -40,7 +40,7 @@ VM host is down; otherwise, the evacuation fails with an error.
 #. To preserve the user disk data on the evacuated server, deploy
    OpenStack Compute with a shared file system. To configure your
    system, see `Configure migrations
-   <http://docs.openstack.org/admin-guide-cloud/content/section_configuring-compute-migrations.html>`_
+   <http://docs.openstack.org/admin-guide-cloud/compute-configuring-migrations.html>`_
    in OpenStack Cloud Administrator Guide. In the following example,
    the password remains unchanged::
 
