@@ -33,7 +33,7 @@ module in the :file:`nova.conf` file:
 If the log level is set to ``debug``, you can also specify
 ``logging_debug_format_suffix`` to append extra formatting.
 For information about what variables are available for the
-formatter see http://docs.python.org/library/logging.html#formatter.
+formatter see http://docs.python.org/library/logging.html#formatter-objects.
 
 You have two options for logging for OpenStack Compute based on
 configuration settings. In :file:`nova.conf`, include the
