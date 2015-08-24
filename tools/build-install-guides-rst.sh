@@ -21,3 +21,7 @@ for tag in obs rdo ubuntu debian; do
     tools/build-rst.sh doc/install-guide  \
         $GLOSSARY --tag ${tag} --target "draft/install-guide-${tag}"
 done
+
+# Debian uses index-debian, rename it.
+mv publish-docs/draft/install-guide-debian/index-debian.html \
+    publish-docs/draft/install-guide-debian/index.html
