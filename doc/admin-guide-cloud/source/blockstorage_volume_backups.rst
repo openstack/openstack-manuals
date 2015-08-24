@@ -1,7 +1,7 @@
-.. _volume_backups:
-
 .. highlight: ini
    :linenothreshold: 5
+
+.. _volume_backups:
 
 ===========================
 Back up and restore volumes
@@ -73,8 +73,7 @@ also back up your Block Storage database regularly to ensure data recovery.
     when you back up and restore the volume.
 
     For more information about how to export and import volume backup metadata,
-    see the `section called “Export and import backup metadata”
-    <http://docs.openstack.org/admin-guide-cloud/content/volume-backup-restore-export-import.html>`__.
+    see the section called :ref:`volume_backups_export_import`.
 
 By default, the swift object store is used for the backup repository.
 

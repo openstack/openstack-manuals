@@ -29,8 +29,8 @@ Data collection
 
       .. note::
 
-         For more information, see the `Pipeline Configuration
-         Options <http://docs.openstack.org/admin-guide-cloud/content/section_telemetry-pipeline-configuration.html>`__.
+         For more information, see the
+         :ref:`telemetry-pipeline-configuration`.
 
 #. If you are using the Kilo version of Telemetry, you can delay or adjust
    polling requests by enabling the jitter support. This adds a random
@@ -46,8 +46,7 @@ Data collection
 
    .. note::
 
-      For more information see, `HA deployment for Central and Compute Agents
-      <http://docs.openstack.org/admin-guide-cloud/content/section_telemetry-central-compute-agent-ha.html>`__.
+      For more information see, :ref:`ha-deploy-services`.
 
 #. If you are using Juno or later releases, use the ``notifier://``
    publisher rather than ``rpc://`` as there is a certain level of overhead
@@ -99,9 +98,7 @@ Data storage
    .. note::
 
       For more information on how to set the TTL, see
-      `TTL support for various back ends
-      <http://docs.openstack.org/admin-guide-cloud/content/
-      section_telemetry-storing-data.html>`__.
+      :ref:`telemetry-storing-samples`.
 
 #. We recommend that you do not use SQLAlchemy back end prior to the Juno
    release, as it previously contained extraneous relationships to handle
