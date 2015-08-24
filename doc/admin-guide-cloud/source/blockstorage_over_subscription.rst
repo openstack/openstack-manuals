@@ -1,7 +1,5 @@
 .. _over_subscription:
 
-.. highlight: ini
-   :linenothreshold: 5
 
 =====================================
 Oversubscription in thin provisioning
@@ -54,10 +52,10 @@ Drivers can report the following capabilities for a back end or a pool:
 .. code-block:: ini
    :linenos:
 
-   thin_provisioning_support=True(or False)
-   thick_provisioning_support=True(or False)
-   provisioned_capacity_gb=PROVISIONED_CAPACITY
-   max_over_subscription_ratio=MAX_RATIO
+   thin_provisioning_support = True(or False)
+   thick_provisioning_support = True(or False)
+   provisioned_capacity_gb = PROVISIONED_CAPACITY
+   max_over_subscription_ratio = MAX_RATIO
 
 Where ``PROVISIONED_CAPACITY`` is the apparent allocated space indicating
 how much capacity has been provisioned and ``MAX_RATIO`` is the maximum

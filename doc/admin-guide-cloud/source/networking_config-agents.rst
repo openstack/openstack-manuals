@@ -220,8 +220,8 @@ capabilities:
    potentially overlapping IP addresses, neutron-l3-agent defaults to using
    Linux network namespaces to provide isolated forwarding contexts. As a
    result, the IP addresses of routers are not visible simply by running
-   the :command:``ip addr list`` or :command:``ifconfig`` command on the node.
-   Similarly, you cannot directly :command:``ping`` fixed IPs.
+   the :command:`ip addr list` or :command:`ifconfig` command on the node.
+   Similarly, you cannot directly :command:`ping` fixed IPs.
 
    To do either of these things, you must run the command within a
    particular network namespace for the router. The namespace has the name
@@ -261,7 +261,7 @@ capabilities:
        service starts.
 
        On Red Hat, SUSE and Ubuntu based systems, the neutron-ovs-cleanup
-       service runs the :command:``neutron-ovs-cleanup`` command
+       service runs the :command:`neutron-ovs-cleanup` command
        automatically. However, on Debian-based systems, you must manually
        run this command or write your own system script that runs on boot
        before the neutron-l3-agent service starts.

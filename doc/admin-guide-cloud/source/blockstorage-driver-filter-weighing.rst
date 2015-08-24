@@ -242,8 +242,8 @@ format:
 
 ``<property>.<sub_property>``
 
-Diver filter and weigher usage examples
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Driver filter and weigher usage examples
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Below are examples for using the filter and weigher separately,
 together, and using driver-specific properties.
@@ -350,7 +350,7 @@ properties::
 
 The above is an example of how back-end specific properties can be used
 in the filter and goodness functions. In this example the LVM driver's
-``total\_volumes`` capability is being used to determine which host gets
+``total_volumes`` capability is being used to determine which host gets
 used during a volume request. In the above example, lvm-1 and lvm-2 will
 handle volume requests for all volumes with a size less than 5 GB. The
 lvm-1 host will have priority until it contains three or more volumes.
