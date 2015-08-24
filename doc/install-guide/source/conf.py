@@ -53,6 +53,11 @@ source_suffix = '.rst'
 
 # The master toctree document.
 master_doc = 'index'
+# We need to use noqa here since tags is defined externally.
+if tags.has('debian'):  # noqa
+    master_doc = 'index-debian'
+else:
+    master_doc = 'index'
 
 # General information about the project.
 project = u'Installation Guide'
@@ -91,6 +96,10 @@ html_context = {"pwd": pwd, "gitsha": gitsha, "bug_tag": bug_tag}
 # directories to ignore when looking for source files.
 exclude_patterns = ['common/cli*', 'common/nova*',
                     'common/log_in_dashboard.rst']
+if tags.has('debian'):  # noqa
+    exclude_patterns.append('index.rst')
+else:
+    exclude_patterns.append('index-debian.rst')
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.

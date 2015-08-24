@@ -1,3 +1,5 @@
+:orphan:
+
 ================================
 Configure OpenStack with debconf
 ================================

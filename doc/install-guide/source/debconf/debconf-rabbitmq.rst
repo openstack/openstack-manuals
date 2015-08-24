@@ -1,3 +1,5 @@
+:orphan:
+
 ===============================
 RabbitMQ credentials parameters
 ===============================
