@@ -6,21 +6,23 @@ This scenario describes a high-availability implementation of the OpenStack
 Networking service using the ML2 plug-in and Linux bridge.
 
 This high-availability implementation augments the :doc:`scenario_legacy_lb`
-architecture with Virtual Router Redundancy Protocol (VRRP) to provide quick
-failover of layer-3 services.
-
-If the layer-3 (L3) agent on a network node fails or a network node loses
-connectivity with a peer, the ``keepalived`` service automatically migrates
-routing services and active connections to another network node. Similar to
-the legacy scenario, all network traffic that requires routing relies on a
-network node. Therefore, this high-availability implementation addresses
-failure situations rather than bandwidth constraints that limit performance.
-Consider deploying :doc:`scenario_dvr_ovs` to increase performance in
-addition to redundancy. As of the Kilo release, you cannot combine the DVR
-and L3HA mechanisms.
+architecture with Virtual Router Redundancy Protocol (VRRP) using
+``keepalived`` to provide quick failover of layer-3 services. See
+:ref:`scenario_l3ha_lb-packet_flow` for VRRP operation. Similar to the legacy
+scenario, all network traffic on a project network that requires routing
+actively traverses only one network node regardless of the quantity of network
+nodes providing HA for the router. Therefore, this high-availability
+implementation primarily addresses failure situations instead of bandwidth
+constraints that limit performance. However, it supports random distribution
+of routers on different network nodes to reduce the chances of bandwidth
+constraints and to improve scaling. Also, this implementation does not address
+situations where one or more layer-3 agents fail and the underlying virtual
+networks continue to operate normally. Consider deploying
+:doc:`scenario_dvr_ovs` to increase performance in addition to redundancy. As
+of the Kilo release, you cannot combine the DVR and L3HA mechanisms.
 
 .. note::
-   The migration process only retains the state of network connections for
+   The failover process only retains the state of network connections for
    instances with a floating IP address.
 
 The example configuration creates one flat external network and one VXLAN
@@ -70,10 +72,6 @@ In the example configuration, the management network uses 10.0.0.0/24,
 the tunnel network uses 10.0.1.0/24, the VRRP network uses 169.254.192.0/18,
 and the external network uses 203.0.113.0/24. The VLAN network does not
 require an IP address range because it only handles layer-2 connectivity.
-
-.. note::
-   To reduce the chance of "split-brain" issues, we recommend that you
-   deploy an odd quantity of network nodes with a minimum of three nodes.
 
 .. image:: figures/scenario-l3ha-hw.png
    :alt: Hardware layout
@@ -163,11 +161,13 @@ The compute nodes contain the following network components:
 .. image:: figures/scenario-l3ha-lb-compute2.png
    :alt: Compute node components - connectivity
 
+.. _scenario_l3ha_lb-packet_flow:
+
 Packet flow
 ~~~~~~~~~~~
 
 The L3HA mechanism simply augments :doc:`scenario_legacy_lb` with quick
-migration of layer-3 services to another router if the master router
+failover of layer-3 services to another router if the master router
 fails.
 
 During normal operation, the master router periodically transmits *heartbeat*
@@ -181,6 +181,11 @@ of the master router and promotes itself to the master router by configuring
 IP addresses on the interfaces in the ``qrouter`` namespace. In environments
 with more than one backup router, the router with the next highest priority
 becomes the master router.
+
+.. note::
+   The L3HA mechanism uses the same priority for all routers. Therefore, VRRP
+   promotes the backup router with the highest IP address to the master
+   router.
 
 Example configuration
 ~~~~~~~~~~~~~~~~~~~~~
@@ -215,7 +220,7 @@ Controller node
       [ml2]
       type_drivers = flat,vlan,gre,vxlan
       tenant_network_types = vlan,gre,vxlan
-      mechanism_drivers = openvswitch
+      mechanism_drivers = linuxbridge
 
       [ml2_type_flat]
       flat_networks = external
@@ -228,7 +233,7 @@ Controller node
       vxlan_group = 239.1.1.1
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
       enable_security_group = True
       enable_ipset = True
 
@@ -582,10 +587,9 @@ This example creates a flat external network and a VXLAN project network.
       +-----------------------+--------------------------------------+
 
    .. note::
-      Default policy might prevent the ``ha`` flag from appearing
-      appearing in the command output. To see all fields, run the
-      ``neutron router-show demo-router`` command using the administrative
-      project credentials.
+      The default :file:`policy.json` file allows only administrative projects
+      to enable/disable HA during router creation and view the ``ha`` flag
+      for a router.
 
 #. Attach the project subnet as an interface on the router:
 
@@ -605,8 +609,7 @@ Verify network operation
 ------------------------
 
 #. Source the administrative project credentials.
-#. On the controller node, verify creation of the HA ports on the
-   ``demo-router`` router:
+#. On the controller node, verify creation of the HA network:
 
    .. code-block:: console
 
@@ -618,6 +621,22 @@ Verify network operation
       | d990778b-49ea-4beb-9336-6ea2248edf7d | demo-net                                           | b7fe4e86-65d5-4e88-8266-88795ae4ac53 192.168.1.0/24   |
       | fde31a29-3e23-470d-bc9d-6218375dca4f | ext-net                                            | 2e1d865a-ef56-41e9-aa31-63fb8a591003 203.0.113.0/24   |
       +--------------------------------------+----------------------------------------------------+-------------------------------------------------------+
+
+#. On the controller node, verify creation of the router on more than one
+   network node:
+
+   .. code-block:: console
+
+      $ neutron l3-agent-list-hosting-router demo-router
+      +--------------------------------------+----------+----------------+-------+----------+
+      | id                                   | host     | admin_state_up | alive | ha_state |
+      +--------------------------------------+----------+----------------+-------+----------+
+      | e5a4e06b-dd9d-4b97-a09a-c8ba07706753 | network1 | True           | :-)   | active   |
+      | 85d5c715-08f6-425d-9efc-73633736bf06 | network2 | True           | :-)   | standby  |
+      +--------------------------------------+----------+----------------+-------+----------+
+
+   .. note::
+      Older versions of *python-neutronclient* do not support the ``ha_state`` field.
 
 #. On the controller node, verify creation of the HA ports on the
    ``demo-router`` router:
