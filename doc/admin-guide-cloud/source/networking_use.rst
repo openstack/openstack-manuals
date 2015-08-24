@@ -90,7 +90,7 @@ basic network operations:
 Administrative operations
 -------------------------
 
-The cloud administrator can run any ``neutron`` command on behalf of
+The cloud administrator can run any :command:`neutron` command on behalf of
 tenants by specifying an Identity ``tenant_id`` in the command, as
 follows:
 
@@ -297,7 +297,7 @@ You must configure security group rules depending on the type of plug-in
 you are using. If you are using a plug-in that:
 
 -  Implements Networking security groups, you can configure security
-   group rules directly by using the ``neutron security-group-rule-create``
+   group rules directly by using the :command:`neutron security-group-rule-create`
    command. This example enables ``ping`` and ``ssh`` access to your VMs.
 
    .. code:: console
@@ -311,9 +311,9 @@ you are using. If you are using a plug-in that:
            --port-range-max 22 --direction ingress default
 
 -  Does not implement Networking security groups, you can configure
-   security group rules by using the ``nova secgroup-add-rule`` or
-   ``euca-authorize`` command. These ``nova`` commands enable ``ping``
-   and ``ssh`` access to your VMs.
+   security group rules by using the :command:`nova secgroup-add-rule` or
+   :command:`euca-authorize` command. These :command:`nova` commands enable
+   ``ping`` and ``ssh`` access to your VMs.
 
    .. code:: console
 

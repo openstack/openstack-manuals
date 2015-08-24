@@ -45,9 +45,11 @@ You can apply this process to volumes of any size.
 
 #. Create a snapshot of a used volume
 
-   * Use this command to list all volumes::
+   * Use this command to list all volumes
 
-      # lvdisplay
+     .. code-block:: console
+
+        # lvdisplay
 
    * Create the snapshot; you can do this while the volume is attached
      to an instance::
@@ -116,9 +118,9 @@ You can apply this process to volumes of any size.
      instance. Without using the partitions created inside instances,
      you cannot see its content and create efficient backups.
 
-     ::
+     .. code-block::console
 
-      # kpartx -av /dev/cinder-volumes/volume-00000001-snapshot
+        # kpartx -av /dev/cinder-volumes/volume-00000001-snapshot
 
      .. note::
 
@@ -141,9 +143,11 @@ You can apply this process to volumes of any size.
      ``cinder--volumes-volume--00000001--snapshot2``,
      ``cinder--volumes-volume--00000001--snapshot3``, and so on.
 
-   * Mount your partition::
+   * Mount your partition
 
-      # mount /dev/mapper/cinder--volumes-volume--volume--00000001--snapshot1 /mnt
+     .. code-block:: console
+
+        # mount /dev/mapper/cinder--volumes-volume--volume--00000001--snapshot1 /mnt
 
      If the partition mounts successfully, no errors are returned.
 
@@ -154,7 +158,7 @@ You can apply this process to volumes of any size.
 
      Allocate more space to the snapshot and try the process again.
 
-#. Use the tar command to create archives
+#. Use the :command:`tar` command to create archives
 
    Create a backup of the volume::
 
@@ -194,15 +198,15 @@ You can apply this process to volumes of any size.
 
    * Unmount the volume::
 
-      umount /mnt
+     $ umount /mnt
 
    * Delete the partition table::
 
-      kpartx -dv /dev/cinder-volumes/volume-00000001-snapshot
+     $ kpartx -dv /dev/cinder-volumes/volume-00000001-snapshot
 
    * Remove the snapshot::
 
-      lvremove -f /dev/cinder-volumes/volume-00000001-snapshot
+     $ lvremove -f /dev/cinder-volumes/volume-00000001-snapshot
 
    Repeat these steps for all your volumes.
 

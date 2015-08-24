@@ -240,7 +240,7 @@ neutron server when it starts up.
 
 #. Show agent details.
 
-   The :command:``agent-show`` command shows details for a specified agent:
+   The :command:`agent-show` command shows details for a specified agent:
 
    .. code:: console
 
@@ -310,7 +310,7 @@ neutron server when it starts up.
 **Manage assignment of networks to DHCP agent**
 
 Now that you have run the :command:`net-list-on-dhcp-agent` and
-``dhcp-agent-list-hosting-net`` commands, you can add a network to a
+:command:`dhcp-agent-list-hosting-net` commands, you can add a network to a
 DHCP agent and remove one from it.
 
 #. Default scheduling.
