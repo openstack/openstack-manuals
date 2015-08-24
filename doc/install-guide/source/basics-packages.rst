@@ -112,77 +112,31 @@ these procedures on all nodes.
 
 .. only:: debian
 
-   ** To use the Debian Wheezy backports archive for Juno**
+   **To use the Debian 8 (Jessie) backports archive for Kilo**
 
-   The Juno release is available only in Debian Experimental (otherwise
-   called rc-buggy), as Jessie is frozen soon, and will contain Icehouse.
-   However, the Debian maintainers of OpenStack also maintain a
-   non-official Debian repository for OpenStack containing Wheezy
-   backports.
+   The Kilo release is available directly through the official
+   Debian backports repository. To use this repository, follow
+   the instruction from the official
+   `Debian website <http://backports.debian.org/Instructions/>`_,
+   which basically suggest doing the following steps:
 
-   #. On all nodes, install the Debian Wheezy backport repository Juno:
+
+   #. On all nodes, adding the Debian 8 (Jessie) backport repository to
+      the source list:
 
       .. code-block:: console
 
-         # echo "deb http://archive.gplhost.com/debian juno-backports main" \
+         # echo "deb deb http://http.debian.net/debian jessie-backports main" \
            >>/etc/apt/sources.list
 
-   #. Install the Debian Wheezy OpenStack repository for Juno:
+      .. note::
 
-      .. code-block:: console
+         Later you can use the following command to install a package:
 
-         # echo "deb http://archive.gplhost.com/debian juno-backports main" \
-           >>/etc/apt/sources.list
+         .. code-block:: console
 
-   #. Update the repository database and install the key:
+            # apt-get -t jessie-backports install ``PACKAGE``
 
-      ::
-
-        $ apt-get update && apt-get install gplhost-archive-keyring
-
-   #. Update the package database, upgrade your system, and reboot
-      for all changes to take effect:
-
-      .. code-block:: console
-
-         $ apt-get update && apt-get dist-upgrade
-         $ reboot
-
-   Numerous archive.gplhost.com mirrors are available around the world. All
-   are available with both FTP and HTTP protocols (you should use the
-   closest mirror). The list of mirrors is available at
-   `http://archive.gplhost.com/readme.mirrors
-   <http://archive.gplhost.com/readme.mirrors>`_ .
-
-   **Manually install python-argparse**
-
-   The Debian OpenStack packages are maintained on Debian Sid (also known
-   as Debian Unstable) - the current development version. Backported
-   packages run correctly on Debian Wheezy with one caveat:
-
-   All OpenStack packages are written in Python. All packages support
-   version 2.7; porting to Python version 3 is ongoing. Note that Debian
-   Wheezy uses Python 2.6 and 2.7, with Python 2.7 as the default
-   interpreter; Sid has only Python 2.7. There is one packaging change
-   between these two. In Python 2.6, you installed the ``python-argparse``
-   package separately. In Python 2.7, this package is installed by default.
-   Unfortunately, in Python 2.7, this package does not include ``Provides:
-   python-argparse`` directive.
-
-   #. Because the packages are maintained in Sid where the
-      ``Provides: python-argparse`` directive causes an error, and the Debian
-      OpenStack maintainer wants to maintain one version of the OpenStack
-      packages, you must manually install the ``python-argparse`` on each
-      OpenStack system that runs Debian Wheezy before you install the other
-      OpenStack packages. Use the following command to install the package:
-
-      .. code-block:: console
-
-         # apt-get install python-argparse
-
-      This caveat applies to most OpenStack packages in Wheezy.
-
-|
 
 **To finalize the installation**
 
@@ -190,11 +144,11 @@ these procedures on all nodes.
 
    * Upgrade the packages on your system:
 
-     ::
+     .. code-block:: console
 
-       $ apt-get update && apt-get dist-upgrade
+        $ apt-get update && apt-get dist-upgrade
 
-   .. note::
+     .. note::
 
       If the upgrade process includes a new kernel, reboot your system
       to activate it.
@@ -379,7 +333,7 @@ services also support other SQL databases including
             # systemctl enable mysql.service
             # systemctl start mysql.service
 
-.. only:: ubuntu or debian
+.. only:: ubuntu
 
    2. Secure the database service:
 
