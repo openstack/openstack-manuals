@@ -1,5 +1,8 @@
+.. _integrate-assignment-backend-ldap:
+
+=======================================
 Integrate assignment back end with LDAP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=======================================
 
 When you configure the OpenStack Identity service to use LDAP servers,
 you can split authentication and authorization using the *assignment*
