@@ -209,6 +209,9 @@ htmlhelp_basename = 'user-guide'
 # If true, publish source files
 # html_copy_source = True
 
+# -- Options for linkcheck ------------------------------------------------
+linkcheck_ignore = [r'https://build.opensuse.org']
+
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {

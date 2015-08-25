@@ -21,6 +21,7 @@ if [ -z "$DIRECTORY" ] ; then
     echo "--tag TAG: Use given tag for building"
     echo "--target TARGET: Copy files to publish-docs/$TARGET"
     echo "--build BUILD: Name of build directory"
+    echo "--linkcheck: Check validity of links instead of building"
     exit 1
 fi
 
@@ -29,10 +30,18 @@ TARGET=""
 TAG=""
 TAG_OPT=""
 BUILD=""
+LINKCHECK=""
 
-while [[ $# > 1 ]] ; do
+while [[ $# > 0 ]] ; do
     option="$1"
     case $option in
+        --build)
+            BUILD="$2"
+            shift
+            ;;
+        --linkcheck)
+            LINKCHECK=1
+            ;;
         --glossary)
             GLOSSARY=1
             ;;
@@ -43,10 +52,6 @@ while [[ $# > 1 ]] ; do
             ;;
         --target)
             TARGET="$2"
-            shift
-            ;;
-        --build)
-            BUILD="$2"
             shift
             ;;
     esac
@@ -70,17 +75,25 @@ else
 fi
 
 if [ -z "$TAG" ] ; then
-    echo "Building $DIRECTORY"
+    echo "Checking $DIRECTORY..."
 else
-    echo "Building $DIRECTORY with tag $TAG"
+    echo "Checking $DIRECTORY with tag $TAG..."
 fi
-# Show sphinx-build invocation for easy reproduction
-set -x
-sphinx-build -E -W -b html $TAG_OPT $DIRECTORY/source $BUILD_DIR
-set +x
 
-# Copy RST
-if [ "$TARGET" != "" ] ; then
-    mkdir -p publish-docs/$TARGET
-    rsync -a $BUILD_DIR/ publish-docs/$TARGET/
+if [ "$LINKCHECK" = "1" ] ; then
+    # Show sphinx-build invocation for easy reproduction
+    set -x
+    sphinx-build -E -W -b linkcheck $TAG_OPT $DIRECTORY/source $BUILD_DIR
+    set +x
+else
+    # Show sphinx-build invocation for easy reproduction
+    set -x
+    sphinx-build -E -W -b html $TAG_OPT $DIRECTORY/source $BUILD_DIR
+    set +x
+
+    # Copy RST
+    if [ "$TARGET" != "" ] ; then
+        mkdir -p publish-docs/$TARGET
+        rsync -a $BUILD_DIR/ publish-docs/$TARGET/
+    fi
 fi
