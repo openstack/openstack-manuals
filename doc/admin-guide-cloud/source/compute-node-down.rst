@@ -8,18 +8,19 @@ If Compute is deployed with a shared file system, and a node fails,
 there are several methods to quickly recover from the failure. This
 section discusses manual recovery.
 
-.. TODO include common/cli_nova_evacuate.rst
+Evacuate instances
+~~~~~~~~~~~~~~~~~~
+If a cloud compute node fails due to a hardware malfunction or another reason,
+you can evacuate instances using the :command:`nova evacuate` command. See the
+`Admin User Guide
+<http://docs.openstack.org/user-guide-admin/cli_nova_evacuate.html>`__.
+
 
 .. _nova-compute-node-down-manual-recovery:
 
 Manual recovery
 ~~~~~~~~~~~~~~~
-
-To recover a KVM or libvirt compute node, see
-the section called :ref:`nova-compute-node-down-manual-recovery`. For
-all other hypervisors, use this procedure:
-
-**Recovering from a failed compute node manually**
+Use this procedure to recover a failed compute node manually:
 
 #. Identify the VMs on the affected hosts. To do this, you can use a
    combination of :command:`nova list` and :command:`nova show` or
