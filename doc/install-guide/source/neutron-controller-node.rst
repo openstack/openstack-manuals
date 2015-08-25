@@ -208,7 +208,7 @@ must create a database, service credentials, and API endpoint.
          rabbit_userid = openstack
          rabbit_password = RABBIT_PASS
 
-   #. Replace ``RABBIT_PASS` with the password you chose for the
+   #. Replace ``RABBIT_PASS`` with the password you chose for the
       ``openstack`` account in RabbitMQ.
 
    #. In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections, configure
