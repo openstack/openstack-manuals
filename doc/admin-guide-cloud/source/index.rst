@@ -17,6 +17,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   common/conventions.rst
    common/get_started_with_openstack.rst
    identity_management.rst
    dashboard.rst
