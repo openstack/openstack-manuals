@@ -15,7 +15,7 @@
        OpenStack command-line interface (CLI).
 
        This chapter documents <command>openstack</command> version
-        <literal>1.4.0</literal>.
+        <literal>1.6.0</literal>.
     </para>
 
     <para>For help on a specific <command>openstack</command>
@@ -29,7 +29,8 @@
                  [--os-cloud &lt;cloud-config-name&gt;]
                  [--os-region-name &lt;auth-region-name&gt;]
                  [--os-cacert &lt;ca-bundle-file&gt;] [--verify | --insecure]
-                 [--os-default-domain &lt;auth-domain&gt;] [--timing]
+                 [--os-default-domain &lt;auth-domain&gt;]
+                 [--os-interface &lt;interface&gt;] [--timing]
                  [--os-compute-api-version &lt;compute-api-version&gt;]
                  [--os-network-api-version &lt;network-api-version&gt;]
                  [--os-image-api-version &lt;image-api-version&gt;]
@@ -151,6 +152,15 @@
       <para>
       Default domain ID, default=default (Env:
       OS_DEFAULT_DOMAIN)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-interface &lt;interface&gt;</command></term>
+    <listitem>
+      <para>
+      Select an interface type. Valid interface types:
+      [admin, public, internal]. (Env: OS_INTERFACE)
       </para>
     </listitem>
   </varlistentry>
@@ -1292,6 +1302,42 @@ Set service command
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_configuration_show">
+        <title>openstack configuration show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token configuration show [-h]
+                                    [-f {html,json,shell,table,value,yaml}]
+                                    [-c COLUMN] [--max-width &lt;integer&gt;]
+                                    [--prefix PREFIX] [--mask | --unmask]</computeroutput></screen>
+        <para>
+Display configuration details
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--mask</command></term>
+    <listitem>
+      <para>
+        Attempt to mask passwords (default)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--unmask</command></term>
+    <listitem>
+      <para>
+        Show password in clear text
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_console_log_show">
         <title>openstack console log show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token console log show [-h] [--lines &lt;num-lines&gt;] &lt;server&gt;</computeroutput></screen>
@@ -2192,7 +2238,7 @@ Display flavor details
         <title>openstack flavor unset</title>
         <screen><computeroutput>usage: openstack --os-auth-type token flavor unset [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;]
-                              [--prefix PREFIX] [--property &lt;key&gt;]
+                              [--prefix PREFIX] --property &lt;key&gt;
                               &lt;flavor&gt;</computeroutput></screen>
         <para>
 Unset flavor properties
@@ -2700,6 +2746,10 @@ Save an image locally
                            [--disk-format &lt;disk-format&gt;] [--size &lt;size&gt;]
                            [--protected | --unprotected]
                            [--public | --private] [--property &lt;key=value&gt;]
+                           [--store &lt;store&gt;] [--location &lt;image-url&gt;]
+                           [--copy-from &lt;image-url&gt;] [--file &lt;file&gt;]
+                           [--volume &lt;volume&gt;] [--force] [--stdin]
+                           [--checksum &lt;checksum&gt;]
                            &lt;image&gt;</computeroutput></screen>
         <para>
 Set image properties
@@ -2821,6 +2871,71 @@ Set image properties
       <para>
       Set a property on this image (repeat option to set
       multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--store &lt;store&gt;</command></term>
+    <listitem>
+      <para>
+        Upload image to this store
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--location &lt;image-url&gt;</command></term>
+    <listitem>
+      <para>
+      Download image from an existing URL
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--copy-from &lt;image-url&gt;</command></term>
+    <listitem>
+      <para>
+      Copy image from the data store (similar to --location)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--file &lt;file&gt;</command></term>
+    <listitem>
+      <para>
+        Upload image from local file
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--volume &lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        Create image from a volume
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--force</command></term>
+    <listitem>
+      <para>
+        Force image change if volume is in use (only
+      meaningful with --volume)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--stdin</command></term>
+    <listitem>
+      <para>
+        Read image data from standard input
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--checksum &lt;checksum&gt;</command></term>
+    <listitem>
+      <para>
+      Image hash used for verification
       </para>
     </listitem>
   </varlistentry>
@@ -3322,7 +3437,7 @@ List module versions
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--prefix PREFIX] [--enable | --disable]
                                 [--share | --no-share] [--project &lt;project&gt;]
-                                [--domain &lt;domain&gt;]
+                                [--project-domain &lt;project-domain&gt;]
                                 &lt;name&gt;</computeroutput></screen>
         <para>
 Create new network
@@ -3388,10 +3503,12 @@ Create new network
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--domain &lt;domain&gt;</command></term>
+    <term><command>--project-domain &lt;project-domain&gt;</command></term>
     <listitem>
       <para>
-        Owner's domain (name or ID)
+      Domain the project belongs to (name or ID). This can
+      be used in case collisions between project names
+      exist.
       </para>
     </listitem>
   </varlistentry>
@@ -3430,7 +3547,7 @@ Delete network(s)
         <screen><computeroutput>usage: openstack --os-auth-type token network list [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;]
                               [--quote {all,minimal,none,nonnumeric}]
-                              [--external] [--dhcp &lt;dhcp-id&gt;] [--long]</computeroutput></screen>
+                              [--external] [--long]</computeroutput></screen>
         <para>
 List networks
         </para>  <variablelist wordsize="10">
@@ -3448,14 +3565,6 @@ List networks
     <listitem>
       <para>
         List external networks
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--dhcp &lt;dhcp-id&gt; DHCP</command></term>
-    <listitem>
-      <para>
-        agent ID
       </para>
     </listitem>
   </varlistentry>
@@ -6431,7 +6540,7 @@ Display snapshot details
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_unset">
         <title>openstack snapshot unset</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token snapshot unset [-h] [--property &lt;key&gt;] &lt;snapshot&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token snapshot unset [-h] --property &lt;key&gt; &lt;snapshot&gt;</computeroutput></screen>
         <para>
 Unset snapshot properties
         </para>  <variablelist wordsize="10">
@@ -7118,6 +7227,291 @@ List volumes
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_volume_qos_associate">
+        <title>openstack volume qos associate</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume qos associate [-h] &lt;qos-spec&gt; &lt;volume-type&gt;</computeroutput></screen>
+        <para>
+Associate a QoS specification to a volume type
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos-spec&gt;</command></term>
+    <listitem>
+      <para>
+        QoS specification to modify (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;volume-type&gt;</command></term>
+    <listitem>
+      <para>
+        Volume type to associate the QoS (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_volume_qos_create">
+        <title>openstack volume qos create</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume qos create [-h]
+                                   [-f {html,json,shell,table,value,yaml}]
+                                   [-c COLUMN] [--max-width &lt;integer&gt;]
+                                   [--prefix PREFIX] [--consumer &lt;consumer&gt;]
+                                   [--property &lt;key=value&gt;]
+                                   &lt;name&gt;</computeroutput></screen>
+        <para>
+Create new QoS specification
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        New QoS specification name
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--consumer &lt;consumer&gt;</command></term>
+    <listitem>
+      <para>
+      Consumer of the QoS. Valid consumers: back-end, both,
+      front-end (defaults to 'both')
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Set a QoS specification property (repeat option to set
+      multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_volume_qos_delete">
+        <title>openstack volume qos delete</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume qos delete [-h] &lt;qos-spec&gt; [&lt;qos-spec&gt; ...]</computeroutput></screen>
+        <para>
+Delete QoS specification
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos-spec&gt;</command></term>
+    <listitem>
+      <para>
+        QoS specification(s) to delete (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_volume_qos_disassociate">
+        <title>openstack volume qos disassociate</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume qos disassociate [-h]
+                                         [--volume-type &lt;volume-type&gt; | --all]
+                                         &lt;qos-spec&gt;</computeroutput></screen>
+        <para>
+Disassociate a QoS specification from a volume type
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos-spec&gt;</command></term>
+    <listitem>
+      <para>
+        QoS specification to modify (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--volume-type &lt;volume-type&gt;</command></term>
+    <listitem>
+      <para>
+      Volume type to disassociate the QoS from (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--all</command></term>
+    <listitem>
+      <para>
+        Disassociate the QoS from every volume type
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_volume_qos_list">
+        <title>openstack volume qos list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume qos list [-h] [-f {csv,html,json,table,value,yaml}]
+                                 [-c COLUMN] [--max-width &lt;integer&gt;]
+                                 [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
+        <para>
+List QoS specifications
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_volume_qos_set">
+        <title>openstack volume qos set</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume qos set [-h] [--property &lt;key=value&gt;] &lt;qos-spec&gt;</computeroutput></screen>
+        <para>
+Set QoS specification properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos-spec&gt;</command></term>
+    <listitem>
+      <para>
+        QoS specification to modify (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Property to add or modify for this QoS specification
+      (repeat option to set multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_volume_qos_show">
+        <title>openstack volume qos show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume qos show [-h] [-f {html,json,shell,table,value,yaml}]
+                                 [-c COLUMN] [--max-width &lt;integer&gt;]
+                                 [--prefix PREFIX]
+                                 &lt;qos-spec&gt;</computeroutput></screen>
+        <para>
+Display QoS specification details
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos-spec&gt;</command></term>
+    <listitem>
+      <para>
+        QoS specification to display (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_volume_qos_unset">
+        <title>openstack volume qos unset</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume qos unset [-h] [--property &lt;key&gt;] &lt;qos-spec&gt;</computeroutput></screen>
+        <para>
+Unset QoS specification properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;qos-spec&gt;</command></term>
+    <listitem>
+      <para>
+        QoS specification to modify (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Property to remove from the QoS specification. (repeat
+      option to unset multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_volume_set">
         <title>openstack volume set</title>
         <screen><computeroutput>usage: openstack --os-auth-type token volume set [-h] [--name &lt;name&gt;] [--description &lt;description&gt;]
@@ -7346,9 +7740,40 @@ Set volume type properties
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_volume_type_show">
+        <title>openstack volume type show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume type show [-h] [-f {html,json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width &lt;integer&gt;]
+                                  [--prefix PREFIX]
+                                  &lt;volume-type&gt;</computeroutput></screen>
+        <para>
+Display volume type details
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume-type&gt;</command></term>
+    <listitem>
+      <para>
+        Volume type to display (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_volume_type_unset">
         <title>openstack volume type unset</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token volume type unset [-h] [--property &lt;key&gt;] &lt;volume-type&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume type unset [-h] --property &lt;key&gt; &lt;volume-type&gt;</computeroutput></screen>
         <para>
 Unset volume type properties
         </para>  <variablelist wordsize="10">
@@ -7385,7 +7810,7 @@ Unset volume type properties
     </section>
     <section xml:id="openstackclient_subcommand_volume_unset">
         <title>openstack volume unset</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token volume unset [-h] [--property &lt;key&gt;] &lt;volume&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token volume unset [-h] --property &lt;key&gt; &lt;volume&gt;</computeroutput></screen>
         <para>
 Unset volume properties
         </para>  <variablelist wordsize="10">
