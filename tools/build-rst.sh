@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/bash -e
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -69,7 +69,15 @@ else
     BUILD_DIR="$DIRECTORY/$BUILD/html"
 fi
 
-sphinx-build -E -W $TAG_OPT $DIRECTORY/source $BUILD_DIR
+if [ -z "$TAG" ] ; then
+    echo "Building $DIRECTORY"
+else
+    echo "Building $DIRECTORY with tag $TAG"
+fi
+# Show sphinx-build invocation for easy reproduction
+set -x
+sphinx-build -E -W -b html $TAG_OPT $DIRECTORY/source $BUILD_DIR
+set +x
 
 # Copy RST
 if [ "$TARGET" != "" ] ; then
