@@ -15,19 +15,12 @@ complete the following tasks:
   IP address to a domain name, and give users access.
 
 * Customize your dashboard. See section
-  `Customize the dashboad <http://docs.openstack.org/admin-guide-cloud/
-  content/ch_install-dashboard.html#dashboard-custom-brand>`__
-  in the `OpenStack Cloud Administrator Guide
-  <http://docs.openstack.org/admin-guide-cloud/content/>`__
-  for information on setting up colors, logos, and site titles.
+  `Customize the dashboad
+  <http://docs.openstack.org/admin-guide-cloud/common/dashboard_customizing.html>`__.
 
-* Set up session storage. See section
+* Set up session storage. See
   `Set up session storage for the dashboard
-  <http://docs.openstack.org/admin-guide-cloud/content/
-  dashboard-sessions.html#dashboard-sessions>`__
-  in the `OpenStack Cloud Administrator Guide
-  <http://docs.openstack.org/admin-guide-cloud/content>`__
-  for information on user session data.
+  <http://docs.openstack.org/admin-guide-cloud/dashboard_sessions.html>`__.
 
 * To use the VNC client with the dashboard, the browser
   must support HTML5 Canvas and HTML5 WebSockets.
