@@ -134,7 +134,7 @@ configure certain kernel networking parameters.
          username = neutron
          password = NEUTRON_PASS
 
-      Replace ``NEUTRON_PASS`` with the password you chose or the ``neutron``
+      Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
       user in the Identity service.
 
       .. note::
