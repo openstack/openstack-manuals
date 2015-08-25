@@ -4,6 +4,13 @@
 Integrate Identity with LDAP
 ============================
 
+.. toctree::
+   :maxdepth: 2
+
+   keystone_integrate_identity_backend_ldap.rst
+   keystone_integrate_assignment_backend_ldap.rst
+   keystone_secure_identity_to_ldap_backend.rst
+
 The OpenStack Identity service supports integration with existing LDAP
 directories for authentication and authorization services.
 
@@ -32,13 +39,10 @@ providing user authentication through the LDAP directory.
 Identity configuration is split into two separate back ends; identity
 (back end for users and groups), and assignments (back end for domains,
 projects, roles, role assignments). To configure Identity, set options
-in the :file:`/etc/keystone/keystone.conf` file. See Integrate Identity back
-end with LDAP for Identity back end configuration examples and Integrate
-Assignment back end with LDAP for assignment back end configuration examples.
-Modify these examples as needed.
-
-.. TODO (DC) Add links to keystone_integrate_identity_backend_ldap.rst and
-   keystone_integrate_assignment_backend_ldap.rst
+in the :file:`/etc/keystone/keystone.conf` file. See
+:ref:`integrate-identity-backend-ldap` for Identity back end configuration
+examples and :ref:`integrate-assignment-backend-ldap` for assignment back
+end configuration examples. Modify these examples as needed.
 
 .. note::
 
@@ -160,15 +164,3 @@ service::
    During service restart, authentication and authorization are
    unavailable.
 
-.. include:: keystone_integrate_identity_backend_ldap.rst
-
-.. include:: keystone_integrate_assignment_backend_ldap.rst
-
-.. include:: keystone_secure_identity_to_ldap_backend.rst
-
-.. toctree::
-   :hidden:
-
-   keystone_integrate_identity_backend_ldap.rst
-   keystone_integrate_assignment_backend_ldap.rst
-   keystone_secure_identity_to_ldap_backend.rst

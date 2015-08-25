@@ -1,5 +1,8 @@
+.. _integrate-identity-backend-ldap:
+
+=====================================
 Integrate Identity back end with LDAP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=====================================
 
 The Identity back end contains information for users, groups, and group
 member lists. Integrating the Identity back end with LDAP allows
@@ -174,7 +177,7 @@ administrators to use users and groups in LDAP.
       During service restart, authentication and authorization are
       unavailable.
 
-**Additional LDAP integration settings.**
+**Additional LDAP integration settings**
 
 Set these options in the :file:`/etc/keystone/keystone.conf` file for a
 single LDAP server, or :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf`
