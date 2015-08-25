@@ -208,6 +208,10 @@ htmlhelp_basename = 'admin-guide-cloud'
 # If true, publish source files
 # html_copy_source = True
 
+# -- Options for linkcheck ------------------------------------------------
+linkcheck_ignore = [r'https://127.0.0.1',
+                    r'https://swift.example.com/']
+
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {

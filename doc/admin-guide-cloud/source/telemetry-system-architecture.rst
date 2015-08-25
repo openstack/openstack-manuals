@@ -79,9 +79,9 @@ events, samples, alarm definitions and alarms are stored.
 
 The list of supported database back ends:
 
--  `ElasticSearch (events only) <http://www.elasticsearch.org/>`__
+-  `ElasticSearch (events only) <https://www.elastic.co/>`__
 
--  `MongoDB <http://www.mongodb.org/>`__
+-  `MongoDB <https://www.mongodb.org/>`__
 
 -  `MySQL <http://www.mysql.com/>`__
 
@@ -149,9 +149,9 @@ external networking services:
 
 -  SDN controller meters:
 
-   -  `OpenDaylight <http://www.opendaylight.org/>`__
+   -  `OpenDaylight <https://www.opendaylight.org/>`__
 
-   -  `OpenContrail <http://opencontrail.org/>`__
+   -  `OpenContrail <http://www.opencontrail.org/>`__
 
 |
 
