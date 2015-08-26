@@ -320,9 +320,6 @@ the additional network information.
 * Managed Configuration Flag = 0
 * Other Configuration Flag = 1
 
-.. todo:: We probably want to have placeholders for some of the Liberty work
-          like prefix delegation, etc.
-
 Router support
 --------------
 
@@ -444,6 +441,218 @@ gone into ensuring that the OpenStack API endpoints can be accessed
 via an IPv6 network. At this time, OpenVswitch (OVS) tunnel types -
 STT, VXLAN, GRE, only support IPv4 endpoints, not IPv6, so a full
 IPv6-only deployment is not possible with that technology.
+
+
+Prefix delegation
+~~~~~~~~~~~~~~~~~
+
+From the Liberty release onwards, OpenStack Networking supports IPv6 prefix
+delegation. This section describes the configuration and workflow steps
+necessary to use IPv6 prefix delegation to provide automatic allocation of
+subnet CIDRs. This allows you as the OpenStack administrator to rely on an
+external (to the OpenStack Networking service) DHCPv6 server to manage your
+tenant network prefixes.
+
+.. note::
+   Prefix delegation will be in the upcoming Liberty release, it is
+   not available in the current OpenStack Kilo release. HA and DVR routers
+   are not currently supported by this feature.
+
+Configuring OpenStack Networking for prefix delegation
+------------------------------------------------------
+
+To enable prefix delegation, edit the :file:`etc/neutron.conf` file::
+
+    default_ipv6_subnet_pool = prefix_delegation
+
+This tells OpenStack Networking to use the prefix delegation mechanism for
+subnet allocation when the user does not provide a CIDR or subnet pool id when
+creating a subnet.
+
+Requirements
+------------
+
+To use this feature, you need a prefix delegation capable DHCPv6 server that is
+reachable from your OpenStack Networking node(s). This could be software
+running on the OpenStack Networking node(s) or elsewhere, or a physical router.
+For the purposes of this guide we are using the open-source DHCPv6 server,
+Dibbler. Dibbler is available in many Linux package managers, or from source at
+https://github.com/tomaszmrugalski/dibbler.
+
+When using the reference implementation of the OpenStack Networking prefix
+delegation driver, Dibbler must also be installed on your OpenStack Networking
+node(s) to serve as a DHCPv6 client. Version 1.0.1 or higher is required.
+
+This guide assumes that you are running a Dibbler server on the network node
+where the external network bridge exists. If you already have a prefix
+delegation capable DHCPv6 server in place, then you can skip the following
+section.
+
+Configuring the Dibbler server
+------------------------------
+
+After installing Dibbler, edit the :file:`/etc/dibbler/server.conf` file:
+
+.. code-block:: none
+
+    script "/var/lib/dibbler/pd-server.sh"
+
+    iface "br-ex" {
+        pd-class {
+            pd-pool 2222:2222:2222::/48
+            pd-length 64
+        }
+    }
+
+The options used in the configuration file above are:
+
+- :code:`script`: Points to a script to be run when a prefix is delegated or
+  released. This is only needed if you want instances on your
+  subnets to have external network access. More on this below.
+- :code:`iface`: The name of the network interface on which to listen for
+  prefix delegation messages.
+- :code:`pd-pool`: The larger prefix from which you want your delegated
+  prefixes to come. The example given is sufficient if you do
+  not need external network access, otherwise a unique
+  globally routable prefix is necessary.
+- :code:`pd-length`: The length that delegated prefixes will be. This must be
+  64 to work with the current OpenStack Networking reference implementation.
+
+To provide external network access to your instances, your Dibbler server also
+needs to create new routes for each delegated prefix. This is done using the
+script file named in the config file above. Edit the
+:file:`/var/lib/dibbler/pd-server.sh` file:
+
+.. code-block:: bash
+
+    if [ "$PREFIX1" != "" ]; then
+        if [ "$1" == "add" ]; then
+            sudo ip -6 route add ${PREFIX1}/64 via $REMOTE_ADDR dev $IFACE
+        fi
+        if [ "$1" == "delete" ]; then
+            sudo ip -6 route del ${PREFIX1}/64 via $REMOTE_ADDR dev $IFACE
+        fi
+    fi
+
+The variables used in the script file above are:
+
+- :code:`$PREFIX1`: The prefix being added/deleted by the Dibbler server.
+- :code:`$1`: The operation being performed.
+- :code:`$REMOTE_ADDR`: The IP address of the requesting Dibbler client.
+- :code:`$IFACE`: The network interface upon which the request was
+  received.
+
+The above is all you need in this scenario, but more information on
+installing, configuring, and running Dibbler is available in the Dibbler user
+guide, at http://klub.com.pl/dhcpv6/doc/dibbler-user.pdf.
+
+To start your Dibbler server, run::
+
+    # dibbler-server run
+
+Or to run in headless mode::
+
+    # dibbler-server start
+
+When using DevStack, it is important to start your server after the
+:file:`stack.sh` script has finished to ensure that the required network
+interfaces have been created.
+
+User workflow
+-------------
+
+First, create a network and IPv6 subnet:
+
+.. code-block:: console
+
+    $ neutron net-create ipv6-pd
+    Created a new network:
+    +-----------------+--------------------------------------+
+    | Field           | Value                                |
+    +-----------------+--------------------------------------+
+    | admin_state_up  | True                                 |
+    | id              | 31ef3e85-111f-4772-8172-8e4a404a7476 |
+    | mtu             | 0                                    |
+    | name            | ipv6-pd                              |
+    | router:external | False                                |
+    | shared          | False                                |
+    | status          | ACTIVE                               |
+    | subnets         |                                      |
+    | tenant_id       | 28b39bcce66e4a648f82e2362b958b60     |
+    +-----------------+--------------------------------------+
+
+    $ neutron subnet-create ipv6-pd --name ipv6-pd-1 --ip_version 6 \
+      --ipv6_ra_mode slaac --ipv6_address_mode slaac
+    Created a new subnet:
+    +-------------------+--------------------------------------------------+
+    | Field             | Value                                            |
+    +-------------------+--------------------------------------------------+
+    | allocation_pools  | {"start": "::2", "end": "::ffff:ffff:ffff:fffe"} |
+    | cidr              | ::/64                                            |
+    | dns_nameservers   |                                                  |
+    | enable_dhcp       | True                                             |
+    | gateway_ip        | ::1                                              |
+    | host_routes       |                                                  |
+    | id                | ea139dcd-17a3-4f0a-8cca-dff8b4e03f8a             |
+    | ip_version        | 6                                                |
+    | ipv6_address_mode | slaac                                            |
+    | ipv6_ra_mode      | slaac                                            |
+    | name              | ipv6-pd-1                                        |
+    | network_id        | 31ef3e85-111f-4772-8172-8e4a404a7476             |
+    | subnetpool_id     | prefix_delegation                                |
+    | tenant_id         | 28b39bcce66e4a648f82e2362b958b60                 |
+    +-------------------+--------------------------------------------------+
+
+The subnet is initially created with a temporary CIDR before one can be
+assigned by prefix delegation. Any number of subnets with this temporary CIDR
+can exist without raising an overlap error. The subnetpool_id is automatically
+set to :code:`prefix_delegation`.
+
+To trigger the prefix delegation process, create a router interface between
+this subnet and a router with an active interface on the external network:
+
+.. code-block:: console
+
+    $ neutron router-interface-add cb9b7a2c-0ffa-412f-989a-1e6c60e1c02f \
+      ea139dcd-17a3-4f0a-8cca-dff8b4e03f8a
+    Added interface a7e4d663-e3fc-4b8f-909f-865c397a930e to router
+    cb9b7a2c-0ffa-412f-989a-1e6c60e1c02f.
+
+The prefix delegation mechanism then sends a request via the external network
+to your prefix delegation server, which replies with the delegated prefix. The
+subnet is then updated with the new prefix, including issuing new IP addresses
+to all ports:
+
+.. code-block:: console
+
+    $ neutron subnet-show ipv6-pd-1
+    +-------------------+-------------------------------------------------+
+    | Field             | Value                                           |
+    +-------------------+-------------------------------------------------+
+    | allocation_pools  | {"start": "2222:2222:2222:6977::2",             |
+    |                   | "end":"2222:2222:2222:6977:ffff:ffff:ffff:fffe"}|
+    | cidr              | 2222:2222:2222:6977::/64                        |
+    | dns_nameservers   |                                                 |
+    | enable_dhcp       | True                                            |
+    | gateway_ip        | 2222:2222:2222:6977::1                          |
+    | host_routes       |                                                 |
+    | id                | ea139dcd-17a3-4f0a-8cca-dff8b4e03f8a            |
+    | ip_version        | 6                                               |
+    | ipv6_address_mode | slaac                                           |
+    | ipv6_ra_mode      | slaac                                           |
+    | name              | ipv6-pd-1                                       |
+    | network_id        | 31ef3e85-111f-4772-8172-8e4a404a7476            |
+    | subnetpool_id     | prefix_delegation                               |
+    | tenant_id         | 28b39bcce66e4a648f82e2362b958b60                |
+    +-------------------+-------------------------------------------------+
+
+If the prefix delegation server is configured to delegate globally routable
+prefixes and setup routes, then any instance with a port on this subnet should
+now have external network access.
+
+Deleting the router interface causes the subnet to be reverted to the temporary
+CIDR, and all ports have their IPs updated. Prefix leases are released and
+renewed automatically as necessary.
 
 References
 ----------
