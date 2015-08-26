@@ -26,6 +26,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   common/conventions.rst
    intro_networking.rst
    intro_os_networking.rst
    config.rst

@@ -20,6 +20,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   common/conventions.rst
    intro-admin.rst
    dashboard.rst
    cli.rst

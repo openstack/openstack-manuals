@@ -74,6 +74,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   common/conventions.rst
    overview.rst
    basic_environment.rst
    keystone.rst
