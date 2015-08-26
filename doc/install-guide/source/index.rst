@@ -2,6 +2,10 @@
 
 .. Don't remove or change title tag manually, which is used by the build tool.
 
+.. Be aware that index-debian and index need to have the same content
+   so that translations work. Only the strings from the file
+   index-debian gets send to our translation server.
+
 .. only:: rdo
 
    =============================================================================
