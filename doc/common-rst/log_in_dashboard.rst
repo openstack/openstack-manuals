@@ -161,7 +161,7 @@ Access the following categories to complete these tasks:
 :guilabel:`Resource Usage`: Use the following tabs to view the following
 usages:
 
-* :guilabel:`Daily Report`: View the daily report.
+* :guilabel:`Usage Report`: View the usage report.
 
 * :guilabel:`Stats`: View the statistics of all resources.
 
