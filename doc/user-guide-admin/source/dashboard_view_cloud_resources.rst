@@ -30,17 +30,9 @@ View resource statistics
 
 #. Click the:
 
-   * :guilabel:`Global Disk Usage` tab to view disk usage per tenant (project).
-
-   * :guilabel:`Global Network Traffic Usage` tab to view ingress or
-     egress usage per tenant (project).
-
-   * :guilabel:`Global Object Storage Usage` tab to view incoming and outgoing
-     storage bytes per tenant (project).
-
-   * :guilabel:`Global Network Usage` tab to view duration and
-     creation requests for networks, subnets, routers, ports, and
-     floating IPs, per tenant (project).
+   * :guilabel:`Usage Report` tab to view a usage report per tenant (project)
+     by specifying the time period (or even use a calendar to define
+     a date range).
 
    * :guilabel:`Stats` tab to view a multi-series line chart with
      user-defined meters. You group by project, define the value type
