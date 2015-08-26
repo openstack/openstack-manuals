@@ -11,7 +11,7 @@ Networking in OpenStack is complex. This section provides the basic
 instructions for creating a network and a router. For detailed
 information about managing networks, refer to the `OpenStack Cloud
 Administrator
-Guide <http://docs.openstack.org/admin-guide-cloud/content/ch_networking.html>`__.
+Guide <http://docs.openstack.org/admin-guide-cloud/networking.html>`__.
 
 Create a network
 ~~~~~~~~~~~~~~~~
