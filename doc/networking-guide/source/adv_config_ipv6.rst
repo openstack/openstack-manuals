@@ -45,8 +45,8 @@ Things not in the scope of this document include:
 Neutron subnets and the IPv6 API attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As of Juno, the OpenStack networking service (neutron) provides two
-new attributes to the Subnet object, which allows users of the API to
+As of Juno, the OpenStack Networking service (neutron) provides two
+new attributes to the subnet object, which allows users of the API to
 configure IPv6 subnets.
 
 There are two IPv6 attributes:
@@ -192,7 +192,8 @@ Tenant network considerations
 Dataplane
 ~~~~~~~~~
 
-Both the Linux bridge and the OVS dataplane modules support forwarding IPv6
+Both the Linux bridge and the Open vSwitch dataplane modules support
+forwarding IPv6
 packets amongst the guests and router ports. Similar to IPv4, there is no
 special configuration or setup required to enable the dataplane to properly
 forward packets from the source to the destination using IPv6. Note that these
@@ -234,10 +235,11 @@ DHCPv6-stateless
 DHCPv6-stateful
   Address configuration and optional information using DHCPv6.
 
-OpenStack can be setup such that Neutron directly provides RA, DHCP
+OpenStack can be setup such that OpenStack Networking directly
+provides RA, DHCP
 relay and DHCPv6 address and optional information for their networks
 or this can be delegated to external routers and services based on the
-drivers that are in use. There are two Neutron subnet attributes -
+drivers that are in use. There are two neutron subnet attributes -
 ``ipv6_ra_mode`` and ``ipv6_address_mode`` – that determine how IPv6
 addressing and network information is provided to tenant instances:
 
@@ -280,8 +282,8 @@ flags in the RA messages:
 * Other Configuration Flag = 0 New or existing
 
 Neutron networks that contain a SLAAC enabled IPv6 subnet will result
-in all Neutron ports attached to the network receiving IPv6 addresses.
-This is because when RA broadcast messages are sent out on a Neutron
+in all neutron ports attached to the network receiving IPv6 addresses.
+This is because when RA broadcast messages are sent out on a neutron
 network, they are received by all IPv6 capable ports on the network,
 and each port will then configure an IPv6 address based on the
 information contained in the RA packet. In some cases, an IPv6 SLAAC
@@ -303,17 +305,17 @@ follows:
      - Result
    * - DHCPv6-stateless
      - DHCPv6-stateless
-     - Address and optional information using Neutron router and DHCP
+     - Address and optional information using neutron router and DHCP
        implementation respectively.
    * - DHCPv6-stateful
      - DHCPv6-stateful
      - Addresses and optional information are assigned using DHCPv6.
 
-Setting DHCPv6-stateless for ``ipv6_ra_mode`` configures the Neutron
+Setting DHCPv6-stateless for ``ipv6_ra_mode`` configures the neutron
 router with radvd agent to send RAs. The table below captures the
 values set for the address configuration flags in the RA packet in
 this scenario. Similarly, setting DHCPv6-stateless for
-``ipv6_address_mode`` configures Neutron DHCP implementation to provide
+``ipv6_address_mode`` configures neutron DHCP implementation to provide
 the additional network information.
 
 * Auto Configuration Flag = 1
@@ -323,7 +325,7 @@ the additional network information.
 Router support
 --------------
 
-The behavior of the Neutron router for IPv6 is different than IPv4 in
+The behavior of the neutron router for IPv6 is different than IPv4 in
 a few ways.
 
 Internal router ports, that act as default gateway ports for a network, will
@@ -335,19 +337,19 @@ hand, external router ports are allowed to have a dual-stack configuration
 with both an IPv4 and an IPv6 address assigned to them.
 
 Neutron tenant networks that are assigned Global Unicast Address (GUA) prefixes
-and addresses don’t require NAT on the Neutron router external gateway port to
+and addresses don’t require NAT on the neutron router external gateway port to
 access the outside world. As a consequence of the lack of NAT the external
 router port doesn’t require a GUA to send and receive to the external networks.
-This implies a GUA IPv6 subnet prefix is not necessarily needed for the Neutron
+This implies a GUA IPv6 subnet prefix is not necessarily needed for the neutron
 external network. By default, a IPv6 LLA associated with the external gateway
 port can be used for routing purposes. To handle this scenario, the
-implementation of router-gateway-set API in Neutron has been modified so
+implementation of router-gateway-set API in neutron has been modified so
 that an IPv6 subnet is not required for the external network that is
-associated with the Neutron router. The LLA address of the upstream router
+associated with the neutron router. The LLA address of the upstream router
 can be learned in two ways.
 
 #. In the absence of an upstream RA support, ``ipv6_gateway`` flag can be set
-   with the external router gateway LLA in the Neutron L3 agent configuration
+   with the external router gateway LLA in the neutron L3 agent configuration
    file. This also requires that no subnet is associated with that port.
 #. The upstream router can send an RA and the neutron router will
    automatically learn the next-hop LLA, provided again that no subnet is
@@ -401,10 +403,11 @@ FWaaS allows creation of IPv6 based rules.
 NAT & Floating IPs
 ~~~~~~~~~~~~~~~~~~
 
-At the current time OpenStack Neutron does not provide any facility to support
-any flavor of NAT with IPv6. Unlike IPv4 there is no current embedded support
-for floating IPs with IPv6. It is assumed that the IPv6 addressing amongst the
-tenants are using GUAs with no overlap across the tenants.
+At the current time OpenStack Networking does not provide any facility
+to support any flavor of NAT with IPv6. Unlike IPv4 there is no
+current embedded support for floating IPs with IPv6. It is assumed
+that the IPv6 addressing amongst the tenants are using GUAs with no
+overlap across the tenants.
 
 Security considerations
 -----------------------
@@ -438,7 +441,7 @@ across the variety of configurations describe above. This same level
 of scrutiny has not been apply to running the OpenStack control
 network in a dual stack configuration. Similarly, little scrutiny has
 gone into ensuring that the OpenStack API endpoints can be accessed
-via an IPv6 network. At this time, OpenVswitch (OVS) tunnel types -
+via an IPv6 network. At this time, Open vSwitch (OVS) tunnel types -
 STT, VXLAN, GRE, only support IPv4 endpoints, not IPv6, so a full
 IPv6-only deployment is not possible with that technology.
 
@@ -657,5 +660,5 @@ renewed automatically as necessary.
 References
 ----------
 
-The following link provides a great step by step tutorial on setting up the v6
-with openstack. http://bit.ly/ipv6-kilo
+The following link provides a great step by step tutorial on setting up IPv6
+with OpenStack: http://www.debug-all.com/?p=52

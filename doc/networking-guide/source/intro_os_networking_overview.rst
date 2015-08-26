@@ -19,15 +19,15 @@ private networks.
 It includes the following components:
 
 API server
-  The Neutron API includes support for Layer 2 networking and IP
+  The OpenStack Networking API includes support for Layer 2 networking and IP
   address management (IPAM), as well as an extension for a Layer 3
   router construct that enables routing between Layer 2 networks and
-  gateways to external networks. Neutron includes a growing list of
+  gateways to external networks. Networking includes a growing list of
   plug-ins that enable interoperability with various commercial and
   open source network technologies, including routers, switches,
   virtual switches and software-defined networking (SDN) controllers.
 
-OpenStack networking plug-in and agents
+OpenStack Networking plug-in and agents
   Plugs and unplugs ports, creates networks or subnets, and provides
   IP addressing. The chosen plug-in and agents differ depending on the
   vendor and technologies used in the particular cloud. It is
@@ -37,10 +37,10 @@ Messaging queue
   Accepts and routes RPC requests between agents to complete API operations.
   Message queue is used in the ML2 plug-in for RPC between the neutron
   server and neutron agents that run on each hypervisor, in the ML2
-  mechanism drivers for OVS and Linux bridge.
+  mechanism drivers for :term:`Open vSwitch` and :term`Linux bridge`.
 
 
-OpenStack networking concepts
+OpenStack Networking concepts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To configure rich network topologies, you can create and configure networks
