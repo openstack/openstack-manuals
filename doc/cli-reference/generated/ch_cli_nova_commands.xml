@@ -1469,52 +1469,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>force-delete</command></term>
+    <term><command>host-evacuate</command></term>
     <listitem>
       <para>
-        Force delete a server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>restore</command></term>
-    <listitem>
-      <para>
-        Restore a soft-deleted server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-servers-migrate</command></term>
-    <listitem>
-      <para>
-        Migrate all instances of the specified host to
-      other available hosts.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-evacuate-live</command></term>
-    <listitem>
-      <para>
-        Live migrate all instances of the specified
-      host to other available hosts.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action</command></term>
-    <listitem>
-      <para>
-        Show an action.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action-list</command></term>
-    <listitem>
-      <para>
-        List actions on a server.
+        Evacuate all instances from failed host.
       </para>
     </listitem>
   </varlistentry>
@@ -1583,6 +1541,48 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>migration-list</command></term>
+    <listitem>
+      <para>
+        Print a list of migrations.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>list-extensions</command></term>
+    <listitem>
+      <para>
+        List all the os-api extensions that are
+      available.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-meta</command></term>
+    <listitem>
+      <para>
+        Set or Delete metadata on all instances of a
+      host.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action</command></term>
+    <listitem>
+      <para>
+        Show an action.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action-list</command></term>
+    <listitem>
+      <para>
+        List actions on a server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>baremetal-interface-add</command></term>
     <listitem>
       <para>
@@ -1642,6 +1642,31 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>force-delete</command></term>
+    <listitem>
+      <para>
+        Force delete a server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>restore</command></term>
+    <listitem>
+      <para>
+        Restore a soft-deleted server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-evacuate-live</command></term>
+    <listitem>
+      <para>
+        Live migrate all instances of the specified
+      host to other available hosts.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>cell-capacities</command></term>
     <listitem>
       <para>
@@ -1659,36 +1684,11 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>migration-list</command></term>
+    <term><command>host-servers-migrate</command></term>
     <listitem>
       <para>
-        Print a list of migrations.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-meta</command></term>
-    <listitem>
-      <para>
-        Set or Delete metadata on all instances of a
-      host.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>list-extensions</command></term>
-    <listitem>
-      <para>
-        List all the os-api extensions that are
-      available.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-evacuate</command></term>
-    <listitem>
-      <para>
-        Evacuate all instances from failed host.
+        Migrate all instances of the specified host to
+      other available hosts.
       </para>
     </listitem>
   </varlistentry>
@@ -3212,18 +3212,18 @@ List current DNS entries for domain and IP or domain and name.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--ip &lt;ip&gt; IP</command></term>
+    <term><command>--ip &lt;ip&gt;</command></term>
     <listitem>
       <para>
-        address
+        IP address
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--name &lt;name&gt; DNS</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-        name
+        DNS name
       </para>
     </listitem>
   </varlistentry>
@@ -3947,10 +3947,10 @@ Perform a power action on a host.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--action &lt;action&gt; A</command></term>
+    <term><command>--action &lt;action&gt;</command></term>
     <listitem>
       <para>
-        power action: startup, reboot, or shutdown.
+        A power action: startup, reboot, or shutdown.
       </para>
     </listitem>
   </varlistentry>
@@ -5139,10 +5139,10 @@ Create a network.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--mtu MTU MTU</command></term>
+    <term><command>--mtu MTU</command></term>
     <listitem>
       <para>
-        for network
+        MTU for network
       </para>
     </listitem>
   </varlistentry>
@@ -5466,10 +5466,10 @@ List the default quotas for a tenant.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--tenant &lt;tenant-id&gt; ID</command></term>
+    <term><command>--tenant &lt;tenant-id&gt;</command></term>
     <listitem>
       <para>
-        of tenant to list the default quotas for.
+        ID of tenant to list the default quotas for.
       </para>
     </listitem>
   </varlistentry>
@@ -5483,18 +5483,18 @@ Delete quota for a tenant/user so their quota will Revert back to default.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--tenant &lt;tenant-id&gt; ID</command></term>
+    <term><command>--tenant &lt;tenant-id&gt;</command></term>
     <listitem>
       <para>
-        of tenant to delete quota for.
+        ID of tenant to delete quota for.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--user &lt;user-id&gt; ID</command></term>
+    <term><command>--user &lt;user-id&gt;</command></term>
     <listitem>
       <para>
-        of user to delete quota for.
+        ID of user to delete quota for.
       </para>
     </listitem>
   </varlistentry>
@@ -5508,18 +5508,18 @@ List the quotas for a tenant/user.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--tenant &lt;tenant-id&gt; ID</command></term>
+    <term><command>--tenant &lt;tenant-id&gt;</command></term>
     <listitem>
       <para>
-        of tenant to list the quotas for.
+        ID of tenant to list the quotas for.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--user &lt;user-id&gt; ID</command></term>
+    <term><command>--user &lt;user-id&gt;</command></term>
     <listitem>
       <para>
-        of user to list the quotas for.
+        ID of user to list the quotas for.
       </para>
     </listitem>
   </varlistentry>
@@ -5558,10 +5558,10 @@ Update the quotas for a tenant/user.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--user &lt;user-id&gt; ID</command></term>
+    <term><command>--user &lt;user-id&gt;</command></term>
     <listitem>
       <para>
-        of user to set the quotas for.
+        ID of user to set the quotas for.
       </para>
     </listitem>
   </varlistentry>
@@ -7079,10 +7079,10 @@ Show usage data for a single tenant.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--tenant &lt;tenant-id&gt; UUID</command></term>
+    <term><command>--tenant &lt;tenant-id&gt;</command></term>
     <listitem>
       <para>
-        of tenant to get usage for.
+        UUID of tenant to get usage for.
       </para>
     </listitem>
   </varlistentry>
