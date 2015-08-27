@@ -67,10 +67,6 @@ from the CURRENT PROJECT list at the top of the tab.
 
 **Figure: Project tab**
 
------------------------
-:guilabel:`Project` tab
------------------------
-
 From the :guilabel:`Project` tab, you can access the following tabs:
 
 -----------------------
@@ -145,12 +141,8 @@ quotas.
 
 **Figure: Admin tab**
 
-
----------------------
-:guilabel:`Admin` tab
----------------------
-
-Access the following categories to complete these tasks:
+From the :guilabel:`Admin` tab, you can access the following category
+to complete these tasks:
 
 ----------------------------
 :guilabel:`System Panel` tab
@@ -208,9 +200,8 @@ information:
 * :guilabel:`Orchestration Services`: View a list of all Orchestration
   services.
 
-------------------------------
-:guilabel:`Identity Panel` tab
-------------------------------
+OpenStack dashboard—:guilabel:`Identity` tab
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :guilabel:`Projects`: View, create, assign users to, remove users from, and
 delete projects.
