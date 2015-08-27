@@ -330,21 +330,21 @@ properties::
 
     [lvm-1]
     volume_group = stack-volumes-lvmdriver-1
-    volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+    volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
     volume_backend_name = lvmdriver-1
     filter_function = "volume.size < 5"
     goodness_function = "(capabilities.total_volumes < 3) ? 100 : 50"
 
     [lvm-2]
     volume_group = stack-volumes-lvmdriver-2
-    volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+    volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
     volume_backend_name = lvmdriver-2
     filter_function = "volumes.size < 5"
     goodness_function = "(capabilities.total_volumes < 8) ? 100 : 50"
 
     [lvm-3]
     volume_group = stack-volumes-lvmdriver-3
-    volume_driver = cinder.volume.drivers.lvm.LVMISCSIDriver
+    volume_driver = cinder.volume.drivers.LVMVolumeDriver
     volume_backend_name = lvmdriver-3
     goodness_function = "55"
 

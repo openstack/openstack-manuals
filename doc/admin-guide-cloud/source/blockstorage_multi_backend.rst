@@ -18,7 +18,7 @@ In that case, the scheduler properly decides which back end the volume
 has to be created in.
 
 The name of the back end is declared as an extra-specification of a
-volume type (such as, ``volume_backend_name=LVM_iSCSI``). When a volume
+volume type (such as, ``volume_backend_name=LVM``). When a volume
 is created, the scheduler chooses an appropriate back end to handle the
 request, according to the volume type specified by the user.
 
@@ -60,19 +60,19 @@ These examples show three back ends:
    enabled_backends=lvmdriver-1,lvmdriver-2,lvmdriver-3
    [lvmdriver-1]
    volume_group=cinder-volumes-1
-   volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
-   volume_backend_name=LVM_iSCSI
+   volume_driver=cinder.volume.drivers.lvm.LVMVolumeDriver
+   volume_backend_name=LVM
    [lvmdriver-2]
    volume_group=cinder-volumes-2
-   volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
-   volume_backend_name=LVM_iSCSI
+   volume_driver=cinder.volume.drivers.lvm.LVMVolumeDriver
+   volume_backend_name=LVM
    [lvmdriver-3]
    volume_group=cinder-volumes-3
-   volume_driver=cinder.volume.drivers.lvm.LVMISCSIDriver
-   volume_backend_name=LVM_iSCSI_b
+   volume_driver=cinder.volume.drivers.lvm.LVMVolumeDriver
+   volume_backend_name=LVM_b
 
 In this configuration, ``lvmdriver-1`` and ``lvmdriver-2`` have the same
-``volume_backend_name``. If a volume creation requests the ``LVM_iSCSI``
+``volume_backend_name``. If a volume creation requests the ``LVM``
 back end name, the scheduler uses the capacity filter scheduler to choose
 the most suitable driver, which is either ``lvmdriver-1`` or ``lvmdriver-2``.
 The capacity filter scheduler is enabled by default. The next section
