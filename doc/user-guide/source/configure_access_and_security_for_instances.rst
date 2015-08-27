@@ -48,7 +48,7 @@ group rules to a project, if your cloud requires them.
    Security`. The :guilabel:`Security Groups` tab shows the security groups
    that are available for this project.
 
-#. Select the default security group and click :guilabel:`Edit Rules`.
+#. Select the default security group and click :guilabel:`Manage Rules`.
 
 #. To allow SSH access, click :guilabel:`Add Rule`.
 
