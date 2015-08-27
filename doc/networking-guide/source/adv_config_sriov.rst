@@ -39,7 +39,7 @@ In order to enable SR-IOV, the following steps are required:
 #. Whitelist PCI devices in nova-compute (Compute)
 #. Configure neutron-server (Controller)
 #. Configure nova-scheduler (Controller)
-#. Enable Neutron sriov-agent (Compute)
+#. Enable neutron sriov-agent (Compute)
 
 Neutron sriov-agent
 --------------------
@@ -64,7 +64,7 @@ Known limitations
 ~~~~~~~~~~~~~~~~~
 
 * No OpenStack Dashboard integration. Users need to use CLI or API to
-  create Neutron SR-IOV ports.
+  create neutron SR-IOV ports.
 * The following functionalities are not implemented for SR-IOV ports:
   security groups, QoS, and ARP spoofing filtering.
 * When using Intel SR-IOV cards the sriov-agent should be disabled.
@@ -220,7 +220,7 @@ Configure neutron-server (Controller)
 
 #. Update the :file:`/etc/neutron/plugins/ml2/ml2_conf_sriov.ini` on each
    controller. In our case the vendor_id is 8086 and the product_id is 10ed.
-   Tell Neutron the vendor_id and product_id of the VFs that are supported.
+   Tell neutron the vendor_id and product_id of the VFs that are supported.
 
    .. code-block:: ini
 
@@ -274,7 +274,7 @@ Configure nova-scheduler (Controller)
    :command:`service nova-scheduler restart`.
 
 
-Enable Neutron sriov-agent (Compute)
+Enable neutron sriov-agent (Compute)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note::
@@ -322,7 +322,7 @@ Enable Neutron sriov-agent (Compute)
 Creating instances with SR-IOV ports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 After the configuration is done, you can now launch Instances
-with Neutron SR-IOV ports.
+with neutron SR-IOV ports.
 
 #. Get the id of the neutron network where you want the SR-IOV port to be
    created:
