@@ -52,5 +52,6 @@ following actions:
 
 4. Use the ``cinder-volume-usage-audit`` command to retrieve meters
    on demand. For more information, see `Block Storage audit script
-   setup to get notifications <http://docs.openstack.org/
-   admin-guide-cloud/content/section_telemetry-cinder-audit-script.html>`__.
+   setup to get notifications <http://docs.openstack.org/admin-guide-cloud/
+   telemetry-data-collection.html#block-storage-audit-script-setup-to-get-
+   notifications>`__.
