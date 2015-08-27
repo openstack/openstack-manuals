@@ -8,7 +8,8 @@ As an administrative user, you can view information for OpenStack services.
    :guilabel:`admin` project from the drop-down list
    at the top of the page.
 
-#. On the :guilabel:`Admin` tab, click the :guilabel:`System Info` category.
+#. On the :guilabel:`Admin` tab, click the :guilabel:`System Information`
+   category.
 
    View the following information on these tabs:
 
@@ -23,19 +24,15 @@ As an administrative user, you can view information for OpenStack services.
      activation status.
 
    * :guilabel:`Block Storage Services`:
-      Displays information specific to the Block Storage Service. Both
-      host and zone are listed for each service, as well as its
-      activation status.
+     Displays information specific to the Block Storage Service. Both host
+     and zone are listed for each service, as well as its
+     activation status.
 
    * :guilabel:`Network Agents`:
      Displays the network agents active within the cluster, such as L3 and
      DHCP agents, and the status of each agent.
 
    * :guilabel:`Orchestration Services`:
-      Displays information specific to the Orchestration Service. Both
-      name and host are listed for each service, and its
-      activation status.
-
-   * :guilabel:`Availability Zones`: Displays the availability zones
-     that have been configured for the cluster. It is only available
-     when multiple availability zones have been defined.
+     Displays information specific to the Orchestration Service. Name,
+     engine id, host and topic are listed for each service, as well as its
+     activation status.
