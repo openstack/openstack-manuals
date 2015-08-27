@@ -19,4 +19,4 @@ for your operating system.
 - To deploy the dashboard, see the `OpenStack dashboard documentation
   <http://docs.openstack.org/developer/horizon/topics/deployment.html>`__.
 - To launch instances with the dashboard, see the `OpenStack End User
-  Guide <http://docs.openstack.org/user-guide/index.html>`__.
+  Guide <http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__.
