@@ -2,6 +2,34 @@
 OpenStack Installation Guide for Debian
 =======================================
 
+.. Be aware that index-debian and index need to have the same content
+   so that translations work. Only the strings from the file
+   index-debian gets send to our translation server.
+
+.. only:: rdo
+
+   =============================================================================
+   OpenStack Installation Guide for Red Hat Enterprise Linux, CentOS, and Fedora
+   =============================================================================
+
+.. only:: obs
+
+   ===================================================================
+   OpenStack Installation Guide for openSUSE and SUSE Linux Enterprise
+   ===================================================================
+
+.. only:: ubuntu
+
+   =======================================
+   OpenStack Installation Guide for Ubuntu
+   =======================================
+
+.. only:: debian
+
+   =======================================
+   OpenStack Installation Guide for Debian
+   =======================================
+
 
 Abstract
 ~~~~~~~~
