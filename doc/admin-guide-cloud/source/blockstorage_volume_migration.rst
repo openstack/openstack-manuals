@@ -147,7 +147,8 @@ Migrate this volume to the second LVM back-end:
 
 .. code::
 
-   $ cinder migrate 6088f80a-f116-4331-ad48-9afb0dfb196c server2@lvmstorage-2
+   $ cinder migrate 6088f80a-f116-4331-ad48-9afb0dfb196c \
+     server2@lvmstorage-2#lvmstorage-2
 
 You can use the :command:`cinder show` command to see the status of the
 migration. While migrating, the ``migstat`` attribute shows states such as
