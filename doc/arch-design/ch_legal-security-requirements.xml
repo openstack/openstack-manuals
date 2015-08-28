@@ -61,7 +61,7 @@
         to services. This can result in loss of reputation and you must
         protect against it through auditing and appropriate
         filtering.</para>
-     <para>It's important to understand that user authentication
+     <para>It is important to understand that user authentication
         requests encase sensitive information such as user names,
         passwords, and authentication tokens. For this reason, place
         the API services behind hardware that performs SSL termination.</para>
@@ -87,7 +87,7 @@
    <simplesect>
      <title>Public security domains</title>
      <para>The public security domain is an untrusted area of
-           the cloud infrastructure. It can refer to the Internet as a
+           the cloud infrastructure. It can refer to the internet as a
            whole or simply to networks over which the user has no
            authority. Always consider this domain untrusted. For example,
            in a hybrid cloud deployment, any information traversing
@@ -102,7 +102,7 @@
            operation of the cloud, such as API calls. Public cloud
            providers and private cloud providers who do not have
            stringent controls on instance use or who allow unrestricted
-           Internet access to instances should consider this domain to be
+           internet access to instances should consider this domain to be
            untrusted. Private cloud providers may want to consider this
            network as internal and therefore trusted only if they have
            controls in place to assert that they trust instances and all
@@ -130,8 +130,7 @@
      <title>Hypervisor-security</title>
       <para>The hypervisor also requires a security assessment. In a
             public cloud, organizations typically do not have control
-            over the choice of hypervisor. For example, Amazon uses
-            its own particular version of Xen. Properly securing your
+            over the choice of hypervisor. Properly securing your
             hypervisor is important. Attacks made upon the
             unsecured hypervisor are called a
             <firstterm>hypervisor breakout</firstterm>.
@@ -155,14 +154,16 @@
             with a private Cloud-as-a-Service deployment. The
             organization does not buy the hardware, but also does not share
             with other tenants. It is also possible to use a provider that
-            hosts a bare-metal "public" cloud instance for which the
+            hosts a bare-metal public cloud instance for which the
             hardware is dedicated only to one customer, or a provider that
             offers private Cloud-as-a-Service.</para>
-      <para>It is important to realize that each cloud
-            implements services differently. What keeps data secure in one
+      <important>
+        <para>Each cloud implements services differently.
+            What keeps data secure in one
             cloud may not do the same in another. Be sure to know the
             security requirements of every cloud that handles the
             organization's data or workloads.</para>
+      </important>
       <para>More information on OpenStack Security can be found in the
            <link xlink:href="http://docs.openstack.org/security-guide"><citetitle>OpenStack
            Security Guide</citetitle></link>.</para>
@@ -214,7 +215,7 @@
              from each other, so do tenants in multi-site installations.
              The extra challenges in multi-site designs revolve around
              ensuring that tenant networks function across regions.
-             Unfortunately, OpenStack Networking does not presently support
+             OpenStack Networking (neutron) does not presently support
              a mechanism to provide this functionality, therefore an
              external system may be necessary to manage these mappings.
              Tenant networks may contain sensitive information requiring
