@@ -434,7 +434,7 @@ The following steps involve the network node:
    interface contains the project network 1 gateway IP address
    *TG1*.
 #. The router namespace ``qrouter`` routes the packet (6) to the ``qr-2``
-   interface (7). The The ``qr-2`` interface contains the project network 2
+   interface (7). The ``qr-2`` interface contains the project network 2
    gateway IP address *TG2*.
 #. The router namespace ``qrouter`` forwards the packet to the VLAN
    bridge ``qbr``.
@@ -603,7 +603,7 @@ Network node
       verbose = True
 
 #. Configure the Linux bridge agent. Edit the
-   the :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
+   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
 
    .. code-block:: ini
 

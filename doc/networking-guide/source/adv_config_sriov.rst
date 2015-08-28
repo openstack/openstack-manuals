@@ -257,7 +257,7 @@ Configure nova-scheduler (Controller)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. On every controller node running nova-scheduler add
-   PCIDeviceScheduler to the the scheduler_default_filters parameter
+   PCIDeviceScheduler to the scheduler_default_filters parameter
    and add a new line for scheduler_available_filters parameter
    under the [default] section in
    :file:`/etc/nova/nova.conf`:
