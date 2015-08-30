@@ -32,7 +32,7 @@ Networking
    recommend that you disable any automated network management tools and
    manually edit the appropriate configuration files for your distribution.
    For more information on how to configure networking on your
-   distribution, see the `documentation <https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/s1-networkscripts-interfaces.html>`__ .
+   distribution, see the `documentation <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Using_the_Command_Line_Interface.html>`__ .
 
 .. only:: obs
 
