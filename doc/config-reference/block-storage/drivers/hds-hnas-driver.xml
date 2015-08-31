@@ -41,6 +41,9 @@
            <listitem>
                <para>Get volume statistics.</para>
            </listitem>
+          <listitem>
+               <para>Manage and unmanage a volume.</para>
+           </listitem>
        </itemizedlist>
     </section>
     <section xml:id="hds-hnas-storage-reqs">
@@ -49,7 +52,7 @@
           Before using iSCSI and NFS services, use the HNAS configuration and
           management GUI (SMU) or SSC CLI to create storage pool(s), file system(s),
           and assign an EVS. Make sure that the file system used is not
-          created as <literal>replication targets</literal>. Additionally:
+          created as a <literal>replication target</literal>. Additionally:
         </para>
        <variablelist>
            <varlistentry><term><emphasis>For NFS:</emphasis></term>
@@ -61,9 +64,9 @@
                       access</literal>.
                    </para>
                    <para>
-                      Also, configure the option <literal>norootsquash
-                    </literal> as <option>"* (rw, norootsquash)",</option> so
-                    cinder services can change the permissions of its volumes.
+                      Also, in the "Access Configuration" set the option <literal>norootsquash
+                    </literal>, e.g. <option>"* (rw, norootsquash)",</option> so
+                    HNAS cinder driver can change the permissions of its volumes.
                    </para>
                    <para>
                       In order to use the hardware accelerated features of
@@ -171,12 +174,12 @@
 enabled_backends = hnas_iscsi1, hnas_nfs1</programlisting>
            <para>For HNAS iSCSI driver create this section:</para>
            <programlisting language="ini">[hnas_iscsi1]
-volume_driver = cinder.volume.drivers.hds.iscsi.HDSISCSIDriver
+volume_driver = cinder.volume.drivers.hitachi.hnas_iscsi.HDSISCSIDriver
 hds_hnas_iscsi_config_file = <replaceable>/path/to/config/hnas_config_file.xml</replaceable>
 volume_backend_name = <replaceable>HNAS-ISCSI</replaceable></programlisting>
            <para>For HNAS NFS driver create this section:</para>
            <programlisting language="ini">[hnas_nfs1]
-volume_driver = cinder.volume.drivers.hds.nfs.HDSNFSDriver
+volume_driver = cinder.volume.drivers.hitachi.hnas_nfs.HDSNFSDriver
 hds_hnas_nfs_config_file = <replaceable>/path/to/config/hnas_config_file.xml</replaceable>
 volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
            <para>The XML file has the following format:
@@ -470,10 +473,12 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
            schedule the volume creation to the pool with largest available
            free space or other criteria configured in volume filters.
        </para>
-       <screen><prompt>$</prompt> <userinput>cinder type-create 'default'</userinput>
-<prompt>$</prompt> <userinput>cinder type-key 'default' set service_label = 'default'</userinput>
-<prompt>$</prompt> <userinput>cinder type-create 'platinun-tier'</userinput>
-<prompt>$</prompt> <userinput>cinder type-key 'platinun' set service_label = 'platinun'</userinput></screen>
+       <screen>
+        <prompt>$</prompt> <userinput>cinder type-create 'default'</userinput>
+        <prompt>$</prompt> <userinput>cinder type-key 'default' set service_label = 'default'</userinput>
+        <prompt>$</prompt> <userinput>cinder type-create 'platinun-tier'</userinput>
+        <prompt>$</prompt> <userinput>cinder type-key 'platinun' set service_label = 'platinun'</userinput>
+       </screen>
        </section>
        <section xml:id="hds-hnas-multibend-config">
        <title>Multi-back-end configuration</title>
@@ -571,14 +576,14 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
            <para>
                Enable SSH adding the line <literal>"&lt;ssh_enabled&gt;
                True&lt;/ssh_enabled&gt;"</literal> under <literal>
-               "&lt;config&gt;"</literal> session.
+               "&lt;config&gt;"</literal> section.
            </para>
        </listitem>
        <listitem>
            <para>
               Set the private key path: <literal>"&lt;ssh_private_key&gt;
               /opt/hds/ssh/hnaskey&lt;/ssh_private_key&gt;" </literal>under
-              <literal>"&lt;config&gt;"</literal> session.
+              <literal>"&lt;config&gt;"</literal> section.
            </para>
        </listitem>
        <listitem>
@@ -590,10 +595,100 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
        </listitem>
        <listitem>
            <para>
-               Restart the cinder service.
+               Restart cinder services.
            </para>
        </listitem>
        </orderedlist>
+       <warning><para>Note that copying the public key HNAS using ssh-copy-id doesn't work properly as the SMU periodically wipe out those keys.</para></warning>
+   </section>
+   <section xml:id="hds-hnas-manage-unmanage">
+       <title>Manage and unmanage</title>
+       <para>
+            The manage and unmanage are two new API extensions that add some new features to the driver. The manage action on an existing volume is very similar to a volume creation. It creates a volume entry on OpenStack Block Storage DB, but instead of creating a new volume in the back end, it only adds a 'link' to an existing volume. Volume name, description, volume_type, metadata and availability_zone are supported as in a normal volume creation.
+       </para>
+       <para>
+            The unmanage action on an existing volume removes the volume from OpenStack Block Storage DB, but keeps the actual volume in the back-end. From an OpenStack Block Storage perspective the volume would be deleted, but it would still exist for use outside of it.
+       </para>
+       <note>
+        <title>How to Manage:</title>
+        <para>On Dashboard:</para>
+        <para>For NFS:</para>
+        <orderedlist>
+           <listitem>
+            <para>Under the tab System -> Volumes choose the option <guibutton>[ + Manage Volume ]</guibutton></para>
+           </listitem>
+           <listitem>
+            <para>
+                Fill the fields Identifier, Host and Volume Type with volume information to be managed:
+                <itemizedlist>
+                    <listitem><para>
+                        <guibutton>Identifier:</guibutton> ip:/type/volume_name Example: 172.24.44.34:/silver/volume-test
+                    </para></listitem>
+                    <listitem><para>
+                        <guibutton>Host:</guibutton> host@backend-name#pool_name Example: ubuntu@hnas-nfs#test_silver
+                    </para></listitem>
+                    <listitem><para>
+                        <guibutton>Volume Name:</guibutton> volume_name Example: volume-test
+                    </para></listitem>
+                    <listitem><para>
+                        <guibutton>Volume Type:</guibutton> choose a type of volume Example: silver
+                    </para></listitem>
+                </itemizedlist>
+            </para>
+           </listitem>
+        </orderedlist>
+        <para>For iSCSI:</para>
+        <orderedlist>
+           <listitem>
+            <para>Under the tab System -> Volumes choose the option <guibutton>[ + Manage Volume ]</guibutton></para>
+           </listitem>
+           <listitem>
+            <para>
+                Fill the fields Identifier, Host, Volume Name and Volume Type with volume information to be managed:
+                <itemizedlist>
+                    <listitem><para>
+                        <guibutton>Identifier:</guibutton> filesystem-name/volume-name Example: filesystem-test/volume-test
+                    </para></listitem>
+                    <listitem><para>
+                        <guibutton>Host:</guibutton> host@backend-name#pool_name Example: ubuntu@hnas-iscsi#test_silver
+                    </para></listitem>
+                    <listitem><para>
+                        <guibutton>Volume Name:</guibutton> volume_name Example: volume-test
+                    </para></listitem>
+                    <listitem><para>
+                        <guibutton>Volume Type:</guibutton> choose a type of volume Example: silver
+                    </para></listitem>
+                </itemizedlist>
+            </para>
+            </listitem>
+        </orderedlist>
+        <para>By CLI:</para>
+       <screen><prompt>$</prompt> <userinput>cinder --os-volume-api-version 2 manage [--id-type &lt;id-type&gt;] [--name &lt;name&gt;][--description &lt;description&gt;][--volume-type &lt;volume-type&gt;][--availability-zone &lt;availability-zone&gt;][--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]] [--bootable]&lt;host&gt; &lt;identifier&gt;</userinput></screen>
+       <para>Example:</para>
+       <para>For NFS:</para>
+       <screen><prompt>$</prompt> <userinput>cinder --os-volume-api-version 2 manage --name &lt;volume-test&gt; --volume-type &lt;silver&gt; &lt;ubuntu@hnas-nfs#test_silver&gt; &lt;172.24.44.34:/silver/volume-test&gt;</userinput></screen>
+       <para>For iSCSI:</para>
+       <screen><prompt>$</prompt> <userinput>cinder --os-volume-api-version 2 manage --name &lt;volume-test&gt; --volume-type &lt;silver&gt; &lt;ubuntu@hnas-iscsi#test_silver&gt; &lt;filesystem-test/volume-test&gt;</userinput></screen>
+     </note>
+     <note>
+       <title>How to Unmanage:</title>
+       <para>On Dashboard:</para>
+       <orderedlist>
+           <listitem>
+            <para>Under the tab [ System -> Volumes ] choose a volume</para>
+           </listitem>
+           <listitem>
+            <para>On the volume options, choose <guibutton>[ +Unmanage Volume ]</guibutton></para>
+           </listitem>
+           <listitem>
+            <para>Check the data and Confirm.</para>
+           </listitem>
+       </orderedlist>
+       <para>By CLI:</para>
+       <screen><prompt>$</prompt> <userinput>cinder --os-volume-api-version 2 unmanage &lt;volume&gt;</userinput></screen>
+       <para>Example:</para>
+       <screen><prompt>$</prompt> <userinput>cinder --os-volume-api-version 2 unmanage &lt;voltest&gt;</userinput></screen>
+     </note>
    </section>
    <section xml:id="hds-hnas-additional-notes">
        <title>Additional notes</title>
@@ -615,17 +710,18 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
            </listitem>
            <listitem>
                <para>
-                   HNAS iSCSI driver, due to an HNAS limitation,
-                   allows only 32 volumes per target.
-               </para>
-           </listitem>
-           <listitem>
-               <para>
                    On Red Hat, if the system is configured to use SELinux, you
                    need to set <option>"virt_use_nfs = on"</option> for NFS
                    driver work properly.
                </para>
            </listitem>
-       </itemizedlist>
+           <listitem>
+               <para>
+                   It is not possible to manage a volume if there is a slash
+                   ('/') on the volume name.
+               </para>
+           </listitem>
+         </itemizedlist>
    </section>
 </section>
+
