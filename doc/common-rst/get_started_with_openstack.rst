@@ -87,7 +87,7 @@ OpenStack architecture:
        for both relational and non-relational database engines.
    * - `Data processing service <http://www.openstack.org/software/openstack-shared-services/>`__
      - `Sahara <http://docs.openstack.org/developer/sahara/>`__
-     - Provides capabilties to provision and scale Hadoop clusters in OpenStack
+     - Provides capabilities to provision and scale Hadoop clusters in OpenStack
        by specifying parameters like Hadoop version, cluster topology and nodes
        hardware details.
 
