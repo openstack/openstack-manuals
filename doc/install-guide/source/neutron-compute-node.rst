@@ -5,7 +5,7 @@ Install and configure compute node
 The compute node handles connectivity and :term:`security groups <security
 group>` for instances.
 
-**To configure prequisites**
+**To configure prerequisites**
 
 Before you install and configure OpenStack Networking, you must
 configure certain kernel networking parameters.
