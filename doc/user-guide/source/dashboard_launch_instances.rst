@@ -15,10 +15,10 @@ Launch an instance
 
 When you launch an instance from a volume, note the following steps:
 
--  To select the volume to from which to launch, launch an instance from
-   an arbitrary image on the volume. The image that you select does not
-   boot. Instead, it is replaced by the image on the volume that you
-   choose in the next steps.
+-  To select the volume from which to launch, launch an instance from
+   an arbitrary image on the volume. The arbitrary image that you select
+   does not boot. Instead, it is replaced by the image on the volume that
+   you choose in the next steps.
 
    To boot a Xen image from a volume, the image you launch in must be
    the same type, fully virtualized or paravirtualized, as the one on
