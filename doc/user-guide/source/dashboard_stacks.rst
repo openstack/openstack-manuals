@@ -40,7 +40,7 @@ Launch a stack
    |                                       | you select, enter the URL,    |
    |                                       | browse to the file location,  |
    |                                       | or directly include the       |
-   |                                       | the template.                 |
+   |                                       | template.                     |
    +---------------------------------------+-------------------------------+
    | :guilabel:`Environment Source`        | Choose the source of the      |
    |                                       | environment from the list.    |
