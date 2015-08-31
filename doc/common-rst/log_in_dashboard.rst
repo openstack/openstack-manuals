@@ -207,3 +207,13 @@ OpenStack dashboard—:guilabel:`Identity` tab
 delete projects.
 
 :guilabel:`Users`: View, create, enable, disable, and delete users.
+
+OpenStack dashboard—:guilabel:`Settings` tab
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Click the 'Settings' button from the user drop down menu in the top right
+of any page, you will see the :guilabel:`Settings` tab.
+
+:guilabel:`User Settings`: View and manage dashboard settings.
+
+:guilabel:`Change Password`: Change the password of the user.
