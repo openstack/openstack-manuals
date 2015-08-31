@@ -8,16 +8,18 @@ Networking service using the ML2 plug-in and Open vSwitch (OVS).
 This high-availability implementation augments the :doc:`scenario_legacy_ovs`
 architecture with Virtual Router Redundancy Protocol (VRRP) using
 ``keepalived`` to provide quick failover of layer-3 services. See
-:ref:`packet-flow` for VRRP operation. Similar to the legacy scenario, all
-network traffic on a project network that requires routing actively traverses
-only one network node regardless of the quantity of network nodes providing HA
-for the router. Therefore, this high-availabilty implementation addresses
-failure situations rather than bandwidth constraints that limit performance.
-However, it does not address situations where one or more layer-3 agents fail
-and the underlying virtual networks continue to operate normally. Consider
-deploying :doc:`scenario_dvr_ovs` to increase performance in addition to
-redundancy. As of the Kilo release, you cannot combine the DVR and L3HA
-mechanisms.
+:ref:`scenario_l3ha_ovs-packet_flow` for VRRP operation. Similar to the legacy
+scenario, all network traffic on a project network that requires routing
+actively traverses only one network node regardless of the quantity of network
+nodes providing HA for the router. Therefore, this high-availability
+implementation primarily addresses failure situations instead of bandwidth
+constraints that limit performance. However, it supports random distribution
+of routers on different network nodes to reduce the chances of bandwidth
+constraints and to improve scaling. Also, this implementation does not address
+situations where one or more layer-3 agents fail and the underlying virtual
+networks continue to operate normally. Consider deploying
+:doc:`scenario_dvr_ovs` to increase performance in addition to redundancy. As
+of the Kilo release, you cannot combine the DVR and L3HA mechanisms.
 
 .. note::
    The failover process only retains the state of network connections for
@@ -168,13 +170,13 @@ The compute nodes contain the following components:
 .. figure:: figures/scenario-l3ha-ovs-compute2.png
    :alt: Compute node components - connectivity
 
-.. _packet-flow:
+.. _scenario_l3ha_ovs-packet_flow:
 
 Packet flow
 ~~~~~~~~~~~
 
 The L3HA mechanism simply augments :doc:`scenario_legacy_ovs` with quick
-migration of layer-3 services to another router if the master router
+failover of layer-3 services to another router if the master router
 fails.
 
 During normal operation, the master router periodically transmits *heartbeat*
@@ -279,7 +281,7 @@ Network nodes
 
    .. code-block:: console
 
-       $ sysctl -p
+      $ sysctl -p
 
 #. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
 
@@ -595,7 +597,7 @@ This example creates a flat external network and a VXLAN project network.
       +-----------------------+--------------------------------------+
 
    .. note::
-      The default ``policy.json`` file allows only administrative projects
+      The default :file:`policy.json` file allows only administrative projects
       to enable/disable HA during router creation and view the ``ha`` flag
       for a router.
 
@@ -616,6 +618,7 @@ This example creates a flat external network and a VXLAN project network.
 Verify network operation
 ------------------------
 
+#. Source the administrative project credentials.
 #. On the controller node, verify creation of the HA network:
 
    .. code-block:: console
