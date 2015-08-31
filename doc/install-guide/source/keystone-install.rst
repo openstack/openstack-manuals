@@ -544,7 +544,7 @@ database and an administration token.
 
 .. only:: rdo
 
-   * Restart the Apache HTTP server:
+   * Start the Apache HTTP service and configure it to start when the system boots:
 
      .. code-block:: console
 
@@ -553,7 +553,7 @@ database and an administration token.
 
 .. only:: obs
 
-   #. Restart the Apache HTTP server:
+   #. Start the Apache HTTP service and configure it to start when the system boots:
 
       .. code-block:: console
 
