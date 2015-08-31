@@ -94,7 +94,7 @@ integration. The following table provides a list of OpenStack services:
    * - `Data processing service
        <http://www.openstack.org/software/openstack-shared-services/>`_
      - `Sahara <http://docs.openstack.org/developer/sahara/>`_
-     - Provides capabilties to provision and scale Hadoop clusters in OpenStack by
+     - Provides capabilities to provision and scale Hadoop clusters in OpenStack by
        specifying parameters like Hadoop version, cluster topology and nodes hardware
        details.
 
