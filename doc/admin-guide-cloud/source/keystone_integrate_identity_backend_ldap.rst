@@ -109,11 +109,11 @@ administrators to use users and groups in LDAP.
    :file:`keystone.DOMAIN_NAME.conf`, where DOMAIN\_NAME is the domain name
    assigned in the previous step.
 
-.. note::
+   .. note::
 
-   The options set in the
-   :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf` file will
-   override options in the :file:`/etc/keystone/keystone.conf` file.
+      The options set in the
+      :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf` file will
+      override options in the :file:`/etc/keystone/keystone.conf` file.
 
 #. Define the destination LDAP server in the
    :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf` file. For example:
