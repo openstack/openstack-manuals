@@ -101,7 +101,7 @@ follows:
 *MOUNT_OPTIONS* is a comma-separated string of NFS mount options as detailed
 in the NFS man page.
 
-There are several other options whose default values may be overriden as
+There are several other options whose default values may be overridden as
 appropriate for your environment:
 
 .. code-block:: ini
