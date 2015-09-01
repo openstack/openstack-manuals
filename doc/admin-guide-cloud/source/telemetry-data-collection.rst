@@ -802,6 +802,105 @@ silly meter that shows average CPU time per core::
     Expression evaluation gracefully handles NaNs and exceptions. In
     such a case it does not create a new sample but only logs a warning.
 
+.. _telemetry-meter-definitions:
+
+Meter definitions
+-----------------
+The Telemetry module collects a subset of the meters by filtering notifications
+emitted by other OpenStack services. Starting with the Liberty release, you can
+find the meter definitions in a separate configuration file, called
+:file:`ceilometer/meter/data/meter.yaml`. This enables operators/administrators
+to add new meters to Telemetry project by updating the :file:`meter.yaml`
+file without any need for additional code changes.
+
+.. note::
+
+   The :file:`meter.yaml` file should be modified with care. Unless intended
+   do not remove any existing meter definitions from the file. Also, the
+   collected meters can differ in some cases from what is referenced in the
+   documentation.
+
+A standard meter definition looks like the following::
+
+    ---
+    metric:
+      - name: 'meter name'
+        event_type: 'event name'
+        type: 'type of meter eg: gauge, cumulative or delta'
+        unit: 'name of unit eg: MB'
+        volume: 'path to a measurable value eg: $.payload.size'
+        resource_id: 'path to resouce id eg: $.payload.id'
+        project_id: 'path to project id eg: $.payload.owner'
+
+The definition above shows a simple meter definition with some fields,
+from which ``name``, ``event_type``, ``type``, ``unit``, and ``volume``
+are required. If there is a match on the event type, samples are generated
+for the meter.
+
+If you take a look at the :file:`meter.yaml` file, it contains the sample
+definitions for all the meters that Telemetry is collecting from
+notifications. The value of each field is specified by using json path in
+order to find the right value from the notification message. In order to be
+able to specify the right field you need to be aware of the format of the
+consumed notification. The values that need to be searched in the notification
+message are set with a json path starting with ``$.`` For instance, if you need
+the ``size`` information from the payload you can define it like
+``$.payload.size``.
+
+A notification message may contain multiple meters. You can use ``*`` in
+the meter definition to capture all the meters and generate samples
+respectively. You can use wild cards as shown in the following example::
+
+    ---
+    metric:
+      - name: $.payload.measurements.[*].metric.[*].name
+        event_type: 'event_name.*'
+        type: 'delta'
+        unit: $.payload.measurements.[*].metric.[*].unit
+        volume: payload.measurements.[*].result
+        resource_id: $.payload.target
+        user_id: $.payload.initiator.id
+        project_id: $.payload.initiator.project_id
+
+In the above example, the ``name`` field is a json path with matching
+a list of meter names defined in the notification message.
+
+You can even use complex operations on json paths. In the following example,
+``volume`` and ``resource_id`` fields perform an arithmetic
+and string concatenation::
+
+    ---
+    metric:
+    - name: 'compute.node.cpu.idle.percent'
+      event_type: 'compute.metrics.update'
+      type: 'gauge'
+      unit: 'percent'
+      volume: payload.metrics[?(@.name='cpu.idle.percent')].value * 100
+      resource_id: $.payload.host + "_" + $.payload.nodename
+
+
+You will find some existence meters in the :file:`meter.yaml`. These
+meters have a ``volume`` as ``1`` and are at the bottom of the yaml file
+with a note suggesting that these will be removed in Mitaka release.
+
+For example, the meter definition for existence meters is as follows::
+
+    ---
+    metric:
+      - name: 'meter name'
+        type: 'delta'
+        unit: 'volume'
+        volume: 1
+        event_type:
+            - 'event type'
+        resource_id: $.payload.volume_id
+        user_id: $.payload.user_id
+        project_id: $.payload.tenant_id
+
+These meters are not loaded by default. To load these meters, flip
+the `disable_non_metric_meters` option in the :file:`ceilometer.conf`
+file.
+
 Block Storage audit script setup to get notifications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If you want to collect OpenStack Block Storage notification on demand,
