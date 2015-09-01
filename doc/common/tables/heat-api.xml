@@ -58,7 +58,7 @@
         <td>(IntOpt) Maximum raw byte size of JSON request body. Should be larger than max_template_size.</td>
       </tr>
       <tr>
-        <td><option>num_engine_workers</option> = <replaceable>4</replaceable></td>
+        <td><option>num_engine_workers</option> = <replaceable>2</replaceable></td>
         <td>(IntOpt) Number of heat-engine processes to fork and run.</td>
       </tr>
       <tr>
@@ -79,7 +79,7 @@
       </tr>
       <tr>
         <td><option>stack_scheduler_hints</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) When this feature is enabled, scheduler hints identifying the heat stack context of a server resource are passed to the configured schedulers in nova, for server creates done using heat resource types OS::Nova::Server and AWS::EC2::Instance. heat_root_stack_id will be set to the id of the root stack of the resource, heat_stack_id will be set to the id of the resource's parent stack, heat_stack_name will be set to the name of the resource's parent stack, heat_path_in_stack will be set to a list of tuples, (stackresourcename, stackname) with list[0] being (None, rootstackname), and heat_resource_name will be set to the resource's name.</td>
+        <td>(BoolOpt) When this feature is enabled, scheduler hints identifying the heat stack context of a server or volume resource are passed to the configured schedulers in nova and cinder, for creates done using heat resource types OS::Cinder::Volume, OS::Nova::Server, and AWS::EC2::Instance. heat_root_stack_id will be set to the id of the root stack of the resource, heat_stack_id will be set to the id of the resource's parent stack, heat_stack_name will be set to the name of the resource's parent stack, heat_path_in_stack will be set to a list of tuples, (stackresourcename, stackname) with list[0] being (None, rootstackname), heat_resource_name will be set to the resource's name, and heat_resource_uuid will be set to the resource's orchestration id.</td>
       </tr>
       <tr>
         <td><option>stack_user_domain_id</option> = <replaceable>None</replaceable></td>
@@ -178,7 +178,7 @@
         <td>(IntOpt) The value for the socket option TCP_KEEPIDLE.  This is the time in seconds that the connection must be idle before TCP starts sending keepalive probes.</td>
       </tr>
       <tr>
-        <td><option>workers</option> = <replaceable>4</replaceable></td>
+        <td><option>workers</option> = <replaceable>2</replaceable></td>
         <td>(IntOpt) Number of workers for Heat service.</td>
       </tr>
       <tr>
