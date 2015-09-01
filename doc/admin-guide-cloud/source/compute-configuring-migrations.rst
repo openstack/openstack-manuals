@@ -132,6 +132,13 @@ Example Compute installation environment
    identical between each of your servers. This ensures that the
    permissions on the NFS mount works correctly.
 
+#. Ensure you can access SSH without a password and without
+   StrictHostKeyChecking between ``HostB`` and ``HostC`` as ``nova``
+   user (set with the owner of nova-compute service). Direct access
+   from one compute host to another is needed to copy the VM file
+   across. It is also needed to detect if the source and target
+   compute nodes share a storage subsystem.
+
 #. Export ``NOVA-INST-DIR/instances`` from ``HostA``, and ensure it is
    readable and writable by the Compute user on ``HostB`` and ``HostC``.
 
