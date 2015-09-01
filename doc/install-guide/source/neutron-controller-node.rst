@@ -2,7 +2,7 @@
 Install and configure controller node
 =====================================
 
-**To configure prequisites**
+**To configure prerequisites**
 
 Before you configure the OpenStack Networking (neutron) service, you
 must create a database, service credentials, and API endpoint.
