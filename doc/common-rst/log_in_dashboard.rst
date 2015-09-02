@@ -145,7 +145,7 @@ From the :guilabel:`Admin` tab, you can access the following category
 to complete these tasks:
 
 ----------------------------
-:guilabel:`System Panel` tab
+:guilabel:`System` tab
 ----------------------------
 
 :guilabel:`Overview`: View basic reports.
@@ -166,7 +166,13 @@ list of availability zones.
 reboot, and delete running instances that belong to users of some, but not all,
 projects. Also, view the log for an instance or access an instance through VNC.
 
-:guilabel:`Volumes`: View, create, edit, and delete volumes and volume types.
+:guilabel:`Volumes`: Use the following tabs to complete these tasks:
+
+* :guilabel:`Volumes`: View, create, manage, and delete volumes.
+
+* :guilabel:`Volume Types`: View, create, manage, and delete volume types.
+
+* :guilabel:`Volume Snapshots`: View, manage, and delete volume snapshots.
 
 :guilabel:`Flavors`: View, create, edit, view extra specifications for, and
 delete flavors. A flavor is size of an instance.
