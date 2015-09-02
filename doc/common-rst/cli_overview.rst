@@ -31,12 +31,18 @@ service with its package name and description.
 +----------------+----------+-----------------------+------------------------+
 |Service         |Client    |Package                |Description             |
 +================+==========+=======================+========================+
+|Application     |murano    |python-muranoclient    |Create and manage       |
+|catalog         |          |                       |applications.           |
++----------------+----------+-----------------------+------------------------+
 |Block Storage   |cinder    |python-cinderclient    |Create and manage       |
 |                |          |                       |volumes.                |
 +----------------+----------+-----------------------+------------------------+
 |Compute         |nova      |python-novaclient      |Create and manage       |
 |                |          |                       |images, instances, and  |
 |                |          |                       |flavors.                |
++----------------+----------+-----------------------+------------------------+
+|Containers      |magnum    |python-magnumclient    |Create and manage       |
+|service         |          |                       |containers.             |
 +----------------+----------+-----------------------+------------------------+
 |Database service|trove     |python-troveclient     |Create and manage       |
 |                |          |                       |databases.              |
@@ -68,6 +74,9 @@ service with its package name and description.
 |                |          |                       |including events and    |
 |                |          |                       |resources, and update   |
 |                |          |                       |and delete stacks.      |
++----------------+----------+-----------------------+------------------------+
+|Shared file     |manila    |python-manilaclient    |Create and manage       |
+|systems         |          |                       |shared file systems     |
 +----------------+----------+-----------------------+------------------------+
 |Telemetry       |ceilometer|python-ceilometerclient|Create and collect      |
 |                |          |                       |measurements across     |

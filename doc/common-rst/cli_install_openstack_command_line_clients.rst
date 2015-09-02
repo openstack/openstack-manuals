@@ -153,6 +153,12 @@ for each client. The following values are valid:
 
 -  ``heat`` - Orchestration API
 
+-  ``magnum`` - Containers service API
+
+-  ``manila`` - Shared file systems API
+
+-  ``murano`` - Application catalog API
+
 -  ``neutron`` - Networking API
 
 -  ``nova`` - Compute API and extensions
