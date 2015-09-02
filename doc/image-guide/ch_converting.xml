@@ -61,6 +61,12 @@
             <note>
                 <para>The <literal>-f <replaceable>format</replaceable></literal> flag is optional.
                     If omitted, <command>qemu-img</command> will try to infer the image format.</para>
+                <para>When converting an image file with Windows OS, ensure the virtio driver is
+                      installed. Otherwise, you will get a blue screen of death or BSOD when
+                      launching the image due to lack of the virtio driver. Another option is to
+                      set the image properties as below when you update the image in glance to
+                      avoid this issue, but it will reduce performance significantly.</para>
+                <screen><prompt>$</prompt> <userinput>glance image-update --property hw_disk_bus='ide' image_id</userinput></screen>
             </note>
         </para>
     </simplesect>
