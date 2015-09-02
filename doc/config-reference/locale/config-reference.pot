@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-09-01 06:20+0000\n"
+"POT-Creation-Date: 2015-09-02 06:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6619,138 +6619,150 @@ msgid "The volume drivers are included with the Block Storage repository (<link 
 msgstr ""
 
 #: ./doc/config-reference/block-storage/section_volume-encryption.xml:11(title)
-msgid "Volume encryption with static key"
+msgid "Volume encryption supported by the key manager"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/section_volume-encryption.xml:12(para)
-msgid "This is an implementation of a key manager that reads its key from the project's configuration options."
+msgid "We recommend the Key management service (barbican) for storing encryption keys used by the OpenStack volume encryption feature. It can be enabled by updating <filename>cinder.conf</filename> and <filename>nova.conf</filename>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:14(para)
-msgid "This key manager implementation provides limited security, assuming that the key remains secret. Volume encryption provides protection against a lost or stolen disk, assuming that the configuration file that contains the key is not stored on the disk. Encryption also protects the confidentiality of data as it is transmitted via iSCSI from the compute host to the storage host as long as an attacker who intercepts the data does not know the secret key."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:21(para)
-msgid "Because this implementation uses a single, fixed key, it does not provide protection if that key is compromised. In particular, different volumes encrypted with a key provided by this key manager actually share the same encryption key so <emphasis>any</emphasis> volume can be decrypted once the fixed key is known."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:26(para)
-msgid "Updates are in the pipeline which will provide true key manager support via the key management service. This will provide much better security once complete."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:29(title)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:20(title)
 msgid "Initial configuration"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:31(para)
-msgid "Configuration changes need to be made to any nodes running the <systemitem class=\"service\">cinder-volume</systemitem> or <systemitem class=\"service\">nova-compute</systemitem> services."
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:22(para)
+msgid "Configuration changes need to be made to any nodes running the <systemitem class=\"service\">cinder-volume</systemitem> or <systemitem class=\"service\">nova-compute</systemitem> server."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:26(para)
+msgid "Steps to update <systemitem class=\"service\">cinder-volume</systemitem> servers:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:29(para)
+msgid "Edit the <filename>/etc/cinder/cinder.conf</filename> file to use Key management service as follows:"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/section_volume-encryption.xml:33(para)
-msgid "Update <systemitem class=\"service\">cinder-volume</systemitem> servers:"
+msgid "Look for the <literal>[keymgr]</literal> section."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:35(para)
-msgid "Edit the <filename>/etc/cinder/cinder.conf</filename> file and add or update the value of the option <placeholder-1/> in the <literal>[keymgr]</literal> section:"
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:36(para)
+msgid "Enter a new line directly below <literal>[keymgr]</literal> with the following: api_class=cinder.keymgr.barbican.BarbicanKeyManager"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:43(para)
-msgid "Restart <systemitem class=\"service\">cinder-volume</systemitem>."
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:40(para)
+msgid "Use a '#' prefix to comment out the line in this section that begins with 'fixed_key'."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/section_volume-encryption.xml:47(para)
+msgid "Restart <systemitem class=\"service\">cinder-volume</systemitem>."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:52(para)
 msgid "Update <systemitem class=\"service\">nova-compute</systemitem> servers:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:49(para)
-msgid "Edit the <filename>/etc/nova/nova.conf</filename> file and add or update the value of the option <placeholder-1/> in the <literal>[keymgr]</literal> section (add a keymgr section as shown if needed):"
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:55(para)
+msgid "Repeat the same steps above to set up the Key management service by editing <filename>/etc/nova/nova.conf</filename>"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:57(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:60(para)
 msgid "Restart <systemitem class=\"service\">nova-compute</systemitem>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:62(title)
-msgid "Create encrypted volume type"
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:64(para)
+msgid "Follow the instructions in the OpenStack Admin User Guide under the heading <link xlink:href=\"http://docs.openstack.org/user-guide-admin/dashboard_manage_volumes.html\"> Create an encrypted volume type</link> or alternatively, see <xref linkend=\"section_create-encrypted-volume-type\"/> in this manual to do this via the command line."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:63(para)
-msgid "Block Storage volume type assignment provides scheduling to a specific back-end, and can be used to specify actionable information for a back-end storage device."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:65(para)
-msgid "This example creates a volume type called LUKS and provides configuration information for the storage system to encrypt or decrypt the volume."
-msgstr ""
-
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:69(para) ./doc/config-reference/block-storage/section_volume-encryption.xml:103(para)
-msgid "Source your admin credentials:"
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:70(para)
+msgid "<emphasis>Create</emphasis> an encrypted volume by typing the command:"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/section_volume-encryption.xml:73(para)
+msgid "For alternate instructions and details, including the console output, see the <xref linkend=\"section_create_volume\"/> in this document."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:77(title)
+msgid "Create an encrypted volume type"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:79(para)
+msgid "Block Storage volume type assignment provides scheduling to a specific back-end, and can be used to specify actionable information for a back-end storage device."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:81(para)
+msgid "This example creates a volume type called LUKS and provides configuration information for the storage system to encrypt or decrypt the volume."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:85(para) ./doc/config-reference/block-storage/section_volume-encryption.xml:119(para)
+msgid "Source your admin credentials:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:89(para)
 msgid "Create the volume type:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:82(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:98(para)
 msgid "Mark the volume type as encrypted and provide the necessary details. Use <parameter>--control_location</parameter> to specify where encryption is performed: <literal>front-end</literal> (default) or <literal>back-end</literal>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:94(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:110(para)
 msgid "Support for creating the volume type in the OpenStack dashboard (horizon) exists today, however support for tagging the type as encrypted and providing the additional information needed is still in review."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:98(title)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:114(title)
 msgid "Create an encrypted volume"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:99(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:115(para)
 msgid "Use the OpenStack dashboard (horizon), or the <placeholder-1/> command to create volumes just as you normally would. For an encrypted volume use the LUKS tag, for unencrypted leave the LUKS tag off."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:107(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:123(para)
 msgid "Create an unencrypted 1GB test volume:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:134(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:150(para)
 msgid "Create an encrypted 1GB test volume:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:161(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:177(para)
 msgid "Notice the encrypted parameter; it will show True/False. The option <placeholder-1/> is also shown for easy review."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:163(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:179(para)
 msgid "Due to the issue that some of the volume drivers do not set 'encrypted' flag, attaching of encrypted volumes to a virtual guest will fail, because OpenStack Compute service will not run encryption providers."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:170(title)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:186(title)
 msgid "Testing volume encryption"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:171(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:187(para)
 msgid "This is a simple test scenario to help validate your encryption. It assumes an LVM based Block Storage server."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:172(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:188(para)
 msgid "Perform these steps after completing the volume encryption setup and creating the volume-type for LUKS as described in the preceding sections."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:175(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:191(para)
 msgid "Create a VM:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:179(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:195(para)
 msgid "Create two volumes, one encrypted and one not encrypted then attach them to your VM:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:193(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:209(para)
 msgid "On the VM, send some text to the newly attached volumes and synchronize them:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:200(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:216(para)
 msgid "On the system hosting cinder volume services, synchronize to flush the I/O cache then test to see if your strings can be found:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_volume-encryption.xml:207(para)
+#: ./doc/config-reference/block-storage/section_volume-encryption.xml:223(para)
 msgid "In the above example you see that the search returns the string written to the unencrypted volume, but not the encrypted one."
 msgstr ""
 
