@@ -156,6 +156,15 @@ each OpenStack service that are transformed to samples by Telemetry.
    queue and so forth. These configuration needs are referred in the
    above table for each OpenStack service that needs it.
 
+Specific notifications from the Compute service are important for
+administrators and users. Configuring nova_notifications in the
+:file:`nova.conf` file allows administrators to respond to events
+rapidly. For more information on configuring notifications for the
+compute service, see
+`Chapter 11 on Telemetry services <http://docs.openstack.org/
+kilo/install-guide/install/apt/content/ceilometer-nova.html>`__ in the
+OpenStack Installation Guide.
+
 .. note::
 
    When the ``store_events`` option is set to True in

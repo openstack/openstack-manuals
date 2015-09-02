@@ -122,18 +122,49 @@ To configure notifications
 
 Configure the Compute service to send notifications to the message bus.
 
-1. Edit the :file:`/etc/nova/nova.conf` file and configure
-   notifications in the ``[DEFAULT]`` section:
+Edit the :file:`/etc/nova/nova.conf` file and configure
+notifications in the ``[DEFAULT]`` section:
 
-   .. code-block:: ini
-      :linenos:
+.. code-block:: ini
+   :linenos:
 
-      [DEFAULT]
-      ...
-      instance_usage_audit = True
-      instance_usage_audit_period = hour
-      notify_on_state_change = vm_and_task_state
-      notification_driver = messagingv2
+   [DEFAULT]
+   ...
+   instance_usage_audit = True
+   instance_usage_audit_period = hour
+   notify_on_state_change = vm_and_task_state
+   notification_driver = messagingv2
+
+The Nova notification_driver creates alerts and sends system state
+updates to administrators and users. The notification_driver
+sends this information to users in a manner as close to real-time
+as possible.
+
+Notifications in real-time allow administrars to observe and resolve
+emergencies when the cloud environment experiences errors or faults.
+
+Administrators can also restrict notification delivery to certain
+tenant groups. Users can view notifications through a web browser,
+without using a specific interface.
+
+Messages arrive in a specific format which includes: Message ID,
+Publisher ID, Event type, Timestamp, Priority, and Payload. See the
+`Notification System information <https://wiki.openstack.org/wiki/
+NotificationSystem#General_Notification_Message_Format>`__ for an
+example message format.
+
+Notification messages are placed on the OpenStack messaging system,
+which recruits AMPQ to send information when an event triggers alerts.
+
+The :file:`nova.conf` file uses the nova_notification driver by defualt.
+
+.. warning::
+
+   While you can use a customised notification_driver, we
+   recommend using the default settings. Using stable web hooks
+   for events, such as creating new instances, and using custom
+   notification drivers are not guaranteed to
+   deliver notifications in real-time.
 
 To finalize installation
 ~~~~~~~~~~~~~~~~~~~~~~~~
