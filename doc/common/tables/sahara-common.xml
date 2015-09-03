@@ -34,12 +34,20 @@
         <td>(IntOpt) Maximal time (in hours) for clusters allowed to be in states other than "Active", "Deleting" or "Error". If a cluster is not in "Active", "Deleting" or "Error" state and last update of it was longer than "cleanup_time_for_incomplete_clusters" hours ago then it will be deleted automatically. (0 value means that automatic clean up is disabled).</td>
       </tr>
       <tr>
+        <td><option>cluster_operation_trust_expiration_hours</option> = <replaceable>24</replaceable></td>
+        <td>(IntOpt) Defines the period of time (in hours) after which trusts created to allow sahara to create or scale a cluster will expire. Note that this value should be significantly larger than the value of the cleanup_time_for_incomplete_clusters configuration key if use of the cluster cleanup feature is desired (the trust must last at least as long as a cluster could validly take to stall in its creation, plus the timeout value set in that key, plus one hour for the period of the cleanup job).</td>
+      </tr>
+      <tr>
         <td><option>cluster_remote_threshold</option> = <replaceable>70</replaceable></td>
         <td>(IntOpt) The same as global_remote_threshold, but for a single cluster.</td>
       </tr>
       <tr>
         <td><option>compute_topology_file</option> = <replaceable>etc/sahara/compute.topology</replaceable></td>
         <td>(StrOpt) File with nova compute topology. It should contain mapping between nova computes and racks.</td>
+      </tr>
+      <tr>
+        <td><option>default_ntp_server</option> = <replaceable>pool.ntp.org</replaceable></td>
+        <td>(StrOpt) Default ntp server for time sync</td>
       </tr>
       <tr>
         <td><option>disable_event_log</option> = <replaceable>False</replaceable></td>
@@ -56,6 +64,10 @@
       <tr>
         <td><option>enable_notifications</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Enables sending notifications to Ceilometer</td>
+      </tr>
+      <tr>
+        <td><option>executor_thread_pool_size</option> = <replaceable>64</replaceable></td>
+        <td>(IntOpt) Size of executor thread pool.</td>
       </tr>
       <tr>
         <td><option>global_remote_threshold</option> = <replaceable>100</replaceable></td>
