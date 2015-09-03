@@ -18,6 +18,7 @@ engine_life_check_timeout rpc
 environment_dir common
 error_wait_time common
 event_purge_batch_size common
+executor_thread_pool_size common
 fatal_deprecations logging
 heat_metadata_server_url api metadata_api
 heat_stack_user_role api
@@ -28,7 +29,6 @@ host common
 instance_connection_https_validate_certificates cfn_api
 instance_connection_is_secure cfn_api
 instance_format logging
-instance_user common
 instance_uuid_format logging
 keystone_backend common
 loadbalancer_template loadbalancer
@@ -62,7 +62,6 @@ rpc_backend rpc
 rpc_cast_timeout rpc
 rpc_conn_pool_size rpc
 rpc_response_timeout rpc
-rpc_thread_pool_size rpc
 rpc_zmq_bind_address zeromq
 rpc_zmq_contexts zeromq
 rpc_zmq_host zeromq
@@ -86,6 +85,19 @@ use_syslog_rfc_format logging
 verbose logging
 auth_password/allowed_auth_uris api
 auth_password/multi_cloud api
+cache/backend common
+cache/backend_argument common
+cache/config_prefix common
+cache/debug_cache_backend common
+cache/enabled common
+cache/expiration_time common
+cache/memcache_dead_retry common
+cache/memcache_pool_connection_get_timeout common
+cache/memcache_pool_maxsize common
+cache/memcache_pool_unused_timeout common
+cache/memcache_servers common
+cache/memcache_socket_timeout common
+cache/proxies common
 clients/ca_file clients
 clients/cert_file clients
 clients/endpoint_type clients
@@ -113,6 +125,7 @@ clients_heat/endpoint_type clients_heat
 clients_heat/insecure clients_heat
 clients_heat/key_file clients_heat
 clients_heat/url clients_heat
+clients_keystone/auth_uri clients_keystone
 clients_keystone/ca_file clients_keystone
 clients_keystone/cert_file clients_keystone
 clients_keystone/endpoint_type clients_keystone
@@ -144,6 +157,8 @@ clients_trove/cert_file clients_trove
 clients_trove/endpoint_type clients_trove
 clients_trove/insecure clients_trove
 clients_trove/key_file clients_trove
+constraint_validation_cache/caching common
+constraint_validation_cache/expiration_time common
 cors/allow_credentials cors
 cors/allow_headers cors
 cors/allow_methods cors
