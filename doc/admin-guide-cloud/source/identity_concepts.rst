@@ -3,86 +3,90 @@ Identity concepts
 =================
 
 Authentication
-    The process of confirming the identity of a user.
-    OpenStack Identity confirms an incoming request
-    by validating a set of credentials supplied by the
-    user. These credentials are initially a user name and
-    password, or a user name and API key. When user
-    credentials are validated, OpenStack Identity issues an
-    authentication token which the user provides in subsequent
+    The process of confirming the identity of a user. To confirm an incoming
+    request, OpenStack Identity validates a set of credentials that the user
+    supplies. Initially, these credentials are a user name and password or a
+    user name and API key. When OpenStack Identity validates user credentials,
+    it issues an authentication token that the user provides in subsequent
     requests.
 
 Credentials
-    Data that confirms the user's identity. For
-    example: user name and password, user name and API
-    key, or an authentication token provided by the
-    Identity service.
+    Data that confirms the identity of the user. For example, user
+    name and password, user name and API key, or an authentication
+    token that the Identity service provides.
 
 Domain
-    A domain is a collection of projects and users. It defines administrative
-    boundaries for the management of Identity entities. A domain may represent
-    an individual, company, or operator-owned space. It is used for exposing
-    administrative activities directly to the system users. Users may be given
-    a domain's administrator role. A domain administrator may create
-    projects, users, and groups within a domain and assign roles to users
-    and groups.
+    An Identity service API v3 entity. Represents a collection of
+    projects and users that defines administrative boundaries for the
+    management of Identity entities. A domain, which can represent an
+    individual, company, or operator-owned space, exposes
+    administrative activities directly to system users. Users can be
+    granted the administrator role for a domain. A domain
+    administrator can create projects, users, and groups in a domain
+    and assign roles to users and groups in a domain.
 
 Endpoint
-    A network-accessible address where you access a service,
-    usually a URL address. If you are using an extension for
-    templates, an endpoint template can be created, which
-    represents the templates of all the consumable services
-    that are available across the regions.
+    A network-accessible address, usually a URL, through which you can
+    access a service. If you are using an extension for templates, you
+    can create an endpoint template that represents the templates of
+    all consumable services that are available across the regions.
+
+Group
+    An Identity service API v3 entity. Represents a collection of
+    users that are owned by a domain. A group role granted to a domain
+    or project applies to all users in the group. Adding users to, or
+    removing users from, a group respectively grants, or revokes,
+    their role and authentication to the associated domain or project.
 
 OpenStackClient
-    A command-line interface for several OpenStack services
-    including the Identity API. For example, users can run the
+    A command-line interface for several OpenStack services including
+    the Identity API. For example, a user can run the
     :command:`openstack service create` and
-    :command:`openstack endpoint create` commands
-    to register services in their OpenStack
-    installations.
+    :command:`openstack endpoint create` commands to register services
+    in her OpenStack installation.
 
 Project
-    A container used to group or isolate resources.
-    Projects also group or isolate identity objects.
-    Depending on the service operator, a project may map
-    to a customer, account, organization, or tenant.
+    A container that groups or isolates resources or identity objects.
+    Depending on the service operator, a project might map to a
+    customer, account, organization, or tenant.
+
+Region
+    An Identity service API v3 entity. Represents a general division
+    in an OpenStack deployment. You can associate zero or more
+    sub-regions with a region to make a tree-like structured hierarchy.
+    Although a region does not have a geographical connotation, a
+    deployment can use a geographical name for a region, such as ``us-east``.
 
 Role
-    A personality with a defined set of user rights and
-    privileges to perform a specific set of operations.
-    In the Identity service, a token that is issued
-    to a user includes the list of roles. Services that are
-    being called by that user determine how they interpret the
-    set of roles a user has and to which operations or
-    resources each role grants access.
+    A personality with a defined set of user rights and privileges to
+    perform a specific set of operations. The Identity service issues
+    a token that includes a list of roles to a user. When a user calls
+    a service, that service interprets the set of user roles and
+    determines to which operations or resources each role grants
+    access.
 
 Service
-    An OpenStack service, such as Compute (nova),
-    Object Storage (swift), or Image service (glance).
-    It provides one or more endpoints in which
-    users can access resources and perform operations.
+    An OpenStack service, such as Compute (nova), Object Storage
+    (swift), or Image service (glance), that provides one or more
+    endpoints through which users can access resources and perform
+    operations.
 
 Token
-    An alpha-numeric string of text used to access
-    OpenStack APIs and resources. A token may be
-    revoked at any time and is valid for a
-    finite duration. While OpenStack Identity supports token-based
-    authentication in this release, the intention is
-    to support additional protocols in the future.
-    Its main purpose is to be an integration service,
-    and not aspire to be a full-fledged identity store
+    An alpha-numeric text string that enables access to OpenStack APIs
+    and resources. A token may be revoked at any time and is valid for
+    a finite duration. While OpenStack Identity supports token-based
+    authentication in this release, it intends to support additional
+    protocols in the future. OpenStack Identity is an integration
+    service that does not aspire to be a full-fledged identity store
     and management solution.
 
 User
-    Digital representation of a person, system, or
-    service who uses OpenStack cloud services. The
-    Identity service validates that incoming requests
-    are made by the user who claims to be making the
-    call. Users have a login and may be assigned
-    tokens to access resources. Users can be directly
-    assigned to a particular project and behave as if
-    they are contained in that project.
+    A digital representation of a person, system, or service that uses
+    OpenStack cloud services. The Identity service validates that
+    incoming requests are made by the user who claims to be making the
+    call. Users have a login and can access resources by using
+    assigned tokens. Users can be directly assigned to a particular
+    project and behave as if they are contained in that project.
 
 User management
 ~~~~~~~~~~~~~~~
@@ -158,41 +162,43 @@ A user can have different roles in different tenants. For example, Alice
 might also have the ``admin`` role in the ``Cyberdyne`` tenant. A user
 can also have multiple roles in the same tenant.
 
-The :file:`/etc/[SERVICE_CODENAME]/policy.json` file controls the tasks that
-users can perform for a given service. For example,
-:file:`/etc/nova/policy.json` file specifies the access policy for the Compute
-service, :file:`/etc/glance/policy.json` file specifies the access policy for
-the Image service, and :file:`/etc/keystone/policy.json` file specifies the
-access policy for the Identity service.
+The :file:`/etc/[SERVICE_CODENAME]/policy.json` file controls the
+tasks that users can perform for a given service. For example, the
+:file:`/etc/nova/policy.json` file specifies the access policy for the
+Compute service, the :file:`/etc/glance/policy.json` file specifies
+the access policy for the Image service, and the
+:file:`/etc/keystone/policy.json` file specifies the access policy for
+the Identity service.
 
-The default :file:`policy.json` files in the Compute, Identity, and Image
-service recognize only the ``admin`` role; all operations that do not
-require the ``admin`` role are accessible by any user that has any role
-in a tenant.
+The default :file:`policy.json` files in the Compute, Identity, and
+Image services recognize only the ``admin`` role. Any user with
+any role in a tenant can access all operations that do not require the
+``admin`` role.
 
 To restrict users from performing operations in, for example, the
-Compute service, you need to create a role in the Identity service and
+Compute service, you must create a role in the Identity service and
 then modify the :file:`/etc/nova/policy.json` file so that this role
 is required for Compute operations.
 
-For example, the following line in the :file:`/etc/nova/policy.json` file
-specifies that there are no restrictions on which users can create volumes:
+For example, the following line in the :file:`/etc/nova/policy.json`
+file does not restrict which users can create volumes:
 
 .. code:: json
 
     "volume:create": "",
 
-If the user has any role in a tenant, they can create volumes in that tenant.
+If the user has any role in a tenant, he can create volumes in that
+tenant.
 
-To restrict the creation of volumes to users who had the ``compute-user``
-role in a particular tenant, you would add ``"role:compute-user"``:
+To restrict the creation of volumes to users who have the
+``compute-user`` role in a particular tenant, you add ``"role:compute-user"``:
 
 .. code:: json
 
     "volume:create": "role:compute-user",
 
 To restrict all Compute service requests to require this role, the
-resulting file would look like:
+resulting file looks like:
 
 .. code-block:: json
    :linenos:
@@ -325,9 +331,10 @@ For information about how to create services and endpoints, see the
 Groups
 ~~~~~~
 
-A group is a collection of users in a domain. Administrators can create groups
-and add users to them. A role can then be assigned to the group, rather than
-individual users. Groups were introduced with the Identity API v3.
+A group is a collection of users in a domain. Administrators can
+create groups and add users to them. A role can then be assigned to
+the group, rather than individual users. Groups were introduced with
+the Identity API v3.
 
 Identity API V3 provides the following group-related operations:
 
@@ -354,8 +361,8 @@ Identity API V3 provides the following group-related operations:
 .. note::
 
     The Identity service server might not allow all operations. For
-    example, if using the Identity server with the LDAP Identity back
-    end and group updates are disabled, then a request to create,
+    example, if you use the Identity server with the LDAP Identity
+    back end and group updates are disabled, a request to create,
     delete, or update a group fails.
 
 Here are a couple of examples:
