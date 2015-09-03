@@ -18,6 +18,14 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
+        <td><option>batch_polled_samples</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) To reduce polling agent load, samples are sent to the notification agent in a batch. To gain higher throughput at the cost of load set this to False.</td>
+      </tr>
+      <tr>
+        <td><option>executor_thread_pool_size</option> = <replaceable>64</replaceable></td>
+        <td>(IntOpt) Size of executor thread pool.</td>
+      </tr>
+      <tr>
         <td><option>host</option> = <replaceable>localhost</replaceable></td>
         <td>(StrOpt) Name of this node, which must be valid in an AMQP key. Can be an opaque identifier. For ZeroMQ only, must be a valid host name, FQDN, or IP address.</td>
       </tr>
@@ -28,10 +36,6 @@
       <tr>
         <td><option>memcached_servers</option> = <replaceable>None</replaceable></td>
         <td>(ListOpt) Memcached servers or None for in process cache.</td>
-      </tr>
-      <tr>
-        <td><option>notification_workers</option> = <replaceable>1</replaceable></td>
-        <td>(IntOpt) Number of workers for notification service. A single notification agent is enabled by default.</td>
       </tr>
       <tr>
         <td><option>polling_namespaces</option> = <replaceable>['compute', 'central']</replaceable></td>
