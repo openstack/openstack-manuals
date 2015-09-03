@@ -233,7 +233,27 @@ Example Compute installation environment
    about ports that are used with libvirt,
    see the `libvirt documentation <http://libvirt.org/remote.html#Remote_libvirtd_configuration>`_.
 
-#. You can now configure options for live migration. In most cases, you
+#. Configure the downtime required for the migration by adjusting these
+   parameters in the :file:`nova.conf` file:
+
+   .. code:: ini
+
+      live_migration_downtime
+      live_migration_downtime_steps
+      live_migration_downtime_delay
+
+   The ``live_migration_downtime`` parameter sets the maximum permitted
+   downtime for a live migration, in milliseconds. This setting defaults to
+   500 milliseconds.
+
+   The ``live_migration_downtime_steps`` parameter sets the total number of
+   incremental steps to reach the maximum downtime value. This setting
+   defaults to 10 steps.
+
+   The ``live_migration_downtime_delay`` parameter sets the amount of time
+   to wait between each step, in seconds. This setting defaults to 75 seconds.
+
+#. You can now configure other options for live migration. In most cases, you
    will not need to configure any options. For advanced configuration options,
    see the `OpenStack Configuration Reference Guide <http://docs.openstack.org/
    kilo/config-reference/content/list-of-compute-config-options.html
