@@ -15,7 +15,7 @@
         interface (CLI) for the Bare metal API and its extensions.
 
        This chapter documents <command>ironic</command> version
-        <literal>0.7.0</literal>.
+        <literal>0.8.0</literal>.
     </para>
 
     <para>For help on a specific <command>ironic</command>
@@ -25,24 +25,24 @@
 
     <section xml:id="ironicclient_command_usage">
        <title>ironic usage</title>
-        <screen><computeroutput>usage: ironic [--version] [--debug] [-v] [--cert-file OS_CERT]
-              [--key-file OS_KEY] [--ca-file OS_CACERT]
-              [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
-              [--os-tenant-id OS_TENANT_ID] [--os-tenant-name OS_TENANT_NAME]
-              [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
-              [--os-auth-token OS_AUTH_TOKEN] [--ironic-url IRONIC_URL]
-              [--ironic-api-version IRONIC_API_VERSION]
-              [--os-service-type OS_SERVICE_TYPE] [--os-endpoint OS_ENDPOINT]
-              [--os-endpoint-type OS_ENDPOINT_TYPE]
-              [--max-retries MAX_RETRIES] [--retry-interval RETRY_INTERVAL]
-              [--insecure] [--os-cacert &lt;ca-certificate&gt;]
+        <screen><computeroutput>usage: ironic [--insecure] [--os-cacert &lt;ca-certificate&gt;]
               [--os-cert &lt;certificate&gt;] [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;]
               [--os-user-domain-id OS_USER_DOMAIN_ID]
               [--os-user-domain-name OS_USER_DOMAIN_NAME]
               [--os-project-id OS_PROJECT_ID]
               [--os-project-name OS_PROJECT_NAME]
               [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
-              [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
+              [--os-project-domain-name OS_PROJECT_DOMAIN_NAME] [--version]
+              [--debug] [-v] [--cert-file OS_CERT] [--key-file OS_KEY]
+              [--ca-file OS_CACERT] [--os-username OS_USERNAME]
+              [--os-password OS_PASSWORD] [--os-tenant-id OS_TENANT_ID]
+              [--os-tenant-name OS_TENANT_NAME] [--os-auth-url OS_AUTH_URL]
+              [--os-region-name OS_REGION_NAME]
+              [--os-auth-token OS_AUTH_TOKEN] [--ironic-url IRONIC_URL]
+              [--ironic-api-version IRONIC_API_VERSION]
+              [--os-service-type OS_SERVICE_TYPE] [--os-endpoint OS_ENDPOINT]
+              [--os-endpoint-type OS_ENDPOINT_TYPE]
+              [--max-retries MAX_RETRIES] [--retry-interval RETRY_INTERVAL]
               &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
@@ -329,6 +329,103 @@
         <title>ironic optional arguments</title>
   <variablelist wordsize="10">
   <varlistentry>
+    <term><command>--insecure</command></term>
+    <listitem>
+      <para>
+        Explicitly allow client to perform "insecure" TLS
+      (https) requests. The server's certificate will not be
+      verified against any certificate authorities. This
+      option should be used with caution.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Specify a CA bundle file to use in verifying a TLS
+      (https) server certificate. Defaults to
+      <code>env[OS_CACERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cert &lt;certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_CERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-key &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_KEY]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--timeout &lt;seconds&gt;</command></term>
+    <listitem>
+      <para>
+        Set request timeout (in seconds).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id OS_USER_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_USER_DOMAIN_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name OS_USER_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_USER_DOMAIN_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id OS_PROJECT_ID</command></term>
+    <listitem>
+      <para>
+      Another way to specify tenant ID. This option is
+      mutually exclusive with --os-tenant-id. Defaults to
+      <code>env[OS_PROJECT_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-name OS_PROJECT_NAME</command></term>
+    <listitem>
+      <para>
+      Another way to specify tenant name. This option is
+      mutually exclusive with --os-tenant-name. Defaults to
+      <code>env[OS_PROJECT_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-id OS_PROJECT_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_PROJECT_DOMAIN_ID]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-name OS_PROJECT_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_PROJECT_DOMAIN_NAME]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--version</command></term>
     <listitem>
       <para>
@@ -495,103 +592,6 @@
       </para>
     </listitem>
   </varlistentry>
-  <varlistentry>
-    <term><command>--insecure</command></term>
-    <listitem>
-      <para>
-        Explicitly allow client to perform "insecure" TLS
-      (https) requests. The server's certificate will not be
-      verified against any certificate authorities. This
-      option should be used with caution.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
-    <listitem>
-      <para>
-      Specify a CA bundle file to use in verifying a TLS
-      (https) server certificate. Defaults to
-      <code>env[OS_CACERT]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-cert &lt;certificate&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_CERT]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-key &lt;key&gt;</command></term>
-    <listitem>
-      <para>
-        Defaults to <code>env[OS_KEY]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--timeout &lt;seconds&gt;</command></term>
-    <listitem>
-      <para>
-        Set request timeout (in seconds).
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-user-domain-id OS_USER_DOMAIN_ID</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_USER_DOMAIN_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-user-domain-name OS_USER_DOMAIN_NAME</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_USER_DOMAIN_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-id OS_PROJECT_ID</command></term>
-    <listitem>
-      <para>
-      Another way to specify tenant ID. This option is
-      mutually exclusive with --os-tenant-id. Defaults to
-      <code>env[OS_PROJECT_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-name OS_PROJECT_NAME</command></term>
-    <listitem>
-      <para>
-      Another way to specify tenant name. This option is
-      mutually exclusive with --os-tenant-name. Defaults to
-      <code>env[OS_PROJECT_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-domain-id OS_PROJECT_DOMAIN_ID</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_PROJECT_DOMAIN_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-domain-name OS_PROJECT_DOMAIN_NAME</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_PROJECT_DOMAIN_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ironicclient_subcommand_chassis-create">
@@ -640,7 +640,8 @@ Delete a chassis.
     <section xml:id="ironicclient_subcommand_chassis-list">
         <title>ironic chassis-list</title>
         <screen><computeroutput>usage: ironic chassis-list [--detail] [--limit &lt;limit&gt;] [--marker &lt;chassis&gt;]
-                           [--sort-key &lt;field&gt;] [--sort-dir &lt;direction&gt;]</computeroutput></screen>
+                           [--sort-key &lt;field&gt;] [--sort-dir &lt;direction&gt;]
+                           [--fields &lt;field&gt; [&lt;field&gt; ...]]</computeroutput></screen>
         <para>
 List the chassis.
         </para>  <variablelist wordsize="10">
@@ -689,12 +690,23 @@ List the chassis.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--fields &lt;field&gt; [&lt;field&gt; ...]</command></term>
+    <listitem>
+      <para>
+      One or more chassis fields. Only these fields will be
+      fetched from the server. Can not be used when '--
+      detail' is specified.
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ironicclient_subcommand_chassis-node-list">
         <title>ironic chassis-node-list</title>
         <screen><computeroutput>usage: ironic chassis-node-list [--detail] [--limit &lt;limit&gt;] [--marker &lt;node&gt;]
                                 [--sort-key &lt;field&gt;] [--sort-dir &lt;direction&gt;]
+                                [--fields &lt;field&gt; [&lt;field&gt; ...]]
                                 &lt;chassis&gt;</computeroutput></screen>
         <para>
 List the nodes contained in a chassis.
@@ -755,11 +767,21 @@ List the nodes contained in a chassis.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--fields &lt;field&gt; [&lt;field&gt; ...]</command></term>
+    <listitem>
+      <para>
+      One or more node fields. Only these fields will be
+      fetched from the server. Can not be used when '--
+      detail' is specified.
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ironicclient_subcommand_chassis-show">
         <title>ironic chassis-show</title>
-        <screen><computeroutput>usage: ironic chassis-show &lt;chassis&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic chassis-show [--fields &lt;field&gt; [&lt;field&gt; ...]] &lt;chassis&gt;</computeroutput></screen>
         <para>
 Show detailed information about a chassis.
         </para>  <variablelist wordsize="10">
@@ -769,6 +791,18 @@ Show detailed information about a chassis.
     <listitem>
       <para>
         UUID of the chassis.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--fields &lt;field&gt; [&lt;field&gt; ...]</command></term>
+    <listitem>
+      <para>
+      One or more chassis fields. Only these fields will be
+      fetched from the server.
       </para>
     </listitem>
   </varlistentry>
@@ -1043,7 +1077,8 @@ Get the supported boot devices for a node.
         <screen><computeroutput>usage: ironic node-list [--limit &lt;limit&gt;] [--marker &lt;node&gt;]
                         [--sort-key &lt;field&gt;] [--sort-dir &lt;direction&gt;]
                         [--maintenance &lt;boolean&gt;] [--associated &lt;boolean&gt;]
-                        [--detail]</computeroutput></screen>
+                        [--provision-state &lt;provision-state&gt;] [--detail]
+                        [--fields &lt;field&gt; [&lt;field&gt; ...]]</computeroutput></screen>
         <para>
 List the nodes which are registered with the Ironic service.
         </para>  <variablelist wordsize="10">
@@ -1101,10 +1136,28 @@ List the nodes which are registered with the Ironic service.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--provision-state &lt;provision-state&gt;</command></term>
+    <listitem>
+      <para>
+      List nodes in specified provision state.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--detail</command></term>
     <listitem>
       <para>
         Show detailed information about the nodes.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--fields &lt;field&gt; [&lt;field&gt; ...]</command></term>
+    <listitem>
+      <para>
+      One or more node fields. Only these fields will be
+      fetched from the server. Can not be used when '--
+      detail' is specified.
       </para>
     </listitem>
   </varlistentry>
@@ -1114,6 +1167,7 @@ List the nodes which are registered with the Ironic service.
         <title>ironic node-port-list</title>
         <screen><computeroutput>usage: ironic node-port-list [--detail] [--limit &lt;limit&gt;] [--marker &lt;port&gt;]
                              [--sort-key &lt;field&gt;] [--sort-dir &lt;direction&gt;]
+                             [--fields &lt;field&gt; [&lt;field&gt; ...]]
                              &lt;node&gt;</computeroutput></screen>
         <para>
 List the ports associated with a node.
@@ -1171,6 +1225,16 @@ List the ports associated with a node.
     <listitem>
       <para>
       Sort direction: "asc" (the default) or "desc".
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--fields &lt;field&gt; [&lt;field&gt; ...]</command></term>
+    <listitem>
+      <para>
+      One or more port fields. Only these fields will be
+      fetched from the server. Can not be used when '--
+      detail' is specified.
       </para>
     </listitem>
   </varlistentry>
@@ -1345,7 +1409,7 @@ Provision, rebuild, delete, inspect, provide or manage an instance.
     </section>
     <section xml:id="ironicclient_subcommand_node-show">
         <title>ironic node-show</title>
-        <screen><computeroutput>usage: ironic node-show [--instance] &lt;id&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic node-show [--instance] [--fields &lt;field&gt; [&lt;field&gt; ...]] &lt;id&gt;</computeroutput></screen>
         <para>
 Show detailed information about a node.
         </para>  <variablelist wordsize="10">
@@ -1354,8 +1418,8 @@ Show detailed information about a node.
     <term><command>&lt;id&gt;</command></term>
     <listitem>
       <para>
-        Name or UUID of the node (or instance UUID if --instance is
-      specified).
+        Name or UUID of the node (or instance UUID if
+      --instance is specified).
       </para>
     </listitem>
   </varlistentry>
@@ -1367,6 +1431,15 @@ Show detailed information about a node.
     <listitem>
       <para>
         is an instance UUID.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--fields &lt;field&gt; [&lt;field&gt; ...]</command></term>
+    <listitem>
+      <para>
+      One or more node fields. Only these fields will be
+      fetched from the server.
       </para>
     </listitem>
   </varlistentry>
@@ -1544,7 +1617,8 @@ Delete a port.
         <title>ironic port-list</title>
         <screen><computeroutput>usage: ironic port-list [--detail] [--address &lt;mac-address&gt;] [--limit &lt;limit&gt;]
                         [--marker &lt;port&gt;] [--sort-key &lt;field&gt;]
-                        [--sort-dir &lt;direction&gt;]</computeroutput></screen>
+                        [--sort-dir &lt;direction&gt;]
+                        [--fields &lt;field&gt; [&lt;field&gt; ...]]</computeroutput></screen>
         <para>
 List the ports.
         </para>  <variablelist wordsize="10">
@@ -1602,11 +1676,21 @@ List the ports.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--fields &lt;field&gt; [&lt;field&gt; ...]</command></term>
+    <listitem>
+      <para>
+      One or more port fields. Only these fields will be
+      fetched from the server. Can not be used when '--
+      detail' is specified.
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ironicclient_subcommand_port-show">
         <title>ironic port-show</title>
-        <screen><computeroutput>usage: ironic port-show [--address] &lt;id&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: ironic port-show [--address] [--fields &lt;field&gt; [&lt;field&gt; ...]] &lt;id&gt;</computeroutput></screen>
         <para>
 Show detailed information about a port.
         </para>  <variablelist wordsize="10">
@@ -1615,7 +1699,8 @@ Show detailed information about a port.
     <term><command>&lt;id&gt;</command></term>
     <listitem>
       <para>
-        UUID of the port (or MAC address if --address is specified).
+        UUID of the port (or MAC address if --address is
+      specified).
       </para>
     </listitem>
   </varlistentry>
@@ -1626,7 +1711,17 @@ Show detailed information about a port.
     <term><command>--address &lt;id&gt;</command></term>
     <listitem>
       <para>
-        is the MAC address (instead of the UUID) of the port.
+        is the MAC address (instead of the UUID) of the
+      port.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--fields &lt;field&gt; [&lt;field&gt; ...]</command></term>
+    <listitem>
+      <para>
+      One or more port fields. Only these fields will be
+      fetched from the server.
       </para>
     </listitem>
   </varlistentry>
