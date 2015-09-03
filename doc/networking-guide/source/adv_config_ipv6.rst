@@ -679,4 +679,19 @@ with OpenStack: http://www.debug-all.com/?p=52
 Extra configuration
 -------------------
 
-None
+Neutron dhcpv6_pd_agent
+^^^^^^^^^^^^^^^^^^^^^^^
+To enable the driver for the dhcpv6_pd_agent, set pd_dhcp_driver to this in
+:file:`etc/neutron.conf`::
+
+    pd_dhcp_driver = neutron_pd_agent
+
+To allow the neutron-pd-agent to communicate with prefix delegation servers,
+you must set which network interface to use for external communication. In
+DevStack the default for this is br-ex::
+
+    pd_interface = br-ex
+
+Once you have stacked run the command below to start the neutron-pd-agent::
+
+    neutron-pd-agent --config-file /etc/neutron/neutron.conf
