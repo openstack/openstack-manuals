@@ -97,6 +97,38 @@ The above extra specs are used by the scheduler to find a back end that
 supports thin provisioning, thick provisioning, or both to match the needs
 of a specific volume type.
 
+Volume replication extra specs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OpenStack Block Storage has the ability to create volume replicas.
+Cloud administrators can define a storage policy that includes
+replication by adjusting the cinder volume driver. Volume replication
+for OpenStack Block Storage helps safeguard OpenStack environments from
+data loss during disaster recovery.
+
+To enable replication when creating volume types, configure the cinder
+volume with ``capabilities:replication="<is> True"``.
+
+Each volume created with the replication capability set to `True`
+generates a copy of the volume on a storage back end.
+
+One use case for replication involves an OpenStack cloud environment
+installed accross two data centers located nearby each other. The
+distance between the two data centers in this use case is the length of
+a city.
+
+At each data center, a cinder host supports the Block Storage service.
+Both data centers include storage back ends.
+
+Depending on the storage requirements, there can be one or two cinder
+hosts. The cloud administrator accesses the
+:file:`/etc/cinder/cinder.conf` configuration file and sets
+``capabilities:replication="<is> True"``.
+
+If one data center experiences a service failure, cloud administrators
+can redeploy the VM. The VM will run using a replicated, backed up
+volume on a host in the second data center.
+
 Capacity filter
 ~~~~~~~~~~~~~~~
 
