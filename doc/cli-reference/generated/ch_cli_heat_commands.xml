@@ -15,7 +15,7 @@
         interface (CLI) for the Orchestration API and its extensions.
 
        This chapter documents <command>heat</command> version
-        <literal>0.6.0</literal>.
+        <literal>0.7.0</literal>.
     </para>
 
     <para>For help on a specific <command>heat</command>
@@ -89,7 +89,7 @@
     <term><command>config-delete</command></term>
     <listitem>
       <para>
-        Delete software configurations.
+        Delete a software configuration.
       </para>
     </listitem>
   </varlistentry>
@@ -105,6 +105,7 @@
     <term><command>deployment-create</command></term>
     <listitem>
       <para>
+        Create a software deployment.
       </para>
     </listitem>
   </varlistentry>
@@ -112,7 +113,15 @@
     <term><command>deployment-delete</command></term>
     <listitem>
       <para>
-        Delete software deployments.
+        Delete a software deployment.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>deployment-list</command></term>
+    <listitem>
+      <para>
+        List software deployments.
       </para>
     </listitem>
   </varlistentry>
@@ -129,7 +138,7 @@
     <term><command>deployment-output-show</command></term>
     <listitem>
       <para>
-      Show a specific stack output.
+      Show a specific deployment output.
       </para>
     </listitem>
   </varlistentry>
@@ -382,6 +391,14 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>template-function-list</command></term>
+    <listitem>
+      <para>
+      List the available functions.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>template-show</command></term>
     <listitem>
       <para>
@@ -394,6 +411,14 @@
     <listitem>
       <para>
         Validate a template with parameters.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>template-version-list</command></term>
+    <listitem>
+      <para>
+      List the available template versions.
       </para>
     </listitem>
   </varlistentry>
@@ -794,7 +819,7 @@ Create a software configuration.
         <title>heat config-delete</title>
         <screen><computeroutput>usage: heat config-delete &lt;ID&gt; [&lt;ID&gt; ...]</computeroutput></screen>
         <para>
-Delete software configurations.
+Delete a software configuration.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -837,12 +862,13 @@ View details of a software configuration.
     </section>
     <section xml:id="heatclient_subcommand_deployment-create">
         <title>heat deployment-create</title>
-        <screen><computeroutput>usage: heat deployment-create [-i &lt;KEY=VALUE&gt;] [-a &lt;ACTION&gt;] [-c &lt;CONFIG&gt;]
-                              [-s &lt;SERVER&gt;] [-t &lt;TRANSPORT&gt;]
+        <screen><computeroutput>usage: heat deployment-create [-i &lt;KEY=VALUE&gt;] [-a &lt;ACTION&gt;] [-c &lt;CONFIG&gt;] -s
+                              &lt;SERVER&gt; [-t &lt;TRANSPORT&gt;]
                               [--container &lt;CONTAINER_NAME&gt;]
                               [--timeout &lt;TIMEOUT&gt;]
                               &lt;DEPLOY_NAME&gt;</computeroutput></screen>
         <para>
+Create a software deployment.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -930,7 +956,7 @@ View details of a software configuration.
         <title>heat deployment-delete</title>
         <screen><computeroutput>usage: heat deployment-delete &lt;ID&gt; [&lt;ID&gt; ...]</computeroutput></screen>
         <para>
-Delete software deployments.
+Delete a software deployment.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -938,6 +964,23 @@ Delete software deployments.
     <listitem>
       <para>
         IDs of the deployments to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_deployment-list">
+        <title>heat deployment-list</title>
+        <screen><computeroutput>usage: heat deployment-list [-s &lt;SERVER&gt;]</computeroutput></screen>
+        <para>
+List software deployments.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-s &lt;SERVER&gt;, --server &lt;SERVER&gt;</command></term>
+    <listitem>
+      <para>
+      ID of the server to fetch deployments for.
       </para>
     </listitem>
   </varlistentry>
@@ -964,7 +1007,7 @@ Get deployment configuration metadata for the specified server.
         <title>heat deployment-output-show</title>
         <screen><computeroutput>usage: heat deployment-output-show [-a] [-F &lt;FORMAT&gt;] &lt;ID&gt; [&lt;OUTPUT NAME&gt;]</computeroutput></screen>
         <para>
-Show a specific stack output.
+Show a specific deployment output.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1024,7 +1067,7 @@ Show the details of a software deployment.
     <section xml:id="heatclient_subcommand_event-list">
         <title>heat event-list</title>
         <screen><computeroutput>usage: heat event-list [-r &lt;RESOURCE&gt;] [-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
-                       [-l &lt;LIMIT&gt;] [-m &lt;ID&gt;] [-n &lt;DEPTH&gt;]
+                       [-l &lt;LIMIT&gt;] [-m &lt;ID&gt;] [-n &lt;DEPTH&gt;] [-F &lt;FORMAT&gt;]
                        &lt;NAME or ID&gt;</computeroutput></screen>
         <para>
 List events for a stack.
@@ -1082,6 +1125,14 @@ List events for a stack.
       <para>
       Depth of nested stacks from which to display events.
       Note this cannot be specified with --resource.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-F &lt;FORMAT&gt;, --format &lt;FORMAT&gt;</command></term>
+    <listitem>
+      <para>
+      The output value format, one of: log, table
       </para>
     </listitem>
   </varlistentry>
@@ -1260,7 +1311,7 @@ Show a specific stack output.
     </section>
     <section xml:id="heatclient_subcommand_resource-list">
         <title>heat resource-list</title>
-        <screen><computeroutput>usage: heat resource-list [-n &lt;DEPTH&gt;] &lt;NAME or ID&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: heat resource-list [-n &lt;DEPTH&gt;] [--with-detail] &lt;NAME or ID&gt;</computeroutput></screen>
         <para>
 Show list of resources belonging to a stack.
         </para>  <variablelist wordsize="10">
@@ -1282,6 +1333,15 @@ Show list of resources belonging to a stack.
       <para>
       Depth of nested stacks from which to display
       resources.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--with-detail</command></term>
+    <listitem>
+      <para>
+        Enable detail information presented for each resource
+      in resources list.
       </para>
     </listitem>
   </varlistentry>
@@ -1314,7 +1374,7 @@ List resource metadata.
     </section>
     <section xml:id="heatclient_subcommand_resource-show">
         <title>heat resource-show</title>
-        <screen><computeroutput>usage: heat resource-show &lt;NAME or ID&gt; &lt;RESOURCE&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: heat resource-show [-a &lt;ATTRIBUTE&gt;] &lt;NAME or ID&gt; &lt;RESOURCE&gt;</computeroutput></screen>
         <para>
 Describe the resource.
         </para>  <variablelist wordsize="10">
@@ -1332,6 +1392,17 @@ Describe the resource.
     <listitem>
       <para>
         Name of the resource to show the details for.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-a &lt;ATTRIBUTE&gt;, --with-attr &lt;ATTRIBUTE&gt;</command></term>
+    <listitem>
+      <para>
+      Attribute to show, it can be specified multiple times.
       </para>
     </listitem>
   </varlistentry>
@@ -1645,7 +1716,8 @@ Cancel currently running update of the stack.
         <screen><computeroutput>usage: heat stack-create [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;]
                          [--pre-create &lt;RESOURCE&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
                          [-c &lt;TIMEOUT&gt;] [-t &lt;TIMEOUT&gt;] [-r]
-                         [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-Pf &lt;KEY=VALUE&gt;]
+                         [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-Pf &lt;KEY=FILE&gt;]
+                         [--poll [SECONDS]] [--tags &lt;TAG1,TAG2&gt;]
                          &lt;STACK_NAME&gt;</computeroutput></screen>
         <para>
 Create the stack.
@@ -1744,12 +1816,30 @@ Create the stack.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-Pf &lt;KEY=VALUE&gt;, --parameter-file &lt;KEY=VALUE&gt;</command></term>
+    <term><command>-Pf &lt;KEY=FILE&gt;, --parameter-file &lt;KEY=FILE&gt;</command></term>
     <listitem>
       <para>
       Parameter values from file used to create the stack.
       This can be specified multiple times. Parameter value
       would be the content of the file
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--poll [SECONDS]</command></term>
+    <listitem>
+      <para>
+        Poll and report events until stack completes. Optional
+      poll interval in seconds can be provided as argument,
+      default 5.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--tags &lt;TAG1,TAG2&gt;</command></term>
+    <listitem>
+      <para>
+        A list of tags to associate with the stack.
       </para>
     </listitem>
   </varlistentry>
@@ -1775,7 +1865,10 @@ Delete the stack(s).
     <section xml:id="heatclient_subcommand_stack-list">
         <title>heat stack-list</title>
         <screen><computeroutput>usage: heat stack-list [-s] [-n] [-a] [-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]
-                       [-l &lt;LIMIT&gt;] [-m &lt;ID&gt;] [-g] [-o]</computeroutput></screen>
+                       [-t &lt;TAG1,TAG2...&gt;] [--tags-any &lt;TAG1,TAG2...&gt;]
+                       [--not-tags &lt;TAG1,TAG2...&gt;]
+                       [--not-tags-any &lt;TAG1,TAG2...&gt;] [-l &lt;LIMIT&gt;] [-m &lt;ID&gt;]
+                       [-g] [-o]</computeroutput></screen>
         <para>
 List the user's stacks.
         </para>  <variablelist wordsize="10">
@@ -1811,6 +1904,42 @@ List the user's stacks.
       Filter parameters to apply on returned stacks. This
       can be specified multiple times, or once with
       parameters separated by a semicolon.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-t &lt;TAG1,TAG2...&gt;, --tags &lt;TAG1,TAG2...&gt;</command></term>
+    <listitem>
+      <para>
+      Show stacks containing these tags, combine multiple
+      tags using the boolean AND expression
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--tags-any &lt;TAG1,TAG2...&gt;</command></term>
+    <listitem>
+      <para>
+      Show stacks containing these tags, combine multiple
+      tags using the boolean OR expression
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--not-tags &lt;TAG1,TAG2...&gt;</command></term>
+    <listitem>
+      <para>
+      Show stacks not containing these tags, combine
+      multiple tags using the boolean AND expression
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--not-tags-any &lt;TAG1,TAG2...&gt;</command></term>
+    <listitem>
+      <para>
+      Show stacks not containing these tags, combine
+      multiple tags using the boolean OR expression
       </para>
     </listitem>
   </varlistentry>
@@ -1856,7 +1985,8 @@ List the user's stacks.
         <title>heat stack-preview</title>
         <screen><computeroutput>usage: heat stack-preview [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
                           [-t &lt;TIMEOUT&gt;] [-r]
-                          [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-Pf &lt;KEY=VALUE&gt;]
+                          [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-Pf &lt;KEY=FILE&gt;]
+                          [--tags &lt;TAG1,TAG2&gt;]
                           &lt;STACK_NAME&gt;</computeroutput></screen>
         <para>
 Preview the stack.
@@ -1936,12 +2066,20 @@ Preview the stack.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-Pf &lt;KEY=VALUE&gt;, --parameter-file &lt;KEY=VALUE&gt;</command></term>
+    <term><command>-Pf &lt;KEY=FILE&gt;, --parameter-file &lt;KEY=FILE&gt;</command></term>
     <listitem>
       <para>
       Parameter values from file used to create the stack.
       This can be specified multiple times. Parameter value
       would be the content of the file
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--tags &lt;TAG1,TAG2&gt;</command></term>
+    <listitem>
+      <para>
+        A list of tags to associate with the stack.
       </para>
     </listitem>
   </varlistentry>
@@ -2022,8 +2160,8 @@ Make a snapshot of a stack.
         <screen><computeroutput>usage: heat stack-update [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;]
                          [--pre-update &lt;RESOURCE&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
                          [-t &lt;TIMEOUT&gt;] [-r] [--rollback &lt;VALUE&gt;]
-                         [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-Pf &lt;KEY=VALUE&gt;]
-                         [-x] [-c &lt;PARAMETER&gt;]
+                         [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-Pf &lt;KEY=FILE&gt;]
+                         [-x] [-c &lt;PARAMETER&gt;] [--tags &lt;TAG1,TAG2&gt;]
                          &lt;NAME or ID&gt;</computeroutput></screen>
         <para>
 Update the stack.
@@ -2128,7 +2266,7 @@ Update the stack.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-Pf &lt;KEY=VALUE&gt;, --parameter-file &lt;KEY=VALUE&gt;</command></term>
+    <term><command>-Pf &lt;KEY=FILE&gt;, --parameter-file &lt;KEY=FILE&gt;</command></term>
     <listitem>
       <para>
       Parameter values from file used to create the stack.
@@ -2156,6 +2294,31 @@ Update the stack.
       current stack for the stack-update. The default value
       in the template will be used. This can be specified
       multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--tags &lt;TAG1,TAG2&gt;</command></term>
+    <listitem>
+      <para>
+        An updated list of tags to associate with the stack.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_template-function-list">
+        <title>heat template-function-list</title>
+        <screen><computeroutput>usage: heat template-function-list &lt;TEMPLATE_VERSION&gt;</computeroutput></screen>
+        <para>
+List the available functions.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;TEMPLATE_VERSION&gt;</command></term>
+    <listitem>
+      <para>
+        Template version to get the functions for.
       </para>
     </listitem>
   </varlistentry>
@@ -2220,5 +2383,12 @@ Validate a template with parameters.
     </listitem>
   </varlistentry>
  </variablelist>
+    </section>
+    <section xml:id="heatclient_subcommand_template-version-list">
+        <title>heat template-version-list</title>
+        <screen><computeroutput>usage: heat template-version-list</computeroutput></screen>
+        <para>
+List the available template versions.
+        </para>
     </section>
 </chapter>
