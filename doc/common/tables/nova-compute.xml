@@ -31,7 +31,7 @@
       </tr>
       <tr>
         <td><option>compute_monitors</option> = <replaceable></replaceable></td>
-        <td>(ListOpt) A list of monitors that can be used for getting compute metrics. You can use the alias/name from the setuptools entry points for nova.compute.monitors.* namespaces.</td>
+        <td>(ListOpt) A list of monitors that can be used for getting compute metrics. You can use the alias/name from the setuptools entry points for nova.compute.monitors.* namespaces. If no namespace is supplied, the "cpu." namespace is assumed for backwards-compatibility. An example value that would enable both the CPU and NUMA memory bandwidth monitors that used the virt driver variant: ["cpu.virt_driver", "numa_mem_bw.virt_driver"]</td>
       </tr>
       <tr>
         <td><option>compute_resources</option> = <replaceable>vcpu</replaceable></td>
@@ -135,7 +135,7 @@
       </tr>
       <tr>
         <td><option>shelved_offload_time</option> = <replaceable>0</replaceable></td>
-        <td>(IntOpt) Time in seconds before a shelved instance is eligible for removing from a host.  -1 never offload, 0 offload when shelved</td>
+        <td>(IntOpt) Time in seconds before a shelved instance is eligible for removing from a host. -1 never offload, 0 offload immediately when shelved</td>
       </tr>
       <tr>
         <td><option>shelved_poll_interval</option> = <replaceable>3600</replaceable></td>

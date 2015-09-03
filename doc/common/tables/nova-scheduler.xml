@@ -30,8 +30,8 @@
         <td>(ListOpt) Which filter class names to use for filtering baremetal hosts when not specified in the request.</td>
       </tr>
       <tr>
-        <td><option>cpu_allocation_ratio</option> = <replaceable>16.0</replaceable></td>
-        <td>(FloatOpt) Virtual CPU to physical CPU allocation ratio which affects all CPU filters. This configuration specifies a global ratio for CoreFilter. For AggregateCoreFilter, it will fall back to this configuration value if no per-aggregate setting found.</td>
+        <td><option>cpu_allocation_ratio</option> = <replaceable>0.0</replaceable></td>
+        <td>(FloatOpt) Virtual CPU to physical CPU allocation ratio which affects all CPU filters. This configuration specifies a global ratio for CoreFilter. For AggregateCoreFilter, it will fall back to this configuration value if no per-aggregate setting found. NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) will be used and defaulted to 16.0</td>
       </tr>
       <tr>
         <td><option>disk_allocation_ratio</option> = <replaceable>1.0</replaceable></td>
@@ -58,8 +58,8 @@
         <td>(IntOpt) Tells filters to ignore hosts that have this many or more instances currently in build, resize, snapshot, migrate, rescue or unshelve task states</td>
       </tr>
       <tr>
-        <td><option>ram_allocation_ratio</option> = <replaceable>1.5</replaceable></td>
-        <td>(FloatOpt) Virtual ram to physical ram allocation ratio which affects all ram filters. This configuration specifies a global ratio for RamFilter. For AggregateRamFilter, it will fall back to this configuration value if no per-aggregate setting found.</td>
+        <td><option>ram_allocation_ratio</option> = <replaceable>0.0</replaceable></td>
+        <td>(FloatOpt) Virtual ram to physical ram allocation ratio which affects all ram filters. This configuration specifies a global ratio for RamFilter. For AggregateRamFilter, it will fall back to this configuration value if no per-aggregate setting found. NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) will be used and defaulted to 1.5</td>
       </tr>
       <tr>
         <td><option>ram_weight_multiplier</option> = <replaceable>1.0</replaceable></td>
@@ -82,7 +82,7 @@
         <td>(MultiStrOpt) Filter classes available to the scheduler which may be specified more than once.  An entry of "nova.scheduler.filters.all_filters" maps to all filters included with nova.</td>
       </tr>
       <tr>
-        <td><option>scheduler_default_filters</option> = <replaceable>RetryFilter, AvailabilityZoneFilter, RamFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ServerGroupAntiAffinityFilter, ServerGroupAffinityFilter</replaceable></td>
+        <td><option>scheduler_default_filters</option> = <replaceable>RetryFilter, AvailabilityZoneFilter, RamFilter, DiskFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ServerGroupAntiAffinityFilter, ServerGroupAffinityFilter</replaceable></td>
         <td>(ListOpt) Which filter class names to use for filtering hosts when not specified in the request.</td>
       </tr>
       <tr>
