@@ -13,6 +13,7 @@ Object Storage
    objectstorage_arch.rst
    objectstorage_replication.rst
    objectstorage_auditors.rst
+   objectstorage_EC.rst
    objectstorage_account_reaper.rst
    objectstorage_tenant_specific_image_storage.rst
    objectstorage-monitoring.rst
