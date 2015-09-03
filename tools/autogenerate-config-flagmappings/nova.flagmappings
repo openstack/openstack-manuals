@@ -7,7 +7,6 @@ api_paste_config api
 api_rate_limit api
 auth_strategy authentication
 auto_assign_floating_ip network
-backdoor_port debug
 bandwidth_poll_interval quota
 baremetal_scheduler_default_filters scheduler
 bindir common
@@ -31,6 +30,7 @@ compute_stats_class compute
 compute_topic common
 config_drive_format configdrive
 config_drive_skip_versions configdrive
+console_allowed_origins console
 console_driver xen
 console_host compute
 console_manager compute
@@ -90,6 +90,7 @@ enable_network_quota quota
 enable_new_services api
 enabled_apis api
 enabled_ssl_apis api
+executor_thread_pool_size common
 fake_call testing
 fake_network testing
 fatal_deprecations logging
@@ -169,6 +170,7 @@ matchmaker_heartbeat_freq rpc
 matchmaker_heartbeat_ttl rpc
 max_age policy
 max_concurrent_builds compute
+max_concurrent_live_migrations livemigration
 max_header_line api
 max_instances_per_host scheduler
 max_io_ops_per_host scheduler
@@ -271,7 +273,6 @@ rpc_backend rpc
 rpc_cast_timeout rpc
 rpc_conn_pool_size rpc
 rpc_response_timeout rpc
-rpc_thread_pool_size rpc
 rpc_zmq_bind_address zeromq
 rpc_zmq_contexts zeromq
 rpc_zmq_host zeromq
@@ -279,7 +280,6 @@ rpc_zmq_ipc_dir zeromq
 rpc_zmq_matchmaker zeromq
 rpc_zmq_port zeromq
 rpc_zmq_topic_backlog zeromq
-run_external_periodic_tasks periodic
 running_deleted_instance_action compute
 running_deleted_instance_poll_interval compute
 running_deleted_instance_timeout compute
@@ -305,6 +305,7 @@ scheduler_topic scheduler
 scheduler_tracks_instance_changes scheduler
 scheduler_use_baremetal_filters scheduler
 scheduler_weight_classes scheduler
+secure_proxy_ssl_header api
 security_group_api network
 send_arp_for_ha network
 send_arp_for_ha_count network
@@ -338,6 +339,7 @@ use_ipv6 ipv6
 use_network_dns_servers network
 use_neutron_default_nets network
 use_project_ca ca
+use_rootwrap_daemon common
 use_single_default_gateway network
 use_stderr logging
 use_syslog logging
@@ -478,6 +480,8 @@ hyperv/instances_path_share hyperv
 hyperv/limit_cpu_features hyperv
 hyperv/mounted_disk_query_retry_count hyperv
 hyperv/mounted_disk_query_retry_interval hyperv
+hyperv/power_state_check_timeframe hyperv
+hyperv/power_state_event_polling_interval hyperv
 hyperv/qemu_img_cmd hyperv
 hyperv/volume_attach_retry_count volumes
 hyperv/volume_attach_retry_interval volumes
@@ -557,7 +561,12 @@ libvirt/iscsi_iface libvirt
 libvirt/iscsi_use_multipath libvirt
 libvirt/iser_use_multipath libvirt
 libvirt/live_migration_bandwidth livemigration
+libvirt/live_migration_completion_timeout livemigration
+libvirt/live_migration_downtime livemigration
+libvirt/live_migration_downtime_delay livemigration
+libvirt/live_migration_downtime_steps livemigration
 libvirt/live_migration_flag livemigration
+libvirt/live_migration_progress_timeout livemigration
 libvirt/live_migration_uri livemigration
 libvirt/mem_stats_period_seconds libvirt
 libvirt/nfs_mount_options volumes
@@ -570,6 +579,7 @@ libvirt/quobyte_client_cfg quobyte
 libvirt/quobyte_mount_point_base quobyte
 libvirt/rbd_secret_uuid volumes
 libvirt/rbd_user volumes
+libvirt/remote_filesystem_transport network
 libvirt/remove_unused_kernels libvirt
 libvirt/remove_unused_resized_minimum_age_seconds libvirt
 libvirt/rescue_image_id libvirt
@@ -601,6 +611,8 @@ metrics/required scheduler
 metrics/weight_multiplier scheduler
 metrics/weight_of_unavailable scheduler
 metrics/weight_setting scheduler
+mks/enabled console
+mks/mksproxy_base_url console
 neutron/admin_auth_url neutron
 neutron/admin_password neutron
 neutron/admin_tenant_id neutron
@@ -621,9 +633,9 @@ neutron/region_name neutron
 neutron/service_metadata_proxy neutron
 neutron/timeout neutron
 neutron/url neutron
-osapi_v3/enabled apiv3
-osapi_v3/extensions_blacklist apiv3
-osapi_v3/extensions_whitelist apiv3
+osapi_v21/enabled apiv21
+osapi_v21/extensions_blacklist apiv21
+osapi_v21/extensions_whitelist apiv21
 oslo_concurrency/disable_process_locking rpc
 oslo_concurrency/lock_path rpc
 oslo_messaging_amqp/allow_insecure_clients rpc
@@ -731,6 +743,8 @@ vmware/maximum_objects vmware
 vmware/pbm_default_policy vmware
 vmware/pbm_enabled vmware
 vmware/pbm_wsdl_location vmware
+vmware/serial_port_proxy_uri vmware
+vmware/serial_port_service_uri vmware
 vmware/task_poll_interval vmware
 vmware/use_linked_clone vmware
 vmware/vlan_interface network

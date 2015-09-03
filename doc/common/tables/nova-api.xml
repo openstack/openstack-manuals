@@ -23,7 +23,7 @@
       </tr>
       <tr>
         <td><option>api_rate_limit</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Whether to use per-user rate limiting for the api. This option is only used by v2 api. Rate limiting is removed from v3 api.</td>
+        <td>(BoolOpt) Whether to use per-user rate limiting for the api. This option is only used by v2 api. Rate limiting is removed from v2.1 api.</td>
       </tr>
       <tr>
         <td><option>client_socket_timeout</option> = <replaceable>900</replaceable></td>
@@ -63,11 +63,11 @@
       </tr>
       <tr>
         <td><option>osapi_compute_ext_list</option> = <replaceable></replaceable></td>
-        <td>(ListOpt) Specify list of extensions to load when using osapi_compute_extension option with nova.api.openstack.compute.contrib.select_extensions</td>
+        <td>(ListOpt) DEPRECATED: Specify list of extensions to load when using osapi_compute_extension option with nova.api.openstack.compute.legacy_v2.contrib.select_extensions This option will be removed in the near future. After that point you have to run all of the API.</td>
       </tr>
       <tr>
-        <td><option>osapi_compute_extension</option> = <replaceable>['nova.api.openstack.compute.contrib.standard_extensions']</replaceable></td>
-        <td>(MultiStrOpt) osapi compute extension to load</td>
+        <td><option>osapi_compute_extension</option> = <replaceable>['nova.api.openstack.compute.legacy_v2.contrib.standard_extensions']</replaceable></td>
+        <td>(MultiStrOpt) osapi compute extension to load. This option will be removed in the near future. After that point you have to run all of the API.</td>
       </tr>
       <tr>
         <td><option>osapi_compute_link_prefix</option> = <replaceable>None</replaceable></td>
@@ -88,6 +88,10 @@
       <tr>
         <td><option>osapi_hide_server_address_states</option> = <replaceable>building</replaceable></td>
         <td>(ListOpt) List of instance states that should hide network info</td>
+      </tr>
+      <tr>
+        <td><option>secure_proxy_ssl_header</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) The HTTP header used to determine the scheme for the original request, even if it was removed by an SSL terminating proxy. Typical value is "HTTP_X_FORWARDED_PROTO".</td>
       </tr>
       <tr>
         <td><option>servicegroup_driver</option> = <replaceable>db</replaceable></td>
