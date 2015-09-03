@@ -22,10 +22,6 @@
         <td>(StrOpt) Configuration file for WSGI definition of API.</td>
       </tr>
       <tr>
-        <td><option>api_workers</option> = <replaceable>1</replaceable></td>
-        <td>(IntOpt) Number of workers for Ceilometer API server.</td>
-      </tr>
-      <tr>
         <td><option>event_pipeline_cfg_file</option> = <replaceable>event_pipeline.yaml</replaceable></td>
         <td>(StrOpt) Configuration file for event pipeline definition.</td>
       </tr>
@@ -57,8 +53,20 @@
         <th colspan="2">[api]</th>
       </tr>
       <tr>
-        <td><option>default_api_return_limit</option> = <replaceable>1000</replaceable></td>
+        <td><option>aodh_is_enabled</option> = <replaceable>None</replaceable></td>
+        <td>(BoolOpt) Set True to redirect alarms URLs to aodh. Default autodetection by querying keystone.</td>
+      </tr>
+      <tr>
+        <td><option>aodh_url</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) The endpoint of Aodh to redirect alarms URLs to Aodh API. Default autodetection by querying keystone.</td>
+      </tr>
+      <tr>
+        <td><option>default_api_return_limit</option> = <replaceable>100</replaceable></td>
         <td>(IntOpt) Default maximum number of items returned by API request.</td>
+      </tr>
+      <tr>
+        <td><option>gnocchi_is_enabled</option> = <replaceable>None</replaceable></td>
+        <td>(BoolOpt) Set True to disable resource/meter/sample URLs. Default autodetection by querying keystone.</td>
       </tr>
       <tr>
         <td><option>host</option> = <replaceable>0.0.0.0</replaceable></td>
@@ -71,6 +79,10 @@
       <tr>
         <td><option>port</option> = <replaceable>8777</replaceable></td>
         <td>(IntOpt) The port for the ceilometer API server.</td>
+      </tr>
+      <tr>
+        <td><option>workers</option> = <replaceable>1</replaceable></td>
+        <td>(IntOpt) Number of workers for api, default value is 1.</td>
       </tr>
       <tr>
         <th colspan="2">[oslo_middleware]</th>
