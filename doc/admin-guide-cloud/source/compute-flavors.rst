@@ -98,6 +98,10 @@ CPU limits
        a VM configured with value 2048 gets twice as much CPU time as a
        VM configured with value 1024.
 
+    -  ``cpu_shares_level``. On VMWare, specifies the allocation level. Can
+       be ``custom``, ``high``, ``normal``, or ``low``. If you choose
+       ``custom``, set the number of shares using ``cpu_shares_share``.
+
     -  ``cpu_period``. Specifies the enforcement interval (unit:
        microseconds) for QEMU and LXC hypervisors. Within a period, each
        VCPU of the domain is not allowed to consume more than the quota
