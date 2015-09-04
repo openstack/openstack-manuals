@@ -20,9 +20,9 @@ Contents
    docs-structure.rst
    content-specs.rst
    docs_builds.rst
+   writing-style.rst
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
 
 * :ref:`search`
-
