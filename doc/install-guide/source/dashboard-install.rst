@@ -168,6 +168,10 @@ To finalize installation
      # systemctl enable apache2.service memcached.service
      # systemctl start apache2.service memcached.service
 
+   .. note::
+
+      Restart the Apache HTTP service if it is already running.
+
 .. only:: rdo
 
    Start the web server and session storage service and configure
@@ -175,3 +179,7 @@ To finalize installation
 
      # systemctl enable httpd.service memcached.service
      # systemctl start httpd.service memcached.service
+
+   .. note::
+
+      Restart the Apache HTTP service if it is already running.
