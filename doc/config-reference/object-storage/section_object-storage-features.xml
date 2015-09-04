@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE section [
+<!ENTITY % openstack SYSTEM "../../common/entities/openstack.ent">
+%openstack;
+]>
 <section xmlns="http://docbook.org/ns/docbook"
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -74,13 +78,12 @@
             the case of a loss of power, this data may never actually
             get committed to disk, resulting in discrepancies that the
             underlying file system must handle.</para>
-        <para>OpenStack Object Storage works best on the XFS file
-            system, and this document assumes that the hardware being
-            used is configured appropriately to be mounted with the
-                <command>nobarriers</command> option. For more
-            information, refer to the XFS FAQ: <link
-                xlink:href="http://xfs.org/index.php/XFS_FAQ"
-                >http://xfs.org/index.php/XFS_FAQ</link>
+        <para>
+            OpenStack Object Storage works best on the XFS file system, and
+            this document assumes that the hardware being used is configured
+            appropriately to be mounted with the <command>nobarriers</command>
+            option. For more information, see the <link
+            xlink:href="http://xfs.org/index.php/XFS_FAQ">XFS FAQ</link>.
         </para>
         <para>To get the most out of your hardware, it is essential
             that every disk used in OpenStack Object Storage is
@@ -217,11 +220,14 @@
     temp_url_sig=da39a3ee5e6b4b0d3255bfef95601890afd80709&amp;
     temp_url_expires=1323479485
 </programlisting></para>
-        <para>To create temporary URLs, first set the <literal>X-Account-Meta-Temp-URL-Key</literal>
-            header on your Object Storage account to an arbitrary string. This string serves as a
-            secret key. For example, to set a key of
-                <literal>b3968d0207b54ece87cccc06515a89d4</literal> using the
-                <command>swift</command> command-line tool:</para>
+        <para>
+            To create temporary URLs, first set the
+            <literal>X-Account-Meta-Temp-URL-Key</literal> header on your
+            Object Storage account to an arbitrary string. This string serves
+            as a secret key. For example, to set a key of
+            <literal>b3968d0207b54ece87cccc06515a89d4</literal> by using the
+            <command>swift</command> command-line tool:
+        </para>
         <screen><prompt>$</prompt> <userinput>swift post -m "Temp-URL-Key:<replaceable>b3968d0207b54ece87cccc06515a89d4</replaceable>"</userinput></screen>
         <para>Next, generate an HMAC-SHA1 (RFC 2104) signature to
             specify:</para>
@@ -257,31 +263,32 @@ hmac_body = '%s\n%s\n%s' % (method, expires, path)
 sig = hmac.new(key, hmac_body, sha1).hexdigest()
 s = 'https://{host}/{path}?temp_url_sig={sig}&amp;temp_url_expires={expires}'
 url = s.format(host='swift-cluster.example.com', path=path, sig=sig, expires=expires)</programlisting>
-        <para>Any alteration of the resource path or query arguments
-            results in a <errorcode>401</errorcode>
-            <errortext>Unauthorized</errortext> error. Similarly, a
-            PUT where GET was the allowed method returns a
-                <errorcode>401</errorcode>. HEAD is allowed if GET or
-            PUT is allowed. Using this in combination with browser
-            form post translation middleware could also allow
-            direct-from-browser uploads to specific locations in
-            Object Storage.</para>
+        <para>
+            Any alteration of the resource path or query arguments results in
+            a <errorcode>401</errorcode> <errortext>Unauthorized</errortext>
+            error. Similarly, a PUT where GET was the allowed method returns a
+            <errorcode>401</errorcode> error. HEAD is allowed if GET or PUT is
+            allowed. Using this in combination with browser form post
+            translation middleware could also allow direct-from-browser
+            uploads to specific locations in Object Storage.
+        </para>
             <note>
-                <para>Changing the
-                        <literal>X-Account-Meta-Temp-URL-Key</literal>
-                    invalidates any previously generated temporary
-                    URLs within 60 seconds (the memcache time for the
-                    key). Object Storage supports up to two keys, specified by
-                        <literal>X-Account-Meta-Temp-URL-Key</literal>
-                    and
-                        <literal>X-Account-Meta-Temp-URL-Key-2</literal>.
-                    Signatures are checked against both keys, if
-                    present. This is to allow for key rotation without
-                    invalidating all existing temporary URLs.</para>
+                <para>
+                    Changing the <literal>X-Account-Meta-Temp-URL-Key</literal>
+                    invalidates any previously generated
+                    temporary URLs within 60 seconds, which is the memcache time for
+                    the key. Object Storage supports up to two keys,
+                    specified by <literal>X-Account-Meta-Temp-URL-Key</literal>
+                    and <literal>X-Account-Meta-Temp-URL-Key-2</literal>.
+                    Signatures are checked against both keys,
+                    if present. This process enables key rotation without
+                    invalidating all existing temporary URLs.
+                </para>
             </note>
-        <para>Object Storage includes a script called
-                <command>swift-temp-url</command> that generates the
-            query parameters automatically:</para>
+        <para>
+            Object Storage includes the <command>swift-temp-url</command>
+            script that generates the query parameters automatically:
+        </para>
         <screen><prompt>$</prompt> <userinput>bin/swift-temp-url GET 3600 /v1/AUTH_account/container/object mykey</userinput>
 <computeroutput>/v1/AUTH_account/container/object?
 temp_url_sig=5c4cc8886f36a9d0919d708ade98bf0cc71c9e91&amp;
@@ -350,58 +357,62 @@ pipeline = pipeline = healthcheck cache <emphasis role="bold">tempurl</emphasis>
     </section>
     <section xml:id="object-storage-dispersion">
         <title>Cluster health</title>
-        <para>Use the <command>swift-dispersion-report</command> tool
-            to measure overall cluster health. This tool checks if a
-            set of deliberately distributed containers and objects are
-            currently in their proper places within the cluster. For
-            instance, a common deployment has three replicas of each
-            object. The health of that object can be measured by
-            checking if each replica is in its proper place. If only 2
-            of the 3 is in place the object's health can be said to be
-            at 66.66%, where 100% would be perfect. A single object's
-            health, especially an older object, usually reflects the
-            health of that entire partition the object is in. If you
-            make enough objects on a distinct percentage of the
-            partitions in the cluster,you get a good estimate of the
-            overall cluster health. In practice, about 1% partition
-            coverage seems to balance well between accuracy and the
-            amount of time it takes to gather results. The first thing
-            that needs to be done to provide this health value is
-            create a new account solely for this usage. Next, you need
-            to place the containers and objects throughout the system
-            so that they are on distinct partitions. The
-            <command>swift-dispersion-populate</command> tool does this
-            by making up
-            random container and object names until they fall on
-            distinct partitions. Last, and repeatedly for the life of
-            the cluster, you must run the
-                <command>swift-dispersion-report</command> tool to
-            check the health of each of these containers and objects.
-            These tools need direct access to the entire cluster and
-            to the ring files (installing them on a proxy server
-            suffices). The
-                <command>swift-dispersion-populate</command> and
-                <command>swift-dispersion-report</command> commands
-            both use the same configuration file,
-                <filename>/etc/swift/dispersion.conf</filename>.
-            Example <filename>dispersion.conf</filename> file:</para>
+        <para>
+            Use the <command>swift-dispersion-report</command> tool to measure
+            overall cluster health. This tool checks if a set of deliberately
+            distributed containers and objects are currently in their proper
+            places within the cluster. For instance, a common deployment has
+            three replicas of each object. The health of that object can be
+            measured by checking if each replica is in its proper place. If
+            only 2 of the 3 is in place the object's health can be said to be
+            at 66.66%, where 100% would be perfect. A single object's health,
+            especially an older object, usually reflects the health of that
+            entire partition the object is in. If you make enough objects on a
+            distinct percentage of the partitions in the cluster,you get a
+            good estimate of the overall cluster health.
+        </para>
+        <para>
+            In practice, about 1% partition coverage seems to balance well
+            between accuracy and the amount of time it takes to gather
+            results. To provide this health value, you must create an account
+            solely for this usage. Next, you must place the containers and
+            objects throughout the system so that they are on distinct
+            partitions. Use the <command>swift-dispersion-populate</command>
+            tool to create random container and object names until they fall
+            on distinct partitions.
+        </para>
+        <para>
+            Last, and repeatedly for the life of the cluster, you must run the
+            <command>swift-dispersion-report</command> tool to check the
+            health of each container and object.
+        </para>
+        <para>
+            These tools must have direct access to the entire cluster and ring
+            files. Installing them on a proxy server suffices.
+        </para>
+        <para>
+            The <command>swift-dispersion-populate</command> and
+            <command>swift-dispersion-report</command> commands both use the
+            same <filename>/etc/swift/dispersion.conf</filename> configuration
+            file. Example <filename>dispersion.conf</filename> file:
+        </para>
         <programlisting language="ini">
 [dispersion]
 auth_url = http://localhost:8080/auth/v1.0
 auth_user = test:tester
 auth_key = testing
 </programlisting>
-        <para>There are also configuration options for specifying the
-            dispersion coverage, which defaults to 1%, retries,
-            concurrency, and so on. However, the defaults are usually
-            fine. Once the configuration is in place, run
-                <command>swift-dispersion-populate</command> to
-            populate the containers and objects throughout the
-            cluster. Now that those containers and objects are in
-            place, you can run
-                <command>swift-dispersion-report</command> to get a
-            dispersion report, or the overall health of the cluster.
-            Here is an example of a cluster in perfect health:</para>
+        <para>
+            You can use configuration options to specify the dispersion
+            coverage, which defaults to 1%, retries, concurrency, and so on.
+            However, the defaults are usually fine. After the configuration is
+            in place, run the <command>swift-dispersion-populate</command>
+            tool to populate the containers and objects throughout the
+            cluster. Now that those containers and objects are in place, you
+            can run the <command>swift-dispersion-report</command> tool to get
+            a dispersion report or view the overall health of the cluster.
+            Here is an example of a cluster in perfect health:
+        </para>
         <screen><prompt>$</prompt> <userinput>swift-dispersion-report</userinput>
 <computeroutput>Queried 2621 containers for dispersion reporting, 19s, 0 retries
 100.00% of container copies found (7863 of 7863)
@@ -427,12 +438,14 @@ There were 1763 partitions missing one copy.
 77.56% of object copies found (6094 of 7857)
 Sample represents 1.00% of the object partition space
 </computeroutput></screen>
-        <para>You can see the health of the objects in the cluster has
-            gone down significantly. Of course, this test environment
-            has just four devices, in a production environment with
-            many devices the impact of one device change is much less.
-            Next, run the replicators to get everything put back into
-            place and then rerun the dispersion report:</para>
+        <para>
+            You can see the health of the objects in the cluster has gone down
+            significantly. Of course, this test environment has just four
+            devices, in a production environment with many devices the impact
+            of one device change is much less. Next, run the replicators to
+            get everything put back into place and then rerun the dispersion
+            report:
+        </para>
         <programlisting>
 ... start object replicators and monitor logs until they're caught up ...
 $ swift-dispersion-report
@@ -472,13 +485,16 @@ Sample represents 1.00% of the object partition space
     </section>
     <section xml:id="object-storage-container-quotas">
         <title>Container quotas</title>
-        <para>The <code>container_quotas</code> middleware implements simple quotas that can be
-            imposed on Object Storage containers by a user with the ability to set container
-            metadata, most likely the account administrator. This can be useful for limiting the
-            scope of containers that are delegated to non-admin users, exposed to formpost uploads,
-            or just as a self-imposed sanity check.</para>
-        <para>Any object PUT operations that exceed these quotas
-            return a 403 response (forbidden).</para>
+        <para>
+            The <code>container_quotas</code> middleware implements simple
+            quotas that can be imposed on Object Storage containers by a user
+            with the ability to set container metadata, most likely the
+            account administrator. This can be useful for limiting the scope
+            of containers that are delegated to non-admin users, exposed to
+            form &POST; uploads, or just as a self-imposed sanity check.
+        </para>
+        <para>Any object &PUT; operations that exceed these quotas
+            return a <literal>Forbidden (403)</literal> status code.</para>
         <para>Quotas are subject to several limitations: eventual
             consistency, the timeliness of the cached container_info
             (60 second TTL by default), and it is unable to reject
@@ -560,21 +576,26 @@ X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
     <xi:include href="section_configure_s3.xml"/>
     <section xml:id="object-storage-drive-audit">
         <title>Drive audit</title>
-        <para>The <option>swift-drive-audit</option> configuration
-            items reference a script that can be run by using
-                <command>cron</command> to watch for bad drives. If
-            errors are detected, it unmounts the bad drive, so that
-            OpenStack Object Storage can work around it. It takes the
-            following options:</para>
+        <para>
+            The <option>swift-drive-audit</option> configuration items
+            reference a script that can be run by using
+            <command>cron</command> to watch for bad drives. If errors are
+            detected, it unmounts the bad drive so that OpenStack Object
+            Storage can work around it. It takes the following options:
+        </para>
         <xi:include
             href="../../common/tables/swift-drive-audit-drive-audit.xml"
         />
     </section>
     <section xml:id="object-storage-form-post">
         <title>Form post</title>
-        <para>Middleware that provides the ability to upload objects
-            to a cluster using an HTML form POST. The format of the
-            form is:</para>
+        <para>
+            Middleware that enables you to upload objects to a cluster by
+            using an HTML form &POST;.
+        </para>
+        <para>
+            The format of the form is:
+        </para>
         <programlisting>&lt;![CDATA[
 &lt;form action="&lt;swift-url&gt;" method="POST"
       enctype="multipart/form-data"&gt;
@@ -583,47 +604,110 @@ X-Trans-Id: tx602634cf478546a39b1be-0051e6bc7a</computeroutput></screen>
   &lt;input type="hidden" name="max_file_count" value="&lt;count&gt;" /&gt;
   &lt;input type="hidden" name="expires" value="&lt;unix-timestamp&gt;" /&gt;
   &lt;input type="hidden" name="signature" value="&lt;hmac&gt;" /&gt;
+  &lt;input type="hidden" name="x_delete_at" value="&lt;unix-timestamp>"/&gt;
+  &lt;input type="hidden" name="x_delete_after" value="&lt;seconds>"/&gt;
   &lt;input type="file" name="file1" /&gt;&lt;br /&gt;
   &lt;input type="submit" /&gt;
 &lt;/form&gt;]]&gt;
 </programlisting>
-        <para>The <literal>swift-url</literal> is the URL to the Object Storage destination, such
-            as: <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
-            The name of each file uploaded is appended to the specified
-            <literal>swift-url</literal>. So, you can upload directly to the root of container with
-            a URL like: <uri>https://swift-cluster.example.com/v1/AUTH_account/container/</uri>
-            Optionally, you can include an object prefix to better separate different users'
-            uploads, such as:
-                <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>
+        <para>
+            In the form:
         </para>
-        <note>
-            <para>The form method must be POST and the enctype must be
-                set as <literal>multipart/form-data</literal>.</para>
-        </note>
-        <para>The redirect attribute is the URL to redirect the
-            browser to after the upload completes. The URL has status
-            and message query parameters added to it, indicating the
-            HTTP status code for the upload (2xx is success) and a
-            possible message for further information if there was an
-            error (such as <literal>"max_file_size
-            exceeded"</literal>).</para>
-        <para>The <literal>max_file_size</literal> attribute must be
-            included and indicates the largest single file upload that
-            can be done, in bytes.</para>
-        <para>The <literal>max_file_count</literal> attribute must be
-            included and indicates the maximum number of files that
-            can be uploaded with the form. Include additional
-                <code>&lt;![CDATA[&lt;input type="file"
-                name="filexx"/&gt;]]&gt;</code> attributes if
-            desired.</para>
-        <para>The expires attribute is the Unix timestamp before which
-            the form must be submitted before it is
-            invalidated.</para>
-        <para>The signature attribute is the HMAC-SHA1 signature of
-            the form. This sample Python code shows how to compute the
-            signature:</para>
-        <programlisting language="python">
-import hmac
+        <itemizedlist>
+        <listitem>
+            <para>
+                <emphasis role="bold"><literal>action="&lt;swift-url&gt;"</literal></emphasis>
+            </para>
+            <para>
+                The URL to the Object Storage destination, such as
+                <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>.
+            </para>
+            <para>
+                The name of each uploaded file is appended to the specified
+                <literal>swift-url</literal>. So, you can upload directly to the root of
+                container with a URL like
+                <uri>https://swift-cluster.example.com/v1/AUTH_account/container/</uri>.
+            </para>
+            <para>
+                Optionally, you can include an object prefix to
+                separate different users' uploads, such as
+                <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis
+                role="bold"><literal>method="POST"</literal></emphasis></para>
+            <para>
+                The form <literal>method</literal> must be &POST;.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis
+                role="bold"><literal>enctype="multipart/form-data</literal></emphasis></para>
+            <para>
+                The <literal>enctype</literal> must be set to <literal>multipart/form-data</literal>.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis
+                role="bold"><literal>name="redirect"</literal></emphasis></para>
+            <para>
+                The URL to which to redirect the browser after the upload
+                completes. The URL has status and message query parameters
+                added to it that indicate the HTTP status code for the upload
+                and, optionally, additional error information. The 2<emphasis
+                role="italic">nn</emphasis> status code indicates success. If
+                an error occurs, the URL might include error information, such
+                as <literal>"max_file_size exceeded"</literal>.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis
+                role="bold"><literal>name="max_file_size"</literal></emphasis></para>
+            <para>
+                Required. The maximum number of bytes that can be uploaded in
+                a single file upload.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis
+                role="bold"><literal>name="max_file_count"</literal></emphasis></para>
+            <para>
+                Required. The maximum number of files that can be uploaded
+                with the form.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis
+                role="bold"><literal>name="expires"</literal></emphasis>
+            </para>
+            <para>
+                The expiration date and time for the form in <link
+                xlink:href="https://en.wikipedia.org/wiki/Unix_time">UNIX
+                Epoch time stamp format</link>. After this date and time, the
+                form is no longer valid.
+            </para>
+            <para>
+                For example, <code>1440619048</code> is equivalent to
+                <code>Mon, Wed, 26 Aug 2015 19:57:28 GMT</code>.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                <emphasis
+                role="bold"><literal>name="signature"</literal></emphasis>
+            </para>
+            <para>
+                The HMAC-SHA1 signature of the form. This sample Python code
+                shows how to compute the signature:
+            </para>
+        <programlisting language="python">import hmac
 from hashlib import sha1
 from time import time
 path = '/v1/account/container/object_prefix'
@@ -634,28 +718,70 @@ expires = int(time() + 600)
 key = 'mykey'
 hmac_body = '%s\n%s\n%s\n%s\n%s' % (path, redirect,
     max_file_size, max_file_count, expires)
-signature = hmac.new(key, hmac_body, sha1).hexdigest()
-</programlisting>
+signature = hmac.new(key, hmac_body, sha1).hexdigest()</programlisting>
         <para>The key is the value of the
                 <literal>X-Account-Meta-Temp-URL-Key</literal> header
             on the account.</para>
-        <para>Be certain to use the full path, from the
-                <literal>/v1/</literal> onward.</para>
-        <para>The command-line tool
-                <command>swift-form-signature</command> may be used
-            (mostly just when testing) to compute expires and
-            signature.</para>
-        <para>The file attributes must appear after the other
-            attributes to be processed correctly. If attributes come
-            after the file, they are not sent with the sub-request
-            because on the server side, all attributes in the file
-            cannot be parsed unless the whole file is read into memory
-            and the server does not have enough memory to service
-            these requests. So, attributes that follow the file are
-            ignored.</para>
-        <xi:include
-            href="../../common/tables/swift-proxy-server-filter-formpost.xml"
-        />
+        <para>
+            Use the full path from the <literal>/v1/</literal> value and
+            onward.
+        </para>
+        <para>
+            During testing, you can use the
+            <command>swift-form-signature</command> command-line tool to compute the
+            <literal>expires</literal> and <literal>signature</literal>
+            values.
+        </para>
+    </listitem>
+    <listitem>
+        <para>
+            <emphasis
+            role="bold"><literal>name="x_delete_at"</literal></emphasis>
+        </para>
+        <para>
+            The date and time in <link
+            xlink:href="https://en.wikipedia.org/wiki/Unix_time">UNIX Epoch
+            time stamp format</link> when the object will be removed.
+        </para>
+        <para>
+            For example, <code>1440619048</code> is equivalent to
+            <code>Mon, Wed, 26 Aug 2015 19:57:28 GMT</code>.
+        </para>
+        <para>
+            This attribute enables you to specify the <literal>X-Delete-
+            At</literal> header value in the form &POST;.
+        </para>
+    </listitem>
+    <listitem>
+        <para>
+            <emphasis
+            role="bold"><literal>name="x_delete_after"</literal></emphasis>
+        </para>
+        <para>
+            The number of seconds after which the object is removed.
+            Internally, the Object Storage system stores this value in the
+            <literal>X-Delete-At</literal> metadata item. This attribute
+            enables you to specify the <literal>X-Delete-After</literal>
+            header value in the form &POST;.
+        </para>
+    </listitem>
+    <listitem>
+        <para>
+            <emphasis role="bold"><literal>type="file" name="filexx"</literal></emphasis>
+        </para>
+        <para>
+            Optional. One or more files to upload. Must appear after the other
+            attributes to be processed correctly. If attributes come after the
+            <literal>file</literal> attribute, they are not sent with the sub-
+            request because on the server side, all attributes in the file
+            cannot be parsed unless the whole file is read into memory and the
+            server does not have enough memory to service these requests. So,
+            attributes that follow the <literal>file</literal> attribute are
+            ignored.
+        </para>
+    </listitem>
+</itemizedlist>
+<xi:include href="../../common/tables/swift-proxy-server-filter-formpost.xml"/>
     </section>
     <section xml:id="object-storage-static-web">
         <title>Static web sites</title>
