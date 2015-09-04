@@ -16,7 +16,8 @@ Contents
    :maxdepth: 2
 
    introduction.rst
-   rst_conv.rst
+   rst-conv.rst
+   docs-structure.rst
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
