@@ -73,25 +73,34 @@ Shared storage
 
 -  **Instances:** Instance can be migrated with iSCSI-based volumes.
 
-.. note::
+**Notes**
 
-    -  Because the Compute service does not use the libvirt live
-       migration functionality by default, guests are suspended before
-       migration and might experience several minutes of downtime. For
-       details, see :ref:Enabling True Live Migration.
+-  Because the Compute service does not use the libvirt live
+   migration functionality by default, guests are suspended before
+   migration and might experience several minutes of downtime. For
+   details, see `Enabling true live migration`.
 
-    -  This guide assumes the default value for ``instances_path`` in
-       your :file:`nova.conf` file (:file:`NOVA-INST-DIR/instances`). If you
-       have changed the ``state_path`` or ``instances_path`` variables,
-       modify the commands accordingly.
+-  Compute calculates the amount of downtime required using the RAM size of
+   the disk being migrated, in accordance with the ``live_migration_downtime``
+   configuration parameters. Migration downtime is measured in steps, with an
+   exponential backoff between each step. This means that the maximum
+   downtime between each step starts off small, and is increased in ever
+   larger amounts as Compute waits for the migration to complete. This gives
+   the guest a chance to complete the migration successfully, with a minimum
+   amount of downtime.
 
-    -  You must specify ``vncserver_listen=0.0.0.0`` or live migration
-       will not work correctly.
+-  This guide assumes the default value for ``instances_path`` in
+   your :file:`nova.conf` file (:file:`NOVA-INST-DIR/instances`). If you
+   have changed the ``state_path`` or ``instances_path`` variables,
+   modify the commands accordingly.
 
-    -  You must specify the ``instances_path`` in each node that runs
-       nova-compute. The mount point for ``instances_path`` must be the
-       same value for each node, or live migration will not work
-       correctly.
+-  You must specify ``vncserver_listen=0.0.0.0`` or live migration
+   will not work correctly.
+
+-  You must specify the ``instances_path`` in each node that runs
+   nova-compute. The mount point for ``instances_path`` must be the
+   same value for each node, or live migration will not work
+   correctly.
 
 .. _section_example-compute-install:
 
