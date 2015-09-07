@@ -173,12 +173,6 @@ create a MongoDB database, service credentials, and API endpoint.
          You can also disable journaling. For more information, see the
          `MongoDB manual <http://docs.mongodb.org/manual/>`__.
 
-      c. Restart the MongoDB service:
-
-         .. code-block:: console
-
-            # service mongodb restart
-
 .. only:: obs or ubuntu
 
    3. Create the ``ceilometer`` database:
