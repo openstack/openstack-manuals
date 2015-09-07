@@ -191,7 +191,7 @@ Bandwidth I/O
 
        -  peak: 512 Mbps (65536 kilobytes/second)
 
-       -  burst: 100 ms
+       -  burst: 65536 kilobytes
 
     -  Inbound traffic:
 
@@ -199,16 +199,16 @@ Bandwidth I/O
 
        -  peak: 512 Mbps (65536 kilobytes/second)
 
-       -  burst: 100 ms
+       -  burst: 65536 kilobytes
 
     .. code:: console
 
         $ nova flavor-key nlimit set quota:vif_outbound_average=32768
         $ nova flavor-key nlimit set quota:vif_outbound_peak=65536
-        $ nova flavor-key nlimit set quota:vif_outbound_burst=6553
-        $ nova flavor-key nlimit set quota:vif_inbound_average=16384
-        $ nova flavor-key nlimit set quota:vif_inbound_peak=32768
-        $ nova flavor-key nlimit set quota:vif_inbound_burst=3276
+        $ nova flavor-key nlimit set quota:vif_outbound_burst=65536
+        $ nova flavor-key nlimit set quota:vif_inbound_average=32768
+        $ nova flavor-key nlimit set quota:vif_inbound_peak=65536
+        $ nova flavor-key nlimit set quota:vif_inbound_burst=65536
 
 
     .. note::
