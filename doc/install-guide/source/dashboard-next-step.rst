@@ -3,8 +3,7 @@ Next steps
 ==========
 
 Your OpenStack environment now includes the dashboard. You can
-:doc:`launch an instance <launch-instance>` or add
-more services to your environment in the following chapters.
+:ref:`launch-instance` or add more services to your environment.
 
 After you install and configure the dashboard, you can
 complete the following tasks:

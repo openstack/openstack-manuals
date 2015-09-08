@@ -1,9 +1,6 @@
-============
-Architecture
-============
-
+========
 Overview
-~~~~~~~~
+========
 
 The :term:`OpenStack` project is an open source cloud computing platform that
 supports all types of cloud environments. The project aims for simple
@@ -13,7 +10,11 @@ computing experts from around the world contribute to the project.
 OpenStack provides an :term:`Infrastructure-as-a-Service (IaaS)<IaaS>` solution
 through a variety of complemental services. Each service offers an
 :term:`application programming interface (API)<API>` that facilitates this
-integration. The following table provides a list of OpenStack services:
+integration.
+
+This guide covers step-by-step deployment of the following major OpenStack
+services using a functional example architecture suitable for new users of
+OpenStack with sufficient Linux experience:
 
 .. list-table:: **OpenStack services**
    :widths: 20 15 70
@@ -86,221 +87,147 @@ integration. The following table provides a list of OpenStack services:
        format or the AWS CloudFormation template format, through both an
        OpenStack-native REST API and a CloudFormation-compatible
        Query API.
-   * - `Database service <http://www.openstack.org/software/openstack-shared-services/>`_
-     - `Trove <http://docs.openstack.org/developer/trove/>`_
-     - Provides scalable and reliable Cloud Database-as-a-Service
-       functionality for both relational and non-relational database
-       engines.
-   * - `Data processing service
-       <http://www.openstack.org/software/openstack-shared-services/>`_
-     - `Sahara <http://docs.openstack.org/developer/sahara/>`_
-     - Provides capabilities to provision and scale Hadoop clusters in OpenStack by
-       specifying parameters like Hadoop version, cluster topology and nodes hardware
-       details.
 
 |
 
-This guide describes how to deploy these services in a functional test
-environment and, by example, teaches you how to build a production
-environment. Realistically, you would use automation tools such as
-Ansible, Chef, and Puppet to deploy and manage a production environment.
+After becoming familiar with basic installation, configuration, operation,
+and troubleshooting of these OpenStack services, you should consider the
+following steps toward deployment using a production architecture:
 
-.. _overview-conceptual-architecture:
+- Determine and implement the necessary core and optional services to
+  meet performance and redundancy requirements.
 
-Conceptual architecture
-~~~~~~~~~~~~~~~~~~~~~~~
+- Increase security using methods such as firewalls, encryption, and
+  service policies.
 
-Launching a virtual machine or instance involves many interactions among
-several services. The following diagram provides the conceptual
-architecture of a typical OpenStack environment.
-
-.. figure:: figures/openstack_kilo_conceptual_arch.png
-   :alt: Conceptual view of OpenStack Kilo architecture
-   :width: 7in
-   :height: 7in
-
-   Figure 1.1 Conceptual architecture
-
-|
+- Implement a deployment tool such as Ansible, Chef, Puppet, or Salt
+  to automate deployment and management of the production environment.
 
 .. _overview-example-architectures:
 
-Example architectures
-~~~~~~~~~~~~~~~~~~~~~
+Example architecture
+~~~~~~~~~~~~~~~~~~~~
 
-OpenStack is highly configurable to meet different needs with various
-compute, networking, and storage options. This guide presents several
-combinations of core and optional services for you to choose from. This guide
-uses the following example architectures:
+The example architecture requires at least two nodes (hosts) to launch a basic
+:term:`virtual machine <virtual machine (VM)>` or instance. Optional
+services such as Block Storage and Object Storage require additional nodes.
 
--  Three-node architecture with OpenStack Networking (neutron) and
-   optional nodes for Block Storage and Object Storage services.
+This example architecture differs from a minimal production architecture as
+follows:
 
-   -  The :term:`controller node <cloud controller node>` runs the
-      Identity service, Image Service, management portions of Compute
-      and Networking, Networking plug-in, and the dashboard. It also
-      includes supporting services such as an SQL database,
-      :term:`message queue`, and :term:`Network Time Protocol (NTP)`.
+- Networking agents reside on the controller node instead of one or more
+  dedicated network nodes.
 
-      Optionally, the controller node runs portions of Block Storage,
-      Object Storage, Orchestration, Telemetry, Database, and Data
-      processing services. These components provide additional features
-      for your environment.
+- Overlay (tunnel) traffic for private networks traverses the management
+  network instead of a dedicated network.
 
-   -  The network node runs the Networking plug-in and several agents
-      that provision tenant networks and provide switching, routing,
-      :term:`NAT<Network Address Translation (NAT)>`, and
-      :term:`DHCP` services. This node also handles external (internet)
-      connectivity for tenant virtual machine instances.
+For more information on production architectures, see the
+`Architecture Design Guide <http://docs.openstack.org/arch-design/content/>`__,
+`Operations Guide <http://docs.openstack.org/ops/>`__, and
+`Networking Guide <http://docs.openstack.org/networking-guide/>`__.
 
-   -  The :term:`compute node` runs the :term:`hypervisor` portion of
-      Compute that operates :term:`tenant`
-      :term:`virtual machines <virtual machine (VM)>` or instances. By
-      default, Compute uses :term:`KVM <kernel-based VM (KVM)>` as the
-      :term:`hypervisor`. The compute node also runs the Networking
-      plug-in and an agent that connect tenant networks to instances and
-      provide firewalling (:term:`security groups <security group>`)
-      services. You can run more than one compute node.
+.. _figure-hwreqs:
 
-      Optionally, the compute node runs a Telemetry agent to collect
-      meters. Also, it can contain a third network interface on a
-      separate storage network to improve performance of storage
-      services.
+.. figure:: figures/hwreqs.png
+   :alt: Hardware requirements
 
-   -  The optional Block Storage node contains the disks that the Block
-      Storage service provisions for tenant virtual machine instances.
-      You can run more than one of these nodes.
+   **Hardware requirements**
 
-      Optionally, the Block Storage node runs a Telemetry agent to
-      collect meters. Also, it can contain a second network interface on
-      a separate storage network to improve performance of storage
-      services.
+Controller
+----------
 
-   -  The optional Object Storage nodes contain the disks that the
-      Object Storage service uses for storing accounts, containers, and
-      objects. You can run more than two of these nodes. However, the
-      minimal architecture example requires two nodes.
+The controller node runs the Identity service, Image service, management
+portions of Compute, management portion of Networking, various Networking
+agents, and the dashboard. It also includes supporting services such as
+an SQL database, :term:`message queue`, and :term:`NTP`.
 
-      Optionally, these nodes can contain a second network interface on
-      a separate storage network to improve performance of storage
-      services.
+Optionally, the controller node runs portions of Block Storage, Object
+Storage, Orchestration, and Telemetry services.
 
-      .. note::
-         When you implement this architecture, skip the section
-         :doc:`networking-nova`. Optional services might require
-         additional nodes or additional resources on existing nodes.
+The controller node requires a minimum of two network interfaces.
 
-|
+Compute
+-------
 
-.. _figure-neutron-network-hw:
+The compute node runs the :term:`hypervisor` portion of Compute that
+operates instances. By default, Compute uses the
+:term:`KVM <kernel-based VM (KVM)>` hypervisor. The compute node also
+runs a Networking service agent that connects instances to virtual networks
+and provides firewalling services to instances via
+:term:`security groups <security group>`.
 
-.. figure:: figures/installguidearch-neutron-hw.png
-   :alt: Minimal architecture example with OpenStack Networking
-         (neutron)—Hardware requirements
+You can deploy more than one compute node. Each node requires a minimum
+of two network interfaces.
 
-   Figure 1.2 Minimal architecture example with OpenStack Networking
-   (neutron)—Hardware requirements
+Block Storage
+-------------
 
-|
+The optional Block Storage node contains the disks that the Block
+Storage service provisions for instances.
 
-.. _figure-neutron-networks:
+For simplicity, service traffic between compute nodes and this node
+uses the management network. Production environments should implement
+a separate storage network to increase performance and security.
 
-.. figure:: figures/installguidearch-neutron-networks.png
-   :alt: Minimal architecture example with OpenStack Networking
-         (neutron)—Network layout
+You can deploy more than one block storage node. Each node requires a
+minimum of one network interface.
 
-   Figure 1.3 Minimal architecture example with OpenStack Networking
-   (neutron)—Network layout
+Object Storage
+--------------
 
-|
+The optional Object Storage node contain the disks that the
+Object Storage service uses for storing accounts, containers, and
+objects.
 
-.. figure:: figures/installguidearch-neutron-services.png
-   :alt: Minimal architecture example with OpenStack Networking
-         (neutron)—Service layout
+For simplicity, service traffic between compute nodes and this node
+uses the management network. Production environments should implement
+a separate storage network to increase performance and security.
 
-   Figure 1.4 Minimal architecture example with OpenStack Networking
-   (neutron)—Service layout
+This service requires two nodes. Eac node requires a minimum of one
+network interface. You can deploy more than two object storage nodes.
 
-|
+Networking
+~~~~~~~~~~
 
--  Two-node architecture with legacy networking (nova-network) and
-   optional nodes for Block Storage and Object Storage services.
+Choose one of the following virtual networking options.
 
-   -  The :term:`controller node <cloud controller node>` runs the
-      Identity service, Image service, management portion of Compute,
-      and the dashboard. It also includes supporting services such as an
-      SQL database, :term:`message queue`, and :term:`Network Time
-      Protocol (NTP)`.
+.. _network1:
 
-      Optionally, the controller node runs portions of Block Storage,
-      Object Storage, Orchestration, Telemetry, Database, and Data
-      processing services. These components provide additional features
-      for your environment.
+Networking Option 1: Provider networks
+--------------------------------------
 
-   -  The :term:`compute node` runs the :term:`hypervisor` portion of
-      Compute that operates :term:`tenant` :term:`virtual machines
-      <virtual machine (VM)>` or instances. By default, Compute uses
-      :term:`KVM <kernel-based VM (KVM)>` as the :term:`hypervisor`.
-      Compute also provisions tenant networks and provides firewalling
-      (:term:`security groups <security group>`) services. You can run
-      more than one compute node.
+The provider networks option deploys the OpenStack Networking service
+in the simplest way possible with primarily layer-2 (bridging/switching)
+services and VLAN segmentation of networks. Essentially, it bridges virtual
+networks to physical networks and relies on physical network infrastructure
+for layer-3 (routing) services. Additionally, a :term:`DHCP` service provides
+IP address information to instances.
 
-      Optionally, the compute node runs a Telemetry agent to collect
-      meters. Also, it can contain a third network interface on a
-      separate storage network to improve performance of storage
-      services.
+.. note::
 
-   -  The optional Block Storage node contains the disks that the Block
-      Storage service provisions for tenant virtual machine instances.
-      You can run more than one of these nodes.
+   This option lacks support for self-service private networks, layer-3
+   (routing) services, and advanced services such as :term:`LBaaS` and
+   :term:`FWaaS`. Consider the self-service networks option if you
+   desire these features.
 
-      Optionally, the Block Storage node runs a Telemetry agent to
-      collect meters. Also, it can contain a second network interface on
-      a separate storage network to improve performance of storage
-      services.
+.. _figure-network1-services:
 
-   -  The optional Object Storage nodes contain the disks that the
-      Object Storage service uses for storing accounts, containers, and
-      objects. You can run more than two of these nodes. However, the
-      minimal architecture example requires two nodes.
+.. figure:: figures/network1-services.png
+   :alt: Networking Option 1: Provider networks - Service layout
 
-      Optionally, these nodes can contain a second network interface on
-      a separate storage network to improve performance of storage
-      services.
+.. _network2:
 
-      .. note::
+Networking Option 2: Self-service networks
+------------------------------------------
 
-         When you implement this architecture, skip the section
-         :doc:`networking-neutron`. To use optional services, you might need to
-         build additional nodes.
+The self-service networks option augments the provider networks option
+with layer-3 (routing) services that enable
+:term:`self-service` networks using overlay segmentation methods such
+as :term:`VXLAN`. Essentially, it routes virtual networks to physical networks
+using :term:`NAT`. Additionally, this option provides the foundation
+for advanced services such as LBaaS and FWaaS.
 
-|
+.. _figure-network2-services:
 
-.. _figure-legacy-network-hw:
-
-.. figure:: figures/installguidearch-nova-hw.png
-   :alt: Minimal architecture example with legacy networking
-         (nova-network)—Hardware requirements
-
-   Figure 1.5 Minimal architecture example with legacy networking
-   (nova-network)—Hardware requirements
-
-|
-
-.. _figure-nova-networks:
-
-.. figure:: figures/installguidearch-nova-networks.png
-   :alt: Minimal architecture example with legacy networking
-         (nova-network)—Network layout
-
-   Figure 1.6 Minimal architecture example with legacy networking
-   (nova-network)—Network layout
-
-|
-
-.. figure:: figures/installguidearch-nova-services.png
-   :alt: Minimal architecture example with legacy networking
-         (nova-network)—Service layout
-
-   Figure 1.7 Minimal architecture example with legacy networking
-   (nova-network)—Service layout
+.. figure:: figures/network2-services.png
+   :alt: Networking Option 2: Self-service networks - Service layout

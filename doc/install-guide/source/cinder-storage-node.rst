@@ -21,7 +21,7 @@ configure the volume service on it. Similar to the controller node,
 the storage node contains one network interface on the
 :term:`management network`. The storage node also
 needs an empty block storage device of suitable size for your
-environment. For more information, see :doc:`basic_environment`.
+environment. For more information, see :ref:`environment`.
 
 1. Configure the management interface:
 
@@ -42,9 +42,8 @@ environment. For more information, see :doc:`basic_environment`.
    Also add this content to the :file:`/etc/hosts` file
    on all other nodes in your environment.
 
-4. Install and configure :term:`NTP
-   <Network Time Protocol (NTP)>` using the instructions in
-   :ref:`the section called "Other nodes" <basics-ntp-other-nodes>`.
+4. Install and configure :term:`NTP` using the instructions in
+   :ref:`environment-ntp`.
 
 .. only:: obs
 

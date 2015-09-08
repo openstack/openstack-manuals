@@ -1,6 +1,5 @@
-=============================
 Networking (neutron) concepts
-=============================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack Networking (neutron) manages all networking facets for the
 Virtual Networking Infrastructure (VNI) and the access layer aspects
