@@ -154,7 +154,7 @@ NotificationSystem#General_Notification_Message_Format>`__ for an
 example message format.
 
 Notification messages are placed on the OpenStack messaging system,
-which recruits AMPQ to send information when an event triggers alerts.
+which recruits AMQP to send information when an event triggers alerts.
 
 The :file:`nova.conf` file uses the nova_notification driver by defualt.
 
