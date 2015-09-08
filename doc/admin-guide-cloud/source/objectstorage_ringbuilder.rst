@@ -51,6 +51,44 @@ a partition will have more than one replica on a device.
 ``array('H')`` is used for memory conservation as there may be millions
 of partitions.
 
+Overload
+~~~~~~~~
+
+The ring builder tries to keep replicas as far apart as possible while
+still respecting device weights. When it can not do both, the overload
+factor determines what happens. Each device takes an extra
+fraction of its desired partitions to allow for replica dispersion;
+after that extra fraction is exhausted, replicas are placed closer
+together than optimal.
+
+The overload factor lets the operator trade off replica
+dispersion (durability) against data dispersion (uniform disk usage).
+
+The default overload factor is 0, so device weights are strictly
+followed.
+
+With an overload factor of 0.1, each device accepts 10% more
+partitions than it otherwise would, but only if it needs to maintain
+partition dispersion.
+
+For example, consider a 3-node cluster of machines with equal-size disks;
+node A has 12 disks, node B has 12 disks, and node C has
+11 disks. The ring has an overload factor of 0.1 (10%).
+
+Without the overload, some partitions would end up with replicas only
+on nodes A and B. However, with the overload, every device can accept
+up to 10% more partitions for the sake of dispersion. The
+missing disk in C means there is one disk's worth of partitions
+to spread across the remaining 11 disks, which gives each
+disk in C an extra 9.09% load. Since this is less than the 10%
+overload, there is one replica of each partition on each node.
+
+However, this does mean that the disks in node C have more data
+than the disks in nodes A and B. If 80% full is the warning
+threshold for the cluster, node C's disks reach 80% full while A
+and B's disks are only 72.7% full.
+
+
 Replica counts
 ~~~~~~~~~~~~~~
 To support the gradual change in replica counts, a ring can have a real
