@@ -3,20 +3,18 @@
          xmlns:xi="http://www.w3.org/2001/XInclude"
          xmlns:xlink="http://www.w3.org/1999/xlink"
          xml:id="pure-storage-driver" version="5.0">
-  <title>Pure Storage volume driver</title>
+  <title>Pure Storage iSCSI and Fibre Channel volume drivers</title>
   <?dbhtml stop-chunking?>
-    <para>The Pure Storage FlashArray volume driver for OpenStack Block Storage interacts with
-      configured Pure Storage arrays and supports various operations.</para>
-    <para>This driver can be configured in OpenStack Block Storage to work with the iSCSI
-      storage protocol.</para>
-    <para>This driver is compatible with Purity FlashArrays that support the REST API (Purity
-      3.4.0 and newer) and that are capable of iSCSI connectivity. This release supports
-      installation with OpenStack clusters running the Kilo version that use the KVM or QEMU
-      hypervisors together with OpenStack Compute service's libvirt driver.</para>
+    <para>The Pure Storage FlashArray volume drivers for OpenStack Block Storage interact with
+      configured Pure Storage arrays and support various operations.</para>
+    <para>Support for iSCSI storage protocol is available with the PureISCSIDriver Volume Driver class,
+      and Fibre Channel with PureFCDriver.</para>
+    <para>All drivers are compatible with Purity FlashArrays that support the REST API
+      version 1.2, 1.3, or 1.4 (Purity 4.0.0 and newer).</para>
     <section xml:id="pure-storage-driver-limitations">
       <title>Limitations and known issues</title>
-      <para>If you do not set up the nodes hosting instances to use multipathing, all iSCSI
-        connectivity will use a single physical 10-gigabit Ethernet port on the array. In addition to
+      <para>If you do not set up the nodes hosting instances to use multipathing, all network
+        connectivity will use a single physical port on the array. In addition to
         significantly limiting the available bandwidth, this means you do not have the
         high-availability and non-disruptive upgrade benefits provided by FlashArray.</para>
       <para>Workaround: You must set up multipathing on your hosts.</para>
@@ -41,6 +39,9 @@
     </listitem>
     <listitem>
       <para>Manage and unmanage a volume.</para>
+    </listitem>
+    <listitem>
+      <para>Manage and unmanage a snapshot.</para>
     </listitem>
     <listitem>
       <para>Get volume statistics.</para>
@@ -114,12 +115,19 @@ default_volume_type = puredriver-1
 
 [puredriver-1]
 volume_backend_name = puredriver-1
-volume_driver = cinder.volume.drivers.pure.PureISCSIDriver
+volume_driver = <replaceable>PURE_VOLUME_DRIVER</replaceable>
 san_ip = <replaceable>IP_PURE_MGMT</replaceable>
 pure_api_token = <replaceable>PURE_API_TOKEN</replaceable>
 use_multipath_for_image_xfer = True</programlisting>
             <para>Replace the following variables accordingly:</para>
             <variablelist>
+              <varlistentry>
+                <term>PURE_VOLUME_DRIVER</term>
+                <listitem>
+                  <para>Use either cinder.volume.drivers.pure.PureISCSIDriver for iSCSI
+                    or cinder.volume.drivers.pure.PureFCDriver for Fibre Channel connectivity.</para>
+                </listitem>
+              </varlistentry>
               <varlistentry>
                 <term>IP_PURE_MGMT</term>
                 <listitem>
@@ -144,6 +152,10 @@ use_multipath_for_image_xfer = True</programlisting>
        CHAP authentication is enabled via the <option>use_chap_auth</option> settting, you must ensure
        there are no manually created host objects with IQN's that will be used by the OpenStack Block
        Storage. The driver will only modify credentials on hosts that it manages.
+     </para>
+    </note>
+     <note>
+     <para>If using the PureFCDriver it is recommended to use the OpenStack Block Storage Fibre Channel Zone Manager.
      </para>
     </note>
   </section>
