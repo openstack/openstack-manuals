@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-06 06:15+0000\n"
+"POT-Creation-Date: 2015-09-08 06:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -382,7 +382,7 @@ msgid ""
 "<http://docs.openstack.org/user-guide/cli_config_drive.html>`_."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:299
+#: ../compute-configuring-migrations.rst:335
 msgid ""
 "**Compatible XenServer hypervisors**. For more information, see the "
 "`Requirements for Creating Resource Pools <http://docs.vmd.citrix.com/"
@@ -390,7 +390,7 @@ msgid ""
 "section of the XenServer Administrator's Guide."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:370
+#: ../compute-configuring-migrations.rst:406
 msgid ""
 "**Compatible XenServer hypervisors**. The hypervisors must support the "
 "Storage XenMotion feature. See your XenServer manual to make sure your "
@@ -447,7 +447,7 @@ msgstr ""
 msgid "**Configuring the service-node firewall**"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:118
+#: ../compute-configuring-migrations.rst:127
 msgid "**Configuring your system**"
 msgstr ""
 
@@ -733,6 +733,10 @@ msgid ""
 "hypervisor. In this case, the instance recognizes that it was rebooted."
 msgstr ""
 
+#: ../compute-configuring-migrations.rst:76
+msgid "**Notes**"
+msgstr ""
+
 #: ../objectstorage_arch.rst:59
 msgid "**Object Storage (swift)**"
 msgstr ""
@@ -813,7 +817,7 @@ msgid "**Port**"
 msgstr ""
 
 #: ../compute-configuring-migrations.rst:64
-#: ../compute-configuring-migrations.rst:297
+#: ../compute-configuring-migrations.rst:333
 msgid "**Prerequisites**"
 msgstr ""
 
@@ -926,7 +930,7 @@ msgstr ""
 msgid "**Settings**"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:303
+#: ../compute-configuring-migrations.rst:339
 msgid "**Shared storage**. An NFS export, visible to all XenServer hosts."
 msgstr ""
 
@@ -1054,7 +1058,7 @@ msgstr ""
 msgid "**User ID**"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:316
+#: ../compute-configuring-migrations.rst:352
 msgid "**Using shared storage live migrations with XenServer Hypervisors**"
 msgstr ""
 
@@ -2213,7 +2217,7 @@ msgstr ""
 msgid "Add a user to a group"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:318
+#: ../compute-configuring-migrations.rst:354
 msgid ""
 "Add an NFS VHD storage to your master XenServer, and set it as the default "
 "storage repository. For more information, see NFS VHD in the XenServer "
@@ -2238,11 +2242,11 @@ msgstr ""
 msgid "Add entries to the list:"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:353
+#: ../compute-configuring-migrations.rst:389
 msgid "Add hosts to the pool"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:337
+#: ../compute-configuring-migrations.rst:373
 msgid "Add metadata to the aggregate, to mark it as a hypervisor pool"
 msgstr ""
 
@@ -3303,8 +3307,8 @@ msgstr ""
 msgid ""
 "Because the Compute service does not use the libvirt live migration "
 "functionality by default, guests are suspended before migration and might "
-"experience several minutes of downtime. For details, see :ref:Enabling True "
-"Live Migration."
+"experience several minutes of downtime. For details, see `Enabling true live "
+"migration`."
 msgstr ""
 
 #: ../blockstorage_volume_backups.rst:61
@@ -3439,19 +3443,19 @@ msgstr ""
 msgid "Block Storage audit script setup to get notifications"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:263
-#: ../compute-configuring-migrations.rst:368
+#: ../compute-configuring-migrations.rst:299
+#: ../compute-configuring-migrations.rst:404
 msgid "Block migration"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:276
+#: ../compute-configuring-migrations.rst:312
 msgid ""
 "Block migration is incompatible with read-only devices such as CD-ROMs and "
 "`Configuration Drive (config_drive) <http://docs.openstack.org/user-guide/"
 "cli_config_drive.html>`_."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:380
+#: ../compute-configuring-migrations.rst:416
 msgid ""
 "Block migration works only with EXT local storage storage repositories, and "
 "the server must not have any volumes attached."
@@ -3931,7 +3935,7 @@ msgid ""
 "dashboard/openstack_dashboard/local/local_settings .py`):"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:148
+#: ../compute-configuring-migrations.rst:164
 msgid ""
 "Change the subnet mask (``255.255.0.0``) to the appropriate value to include "
 "the IP addresses of ``HostB`` and ``HostC``. Then restart the NFS server:"
@@ -3948,7 +3952,7 @@ msgstr ""
 msgid "Changing over time (bandwidth)"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:178
+#: ../compute-configuring-migrations.rst:194
 msgid ""
 "Check that ``HostA`` can see the :file:`NOVA-INST-DIR/instances/` directory"
 msgstr ""
@@ -4134,6 +4138,18 @@ msgid ""
 "reserve a floating IP for their project."
 msgstr ""
 
+#: ../compute-configuring-migrations.rst:83
+msgid ""
+"Compute calculates the amount of downtime required using the RAM size of the "
+"disk being migrated, in accordance with the ``live_migration_downtime`` "
+"configuration parameters. Migration downtime is measured in steps, with an "
+"exponential backoff between each step. This means that the maximum downtime "
+"between each step starts off small, and is increased in ever larger amounts "
+"as Compute waits for the migration to complete. This gives the guest a "
+"chance to complete the migration successfully, with a minimum amount of "
+"downtime."
+msgstr ""
+
 #: ../compute-admin-password-injection.rst:7
 msgid ""
 "Compute can generate a random administrator (root) password and inject that "
@@ -4313,7 +4329,7 @@ msgid ""
 "LBaaS for OVS-based plug-ins, including BigSwitch, Floodlight, NEC, and NSX."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:165
+#: ../compute-configuring-migrations.rst:181
 msgid ""
 "Configure NFS on ``HostB`` and ``HostC`` by adding the following line to "
 "the :file:`/etc/fstab` file"
@@ -4359,7 +4375,7 @@ msgstr ""
 msgid "Configure a cluster"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:322
+#: ../compute-configuring-migrations.rst:358
 msgid ""
 "Configure all compute nodes to use the default storage repository (``sr``) "
 "for pool operations. Add this line to your :file:`nova.conf` configuration "
@@ -4452,7 +4468,7 @@ msgstr ""
 msgid "Configure the Memcached back end example"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:141
+#: ../compute-configuring-migrations.rst:157
 msgid ""
 "Configure the NFS server at ``HostA`` by adding the following line to the :"
 "file:`/etc/exports` file:"
@@ -4480,11 +4496,17 @@ msgid ""
 "file:`/etc/cinder/nfsshares`."
 msgstr ""
 
+#: ../compute-configuring-migrations.rst:252
+msgid ""
+"Configure the downtime required for the migration by adjusting these "
+"parameters in the :file:`nova.conf` file:"
+msgstr ""
+
 #: ../blockstorage_ratelimit_volume_copy_bandwidth.rst:17
 msgid "Configure volume copy bandwidth limit"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:120
+#: ../compute-configuring-migrations.rst:129
 msgid ""
 "Configure your DNS or ``/etc/hosts`` and ensure it is consistent across all "
 "hosts. Make sure that the three hosts can perform name resolution with each "
@@ -4492,7 +4514,7 @@ msgid ""
 "another:"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:228
+#: ../compute-configuring-migrations.rst:244
 msgid ""
 "Configure your firewall to allow libvirt to communicate between nodes. By "
 "default, libvirt listens on TCP port 16509, and an ephemeral TCP range from "
@@ -4503,7 +4525,7 @@ msgid ""
 "html#Remote_libvirtd_configuration>`_."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:265
+#: ../compute-configuring-migrations.rst:301
 msgid ""
 "Configuring KVM for block migration is exactly the same as the above "
 "configuration in :ref:`configuring-migrations-kvm-shared-storage` the "
@@ -4687,7 +4709,7 @@ msgstr ""
 msgid "Create a group"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:330
+#: ../compute-configuring-migrations.rst:366
 msgid ""
 "Create a host aggregate. This command creates the aggregate, and then "
 "displays a table that contains the ID of the new aggregate"
@@ -6091,7 +6113,7 @@ msgstr ""
 msgid "Enabling CORS with pastedeploy"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:245
+#: ../compute-configuring-migrations.rst:281
 msgid "Enabling true live migration"
 msgstr ""
 
@@ -6113,7 +6135,7 @@ msgid ""
 "framework"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:111
+#: ../compute-configuring-migrations.rst:120
 msgid ""
 "Ensure that ``NOVA-INST-DIR`` (set with ``state_path`` in the :file:`nova."
 "conf` file) is the same on all hosts."
@@ -6127,7 +6149,7 @@ msgid ""
 "``NSX Administrator Guide``."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:131
+#: ../compute-configuring-migrations.rst:140
 msgid ""
 "Ensure that the UID and GID of your Compute and libvirt users are identical "
 "between each of your servers. This ensures that the permissions on the NFS "
@@ -6140,8 +6162,17 @@ msgid ""
 "the various clients to access the Identity service."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:172
+#: ../compute-configuring-migrations.rst:188
 msgid "Ensure that you can mount the exported directory"
+msgstr ""
+
+#: ../compute-configuring-migrations.rst:144
+msgid ""
+"Ensure you can access SSH without a password and without "
+"StrictHostKeyChecking between ``HostB`` and ``HostC`` as ``nova`` user (set "
+"with the owner of nova-compute service). Direct access from one compute host "
+"to another is needed to copy the VM file across. It is also needed to detect "
+"if the source and target compute nodes share a storage subsystem."
 msgstr ""
 
 #: ../dashboard_sessions.rst:114
@@ -6160,6 +6191,21 @@ msgstr ""
 msgid ""
 "Ephemeral storage includes a root ephemeral volume and an additional "
 "ephemeral volume."
+msgstr ""
+
+#: ../objectstorage_EC.rst:3
+msgid "Erasure coding"
+msgstr ""
+
+#: ../objectstorage_EC.rst:5
+msgid ""
+"Erasure coding is a set of algorithms that allows the reconstruction of "
+"missing data from a set of original data. In theory, erasure coding uses "
+"less capacity with similar durability characteristics as replicas. From an "
+"application perspective, erasure coding support is transparent. Object "
+"Storage (swift) implements erasure coding as a Storage Policy. See `Storage "
+"Policies <http://docs.openstack.org/developer/swift/overview_policies."
+"html>`_ for more details."
 msgstr ""
 
 #: ../telemetry-measurements.rst:995
@@ -6291,7 +6337,7 @@ msgstr ""
 msgid "Example :file:`nsx.ini` file:"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:99
+#: ../compute-configuring-migrations.rst:108
 msgid "Example Compute installation environment"
 msgstr ""
 
@@ -6424,7 +6470,7 @@ msgstr ""
 msgid "Expiring objects"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:135
+#: ../compute-configuring-migrations.rst:151
 msgid ""
 "Export ``NOVA-INST-DIR/instances`` from ``HostA``, and ensure it is readable "
 "and writable by the Compute user on ``HostB`` and ``HostC``."
@@ -7282,7 +7328,7 @@ msgstr ""
 msgid "For more information, see the :ref:`telemetry-pipeline-configuration`."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:138
+#: ../compute-configuring-migrations.rst:154
 msgid ""
 "For more information, see: `SettingUpNFSHowTo <https://help.ubuntu.com/"
 "community/SettingUpNFSHowTo>`_ or `CentOS/Red Hat: Setup NFS v4.0 File "
@@ -7380,7 +7426,7 @@ msgid ""
 "ceilometer/measurements.html>`__."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:307
+#: ../compute-configuring-migrations.rst:343
 msgid ""
 "For the supported NFS versions, see the `NFS VHD <http://docs.vmd.citrix.com/"
 "XenServer/6.0.0/1.0/en_gb/reference.html#id1002701>`_ section of the "
@@ -8986,7 +9032,7 @@ msgid ""
 "example:"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:114
+#: ../compute-configuring-migrations.rst:123
 msgid ""
 "In this example, ``HostA`` is the NFSv4 server that exports ``NOVA-INST-DIR/"
 "instances`` directory. ``HostB`` and ``HostC`` are NFSv4 clients that mount "
@@ -9961,7 +10007,7 @@ msgid ""
 "reachable through the second IP."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:345
+#: ../compute-configuring-migrations.rst:381
 msgid "Make the first compute node part of that aggregate"
 msgstr ""
 
@@ -10914,7 +10960,7 @@ msgid ""
 "True``."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:157
+#: ../compute-configuring-migrations.rst:173
 msgid ""
 "On both compute nodes, enable the 'execute/search' bit on your shared "
 "directory to allow qemu to be able to use the images within the directories. "
@@ -10981,7 +11027,7 @@ msgid ""
 "flags are set."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:255
+#: ../compute-configuring-migrations.rst:291
 msgid ""
 "On versions older than Kilo, the Compute service does not use libvirt's live "
 "migration by default because there is a risk that the migration process will "
@@ -11747,7 +11793,7 @@ msgstr ""
 msgid "Path to the Identity service public certificate file."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:186
+#: ../compute-configuring-migrations.rst:202
 msgid ""
 "Perform the same check on ``HostB`` and ``HostC``, paying special attention "
 "to the permissions (Compute should be able to write)"
@@ -11914,7 +11960,7 @@ msgstr ""
 msgid "Predefined meter types:"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:101
+#: ../compute-configuring-migrations.rst:110
 msgid ""
 "Prepare at least three servers. In this example, we refer to the servers as "
 "``HostA``, ``HostB``, and ``HostC``:"
@@ -11944,7 +11990,7 @@ msgid ""
 "collector process when using PostgreSQL as the database back end."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:247
+#: ../compute-configuring-migrations.rst:283
 msgid ""
 "Prior to the Kilo release, the Compute service did not use the libvirt live "
 "migration function by default. To enable this function, add the following "
@@ -12480,7 +12526,7 @@ msgstr ""
 msgid "Restart and refresh Apache:"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:219
+#: ../compute-configuring-migrations.rst:235
 msgid ""
 "Restart libvirt. After you run the command, ensure that libvirt is "
 "successfully restarted"
@@ -12783,7 +12829,7 @@ msgstr ""
 msgid "SQL-based back ends"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:209
+#: ../compute-configuring-migrations.rst:225
 msgid "SSH tunnel to libvirtd's UNIX socket"
 msgstr ""
 
@@ -13149,7 +13195,7 @@ msgid ""
 msgstr ""
 
 #: ../compute-configuring-migrations.rst:59
-#: ../compute-configuring-migrations.rst:295
+#: ../compute-configuring-migrations.rst:331
 msgid "Shared storage"
 msgstr ""
 
@@ -13231,7 +13277,7 @@ msgid ""
 "value to ``true``."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:279
+#: ../compute-configuring-migrations.rst:315
 msgid ""
 "Since the ephemeral drives are copied over the network in block migration, "
 "migrations of instances with heavy I/O loads may never complete if the "
@@ -14795,6 +14841,26 @@ msgid ""
 "listening on all interfaces."
 msgstr ""
 
+#: ../compute-configuring-migrations.rst:269
+msgid ""
+"The ``live_migration_downtime_delay`` parameter sets the amount of time to "
+"wait between each step, in seconds. This setting defaults to 75 seconds."
+msgstr ""
+
+#: ../compute-configuring-migrations.rst:265
+msgid ""
+"The ``live_migration_downtime_steps`` parameter sets the total number of "
+"incremental steps to reach the maximum downtime value. This setting defaults "
+"to 10 steps."
+msgstr ""
+
+#: ../compute-configuring-migrations.rst:261
+msgid ""
+"The ``live_migration_downtime`` parameter sets the maximum permitted "
+"downtime for a live migration, in milliseconds. This setting defaults to 500 "
+"milliseconds."
+msgstr ""
+
 #: ../compute-networking-nova.rst:495
 msgid ""
 "The ``metadata_host`` configuration option must be an IP address, not a host "
@@ -14949,7 +15015,7 @@ msgid ""
 "also report a volume size of 1.01 GB::"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:361
+#: ../compute-configuring-migrations.rst:397
 msgid ""
 "The added compute node and the host will shut down to join the host to the "
 "XenServer pool. The operation will fail if any server other than the compute "
@@ -15542,6 +15608,16 @@ msgstr ""
 msgid "The driver version"
 msgstr ""
 
+#: ../objectstorage_EC.rst:24
+msgid ""
+"The erasure code support in Object Storage is considered beta in Kilo. Most "
+"major functionality is included, but it has not been tested or validated at "
+"large scale. This feature relies on `ssync` for durability. We recommend "
+"deployers do extensive testing and not deploy production data using an "
+"erasure code storage policy. If any bugs are found during testing, please "
+"report them to https://bugs.launchpad.net/swift"
+msgstr ""
+
 #: ../telemetry-events.rst:107
 msgid ""
 "The event definitions file is in YAML format. It consists of a list of event "
@@ -15845,7 +15921,7 @@ msgid ""
 "specified by a config file."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:351
+#: ../compute-configuring-migrations.rst:387
 msgid "The host is now part of a XenServer pool."
 msgstr ""
 
@@ -17212,6 +17288,17 @@ msgid ""
 "used by EQL for internal volume metadata."
 msgstr ""
 
+#: ../objectstorage_EC.rst:14
+msgid ""
+"There is no external API related to erasure coding. Create a container using "
+"a Storage Policy; the interaction with the cluster is the same as any other "
+"durability policy. Because support implements as a Storage Policy, you can "
+"isolate all storage devices that associate with your cluster's erasure "
+"coding capability. It is entirely possible to share devices between storage "
+"policies, but for erasure coding it may make more sense to use not only "
+"separate devices but possibly even entire nodes dedicated for erasure coding."
+msgstr ""
+
 #: ../networking_multi-dhcp-agents.rst:33
 msgid "There will be three hosts in the setup."
 msgstr ""
@@ -17671,7 +17758,7 @@ msgid ""
 "policies associated with it."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:83
+#: ../compute-configuring-migrations.rst:92
 msgid ""
 "This guide assumes the default value for ``instances_path`` in your :file:"
 "`nova.conf` file (:file:`NOVA-INST-DIR/instances`). If you have changed the "
@@ -18799,8 +18886,8 @@ msgid ""
 "to this bridge."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:273
-#: ../compute-configuring-migrations.rst:377
+#: ../compute-configuring-migrations.rst:309
+#: ../compute-configuring-migrations.rst:413
 msgid ""
 "To use block migration, you must use the :option:`--block-migrate` parameter "
 "with the live migration command."
@@ -18816,7 +18903,7 @@ msgid ""
 "For example:"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:311
+#: ../compute-configuring-migrations.rst:347
 msgid ""
 "To use shared storage live migration with XenServer hypervisors, the hosts "
 "must be joined to a XenServer pool. To create that pool, a host aggregate "
@@ -19230,7 +19317,7 @@ msgid ""
 "using these queries:"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:205
+#: ../compute-configuring-migrations.rst:221
 msgid ""
 "Update the libvirt configurations so that the calls can be made securely. "
 "These methods enable remote access over TCP and are not documented here."
@@ -20512,7 +20599,7 @@ msgstr ""
 msgid "Workload partitioning"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:287
+#: ../compute-configuring-migrations.rst:323
 msgid "XenServer"
 msgstr ""
 
@@ -20700,11 +20787,11 @@ msgid ""
 "For example:"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:236
+#: ../compute-configuring-migrations.rst:272
 msgid ""
-"You can now configure options for live migration. In most cases, you will "
-"not need to configure any options. For advanced configuration options, see "
-"the `OpenStack Configuration Reference Guide <http://docs.openstack.org/ "
+"You can now configure other options for live migration. In most cases, you "
+"will not need to configure any options. For advanced configuration options, "
+"see the `OpenStack Configuration Reference Guide <http://docs.openstack.org/ "
 "kilo/config-reference/content/list-of-compute-config-options.html "
 "#config_table_nova_livemigration>`_."
 msgstr ""
@@ -20956,13 +21043,13 @@ msgid ""
 "disks."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:88
+#: ../compute-configuring-migrations.rst:97
 msgid ""
 "You must specify ``vncserver_listen=0.0.0.0`` or live migration will not "
 "work correctly."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:91
+#: ../compute-configuring-migrations.rst:100
 msgid ""
 "You must specify the ``instances_path`` in each node that runs nova-compute. "
 "The mount point for ``instances_path`` must be the same value for each node, "
@@ -21424,13 +21511,13 @@ msgstr ""
 msgid "``HOST:SHARE``"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:104
+#: ../compute-configuring-migrations.rst:113
 msgid ""
 "``HostA`` is the Cloud Controller, and should run these services: nova-api, "
 "nova-scheduler, ``nova-network``, cinder-volume, and ``nova-objectstore``."
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:108
+#: ../compute-configuring-migrations.rst:117
 msgid "``HostB`` and ``HostC`` are the compute nodes that run nova-compute."
 msgstr ""
 
@@ -23309,16 +23396,16 @@ msgstr ""
 msgid "label ID"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:211
+#: ../compute-configuring-migrations.rst:227
 msgid "libvirtd TCP socket, with GSSAPI/Kerberos for auth+data encryption"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:216
+#: ../compute-configuring-migrations.rst:232
 msgid ""
 "libvirtd TCP socket, with TLS for encryption and Kerberos for authentication"
 msgstr ""
 
-#: ../compute-configuring-migrations.rst:213
+#: ../compute-configuring-migrations.rst:229
 msgid ""
 "libvirtd TCP socket, with TLS for encryption and x509 client certs for "
 "authentication"
