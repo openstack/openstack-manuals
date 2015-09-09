@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Object Storage API and its extensions.
 
        This chapter documents <command>swift</command> version
-        <literal>2.5.0</literal>.
+        <literal>2.6.0</literal>.
     </para>
 
     <para>For help on a specific <command>swift</command>
@@ -44,7 +44,7 @@
              [--os-endpoint-type &lt;endpoint-type&gt;]
              [--os-cacert &lt;ca-certificate&gt;] [--insecure]
              [--no-ssl-compression]
-             &lt;subcommand&gt; [--help]</computeroutput></screen>
+             &lt;subcommand&gt; [--help] [&lt;subcommand options&gt;]</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
   <varlistentry>
@@ -313,7 +313,7 @@ Delete a container or objects within a container.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--all</command></term>
+    <term><command>-a, --all</command></term>
     <listitem>
       <para>
         Delete all containers and objects.
@@ -379,7 +379,7 @@ Download objects from containers.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--all</command></term>
+    <term><command>-a, --all</command></term>
     <listitem>
       <para>
         Indicates that you really want to download
@@ -388,7 +388,7 @@ Download objects from containers.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--marker</command></term>
+    <term><command>-m, --marker</command></term>
     <listitem>
       <para>
         Marker to use when starting a container or account
@@ -397,7 +397,7 @@ Download objects from containers.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--prefix &lt;prefix&gt;</command></term>
+    <term><command>-p, --prefix &lt;prefix&gt;</command></term>
     <listitem>
       <para>
         Only download items beginning with &lt;prefix&gt;
@@ -405,7 +405,7 @@ Download objects from containers.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--remove-prefix</command></term>
+    <term><command>-r, --remove-prefix</command></term>
     <listitem>
       <para>
         An optional flag for --prefix &lt;prefix&gt;, use this
@@ -414,17 +414,17 @@ Download objects from containers.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--output &lt;out_file&gt;</command></term>
+    <term><command>-o, --output &lt;out_file&gt;</command></term>
     <listitem>
       <para>
-        For a single file download, stream the output to
+      For a single file download, stream the output to
       &lt;out_file&gt;. Specifying "-" as &lt;out_file&gt; will
       redirect to stdout.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--output-dir &lt;out_directory&gt;</command></term>
+    <term><command>-D, --output-dir &lt;out_directory&gt;</command></term>
     <listitem>
       <para>
       An optional directory to which to store objects.
@@ -461,11 +461,11 @@ Download objects from containers.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--header &lt;header_name:header_value&gt;</command></term>
+    <term><command>-H, --header &lt;header:value&gt;</command></term>
     <listitem>
       <para>
       Adds a customized request header to the query, like
-      "Range" or "If-Match". This argument is repeatable.
+      "Range" or "If-Match". This option may be repeated.
       Example --header "content-type:text/plain"
       </para>
     </listitem>
@@ -476,6 +476,21 @@ Download objects from containers.
       <para>
         Skip downloading files that are identical on both
       sides.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--no-shuffle</command></term>
+    <listitem>
+      <para>
+        By default, when downloading a complete account or
+      container, download order is randomised in order to
+      to reduce the load on individual drives when multiple
+      clients are executed simultaneously to download the
+      same set of objects (e.g. a nightly automated download
+      script to multiple servers). Enable this option to
+      submit download jobs to the thread pool in the order
+      they are listed in the object store.
       </para>
     </listitem>
   </varlistentry>
@@ -501,7 +516,7 @@ Lists the containers for the account or the objects for a container.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--long</command></term>
+    <term><command>-l, --long</command></term>
     <listitem>
       <para>
         Long listing format, similar to ls -l.
@@ -518,7 +533,7 @@ Lists the containers for the account or the objects for a container.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--totals</command></term>
+    <term><command>-t, --totals</command></term>
     <listitem>
       <para>
         Used with -l or --lh, only report totals.
@@ -526,7 +541,7 @@ Lists the containers for the account or the objects for a container.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--prefix</command></term>
+    <term><command>-p, --prefix</command></term>
     <listitem>
       <para>
         Only list items beginning with the prefix.
@@ -534,7 +549,7 @@ Lists the containers for the account or the objects for a container.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--delimiter</command></term>
+    <term><command>-d, --delimiter</command></term>
     <listitem>
       <para>
         Roll up items with the given delimiter. For containers
@@ -574,7 +589,7 @@ If the container is not found, it will be created automatically.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--read-acl &lt;acl&gt;</command></term>
+    <term><command>-r, --read-acl &lt;acl&gt;</command></term>
     <listitem>
       <para>
         Read ACL for containers. Quick summary of ACL syntax:
@@ -584,7 +599,7 @@ If the container is not found, it will be created automatically.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--write-acl &lt;acl&gt;</command></term>
+    <term><command>-w, --write-acl &lt;acl&gt;</command></term>
     <listitem>
       <para>
         Write ACL for containers. Quick summary of ACL syntax:
@@ -593,36 +608,37 @@ If the container is not found, it will be created automatically.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sync-to &lt;sync-to&gt;</command></term>
+    <term><command>-t, --sync-to &lt;sync-to&gt;</command></term>
     <listitem>
       <para>
-        Sync To for containers, for multi-cluster replication.
+      Sync To for containers, for multi-cluster replication.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--sync-key &lt;sync-key&gt;</command></term>
+    <term><command>-k, --sync-key &lt;sync-key&gt;</command></term>
     <listitem>
       <para>
-        Sync Key for containers, for multi-cluster replication.
+      Sync Key for containers, for multi-cluster replication.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--meta &lt;name:value&gt;</command></term>
+    <term><command>-m, --meta &lt;name:value&gt;</command></term>
     <listitem>
       <para>
-        Sets a meta data item. This option may be repeated.
+      Sets a meta data item. This option may be repeated.
       Example: -m Color:Blue -m Size:Large
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--header &lt;header&gt;</command></term>
+    <term><command>-H, --header &lt;header:value&gt;</command></term>
     <listitem>
       <para>
-        Set request headers. This option may be repeated.
-      Example -H "content-type:text/plain"
+      Adds a customized request header.
+      This option may be repeated. Example
+      -H "content-type:text/plain" -H "Content-Length: 4000"
       </para>
     </listitem>
   </varlistentry>
@@ -687,8 +703,9 @@ Generates a temporary URL for a Swift object.
     <term><command>&lt;seconds&gt;</command></term>
     <listitem>
       <para>
-        The amount of time in seconds the temporary URL will
-      be valid for.
+        The amount of time in seconds the temporary URL will be
+      valid for; or, if --absolute is passed, the Unix
+      timestamp when the temporary URL will expire.
       </para>
     </listitem>
   </varlistentry>
@@ -712,13 +729,26 @@ Generates a temporary URL for a Swift object.
     </listitem>
   </varlistentry>
  </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--absolute</command></term>
+    <listitem>
+      <para>
+        Interpet the &lt;seconds&gt; positional argument as a Unix
+      timestamp rather than a number of seconds in the
+      future.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="swiftclient_subcommand_upload">
         <title>swift upload</title>
 
         <screen><computeroutput>Usage: swift upload</computeroutput></screen>
         <para>
-Uploads specified files and directories to the given container.
+ Uploads specified files and directories to the given container.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -742,7 +772,7 @@ Uploads specified files and directories to the given container.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--changed</command></term>
+    <term><command>-c, --changed</command></term>
     <listitem>
       <para>
         Only upload files that have changed since the last
@@ -759,10 +789,10 @@ Uploads specified files and directories to the given container.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--segment-size &lt;size&gt;</command></term>
+    <term><command>-S, --segment-size &lt;size&gt;</command></term>
     <listitem>
       <para>
-        Upload files in segments no larger than &lt;size&gt; (in
+      Upload files in segments no larger than &lt;size&gt; (in
       Bytes) and then create a "manifest" file that will
       download all the segments as if it were the original
       file.
@@ -808,12 +838,12 @@ Uploads specified files and directories to the given container.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--header &lt;header&gt;</command></term>
+    <term><command>-H, --header &lt;header:value&gt;</command></term>
     <listitem>
       <para>
-        Set request headers with the syntax header:value.
-      This option may be repeated.
-      Example -H "content-type:text/plain".
+      Adds a customized request header. This option may be
+      repeated. Example -H "content-type:text/plain"
+      -H "Content-Length: 4000".
       </para>
     </listitem>
   </varlistentry>
