@@ -15,7 +15,7 @@
         interface (CLI) for the Telemetry API and its extensions.
 
        This chapter documents <command>ceilometer</command> version
-        <literal>1.4.0</literal>.
+        <literal>1.5.0</literal>.
     </para>
 
     <para>For help on a specific <command>ceilometer</command>
@@ -81,6 +81,22 @@
     <listitem>
       <para>
         Delete an alarm.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>alarm-event-create</command></term>
+    <listitem>
+      <para>
+        Create a new alarm based on events.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>alarm-event-update</command></term>
+    <listitem>
+      <para>
+        Update an existing alarm based on events.
       </para>
     </listitem>
   </varlistentry>
@@ -629,9 +645,9 @@
                                            [--ok-action &lt;Webhook URL&gt;]
                                            [--insufficient-data-action &lt;Webhook URL&gt;]
                                            [--time-constraint &lt;Time Constraint&gt;]
+                                           [--repeat-actions {True|False}]
                                            --alarm_ids &lt;ALARM IDS&gt;
-                                           [--operator &lt;OPERATOR&gt;]
-                                           [--repeat-actions {True|False}]</computeroutput></screen>
+                                           [--operator &lt;OPERATOR&gt;]</computeroutput></screen>
         <para>
 Create a new alarm based on state of other alarms.
         </para>  <variablelist wordsize="10">
@@ -742,6 +758,16 @@ Create a new alarm based on state of other alarms.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--alarm_ids &lt;ALARM IDS&gt;</command></term>
     <listitem>
       <para>
@@ -755,16 +781,6 @@ Create a new alarm based on state of other alarms.
       <para>
         Operator to compare with, one of: ['and',
       'or'].
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--repeat-actions {True|False}</command></term>
-    <listitem>
-      <para>
-      True if actions should be repeatedly notified
-      while alarm remains in target state. Defaults
-      to False.
       </para>
     </listitem>
   </varlistentry>
@@ -783,10 +799,10 @@ Create a new alarm based on state of other alarms.
                                            [--ok-action &lt;Webhook URL&gt;]
                                            [--insufficient-data-action &lt;Webhook URL&gt;]
                                            [--time-constraint &lt;Time Constraint&gt;]
+                                           [--repeat-actions {True|False}]
                                            [--remove-time-constraint &lt;Constraint names&gt;]
                                            [--alarm_ids &lt;ALARM IDS&gt;]
                                            [--operator &lt;OPERATOR&gt;]
-                                           [--repeat-actions {True|False}]
                                            [&lt;ALARM_ID&gt;]</computeroutput></screen>
         <para>
 Update an existing alarm based on state of other alarms.
@@ -908,6 +924,16 @@ Update an existing alarm based on state of other alarms.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--remove-time-constraint &lt;Constraint names&gt;</command></term>
     <listitem>
       <para>
@@ -933,15 +959,6 @@ Update an existing alarm based on state of other alarms.
       </para>
     </listitem>
   </varlistentry>
-  <varlistentry>
-    <term><command>--repeat-actions {True|False}</command></term>
-    <listitem>
-      <para>
-      True if actions should be repeatedly notified
-      while alarm remains in target state.
-      </para>
-    </listitem>
-  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-delete">
@@ -961,6 +978,323 @@ Delete an alarm.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="ceilometerclient_subcommand_alarm-event-create">
+        <title>ceilometer alarm-event-create</title>
+        <screen><computeroutput>usage: ceilometer alarm-event-create --name &lt;NAME&gt;
+                                     [--project-id &lt;ALARM_PROJECT_ID&gt;]
+                                     [--user-id &lt;ALARM_USER_ID&gt;]
+                                     [--description &lt;DESCRIPTION&gt;]
+                                     [--state &lt;STATE&gt;] [--severity &lt;SEVERITY&gt;]
+                                     [--enabled {True|False}]
+                                     [--alarm-action &lt;Webhook URL&gt;]
+                                     [--ok-action &lt;Webhook URL&gt;]
+                                     [--insufficient-data-action &lt;Webhook URL&gt;]
+                                     [--time-constraint &lt;Time Constraint&gt;]
+                                     [--repeat-actions {True|False}]
+                                     [--event-type &lt;EVENT_TYPE&gt;] [-q &lt;QUERY&gt;]</computeroutput></screen>
+        <para>
+Create a new alarm based on events.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;NAME&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the alarm (must be unique per tenant).
+      Required.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--project-id &lt;ALARM_PROJECT_ID&gt;</command></term>
+    <listitem>
+      <para>
+      Tenant to associate with alarm (only settable
+      by admin users).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--user-id &lt;ALARM_USER_ID&gt;</command></term>
+    <listitem>
+      <para>
+        User to associate with alarm (only settable by
+      admin users).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;DESCRIPTION&gt;</command></term>
+    <listitem>
+      <para>
+        Free text description of the alarm.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--state &lt;STATE&gt;</command></term>
+    <listitem>
+      <para>
+        State of the alarm, one of: ['ok', 'alarm',
+      'insufficient data']
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--severity &lt;SEVERITY&gt;</command></term>
+    <listitem>
+      <para>
+        Severity of the alarm, one of: ['low',
+      'moderate', 'critical']
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--enabled {True|False}</command></term>
+    <listitem>
+      <para>
+        True if alarm evaluation/actioning is enabled.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--alarm-action &lt;Webhook URL&gt;</command></term>
+    <listitem>
+      <para>
+        URL to invoke when state transitions to alarm.
+      May be used multiple times. Defaults to None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--ok-action &lt;Webhook URL&gt;</command></term>
+    <listitem>
+      <para>
+        URL to invoke when state transitions to OK.
+      May be used multiple times. Defaults to None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--insufficient-data-action &lt;Webhook URL&gt;</command></term>
+    <listitem>
+      <para>
+      URL to invoke when state transitions to
+      insufficient data. May be used multiple times.
+      Defaults to None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--time-constraint &lt;Time Constraint&gt;</command></term>
+    <listitem>
+      <para>
+      Only evaluate the alarm if the time at
+      evaluation is within this time constraint.
+      Start point(s) of the constraint are specified
+      with a cron expression, whereas its duration
+      is given in seconds. Can be specified multiple
+      times for multiple time constraints, format
+      is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;CRON&gt;;durati
+      on=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[timez
+      one=&lt;IANA Timezone&gt;]] Defaults to None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--event-type &lt;EVENT_TYPE&gt;</command></term>
+    <listitem>
+      <para>
+        Event type for event alarm.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-q &lt;QUERY&gt;, --query &lt;QUERY&gt;</command></term>
+    <listitem>
+      <para>
+        key[op]data_type::value; list for filtering
+      events. data_type is optional, but if supplied
+      must be string, integer, float or datetime.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="ceilometerclient_subcommand_alarm-event-update">
+        <title>ceilometer alarm-event-update</title>
+        <screen><computeroutput>usage: ceilometer alarm-event-update [--name &lt;NAME&gt;]
+                                     [--project-id &lt;ALARM_PROJECT_ID&gt;]
+                                     [--user-id &lt;ALARM_USER_ID&gt;]
+                                     [--description &lt;DESCRIPTION&gt;]
+                                     [--state &lt;STATE&gt;] [--severity &lt;SEVERITY&gt;]
+                                     [--enabled {True|False}]
+                                     [--alarm-action &lt;Webhook URL&gt;]
+                                     [--ok-action &lt;Webhook URL&gt;]
+                                     [--insufficient-data-action &lt;Webhook URL&gt;]
+                                     [--time-constraint &lt;Time Constraint&gt;]
+                                     [--repeat-actions {True|False}]
+                                     [--event-type &lt;EVENT_TYPE&gt;] [-q &lt;QUERY&gt;]
+                                     [&lt;ALARM_ID&gt;]</computeroutput></screen>
+        <para>
+Update an existing alarm based on events.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;ALARM_ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of the alarm to update.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;NAME&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the alarm (must be unique per tenant).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--project-id &lt;ALARM_PROJECT_ID&gt;</command></term>
+    <listitem>
+      <para>
+      Tenant to associate with alarm (only settable
+      by admin users).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--user-id &lt;ALARM_USER_ID&gt;</command></term>
+    <listitem>
+      <para>
+        User to associate with alarm (only settable by
+      admin users).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;DESCRIPTION&gt;</command></term>
+    <listitem>
+      <para>
+        Free text description of the alarm.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--state &lt;STATE&gt;</command></term>
+    <listitem>
+      <para>
+        State of the alarm, one of: ['ok', 'alarm',
+      'insufficient data']
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--severity &lt;SEVERITY&gt;</command></term>
+    <listitem>
+      <para>
+        Severity of the alarm, one of: ['low',
+      'moderate', 'critical']
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--enabled {True|False}</command></term>
+    <listitem>
+      <para>
+        True if alarm evaluation/actioning is enabled.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--alarm-action &lt;Webhook URL&gt;</command></term>
+    <listitem>
+      <para>
+        URL to invoke when state transitions to alarm.
+      May be used multiple times. Defaults to None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--ok-action &lt;Webhook URL&gt;</command></term>
+    <listitem>
+      <para>
+        URL to invoke when state transitions to OK.
+      May be used multiple times. Defaults to None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--insufficient-data-action &lt;Webhook URL&gt;</command></term>
+    <listitem>
+      <para>
+      URL to invoke when state transitions to
+      insufficient data. May be used multiple times.
+      Defaults to None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--time-constraint &lt;Time Constraint&gt;</command></term>
+    <listitem>
+      <para>
+      Only evaluate the alarm if the time at
+      evaluation is within this time constraint.
+      Start point(s) of the constraint are specified
+      with a cron expression, whereas its duration
+      is given in seconds. Can be specified multiple
+      times for multiple time constraints, format
+      is: name=&lt;CONSTRAINT_NAME&gt;;start=&lt;CRON&gt;;durati
+      on=&lt;SECONDS&gt;;[description=&lt;DESCRIPTION&gt;;[timez
+      one=&lt;IANA Timezone&gt;]] Defaults to None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--event-type &lt;EVENT_TYPE&gt;</command></term>
+    <listitem>
+      <para>
+        Event type for event alarm.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-q &lt;QUERY&gt;, --query &lt;QUERY&gt;</command></term>
+    <listitem>
+      <para>
+        key[op]data_type::value; list for filtering
+      events. data_type is optional, but if supplied
+      must be string, integer, float or datetime.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="ceilometerclient_subcommand_alarm-gnocchi-aggregation-by-metrics-threshold-create">
         <title>ceilometer alarm-gnocchi-aggregation-by-metrics-threshold-create</title>
         <screen><computeroutput>usage: ceilometer alarm-gnocchi-aggregation-by-metrics-threshold-create
@@ -969,10 +1303,10 @@ Delete an alarm.
        [--state &lt;STATE&gt;] [--severity &lt;SEVERITY&gt;] [--enabled {True|False}]
        [--alarm-action &lt;Webhook URL&gt;] [--ok-action &lt;Webhook URL&gt;]
        [--insufficient-data-action &lt;Webhook URL&gt;]
-       [--time-constraint &lt;Time Constraint&gt;] [--granularity &lt;GRANULARITY&gt;]
-       [--evaluation-periods &lt;COUNT&gt;] [--aggregation-method &lt;AGGREATION&gt;]
-       [--comparison-operator &lt;OPERATOR&gt;] --threshold &lt;THRESHOLD&gt;
-       [--repeat-actions {True|False}] -m &lt;METRICS&gt;</computeroutput></screen>
+       [--time-constraint &lt;Time Constraint&gt;] [--repeat-actions {True|False}]
+       [--granularity &lt;GRANULARITY&gt;] [--evaluation-periods &lt;COUNT&gt;]
+       [--aggregation-method &lt;AGGREATION&gt;] [--comparison-operator &lt;OPERATOR&gt;]
+       --threshold &lt;THRESHOLD&gt; -m &lt;METRICS&gt;</computeroutput></screen>
         <para>
 Create a new alarm based on computed statistics.
         </para>  <variablelist wordsize="10">
@@ -1083,6 +1417,16 @@ Create a new alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--granularity &lt;GRANULARITY&gt;</command></term>
     <listitem>
       <para>
@@ -1126,16 +1470,6 @@ Create a new alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--repeat-actions {True|False}</command></term>
-    <listitem>
-      <para>
-      True if actions should be repeatedly notified
-      while alarm remains in target state. Defaults
-      to False.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>-m &lt;METRICS&gt;, --metrics &lt;METRICS&gt;</command></term>
     <listitem>
       <para>
@@ -1153,10 +1487,10 @@ Create a new alarm based on computed statistics.
        [--state &lt;STATE&gt;] [--severity &lt;SEVERITY&gt;] [--enabled {True|False}]
        [--alarm-action &lt;Webhook URL&gt;] [--ok-action &lt;Webhook URL&gt;]
        [--insufficient-data-action &lt;Webhook URL&gt;]
-       [--time-constraint &lt;Time Constraint&gt;] [--granularity &lt;GRANULARITY&gt;]
-       [--evaluation-periods &lt;COUNT&gt;] [--aggregation-method &lt;AGGREATION&gt;]
-       [--comparison-operator &lt;OPERATOR&gt;] [--threshold &lt;THRESHOLD&gt;]
-       [--repeat-actions {True|False}] [-m &lt;METRICS&gt;]
+       [--time-constraint &lt;Time Constraint&gt;] [--repeat-actions {True|False}]
+       [--granularity &lt;GRANULARITY&gt;] [--evaluation-periods &lt;COUNT&gt;]
+       [--aggregation-method &lt;AGGREATION&gt;] [--comparison-operator &lt;OPERATOR&gt;]
+       [--threshold &lt;THRESHOLD&gt;] [-m &lt;METRICS&gt;]
        [--remove-time-constraint &lt;Constraint names&gt;]
        [&lt;ALARM_ID&gt;]</computeroutput></screen>
         <para>
@@ -1279,6 +1613,16 @@ Update an existing alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--granularity &lt;GRANULARITY&gt;</command></term>
     <listitem>
       <para>
@@ -1322,16 +1666,6 @@ Update an existing alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--repeat-actions {True|False}</command></term>
-    <listitem>
-      <para>
-      True if actions should be repeatedly notified
-      while alarm remains in target state. Defaults
-      to False.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>-m &lt;METRICS&gt;, --metrics &lt;METRICS&gt;</command></term>
     <listitem>
       <para>
@@ -1358,11 +1692,11 @@ Update an existing alarm based on computed statistics.
        [--state &lt;STATE&gt;] [--severity &lt;SEVERITY&gt;] [--enabled {True|False}]
        [--alarm-action &lt;Webhook URL&gt;] [--ok-action &lt;Webhook URL&gt;]
        [--insufficient-data-action &lt;Webhook URL&gt;]
-       [--time-constraint &lt;Time Constraint&gt;] [--granularity &lt;GRANULARITY&gt;]
-       [--evaluation-periods &lt;COUNT&gt;] [--aggregation-method &lt;AGGREATION&gt;]
-       [--comparison-operator &lt;OPERATOR&gt;] --threshold &lt;THRESHOLD&gt;
-       [--repeat-actions {True|False}] -m &lt;METRIC&gt; --resource-type
-       &lt;RESOURCE_TYPE&gt; --query &lt;QUERY&gt;</computeroutput></screen>
+       [--time-constraint &lt;Time Constraint&gt;] [--repeat-actions {True|False}]
+       [--granularity &lt;GRANULARITY&gt;] [--evaluation-periods &lt;COUNT&gt;]
+       [--aggregation-method &lt;AGGREATION&gt;] [--comparison-operator &lt;OPERATOR&gt;]
+       --threshold &lt;THRESHOLD&gt; -m &lt;METRIC&gt; --resource-type &lt;RESOURCE_TYPE&gt;
+       --query &lt;QUERY&gt;</computeroutput></screen>
         <para>
 Create a new alarm based on computed statistics.
         </para>  <variablelist wordsize="10">
@@ -1473,6 +1807,16 @@ Create a new alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--granularity &lt;GRANULARITY&gt;</command></term>
     <listitem>
       <para>
@@ -1516,16 +1860,6 @@ Create a new alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--repeat-actions {True|False}</command></term>
-    <listitem>
-      <para>
-      True if actions should be repeatedly notified
-      while alarm remains in target state. Defaults
-      to False.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>-m &lt;METRIC&gt;, --metric &lt;METRIC&gt;</command></term>
     <listitem>
       <para>
@@ -1560,10 +1894,10 @@ Create a new alarm based on computed statistics.
        [--state &lt;STATE&gt;] [--severity &lt;SEVERITY&gt;] [--enabled {True|False}]
        [--alarm-action &lt;Webhook URL&gt;] [--ok-action &lt;Webhook URL&gt;]
        [--insufficient-data-action &lt;Webhook URL&gt;]
-       [--time-constraint &lt;Time Constraint&gt;] [--granularity &lt;GRANULARITY&gt;]
-       [--evaluation-periods &lt;COUNT&gt;] [--aggregation-method &lt;AGGREATION&gt;]
-       [--comparison-operator &lt;OPERATOR&gt;] [--threshold &lt;THRESHOLD&gt;]
-       [--repeat-actions {True|False}] [-m &lt;METRIC&gt;]
+       [--time-constraint &lt;Time Constraint&gt;] [--repeat-actions {True|False}]
+       [--granularity &lt;GRANULARITY&gt;] [--evaluation-periods &lt;COUNT&gt;]
+       [--aggregation-method &lt;AGGREATION&gt;] [--comparison-operator &lt;OPERATOR&gt;]
+       [--threshold &lt;THRESHOLD&gt;] [-m &lt;METRIC&gt;]
        [--resource-type &lt;RESOURCE_TYPE&gt;] [--query &lt;QUERY&gt;]
        [--remove-time-constraint &lt;Constraint names&gt;]
        [&lt;ALARM_ID&gt;]</computeroutput></screen>
@@ -1687,6 +2021,16 @@ Update an existing alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--granularity &lt;GRANULARITY&gt;</command></term>
     <listitem>
       <para>
@@ -1726,16 +2070,6 @@ Update an existing alarm based on computed statistics.
     <listitem>
       <para>
         Threshold to evaluate against.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--repeat-actions {True|False}</command></term>
-    <listitem>
-      <para>
-      True if actions should be repeatedly notified
-      while alarm remains in target state. Defaults
-      to False.
       </para>
     </listitem>
   </varlistentry>
@@ -1787,14 +2121,14 @@ Update an existing alarm based on computed statistics.
                                                            [--ok-action &lt;Webhook URL&gt;]
                                                            [--insufficient-data-action &lt;Webhook URL&gt;]
                                                            [--time-constraint &lt;Time Constraint&gt;]
+                                                           [--repeat-actions {True|False}]
                                                            [--granularity &lt;GRANULARITY&gt;]
                                                            [--evaluation-periods &lt;COUNT&gt;]
                                                            [--aggregation-method &lt;AGGREATION&gt;]
                                                            [--comparison-operator &lt;OPERATOR&gt;]
                                                            --threshold
-                                                           &lt;THRESHOLD&gt;
-                                                           [--repeat-actions {True|False}]
-                                                           -m &lt;METRIC&gt;
+                                                           &lt;THRESHOLD&gt; -m
+                                                           &lt;METRIC&gt;
                                                            --resource-type
                                                            &lt;RESOURCE_TYPE&gt;
                                                            --resource-id
@@ -1909,6 +2243,16 @@ Create a new alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--granularity &lt;GRANULARITY&gt;</command></term>
     <listitem>
       <para>
@@ -1952,16 +2296,6 @@ Create a new alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--repeat-actions {True|False}</command></term>
-    <listitem>
-      <para>
-      True if actions should be repeatedly notified
-      while alarm remains in target state. Defaults
-      to False.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>-m &lt;METRIC&gt;, --metric &lt;METRIC&gt;</command></term>
     <listitem>
       <para>
@@ -2000,12 +2334,12 @@ Create a new alarm based on computed statistics.
                                                            [--ok-action &lt;Webhook URL&gt;]
                                                            [--insufficient-data-action &lt;Webhook URL&gt;]
                                                            [--time-constraint &lt;Time Constraint&gt;]
+                                                           [--repeat-actions {True|False}]
                                                            [--granularity &lt;GRANULARITY&gt;]
                                                            [--evaluation-periods &lt;COUNT&gt;]
                                                            [--aggregation-method &lt;AGGREATION&gt;]
                                                            [--comparison-operator &lt;OPERATOR&gt;]
                                                            [--threshold &lt;THRESHOLD&gt;]
-                                                           [--repeat-actions {True|False}]
                                                            [-m &lt;METRIC&gt;]
                                                            [--resource-type &lt;RESOURCE_TYPE&gt;]
                                                            [--resource-id &lt;RESOURCE_ID&gt;]
@@ -2131,6 +2465,16 @@ Update an existing alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--granularity &lt;GRANULARITY&gt;</command></term>
     <listitem>
       <para>
@@ -2170,16 +2514,6 @@ Update an existing alarm based on computed statistics.
     <listitem>
       <para>
         Threshold to evaluate against.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--repeat-actions {True|False}</command></term>
-    <listitem>
-      <para>
-      True if actions should be repeatedly notified
-      while alarm remains in target state. Defaults
-      to False.
       </para>
     </listitem>
   </varlistentry>
@@ -2343,12 +2677,12 @@ Set the state of an alarm.
                                          [--ok-action &lt;Webhook URL&gt;]
                                          [--insufficient-data-action &lt;Webhook URL&gt;]
                                          [--time-constraint &lt;Time Constraint&gt;]
-                                         -m &lt;METRIC&gt; [--period &lt;PERIOD&gt;]
+                                         [--repeat-actions {True|False}] -m
+                                         &lt;METRIC&gt; [--period &lt;PERIOD&gt;]
                                          [--evaluation-periods &lt;COUNT&gt;]
                                          [--statistic &lt;STATISTIC&gt;]
                                          [--comparison-operator &lt;OPERATOR&gt;]
-                                         --threshold &lt;THRESHOLD&gt; [-q &lt;QUERY&gt;]
-                                         [--repeat-actions {True|False}]</computeroutput></screen>
+                                         --threshold &lt;THRESHOLD&gt; [-q &lt;QUERY&gt;]</computeroutput></screen>
         <para>
 Create a new alarm based on computed statistics.
         </para>  <variablelist wordsize="10">
@@ -2459,6 +2793,16 @@ Create a new alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>-m &lt;METRIC&gt;, --meter-name &lt;METRIC&gt;</command></term>
     <listitem>
       <para>
@@ -2519,16 +2863,6 @@ Create a new alarm based on computed statistics.
       </para>
     </listitem>
   </varlistentry>
-  <varlistentry>
-    <term><command>--repeat-actions {True|False}</command></term>
-    <listitem>
-      <para>
-      True if actions should be repeatedly notified
-      while alarm remains in target state. Defaults
-      to False.
-      </para>
-    </listitem>
-  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_alarm-threshold-update">
@@ -2544,6 +2878,7 @@ Create a new alarm based on computed statistics.
                                          [--ok-action &lt;Webhook URL&gt;]
                                          [--insufficient-data-action &lt;Webhook URL&gt;]
                                          [--time-constraint &lt;Time Constraint&gt;]
+                                         [--repeat-actions {True|False}]
                                          [--remove-time-constraint &lt;Constraint names&gt;]
                                          [-m &lt;METRIC&gt;] [--period &lt;PERIOD&gt;]
                                          [--evaluation-periods &lt;COUNT&gt;]
@@ -2551,7 +2886,6 @@ Create a new alarm based on computed statistics.
                                          [--comparison-operator &lt;OPERATOR&gt;]
                                          [--threshold &lt;THRESHOLD&gt;]
                                          [-q &lt;QUERY&gt;]
-                                         [--repeat-actions {True|False}]
                                          [&lt;ALARM_ID&gt;]</computeroutput></screen>
         <para>
 Update an existing alarm based on computed statistics.
@@ -2673,6 +3007,16 @@ Update an existing alarm based on computed statistics.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--repeat-actions {True|False}</command></term>
+    <listitem>
+      <para>
+      True if actions should be repeatedly notified
+      while alarm remains in target state. Defaults
+      to False.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--remove-time-constraint &lt;Constraint names&gt;</command></term>
     <listitem>
       <para>
@@ -2742,15 +3086,6 @@ Update an existing alarm based on computed statistics.
       </para>
     </listitem>
   </varlistentry>
-  <varlistentry>
-    <term><command>--repeat-actions {True|False}</command></term>
-    <listitem>
-      <para>
-      True if actions should be repeatedly notified
-      while alarm remains in target state.
-      </para>
-    </listitem>
-  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="ceilometerclient_subcommand_capabilities">
@@ -2762,7 +3097,7 @@ Print Ceilometer capabilities.
     </section>
     <section xml:id="ceilometerclient_subcommand_event-list">
         <title>ceilometer event-list</title>
-        <screen><computeroutput>usage: ceilometer event-list [-q &lt;QUERY&gt;] [--no-traits]</computeroutput></screen>
+        <screen><computeroutput>usage: ceilometer event-list [-q &lt;QUERY&gt;] [--no-traits] [-l &lt;NUMBER&gt;]</computeroutput></screen>
         <para>
 List events.
         </para>  <variablelist wordsize="10">
@@ -2782,6 +3117,14 @@ List events.
     <listitem>
       <para>
         If specified, traits will not be printed.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-l &lt;NUMBER&gt;, --limit &lt;NUMBER&gt;</command></term>
+    <listitem>
+      <para>
+      Maximum number of events to return.
       </para>
     </listitem>
   </varlistentry>
@@ -2813,7 +3156,7 @@ List event types.
     </section>
     <section xml:id="ceilometerclient_subcommand_meter-list">
         <title>ceilometer meter-list</title>
-        <screen><computeroutput>usage: ceilometer meter-list [-q &lt;QUERY&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: ceilometer meter-list [-q &lt;QUERY&gt;] [-l &lt;NUMBER&gt;]</computeroutput></screen>
         <para>
 List the user's meters.
         </para>  <variablelist wordsize="10">
@@ -2825,6 +3168,14 @@ List the user's meters.
         key[op]data_type::value; list. data_type is
       optional, but if supplied must be string,
       integer, float, or boolean.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-l &lt;NUMBER&gt;, --limit &lt;NUMBER&gt;</command></term>
+    <listitem>
+      <para>
+      Maximum number of meters to return.
       </para>
     </listitem>
   </varlistentry>
@@ -2948,7 +3299,7 @@ Query samples.
     </section>
     <section xml:id="ceilometerclient_subcommand_resource-list">
         <title>ceilometer resource-list</title>
-        <screen><computeroutput>usage: ceilometer resource-list [-q &lt;QUERY&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: ceilometer resource-list [-q &lt;QUERY&gt;] [-l &lt;NUMBER&gt;]</computeroutput></screen>
         <para>
 List the resources.
         </para>  <variablelist wordsize="10">
@@ -2960,6 +3311,14 @@ List the resources.
         key[op]data_type::value; list. data_type is
       optional, but if supplied must be string,
       integer, float, or boolean.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-l &lt;NUMBER&gt;, --limit &lt;NUMBER&gt;</command></term>
+    <listitem>
+      <para>
+      Maximum number of resources to return.
       </para>
     </listitem>
   </varlistentry>
