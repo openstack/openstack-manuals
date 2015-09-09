@@ -1,4 +1,5 @@
 allocated_capacity_weight_multiplier storage
+allow_availability_zone_fallback common
 allowed_direct_url_schemes images
 api_paste_config api
 api_rate_limit api
@@ -24,6 +25,8 @@ backup_mount_options backups_nfs
 backup_mount_point_base backups_nfs
 backup_name_template backups
 backup_object_number_per_notification backups
+backup_posix_path backups
+backup_service_inithost_offload backups
 backup_sha_block_size_bytes backups_nfs
 backup_share backups_nfs
 backup_swift_auth backups_swift
@@ -59,6 +62,8 @@ cb_apikey cloudbyte
 cb_auth_group cloudbyte
 cb_confirm_volume_create_retries cloudbyte
 cb_confirm_volume_create_retry_interval cloudbyte
+cb_confirm_volume_delete_retries cloudbyte
+cb_confirm_volume_delete_retry_interval cloudbyte
 cb_create_volume cloudbyte
 cb_tsm_name cloudbyte
 chap_password common
@@ -67,6 +72,8 @@ check_max_pool_luns_threshold emc
 chiscsi_conf common
 cinder_emc_config_file emc
 cinder_huawei_conf_file huawei
+cinder_internal_tenant_project_id common
+cinder_internal_tenant_user_id common
 client_socket_timeout common
 cloned_volume_same_az zones
 compute_api_class common
@@ -88,10 +95,12 @@ dell_sc_ssn dellsc
 dell_sc_verify_cert dellsc
 dell_sc_volume_folder dellsc
 destroy_empty_storage_group emc
+dothill_api_protocol dothill
 dothill_backend_name dothill
 dothill_backend_type dothill
 dothill_iscsi_ips dothill
-dothill_wbi_protocol dothill
+dothill_verify_certificate dothill
+dothill_verify_certificate_path dothill
 dpl_pool prophetstor_dpl
 dpl_port prophetstor_dpl
 drbdmanage_redundancy drbd
@@ -114,6 +123,7 @@ eqlx_cli_timeout eqlx
 eqlx_group_name eqlx
 eqlx_pool eqlx
 eqlx_use_chap eqlx
+executor_thread_pool_size common
 expiry_thres_minutes netapp_7mode_nfs netapp_cdot_nfs
 extra_capabilities api
 fatal_deprecations logging
@@ -136,10 +146,10 @@ glance_host images
 glance_num_retries images
 glance_port images
 glance_request_timeout images
+glusterfs_backup_mount_point storage_glusterfs
+glusterfs_backup_share storage_glusterfs
 glusterfs_mount_point_base storage_glusterfs
-glusterfs_qcow2_volumes storage_glusterfs
 glusterfs_shares_config storage_glusterfs
-glusterfs_sparsed_volumes storage_glusterfs
 goodness_function scheduler
 gpfs_images_dir storage_gpfs
 gpfs_images_share_mode storage_gpfs
@@ -168,6 +178,7 @@ hitachi_group_request hitachi-hbsd
 hitachi_horcm_add_conf hitachi-hbsd
 hitachi_horcm_numbers hitachi-hbsd
 hitachi_horcm_password hitachi-hbsd
+hitachi_horcm_resource_lock_timeout hitachi-hbsd
 hitachi_horcm_user hitachi-hbsd
 hitachi_ldev_range hitachi-hbsd
 hitachi_pool_id hitachi-hbsd
@@ -193,10 +204,12 @@ hplefthand_debug hplefthand
 hplefthand_iscsi_chap_enabled hplefthand
 hplefthand_password hplefthand
 hplefthand_username hplefthand
+hpmsa_api_protocol hpmsa
 hpmsa_backend_name hpmsa
 hpmsa_backend_type hpmsa
 hpmsa_iscsi_ips hpmsa
-hpmsa_wbi_protocol hpmsa
+hpmsa_verify_certificate hpmsa
+hpmsa_verify_certificate_path hpmsa
 hpxp_async_copy_check_interval hpxp
 hpxp_compute_target_ports hpxp
 hpxp_copy_check_interval hpxp
@@ -219,6 +232,11 @@ ibmnas_platform_type ibmnas
 iet_conf common
 ignore_pool_full_threshold api
 image_conversion_dir images
+image_upload_use_cinder_backend images
+image_upload_use_internal_tenant images
+image_volume_cache_enabled images
+image_volume_cache_max_count images
+image_volume_cache_max_size_gb images
 infortrend_cli_max_retries infortrend
 infortrend_cli_path infortrend
 infortrend_cli_timeout infortrend
@@ -231,26 +249,32 @@ initiator_auto_deregistration emc
 initiator_auto_registration emc
 instance_format logging
 instance_uuid_format logging
+io_port_list emc
 iscsi_helper storage
 iscsi_initiators emc
 iscsi_iotype storage
 iscsi_ip_address storage
-iscsi_num_targets storage
 iscsi_port storage prophetstor_dpl
 iscsi_protocol storage
 iscsi_secondary_ip_addresses common
 iscsi_target_flags storage
 iscsi_target_prefix storage
 iscsi_write_cache storage
+ise_completion_retries xio
+ise_connection_retries xio
+ise_raid xio
+ise_retry_interval xio
+ise_storage_pool xio
 iser_helper storage
 iser_ip_address storage
-iser_num_targets storage
 iser_port storage
 iser_target_prefix storage
+lenovo_api_protocol lenovo
 lenovo_backend_name lenovo
 lenovo_backend_type lenovo
 lenovo_iscsi_ips lenovo
-lenovo_wbi_protocol lenovo
+lenovo_verify_certificate lenovo
+lenovo_verify_certificate_path lenovo
 log_config_append logging
 log_date_format logging
 log_dir logging
@@ -263,11 +287,11 @@ logging_exception_prefix logging
 lvm_conf_file lvm
 lvm_mirrors lvm
 lvm_type lvm
+managed_replication_target common
 management_ips api
 matchmaker_heartbeat_freq rpc
 matchmaker_heartbeat_ttl rpc
 max_age quota
-max_gigabytes storage
 max_header_line api
 max_luns_per_storage_group emc
 max_over_subscription_ratio common
@@ -285,6 +309,7 @@ nas_secure_file_operations ibmnas
 nas_secure_file_permissions ibmnas
 nas_share_path ibmnas
 nas_ssh_port ibmnas
+nas_volume_prov_type storage_glusterfs
 naviseccli_path emc
 netapp_controller_ips netapp_eseries_iscsi
 netapp_copyoffload_tool_path netapp_cdot_nfs
@@ -292,6 +317,7 @@ netapp_enable_multiattach netapp_eseries_iscsi
 netapp_host_type netapp_cdot_nfs netapp_cdot_nfs netapp_eseries_iscsi
 netapp_login netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_lun_ostype netapp_cdot_nfs netapp_cdot_iscsi
+netapp_lun_space_reservation netapp_cdot_iscsi
 netapp_partner_backend_name netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_password netapp_7mode_iscsi netapp_7mode_nfs netapp_cdot_iscsi netapp_cdot_nfs netapp_eseries_iscsi
 netapp_sa_password netapp_eseries_iscsi
@@ -347,6 +373,11 @@ public_endpoint api
 publish_errors logging
 pure_api_token pure
 query_volume_filters api
+quobyte_client_cfg quobyte
+quobyte_mount_point_base quobyte
+quobyte_qcow2_volumes quobyte
+quobyte_sparsed_volumes quobyte
+quobyte_volume_url quobyte
 quota_backup_gigabytes quota
 quota_backups quota
 quota_consistencygroups quota
@@ -366,6 +397,7 @@ rbd_secret_uuid storage_ceph
 rbd_store_chunk_size storage_ceph
 rbd_user storage_ceph
 replication_api_class common
+replication_devices common
 report_interval common
 request_timeout common
 reservation_expire quota
@@ -376,7 +408,6 @@ rpc_backend rpc
 rpc_cast_timeout rpc
 rpc_conn_pool_size rpc
 rpc_response_timeout rpc
-rpc_thread_pool_size rpc
 rpc_zmq_bind_address zeromq
 rpc_zmq_contexts zeromq
 rpc_zmq_host zeromq
@@ -413,7 +444,11 @@ sf_allow_template_caching solidfire
 sf_allow_tenant_qos solidfire
 sf_api_port solidfire
 sf_emulate_512 solidfire
+sf_enable_volume_mapping solidfire
+sf_svip solidfire
 sf_template_account_name solidfire
+sheepdog_store_address sheepdog
+sheepdog_store_port sheepdog
 sio_force_delete emc_sio
 sio_protection_domain_id emc_sio
 sio_protection_domain_name emc_sio
@@ -449,8 +484,6 @@ storage_availability_zone common
 storage_vnx_authentication_type emc
 storage_vnx_pool_names emc
 storage_vnx_security_file_dir emc
-storpool_replication storpool
-storpool_template storpool
 storwize_svc_allow_tenant_qos storwize
 storwize_svc_connection_protocol storwize
 storwize_svc_flashcopy_timeout storwize
@@ -496,6 +529,7 @@ verbose logging
 violin_request_timeout violin
 vmware_api_retry_count vmware
 vmware_ca_file vmware
+vmware_cluster_name vmware
 vmware_host_ip vmware
 vmware_host_password vmware
 vmware_host_username vmware
@@ -527,7 +561,6 @@ volume_transfer_key_length api
 volume_transfer_salt_length api
 volume_usage_audit_period storage
 volumes_dir storage
-vpool_name openvstorage
 vzstorage_mount_options vzstorage
 vzstorage_mount_point_base vzstorage
 vzstorage_shares_config vzstorage
@@ -538,8 +571,13 @@ wsgi_keep_alive common
 xiv_chap xiv
 xiv_ds8k_connection_type xiv
 xiv_ds8k_proxy xiv
+xtremio_array_busy_retry_count emc
+xtremio_array_busy_retry_interval emc
 xtremio_cluster_name emc
+zfssa_cache_directory zfssa-nfs
+zfssa_cache_project zfssa-nfs
 zfssa_data_ip zfssa-nfs
+zfssa_enable_local_cache zfssa-nfs
 zfssa_https_port zfssa-nfs
 zfssa_initiator zfssa-iscsi
 zfssa_initiator_config zfssa-iscsi
@@ -558,6 +596,7 @@ zfssa_nfs_share_compression zfssa-nfs
 zfssa_nfs_share_logbias zfssa-nfs
 zfssa_pool zfssa-iscsi
 zfssa_project zfssa-iscsi
+zfssa_replication_ip zfssa-nfs
 zfssa_rest_timeout zfssa zfssa-nfs
 zfssa_target_group zfssa-iscsi
 zfssa_target_interfaces zfssa-iscsi
@@ -658,6 +697,7 @@ keystone_authtoken/memcache_secret_key auth_token
 keystone_authtoken/memcache_security_strategy auth_token
 keystone_authtoken/memcache_use_advanced_pool auth_token
 keystone_authtoken/memcached_servers common
+keystone_authtoken/region_name auth_token
 keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
 keystone_authtoken/token_cache_time auth_token
