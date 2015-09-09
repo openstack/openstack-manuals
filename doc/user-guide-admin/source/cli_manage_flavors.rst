@@ -76,7 +76,7 @@ Create a flavor
 
 #. To create a flavor, specify a name, ID, RAM
    size, disk size, and the number of VCPUs for the
-   lavor, as follows::
+   flavor, as follows::
 
    $ nova flavor-create FLAVOR_NAME FLAVOR_ID RAM_IN_MB ROOT_DISK_IN_GB NUMBER_OF_VCPUS
 
