@@ -2,12 +2,12 @@
 Add the dashboard
 =================
 
-The OpenStack dashboard, also known as
-`Horizon <https://git.openstack.org/cgit/openstack/horizon>`__
-is a Web interface that enables cloud administrators
+The OpenStack Dashboard, also known as
+`horizon <https://git.openstack.org/cgit/openstack/horizon>`__
+is a web interface that enables cloud administrators
 and users to manage various OpenStack resources and services.
 
-The dashboard enables web-based interactions with the
+The Dashboard enables web-based interactions with the
 OpenStack Compute cloud controller through the OpenStack APIs.
 
 Horizon enables you to customize the brand of the dashboard.
