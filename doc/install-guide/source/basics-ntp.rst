@@ -2,14 +2,14 @@
    :linenothreshold: 1
 
 
-Network Time Protocol (NTP)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configure Network Time Protocol (NTP)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You must install :term:`Network Time Protocol (NTP)` to properly
-synchronize services among nodes. We recommend that you configure
-the controller node to reference more accurate (lower stratum)
-servers and other nodes to reference the controller node.
-
+You should install Chrony, an implementation of
+:term:`Network Time Protocol (NTP)`, to properly synchronize services among
+nodes. We recommend that you configure the controller node to reference more
+accurate (lower stratum) servers and other nodes to reference the controller
+node.
 
 Controller node
 ---------------
@@ -20,69 +20,78 @@ Controller node
 
    .. code-block:: console
 
-      # apt-get install ntp
+      # apt-get install chrony
 
 .. only:: rdo
 
    .. code-block:: console
 
-      # yum install ntp
+      # yum install chrony
 
 .. only:: obs
 
+   On openSUSE:
+
    .. code-block:: console
 
-      # zypper install ntp
+      # zypper addrepo http://download.opensuse.org/repositories/network:time/openSUSE_13.2/network:time.repo
+      # zypper refresh
+      # zypper install chrony
+
+   On SLES:
+
+   .. code-block:: console
+
+      # zypper addrepo http://download.opensuse.org/repositories/network:time/SLE_12/network:time.repo
+      # zypper refresh
+      # zypper install chrony
 
 |
 
 **To configure the NTP service**
 
 By default, the controller node synchronizes the time via a pool of
-public servers. However, you can optionally edit the :file:`/etc/ntp.conf`
-file to configure alternative servers such as those provided by your
-organization.
-
-1. Edit the :file:`/etc/ntp.conf` file and add, change, or remove the following
-   keys as necessary for your environment:
-
-   .. code:: ini
-
-      server NTP_SERVER iburst
-      restrict -4 default kod notrap nomodify
-      restrict -6 default kod notrap nomodify
-
-   Replace ``NTP_SERVER`` with the hostname or IP address of a suitable more
-   accurate (lower stratum) NTP server. The configuration supports multiple
-   ``server`` keys.
-
-   .. note::
-
-      For the ``restrict`` keys, you essentially remove the ``nopeer``
-      and ``noquery`` options.
-
-   .. only:: ubuntu or debian
-
-      .. note::
-
-         Remove the :file:`/var/lib/ntp/ntp.conf.dhcp` file if it exists.
+public servers. However, you can optionally configure alternative servers such
+as those provided by your organization.
 
 .. only:: ubuntu or debian
+
+   1. Edit the :file:`/etc/chrony/chrony.conf` file and add, change, or remove the
+      following keys as necessary for your environment:
+
+      .. code:: ini
+
+         server NTP_SERVER iburst
+
+      Replace ``NTP_SERVER`` with the hostname or IP address of a suitable more
+      accurate (lower stratum) NTP server. The configuration supports multiple
+      ``server`` keys.
 
    2. Restart the NTP service:
 
       .. code-block:: console
 
-         # service ntp restart
+         # service chrony restart
 
 .. only:: rdo or obs
+
+   1. Edit the :file:`/etc/chrony.conf` file and add, change, or remove the
+      following keys as necessary for your environment:
+
+      .. code:: ini
+
+         server NTP_SERVER iburst
+
+      Replace ``NTP_SERVER`` with the hostname or IP address of a suitable more
+      accurate (lower stratum) NTP server. The configuration supports multiple
+      ``server`` keys.
 
    2. Start the NTP service and configure it to start when the system boots:
 
       .. code-block:: console
 
-         # systemctl enable ntpd.service
-         # systemctl start ntpd.service
+         # systemctl enable chronyd.service
+         # systemctl start chronyd.service
 
 |
 
@@ -97,19 +106,31 @@ Other nodes
 
    .. code-block:: console
 
-      # apt-get install ntp
+      # apt-get install chrony
 
 .. only:: rdo
 
    .. code-block:: console
 
-      # yum install ntp
+      # yum install chrony
 
 .. only:: obs
 
+   On openSUSE:
+
    .. code-block:: console
 
-      # zypper install ntp
+      # zypper addrepo http://download.opensuse.org/repositories/network:time/openSUSE_13.2/network:time.repo
+      # zypper refresh
+      # zypper install chrony
+
+   On SLES:
+
+   .. code-block:: console
+
+      # zypper addrepo http://download.opensuse.org/repositories/network:time/SLE_12/network:time.repo
+      # zypper refresh
+      # zypper install chrony
 
 |
 
@@ -118,38 +139,36 @@ Other nodes
 Configure the network and compute nodes to reference the controller
 node.
 
-1. Edit the :file:`/etc/ntp.conf` file:
-
-   Comment out or remove all but one ``server`` key and change it to
-   reference the controller node.
-
-   .. code:: ini
-
-      server controller iburst
-
-   .. only:: ubuntu or debian
-
-      .. note::
-
-         Remove the :file:`/var/lib/ntp/ntp.conf.dhcp` file if it exists.
-
 .. only:: ubuntu or debian
+
+   1. Edit the :file:`/etc/chrony/chrony.conf` and comment out or remove all but one ``server`` key. Change
+      it to reference the controller node:
+
+      .. code:: ini
+
+         server controller iburst
 
    2. Restart the NTP service:
 
       .. code-block:: console
 
-         # service ntp restart
+         # service chrony restart
 
 .. only:: rdo or obs
 
-   2. Start the NTP service and configure it to start when the system
-      boots:
+   1. Edit the :file:`/etc/chrony.conf` and comment out or remove all but one ``server`` key. Change
+      it to reference the controller node:
+
+      .. code:: ini
+
+         server controller iburst
+
+   2. Start the NTP service and configure it to start when the system boots:
 
       .. code-block:: console
 
-         # systemctl enable ntpd.service
-         # systemctl start ntpd.service
+         # systemctl enable chronyd.service
+         # systemctl start chronyd.service
 
 |
 
@@ -164,57 +183,25 @@ node, can take several minutes to synchronize.
 
    .. code-block:: console
 
-      # ntpq -c peers
-        remote           refid      st t when poll reach   delay   offset  jitter
-      ===========================================================================
-      *ntp-server1     192.0.2.11   2 u  169 1024  377    1.901   -0.611   5.483
-      +ntp-server2     192.0.2.12   2 u  887 1024  377    0.922   -0.246   2.864
+    # chronyc sources
+      210 Number of sources = 2
+      MS Name/IP address         Stratum Poll Reach LastRx Last sample
+      ===============================================================================
+      ^- 192.0.2.11                    2   7    12   137  -2814us[-3000us] +/-   43ms
+      ^* 192.0.2.12                    2   6   177    46    +17us[  -23us] +/-   68ms
 
-   Contents in the *remote* column should indicate the hostname or IP
-   address of one or more NTP servers.
+   Contents in the *Name/IP address* column should indicate the hostname or IP
+   address of one or more NTP servers.  Contents in the *S* column should indicate
+   *\** for the server to which the NTP service is currently synchronized.
 
-   .. note::
-
-      Contents in the *refid* column typically reference IP addresses of
-      upstream servers.
-
-#. Run this command on the *controller* node:
+#. Run the same command on *all other* nodes:
 
    .. code-block:: console
 
-      # ntpq -c assoc
-      ind assid status  conf reach auth condition  last_event cnt
-      ===========================================================
-      1   20487  961a   yes   yes  none  sys.peer    sys_peer  1
-      2   20488  941a   yes   yes  none candidate    sys_peer  1
+    # chronyc sources
+      210 Number of sources = 1
+      MS Name/IP address         Stratum Poll Reach LastRx Last sample
+      ===============================================================================
+      ^* controller                    3    9   377   421    +15us[  -87us] +/-   15ms
 
-   Contents in the *condition* column should indicate ``sys.peer`` for at
-   least one server.
-
-#. Run this command on *all other* nodes:
-
-   .. code-block:: console
-
-      # ntpq -c peers
-      remote           refid      st t when poll reach   delay   offset  jitter
-      =========================================================================
-      *controller      192.0.2.21  3 u  47   64   37    0.308   -0.251   0.079
-
-   Contents in the *remote* column should indicate the hostname of the
-   controller node.
-
-   .. note::
-
-      Contents in the *refid* column typically reference IP addresses of
-      upstream servers.
-
-#. Run this command on *all other* nodes:
-
-   .. code-block:: console
-
-      # ntpq -c assoc
-      ind assid status  conf reach auth condition  last_event cnt
-      ===========================================================
-      1   21181  963a   yes   yes  none  sys.peer    sys_peer  3
-
-   Contents in the *condition* column should indicate ``sys.peer``.
+   Contents in the *remote* column should indicate the hostname of the controller node.
