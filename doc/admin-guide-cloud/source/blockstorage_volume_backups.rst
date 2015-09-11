@@ -14,19 +14,31 @@ in the Block Storage database.
 
 Run this command to create a backup of a volume::
 
- $ cinder backup-create [--incremental] VOLUME
+ $ cinder backup-create [--incremental] [--force] VOLUME
 
-Where *VOLUME* is the name or ID of the volume, and ``incremental`` is
-a flag that indicates whether an incremental backup should be performed.
+Where *VOLUME* is the name or ID of the volume, ``incremental`` is
+a flag that indicates whether an incremental backup should be performed,
+and ``force`` is a flag that allows or disallows backup of a volume
+when the volume is attached to an instance.
 
 Without the ``incremental`` flag, a full backup is created by default.
 With the ``incremental`` flag, an incremental backup is created.
 
+Without the ``force`` flag, the volume will be backed up only if its
+status is ``available``. With the ``force`` flag, the volume will be
+backed up whether its status is ``available`` or ``in-use``. A volume
+is ``in-use`` when it is attached to an instance. The backup of an
+``in-use`` volume means your data is crash consistent. The ``force``
+flag is False by default.
+
 .. note::
 
-    The ``incremental`` flag is only available for block storage API v2.
-    You have to specify [--os-volume-api-version 2] in the **cinder**
-    command-line interface to use this parameter.
+    The ``incremental`` and ``force`` flags are only available for block
+    storage API v2. You have to specify [--os-volume-api-version 2] in the
+    **cinder** command-line interface to use this parameter.
+
+.. note::
+   The ``force`` flag is new in OpenStack Liberty.
 
 The incremental backup is based on a parent backup which is an existing
 backup with the latest timestamp. The parent backup can be a full backup
