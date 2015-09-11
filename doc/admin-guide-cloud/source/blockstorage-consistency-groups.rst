@@ -34,6 +34,7 @@ Here are existing policy entries for consistency groups::
 
     "consistencygroup:create": "group:nobody",
     "consistencygroup:delete": "group:nobody",
+    "consistencygroup:update": "group:nobody",
     "consistencygroup:get": "group:nobody",
     "consistencygroup:get_all": "group:nobody",
     "consistencygroup:create_cgsnapshot" : "group:nobody",
@@ -92,6 +93,8 @@ The following consistency group operations are supported:
 
 -  Create a consistency group from the snapshot of another consistency
    group.
+
+-  Create a consistency group from a source consistency group.
 
 The following operations are not allowed if a volume is in a consistency
 group:
@@ -295,3 +298,16 @@ consistency group::
 
     $ cinder consisgroup-create-from-src --cgsnapshot 6d9dfb7d-079a-471e-b75a-\
       6e9185ba0c38 --name 'new cg' --description 'new cg from cgsnapshot'
+
+**Create a consistency group from a source consistency group**::
+
+    $ cinder consisgroup-create-from-src
+    [--source-cg SOURCECG]
+    [--name NAME]
+    [--description DESCRIPTION]
+
+The parameter ``SOURCECG`` is a name or UUID of a source
+consistency group::
+
+    $ cinder consisgroup-create-from-src --source-cg 6d9dfb7d-079a-471e-b75a-\
+      6e9185ba0c38 --name 'new cg' --description 'new cloned cg'
