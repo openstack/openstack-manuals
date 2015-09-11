@@ -17,26 +17,19 @@ The example architecture assumes use of the following networks:
 
 - Management on 10.0.0.0/24 with gateway 10.0.0.1
 
-  .. note::
-
-     This network requires a gateway to provide Internet access to all
-     nodes for administrative purposes such as package installation,
-     security updates, :term:`DNS`, and :term:`Network Time Protocol (NTP)`.
+  This network requires a gateway to provide internet access to all nodes for
+  administrative purposes such as package installation, security updates,
+  :term:`DNS`, and :term:`Network Time Protocol (NTP)`.
 
 - Instance tunnels on 10.0.1.0/24 without a gateway
 
-  .. note::
-
-     This network does not require a gateway because communication
-     only occurs among network and compute nodes in your OpenStack
-     environment.
+  This network does not require a gateway because communication only occurs
+  among network and compute nodes in your OpenStack environment.
 
 - External on 203.0.113.0/24 with gateway 203.0.113.1
 
-  .. note::
-
-     This network requires a gateway to provide Internet access to
-     instances in your OpenStack environment.
+  This network requires a gateway to provide internet access to instances in
+  your OpenStack environment.
 
 You can modify these ranges and gateways to work with your particular
 network infrastructure.
@@ -279,10 +272,10 @@ Compute node
 Verify connectivity
 -------------------
 
-We recommend that you verify network connectivity to the Internet and
+We recommend that you verify network connectivity to the internet and
 among the nodes before proceeding further.
 
-#. From the *controller* node, :command:`ping` a site on the Internet:
+#. From the *controller* node, :command:`ping` a site on the internet:
 
    .. code-block:: console
 
@@ -329,7 +322,7 @@ among the nodes before proceeding further.
       4 packets transmitted, 4 received, 0% packet loss, time 3000ms
       rtt min/avg/max/mdev = 0.202/0.217/0.263/0.030 ms
 
-#. From the *network* node, :command:`ping` a site on the Internet:
+#. From the *network* node, :command:`ping` a site on the internet:
 
    .. code-block:: console
 
@@ -377,7 +370,7 @@ among the nodes before proceeding further.
       4 packets transmitted, 4 received, 0% packet loss, time 3000ms
       rtt min/avg/max/mdev = 0.202/0.217/0.263/0.030 ms
 
-#. From the *compute* node, :command:`ping` a site on the Internet:
+#. From the *compute* node, :command:`ping` a site on the internet:
 
    .. code-block:: console
 
