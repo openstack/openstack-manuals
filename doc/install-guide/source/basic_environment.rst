@@ -54,12 +54,9 @@ distribution on at least the compute node. If you install a 32-bit
 version of your distribution on the compute node, attempting to start an
 instance using a 64-bit image will fail.
 
-.. note::
-
-   A single disk partition on each node works for most basic
-   installations. However, you should consider
-   :term:`Logical Volume Manager (LVM)` for installations with
-   optional services such as Block Storage.
+A single disk partition on each node works for most basic installations.
+However, you should consider :term:`Logical Volume Manager (LVM)` for
+installations with optional services such as Block Storage.
 
 Many users build their test environment on a
 :term:`virtual machine (VM)`. The primary benefits of VMs include
