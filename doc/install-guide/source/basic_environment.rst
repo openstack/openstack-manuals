@@ -25,10 +25,11 @@ You must use an account with administrative privileges to configure each node.
 Either run the commands as the ``root`` user or configure the ``sudo``
 utility.
 
-The :command:`systemctl enable` call on openSUSE outputs a warning message
-when the service uses SysV Init scripts instead of native systemd files. This
-warning can be ignored.
+.. only:: obs
 
+   The :command:`systemctl enable` call on openSUSE outputs a warning message
+   when the service uses SysV Init scripts instead of native systemd files. This
+   warning can be ignored.
 
 Before you begin
 ~~~~~~~~~~~~~~~~
