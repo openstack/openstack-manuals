@@ -129,9 +129,9 @@ Example architectures
 ~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack is highly configurable to meet different needs with various
-compute, networking, and storage options. This guide enables you to
-choose your own OpenStack adventure using a combination of core and
-optional services. This guide uses the following example architectures:
+compute, networking, and storage options. This guide presents several
+combinations of core and optional services for you to choose from. This guide
+uses the following example architectures:
 
 -  Three-node architecture with OpenStack Networking (neutron) and
    optional nodes for Block Storage and Object Storage services.
@@ -150,7 +150,7 @@ optional services. This guide uses the following example architectures:
    -  The network node runs the Networking plug-in and several agents
       that provision tenant networks and provide switching, routing,
       :term:`NAT<Network Address Translation (NAT)>`, and
-      :term:`DHCP` services. This node also handles external (Internet)
+      :term:`DHCP` services. This node also handles external (internet)
       connectivity for tenant virtual machine instances.
 
    -  The :term:`compute node` runs the :term:`hypervisor` portion of
