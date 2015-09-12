@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-09-09 06:19+0000\n"
+"POT-Creation-Date: 2015-09-12 06:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3500,7 +3500,7 @@ msgid "<link xlink:href=\"http://www.xenproject.org/downloads/xen-archives/xen-4
 msgstr ""
 
 #: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:32(para)
-msgid "The latest releases of Xen and libvirt packages that fulfil the above minimum requirements for the various openSUSE distributions can always be found and installed from the <link xlink:href=\"https://build.opensuse.org/project/show/Virtualization\">Open Build Service</link> Virtualization project. To install these latest packages, add the Virtualization repository to your software management stack and get the newest packages from there. More information about the latest Xen and Libvirt packages are avalable <link xlink:href=\"https://build.opensuse.org/package/show/Virtualization/xen\">here</link> and <link xlink:href=\"https://build.opensuse.org/package/show/Virtualization/libvirt\">here</link>."
+msgid "The latest releases of Xen and libvirt packages that fulfil the above minimum requirements for the various openSUSE distributions can always be found and installed from the <link xlink:href=\"https://build.opensuse.org/project/show/Virtualization\">Open Build Service</link> Virtualization project. To install these latest packages, add the Virtualization repository to your software management stack and get the newest packages from there. More information about the latest Xen and Libvirt packages are available <link xlink:href=\"https://build.opensuse.org/package/show/Virtualization/xen\">here</link> and <link xlink:href=\"https://build.opensuse.org/package/show/Virtualization/libvirt\">here</link>."
 msgstr ""
 
 #: ./doc/config-reference/compute/section_hypervisor_xen_libvirt.xml:42(para)
@@ -5753,440 +5753,536 @@ msgstr ""
 msgid "Modular Layer 2 (ml2) SR-IOV Mechanism configuration options"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:7(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:11(title)
 msgid "Configure Object Storage features"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:9(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:13(title)
 msgid "Object Storage zones"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:10(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:14(para)
 msgid "In OpenStack Object Storage, data is placed across different tiers of failure domains. First, data is spread across regions, then zones, then servers, and finally across drives. Data is placed to get the highest failure domain isolation. If you deploy multiple regions, the Object Storage service places the data across the regions. Within a region, each replica of the data should be stored in unique zones, if possible. If there is only one zone, data should be placed on different servers. And if there is only one server, data should be placed on different drives."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:21(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:25(para)
 msgid "Regions are widely separated installations with a high-latency or otherwise constrained network link between them. Zones are arbitrarily assigned, and it is up to the administrator of the Object Storage cluster to choose an isolation level and attempt to maintain the isolation level through appropriate zone assignment. For example, a zone may be defined as a rack with a single power source. Or a zone may be a DC room with a common utility provider. Servers are identified by a unique IP/port. Drives are locally attached storage volumes identified by mount point."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:32(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:36(para)
 msgid "In small clusters (five nodes or fewer), everything is normally in a single zone. Larger Object Storage deployments may assign zone designations differently; for example, an entire cabinet or rack of servers may be designated as a single zone to maintain replica availability if the cabinet becomes unavailable (for example, due to failure of the top of rack switches or a dedicated circuit). In very large deployments, such as service provider level deployments, each zone might have an entirely autonomous switching and power infrastructure, so that even the loss of an electrical circuit or switching aggregator would result in the loss of a single replica at most."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:46(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:50(title)
 msgid "Rackspace zone recommendations"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:47(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:51(para)
 msgid "For ease of maintenance on OpenStack Object Storage, Rackspace recommends that you set up at least five nodes. Each node is assigned its own zone (for a total of five zones), which gives you host level redundancy. This enables you to take down a single zone for maintenance and still guarantee object availability in the event that another zone fails during your maintenance."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:55(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:59(para)
 msgid "You could keep each server in its own cabinet to achieve cabinet level isolation, but you may wish to wait until your Object Storage service is better established before developing cabinet-level isolation. OpenStack Object Storage is flexible; if you later decide to change the isolation level, you can take down one zone at a time and move them to appropriate new homes."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:63(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:67(title)
 msgid "RAID controller configuration"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:64(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:68(para)
 msgid "OpenStack Object Storage does not require RAID. In fact, most RAID configurations cause significant performance degradation. The main reason for using a RAID controller is the battery-backed cache. It is very important for data integrity reasons that when the operating system confirms a write has been committed that the write has actually been committed to a persistent location. Most disks lie about hardware commits by default, instead writing to a faster write cache for performance reasons. In most cases, that write cache exists only in non-persistent memory. In the case of a loss of power, this data may never actually get committed to disk, resulting in discrepancies that the underlying file system must handle."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:77(para)
-msgid "OpenStack Object Storage works best on the XFS file system, and this document assumes that the hardware being used is configured appropriately to be mounted with the <placeholder-1/> option. For more information, refer to the XFS FAQ: <link xlink:href=\"http://xfs.org/index.php/XFS_FAQ\">http://xfs.org/index.php/XFS_FAQ</link>"
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:81(para)
+msgid "OpenStack Object Storage works best on the XFS file system, and this document assumes that the hardware being used is configured appropriately to be mounted with the <placeholder-1/> option. For more information, see the <link xlink:href=\"http://xfs.org/index.php/XFS_FAQ\">XFS FAQ</link>."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:85(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:88(para)
 msgid "To get the most out of your hardware, it is essential that every disk used in OpenStack Object Storage is configured as a standalone, individual RAID 0 disk; in the case of 6 disks, you would have six RAID 0s or one JBOD. Some RAID controllers do not support JBOD or do not support battery backed cache with JBOD. To ensure the integrity of your data, you must ensure that the individual drive caches are disabled and the battery backed cache in your RAID card is configured and used. Failure to configure the controller properly in this case puts data at risk in the case of sudden loss of power."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:97(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:100(para)
 msgid "You can also use hybrid drives or similar options for battery backed up cache configurations without a RAID controller."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:103(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:106(title)
 msgid "Throttle resources through rate limits"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:104(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:107(para)
 msgid "Rate limiting in OpenStack Object Storage is implemented as a pluggable middleware that you configure on the proxy server. Rate limiting is performed on requests that result in database writes to the account and container SQLite databases. It uses memcached and is dependent on the proxy servers having highly synchronized time. The rate limits are limited by the accuracy of the proxy server clocks."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:113(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:116(title)
 msgid "Configure rate limiting"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:114(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:117(para)
 msgid "All configuration is optional. If no account or container limits are provided, no rate limiting occurs. Available configuration options include:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:120(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:123(para)
 msgid "The container rate limits are linearly interpolated from the values given. A sample container rate limiting could be:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:123(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:126(para)
 msgid "container_ratelimit_100 = 100"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:124(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:127(para)
 msgid "container_ratelimit_200 = 50"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:125(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:128(para)
 msgid "container_ratelimit_500 = 20"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:126(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:129(para)
 msgid "This would result in:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:128(caption)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:131(caption)
 msgid "Values for Rate Limiting with Sample Configuration Settings"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:132(td)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:135(td)
 msgid "Container Size"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:133(td)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:136(td)
 msgid "Rate Limit"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:136(td)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:139(td)
 msgid "0-99"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:137(td)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:140(td)
 msgid "No limiting"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:140(td) ./doc/config-reference/object-storage/section_object-storage-features.xml:141(td)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:143(td) ./doc/config-reference/object-storage/section_object-storage-features.xml:144(td)
 msgid "100"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:145(td)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:148(td)
 msgid "150"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:146(td)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:149(td)
 msgid "75"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:149(td)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:152(td)
 msgid "500"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:150(td) ./doc/config-reference/object-storage/section_object-storage-features.xml:154(td)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:153(td) ./doc/config-reference/object-storage/section_object-storage-features.xml:157(td)
 msgid "20"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:153(td)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:156(td)
 msgid "1000"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:161(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:164(title)
 msgid "Health check"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:162(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:165(para)
 msgid "Provides an easy way to monitor whether the Object Storage proxy server is alive. If you access the proxy with the path <filename>/healthcheck</filename>, it responds with <literal>OK</literal> in the response body, which monitoring tools can use."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:170(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:173(title)
 msgid "Domain remap"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:171(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:174(para)
 msgid "Middleware that translates container and account parts of a domain to path parameters that the proxy server understands."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:179(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:182(title)
 msgid "CNAME lookup"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:180(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:183(para)
 msgid "Middleware that translates an unknown domain in the host header to something that ends with the configured <code>storage_domain</code> by looking up the given domain's CNAME record in DNS."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:190(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:193(title)
 msgid "Temporary URL"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:191(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:194(para)
 msgid "Allows the creation of URLs to provide temporary access to objects. For example, a website may wish to provide a link to download a large object in OpenStack Object Storage, but the Object Storage account has no public access. The website can generate a URL that provides GET access for a limited time to the resource. When the web browser user clicks on the link, the browser downloads the object directly from Object Storage, eliminating the need for the website to act as a proxy for the request. If the user shares the link with all his friends, or accidentally posts it on a forum, the direct access is limited to the expiration time set when the website created the link."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:202(literal)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:205(literal)
 msgid "temp_url_sig"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:204(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:207(para)
 msgid "A cryptographic signature"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:208(literal)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:211(literal)
 msgid "temp_url_expires"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:210(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:213(para)
 msgid "An expiration date, in Unix time"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:199(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:202(para)
 msgid "A temporary URL is the typical URL associated with an object, with two additional query parameters:<placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:214(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:217(para)
 msgid "An example of a temporary URL:<placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:220(para)
-msgid "To create temporary URLs, first set the <literal>X-Account-Meta-Temp-URL-Key</literal> header on your Object Storage account to an arbitrary string. This string serves as a secret key. For example, to set a key of <literal>b3968d0207b54ece87cccc06515a89d4</literal> using the <placeholder-1/> command-line tool:"
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:223(para)
+msgid "To create temporary URLs, first set the <literal>X-Account-Meta-Temp-URL-Key</literal> header on your Object Storage account to an arbitrary string. This string serves as a secret key. For example, to set a key of <literal>b3968d0207b54ece87cccc06515a89d4</literal> by using the <placeholder-1/> command-line tool:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:225(replaceable)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:231(replaceable)
 msgid "b3968d0207b54ece87cccc06515a89d4"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:226(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:232(para)
 msgid "Next, generate an HMAC-SHA1 (RFC 2104) signature to specify:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:230(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:236(para)
 msgid "Which HTTP method to allow (typically <literal>GET</literal> or <literal>PUT</literal>)"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:235(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:241(para)
 msgid "The expiry date as a Unix timestamp"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:238(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:244(para)
 msgid "The full path to the object"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:241(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:247(para)
 msgid "The secret key set as the <literal>X-Account-Meta-Temp-URL-Key</literal>"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:245(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:251(para)
 msgid "Here is code generating the signature for a GET for 24 hours on <code>/v1/AUTH_account/container/object</code>:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:260(para)
-msgid "Any alteration of the resource path or query arguments results in a <errorcode>401</errorcode><errortext>Unauthorized</errortext> error. Similarly, a PUT where GET was the allowed method returns a <errorcode>401</errorcode>. HEAD is allowed if GET or PUT is allowed. Using this in combination with browser form post translation middleware could also allow direct-from-browser uploads to specific locations in Object Storage."
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:266(para)
+msgid "Any alteration of the resource path or query arguments results in a <errorcode>401</errorcode><errortext>Unauthorized</errortext> error. Similarly, a PUT where GET was the allowed method returns a <errorcode>401</errorcode> error. HEAD is allowed if GET or PUT is allowed. Using this in combination with browser form post translation middleware could also allow direct-from-browser uploads to specific locations in Object Storage."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:270(para)
-msgid "Changing the <literal>X-Account-Meta-Temp-URL-Key</literal> invalidates any previously generated temporary URLs within 60 seconds (the memcache time for the key). Object Storage supports up to two keys, specified by <literal>X-Account-Meta-Temp-URL-Key</literal> and <literal>X-Account-Meta-Temp-URL-Key-2</literal>. Signatures are checked against both keys, if present. This is to allow for key rotation without invalidating all existing temporary URLs."
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:276(para)
+msgid "Changing the <literal>X-Account-Meta-Temp-URL-Key</literal> invalidates any previously generated temporary URLs within 60 seconds, which is the memcache time for the key. Object Storage supports up to two keys, specified by <literal>X-Account-Meta-Temp-URL-Key</literal> and <literal>X-Account-Meta-Temp-URL-Key-2</literal>. Signatures are checked against both keys, if present. This process enables key rotation without invalidating all existing temporary URLs."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:282(para)
-msgid "Object Storage includes a script called <placeholder-1/> that generates the query parameters automatically:"
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:288(para)
+msgid "Object Storage includes the <placeholder-1/> script that generates the query parameters automatically:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:289(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:296(para)
 msgid "Because this command only returns the path, you must prefix the Object Storage host name (for example, <literal>https://swift-cluster.example.com</literal>)."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:292(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:299(para)
 msgid "With GET Temporary URLs, a <literal>Content-Disposition</literal> header is set on the response so that browsers interpret this as a file attachment to be saved. The file name chosen is based on the object name, but you can override this with a <literal>filename</literal> query parameter. The following example specifies a filename of <filename>My Test File.pdf</filename>:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:305(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:312(para)
 msgid "If you do not want the object to be downloaded, you can cause <literal>Content-Disposition: inline</literal> to be set on the response by adding the <literal>inline</literal> parameter to the query string, as follows:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:324(emphasis)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:331(emphasis)
 msgid "tempurl"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:313(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:320(para)
 msgid "To enable Temporary URL functionality, edit <filename>/etc/swift/proxy-server.conf</filename> to add <literal>tempurl</literal> to the <literal>pipeline</literal> variable defined in the <literal>[pipeline:main]</literal> section. The <literal>tempurl</literal> entry should appear immediately before the authentication filters in the pipeline, such as <literal>authtoken</literal>, <literal>tempauth</literal> or <literal>keystoneauth</literal>. For example:<placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:331(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:338(title)
 msgid "Name check filter"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:332(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:339(para)
 msgid "Name Check is a filter that disallows any paths that contain defined forbidden characters or that exceed a defined length."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:340(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:347(title)
 msgid "Constraints"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:341(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:348(para)
 msgid "To change the OpenStack Object Storage internal limits, update the values in the <literal>swift-constraints</literal> section in the <filename>swift.conf</filename> file. Use caution when you update these values because they affect the performance in the entire cluster."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:352(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:359(title)
 msgid "Cluster health"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:353(para)
-msgid "Use the <placeholder-1/> tool to measure overall cluster health. This tool checks if a set of deliberately distributed containers and objects are currently in their proper places within the cluster. For instance, a common deployment has three replicas of each object. The health of that object can be measured by checking if each replica is in its proper place. If only 2 of the 3 is in place the object's health can be said to be at 66.66%, where 100% would be perfect. A single object's health, especially an older object, usually reflects the health of that entire partition the object is in. If you make enough objects on a distinct percentage of the partitions in the cluster,you get a good estimate of the overall cluster health. In practice, about 1% partition coverage seems to balance well between accuracy and the amount of time it takes to gather results. The first thing that needs to be done to provide this health value is create a new account solely for this usage. Next, you need to place the containers and objects throughout the system so that they are on distinct partitions. The <placeholder-2/> tool does this by making up random container and object names until they fall on distinct partitions. Last, and repeatedly for the life of the cluster, you must run the <placeholder-3/> tool to check the health of each of these containers and objects. These tools need direct access to the entire cluster and to the ring files (installing them on a proxy server suffices). The <placeholder-4/> and <placeholder-5/> commands both use the same configuration file, <filename>/etc/swift/dispersion.conf</filename>. Example <filename>dispersion.conf</filename> file:"
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:360(para)
+msgid "Use the <placeholder-1/> tool to measure overall cluster health. This tool checks if a set of deliberately distributed containers and objects are currently in their proper places within the cluster. For instance, a common deployment has three replicas of each object. The health of that object can be measured by checking if each replica is in its proper place. If only 2 of the 3 is in place the object's health can be said to be at 66.66%, where 100% would be perfect. A single object's health, especially an older object, usually reflects the health of that entire partition the object is in. If you make enough objects on a distinct percentage of the partitions in the cluster,you get a good estimate of the overall cluster health."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:394(para)
-msgid "There are also configuration options for specifying the dispersion coverage, which defaults to 1%, retries, concurrency, and so on. However, the defaults are usually fine. Once the configuration is in place, run <placeholder-1/> to populate the containers and objects throughout the cluster. Now that those containers and objects are in place, you can run <placeholder-2/> to get a dispersion report, or the overall health of the cluster. Here is an example of a cluster in perfect health:"
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:374(para)
+msgid "In practice, about 1% partition coverage seems to balance well between accuracy and the amount of time it takes to gather results. To provide this health value, you must create an account solely for this usage. Next, you must place the containers and objects throughout the system so that they are on distinct partitions. Use the <placeholder-1/> tool to create random container and object names until they fall on distinct partitions."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:414(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:384(para)
+msgid "Last, and repeatedly for the life of the cluster, you must run the <placeholder-1/> tool to check the health of each container and object."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:389(para)
+msgid "These tools must have direct access to the entire cluster and ring files. Installing them on a proxy server suffices."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:393(para)
+msgid "The <placeholder-1/> and <placeholder-2/> commands both use the same <filename>/etc/swift/dispersion.conf</filename> configuration file. Example <filename>dispersion.conf</filename> file:"
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:405(para)
+msgid "You can use configuration options to specify the dispersion coverage, which defaults to 1%, retries, concurrency, and so on. However, the defaults are usually fine. After the configuration is in place, run the <placeholder-1/> tool to populate the containers and objects throughout the cluster. Now that those containers and objects are in place, you can run the <placeholder-2/> tool to get a dispersion report or view the overall health of the cluster. Here is an example of a cluster in perfect health:"
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:425(para)
 msgid "Now, deliberately double the weight of a device in the object ring (with replication turned off) and re-run the dispersion report to show what impact that has:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:430(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:441(para)
 msgid "You can see the health of the objects in the cluster has gone down significantly. Of course, this test environment has just four devices, in a production environment with many devices the impact of one device change is much less. Next, run the replicators to get everything put back into place and then rerun the dispersion report:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:447(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:460(para)
 msgid "Alternatively, the dispersion report can also be output in JSON format. This allows it to be more easily consumed by third-party utilities:"
 msgstr ""
 
 #. Usage documented in http://docs.openstack.org/developer/swift/overview_large_objects.html
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:461(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:474(title)
 msgid "Static Large Object (SLO) support"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:462(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:475(para)
 msgid "This feature is very similar to Dynamic Large Object (DLO) support in that it enables the user to upload many objects concurrently and afterwards download them as a single object. It is different in that it does not rely on eventually consistent container listings to do so. Instead, a user-defined manifest of the object segments is used."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:474(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:487(title)
 msgid "Container quotas"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:475(para)
-msgid "The <code>container_quotas</code> middleware implements simple quotas that can be imposed on Object Storage containers by a user with the ability to set container metadata, most likely the account administrator. This can be useful for limiting the scope of containers that are delegated to non-admin users, exposed to formpost uploads, or just as a self-imposed sanity check."
-msgstr ""
-
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:480(para)
-msgid "Any object PUT operations that exceed these quotas return a 403 response (forbidden)."
-msgstr ""
-
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:482(para)
-msgid "Quotas are subject to several limitations: eventual consistency, the timeliness of the cached container_info (60 second TTL by default), and it is unable to reject chunked transfer uploads that exceed the quota (though once the quota is exceeded, new chunked transfers are refused)."
-msgstr ""
-
 #: ./doc/config-reference/object-storage/section_object-storage-features.xml:488(para)
-msgid "Set quotas by adding meta values to the container. These values are validated when you set them:"
-msgstr ""
-
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:492(para)
-msgid "X-Container-Meta-Quota-Bytes: Maximum size of the container, in bytes."
+msgid "The <code>container_quotas</code> middleware implements simple quotas that can be imposed on Object Storage containers by a user with the ability to set container metadata, most likely the account administrator. This can be useful for limiting the scope of containers that are delegated to non-admin users, exposed to form uploads, or just as a self-imposed sanity check."
 msgstr ""
 
 #: ./doc/config-reference/object-storage/section_object-storage-features.xml:496(para)
+msgid "Any object operations that exceed these quotas return a Forbidden (403) status code."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:498(para)
+msgid "Quotas are subject to several limitations: eventual consistency, the timeliness of the cached container_info (60 second TTL by default), and it is unable to reject chunked transfer uploads that exceed the quota (though once the quota is exceeded, new chunked transfers are refused)."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:504(para)
+msgid "Set quotas by adding meta values to the container. These values are validated when you set them:"
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:508(para)
+msgid "X-Container-Meta-Quota-Bytes: Maximum size of the container, in bytes."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:512(para)
 msgid "X-Container-Meta-Quota-Count: Maximum object count of the container."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:505(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:521(title)
 msgid "Account quotas"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:506(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:522(para)
 msgid "The <literal>x-account-meta-quota-bytes</literal> metadata entry must be requests (PUT, POST) if a given account quota (in bytes) is exceeded while DELETE requests are still allowed."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:510(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:526(para)
 msgid "The <literal>x-account-meta-quota-bytes</literal> metadata entry must be set to store and enable the quota. Write requests to this metadata entry are only permitted for resellers. There is no account quota limitation on a reseller account even if <literal>x-account-meta-quota-bytes</literal> is set."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:517(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:533(para)
 msgid "Any object PUT operations that exceed the quota return a 413 response (request entity too large) with a descriptive body."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:520(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:536(para)
 msgid "The following command uses an admin account that own the Reseller role to set a quota on the test account:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:524(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:540(para)
 msgid "Here is the stat listing of an account where quota has been set:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:534(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:550(para)
 msgid "This command removes the account quota:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:538(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:554(title)
 msgid "Bulk delete"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:539(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:555(para)
 msgid "Use <code>bulk-delete</code> to delete multiple files from an account with a single request. Responds to DELETE requests with a header 'X-Bulk-Delete: true_value'. The body of the DELETE request is a new line-separated list of files to delete. The files listed must be URL encoded and in the form:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:549(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:565(para)
 msgid "If all files are successfully deleted (or did not exist), the operation returns <code>HTTPOk</code>. If any files failed to delete, the operation returns <code>HTTPBadGateway</code>. In both cases, the response body is a JSON dictionary that shows the number of files that were successfully deleted or not found. The files that failed are listed."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:562(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:578(title)
 msgid "Drive audit"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:563(para)
-msgid "The <placeholder-1/> configuration items reference a script that can be run by using <placeholder-2/> to watch for bad drives. If errors are detected, it unmounts the bad drive, so that OpenStack Object Storage can work around it. It takes the following options:"
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:579(para)
+msgid "The <placeholder-1/> configuration items reference a script that can be run by using <placeholder-2/> to watch for bad drives. If errors are detected, it unmounts the bad drive so that OpenStack Object Storage can work around it. It takes the following options:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:574(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:591(title)
 msgid "Form post"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:575(para)
-msgid "Middleware that provides the ability to upload objects to a cluster using an HTML form POST. The format of the form is:"
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:592(para)
+msgid "Middleware that enables you to upload objects to a cluster by using an HTML form ."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:590(para)
-msgid "The <literal>swift-url</literal> is the URL to the Object Storage destination, such as: <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri> The name of each file uploaded is appended to the specified <literal>swift-url</literal>. So, you can upload directly to the root of container with a URL like: <uri>https://swift-cluster.example.com/v1/AUTH_account/container/</uri> Optionally, you can include an object prefix to better separate different users' uploads, such as: <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>"
-msgstr ""
-
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:600(para)
-msgid "The form method must be POST and the enctype must be set as <literal>multipart/form-data</literal>."
-msgstr ""
-
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:603(para)
-msgid "The redirect attribute is the URL to redirect the browser to after the upload completes. The URL has status and message query parameters added to it, indicating the HTTP status code for the upload (2xx is success) and a possible message for further information if there was an error (such as <literal>\"max_file_size exceeded\"</literal>)."
-msgstr ""
-
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:610(para)
-msgid "The <literal>max_file_size</literal> attribute must be included and indicates the largest single file upload that can be done, in bytes."
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:596(para)
+msgid "The format of the form is:"
 msgstr ""
 
 #: ./doc/config-reference/object-storage/section_object-storage-features.xml:613(para)
-msgid "The <literal>max_file_count</literal> attribute must be included and indicates the maximum number of files that can be uploaded with the form. Include additional <code>&lt;![CDATA[&lt;input type=\"file\" name=\"filexx\"/&gt;]]&gt;</code> attributes if desired."
+msgid "In the form:"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:619(para)
-msgid "The expires attribute is the Unix timestamp before which the form must be submitted before it is invalidated."
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:619(literal)
+msgid "action=\"&lt;swift-url&gt;\""
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:622(para)
-msgid "The signature attribute is the HMAC-SHA1 signature of the form. This sample Python code shows how to compute the signature:"
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:621(para)
+msgid "The URL to the Object Storage destination, such as <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:639(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:625(para)
+msgid "The name of each uploaded file is appended to the specified <literal>swift-url</literal>. So, you can upload directly to the root of container with a URL like <uri>https://swift-cluster.example.com/v1/AUTH_account/container/</uri>."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:631(para)
+msgid "Optionally, you can include an object prefix to separate different users' uploads, such as <uri>https://swift-cluster.example.com/v1/AUTH_account/container/object_prefix</uri>."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:640(literal)
+msgid "method=\"POST\""
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:641(para)
+msgid "The form <literal>method</literal> must be ."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:648(literal)
+msgid "enctype=\"multipart/form-data"
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:649(para)
+msgid "The <literal>enctype</literal> must be set to <literal>multipart/form-data</literal>."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:656(literal)
+msgid "name=\"redirect\""
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:657(para)
+msgid "The URL to which to redirect the browser after the upload completes. The URL has status and message query parameters added to it that indicate the HTTP status code for the upload and, optionally, additional error information. The 2<emphasis role=\"italic\">nn</emphasis> status code indicates success. If an error occurs, the URL might include error information, such as <literal>\"max_file_size exceeded\"</literal>."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:670(literal)
+msgid "name=\"max_file_size\""
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:671(para)
+msgid "Required. The maximum number of bytes that can be uploaded in a single file upload."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:679(literal)
+msgid "name=\"max_file_count\""
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:680(para)
+msgid "Required. The maximum number of files that can be uploaded with the form."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:688(literal)
+msgid "name=\"expires\""
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:690(para)
+msgid "The expiration date and time for the form in <link xlink:href=\"https://en.wikipedia.org/wiki/Unix_time\">UNIX Epoch time stamp format</link>. After this date and time, the form is no longer valid."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:696(para) ./doc/config-reference/object-storage/section_object-storage-features.xml:746(para)
+msgid "For example, <code>1440619048</code> is equivalent to <code>Mon, Wed, 26 Aug 2015 19:57:28 GMT</code>."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:704(literal)
+msgid "name=\"signature\""
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:706(para)
+msgid "The HMAC-SHA1 signature of the form. This sample Python code shows how to compute the signature:"
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:722(para)
 msgid "The key is the value of the <literal>X-Account-Meta-Temp-URL-Key</literal> header on the account."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:642(para)
-msgid "Be certain to use the full path, from the <literal>/v1/</literal> onward."
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:725(para)
+msgid "Use the full path from the <literal>/v1/</literal> value and onward."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:644(para)
-msgid "The command-line tool <placeholder-1/> may be used (mostly just when testing) to compute expires and signature."
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:729(para)
+msgid "During testing, you can use the <placeholder-1/> command-line tool to compute the <literal>expires</literal> and <literal>signature</literal> values."
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:648(para)
-msgid "The file attributes must appear after the other attributes to be processed correctly. If attributes come after the file, they are not sent with the sub-request because on the server side, all attributes in the file cannot be parsed unless the whole file is read into memory and the server does not have enough memory to service these requests. So, attributes that follow the file are ignored."
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:739(literal)
+msgid "name=\"x_delete_at\""
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:661(title)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:741(para)
+msgid "The date and time in <link xlink:href=\"https://en.wikipedia.org/wiki/Unix_time\">UNIX Epoch time stamp format</link> when the object will be removed."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:750(para)
+msgid "This attribute enables you to specify the <literal>X-Delete- At</literal> header value in the form ."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:758(literal)
+msgid "name=\"x_delete_after\""
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:760(para)
+msgid "The number of seconds after which the object is removed. Internally, the Object Storage system stores this value in the <literal>X-Delete-At</literal> metadata item. This attribute enables you to specify the <literal>X-Delete-After</literal> header value in the form ."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:770(literal)
+msgid "type=\"file\" name=\"filexx\""
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:772(para)
+msgid "Optional. One or more files to upload. Must appear after the other attributes to be processed correctly. If attributes come after the <literal>file</literal> attribute, they are not sent with the sub- request because on the server side, all attributes in the file cannot be parsed unless the whole file is read into memory and the server does not have enough memory to service these requests. So, attributes that follow the <literal>file</literal> attribute are ignored."
+msgstr ""
+
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:787(title)
 msgid "Static web sites"
 msgstr ""
 
-#: ./doc/config-reference/object-storage/section_object-storage-features.xml:662(para)
+#: ./doc/config-reference/object-storage/section_object-storage-features.xml:788(para)
 msgid "When configured, this middleware serves container data as a static web site with index file and error file resolution and optional file listings. This mode is normally only active for anonymous requests."
 msgstr ""
 
@@ -6554,7 +6650,7 @@ msgstr ""
 msgid "If Block Storage is configured to use a Fibre Channel volume driver that supports Zone Manager, update <filename>cinder.conf</filename> to add the following configuration options to enable Fibre Channel Zone Manager."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/section_fc-zoning.xml:19(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:376(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:362(para)
+#: ./doc/config-reference/block-storage/section_fc-zoning.xml:19(para) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:383(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:362(para)
 msgid "Make the following changes in the <filename>/etc/cinder/cinder.conf</filename> file."
 msgstr ""
 
@@ -7142,267 +7238,271 @@ msgstr ""
 msgid "The Dynamic Optimization license is required to support any feature that results in a volume changing provisioning type or CPG. This may apply to the volume <placeholder-1/>, <placeholder-2/>, and <placeholder-3/> commands."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:76(para)
-msgid "HP 3PAR Web Services API Server must be enabled and running"
-msgstr ""
-
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:80(para)
-msgid "One Common Provisioning Group (CPG)"
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:74(para)
+msgid "The Virtual Copy License is required to support any feature that involves volume snapshots. This applies to the volume <placeholder-1/> commands."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:83(para)
+msgid "HP 3PAR Web Services API Server must be enabled and running"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:87(para)
+msgid "One Common Provisioning Group (CPG)"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:90(para)
 msgid "Additionally, you must install the <package>hp3parclient</package> version 3.1.1 or newer from the Python standard library on the system with the enabled Block Storage service volume drivers."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:92(title) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:25(title) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:9(title) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:10(title) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:252(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:40(title) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:21(title) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:289(title) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:35(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:18(title) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:16(title) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:56(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:66(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:327(title) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:15(title)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:99(title) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:25(title) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:9(title) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:10(title) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:252(title) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:40(title) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:21(title) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:289(title) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:35(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:18(title) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:16(title) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:56(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:66(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:327(title) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:15(title)
 msgid "Supported operations"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:95(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:12(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:257(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:43(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:293(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:69(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:330(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:102(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:12(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:257(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:43(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:293(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:69(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:330(para)
 msgid "Create, delete, attach, and detach volumes."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:98(para) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:34(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:15(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:266(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:46(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:296(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:42(para) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:26(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:72(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:333(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:105(para) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:34(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:15(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:266(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:46(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:296(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:42(para) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:26(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:72(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:333(para)
 msgid "Create, list, and delete volume snapshots."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:101(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:28(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:273(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:49(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:299(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:60(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:65(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:75(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:336(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:108(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:28(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:273(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:49(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:299(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:60(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:65(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:75(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:336(para)
 msgid "Create a volume from a snapshot."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:104(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:18(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:31(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:276(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:52(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:302(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:45(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:71(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:78(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:339(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:111(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:18(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:31(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:276(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:52(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:302(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:45(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:71(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:78(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:339(para)
 msgid "Copy an image to a volume."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:107(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:34(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:289(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:305(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:48(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:68(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:81(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:342(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:114(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:21(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:34(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:289(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:305(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:48(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:68(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:81(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:342(para)
 msgid "Copy a volume to an image."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:110(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:37(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:18(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:304(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:55(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:308(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:51(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:74(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:84(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:117(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:37(para) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:18(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:304(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:55(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:308(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:51(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:74(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:84(para)
 msgid "Clone a volume."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:113(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:40(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:333(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:58(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:311(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:54(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:77(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:87(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:120(para) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:40(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:333(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:58(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:311(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:54(para) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:77(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:87(para)
 msgid "Extend a volume."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:116(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:93(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:123(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:93(para)
 msgid "Migrate a volume with back-end assistance."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:119(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:64(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:57(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:96(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:126(para) ./doc/config-reference/block-storage/drivers/emc-vnx-direct-driver.xml:64(para) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:57(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:96(para)
 msgid "Retype a volume."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:122(para) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:43(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:45(para) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:29(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:129(para) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:43(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:45(para) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:29(para)
 msgid "Manage and unmanage a volume."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:125(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:132(para)
 msgid "Volume type support for both HP 3PAR drivers includes the ability to set the following capabilities in the OpenStack Block Storage API <filename>cinder.api.contrib.types_extra_specs</filename> volume type extra specs extension module:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:132(literal)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:139(literal)
 msgid "hp3par:cpg"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:133(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:140(para)
 msgid "This setting is ignored as of Kilo. Instead, use the <literal>hp3par_cpg</literal> setting in <filename> cinder.conf</filename> to list the valid CPGs for a backend. CPGs should now be controlled by configuring separate backends with pools."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:140(literal)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:147(literal)
 msgid "hp3par:snap_cpg"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:143(literal)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:150(literal)
 msgid "hp3par:provisioning"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:146(literal)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:153(literal)
 msgid "hp3par:persona"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:149(literal)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:156(literal)
 msgid "hp3par:vvs"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:152(literal)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:159(literal)
 msgid "hp3par:flash_cache"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:155(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:162(para)
 msgid "To work with the default filter scheduler, the key values are case sensitive and scoped with <literal>hp3par:</literal>. For information about how to set the key-value pairs and associate them with a volume type, run the following command: <placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:164(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:171(para)
 msgid "Volumes that are cloned only support extra specs keys cpg, snap_cpg, provisioning and vvs. The others are ignored. In addition the comments section of the cloned volume in the HP 3PAR StoreServ storage array is not populated."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:170(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:157(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:177(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:157(para)
 msgid "If volume types are not used or a particular key is not set for a volume type, the following defaults are used:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:175(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:182(para)
 msgid "<literal>hp3par:cpg</literal> - Defaults to the <literal>hp3par_cpg</literal> setting in the <filename>cinder.conf</filename> file."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:180(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:187(para)
 msgid "<literal>hp3par:snap_cpg</literal> - Defaults to the <literal>hp3par_snap</literal> setting in the <filename>cinder.conf</filename> file. If <literal>hp3par_snap</literal> is not set, it defaults to the <literal>hp3par_cpg</literal> setting."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:188(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:195(para)
 msgid "<literal>hp3par:provisioning</literal> - Defaults to thin provisioning, the valid values are <literal>thin</literal>, <literal>full</literal>, and <literal>dedup</literal>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:194(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:201(para)
 msgid "<literal>hp3par:persona</literal> - Defaults to the <literal>2 - Generic-ALUA</literal> persona. The valid values are, <literal>1 - Generic</literal>, <literal>2 - Generic-ALUA</literal>, <literal>3 - Generic-legacy</literal>, <literal>4 - HPUX-legacy</literal>, <literal>5 - AIX-legacy</literal>, <literal>6 - EGENERA</literal>, <literal>7 - ONTAP-legacy</literal>, <literal>8 - VMware</literal>, <literal>9 - OpenVMS</literal>, <literal>10 - HPUX</literal>, and <literal>11 - WindowsServer</literal>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:208(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:215(para)
 msgid "<literal>hp3par:flash_cache</literal> - Defaults to <literal>false</literal>, the valid values are <literal>true</literal> and <literal>false</literal>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:214(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:221(para)
 msgid "QoS support for both HP 3PAR drivers includes the ability to set the following capabilities in the OpenStack Block Storage API <filename>cinder.api.contrib.qos_specs_manage</filename> qos specs extension module:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:221(literal)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:228(literal)
 msgid "minBWS"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:224(literal)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:231(literal)
 msgid "maxBWS"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:227(literal)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:234(literal)
 msgid "minIOPS"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:230(literal)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:237(literal)
 msgid "maxIOPS"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:233(literal) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:192(replaceable)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:240(literal) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:192(replaceable)
 msgid "latency"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:236(literal)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:243(literal)
 msgid "priority"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:239(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:246(para)
 msgid "The qos keys above no longer require to be scoped but must be created and associated to a volume type. For information about how to set the key-value pairs and associate them with a volume type, run the following commands: <placeholder-1/><placeholder-2/><placeholder-3/>"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:249(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:256(para)
 msgid "The following keys require that the HP 3PAR StoreServ storage array has a Priority Optimization license installed."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:254(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:261(para)
 msgid "<literal>hp3par:vvs</literal> - The virtual volume set name that has been predefined by the Administrator with Quality of Service (QoS) rules associated to it. If you specify extra_specs <literal>hp3par:vvs</literal>, the qos_specs <literal>minIOPS</literal>, <literal>maxIOPS</literal>, <literal>minBWS</literal>, and <literal>maxBWS</literal> settings are ignored."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:265(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:272(para)
 msgid "<literal>minBWS</literal> - The QoS I/O issue bandwidth minimum goal in MBs. If not set, the I/O issue bandwidth rate has no minimum goal."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:270(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:277(para)
 msgid "<literal>maxBWS</literal> - The QoS I/O issue bandwidth rate limit in MBs. If not set, the I/O issue bandwidth rate has no limit."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:275(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:282(para)
 msgid "<literal>minIOPS</literal> - The QoS I/O issue count minimum goal. If not set, the I/O issue count has no minimum goal."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:280(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:287(para)
 msgid "<literal>maxIOPS</literal> - The QoS I/O issue count rate limit. If not set, the I/O issue count rate has no limit."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:285(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:292(para)
 msgid "<literal>latency</literal> - The latency goal in milliseconds."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:289(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:296(para)
 msgid "<literal>priority</literal> - The priority of the QoS rule over other rules. If not set, the priority is normal, valid values are low, normal and high."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:296(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:303(para)
 msgid "Since the Icehouse release, minIOPS and maxIOPS must be used together to set I/O limits. Similarly, minBWS and maxBWS must be used together. If only one is set the other will be set to the same value."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:302(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:309(para)
 msgid "The following keys require that the HP 3PAR StoreServ storage array has an Adaptive Flash Cache license installed."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:307(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:314(para)
 msgid "<literal>hp3par:flash_cache</literal> - The flash-cache policy, which can be turned on and off by setting the value to <literal>true</literal> or <literal>false</literal>."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:316(title)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:323(title)
 msgid "Enable the HP 3PAR Fibre Channel and iSCSI drivers"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:318(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:325(para)
 msgid "The <filename>HP3PARFCDriver</filename> and <filename>HP3PARISCSIDriver</filename> are installed with the OpenStack software."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:323(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:330(para)
 msgid "Install the <filename>hp3parclient</filename> Python package on the OpenStack Block Storage system. <placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:330(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:337(para)
 msgid "Verify that the HP 3PAR Web Services API server is enabled and running on the HP 3PAR storage system."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:335(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:342(para)
 msgid "Log onto the HP 3PAR storage system with administrator access."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:338(replaceable)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:345(replaceable)
 msgid "&lt;HP 3PAR IP Address&gt;"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:341(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:348(para)
 msgid "View the current state of the Web Services API Server."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:348(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:355(para)
 msgid "If the Web Services API Server is disabled, start it."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:357(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:364(para)
 msgid "If the HTTP or HTTPS state is disabled, enable one of them. <placeholder-1/> or <placeholder-2/>"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:364(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:371(para)
 msgid "To stop the Web Services API Server, use the stopwsapi command. For other options run the <placeholder-1/> command."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:371(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:378(para)
 msgid "If you are not using an existing CPG, create a CPG on the HP 3PAR storage system to be used as the default location for creating volumes."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:379(emphasis) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:236(emphasis) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:367(emphasis)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:386(emphasis) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:236(emphasis) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:367(emphasis)
 msgid "## REQUIRED SETTINGS"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:414(emphasis) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:253(emphasis) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:387(emphasis)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:421(emphasis) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:253(emphasis) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:387(emphasis)
 msgid "## OPTIONAL SETTINGS"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:438(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:445(para)
 msgid "You can enable only one driver on each cinder instance unless you enable multiple back-end support. See the Cinder multiple back-end support instructions to enable this feature."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:445(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:452(para)
 msgid "You can configure one or more iSCSI addresses by using the <placeholder-1/> option. When you configure multiple addresses, the driver selects the iSCSI port with the fewest active volumes at attach time. The IP address might include an IP port by using a colon (<literal>:</literal>) to separate the address from port. If you do not define an IP port, the default port 3260 is used. Separate IP addresses with a comma (<literal>,</literal>). The <placeholder-2/>/<placeholder-3/> options might be used as an alternative to <placeholder-4/> for single port iSCSI configuration."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:464(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:298(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:400(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:471(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:298(para) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:400(para)
 msgid "Save the changes to the <filename>cinder.conf</filename> file and restart the <systemitem class=\"service\">cinder-volume</systemitem> service."
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:470(para)
+#: ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:477(para)
 msgid "The HP 3PAR Fibre Channel and iSCSI drivers are now enabled on your OpenStack system. If you experience problems, review the Block Storage service log files for errors."
 msgstr ""
 
