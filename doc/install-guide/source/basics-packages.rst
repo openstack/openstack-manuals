@@ -193,10 +193,6 @@ these procedures on all nodes.
 
          Fedora does not require this package.
 
-      .. note::
-
-         The installation process for this package can take a while.
-
    3. Because Fedora does not provide the ``openstack-selinux`` package
       ensure that SELinux is disabled.
 
