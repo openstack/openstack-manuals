@@ -2,6 +2,8 @@
 
 mkdir -p publish-docs
 
+TAGS=${1:-obs rdo ubuntu debian}
+
 LINKCHECK=""
 if [[ $# > 0 ]] ; then
     if [ "$1" = "--linkcheck" ] ; then
@@ -15,7 +17,7 @@ title_org=$(grep "title::" doc/install-guide/source/index.rst | \
 trap "sed -i -e \"s/\.\. title::.*/.. title:: ${title_org}/\" \
   doc/install-guide/source/index.rst" EXIT
 
-for tag in obs rdo ubuntu debian; do
+for tag in $TAGS; do
     GLOSSARY=""
     if [[ ! -e doc/common-rst/glossary.rst ]] ; then
         GLOSSARY="--glossary"
@@ -28,8 +30,10 @@ for tag in obs rdo ubuntu debian; do
     tools/build-rst.sh doc/install-guide  \
         $GLOSSARY --tag ${tag} --target "draft/install-guide-${tag}" \
         $LINKCHECK
-done
 
-# Debian uses index-debian, rename it.
-mv publish-docs/draft/install-guide-debian/index-debian.html \
-    publish-docs/draft/install-guide-debian/index.html
+    # Debian uses index-debian, rename it.
+    if [[ "$tag" == "debian" ]]; then
+        mv publish-docs/draft/install-guide-debian/index-debian.html \
+            publish-docs/draft/install-guide-debian/index.html
+    fi
+done
