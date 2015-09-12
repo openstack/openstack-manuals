@@ -197,6 +197,25 @@ these procedures on all nodes.
 
          The installation process for this package can take a while.
 
+   3. Because Fedora does not provide the ``openstack-selinux`` package
+      ensure that SELinux is disabled.
+
+      .. code-block: console
+
+         # sestatus
+         SELinux status:                 disabled
+
+      If ``SELinux status`` is ``enabled`` disable SELinux by editing the file
+      ``/etc/selinux/config`` and restarting the system afterwards:
+
+      .. code-block: ini
+
+         SELINUX=disabled
+
+      .. note::
+
+         CentOS and RHEL do not require this step.
+
 |
 
 SQL database
