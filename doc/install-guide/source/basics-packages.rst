@@ -401,10 +401,10 @@ associated with it.
 
    .. code-block:: console
 
-      # rabbitmqctl add_user openstack `RABBIT_PASS`
+      # rabbitmqctl add_user openstack RABBIT_PASS
         Creating user "openstack" ...
 
-   Replace `RABBIT_PASS` with a suitable password.
+   Replace ``RABBIT_PASS`` with a suitable password.
 
 #. Permit configuration, write, and read access for the
    ``openstack`` user:
