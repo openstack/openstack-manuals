@@ -101,8 +101,8 @@ following command:
 
    $ openssl rand -hex 10
 
-For OpenStack services, this guide uses `SERVICE_PASS` to reference
-service account passwords and `SERVICE_DBPASS` to reference database
+For OpenStack services, this guide uses ``SERVICE_PASS`` to reference
+service account passwords and ``SERVICE_DBPASS`` to reference database
 passwords.
 
 The following table provides a list of services that require passwords
@@ -116,49 +116,49 @@ and their associated references in the guide:
      - Description
    * - Database password (no variable used)
      - Root password for the database
-   * - `ADMIN_PASS`
+   * - ``ADMIN_PASS``
      - Password of user ``admin``
-   * - `CEILOMETER_DBPASS`
+   * - ``CEILOMETER_DBPASS``
      - Database password for the Telemetry service
-   * - `CEILOMETER_PASS`
+   * - ``CEILOMETER_PASS``
      - Password of Telemetry service user ``ceilometer``
-   * - `CINDER_DBPASS`
+   * - ``CINDER_DBPASS``
      - Database password for the Block Storage service
-   * - `CINDER_PASS`
+   * - ``CINDER_PASS``
      - Password of Block Storage service user ``cinder``
-   * - `DASH_DBPASS`
+   * - ``DASH_DBPASS``
      - Database password for the dashboard
-   * - `DEMO_PASS`
+   * - ``DEMO_PASS``
      - Password of user ``demo``
-   * - `GLANCE_DBPASS`
+   * - ``GLANCE_DBPASS``
      - Database password for Image service
-   * - `GLANCE_PASS`
+   * - ``GLANCE_PASS``
      - Password of Image service user ``glance``
-   * - `HEAT_DBPASS`
+   * - ``HEAT_DBPASS``
      - Database password for the Orchestration service
-   * - `HEAT_DOMAIN_PASS`
+   * - ``HEAT_DOMAIN_PASS``
      - Password of Orchestration domain
-   * - `HEAT_PASS`
+   * - ``HEAT_PASS``
      - Password of Orchestration service user ``heat``
-   * - `KEYSTONE_DBPASS`
+   * - ``KEYSTONE_DBPASS``
      - Database password of Identity service
-   * - `NEUTRON_DBPASS`
+   * - ``NEUTRON_DBPASS``
      - Database password for the Networking service
-   * - `NEUTRON_PASS`
+   * - ``NEUTRON_PASS``
      - Password of Networking service user ``neutron``
-   * - `NOVA_DBPASS`
+   * - ``NOVA_DBPASS``
      - Database password for Compute service
-   * - `NOVA_PASS`
+   * - ``NOVA_PASS``
      - Password of Compute service user ``nova``
-   * - `RABBIT_PASS`
+   * - ``RABBIT_PASS``
      - Password of user guest of RabbitMQ
-   * - `SAHARA_DBPASS`
+   * - ``SAHARA_DBPASS``
      - Database password of Data processing service
-   * - `SWIFT_PASS`
+   * - ``SWIFT_PASS``
      - Password of Object Storage service user ``swift``
-   * - `TROVE_DBPASS`
+   * - ``TROVE_DBPASS``
      - Database password of Database service
-   * - `TROVE_PASS`
+   * - ``TROVE_PASS``
      - Password of Database service user ``trove``
 
 |
