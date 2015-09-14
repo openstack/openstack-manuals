@@ -14,7 +14,7 @@ administrators to use users and groups in LDAP.
    define the destination LDAP server in the ``keystone.conf`` file.
    For more information, see :ref:`integrate-identity-with-ldap`.
 
-**Integrating an Identity back end with LDAP**
+**To integrate one Identity back end with LDAP**
 
 #. Enable the LDAP Identity driver in the ``keystone.conf`` file. This
    allows LDAP as an identity back end:
@@ -73,7 +73,7 @@ administrators to use users and groups in LDAP.
       During service restart, authentication and authorization are
       unavailable.
 
-**Integrating Identity with multiple back ends**
+**To integrate multiple Identity back ends with LDAP**
 
 #. Set the following options in the :file:`/etc/keystone/keystone.conf` file:
 
@@ -181,7 +181,8 @@ administrators to use users and groups in LDAP.
 
 Set these options in the :file:`/etc/keystone/keystone.conf` file for a
 single LDAP server, or :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf`
-files for multiple back ends.
+files for multiple back ends. Example configurations appear below each
+setting summary:
 
 Filters
    Use filters to control the scope of data presented through LDAP.
@@ -240,3 +241,13 @@ Enabled emulation
       [ldap]
       user_enabled_emulation = false
       user_enabled_emulation_dn = false
+
+When you have finished configuration, restart the OpenStack Identity
+service::
+
+   # service keystone restart
+
+.. warning::
+
+   During service restart, authentication and authorization are
+   unavailable.

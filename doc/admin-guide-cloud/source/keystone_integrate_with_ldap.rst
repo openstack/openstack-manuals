@@ -30,7 +30,8 @@ providing user authentication through the LDAP directory.
    For the OpenStack Identity service to access LDAP servers, you must
    enable the ``authlogin_nsswitch_use_ldap`` boolean value for SELinux
    on the Openstack Identity server. To enable and make the option
-   persistent across reboots:
+   persistent across reboots, set the following boolean value as the
+   root user:
 
 .. code-block:: console
 
@@ -55,22 +56,21 @@ end configuration examples. Modify these examples as needed.
 
 **To define the destination LDAP server**
 
-Define the destination LDAP server in the  :file:`keystone.conf` file:
+#. Define the destination LDAP server in the  :file:`keystone.conf` file:
 
-.. code-block:: ini
-   :linenos:
+   .. code-block:: ini
+      :linenos:
 
-   [ldap]
-   url = ldap://localhost
-   user = dc=Manager,dc=example,dc=org
-   password = samplepassword
-   suffix = dc=example,dc=org
-   use_dumb_member = False
-   allow_subtree_delete = False
+      [ldap]
+      url = ldap://localhost
+      user = dc=Manager,dc=example,dc=org
+      password = samplepassword
+      suffix = dc=example,dc=org
+      use_dumb_member = False
+      allow_subtree_delete = False
 
-.. note::
-
-   Configure ``dumb_member`` if you set ``use_dumb_member`` to true.
+#. Configure ``dumb_member`` to true if your environment requires
+   the ``use_dumb_member`` variable.
 
    .. code-block:: ini
       :linenos:
@@ -82,21 +82,23 @@ Define the destination LDAP server in the  :file:`keystone.conf` file:
 
 Set these options in the :file:`/etc/keystone/keystone.conf` file for a
 single LDAP server, or :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf`
-files for multiple back ends.
+files for multiple back ends. Example configurations appear below each
+setting summary:
 
 **Query option**
 
-Use ``query_scope`` to control the scope level of data presented
-(search only the first level or search an entire sub-tree) through LDAP.
+.. hlist::
+   :columns: 1
 
-Use ``page_size`` to control the maximum results per page. A value of zero
-disables paging.
-
-Use ``alias_dereferencing`` to control the LDAP dereferencing option for
-queries.
-
-Use ``chase_referrals`` to override the system's default referral chasing
-behavior for queries.
+   * Use ``query_scope`` to control the scope level of data presented
+     (search only the first level or search an entire sub-tree)
+     through LDAP.
+   * Use ``page_size`` to control the maximum results per page. A value
+     of zero disables paging.
+   * Use ``alias_dereferencing`` to control the LDAP dereferencing
+     option for queries.
+   * Use ``chase_referrals`` to override the system's default referral
+     chasing behavior for queries.
 
 .. code-block:: ini
    :linenos:
