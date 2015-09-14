@@ -101,6 +101,6 @@ To prevent the network from automatically starting on boot::
 
     # virsh net-autostart --network default --disable
 
-To activate the network afer it has been deactivated::
+To activate the network after it has been deactivated::
 
     # virsh net-start default
