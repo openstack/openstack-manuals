@@ -138,7 +138,7 @@ database and an administration token.
 
             [database]
             ...
-            connection = mysql://keystone:KEYSTONE_DBPASS@controller/keystone
+            connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
 
          Replace ``KEYSTONE_DBPASS`` with the password you chose for the database.
 
@@ -212,7 +212,7 @@ database and an administration token.
 
          [database]
          ...
-         connection = mysql://keystone:KEYSTONE_DBPASS@controller/keystone
+         connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
 
       If you decide to not use ``dbconfig-common``, then you will have to
       create the database and manage its access rights yourself, and run the

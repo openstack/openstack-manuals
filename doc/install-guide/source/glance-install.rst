@@ -180,7 +180,7 @@ To install and configure the Image service components
 
             [database]
             ...
-            connection = mysql://glance:GLANCE_DBPASS@controller/glance
+            connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
 
          Replace ``GLANCE_DBPASS`` with the password you chose for the
          Image service database.
@@ -259,7 +259,7 @@ To install and configure the Image service components
 
             [database]
             ...
-            connection = mysql://glance:GLANCE_DBPASS@controller/glance
+            connection = mysql+pymysql://glance:GLANCE_DBPASS@controller/glance
 
          Replace ``GLANCE_DBPASS`` with the password you chose for the
          Image service database.

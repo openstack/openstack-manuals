@@ -238,19 +238,19 @@ services also support other SQL databases including
 
       .. code-block:: console
 
-         # apt-get install mariadb-server python-mysqldb
+         # apt-get install mariadb-server python-pymysql
 
    .. only:: debian
 
       .. code-block:: console
 
-         # apt-get install mysql-server python-mysqldb
+         # apt-get install mysql-server python-pymysql
 
    .. only:: rdo
 
       .. code-block:: console
 
-         # yum install mariadb mariadb-server MySQL-python
+         # yum install mariadb mariadb-server PyMySQL
 
    .. only:: obs
 

@@ -11,7 +11,7 @@ directive as follows:
 .. code-block:: ini
 
    [database]
-   connection = mysql://keystone:0dec658e3f14a7d@localhost/keystonedb
+   connection = mysql+pymysql://keystone:0dec658e3f14a7d@localhost/keystonedb
 
 This ``connection`` directive will be handled by the ``dbconfig-common``
 package, which provides a standard Debian interface. It enables you to
@@ -80,7 +80,7 @@ corresponding DNS will then be:
 .. code-block:: ini
 
    [database]
-   connection = mysql://keystone:PASSWORD@localhost/keystonedb
+   connection = mysql+pymysql://keystone:PASSWORD@localhost/keystonedb
 
 The ``dbconfig-common`` package will configure MySQL for these access
 rights, and create the database for you. Since OpenStack 2014.1.1, all

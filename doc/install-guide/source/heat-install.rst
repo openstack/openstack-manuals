@@ -248,7 +248,7 @@ To install and configure the Orchestration components
 
            [database]
            ...
-           connection = mysql://heat:HEAT_DBPASS@controller/heat
+           connection = mysql+pymysql://heat:HEAT_DBPASS@controller/heat
 
         Replace ``HEAT_DBPASS`` with the password you chose for the
         Orchestration database.
