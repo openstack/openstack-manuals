@@ -15,7 +15,7 @@
         interface (CLI) for the Shared file systems API and its extensions.
 
        This chapter documents <command>manila</command> version
-        <literal>1.2.0</literal>.
+        <literal>1.3.0</literal>.
     </para>
 
     <para>For help on a specific <command>manila</command>
@@ -33,7 +33,7 @@
               [--service-name &lt;service-name&gt;]
               [--share-service-name &lt;share-service-name&gt;]
               [--endpoint-type &lt;endpoint-type&gt;]
-              [--os-share-api-version &lt;compute-api-ver&gt;]
+              [--os-share-api-version &lt;share-api-ver&gt;]
               [--os-cacert &lt;ca-certificate&gt;] [--retries &lt;retries&gt;]
               &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
@@ -67,6 +67,14 @@
     <listitem>
       <para>
         Show access list for share.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>api-version</command></term>
+    <listitem>
+      <para>
+        Display the API version information.
       </para>
     </listitem>
   </varlistentry>
@@ -165,6 +173,13 @@
     <listitem>
       <para>
       Update all metadata of a share.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>migrate</command></term>
+    <listitem>
+      <para>
       </para>
     </listitem>
   </varlistentry>
@@ -291,6 +306,39 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>share-instance-force-delete</command></term>
+    <listitem>
+      <para>
+      Attempt force-delete of share instance, regardless of
+      state.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>share-instance-list</command></term>
+    <listitem>
+      <para>
+      List share instances.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>share-instance-reset-state</command></term>
+    <listitem>
+      <para>
+      Explicitly update the state of a share instance.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>share-instance-show</command></term>
+    <listitem>
+      <para>
+      Show details about a share instance.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>share-network-create</command></term>
     <listitem>
       <para>
@@ -392,6 +440,14 @@
     <listitem>
       <para>
         Show details about a NAS share.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>shrink</command></term>
+    <listitem>
+      <para>
+        Decreases the size of an existing share.
       </para>
     </listitem>
   </varlistentry>
@@ -669,10 +725,11 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-share-api-version &lt;compute-api-ver&gt;</command></term>
+    <term><command>--os-share-api-version &lt;share-api-ver&gt;</command></term>
     <listitem>
       <para>
-      Accepts 1 or 2, defaults to <code>env[OS_SHARE_API_VERSION]</code>.
+      Accepts 1.x to override default to
+      <code>env[OS_SHARE_API_VERSION]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -792,13 +849,20 @@ Show access list for share.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="manilaclient_subcommand_api-version">
+        <title>manila api-version</title>
+        <screen><computeroutput>usage: manila api-version</computeroutput></screen>
+        <para>
+Display the API version information.
+        </para>
+    </section>
     <section xml:id="manilaclient_subcommand_create">
         <title>manila create</title>
         <screen><computeroutput>usage: manila create [--snapshot-id &lt;snapshot-id&gt;] [--name &lt;name&gt;]
                      [--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
                      [--share-network &lt;network-info&gt;]
                      [--description &lt;description&gt;] [--share-type &lt;share-type&gt;]
-                     [--public]
+                     [--public] [--availability-zone &lt;availability-zone&gt;]
                      &lt;share_protocol&gt; &lt;size&gt;</computeroutput></screen>
         <para>
 Creates a new share (NFS, CIFS, GlusterFS or HDFS).
@@ -879,6 +943,14 @@ Creates a new share (NFS, CIFS, GlusterFS or HDFS).
       <para>
         Level of visibility for share. Defines whether other
       tenants are able to see it or not.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--availability-zone &lt;availability-zone&gt;, --availability_zone &lt;availability-zone&gt;, --az &lt;availability-zone&gt;</command></term>
+    <listitem>
+      <para>
+      Availability zone in which share should be created.
       </para>
     </listitem>
   </varlistentry>
@@ -1134,7 +1206,7 @@ List all the os-api extensions that are available.
     <section xml:id="manilaclient_subcommand_manage">
         <title>manila manage</title>
         <screen><computeroutput>usage: manila manage [--name &lt;name&gt;] [--description &lt;description&gt;]
-                     [--share_type &lt;share_type&gt;]
+                     [--share_type &lt;share-type&gt;]
                      [--driver_options [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
                      &lt;service_host&gt; &lt;protocol&gt; &lt;export_path&gt;</computeroutput></screen>
         <para>
@@ -1145,7 +1217,7 @@ Manage share not handled by Manila.
     <term><command>&lt;service_host&gt;</command></term>
     <listitem>
       <para>
-        manage-share service host: some.host@driver[#pool]
+        manage-share service host: some.host@driver#pool
       </para>
     </listitem>
   </varlistentry>
@@ -1161,7 +1233,9 @@ Manage share not handled by Manila.
     <term><command>&lt;export_path&gt;</command></term>
     <listitem>
       <para>
-        Share export path.
+        Share export path, NFS share such as:
+      10.0.0.1:/foo_path, CIFS share such as: \10.0.0.1
+      oo_name_of_cifs_share
       </para>
     </listitem>
   </varlistentry>
@@ -1185,7 +1259,7 @@ Manage share not handled by Manila.
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--share_type &lt;share_type&gt;, --share-type &lt;share_type&gt;</command></term>
+    <term><command>--share_type &lt;share-type&gt;, --share-type &lt;share-type&gt;</command></term>
     <listitem>
       <para>
       Optional share type assigned to share. (Default=None)
@@ -1273,6 +1347,43 @@ Update all metadata of a share.
     <listitem>
       <para>
         Metadata entry or entries to update.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_migrate">
+        <title>manila migrate</title>
+        <screen><computeroutput>usage: manila migrate [--force-host-copy &lt;True|False&gt;] &lt;share&gt; &lt;host#pool&gt;</computeroutput></screen>
+        <para>
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;share&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of share to migrate.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;host#pool&gt;</command></term>
+    <listitem>
+      <para>
+        Destination host and pool.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--force-host-copy &lt;True|False&gt;</command></term>
+    <listitem>
+      <para>
+      Enables or disables generic host-based force-
+      migration, which bypasses driver optimizations.
+      Default=False.
       </para>
     </listitem>
   </varlistentry>
@@ -1403,10 +1514,10 @@ List the default quotas for a tenant.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--tenant &lt;tenant-id&gt; ID</command></term>
+    <term><command>--tenant &lt;tenant-id&gt;</command></term>
     <listitem>
       <para>
-        of tenant to list the default quotas for.
+        ID of tenant to list the default quotas for.
       </para>
     </listitem>
   </varlistentry>
@@ -1420,18 +1531,18 @@ Delete quota for a tenant/user. The quota will revert back to default.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--tenant &lt;tenant-id&gt; ID</command></term>
+    <term><command>--tenant &lt;tenant-id&gt;</command></term>
     <listitem>
       <para>
-        of tenant to delete quota for.
+        ID of tenant to delete quota for.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--user &lt;user-id&gt; ID</command></term>
+    <term><command>--user &lt;user-id&gt;</command></term>
     <listitem>
       <para>
-        of user to delete quota for.
+        ID of user to delete quota for.
       </para>
     </listitem>
   </varlistentry>
@@ -1445,18 +1556,18 @@ List the quotas for a tenant/user.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--tenant &lt;tenant-id&gt; ID</command></term>
+    <term><command>--tenant &lt;tenant-id&gt;</command></term>
     <listitem>
       <para>
-        of tenant to list the quotas for.
+        ID of tenant to list the quotas for.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--user &lt;user-id&gt; ID</command></term>
+    <term><command>--user &lt;user-id&gt;</command></term>
     <listitem>
       <para>
-        of user to list the quotas for.
+        ID of user to list the quotas for.
       </para>
     </listitem>
   </varlistentry>
@@ -1485,10 +1596,10 @@ Update the quotas for a tenant/user.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--user &lt;user-id&gt; ID</command></term>
+    <term><command>--user &lt;user-id&gt;</command></term>
     <listitem>
       <para>
-        of user to set the quotas for.
+        ID of user to set the quotas for.
       </para>
     </listitem>
   </varlistentry>
@@ -1604,10 +1715,10 @@ Create security service used by tenant.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--dns-ip &lt;dns_ip&gt; DNS IP</command></term>
+    <term><command>--dns-ip &lt;dns_ip&gt;</command></term>
     <listitem>
       <para>
-        address used inside tenant's network.
+        DNS IP address used inside tenant's network.
       </para>
     </listitem>
   </varlistentry>
@@ -1832,10 +1943,10 @@ Update security service.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--dns-ip &lt;dns-ip&gt; DNS IP</command></term>
+    <term><command>--dns-ip &lt;dns-ip&gt;</command></term>
     <listitem>
       <para>
-        address used inside tenant's network.
+        DNS IP address used inside tenant's network.
       </para>
     </listitem>
   </varlistentry>
@@ -1935,6 +2046,88 @@ List all services.
     <listitem>
       <para>
         Availability zone.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_share-instance-force-delete">
+        <title>manila share-instance-force-delete</title>
+        <screen><computeroutput>usage: manila share-instance-force-delete &lt;instance&gt; [&lt;instance&gt; ...]</computeroutput></screen>
+        <para>
+Attempt force-delete of share instance, regardless of state.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the instance(s) to force delete.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_share-instance-list">
+        <title>manila share-instance-list</title>
+        <screen><computeroutput>usage: manila share-instance-list [--share-id &lt;share_id&gt;]</computeroutput></screen>
+        <para>
+List share instances.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--share-id &lt;share_id&gt;, --share_id &lt;share_id&gt;</command></term>
+    <listitem>
+      <para>
+      Filter results by share ID.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_share-instance-reset-state">
+        <title>manila share-instance-reset-state</title>
+        <screen><computeroutput>usage: manila share-instance-reset-state [--state &lt;state&gt;] &lt;instance&gt;</computeroutput></screen>
+        <para>
+Explicitly update the state of a share instance.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the share instance to modify.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--state &lt;state&gt;</command></term>
+    <listitem>
+      <para>
+        Indicate which state to assign the instance. Options
+      include available, error, creating, deleting,
+      error_deleting. If no state is provided, available will be
+      used.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_share-instance-show">
+        <title>manila share-instance-show</title>
+        <screen><computeroutput>usage: manila share-instance-show &lt;instance&gt;</computeroutput></screen>
+        <para>
+Show details about a share instance.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;instance&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the share instance.
       </para>
     </listitem>
   </varlistentry>
@@ -2420,6 +2613,31 @@ Show details about a NAS share.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="manilaclient_subcommand_shrink">
+        <title>manila shrink</title>
+        <screen><computeroutput>usage: manila shrink &lt;share&gt; &lt;new_size&gt;</computeroutput></screen>
+        <para>
+Decreases the size of an existing share.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;share&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of share to shrink.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;new_size&gt;</command></term>
+    <listitem>
+      <para>
+        New size of share, in GBs.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="manilaclient_subcommand_snapshot-create">
         <title>manila snapshot-create</title>
         <screen><computeroutput>usage: manila snapshot-create [--force &lt;True|False&gt;] [--name &lt;name&gt;]
@@ -2747,8 +2965,9 @@ Removes share type access for the given project.
     </section>
     <section xml:id="manilaclient_subcommand_type-create">
         <title>manila type-create</title>
-        <screen><computeroutput>usage: manila type-create [--is_public &lt;is_public&gt;]
-                          &lt;name&gt; [&lt;spec_driver_handles_share_servers&gt;]</computeroutput></screen>
+        <screen><computeroutput>usage: manila type-create [--snapshot_support &lt;snapshot_support&gt;]
+                          [--is_public &lt;is_public&gt;]
+                          &lt;name&gt; &lt;spec_driver_handles_share_servers&gt;</computeroutput></screen>
         <para>
 Create a new share type.
         </para>  <variablelist wordsize="10">
@@ -2765,14 +2984,24 @@ Create a new share type.
     <term><command>&lt;spec_driver_handles_share_servers&gt;</command></term>
     <listitem>
       <para>
-      Required extra specification. Valid values 'true'/'1'
-      and 'false'/'0'
+      Required extra specification. Valid values are
+      'true'/'1' and 'false'/'0'
       </para>
     </listitem>
   </varlistentry>
  </variablelist>
   <variablelist wordsize="10">
     <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--snapshot_support &lt;snapshot_support&gt;, --snapshot-support &lt;snapshot_support&gt;</command></term>
+    <listitem>
+      <para>
+      Boolean extra spec that used for filtering of back
+      ends by their capability to create share snapshots.
+      (Default is True).
+      </para>
+    </listitem>
+  </varlistentry>
   <varlistentry>
     <term><command>--is_public &lt;is_public&gt;, --is-public &lt;is_public&gt;</command></term>
     <listitem>
