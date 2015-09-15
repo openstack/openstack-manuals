@@ -36,7 +36,7 @@ Client authentication with keystone-all
 
 When running ``keystone-all``, the server can be configured to enable SSL
 with client authentication using the following instructions. Modify the
-``[eventlet_server_ssl]`` section in the :file:`etc/keystone.conf` file. The
+``[eventlet_server_ssl]`` section in the :file:`/etc/keystone.conf` file. The
 following SSL configuration example uses the included sample
 certificates:
 
