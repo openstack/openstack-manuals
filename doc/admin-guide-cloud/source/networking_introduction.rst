@@ -304,3 +304,41 @@ an IP address between two instances to enable fast data plane failover.
     one of the fixed IP addresses of the port.
 
 .. |FWaaS architecture| image:: ../../common/figures/fwaas.png
+
+
+Virtual-Private-Network-as-a-Service (VPNaaS)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The VPNaaS extension enables OpenStack tenants to extend private networks
+across the internet.
+
+This extension introduces these resources:
+
+- :term:`service`. A parent object that associates VPN with a specific subnet
+  and router.
+
+- The Internet Key Exchange (IKE) policy that identifies the authentication
+  and encryption algorithm to use during phase one and two negotiation of a
+  VPN connection.
+
+- The IP security policy that specifies the authentication and encryption
+  algorithm and encapsulation mode to use for
+  the established VPN connection.
+
+- Details for the site-to-site IPsec connection, including the peer CIDRs,
+  MTU, authentication mode, peer address, DPD settings, and status.
+
+This initial implementation of the VPNaaS extension provides:
+
+- Site-to-site VPN that connects two private networks.
+
+- Multiple VPN connections per tenant.
+
+- IKEv1 policy support with 3des, aes-128, aes-256, or aes-192 encryption.
+
+- IPSec policy support with 3des, aes-128, aes-192, or aes-256 encryption,
+  sha1 authentication, ESP, AH, or AH-ESP transform protocol, and tunnel or
+  transport mode encapsulation.
+
+- Dead Peer Detection (DPD) with hold, clear, restart, disabled, or
+  restart-by-peer actions.
