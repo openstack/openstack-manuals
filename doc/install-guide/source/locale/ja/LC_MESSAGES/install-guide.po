@@ -7,20 +7,24 @@
 # yfukuda <fukuda.yuko@jp.fujitsu.com>, 2013
 # Tomoyuki KATO <tomo@dream.daynight.jp>, 2013-2015
 # yfukuda <fukuda.yuko@jp.fujitsu.com>, 2013
+# Akihiro Motoki <amotoki@gmail.com>, 2015. #zanata
+# KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>, 2015. #zanata
+# OpenStack Infra <zanata@openstack.org>, 2015. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenStack Manuals\n"
+"Project-Id-Version: Installation Guide 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-15 00:11+0000\n"
-"PO-Revision-Date: 2015-09-14 10:17+0000\n"
-"Last-Translator: openstackjenkins <jenkins@openstack.org>\n"
-"Language-Team: Japanese (http://www.transifex.com/openstack/openstack-"
-"manuals-i18n/language/ja/)\n"
+"POT-Creation-Date: 2015-09-16 12:29+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-09-16 01:11+0000\n"
+"Last-Translator: KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>\n"
+"Language-Team: Japanese (http://www.transifex.com/openstack/openstack-"
+"manuals-i18n/language/ja/)\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Zanata 3.7.1\n"
 
 # #-#-#-#-#  ceilometer-controller-install.pot (Installation Guide 0.1)
 # #-#-#-#-#
@@ -811,6 +815,13 @@ msgid "Basic environment"
 msgstr "基本環境"
 
 msgid ""
+"Because Fedora does not provide the ``openstack-selinux`` package ensure "
+"that SELinux is disabled."
+msgstr ""
+"Fedora では ``openstack-selinux`` パッケージは提供されないので、必ず SELinux "
+"を無効にすること。"
+
+msgid ""
 "Because most OpenStack services must access the Identity service, you must "
 "configure the IP address of the ``keystone`` server to be able to access it. "
 "You must also configure the ``admin_tenant_name``, ``admin_user``, and "
@@ -1075,8 +1086,20 @@ msgstr ""
 "使用するよう設定します。そのため、``debconf`` を非対話モードで事前シードせず"
 "に利用した場合、インストールした OpenStack サービスが SQLite を使用します。"
 
+msgid ""
+"By default, the controller node synchronizes the time via a pool of public "
+"servers. However, you can optionally configure alternative servers such as "
+"those provided by your organization."
+msgstr ""
+"コントローラーノードはデフォルトで、パブリックなサーバープール経由で時刻同期"
+"を行います。しかし、オプションとして、自組織により提供されるサーバーなど別の"
+"サーバーを参照するように設定することもできます。"
+
 msgid "CentOS and Fedora do not require these repositories."
 msgstr "CentOS と Fedora は、これらのリポジトリーが必要ありません。"
+
+msgid "CentOS and RHEL do not require this step."
+msgstr "CentOS と RHEL では、この手順は不要です。"
 
 msgid ""
 "Change the ownership of :file:`/etc/keystone` to give the ``keystone`` "
@@ -1148,6 +1171,9 @@ msgstr "コンピュートノード"
 
 msgid "Conceptual architecture"
 msgstr "概念アーキテクチャー"
+
+msgid "Configure Network Time Protocol (NTP)"
+msgstr "Network Time Protocol (NTP) の設定"
 
 msgid "Configure OpenStack with debconf"
 msgstr "debconf を用いた OpenStack の設定"
@@ -1250,6 +1276,16 @@ msgstr "コンテナーリング"
 
 msgid "Contents"
 msgstr "内容"
+
+msgid ""
+"Contents in the *Name/IP address* column should indicate the hostname or IP "
+"address of one or more NTP servers.  Contents in the *S* column should "
+"indicate *\\** for the server to which the NTP service is currently "
+"synchronized."
+msgstr ""
+"*Name/IP address* 列の内容は、1 つ以上の NTP サーバーのホスト名または IP アド"
+"レスを表すでしょう。*S* 列の内容は、*\\** のサーバーが現在 NTP サービスと同期"
+"されていることを表します。"
 
 msgid ""
 "Contents in the *remote* column should indicate the hostname of the "
@@ -1820,6 +1856,36 @@ msgstr ""
 ":file:`/etc/ceilometer/ceilometer.conf` ファイルを編集し、以下の作業を完了し"
 "ます。"
 
+msgid ""
+"Edit the :file:`/etc/chrony.conf` and comment out or remove all but one "
+"``server`` key. Change it to reference the controller node:"
+msgstr ""
+":file:`/etc/chrony.conf` ファイルを編集して、1 つの ``server`` キー以外のすべ"
+"てをコメントアウトまたは削除します。このキーはコントローラーノードを参照する"
+"よう変更します。"
+
+msgid ""
+"Edit the :file:`/etc/chrony.conf` file and add, change, or remove the "
+"following keys as necessary for your environment:"
+msgstr ""
+":file:`/etc/chrony.conf` ファイルを編集して、お使いの環境の必要に応じて、以下"
+"のキーを追加、変更、削除します。"
+
+msgid ""
+"Edit the :file:`/etc/chrony/chrony.conf` and comment out or remove all but "
+"one ``server`` key. Change it to reference the controller node:"
+msgstr ""
+":file:`/etc/chrony/chrony.conf` ファイルを編集して、1 つの ``server`` キー以"
+"外のすべてをコメントアウトまたは削除します。このキーはコントローラーノードを"
+"参照するよう変更します。"
+
+msgid ""
+"Edit the :file:`/etc/chrony/chrony.conf` file and add, change, or remove the "
+"following keys as necessary for your environment:"
+msgstr ""
+":file:`/etc/chrony/chrony.conf` ファイルを編集して、お使いの環境の必要に応じ"
+"て、以下のキーを追加、変更、削除します。"
+
 # #-#-#-#-#  ceilometer-cinder.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  cinder-controller-node.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  cinder-storage-node.pot (Installation Guide 0.1)  #-#-#-#-#
@@ -2167,6 +2233,15 @@ msgid "Finalize installation"
 msgstr "インストールの最終手順"
 
 msgid ""
+"For OpenStack services, this guide uses ``SERVICE_PASS`` to reference "
+"service account passwords and ``SERVICE_DBPASS`` to reference database "
+"passwords."
+msgstr ""
+"このガイドは、OpenStack のサービスのために、サービスアカウントの参照パスワー"
+"ドに ``SERVICE_PASS`` を使用し、データベースの参照パスワードに "
+"``SERVICE_DBPASS`` を使用します。"
+
+msgid ""
 "For best performance, we recommend that your environment meets or exceeds "
 "the hardware requirements in :ref:`figure-neutron-network-hw` or :ref:"
 "`figure-legacy-network-hw`.  However, OpenStack does not require a "
@@ -2355,6 +2430,11 @@ msgid "From a host on the external network, ping the tenant router gateway:"
 msgstr ""
 "外部ネットワークのホストからテナントルーターのゲートウェイに ping します。"
 
+msgid "From the *compute* node, :command:`ping` a site on the internet:"
+msgstr ""
+"*コンピュート*ノードから、インターネットにあるサイトに :command:`ping` しま"
+"す。"
+
 msgid ""
 "From the *compute* node, :command:`ping` the instance tunnels interface on "
 "the *network* node:"
@@ -2375,10 +2455,17 @@ msgid "From the *compute* node, ``ping`` a site on the Internet:"
 msgstr ""
 "*コンピュート* ノードから、インターネットのサイトに :command:`ping` します。"
 
+# #-#-#-#-#  basics-networking-neutron.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  basics-networking-nova.pot (Installation Guide 0.1)  #-#-#-#-#
 msgid "From the *controller* node, :command:`ping` a site on the Internet:"
 msgstr ""
 "*コントローラー* ノードから、インターネットのサイトに :command:`ping` しま"
 "す。"
+
+msgid "From the *controller* node, :command:`ping` a site on the internet:"
+msgstr ""
+"*コントローラー* ノードから、インターネットにあるサイトに :command:`ping` し"
+"ます。"
 
 # #-#-#-#-#  basics-networking-neutron.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  basics-networking-nova.pot (Installation Guide 0.1)  #-#-#-#-#
@@ -2395,6 +2482,11 @@ msgid ""
 msgstr ""
 "*コントローラー* ノードから、*ネットワーク* ノードの管理インターフェースに :"
 "command:`ping` します。"
+
+msgid "From the *network* node, :command:`ping` a site on the internet:"
+msgstr ""
+"*ネットワーク* ノードから、インターネットにあるサイトに :command:`ping` しま"
+"す。"
 
 msgid ""
 "From the *network* node, :command:`ping` the instance tunnels interface on "
@@ -2533,6 +2625,13 @@ msgstr ""
 "こともできます。適切な MTU 値を判断するには、しばしば実験を必要としますが、"
 "1454 バイトがほとんどの環境で機能するでしょう。IP アドレスを割り当てる DHCP "
 "サーバーがインスタンスに適切な MTU を調整するよう設定できます。"
+
+msgid ""
+"If ``SELinux status`` is ``enabled`` disable SELinux by editing the file ``/"
+"etc/selinux/config`` and restarting the system afterwards:"
+msgstr ""
+"``SELinux status`` が ``enabled`` ならば、``/etc/selinux/config`` ファイルを"
+"編集して、SELinux を無効化して、システムを再起動します。"
 
 msgid ""
 "If the status does not indicate ``available``, check the logs in the :file:`/"
@@ -3604,6 +3703,14 @@ msgid "Next steps"
 msgstr "次の手順"
 
 msgid ""
+"Notification messages are placed on the OpenStack messaging system, which "
+"recruits AMQP to send information when an event triggers alerts."
+msgstr ""
+"通知メッセージは、OpenStack のメッセージングシステムに置かれます。これは、イ"
+"ベントのトリガーがアラートを発行するとき、情報を送信するために AMQP を集めま"
+"す。"
+
+msgid ""
 "Notifications in real-time allow administrars to observe and resolve "
 "emergencies when the cloud environment experiences errors or faults."
 msgstr ""
@@ -3663,9 +3770,6 @@ msgstr ""
 "RHEL の場合、サブスクリプションマネージャーを使用して、追加リポジトリーを有効"
 "化します。"
 
-# #-#-#-#-#  basics-ntp.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-controller-install.pot (Installation Guide 0.1)
-# #-#-#-#-#
 msgid "On SLES:"
 msgstr "SLES の場合:"
 
@@ -3681,9 +3785,6 @@ msgstr ""
 "すべてのノードにおいて、きちんと設定ディレクトリーに適切な所有権を設定しま"
 "す。"
 
-# #-#-#-#-#  basics-ntp.pot (Installation Guide 0.1)  #-#-#-#-#
-# #-#-#-#-#  ceilometer-controller-install.pot (Installation Guide 0.1)
-# #-#-#-#-#
 msgid "On openSUSE:"
 msgstr "openSUSE の場合:"
 
@@ -3977,6 +4078,17 @@ msgstr "OpenStack glance デーモン"
 
 msgid "OpenStack heat daemons"
 msgstr "OpenStack heat デーモン"
+
+msgid ""
+"OpenStack is highly configurable to meet different needs with various "
+"compute, networking, and storage options. This guide presents several "
+"combinations of core and optional services for you to choose from. This "
+"guide uses the following example architectures:"
+msgstr ""
+"OpenStack は、さまざまなニーズを満たすために、さまざまなコンピュート、ネット"
+"ワーク、ストレージのオプションを持ち、いろいろと設定できます。このガイドは、"
+"あなたが選択できる、いくつかのコアサービスとオプションサービスの組み合わせを"
+"説明します。このガイドは、以下のサンプルアーキテクチャを使用します。"
 
 msgid "OpenStack keystone daemons"
 msgstr "OpenStack keystone デーモン"
@@ -4667,6 +4779,9 @@ msgstr ""
 "``NTP_SERVER`` をできる限り正確な（低ストラタム値）NTP サーバーのホスト名か "
 "IP アドレスに置き換えます。複数の ``server`` キーを設定することもできます。"
 
+msgid "Replace ``RABBIT_PASS`` with a suitable password."
+msgstr "``RABBIT_PASS`` を適切なパスワードに置き換えます。"
+
 # #-#-#-#-#  neutron-compute-node.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  neutron-controller-node.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  neutron-network-node.pot (Installation Guide 0.1)  #-#-#-#-#
@@ -4876,6 +4991,9 @@ msgstr "パッケージをインストールするために、以下のコマン
 
 msgid "Run the following commands to install the packages:"
 msgstr "パッケージをインストールするために以下のコマンドを実行します。"
+
+msgid "Run the same command on *all other* nodes:"
+msgstr "同じコマンドを *すべてのノード* において実行します。"
 
 msgid "Run this command on the *controller* node:"
 msgstr "このコマンドを *コントローラー* ノードで実行します。"
@@ -5376,6 +5494,13 @@ msgstr ""
 "``ping`` を使用してネットワーク接続性を検証することを推奨します。"
 
 msgid ""
+"The Dashboard enables web-based interactions with the OpenStack Compute "
+"cloud controller through the OpenStack APIs."
+msgstr ""
+"Dashboard は OpenStack API を経由して OpenStack Compute クラウドコントロー"
+"ラーとウェブベースで操作できます。"
+
+msgid ""
 "The Debian OpenStack packages offer automation for this, so OpenStack users "
 "do not have to manually edit the configuration files."
 msgstr ""
@@ -5606,6 +5731,15 @@ msgstr ""
 "レージノードで実行できます。詳細は `Configuration Reference <http://docs."
 "openstack.org/kilo/ config-reference/content/section_volume-drivers.html>`__ "
 "を参照してください。"
+
+msgid ""
+"The OpenStack Dashboard, also known as `horizon <https://git.openstack.org/"
+"cgit/openstack/horizon>`__ is a web interface that enables cloud "
+"administrators and users to manage various OpenStack resources and services."
+msgstr ""
+"OpenStack dashboard は `horizon <https://git.openstack.org/cgit/openstack/"
+"horizon>`__ としても知られ、クラウド管理者やユーザーがさまざまな OpenStack の"
+"リソースとサービスを管理できるようになるウェブインターフェースです。"
 
 msgid ""
 "The OpenStack Image service (glance) enables users to discover, register, "
@@ -5900,6 +6034,18 @@ msgid ""
 msgstr ""
 "ネットワークノードは、仮想ネットワークの内部と外部のルーティング、"
 "<glossterm>DHCP</glossterm> サービスをおもに処理します。"
+
+msgid ""
+"The network node runs the Networking plug-in and several agents that "
+"provision tenant networks and provide switching, routing, :term:`NAT<Network "
+"Address Translation (NAT)>`, and :term:`DHCP` services. This node also "
+"handles external (internet) connectivity for tenant virtual machine "
+"instances."
+msgstr ""
+"ネットワークノードは Networking プラグインといくつかのエージェントを実行しま"
+"す。これらは、スイッチング、ルーティング、:term:`NAT<Network Address "
+"Translation (NAT)>`、:term:`DHCP`  を提供します。また、このノードは、プロジェ"
+"クトの仮想マシン向けに外部 (インターネット) 接続を処理します。"
 
 msgid ""
 "The object server uses the object ring to maintain lists of object locations "
@@ -6263,6 +6409,8 @@ msgstr ""
 "このネットワークは、通信が OpenStack 環境のネットワークノードとコンピュート"
 "ノード間のみで発生するため、ゲートウェイを必要としません。"
 
+# #-#-#-#-#  basics-networking-neutron.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  basics-networking-nova.pot (Installation Guide 0.1)  #-#-#-#-#
 msgid ""
 "This network requires a gateway to provide Internet access to all nodes for "
 "administrative purposes such as package installation, security updates, :"
@@ -6272,8 +6420,26 @@ msgstr ""
 "提供するゲートウェイが必要になります。パッケージのインストール、セキュリティ"
 "更新、:term:`DNS` 、:term:`Network Time Protocol (NTP)` などです。"
 
+# #-#-#-#-#  basics-networking-neutron.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  basics-networking-nova.pot (Installation Guide 0.1)  #-#-#-#-#
 msgid ""
 "This network requires a gateway to provide Internet access to instances in "
+"your OpenStack environment."
+msgstr ""
+"このネットワークは、OpenStack 環境のインスタンスにインターネットアクセスを提"
+"供するためにゲートウェイを必要とします。"
+
+msgid ""
+"This network requires a gateway to provide internet access to all nodes for "
+"administrative purposes such as package installation, security updates, :"
+"term:`DNS`, and :term:`Network Time Protocol (NTP)`."
+msgstr ""
+"このネットワークは、すべてのノードで管理目的のためにインターネットアクセスを"
+"提供するゲートウェイが必要になります。パッケージのインストール、セキュリティ"
+"更新、:term:`DNS` 、:term:`Network Time Protocol (NTP)` などです。"
+
+msgid ""
+"This network requires a gateway to provide internet access to instances in "
 "your OpenStack environment."
 msgstr ""
 "このネットワークは、OpenStack 環境のインスタンスにインターネットアクセスを提"
@@ -7012,6 +7178,8 @@ msgstr ""
 "適切に設定した場合、外部物理ネットワークにあるホストから、この IP アドレスに "
 "``ping`` できるでしょう。"
 
+# #-#-#-#-#  basics-networking-neutron.pot (Installation Guide 0.1)  #-#-#-#-#
+# #-#-#-#-#  basics-networking-nova.pot (Installation Guide 0.1)  #-#-#-#-#
 msgid ""
 "We recommend that you verify network connectivity to the Internet and among "
 "the nodes before proceeding further."
@@ -7023,8 +7191,8 @@ msgid ""
 "We recommend that you verify network connectivity to the internet and among "
 "the nodes before proceeding further."
 msgstr ""
-"続行する前に、インターネットとノード間のネットワーク接続性を検証することを推"
-"奨します。"
+"続行する前に、インターネットへの接続性とノード間の通信を検証することを推奨し"
+"ます。"
 
 msgid ""
 "When you implement this architecture, skip the section :doc:`networking-"
@@ -7222,6 +7390,17 @@ msgid ""
 msgstr ""
 "インスタンスが外部ネットワークに直接接続されず、Floating IP アドレスが手動で"
 "割り当てられるため、このサブネットにおいて :term:`DHCP` を無効化すべきです。"
+
+msgid ""
+"You should install Chrony, an implementation of :term:`Network Time Protocol "
+"(NTP)`, to properly synchronize services among nodes. We recommend that you "
+"configure the controller node to reference more accurate (lower stratum) "
+"servers and other nodes to reference the controller node."
+msgstr ""
+"サービスをノード間で正しく同期するために、:term:`Network Time Protocol "
+"(NTP)` を実装している Chrony をインストールすべきです。コントローラーノードを"
+"できる限り正確な（低ストラタム値）参照サーバーに設定し、他のノードからコント"
+"ローラーノードを参照するよう設定することを推奨します。"
 
 msgid ""
 "Your OpenStack environment now includes Block Storage. You can :doc:`launch "
@@ -7434,6 +7613,72 @@ msgstr ""
 
 msgid "`Trove <http://docs.openstack.org/developer/trove/>`_"
 msgstr "`Trove <http://docs.openstack.org/developer/trove/>`_"
+
+msgid "``ADMIN_PASS``"
+msgstr "``ADMIN_PASS``"
+
+msgid "``CEILOMETER_DBPASS``"
+msgstr "``CEILOMETER_DBPASS``"
+
+msgid "``CEILOMETER_PASS``"
+msgstr "``CEILOMETER_PASS``"
+
+msgid "``CINDER_DBPASS``"
+msgstr "``CINDER_DBPASS``"
+
+msgid "``CINDER_PASS``"
+msgstr "``CINDER_PASS``"
+
+msgid "``DASH_DBPASS``"
+msgstr "``DASH_DBPASS``"
+
+msgid "``DEMO_PASS``"
+msgstr "``DEMO_PASS``"
+
+msgid "``GLANCE_DBPASS``"
+msgstr "``GLANCE_DBPASS``"
+
+msgid "``GLANCE_PASS``"
+msgstr "``GLANCE_PASS``"
+
+msgid "``HEAT_DBPASS``"
+msgstr "``HEAT_DBPASS``"
+
+msgid "``HEAT_DOMAIN_PASS``"
+msgstr "``HEAT_DOMAIN_PASS``"
+
+msgid "``HEAT_PASS``"
+msgstr "``HEAT_PASS``"
+
+msgid "``KEYSTONE_DBPASS``"
+msgstr "``KEYSTONE_DBPASS``"
+
+msgid "``NEUTRON_DBPASS``"
+msgstr "``NEUTRON_DBPASS``"
+
+msgid "``NEUTRON_PASS``"
+msgstr "``NEUTRON_PASS``"
+
+msgid "``NOVA_DBPASS``"
+msgstr "``NOVA_DBPASS``"
+
+msgid "``NOVA_PASS``"
+msgstr "``NOVA_PASS``"
+
+msgid "``RABBIT_PASS``"
+msgstr "``RABBIT_PASS``"
+
+msgid "``SAHARA_DBPASS``"
+msgstr "``SAHARA_DBPASS``"
+
+msgid "``SWIFT_PASS``"
+msgstr "``SWIFT_PASS``"
+
+msgid "``TROVE_DBPASS``"
+msgstr "``TROVE_DBPASS``"
+
+msgid "``TROVE_PASS``"
+msgstr "``TROVE_PASS``"
 
 msgid "and run the helper script:"
 msgstr "ヘルパースクリプトを実行します。"
