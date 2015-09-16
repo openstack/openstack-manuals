@@ -48,56 +48,44 @@
         amount of memory, and the quantity of storage required for each hypervisor
         must be taken into account.</para>
     <para>You will also need to decide whether to provide compute resources
-    in a single pool or in multiple pools. In most cases, multiple pools
-    of resources can be allocated and addressed on demand. A compute design
-    that allocates multiple pools of resources makes best use of application
-    resources, and is commonly referred to as
+        in a single pool or in multiple pools. In most cases, multiple pools
+        of resources can be allocated and addressed on demand. A compute design
+        that allocates multiple pools of resources makes best use of application
+        resources, and is commonly referred to as
     <firstterm>bin packing</firstterm>.</para>
     <para>In a bin packing design, each independent resource pool provides service
-      for specific flavors. This helps to ensure that, as instances are scheduled
-      onto compute hypervisors, each independent node's resources will be allocated
-      in a way that makes the most efficient use of the available hardware. Bin
-      packing also requires a common hardware design, with all hardware nodes within
-      a compute resource pool sharing a common processor, memory, and storage layout.
-      This makes it easier to deploy, support, and maintain nodes throughout their
-      life cycle.</para>
+        for specific flavors. This helps to ensure that, as instances are scheduled
+        onto compute hypervisors, each independent node's resources will be allocated
+        in a way that makes the most efficient use of the available hardware. Bin
+        packing also requires a common hardware design, with all hardware nodes within
+        a compute resource pool sharing a common processor, memory, and storage layout.
+        This makes it easier to deploy, support, and maintain nodes throughout their
+        life cycle.</para>
     <para>An <firstterm>overcommit ratio</firstterm> is the ratio of available
-      virtual resources to available physical resources. This ratio is
-      configurable for CPU and memory. The default CPU overcommit ratio is 16:1, and
-      the default memory overcommit ratio is 1.5:1. Determining the tuning of the
-      overcommit ratios during the design phase is important as it has a direct
-      impact on the hardware layout of your compute nodes.</para>
-    <para>For example, if you wanted to design a hardware node as a compute resource
-      pool to service instances, consider the number of processor cores available
-      on the node as well as the required disk and memory to service instances
-      running at capacity. For a server with 2 CPUs of 10 cores each, with
-      hyperthreading turned on, the default CPU overcommit ratio of 16:1 would allow
-      for 640 (2 &times; 10 &times; 2 &times; 16) total <literal>m1.small</literal>
-      instances, where each instance uses 1 vCPU, 20&nbsp;GB of ephemeral storage
-      and 2,048&nbsp;MB of RAM.  By the same reasoning, using the default memory
-      overcommit ratio of 1.5:1 you can determine that the server will need at least
-      853&nbsp;GB (640 &times; 2,048&nbsp;MB / 1.5) of RAM. When sizing nodes for
-      memory, it is also important to consider the additional memory required to
-      service operating system and service needs.</para>
+        virtual resources to available physical resources. This ratio is
+        configurable for CPU and memory. The default CPU overcommit ratio is 16:1, and
+        the default memory overcommit ratio is 1.5:1. Determining the tuning of the
+        overcommit ratios during the design phase is important as it has a direct
+        impact on the hardware layout of your compute nodes.</para>
     <para>When selecting a processor, compare features and performance
-      characteristics. Some processors include features specific to virtualized
-      compute hosts, such as hardware-assisted virtualization, and technology
-      related to memory paging (also known as EPT shadowing). These types of features
-      can have a significant impact on the performance of your virtual machine.</para>
+        characteristics. Some processors include features specific to virtualized
+        compute hosts, such as hardware-assisted virtualization, and technology
+        related to memory paging (also known as EPT shadowing). These types of features
+        can have a significant impact on the performance of your virtual machine.</para>
     <para>You will also need to consider the compute requirements of non-hypervisor
-      nodes (sometimes referred to as resource nodes). This includes controller, object
-      storage, and block storage nodes, and networking services.</para>
+        nodes (sometimes referred to as resource nodes). This includes controller, object
+        storage, and block storage nodes, and networking services.</para>
     <para>The number of processor cores and threads impacts the number of worker
-      threads which can be run on a resource node. Design decisions must relate
-      directly to the service being run on it, as well as provide a balanced
-      infrastructure for all services.</para>
+        threads which can be run on a resource node. Design decisions must relate
+        directly to the service being run on it, as well as provide a balanced
+        infrastructure for all services.</para>
     <para>Workload can be unpredictable in a general purpose cloud, so consider
-      including the ability to add additional compute resource pools on demand.
-      In some cases, however, the demand for certain instance types or flavors may not
-      justify individual hardware design. In either case, start by allocating
-      hardware designs that are capable of servicing the most common instance
-      requests. If you want to add additional hardware to the overall architecture,
-      this can be done later.</para>
+        including the ability to add additional compute resource pools on demand.
+        In some cases, however, the demand for certain instance types or flavors may not
+        justify individual hardware design. In either case, start by allocating
+        hardware designs that are capable of servicing the most common instance
+        requests. If you want to add additional hardware to the overall architecture,
+        this can be done later.</para>
     </section>
 
     <section xml:id="designing-network-resources-tech-considerations">
@@ -162,36 +150,34 @@
             </listitem>
         </varlistentry>
       </variablelist>
-    <para>Initially, we recommend you design at least three network segments.</para>
-    <para>The first segment is a public network, used for access to REST APIs
-        by tenants and operators. Generally, the controller nodes and swift
-        proxies will be the only devices connecting to this network segment. In some
-        cases, this network might also be serviced by hardware load balancers
-        and other network devices.</para>
-    <para>The second segment is used by administrators to manage hardware resources.
-        It is also used by configuration management tools for deploying software and
-        services onto new hardware. In some cases, this network segment might also be
-        used for internal services, including the message bus and database services.
-        This network will probably need to communicate with every hardware node.
-        Due to the highly secure nature of this network segment, you will also need to
-        secure this network from unauthorized access.</para>
-    <para>The third network segment is used by applications and consumers to access
-        the physical network, and for users to access applications. This network is
-        generally segregated from the one used to access the cloud APIs and is not
-        capable of communicating directly with the hardware resources in the cloud.
-        Compute resource nodes will need to communicate on this network segment, as
-        will any network gateway services which allow application data to access the
-        physical network from outside of the cloud.</para>
-    </section>
-
-    <section xml:id="designing-storage-resources-tech-considerations">
-      <title>Designing storage resources</title>
-      <para>OpenStack has two independent storage services to consider,
-        each with its own specific design requirements and goals. In
-        addition to services which provide storage as their primary
-        function, there are additional design considerations with
-        regard to compute and controller nodes which will affect the
-        overall cloud architecture.</para> <!--Could there be room for more tech content here? A.S-->
+    <para>We recommend you design at least three network segments:</para>
+    <itemizedlist>
+      <listitem>
+        <para>The first segment is a public network, used for access to REST APIs
+          by tenants and operators. The controller nodes and swift
+          proxies are the only devices connecting to this network segment. In some
+          cases, this network might also be serviced by hardware load balancers
+          and other network devices.</para>
+      </listitem>
+      <listitem>
+        <para>The second segment is used by administrators to manage hardware resources.
+          Configuration management tools also use this for deploying software and
+          services onto new hardware. In some cases, this network segment might also be
+          used for internal services, including the message bus and database services.
+          This network needs to communicate with every hardware node.
+          Due to the highly sensitive nature of this network segment, you also need to
+          secure this network from unauthorized access.</para>
+      </listitem>
+      <listitem>
+        <para>The third network segment is used by applications and consumers to access
+          the physical network, and for users to access applications. This network is
+          segregated from the one used to access the cloud APIs and is not
+          capable of communicating directly with the hardware resources in the cloud.
+          Compute resource nodes and network gateway services which allow application
+          data to access the physical network from outside of the cloud need to
+          communicate on this network segment.</para>
+      </listitem>
+    </itemizedlist>
     </section>
 
     <section xml:id="designing-openstack-object-storage-tech-considerations">
@@ -205,22 +191,19 @@
         attached storage or an external chassis that holds a larger
         number of drives, the main goal is to maximize the storage
         available in each node.</para>
-    <para>We do not recommended investing in enterprise class drives
-        for an OpenStack Object Storage cluster. The consistency and
-        partition tolerance characteristics of OpenStack Object
-        Storage will ensure that data stays up to date and survives
-        hardware faults without the use of any specialized data
-        replication devices.</para>
+        <note>
+          <para>We do not recommended investing in enterprise class drives
+           for an OpenStack Object Storage cluster. The consistency and
+           partition tolerance characteristics of OpenStack Object
+           Storage ensures that data stays up to date and survives
+           hardware faults without the use of any specialized data
+           replication devices.</para>
+        </note>
     <para>One of the benefits of OpenStack Object Storage is the ability
         to mix and match drives by making use of weighting within the
         swift ring. When designing your swift storage cluster, we
         recommend making use of the most cost effective storage
-        solution available at the time. Many server chassis on the
-        market can hold 60 or more drives in 4U of rack space,
-        therefore we recommend maximizing the amount of storage
-        per rack unit at the best cost per terabyte. Furthermore, we
-        do not recommend the use of RAID controllers in an object storage
-        node.</para>
+        solution available at the time.</para>
     <para>To achieve durability and availability of data stored as objects
         it is important to design object storage resource pools to ensure they can
         provide the suggested availability. Considering rack-level and zone-level
@@ -414,20 +397,9 @@
         requirement to run software on a certified hypervisor
         including solutions from VMware, Microsoft, and Citrix.</para>
     <para>The features offered through the OpenStack cloud platform
-        determine the best choice of a hypervisor. As an example, for
-        a general purpose cloud that predominantly supports a
-        Microsoft-based migration, or is managed by staff that has a
-        particular skill for managing certain hypervisors and
-        operating systems, Hyper-V would be the best available choice.
-        While the decision to use Hyper-V does not limit the ability
-        to run alternative operating systems, be mindful of those that
-        are deemed supported. Each different hypervisor also has their
-        own hardware requirements which may affect the decisions
-        around designing a general purpose cloud. For example, to
-        utilize the live migration feature of VMware, vMotion, this
-        requires an installation of vCenter/vSphere and the use of the
-        ESXi hypervisor, which increases the infrastructure
-        requirements.</para>
+        determine the best choice of a hypervisor. Each hypervisor
+        has their own hardware requirements which may affect the decisions
+        around designing a general purpose cloud.</para>
     <para>In a mixed hypervisor environment, specific aggregates of
         compute resources, each with defined capabilities, enable
         workloads to utilize software and hardware specific to their
@@ -474,10 +446,6 @@
         (<glossterm>cinder</glossterm>). These may be
         selected to provide storage to applications and
         instances.</para>
-      <note>
-        <para>However, depending on the use case, these could be
-        optional.</para>
-      </note>
     </section>
 
     <section xml:id="supplemental-software-tech-considerations">
@@ -491,12 +459,7 @@
         queue might affect the required number of controller services,
         as well as the technology to provide highly resilient database
         functionality, such as MariaDB with Galera. In such a
-        scenario, replication of services relies on quorum. Therefore,
-        the underlying database nodes, for example, should consist of
-        at least 3 nodes to account for the recovery of a failed
-        Galera node. When increasing the number of nodes to support a
-        feature of the software, consideration of rack space and
-        switch port density becomes important.</para>
+        scenario, replication of services relies on quorum.</para>
     <para>Where many general purpose deployments use hardware load
         balancers to provide highly available API access and SSL
         termination, software solutions, for example HAProxy, can also
@@ -519,15 +482,6 @@
         memcached or Redis does not affect the overall design of your
         architecture as they tend to be deployed onto the
         infrastructure nodes providing the OpenStack services.</para>
-    </section>
-
-    <section xml:id="performance-tech-considerations">
-      <title>Performance</title>
-    <para>Performance of an OpenStack deployment is dependent on a
-        number of factors related to the infrastructure and controller
-        services. The user requirements can be split into general
-        network performance, performance of compute resources, and
-        performance of storage systems.</para>
     </section>
 
     <section xml:id="controller-infrastructure-tech-considerations">
@@ -562,22 +516,12 @@
     <section xml:id="network-performance-tech-considerations">
       <title>Network performance</title>
     <para>In a general purpose OpenStack cloud, the requirements of
-        the network help determine performance capabilities. For
-        example, small deployments may employ 1 Gigabit Ethernet (GbE)
-        networking, whereas larger installations serving multiple
-        departments or many users would be better architected with
-        10&nbsp;GbE networking. The performance of the running instances will
-        be limited by these speeds. It is possible to design OpenStack
+        the network help determine performance capabilities.
+        It is possible to design OpenStack
         environments that run a mix of networking capabilities. By
         utilizing the different interface speeds, the users of the
         OpenStack environment can choose networks that are fit for
         their purpose.</para>
-    <para>For example, web application instances may run
-        on a public network presented through OpenStack Networking
-        that has 1 GbE capability, whereas the back-end database uses
-        an OpenStack Networking network that has 10&nbsp;GbE capability to
-        replicate its data or, in some cases, the design may
-        incorporate link aggregation for greater throughput.</para>
     <para>Network performance can be boosted considerably by
         implementing hardware load balancers to provide front-end
         service to the cloud APIs. The hardware load balancers also
@@ -682,21 +626,13 @@
        <citetitle><link
        xlink:href="http://docs.openstack.org/openstack-ops/content/network_design.html#network_deployment_options"
        >OpenStack Operations Guide</link></citetitle>.</para>
-    <para>Ensure your deployment has adequate back-up capabilities. As
-        an example, in a deployment that has two infrastructure
-        controller nodes, the design should include controller
-        availability. In the event of the loss of a single controller,
-        cloud services will run from a single controller in the event
-        of failure. Where the design has higher availability
-        requirements, it is important to meet those requirements by
-        designing the proper redundancy and availability of controller
-        nodes.</para>
+    <para>Ensure your deployment has adequate back-up capabilities.</para>
     <para>Application design must also be factored into the
         capabilities of the underlying cloud infrastructure. If the
         compute hosts do not provide a seamless live migration
         capability, then it must be expected that when a compute host
         fails, that instance and any data local to that instance will
-        be deleted. Conversely, when providing an expectation to users
+        be deleted. However, when providing an expectation to users
         that instances have a high-level of uptime guarantees, the
         infrastructure must be deployed in a way that eliminates any
         single point of failure when a compute host disappears. This
@@ -731,65 +667,66 @@
         </listitem>
     </itemizedlist>
     <para>These security domains can be mapped to an OpenStack
-        deployment individually, or combined. For example, some
-        deployment topologies combine both guest and data domains onto
-        one physical network, whereas in other cases these networks
-        are physically separated. In each case, the cloud operator
+        deployment individually, or combined. In each case, the cloud operator
         should be aware of the appropriate security concerns. Security
         domains should be mapped out against your specific OpenStack
         deployment topology. The domains and their trust requirements
         depend upon whether the cloud instance is public, private, or
         hybrid.</para>
-    <para>The public security domain is an entirely untrusted area of
-        the cloud infrastructure. It can refer to the Internet as a
-        whole or simply to networks over which you have no authority.
-        This domain should always be considered untrusted.</para>
-    <para>Typically used for compute instance-to-instance traffic, the
-        guest security domain handles compute data generated by
-        instances on the cloud but not services that support the
-        operation of the cloud, such as API calls. Public cloud
-        providers and private cloud providers who do not have
-        stringent controls on instance use or who allow unrestricted
-        Internet access to instances should consider this domain to be
-        untrusted. Private cloud providers may want to consider this
-        network as internal and therefore trusted only if they have
-        controls in place to assert that they trust instances and all
-        their tenants.</para>
-    <para>The management security domain is where services interact.
-        Sometimes referred to as the "control plane", the networks in
-        this domain transport confidential data such as configuration
-        parameters, user names, and passwords. In most deployments this
-        domain is considered trusted.</para>
-    <para>The data security domain is concerned primarily with
-        information pertaining to the storage services within
-        OpenStack. Much of the data that crosses this network has high
-        integrity and confidentiality requirements and, depending on
-        the type of deployment, may also have strong availability
-        requirements. The trust level of this network is heavily
-        dependent on other deployment decisions.</para>
+      <itemizedlist>
+        <listitem>
+          <para>The public security domain is an entirely untrusted area of
+           the cloud infrastructure. It can refer to the internet as a
+           whole or simply to networks over which you have no authority.
+           This domain should always be considered untrusted.</para>
+        </listitem>
+        <listitem>
+          <para>The guest security domain handles compute data generated by
+           instances on the cloud but not services that support the
+           operation of the cloud, such as API calls. Public cloud
+           providers and private cloud providers who do not have
+           stringent controls on instance use or who allow unrestricted
+           internet access to instances should consider this domain to be
+           untrusted. Private cloud providers may want to consider this
+           network as internal and therefore trusted only if they have
+           controls in place to assert that they trust instances and all
+           their tenants.</para>
+        </listitem>
+        <listitem>
+          <para>The management security domain is where services interact.
+           Sometimes referred to as the <emphasis>control plane</emphasis>, the networks
+           in this domain transport confidential data such as configuration
+           parameters, user names, and passwords. In most deployments this
+           domain is considered trusted.</para>
+        </listitem>
+        <listitem>
+          <para>The data security domain is concerned primarily with
+           information pertaining to the storage services within
+           OpenStack. Much of the data that crosses this network has high
+           integrity and confidentiality requirements and, depending on
+           the type of deployment, may also have strong availability
+           requirements. The trust level of this network is heavily
+           dependent on other deployment decisions.</para>
+        </listitem>
+      </itemizedlist>
     <para>When deploying OpenStack in an enterprise as a private cloud
         it is usually behind the firewall and within the trusted
-        network alongside existing systems. Users of the cloud are,
-        traditionally, employees that are bound by the security
+        network alongside existing systems. Users of the cloud are
+        employees that are bound by the security
         requirements set forth by the company. This tends to push most
         of the security domains towards a more trusted model. However,
         when deploying OpenStack in a public facing role, no
         assumptions can be made and the attack vectors significantly
-        increase. For example, the API endpoints, along with the
-        software behind them, become vulnerable to bad actors wanting
-        to gain unauthorized access or prevent access to services,
-        which could lead to loss of data, functionality, and
-        reputation. These services must be protected against through
-        auditing and appropriate filtering.</para>
+        increase.</para>
     <para>Consideration must be taken when managing the users of the
         system for both public and private clouds. The identity
         service allows for LDAP to be part of the authentication
         process. Including such systems in an OpenStack deployment may
         ease user management if integrating into existing
         systems.</para>
-    <para>It's important to understand that user authentication
+    <para>It is important to understand that user authentication
         requests include sensitive information including user names,
-        passwords and authentication tokens. For this reason, placing
+        passwords, and authentication tokens. For this reason, placing
         the API services behind hardware that performs SSL termination
         is strongly recommended.</para>
     <para>
