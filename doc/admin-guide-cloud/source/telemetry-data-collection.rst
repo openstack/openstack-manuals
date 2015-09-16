@@ -1025,3 +1025,15 @@ You can store samples in a file by setting the ``dispatcher`` option in the
 see the `dispatcher_file section
 <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html>`__
 in the OpenStack Configuration Reference.
+
+Gnocchi dispatcher
+------------------
+The Telemetry module supports sending the metering data to Gnocchi back end
+through the gnocchi dispatcher. To set this option as the target, change the
+``dispatcher`` to ``gnocchi`` in the :file:`ceilometer.conf`
+configuration file.
+
+For the list of options that you need to set, see the
+`dispatcher_gnocchi section
+<http://docs.openstack.org/draft/config-reference/content/ch_configuring-openstack-telemetry.html>`__
+in the OpenStack Configuration Reference.
