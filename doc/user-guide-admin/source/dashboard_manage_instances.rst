@@ -7,13 +7,13 @@ projects. You can view, terminate, edit, perform a soft or hard reboot,
 create a snapshot from, and migrate instances. You can also view the
 logs for instances or launch a VNC console for an instance.
 
-For information about using the dashboard to launch instances as an end
+For information about using the Dashboard to launch instances as an end
 user, see the `OpenStack End User Guide <http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__.
 
 Create instance snapshots
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the admin project from the
+#. Log in to the Dashboard and choose the admin project from the
    drop-down list at the top of the page.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
@@ -24,7 +24,7 @@ Create instance snapshots
 
 #. In the :guilabel:`Create Snapshot` window, enter a name for the snapshot.
 
-#. Click :guilabel:`Create Snapshot`. The dashboard shows the instance snapshot
+#. Click :guilabel:`Create Snapshot`. The Dashboard shows the instance snapshot
    in the :guilabel:`Images & Snapshots` category.
 
 #. To launch an instance from the snapshot, select the snapshot and
@@ -34,7 +34,7 @@ Create instance snapshots
 Control the state of an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the admin project from the
+#. Log in to the Dashboard and choose the admin project from the
    drop-down list at the top of the page.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
@@ -62,7 +62,7 @@ Use the Overview category to track usage of instances for each project.
 You can track costs per month by showing meters like number of VCPUs,
 disks, RAM, and uptime of all your instances.
 
-#. Log in to the dashboard and choose the admin project from the CURRENT
+#. Log in to the Dashboard and choose the admin project from the CURRENT
    PROJECT drop-down list.
 
 #. On the :guilabel:`Admin` tab, click the :guilabel:`Instances` category.

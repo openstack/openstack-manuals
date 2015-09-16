@@ -16,9 +16,9 @@ core services via a single modular template, with additional
 orchestration capabilities such as auto-scaling and basic
 high availability.
 
-For information about the:
+For information about:
 
--  Basic creation and deletion of Orchestration stacks, refer
+-  basic creation and deletion of Orchestration stacks, refer
    to the `OpenStack End User Guide <http://docs.openstack.org/user-guide/dashboard_stacks.html>`_
 
 -  **heat** CLI commands, see the `OpenStack Command Line Interface Reference <http://docs.openstack.org/cli-reference/content/heatclient_commands.html>`_
