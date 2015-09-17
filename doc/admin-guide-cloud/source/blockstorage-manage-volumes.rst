@@ -69,3 +69,4 @@ troubleshoot your installation and back up your Compute volumes.
    blockstorage-driver-filter-weighing.rst
    blockstorage_ratelimit_volume_copy_bandwidth.rst
    blockstorage_over_subscription.rst
+   blockstorage_image_volume_cache.rst
