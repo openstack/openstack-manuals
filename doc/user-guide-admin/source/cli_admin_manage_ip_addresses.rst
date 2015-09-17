@@ -16,8 +16,8 @@ Internet.
 
 - For details on creating public networks using OpenStack Networking
   (``neutron``), refer to the `OpenStack Cloud Administrator Guide
-  <http://docs.openstack.org/admin-guide-cloud/content/>`_. No
-  floating IP addresses are created by default in OpenStack Networking.
+  <http://docs.openstack.org/admin-guide-cloud/networking_adv-features.html>`_
+  . No floating IP addresses are created by default in OpenStack Networking.
 
 As an administrator using legacy networking (``nova-network``), you
 can use the following bulk commands to list, create, and delete ranges

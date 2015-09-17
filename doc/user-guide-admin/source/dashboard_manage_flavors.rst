@@ -147,7 +147,7 @@ Update Metadata
 
    For information about supporting metadata keys, see the
    `OpenStack Cloud Administrator Guide
-   <http://docs.openstack.org/admin-guide-cloud/content/customize-flavors.html>`__.
+   <http://docs.openstack.org/admin-guide-cloud/compute-flavors.html>`__.
 
 Delete flavors
 ~~~~~~~~~~~~~~
