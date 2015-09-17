@@ -55,6 +55,9 @@ service with its package name and description.
 |Image service   |glance    |python-glanceclient    |Create and manage       |
 |                |          |                       |images.                 |
 +----------------+----------+-----------------------+------------------------+
+|Key Manager     |barbican  |python-barbicanclient  |Create and manage       |
+|service         |          |                       |keys.                   |
++----------------+----------+-----------------------+------------------------+
 |Networking      |neutron   |python-neutronclient   |Configure networks for  |
 |                |          |                       |guest servers.          |
 +----------------+----------+-----------------------+------------------------+
@@ -76,7 +79,7 @@ service with its package name and description.
 |                |          |                       |and delete stacks.      |
 +----------------+----------+-----------------------+------------------------+
 |Shared file     |manila    |python-manilaclient    |Create and manage       |
-|systems         |          |                       |shared file systems     |
+|systems         |          |                       |shared file systems.    |
 +----------------+----------+-----------------------+------------------------+
 |Telemetry       |ceilometer|python-ceilometerclient|Create and collect      |
 |                |          |                       |measurements across     |

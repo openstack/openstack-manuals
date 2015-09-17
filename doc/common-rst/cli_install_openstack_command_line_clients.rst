@@ -145,6 +145,8 @@ When following the instructions in this section, replace PROJECT with
 the lowercase name of the client to install, such as ``nova``. Repeat
 for each client. The following values are valid:
 
+-  ``barbican`` - Key Manager Service API
+
 -  ``ceilometer`` - Telemetry API
 
 -  ``cinder`` - Block Storage API and extensions
