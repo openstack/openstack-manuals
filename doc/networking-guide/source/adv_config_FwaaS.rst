@@ -2,15 +2,6 @@
 FWaaS
 =====
 
-See the following URLs:
+See the following URL:
 
-http://docs.openstack.org/admin-guide-cloud/content/install_neutron-fwaas-agent.html
-
-
-http://docs.openstack.org/admin-guide-cloud/content/fwaas.html
-
-
-
-
-
-
+http://docs.openstack.org/admin-guide-cloud/networking_introduction.html#firewall-as-a-service-fwaas-overview

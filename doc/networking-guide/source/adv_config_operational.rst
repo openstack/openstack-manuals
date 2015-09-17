@@ -7,7 +7,4 @@ TBD
 Logging
 ~~~~~~~
 
-http://docs.openstack.org/admin-guide-cloud/content/section_adv_logging.html
-
-
-
+http://docs.openstack.org/admin-guide-cloud/networking_adv-operational-features.html#logging-settings
