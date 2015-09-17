@@ -15,7 +15,7 @@
         interface (CLI) for the Orchestration API and its extensions.
 
        This chapter documents <command>heat</command> version
-        <literal>0.7.0</literal>.
+        <literal>0.8.0</literal>.
     </para>
 
     <para>For help on a specific <command>heat</command>
@@ -1455,10 +1455,23 @@ Send a signal to a resource.
     </section>
     <section xml:id="heatclient_subcommand_resource-type-list">
         <title>heat resource-type-list</title>
-        <screen><computeroutput>usage: heat resource-type-list</computeroutput></screen>
+        <screen><computeroutput>usage: heat resource-type-list [-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;]</computeroutput></screen>
         <para>
 List the available resource types.
-        </para>
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-f &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;, --filters &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;</command></term>
+    <listitem>
+      <para>
+      Filter parameters to apply on returned resource types.
+      This can be specified multiple times, or once with
+      parameters separated by a semicolon. It can be any of
+      name, version and support_status
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="heatclient_subcommand_resource-type-show">
         <title>heat resource-type-show</title>
@@ -1868,7 +1881,7 @@ Delete the stack(s).
                        [-t &lt;TAG1,TAG2...&gt;] [--tags-any &lt;TAG1,TAG2...&gt;]
                        [--not-tags &lt;TAG1,TAG2...&gt;]
                        [--not-tags-any &lt;TAG1,TAG2...&gt;] [-l &lt;LIMIT&gt;] [-m &lt;ID&gt;]
-                       [-g] [-o]</computeroutput></screen>
+                       [-k &lt;KEY1,KEY2...&gt;] [-d [asc|desc]] [-g] [-o]</computeroutput></screen>
         <para>
 List the user's stacks.
         </para>  <variablelist wordsize="10">
@@ -1957,6 +1970,27 @@ List the user's stacks.
       <para>
       Only return stacks that appear after the given stack
       ID.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-k &lt;KEY1,KEY2...&gt;, --sort-keys &lt;KEY1,KEY2...&gt;</command></term>
+    <listitem>
+      <para>
+      List of keys for sorting the returned stacks. This can
+      be specified multiple times or once with keys
+      separated by semicolons. Valid sorting keys include
+      "stack_name", "stack_status", "creation_time" and
+      "updated_time".
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-d [asc|desc], --sort-dir [asc|desc]</command></term>
+    <listitem>
+      <para>
+      Sorting direction (either "asc" or "desc") for the
+      sorting keys.
       </para>
     </listitem>
   </varlistentry>
@@ -2159,7 +2193,7 @@ Make a snapshot of a stack.
         <title>heat stack-update</title>
         <screen><computeroutput>usage: heat stack-update [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;]
                          [--pre-update &lt;RESOURCE&gt;] [-u &lt;URL&gt;] [-o &lt;URL&gt;]
-                         [-t &lt;TIMEOUT&gt;] [-r] [--rollback &lt;VALUE&gt;]
+                         [-t &lt;TIMEOUT&gt;] [-r] [--rollback &lt;VALUE&gt;] [-y]
                          [-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;] [-Pf &lt;KEY=FILE&gt;]
                          [-x] [-c &lt;PARAMETER&gt;] [--tags &lt;TAG1,TAG2&gt;]
                          &lt;NAME or ID&gt;</computeroutput></screen>
@@ -2256,6 +2290,15 @@ Update the stack.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>-y, --dry-run</command></term>
+    <listitem>
+      <para>
+        Do not actually perform the stack update, but show
+      what would be changed
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>-P &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;, --parameters &lt;KEY1=VALUE1;KEY2=VALUE2...&gt;</command></term>
     <listitem>
       <para>
@@ -2279,10 +2322,14 @@ Update the stack.
     <term><command>-x, --existing</command></term>
     <listitem>
       <para>
-        Re-use the set of parameters of the current stack.
-      Parameters specified in --parameters will patch over
-      the existing values in the current stack. Parameters
-      omitted will keep the existing values.
+        Re-use the template, parameters and environment of the
+      current stack. If the template argument is omitted
+      then the existing template is used. If no
+      --environment-file is specified then the existing
+      environment is used. Parameters specified in
+      --parameters will patch over the existing values in
+      the current stack. Parameters omitted will keep the
+      existing values.
       </para>
     </listitem>
   </varlistentry>
@@ -2344,7 +2391,7 @@ Get the template for the specified stack.
     <section xml:id="heatclient_subcommand_template-validate">
         <title>heat template-validate</title>
         <screen><computeroutput>usage: heat template-validate [-u &lt;URL&gt;] [-f &lt;FILE&gt;] [-e &lt;FILE or URL&gt;]
-                              [-o &lt;URL&gt;]</computeroutput></screen>
+                              [-o &lt;URL&gt;] [-n]</computeroutput></screen>
         <para>
 Validate a template with parameters.
         </para>  <variablelist wordsize="10">
@@ -2379,6 +2426,14 @@ Validate a template with parameters.
     <listitem>
       <para>
       URL to retrieve template object (e.g. from swift).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-n, --show-nested</command></term>
+    <listitem>
+      <para>
+        Resolve parameters from nested templates as well.
       </para>
     </listitem>
   </varlistentry>
