@@ -11,6 +11,12 @@ system. This tier consists of front-end load balancers, ssl-terminators,
 and authentication services. It runs the (distributed) brain of the
 Object Storage system: the proxy server processes.
 
+.. note::
+   If you want to use OpenStack Identity API v3 for authentication, you
+   have the following options available in :file:`/etc/swift/dispersion.conf`:
+   ``auth_version``, ``user_domain_name``, ``project_domain_name``,
+   and ``project_name``.
+
 **Object Storage architecture**
 
 |
