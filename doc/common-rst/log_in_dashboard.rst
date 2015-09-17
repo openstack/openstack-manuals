@@ -63,7 +63,8 @@ From the :guilabel:`Project` tab, you can view and manage the resources in a
 selected project, including instances and images. You select the project
 from the CURRENT PROJECT list at the top of the tab.
 
-.. figure:: figures/dashboard-project-tab.png
+.. figure:: figures/dashboard_project_tab.png
+   :width: 100%
 
 **Figure: Project tab**
 
@@ -137,7 +138,8 @@ manage instances, volumes, flavors, images, projects, users, services, and
 quotas.
 
 
-.. figure:: figures/dashboard_admin_project_tab.png
+.. figure:: figures/dashboard_admin_tab.png
+   :width: 100%
 
 **Figure: Admin tab**
 
@@ -209,6 +211,11 @@ information:
 OpenStack dashboard—:guilabel:`Identity` tab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. figure:: figures/dashboard_identity_tab.png
+   :width: 100%
+
+**Figure:Identity tab**
+
 :guilabel:`Projects`: View, create, assign users to, remove users from, and
 delete projects.
 
@@ -216,6 +223,11 @@ delete projects.
 
 OpenStack dashboard—:guilabel:`Settings` tab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. figure:: figures/dashboard_settings_tab.png
+   :width: 100%
+
+**Figure:Settings tab**
 
 Click the 'Settings' button from the user drop down menu in the top right
 of any page, you will see the :guilabel:`Settings` tab.
