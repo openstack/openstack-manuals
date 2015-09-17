@@ -49,6 +49,11 @@ or an incremental backup depending on the timestamp.
 
     The first backup of a volume has to be a full backup. Attempting to do
     an incremental backup without any existing backups will fail.
+    There is an ``is_incremental`` flag that indicates whether a backup is
+    incremental when showing details on the backup.
+    Another flag, ``has_dependent_backups``, returned when showing backup
+    details, will indicate whether the backup has dependent backups.
+    If it is true, attempting to delete this backup will fail.
 
 A new configure option ``backup_swift_block_size`` is introduced into
 :file:`cinder.conf` for the default Swift backup driver. This is the size in
