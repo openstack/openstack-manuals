@@ -18,6 +18,10 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
+        <td><option>allow_availability_zone_fallback</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) If the requested Cinder availability zone is unavailable, fall back to the value of default_availability_zone, then storage_availability_zone, instead of failing.</td>
+      </tr>
+      <tr>
         <td><option>chap_password</option> = <replaceable></replaceable></td>
         <td>(StrOpt) Password for specified CHAP account name.</td>
       </tr>
@@ -28,6 +32,14 @@
       <tr>
         <td><option>chiscsi_conf</option> = <replaceable>/etc/chelsio-iscsi/chiscsi.conf</replaceable></td>
         <td>(StrOpt) Chiscsi (CXT) global defaults configuration file</td>
+      </tr>
+      <tr>
+        <td><option>cinder_internal_tenant_project_id</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) ID of the project which will be used as the Cinder internal tenant.</td>
+      </tr>
+      <tr>
+        <td><option>cinder_internal_tenant_user_id</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) ID of the user to be used in volume operations as the Cinder internal tenant.</td>
       </tr>
       <tr>
         <td><option>client_socket_timeout</option> = <replaceable>900</replaceable></td>
@@ -74,6 +86,10 @@
         <td>(BoolOpt) If this is set to True, attachment of volumes for image transfer will be aborted when multipathd is not running. Otherwise, it will fallback to single path.</td>
       </tr>
       <tr>
+        <td><option>executor_thread_pool_size</option> = <replaceable>64</replaceable></td>
+        <td>(IntOpt) Size of executor thread pool.</td>
+      </tr>
+      <tr>
         <td><option>host</option> = <replaceable>localhost</replaceable></td>
         <td>(StrOpt) Name of this node.  This can be an opaque identifier. It is not necessarily a host name, FQDN, or IP address.</td>
       </tr>
@@ -84,6 +100,10 @@
       <tr>
         <td><option>iscsi_secondary_ip_addresses</option> = <replaceable></replaceable></td>
         <td>(ListOpt) The list of secondary IP addresses of the iSCSI daemon</td>
+      </tr>
+      <tr>
+        <td><option>managed_replication_target</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) There are two types of target configurations managed (replicate to another configured backend) or unmanaged (replicate to a device not managed by Cinder).</td>
       </tr>
       <tr>
         <td><option>max_over_subscription_ratio</option> = <replaceable>20.0</replaceable></td>
@@ -140,6 +160,10 @@
       <tr>
         <td><option>replication_api_class</option> = <replaceable>cinder.replication.api.API</replaceable></td>
         <td>(StrOpt) The full class name of the volume replication API class</td>
+      </tr>
+      <tr>
+        <td><option>replication_devices</option> = <replaceable>None</replaceable></td>
+        <td>(ListOpt) List of k/v pairs representing a replication target for this backend device.  For unmanaged the format is: {'key-1'='val1' 'key-2'='val2'...},{...} and for managed devices its simply a list of valid configured backend_names that the driver supports replicating to: backend-a,bakcend-b...</td>
       </tr>
       <tr>
         <td><option>report_interval</option> = <replaceable>10</replaceable></td>
