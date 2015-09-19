@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Compute API and its extensions.
 
        This chapter documents <command>nova</command> version
-        <literal>2.26.0</literal>.
+        <literal>2.29.0</literal>.
     </para>
 
     <para>For help on a specific <command>nova</command>
@@ -450,7 +450,8 @@
     <term><command>floating-ip-bulk-create</command></term>
     <listitem>
       <para>
-        Bulk create floating IPs by range.
+        Bulk create floating IPs by range (nova-
+      network only).
       </para>
     </listitem>
   </varlistentry>
@@ -458,7 +459,8 @@
     <term><command>floating-ip-bulk-delete</command></term>
     <listitem>
       <para>
-        Bulk delete floating IPs by range.
+        Bulk delete floating IPs by range (nova-
+      network only).
       </para>
     </listitem>
   </varlistentry>
@@ -466,7 +468,7 @@
     <term><command>floating-ip-bulk-list</command></term>
     <listitem>
       <para>
-        List all floating IPs.
+        List all floating IPs (nova-network only).
       </para>
     </listitem>
   </varlistentry>
@@ -1026,7 +1028,7 @@
     <term><command>root-password</command></term>
     <listitem>
       <para>
-        Change the admin password for a server.
+        <emphasis>DEPRECATED</emphasis>, use set-password instead.
       </para>
     </listitem>
   </varlistentry>
@@ -1045,7 +1047,7 @@
       <para>
         Add a rule to the set of rules that will be
       added to the 'default' security group for new
-      tenants.
+      tenants (nova-network only).
       </para>
     </listitem>
   </varlistentry>
@@ -1087,7 +1089,7 @@
       <para>
       Delete a rule from the set of rules that will
       be added to the 'default' security group for
-      new tenants.
+      new tenants (nova-network only).
       </para>
     </listitem>
   </varlistentry>
@@ -1199,11 +1201,28 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>service-force-down</command></term>
+    <listitem>
+      <para>
+        Force service to down. (Supported by API
+      versions '2.11' - '2.latest')
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>service-list</command></term>
     <listitem>
       <para>
         Show a list of all running services. Filter by
       host &amp; binary.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>set-password</command></term>
+    <listitem>
+      <para>
+        Change the admin password for a server.
       </para>
     </listitem>
   </varlistentry>
@@ -1469,10 +1488,18 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-evacuate</command></term>
+    <term><command>force-delete</command></term>
     <listitem>
       <para>
-        Evacuate all instances from failed host.
+        Force delete a server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>restore</command></term>
+    <listitem>
+      <para>
+        Restore a soft-deleted server.
       </para>
     </listitem>
   </varlistentry>
@@ -1541,48 +1568,6 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>migration-list</command></term>
-    <listitem>
-      <para>
-        Print a list of migrations.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>list-extensions</command></term>
-    <listitem>
-      <para>
-        List all the os-api extensions that are
-      available.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-meta</command></term>
-    <listitem>
-      <para>
-        Set or Delete metadata on all instances of a
-      host.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action</command></term>
-    <listitem>
-      <para>
-        Show an action.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action-list</command></term>
-    <listitem>
-      <para>
-        List actions on a server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>baremetal-interface-add</command></term>
     <listitem>
       <para>
@@ -1642,27 +1627,43 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>force-delete</command></term>
+    <term><command>host-evacuate</command></term>
     <listitem>
       <para>
-        Force delete a server.
+        Evacuate all instances from failed host.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>restore</command></term>
+    <term><command>instance-action</command></term>
     <listitem>
       <para>
-        Restore a soft-deleted server.
+        Show an action.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-evacuate-live</command></term>
+    <term><command>instance-action-list</command></term>
     <listitem>
       <para>
-        Live migrate all instances of the specified
-      host to other available hosts.
+        List actions on a server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>migration-list</command></term>
+    <listitem>
+      <para>
+        Print a list of migrations.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-servers-migrate</command></term>
+    <listitem>
+      <para>
+        Migrate all instances of the specified host to
+      other available hosts.
       </para>
     </listitem>
   </varlistentry>
@@ -1684,11 +1685,29 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-servers-migrate</command></term>
+    <term><command>host-evacuate-live</command></term>
     <listitem>
       <para>
-        Migrate all instances of the specified host to
-      other available hosts.
+        Live migrate all instances of the specified
+      host to other available hosts.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-meta</command></term>
+    <listitem>
+      <para>
+        Set or Delete metadata on all instances of a
+      host.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>list-extensions</command></term>
+    <listitem>
+      <para>
+        List all the os-api extensions that are
+      available.
       </para>
     </listitem>
   </varlistentry>
@@ -1807,7 +1826,8 @@
     <term><command>--os-compute-api-version &lt;compute-api-ver&gt;</command></term>
     <listitem>
       <para>
-      Accepts number of API version, defaults to
+      Accepts X, X.Y (where X is major and Y is
+      minor part) or "X.latest", defaults to
       <code>env[OS_COMPUTE_API_VERSION]</code>.
       </para>
     </listitem>
@@ -2615,7 +2635,7 @@ Show information about a baremetal node.
                  [--ephemeral size=&lt;size&gt;[,format=&lt;format&gt;]]
                  [--hint &lt;key=value&gt;]
                  [--nic &lt;net-id=net-uuid,v4-fixed-ip=ip-addr,v6-fixed-ip=ip-addr,port-id=port-uuid&gt;]
-                 [--config-drive &lt;value&gt;] [--poll]
+                 [--config-drive &lt;value&gt;] [--poll] [--admin-pass &lt;value&gt;]
                  &lt;name&gt;</computeroutput></screen>
         <para>
 Boot a new server.
@@ -2845,6 +2865,14 @@ Boot a new server.
       <para>
         Report the new server boot progress until it
       completes.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--admin-pass &lt;value&gt;</command></term>
+    <listitem>
+      <para>
+        Admin password for the instance
       </para>
     </listitem>
   </varlistentry>
@@ -3631,7 +3659,7 @@ Associate a floating IP address to a server.
         <screen><computeroutput>usage: nova floating-ip-bulk-create [--pool &lt;pool&gt;] [--interface &lt;interface&gt;]
                                     &lt;range&gt;</computeroutput></screen>
         <para>
-Bulk create floating IPs by range.
+Bulk create floating IPs by range (nova-network only).
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -3667,7 +3695,7 @@ Bulk create floating IPs by range.
         <title>nova floating-ip-bulk-delete</title>
         <screen><computeroutput>usage: nova floating-ip-bulk-delete &lt;range&gt;</computeroutput></screen>
         <para>
-Bulk delete floating IPs by range.
+Bulk delete floating IPs by range (nova-network only).
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -3684,7 +3712,7 @@ Bulk delete floating IPs by range.
         <title>nova floating-ip-bulk-list</title>
         <screen><computeroutput>usage: nova floating-ip-bulk-list [--host &lt;host&gt;]</computeroutput></screen>
         <para>
-List all floating IPs.
+List all floating IPs (nova-network only).
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -3758,20 +3786,10 @@ Disassociate a floating IP address from a server.
     </section>
     <section xml:id="novaclient_subcommand_floating-ip-list">
         <title>nova floating-ip-list</title>
-        <screen><computeroutput>usage: nova floating-ip-list [--all-tenants]</computeroutput></screen>
+        <screen><computeroutput>usage: nova floating-ip-list</computeroutput></screen>
         <para>
 List floating IPs.
-        </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
-  <varlistentry>
-    <term><command>--all-tenants</command></term>
-    <listitem>
-      <para>
-        Display floatingips from all tenants (Admin only).
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
+        </para>
     </section>
     <section xml:id="novaclient_subcommand_floating-ip-pool-list">
         <title>nova floating-ip-pool-list</title>
@@ -4016,6 +4034,7 @@ Evacuate all instances from failed host.
         <title>nova host-evacuate-live</title>
         <screen><computeroutput>usage: nova host-evacuate-live [--target-host &lt;target_host&gt;] [--block-migrate]
                                [--disk-over-commit]
+                               [--max-servers &lt;max_servers&gt;]
                                &lt;host&gt;</computeroutput></screen>
         <para>
 Live migrate all instances of the specified host to other available hosts.
@@ -4053,6 +4072,15 @@ Live migrate all instances of the specified host to other available hosts.
     <listitem>
       <para>
         Enable disk overcommit.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--max-servers &lt;max_servers&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of servers to live migrate
+      simultaneously
       </para>
     </listitem>
   </varlistentry>
@@ -4200,7 +4228,7 @@ List servers belonging to specific hypervisors.
     </section>
     <section xml:id="novaclient_subcommand_hypervisor-show">
         <title>nova hypervisor-show</title>
-        <screen><computeroutput>usage: nova hypervisor-show &lt;hypervisor&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: nova hypervisor-show [--wrap &lt;integer&gt;] &lt;hypervisor&gt;</computeroutput></screen>
         <para>
 Display the details of the specified hypervisor.
         </para>  <variablelist wordsize="10">
@@ -4210,6 +4238,18 @@ Display the details of the specified hypervisor.
     <listitem>
       <para>
         Name or ID of the hypervisor to show the details of.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--wrap &lt;integer&gt;</command></term>
+    <listitem>
+      <para>
+        Wrap the output to a specified length. Default is 40 or 0
+      to disable
       </para>
     </listitem>
   </varlistentry>
@@ -4501,7 +4541,7 @@ List interfaces attached to a server.
     </section>
     <section xml:id="novaclient_subcommand_keypair-add">
         <title>nova keypair-add</title>
-        <screen><computeroutput>usage: nova keypair-add [--pub-key &lt;pub-key&gt;] &lt;name&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: nova keypair-add [--pub-key &lt;pub-key&gt;] [--key-type &lt;key-type&gt;] &lt;name&gt;</computeroutput></screen>
         <para>
 Create a new key pair for use with servers.
         </para>  <variablelist wordsize="10">
@@ -4522,6 +4562,15 @@ Create a new key pair for use with servers.
     <listitem>
       <para>
         Path to a public ssh key.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--key-type &lt;key-type&gt;</command></term>
+    <listitem>
+      <para>
+        Keypair type. Can be ssh or x509. (Supported by API
+      versions '2.2' - '2.latest')
       </para>
     </listitem>
   </varlistentry>
@@ -4601,7 +4650,8 @@ Print rate and absolute limits.
                  [--flavor &lt;flavor&gt;] [--image &lt;image&gt;] [--host &lt;hostname&gt;]
                  [--all-tenants [&lt;0|1&gt;]] [--tenant [&lt;tenant&gt;]]
                  [--user [&lt;user&gt;]] [--deleted] [--fields &lt;fields&gt;] [--minimal]
-                 [--sort &lt;key&gt;[:&lt;direction&gt;]]</computeroutput></screen>
+                 [--sort &lt;key&gt;[:&lt;direction&gt;]] [--marker &lt;marker&gt;]
+                 [--limit &lt;limit&gt;]</computeroutput></screen>
         <para>
 List active servers.
         </para>  <variablelist wordsize="10">
@@ -4744,6 +4794,27 @@ List active servers.
       directions in the form of &lt;key&gt;[:&lt;asc|desc&gt;].
       The direction defaults to descending if not
       specified.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker &lt;marker&gt;</command></term>
+    <listitem>
+      <para>
+        The last server uuid of the previous page;
+      displays list of servers after "marker".
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of servers to display. If limit
+      == -1, all servers will be displayed. If limit
+      is bigger than 'osapi_max_limit' option of
+      Nova API, limit 'osapi_max_limit' will be used
+      instead.
       </para>
     </listitem>
   </varlistentry>
@@ -5695,7 +5766,7 @@ Update the quotas for a tenant/user.
     </section>
     <section xml:id="novaclient_subcommand_reboot">
         <title>nova reboot</title>
-        <screen><computeroutput>usage: nova reboot [--hard] [--poll] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: nova reboot [--hard] [--poll] &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
         <para>
 Reboot a server.
         </para>  <variablelist wordsize="10">
@@ -5704,7 +5775,7 @@ Reboot a server.
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of server.
+        Name or ID of server(s).
       </para>
     </listitem>
   </varlistentry>
@@ -6106,23 +6177,6 @@ Resume a server.
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="novaclient_subcommand_root-password">
-        <title>nova root-password</title>
-        <screen><computeroutput>usage: nova root-password &lt;server&gt;</computeroutput></screen>
-        <para>
-Change the admin password for a server.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;server&gt;</command></term>
-    <listitem>
-      <para>
-        Name or ID of server.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
     <section xml:id="novaclient_subcommand_scrub">
         <title>nova scrub</title>
         <screen><computeroutput>usage: nova scrub &lt;project_id&gt;</computeroutput></screen>
@@ -6145,7 +6199,7 @@ Delete networks and security groups associated with a project.
         <screen><computeroutput>usage: nova secgroup-add-default-rule &lt;ip-proto&gt; &lt;from-port&gt; &lt;to-port&gt; &lt;cidr&gt;</computeroutput></screen>
         <para>
 Add a rule to the set of rules that will be added to the 'default' security
-group for new tenants.
+group for new tenants (nova-network only).
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -6330,7 +6384,7 @@ Delete a security group.
                                          &lt;cidr&gt;</computeroutput></screen>
         <para>
 Delete a rule from the set of rules that will be added to the 'default'
-security group for new tenants.
+security group for new tenants (nova-network only).
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -6715,6 +6769,23 @@ Show a list of all running services. Filter by host &amp; binary.
     <listitem>
       <para>
         Service binary.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="novaclient_subcommand_set-password">
+        <title>nova set-password</title>
+        <screen><computeroutput>usage: nova set-password &lt;server&gt;</computeroutput></screen>
+        <para>
+Change the admin password for a server.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;server&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of server.
       </para>
     </listitem>
   </varlistentry>
