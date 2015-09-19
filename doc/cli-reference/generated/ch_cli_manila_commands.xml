@@ -15,7 +15,7 @@
         interface (CLI) for the Shared file systems API and its extensions.
 
        This chapter documents <command>manila</command> version
-        <literal>1.3.0</literal>.
+        <literal>1.4.0</literal>.
     </para>
 
     <para>For help on a specific <command>manila</command>
@@ -75,6 +75,110 @@
     <listitem>
       <para>
         Display the API version information.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-create</command></term>
+    <listitem>
+      <para>
+        Creates a new consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-delete</command></term>
+    <listitem>
+      <para>
+        Remove one or more consistency groups.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-list</command></term>
+    <listitem>
+      <para>
+        List consistency groups with filters.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-reset-state</command></term>
+    <listitem>
+      <para>
+        Explicitly update the state of a consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-show</command></term>
+    <listitem>
+      <para>
+        Show details about a consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-snapshot-create</command></term>
+    <listitem>
+      <para>
+        Creates a new consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-snapshot-delete</command></term>
+    <listitem>
+      <para>
+        Remove one or more consistency group snapshots.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-snapshot-list</command></term>
+    <listitem>
+      <para>
+        List consistency group snapshots with filters.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-snapshot-members</command></term>
+    <listitem>
+      <para>
+      Get member details for a consistency group snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-snapshot-reset-state</command></term>
+    <listitem>
+      <para>
+      Explicitly update the state of a consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-snapshot-show</command></term>
+    <listitem>
+      <para>
+        Show details about a consistency group snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-snapshot-update</command></term>
+    <listitem>
+      <para>
+        Update a consistency group snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>cg-update</command></term>
+    <listitem>
+      <para>
+        Update a consistency group.
       </para>
     </listitem>
   </varlistentry>
@@ -180,6 +284,7 @@
     <term><command>migrate</command></term>
     <listitem>
       <para>
+        Migrates share to a new host.
       </para>
     </listitem>
   </varlistentry>
@@ -856,6 +961,442 @@ Show access list for share.
 Display the API version information.
         </para>
     </section>
+    <section xml:id="manilaclient_subcommand_cg-create">
+        <title>manila cg-create</title>
+        <screen><computeroutput>usage: manila cg-create [--name &lt;name&gt;] [--description &lt;description&gt;]
+                        [--share-types &lt;share_types&gt;]
+                        [--share-network &lt;share_network&gt;]
+                        [--source-cgsnapshot-id &lt;source_cgsnapshot_id&gt;]</computeroutput></screen>
+        <para>
+Creates a new consistency group.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Optional consistency group name. (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+      Optional consistency group description. (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--share-types &lt;share_types&gt;, --share_types &lt;share_types&gt;</command></term>
+    <listitem>
+      <para>
+      Optional list of share types. (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--share-network &lt;share_network&gt;, --share_network &lt;share_network&gt;</command></term>
+    <listitem>
+      <para>
+      Specify share-network name or id.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--source-cgsnapshot-id &lt;source_cgsnapshot_id&gt;, --source_cgsnapshot_id &lt;source_cgsnapshot_id&gt;</command></term>
+    <listitem>
+      <para>
+      Optional snapshot ID to create the share from.
+      (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-delete">
+        <title>manila cg-delete</title>
+        <screen><computeroutput>usage: manila cg-delete [--force]
+                        &lt;consistency_group&gt; [&lt;consistency_group&gt; ...]</computeroutput></screen>
+        <para>
+Remove one or more consistency groups.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;consistency_group&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the consistency group(s).
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--force</command></term>
+    <listitem>
+      <para>
+        Attempt to force delete the consistency group
+      (Default=False).
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-list">
+        <title>manila cg-list</title>
+        <screen><computeroutput>usage: manila cg-list [--all-tenants [&lt;0|1&gt;]] [--limit &lt;limit&gt;]
+                      [--offset &lt;offset&gt;]</computeroutput></screen>
+        <para>
+List consistency groups with filters.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--all-tenants [&lt;0|1&gt;]</command></term>
+    <listitem>
+      <para>
+      Display information from all tenants (Admin only).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of consistency groups to return.
+      (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--offset &lt;offset&gt;</command></term>
+    <listitem>
+      <para>
+        Start position of consistency group listing.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-reset-state">
+        <title>manila cg-reset-state</title>
+        <screen><computeroutput>usage: manila cg-reset-state [--state &lt;state&gt;] &lt;consistency_group&gt;</computeroutput></screen>
+        <para>
+Explicitly update the state of a consistency group.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;consistency_group&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the consistency group state to modify.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--state &lt;state&gt;</command></term>
+    <listitem>
+      <para>
+        Indicate which state to assign the consistency group.
+      Options include available, error, creating, deleting,
+      error_deleting. If no state is provided, available will
+      be used.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-show">
+        <title>manila cg-show</title>
+        <screen><computeroutput>usage: manila cg-show &lt;consistency_group&gt;</computeroutput></screen>
+        <para>
+Show details about a consistency group.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;consistency_group&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-snapshot-create">
+        <title>manila cg-snapshot-create</title>
+        <screen><computeroutput>usage: manila cg-snapshot-create [--name &lt;name&gt;] [--description &lt;description&gt;]
+                                 &lt;consistency_group&gt;</computeroutput></screen>
+        <para>
+Creates a new consistency group.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;consistency_group&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the consistency group.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Optional consistency group snapshot name.
+      (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+      Optional consistency group snapshot description.
+      (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-snapshot-delete">
+        <title>manila cg-snapshot-delete</title>
+        <screen><computeroutput>usage: manila cg-snapshot-delete [--force] &lt;cg_snapshot&gt; [&lt;cg_snapshot&gt; ...]</computeroutput></screen>
+        <para>
+Remove one or more consistency group snapshots.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;cg_snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the consistency group snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--force</command></term>
+    <listitem>
+      <para>
+        Attempt to force delete the cg snapshot(s) (Default=False).
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-snapshot-list">
+        <title>manila cg-snapshot-list</title>
+        <screen><computeroutput>usage: manila cg-snapshot-list [--all-tenants [&lt;0|1&gt;]] [--limit &lt;limit&gt;]
+                               [--offset &lt;offset&gt;] [--detailed DETAILED]</computeroutput></screen>
+        <para>
+List consistency group snapshots with filters.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--all-tenants [&lt;0|1&gt;]</command></term>
+    <listitem>
+      <para>
+      Display information from all tenants (Admin only).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of consistency group snapshots to
+      return.(Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--offset &lt;offset&gt;</command></term>
+    <listitem>
+      <para>
+        Start position of consistency group snapshot listing.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--detailed DETAILED</command></term>
+    <listitem>
+      <para>
+        Show detailed information about snapshots.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-snapshot-members">
+        <title>manila cg-snapshot-members</title>
+        <screen><computeroutput>usage: manila cg-snapshot-members [--limit &lt;limit&gt;] [--offset &lt;offset&gt;]
+                                  &lt;cg_snapshot&gt;</computeroutput></screen>
+        <para>
+Get member details for a consistency group snapshot.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;cg_snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the consistency group snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of shares to return. (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--offset &lt;offset&gt;</command></term>
+    <listitem>
+      <para>
+        Start position of security services listing.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-snapshot-reset-state">
+        <title>manila cg-snapshot-reset-state</title>
+        <screen><computeroutput>usage: manila cg-snapshot-reset-state [--state &lt;state&gt;] &lt;cg_snapshot&gt;</computeroutput></screen>
+        <para>
+Explicitly update the state of a consistency group.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;cg_snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the consistency group snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--state &lt;state&gt;</command></term>
+    <listitem>
+      <para>
+        Indicate which state to assign the consistency group.
+      Options include available, error, creating, deleting,
+      error_deleting. If no state is provided, available will be
+      used.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-snapshot-show">
+        <title>manila cg-snapshot-show</title>
+        <screen><computeroutput>usage: manila cg-snapshot-show &lt;cg_snapshot&gt;</computeroutput></screen>
+        <para>
+Show details about a consistency group snapshot.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;cg_snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the consistency group snapshot.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-snapshot-update">
+        <title>manila cg-snapshot-update</title>
+        <screen><computeroutput>usage: manila cg-snapshot-update [--name &lt;name&gt;] [--description &lt;description&gt;]
+                                 &lt;cg_snapshot&gt;</computeroutput></screen>
+        <para>
+Update a consistency group snapshot.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;cg_snapshot&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the cg snapshot to update.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Optional new name for the cg snapshot. (Default=None
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+      Optional cg snapshot description. (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_cg-update">
+        <title>manila cg-update</title>
+        <screen><computeroutput>usage: manila cg-update [--name &lt;name&gt;] [--description &lt;description&gt;]
+                        &lt;consistency_group&gt;</computeroutput></screen>
+        <para>
+Update a consistency group.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;consistency_group&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the consistency group to update.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Optional new name for the consistency group.
+      (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+      Optional consistency group description. (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="manilaclient_subcommand_create">
         <title>manila create</title>
         <screen><computeroutput>usage: manila create [--snapshot-id &lt;snapshot-id&gt;] [--name &lt;name&gt;]
@@ -863,6 +1404,7 @@ Display the API version information.
                      [--share-network &lt;network-info&gt;]
                      [--description &lt;description&gt;] [--share-type &lt;share-type&gt;]
                      [--public] [--availability-zone &lt;availability-zone&gt;]
+                     [--consistency-group &lt;consistency-group&gt;]
                      &lt;share_protocol&gt; &lt;size&gt;</computeroutput></screen>
         <para>
 Creates a new share (NFS, CIFS, GlusterFS or HDFS).
@@ -954,6 +1496,15 @@ Creates a new share (NFS, CIFS, GlusterFS or HDFS).
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--consistency-group &lt;consistency-group&gt;, --consistency_group &lt;consistency-group&gt;, --cg &lt;consistency-group&gt;</command></term>
+    <listitem>
+      <para>
+      Optional consistency group name or ID in which to
+      create the share. (Default=None)
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="manilaclient_subcommand_credentials">
@@ -965,7 +1516,8 @@ Show user credentials returned from auth.
     </section>
     <section xml:id="manilaclient_subcommand_delete">
         <title>manila delete</title>
-        <screen><computeroutput>usage: manila delete &lt;share&gt; [&lt;share&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: manila delete [--consistency-group &lt;consistency-group&gt;]
+                     &lt;share&gt; [&lt;share&gt; ...]</computeroutput></screen>
         <para>
 Remove one or more shares.
         </para>  <variablelist wordsize="10">
@@ -975,6 +1527,18 @@ Remove one or more shares.
     <listitem>
       <para>
         Name or ID of the share(s).
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--consistency-group &lt;consistency-group&gt;, --consistency_group &lt;consistency-group&gt;, --cg &lt;consistency-group&gt;</command></term>
+    <listitem>
+      <para>
+      Optional consistency group name or ID which contains
+      the share. (Default=None)
       </para>
     </listitem>
   </varlistentry>
@@ -1046,7 +1610,8 @@ Attempt force-delete of share, regardless of state.
                    [--offset &lt;offset&gt;] [--sort-key &lt;sort_key&gt;]
                    [--sort-dir &lt;sort_dir&gt;] [--snapshot &lt;snapshot&gt;]
                    [--host &lt;host&gt;] [--share-network &lt;share_network&gt;]
-                   [--project-id &lt;project_id&gt;] [--public]</computeroutput></screen>
+                   [--project-id &lt;project_id&gt;] [--public]
+                   [--consistency-group &lt;consistency_group&gt;]</computeroutput></screen>
         <para>
 List NAS shares with filters.
         </para>  <variablelist wordsize="10">
@@ -1191,6 +1756,14 @@ List NAS shares with filters.
     <listitem>
       <para>
         Add public shares from all tenants to result.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--consistency-group &lt;consistency_group&gt;, --consistency_group &lt;consistency_group&gt;, --cg &lt;consistency_group&gt;</command></term>
+    <listitem>
+      <para>
+      Filter results by consistency group name or ID.
       </para>
     </listitem>
   </varlistentry>
@@ -1356,6 +1929,7 @@ Update all metadata of a share.
         <title>manila migrate</title>
         <screen><computeroutput>usage: manila migrate [--force-host-copy &lt;True|False&gt;] &lt;share&gt; &lt;host#pool&gt;</computeroutput></screen>
         <para>
+Migrates share to a new host.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -2795,8 +3369,7 @@ List all the snapshots.
       <para>
       Key to be sorted, available keys are ('id', 'status',
       'size', 'share_id', 'user_id', 'project_id',
-      'progress', 'name', 'display_name'). OPTIONAL:
-      Default=None.
+      'progress', 'name', 'display_name'). Default=None.
       </para>
     </listitem>
   </varlistentry>
