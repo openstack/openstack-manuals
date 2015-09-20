@@ -50,9 +50,9 @@ group rules to a project, if your cloud requires them.
    appropriate project.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
-   click :guilabel:`Access & Security` category. The :guilabel:
-   `Security Groups` tab shows the security groups that are available
-   for this project.
+   click :guilabel:`Access & Security` category. The
+   :guilabel:`Security Groups` tab shows the security groups that are
+   available for this project.
 
 #. Select the default security group and click :guilabel:`Manage Rules`.
 
