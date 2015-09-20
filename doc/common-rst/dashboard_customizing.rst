@@ -38,7 +38,7 @@ Logo and site colors
    :file:`/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/img/`.
 
 #. Create a CSS style sheet in
-   :file:`/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/css/`.
+   :file:`/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/scss/`.
 
 #. Change the colors and image file names as appropriate, though the
    relative directory paths should be the same. The following example file
