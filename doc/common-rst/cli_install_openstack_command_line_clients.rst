@@ -216,12 +216,12 @@ installed without ``pip``.
 
      # yum install python-PROJECTclient
 
--  For openSUSE, use zypper to install the clients from the distribution
+-  For openSUSE, use ``zypper`` to install the clients from the distribution
    packages service::
 
-     # zypper install python-PROJECT
+     # zypper install python-PROJECTclient
 
--  For SUSE Linux Enterprise Server, use zypper to install the clients from
+-  For SUSE Linux Enterprise Server, use ``zypper`` to install the clients from
    the distribution packages in the Open Build Service. First, add the Open
    Build Service repository::
 
@@ -229,7 +229,7 @@ installed without ``pip``.
 
    Then you can install the packages::
 
-     # zypper install python-PROJECT
+     # zypper install python-PROJECTclient
 
 Upgrade or remove clients
 ~~~~~~~~~~~~~~~~~~~~~~~~~
