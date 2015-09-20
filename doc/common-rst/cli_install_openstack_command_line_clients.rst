@@ -207,14 +207,19 @@ Install each client separately by using the following command:
 Installing from packages
 ------------------------
 
-RDO, openSUSE and SUSE Linux Enterprise have client packages that can be
-installed without ``pip``.
+RDO, openSUSE, SUSE Linux Enterprise, Debian, and Ubuntu have client packages
+that can be installed without ``pip``.
 
 -  On Red Hat Enterprise Linux, CentOS, or Fedora, use ``yum`` to install
    the clients from the packaged versions available in
    `RDO <https://www.rdoproject.org/>`__::
 
      # yum install python-PROJECTclient
+
+- For Ubuntu or Debian, use ``apt-get`` to install the clients from the
+  packaged versions::
+
+     # apt-get install python-PROJECTclient
 
 -  For openSUSE, use ``zypper`` to install the clients from the distribution
    packages service::
