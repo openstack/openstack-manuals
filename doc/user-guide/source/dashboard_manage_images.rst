@@ -102,7 +102,7 @@ Follow this procedure to update an existing image.
 #. Select the image that you want to edit.
 
 #. In the :guilabel:`Actions` column, click :guilabel:`More` and then
-   select :guilabel:`Edit` from the list.
+   select :guilabel:`Edit Image` from the list.
 
 #. In the :guilabel:`Update Image` dialog box, you can perform the
    following actions:
@@ -133,5 +133,5 @@ with the appropriate permissions can delete images.
 
 #. Click :guilabel:`Delete Images`.
 
-#. In the :guilabel:`Confirm Delete Image` dialog box, click
+#. In the :guilabel:`Confirm Delete Images` dialog box, click
    :guilabel:`Delete Images` to confirm the deletion.

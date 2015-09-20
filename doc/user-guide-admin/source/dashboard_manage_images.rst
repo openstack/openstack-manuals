@@ -83,7 +83,7 @@ Update images
    at the top of the page.
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Images` category.
-#. Select the images that you want to edit. Click :guilabel:`Edit`.
+#. Select the images that you want to edit. Click :guilabel:`Edit Image`.
 #. In the :guilabel:`Update Image` window, you can change the image name.
 
    Select the :guilabel:`Public` check box to make the image public.
@@ -101,7 +101,7 @@ Delete images
    and click the :guilabel:`Images` category.
 #. Select the images that you want to delete.
 #. Click :guilabel:`Delete Images`.
-#. In the :guilabel:`Confirm Delete Image` window, click :guilabel:`Delete
+#. In the :guilabel:`Confirm Delete Images` window, click :guilabel:`Delete
    Images` to confirm the deletion.
 
    You cannot undo this action.
