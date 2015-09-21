@@ -86,53 +86,41 @@
    </section>
    <section xml:id="hds-hnas-cinder-reqs">
        <title>Block storage host requirements</title>
-       <variablelist>
-           <varlistentry><term>The HNAS driver is supported for Red Hat, SUSE Cloud
-            and Ubuntu Cloud. The following packages must be installed:</term>
-               <listitem>
-                 <orderedlist>
-                    <listitem>
-                      <para><package>nfs-utils</package> for Red Hat</para>
-                    </listitem>
-                    <listitem>
-                      <para><package>nfs-client</package> for SUSE</para>
-                    </listitem>
-                    <listitem>
-                      <para>
-                        <package>nfs-common</package>, <package>libc6-i386</package>
-                        for Ubuntu (<package>libc6-i386</package> only required on
-                        Ubuntu 12.04)
-                      </para>
-                    </listitem>
-                    <listitem>
-                      <para>
-                       If you are not using SSH, you need the HDS SSC package
-                       (<package>hds-ssc-v1.0-1</package>) to
-                       communicate with an HNAS array using the <command>SSC
-                       </command> command. This utility package is available
-                       in the RPM package distributed with the hardware
-                       through physical media or it can be manually
-                       copied from the SMU to the Block Storage host.
-                      </para>
-                    </listitem>
-                 </orderedlist>
-               </listitem>
-           </varlistentry>
-   </variablelist>
+       <para>The HNAS driver is supported for Red Hat Enterprise Linux
+        OpenStack Platform, SUSE OpenStack Cloud, and Ubuntu OpenStack. The
+        following packages must be installed:</para>
+           <orderedlist>
+              <listitem>
+                <para><package>nfs-utils</package> for Red Hat Enterprise
+                Linux OpenStack Platform</para>
+              </listitem>
+              <listitem>
+                <para><package>nfs-client</package> for SUSE OpenStack Cloud
+              </para>
+              </listitem>
+              <listitem>
+                <para>
+                  <package>nfs-common</package>, <package>libc6-i386</package>
+                  for Ubuntu OpenStack
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                 If you are not using SSH, you need the HDS SSC to
+                 communicate with an HNAS array using the <command>SSC
+                 </command> commands. This utility package is available
+                 in the RPM package distributed with the hardware
+                 through physical media or it can be manually
+                 copied from the SMU to the Block Storage host.
+                </para>
+              </listitem>
+           </orderedlist>
    </section>
    <section xml:id="hds-hnas-pkg-install">
        <title>Package installation</title>
        <procedure>
            <para>If you are installing the driver from a RPM or DEB package,
             follow the steps bellow:</para>
-           <step><para>Install SSC:</para>
-           <para>In Red Hat:</para>
-           <screen><prompt>#</prompt> <userinput>rpm -i hds-ssc-v1.0-1.rpm</userinput></screen>
-           <para>Or in SUSE:</para>
-           <screen><prompt>#</prompt> <userinput>zypper hds-ssc-v1.0-1.rpm</userinput></screen>
-           <para>Or in Ubuntu:</para>
-           <screen><prompt>#</prompt> <userinput>dpkg -i hds-ssc_1.0-1_all.deb</userinput></screen>
-           </step>
            <step><para>Install the dependencies:</para>
            <para>In Red Hat:</para>
            <screen><prompt>#</prompt> <userinput>yum install nfs-utils nfs-utils-lib</userinput></screen>
@@ -199,9 +187,9 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
       &lt;hdp&gt;fs01-husvm&lt;/hdp&gt;
     &lt;/svc_0&gt;
     &lt;svc_1&gt;
-      &lt;volume_type&gt;platinun&lt;/volume_type&gt;
+      &lt;volume_type&gt;platinum&lt;/volume_type&gt;
       &lt;iscsi_ip&gt;172.24.44.20&lt;/iscsi_ip&gt;
-      &lt;hdp&gt;fs01-platinun&lt;/hdp&gt;
+      &lt;hdp&gt;fs01-platinum&lt;/hdp&gt;
     &lt;/svc_1&gt;
   &lt;/config&gt;</programlisting>
    </section>
@@ -461,7 +449,7 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
       <para>
         HNAS driver supports differentiated types of service using the service
         labels. It is possible to create up to four types of them, as gold,
-        platinun, silver and ssd, for example.
+        platinum, silver and ssd, for example.
        </para>
        <para>
            After creating the services in the XML configuration file, you
@@ -474,10 +462,10 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
            free space or other criteria configured in volume filters.
        </para>
        <screen>
-        <prompt>$</prompt> <userinput>cinder type-create 'default'</userinput>
-        <prompt>$</prompt> <userinput>cinder type-key 'default' set service_label = 'default'</userinput>
-        <prompt>$</prompt> <userinput>cinder type-create 'platinun-tier'</userinput>
-        <prompt>$</prompt> <userinput>cinder type-key 'platinun' set service_label = 'platinun'</userinput>
+<prompt>$</prompt> <userinput>cinder type-create default</userinput>
+<prompt>$</prompt> <userinput>cinder type-key default set service_label=default</userinput>
+<prompt>$</prompt> <userinput>cinder type-create platinum-tier</userinput>
+<prompt>$</prompt> <userinput>cinder type-key platinum set service_label=platinum</userinput>
        </screen>
        </section>
        <section xml:id="hds-hnas-multibend-config">
@@ -663,12 +651,17 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
             </listitem>
         </orderedlist>
         <para>By CLI:</para>
-       <screen><prompt>$</prompt> <userinput>cinder --os-volume-api-version 2 manage [--id-type &lt;id-type&gt;] [--name &lt;name&gt;][--description &lt;description&gt;][--volume-type &lt;volume-type&gt;][--availability-zone &lt;availability-zone&gt;][--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]] [--bootable]&lt;host&gt; &lt;identifier&gt;</userinput></screen>
+       <screen><prompt>$</prompt> <userinput>cinder --os-volume-api-version 2 manage [--source-name &lt;source-name&gt;][--id-type &lt;id-type&gt;]
+       [--name &lt;name&gt;][--description &lt;description&gt;][--volume-type &lt;volume-type&gt;]
+       [--availability-zone &lt;availability-zone&gt;][--metadata [&lt;key=value&gt; [&lt;key=value&gt; ...]]][--bootable]
+       &lt;host&gt; [&lt;key=value&gt; [&lt;key=value&gt; ...]]</userinput></screen>
        <para>Example:</para>
        <para>For NFS:</para>
-       <screen><prompt>$</prompt> <userinput>cinder --os-volume-api-version 2 manage --name &lt;volume-test&gt; --volume-type &lt;silver&gt; &lt;ubuntu@hnas-nfs#test_silver&gt; &lt;172.24.44.34:/silver/volume-test&gt;</userinput></screen>
+       <screen><prompt>$</prompt> <userinput>cinder --os-volume-api-version 2 manage --name &lt;volume-test&gt; --volume-type &lt;silver&gt;
+       --source-name &lt;172.24.44.34:/silver/volume-test&gt; &lt;ubuntu@hnas-nfs#test_silver&gt;</userinput></screen>
        <para>For iSCSI:</para>
-       <screen><prompt>$</prompt> <userinput>cinder --os-volume-api-version 2 manage --name &lt;volume-test&gt; --volume-type &lt;silver&gt; &lt;ubuntu@hnas-iscsi#test_silver&gt; &lt;filesystem-test/volume-test&gt;</userinput></screen>
+       <screen><prompt>$</prompt> <userinput>cinder --os-volume-api-version 2 manage --name &lt;volume-test&gt; --volume-type &lt;silver&gt;
+       --source-name &lt;filesystem-test/volume-test&gt; &lt;ubuntu@hnas-iscsi#test_silver&gt;</userinput></screen>
      </note>
      <note>
        <title>How to Unmanage:</title>
@@ -714,11 +707,12 @@ volume_backend_name = <replaceable>HNAS-NFS</replaceable></programlisting>
                    need to set <option>"virt_use_nfs = on"</option> for NFS
                    driver work properly.
                </para>
+               <screen><prompt>#</prompt> <userinput>setsebool -P virt_use_nfs on</userinput></screen>
            </listitem>
            <listitem>
                <para>
                    It is not possible to manage a volume if there is a slash
-                   ('/') on the volume name.
+                   ('/') or a colon (':') on the volume name.
                </para>
            </listitem>
          </itemizedlist>
