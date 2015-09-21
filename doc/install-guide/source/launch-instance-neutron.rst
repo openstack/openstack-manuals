@@ -317,8 +317,8 @@ To access your instance remotely
    .. note::
 
       If your host does not contain the public/private key pair created
-      in an earlier step, SSH prompts for the default password associated
-      with the ``cirros`` user.
+      in an earlier step, originally SSH prompts for the password associated
+      with the ``cirros`` user that is ``cubswin:)``.
 
 To attach a Block Storage volume to your instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
