@@ -16,7 +16,8 @@ ceilometer-api
 
 ceilometer-polling
     Polls for different kinds of meter data by using the polling
-    plug-ins (pollsters) registered in different namespaces.
+    plug-ins (pollsters) registered in different namespaces. It provides a
+    single polling interface across different namespaces.
 
 ceilometer-agent-central
     Polls the public RESTful APIs of other OpenStack services such as
@@ -53,6 +54,8 @@ ceilometer-alarm-notifier
     .. note::
 
        The ``ceilometer-polling`` service is available since the Kilo release.
+       It is intended to replace ceilometer-agent-central,
+       ceilometer-agent-compute, and ceilometer-agent-ipmi.
 
 Besides the ``ceilometer-agent-compute`` and the ``ceilometer-agent-ipmi``
 services, all the other services are placed on one or more controller
@@ -89,7 +92,12 @@ The list of supported database back ends:
 
 -  `HBase <http://hbase.apache.org/>`__
 
--  `DB2 <http://www-01.ibm.com/software/data/db2/>`__
+-  `DB2(deprecated) <http://www-01.ibm.com/software/data/db2/>`__
+
+.. note::
+
+   DB2 nosql support is deprecated as of Liberty and will be removed in Mitaka
+   as the product is no longer in development.
 
 |
 

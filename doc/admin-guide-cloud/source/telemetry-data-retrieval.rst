@@ -416,7 +416,8 @@ rpc
     It can be specified in the form of
     ``rpc://?option1=value1&option2=value2``. It emits metering data
     over lossy AMQP. This method is synchronous and may experience
-    performance issues.
+    performance issues. This publisher is deprecated in Liberty in favour of
+    the notifier publisher.
 
 udp
     It can be specified in the form of ``udp://<host>:<port>/``. It emits
@@ -493,5 +494,5 @@ specified. A sample ``publishers`` section in the
 
     publishers:
         - udp://10.0.0.2:1234
-        - rpc://?per_meter_topic=1
+        - rpc://?per_meter_topic=1 (deprecated in Liberty)
         - notifier://?policy=drop&max_queue_length=512
