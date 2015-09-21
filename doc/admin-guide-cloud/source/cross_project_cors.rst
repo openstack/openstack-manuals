@@ -72,10 +72,10 @@ human-readable string:
    allowed_origin = *
    allow_methods = GET
 
-Enabling CORS with pastedeploy
+Enabling CORS with PasteDeploy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In other services, CORS is configured via pastedeploy. In this case,
+In other services, CORS is configured via PasteDeploy. In this case,
 you must first make sure that OpenStack's :code:`oslo_middleware` package
 (version 2.4.0 or later) is available in the Python environment that is
 running the service. Then, add the following configuration block to your
