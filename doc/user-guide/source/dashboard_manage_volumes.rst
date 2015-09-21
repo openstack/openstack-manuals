@@ -37,21 +37,18 @@ Create a volume
    * No source, empty volume: Creates an empty volume. An empty volume does
      not contain a file system or a partition table.
 
-   * Snapshot: If you choose this option, a new field for Use snapshot as a
-     source displays. You can select the snapshot from the list.
-
    * Image: If you choose this option, a new field for Use image as a source
      displays. You can select the image from the list.
-
-   * Availability Zone: Select the Availability Zone from the list. By
-     default, this value is set to the availability zone given by the cloud
-     provider (for example, ``us-west`` or ``apac-south``). For some cases,
-     it could be ``nova``.
 
    * Volume: If you choose this option, a new field for
      :guilabel:`Use volume as a source` displays. You can select the volume
      from the list. Options to use a snapshot or a volume as the source for a
      volume are displayed only if there are existing snapshots or volumes.
+
+   :guilabel:`Availability Zone`: Select the Availability Zone from the list.
+   By default, this value is set to the availability zone given by the cloud
+   provider (for example, ``us-west`` or ``apac-south``). For some cases,
+   it could be ``nova``.
 
 #. Click :guilabel:`Create Volume`.
 
