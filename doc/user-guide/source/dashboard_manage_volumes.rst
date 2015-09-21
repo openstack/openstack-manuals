@@ -95,7 +95,13 @@ Now you can log in to the instance and mount, format, and use the disk.
 Detach a volume from an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Volumes`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click the :guilabel:`Volumes` category.
 
 #. Select the volume and click :guilabel:`Edit Attachments`.
 
@@ -136,17 +142,12 @@ Edit a volume
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Volumes` category.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
-
-#. On the :guilabel:`Project` tab, click :guilabel:`Volumes`.
-
-#. Select the image that you want to edit.
+#. Select the volume that you want to edit.
 
 #. In the :guilabel:`Actions` column, click :guilabel:`Edit Volume`.
 
 #. In the :guilabel:`Edit Volume` dialog box, update the name and description
-   of the image.
+   of the volume.
 
 #. Click :guilabel:`Edit Volume`.
 

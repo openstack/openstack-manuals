@@ -210,7 +210,13 @@ uptime for all your instances.
 Create an instance snapshot
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Instances`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click the :guilabel:`Instances` category.
 
 #. Select the instance from which to create a snapshot.
 
