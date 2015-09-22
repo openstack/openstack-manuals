@@ -18,6 +18,7 @@ Contents
    introduction.rst
    rst-conv.rst
    docs-structure.rst
+   content-specs.rst
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
