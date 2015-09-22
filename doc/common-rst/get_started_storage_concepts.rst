@@ -51,21 +51,3 @@ The OpenStack stack uses the following storage types:
    - *The OpenStack Object Storage can function on its own.* The Object
      Storage (swift) product can be used independently of the Compute
      (nova) product.
-
-swift client
-  Enables users to submit commands to the REST API through a
-  command-line client authorized as either a admin user, reseller
-  user, or swift user.
-
-swift-init
-  Script that initializes the building of the ring file, takes daemon
-  names as parameter and offers commands. Documented in
-  http://docs.openstack.org/developer/swift/admin_guide.html#managing-services.
-
-swift-recon
-  A cli tool used to retrieve various metrics and telemetry information
-  about a cluster, that has been collected by the swift-recon middleware.
-
-swift-ring-builder
-  Storage ring build and rebalance utility. Documented in
-  http://docs.openstack.org/developer/swift/admin_guide.html#managing-the-rings.
