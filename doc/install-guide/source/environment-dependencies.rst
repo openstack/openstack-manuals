@@ -256,7 +256,7 @@ Install and configure the database server
 
       .. code-block:: console
 
-         # yum install mariadb mariadb-server PyMySQL
+         # yum install mariadb mariadb-server python2-PyMySQL
 
    .. only:: obs
 
