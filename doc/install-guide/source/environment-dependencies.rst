@@ -201,7 +201,7 @@ Finalize the installation
    3. Because Fedora does not provide the ``openstack-selinux`` package
       ensure that SELinux is disabled.
 
-      .. code-block: console
+      .. code-block:: console
 
          # sestatus
          SELinux status:                 disabled
@@ -209,7 +209,7 @@ Finalize the installation
       If ``SELinux status`` is ``enabled`` disable SELinux by editing the file
       ``/etc/selinux/config`` and restarting the system afterwards:
 
-      .. code-block: ini
+      .. code-block:: ini
 
          SELINUX=disabled
 
