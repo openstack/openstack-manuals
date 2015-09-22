@@ -77,13 +77,7 @@ To configure the Networking common components
 The Networking common component configuration includes the
 authentication mechanism, message queue, and plug-in.
 
-.. note::
-
-   Default configuration files vary by distribution. You might need to
-   add these sections and options rather than modifying existing
-   sections and options. Also, an ellipsis (...) in the configuration
-   snippets indicates potential default configuration options that you
-   should retain.
+.. include:: shared/note_configuration_vary_by_distribution.rst
 
 Edit the ``/etc/neutron/neutron.conf`` file.
 
