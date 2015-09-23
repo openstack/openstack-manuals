@@ -95,7 +95,8 @@ html_context = {"pwd": pwd, "gitsha": gitsha, "bug_tag": bug_tag}
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['common/cli*', 'common/nova*',
-                    'common/log_in_dashboard.rst']
+                    'common/log_in_dashboard.rst',
+                    'shared/note_configuration_vary_by_distribution.rst']
 if tags.has('debian'):  # noqa
     exclude_patterns.append('index.rst')
 else:
