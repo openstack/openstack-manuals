@@ -288,6 +288,14 @@ To install and configure Compute controller components
            ...
            lock_path = /var/lib/nova/tmp
 
+   * In the ``[DEFAULT]`` section, disable the in tree EC2 API:
+
+        .. code-block:: ini
+
+           [DEFAULT]
+           ...
+           enabled_apis=osapi_compute,metadata
+
    * (Optional) To assist with troubleshooting, enable verbose
      logging in the ``[DEFAULT]`` section:
 
