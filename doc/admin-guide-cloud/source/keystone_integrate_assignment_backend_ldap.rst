@@ -6,18 +6,17 @@ Integrate assignment back end with LDAP
 
 When you configure the OpenStack Identity service to use LDAP servers,
 you can split authentication and authorization using the *assignment*
-feature. Integrating the assignment back end with LDAP allows
+feature. Integrating the *assignment* back end with LDAP allows
 administrators to use projects (tenant), roles, domains, and role
 assignments in LDAP.
 
 .. note::
 
-   Using LDAP as an assignment back end is not recommended.
-
-.. note::
-
-   The OpenStack Identity service does not support domain-specific
-   assignment back ends.
+   Be aware of domain-specific back end limitations when configuring
+   OpenStack Identity. The OpenStack Identity service
+   does not support domain-specific assignment back ends.
+   Using LDAP as an assignment back end is not
+   recommended.
 
 .. important::
 
@@ -25,7 +24,7 @@ assignments in LDAP.
    define the destination LDAP server in the :file:`keystone.conf` file.
    For more information, see :ref:`integrate-identity-with-ldap`.
 
-**Integrating assignment back ends with LDAP**
+**To integrate assignment back ends with LDAP**
 
 #. Enable the assignment driver. In the ``[assignment]`` section, set the
    ``driver`` configuration key to
