@@ -473,6 +473,14 @@ policy option can be used by ``kafka`` publisher:
         queue length can be configured with ``max_queue_length``, where
         1024 is the default value).
 
+The following option is additionally available for the ``notifier`` publisher:
+
+``topic``
+    The topic name of queue to publish to. Setting this will override the
+    default topic defined by ``metering_topic`` and ``event_topic`` options.
+    This option can be used to support multiple consumers. Support for this
+    feature was added in Kilo.
+
 The following options are available for the ``file`` publisher:
 
 ``max_bytes``
@@ -495,4 +503,4 @@ specified. A sample ``publishers`` section in the
     publishers:
         - udp://10.0.0.2:1234
         - rpc://?per_meter_topic=1 (deprecated in Liberty)
-        - notifier://?policy=drop&max_queue_length=512
+        - notifier://?policy=drop&max_queue_length=512&topic=custom_target
