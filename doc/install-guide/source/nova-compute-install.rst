@@ -21,8 +21,8 @@ scale your environment with additional compute nodes.
    <overview-example-architectures>` section. Each additional compute node
    requires a unique IP address.
 
-To install and configure the Compute hypervisor components
-----------------------------------------------------------
+Install and configure components
+--------------------------------
 
 .. include:: shared/note_configuration_vary_by_distribution.rst
 
@@ -57,7 +57,6 @@ To install and configure the Compute hypervisor components
      sections, configure ``RabbitMQ`` message queue access:
 
      .. code-block:: ini
-        :linenos:
 
         [DEFAULT]
         ...
@@ -76,7 +75,6 @@ To install and configure the Compute hypervisor components
      configure Identity service access:
 
      .. code-block:: ini
-        :linenos:
 
         [DEFAULT]
         ...
@@ -104,7 +102,6 @@ To install and configure the Compute hypervisor components
    * In the ``[DEFAULT]`` section, configure the ``my_ip`` option:
 
      .. code-block:: ini
-        :linenos:
 
         [DEFAULT]
         ...
@@ -115,15 +112,31 @@ To install and configure the Compute hypervisor components
      typically 10.0.0.31 for the first node in the
      :ref:`example architecture <overview-example-architectures>`.
 
-   * In the ``[DEFAULT]`` section, enable and configure remote console
-     access:
+   * In the ``[DEFAULT]`` section, enable support for the Networking service:
 
      .. code-block:: ini
-        :linenos:
 
         [DEFAULT]
         ...
-        vnc_enabled = True
+        network_api_class = nova.network.neutronv2.api.API
+        security_group_api = neutron
+        linuxnet_interface_driver = nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver
+        firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+     .. note::
+
+        By default, Compute uses an internal firewall service. Since
+        Networking includes a firewall service, you must disable the Compute
+        firewall service by using the
+        ``nova.virt.firewall.NoopFirewallDriver`` firewall driver.
+
+   * In the ``[vnc]`` section, enable and configure remote console access:
+
+     .. code-block:: ini
+
+        [vnc]
+        ...
+        enabled = True
         vncserver_listen = 0.0.0.0
         vncserver_proxyclient_address = MANAGEMENT_INTERFACE_IP_ADDRESS
         novncproxy_base_url = http://controller:6080/vnc_auto.html
@@ -150,7 +163,6 @@ To install and configure the Compute hypervisor components
      Image service:
 
      .. code-block:: ini
-        :linenos:
 
         [glance]
         ...
@@ -161,7 +173,6 @@ To install and configure the Compute hypervisor components
       * In the ``[oslo_concurrency]`` section, configure the lock path:
 
         .. code-block:: ini
-           :linenos:
 
            [oslo_concurrency]
            ...
@@ -172,7 +183,6 @@ To install and configure the Compute hypervisor components
       * In the ``[oslo_concurrency]`` section, configure the lock path:
 
         .. code-block:: ini
-           :linenos:
 
            [oslo_concurrency]
            ...
@@ -182,7 +192,6 @@ To install and configure the Compute hypervisor components
      enable verbose logging in the ``[DEFAULT]`` section:
 
      .. code-block:: ini
-        :linenos:
 
         [DEFAULT]
         ...
@@ -201,8 +210,8 @@ To install and configure the Compute hypervisor components
       * Ensure the module will be loaded on every boot by adding
         ``nbd`` in the :file:`/etc/modules-load.d/nbd.conf` file.
 
-To finalize installation
-------------------------
+Finalize installation
+---------------------
 
 1. Determine whether your compute node supports hardware acceleration
    for virtual machines:
@@ -225,7 +234,6 @@ To finalize installation
         :file:`/etc/nova/nova.conf` file as follows:
 
         .. code-block:: ini
-           :linenos:
 
            [libvirt]
            ...
@@ -237,7 +245,6 @@ To finalize installation
         :file:`/etc/nova/nova-compute.conf` file as follows:
 
         .. code-block:: ini
-           :linenos:
 
            [libvirt]
            ...

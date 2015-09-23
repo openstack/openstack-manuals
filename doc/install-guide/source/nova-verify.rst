@@ -3,7 +3,6 @@ Verify operation
 
 Verify operation of the Compute service.
 
-
 .. note::
 
    Perform these commands on the controller node.
@@ -126,6 +125,10 @@ Verify operation of the Compute service.
       | region_id | RegionOne                        |
       | url       | http://controller:35357/v2.0     |
       +-----------+----------------------------------+
+
+   .. note::
+
+      Ignore any warnings in this output.
 
 #. List images in the Image service catalog to verify connectivity
    with the Image service:
