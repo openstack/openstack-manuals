@@ -190,7 +190,7 @@ Install and configure Block Storage volume components
       .. code-block:: console
 
          # yum install openstack-cinder targetcli python-oslo-db \
-           python-oslo-log PyMySQL
+           python-oslo-log python2-PyMySQL
 
       .. Temporary workaround for bug:
          https://bugzilla.redhat.com/show_bug.cgi?id=1212899
