@@ -349,6 +349,14 @@ and ``disk.read.bytes`` meters, the following command should be invoked::
     | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.4795e+11 | ns   | 2014-08-30T13:20:34 |
     +--------------------------------------+-----------------+------------+------------+------+---------------------+
 
+  .. note::
+
+      As of the Liberty release, the number of items returned will be
+      restricted to the value defined by ``default_api_return_limit`` in the
+      :file:`ceilometer.conf` configuration file. Alternatively, the value can
+      be set per query by passing ``limit`` option in request.
+
+
 Telemetry python bindings
 -------------------------
 The command line client library provides python bindings in order to use
