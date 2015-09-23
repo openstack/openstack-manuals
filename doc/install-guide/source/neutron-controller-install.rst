@@ -9,106 +9,133 @@ must create a database, service credentials, and API endpoints.
 
 #. To create the database, complete these steps:
 
-   a. Use the database access client to connect to the database server as the
+   * Use the database access client to connect to the database server as the
       ``root`` user:
 
-      .. code:: console
+     .. code-block:: console
 
-         $ mysql -u root -p
+        $ mysql -u root -p
 
-   #. Create the ``neutron`` database:
+   * Create the ``neutron`` database:
 
-      .. code:: console
+     .. code-block:: console
 
-         CREATE DATABASE neutron;
+        CREATE DATABASE neutron;
 
-   #. Grant proper access to the ``neutron`` database, replacing
-      ``NEUTRON_DBPASS`` with a suitable password:
+   * Grant proper access to the ``neutron`` database, replacing
+     ``NEUTRON_DBPASS`` with a suitable password:
 
-      .. code:: console
+     .. code-block:: console
 
-         GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' \
-           IDENTIFIED BY 'NEUTRON_DBPASS';
-         GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' \
-           IDENTIFIED BY 'NEUTRON_DBPASS';
+        GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' \
+          IDENTIFIED BY 'NEUTRON_DBPASS';
+        GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' \
+          IDENTIFIED BY 'NEUTRON_DBPASS';
 
-   #. Exit the database access client.
+   * Exit the database access client.
 
 #. Source the ``admin`` credentials to gain access to admin-only CLI
    commands:
 
-   .. code:: console
+   .. code-block:: console
 
       $ source admin-openrc.sh
 
 #. To create the service credentials, complete these steps:
 
-   a. Create the ``neutron`` user:
+   * Create the ``neutron`` user:
 
-      .. code:: console
+     .. code-block:: console
 
-         $ openstack user create --password-prompt neutron
-         User Password:
-         Repeat User Password:
-         +----------+----------------------------------+
-         | Field    | Value                            |
-         +----------+----------------------------------+
-         | email    | None                             |
-         | enabled  | True                             |
-         | id       | ab67f043d9304017aaa73d692eeb4945 |
-         | name     | neutron                          |
-         | username | neutron                          |
-         +----------+----------------------------------+
+        $ openstack user create --domain default --password-prompt neutron
+        User Password:
+        Repeat User Password:
+        +-----------+----------------------------------+
+        | Field     | Value                            |
+        +-----------+----------------------------------+
+        | domain_id | default                          |
+        | enabled   | True                             |
+        | id        | b20a6692f77b4258926881bf831eb683 |
+        | name      | neutron                          |
+        +-----------+----------------------------------+
 
-   #. Add the ``admin`` role to the ``neutron`` user:
 
-      .. code:: console
+   * Add the ``admin`` role to the ``neutron`` user:
 
-         $ openstack role add --project service --user neutron admin
-         +-------+----------------------------------+
-         | Field | Value                            |
-         +-------+----------------------------------+
-         | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
-         | name  | admin                            |
-         +-------+----------------------------------+
+     .. code-block:: console
 
-   #. Create the ``neutron`` service entity:
+        $ openstack role add --project service --user neutron admin
 
-      .. code:: console
+     .. note::
 
-         $ openstack service create --name neutron \
-           --description "OpenStack Networking" network
-         +-------------+----------------------------------+
-         | Field       | Value                            |
-         +-------------+----------------------------------+
-         | description | OpenStack Networking             |
-         | enabled     | True                             |
-         | id          | f71529314dab4a4d8eca427e701d209e |
-         | name        | neutron                          |
-         | type        | network                          |
-         +-------------+----------------------------------+
+        This command provides no output.
+
+   * Create the ``neutron`` service entity:
+
+     .. code-block:: console
+
+        $ openstack service create --name neutron \
+          --description "OpenStack Networking" network
+        +-------------+----------------------------------+
+        | Field       | Value                            |
+        +-------------+----------------------------------+
+        | description | OpenStack Networking             |
+        | enabled     | True                             |
+        | id          | f71529314dab4a4d8eca427e701d209e |
+        | name        | neutron                          |
+        | type        | network                          |
+        +-------------+----------------------------------+
 
 #. Create the Networking service API endpoints:
 
-   .. code:: console
+   .. code-block:: console
 
-      $ openstack endpoint create \
-        --publicurl http://controller:9696 \
-        --adminurl http://controller:9696 \
-        --internalurl http://controller:9696 \
-        --region RegionOne \
-        network
+      $ openstack endpoint create --region RegionOne \
+        network public http://controller:9696
       +--------------+----------------------------------+
       | Field        | Value                            |
       +--------------+----------------------------------+
-      | adminurl     | http://controller:9696           |
-      | id           | 04a7d3c1de784099aaba83a8a74100b3 |
-      | internalurl  | http://controller:9696           |
-      | publicurl    | http://controller:9696           |
+      | enabled      | True                             |
+      | id           | 85d80a6d02fc4b7683f611d7fc1493a3 |
+      | interface    | public                           |
       | region       | RegionOne                        |
+      | region_id    | RegionOne                        |
       | service_id   | f71529314dab4a4d8eca427e701d209e |
       | service_name | neutron                          |
       | service_type | network                          |
+      | url          | http://controller:9696           |
+      +--------------+----------------------------------+
+
+      $ openstack endpoint create --region RegionOne \
+        network internal http://controller:9696
+      +--------------+----------------------------------+
+      | Field        | Value                            |
+      +--------------+----------------------------------+
+      | enabled      | True                             |
+      | id           | 09753b537ac74422a68d2d791cf3714f |
+      | interface    | internal                         |
+      | region       | RegionOne                        |
+      | region_id    | RegionOne                        |
+      | service_id   | f71529314dab4a4d8eca427e701d209e |
+      | service_name | neutron                          |
+      | service_type | network                          |
+      | url          | http://controller:9696           |
+      +--------------+----------------------------------+
+
+      $ openstack endpoint create --region RegionOne \
+        network admin http://controller:9696
+      +--------------+----------------------------------+
+      | Field        | Value                            |
+      +--------------+----------------------------------+
+      | enabled      | True                             |
+      | id           | 1ee14289c9374dffb5db92a5c112fc4e |
+      | interface    | admin                            |
+      | region       | RegionOne                        |
+      | region_id    | RegionOne                        |
+      | service_id   | f71529314dab4a4d8eca427e701d209e |
+      | service_name | neutron                          |
+      | service_type | network                          |
+      | url          | http://controller:9696           |
       +--------------+----------------------------------+
 
 Configure networking options
@@ -137,99 +164,86 @@ Configure the metadata agent
 The :term:`metadata agent <Metadata agent>` provides configuration information
 such as credentials to instances.
 
-Edit the ``/etc/neutron/metadata_agent.ini`` file.
+#. Edit the ``/etc/neutron/metadata_agent.ini`` file and complete the following
+   actions:
 
-#. In the ``[DEFAULT]`` section, configure access parameters:
+   * In the ``[DEFAULT]`` section, configure access parameters:
 
-   .. code-block:: ini
+     .. code-block:: ini
 
-      [DEFAULT]
-      ...
-      auth_uri = http://controller:5000
-      auth_url = http://controller:35357
-      auth_region = RegionOne
-      auth_plugin = password
-      project_domain_id = default
-      user_domain_id = default
-      project_name = service
-      username = neutron
-      password = NEUTRON_PASS
+        [DEFAULT]
+        ...
+        auth_uri = http://controller:5000
+        auth_url = http://controller:35357
+        auth_region = RegionOne
+        auth_plugin = password
+        project_domain_id = default
+        user_domain_id = default
+        project_name = service
+        username = neutron
+        password = NEUTRON_PASS
 
-   Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
-   user in the Identity service.
+     Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
+     user in the Identity service.
 
-#. In the ``[DEFAULT]`` section, configure the metadata host:
+   * In the ``[DEFAULT]`` section, configure the metadata host:
 
-   .. code-block:: ini
+     .. code-block:: ini
 
-      [DEFAULT]
-      ...
-      nova_metadata_ip = controller
+        [DEFAULT]
+        ...
+        nova_metadata_ip = controller
 
-#. In the ``[DEFAULT]`` section, configure the metadata proxy shared
-   secret:
+   * In the ``[DEFAULT]`` section, configure the metadata proxy shared
+     secret:
 
-   .. code-block:: ini
+     .. code-block:: ini
 
-      [DEFAULT]
-      ...
-      metadata_proxy_shared_secret = METADATA_SECRET
+        [DEFAULT]
+        ...
+        metadata_proxy_shared_secret = METADATA_SECRET
 
-   Replace ``METADATA_SECRET`` with a suitable secret for the metadata proxy.
+     Replace ``METADATA_SECRET`` with a suitable secret for the metadata proxy.
 
-#. (Optional) To assist with troubleshooting, enable verbose logging in the
-   ``[DEFAULT]`` section:
+   * (Optional) To assist with troubleshooting, enable verbose logging in the
+     ``[DEFAULT]`` section:
 
-   .. code-block:: ini
+     .. code-block:: ini
 
-      [DEFAULT]
-      ...
-      verbose = True
+        [DEFAULT]
+        ...
+        verbose = True
 
 Configure Compute to use Networking
 -----------------------------------
 
-Edit the ``/etc/nova/nova.conf`` file:
+#. Edit the ``/etc/nova/nova.conf`` file and perform the following actions:
 
-#. In the ``[DEFAULT]`` section, configure Compute to use the Networking
-   service:
+   * In the ``[neutron]`` section, configure access parameters, enable the
+     metadata proxy, and configure the secret:
 
-   .. code-block:: ini
+     .. code-block:: ini
 
-      [DEFAULT]
-      network_api_class = nova.network.neutronv2.api.API
-      security_group_api = neutron
-      linuxnet_interface_driver = nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver
-      firewall_driver = nova.virt.firewall.NoopFirewallDriver
+        [neutron]
+        ...
+        url = http://controller:9696
+        auth_url = http://controller:35357
+        auth_plugin = password
+        project_domain_id = default
+        user_domain_id = default
+        region_name = RegionOne
+        project_name = service
+        username = neutron
+        password = NEUTRON_PASS
 
-   .. note::
+        service_metadata_proxy = True
+        metadata_proxy_shared_secret = METADATA_SECRET
 
-      The ``firewall_driver`` option uses the ``NoopFirewallDriver`` value
-      because Compute delegates security group (firewall) operation to the
-      Networking service.
+     Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
+     user in the Identity service.
 
-#. In the ``[neutron]`` section, configure access parameters, enable the
-   metadata proxy, and configure the secret:
-
-   .. code-block:: ini
-
-      [neutron]
-      ...
-      url = http://controller:9696
-      auth_strategy = keystone
-      admin_auth_url = http://controller:35357/v2.0
-      admin_tenant_name = service
-      admin_username = neutron
-      admin_password = NEUTRON_PASS
-
-      service_metadata_proxy = True
-      metadata_proxy_shared_secret = METADATA_SECRET
-
-   Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
-   user in the Identity service.
-
-   Replace ``METADATA_SECRET`` with the secret you chose for the metadata
-   proxy.
+     Replace ``METADATA_SECRET`` with the secret you chose for the metadata
+     proxy.
 
 Finalize installation
 ---------------------
@@ -237,11 +251,11 @@ Finalize installation
 .. only:: rdo
 
    #. The Networking service initialization scripts expect a symbolic link
-      :file:`/etc/neutron/plugin.ini` pointing to the ML2 plug-in configuration
-      file, :file:`/etc/neutron/plugins/ml2/ml2_conf.ini`. If this symbolic
+      ``/etc/neutron/plugin.ini`` pointing to the ML2 plug-in configuration
+      file, ``/etc/neutron/plugins/ml2/ml2_conf.ini``. If this symbolic
       link does not exist, create it using the following command:
 
-      .. code:: console
+      .. code-block:: console
 
          # ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
 
@@ -264,7 +278,7 @@ Finalize installation
 
    #. Populate the database:
 
-      .. code:: console
+      .. code-block:: console
 
          # su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
            --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
@@ -276,7 +290,7 @@ Finalize installation
 
    #. Restart the Compute services:
 
-      .. code:: console
+      .. code-block:: console
 
          # systemctl restart openstack-nova-api.service openstack-nova-scheduler.service \
            openstack-nova-conductor.service
@@ -286,7 +300,7 @@ Finalize installation
 
       For both networking options:
 
-      .. code:: console
+      .. code-block:: console
 
          # systemctl enable neutron-server.service \
            neutron-linuxbridge-agent.service neutron-dhcp-agent.service \
@@ -297,7 +311,7 @@ Finalize installation
 
       For networking option 2, also enable and start the layer-3 service:
 
-      .. code:: console
+      .. code-block:: console
 
          # systemctl enable neutron-l3-agent.service
          # systemctl start neutron-l3-agent.service
@@ -305,17 +319,17 @@ Finalize installation
 .. only:: obs
 
    #. The Networking service initialization scripts expect the variable
-      ``NEUTRON_PLUGIN_CONF`` in the :file:`/etc/sysconfig/neutron` file to
+      ``NEUTRON_PLUGIN_CONF`` in the ``/etc/sysconfig/neutron`` file to
       reference the ML2 plug-in configuration file. Edit the
-      :file:`/etc/sysconfig/neutron` file and add the following:
+      ``/etc/sysconfig/neutron`` file and add the following:
 
-      .. code:: console
+      .. code-block:: console
 
          NEUTRON_PLUGIN_CONF="/etc/neutron/plugins/ml2/ml2_conf.ini"
 
    #. Restart the Compute services:
 
-      .. code:: console
+      .. code-block:: console
 
          # systemctl restart openstack-nova-api.service openstack-nova-scheduler.service \
            openstack-nova-conductor.service
@@ -325,7 +339,7 @@ Finalize installation
 
       For both networking options:
 
-      .. code:: console
+      .. code-block:: console
 
          # systemctl enable openstack-neutron.service \
            openstack-neutron-linuxbridge.service \
@@ -338,7 +352,7 @@ Finalize installation
 
       For networking option 2, also enable and start the layer-3 service:
 
-      .. code:: console
+      .. code-block:: console
 
          # systemctl enable openstack-neutron-l3-agent.service
          # systemctl start openstack-neutron-l3-agent.service
@@ -350,7 +364,7 @@ Finalize installation
       agent configuration file. Run the following commands to resolve this
       issue:
 
-      .. code:: console
+      .. code-block:: console
 
          # cp /etc/init/neutron-plugin-linuxbridge-agent.conf \
            /etc/init/neutron-plugin-linuxbridge-agent.conf.orig
@@ -359,7 +373,7 @@ Finalize installation
 
    #. Populate the database:
 
-      .. code:: console
+      .. code-block:: console
 
          # su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
            --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
@@ -371,7 +385,7 @@ Finalize installation
 
    #. Restart the nova-api service:
 
-      .. code:: console
+      .. code-block:: console
 
          # service nova-api restart
 
@@ -379,7 +393,7 @@ Finalize installation
 
       For both networking options:
 
-      .. code:: console
+      .. code-block:: console
 
          # service neutron-server restart
          # service neutron-plugin-linuxbridge-agent restart
@@ -388,6 +402,6 @@ Finalize installation
 
       For networking option 2, also restart the layer-3 service:
 
-      .. code:: console
+      .. code-block:: console
 
          # service neutron-l3-agent restart
