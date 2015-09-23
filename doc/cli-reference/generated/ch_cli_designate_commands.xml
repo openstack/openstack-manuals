@@ -15,7 +15,7 @@
         interface (CLI) for the DNS service API and its extensions.
 
        This chapter documents <command>designate</command> version
-        <literal>1.4.0</literal>.
+        <literal>1.5.0</literal>.
     </para>
 
     <para>For help on a specific <command>designate</command>
@@ -73,7 +73,7 @@
     <term><command>-q, --quiet</command></term>
     <listitem>
       <para>
-        suppress output except warnings and errors
+        Suppress output except warnings and errors.
       </para>
     </listitem>
   </varlistentry>
@@ -81,7 +81,7 @@
     <term><command>-h, --help</command></term>
     <listitem>
       <para>
-        show this help message and exit
+        Show this help message and exit.
       </para>
     </listitem>
   </varlistentry>
@@ -89,7 +89,7 @@
     <term><command>--debug</command></term>
     <listitem>
       <para>
-        show tracebacks on errors
+        Show tracebacks on errors.
       </para>
     </listitem>
   </varlistentry>
@@ -255,7 +255,7 @@
     <term><command>--os-service-type OS_SERVICE_TYPE</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_DNS_SERVICE_TYPE]</code>, or 'dns'
+      Defaults to <code>env[OS_DNS_SERVICE_TYPE]</code>, or 'dns'.
       </para>
     </listitem>
   </varlistentry>
@@ -263,7 +263,8 @@
     <term><command>--os-cacert OS_CACERT</command></term>
     <listitem>
       <para>
-      CA certificate bundle file. Defaults to <code>env[OS_CACERT]</code>
+      CA certificate bundle file. Defaults to
+      <code>env[OS_CACERT]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -271,7 +272,7 @@
     <term><command>--insecure</command></term>
     <listitem>
       <para>
-        Explicitly allow 'insecure' SSL requests
+        Explicitly allow 'insecure' SSL requests.
       </para>
     </listitem>
   </varlistentry>
@@ -279,7 +280,7 @@
     <term><command>--all-tenants</command></term>
     <listitem>
       <para>
-        Allows to list all domains from all tenants
+        Allows to list all domains from all tenants.
       </para>
     </listitem>
   </varlistentry>
@@ -287,7 +288,7 @@
     <term><command>--edit-managed</command></term>
     <listitem>
       <para>
-        Allows to edit records that are marked as managed
+        Allows to edit records that are marked as managed.
       </para>
     </listitem>
   </varlistentry>
@@ -295,9 +296,10 @@
     </section>
     <section xml:id="designateclient_subcommand_diagnostics-ping">
         <title>designate diagnostics-ping</title>
-        <screen><computeroutput>usage: designate diagnostics-ping [-h] [-f {shell,table,value}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;] [--prefix PREFIX]
-                                  --service SERVICE --host HOST</computeroutput></screen>
+        <screen><computeroutput>usage: designate diagnostics-ping [-h] [-f {json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width &lt;integer&gt;]
+                                  [--noindent] [--prefix PREFIX] --service
+                                  SERVICE --host HOST</computeroutput></screen>
         <para>
 Ping a service on a given host
         </para>  <variablelist wordsize="10">
@@ -314,7 +316,7 @@ Ping a service on a given host
     <term><command>--service SERVICE</command></term>
     <listitem>
       <para>
-        Service Name (e.g. central)
+        Service name (e.g. central)
       </para>
     </listitem>
   </varlistentry>
@@ -330,9 +332,10 @@ Ping a service on a given host
     </section>
     <section xml:id="designateclient_subcommand_domain-create">
         <title>designate domain-create</title>
-        <screen><computeroutput>usage: designate domain-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--prefix PREFIX]
-                               --name NAME --email EMAIL [--ttl TTL]
+        <screen><computeroutput>usage: designate domain-create [-h] [-f {json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--noindent] [--prefix PREFIX] --name NAME
+                               --email EMAIL [--ttl TTL]
                                [--description DESCRIPTION]</computeroutput></screen>
         <para>
 Create Domain
@@ -350,7 +353,7 @@ Create Domain
     <term><command>--name NAME</command></term>
     <listitem>
       <para>
-        Domain Name
+        Domain name
       </para>
     </listitem>
   </varlistentry>
@@ -358,7 +361,7 @@ Create Domain
     <term><command>--email EMAIL</command></term>
     <listitem>
       <para>
-        Domain Email
+        Domain email
       </para>
     </listitem>
   </varlistentry>
@@ -366,7 +369,7 @@ Create Domain
     <term><command>--ttl TTL</command></term>
     <listitem>
       <para>
-        Time To Live (Seconds)
+        Time to live (seconds)
       </para>
     </listitem>
   </varlistentry>
@@ -382,8 +385,9 @@ Create Domain
     </section>
     <section xml:id="designateclient_subcommand_domain-delete">
         <title>designate domain-delete</title>
-        <screen><computeroutput>usage: designate domain-delete [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--prefix PREFIX]
+        <screen><computeroutput>usage: designate domain-delete [-h] [-f {json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--noindent] [--prefix PREFIX]
                                id</computeroutput></screen>
         <para>
 Delete Domain
@@ -393,7 +397,7 @@ Delete Domain
     <term><command>id</command></term>
     <listitem>
       <para>
-        Domain ID or Name
+        Domain ID or name
       </para>
     </listitem>
   </varlistentry>
@@ -412,8 +416,9 @@ Delete Domain
     </section>
     <section xml:id="designateclient_subcommand_domain-get">
         <title>designate domain-get</title>
-        <screen><computeroutput>usage: designate domain-get [-h] [-f {shell,table,value}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--prefix PREFIX]
+        <screen><computeroutput>usage: designate domain-get [-h] [-f {json,shell,table,value,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
+                            [--prefix PREFIX]
                             id</computeroutput></screen>
         <para>
 Get Domain
@@ -423,7 +428,7 @@ Get Domain
     <term><command>id</command></term>
     <listitem>
       <para>
-        Domain ID or Name
+        Domain ID or name
       </para>
     </listitem>
   </varlistentry>
@@ -442,8 +447,8 @@ Get Domain
     </section>
     <section xml:id="designateclient_subcommand_domain-list">
         <title>designate domain-list</title>
-        <screen><computeroutput>usage: designate domain-list [-h] [-f {csv,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: designate domain-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                             [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List Domains
@@ -461,8 +466,9 @@ List Domains
     </section>
     <section xml:id="designateclient_subcommand_domain-servers-list">
         <title>designate domain-servers-list</title>
-        <screen><computeroutput>usage: designate domain-servers-list [-h] [-f {csv,table,value}] [-c COLUMN]
-                                     [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: designate domain-servers-list [-h] [-f {csv,json,table,value,yaml}]
+                                     [-c COLUMN] [--max-width &lt;integer&gt;]
+                                     [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
                                      id</computeroutput></screen>
         <para>
@@ -473,7 +479,7 @@ List Domain Servers
     <term><command>id</command></term>
     <listitem>
       <para>
-        Domain ID or Name
+        Domain ID or name
       </para>
     </listitem>
   </varlistentry>
@@ -492,9 +498,10 @@ List Domain Servers
     </section>
     <section xml:id="designateclient_subcommand_domain-update">
         <title>designate domain-update</title>
-        <screen><computeroutput>usage: designate domain-update [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--prefix PREFIX]
-                               [--name NAME] [--email EMAIL] [--ttl TTL]
+        <screen><computeroutput>usage: designate domain-update [-h] [-f {json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--noindent] [--prefix PREFIX] [--name NAME]
+                               [--email EMAIL] [--ttl TTL]
                                [--description DESCRIPTION | --no-description]
                                id</computeroutput></screen>
         <para>
@@ -505,7 +512,7 @@ Update Domain
     <term><command>id</command></term>
     <listitem>
       <para>
-        Domain ID or Name
+        Domain ID or name
       </para>
     </listitem>
   </varlistentry>
@@ -524,7 +531,7 @@ Update Domain
     <term><command>--name NAME</command></term>
     <listitem>
       <para>
-        Domain Name
+        Domain name
       </para>
     </listitem>
   </varlistentry>
@@ -532,7 +539,7 @@ Update Domain
     <term><command>--email EMAIL</command></term>
     <listitem>
       <para>
-        Domain Email
+        Domain email
       </para>
     </listitem>
   </varlistentry>
@@ -540,7 +547,7 @@ Update Domain
     <term><command>--ttl TTL</command></term>
     <listitem>
       <para>
-        Time To Live (Seconds)
+        Time to live (seconds)
       </para>
     </listitem>
   </varlistentry>
@@ -563,8 +570,9 @@ Update Domain
     </section>
     <section xml:id="designateclient_subcommand_quota-get">
         <title>designate quota-get</title>
-        <screen><computeroutput>usage: designate quota-get [-h] [-f {shell,table,value}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--prefix PREFIX]
+        <screen><computeroutput>usage: designate quota-get [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
+                           [--max-width &lt;integer&gt;] [--noindent]
+                           [--prefix PREFIX]
                            tenant_id</computeroutput></screen>
         <para>
 Get Quota
@@ -593,8 +601,9 @@ Get Quota
     </section>
     <section xml:id="designateclient_subcommand_quota-reset">
         <title>designate quota-reset</title>
-        <screen><computeroutput>usage: designate quota-reset [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--prefix PREFIX]
+        <screen><computeroutput>usage: designate quota-reset [-h] [-f {json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
+                             [--prefix PREFIX]
                              tenant_id</computeroutput></screen>
         <para>
 Reset Quota
@@ -623,9 +632,9 @@ Reset Quota
     </section>
     <section xml:id="designateclient_subcommand_quota-update">
         <title>designate quota-update</title>
-        <screen><computeroutput>usage: designate quota-update [-h] [-f {shell,table,value}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;] [--prefix PREFIX]
-                              [--domains DOMAINS]
+        <screen><computeroutput>usage: designate quota-update [-h] [-f {json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
+                              [--prefix PREFIX] [--domains DOMAINS]
                               [--domain-recordsets DOMAIN_RECORDSETS]
                               [--recordset-records RECORDSET_RECORDS]
                               [--domain-records DOMAIN_RECORDS]
@@ -657,7 +666,7 @@ Update Quota
     <term><command>--domains DOMAINS</command></term>
     <listitem>
       <para>
-        Allowed Domains
+        Allowed domains
       </para>
     </listitem>
   </varlistentry>
@@ -665,7 +674,7 @@ Update Quota
     <term><command>--domain-recordsets DOMAIN_RECORDSETS</command></term>
     <listitem>
       <para>
-      Allowed Domain Records
+      Allowed domain records
       </para>
     </listitem>
   </varlistentry>
@@ -673,7 +682,7 @@ Update Quota
     <term><command>--recordset-records RECORDSET_RECORDS</command></term>
     <listitem>
       <para>
-      Allowed Recordset Records
+      Allowed recordset records
       </para>
     </listitem>
   </varlistentry>
@@ -681,7 +690,7 @@ Update Quota
     <term><command>--domain-records DOMAIN_RECORDS</command></term>
     <listitem>
       <para>
-      Allowed Domain Records
+      Allowed domain records
       </para>
     </listitem>
   </varlistentry>
@@ -689,9 +698,10 @@ Update Quota
     </section>
     <section xml:id="designateclient_subcommand_record-create">
         <title>designate record-create</title>
-        <screen><computeroutput>usage: designate record-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--prefix PREFIX]
-                               --name NAME --type TYPE --data DATA [--ttl TTL]
+        <screen><computeroutput>usage: designate record-create [-h] [-f {json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--noindent] [--prefix PREFIX] --name NAME
+                               --type TYPE --data DATA [--ttl TTL]
                                [--priority PRIORITY]
                                [--description DESCRIPTION]
                                domain_id</computeroutput></screen>
@@ -703,7 +713,7 @@ Create Record
     <term><command>domain_id</command></term>
     <listitem>
       <para>
-        Domain ID or Name
+        Domain ID or name
       </para>
     </listitem>
   </varlistentry>
@@ -722,7 +732,7 @@ Create Record
     <term><command>--name NAME</command></term>
     <listitem>
       <para>
-        Record (relative|absolute) Name
+        Record (relative|absolute) name
       </para>
     </listitem>
   </varlistentry>
@@ -730,7 +740,7 @@ Create Record
     <term><command>--type TYPE</command></term>
     <listitem>
       <para>
-        Record Type
+        Record type
       </para>
     </listitem>
   </varlistentry>
@@ -738,7 +748,7 @@ Create Record
     <term><command>--data DATA</command></term>
     <listitem>
       <para>
-        Record Data
+        Record data
       </para>
     </listitem>
   </varlistentry>
@@ -754,7 +764,7 @@ Create Record
     <term><command>--priority PRIORITY</command></term>
     <listitem>
       <para>
-        Record Priority
+        Record priority
       </para>
     </listitem>
   </varlistentry>
@@ -770,8 +780,9 @@ Create Record
     </section>
     <section xml:id="designateclient_subcommand_record-delete">
         <title>designate record-delete</title>
-        <screen><computeroutput>usage: designate record-delete [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--prefix PREFIX]
+        <screen><computeroutput>usage: designate record-delete [-h] [-f {json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--noindent] [--prefix PREFIX]
                                domain_id id</computeroutput></screen>
         <para>
 Delete Record
@@ -781,7 +792,7 @@ Delete Record
     <term><command>domain_id</command></term>
     <listitem>
       <para>
-        Domain ID or Name
+        Domain ID or name
       </para>
     </listitem>
   </varlistentry>
@@ -808,8 +819,9 @@ Delete Record
     </section>
     <section xml:id="designateclient_subcommand_record-get">
         <title>designate record-get</title>
-        <screen><computeroutput>usage: designate record-get [-h] [-f {shell,table,value}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--prefix PREFIX]
+        <screen><computeroutput>usage: designate record-get [-h] [-f {json,shell,table,value,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
+                            [--prefix PREFIX]
                             domain_id id</computeroutput></screen>
         <para>
 Get Record
@@ -819,7 +831,7 @@ Get Record
     <term><command>domain_id</command></term>
     <listitem>
       <para>
-        Domain ID or Name
+        Domain ID or name
       </para>
     </listitem>
   </varlistentry>
@@ -846,8 +858,8 @@ Get Record
     </section>
     <section xml:id="designateclient_subcommand_record-list">
         <title>designate record-list</title>
-        <screen><computeroutput>usage: designate record-list [-h] [-f {csv,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: designate record-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                             [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
                              domain_id</computeroutput></screen>
         <para>
@@ -858,7 +870,7 @@ List Records
     <term><command>domain_id</command></term>
     <listitem>
       <para>
-        Domain ID or Name
+        Domain ID or name
       </para>
     </listitem>
   </varlistentry>
@@ -877,9 +889,10 @@ List Records
     </section>
     <section xml:id="designateclient_subcommand_record-update">
         <title>designate record-update</title>
-        <screen><computeroutput>usage: designate record-update [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--prefix PREFIX]
-                               [--name NAME] [--type TYPE] [--data DATA]
+        <screen><computeroutput>usage: designate record-update [-h] [-f {json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--noindent] [--prefix PREFIX] [--name NAME]
+                               [--type TYPE] [--data DATA]
                                [--description DESCRIPTION | --no-description]
                                [--ttl TTL | --no-ttl]
                                [--priority PRIORITY | --no-priority]
@@ -892,7 +905,7 @@ Update Record
     <term><command>domain_id</command></term>
     <listitem>
       <para>
-        Domain ID or Name
+        Domain ID or name
       </para>
     </listitem>
   </varlistentry>
@@ -919,7 +932,7 @@ Update Record
     <term><command>--name NAME</command></term>
     <listitem>
       <para>
-        Record Name
+        Record name
       </para>
     </listitem>
   </varlistentry>
@@ -927,7 +940,7 @@ Update Record
     <term><command>--type TYPE</command></term>
     <listitem>
       <para>
-        Record Type
+        Record type
       </para>
     </listitem>
   </varlistentry>
@@ -935,7 +948,7 @@ Update Record
     <term><command>--data DATA</command></term>
     <listitem>
       <para>
-        Record Data
+        Record data
       </para>
     </listitem>
   </varlistentry>
@@ -958,7 +971,7 @@ Update Record
     <term><command>--ttl TTL</command></term>
     <listitem>
       <para>
-        Record Time To Live (Seconds)
+        Record time to live (seconds)
       </para>
     </listitem>
   </varlistentry>
@@ -973,7 +986,7 @@ Update Record
     <term><command>--priority PRIORITY</command></term>
     <listitem>
       <para>
-        Record Priority
+        Record priority
       </para>
     </listitem>
   </varlistentry>
@@ -988,8 +1001,9 @@ Update Record
     </section>
     <section xml:id="designateclient_subcommand_report-count-all">
         <title>designate report-count-all</title>
-        <screen><computeroutput>usage: designate report-count-all [-h] [-f {shell,table,value}] [-c COLUMN]
-                                  [--max-width &lt;integer&gt;] [--prefix PREFIX]</computeroutput></screen>
+        <screen><computeroutput>usage: designate report-count-all [-h] [-f {json,shell,table,value,yaml}]
+                                  [-c COLUMN] [--max-width &lt;integer&gt;]
+                                  [--noindent] [--prefix PREFIX]</computeroutput></screen>
         <para>
 Get count totals for all tenants, domains and records
         </para>  <variablelist wordsize="10">
@@ -1006,9 +1020,9 @@ Get count totals for all tenants, domains and records
     </section>
     <section xml:id="designateclient_subcommand_report-count-domains">
         <title>designate report-count-domains</title>
-        <screen><computeroutput>usage: designate report-count-domains [-h] [-f {shell,table,value}]
+        <screen><computeroutput>usage: designate report-count-domains [-h] [-f {json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
-                                      [--prefix PREFIX]</computeroutput></screen>
+                                      [--noindent] [--prefix PREFIX]</computeroutput></screen>
         <para>
 Get counts for total domains
         </para>  <variablelist wordsize="10">
@@ -1025,9 +1039,9 @@ Get counts for total domains
     </section>
     <section xml:id="designateclient_subcommand_report-count-records">
         <title>designate report-count-records</title>
-        <screen><computeroutput>usage: designate report-count-records [-h] [-f {shell,table,value}]
+        <screen><computeroutput>usage: designate report-count-records [-h] [-f {json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
-                                      [--prefix PREFIX]</computeroutput></screen>
+                                      [--noindent] [--prefix PREFIX]</computeroutput></screen>
         <para>
 Get counts for total records
         </para>  <variablelist wordsize="10">
@@ -1044,9 +1058,9 @@ Get counts for total records
     </section>
     <section xml:id="designateclient_subcommand_report-count-tenants">
         <title>designate report-count-tenants</title>
-        <screen><computeroutput>usage: designate report-count-tenants [-h] [-f {shell,table,value}]
+        <screen><computeroutput>usage: designate report-count-tenants [-h] [-f {json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
-                                      [--prefix PREFIX]</computeroutput></screen>
+                                      [--noindent] [--prefix PREFIX]</computeroutput></screen>
         <para>
 Get counts for total tenants
         </para>  <variablelist wordsize="10">
@@ -1063,8 +1077,9 @@ Get counts for total tenants
     </section>
     <section xml:id="designateclient_subcommand_report-tenant-domains">
         <title>designate report-tenant-domains</title>
-        <screen><computeroutput>usage: designate report-tenant-domains [-h] [-f {csv,table,value}] [-c COLUMN]
-                                       [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: designate report-tenant-domains [-h] [-f {csv,json,table,value,yaml}]
+                                       [-c COLUMN] [--max-width &lt;integer&gt;]
+                                       [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]
                                        --report-tenant-id REPORT_TENANT_ID</computeroutput></screen>
         <para>
@@ -1083,7 +1098,7 @@ Get a list of domains for given tenant
     <term><command>--report-tenant-id REPORT_TENANT_ID</command></term>
     <listitem>
       <para>
-      tenant_id being reported on
+      The tenant_id being reported on.
       </para>
     </listitem>
   </varlistentry>
@@ -1091,8 +1106,9 @@ Get a list of domains for given tenant
     </section>
     <section xml:id="designateclient_subcommand_report-tenants-all">
         <title>designate report-tenants-all</title>
-        <screen><computeroutput>usage: designate report-tenants-all [-h] [-f {csv,table,value}] [-c COLUMN]
-                                    [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: designate report-tenants-all [-h] [-f {csv,json,table,value,yaml}]
+                                    [-c COLUMN] [--max-width &lt;integer&gt;]
+                                    [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 Get list of tenants and domain count for each
@@ -1110,9 +1126,9 @@ Get list of tenants and domain count for each
     </section>
     <section xml:id="designateclient_subcommand_server-create">
         <title>designate server-create</title>
-        <screen><computeroutput>usage: designate server-create [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--prefix PREFIX]
-                               --name NAME</computeroutput></screen>
+        <screen><computeroutput>usage: designate server-create [-h] [-f {json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--noindent] [--prefix PREFIX] --name NAME</computeroutput></screen>
         <para>
 Create Server
         </para>  <variablelist wordsize="10">
@@ -1129,7 +1145,7 @@ Create Server
     <term><command>--name NAME</command></term>
     <listitem>
       <para>
-        Server Name
+        Server name
       </para>
     </listitem>
   </varlistentry>
@@ -1137,8 +1153,9 @@ Create Server
     </section>
     <section xml:id="designateclient_subcommand_server-delete">
         <title>designate server-delete</title>
-        <screen><computeroutput>usage: designate server-delete [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--prefix PREFIX]
+        <screen><computeroutput>usage: designate server-delete [-h] [-f {json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--noindent] [--prefix PREFIX]
                                id</computeroutput></screen>
         <para>
 Delete Server
@@ -1167,8 +1184,9 @@ Delete Server
     </section>
     <section xml:id="designateclient_subcommand_server-get">
         <title>designate server-get</title>
-        <screen><computeroutput>usage: designate server-get [-h] [-f {shell,table,value}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--prefix PREFIX]
+        <screen><computeroutput>usage: designate server-get [-h] [-f {json,shell,table,value,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
+                            [--prefix PREFIX]
                             id</computeroutput></screen>
         <para>
 Get Server
@@ -1197,8 +1215,8 @@ Get Server
     </section>
     <section xml:id="designateclient_subcommand_server-list">
         <title>designate server-list</title>
-        <screen><computeroutput>usage: designate server-list [-h] [-f {csv,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: designate server-list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
+                             [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List Servers
@@ -1216,9 +1234,9 @@ List Servers
     </section>
     <section xml:id="designateclient_subcommand_server-update">
         <title>designate server-update</title>
-        <screen><computeroutput>usage: designate server-update [-h] [-f {shell,table,value}] [-c COLUMN]
-                               [--max-width &lt;integer&gt;] [--prefix PREFIX]
-                               [--name NAME]
+        <screen><computeroutput>usage: designate server-update [-h] [-f {json,shell,table,value,yaml}]
+                               [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--noindent] [--prefix PREFIX] [--name NAME]
                                id</computeroutput></screen>
         <para>
 Update Server
@@ -1247,7 +1265,7 @@ Update Server
     <term><command>--name NAME</command></term>
     <listitem>
       <para>
-        Server Name
+        Server name
       </para>
     </listitem>
   </varlistentry>
@@ -1255,8 +1273,9 @@ Update Server
     </section>
     <section xml:id="designateclient_subcommand_sync-all">
         <title>designate sync-all</title>
-        <screen><computeroutput>usage: designate sync-all [-h] [-f {shell,table,value}] [-c COLUMN]
-                          [--max-width &lt;integer&gt;] [--prefix PREFIX]</computeroutput></screen>
+        <screen><computeroutput>usage: designate sync-all [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
+                          [--max-width &lt;integer&gt;] [--noindent]
+                          [--prefix PREFIX]</computeroutput></screen>
         <para>
 Sync Everything
         </para>  <variablelist wordsize="10">
@@ -1273,8 +1292,9 @@ Sync Everything
     </section>
     <section xml:id="designateclient_subcommand_sync-domain">
         <title>designate sync-domain</title>
-        <screen><computeroutput>usage: designate sync-domain [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--prefix PREFIX]
+        <screen><computeroutput>usage: designate sync-domain [-h] [-f {json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
+                             [--prefix PREFIX]
                              domain_id</computeroutput></screen>
         <para>
 Sync a single Domain
@@ -1303,8 +1323,9 @@ Sync a single Domain
     </section>
     <section xml:id="designateclient_subcommand_sync-record">
         <title>designate sync-record</title>
-        <screen><computeroutput>usage: designate sync-record [-h] [-f {shell,table,value}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--prefix PREFIX]
+        <screen><computeroutput>usage: designate sync-record [-h] [-f {json,shell,table,value,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
+                             [--prefix PREFIX]
                              domain_id record_id</computeroutput></screen>
         <para>
 Sync a single Record
@@ -1341,8 +1362,9 @@ Sync a single Record
     </section>
     <section xml:id="designateclient_subcommand_touch-domain">
         <title>designate touch-domain</title>
-        <screen><computeroutput>usage: designate touch-domain [-h] [-f {shell,table,value}] [-c COLUMN]
-                              [--max-width &lt;integer&gt;] [--prefix PREFIX]
+        <screen><computeroutput>usage: designate touch-domain [-h] [-f {json,shell,table,value,yaml}]
+                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
+                              [--prefix PREFIX]
                               domain_id</computeroutput></screen>
         <para>
 Touch a single Domain
