@@ -22,7 +22,7 @@ the Object Storage service on it. Similar to the controller node, each
 storage node contains one network interface on the :term:`management network`.
 Optionally, each storage node can contain a second network interface on
 a separate network for replication. For more information, see
-:doc:`basic_environment`.
+:ref:`environment`.
 
 #. Configure unique items on the first storage node:
 
@@ -61,8 +61,8 @@ a separate network for replication. For more information, see
      Also add this content to the :file:`/etc/hosts` file on all other
      nodes in your environment.
 
-   * Install and configure :term:`NTP <Network Time Protocol (NTP)>` using
-     the instructions in :doc:`basics-ntp`.
+   * Install and configure :term:`NTP` using the instructions in
+     :ref:`environment-ntp`.
 
    * Install the supporting utility packages:
 

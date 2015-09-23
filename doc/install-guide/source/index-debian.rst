@@ -80,12 +80,12 @@ Contents
 
    common/conventions.rst
    overview.rst
-   basic_environment.rst
+   environment.rst
    debconf/debconf.rst
    keystone.rst
    glance.rst
    nova.rst
-   networking.rst
+   neutron.rst
    horizon.rst
    cinder.rst
    swift.rst

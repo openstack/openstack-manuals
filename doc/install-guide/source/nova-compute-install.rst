@@ -18,15 +18,8 @@ scale your environment with additional compute nodes.
    this guide step-by-step to configure the first compute node. If you
    want to configure additional compute nodes, prepare them in a similar
    fashion to the first compute node in the :ref:`example architectures
-   <overview-example-architectures>` section using the same networking
-   service as your existing environment. For either networking service,
-   follow the :ref:`NTP configuration <basics-ntp-other-nodes>` and
-   :doc:`OpenStack packages <basics-packages>` instructions.
-   For OpenStack Networking (neutron), also follow the
-   :doc:`OpenStack Networking compute node <basics-networking-neutron>`
-   instructions. For legacy networking (nova-network), also follow the
-   :doc:`legacy networking compute node <basics-networking-nova>`
-   instructions. Each additional compute node requires unique IP addresses.
+   <overview-example-architectures>` section. Each additional compute node
+   requires a unique IP address.
 
 To install and configure the Compute hypervisor components
 ----------------------------------------------------------

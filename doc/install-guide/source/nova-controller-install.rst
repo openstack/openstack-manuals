@@ -227,6 +227,24 @@ To install and configure Compute controller components
         ...
         my_ip = 10.0.0.11
 
+   * In the ``[DEFAULT]`` section, enable support for the Networking service:
+
+     .. code-block:: ini
+
+        [DEFAULT]
+        ...
+        network_api_class = nova.network.neutronv2.api.API
+        security_group_api = neutron
+        linuxnet_interface_driver = nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver
+        firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+     .. note::
+
+        By default, Compute uses an internal firewall service. Since
+        Networking includes a firewall service, you must disable the Compute
+        firewall service by using the
+        ``nova.virt.firewall.NoopFirewallDriver`` firewall driver.
+
    * In the ``[DEFAULT]`` section, configure the VNC proxy to use
      the management interface IP address of the controller node:
 
@@ -275,7 +293,6 @@ To install and configure Compute controller components
            [oslo_concurrency]
            ...
            lock_path = /var/lib/nova/tmp
-
 
    * (Optional) To assist with troubleshooting, enable verbose
      logging in the ``[DEFAULT]`` section:
