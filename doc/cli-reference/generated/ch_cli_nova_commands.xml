@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Compute API and its extensions.
 
        This chapter documents <command>nova</command> version
-        <literal>2.29.0</literal>.
+        <literal>2.30.0</literal>.
     </para>
 
     <para>For help on a specific <command>nova</command>
@@ -1488,18 +1488,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>force-delete</command></term>
+    <term><command>host-evacuate</command></term>
     <listitem>
       <para>
-        Force delete a server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>restore</command></term>
-    <listitem>
-      <para>
-        Restore a soft-deleted server.
+        Evacuate all instances from failed host.
       </para>
     </listitem>
   </varlistentry>
@@ -1568,6 +1560,48 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>migration-list</command></term>
+    <listitem>
+      <para>
+        Print a list of migrations.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>list-extensions</command></term>
+    <listitem>
+      <para>
+        List all the os-api extensions that are
+      available.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-meta</command></term>
+    <listitem>
+      <para>
+        Set or Delete metadata on all instances of a
+      host.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action</command></term>
+    <listitem>
+      <para>
+        Show an action.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action-list</command></term>
+    <listitem>
+      <para>
+        List actions on a server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>baremetal-interface-add</command></term>
     <listitem>
       <para>
@@ -1627,43 +1661,27 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-evacuate</command></term>
+    <term><command>force-delete</command></term>
     <listitem>
       <para>
-        Evacuate all instances from failed host.
+        Force delete a server.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>instance-action</command></term>
+    <term><command>restore</command></term>
     <listitem>
       <para>
-        Show an action.
+        Restore a soft-deleted server.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>instance-action-list</command></term>
+    <term><command>host-evacuate-live</command></term>
     <listitem>
       <para>
-        List actions on a server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>migration-list</command></term>
-    <listitem>
-      <para>
-        Print a list of migrations.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-servers-migrate</command></term>
-    <listitem>
-      <para>
-        Migrate all instances of the specified host to
-      other available hosts.
+        Live migrate all instances of the specified
+      host to other available hosts.
       </para>
     </listitem>
   </varlistentry>
@@ -1685,29 +1703,11 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-evacuate-live</command></term>
+    <term><command>host-servers-migrate</command></term>
     <listitem>
       <para>
-        Live migrate all instances of the specified
-      host to other available hosts.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-meta</command></term>
-    <listitem>
-      <para>
-        Set or Delete metadata on all instances of a
-      host.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>list-extensions</command></term>
-    <listitem>
-      <para>
-        List all the os-api extensions that are
-      available.
+        Migrate all instances of the specified host to
+      other available hosts.
       </para>
     </listitem>
   </varlistentry>
@@ -4611,7 +4611,7 @@ Show details about the given keypair.
     <term><command>&lt;keypair&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of keypair
+        Name of keypair.
       </para>
     </listitem>
   </varlistentry>
@@ -4746,8 +4746,7 @@ List active servers.
     <listitem>
       <para>
         Display information from single tenant (Admin
-      only). The --all-tenants option must also be
-      provided.
+      only).
       </para>
     </listitem>
   </varlistentry>
@@ -6744,6 +6743,42 @@ Enable the service.
     <listitem>
       <para>
         Service binary.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="novaclient_subcommand_service-force-down">
+        <title>nova service-force-down</title>
+        <screen><computeroutput>usage: nova service-force-down [--unset] &lt;hostname&gt; &lt;binary&gt;</computeroutput></screen>
+        <para>
+Force service to down. (Supported by API versions '2.11' - '2.latest')
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;hostname&gt;</command></term>
+    <listitem>
+      <para>
+        Name of host.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;binary&gt;</command></term>
+    <listitem>
+      <para>
+        Service binary.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--unset</command></term>
+    <listitem>
+      <para>
+        Unset the force state down of service
       </para>
     </listitem>
   </varlistentry>
