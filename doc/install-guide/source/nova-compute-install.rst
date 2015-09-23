@@ -125,7 +125,7 @@ To install and configure the Compute hypervisor components
         ...
         vnc_enabled = True
         vncserver_listen = 0.0.0.0
-        vncserver_proxyclient_address = MANAGEMENT_INTERFACE_IP_ADDRESS
+        vncserver_proxyclient_address = $my_ip
         novncproxy_base_url = http://controller:6080/vnc_auto.html
 
      The server component listens on all IP addresses and the proxy
