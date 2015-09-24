@@ -79,6 +79,13 @@ Data storage
 
      $ ceilometer sample-list --meter cpu -q 'resource_id=INSTANCE_ID_1;timestamp > 2015-05-01T00:00:00;timestamp < 2015-06-01T00:00:00'
 
+   .. note::
+
+      As of the Liberty release, the number of items returned will be
+      restricted to the value defined by ``default_api_return_limit`` in the
+      :file:`ceilometer.conf` configuration file. Alternatively, the value can
+      be set per query by passing ``limit`` option in request.
+
 #. You can install the API behind ``mod_wsgi``, as it provides more
    settings to tweak, like ``threads`` and ``processes`` in case of
    ``WSGIDaemon``.
