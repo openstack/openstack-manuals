@@ -246,8 +246,8 @@ Install and configure components
 
         [vnc]
         ...
-        vncserver_listen = 10.0.0.11
-        vncserver_proxyclient_address = 10.0.0.11
+        vncserver_listen = $my_ip
+        vncserver_proxyclient_address = $my_ip
 
    * In the ``[glance]`` section, configure the location of the
      Image service:
