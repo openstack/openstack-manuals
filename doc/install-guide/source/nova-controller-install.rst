@@ -4,11 +4,11 @@ Install and configure controller node
 This section describes how to install and configure the
 Compute service, code-named nova, on the controller node.
 
-To configure prerequisites
---------------------------
+Prerequisites
+-------------
 
 Before you install and configure the Compute service, you must
-create a database, service credentials, and API endpoint.
+create a database, service credentials, and API endpoints.
 
 #. To create the database, complete these steps:
 
@@ -115,8 +115,8 @@ create a database, service credentials, and API endpoint.
       | service_type | compute                                 |
       +--------------+-----------------------------------------+
 
-To install and configure Compute controller components
-------------------------------------------------------
+Install and configure components
+--------------------------------
 
 .. include:: shared/note_configuration_vary_by_distribution.rst
 
@@ -239,12 +239,12 @@ To install and configure Compute controller components
         firewall service by using the
         ``nova.virt.firewall.NoopFirewallDriver`` firewall driver.
 
-   * In the ``[DEFAULT]`` section, configure the VNC proxy to use
-     the management interface IP address of the controller node:
+   * In the ``[vnc]`` section, configure the VNC proxy to use the management
+     interface IP address of the controller node:
 
      .. code-block:: ini
 
-        [DEFAULT]
+        [vnc]
         ...
         vncserver_listen = 10.0.0.11
         vncserver_proxyclient_address = 10.0.0.11
@@ -321,8 +321,8 @@ To install and configure Compute controller components
 
          # su -s /bin/sh -c "nova-manage db sync" nova
 
-To finalize installation
-------------------------
+Finalize installation
+---------------------
 
 .. only:: obs
 
