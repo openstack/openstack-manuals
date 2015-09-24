@@ -69,7 +69,7 @@ For information about how to manage images, see the
    For information about the :command:`glance image-create` parameters,
    see `Image service command-line client
    <http://docs.openstack.org/cli-reference/content/
-   glanceclient_commands.html#glanceclient_subcommand_image-create>`__
+   glanceclient_commands.html#glanceclient_subcommand_image-create_v2>`__
    in the ``OpenStack Command-Line Interface Reference``.
 
    For information about disk and container formats for images, see
