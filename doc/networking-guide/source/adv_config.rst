@@ -10,6 +10,7 @@ Advanced configuration
    adv_config_FwaaS.rst
    adv_config_VPNaaS.rst
    adv_config_service_chaining.rst
+   adv_config_qos.rst
    adv_config_group_policy.rst
    adv_config_debugging.rst
    adv_config_ipv6.rst
