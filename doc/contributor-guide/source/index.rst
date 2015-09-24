@@ -16,9 +16,11 @@ Contents
    :maxdepth: 2
 
    introduction.rst
+   first-timers-quickstart.rst
    rst-conv.rst
    docs-structure.rst
    content-specs.rst
+
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
