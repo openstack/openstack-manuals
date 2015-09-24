@@ -28,17 +28,11 @@ For information about how to manage images, see the
 
       $ source admin-openrc.sh
 
-#. Create a temporary local directory:
+#. Download the source image:
 
    .. code-block:: console
 
-      $ mkdir /tmp/images
-
-#. Download the source image into it:
-
-   .. code-block:: console
-
-      $ wget -P /tmp/images http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+      $ wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
 
 #. Upload the image to the Image service using the
    :term:`QCOW2 <QEMU Copy On Write 2 (QCOW2)>` disk format, :term:`bare`
@@ -47,7 +41,7 @@ For information about how to manage images, see the
    .. code-block:: console
 
       $ glance image-create --name "cirros-0.3.4-x86_64" \
-        --file /tmp/images/cirros-0.3.4-x86_64-disk.img \
+        --file cirros-0.3.4-x86_64-disk.img \
         --disk-format qcow2 --container-format bare \
         --visibility public --progress
       [=============================>] 100%
@@ -98,9 +92,3 @@ For information about how to manage images, see the
       +--------------------------------------+---------------------+
       | 38047887-61a7-41ea-9b49-27987d5e8bb9 | cirros-0.3.4-x86_64 |
       +--------------------------------------+---------------------+
-
-#. Remove the temporary local directory and source image:
-
-   .. code-block:: console
-
-      $ rm -r /tmp/images
