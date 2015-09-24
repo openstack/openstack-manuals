@@ -350,6 +350,12 @@ The following meters are collected for OpenStack Compute:
 |           |       |      |          | Pollster | vSphere,| (OpenStack types)|
 |           |       |      |          |          | XenAPI  |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
+| **Meters added in the Liberty release**                                     |
++-----------+-------+------+----------+----------+---------+------------------+
+| cpu.delta | Delta | ns   | instance | Pollster | Libvirt,| CPU time used s\ |
+|           |       |      | ID       |          | Hyper-V | ince previous d\ |
+|           |       |      |          |          |         | atapoint         |
++-----------+-------+------+----------+----------+---------+------------------+
 
 |
 

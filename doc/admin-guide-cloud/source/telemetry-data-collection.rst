@@ -618,6 +618,8 @@ add a list of transformer definitions. The available transformers are:
 +-----------------------+------------------------------------+
 | Unit conversion       | unit\_conversion                   |
 +-----------------------+------------------------------------+
+| Delta                 | delta                              |
++-----------------------+------------------------------------+
 
 The publishers section contains the list of publishers, where the
 samples data should be sent after the possible transformations.
@@ -810,6 +812,20 @@ silly meter that shows average CPU time per core::
 
     Expression evaluation gracefully handles NaNs and exceptions. In
     such a case it does not create a new sample but only logs a warning.
+
+**Delta transformer**
+
+This transformer calculates the change between two sample datapoints of a
+resource. It can be configured to capture only the positive growth deltas.
+
+Example configuration::
+
+    transformers:
+        - name: "delta"
+          parameters:
+            target:
+                name: "cpu.delta"
+            growth_only: True
 
 .. _telemetry-meter-definitions:
 
