@@ -27,6 +27,7 @@ Contents
    networking.rst
    telemetry.rst
    database.rst
+   baremetal.rst
    orchestration.rst
    cross_project.rst
    common/app_support.rst
