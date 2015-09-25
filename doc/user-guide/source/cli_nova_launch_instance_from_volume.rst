@@ -92,8 +92,8 @@ system.
    instance::
 
       $ nova boot --flavor 2 --image 98901246-af91-43d8-b5e6-a4506aa8f369 \
-              --block-device source=volume,id=d620d971-b160-4c4e-8652-2513d74e2080,dest=volume,shutdown=preserve \
-              myInstanceWithVolume
+        --block-device source=volume,id=d620d971-b160-4c4e-8652-2513d74e2080,dest=volume,shutdown=preserve \
+        myInstanceWithVolume
       +--------------------------------------+--------------------------------------------+
       | Property                             | Value                                      |
       +--------------------------------------+--------------------------------------------+
@@ -171,9 +171,9 @@ the volume to boot an instance.
 
    For example::
 
-      $ nova boot --flavor FLAVOR --block-device
-      source=SOURCE,id=ID,dest=DEST,size=SIZE,shutdown=PRESERVE,bootindex=INDEX
-      NAME
+      $ nova boot --flavor FLAVOR --block-device \
+        source=SOURCE,id=ID,dest=DEST,size=SIZE,shutdown=PRESERVE,bootindex=INDEX \
+        NAME
 
    The parameters are:
 
@@ -210,8 +210,8 @@ the volume to boot an instance.
    volume is not deleted when the instance is terminated::
 
       $ nova boot --flavor 2 \
-          --block-device source=image,id=484e05af-a14d-4567-812b-28122d1c2260,dest=volume,size=10,shutdown=preserve,bootindex=0 \
-          myInstanceFromVolume
+        --block-device source=image,id=484e05af-a14d-4567-812b-28122d1c2260,dest=volume,size=10,shutdown=preserve,bootindex=0 \
+        myInstanceFromVolume
       +--------------------------------------+--------------------------------+
       | Property                             | Value                          |
       +--------------------------------------+--------------------------------+
@@ -270,7 +270,7 @@ Boot an instance with a 512 MB swap disk and 2 GB ephemeral disk::
 
     $ nova boot --flavor FLAVOR --image IMAGE_ID --swap 512 --ephemeral size=2 NAME
 
-..  note::
+.. note::
 
    The flavor defines the maximum swap and ephemeral disk size. You
    cannot exceed these maximum values.
