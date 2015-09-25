@@ -40,7 +40,7 @@ requirements for the compute host and image.
    ``mkisofs_cmd`` value to the full path to an ``mkisofs.exe``
    installation. Additionally, you must set the ``qemu_img_cmd`` value
    in the ``hyperv`` configuration section to the full path to an
-   ``qemu-img`` command installation.
+   :command:`qemu-img` command installation.
 
 **Image requirements**
 
@@ -76,22 +76,28 @@ Enable and access the configuration drive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. To enable the configuration drive, pass the ``--config-drive true``
-   parameter to the **nova boot** command.
+   parameter to the :command:`nova boot` command.
 
    The following example enables the configuration drive and passes user
    data, two files, and two key/value metadata pairs, all of which are
    accessible from the configuration drive::
 
-       $ nova boot --config-drive true --image my-image-name --key-name mykey --flavor 1 --user-data ./my-user-data.txt myinstance --file /etc/network/interfaces=/home/myuser/instance-interfaces --file known_hosts=/home/myuser/.ssh/known_hosts --meta role=webservers --meta essential=false
+      $ nova boot --config-drive true --image my-image-name --key-name mykey \
+        --flavor 1 --user-data ./my-user-data.txt myinstance \
+        --file /etc/network/interfaces=/home/myuser/instance-interfaces \
+        --file known_hosts=/home/myuser/.ssh/known_hosts \
+        --meta role=webservers --meta essential=false
 
    You can also configure the Compute service to always create a
    configuration drive by setting the following option in the
-   ``/etc/nova/nova.conf`` file::
+   :file:`/etc/nova/nova.conf` file::
 
-       force_config_drive=true
+      force_config_drive=true
 
-.. note:: If a user passes the ``--config-drive true`` flag to the **nova
-   boot** command, an administrator cannot disable the configuration
+.. note::
+
+   If a user passes the ``--config-drive true`` flag to the :command:`nova
+   boot` command, an administrator cannot disable the configuration
    drive.
 
 #. If your guest operating system supports accessing disk by label, you
@@ -100,173 +106,177 @@ Enable and access the configuration drive
    following example, the configuration drive has the ``config-2``
    volume label::
 
-       # mkdir -p /mnt/config
-       # mount /dev/disk/by-label/config-2 /mnt/config
+      # mkdir -p /mnt/config
+      # mount /dev/disk/by-label/config-2 /mnt/config
 
-.. note:: Ensure that you use at least version 0.3.1 of CirrOS for
+.. note::
+
+   Ensure that you use at least version 0.3.1 of CirrOS for
    configuration drive support.
 
    If your guest operating system does not use ``udev``, the
    ``/dev/disk/by-label`` directory is not present.
 
-   You can use the **blkid** command to identify the block device that
+   You can use the :command:`blkid` command to identify the block device that
    corresponds to the configuration drive. For example, when you boot
    the CirrOS image with the ``m1.tiny`` flavor, the device is
    ``/dev/vdb``:
 
    .. code::
 
-       # blkid -t LABEL="config-2" -odevice
+      # blkid -t LABEL="config-2" -odevice
 
    .. code::
 
-       /dev/vdb
+      /dev/vdb
 
    Once identified, you can mount the device::
 
-       # mkdir -p /mnt/config
-       # mount /dev/vdb /mnt/config
+      # mkdir -p /mnt/config
+      # mount /dev/vdb /mnt/config
 
 Configuration drive contents
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In this example, the contents of the configuration drive are as follows::
 
-    ec2/2009-04-04/meta-data.json
-    ec2/2009-04-04/user-data
-    ec2/latest/meta-data.json
-    ec2/latest/user-data
-    openstack/2012-08-10/meta_data.json
-    openstack/2012-08-10/user_data
-    openstack/content
-    openstack/content/0000
-    openstack/content/0001
-    openstack/latest/meta_data.json
-    openstack/latest/user_data
+   ec2/2009-04-04/meta-data.json
+   ec2/2009-04-04/user-data
+   ec2/latest/meta-data.json
+   ec2/latest/user-data
+   openstack/2012-08-10/meta_data.json
+   openstack/2012-08-10/user_data
+   openstack/content
+   openstack/content/0000
+   openstack/content/0001
+   openstack/latest/meta_data.json
+   openstack/latest/user_data
 
 The files that appear on the configuration drive depend on the arguments
-that you pass to the **nova boot** command.
+that you pass to the :command:`nova boot` command.
 
 OpenStack metadata format
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The following example shows the contents of the
-``openstack/2012-08-10/meta_data.json`` and
-``openstack/latest/meta_data.json`` files. These files are identical.
+:file:`openstack/2012-08-10/meta_data.json` and
+:file:`openstack/latest/meta_data.json` files. These files are identical.
 The file contents are formatted for readability.
 
 .. code::
 
-    {
-        "availability_zone": "nova",
-        "files": [
-            {
-                "content_path": "/content/0000",
-                "path": "/etc/network/interfaces"
-            },
-            {
-                "content_path": "/content/0001",
-                "path": "known_hosts"
-            }
-        ],
-        "hostname": "test.novalocal",
-        "launch_index": 0,
-        "name": "test",
-        "meta": {
-            "role": "webservers",
-            "essential": "false"
-        },
-        "public_keys": {
-            "mykey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDBqUfVvCSez0/Wfpd8dLLgZXV9GtXQ7hnMN+Z0OWQUyebVEHey1CXuin0uY1cAJMhUq8j98SiW+cU0sU4J3x5l2+xi1bodDm1BtFWVeLIOQINpfV1n8fKjHB+ynPpe1F6tMDvrFGUlJs44t30BrujMXBe8Rq44cCk6wqyjATA3rQ== Generated by Nova\n"
-        },
-        "uuid": "83679162-1378-4288-a2d4-70e13ec132aa"
-    }
+   {
+       "availability_zone": "nova",
+       "files": [
+           {
+               "content_path": "/content/0000",
+               "path": "/etc/network/interfaces"
+           },
+           {
+               "content_path": "/content/0001",
+               "path": "known_hosts"
+           }
+       ],
+       "hostname": "test.novalocal",
+       "launch_index": 0,
+       "name": "test",
+       "meta": {
+           "role": "webservers",
+           "essential": "false"
+       },
+       "public_keys": {
+           "mykey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDBqUfVvCSez0/Wfpd8dLLgZXV9GtXQ7hnMN+Z0OWQUyebVEHey1CXuin0uY1cAJMhUq8j98SiW+cU0sU4J3x5l2+xi1bodDm1BtFWVeLIOQINpfV1n8fKjHB+ynPpe1F6tMDvrFGUlJs44t30BrujMXBe8Rq44cCk6wqyjATA3rQ== Generated by Nova\n"
+       },
+       "uuid": "83679162-1378-4288-a2d4-70e13ec132aa"
+   }
 
 Note the effect of the
 ``--file /etc/network/interfaces=/home/myuser/instance-interfaces``
-argument that was passed to the **nova boot** command. The contents of
-this file are contained in the ``openstack/content/0000`` file on the
+argument that was passed to the :command:`nova boot` command. The contents of
+this file are contained in the :file:`openstack/content/0000` file on the
 configuration drive, and the path is specified as
-``/etc/network/interfaces`` in the ``meta_data.json`` file.
+:file:`/etc/network/interfaces` in the :file:`meta_data.json` file.
 
 EC2 metadata format
 ^^^^^^^^^^^^^^^^^^^
 
 The following example shows the contents of the
-``ec2/2009-04-04/meta-data.json`` and the ``ec2/latest/meta-data.json``
+:file:`ec2/2009-04-04/meta-data.json` and the :file:`ec2/latest/meta-data.json`
 files. These files are identical. The file contents are formatted to
 improve readability.
 
 .. code::
 
-    {
-        "ami-id": "ami-00000001",
-        "ami-launch-index": 0,
-        "ami-manifest-path": "FIXME",
-        "block-device-mapping": {
-            "ami": "sda1",
-            "ephemeral0": "sda2",
-            "root": "/dev/sda1",
-            "swap": "sda3"
-        },
-        "hostname": "test.novalocal",
-        "instance-action": "none",
-        "instance-id": "i-00000001",
-        "instance-type": "m1.tiny",
-        "kernel-id": "aki-00000002",
-        "local-hostname": "test.novalocal",
-        "local-ipv4": null,
-        "placement": {
-            "availability-zone": "nova"
-        },
-        "public-hostname": "test.novalocal",
-        "public-ipv4": "",
-        "public-keys": {
-            "0": {
-                "openssh-key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDBqUfVvCSez0/Wfpd8dLLgZXV9GtXQ7hnMN+Z0OWQUyebVEHey1CXuin0uY1cAJMhUq8j98SiW+cU0sU4J3x5l2+xi1bodDm1BtFWVeLIOQINpfV1n8fKjHB+ynPpe1F6tMDvrFGUlJs44t30BrujMXBe8Rq44cCk6wqyjATA3rQ== Generated by Nova\n"
-            }
-        },
-        "ramdisk-id": "ari-00000003",
-        "reservation-id": "r-7lfps8wj",
-        "security-groups": [
-            "default"
-        ]
-    }
+   {
+       "ami-id": "ami-00000001",
+       "ami-launch-index": 0,
+       "ami-manifest-path": "FIXME",
+       "block-device-mapping": {
+           "ami": "sda1",
+           "ephemeral0": "sda2",
+           "root": "/dev/sda1",
+           "swap": "sda3"
+       },
+       "hostname": "test.novalocal",
+       "instance-action": "none",
+       "instance-id": "i-00000001",
+       "instance-type": "m1.tiny",
+       "kernel-id": "aki-00000002",
+       "local-hostname": "test.novalocal",
+       "local-ipv4": null,
+       "placement": {
+           "availability-zone": "nova"
+       },
+       "public-hostname": "test.novalocal",
+       "public-ipv4": "",
+       "public-keys": {
+           "0": {
+               "openssh-key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDBqUfVvCSez0/Wfpd8dLLgZXV9GtXQ7hnMN+Z0OWQUyebVEHey1CXuin0uY1cAJMhUq8j98SiW+cU0sU4J3x5l2+xi1bodDm1BtFWVeLIOQINpfV1n8fKjHB+ynPpe1F6tMDvrFGUlJs44t30BrujMXBe8Rq44cCk6wqyjATA3rQ== Generated by Nova\n"
+           }
+       },
+       "ramdisk-id": "ari-00000003",
+       "reservation-id": "r-7lfps8wj",
+       "security-groups": [
+           "default"
+       ]
+   }
 
 User data
 ^^^^^^^^^
 
-The ``openstack/2012-08-10/user_data``, ``openstack/latest/user_data``,
-``ec2/2009-04-04/user-data``, and ``ec2/latest/user-data`` file are
+The :file:`openstack/2012-08-10/user_data`, :file:`openstack/latest/user_data`,
+:file:`ec2/2009-04-04/user-data`, and :file:`ec2/latest/user-data` file are
 present only if the ``--user-data`` flag and the contents of the user
-data file are passed to the **nova boot** command.
+data file are passed to the :command:`nova boot` command.
 
 Configuration drive format
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The default format of the configuration drive as an ISO 9660 file
 system. To explicitly specify the ISO 9660 format, add the following
-line to the ``/etc/nova/nova.conf`` file::
+line to the :file:`/etc/nova/nova.conf` file::
 
-    config_drive_format=iso9660
+   config_drive_format=iso9660
 
 By default, you cannot attach the configuration drive image as a CD
 drive instead of as a disk drive. To attach a CD drive, add the
-following line to the ``/etc/nova/nova.conf`` file::
+following line to the :file:`/etc/nova/nova.conf` file::
 
-    config_drive_cdrom=true
+   config_drive_cdrom=true
 
 For legacy reasons, you can configure the configuration drive to use
 VFAT format instead of ISO 9660. It is unlikely that you would require
 VFAT format because ISO 9660 is widely supported across operating
 systems. However, to use the VFAT format, add the following line to the
-``/etc/nova/nova.conf`` file::
+:file:`/etc/nova/nova.conf` file::
 
-    config_drive_format=vfat
+   config_drive_format=vfat
 
 If you choose VFAT, the configuration drive is 64 MB.
 
-.. note:: In current version (Kilo) of OpenStack Compute, live migration with
+.. note::
+
+   In current version (Kilo) of OpenStack Compute, live migration with
    ``config_drive`` on local disk is forbidden due to the bug in libvirt
    of copying a read-only disk. However, if we use VFAT as the format of
    ``config_drive``, the function of live migration works well.
