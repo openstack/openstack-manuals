@@ -159,6 +159,8 @@ for each client. The following values are valid:
 
 -  ``manila`` - Shared file systems API
 
+-  ``mistral`` - Workflow service API
+
 -  ``murano`` - Application catalog API
 
 -  ``neutron`` - Networking API

@@ -47,6 +47,10 @@ service with its package name and description.
 |Database service|trove     |python-troveclient     |Create and manage       |
 |                |          |                       |databases.              |
 +----------------+----------+-----------------------+------------------------+
+|Data processing |sahara    |python-saharaclient    |Create and manage       |
+|                |          |                       |Hadoop clusters on      |
+|                |          |                       |OpenStack.              |
++----------------+----------+-----------------------+------------------------+
 |Identity        |keystone  |python-keystoneclient  |Create and manage       |
 |                |          |                       |users, tenants, roles,  |
 |                |          |                       |endpoints, and          |
@@ -85,9 +89,8 @@ service with its package name and description.
 |                |          |                       |measurements across     |
 |                |          |                       |OpenStack.              |
 +----------------+----------+-----------------------+------------------------+
-|Data processing |sahara    |python-saharaclient    |Create and manage       |
-|                |          |                       |Hadoop clusters on      |
-|                |          |                       |OpenStack.              |
+|Workflow        |mistral   |python-mistralclient   |Workflow service        |
+|service         |          |                       |for OpenStack cloud.    |
 +----------------+----------+-----------------------+------------------------+
 |Common client   |openstack |python-openstackclient |Common client for the   |
 |                |          |                       |OpenStack project.      |
