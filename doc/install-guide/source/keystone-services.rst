@@ -1,13 +1,13 @@
-==========================================
-Create the service entity and API endpoint
-==========================================
+Create the service entity and API endpoints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Identity service provides a catalog of services and their locations.
 Each service that you add to your OpenStack environment requires a
 :term:`service` entity and several :term:`API endpoints<API endpoint>`
 in the catalog.
 
-**To configure prerequisites**
+Prerequisites
+-------------
 
 .. only:: obs or rdo or ubuntu
 
@@ -16,6 +16,13 @@ in the catalog.
    temporary authentication token that you created in the section called
    :doc:`keystone-install` to initialize the service entity and API endpoint
    for the Identity service.
+
+.. only:: debian
+
+   .. note::
+
+      The packages can automatically create the service entity and API
+      endpoints.
 
 You must pass the value of the authentication token to the :command:`openstack`
 command with the ``--os-token`` parameter or set the OS_TOKEN
@@ -49,7 +56,7 @@ environment variables to reduce command length.
 
    .. code-block:: console
 
-      $ export OS_URL=http://controller:35357/v2.0
+      $ export OS_URL=http://controller:35357/v3
 
    .. only:: debian
 
@@ -58,7 +65,14 @@ environment variables to reduce command length.
          The packages can automatically create the service entity and API
          endpoint.
 
-**To create the service entity and API endpoint**
+#. Configure the Identity API version:
+
+   .. code-block:: console
+
+      $ export OS_IDENTITY_API_VERSION=3
+
+Create the service entity and API endpoints
+-------------------------------------------
 
 #. The Identity service manages a catalog of services in your OpenStack
    environment. Services use this catalog to determine the other services
@@ -91,41 +105,72 @@ environment variables to reduce command length.
 
    OpenStack uses three API endpoint variants for each service: admin,
    internal, and public. The admin API endpoint allows modifying users and
-   tenants by default, while the public and internal APIs do not. In a
-   production environment, the variants might reside on separate networks
-   that service different types of users for security reasons. For
-   instance, the public API network might be reachable from outside the
-   cloud for management tools, the admin API network might be protected,
-   while the internal API network is connected to each host. Also,
-   OpenStack supports multiple regions for scalability. For simplicity,
-   this guide uses the management network for all endpoint variations and
-   the default ``RegionOne`` region.
+   tenants by default, while the public and internal APIs do not allow these
+   operations. In a production environment, the variants might reside on
+   separate networks that service different types of users for security
+   reasons. For instance, the public API network might be visible from the
+   Internet so customers can manage their clouds. The admin API network
+   might be restricted to operators within the organization that manages
+   cloud infrastructure. The internal API network might be restricted to
+   the hosts that contain OpenStack services. Also, OpenStack supports
+   multiple regions for scalability. For simplicity, this guide uses the
+   management network for all endpoint variations and the default
+   ``RegionOne`` region.
 
-   Create the Identity service API endpoint:
+   Create the Identity service API endpoints:
 
    .. code-block:: console
 
-      $ openstack endpoint create \
-        --publicurl http://controller:5000/v2.0 \
-        --internalurl http://controller:5000/v2.0 \
-        --adminurl http://controller:35357/v2.0 \
-        --region RegionOne \
-        identity
+      $ openstack endpoint create --region RegionOne \
+        identity public http://controller:5000/v2.0
       +--------------+----------------------------------+
       | Field        | Value                            |
       +--------------+----------------------------------+
-      | adminurl     | http://controller:35357/v2.0     |
-      | id           | 4a9ffc04b8eb4848a49625a3df0170e5 |
-      | internalurl  | http://controller:5000/v2.0      |
-      | publicurl    | http://controller:5000/v2.0      |
+      | enabled      | True                             |
+      | id           | 30fff543e7dc4b7d9a0fb13791b78bf4 |
+      | interface    | public                           |
       | region       | RegionOne                        |
-      | service_id   | 4ddaae90388b4ebc9d252ec2252d8d10 |
+      | region_id    | RegionOne                        |
+      | service_id   | 8c8c0927262a45ad9066cfe70d46892c |
       | service_name | keystone                         |
       | service_type | identity                         |
+      | url          | http://controller:5000/v2.0      |
+      +--------------+----------------------------------+
+
+      $ openstack endpoint create --region RegionOne \
+        identity internal http://controller:5000/v2.0
+      +--------------+----------------------------------+
+      | Field        | Value                            |
+      +--------------+----------------------------------+
+      | enabled      | True                             |
+      | id           | 57cfa543e7dc4b712c0ab137911bc4fe |
+      | interface    | internal                         |
+      | region       | RegionOne                        |
+      | region_id    | RegionOne                        |
+      | service_id   | 6f8de927262ac12f6066cfe70d99ac51 |
+      | service_name | keystone                         |
+      | service_type | identity                         |
+      | url          | http://controller:5000/v2.0      |
+      +--------------+----------------------------------+
+
+      $ openstack endpoint create --region RegionOne \
+        identity admin http://controller:35357/v2.0
+      +--------------+----------------------------------+
+      | Field        | Value                            |
+      +--------------+----------------------------------+
+      | enabled      | True                             |
+      | id           | 78c3dfa3e7dc44c98ab1b1379122ecb1 |
+      | interface    | admin                            |
+      | region       | RegionOne                        |
+      | region_id    | RegionOne                        |
+      | service_id   | 34ab3d27262ac449cba6cfe704dbc11f |
+      | service_name | keystone                         |
+      | service_type | identity                         |
+      | url          | http://controller:5000/v2.0      |
       +--------------+----------------------------------+
 
    .. note::
 
       Each service that you add to your OpenStack environment requires one
-      or more service entities and one API endpoint in the Identity
+      or more service entities and three API endpoint variants in the Identity
       service.

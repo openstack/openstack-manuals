@@ -1,6 +1,5 @@
-=================================
 Create projects, users, and roles
-=================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Identity service provides authentication services for each OpenStack
 service. The authentication service uses a combination of :term:`domains
@@ -9,169 +8,166 @@ service. The authentication service uses a combination of :term:`domains
 
 .. note::
 
-   For simplicity, this guide implicitly uses the ``default`` domain.
-
-.. only:: debian
-
-   .. note::
-
-      The packages can automatically create the service entity and API
-      endpoint.
-
-To create tenants, users, and roles
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   For simplicity, this guide uses the ``default`` domain.
 
 #. Create an administrative project, user, and role for administrative
    operations in your environment:
 
-   a. Create the ``admin`` project:
+   * Create the ``admin`` project:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack project create --description "Admin Project" admin
-         +-------------+----------------------------------+
-         | Field       | Value                            |
-         +-------------+----------------------------------+
-         | description | Admin Project                    |
-         | enabled     | True                             |
-         | id          | cf12a15c5ea84b019aec3dc45580896b |
-         | name        | admin                            |
-         +-------------+----------------------------------+
+        $ openstack project create --domain default \
+          --description "Admin Project" admin
+        +-------------+----------------------------------+
+        | Field       | Value                            |
+        +-------------+----------------------------------+
+        | description | Admin Project                    |
+        | domain_id   | default                          |
+        | enabled     | True                             |
+        | id          | 343d245e850143a096806dfaefa9afdc |
+        | is_domain   | False                            |
+        | name        | admin                            |
+        | parent_id   | None                             |
+        +-------------+----------------------------------+
 
-      .. note::
+     .. note::
 
-         OpenStack generates IDs dynamically, so you will see different
-         values in the example command output.
+        OpenStack generates IDs dynamically, so you will see different
+        values in the example command output.
 
-   b. Create the ``admin`` user:
+   * Create the ``admin`` user:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack user create --password-prompt admin
-         User Password:
-         Repeat User Password:
-         +------------+----------------------------------+
-         | Field      | Value                            |
-         +------------+----------------------------------+
-         | email      | None                             |
-         | enabled    | True                             |
-         | id         | 4d411f2291f34941b30eef9bd797505a |
-         | name       | admin                            |
-         | username   | admin                            |
-         +------------+----------------------------------+
+        $ openstack user create --domain default \
+          --password-prompt admin
+        User Password:
+        Repeat User Password:
+        +-----------+----------------------------------+
+        | Field     | Value                            |
+        +-----------+----------------------------------+
+        | domain_id | default                          |
+        | enabled   | True                             |
+        | id        | ac3377633149401296f6c0d92d79dc16 |
+        | name      | admin                            |
+        +-----------+----------------------------------+
 
-   c. Create the ``admin`` role:
+   * Create the ``admin`` role:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack role create admin
-         +-------+----------------------------------+
-         | Field | Value                            |
-         +-------+----------------------------------+
-         | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
-         | name  | admin                            |
-         +-------+----------------------------------+
+        $ openstack role create admin
+        +-------+----------------------------------+
+        | Field | Value                            |
+        +-------+----------------------------------+
+        | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
+        | name  | admin                            |
+        +-------+----------------------------------+
 
-   d. Add the ``admin`` role to the ``admin`` project and user:
+   * Add the ``admin`` role to the ``admin`` project and user:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack role add --project admin --user admin admin
-         +-------+----------------------------------+
-         | Field | Value                            |
-         +-------+----------------------------------+
-         | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
-         | name  | admin                            |
-         +-------+----------------------------------+
+        $ openstack role add --project admin --user admin admin
 
-      .. note::
+     .. note::
 
-         Any roles that you create must map to roles specified in the
-         :file:`policy.json` file in the configuration file directory of each
-         OpenStack service. The default policy for most services grants
-         administrative access to the ``admin`` role. For more information,
-         see the `Operations Guide - Managing Projects and
-         Users <http://docs.openstack.org/openstack-ops/content/projects_users.html>`__.
+        This command provides no output.
+
+     .. note::
+
+        Any roles that you create must map to roles specified in the
+        ``policy.json`` file in the configuration file directory of each
+        OpenStack service. The default policy for most services grants
+        administrative access to the ``admin`` role. For more information,
+        see the `Operations Guide - Managing Projects and
+        Users <http://docs.openstack.org/openstack-ops/content/projects_users.html>`__.
 
 #. This guide uses a service project that contains a unique user for each
-   service that you add to your environment.
+   service that you add to your environment. Create the ``service``
+   project:
 
-   a. Create the ``service`` project:
+   .. code-block:: console
 
-      .. code-block:: console
-
-         $ openstack project create --description "Service Project" service
-         +-------------+----------------------------------+
-         | Field       | Value                            |
-         +-------------+----------------------------------+
-         | description | Service Project                  |
-         | enabled     | True                             |
-         | id          | 55cbd79c0c014c8a95534ebd16213ca1 |
-         | name        | service                          |
-         +-------------+----------------------------------+
+      $ openstack project create --domain default \
+        --description "Service Project" service
+      +-------------+----------------------------------+
+      | Field       | Value                            |
+      +-------------+----------------------------------+
+      | description | Service Project                  |
+      | domain_id   | default                          |
+      | enabled     | True                             |
+      | id          | 894cdfa366d34e9d835d3de01e752262 |
+      | is_domain   | False                            |
+      | name        | service                          |
+      | parent_id   | None                             |
+      +-------------+----------------------------------+
 
 #. Regular (non-admin) tasks should use an unprivileged project and user.
    As an example, this guide creates the ``demo`` project and user.
 
-   a. Create the ``demo`` project:
+   * Create the ``demo`` project:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack project create --description "Demo Project" demo
-         +-------------+----------------------------------+
-         | Field       | Value                            |
-         +-------------+----------------------------------+
-         | description | Demo Project                     |
-         | enabled     | True                             |
-         | id          | ab8ea576c0574b6092bb99150449b2d3 |
-         | name        | demo                             |
-         +-------------+----------------------------------+
+        $ openstack project create --domain default \
+          --description "Demo Project" demo
+        +-------------+----------------------------------+
+        | Field       | Value                            |
+        +-------------+----------------------------------+
+        | description | Demo Project                     |
+        | domain_id   | default                          |
+        | enabled     | True                             |
+        | id          | ed0b60bf607743088218b0a533d5943f |
+        | is_domain   | False                            |
+        | name        | demo                             |
+        | parent_id   | None                             |
+        +-------------+----------------------------------+
 
-      .. note::
+     .. note::
 
          Do not repeat this step when creating additional users for this
          project.
 
-   b. Create the ``demo`` user:
+   * Create the ``demo`` user:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack user create --password-prompt demo
-         User Password:
-         Repeat User Password:
-         +------------+----------------------------------+
-         | Field      | Value                            |
-         +------------+----------------------------------+
-         | email      | None                             |
-         | enabled    | True                             |
-         | id         | 3a81e6c8103b46709ef8d141308d4c72 |
-         | name       | demo                             |
-         | username   | demo                             |
-         +------------+----------------------------------+
+        $ openstack user create --domain default \
+          --password-prompt demo
+        User Password:
+        Repeat User Password:
+        +-----------+----------------------------------+
+        | Field     | Value                            |
+        +-----------+----------------------------------+
+        | domain_id | default                          |
+        | enabled   | True                             |
+        | id        | 58126687cbcc4888bfa9ab73a2256f27 |
+        | name      | demo                             |
+        +-----------+----------------------------------+
 
-   c. Create the ``user`` role:
+   * Create the ``user`` role:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack role create user
-         +-------+----------------------------------+
-         | Field | Value                            |
-         +-------+----------------------------------+
-         | id    | 9fe2ff9ee4384b1894a90878d3e92bab |
-         | name  | user                             |
-         +-------+----------------------------------+
+        $ openstack role create user
+        +-------+----------------------------------+
+        | Field | Value                            |
+        +-------+----------------------------------+
+        | id    | 997ce8d05fc143ac97d83fdfb5998552 |
+        | name  | user                             |
+        +-------+----------------------------------+
 
-   d. Add the ``user`` role to the ``demo`` project and user:
+   * Add the ``user`` role to the ``demo`` project and user:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack role add --project demo --user demo user
-         +-------+----------------------------------+
-         | Field | Value                            |
-         +-------+----------------------------------+
-         | id    | 9fe2ff9ee4384b1894a90878d3e92bab |
-         | name  | user                             |
-         +-------+----------------------------------+
+        $ openstack role add --project demo --user demo user
+
+     .. note::
+
+        This command provides no output.
 
 .. note::
 
