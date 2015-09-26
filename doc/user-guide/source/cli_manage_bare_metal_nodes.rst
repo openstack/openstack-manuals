@@ -113,6 +113,7 @@ network control via Neutron and OpenFlow.
   +-----------------------------+--------------------------------------+
   | status                      | BUILD                                |
   | id                          | cc302a8f-cd81-484b-89a8-b75eb3911b1b |
+  +-----------------------------+--------------------------------------+
 
   ... wait for instance to become active ...
 
@@ -122,12 +123,12 @@ network control via Neutron and OpenFlow.
   node to use to start the server. Separate the zone from the host
   name with a comma. For example:
 
-.. code::
+    .. code::
 
-  $ nova boot --availability_zone zone:HOST,NODE
+      $ nova boot --availability_zone zone:HOST,NODE
 
-``host`` is optional for the ``--availability_zone`` parameter. You
-can simply specify ``zone:,node``, still including the comma.
+  ``host`` is optional for the ``--availability_zone`` parameter. You
+  can simply specify ``zone:,node``, still including the comma.
 
 List bare-metal nodes and interfaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -148,7 +149,7 @@ UUID of the instance that runs on it:
 Show details for a bare-metal node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the ``nova baremetal-node-list`` command to view the details for a
+Use the :command:`nova baremetal-node-list` command to view the details for a
 bare-metal node:
 
 .. code::
