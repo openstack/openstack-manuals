@@ -133,8 +133,7 @@ OpenStack dashboard—:guilabel:`Admin` tab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Administrative users can use the :guilabel:`Admin` tab to view usage and to
-manage instances, volumes, flavors, images, projects, users, services, and
-quotas.
+manage instances, volumes, flavors, images, services, and quotas.
 
 
 .. figure:: figures/dashboard_admin_project_tab.png
