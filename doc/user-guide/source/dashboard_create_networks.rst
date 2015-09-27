@@ -81,7 +81,8 @@ Create a router
 
    A) On the :guilabel:`Routers` tab, click the name of the router.
 
-   B) On the :guilabel:`Router Details` page, click :guilabel:`Add Interface`.
+   B) On the :guilabel:`Router Details` page, click the :guilabel:`Interfaces`
+      tab, then click :guilabel:`Add Interface`.
 
    C) In the :guilabel:`Add Interface` dialog box, select a :guilabel:`Subnet`.
 
