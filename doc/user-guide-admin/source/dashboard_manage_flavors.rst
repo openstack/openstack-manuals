@@ -75,7 +75,7 @@ Update flavors
 
    Choose the :guilabel:`admin` project from the drop-down list at
    the top of the page.
-#. In the :guilabel:`Admin` tab, open the :guilabel:`System Panel`
+#. In the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Flavors` category.
 #. Select the flavor that you want to edit. Click :guilabel:`Edit
    Flavor`.
@@ -90,7 +90,7 @@ Update Metadata
 
    Choose the :guilabel:`admin` project from the drop-down list at
    the top of the page.
-#. In the :guilabel:`Admin` tab, open the :guilabel:`System Panel`
+#. In the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Flavors` category.
 #. Select the flavor that you want to update. In the drop-down
    list, click :guilabel:`Update Metadata` or click :guilabel:`No` or
@@ -156,7 +156,7 @@ Delete flavors
 
    Choose the :guilabel:`admin` project from the drop-down list at
    the top of the page.
-#. In the :guilabel:`Admin` tab, open the :guilabel:`System Panel`
+#. In the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Flavors` category.
 #. Select the flavors that you want to delete.
 #. Click :guilabel:`Delete Flavors`.

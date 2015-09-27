@@ -21,8 +21,8 @@ To create a host aggregate
    Choose the admin project from the drop-down list at the top of the
    page.
 
-#. On the :guilabel:`Admin` tab, open the System Panel and click the
-   :guilabel:`Host Aggregates` category.
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click
+   the :guilabel:`Host Aggregates` category.
 
 #. Click :guilabel:`Create Host Aggregate`.
 
@@ -57,7 +57,7 @@ To manage host aggregates
 #. Choose the admin project from the drop-down list at the top of the
    page.
 
-#. On the :guilabel:`Admin` tab, open the :guilabel:`System Panel` and click
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab and click
    the :guilabel:`Host Aggregates` category.
 
    -  To edit host aggregates, select the host aggregate that you want
