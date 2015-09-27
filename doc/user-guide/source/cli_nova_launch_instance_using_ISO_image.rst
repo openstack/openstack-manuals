@@ -8,7 +8,7 @@ Boot an instance from an ISO image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack supports booting instances using ISO images. But before you
-make such instances functional, use the nova :command:`boot` command
+make such instances functional, use the :command:`nova boot` command
 with the following parameters to boot an instance::
 
     $ nova boot \

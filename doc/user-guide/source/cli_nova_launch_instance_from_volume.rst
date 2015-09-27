@@ -4,7 +4,7 @@ Launch an instance from a volume
 
 You can boot instances from a volume instead of an image.
 
-To complete these tasks, use these parameters on the nova :command:`boot`
+To complete these tasks, use these parameters on the :command:`nova boot`
 command:
 
 .. list-table::
