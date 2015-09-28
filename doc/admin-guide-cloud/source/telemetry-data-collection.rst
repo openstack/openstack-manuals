@@ -44,7 +44,12 @@ Compute service.
 The Telemetry module has a separate agent that is responsible for
 consuming notifications, namely the notification agent. This component
 is responsible for consuming from the message bus and transforming
-notifications into events and measurement samples.
+notifications into events and measurement samples. Beginning in the Liberty
+release, the notification agent is responsible for all data processing such as
+transformations and publishing. After processing, the data is sent via AMQP to
+the collector service or any external service, which is responsible for
+persisting the data into the configured database back end.
+
 
 The different OpenStack services emit several notifications about the
 various types of events that happen in the system during normal
@@ -168,8 +173,8 @@ OpenStack Installation Guide.
 .. note::
 
    When the ``store_events`` option is set to True in
-   :file:`ceilometer.conf`, the notification agent needs database access in
-   order to work properly.
+   :file:`ceilometer.conf`, Prior to the Kilo release, the notification agent
+   needed database access in order to work properly.
 
 Middleware for the OpenStack Object Storage service
 ---------------------------------------------------
@@ -254,11 +259,9 @@ polling plug-ins to be loaded by using the ``pollster-list`` option::
 
 Central agent
 -------------
-As the name of this agent shows, it is a central component in the
-Telemetry architecture. This agent is responsible for polling public
-REST APIs to retrieve additional information on OpenStack resources not
-already surfaced via notifications, and also for polling hardware
-resources over SNMP.
+This agent is responsible for polling public REST APIs to retrieve additional
+information on OpenStack resources not already surfaced via notifications,
+and also for polling hardware resources over SNMP.
 
 The following services can be polled with this agent:
 
@@ -278,9 +281,13 @@ To install and configure this service use the `Install the Telemetry module
 section in the OpenStack Installation Guide.
 
 The central agent does not need direct database connection. The samples
-collected by this agent are sent via AMQP to the collector service or
-any external service, which is responsible for persisting the data into
-the configured database back end.
+collected by this agent are sent via AMQP to the notification agent to be
+processed.
+
+.. note::
+
+   Prior to the Liberty release, data from the polling agents was processed
+   locally and published accordingly rather than by the notification agent.
 
 Compute agent
 -------------
@@ -298,7 +305,7 @@ agent for Telemetry
 section in the OpenStack Installation Guide.
 
 Just like the central agent, this component also does not need a direct
-database connection. The samples are sent via AMQP to the collector.
+database connection. The samples are sent via AMQP to the notification agent.
 
 The list of supported hypervisors can be found in
 :ref:`telemetry-supported-hypervisors`. The compute agent uses the API of the
@@ -407,7 +414,7 @@ is suggested that you install the IPMI agent only on an IPMI capable
 node for performance reasons.
 
 Just like the central agent, this component also does not need direct
-database access. The samples are sent via AMQP to the collector.
+database access. The samples are sent via AMQP to the notification agent.
 
 The list of collected meters can be found in
 :ref:`telemetry-bare-metal-service`.
