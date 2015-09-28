@@ -45,33 +45,33 @@ Neutron sriov-agent
 --------------------
 There are 2 ways of configuring SR-IOV:
 
-#. Without the sriov-agent running on each compute node
 #. With the sriov-agent running on each compute node
+#. Without the sriov-agent running on each compute node
 
 The sriov-agent allows you to set the admin state of ports and
 starting from Liberty allows you to control
 port security (enable and disable spoofchecking) and QoS rate limit settings.
 
-When would you decide to not use sriov-agent?
 
-- **Hardware is not supported:** Currently Intel cards are known not to work
-  with sriov-agent.
-- **Extra configuration burden:** Using sriov-agent requires you to run an
-  extra agent on each compute node.
-
+  .. note::
+     With the sriov-agent mode is default in Liberty.
+     Without the sriov-agent mode is deprecated in Liberty and
+     removed in Mitaka.
 
 Known limitations
 ~~~~~~~~~~~~~~~~~
 
+* QoS is supported since Liberty, while it has limitations.
+  max_burst_kbps (burst over max_kbps) is not supported.
+  max_kbps is rounded to Mbps.
+* Security Group is not supported. the agent is only working with
+  ``firewall_driver = neutron.agent.firewall.NoopFirewallDriver``.
 * No OpenStack Dashboard integration. Users need to use CLI or API to
   create neutron SR-IOV ports.
-* The following functionalities are not implemented for SR-IOV ports:
-  security groups, QoS, and ARP spoofing filtering.
-* When using Intel SR-IOV cards the sriov-agent should be disabled.
 * Live migration is not supported for instances with SR-IOV ports.
 
   .. note::
-     QoS and ARP spoofing filtering are supported since Liberty when using
+     ARP spoofing filtering is supported since Liberty when using
      sriov-agent.
 
 Environment example
@@ -82,7 +82,7 @@ and instances with SR-IOV ports on a single neutron
 network.
 
 .. note::
-   Thoughout this guide, eth3 is used as the PF and
+   Throughout this guide, eth3 is used as the PF and
    physnet2 is used as the provider network configured as a VLAN range.
    You are expected to change this according to your actual
    environment.
@@ -97,12 +97,13 @@ as the interface for Open vSwitch VLAN and has access
 to the private networks of all machines.
 
 The step to create VFs differ between SR-IOV card ethernet controller
-manufacturers. Currently the following manufactuers are known to work:
+manufacturers. Currently the following manufacturers are known to work:
 
 - Intel
 - Mellanox
+- QLogic
 
-For **Melanox SR-IOV ethernet cards** see:
+For **Mellanox SR-IOV ethernet cards** see:
 `Mellanox: HowTo Configure SR-IOV VFs
 <https://community.mellanox.com/docs/DOC-1484>`_
 
@@ -154,6 +155,10 @@ do the following:
       is through :file:`sysfs.conf` but for unknown reason
       changing :file:`sysfs.conf` does not have any effect on Ubuntu 14.04.
 
+For **QLogic SR-IOV ethernet cards** see:
+`User's Guide OpenStack Deployment with SR-IOV Configuration
+<http://www.qlogic.com/solutions/Documents/UsersGuide_OpenStack_SR-IOV.pdf>`_
+
 
 Whitelist PCI devices nova-compute (Compute)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -194,7 +199,7 @@ whitelisting by:
 
 
 If the device defined by the PCI address or devname corresponds to a SR-IOV PF,
-all VFs under the PF will match the entry. Multiple pci_passhtrough_whitelist
+all VFs under the PF will match the entry. Multiple pci_passthrough_whitelist
 entries per host are supported.
 
 
@@ -225,20 +230,6 @@ Configure neutron-server (Controller)
    .. code-block:: ini
 
       supported_pci_vendor_devs = 8086:10ed
-
-#. Enable or disable the sriovagent. Please see the section,
-   `Neutron sriov-agent`_ if you want to disable or enable the sriovagent.
-   Edit the agent_required parameter under the ml2_sriov section in
-   :file:`/etc/neutron/plugins/ml2/ml2_conf_sriov.ini`:
-
-   .. code-block:: ini
-
-      [ml2_sriov]
-      agent_required = True
-
-   .. note::
-      If you enabled agent_required=True make sure that you run the sriov-agent
-      on each compute node.
 
 
 #. Add the newly configured :file:`ml2_conf_sriov.ini` as parameter to
@@ -278,9 +269,9 @@ Enable neutron sriov-agent (Compute)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note::
-   You only need to enable the sriov-agent if you decided to set
-   agent_required=True in the step `Configure neutron-server (Controller)`_.
-   If you set agent_required=False, you can safely skip this step.
+   You only need to enable the sriov-agent if you decided to keep
+   ``agent_required=True`` in the step `Configure neutron-server (Controller)`_.
+   If you set ``agent_required=False``, you can safely skip this step.
 
 #. On each compute node edit the file
    :file:`/etc/neutron/plugins/ml2/ml2_conf_sriov.ini`:
