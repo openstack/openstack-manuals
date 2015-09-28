@@ -321,11 +321,42 @@ each hypervisor supported by the Telemetry module.
 
     Telemetry supports Libvirt, which hides the hypervisor under it.
 
+.. _telemetry-ipmi-agent:
+
+IPMI agent
+----------
+This agent is responsible for collecting IPMI sensor data and Intel Node
+Manager data on individual compute nodes within an OpenStack deployment.
+This agent requires an IPMI capable node with the ipmitool utility installed,
+which is commonly used for IPMI control on various Linux distributions.
+
+An IPMI agent instance could be installed on each and every compute node
+with IPMI support, except when the node is managed by the Bare metal
+service and the ``conductor.send_sensor_data`` option is set to ``true``
+in the Bare metal service. It is no harm to install this agent on a
+compute node without IPMI or Intel Node Manager support, as the agent
+checks for the hardware and if none is available, returns empty data. It
+is suggested that you install the IPMI agent only on an IPMI capable
+node for performance reasons.
+
+Just like the central agent, this component also does not need direct
+database access. The samples are sent via AMQP to the notification agent.
+
+The list of collected meters can be found in
+:ref:`telemetry-bare-metal-service`.
+
+.. note::
+
+    Do not deploy both the IPMI agent and the Bare metal service on one
+    compute node. If ``conductor.send_sensor_data`` is set, this
+    misconfiguration causes duplicated IPMI sensor samples.
+
+
 .. _ha-deploy-services:
 
-Support for HA deployment of the central and compute agent services
--------------------------------------------------------------------
-Both the central and the compute agent can run in an HA deployment,
+Support for HA deployment
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Both the polling agents and notification agents can run in an HA deployment,
 which means that multiple instances of these services can run in
 parallel with workload partitioning among these running instances.
 
@@ -354,6 +385,32 @@ set in the :file:`ceilometer.conf` configuration file for both the central
 and compute agents, see the `Coordination section
 <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html>`__
 in the OpenStack Configuration Reference.
+
+Notification agent HA deployment
+--------------------------------
+In the Kilo release, workload partitioning support was added to the
+notification agent. This is particularly useful as the pipeline processing
+is handled exclusively by the notification agent now which may result
+in a larger amount of load.
+
+To enable workload partitioning by notification agent, the ``backend_url``
+option must be set in the :file:`ceilometer.conf` configuration file.
+Additionally, ``workload_partitioning`` should be enabled in the
+`Notification section <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html>`__ in the OpenStack Configuration Reference.
+
+.. note::
+
+   In Liberty, the notification agent creates multiple queues to divide the
+   workload across all active agents. The number of queues can be controled by
+   the ``pipeline_processing_queues`` option in the :file:`ceilometer.conf`
+   configuration file. A larger value will result in better distribution of
+   tasks but will also require more memory and longer startup time. It is
+   recommended to have a value approximately three times the number of active
+   notification agents. At a minimum, the value should be equal to the number
+   of active agents.
+
+Polling agent HA deployment
+---------------------------
 
 .. note::
 
@@ -395,35 +452,6 @@ be set to ``True`` under the `Compute section
 <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html>`__
 in the :file:`ceilometer.conf` configuration file.
 
-.. _telemetry-ipmi-agent:
-
-IPMI agent
-----------
-This agent is responsible for collecting IPMI sensor data and Intel Node
-Manager data on individual compute nodes within an OpenStack deployment.
-This agent requires an IPMI capable node with the ipmitool utility installed,
-which is commonly used for IPMI control on various Linux distributions.
-
-An IPMI agent instance could be installed on each and every compute node
-with IPMI support, except when the node is managed by the Bare metal
-service and the ``conductor.send_sensor_data`` option is set to ``true``
-in the Bare metal service. It is no harm to install this agent on a
-compute node without IPMI or Intel Node Manager support, as the agent
-checks for the hardware and if none is available, returns empty data. It
-is suggested that you install the IPMI agent only on an IPMI capable
-node for performance reasons.
-
-Just like the central agent, this component also does not need direct
-database access. The samples are sent via AMQP to the notification agent.
-
-The list of collected meters can be found in
-:ref:`telemetry-bare-metal-service`.
-
-.. note::
-
-    Do not deploy both the IPMI agent and the Bare metal service on one
-    compute node. If ``conductor.send_sensor_data`` is set, this
-    misconfiguration causes duplicated IPMI sensor samples.
 
 Send samples to Telemetry
 ~~~~~~~~~~~~~~~~~~~~~~~~~
