@@ -39,7 +39,7 @@ copy of the image on the compute node where the instance starts.
    manually <http://docs.openstack.org/image-guide/content/ch_creating_images_manually.html>`__
    in the *OpenStack Virtual Machine Image Guide*.
 
-#. Select an image and click :guilabel:`Launch`.
+#. Select an image and click :guilabel:`Launch Instance`.
 
 #. In the :guilabel:`Launch Instance` dialog box, specify the following values:
 
