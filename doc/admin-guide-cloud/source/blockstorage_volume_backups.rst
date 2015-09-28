@@ -75,6 +75,13 @@ on the IDs of the parent backups. A full restore is performed based on the
 full backup first, then restore is done based on the incremental backup,
 laying on top of it in order.
 
+You can view a backup list with the :command:`cinder backup-list`
+command. Optional arguments to clarify the status of your backups
+include: running ``--name``, ``--status``, and ``--volume-id`` to filter
+through backups by the specified name, status, or volume-id. Search
+with ``--all-tenants`` for details of the tenants associated
+with the listed backups.
+
 Because volume backups are dependent on the Block Storage database, you must
 also back up your Block Storage database regularly to ensure data recovery.
 
