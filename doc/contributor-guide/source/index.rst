@@ -21,6 +21,7 @@ Contents
    content-specs.rst
    docs_builds.rst
    writing-style.rst
+   json_conventions.rst
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
