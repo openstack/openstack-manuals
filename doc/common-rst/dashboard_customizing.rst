@@ -99,25 +99,7 @@ Logo and site colors
       <link href='{{ STATIC_URL }}dashboard/css/{% choose_css %}' media='screen' rel='stylesheet' />
       <link href='{{ STATIC_URL }}dashboard/css/custom.css' media='screen' rel='stylesheet' />
 
-#. Restart Apache:
-
-   On Ubuntu:
-
-   .. code-block:: console
-
-      # service apache2 restart
-
-   On Fedora, RHEL, CentOS:
-
-   .. code-block:: console
-
-      # service httpd restart
-
-   On openSUSE:
-
-   .. code-block:: console
-
-      # service apache2 restart
+#. Restart the Apache service.
 
 #. To view your changes reload your dashboard. If necessary go back
    and modify your CSS file as appropriate.

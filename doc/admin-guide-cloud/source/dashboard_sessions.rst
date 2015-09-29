@@ -159,20 +159,7 @@ far beyond the scope of this documentation.
 
      # mkdir -p /var/lib/dash/.blackhole
 
-#. Restart and refresh Apache:
-
-   On Ubuntu::
-
-     # /etc/init.d/apache2 restart
-
-   On Fedora/RHEL/CentOS::
-
-     # service httpd restart
-     # service apache2 restart
-
-   On openSUSE::
-
-     # systemctl restart apache2.service
+#. Restart the Apache service.
 
 #. On Ubuntu, restart the nova-api service to ensure that the API server
    can connect to the Dashboard without error::
