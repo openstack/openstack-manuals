@@ -188,6 +188,9 @@ The following Launchpad Bugs areas are available:
 -  `Bugs: Telemetry
    (ceilometer) <https://bugs.launchpad.net/ceilometer>`__
 
+-  `Bugs: Workflow service
+   (mistral) <https://bugs.launchpad.net/mistral>`__
+
 -  `Bugs: Messaging service
    (zaqar) <https://bugs.launchpad.net/zaqar>`__
 
