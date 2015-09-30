@@ -6,8 +6,17 @@
   xml:id="ch_obtaining_images">
         <title>Get images</title>
         <?dbhtml stop-chunking?>
-    <para>The simplest way to obtain a virtual machine image that works with OpenStack is to
-        download one that someone else has already created.</para>
+    <para>The simplest way to obtain a virtual machine image that works with
+          OpenStack is to download one that someone else has already created.
+          Most of the images contain the
+          <systemitem class="process">cloud-init</systemitem> package to
+          support SSH key pair and user data injection. Because many of the
+          images disable SSH password authentication by default, boot the
+          image with an injected key pair. You can SSH into the instance with
+          the private key and default login account. See the
+          <link xlink:href="http://docs.openstack.org/user-guide"
+          >OpenStack End User Guide</link> for more information on how to
+          create and inject key pairs with OpenStack.</para>
         <section xml:id="centos-images">
           <title>CentOS images</title>
           <para>The CentOS project maintains official images for direct
@@ -27,7 +36,8 @@
                 </listitem>
               </itemizedlist>
             <note>
-                <para>In a CentOS image, the login account is <literal>centos</literal>.</para>
+                <para>In a CentOS cloud image, the login account is
+                      <literal>centos</literal>.</para>
             </note>
         </section>
         <section xml:id="cirros-images">
@@ -87,19 +97,18 @@
             </itemizedlist>
             <note>
                 <para>
-                In a RHEL image, the login account is <literal>cloud-user</literal>.
+                In a RHEL cloud image, the login account is
+                <literal>cloud-user</literal>.
                 </para>
             </note>
         </section>
     <section xml:id="fedora-images">
         <title>Official Fedora images</title>
         <para>The Fedora project maintains a list of official cloud images at
-              <link xlink:href="https://getfedora.org/en/cloud/download/" />. The images
-              include the <systemitem class="process">cloud-init</systemitem>
-              utility to support key and user data injection. The default user
-              name is <systemitem class="username">fedora</systemitem>.
+              <link xlink:href="https://getfedora.org/en/cloud/download/" />.
             <note>
-                <para>In a Fedora image, the login account is <literal>fedora</literal>.</para>
+                <para>In a Fedora cloud image, the login account is
+                <literal>fedora</literal>.</para>
             </note></para>
     </section>
     <section xml:id="suse-sles-images">
