@@ -11,7 +11,13 @@ users can create volume types.
 Create a volume
 ~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Volumes`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Volumes` category.
 
 #. Click :guilabel:`Create Volume`.
 
@@ -57,7 +63,13 @@ Attach a volume to an instance
 After you create one or more volumes, you can attach them to instances.
 You can attach a volume to one instance at a time.
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Volumes`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Volumes` category.
 
 #. Select the volume to add to an instance and click
    :guilabel:`Edit Attachments`.
@@ -94,7 +106,13 @@ A message indicates whether the action was successful.
 Create a snapshot from a volume
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Volumes`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Volumes` category.
 
 #. Select a volume from which to create a snapshot.
 
@@ -110,7 +128,13 @@ Create a snapshot from a volume
 Edit a volume
 ~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Volumes`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Volumes` category.
 
 #. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
    appropriate project.
@@ -136,7 +160,13 @@ Delete a volume
 When you delete an instance, the data in its attached volumes is not
 destroyed.
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Volumes`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Volumes` category.
 
 #. Select the check boxes for the volumes that you want to delete.
 

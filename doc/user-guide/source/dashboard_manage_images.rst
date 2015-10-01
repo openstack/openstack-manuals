@@ -29,7 +29,8 @@ Follow this procedure to upload an image to a project:
 #. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
    appropriate project.
 
-#. On the :guilabel:`Project` tab, click :guilabel:`Images`.
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Images` category.
 
 #. Click :guilabel:`Create Image`.
 
@@ -95,7 +96,8 @@ Follow this procedure to update an existing image.
 #. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
    appropriate project.
 
-#. On the :guilabel:`Project` tab, click :guilabel:`Images`.
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Images` category.
 
 #. Select the image that you want to edit.
 
@@ -124,7 +126,8 @@ with the appropriate permissions can delete images.
 #. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
    appropriate project.
 
-#. On the :guilabel:`Project` tab, click :guilabel:`Images`.
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Images` category.
 
 #. Select the images that you want to delete.
 

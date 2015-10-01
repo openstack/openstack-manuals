@@ -57,10 +57,14 @@ flavor for the type of database instance you want.
 datastore and verified that you have an appropriate flavor, you can
 create a database instance.
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Databases`.
+#. Log in to the dashboard.
 
-#. Click :guilabel:`Database Instances`. This lists the instances that already
-   exist in your environment.
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Database` tab and
+   click :guilabel:`Instances` category.  This lists the instances that
+   already exist in your environment.
 
 #. Click :guilabel:`Launch Instance`.
 
@@ -108,10 +112,13 @@ This example shows you how to back up and restore a MySQL database.
 To backup the database instance
 -------------------------------
 
-#. Log in to the dashboard, choose a project, and click
-   :guilabel:`Databases`.
+#. Log in to the dashboard.
 
-#. Click :guilabel:`Database Instances`. This displays the existing
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Database` tab and
+   click :guilabel:`Instances` category. This displays the existing
    instances in your system.
 
 #. Click :guilabel:`Create Backup`.
@@ -136,10 +143,13 @@ Now assume that your original database instance is damaged and you
 need to restore it. You do the restore by using your backup to create
 a new database instance.
 
-#. Log in to the dashboard, choose a project, and click
-   :guilabel:`Databases`.
+#. Log in to the dashboard.
 
-#. Click :guilabel:`Database Backups`. This lists the available backups.
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Database` tab and
+   click :guilabel:`Backups` category. This lists the available backups.
 
 #. Check the backup you want to use and click :guilabel:`Restore Backup`.
 
@@ -162,10 +172,13 @@ such as its volume size and flavor.
 To change the volume size of an instance
 ----------------------------------------
 
-#. Log in to the dashboard, choose a project, and click
-   :guilabel:`Databases`.
+#. Log in to the dashboard.
 
-#. Click :guilabel:`Database Instances`. This displays the existing
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Database` tab and
+   click :guilabel:`Instances` category. This displays the existing
    instances in your system.
 
 #. Check the instance you want to work with.
@@ -182,10 +195,13 @@ To change the volume size of an instance
 To change the flavor of an instance
 -----------------------------------
 
-#. Log in to the dashboard, choose a project, and
-   click :guilabel:`Databases`.
+#. Log in to the dashboard.
 
-#. Click :guilabel:`Database Instances`. This displays the existing
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Database` tab and
+   click :guilabel:`Instances` category. This displays the existing
    instances in your system.
 
 #. Check the instance you want to work with. In the

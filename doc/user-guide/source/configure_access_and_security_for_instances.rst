@@ -44,9 +44,15 @@ group rules to a project, if your cloud requires them.
 .. note:: When adding a rule, you must specify the protocol used with the
    destination port or source port.
 
-#. Log in to the dashboard, choose a project, and click :guilabel:`Access &
-   Security`. The :guilabel:`Security Groups` tab shows the security groups
-   that are available for this project.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Access & Security` category. The :guilabel:
+   `Security Groups` tab shows the security groups that are available
+   for this project.
 
 #. Select the default security group and click :guilabel:`Manage Rules`.
 
@@ -89,8 +95,13 @@ Add a key pair
 
 Create at least one key pair for each project.
 
-#. Log in to the dashboard, choose a project, and click
-   :guilabel:`Access & Security`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Access & Security` category.
 
 #. Click the :guilabel:`Key Pairs` tab, which shows the key pairs that
    are available for this project.
@@ -107,8 +118,13 @@ Create at least one key pair for each project.
 Import a key pair
 ~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click
-   :guilabel:`Access & Security`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Access & Security` category.
 
 #. Click the :guilabel:`Key Pairs` tab, which shows the key pairs that
    are available for this project.
@@ -158,8 +174,13 @@ of the state of the instances involved. This procedure details the
 reservation of a floating IP address from an existing pool of addresses
 and the association of that address with a specific instance.
 
-#. Log in to the dashboard, choose a project, and click
-   :guilabel:`Access & Security`.
+#. Log in to the dashboard.
+
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+
+#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
+   click :guilabel:`Access & Security` category.
 
 #. Click the :guilabel:`Floating IPs` tab, which shows the floating IP
    addresses allocated to instances.

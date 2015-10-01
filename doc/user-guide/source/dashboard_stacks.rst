@@ -25,9 +25,11 @@ openstack.org/developer/heat/>`_.
 Launch a stack
 ~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click
-   :guilabel:`Stacks` in the :guilabel:`Orchestration` category
-   on the :guilabel:`Project` tab.
+#. Log in to the dashboard.
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+#. On the :guilabel:`Project` tab, open the :guilabel:`Orchestration` tab and
+   click :guilabel:`Stacks` category.
 #. Click :guilabel:`Launch Stack`.
 #. In the :guilabel:`Select Template` dialog box, specify the
    following values:
@@ -118,9 +120,11 @@ Events
 Manage a stack
 ~~~~~~~~~~~~~~
 
-#. Log in to the dashboard, choose a project, and click
-   :guilabel:`Stacks` in the :guilabel:`Orchestration` category
-   on the :guilabel:`Project` tab.
+#. Log in to the dashboard.
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+#. On the :guilabel:`Project` tab, open the :guilabel:`Orchestration` tab and
+   click :guilabel:`Stacks` category.
 #. Select the stack that you want to update.
 #. Click :guilabel:`Change Stack Template`.
 #. In the :guilabel:`Select Template` dialog box, select the
@@ -136,9 +140,11 @@ Delete a stack
 
 When you delete a stack, you cannot undo this action.
 
-#. Log in to the dashboard, choose a project, and click
-   :guilabel:`Stacks` in the :guilabel:`Orchestration` category
-   on the :guilabel:`Project` tab.
+#. Log in to the dashboard.
+#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
+   appropriate project.
+#. On the :guilabel:`Project` tab, open the :guilabel:`Orchestration` tab and
+   click :guilabel:`Stacks` category.
 #. Select the stack that you want to delete.
 #. Click :guilabel:`Delete Stack`.
 #. In the confirmation dialog box, click :guilabel:`Delete Stack`
