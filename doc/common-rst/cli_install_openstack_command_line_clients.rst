@@ -173,6 +173,8 @@ for each client. The following values are valid:
 
 -  ``trove`` - Database service API
 
+-  ``tuskar`` - Deployment service API
+
 -  ``openstack`` - Common OpenStack client supporting multiple services
 
 The following CLIs are deprecated in favor of ``openstack``, the
