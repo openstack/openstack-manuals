@@ -183,7 +183,7 @@ For simplicity, service traffic between compute nodes and this node
 uses the management network. Production environments should implement
 a separate storage network to increase performance and security.
 
-This service requires two nodes. Eac node requires a minimum of one
+This service requires two nodes. Each node requires a minimum of one
 network interface. You can deploy more than two object storage nodes.
 
 Networking
