@@ -47,7 +47,7 @@ Control the state of an instance
 
    Depending on the current state of the instance, you can choose to
    pause, un-pause, suspend, resume, soft or hard reboot, or terminate
-   an instance (items in red are disabled).
+   an instance (items in red are dangerous).
 
 .. figure:: figures/change_instance_state.png
 
