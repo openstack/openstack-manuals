@@ -137,9 +137,9 @@ Configure name resolution
 
       Some distributions add an extraneous entry in the :file:`/etc/hosts`
       file that resolves the actual hostname to another loopback IP
-      address such as ``127.0.1.1``. You must commend out or remove this
+      address such as ``127.0.1.1``. You must comment out or remove this
       entry to prevent name resolution problems. **Do not remove the
-      ``127.0.0.1`` entry.**
+      127.0.0.1 entry.**
 
 |
 
@@ -227,9 +227,9 @@ Configure name resolution
 
       Some distributions add an extraneous entry in the :file:`/etc/hosts`
       file that resolves the actual hostname to another loopback IP
-      address such as ``127.0.1.1``. You must commend out or remove this
+      address such as ``127.0.1.1``. You must comment out or remove this
       entry to prevent name resolution problems. **Do not remove the
-      ``127.0.0.1`` entry.**
+      127.0.0.1 entry.**
 
 |
 
