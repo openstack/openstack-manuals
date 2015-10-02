@@ -349,12 +349,89 @@ and ``disk.read.bytes`` meters, the following command should be invoked::
     | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.4795e+11 | ns   | 2014-08-30T13:20:34 |
     +--------------------------------------+-----------------+------------+------------+------+---------------------+
 
-  .. note::
+Ceilometer also captures data as Events, which represents the state of a
+resource. Refer to :doc:`/telemetry-events` for more information regarding
+Events.
 
-      As of the Liberty release, the number of items returned will be
-      restricted to the value defined by ``default_api_return_limit`` in the
-      :file:`ceilometer.conf` configuration file. Alternatively, the value can
-      be set per query by passing ``limit`` option in request.
+To retrieve a list of recent events that occurred in the system, the
+following command can be executed:
+
+.. code:: console
+
+    $ ceilometer event-list
+    +--------------------------------------+---------------+----------------------------+-----------------------------------------------------------------+
+    | Message ID                           | Event Type    | Generated                  | Traits                                                          |
+    +--------------------------------------+---------------+----------------------------+-----------------------------------------------------------------+
+    | dfdb87b6-92c6-4d40-b9b5-ba308f304c13 | image.create  | 2015-09-24T22:17:39.498888 | +---------+--------+-----------------+                          |
+    |                                      |               |                            | |   name  |  type  |      value      |                          |
+    |                                      |               |                            | +---------+--------+-----------------+                          |
+    |                                      |               |                            | | service | string | image.localhost |                          |
+    |                                      |               |                            | +---------+--------+-----------------+                          |
+    | 84054bc6-2ae6-4b93-b5e7-06964f151cef | image.prepare | 2015-09-24T22:17:39.594192 | +---------+--------+-----------------+                          |
+    |                                      |               |                            | |   name  |  type  |      value      |                          |
+    |                                      |               |                            | +---------+--------+-----------------+                          |
+    |                                      |               |                            | | service | string | image.localhost |                          |
+    |                                      |               |                            | +---------+--------+-----------------+                          |
+    | 2ec99c2c-08ee-4079-bf80-27d4a073ded6 | image.update  | 2015-09-24T22:17:39.578336 | +-------------+--------+--------------------------------------+ |
+    |                                      |               |                            | |     name    |  type  |                value                 | |
+    |                                      |               |                            | +-------------+--------+--------------------------------------+ |
+    |                                      |               |                            | |  created_at | string |         2015-09-24T22:17:39Z         | |
+    |                                      |               |                            | |     name    | string |    cirros-0.3.4-x86_64-uec-kernel    | |
+    |                                      |               |                            | |  project_id | string |   56ffddea5b4f423496444ea36c31be23   | |
+    |                                      |               |                            | | resource_id | string | 86eb8273-edd7-4483-a07c-002ff1c5657d | |
+    |                                      |               |                            | |   service   | string |           image.localhost            | |
+    |                                      |               |                            | |    status   | string |                saving                | |
+    |                                      |               |                            | |   user_id   | string |   56ffddea5b4f423496444ea36c31be23   | |
+    |                                      |               |                            | +-------------+--------+--------------------------------------+ |
+    +--------------------------------------+---------------+----------------------------+-----------------------------------------------------------------+
+
+.. note::
+
+   In Liberty, the data returned corresponds to the role and user. Non-admin
+   users will only returned events that are scoped to them. Admin users will
+   be returned all events related to the project they administer as well as
+   all unscoped events.
+
+Similar to querying meters, additional filter parameters can be given to
+retrieve specific events:
+
+.. code:: console
+
+    $ ceilometer event-list -q 'event_type=compute.instance.exists; \
+      instance_type=m1.tiny'
+    +--------------------------------------+-------------------------+----------------------------+----------------------------------------------------------------------------------+
+    | Message ID                           | Event Type              | Generated                  | Traits                                                                           |
+    +--------------------------------------+-------------------------+----------------------------+----------------------------------------------------------------------------------+
+    | 134a2ab3-6051-496c-b82f-10a3c367439a | compute.instance.exists | 2015-09-25T03:00:02.152041 | +------------------------+----------+------------------------------------------+ |
+    |                                      |                         |                            | |          name          |   type   |                  value                   | |
+    |                                      |                         |                            | +------------------------+----------+------------------------------------------+ |
+    |                                      |                         |                            | | audit_period_beginning | datetime |           2015-09-25T02:00:00            | |
+    |                                      |                         |                            | |  audit_period_ending   | datetime |           2015-09-25T03:00:00            | |
+    |                                      |                         |                            | |        disk_gb         | integer  |                    1                     | |
+    |                                      |                         |                            | |      ephemeral_gb      | integer  |                    0                     | |
+    |                                      |                         |                            | |          host          |  string  |          localhost.localdomain           | |
+    |                                      |                         |                            | |      instance_id       |  string  |   2115f189-c7f1-4228-97bc-d742600839f2   | |
+    |                                      |                         |                            | |     instance_type      |  string  |                 m1.tiny                  | |
+    |                                      |                         |                            | |    instance_type_id    | integer  |                    2                     | |
+    |                                      |                         |                            | |      launched_at       | datetime |           2015-09-24T22:24:56            | |
+    |                                      |                         |                            | |       memory_mb        | integer  |                   512                    | |
+    |                                      |                         |                            | |       project_id       |  string  |     56ffddea5b4f423496444ea36c31be23     | |
+    |                                      |                         |                            | |       request_id       |  string  | req-c6292b21-bf98-4a1d-b40c-cebba4d09a67 | |
+    |                                      |                         |                            | |        root_gb         | integer  |                    1                     | |
+    |                                      |                         |                            | |        service         |  string  |                 compute                  | |
+    |                                      |                         |                            | |         state          |  string  |                  active                  | |
+    |                                      |                         |                            | |       tenant_id        |  string  |     56ffddea5b4f423496444ea36c31be23     | |
+    |                                      |                         |                            | |        user_id         |  string  |     0b3d725756f94923b9d0c4db864d06a9     | |
+    |                                      |                         |                            | |         vcpus          | integer  |                    1                     | |
+    |                                      |                         |                            | +------------------------+----------+------------------------------------------+ |
+    +--------------------------------------+-------------------------+----------------------------+----------------------------------------------------------------------------------+
+
+.. note::
+
+   As of the Liberty release, the number of items returned will be
+   restricted to the value defined by ``default_api_return_limit`` in the
+   :file:`ceilometer.conf` configuration file. Alternatively, the value can
+   be set per query by passing ``limit`` option in request.
 
 
 Telemetry python bindings
