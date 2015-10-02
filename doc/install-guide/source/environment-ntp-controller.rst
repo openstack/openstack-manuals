@@ -47,7 +47,7 @@ as those provided by your organization.
 
 .. only:: ubuntu or debian
 
-   1. Edit the :file:`/etc/chrony/chrony.conf` file and add, change, or remove the
+   #. Edit the :file:`/etc/chrony/chrony.conf` file and add, change, or remove the
       following keys as necessary for your environment:
 
       .. code:: ini
@@ -58,7 +58,7 @@ as those provided by your organization.
       accurate (lower stratum) NTP server. The configuration supports multiple
       ``server`` keys.
 
-   2. Restart the NTP service:
+   #. Restart the NTP service:
 
       .. code-block:: console
 
@@ -66,7 +66,7 @@ as those provided by your organization.
 
 .. only:: rdo or obs
 
-   1. Edit the :file:`/etc/chrony.conf` file and add, change, or remove the
+   #. Edit the :file:`/etc/chrony.conf` file and add, change, or remove the
       following keys as necessary for your environment:
 
       .. code:: ini
@@ -77,7 +77,16 @@ as those provided by your organization.
       accurate (lower stratum) NTP server. The configuration supports multiple
       ``server`` keys.
 
-   2. Start the NTP service and configure it to start when the system boots:
+   #. To enable other nodes to connect to the chrony daemon on the controller,
+      add the following key to :file:`/etc/chrony.conf`:
+
+      .. code:: ini
+
+         allow 10.0.0.0/24
+
+      If necessary, replace ``10.0.0.0/24`` with a description of your subnet.
+
+   #. Start the NTP service and configure it to start when the system boots:
 
       .. code-block:: console
 
