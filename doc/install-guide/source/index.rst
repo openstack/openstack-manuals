@@ -44,7 +44,7 @@ separately and configure them stand-alone or as connected entities.
 .. only:: rdo
 
    This guide shows you how to install OpenStack by using packages
-   available through Fedora 21 as well as on Red Hat Enterprise Linux
+   available through Fedora 22 as well as on Red Hat Enterprise Linux
    7 and its derivatives through the EPEL repository.
 
 .. only:: ubuntu
