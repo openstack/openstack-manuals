@@ -70,4 +70,5 @@ troubleshoot your installation and back up your Compute volumes.
    blockstorage_ratelimit_volume_copy_bandwidth.rst
    blockstorage_over_subscription.rst
    blockstorage_image_volume_cache.rst
+   blockstorage_volume_backed_image.rst
    blockstorage_get_capabilities.rst
