@@ -55,7 +55,7 @@ module (heat).
 
       $ NET_ID=$(nova net-list | awk '/ demo-net / { print $2 }')
       $ heat stack-create -f test-stack.yml \
-        -P "ImageID=cirros-0.3.4-x86_64;NetID=$NET_ID" testStack
+        -P "ImageID=cirros;NetID=$NET_ID" testStack
       +--------------------------------------+------------+--------------------+----------------------+
       | id                                   | stack_name | stack_status       | creation_time        |
       +--------------------------------------+------------+--------------------+----------------------+

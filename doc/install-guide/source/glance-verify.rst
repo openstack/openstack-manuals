@@ -1,6 +1,5 @@
-================
 Verify operation
-================
+~~~~~~~~~~~~~~~~
 
 Verify operation of the Image service using
 `CirrOS <http://launchpad.net/cirros>`__, a small
@@ -40,7 +39,7 @@ For information about how to manage images, see the
 
    .. code-block:: console
 
-      $ glance image-create --name "cirros-0.3.4-x86_64" \
+      $ glance image-create --name "cirros" \
         --file cirros-0.3.4-x86_64-disk.img \
         --disk-format qcow2 --container-format bare \
         --visibility public --progress
@@ -55,7 +54,7 @@ For information about how to manage images, see the
       | id               | 38047887-61a7-41ea-9b49-27987d5e8bb9 |
       | min_disk         | 0                                    |
       | min_ram          | 0                                    |
-      | name             | cirros-0.3.4-x86_64                  |
+      | name             | cirros                               |
       | owner            | ae7a98326b9c455588edd2656d723b9d     |
       | protected        | False                                |
       | size             | 13200896                             |
@@ -87,8 +86,8 @@ For information about how to manage images, see the
    .. code-block:: console
 
       $ glance image-list
-      +--------------------------------------+---------------------+
-      | ID                                   | Name                |
-      +--------------------------------------+---------------------+
-      | 38047887-61a7-41ea-9b49-27987d5e8bb9 | cirros-0.3.4-x86_64 |
-      +--------------------------------------+---------------------+
+      +--------------------------------------+--------+
+      | ID                                   | Name   |
+      +--------------------------------------+--------+
+      | 38047887-61a7-41ea-9b49-27987d5e8bb9 | cirros |
+      +--------------------------------------+--------+

@@ -33,7 +33,7 @@ This section describes how to verify operation of the Telemetry module.
 
    .. code-block:: console
 
-      $ IMAGE_ID=$(glance image-list | grep 'cirros-0.3.4-x86_64' | awk '{ print $2 }')
+      $ IMAGE_ID=$(glance image-list | grep 'cirros' | awk '{ print $2 }')
       $ glance image-download $IMAGE_ID > /tmp/cirros.img
 
 #. List available meters again to validate detection of the image

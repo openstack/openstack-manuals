@@ -38,13 +38,13 @@ name, network, security group, key, and instance name.
    .. code-block:: console
 
       $ nova image-list
-      +--------------------------------------+---------------------+--------+--------+
-      | ID                                   | Name                | Status | Server |
-      +--------------------------------------+---------------------+--------+--------+
-      | acafc7c0-40aa-4026-9673-b879898e1fc2 | cirros-0.3.4-x86_64 | ACTIVE |        |
-      +--------------------------------------+---------------------+--------+--------+
+      +--------------------------------------+--------+--------+--------+
+      | ID                                   | Name   | Status | Server |
+      +--------------------------------------+--------+--------+--------+
+      | 38047887-61a7-41ea-9b49-27987d5e8bb9 | cirros | ACTIVE |        |
+      +--------------------------------------+--------+--------+--------+
 
-   This instance uses the ``cirros-0.3.4-x86_64`` image.
+   This instance uses the ``cirros`` image.
 
 #. List available networks:
 
@@ -92,38 +92,38 @@ Launch the instance
 
    .. code-block:: console
 
-      $ nova boot --flavor m1.tiny --image cirros-0.3.4-x86_64 --nic net-id=PUBLIC_NET_ID \
+      $ nova boot --flavor m1.tiny --image cirros --nic net-id=PUBLIC_NET_ID \
         --security-group default --key-name mykey public-instance
-      +--------------------------------------+------------------------------------------------------------+
-      | Property                             | Value                                                      |
-      +--------------------------------------+------------------------------------------------------------+
-      | OS-DCF:diskConfig                    | MANUAL                                                     |
-      | OS-EXT-AZ:availability_zone          | nova                                                       |
-      | OS-EXT-STS:power_state               | 0                                                          |
-      | OS-EXT-STS:task_state                | scheduling                                                 |
-      | OS-EXT-STS:vm_state                  | building                                                   |
-      | OS-SRV-USG:launched_at               | -                                                          |
-      | OS-SRV-USG:terminated_at             | -                                                          |
-      | accessIPv4                           |                                                            |
-      | accessIPv6                           |                                                            |
-      | adminPass                            | hdF4LMQqC5PB                                               |
-      | config_drive                         |                                                            |
-      | created                              | 2015-09-17T21:58:18Z                                       |
-      | flavor                               | m1.tiny (1)                                                |
-      | hostId                               |                                                            |
-      | id                                   | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf                       |
-      | image                                | cirros-0.3.4-x86_64 (939ad102-c74e-405d-a957-2798071d0a7c) |
-      | key_name                             | key                                                        |
-      | metadata                             | {}                                                         |
-      | name                                 | public-instance                                            |
-      | os-extended-volumes:volumes_attached | []                                                         |
-      | progress                             | 0                                                          |
-      | security_groups                      | default                                                    |
-      | status                               | BUILD                                                      |
-      | tenant_id                            | f5b2ccaa75ac413591f12fcaa096aa5c                           |
-      | updated                              | 2015-09-17T21:58:18Z                                       |
-      | user_id                              | 684286a9079845359882afc3aa5011fb                           |
-      +--------------------------------------+------------------------------------------------------------+
+      +--------------------------------------+-----------------------------------------------+
+      | Property                             | Value                                         |
+      +--------------------------------------+-----------------------------------------------+
+      | OS-DCF:diskConfig                    | MANUAL                                        |
+      | OS-EXT-AZ:availability_zone          | nova                                          |
+      | OS-EXT-STS:power_state               | 0                                             |
+      | OS-EXT-STS:task_state                | scheduling                                    |
+      | OS-EXT-STS:vm_state                  | building                                      |
+      | OS-SRV-USG:launched_at               | -                                             |
+      | OS-SRV-USG:terminated_at             | -                                             |
+      | accessIPv4                           |                                               |
+      | accessIPv6                           |                                               |
+      | adminPass                            | hdF4LMQqC5PB                                  |
+      | config_drive                         |                                               |
+      | created                              | 2015-09-17T21:58:18Z                          |
+      | flavor                               | m1.tiny (1)                                   |
+      | hostId                               |                                               |
+      | id                                   | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf          |
+      | image                                | cirros (38047887-61a7-41ea-9b49-27987d5e8bb9) |
+      | key_name                             | key                                           |
+      | metadata                             | {}                                            |
+      | name                                 | public-instance                               |
+      | os-extended-volumes:volumes_attached | []                                            |
+      | progress                             | 0                                             |
+      | security_groups                      | default                                       |
+      | status                               | BUILD                                         |
+      | tenant_id                            | f5b2ccaa75ac413591f12fcaa096aa5c              |
+      | updated                              | 2015-09-17T21:58:18Z                          |
+      | user_id                              | 684286a9079845359882afc3aa5011fb              |
+      +--------------------------------------+-----------------------------------------------+
 
 #. Check the status of your instance:
 
