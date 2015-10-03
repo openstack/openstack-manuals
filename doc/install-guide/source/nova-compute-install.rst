@@ -50,7 +50,7 @@ Install and configure components
 
          # apt-get install nova-compute sysfsutils
 
-2. Edit the :file:`/etc/nova/nova.conf` file and
+2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:
 
    * In the ``[DEFAULT]`` and [oslo_messaging_rabbit]
@@ -147,11 +147,6 @@ Install and configure components
      can use a web browser to access remote consoles of instances
      on this compute node.
 
-     Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with
-     the IP address of the management network interface on your
-     compute node, typically 10.0.0.31 for the first node in the
-     :ref:`example architecture <overview-example-architectures>`.
-
      .. note::
 
         If the web browser to access remote consoles resides on
@@ -199,16 +194,14 @@ Install and configure components
 
 .. only:: obs
 
-   3.
+   3. Ensure the kernel module ``nbd`` is loaded.
 
-      * Ensure the kernel module ``nbd`` is loaded.
+      .. code-block:: console
 
-        .. code-block:: console
+         # modprobe nbd
 
-           # modprobe nbd
-
-      * Ensure the module will be loaded on every boot by adding
-        ``nbd`` in the :file:`/etc/modules-load.d/nbd.conf` file.
+   4. Ensure the module will be loaded on every boot by adding
+      ``nbd`` in the ``/etc/modules-load.d/nbd.conf`` file.
 
 Finalize installation
 ---------------------
@@ -231,7 +224,7 @@ Finalize installation
    .. only:: obs or rdo
 
       * Edit the ``[libvirt]`` section in the
-        :file:`/etc/nova/nova.conf` file as follows:
+        ``/etc/nova/nova.conf`` file as follows:
 
         .. code-block:: ini
 
@@ -242,7 +235,7 @@ Finalize installation
    .. only:: ubuntu
 
       * Edit the ``[libvirt]`` section in the
-        :file:`/etc/nova/nova-compute.conf` file as follows:
+        ``/etc/nova/nova-compute.conf`` file as follows:
 
         .. code-block:: ini
 

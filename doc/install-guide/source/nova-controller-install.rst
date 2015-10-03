@@ -51,30 +51,27 @@ create a database, service credentials, and API endpoints.
 
      .. code-block:: console
 
-        $ openstack user create --password-prompt nova
+        $ openstack user create --domain default --password-prompt nova
         User Password:
         Repeat User Password:
-        +----------+----------------------------------+
-        | Field    | Value                            |
-        +----------+----------------------------------+
-        | email    | None                             |
-        | enabled  | True                             |
-        | id       | 8e0b71d732db4bfba04943a96230c8c0 |
-        | name     | nova                             |
-        | username | nova                             |
-        +----------+----------------------------------+
+        +-----------+----------------------------------+
+        | Field     | Value                            |
+        +-----------+----------------------------------+
+        | domain_id | default                          |
+        | enabled   | True                             |
+        | id        | 8c46e4760902464b889293a74a0c90a8 |
+        | name      | nova                             |
+        +-----------+----------------------------------+
 
    * Add the ``admin`` role to the ``nova`` user:
 
      .. code-block:: console
 
         $ openstack role add --project service --user nova admin
-        +-------+----------------------------------+
-        | Field | Value                            |
-        +-------+----------------------------------+
-        | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
-        | name  | admin                            |
-        +-------+----------------------------------+
+
+     .. note::
+
+        This command provides no output.
 
    * Create the ``nova`` service entity:
 
@@ -92,27 +89,56 @@ create a database, service credentials, and API endpoints.
         | type        | compute                          |
         +-------------+----------------------------------+
 
-#. Create the Compute service API endpoint:
+#. Create the Compute service API endpoints:
 
    .. code-block:: console
 
-      $ openstack endpoint create \
-        --publicurl http://controller:8774/v2/%\(tenant_id\)s \
-        --internalurl http://controller:8774/v2/%\(tenant_id\)s \
-        --adminurl http://controller:8774/v2/%\(tenant_id\)s \
-        --region RegionOne \
-        compute
+      $ openstack endpoint create --region RegionOne \
+        compute public http://controller:8774/v2/%\(tenant_id\)s
       +--------------+-----------------------------------------+
       | Field        | Value                                   |
       +--------------+-----------------------------------------+
-      | adminurl     | http://controller:8774/v2/%(tenant_id)s |
-      | id           | 4e885d4ad43f4c4fbf2287734bc58d6b        |
-      | internalurl  | http://controller:8774/v2/%(tenant_id)s |
-      | publicurl    | http://controller:8774/v2/%(tenant_id)s |
+      | enabled      | True                                    |
+      | id           | 3c1caa473bfe4390a11e7177894bcc7b        |
+      | interface    | public                                  |
       | region       | RegionOne                               |
-      | service_id   | 060d59eac51b4594815603d75a00aba2        |
+      | region_id    | RegionOne                               |
+      | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
       | service_name | nova                                    |
       | service_type | compute                                 |
+      | url          | http://controller:8774/v2/%(tenant_id)s |
+      +--------------+-----------------------------------------+
+
+      $ openstack endpoint create --region RegionOne \
+        compute internal http://controller:8774/v2/%\(tenant_id\)s
+      +--------------+-----------------------------------------+
+      | Field        | Value                                   |
+      +--------------+-----------------------------------------+
+      | enabled      | True                                    |
+      | id           | e3c918de680746a586eac1f2d9bc10ab        |
+      | interface    | internal                                |
+      | region       | RegionOne                               |
+      | region_id    | RegionOne                               |
+      | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
+      | service_name | nova                                    |
+      | service_type | compute                                 |
+      | url          | http://controller:8774/v2/%(tenant_id)s |
+      +--------------+-----------------------------------------+
+
+      $ openstack endpoint create --region RegionOne \
+        compute admin http://controller:8774/v2/%\(tenant_id\)s
+      +--------------+-----------------------------------------+
+      | Field        | Value                                   |
+      +--------------+-----------------------------------------+
+      | enabled      | True                                    |
+      | id           | 38f7af91666a47cfb97b4dc790b94424        |
+      | interface    | admin                                   |
+      | region       | RegionOne                               |
+      | region_id    | RegionOne                               |
+      | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
+      | service_name | nova                                    |
+      | service_type | compute                                 |
+      | url          | http://controller:8774/v2/%(tenant_id)s |
       +--------------+-----------------------------------------+
 
 Install and configure components
@@ -152,7 +178,7 @@ Install and configure components
            nova-consoleauth nova-novncproxy nova-scheduler \
            python-novaclient
 
-2. Edit the :file:`/etc/nova/nova.conf` file and
+2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:
 
    * Add a ``[database]`` section, and configure database access:
@@ -288,13 +314,13 @@ Install and configure components
            ...
            lock_path = /var/lib/nova/tmp
 
-   * In the ``[DEFAULT]`` section, disable the in tree EC2 API:
+   * In the ``[DEFAULT]`` section, disable the EC2 API:
 
-        .. code-block:: ini
+     .. code-block:: ini
 
-           [DEFAULT]
-           ...
-           enabled_apis=osapi_compute,metadata
+        [DEFAULT]
+        ...
+        enabled_apis=osapi_compute,metadata
 
    * (Optional) To assist with troubleshooting, enable verbose
      logging in the ``[DEFAULT]`` section:
