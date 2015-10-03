@@ -84,7 +84,7 @@ Roles control the actions that a user is allowed to perform.
 Tenants are isolated resource containers that form the principal
 organizational structure within the Compute service. They consist of an
 individual VLAN, and volumes, instances, images, keys, and users. A user
-can specify the tenant by appending ``:project_id`` to their access key.
+can specify the tenant by appending ``project_id`` to their access key.
 If no tenant is specified in the API request, Compute attempts to use a
 tenant with the same ID as the user.
 
