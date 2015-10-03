@@ -152,7 +152,7 @@ This can present a problem when you run the Identity daemon under the
 keystone user account (nologin) when you try to run PKI. Unless you run
 the ``chown`` command against the files ``keystone:keystone``, or run the
 ``keystone-manage pki_setup`` command with the :option:`--keystone-user` and
-:option:`--keystone-group`` parameters, you will get an error. For example:
+:option:`--keystone-group` parameters, you will get an error. For example:
 
 .. code::
 
