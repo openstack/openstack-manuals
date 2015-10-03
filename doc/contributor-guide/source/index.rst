@@ -16,12 +16,14 @@ Contents
    :maxdepth: 2
 
    introduction.rst
+   first-timers-quickstart.rst
    rst-conv.rst
    docs-structure.rst
    content-specs.rst
    docs_builds.rst
    writing-style.rst
    json_conventions.rst
+
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
