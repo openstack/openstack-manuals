@@ -219,6 +219,32 @@ Finalize the installation
 
 |
 
+Install the OpenStack client
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Throughout the guide the OpenStack client will be used to perform actions on
+the installed services.
+
+* Install the package:
+
+.. only:: debian or ubuntu
+
+   .. code-block:: console
+
+      # apt-get install python-openstackclient
+
+.. only:: rdo
+
+   .. code-block:: console
+
+      # yum install python-openstackclient
+
+.. only:: obs
+
+   .. code-block:: console
+
+      # zypper install python-openstackclient
+
 SQL database
 ~~~~~~~~~~~~
 
