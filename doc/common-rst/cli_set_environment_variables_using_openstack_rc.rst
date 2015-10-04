@@ -24,10 +24,11 @@ Download and source the OpenStack RC file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Log in to the OpenStack dashboard, choose the project for which you want
-to download the OpenStack RC file, and click :guilabel:`Access & Security`.
+to download the OpenStack RC file, on the :guilabel:`Project` tab, open
+the :guilabel:`Compute` tab and click :guilabel:`Access & Security`.
 
-On the API Access tab, click :guilabel:`Download OpenStack RC File` and
-save the file. The filename will be of the form :file:`PROJECT-openrc.sh`
+On the :guilabel:`API Access` tab, click :guilabel:`Download OpenStack RC File`
+and save the file. The filename will be of the form :file:`PROJECT-openrc.sh`
 where ``PROJECT`` is the name of the project for which you downloaded the
 file.
 
