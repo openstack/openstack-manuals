@@ -277,24 +277,53 @@ create a MongoDB database, service credentials, and API endpoint.
 
    .. code-block:: console
 
-      $ openstack endpoint create \
-        --publicurl http://controller:8777 \
-        --internalurl http://controller:8777 \
-        --adminurl http://controller:8777 \
-        --region RegionOne \
-        metering
-      +--------------+----------------------------------+
-      | Field        | Value                            |
-      +--------------+----------------------------------+
-      | adminurl     | http://controller:8777           |
-      | id           | d3716d85b10d4e60a67a52c6af0068cd |
-      | internalurl  | http://controller:8777           |
-      | publicurl    | http://controller:8777           |
-      | region       | RegionOne                        |
-      | service_id   | 3405453b14da441ebb258edfeba96d83 |
-      | service_name | ceilometer                       |
-      | service_type | metering                         |
-      +--------------+----------------------------------+
+      $ openstack endpoint create --region RegionOne \
+        metering public http://controller:8777
+        +--------------+----------------------------------+
+        | Field        | Value                            |
+        +--------------+----------------------------------+
+        | enabled      | True                             |
+        | id           | 340be3625e9b4239a6415d034e98aace |
+        | interface    | public                           |
+        | region       | RegionOne                        |
+        | region_id    | RegionOne                        |
+        | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
+        | service_name | celiometer                       |
+        | service_type | metering                         |
+        | url          | http://controller:8777           |
+        +--------------+----------------------------------+
+
+      $ openstack endpoint create --region RegionOne \
+        metering internal http://controller:8777
+        +--------------+----------------------------------+
+        | Field        | Value                            |
+        +--------------+----------------------------------+
+        | enabled      | True                             |
+        | id           | 340be3625e9b4239a6415d034e98aace |
+        | interface    | internal                         |
+        | region       | RegionOne                        |
+        | region_id    | RegionOne                        |
+        | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
+        | service_name | celiometer                       |
+        | service_type | metering                         |
+        | url          | http://controller:8777           |
+        +--------------+----------------------------------+
+
+      $ openstack endpoint create --region RegionOne \
+        metering admin http://controller:8777
+        +--------------+----------------------------------+
+        | Field        | Value                            |
+        +--------------+----------------------------------+
+        | enabled      | True                             |
+        | id           | 340be3625e9b4239a6415d034e98aace |
+        | interface    | admin                            |
+        | region       | RegionOne                        |
+        | region_id    | RegionOne                        |
+        | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
+        | service_name | celiometer                       |
+        | service_type | metering                         |
+        | url          | http://controller:8777           |
+        +--------------+----------------------------------+
 
 To install and configure the Telemetry module components
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
