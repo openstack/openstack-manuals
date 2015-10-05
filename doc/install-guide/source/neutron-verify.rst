@@ -4,14 +4,14 @@ Verify operation
 #. Source the ``admin`` credentials to gain access to admin-only CLI
    commands:
 
-   .. code:: console
+   .. code-block:: console
 
       $ source admin-openrc.sh
 
 #. List loaded extensions to verify successful launch of the
    ``neutron-server`` process:
 
-   .. code:: console
+   .. code-block:: console
 
       $ neutron ext-list
       +-----------------------+-----------------------------------------------+
