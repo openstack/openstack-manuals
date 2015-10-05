@@ -381,18 +381,10 @@ To finalize installation
             # systemctl enable mysql.service
             # systemctl start mysql.service
 
-.. only:: ubuntu
+.. only:: ubuntu or rdo or obs
 
-   2. Secure the database service:
-
-      .. literalinclude:: mariadb_output.txt
-
-.. only:: rdo or obs
-
-   2. Secure the database service including choosing a suitable
-      password for the root account:
-
-      .. literalinclude:: mariadb_output.txt
+   2. Secure the database service by running the
+      ``mysql_secure_installation`` script.
 
 |
 
