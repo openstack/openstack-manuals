@@ -6,9 +6,10 @@ Identity management
 
 OpenStack Identity, code-named keystone, is the default identity
 management system for OpenStack. After you install Identity, you
-configure it through the :file:`/etc/keystone.conf` configuration file and,
-possibly, a separate logging configuration file. You initialize data
-into Identity by using the ``keystone`` command-line client.
+configure it through the :file:`/etc/keystone/keystone.conf`
+configuration file and, possibly, a separate logging configuration
+file. You initialize data into Identity by using the ``keystone``
+command-line client.
 
 .. toctree::
    :maxdepth: 1
