@@ -9,6 +9,11 @@ Distributions release OpenStack packages as part of the distribution or
 using other methods because of differing release schedules. Perform
 these procedures on all nodes.
 
+.. warning::
+
+   Your hosts must contain the latest versions of base installation
+   packages available for your distribution before proceeding further.
+
 .. note::
 
    Disable or remove any automatic update services because they can
@@ -19,14 +24,10 @@ these procedures on all nodes.
    Enable the OpenStack repository
    -------------------------------
 
-   * Install the Ubuntu Cloud archive keyring and repository:
+   .. code-block:: console
 
-     .. code-block:: console
-
-        # apt-get install ubuntu-cloud-keyring
-        # echo "deb http://ubuntu-cloud.archive.canonical.com/ubuntu" \
-          "trusty-updates/liberty main" > /etc/apt/sources.list.d/ \
-          cloudarchive-liberty.list
+      # apt-get install software-properties-common
+      # add-apt-repository cloud-archive:liberty
 
 .. only:: rdo
 
@@ -138,7 +139,6 @@ these procedures on all nodes.
 
             # apt-get -t jessie-backports install ``PACKAGE``
 
-
 Finalize the installation
 -------------------------
 
@@ -148,7 +148,7 @@ Finalize the installation
 
      .. code-block:: console
 
-        $ apt-get update && apt-get dist-upgrade
+        # apt-get update && apt-get dist-upgrade
 
      .. note::
 
@@ -214,8 +214,6 @@ Finalize the installation
 
          CentOS and RHEL do not require this step.
 
-|
-
 Install the OpenStack client
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -250,7 +248,6 @@ database typically runs on the controller node. The procedures in this
 guide use MariaDB or MySQL depending on the distribution. OpenStack
 services also support other SQL databases including
 `PostgreSQL <http://www.postgresql.org/>`__.
-
 
 Install and configure the database server
 -----------------------------------------
