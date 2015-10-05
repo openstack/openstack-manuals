@@ -22,19 +22,19 @@ Install the packages:
 
 .. only:: obs
 
-   On openSUSE:
+   On openSUSE 13.2:
 
    .. code-block:: console
 
-      # zypper addrepo http://download.opensuse.org/repositories/network:time/openSUSE_13.2/network:time.repo
+      # zypper addrepo -f http://download.opensuse.org/repositories/network:time/openSUSE_13.2/network:time.repo network_time
       # zypper refresh
       # zypper install chrony
 
-   On SLES:
+   On SLES 12:
 
    .. code-block:: console
 
-      # zypper addrepo http://download.opensuse.org/repositories/network:time/SLE_12/network:time.repo
+      # zypper addrepo -f http://download.opensuse.org/repositories/network:time/SLE_12/network:time.repo network_time
       # zypper refresh
       # zypper install chrony
 
