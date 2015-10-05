@@ -50,7 +50,7 @@ separately and configure them stand-alone or as connected entities.
 .. only:: ubuntu
 
    This guide walks through an installation by using packages
-   available through Ubuntu 14.04.
+   available through Canonical's Ubuntu Cloud archive repository.
 
 .. only:: obs
 
