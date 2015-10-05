@@ -155,42 +155,99 @@ Orchestration module, code-named heat, on the controller node.
 
       .. code-block:: console
 
-         $ openstack endpoint create \
-           --publicurl http://controller:8004/v1/%\(tenant_id\)s \
-           --internalurl http://controller:8004/v1/%\(tenant_id\)s \
-           --adminurl http://controller:8004/v1/%\(tenant_id\)s \
-           --region RegionOne \
-           orchestration
-         +--------------+-----------------------------------------+
-         |        Field | Value                                   |
-         +--------------+-----------------------------------------+
-         | adminurl     | http://controller:8004/v1/%(tenant_id)s |
-         | id           | f41225f665694b95a46448e8676b0dc2        |
-         | internalurl  | http://controller:8004/v1/%(tenant_id)s |
-         | publicurl    | http://controller:8004/v1/%(tenant_id)s |
-         | region       | RegionOne                               |
-         | service_id   | 031112165cad4c2bb23e84603957de29        |
-         | service_name | heat                                    |
-         | service_type | orchestration                           |
-         +--------------+-----------------------------------------+
-         $ openstack endpoint create \
-           --publicurl http://controller:8000/v1 \
-           --internalurl http://controller:8000/v1 \
-           --adminurl http://controller:8000/v1 \
-           --region RegionOne \
-           cloudformation
-         +--------------+----------------------------------+
-         | Field        | Value                            |
-         +--------------+----------------------------------+
-         | adminurl     | http://controller:8000/v1        |
-         | id           | f41225f665694b95a46448e8676b0dc2 |
-         | internalurl  | http://controller:8000/v1        |
-         | publicurl    | http://controller:8000/v1        |
-         | region       | RegionOne                        |
-         | service_id   | 297740d74c0a446bbff867acdccb33fa |
-         | service_name | heat-cfn                         |
-         | service_type | cloudformation                   |
-         +--------------+----------------------------------+
+         $ openstack endpoint create --region RegionOne \
+           orchestration public http://controller:8004/v1/%\(tenant_id\)s
+           +--------------+----------------------------------+
+           | Field        | Value                            |
+           +--------------+----------------------------------+
+           | enabled      | True                             |
+           | id           | 340be3625e9b4239a6415d034e98aace |
+           | interface    | public                           |
+           | region       | RegionOne                        |
+           | region_id    | RegionOne                        |
+           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
+           | service_name | heat                             |
+           | service_type | orchestration                    |
+           | url          | http://controller:8004           |
+           +--------------+----------------------------------+
+         $ openstack endpoint create --region RegionOne \
+           orchestration internal http://controller:8004/v1/%\(tenant_id\)s
+           +--------------+----------------------------------+
+           | Field        | Value                            |
+           +--------------+----------------------------------+
+           | enabled      | True                             |
+           | id           | 340be3625e9b4239a6415d034e98aace |
+           | interface    | internal                         |
+           | region       | RegionOne                        |
+           | region_id    | RegionOne                        |
+           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
+           | service_name | heat                             |
+           | service_type | orchestration                    |
+           | url          | http://controller:8004           |
+           +--------------+----------------------------------+
+         $ openstack endpoint create --region RegionOne \
+           orchestration admin http://controller:8004/v1/%\(tenant_id\)s
+           +--------------+----------------------------------+
+           | Field        | Value                            |
+           +--------------+----------------------------------+
+           | enabled      | True                             |
+           | id           | 340be3625e9b4239a6415d034e98aace |
+           | interface    | admin                            |
+           | region       | RegionOne                        |
+           | region_id    | RegionOne                        |
+           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
+           | service_name | heat                             |
+           | service_type | orchestration                    |
+           | url          | http://controller:8004           |
+           +--------------+----------------------------------+
+
+         $ openstack endpoint create --region RegionOne \
+           cloudformation public http://controller:8000/v1
+           +--------------+----------------------------------+
+           | Field        | Value                            |
+           +--------------+----------------------------------+
+           | enabled      | True                             |
+           | id           | 340be3625e9b4239a6415d034e98aace |
+           | interface    | public                           |
+           | region       | RegionOne                        |
+           | region_id    | RegionOne                        |
+           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
+           | service_name | heat-cfn                         |
+           | service_type | cloudformation                   |
+           | url          | http://controller:8000           |
+           +--------------+----------------------------------+
+
+         $ openstack endpoint create --region RegionOne \
+           cloudformation internal http://controller:8000/v1
+           +--------------+----------------------------------+
+           | Field        | Value                            |
+           +--------------+----------------------------------+
+           | enabled      | True                             |
+           | id           | 340be3625e9b4239a6415d034e98aace |
+           | interface    | internal                         |
+           | region       | RegionOne                        |
+           | region_id    | RegionOne                        |
+           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
+           | service_name | heat-cfn                         |
+           | service_type | cloudformation                   |
+           | url          | http://controller:8000           |
+           +--------------+----------------------------------+
+
+         $ openstack endpoint create --region RegionOne \
+           cloudformation admin http://controller:8000/v1
+           +--------------+----------------------------------+
+           | Field        | Value                            |
+           +--------------+----------------------------------+
+           | enabled      | True                             |
+           | id           | 340be3625e9b4239a6415d034e98aace |
+           | interface    | admin                            |
+           | region       | RegionOne                        |
+           | region_id    | RegionOne                        |
+           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
+           | service_name | heat-cfn                         |
+           | service_type | cloudformation                   |
+           | url          | http://controller:8000           |
+           +--------------+----------------------------------+
 
 To install and configure the Orchestration components
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
