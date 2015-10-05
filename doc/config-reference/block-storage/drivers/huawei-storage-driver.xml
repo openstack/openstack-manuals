@@ -1,80 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0" xml:id="huawei-storage-driver">
-    <title>Huawei storage driver</title>
-    <para>Huawei storage driver can be used to provide functions such as the logical volume and
+    <title>Huawei volume driver</title>
+    <para>Huawei volume driver can be used to provide functions such as the logical volume and
         snapshot for virtual machines (VMs) in the OpenStack Block Storage Driver that supports
         iSCSI and Fibre Channel protocols.</para>
     <section xml:id="version-mappings">
-        <title>Version Mappings</title>
-        <para>The following table describes the version mappings among the Block Storage Driver,
+        <title>Version mappings</title>
+        <para>The following table describes the version mappings among the Block Storage driver,
             Huawei storage system, and OpenStack:</para>
         <table rules="all">
-            <caption>Version mappings among the Block Storage Driver, Huawei storage system, and
-                OpenStack</caption>
+            <caption>Version mappings among the Block Storage driver and Huawei storage
+                system</caption>
             <thead>
                 <tr>
-                    <th>Description (Storage Driver Version)</th>
-                    <th>OpenStack Version</th>
+                    <th>Description (Volume Driver Version)</th>
                     <th>Storage System Version</th>
-                    <th>Storage Driver Version</th>
+                    <th>Volume Driver Version</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td><para>Create, delete, expand, attach, and detach volumes</para><para>Create and
+                        delete a snapshot</para><para>Copy an image to a volume</para><para>Copy a volume
+                            to an image</para><para>Create a volume from a snapshot</para><para>Clone a
+                                volume</para><para>QoS</para></td>
                     <td>
-                        <para>Create Volume</para>
-                        <para>Delete Volume</para>
-                        <para>Attach Volume</para>
-                        <para>Detach Volume</para>
-                        <para>Extend Volume</para>
-                        <para>Create Snapshot</para>
-                        <para>Delete Snapshot</para>
-                        <para>List Snapshots</para>
-                        <para>Create Volume from
-                            Snapshot</para>
-                        <para>Create Volume from
-                            Image</para>
-                        <para>Create Volume from
-                            Volume</para>
-                        <para>Create Image from Volume</para>
-                    </td>
-                    <td>
-                        <para>Havana</para>
-                        <para>IceHouse</para>
-                        <para>Juno</para>
-                        <para>Kilo</para>
-                        <para>Liberty</para>
-                    </td>
-                    <td>
-                        <para>T series V1R5C00/C02/C30</para>
+                        <para>T series V1R5 C00/C02/C30</para>
                         <para>T series V2R2 C00/C20/C30</para>
                         <para>OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00</para>
-                        <para>OceanStor 18500/18800V1R1C00/C20/ C30 V3R3C00</para>
-                        <para>V3R3C00</para>
-                    </td>
-                    <td>
-                        <para>1.1.0</para>
-                        <para>1.2.0</para>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <para>QoS</para>
-                    </td>
-                    <td>
-                        <para>Havana
-                            IceHouse
-                            Juno
-                            Kilo
-                            Liberty</para>
-                    </td>
-                    <td>
-                        <para>T series V1R5C00/C02/C30</para>
-                        <para>T series V2R2 C00/C20/C30</para>
-                        <para>OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00</para>
-                        <para>OceanStor 18500/18800V1R1C00/C20/ C30 V3R3C00</para>
-                        <para>V3R3C00</para>
+                        <para>OceanStor 18500/18800V1R1C00/C20/C30 V3R3C00</para>
                     </td>
                     <td>
                         <para>1.1.0</para>
@@ -83,24 +38,15 @@
                 </tr>
                 <tr>
                     <td>                        <para>Volume Migration (version 1.2.0 or later)</para>
-                        <para>Consistency Group (version 1.2.0 or later)</para>
                         <para>Auto zoning (version 1.2.0 or later)</para>
                         <para>SmartTier (version 1.2.0 or later)</para>
                         <para>SmartCache (version 1.2.0 or later)</para>
                         <para>Smart Thin/Thick (version 1.2.0 or later)</para>
-                        <para>SmartPartition (version 1.2.0 or later)</para>
-                        <para>HyperMetro (version 1.2.0 or later)</para></td>
-                    <td>Juno
-                        Kilo
-                        Liberty</td>
+                        <para>SmartPartition (version 1.2.0 or later)</para></td>
                     <td>
-                        <para>T series V200R002C00/C20/C30</para>
-                        <para>OceanStor V3</para>
-                        <para>V300R001C10/C20</para>
-                        <para>V300R002C10</para>
-                        <para>V300R003C00</para>
-                        <para>OceanStor 18500/18800V100R001C00/C20/C30</para>
-                        <para>V300R003C00</para>
+                        <para>T series V2R2 C00/C20/C30</para>
+                        <para>OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00</para>
+                        <para>OceanStor 18500/18800V1R1C00/C20/C30</para>
                     </td>
                     <td>1.2.0</td>
                 </tr>
@@ -108,19 +54,19 @@
         </table>
     </section>
     <section xml:id="storage-driver-configuration">
-        <title>Storage Driver Configuration</title>
-        <para>This section describes how to configure the Huawei storage driver for iSCSI storage
+        <title>Volume Driver Configuration</title>
+        <para>This section describes how to configure the Huawei volume driver for iSCSI storage
             and FC storage.</para>
         <section xml:id="config-iscsi-storage">
-            <title>Configuring the Storage Driver for iSCSI Storage</title>
-            <para>This section describes how to configure the storage driver for different products for iSCSI storage
+            <title>Configuring the volume driver for iSCSI storage</title>
+            <para>This section describes how to configure the volume driver for different products for iSCSI storage
                 products.</para>
         <section xml:id="config-iscsi-t">
-        <title>Configuring the Storage Driver for T Series V1 (iSCSI)</title>
+        <title>Configuring the volume driver for T series V1 (iSCSI)</title>
         <procedure>
             <step>
-                <para>In <filename>/etc/cinder</filename>, create a Huawei-customized Diver configuration file. The file
-                            format is XML.</para>
+                <para>In <filename>/etc/cinder</filename>, create a Huawei-customized driver
+                            configuration file. The file format is XML.</para>
             </step>
             <step>
                 <para>Configure parameters in the driver configuration file.</para>
@@ -167,7 +113,7 @@
                             the following contents. volume_driver indicates the loaded driver, and
                             <filename>cinder_huawei_conf_file</filename> indicates the specified
                             Huawei-customized configuration file.</para>
-                <programlisting language="xml">volume_driver =cinder.volume.drivers.huawei.huawei_driver.HuaweiTISCSIDriver
+                <programlisting language="xml">volume_driver =cinder.volume.drivers.huawei.huawei_t.HuaweiTISCSIDriver
 cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
             </step>
             <step>
@@ -177,10 +123,10 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
         </procedure>
     </section>
             <section xml:id="config-iscsi-tv2">
-                <title>Configuring the Storage Driver for T Series V2 (iSCSI)</title>
+                <title>Configuring the volume driver for T series V2 (iSCSI)</title>
                 <procedure>
                     <step>
-                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized Diver configuration file. The file
+                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized driver configuration file. The file
                             format is XML.</para>
                     </step>
                     <step>
@@ -227,7 +173,7 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                             add the following contents. volume_driver indicates the loaded
                             driver, and <filename>cinder_huawei_conf_file</filename> indicates the specified
                             Huawei-customized configuration file.</para>
-                            <programlisting language="xml">volume_driver =cinder.volume.drivers.huawei.huawei_driver.HuaweiV2ISCSIDriver
+                            <programlisting language="xml">volume_driver =cinder.volume.drivers.huawei.huawei_driver.HuaweiTV2ISCSIDriver
 cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                     </step>
                     <step>
@@ -237,10 +183,10 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                 </procedure>
 </section>
             <section xml:id="config-iscsi-v3">
-                <title>Configuring the Storage Driver for V3 (iSCSI)</title>
+                <title>Configuring the volume driver for V3 (iSCSI)</title>
                 <procedure>
                     <step>
-                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized Diver configuration file. The file
+                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized driver configuration file. The file
                             format is XML.</para>
                     </step>
                     <step>
@@ -250,9 +196,8 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
     &lt;Storage>
         &lt;Product>V3&lt;/Product>
         &lt;Protocol>iSCSI&lt;/Protocol>
-        &lt;ControllerIP0>x.x.x.x&lt;/ControllerIP0>
-        &lt;ControllerIP1>x.x.x.x&lt;/ControllerIP1>
         &lt;UserName>xxxxxxxx&lt;/UserName>
+        &lt;RestURL>https://x.x.x.x:8088/deviceManager/rest/&lt;/RestURL>
         &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
     &lt;/Storage>
     &lt;LUN>
@@ -298,10 +243,10 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                 </procedure>
             </section>
             <section xml:id="config-iscsi-18000">
-                <title>Configuring the Storage Driver for OceanStor 18000 Series (iSCSI)</title>
+                <title>Configuring the volume driver for OceanStor 18000 series (iSCSI)</title>
                 <procedure>
                     <step>
-                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized Diver configuration file. The file
+                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized driver configuration file. The file
                             format is XML.</para>
                     </step>
                     <step>
@@ -311,8 +256,7 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
     &lt;Storage>
         &lt;Product>18000&lt;/Product>
         &lt;Protocol>iSCSI&lt;/Protocol>
-        &lt;ControllerIP0>x.x.x.x&lt;/ControllerIP0>
-        &lt;ControllerIP1>x.x.x.x&lt;/ControllerIP1>
+        &lt;RestURL>https://x.x.x.x:8088/deviceManager/rest/&lt;/RestURL>
         &lt;UserName>xxxxxxxx&lt;/UserName>
         &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
     &lt;/Storage>
@@ -360,15 +304,15 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                 </procedure>
             </section>
             <section xml:id="parameters">
-                <title>Parameters in the Configuration File</title>
+                <title>Parameters in the configuration file</title>
                 <table rules="all">
                     <caption>Mandatory parameters</caption>
                     <thead>
                         <tr>
                             <th>Parameter</th>
-                            <th>Default Value</th>
+                            <th>Default value</th>
                             <th>Description</th>
-                            <th>Applicable To</th>
+                            <th>Applicable to</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -484,9 +428,9 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                     <thead>
                         <tr>
                             <th>Parameter</th>
-                            <th>Default Value</th>
+                            <th>Default value</th>
                             <th>Description</th>
-                            <th>Applicable To</th>
+                            <th>Applicable to</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -660,15 +604,15 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
             </section>
         </section>
         <section xml:id="config-fc-storage">
-            <title>Configuring the Storage Driver (Fibre Channel)</title>
-            <para>This section describes how to configure storage drivers for different products for the Fibre
+            <title>Configuring the volume driver (Fibre Channel)</title>
+            <para>This section describes how to configure volume drivers for different products for the Fibre
                 Channel products.</para>
             <para>For a Fibre Channel network, the sg tool must be installed so that storage resources can be used.</para>
         <section xml:id="config-fc-tv1">
-        <title>Configuring the Storage Driver for T Series V1 (Fibre Channel)</title>
+        <title>Configuring the volume driver for T series V1 (Fibre Channel)</title>
         <procedure>
             <step>
-                <para>In <filename>/etc/cinder</filename>, create a Huawei-customized Diver configuration file. The file
+                <para>In <filename>/etc/cinder</filename>, create a Huawei-customized driver configuration file. The file
                             format is XML.</para>
             </step>
             <step>
@@ -727,10 +671,10 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
         </procedure>
     </section>
             <section xml:id="config-fc-tv2">
-                <title>Configuring the Storage Driver for T Series V2 (Fibre Channel)</title>
+                <title>Configuring the volume driver for T series V2 (Fibre Channel)</title>
                 <procedure>
                     <step>
-                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized Diver configuration file. The file
+                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized driver configuration file. The file
                             format is XML.</para>
                     </step>
                     <step>
@@ -777,7 +721,7 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                             add the following contents. volume_driver indicates the loaded
                             driver file, and <filename>cinder_huawei_conf_file</filename> indicates the specified
                             Huawei-customized configuration file.</para>
-                            <programlisting language="xml">volume_driver =cinder.volume.drivers.huawei.huawei_driver.HuaweiV2FCDriver
+                            <programlisting language="xml">volume_driver =cinder.volume.drivers.huawei.huawei_driver.HuaweiTV2FCDriver
 cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                     </step>
                     <step>
@@ -787,10 +731,10 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                 </procedure>
             </section>
             <section xml:id="config-fc-v3">
-                <title>Configuring the Storage Driver for V3 (Fibre Channel)</title>
+                <title>Configuring the volume driver for V3 (Fibre Channel)</title>
                 <procedure>
                     <step>
-                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized Diver configuration file. The file
+                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized driver configuration file. The file
                             format is XML.</para>
                     </step>
                     <step>
@@ -800,8 +744,7 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
     &lt;Storage>
         &lt;Product>V3&lt;/Product>
         &lt;Protocol>FC&lt;/Protocol>
-        &lt;ControllerIP0>x.x.x.x&lt;/ControllerIP0>
-        &lt;ControllerIP1>x.x.x.x&lt;/ControllerIP1>
+        &lt;RestURL>https://x.x.x.x:8088/deviceManager/rest/&lt;/RestURL>
         &lt;UserName>xxxxxxxx&lt;/UserName>
         &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
     &lt;/Storage>
@@ -848,11 +791,11 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                 </procedure>
             </section>
             <section xml:id="config-fc-18000">
-                <title>Configuring the Storage Driver for OceanStor 18000 Series (Fibre
+                <title>Configuring the volume driver for OceanStor 18000 series (Fibre
                     Channel)</title>
                 <procedure>
                     <step>
-                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized Diver configuration file. The file
+                        <para>In <filename>/etc/cinder</filename>, create a Huawei-customized driver configuration file. The file
                             format is XML.</para>
                     </step>
                     <step>
@@ -862,8 +805,7 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
     &lt;Storage>
         &lt;Product>18000&lt;/Product>
         &lt;Protocol>FC&lt;/Protocol>
-        &lt;ControllerIP0>x.x.x.x&lt;/ControllerIP0>
-        &lt;ControllerIP1>x.x.x.x&lt;/ControllerIP1>
+        &lt;RestURL>https://x.x.x.x:8088/deviceManager/rest/&lt;/RestURL>
         &lt;UserName>xxxxxxxx&lt;/UserName>
         &lt;UserPassword>xxxxxxxx&lt;/UserPassword>
     &lt;/Storage>
@@ -910,15 +852,15 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                 </procedure>
             </section>
             <section xml:id="parameters-fc">
-                <title>Parameters in the Configuration File</title>
+                <title>Parameters in the configuration file</title>
                 <table rules="all">
                     <caption>Mandatory parameters</caption>
                     <thead>
                         <tr>
                             <th>Parameter</th>
-                            <th>Default Value</th>
+                            <th>Default value</th>
                             <th>Description</th>
-                            <th>Applicable To</th>
+                            <th>Applicable to</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1034,9 +976,9 @@ cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml</programlisting>
                     <thead>
                         <tr>
                             <th>Parameter</th>
-                            <th>Default Value</th>
+                            <th>Default value</th>
                             <th>Description</th>
-                            <th>Applicable To</th>
+                            <th>Applicable to</th>
                         </tr>
                     </thead>
                     <tbody>
