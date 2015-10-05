@@ -78,7 +78,7 @@ database and an administration token.
 
             .. code-block:: console
 
-               # apt-get install keystone python-openstackclient apache2 libapache2-mod-wsgi \
+               # apt-get install keystone apache2 libapache2-mod-wsgi \
                  memcached python-memcache
 
    .. only:: obs or rdo
@@ -89,14 +89,14 @@ database and an administration token.
 
             .. code-block:: console
 
-               # yum install openstack-keystone httpd mod_wsgi python-openstackclient \
+               # yum install openstack-keystone httpd mod_wsgi \
                  memcached python-memcached
 
          .. only:: obs
 
             .. code-block:: console
 
-               # zypper install openstack-keystone python-openstackclient apache2-mod_wsgi \
+               # zypper install openstack-keystone apache2-mod_wsgi \
                  memcached python-python-memcached
 
    .. only:: obs or rdo
