@@ -44,7 +44,7 @@ as listed below.
 
 ::
 
- $ cinder get-capabilities block1@ABC
+ $ cinder get-capabilities block1@ABC-driver
  +---------------------+----------------------------------------------+
  |     Volume stats    |                    Value                     |
  +---------------------+----------------------------------------------+
