@@ -3,8 +3,10 @@
 Other nodes
 ~~~~~~~~~~~
 
-Install the NTP service
------------------------
+Install and configure components
+--------------------------------
+
+Install the packages:
 
 .. only:: ubuntu or debian
 
@@ -36,17 +38,12 @@ Install the NTP service
       # zypper refresh
       # zypper install chrony
 
-|
-
-Configure the NTP service
--------------------------
-
 Configure the network and compute nodes to reference the controller
 node.
 
 .. only:: ubuntu or debian
 
-   1. Edit the :file:`/etc/chrony/chrony.conf` and comment out or remove all
+   1. Edit the ``/etc/chrony/chrony.conf`` file and comment out or remove all
       but one ``server`` key. Change it to reference the controller node:
 
       .. code:: ini
@@ -61,7 +58,7 @@ node.
 
 .. only:: rdo or obs
 
-   1. Edit the :file:`/etc/chrony.conf` and comment out or remove all but one
+   1. Edit the ``/etc/chrony.conf`` file and comment out or remove all but one
       ``server`` key. Change it to reference the controller node:
 
       .. code:: ini

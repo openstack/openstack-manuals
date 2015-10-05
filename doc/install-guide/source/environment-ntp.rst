@@ -3,8 +3,8 @@
 
 .. _environment-ntp:
 
-Configure Network Time Protocol (NTP)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Network Time Protocol (NTP)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You should install Chrony, an implementation of :term:`NTP`, to properly
 synchronize services among nodes. We recommend that you configure the

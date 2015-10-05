@@ -3,8 +3,10 @@
 Controller node
 ~~~~~~~~~~~~~~~
 
-Install the NTP service
------------------------
+Install and configure components
+--------------------------------
+
+Install the packages:
 
 .. only:: ubuntu or debian
 
@@ -36,18 +38,13 @@ Install the NTP service
       # zypper refresh
       # zypper install chrony
 
-|
-
-Configure the NTP service
--------------------------
-
 By default, the controller node synchronizes the time via a pool of
 public servers. However, you can optionally configure alternative servers such
 as those provided by your organization.
 
 .. only:: ubuntu or debian
 
-   #. Edit the :file:`/etc/chrony/chrony.conf` file and add, change, or remove the
+   #. Edit the ``/etc/chrony/chrony.conf`` file and add, change, or remove the
       following keys as necessary for your environment:
 
       .. code:: ini
@@ -66,7 +63,7 @@ as those provided by your organization.
 
 .. only:: rdo or obs
 
-   #. Edit the :file:`/etc/chrony.conf` file and add, change, or remove the
+   #. Edit the ``/etc/chrony.conf`` file and add, change, or remove the
       following keys as necessary for your environment:
 
       .. code:: ini
@@ -78,7 +75,7 @@ as those provided by your organization.
       ``server`` keys.
 
    #. To enable other nodes to connect to the chrony daemon on the controller,
-      add the following key to :file:`/etc/chrony.conf`:
+      add the following key to the ``/etc/chrony.conf`` file:
 
       .. code:: ini
 
