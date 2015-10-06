@@ -6,7 +6,8 @@ The OpenStack dashboard is a web-based interface that allows you to
 manage OpenStack resources and services. The dashboard allows you to
 interact with the OpenStack Compute cloud controller using the OpenStack
 APIs. For more information about installing and configuring the
-dashboard, see the `OpenStack Installation Guide <http://docs.openstack.org/>`__
+dashboard, see the `OpenStack Installation Guide
+<http://docs.openstack.org/index.html#install-guides>`__
 for your operating system.
 
 .. toctree::
