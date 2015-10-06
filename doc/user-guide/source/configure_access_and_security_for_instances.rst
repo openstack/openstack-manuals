@@ -60,14 +60,12 @@ group rules to a project, if your cloud requires them.
 
 #. In the :guilabel:`Add Rule` dialog box, enter the following values:
 
-   +------------------------------------+------------------------------------+
-   | Rule                               | Remote                             |
-   |                                    |                                    |
-   | ``SSH``                            | ``CIDR``                           |
-   +------------------------------------+------------------------------------+
+   * **Rule**: ``SSH``
+   * **Remote**: ``CIDR``
 
-   .. note:: To accept requests from a particular range of IP addresses, specify
-      the IP address block in the :guilabel:`CIDR` box.
+   .. note:: To accept requests from a particular range of IP
+      addresses, specify the IP address block in the
+      :guilabel:`CIDR` box.
 
 #. Click :guilabel:`Add`.
 
@@ -78,11 +76,9 @@ group rules to a project, if your cloud requires them.
 
 #. In the :guilabel:`Add Rule` dialog box, enter the following values:
 
-   +------------------------------------+------------------------------------+
-   | Rule                               | Direction                          |
-   |                                    |                                    |
-   | ``All ICMP``                       | ``Ingress``                        |
-   +------------------------------------+------------------------------------+
+   * **Rule**: ``All ICMP``
+   * **Remote**: ``Ingress``
+
 
 #. Click :guilabel:`Add`.
 
@@ -94,6 +90,7 @@ Add a key pair
 ~~~~~~~~~~~~~~
 
 Create at least one key pair for each project.
+
 
 #. Log in to the dashboard.
 
@@ -117,6 +114,7 @@ Create at least one key pair for each project.
 
 Import a key pair
 ~~~~~~~~~~~~~~~~~
+
 
 #. Log in to the dashboard.
 
@@ -144,7 +142,7 @@ Import a key pair
 
        $ chmod 0600 yourPrivateKey.pem
 
-   .. note:: If you are using the dashboard from a Windows computer, use PuTTYgen
+   .. note:: If you are using the Dashboard from a Windows computer, use PuTTYgen
       to load the ``*.pem`` file and convert and save it as ``*.ppk``. For
       more information see the `WinSCP web page for
       PuTTYgen <http://winscp.net/eng/docs/ui_puttygen>`__.
@@ -157,7 +155,7 @@ Import a key pair
 
 The Compute database registers the public key of the key pair.
 
-The dashboard lists the key pair on the :guilabel:`Access & Security` tab.
+The Dashboard lists the key pair on the :guilabel:`Access & Security` tab.
 
 Allocate a floating IP address to an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -173,6 +171,7 @@ addresses can have their associations modified at any time, regardless
 of the state of the instances involved. This procedure details the
 reservation of a floating IP address from an existing pool of addresses
 and the association of that address with a specific instance.
+
 
 #. Log in to the dashboard.
 

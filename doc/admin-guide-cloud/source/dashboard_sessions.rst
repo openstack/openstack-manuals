@@ -2,7 +2,7 @@
    :linenothreshold: 5
 
 ========================================
-Set up session storage for the dashboard
+Set up session storage for the Dashboard
 ========================================
 
 The dashboard uses `Django sessions
@@ -14,8 +14,16 @@ CentOS: :file:`/etc/openstack-dashboard/local_settings`, on Ubuntu and Debian:
 :file:`/etc/openstack-dashboard/local_settings.py`, and on openSUSE:
 :file:`/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py`).
 
+After architecting and implementing the core OpenStack
+services and other required services, combined with the Dashboard
+service steps below, users and administrators can use
+the OpenStack dashboard. Refer to the
+`OpenStack Dashboard <http://docs.openstack.org/
+user-guide/dashboard.html>`__ chapter of the User Guide for further
+instructions on logging in to the Dashboard.
+
 The following sections describe the pros and cons of each option as it
-pertains to deploying the dashboard.
+pertains to deploying the Dashboard.
 
 Local memory cache
 ~~~~~~~~~~~~~~~~~~
@@ -147,7 +155,7 @@ far beyond the scope of this documentation.
      No fixtures found.
 
 #. To avoid a warning when you restart Apache on Ubuntu, create a
-   :file:`blackhole` directory in the dashboard directory, as follows::
+   :file:`blackhole` directory in the Dashboard directory, as follows::
 
      # mkdir -p /var/lib/dash/.blackhole
 
@@ -167,7 +175,7 @@ far beyond the scope of this documentation.
      # systemctl restart apache2.service
 
 #. On Ubuntu, restart the nova-api service to ensure that the API server
-   can connect to the dashboard without error::
+   can connect to the Dashboard without error::
 
      # service nova-api restart
 
