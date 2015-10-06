@@ -1,29 +1,25 @@
-=====================
 Finalize installation
-=====================
-
-**Configure hashes and default storage policy**
+~~~~~~~~~~~~~~~~~~~~~
 
 .. include:: shared/note_configuration_vary_by_distribution.rst
 
 .. only:: ubuntu or rdo or debian
 
-   #. Obtain the :file:`/etc/swift/swift.conf` file from the Object
+   #. Obtain the ``/etc/swift/swift.conf`` file from the Object
       Storage source repository:
 
       .. code-block:: console
 
          # curl -o /etc/swift/swift.conf \
-           https://git.openstack.org/cgit/openstack/swift/plain/etc/swift.conf-sample?h=stable/kilo
+           https://git.openstack.org/cgit/openstack/swift/plain/etc/swift.conf-sample?h=stable/liberty
 
-   #. Edit the :file:`/etc/swift/swift.conf` file and complete the following
+   #. Edit the ``/etc/swift/swift.conf`` file and complete the following
       actions:
 
       a. In the ``[swift-hash]`` section, configure the hash path prefix and
          suffix for your environment.
 
          .. code-block:: ini
-            :linenos:
 
             [swift-hash]
             ...
@@ -40,26 +36,24 @@ Finalize installation
          storage policy:
 
          .. code-block:: ini
-            :linenos:
 
             [storage-policy:0]
             ...
             name = Policy-0
             default = yes
 
-   #. Copy the :file:`swift.conf` file to the :file:`/etc/swift` directory on
+   #. Copy the ``swift.conf`` file to the ``/etc/swift`` directory on
       each storage node and any additional nodes running the proxy service.
 
 .. only:: obs
 
-   #. Edit the :file:`/etc/swift/swift.conf` file and complete the following
+   #. Edit the ``/etc/swift/swift.conf`` file and complete the following
       actions:
 
       a. In the ``[swift-hash]`` section, configure the hash path prefix and
          suffix for your environment.
 
          .. code-block:: ini
-            :linenos:
 
             [swift-hash]
             ...
@@ -76,14 +70,13 @@ Finalize installation
          storage policy:
 
          .. code-block:: ini
-            :linenos:
 
             [storage-policy:0]
             ...
             name = Policy-0
             default = yes
 
-   #. Copy the :file:`swift.conf` file to the :file:`/etc/swift` directory on
+   #. Copy the ``swift.conf`` file to the ``/etc/swift`` directory on
       each storage node and any additional nodes running the proxy service.
 
 .. only:: ubuntu or debian
@@ -92,7 +85,7 @@ Finalize installation
 
       .. code-block:: console
 
-         # chown -R swift:swift /etc/swift
+         # chown -R root:swift /etc/swift
 
    5. On the controller node and any other nodes running the proxy service,
       restart the Object Storage proxy service including its dependencies:
@@ -120,7 +113,7 @@ Finalize installation
 
       .. code-block:: console
 
-         # chown -R swift:swift /etc/swift
+         # chown -R root:swift /etc/swift
 
    5. On the controller node and any other nodes running the proxy service,
       start the Object Storage proxy service including its dependencies and
@@ -155,7 +148,7 @@ Finalize installation
 
       .. code-block:: console
 
-         # chown -R swift:swift /etc/swift
+         # chown -R root:swift /etc/swift
 
    4. On the controller node and any other nodes running the proxy service,
       start the Object Storage proxy service including its dependencies and

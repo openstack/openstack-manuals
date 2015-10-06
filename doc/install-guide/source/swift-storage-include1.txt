@@ -1,30 +1,29 @@
-Edit the :file:`/etc/swift/object-server.conf` file and complete the
+Edit the ``/etc/swift/account-server.conf`` file and complete the
 following actions:
 
 * In the ``[DEFAULT]`` section, configure the bind IP address, bind port,
   user, configuration directory, and mount point directory:
 
   .. code-block:: ini
-     :linenos:
 
      [DEFAULT]
      ...
      bind_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
-     bind_port = 6000
+     bind_port = 6002
      user = swift
      swift_dir = /etc/swift
      devices = /srv/node
+     mount_check = true
 
-  Replace MANAGEMENT_INTERFACE_IP_ADDRESS with the IP address of the
+  Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address of the
   management network on the storage node.
 
 * In the ``[pipeline:main]`` section, enable the appropriate modules:
 
   .. code-block:: ini
-     :linenos:
 
      [pipeline:main]
-     pipeline = healthcheck recon object-server
+     pipeline = healthcheck recon account-server
 
   .. note::
 
@@ -32,12 +31,10 @@ following actions:
      see the `Deployment Guide <http://docs.openstack.org/developer/swift/deployment_guide.html>`__.
 
 * In the ``[filter:recon]`` section, configure the recon (meters) cache
-  and lock directories:
+  directory:
 
   .. code-block:: ini
-     :linenos:
 
      [filter:recon]
      ...
      recon_cache_path = /var/cache/swift
-     recon_lock_path = /var/lock

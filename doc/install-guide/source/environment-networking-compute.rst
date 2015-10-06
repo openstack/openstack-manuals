@@ -76,6 +76,15 @@ Configure name resolution
       # compute1
       10.0.0.31       compute1
 
+      # block1
+      10.0.0.41       block1
+
+      # object1
+      10.0.0.51       object1
+
+      # object2
+      10.0.0.52       object2
+
    .. warning::
 
       Some distributions add an extraneous entry in the :file:`/etc/hosts`
@@ -83,3 +92,8 @@ Configure name resolution
       address such as ``127.0.1.1``. You must comment out or remove this
       entry to prevent name resolution problems. **Do not remove the
       127.0.0.1 entry.**
+
+   .. note::
+
+      To reduce complexity of this guide, we add host entries for optional
+      services regardless of whether you choose to deploy them.

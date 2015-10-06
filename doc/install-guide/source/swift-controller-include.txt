@@ -1,11 +1,10 @@
-Edit the :file:`/etc/swift/proxy-server.conf` file and complete the
+Edit the ``/etc/swift/proxy-server.conf`` file and complete the
 following actions:
 
 * In the ``[DEFAULT]`` section, configure the bind port, user, and
   configuration directory:
 
   .. code-block:: ini
-     :linenos:
 
      [DEFAULT]
      ...
@@ -16,12 +15,11 @@ following actions:
 * In the ``[pipeline:main]`` section, enable the appropriate modules:
 
   .. code-block:: ini
-     :linenos:
 
      [pipeline:main]
-     pipeline = catch_errors gatekeeper healthcheck proxy-logging cache \
-     container_sync bulk ratelimit authtoken keystoneauth container-quotas \
-     account-quotas slo dlo proxy-logging proxy-server
+     pipeline = catch_errors gatekeeper healthcheck proxy-logging cache
+     container_sync bulk ratelimit authtoken keystoneauth container-quotas
+     account-quotas slo dlo versioned_writes proxy-logging proxy-server
 
   .. note::
 
@@ -48,7 +46,6 @@ following actions:
 * In the ``[filter:authtoken]`` section, configure Identity service access:
 
   .. code-block:: ini
-     :linenos:
 
      [filter:authtoken]
      paste.filter_factory = keystonemiddleware.auth_token:filter_factory
@@ -74,7 +71,6 @@ following actions:
 * In the ``[filter:cache]`` section, configure the ``memcached`` location:
 
   .. code-block:: ini
-     :linenos:
 
      [filter:cache]
      ...
