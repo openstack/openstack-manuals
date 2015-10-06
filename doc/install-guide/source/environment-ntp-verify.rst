@@ -32,4 +32,5 @@ node, can take several minutes to synchronize.
       ===============================================================================
       ^* controller                    3    9   377   421    +15us[  -87us] +/-   15ms
 
-   Contents in the *remote* column should indicate the hostname of the controller node.
+   Contents in the *Name/IP address* column should indicate the hostname of the
+   controller node.
