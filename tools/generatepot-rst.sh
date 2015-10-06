@@ -44,7 +44,7 @@ sphinx-build -b gettext $TAG doc/$DOCNAME/source/ doc/$DOCNAME/source/locale/
 sed -i -e 's/^"Project-Id-Version: [a-zA-Z0-9\. ]+\\n"$/"Project-Id-Version: \\n"/' \
     doc/$DOCNAME/source/locale/common.pot
 # Create the common pot file
-msgcat --sort-output doc/common-rst/source/locale/common-rst.pot \
+msgcat --sort-by-file doc/common-rst/source/locale/common-rst.pot \
     doc/$DOCNAME/source/locale/common.pot | \
     sed -e 's/^"Project-Id-Version: [a-zA-Z0-9\. ]+\\n"$/"Project-Id-Version: \\n"/' | \
     awk '$0 !~ /^\# [a-z0-9]+$/' | awk '$0 !~ /^\# \#-\#-\#-\#-\# /' \
@@ -75,7 +75,7 @@ rm -f doc/common-rst/source/locale/dummy.po
 # Take care of deleting all temporary files so that git add
 # doc/$DOCNAME/source/locale will only add the single pot file.
 # Remove UUIDs, those are not necessary and change too often
-msgcat --sort-output doc/$DOCNAME/source/locale/*.pot | \
+msgcat --sort-by-file doc/$DOCNAME/source/locale/*.pot | \
   awk '$0 !~ /^\# [a-z0-9]+$/' > doc/$DOCNAME/source/$DOCNAME.pot
 rm  doc/$DOCNAME/source/locale/*.pot
 rm -rf doc/$DOCNAME/source/locale/.doctrees/
