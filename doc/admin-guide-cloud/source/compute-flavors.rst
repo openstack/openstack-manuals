@@ -31,8 +31,6 @@ manage flavors. To see the available flavor-related commands, run:
 
 Flavors define these elements:
 
-**Identity Service configuration file sections**
-
 +-------------+---------------------------------------------------------------+
 | Element     | Description                                                   |
 +=============+===============================================================+
