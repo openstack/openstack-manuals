@@ -19,7 +19,7 @@ kernel networking parameters to disable reverse-path filtering:
 
 #. Implement the changes:
 
-   .. code-block:: ini
+   .. code-block:: console
 
       # sysctl -p
 
@@ -261,18 +261,6 @@ Finalize installation
       .. code-block:: console
 
          # service nova-compute restart
-
-   #. Due to a packaging issue, the Linux bridge agent initialization script
-      explicitly looks for the ML2 plug-in configuration file rather than the
-      agent configuration file. Run the following commands to resolve this
-      issue:
-
-      .. code-block:: console
-
-         # cp /etc/init/neutron-plugin-linuxbridge-agent.conf \
-           /etc/init/neutron-plugin-linuxbridge-agent.conf.orig
-         # sed -i 's,ml2_conf.ini,linuxbridge_agent.ini,g' \
-           /etc/init/neutron-plugin-linuxbridge-agent.conf
 
    #. Restart the Linux bridge agent:
 

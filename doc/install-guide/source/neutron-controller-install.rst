@@ -359,18 +359,6 @@ Finalize installation
 
 .. only:: ubuntu
 
-   #. Due to a packaging issue, the Linux bridge agent initialization script
-      explicitly looks for the ML2 plug-in configuration file rather than the
-      agent configuration file. Run the following commands to resolve this
-      issue:
-
-      .. code-block:: console
-
-         # cp /etc/init/neutron-plugin-linuxbridge-agent.conf \
-           /etc/init/neutron-plugin-linuxbridge-agent.conf.orig
-         # sed -i 's,ml2_conf.ini,linuxbridge_agent.ini,g' \
-           /etc/init/neutron-plugin-linuxbridge-agent.conf
-
    #. Populate the database:
 
       .. code-block:: console
