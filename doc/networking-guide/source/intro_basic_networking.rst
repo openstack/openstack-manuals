@@ -315,7 +315,7 @@ are on the local network associated with the network interface eth1.
 Line 4 of the output specifies that IPs in the 192.168.122/24 subnet are on the
 local network associated with the network interface virbr0.
 
-The output of the ``route -n`` and ``netsat -rn`` commands are
+The output of the ``route -n`` and ``netstat -rn`` commands are
 formatted in a slightly different way. This example shows how the same
 routes would be formatted using these commands::
 
