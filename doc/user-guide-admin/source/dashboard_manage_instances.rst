@@ -25,10 +25,11 @@ Create instance snapshots
 #. In the :guilabel:`Create Snapshot` window, enter a name for the snapshot.
 
 #. Click :guilabel:`Create Snapshot`. The Dashboard shows the instance snapshot
-   in the :guilabel:`Images & Snapshots` category.
+   in the :guilabel:`Images` category.
 
 #. To launch an instance from the snapshot, select the snapshot and
-   click Launch. For information about launching instances, see the
+   click :guilabel:`Launch Instance`. For information about launching
+   instances, see the
    `OpenStack End User Guide <http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__.
 
 Control the state of an instance
