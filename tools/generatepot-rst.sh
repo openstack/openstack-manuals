@@ -13,12 +13,22 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-DOCNAME=$1
+REPOSITORY=$1
+USE_DOC=$2
+DOCNAME=$3
 
-if [ -z "$DOCNAME" ] ; then
-    echo "usage $0 DOCNAME"
+if [ $# -lt 3 ] ; then
+    echo "usage $0 REPOSITORY USE_DOC DOCNAME"
     exit 1
 fi
+
+DIRECTORY=$DOCNAME
+TOPDIR=""
+if [ "$USE_DOC" = "1" ] ; then
+    DIRECTORY="doc/$DOCNAME"
+    TOPDIR="doc/"
+fi
+
 
 # We're not doing anything for this directory. But we need to handle
 # it by this script so that the common-rst.pot file gets registered.
@@ -26,35 +36,43 @@ if [[ "$DOCNAME" = "common-rst" ]] ; then
     exit 0
 fi
 
-# Build Glossary
-tools/glossary2rst.py doc/common-rst/glossary.rst
+if [ "$REPOSITORY" = "openstack-manuals" ] ; then
+    # Build Glossary
+    tools/glossary2rst.py doc/common-rst/glossary.rst
+fi
 # First remove the old pot file, otherwise the new file will contain
 # old references
 
-rm -f doc/$DOCNAME/source/locale/$DOCNAME.pot
+rm -f ${DIRECTORY}/source/locale/$DOCNAME.pot
 
 # We need to extract all strings, so add all supported tags
 TAG=""
 if [ ${DOCNAME} = "install-guide" ] ; then
     TAG="-t obs -t rdo -t ubuntu -t debian"
 fi
-sphinx-build -b gettext $TAG doc/$DOCNAME/source/ doc/$DOCNAME/source/locale/
+if [ ${DOCNAME} = "firstapp" ] ; then
+    TAG="-t libcloud  -t dotnet -t fog -t pkgcloud -t shade"
+fi
+sphinx-build -b gettext $TAG ${DIRECTORY}/source/ \
+    ${DIRECTORY}/source/locale/
 
-# Update common
-sed -i -e 's/^"Project-Id-Version: [a-zA-Z0-9\. ]+\\n"$/"Project-Id-Version: \\n"/' \
-    doc/$DOCNAME/source/locale/common.pot
-# Create the common pot file
-msgcat --sort-by-file doc/common-rst/source/locale/common-rst.pot \
-    doc/$DOCNAME/source/locale/common.pot | \
-    sed -e 's/^"Project-Id-Version: [a-zA-Z0-9\. ]+\\n"$/"Project-Id-Version: \\n"/' | \
-    awk '$0 !~ /^\# [a-z0-9]+$/' | awk '$0 !~ /^\# \#-\#-\#-\#-\# /' \
-    > doc/$DOCNAME/source/locale/common-rst.pot
-mv -f doc/$DOCNAME/source/locale/common-rst.pot doc/common-rst/source/locale/common-rst.pot
-rm -f doc/$DOCNAME/source/locale/common.pot
+if [ "$REPOSITORY" = "openstack-manuals" ] ; then
+    # Update common
+    sed -i -e 's/^"Project-Id-Version: [a-zA-Z0-9\. ]+\\n"$/"Project-Id-Version: \\n"/' \
+        ${DIRECTORY}/source/locale/common.pot
+    # Create the common pot file
+    msgcat --sort-by-file ${TOPDIR}common-rst/source/locale/common-rst.pot \
+        ${DIRECTORY}/source/locale/common.pot | \
+        sed -e 's/^"Project-Id-Version: [a-zA-Z0-9\. ]+\\n"$/"Project-Id-Version: \\n"/' | \
+        awk '$0 !~ /^\# [a-z0-9]+$/' | awk '$0 !~ /^\# \#-\#-\#-\#-\# /' \
+        > ${DIRECTORY}/source/locale/common-rst.pot
+    mv -f ${DIRECTORY}/source/locale/common-rst.pot \
+        ${TOPDIR}common-rst/source/locale/common-rst.pot
+    rm -f ${DIRECTORY}/source/locale/common.pot
 
-# Simplify metadata
-rm -f doc/common-rst/source/locale/dummy.po
-cat << EOF > doc/common-rst/source/locale/dummy.po
+    # Simplify metadata
+    rm -f ${TOPDIR}common-rst/source/locale/dummy.po
+    cat << EOF > ${TOPDIR}common-rst/source/locale/dummy.po
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
@@ -67,16 +85,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 EOF
-msgmerge -N doc/common-rst/source/locale/dummy.po \
-  doc/common-rst/source/locale/common-rst.pot > doc/common-rst/source/locale/tmp.pot
-mv -f doc/common-rst/source/locale/tmp.pot doc/common-rst/source/locale/common-rst.pot
-rm -f doc/common-rst/source/locale/dummy.po
+    msgmerge -N ${TOPDIR}common-rst/source/locale/dummy.po \
+        ${TOPDIR}common-rst/source/locale/common-rst.pot \
+        > ${TOPDIR}common-rst/source/locale/tmp.pot
+    mv -f ${TOPDIR}common-rst/source/locale/tmp.pot \
+        ${TOPDIR}common-rst/source/locale/common-rst.pot
+    rm -f ${TOPDIR}common-rst/source/locale/dummy.po
+else
+    # common-rst is translated as part of openstack-manuals, do not
+    # include the file in the combined tree.
+    rm ${DIRECTORY}/source/locale/common.pot
+fi
 
-# Take care of deleting all temporary files so that git add
-# doc/$DOCNAME/source/locale will only add the single pot file.
+# Take care of deleting all temporary files so that
+# "git add ${DIRECTORY}/source/locale" will only add the
+# single pot file.
 # Remove UUIDs, those are not necessary and change too often
-msgcat --sort-by-file doc/$DOCNAME/source/locale/*.pot | \
-  awk '$0 !~ /^\# [a-z0-9]+$/' > doc/$DOCNAME/source/$DOCNAME.pot
-rm  doc/$DOCNAME/source/locale/*.pot
-rm -rf doc/$DOCNAME/source/locale/.doctrees/
-mv doc/$DOCNAME/source/$DOCNAME.pot doc/$DOCNAME/source/locale/$DOCNAME.pot
+msgcat --sort-by-file ${DIRECTORY}/source/locale/*.pot | \
+  awk '$0 !~ /^\# [a-z0-9]+$/' > ${DIRECTORY}/source/$DOCNAME.pot
+rm  ${DIRECTORY}/source/locale/*.pot
+rm -rf ${DIRECTORY}/source/locale/.doctrees/
+mv ${DIRECTORY}/source/$DOCNAME.pot ${DIRECTORY}/source/locale/$DOCNAME.pot
