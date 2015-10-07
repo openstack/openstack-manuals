@@ -61,8 +61,7 @@ The following books explain how to configure and run an OpenStack cloud:
 The following books explain how to use the OpenStack dashboard and
 command-line clients:
 
--  `API Quick
-   Start <http://docs.openstack.org/api/quick-start/content/>`__
+-  `API Guide <http://developer.openstack.org/api-guide/quick-start/>`__
 
 -  `End User Guide <http://docs.openstack.org/user-guide/>`__
 

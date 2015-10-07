@@ -104,9 +104,9 @@ Guides for end users
      - Source location
      - Target location
 
-   * - API Quick Start
+   * - API Guide
      - http://git.openstack.org/cgit/openstack/api-site/tree/api-quick-start
-     - http://docs.openstack.org/api/quick-start/content
+     - http://developer.openstack.org/api-guide/quick-start/
 
    * - End User Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/user-guide

@@ -71,7 +71,7 @@ Guides for end users
 * `OpenStack Admin User Guide`_: Shows OpenStack administrators how to create
   and manage resources in an OpenStack cloud with the OpenStack dashboard and
   OpenStack client commands.
-* `OpenStack API Quick Start`_: A brief overview of how to send REST API
+* `OpenStack API Guide`_: A brief overview of how to send REST API
   requests to endpoints for OpenStack services.
 * `Command-Line Interface Reference`_: Automatically generates help text for
   CLI commands and subcommands.
@@ -167,7 +167,7 @@ This guide has a review in place to get a license indicator in output:
 
 .. _`OpenStack End User Guide`: http://docs.openstack.org/user-guide/index.html
 .. _`OpenStack Admin User Guide`: http://docs.openstack.org/user-guide-admin/index.html
-.. _`OpenStack API Quick Start`: http://docs.openstack.org/api/quick-start/content/
+.. _`OpenStack API Guide`: http://developer.openstack.org/api-guide/quick-start/
 .. _`Command-Line Interface Reference`: http://docs.openstack.org/cli-reference/content/
 
 .. _`Complete API Reference`: http://developer.openstack.org/api-ref.html
