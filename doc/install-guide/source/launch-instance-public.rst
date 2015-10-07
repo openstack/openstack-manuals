@@ -9,6 +9,13 @@ Determine instance options
 To launch an instance, you must at least specify the flavor, image
 name, network, security group, key, and instance name.
 
+#. On the controller node, source the ``demo`` credentials to gain access to
+   user-only CLI commands:
+
+   .. code-block:: console
+
+      $ source demo-openrc.sh
+
 #. A flavor specifies a virtual resource allocation profile which
    includes processor, memory, and storage.
 
