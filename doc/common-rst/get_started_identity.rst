@@ -22,8 +22,8 @@ Server
 
 Drivers
     Drivers or a service back end are integrated to the centralized
-    server, and are used for accessing identity information in
-    repositories, external to OpenStack, and maybe already existing in
+    server. They are used for accessing identity information in
+    repositories external to OpenStack, and may already exist in
     the infrastructure where OpenStack is deployed (for example, SQL
     databases or LDAP servers).
 
