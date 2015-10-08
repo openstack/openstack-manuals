@@ -93,8 +93,8 @@ EOF
     rm -f ${TOPDIR}common-rst/source/locale/dummy.po
 else
     # common-rst is translated as part of openstack-manuals, do not
-    # include the file in the combined tree.
-    rm ${DIRECTORY}/source/locale/common.pot
+    # include the file in the combined tree if it exists.
+    rm -f ${DIRECTORY}/source/locale/common.pot
 fi
 
 # Take care of deleting all temporary files so that
