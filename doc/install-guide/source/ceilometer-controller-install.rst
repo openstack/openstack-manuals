@@ -74,7 +74,6 @@ create a MongoDB database, service credentials, and API endpoint.
          IP address of the controller node.
 
          .. code-block:: ini
-            :linenos:
 
             bind_ip = 10.0.0.11
 
@@ -85,7 +84,6 @@ create a MongoDB database, service credentials, and API endpoint.
          assert the ``smallfiles`` key:
 
          .. code-block:: ini
-            :linenos:
 
             smallfiles = true
 
@@ -111,7 +109,6 @@ create a MongoDB database, service credentials, and API endpoint.
          IP address of the controller node.
 
          .. code-block:: ini
-            :linenos:
 
             bind_ip = 10.0.0.11
 
@@ -122,7 +119,6 @@ create a MongoDB database, service credentials, and API endpoint.
          assert the ``smallfiles`` key:
 
          .. code-block:: ini
-            :linenos:
 
             smallfiles = true
 
@@ -146,7 +142,6 @@ create a MongoDB database, service credentials, and API endpoint.
          IP address of the controller node.
 
          .. code-block:: ini
-            :linenos:
 
             bind_ip = 10.0.0.11
 
@@ -157,7 +152,6 @@ create a MongoDB database, service credentials, and API endpoint.
          assert the ``smallfiles`` key:
 
          .. code-block:: ini
-            :linenos:
 
             smallfiles = true
 
@@ -375,7 +369,6 @@ To install and configure the Telemetry module components
    a. In the ``[database]`` section, configure database access:
 
       .. code-block:: ini
-         :linenos:
 
          [database]
          ...
@@ -390,7 +383,6 @@ To install and configure the Telemetry module components
       configure ``RabbitMQ`` message queue access:
 
       .. code-block:: ini
-         :linenos:
 
          [DEFAULT]
          ...
@@ -409,7 +401,6 @@ To install and configure the Telemetry module components
       configure Identity service access:
 
       .. code-block:: ini
-         :linenos:
 
          [DEFAULT]
          ...
@@ -434,7 +425,6 @@ To install and configure the Telemetry module components
    d. In the ``[service_credentials]`` section, configure service credentials:
 
       .. code-block:: ini
-         :linenos:
 
          [service_credentials]
          ...
@@ -451,7 +441,6 @@ To install and configure the Telemetry module components
    e. In the ``[publisher]`` section, configure the telemetry secret:
 
       .. code-block:: ini
-         :linenos:
 
          [publisher]
          ...
@@ -465,7 +454,6 @@ To install and configure the Telemetry module components
       f. In the ``[collector]`` section, configure the dispatcher:
 
          .. code-block:: ini
-            :linenos:
 
             [collector]
             ...
@@ -475,7 +463,6 @@ To install and configure the Telemetry module components
          logging in the ``[DEFAULT]`` section:
 
          .. code-block:: ini
-            :linenos:
 
             [DEFAULT]
             ...
@@ -487,7 +474,6 @@ To install and configure the Telemetry module components
          logging in the ``[DEFAULT]`` section:
 
          .. code-block:: ini
-            :linenos:
 
             [DEFAULT]
             ...

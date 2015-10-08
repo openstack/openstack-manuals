@@ -301,7 +301,6 @@ To install and configure the Orchestration components
       * In the ``[database]`` section, configure database access:
 
         .. code-block:: ini
-           :linenos:
 
            [database]
            ...
@@ -314,7 +313,6 @@ To install and configure the Orchestration components
         configure ``RabbitMQ`` message queue access:
 
         .. code-block:: ini
-           :linenos:
 
            [DEFAULT]
            ...
@@ -333,7 +331,6 @@ To install and configure the Orchestration components
         configure Identity service access:
 
         .. code-block:: ini
-           :linenos:
 
            [keystone_authtoken]
            ...
@@ -360,7 +357,6 @@ To install and configure the Orchestration components
         wait condition URLs:
 
         .. code-block:: ini
-           :linenos:
 
            [DEFAULT]
            ...
@@ -371,7 +367,6 @@ To install and configure the Orchestration components
         Identity service domain:
 
         .. code-block:: ini
-           :linenos:
 
            [DEFAULT]
            ...
@@ -386,7 +381,6 @@ To install and configure the Orchestration components
         logging in the ``[DEFAULT]`` section:
 
         .. code-block:: ini
-           :linenos:
 
            [DEFAULT]
            ...
@@ -438,7 +432,6 @@ To install and configure the Orchestration components
       * In the ``[ec2authtoken]`` section, configure Identity service access:
 
         .. code-block:: ini
-           :linenos:
 
            [ec2authtoken]
            ...

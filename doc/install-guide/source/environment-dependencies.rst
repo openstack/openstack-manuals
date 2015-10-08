@@ -1,6 +1,3 @@
-.. highlight:: ini
-   :linenothreshold: 1
-
 ==============================
 OpenStack service dependencies
 ==============================

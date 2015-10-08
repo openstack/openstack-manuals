@@ -1,6 +1,3 @@
-.. highlight:: ini
-   :linenothreshold: 1
-
 .. _environment-ntp:
 
 Network Time Protocol (NTP)

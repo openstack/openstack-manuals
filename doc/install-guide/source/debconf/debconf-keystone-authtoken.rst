@@ -12,7 +12,6 @@ access it. You must also configure the ``admin_tenant_name``,
 Generally, this section looks like this:
 
 .. code-block:: ini
-   :linenos:
 
    [keystone_authtoken]
    auth_uri = http://controller:5000/v2.0
@@ -45,7 +44,6 @@ This information is stored in the configuration file for each service.
 For example:
 
 .. code-block:: ini
-   :linenos:
 
    /etc/ceilometer/ceilometer.conf
    /etc/nova/api-paste.ini

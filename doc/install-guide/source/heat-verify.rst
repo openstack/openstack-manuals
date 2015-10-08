@@ -21,7 +21,6 @@ module (heat).
    file with the following content:
 
    .. code-block:: yaml
-      :linenos:
 
       heat_template_version: 2014-10-16
       description: A simple server.
