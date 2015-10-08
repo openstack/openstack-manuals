@@ -68,7 +68,7 @@ name, network, security group, key, and instance name.
    This instance uses the ``private`` project network. However, you must
    reference this network using the ID instead of the name.
 
-4. List available security groups:
+#. List available security groups:
 
    .. code-block:: console
 
@@ -81,7 +81,7 @@ name, network, security group, key, and instance name.
 
    This instance uses the ``default`` security group.
 
-5. Launch the instance:
+#. Launch the instance:
 
    Replace ``PRIVATE_NET_ID`` with the ID of the ``private`` project network.
 
@@ -120,7 +120,7 @@ name, network, security group, key, and instance name.
       | user_id                              | 684286a9079845359882afc3aa5011fb              |
       +--------------------------------------+-----------------------------------------------+
 
-6. Check the status of your instance:
+#. Check the status of your instance:
 
    .. code-block:: console
 
@@ -138,7 +138,7 @@ name, network, security group, key, and instance name.
 Access the instance using a virtual console
 -------------------------------------------
 
-1. Obtain a :term:`Virtual Network Computing (VNC)`
+#. Obtain a :term:`Virtual Network Computing (VNC)`
    session URL for your instance and access it from a web browser:
 
    .. code-block:: console
@@ -161,35 +161,35 @@ Access the instance using a virtual console
    After logging into CirrOS, we recommend that you verify network
    connectivity using ``ping``.
 
-   #. Verify access to the ``private`` project network gateway:
+#. Verify access to the ``private`` project network gateway:
 
-      .. code-block:: console
+   .. code-block:: console
 
-         $ ping -c 4 172.16.1.1
-         PING 172.16.1.1 (172.16.1.1) 56(84) bytes of data.
-         64 bytes from 172.16.1.1: icmp_req=1 ttl=64 time=0.357 ms
-         64 bytes from 172.16.1.1: icmp_req=2 ttl=64 time=0.473 ms
-         64 bytes from 172.16.1.1: icmp_req=3 ttl=64 time=0.504 ms
-         64 bytes from 172.16.1.1: icmp_req=4 ttl=64 time=0.470 ms
+      $ ping -c 4 172.16.1.1
+      PING 172.16.1.1 (172.16.1.1) 56(84) bytes of data.
+      64 bytes from 172.16.1.1: icmp_req=1 ttl=64 time=0.357 ms
+      64 bytes from 172.16.1.1: icmp_req=2 ttl=64 time=0.473 ms
+      64 bytes from 172.16.1.1: icmp_req=3 ttl=64 time=0.504 ms
+      64 bytes from 172.16.1.1: icmp_req=4 ttl=64 time=0.470 ms
 
-         --- 172.16.1.1 ping statistics ---
-         4 packets transmitted, 4 received, 0% packet loss, time 2998ms
-         rtt min/avg/max/mdev = 0.357/0.451/0.504/0.055 ms
+      --- 172.16.1.1 ping statistics ---
+      4 packets transmitted, 4 received, 0% packet loss, time 2998ms
+      rtt min/avg/max/mdev = 0.357/0.451/0.504/0.055 ms
 
-   #. Verify access to the internet:
+#. Verify access to the internet:
 
-      .. code-block:: console
+   .. code-block:: console
 
-         $ ping -c 4 openstack.org
-         PING openstack.org (174.143.194.225) 56(84) bytes of data.
-         64 bytes from 174.143.194.225: icmp_req=1 ttl=53 time=17.4 ms
-         64 bytes from 174.143.194.225: icmp_req=2 ttl=53 time=17.5 ms
-         64 bytes from 174.143.194.225: icmp_req=3 ttl=53 time=17.7 ms
-         64 bytes from 174.143.194.225: icmp_req=4 ttl=53 time=17.5 ms
+      $ ping -c 4 openstack.org
+      PING openstack.org (174.143.194.225) 56(84) bytes of data.
+      64 bytes from 174.143.194.225: icmp_req=1 ttl=53 time=17.4 ms
+      64 bytes from 174.143.194.225: icmp_req=2 ttl=53 time=17.5 ms
+      64 bytes from 174.143.194.225: icmp_req=3 ttl=53 time=17.7 ms
+      64 bytes from 174.143.194.225: icmp_req=4 ttl=53 time=17.5 ms
 
-         --- openstack.org ping statistics ---
-         4 packets transmitted, 4 received, 0% packet loss, time 3003ms
-         rtt min/avg/max/mdev = 17.431/17.575/17.734/0.143 ms
+      --- openstack.org ping statistics ---
+      4 packets transmitted, 4 received, 0% packet loss, time 3003ms
+      rtt min/avg/max/mdev = 17.431/17.575/17.734/0.143 ms
 
 Access the instance remotely
 ----------------------------

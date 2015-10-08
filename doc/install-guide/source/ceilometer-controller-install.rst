@@ -15,7 +15,7 @@ create a MongoDB database, service credentials, and API endpoint.
 
 .. only:: obs
 
-   1. Enable the Open Build Service repositories for MongoDB based on
+   #. Enable the Open Build Service repositories for MongoDB based on
       your openSUSE or SLES version:
 
       On openSUSE:
@@ -51,7 +51,7 @@ create a MongoDB database, service credentials, and API endpoint.
 
 .. only:: rdo
 
-   1. Install the MongoDB package:
+   #. Install the MongoDB package:
 
       .. code-block:: console
 
@@ -59,7 +59,7 @@ create a MongoDB database, service credentials, and API endpoint.
 
 .. only:: ubuntu
 
-   1. Install the MongoDB package:
+   #. Install the MongoDB package:
 
       .. code-block:: console
 
@@ -70,33 +70,33 @@ create a MongoDB database, service credentials, and API endpoint.
    2. Edit the ``/etc/mongodb.conf`` file and complete the following
       actions:
 
-      a. Configure the ``bind_ip`` key to use the management interface
-         IP address of the controller node.
+      * Configure the ``bind_ip`` key to use the management interface
+        IP address of the controller node.
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            bind_ip = 10.0.0.11
+           bind_ip = 10.0.0.11
 
-      b. By default, MongoDB creates several 1 GB journal files
-         in the ``/var/lib/mongodb/journal`` directory.
-         If you want to reduce the size of each journal file to
-         128 MB and limit total journal space consumption to 512 MB,
-         assert the ``smallfiles`` key:
+      * By default, MongoDB creates several 1 GB journal files
+        in the ``/var/lib/mongodb/journal`` directory.
+        If you want to reduce the size of each journal file to
+        128 MB and limit total journal space consumption to 512 MB,
+        assert the ``smallfiles`` key:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            smallfiles = true
+           smallfiles = true
 
-         You can also disable journaling. For more information, see the
-         `MongoDB manual <http://docs.mongodb.org/manual/>`__.
+        You can also disable journaling. For more information, see the
+        `MongoDB manual <http://docs.mongodb.org/manual/>`__.
 
-      c. Start the MongoDB services and configure them to start when
-         the system boots:
+      * Start the MongoDB services and configure them to start when
+        the system boots:
 
-         .. code-block:: console
+        .. code-block:: console
 
-            # systemctl enable mongodb.service
-            # systemctl start mongodb.service
+           # systemctl enable mongodb.service
+           # systemctl start mongodb.service
 
 .. only:: rdo
 
@@ -105,67 +105,67 @@ create a MongoDB database, service credentials, and API endpoint.
    2. Edit the ``/etc/mongod.conf`` file and complete the following
       actions:
 
-      a. Configure the ``bind_ip`` key to use the management interface
-         IP address of the controller node.
+      * Configure the ``bind_ip`` key to use the management interface
+        IP address of the controller node.
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            bind_ip = 10.0.0.11
+           bind_ip = 10.0.0.11
 
-      b. By default, MongoDB creates several 1 GB journal files
-         in the ``/var/lib/mongodb/journal`` directory.
-         If you want to reduce the size of each journal file to
-         128 MB and limit total journal space consumption to 512 MB,
-         assert the ``smallfiles`` key:
+      * By default, MongoDB creates several 1 GB journal files
+        in the ``/var/lib/mongodb/journal`` directory.
+        If you want to reduce the size of each journal file to
+        128 MB and limit total journal space consumption to 512 MB,
+        assert the ``smallfiles`` key:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            smallfiles = true
+           smallfiles = true
 
-         You can also disable journaling. For more information, see the
-         `MongoDB manual <http://docs.mongodb.org/manual/>`__.
+        You can also disable journaling. For more information, see the
+        `MongoDB manual <http://docs.mongodb.org/manual/>`__.
 
-      c. Start the MongoDB services and configure them to start when
-         the system boots:
+      * Start the MongoDB services and configure them to start when
+        the system boots:
 
-         .. code-block:: console
+        .. code-block:: console
 
-            # systemctl enable mongod.service
-            # systemctl start mongod.service
+           # systemctl enable mongod.service
+           # systemctl start mongod.service
 
 .. only:: ubuntu
 
    2. Edit the ``/etc/mongodb.conf`` file and complete the following
       actions:
 
-      a. Configure the ``bind_ip`` key to use the management interface
-         IP address of the controller node.
+      * Configure the ``bind_ip`` key to use the management interface
+        IP address of the controller node.
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            bind_ip = 10.0.0.11
+           bind_ip = 10.0.0.11
 
-      b. By default, MongoDB creates several 1 GB journal files
-         in the ``/var/lib/mongodb/journal`` directory.
-         If you want to reduce the size of each journal file to
-         128 MB and limit total journal space consumption to 512 MB,
-         assert the ``smallfiles`` key:
+      * By default, MongoDB creates several 1 GB journal files
+        in the ``/var/lib/mongodb/journal`` directory.
+        If you want to reduce the size of each journal file to
+        128 MB and limit total journal space consumption to 512 MB,
+        assert the ``smallfiles`` key:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            smallfiles = true
+           smallfiles = true
 
-         If you change the journaling configuration, stop the MongoDB
-         service, remove the initial journal files, and start the service:
+        If you change the journaling configuration, stop the MongoDB
+        service, remove the initial journal files, and start the service:
 
-         .. code-block:: console
+        .. code-block:: console
 
-            # service mongodb stop
-            # rm /var/lib/mongodb/journal/prealloc.*
-            # service mongodb start
+           # service mongodb stop
+           # rm /var/lib/mongodb/journal/prealloc.*
+           # service mongodb start
 
-         You can also disable journaling. For more information, see the
-         `MongoDB manual <http://docs.mongodb.org/manual/>`__.
+        You can also disable journaling. For more information, see the
+        `MongoDB manual <http://docs.mongodb.org/manual/>`__.
 
 .. only:: obs or ubuntu
 
@@ -222,50 +222,50 @@ create a MongoDB database, service credentials, and API endpoint.
 
 5. To create the service credentials, complete these steps:
 
-   a. Create the ``ceilometer`` user:
+   * Create the ``ceilometer`` user:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack user create --password-prompt ceilometer
-         User Password:
-         Repeat User Password:
-         +----------+----------------------------------+
-         | Field    | Value                            |
-         +----------+----------------------------------+
-         | email    | None                             |
-         | enabled  | True                             |
-         | id       | b7657c9ea07a4556aef5d34cf70713a3 |
-         | name     | ceilometer                       |
-         | username | ceilometer                       |
-         +----------+----------------------------------+
+        $ openstack user create --password-prompt ceilometer
+        User Password:
+        Repeat User Password:
+        +----------+----------------------------------+
+        | Field    | Value                            |
+        +----------+----------------------------------+
+        | email    | None                             |
+        | enabled  | True                             |
+        | id       | b7657c9ea07a4556aef5d34cf70713a3 |
+        | name     | ceilometer                       |
+        | username | ceilometer                       |
+        +----------+----------------------------------+
 
-   b. Add the ``admin`` role to the ``ceilometer`` user.
+   * Add the ``admin`` role to the ``ceilometer`` user.
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack role add --project service --user ceilometer admin
-         +-------+----------------------------------+
-         | Field | Value                            |
-         +-------+----------------------------------+
-         | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
-         | name  | admin                            |
-         +-------+----------------------------------+
+        $ openstack role add --project service --user ceilometer admin
+        +-------+----------------------------------+
+        | Field | Value                            |
+        +-------+----------------------------------+
+        | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
+        | name  | admin                            |
+        +-------+----------------------------------+
 
-   c. Create the ``ceilometer`` service entity:
+   * Create the ``ceilometer`` service entity:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack service create --name ceilometer \
-           --description "Telemetry" metering
-         +-------------+----------------------------------+
-         | Field       | Value                            |
-         +-------------+----------------------------------+
-         | description | Telemetry                        |
-         | enabled     | True                             |
-         | id          | 3405453b14da441ebb258edfeba96d83 |
-         | name        | ceilometer                       |
-         | type        | metering                         |
-         +-------------+----------------------------------+
+        $ openstack service create --name ceilometer \
+          --description "Telemetry" metering
+        +-------------+----------------------------------+
+        | Field       | Value                            |
+        +-------------+----------------------------------+
+        | description | Telemetry                        |
+        | enabled     | True                             |
+        | id          | 3405453b14da441ebb258edfeba96d83 |
+        | name        | ceilometer                       |
+        | type        | metering                         |
+        +-------------+----------------------------------+
 
 6. Create the Telemetry module API endpoint:
 
@@ -324,7 +324,7 @@ To install and configure the Telemetry module components
 
 .. only:: obs
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -337,7 +337,7 @@ To install and configure the Telemetry module components
 
 .. only:: rdo
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -348,7 +348,7 @@ To install and configure the Telemetry module components
 
 .. only:: ubuntu
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -366,124 +366,124 @@ To install and configure the Telemetry module components
 3. Edit the ``/etc/ceilometer/ceilometer.conf`` file and complete
    the following actions:
 
-   a. In the ``[database]`` section, configure database access:
+   * In the ``[database]`` section, configure database access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [database]
-         ...
-         connection = mongodb://ceilometer:CEILOMETER_DBPASS@controller:27017/ceilometer
+        [database]
+        ...
+        connection = mongodb://ceilometer:CEILOMETER_DBPASS@controller:27017/ceilometer
 
-      Replace ``CEILOMETER_DBPASS`` with the password you chose for the
-      Telemetry module database. You must escape special characters such
-      as ':', '/', '+', and '@' in the connection string in accordance
-      with RFC2396.
+     Replace ``CEILOMETER_DBPASS`` with the password you chose for the
+     Telemetry module database. You must escape special characters such
+     as ':', '/', '+', and '@' in the connection string in accordance
+     with RFC2396.
 
-   b. In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-      configure ``RabbitMQ`` message queue access:
+   * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
+     configure ``RabbitMQ`` message queue access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         rpc_backend = rabbit
+        [DEFAULT]
+        ...
+        rpc_backend = rabbit
 
-         [oslo_messaging_rabbit]
-         ...
-         rabbit_host = controller
-         rabbit_userid = openstack
-         rabbit_password = RABBIT_PASS
+        [oslo_messaging_rabbit]
+        ...
+        rabbit_host = controller
+        rabbit_userid = openstack
+        rabbit_password = RABBIT_PASS
 
-      Replace ``RABBIT_PASS`` with the password you chose for the
-      ``openstack`` account in ``RabbitMQ``.
+     Replace ``RABBIT_PASS`` with the password you chose for the
+     ``openstack`` account in ``RabbitMQ``.
 
-   c. In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
-      configure Identity service access:
+   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
+     configure Identity service access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         auth_strategy = keystone
+        [DEFAULT]
+        ...
+        auth_strategy = keystone
 
-         [keystone_authtoken]
-         ...
-         auth_uri = http://controller:5000/v2.0
-         identity_uri = http://controller:35357
-         admin_tenant_name = service
-         admin_user = ceilometer
-         admin_password = CEILOMETER_PASS
+        [keystone_authtoken]
+        ...
+        auth_uri = http://controller:5000/v2.0
+        identity_uri = http://controller:35357
+        admin_tenant_name = service
+        admin_user = ceilometer
+        admin_password = CEILOMETER_PASS
 
-      Replace ``CEILOMETER_PASS`` with the password you chose for
-      the ``ceilometer`` user in the Identity service.
+     Replace ``CEILOMETER_PASS`` with the password you chose for
+     the ``ceilometer`` user in the Identity service.
 
-      .. note::
+     .. note::
 
-         Comment out any ``auth_host``, ``auth_port``, and ``auth_protocol``
-         options because the ``identity_uri`` option replaces them.
+        Comment out any ``auth_host``, ``auth_port``, and ``auth_protocol``
+        options because the ``identity_uri`` option replaces them.
 
-   d. In the ``[service_credentials]`` section, configure service credentials:
+   * In the ``[service_credentials]`` section, configure service credentials:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [service_credentials]
-         ...
-         os_auth_url = http://controller:5000/v2.0
-         os_username = ceilometer
-         os_tenant_name = service
-         os_password = CEILOMETER_PASS
-         os_endpoint_type = internalURL
-         os_region_name = RegionOne
+        [service_credentials]
+        ...
+        os_auth_url = http://controller:5000/v2.0
+        os_username = ceilometer
+        os_tenant_name = service
+        os_password = CEILOMETER_PASS
+        os_endpoint_type = internalURL
+        os_region_name = RegionOne
 
-      Replace ``CEILOMETER_PASS`` with the password you chose for
-      the ``ceilometer`` user in the Identity service.
+     Replace ``CEILOMETER_PASS`` with the password you chose for
+     the ``ceilometer`` user in the Identity service.
 
-   e. In the ``[publisher]`` section, configure the telemetry secret:
+   * In the ``[publisher]`` section, configure the telemetry secret:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [publisher]
-         ...
-         telemetry_secret = TELEMETRY_SECRET
+        [publisher]
+        ...
+        telemetry_secret = TELEMETRY_SECRET
 
-      Replace TELEMETRY_SECRET with the telemetry secret
-      that you generated in a previous step.
+     Replace TELEMETRY_SECRET with the telemetry secret
+     that you generated in a previous step.
 
    .. only:: obs
 
-      f. In the ``[collector]`` section, configure the dispatcher:
+      * In the ``[collector]`` section, configure the dispatcher:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            [collector]
-            ...
-            dispatcher = database
+           [collector]
+           ...
+           dispatcher = database
 
-      g. (Optional) To assist with troubleshooting, enable verbose
-         logging in the ``[DEFAULT]`` section:
+      * (Optional) To assist with troubleshooting, enable verbose
+        logging in the ``[DEFAULT]`` section:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            [DEFAULT]
-            ...
-            verbose = True
+           [DEFAULT]
+           ...
+           verbose = True
 
    .. only:: rdo or ubuntu
 
-      f. (Optional) To assist with troubleshooting, enable verbose
-         logging in the ``[DEFAULT]`` section:
+      * (Optional) To assist with troubleshooting, enable verbose
+        logging in the ``[DEFAULT]`` section:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            [DEFAULT]
-            ...
-            verbose = True
+           [DEFAULT]
+           ...
+           verbose = True
 
 To finalize installation
 ~~~~~~~~~~~~~~~~~~~~~~~~
 .. only:: obs
 
-   1. Start the Telemetry services and configure them to start when the
+   #. Start the Telemetry services and configure them to start when the
       system boots:
 
       .. code-block:: console
@@ -503,7 +503,7 @@ To finalize installation
 
 .. only:: rdo
 
-   1. Start the Telemetry services and configure them to start when the
+   #. Start the Telemetry services and configure them to start when the
       system boots:
 
       .. code-block:: console
@@ -523,7 +523,7 @@ To finalize installation
 
 .. only:: ubuntu
 
-   1. Restart the Telemetry services:
+   #. Restart the Telemetry services:
 
       .. code-block:: console
 

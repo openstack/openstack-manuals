@@ -154,7 +154,7 @@ Install and configure components
 
 .. only:: obs
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -162,7 +162,7 @@ Install and configure components
 
 .. only:: rdo
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -173,7 +173,7 @@ Install and configure components
 
 .. only:: ubuntu
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -329,19 +329,19 @@ Install and configure components
 
 .. only:: debian
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
          # apt-get install glance python-glanceclient
 
-   2. Respond to prompts for
+   #. Respond to prompts for
       :doc:`database management <debconf/debconf-dbconfig-common>`,
       :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
       :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
       and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
 
-   3. Select the ``keystone`` pipeline to configure the Image service
+   #. Select the ``keystone`` pipeline to configure the Image service
       to use the Identity service:
 
       .. image:: figures/debconf-screenshots/glance-common_pipeline_flavor.png
@@ -352,7 +352,7 @@ Finalize installation
 
 .. only:: obs or rdo
 
-   1. Start the Image service services and configure them to start when
+   #. Start the Image service services and configure them to start when
       the system boots:
 
       .. code-block:: console
@@ -364,7 +364,7 @@ Finalize installation
 
 .. only:: ubuntu or debian
 
-   1. Restart the Image service services:
+   #. Restart the Image service services:
 
       .. code-block:: console
 

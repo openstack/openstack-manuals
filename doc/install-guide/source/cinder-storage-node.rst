@@ -132,45 +132,45 @@ environment. For more information, see :ref:`environment`.
    that contain the ``cinder-volume`` volume group. Edit the
    ``/etc/lvm/lvm.conf`` file and complete the following actions:
 
-   a. In the ``devices`` section, add a filter that accepts the
-      ``/dev/sdb`` device and rejects all other devices::
+   * In the ``devices`` section, add a filter that accepts the
+     ``/dev/sdb`` device and rejects all other devices::
 
         devices {
         ...
         filter = [ "a/sdb/", "r/.*/"]
 
-      Each item in the filter array begins with ``a`` for **accept** or
-      ``r`` for **reject** and includes a regular expression for the
-      device name. The array must end with ``r/.*/`` to reject any
-      remaining devices. You can use the :command:`vgs -vvvv` command
-      to test filters.
+     Each item in the filter array begins with ``a`` for **accept** or
+     ``r`` for **reject** and includes a regular expression for the
+     device name. The array must end with ``r/.*/`` to reject any
+     remaining devices. You can use the :command:`vgs -vvvv` command
+     to test filters.
 
-      .. warning::
+     .. warning::
 
-         If your storage nodes use LVM on the operating system disk, you
-         must also add the associated device to the filter. For example,
-         if the ``/dev/sda`` device contains the operating system:
+        If your storage nodes use LVM on the operating system disk, you
+        must also add the associated device to the filter. For example,
+        if the ``/dev/sda`` device contains the operating system:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            filter = [ "a/sda/", "a/sdb/", "r/.*/"]
+           filter = [ "a/sda/", "a/sdb/", "r/.*/"]
 
-         Similarly, if your compute nodes use LVM on the operating
-         system disk, you must also modify the filter in the
-         ``/etc/lvm/lvm.conf`` file on those nodes to include only
-         the operating system disk. For example, if the ``/dev/sda``
-         device contains the operating system:
+        Similarly, if your compute nodes use LVM on the operating
+        system disk, you must also modify the filter in the
+        ``/etc/lvm/lvm.conf`` file on those nodes to include only
+        the operating system disk. For example, if the ``/dev/sda``
+        device contains the operating system:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            filter = [ "a/sda/", "r/.*/"]
+           filter = [ "a/sda/", "r/.*/"]
 
 Install and configure Block Storage volume components
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. only:: obs
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -178,7 +178,7 @@ Install and configure Block Storage volume components
 
 .. only:: rdo
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -190,7 +190,7 @@ Install and configure Block Storage volume components
 
 .. only:: ubuntu
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -199,7 +199,7 @@ Install and configure Block Storage volume components
 2. Edit the ``/etc/cinder/cinder.conf`` file
    and complete the following actions:
 
-   a. In the ``[database]`` section, configure database access:
+   * In the ``[database]`` section, configure database access:
 
       .. code-block:: ini
 
@@ -210,140 +210,140 @@ Install and configure Block Storage volume components
       Replace ``CINDER_DBPASS`` with the password you chose for
       the Block Storage database.
 
-   b. In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-      configure ``RabbitMQ`` message queue access:
+   * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
+     configure ``RabbitMQ`` message queue access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         rpc_backend = rabbit
+        [DEFAULT]
+        ...
+        rpc_backend = rabbit
 
-         [oslo_messaging_rabbit]
-         ...
-         rabbit_host = controller
-         rabbit_userid = openstack
-         rabbit_password = RABBIT_PASS
+        [oslo_messaging_rabbit]
+        ...
+        rabbit_host = controller
+        rabbit_userid = openstack
+        rabbit_password = RABBIT_PASS
 
-      Replace ``RABBIT_PASS`` with the password you chose for
-      the ``openstack`` account in ``RabbitMQ``.
+     Replace ``RABBIT_PASS`` with the password you chose for
+     the ``openstack`` account in ``RabbitMQ``.
 
-   c. In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
-      configure Identity service access:
+   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
+     configure Identity service access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         auth_strategy = keystone
+        [DEFAULT]
+        ...
+        auth_strategy = keystone
 
-         [keystone_authtoken]
-         ...
-         auth_uri = http://controller:5000
-         auth_url = http://controller:35357
-         auth_plugin = password
-         project_domain_id = default
-         user_domain_id = default
-         project_name = service
-         username = cinder
-         password = CINDER_PASS
+        [keystone_authtoken]
+        ...
+        auth_uri = http://controller:5000
+        auth_url = http://controller:35357
+        auth_plugin = password
+        project_domain_id = default
+        user_domain_id = default
+        project_name = service
+        username = cinder
+        password = CINDER_PASS
 
-      Replace ``CINDER_PASS`` with the password you chose for the
-      ``cinder`` user in the Identity service.
+     Replace ``CINDER_PASS`` with the password you chose for the
+     ``cinder`` user in the Identity service.
 
-      .. note::
+     .. note::
 
-         Comment out or remove any other options in the
-         ``[keystone_authtoken]`` section.
+        Comment out or remove any other options in the
+        ``[keystone_authtoken]`` section.
 
-   d. In the ``[DEFAULT]`` section, configure the ``my_ip`` option:
+   * In the ``[DEFAULT]`` section, configure the ``my_ip`` option:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+        [DEFAULT]
+        ...
+        my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
 
-      Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address
-      of the management network interface on your storage node,
-      typically 10.0.0.41 for the first node in the
-      :ref:`example architecture <overview-example-architectures>`.
+     Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address
+     of the management network interface on your storage node,
+     typically 10.0.0.41 for the first node in the
+     :ref:`example architecture <overview-example-architectures>`.
 
    .. only:: obs or ubuntu
 
-      e. In the ``[lvm]`` section, configure the LVM back end with the
-         LVM driver, ``cinder-volumes`` volume group, iSCSI protocol,
-         and appropriate iSCSI service:
+      * In the ``[lvm]`` section, configure the LVM back end with the
+        LVM driver, ``cinder-volumes`` volume group, iSCSI protocol,
+        and appropriate iSCSI service:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            [lvm]
-            ...
-            volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
-            volume_group = cinder-volumes
-            iscsi_protocol = iscsi
-            iscsi_helper = tgtadm
+           [lvm]
+           ...
+           volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+           volume_group = cinder-volumes
+           iscsi_protocol = iscsi
+           iscsi_helper = tgtadm
 
    .. only:: rdo
 
-      e. In the ``[lvm]`` section, configure the LVM back end with the
-         LVM driver, ``cinder-volumes`` volume group, iSCSI protocol,
-         and appropriate iSCSI service:
+      * In the ``[lvm]`` section, configure the LVM back end with the
+        LVM driver, ``cinder-volumes`` volume group, iSCSI protocol,
+        and appropriate iSCSI service:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            [lvm]
-            ...
-            volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
-            volume_group = cinder-volumes
-            iscsi_protocol = iscsi
-            iscsi_helper = lioadm
+           [lvm]
+           ...
+           volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
+           volume_group = cinder-volumes
+           iscsi_protocol = iscsi
+           iscsi_helper = lioadm
 
-   f. In the ``[DEFAULT]`` section, enable the LVM back end:
+   * In the ``[DEFAULT]`` section, enable the LVM back end:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         enabled_backends = lvm
+        [DEFAULT]
+        ...
+        enabled_backends = lvm
 
-      .. note::
+     .. note::
 
-         Back-end names are arbitrary. As an example, this guide
-         uses the name of the driver as the name of the back end.
+        Back-end names are arbitrary. As an example, this guide
+        uses the name of the driver as the name of the back end.
 
-   g. In the ``[DEFAULT]`` section, configure the location of the
-      Image service:
+   * In the ``[DEFAULT]`` section, configure the location of the
+     Image service:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         glance_host = controller
+        [DEFAULT]
+        ...
+        glance_host = controller
 
-   h. In the ``[oslo_concurrency]`` section, configure the lock path:
+   * In the ``[oslo_concurrency]`` section, configure the lock path:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [oslo_concurrency]
-         ...
-         lock_path = /var/lock/cinder
+        [oslo_concurrency]
+        ...
+        lock_path = /var/lock/cinder
 
-   i. (Optional) To assist with troubleshooting, enable verbose logging
-      in the ``[DEFAULT]`` section:
+   * (Optional) To assist with troubleshooting, enable verbose logging
+     in the ``[DEFAULT]`` section:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         verbose = True
+        [DEFAULT]
+        ...
+        verbose = True
 
 To finalize installation
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. only:: obs
 
-   1. Start the Block Storage volume service including its dependencies
+   #. Start the Block Storage volume service including its dependencies
       and configure them to start when the system boots:
 
       .. code-block:: console
@@ -353,7 +353,7 @@ To finalize installation
 
 .. only:: rdo
 
-   1. Start the Block Storage volume service including its dependencies
+   #. Start the Block Storage volume service including its dependencies
       and configure them to start when the system boots:
 
       .. code-block:: console
@@ -363,14 +363,14 @@ To finalize installation
 
 .. only:: ubuntu
 
-   1. Restart the Block Storage volume service including its dependencies:
+   #. Restart the Block Storage volume service including its dependencies:
 
       .. code-block:: console
 
          # service tgt restart
          # service cinder-volume restart
 
-   2. By default, the Ubuntu packages create an SQLite database.
+   #. By default, the Ubuntu packages create an SQLite database.
       Because this configuration uses an SQL database server,
       remove the SQLite database file:
 

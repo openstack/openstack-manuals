@@ -43,14 +43,14 @@ node.
 
 .. only:: ubuntu or debian
 
-   1. Edit the ``/etc/chrony/chrony.conf`` file and comment out or remove all
+   #. Edit the ``/etc/chrony/chrony.conf`` file and comment out or remove all
       but one ``server`` key. Change it to reference the controller node:
 
       .. code-block:: ini
 
          server controller iburst
 
-   2. Restart the NTP service:
+   #. Restart the NTP service:
 
       .. code-block:: console
 
@@ -58,14 +58,14 @@ node.
 
 .. only:: rdo or obs
 
-   1. Edit the ``/etc/chrony.conf`` file and comment out or remove all but one
+   #. Edit the ``/etc/chrony.conf`` file and comment out or remove all but one
       ``server`` key. Change it to reference the controller node:
 
       .. code-block:: ini
 
          server controller iburst
 
-   2. Start the NTP service and configure it to start when the system boots:
+   #. Start the NTP service and configure it to start when the system boots:
 
       .. code-block:: console
 
