@@ -46,7 +46,7 @@ configuration of plug-ins supporting the provider extension:
 +----------------------+-----------------------------------------------------+
 | Term                 | Description                                         |
 +======================+=====================================================+
-| **virtual network**  |An Networking L2 network (identified by a UUID and   |
+| **virtual network**  |A Networking L2 network (identified by a UUID and    |
 |                      |optional name) whose ports can be attached as vNICs  |
 |                      |to Compute instances and to various Networking       |
 |                      |agents. The Open vSwitch and Linux Bridge plug-ins   |
