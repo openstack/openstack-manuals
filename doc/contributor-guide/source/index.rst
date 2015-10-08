@@ -23,6 +23,7 @@ Contents
    docs_builds.rst
    writing-style.rst
    json_conventions.rst
+   doc-bugs.rst
 
 
 Search in this guide
