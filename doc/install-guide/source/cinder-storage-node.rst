@@ -25,11 +25,11 @@ environment. For more information, see :ref:`environment`.
 
 1. Configure the management interface:
 
-   IP address: 10.0.0.41
+   * IP address: ``10.0.0.41``
 
-   Network mask: 255.255.255.0 (or /24)
+   * Network mask: ``255.255.255.0`` (or ``/24``)
 
-   Default gateway: 10.0.0.1
+   * Default gateway: ``10.0.0.1``
 
 2. Set the hostname of the node to ``block1``.
 
