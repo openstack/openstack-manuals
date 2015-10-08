@@ -1,8 +1,8 @@
 .. _swift:
 
-==================
-Add Object Storage
-==================
+==============================
+Add the Object Storage service
+==============================
 
 The OpenStack Object Storage services (swift) work together to provide
 object storage and retrieval through a :term:`REST API <RESTful>`.
