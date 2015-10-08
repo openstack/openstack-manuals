@@ -23,7 +23,7 @@ the storage node contains one network interface on the
 needs an empty block storage device of suitable size for your
 environment. For more information, see :ref:`environment`.
 
-1. Configure the management interface:
+#. Configure the management interface:
 
    * IP address: ``10.0.0.41``
 
@@ -31,18 +31,11 @@ environment. For more information, see :ref:`environment`.
 
    * Default gateway: ``10.0.0.1``
 
-2. Set the hostname of the node to ``block1``.
+#. Set the hostname of the node to ``block1``.
 
-3. Copy the contents of the :file:`/etc/hosts` file from the
-   controller node to the storage node and add the following to it::
+#. .. include:: shared/edit_hosts_file.txt
 
-      # block1
-      10.0.0.41       block1
-
-   Also add this content to the :file:`/etc/hosts` file
-   on all other nodes in your environment.
-
-4. Install and configure :term:`NTP` using the instructions in
+#. Install and configure :term:`NTP` using the instructions in
    :ref:`environment-ntp`.
 
 .. only:: obs
