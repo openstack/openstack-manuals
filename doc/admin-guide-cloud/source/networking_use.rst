@@ -146,7 +146,7 @@ advanced network operations:
 |                               |   ``$ neutron subnet-create``              |
 |                               |   ``net1 10.0.0.0/24 --enable-dhcp False`` |
 +-------------------------------+--------------------------------------------+
-|Specified set of host routes.  |                                            |
+|Specifies a set of host routes |                                            |
 |                               |                                            |
 |                               |     ``$ neutron subnet-create``            |
 |                               |     ``test-net1 40.0.0.0/24 --host-routes``|
@@ -200,7 +200,7 @@ complete basic VM networking operations:
 |                                  |``$ neutron port-list --device_id VM_ID``|
 +----------------------------------+-----------------------------------------+
 |Searches for ports, but shows     |                                         |
-|onlythe ``mac_address`` of        |                                         |
+|only the ``mac_address`` of       |                                         |
 |the port.                         |                                         |
 |                                  |                                         |
 |                                  |    ``$ neutron port-list --field``      |
@@ -271,7 +271,7 @@ complete advanced VM creation operations:
 
     Cloud images that distribution vendors offer usually have only one
     active NIC configured. When you boot with multiple NICs, you must
-    configure additional interfaces on the image or the NICS are not
+    configure additional interfaces on the image or the NICs are not
     reachable.
 
     The following Debian/Ubuntu-based example shows how to set up the

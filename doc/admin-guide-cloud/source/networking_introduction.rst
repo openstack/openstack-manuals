@@ -271,7 +271,7 @@ create a firewall that applies the policy.
 
 **Allowed-address-pairs.**
 
-``Allowed-address-pairs`` enable you to specify
+``Allowed-address-pairs`` enables you to specify
 mac_address/ip_address(cidr) pairs that pass through a port regardless
 of subnet. This enables the use of protocols such as VRRP, which floats
 an IP address between two instances to enable fast data plane failover.
@@ -283,7 +283,7 @@ an IP address between two instances to enable fast data plane failover.
 
 **Basic allowed-address-pairs operations.**
 
-- Create a port with a specified allowed address pairs:
+- Create a port with a specified allowed address pair:
 
   .. code:: console
 

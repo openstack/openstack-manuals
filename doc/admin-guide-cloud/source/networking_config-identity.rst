@@ -38,7 +38,7 @@ Configure Identity service for Networking
    The way that you create a Networking endpoint entry depends on whether
    you are using the SQL or the template catalog driver:
 
-   -  If you use the *SQL driver*, run the following command with the
+   -  If you are using the *SQL driver*, run the following command with the
       specified region (``$REGION``), IP address of the Networking server
       (``$IP``), and service ID (``$NEUTRON_SERVICE_ID``, obtained in the
       previous step).
