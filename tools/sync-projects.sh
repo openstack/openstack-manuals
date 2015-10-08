@@ -75,8 +75,7 @@ function copy_glossary_xml {
 case "$PROJECT_DIR" in
     api-site)
         copy_rst common-rst
-        # TODO(jaegerandi): Copy over once translations are ready
-        #copy_rst_trans common-rst
+        copy_rst_trans common-rst
         ;;
     ha-guide)
         copy_rst doc/common-rst
