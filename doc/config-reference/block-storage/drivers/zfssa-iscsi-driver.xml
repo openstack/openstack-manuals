@@ -119,6 +119,9 @@ e1000g0   up    ip    e1000g0  1.10.20.30/24  Untitled Interface
             <listitem>
                 <para>Volume migration</para>
             </listitem>
+            <listitem>
+                <para>Local cache of a bootable volume</para>
+            </listitem>
         </itemizedlist>
     </simplesect>
     <simplesect>
@@ -170,6 +173,49 @@ e1000g0   up    ip    e1000g0  1.10.20.30/24  Untitled Interface
                 <prompt>zfssa:configuration roles OpenStackRole auth (uncommitted)></prompt> <userinput>set allow_rrtarget=true</userinput>
                 <prompt>zfssa:configuration roles OpenStackRole auth (uncommitted)></prompt> <userinput>set allow_rrsource=true</userinput>
               </screen>
+    </simplesect>
+    <simplesect>
+        <title>ZFSSA local cache</title>
+        <para>The local cache feature enables ZFSSA drivers to serve the usage of bootable volumes significantly better. With the feature,
+              the first bootable volume created from an image is cached, so that subsequent volumes can be created directly from the cache,
+              instead of having image data transferred over the network multiple times.
+        </para>
+        <para>The following conditions must be met in order to use ZFSSA local cache feature:
+        </para>
+            <itemizedlist>
+              <listitem>
+                <para>A storage pool needs to be configured.</para>
+              </listitem>
+              <listitem>
+                <para>REST and iSCSI services need to be turned on.</para>
+              </listitem>
+              <listitem>
+                <para>On an OpenStack controller, <filename>cinder.conf</filename> needs to contain necessary properties used to configure and
+                    set up the ZFSSA iSCSI driver, including the following new properties:
+                    <itemizedlist>
+                      <listitem>
+                      <para><literal>zfssa_enable_local_cache</literal>: (True/False) To enable/disable the feature.</para>
+                      </listitem>
+                      <listitem>
+                      <para><literal>zfssa_cache_project</literal>: The ZFSSA project name where cache volumes are stored.</para>
+                      </listitem>
+                    </itemizedlist>
+
+                </para>
+              </listitem>
+            </itemizedlist>
+
+        <para>Every cache volume has two additional properties stored as ZFSSA custom schema. It is important that the schema are not altered outside of
+            Block Storage when the driver is in use:
+        </para>
+            <itemizedlist>
+              <listitem>
+                <para><literal>image_id</literal>: stores the image id as in Image service.</para>
+              </listitem>
+              <listitem>
+                <para><literal>updated_at</literal>: stores the most current timestamp when the image is updated in Image service.</para>
+              </listitem>
+              </itemizedlist>
     </simplesect>
     <simplesect>
         <title>Supported extra specs</title>
