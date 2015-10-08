@@ -302,7 +302,7 @@ Install and configure the database server
         address of the controller node to enable access by other
         nodes via the management network:
 
-        .. code:: ini
+        .. code-block:: ini
 
            [mysqld]
            ...
@@ -311,7 +311,7 @@ Install and configure the database server
       - In the ``[mysqld]`` section, set the following keys to enable
         useful options and the UTF-8 character set:
 
-        .. code:: ini
+        .. code-block:: ini
 
            [mysqld]
            ...
@@ -332,7 +332,7 @@ Install and configure the database server
         address of the controller node to enable access by other
         nodes via the management network:
 
-        .. code:: ini
+        .. code-block:: ini
 
            [mysqld]
            ...
@@ -341,7 +341,7 @@ Install and configure the database server
       - In the ``[mysqld]`` section, set the following keys to enable
         useful options and the UTF-8 character set:
 
-        .. code:: ini
+        .. code-block:: ini
 
            [mysqld]
            ...

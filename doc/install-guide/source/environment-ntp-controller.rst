@@ -47,7 +47,7 @@ as those provided by your organization.
    #. Edit the ``/etc/chrony/chrony.conf`` file and add, change, or remove the
       following keys as necessary for your environment:
 
-      .. code:: ini
+      .. code-block:: ini
 
          server NTP_SERVER iburst
 
@@ -66,7 +66,7 @@ as those provided by your organization.
    #. Edit the ``/etc/chrony.conf`` file and add, change, or remove the
       following keys as necessary for your environment:
 
-      .. code:: ini
+      .. code-block:: ini
 
          server NTP_SERVER iburst
 
@@ -77,7 +77,7 @@ as those provided by your organization.
    #. To enable other nodes to connect to the chrony daemon on the controller,
       add the following key to the ``/etc/chrony.conf`` file:
 
-      .. code:: ini
+      .. code-block:: ini
 
          allow 10.0.0.0/24
 
