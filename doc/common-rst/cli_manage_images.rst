@@ -291,5 +291,5 @@ creation process.
    later. Earlier versions of qemu result in an ``unknown option -s``
    error message in the ``nova-compute.log`` file.
 
--  Examine the :file:`/var/log/nova-api.log` and
-   :file:`/var/log/nova-compute.log` log files for error messages.
+-  Examine the ``/var/log/nova-api.log`` and
+   ``/var/log/nova-compute.log`` log files for error messages.

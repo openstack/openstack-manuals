@@ -20,8 +20,8 @@ and feels to suit your own needs.
      # apt-get remove --auto-remove openstack-dashboard-ubuntu-theme
 
 .. note::
-   This guide focuses on the :file:`local_settings.py` file, stored in
-   :file:`/openstack-dashboard/openstack_dashboard/local/`.
+   This guide focuses on the ``local_settings.py`` file, stored in
+   ``/openstack-dashboard/openstack_dashboard/local/``.
 
 This guide is adapted from `How To Custom Brand The OpenStack "Horizon"
 Dashboard <http://www.prestonlee.com/2012/05/09/how-to-custom-brand-the-openstack-horizon-dashboard/>`__.
@@ -35,10 +35,10 @@ Logo and site colors
    - Logged in banner: 216 x 35
 
 #. Upload your new images to
-   :file:`/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/img/`.
+   ``/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/img/``.
 
 #. Create a CSS style sheet in
-   :file:`/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/scss/`.
+   ``/usr/share/openstack-dashboard/openstack_dashboard/static/dashboard/scss/``.
 
 #. Change the colors and image file names as appropriate, though the
    relative directory paths should be the same. The following example file
@@ -83,7 +83,7 @@ Logo and site colors
      /usr/share/openstack-dashboard/openstack_dashboard/templates/_stylesheets.html
 
 #. Add a line to include your newly created style sheet. For example
-   :file:`custom.css`::
+   ``custom.css``::
 
      <link href='{{ STATIC_URL }}bootstrap/css/bootstrap.min.css' media='screen' rel='stylesheet' />
      <link href='{{ STATIC_URL }}dashboard/css/{% choose_css %}' media='screen' rel='stylesheet' />
@@ -109,7 +109,7 @@ Logo and site colors
 HTML title
 ~~~~~~~~~~
 #. Set the HTML title, which appears at the top of the browser window, by
-   adding the following line to :file:`local_settings.py`::
+   adding the following line to ``local_settings.py``::
 
      SITE_BRANDING = "Example, Inc. Cloud"
 
@@ -119,7 +119,7 @@ Logo link
 ~~~~~~~~~
 #. The logo also acts as a hyperlink. The default behavior is to redirect
    to ``horizon:user_home``. To change this, add the following attribute to
-   :file:`local_settings.py`::
+   ``local_settings.py``::
 
      SITE_BRANDING_LINK = "http://example.com"
 
@@ -129,7 +129,7 @@ Help URL
 ~~~~~~~~
 #. By default the help URL points to http://docs.openstack.org. Change this
    by editing the following attribute to the URL of your choice in
-   :file:`local_settings.py`::
+   ``local_settings.py``::
 
      'help_url': "http://openstack.mycompany.org"
 

@@ -4,7 +4,7 @@ Set environment variables using the OpenStack RC file
 
 To set the required environment variables for the OpenStack command-line
 clients, you must create an environment file called an OpenStack rc
-file, or :file:`openrc.sh` file. If your OpenStack installation provides
+file, or ``openrc.sh`` file. If your OpenStack installation provides
 it, you can download the file from the OpenStack dashboard as an
 administrative user or any other user. This project-specific environment
 file contains the credentials that all OpenStack services use.
@@ -28,34 +28,34 @@ to download the OpenStack RC file, on the :guilabel:`Project` tab, open
 the :guilabel:`Compute` tab and click :guilabel:`Access & Security`.
 
 On the :guilabel:`API Access` tab, click :guilabel:`Download OpenStack RC File`
-and save the file. The filename will be of the form :file:`PROJECT-openrc.sh`
+and save the file. The filename will be of the form ``PROJECT-openrc.sh``
 where ``PROJECT`` is the name of the project for which you downloaded the
 file.
 
-Copy the :file:`PROJECT-openrc.sh` file to the computer from which you
+Copy the ``PROJECT-openrc.sh`` file to the computer from which you
 want to run OpenStack commands.
 
 For example, copy the file to the computer from which you want to upload
 an image with a ``glance`` client command.
 
 On any shell from which you want to run OpenStack commands, source the
-:file:`PROJECT-openrc.sh` file for the respective project.
+``PROJECT-openrc.sh`` file for the respective project.
 
-In the following example, the :file:`demo-openrc.sh` file is sourced for
+In the following example, the ``demo-openrc.sh`` file is sourced for
 the demo project::
 
   $ source demo-openrc.sh
 
 When you are prompted for an OpenStack password, enter the password for
-the user who downloaded the :file:`PROJECT-openrc.sh` file.
+the user who downloaded the ``PROJECT-openrc.sh`` file.
 
 Create and source the OpenStack RC file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Alternatively, you can create the :file:`PROJECT-openrc.sh` file from
+Alternatively, you can create the ``PROJECT-openrc.sh`` file from
 scratch, if you cannot download the file from the dashboard.
 
-In a text editor, create a file named :file:`PROJECT-openrc.sh` and add
+In a text editor, create a file named ``PROJECT-openrc.sh`` and add
 the following authentication information::
 
   export OS_USERNAME=username
@@ -68,8 +68,8 @@ the following authentication information::
   export OS_CACERT=/path/to/cacertFile
 
 On any shell from which you want to run OpenStack commands, source the
-:file:`PROJECT-openrc.sh` file for the respective project. In this
-example, you source the :file:`admin-openrc.sh` file for the admin
+``PROJECT-openrc.sh`` file for the respective project. In this
+example, you source the ``admin-openrc.sh`` file for the admin
 project::
 
   $ source admin-openrc.sh
@@ -77,7 +77,7 @@ project::
 .. note::
 
   You are not prompted for the password with this method. The password
-  lives in clear text format in the :file:`PROJECT-openrc.sh` file.
+  lives in clear text format in the ``PROJECT-openrc.sh`` file.
   Restrict the permissions on this file to avoid security problems.
   You can also remove the ``OS_PASSWORD`` variable from the file, and
   use the ``--password`` parameter with OpenStack client commands
@@ -98,7 +98,7 @@ When you run OpenStack client commands, you can override some
 environment variable settings by using the options that are listed at
 the end of the ``help`` output of the various client commands. For
 example, you can override the ``OS_PASSWORD`` setting in the
-:file:`PROJECT-openrc.sh` file by specifying a password on a
+``PROJECT-openrc.sh`` file by specifying a password on a
 :command:`openstack` command, as follows::
 
   $ openstack --os-password PASSWORD service list
