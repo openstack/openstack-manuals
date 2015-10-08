@@ -97,9 +97,9 @@ OpenStack Compute consists of the following areas and their components:
 
 In Debian, a unique nova-consoleproxy package provides the
 nova-novncproxy, nova-spicehtml5proxy, and nova-xvpvncproxy packages. To
-select packages, edit the :file:`/etc/default/nova-consoleproxy` file or use
+select packages, edit the ``/etc/default/nova-consoleproxy`` file or use
 the debconf interface. You can also manually edit the
-:file:`/etc/default/nova-consoleproxy` file, and stop and start the console
+``/etc/default/nova-consoleproxy`` file, and stop and start the console
 daemons.
 
 nova-objectstore daemon

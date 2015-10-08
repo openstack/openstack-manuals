@@ -258,5 +258,5 @@ What's next
 ~~~~~~~~~~~
 
 Before you can run client commands, you must create and source the
-:file:`PROJECT-openrc.sh` file to set environment variables. See
+``PROJECT-openrc.sh`` file to set environment variables. See
 :doc:`../common/cli_set_environment_variables_using_openstack_rc`.

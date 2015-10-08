@@ -21,10 +21,10 @@ Compute service logging
 -----------------------
 
 Compute stores a log file for each service in
-:file:`/var/log/nova`. For example, :file:`nova-compute.log`
+``/var/log/nova``. For example, ``nova-compute.log``
 is the log for the ``nova-compute`` service. You can set the
 following options to format log strings for the ``nova.log``
-module in the :file:`nova.conf` file:
+module in the ``nova.conf`` file:
 
 * ``logging_context_format_string``
 
@@ -36,7 +36,7 @@ For information about what variables are available for the
 formatter see http://docs.python.org/library/logging.html#formatter-objects.
 
 You have two options for logging for OpenStack Compute based on
-configuration settings. In :file:`nova.conf`, include the
+configuration settings. In ``nova.conf``, include the
 ``logfile`` option to enable logging. Alternatively you can set
 ``use_syslog = 1`` so that the nova daemon logs to syslog.
 
@@ -58,7 +58,7 @@ resulting in the process ID 8675, you can then run::
   # kill -USR1 8675
 
 This command triggers the Guru Meditation report to be printed to
-:file:`/var/log/nova/nova-api-err.log`.
+``/var/log/nova/nova-api-err.log``.
 
 The report has the following sections:
 
@@ -94,21 +94,21 @@ Missing credentials cause a ``403 forbidden`` error. To resolve
 this issue, use one of these methods:
 
 #. Manual method
-    Gets the :file:`novarc` file from the project ZIP file, saves existing
-    credentials in case of override, and manually sources the :file:`novarc`
+    Gets the ``novarc`` file from the project ZIP file, saves existing
+    credentials in case of override, and manually sources the ``novarc``
     file.
 
 #. Script method
-    Generates :file:`novarc` from the project ZIP file and sources it for you.
+    Generates ``novarc`` from the project ZIP file and sources it for you.
 
 When you run ``nova-api`` the first time, it generates the certificate
-authority information, including :file:`openssl.cnf`. If you
+authority information, including ``openssl.cnf``. If you
 start the CA services before this, you might not be
 able to create your ZIP file. Restart the services.
 When your CA information is available, create your ZIP file.
 
 Also, check your HTTP proxy settings to see whether they cause problems with
-:file:`novarc` creation.
+``novarc`` creation.
 
 **Instance errors**
 
@@ -122,26 +122,26 @@ with FlatManager network settings.
 
 To troubleshoot other possible problems with an instance, such as
 an instance that stays in a spawning state, check the directory for
-the particular instance under :file:`/var/lib/nova/instances` on
+the particular instance under ``/var/lib/nova/instances`` on
 the ``nova-compute`` host and make sure that these files are present:
 
-* :file:`libvirt.xml`
-* :file:`disk`
-* :file:`disk-raw`
-* :file:`kernel`
-* :file:`ramdisk`
-* :file:`console.log`, after the instance starts.
+* ``libvirt.xml``
+* ``disk``
+* ``disk-raw``
+* ``kernel``
+* ``ramdisk``
+* ``console.log``, after the instance starts.
 
 If any files are missing, empty, or very small, the ``nova-compute``
 service did not successfully download the images from the Image service.
 
-Also check :file:`nova-compute.log` for exceptions. Sometimes they do not
+Also check ``nova-compute.log`` for exceptions. Sometimes they do not
 appear in the console output.
 
-Next, check the log file for the instance in the :file:`/var/log/libvirt/qemu`
+Next, check the log file for the instance in the ``/var/log/libvirt/qemu``
 directory to see if it exists and has any useful error messages in it.
 
-Finally, from the :file:`/var/lib/nova/instances` directory for the instance,
+Finally, from the ``/var/lib/nova/instances`` directory for the instance,
 see if this command returns an error::
 
   # virsh create libvirt.xml
@@ -191,7 +191,7 @@ Injection problems
 
 If instances do not boot or boot slowly, investigate file injection as a cause.
 
-To disable injection in libvirt, set the following in :file:`nova.conf`:
+To disable injection in libvirt, set the following in ``nova.conf``:
 
 .. code-block:: ini
    :linenos:
@@ -219,7 +219,7 @@ creation of multiple snapshots.
 To effectively disable the libvirt live snapshotting, until the problem
 is resolved, configure the ``disable_libvirt_livesnapshot`` option.
 You can turn off the live snapshotting mechanism by setting up its value to
-``True`` in the ``[workarounds]`` section of the :file:`nova.conf` file:
+``True`` in the ``[workarounds]`` section of the ``nova.conf`` file:
 
 .. code-block:: ini
    :linenos:
