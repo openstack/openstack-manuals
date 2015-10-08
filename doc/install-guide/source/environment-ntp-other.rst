@@ -46,7 +46,7 @@ node.
    1. Edit the ``/etc/chrony/chrony.conf`` file and comment out or remove all
       but one ``server`` key. Change it to reference the controller node:
 
-      .. code:: ini
+      .. code-block:: ini
 
          server controller iburst
 
@@ -61,7 +61,7 @@ node.
    1. Edit the ``/etc/chrony.conf`` file and comment out or remove all but one
       ``server`` key. Change it to reference the controller node:
 
-      .. code:: ini
+      .. code-block:: ini
 
          server controller iburst
 
