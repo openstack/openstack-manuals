@@ -6,8 +6,8 @@ To retrieve image-oriented events and samples, configure
 the Image service to send notifications to the message bus.
 Perform these steps on the controller node.
 
-Edit the :file:`/etc/glance/glance-api.conf` and
-:file:`/etc/glance/glance-registry.conf` files and
+Edit the ``/etc/glance/glance-api.conf`` and
+``/etc/glance/glance-registry.conf`` files and
 complete the following actions:
 
 1. In the ``[DEFAULT]`` section, configure notifications

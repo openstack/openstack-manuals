@@ -50,7 +50,7 @@ To configure notifications
 Perform these steps on the controller and any other nodes that
 run the Object Storage proxy service.
 
-1. Edit the :file:`/etc/swift/proxy-server.conf` file
+1. Edit the ``/etc/swift/proxy-server.conf`` file
    and complete the following actions:
 
    a. In the ``[filter:keystoneauth]`` section, add the

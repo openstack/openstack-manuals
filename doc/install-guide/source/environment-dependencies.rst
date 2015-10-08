@@ -291,7 +291,7 @@ Install and configure the database server
 
    2. Choose a suitable password for the database root account.
 
-   3. Create and edit the :file:`/etc/mysql/conf.d/mysqld_openstack.cnf` file
+   3. Create and edit the ``/etc/mysql/conf.d/mysqld_openstack.cnf`` file
       and complete the following actions:
 
       - In the ``[mysqld]`` section, set the
@@ -321,7 +321,7 @@ Install and configure the database server
 
 .. only:: obs or rdo
 
-   2. Create and edit the :file:`/etc/my.cnf.d/mariadb_openstack.cnf` file
+   2. Create and edit the ``/etc/my.cnf.d/mariadb_openstack.cnf`` file
       and complete the following actions:
 
       - In the ``[mysqld]`` section, set the

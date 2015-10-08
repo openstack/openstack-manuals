@@ -24,7 +24,7 @@ shows configuration with the ``ceilometer-common`` package:
 These debconf screens appear in: ``ceilometer-common``, ``cinder-common``,
 ``glance-common``, ``heat-common``, ``neutron-common``, and ``nova-common``.
 
-This will configure the below directives (example from :file:`nova.conf`):
+This will configure the below directives (example from ``nova.conf``):
 
 .. code-block:: ini
 

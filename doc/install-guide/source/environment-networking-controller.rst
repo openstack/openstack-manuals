@@ -21,7 +21,7 @@ Configure network interfaces
 
    .. only:: ubuntu or debian
 
-      a. Edit the :file:`/etc/network/interfaces` file to contain the following:
+      a. Edit the ``/etc/network/interfaces`` file to contain the following:
 
          .. code-block:: ini
 
@@ -33,7 +33,7 @@ Configure network interfaces
 
    .. only:: rdo
 
-      a. Edit the :file:`/etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME` file
+      a. Edit the ``/etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME`` file
          to contain the following:
 
          Do not change the ``HWADDR`` and ``UUID`` keys.
@@ -47,7 +47,7 @@ Configure network interfaces
 
    .. only:: obs
 
-      a. Edit the :file:`/etc/sysconfig/network/ifcfg-INTERFACE_NAME` file to
+      a. Edit the ``/etc/sysconfig/network/ifcfg-INTERFACE_NAME`` file to
          contain the following:
 
          .. code-block:: ini

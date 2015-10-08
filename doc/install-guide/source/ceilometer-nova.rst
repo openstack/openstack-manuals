@@ -32,7 +32,7 @@ To install and configure the agent
 
          # apt-get install ceilometer-agent-compute
 
-2. Edit the :file:`/etc/ceilometer/ceilometer.conf` file and
+2. Edit the ``/etc/ceilometer/ceilometer.conf`` file and
    complete the following actions:
 
    a. In the ``[publisher]`` section, configure the telemetry secret:
@@ -117,7 +117,7 @@ To configure notifications
 
 Configure the Compute service to send notifications to the message bus.
 
-Edit the :file:`/etc/nova/nova.conf` file and configure
+Edit the ``/etc/nova/nova.conf`` file and configure
 notifications in the ``[DEFAULT]`` section:
 
 .. code-block:: ini
@@ -150,7 +150,7 @@ example message format.
 Notification messages are placed on the OpenStack messaging system,
 which recruits AMQP to send information when an event triggers alerts.
 
-The :file:`nova.conf` file uses the nova_notification driver by defualt.
+The ``nova.conf`` file uses the nova_notification driver by defualt.
 
 .. warning::
 

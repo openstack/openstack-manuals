@@ -64,7 +64,7 @@ This section describes how to verify operation of the Telemetry module.
       | 60     | 2015-04-21T12:21:45 | 2015-04-21T12:22:45 | 13200896.0 | 13200896.0 | 13200896.0 | 13200896.0 | 1     | 0.0      | 2015-04-21T12:22:12.983000 | 2015-04-21T12:22:12.983000 |
       +--------+---------------------+---------------------+------------+------------+------------+------------+-------+----------+----------------------------+----------------------------+
 
-#. Remove the previously downloaded image file :file:`/tmp/cirros.img`:
+#. Remove the previously downloaded image file ``/tmp/cirros.img``:
 
    .. code-block:: console
 

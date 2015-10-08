@@ -21,7 +21,7 @@ systems to object-storage systems like OpenStack Object Storage.
    For simplicity, this guide describes configuring the Image service to
    use the ``file`` back end, which uploads and stores in a
    directory on the controller node hosting the Image service. By
-   default, this directory is :file:`/var/lib/glance/images/`.
+   default, this directory is ``/var/lib/glance/images/``.
 
    Before you proceed, ensure that the controller node has at least
    several gigabytes of space available in this directory.
