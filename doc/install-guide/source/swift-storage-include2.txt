@@ -1,11 +1,10 @@
-Edit the :file:`/etc/swift/container-server.conf` file and complete the
+Edit the ``/etc/swift/container-server.conf`` file and complete the
 following actions:
 
 * In the ``[DEFAULT]`` section, configure the bind IP address, bind port,
   user, configuration directory, and mount point directory:
 
   .. code-block:: ini
-     :linenos:
 
      [DEFAULT]
      ...
@@ -14,6 +13,7 @@ following actions:
      user = swift
      swift_dir = /etc/swift
      devices = /srv/node
+     mount_check = true
 
   Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address of the
   management network on the storage node.
@@ -21,7 +21,6 @@ following actions:
 * In the ``[pipeline:main]`` section, enable the appropriate modules:
 
   .. code-block:: ini
-     :linenos:
 
      [pipeline:main]
      pipeline = healthcheck recon container-server
@@ -35,7 +34,6 @@ following actions:
   directory:
 
   .. code-block:: ini
-     :linenos:
 
      [filter:recon]
      ...

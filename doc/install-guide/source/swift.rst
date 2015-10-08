@@ -10,11 +10,11 @@ Your environment must at least include the Identity service (keystone)
 prior to deploying Object Storage.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    common/get_started_object_storage.rst
-   swift-controller-node.rst
-   swift-storage-node.rst
+   swift-controller-install.rst
+   swift-storage-install.rst
    swift-initial-rings.rst
    swift-finalize-installation.rst
    swift-verify.rst

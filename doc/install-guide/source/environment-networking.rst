@@ -122,4 +122,5 @@ the controller node.
 
    environment-networking-controller.rst
    environment-networking-compute.rst
+   environment-networking-storage-swift.rst
    environment-networking-verify.rst
