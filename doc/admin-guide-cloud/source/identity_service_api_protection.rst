@@ -27,7 +27,7 @@ entities of the API call in question. For example:
 
 .. code:: ini
 
-    "identity:create_user": [["role:admin", "domain_id:%(user.domain_id)s"]]
+    "identity:create_user": "role:admin and domain_id:%(user.domain_id)s"
 
 Indicates that to create a user, you must have the admin role in your
 token. The :code:`domain_id` in your token must match the
@@ -66,7 +66,7 @@ also available using a target.object.attribute syntax. For instance:
 
 .. code:: ini
 
-    "identity:delete_user": [["role:admin", "domain_id:%(target.user.domain_id)s"]]
+    "identity:delete_user": "role:admin and domain_id:%(target.user.domain_id)s"
 
 would ensure that Identity only deletes the user object in the same
 domain as the provided token.
