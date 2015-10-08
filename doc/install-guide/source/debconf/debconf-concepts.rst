@@ -63,8 +63,8 @@ package in a non-interactive way, you have found a release-critical bug
 in Debian. Report it to the Debian bug tracking system.
 
 Generally, the ``-common`` packages install the configuration files. For
-example, the ``glance-common`` package installs the :file:`glance-api.conf`
-and :file:`glance-registry.conf` files. So, for the Image service, you must
+example, the ``glance-common`` package installs the ``glance-api.conf``
+and ``glance-registry.conf`` files. So, for the Image service, you must
 re-configure the ``glance-common`` package. The same applies for
 ``cinder-common``, ``nova-common``, and ``heat-common`` packages.
 

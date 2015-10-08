@@ -9,7 +9,7 @@ Perform these steps on the controller and storage nodes.
 To configure prerequisites
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Edit the :file:`/etc/cinder/cinder.conf` file and complete the
+Edit the ``/etc/cinder/cinder.conf`` file and complete the
 following actions:
 
 1. In the ``[DEFAULT]`` section, configure notifications:

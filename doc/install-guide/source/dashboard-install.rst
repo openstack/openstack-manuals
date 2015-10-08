@@ -77,13 +77,13 @@ To configure the dashboard
 .. only:: obs
 
    * Edit the
-     :file:`/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py`
+     ``/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py``
      file and complete the following actions:
 
 .. only:: rdo or ubuntu or debian
 
    * Edit the
-     :file:`/etc/openstack-dashboard/local_settings.py`
+     ``/etc/openstack-dashboard/local_settings.py``
      file and complete the following actions:
 
 * Configure the dashboard to use OpenStack services on the

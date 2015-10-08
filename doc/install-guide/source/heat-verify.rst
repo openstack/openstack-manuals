@@ -17,7 +17,7 @@ module (heat).
    in the `Heat developer documentation
    <http://docs.openstack.org/developer/heat/index.html>`__.
 
-   Create a test template in the :file:`test-stack.yml`
+   Create a test template in the ``test-stack.yml``
    file with the following content:
 
    .. code-block:: yaml

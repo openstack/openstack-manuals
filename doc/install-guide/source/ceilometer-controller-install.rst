@@ -67,7 +67,7 @@ create a MongoDB database, service credentials, and API endpoint.
 
 .. only:: obs
 
-   2. Edit the :file:`/etc/mongodb.conf` file and complete the following
+   2. Edit the ``/etc/mongodb.conf`` file and complete the following
       actions:
 
       a. Configure the ``bind_ip`` key to use the management interface
@@ -78,7 +78,7 @@ create a MongoDB database, service credentials, and API endpoint.
             bind_ip = 10.0.0.11
 
       b. By default, MongoDB creates several 1 GB journal files
-         in the :file:`/var/lib/mongodb/journal` directory.
+         in the ``/var/lib/mongodb/journal`` directory.
          If you want to reduce the size of each journal file to
          128 MB and limit total journal space consumption to 512 MB,
          assert the ``smallfiles`` key:
@@ -102,7 +102,7 @@ create a MongoDB database, service credentials, and API endpoint.
 
    .. The use of mongod, and not mongodb, in the below screen is intentional.
 
-   2. Edit the :file:`/etc/mongod.conf` file and complete the following
+   2. Edit the ``/etc/mongod.conf`` file and complete the following
       actions:
 
       a. Configure the ``bind_ip`` key to use the management interface
@@ -113,7 +113,7 @@ create a MongoDB database, service credentials, and API endpoint.
             bind_ip = 10.0.0.11
 
       b. By default, MongoDB creates several 1 GB journal files
-         in the :file:`/var/lib/mongodb/journal` directory.
+         in the ``/var/lib/mongodb/journal`` directory.
          If you want to reduce the size of each journal file to
          128 MB and limit total journal space consumption to 512 MB,
          assert the ``smallfiles`` key:
@@ -135,7 +135,7 @@ create a MongoDB database, service credentials, and API endpoint.
 
 .. only:: ubuntu
 
-   2. Edit the :file:`/etc/mongodb.conf` file and complete the following
+   2. Edit the ``/etc/mongodb.conf`` file and complete the following
       actions:
 
       a. Configure the ``bind_ip`` key to use the management interface
@@ -146,7 +146,7 @@ create a MongoDB database, service credentials, and API endpoint.
             bind_ip = 10.0.0.11
 
       b. By default, MongoDB creates several 1 GB journal files
-         in the :file:`/var/lib/mongodb/journal` directory.
+         in the ``/var/lib/mongodb/journal`` directory.
          If you want to reduce the size of each journal file to
          128 MB and limit total journal space consumption to 512 MB,
          assert the ``smallfiles`` key:
@@ -363,7 +363,7 @@ To install and configure the Telemetry module components
 
       $ openssl rand -hex 10
 
-3. Edit the :file:`/etc/ceilometer/ceilometer.conf` file and complete
+3. Edit the ``/etc/ceilometer/ceilometer.conf`` file and complete
    the following actions:
 
    a. In the ``[database]`` section, configure database access:

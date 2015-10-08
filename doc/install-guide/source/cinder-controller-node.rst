@@ -192,8 +192,8 @@ To install and configure Block Storage controller components
 
       .. Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1212900.
 
-      Copy the :file:`/usr/share/cinder/cinder-dist.conf` file
-      to :file:`/etc/cinder/cinder.conf`.
+      Copy the ``/usr/share/cinder/cinder-dist.conf`` file
+      to ``/etc/cinder/cinder.conf``.
 
       .. code-block:: console
 
@@ -202,7 +202,7 @@ To install and configure Block Storage controller components
 
 
 
-   Edit the :file:`/etc/cinder/cinder.conf` file and complete the
+   Edit the ``/etc/cinder/cinder.conf`` file and complete the
    following actions:
 
    a. In the ``[database]`` section, configure database access:

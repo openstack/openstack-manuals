@@ -5,8 +5,8 @@ Install and configure a storage node
 This section describes how to install and configure storage nodes
 for the Block Storage service. For simplicity, this configuration
 references one storage node with an empty local block storage device
-:file:`/dev/sdb` that contains a suitable partition table with
-one partition :file:`/dev/sdb1` occupying the entire device.
+``/dev/sdb`` that contains a suitable partition table with
+one partition ``/dev/sdb1`` occupying the entire device.
 The service provisions logical volumes on this device using the
 :term:`LVM <Logical Volume Manager (LVM)>` driver and provides them
 to instances via :term:`iSCSI` transport. You can follow these
@@ -100,7 +100,7 @@ environment. For more information, see :ref:`environment`.
          Some distributions include LVM by default.
 
 
-7. Create the LVM physical volume :file:`/dev/sdb1`:
+7. Create the LVM physical volume ``/dev/sdb1``:
 
    .. code-block:: console
 
@@ -124,16 +124,16 @@ environment. For more information, see :ref:`environment`.
 9. Only instances can access Block Storage volumes. However, the
    underlying operating system manages the devices associated with
    the volumes. By default, the LVM volume scanning tool scans the
-   :file:`/dev` directory for block storage devices that
+   ``/dev`` directory for block storage devices that
    contain volumes. If projects use LVM on their volumes, the scanning
    tool detects these volumes and attempts to cache them which can cause
    a variety of problems with both the underlying operating system
    and project volumes. You must reconfigure LVM to scan only the devices
    that contain the ``cinder-volume`` volume group. Edit the
-   :file:`/etc/lvm/lvm.conf` file and complete the following actions:
+   ``/etc/lvm/lvm.conf`` file and complete the following actions:
 
    a. In the ``devices`` section, add a filter that accepts the
-      :file:`/dev/sdb` device and rejects all other devices::
+      ``/dev/sdb`` device and rejects all other devices::
 
         devices {
         ...
@@ -149,7 +149,7 @@ environment. For more information, see :ref:`environment`.
 
          If your storage nodes use LVM on the operating system disk, you
          must also add the associated device to the filter. For example,
-         if the :file:`/dev/sda` device contains the operating system:
+         if the ``/dev/sda`` device contains the operating system:
 
          .. code-block:: ini
 
@@ -157,8 +157,8 @@ environment. For more information, see :ref:`environment`.
 
          Similarly, if your compute nodes use LVM on the operating
          system disk, you must also modify the filter in the
-         :file:`/etc/lvm/lvm.conf` file on those nodes to include only
-         the operating system disk. For example, if the :file:`/dev/sda`
+         ``/etc/lvm/lvm.conf`` file on those nodes to include only
+         the operating system disk. For example, if the ``/dev/sda``
          device contains the operating system:
 
          .. code-block:: ini
@@ -196,7 +196,7 @@ Install and configure Block Storage volume components
 
         # apt-get install cinder-volume python-mysqldb
 
-2. Edit the :file:`/etc/cinder/cinder.conf` file
+2. Edit the ``/etc/cinder/cinder.conf`` file
    and complete the following actions:
 
    a. In the ``[database]`` section, configure database access:

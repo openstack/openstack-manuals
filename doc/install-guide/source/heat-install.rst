@@ -287,15 +287,15 @@ To install and configure the Orchestration components
 
          .. Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1213476.
 
-         Copy the :file:`/usr/share/heat/heat-dist.conf` file
-         to :file:`/etc/heat/heat.conf`.
+         Copy the ``/usr/share/heat/heat-dist.conf`` file
+         to ``/etc/heat/heat.conf``.
 
          .. code-block:: console
 
             # cp /usr/share/heat/heat-dist.conf /etc/heat/heat.conf
             # chown -R heat:heat /etc/heat/heat.conf
 
-      Edit the :file:`/etc/heat/heat.conf` file and complete the following
+      Edit the ``/etc/heat/heat.conf`` file and complete the following
       actions:
 
       * In the ``[database]`` section, configure database access:
@@ -426,7 +426,7 @@ To install and configure the Orchestration components
       :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
       and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
 
-   3. Edit the :file:`/etc/heat/heat.conf` file and complete the following
+   3. Edit the ``/etc/heat/heat.conf`` file and complete the following
       actions:
 
       * In the ``[ec2authtoken]`` section, configure Identity service access:
