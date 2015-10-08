@@ -60,7 +60,6 @@ The Debian package post installation scripts will then perform the below
 commands for you:
 
 .. code-block:: ini
-   :linenos:
 
    PKG_SERVICE_ID=$(pkgos_get_id keystone --os-token ${AUTH_TOKEN} \
      --os-endpoint http://${KEYSTONE_ENDPOINT_IP}:35357/v2.0/ service-create \

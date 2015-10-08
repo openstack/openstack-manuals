@@ -38,7 +38,6 @@ To install and configure the agent
    a. In the ``[publisher]`` section, configure the telemetry secret:
 
       .. code-block:: ini
-         :linenos:
 
          [publisher]
          ...
@@ -51,7 +50,6 @@ To install and configure the agent
       configure ``RabbitMQ`` message queue access:
 
       .. code-block:: ini
-         :linenos:
 
          [DEFAULT]
          ...
@@ -70,7 +68,6 @@ To install and configure the agent
       configure Identity service access:
 
       .. code-block:: ini
-         :linenos:
 
          [keystone_authtoken]
          ...
@@ -93,7 +90,6 @@ To install and configure the agent
       credentials:
 
       .. code-block:: ini
-         :linenos:
 
          [service_credentials]
          ...
@@ -111,7 +107,6 @@ To install and configure the agent
       logging in the ``[DEFAULT]`` section:
 
       .. code-block:: ini
-         :linenos:
 
          [DEFAULT]
          ...
@@ -126,7 +121,6 @@ Edit the :file:`/etc/nova/nova.conf` file and configure
 notifications in the ``[DEFAULT]`` section:
 
 .. code-block:: ini
-   :linenos:
 
    [DEFAULT]
    ...

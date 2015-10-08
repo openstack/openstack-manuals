@@ -106,7 +106,6 @@ The following example shows how to pre-seed an automated MySQL Server
 installation:
 
 .. code-block:: bash
-   :linenos:
 
     MYSQL_PASSWORD=MYSQL_PASSWORD
     echo "mysql-server-5.5 mysql-server/root_password password ${MYSQL_PASSWORD}

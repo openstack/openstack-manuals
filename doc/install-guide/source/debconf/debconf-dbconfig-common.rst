@@ -50,7 +50,6 @@ might create a keystone configuration file for ``dbconfig-common`` that is
 located in :file:`/etc/dbconfig-common/keystone.conf`, as follows:
 
 .. code-block:: ini
-   :linenos:
 
    dbc_install='true'
    dbc_upgrade='true'
@@ -141,7 +140,6 @@ Alternatively, if you do not want to install this package, run this
 script to enable remote root access:
 
 .. code-block:: bash
-   :linenos:
 
    #!/bin/sh
 

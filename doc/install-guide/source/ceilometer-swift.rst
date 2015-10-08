@@ -57,7 +57,6 @@ run the Object Storage proxy service.
       ``ResellerAdmin`` role:
 
       .. code-block:: ini
-         :linenos:
 
          [filter:keystoneauth]
          ...
@@ -66,7 +65,6 @@ run the Object Storage proxy service.
    b. In the ``[pipeline:main]`` section, add ``ceilometer``:
 
       .. code-block:: ini
-         :linenos:
 
          [pipeline:main]
          ...
@@ -75,7 +73,6 @@ run the Object Storage proxy service.
    c. In the ``[filter:ceilometer]`` section, configure notifications:
 
       .. code-block:: ini
-         :linenos:
 
          [filter:ceilometer]
          ...
