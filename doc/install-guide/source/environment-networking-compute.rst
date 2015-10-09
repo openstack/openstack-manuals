@@ -66,4 +66,4 @@ Configure name resolution
 
 #. Set the hostname of the node to ``compute1``.
 
-# .. include:: shared/edit_hosts_file.txt
+#. .. include:: shared/edit_hosts_file.txt
