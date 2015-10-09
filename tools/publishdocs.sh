@@ -31,6 +31,8 @@ function copy_to_branch {
         cp -a publish-docs/draft/* publish-docs/$BRANCH/
         # We don't need this file
         rm -f publish-docs/$BRANCH/draft-index.html
+        # We don't need Contributor Guide
+        rm -rf publish-docs/$BRANCH/contributor-guide
 
         for f in $(find publish-docs/$BRANCH -name "atom.xml"); do
             sed -i -e "s|/draft/|/$BRANCH/|g" $f
@@ -68,7 +70,7 @@ fi
 if [ "$PUBLISH" = "publish" ] ; then
     openstack-doc-test --check-build --publish
     # For publishing to both /draft and /BRANCH
-    # copy_to_branch kilo
+    copy_to_branch liberty
 else
     openstack-doc-test --check-build
 fi
