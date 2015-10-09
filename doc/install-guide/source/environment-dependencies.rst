@@ -102,13 +102,13 @@ these procedures on all nodes.
         The packages are signed by GPG key 893A90DAD85F9316. You should
         verify the fingerprint of the imported GPG key before using it.
 
-        ::
+        .. code-block:: console
 
-          Key ID: 893A90DAD85F9316
-          Key Name: Cloud:OpenStack OBS Project <Cloud:OpenStack@build.opensuse.org>
-          Key Fingerprint: 35B34E18ABC1076D66D5A86B893A90DAD85F9316
-          Key Created: Tue Oct  8 13:34:21 2013
-          Key Expires: Thu Dec 17 13:34:21 2015
+           Key ID: 893A90DAD85F9316
+           Key Name: Cloud:OpenStack OBS Project <Cloud:OpenStack@build.opensuse.org>
+           Key Fingerprint: 35B34E18ABC1076D66D5A86B893A90DAD85F9316
+           Key Created: Tue Oct  8 13:34:21 2013
+           Key Expires: Thu Dec 17 13:34:21 2015
 
 .. only:: debian
 
@@ -172,9 +172,9 @@ Finalize the installation
 
    * Upgrade the packages on your system:
 
-     ::
+     .. code-block:: console
 
-       $ zypper refresh && zypper dist-upgrade
+        # zypper refresh && zypper dist-upgrade
 
      .. note::
 

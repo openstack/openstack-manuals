@@ -22,16 +22,20 @@ Orchestration module, code-named heat, on the controller node.
 
            $ mysql -u root -p
 
-      * Create the ``heat`` database::
+      * Create the ``heat`` database:
 
-          CREATE DATABASE heat;
+        .. code-block:: console
 
-      * Grant proper access to the ``heat`` database::
+           CREATE DATABASE heat;
 
-          GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'localhost' \
-            IDENTIFIED BY 'HEAT_DBPASS';
-          GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'%' \
-            IDENTIFIED BY 'HEAT_DBPASS';
+      * Grant proper access to the ``heat`` database:
+
+        .. code-block:: console
+
+           GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'localhost' \
+             IDENTIFIED BY 'HEAT_DBPASS';
+           GRANT ALL PRIVILEGES ON heat.* TO 'heat'@'%' \
+             IDENTIFIED BY 'HEAT_DBPASS';
 
         Replace ``HEAT_DBPASS`` with a suitable password.
 

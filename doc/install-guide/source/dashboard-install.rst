@@ -22,29 +22,37 @@ To install the dashboard components
 
 .. only:: obs
 
-   * Install the packages::
+   * Install the packages:
 
-       # zypper install openstack-dashboard apache2-mod_wsgi \
-         memcached python-python-memcached
+     .. code-block:: console
+
+        # zypper install openstack-dashboard apache2-mod_wsgi \
+          memcached python-python-memcached
 
 .. only:: rdo
 
-   * Install the packages::
+   * Install the packages:
 
-       # yum install openstack-dashboard httpd mod_wsgi \
-         memcached python-memcached
+     .. code-block:: console
+
+        # yum install openstack-dashboard httpd mod_wsgi \
+          memcached python-memcached
 
 .. only:: ubuntu
 
-   * Install the packages::
+   * Install the packages:
 
-       # apt-get install openstack-dashboard
+     .. code-block:: console
+
+        # apt-get install openstack-dashboard
 
 .. only:: debian
 
-   * Install the packages::
+   * Install the packages:
 
-       # apt-get install openstack-dashboard-apache
+     .. code-block:: console
+
+        # apt-get install openstack-dashboard-apache
 
    * Respond to prompts for web server configuration.
 
@@ -68,11 +76,13 @@ To configure the dashboard
 
 .. only:: obs
 
-   * Configure the web server::
+   * Configure the web server:
 
-       # cp /etc/apache2/conf.d/openstack-dashboard.conf.sample \
-         /etc/apache2/conf.d/openstack-dashboard.conf
-       # a2enmod rewrite;a2enmod ssl;a2enmod wsgi
+     .. code-block:: console
+
+        # cp /etc/apache2/conf.d/openstack-dashboard.conf.sample \
+          /etc/apache2/conf.d/openstack-dashboard.conf
+        # a2enmod rewrite;a2enmod ssl;a2enmod wsgi
 
 .. only:: obs
 
@@ -87,22 +97,28 @@ To configure the dashboard
      file and complete the following actions:
 
 * Configure the dashboard to use OpenStack services on the
-  ``controller`` node::
+  ``controller`` node:
 
-    OPENSTACK_HOST = "controller"
+  .. code-block:: ini
 
-* Allow all hosts to access the dashboard::
+     OPENSTACK_HOST = "controller"
 
-    ALLOWED_HOSTS = '*'
+* Allow all hosts to access the dashboard:
 
-* Configure the ``memcached`` session storage service::
+  .. code-block:: ini
 
-    CACHES = {
-        'default': {
-             'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-             'LOCATION': '127.0.0.1:11211',
-        }
-    }
+     ALLOWED_HOSTS = '*'
+
+* Configure the ``memcached`` session storage service:
+
+  .. code-block:: ini
+
+     CACHES = {
+         'default': {
+              'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+              'LOCATION': '127.0.0.1:11211',
+         }
+     }
 
 .. note::
 
@@ -117,13 +133,17 @@ To configure the dashboard
       to use ``memcached`` for session storage.
 
 * Configure ``user`` as the default role for
-  users that you create via the dashboard::
+  users that you create via the dashboard:
 
-    OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
+  .. code-block:: ini
 
-* Optionally, configure the time zone::
+     OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
 
-    TIME_ZONE = "TIME_ZONE"
+* Optionally, configure the time zone:
+
+  .. code-block:: ini
+
+     TIME_ZONE = "TIME_ZONE"
 
   Replace ``TIME_ZONE`` with an appropriate time zone identifier.
   For more information, see the `list of time zones
@@ -135,33 +155,41 @@ To finalize installation
 .. only:: rdo
 
    On RHEL and CentOS, configure SELinux to permit the web server
-   to connect to OpenStack services::
+   to connect to OpenStack services:
 
-     # setsebool -P httpd_can_network_connect on
+   .. code-block:: console
+
+      # setsebool -P httpd_can_network_connect on
 
 .. only:: rdo
 
    Due to a packaging bug, the dashboard CSS fails to load properly.
-   Run the following command to resolve this issue::
+   Run the following command to resolve this issue:
 
-     # chown -R apache:apache /usr/share/openstack-dashboard/static
+   .. code-block:: console
+
+      # chown -R apache:apache /usr/share/openstack-dashboard/static
 
    For more information, see the `bug report
    <https://bugzilla.redhat.com/show_bug.cgi?id=1150678>`__.
 
 .. only:: ubuntu
 
-   Reload the web server configuration::
+   Reload the web server configuration:
 
-     # service apache2 reload
+   .. code-block:: console
+
+      # service apache2 reload
 
 .. only:: obs
 
    Start the web server and session storage service and configure
-   them to start when the system boots::
+   them to start when the system boots:
 
-     # systemctl enable apache2.service memcached.service
-     # systemctl start apache2.service memcached.service
+   .. code-block:: console
+
+      # systemctl enable apache2.service memcached.service
+      # systemctl start apache2.service memcached.service
 
    .. note::
 
@@ -170,10 +198,12 @@ To finalize installation
 .. only:: rdo
 
    Start the web server and session storage service and configure
-   them to start when the system boots::
+   them to start when the system boots:
 
-     # systemctl enable httpd.service memcached.service
-     # systemctl start httpd.service memcached.service
+   .. code-block:: console
+
+      # systemctl enable httpd.service memcached.service
+      # systemctl start httpd.service memcached.service
 
    .. note::
 

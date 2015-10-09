@@ -36,7 +36,7 @@ create a MongoDB database, service credentials, and API endpoint.
          You should verify the fingerprint of the imported GPG key before
          using it.
 
-         ::
+         .. code-block:: console
 
             Key Name: server:database OBS Project &lt;server:database@build.opensuse.org&gt;
             Key Fingerprint: 116EB86331583E47E63CDF4D562111AC05905EA8

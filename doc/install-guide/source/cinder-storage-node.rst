@@ -133,7 +133,9 @@ environment. For more information, see :ref:`environment`.
    ``/etc/lvm/lvm.conf`` file and complete the following actions:
 
    * In the ``devices`` section, add a filter that accepts the
-     ``/dev/sdb`` device and rejects all other devices::
+     ``/dev/sdb`` device and rejects all other devices:
+
+     .. code-block:: ini
 
         devices {
         ...
