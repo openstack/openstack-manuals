@@ -119,16 +119,16 @@ network control via Neutron and OpenFlow.
 
 .. note::
 
-  Set the ``--availability_zone`` parameter to specify which zone or
-  node to use to start the server. Separate the zone from the host
-  name with a comma. For example:
+   Set the ``--availability_zone`` parameter to specify which zone or
+   node to use to start the server. Separate the zone from the host
+   name with a comma. For example:
 
-    .. code::
+   .. code-block:: console
 
       $ nova boot --availability_zone zone:HOST,NODE
 
-  ``host`` is optional for the ``--availability_zone`` parameter. You
-  can simply specify ``zone:,node``, still including the comma.
+   ``host`` is optional for the ``--availability_zone`` parameter. You
+   can simply specify ``zone:,node``, still including the comma.
 
 List bare-metal nodes and interfaces
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
