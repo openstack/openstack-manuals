@@ -25,6 +25,7 @@ Contents
    json_conventions.rst
    doc-bugs.rst
    docs-review.rst
+   tools_and_content_overview.rst
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
