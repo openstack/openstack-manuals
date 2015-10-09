@@ -249,8 +249,8 @@ client. The exchange looks like this:
 
 OpenStack uses a third-party program called dnsmasq_ to implement the
 DHCP server.
-Dnsmasq writes to the syslog (normally found at /var/log/syslog),
-where you can observe the DHCP request and replies::
+Dnsmasq writes to the syslog, where you can observe the DHCP request
+and replies::
 
     Apr 23 15:53:46 c100-1 dhcpd: DHCPDISCOVER from 08:00:27:b9:88:74 via eth2
     Apr 23 15:53:46 c100-1 dhcpd: DHCPOFFER on 10.10.0.112 to 08:00:27:b9:88:74 via eth2
