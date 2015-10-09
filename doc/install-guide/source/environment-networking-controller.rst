@@ -62,4 +62,4 @@ Configure name resolution
 
 #. Set the hostname of the node to ``controller``.
 
-# .. include:: shared/edit_hosts_file.txt
+#. .. include:: shared/edit_hosts_file.txt
