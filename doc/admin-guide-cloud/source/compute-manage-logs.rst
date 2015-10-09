@@ -209,7 +209,7 @@ also requires a websocket client to access the serial console.
 
    .. code:: console
 
-      $ curl -i 'http://<controller>:8774/v2/<tenant_uuid>/servers/
+      $ curl -i 'http://<controller>:8774/v2.1/<tenant_uuid>/servers/
         <instance_uuid>/action' \
         -X POST \
         -H "Accept: application/json" \
