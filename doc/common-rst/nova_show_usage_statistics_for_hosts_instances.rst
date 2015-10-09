@@ -18,33 +18,37 @@ Show host usage statistics
 The following examples show the host usage statistics for a host called
 ``devstack``.
 
--  List the hosts and the nova-related services that run on them::
+-  List the hosts and the nova-related services that run on them:
 
-     $ nova host-list
-     +-----------+-------------+----------+
-     | host_name | service     | zone     |
-     +-----------+-------------+----------+
-     | devstack  | conductor   | internal |
-     | devstack  | compute     | nova     |
-     | devstack  | cert        | internal |
-     | devstack  | network     | internal |
-     | devstack  | scheduler   | internal |
-     | devstack  | consoleauth | internal |
-     +-----------+-------------+----------+
+   .. code-block:: console
+
+      $ nova host-list
+      +-----------+-------------+----------+
+      | host_name | service     | zone     |
+      +-----------+-------------+----------+
+      | devstack  | conductor   | internal |
+      | devstack  | compute     | nova     |
+      | devstack  | cert        | internal |
+      | devstack  | network     | internal |
+      | devstack  | scheduler   | internal |
+      | devstack  | consoleauth | internal |
+      +-----------+-------------+----------+
 
 -  Get a summary of resource usage of all of the instances running on
-   the host::
+   the host:
 
-     $ nova host-describe devstack
-     +----------+----------------------------------+-----+-----------+---------+
-     | HOST     | PROJECT                          | cpu | memory_mb | disk_gb |
-     +----------+----------------------------------+-----+-----------+---------+
-     | devstack | (total)                          | 2   | 4003      | 157     |
-     | devstack | (used_now)                       | 3   | 5120      | 40      |
-     | devstack | (used_max)                       | 3   | 4608      | 40      |
-     | devstack | b70d90d65e464582b6b2161cf3603ced | 1   | 512       | 0       |
-     | devstack | 66265572db174a7aa66eba661f58eb9e | 2   | 4096      | 40      |
-     +----------+----------------------------------+-----+-----------+---------+
+   .. code-block:: console
+
+      $ nova host-describe devstack
+      +----------+----------------------------------+-----+-----------+---------+
+      | HOST     | PROJECT                          | cpu | memory_mb | disk_gb |
+      +----------+----------------------------------+-----+-----------+---------+
+      | devstack | (total)                          | 2   | 4003      | 157     |
+      | devstack | (used_now)                       | 3   | 5120      | 40      |
+      | devstack | (used_max)                       | 3   | 4608      | 40      |
+      | devstack | b70d90d65e464582b6b2161cf3603ced | 1   | 512       | 0       |
+      | devstack | 66265572db174a7aa66eba661f58eb9e | 2   | 4096      | 40      |
+      +----------+----------------------------------+-----+-----------+---------+
 
    The ``cpu`` column shows the sum of the virtual CPUs for instances
    running on the host.
@@ -77,7 +81,7 @@ Show instance usage statistics
 
    #. List instances:
 
-      .. code::
+      .. code-block:: console
 
         $ nova list
         +----------+----------------------+--------+------------+-------------+------------------+
@@ -89,7 +93,7 @@ Show instance usage statistics
 
    #. Get diagnostic statistics:
 
-      .. code::
+      .. code-block:: console
 
         $ nova diagnostics myCirrosServer
         +------------------+----------------+
@@ -114,7 +118,7 @@ Show instance usage statistics
 
 -  Get summary statistics for each tenant:
 
-   .. code::
+   .. code-block:: console
 
        $ nova usage-list
        Usage from 2013-06-25 to 2013-07-24:

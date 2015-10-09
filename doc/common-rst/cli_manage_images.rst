@@ -23,7 +23,7 @@ List or get details for images (glance)
 To get a list of images and to then get further details about a single
 image, use ``glance image-list`` and ``glance image-show``.
 
-.. code::
+.. code-block:: console
 
   $ glance image-list
   +----------+---------------------------------+-------------+------------------+----------+--------+
@@ -35,7 +35,7 @@ image, use ``glance image-list`` and ``glance image-show``.
   | 7e514... | myCirrosImage                   | ami         | ami              | 14221312 | active |
   +----------+---------------------------------+-------------+------------------+----------+--------+
 
-.. code::
+.. code-block:: console
 
   $ glance image-show myCirrosImage
 
@@ -79,12 +79,14 @@ image, use ``glance image-list`` and ``glance image-show``.
   +---------------------------------------+--------------------------------------+
 
 When viewing a list of images, you can also use ``grep`` to filter the
-list, as follows::
+list, as follows:
 
-  $ glance image-list | grep 'cirros'
-  | 397e713c-b95b-4186-ad46-612... | cirros-0.3.2-x86_64-uec         | ami | ami | 25165824 | active |
-  | df430cc2-3406-4061-b635-a51... | cirros-0.3.2-x86_64-uec-kernel  | aki | aki | 4955792  | active |
-  | 3cf852bd-2332-48f4-9ae4-7d9... | cirros-0.3.2-x86_64-uec-ramdisk | ari | ari | 3714968  | active |
+.. code-block:: console
+
+   $ glance image-list | grep 'cirros'
+   | 397e713c-b95b-4186-ad46-612... | cirros-0.3.2-x86_64-uec         | ami | ami | 25165824 | active |
+   | df430cc2-3406-4061-b635-a51... | cirros-0.3.2-x86_64-uec-kernel  | aki | aki | 4955792  | active |
+   | 3cf852bd-2332-48f4-9ae4-7d9... | cirros-0.3.2-x86_64-uec-ramdisk | ari | ari | 3714968  | active |
 
 .. note::
 
@@ -95,33 +97,36 @@ list, as follows::
    -  ``filesystem_store_metadata_file = filePath``, where filePath points to a JSON file that defines the mount point for OpenStack images on your system and a unique ID. For example:
 
    .. code-block:: json
-      :linenos:
 
       [{
           "id": "2d9bb53f-70ea-4066-a68b-67960eaae673",
           "mountpoint": "/var/lib/glance/images/"
       }]
 
-   After you restart the Image service, you can use the following syntax to view the image's location information::
+   After you restart the Image service, you can use the following syntax to view the image's location information:
 
-   $ glance --os-image-api-version 2 image-show imageID
+   .. code-block:: console
 
-   For example, using the image ID shown above, you would issue the command as follows::
+      $ glance --os-image-api-version 2 image-show imageID
 
-   $ glance --os-image-api-version 2 image-show 2d9bb53f-70ea-4066-a68b-67960eaae673
+   For example, using the image ID shown above, you would issue the command as follows:
+
+   .. code-block:: console
+
+      $ glance --os-image-api-version 2 image-show 2d9bb53f-70ea-4066-a68b-67960eaae673
 
 Create or update an image (glance)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To create an image, use ``glance image-create``:
 
-.. code::
+.. code-block:: console
 
   $ glance image-create imageName
 
 To update an image by name or ID, use ``glance image-update``:
 
-.. code::
+.. code-block:: console
 
   $ glance image-update imageName
 
@@ -194,7 +199,7 @@ Reference <http://docs.openstack.org/cli-reference/content/index.html>`__.
 The following example shows the command that you would use to upload a
 CentOS 6.3 image in qcow2 format and configure it for public access:
 
-.. code::
+.. code-block:: console
 
   $ glance image-create --name centos63-image --disk-format qcow2 \
     --container-format bare --is-public True --file ./centos63.qcow2
@@ -203,7 +208,7 @@ The following example shows how to update an existing image with a
 properties that describe the disk bus, the CD-ROM bus, and the VIF
 model:
 
-.. code::
+.. code-block:: console
 
   $ glance image-update \
       --property hw_disk_bus=scsi \
