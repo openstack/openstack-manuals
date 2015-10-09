@@ -53,10 +53,10 @@ starting from Liberty allows you to control
 port security (enable and disable spoofchecking) and QoS rate limit settings.
 
 
-  .. note::
-     With the sriov-agent mode is default in Liberty.
-     Without the sriov-agent mode is deprecated in Liberty and
-     removed in Mitaka.
+.. note::
+   With the sriov-agent mode is default in Liberty.
+   Without the sriov-agent mode is deprecated in Liberty and
+   removed in Mitaka.
 
 Known limitations
 ~~~~~~~~~~~~~~~~~
