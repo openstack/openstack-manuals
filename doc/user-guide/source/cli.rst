@@ -11,6 +11,7 @@ OpenStack command-line clients
    common/cli_set_environment_variables_using_openstack_rc.rst
    common/cli_manage_images.rst
    common/cli_manage_volumes.rst
+   cli_manage_shares.rst
    cli_nova_configure_access_security_for_instances.rst
    cli_launch_instances.rst
    cli_manage_instances_hosts.rst
