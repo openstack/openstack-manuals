@@ -24,6 +24,6 @@ use ``--option ARGUMENT``.
 
 When documenting ``euca2ools``, limit the content to the following topics:
 
- * Tasks required to get credentials to work with ``euca2ools``
- * Explain the difference in operation between the Amazon EC2 and
-   OpenStack endpoints when you access them through EC2.
+* Tasks required to get credentials to work with ``euca2ools``
+* Explain the difference in operation between the Amazon EC2 and
+  OpenStack endpoints when you access them through EC2.
