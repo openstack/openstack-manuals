@@ -8,8 +8,8 @@ Abstract
 OpenStack offers open source software for cloud administrators to
 manage and troubleshoot an OpenStack cloud.
 
-This guide documents OpenStack Kilo, OpenStack Juno, and OpenStack
-Icehouse releases.
+This guide documents OpenStack Liberty, OpenStack Kilo, and OpenStack
+Juno releases.
 
 Contents
 ~~~~~~~~
