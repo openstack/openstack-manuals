@@ -10,7 +10,7 @@ Edit the ``/etc/glance/glance-api.conf`` and
 ``/etc/glance/glance-registry.conf`` files and
 complete the following actions:
 
-1. In the ``[DEFAULT]`` section, configure notifications
+#. In the ``[DEFAULT]`` section, configure notifications
    and RabbitMQ message broker access:
 
    .. code-block:: ini

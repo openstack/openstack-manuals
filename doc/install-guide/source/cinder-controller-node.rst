@@ -13,109 +13,109 @@ To configure prerequisites
 Before you install and configure the Block Storage service, you
 must create a database, service credentials, and API endpoint.
 
-1. To create the database, complete these steps:
+#. To create the database, complete these steps:
 
-   a. Use the database access client to connect to the database
-      server as the ``root`` user:
+   * Use the database access client to connect to the database
+     server as the ``root`` user:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ mysql -u root -p
+        $ mysql -u root -p
 
-   b. Create the ``cinder`` database:
+   * Create the ``cinder`` database:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         CREATE DATABASE cinder;
+        CREATE DATABASE cinder;
 
-   c. Grant proper access to the ``cinder`` database:
+   * Grant proper access to the ``cinder`` database:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
-           IDENTIFIED BY 'CINDER_DBPASS';
-         GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
-           IDENTIFIED BY 'CINDER_DBPASS';
+        GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
+          IDENTIFIED BY 'CINDER_DBPASS';
+        GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
+          IDENTIFIED BY 'CINDER_DBPASS';
 
-      Replace ``CINDER_DBPASS`` with a suitable password.
+     Replace ``CINDER_DBPASS`` with a suitable password.
 
-   d. Exit the database access client.
+   * Exit the database access client.
 
-2. Source the ``admin`` credentials to gain access to admin-only
+#. Source the ``admin`` credentials to gain access to admin-only
    CLI commands:
 
    .. code-block:: console
 
       $ source admin-openrc.sh
 
-3. To create the service credentials, complete these steps:
+#. To create the service credentials, complete these steps:
 
-   a. Create a ``cinder`` user:
+   * Create a ``cinder`` user:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack user create --password-prompt cinder
-         User Password:
-         Repeat User Password:
-         +----------+----------------------------------+
-         | Field    | Value                            |
-         +----------+----------------------------------+
-         | email    | None                             |
-         | enabled  | True                             |
-         | id       | 881ab2de4f7941e79504a759a83308be |
-         | name     | cinder                           |
-         | username | cinder                           |
-         +----------+----------------------------------+
+        $ openstack user create --password-prompt cinder
+        User Password:
+        Repeat User Password:
+        +----------+----------------------------------+
+        | Field    | Value                            |
+        +----------+----------------------------------+
+        | email    | None                             |
+        | enabled  | True                             |
+        | id       | 881ab2de4f7941e79504a759a83308be |
+        | name     | cinder                           |
+        | username | cinder                           |
+        +----------+----------------------------------+
 
-   b. Add the ``admin`` role to the ``cinder`` user:
+   * Add the ``admin`` role to the ``cinder`` user:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack role add --project service --user cinder admin
-         +-------+----------------------------------+
-         | Field | Value                            |
-         +-------+----------------------------------+
-         | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
-         | name  | admin                            |
-         +-------+----------------------------------+
+        $ openstack role add --project service --user cinder admin
+        +-------+----------------------------------+
+        | Field | Value                            |
+        +-------+----------------------------------+
+        | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
+        | name  | admin                            |
+        +-------+----------------------------------+
 
-   c. Create the ``cinder`` service entities:
+   * Create the ``cinder`` service entities:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack service create --name cinder \
-           --description "OpenStack Block Storage" volume
-         +-------------+----------------------------------+
-         | Field       | Value                            |
-         +-------------+----------------------------------+
-         | description | OpenStack Block Storage          |
-         | enabled     | True                             |
-         | id          | 1e494c3e22a24baaafcaf777d4d467eb |
-         | name        | cinder                           |
-         | type        | volume                           |
-         +-------------+----------------------------------+
+        $ openstack service create --name cinder \
+          --description "OpenStack Block Storage" volume
+        +-------------+----------------------------------+
+        | Field       | Value                            |
+        +-------------+----------------------------------+
+        | description | OpenStack Block Storage          |
+        | enabled     | True                             |
+        | id          | 1e494c3e22a24baaafcaf777d4d467eb |
+        | name        | cinder                           |
+        | type        | volume                           |
+        +-------------+----------------------------------+
 
-      .. code-block:: console
+     .. code-block:: console
 
-         $ openstack service create --name cinderv2 \
-           --description "OpenStack Block Storage" volumev2
-         +-------------+----------------------------------+
-         | Field       | Value                            |
-         +-------------+----------------------------------+
-         | description | OpenStack Block Storage          |
-         | enabled     | True                             |
-         | id          | 16e038e449c94b40868277f1d801edb5 |
-         | name        | cinderv2                         |
-         | type        | volumev2                         |
-         +-------------+----------------------------------+
+        $ openstack service create --name cinderv2 \
+          --description "OpenStack Block Storage" volumev2
+        +-------------+----------------------------------+
+        | Field       | Value                            |
+        +-------------+----------------------------------+
+        | description | OpenStack Block Storage          |
+        | enabled     | True                             |
+        | id          | 16e038e449c94b40868277f1d801edb5 |
+        | name        | cinderv2                         |
+        | type        | volumev2                         |
+        +-------------+----------------------------------+
 
-      .. note::
+     .. note::
 
-         The Block Storage service requires both the ``volume`` and
-         ``volumev2`` services. However, both services use the same API
-         endpoint that references the Block Storage version 2 API.
+        The Block Storage service requires both the ``volume`` and
+        ``volumev2`` services. However, both services use the same API
+        endpoint that references the Block Storage version 2 API.
 
-4. Create the Block Storage service API endpoints:
+#. Create the Block Storage service API endpoints:
 
    .. code-block:: console
 
@@ -164,7 +164,7 @@ To install and configure Block Storage controller components
 
 .. only:: obs
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -172,7 +172,7 @@ To install and configure Block Storage controller components
 
 .. only:: rdo
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -180,7 +180,7 @@ To install and configure Block Storage controller components
 
 .. only:: ubuntu
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -205,88 +205,88 @@ To install and configure Block Storage controller components
    Edit the ``/etc/cinder/cinder.conf`` file and complete the
    following actions:
 
-   a. In the ``[database]`` section, configure database access:
+   * In the ``[database]`` section, configure database access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [database]
-         ...
-         connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
+        [database]
+        ...
+        connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
 
-      Replace ``CINDER_DBPASS`` with the password you chose for the
-      Block Storage database.
+     Replace ``CINDER_DBPASS`` with the password you chose for the
+     Block Storage database.
 
-   b. In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-      configure ``RabbitMQ`` message queue access:
+   * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
+     configure ``RabbitMQ`` message queue access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         rpc_backend = rabbit
+        [DEFAULT]
+        ...
+        rpc_backend = rabbit
 
-         [oslo_messaging_rabbit]
-         ...
-         rabbit_host = controller
-         rabbit_userid = openstack
-         rabbit_password = RABBIT_PASS
+        [oslo_messaging_rabbit]
+        ...
+        rabbit_host = controller
+        rabbit_userid = openstack
+        rabbit_password = RABBIT_PASS
 
-      Replace ``RABBIT_PASS`` with the password you chose for the
-      ``openstack`` account in ``RabbitMQ``.
+     Replace ``RABBIT_PASS`` with the password you chose for the
+     ``openstack`` account in ``RabbitMQ``.
 
-   c. In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
-      configure Identity service access:
+   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
+     configure Identity service access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         auth_strategy = keystone
+        [DEFAULT]
+        ...
+        auth_strategy = keystone
 
-         [keystone_authtoken]
-         ...
-         auth_uri = http://controller:5000
-         auth_url = http://controller:35357
-         auth_plugin = password
-         project_domain_id = default
-         user_domain_id = default
-         project_name = service
-         username = cinder
-         password = CINDER_PASS
+        [keystone_authtoken]
+        ...
+        auth_uri = http://controller:5000
+        auth_url = http://controller:35357
+        auth_plugin = password
+        project_domain_id = default
+        user_domain_id = default
+        project_name = service
+        username = cinder
+        password = CINDER_PASS
 
-      Replace ``CINDER_PASS`` with the password you chose for
-      the ``cinder`` user in the Identity service.
+     Replace ``CINDER_PASS`` with the password you chose for
+     the ``cinder`` user in the Identity service.
 
-      .. note::
+     .. note::
 
-         Comment out or remove any other options in the
-         ``[keystone_authtoken]`` section.
+        Comment out or remove any other options in the
+        ``[keystone_authtoken]`` section.
 
-   d. In the ``[DEFAULT]`` section, configure the ``my_ip`` option to
-      use the management interface IP address of the controller node:
+   * In the ``[DEFAULT]`` section, configure the ``my_ip`` option to
+     use the management interface IP address of the controller node:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         my_ip = 10.0.0.11
+        [DEFAULT]
+        ...
+        my_ip = 10.0.0.11
 
-   e. In the ``[oslo_concurrency]`` section, configure the lock path:
+   * In the ``[oslo_concurrency]`` section, configure the lock path:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [oslo_concurrency]
-         ...
-         lock_path = /var/lock/cinder
+        [oslo_concurrency]
+        ...
+        lock_path = /var/lock/cinder
 
-   f. (Optional) To assist with troubleshooting, enable verbose
-      logging in the ``[DEFAULT]`` section:
+   * (Optional) To assist with troubleshooting, enable verbose
+     logging in the ``[DEFAULT]`` section:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         verbose = True
+        [DEFAULT]
+        ...
+        verbose = True
 
 3. Populate the Block Storage database:
 
@@ -299,7 +299,7 @@ To finalize installation
 
 .. only:: obs or rdo
 
-   1. Start the Block Storage services and configure them to start when
+   #. Start the Block Storage services and configure them to start when
       the system boots:
 
 
@@ -310,14 +310,14 @@ To finalize installation
 
 .. only:: ubuntu
 
-   1. Restart the Block Storage services:
+   #. Restart the Block Storage services:
 
       .. code-block:: console
 
          # service cinder-scheduler restart
          # service cinder-api restart
 
-   2. By default, the Ubuntu packages create an SQLite database.
+   #. By default, the Ubuntu packages create an SQLite database.
 
       Because this configuration uses an SQL database server,
       you can remove the SQLite database file:

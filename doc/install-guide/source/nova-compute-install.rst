@@ -28,7 +28,7 @@ Install and configure components
 
 .. only:: obs
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -36,7 +36,7 @@ Install and configure components
 
 .. only:: rdo
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -44,7 +44,7 @@ Install and configure components
 
 .. only:: ubuntu
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -206,7 +206,7 @@ Install and configure components
 Finalize installation
 ---------------------
 
-1. Determine whether your compute node supports hardware acceleration
+#. Determine whether your compute node supports hardware acceleration
    for virtual machines:
 
    .. code-block:: console

@@ -12,7 +12,7 @@ To configure prerequisites
 Edit the ``/etc/cinder/cinder.conf`` file and complete the
 following actions:
 
-1. In the ``[DEFAULT]`` section, configure notifications:
+#. In the ``[DEFAULT]`` section, configure notifications:
 
    .. code-block:: ini
 

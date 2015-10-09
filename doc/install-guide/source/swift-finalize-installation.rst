@@ -16,31 +16,31 @@ Finalize installation
    #. Edit the ``/etc/swift/swift.conf`` file and complete the following
       actions:
 
-      a. In the ``[swift-hash]`` section, configure the hash path prefix and
-         suffix for your environment.
+      * In the ``[swift-hash]`` section, configure the hash path prefix and
+        suffix for your environment.
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            [swift-hash]
-            ...
-            swift_hash_path_suffix = HASH_PATH_PREFIX
-            swift_hash_path_prefix = HASH_PATH_SUFFIX
+           [swift-hash]
+           ...
+           swift_hash_path_suffix = HASH_PATH_PREFIX
+           swift_hash_path_prefix = HASH_PATH_SUFFIX
 
-         Replace HASH_PATH_PREFIX and HASH_PATH_SUFFIX with unique values.
+        Replace HASH_PATH_PREFIX and HASH_PATH_SUFFIX with unique values.
 
-         .. warning::
+        .. warning::
 
-            Keep these values secret and do not change or lose them.
+           Keep these values secret and do not change or lose them.
 
-      b. In the ``[storage-policy:0]`` section, configure the default
-         storage policy:
+      * In the ``[storage-policy:0]`` section, configure the default
+        storage policy:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            [storage-policy:0]
-            ...
-            name = Policy-0
-            default = yes
+           [storage-policy:0]
+           ...
+           name = Policy-0
+           default = yes
 
    #. Copy the ``swift.conf`` file to the ``/etc/swift`` directory on
       each storage node and any additional nodes running the proxy service.
@@ -50,31 +50,31 @@ Finalize installation
    #. Edit the ``/etc/swift/swift.conf`` file and complete the following
       actions:
 
-      a. In the ``[swift-hash]`` section, configure the hash path prefix and
-         suffix for your environment.
+      * In the ``[swift-hash]`` section, configure the hash path prefix and
+        suffix for your environment.
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            [swift-hash]
-            ...
-            swift_hash_path_suffix = HASH_PATH_PREFIX
-            swift_hash_path_prefix = HASH_PATH_SUFFIX
+           [swift-hash]
+           ...
+           swift_hash_path_suffix = HASH_PATH_PREFIX
+           swift_hash_path_prefix = HASH_PATH_SUFFIX
 
-         Replace HASH_PATH_PREFIX and HASH_PATH_SUFFIX with unique values.
+        Replace HASH_PATH_PREFIX and HASH_PATH_SUFFIX with unique values.
 
-         .. warning::
+        .. warning::
 
-            Keep these values secret and do not change or lose them.
+           Keep these values secret and do not change or lose them.
 
-      b. In the ``[storage-policy:0]`` section, configure the default
-         storage policy:
+      * In the ``[storage-policy:0]`` section, configure the default
+        storage policy:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            [storage-policy:0]
-            ...
-            name = Policy-0
-            default = yes
+           [storage-policy:0]
+           ...
+           name = Policy-0
+           default = yes
 
    #. Copy the ``swift.conf`` file to the ``/etc/swift`` directory on
       each storage node and any additional nodes running the proxy service.

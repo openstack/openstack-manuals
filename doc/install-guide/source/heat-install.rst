@@ -254,7 +254,7 @@ To install and configure the Orchestration components
 
 .. only:: obs
 
-   1. Run the following commands to install the packages:
+   #. Run the following commands to install the packages:
 
       .. code-block:: console
 
@@ -263,7 +263,7 @@ To install and configure the Orchestration components
 
 .. only:: rdo
 
-   1. Run the following commands to install the packages:
+   #. Run the following commands to install the packages:
 
       .. code-block:: console
 
@@ -272,7 +272,7 @@ To install and configure the Orchestration components
 
 .. only:: ubuntu
 
-   1. Run the following commands to install the packages:
+   #. Run the following commands to install the packages:
 
       .. code-block:: console
 
@@ -414,19 +414,19 @@ To install and configure the Orchestration components
 
 .. only:: debian
 
-   1. Run the following commands to install the packages:
+   #. Run the following commands to install the packages:
 
       .. code-block:: console
 
          # apt-get install heat-api heat-api-cfn heat-engine python-heat-client
 
-   2. Respond to prompts for
+   #. Respond to prompts for
       :doc:`database management <debconf/debconf-dbconfig-common>`,
       :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
       :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
       and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
 
-   3. Edit the ``/etc/heat/heat.conf`` file and complete the following
+   #. Edit the ``/etc/heat/heat.conf`` file and complete the following
       actions:
 
       * In the ``[ec2authtoken]`` section, configure Identity service access:
@@ -442,7 +442,7 @@ To finalize installation
 
 .. only:: obs or rdo
 
-   1. Start the Orchestration services and configure them to start
+   #. Start the Orchestration services and configure them to start
       when the system boots:
 
       .. code-block:: console
@@ -454,7 +454,7 @@ To finalize installation
 
 .. only:: ubuntu or debian
 
-   1. Restart the Orchestration services:
+   #. Restart the Orchestration services:
 
       .. code-block:: console
 

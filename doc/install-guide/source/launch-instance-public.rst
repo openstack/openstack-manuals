@@ -172,35 +172,35 @@ Access the instance using the virtual console
    After logging into CirrOS, we recommend that you verify network
    connectivity using ``ping``.
 
-   #. Verify access to the public provider network gateway:
+#. Verify access to the public provider network gateway:
 
-      .. code-block:: console
+   .. code-block:: console
 
-         $ ping -c 4 203.0.113.1
-         PING 203.0.113.1 (203.0.113.1) 56(84) bytes of data.
-         64 bytes from 203.0.113.1: icmp_req=1 ttl=64 time=0.357 ms
-         64 bytes from 203.0.113.1: icmp_req=2 ttl=64 time=0.473 ms
-         64 bytes from 203.0.113.1: icmp_req=3 ttl=64 time=0.504 ms
-         64 bytes from 203.0.113.1: icmp_req=4 ttl=64 time=0.470 ms
+      $ ping -c 4 203.0.113.1
+      PING 203.0.113.1 (203.0.113.1) 56(84) bytes of data.
+      64 bytes from 203.0.113.1: icmp_req=1 ttl=64 time=0.357 ms
+      64 bytes from 203.0.113.1: icmp_req=2 ttl=64 time=0.473 ms
+      64 bytes from 203.0.113.1: icmp_req=3 ttl=64 time=0.504 ms
+      64 bytes from 203.0.113.1: icmp_req=4 ttl=64 time=0.470 ms
 
-         --- 203.0.113.1 ping statistics ---
-         4 packets transmitted, 4 received, 0% packet loss, time 2998ms
-         rtt min/avg/max/mdev = 0.357/0.451/0.504/0.055 ms
+      --- 203.0.113.1 ping statistics ---
+      4 packets transmitted, 4 received, 0% packet loss, time 2998ms
+      rtt min/avg/max/mdev = 0.357/0.451/0.504/0.055 ms
 
-   #. Verify access to the internet:
+#. Verify access to the internet:
 
-      .. code-block:: console
+   .. code-block:: console
 
-         $ ping -c 4 openstack.org
-         PING openstack.org (174.143.194.225) 56(84) bytes of data.
-         64 bytes from 174.143.194.225: icmp_req=1 ttl=53 time=17.4 ms
-         64 bytes from 174.143.194.225: icmp_req=2 ttl=53 time=17.5 ms
-         64 bytes from 174.143.194.225: icmp_req=3 ttl=53 time=17.7 ms
-         64 bytes from 174.143.194.225: icmp_req=4 ttl=53 time=17.5 ms
+      $ ping -c 4 openstack.org
+      PING openstack.org (174.143.194.225) 56(84) bytes of data.
+      64 bytes from 174.143.194.225: icmp_req=1 ttl=53 time=17.4 ms
+      64 bytes from 174.143.194.225: icmp_req=2 ttl=53 time=17.5 ms
+      64 bytes from 174.143.194.225: icmp_req=3 ttl=53 time=17.7 ms
+      64 bytes from 174.143.194.225: icmp_req=4 ttl=53 time=17.5 ms
 
-         --- openstack.org ping statistics ---
-         4 packets transmitted, 4 received, 0% packet loss, time 3003ms
-         rtt min/avg/max/mdev = 17.431/17.575/17.734/0.143 ms
+      --- openstack.org ping statistics ---
+      4 packets transmitted, 4 received, 0% packet loss, time 3003ms
+      rtt min/avg/max/mdev = 17.431/17.575/17.734/0.143 ms
 
 Access the instance remotely
 ----------------------------

@@ -10,7 +10,7 @@ To install and configure the agent
 
 .. only:: obs
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -18,7 +18,7 @@ To install and configure the agent
 
 .. only:: rdo
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -26,7 +26,7 @@ To install and configure the agent
 
 .. only:: ubuntu
 
-   1. Install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -35,82 +35,82 @@ To install and configure the agent
 2. Edit the ``/etc/ceilometer/ceilometer.conf`` file and
    complete the following actions:
 
-   a. In the ``[publisher]`` section, configure the telemetry secret:
+   * In the ``[publisher]`` section, configure the telemetry secret:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
          [publisher]
          ...
          telemetry_secret = TELEMETRY_SECRET
 
-      Replace ``TELEMETRY_SECRET`` with the telemetry secret you
-      chose for the Telemetry module.
+     Replace ``TELEMETRY_SECRET`` with the telemetry secret you
+     chose for the Telemetry module.
 
-   b. In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-      configure ``RabbitMQ`` message queue access:
+   * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
+     configure ``RabbitMQ`` message queue access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         rpc_backend = rabbit
+        [DEFAULT]
+        ...
+        rpc_backend = rabbit
 
-         [oslo_messaging_rabbit]
-         ...
-         rabbit_host = controller
-         rabbit_userid = openstack
-         rabbit_password = RABBIT_PASS
+        [oslo_messaging_rabbit]
+        ...
+        rabbit_host = controller
+        rabbit_userid = openstack
+        rabbit_password = RABBIT_PASS
 
-      Replace ``RABBIT_PASS`` with the password you chose for the
-      ``openstack`` account in ``RabbitMQ``.
+     Replace ``RABBIT_PASS`` with the password you chose for the
+     ``openstack`` account in ``RabbitMQ``.
 
-   c. In the ``[keystone_authtoken]`` section,
-      configure Identity service access:
+   * In the ``[keystone_authtoken]`` section,
+     configure Identity service access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [keystone_authtoken]
-         ...
-         auth_uri = http://controller:5000/v2.0
-         identity_uri = http://controller:35357
-         admin_tenant_name = service
-         admin_user = ceilometer
-         admin_password = CEILOMETER_PASS
+        [keystone_authtoken]
+        ...
+        auth_uri = http://controller:5000/v2.0
+        identity_uri = http://controller:35357
+        admin_tenant_name = service
+        admin_user = ceilometer
+        admin_password = CEILOMETER_PASS
 
-      Replace ``CEILOMETER_PASS`` with the password you chose for the
-      Telemetry module database.
+     Replace ``CEILOMETER_PASS`` with the password you chose for the
+     Telemetry module database.
 
-      .. note::
+     .. note::
 
-         Comment out any ``auth_host``, ``auth_port``, and
-         ``auth_protocol`` options because the ``identity_uri``
-         option replaces them.
+        Comment out any ``auth_host``, ``auth_port``, and
+        ``auth_protocol`` options because the ``identity_uri``
+        option replaces them.
 
-   d. In the ``[service_credentials]`` section, configure service
-      credentials:
+   * In the ``[service_credentials]`` section, configure service
+     credentials:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [service_credentials]
-         ...
-         os_auth_url = http://controller:5000/v2.0
-         os_username = ceilometer
-         os_tenant_name = service
-         os_password = CEILOMETER_PASS
-         os_endpoint_type = internalURL
-         os_region_name = RegionOne
+        [service_credentials]
+        ...
+        os_auth_url = http://controller:5000/v2.0
+        os_username = ceilometer
+        os_tenant_name = service
+        os_password = CEILOMETER_PASS
+        os_endpoint_type = internalURL
+        os_region_name = RegionOne
 
-      Replace ``CEILOMETER_PASS`` with the password you chose for
-      the ``ceilometer`` user in the Identity service.
+     Replace ``CEILOMETER_PASS`` with the password you chose for
+     the ``ceilometer`` user in the Identity service.
 
-   e. (Optional) To assist with troubleshooting, enable verbose
-      logging in the ``[DEFAULT]`` section:
+   * (Optional) To assist with troubleshooting, enable verbose
+     logging in the ``[DEFAULT]`` section:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [DEFAULT]
-         ...
-         verbose = True
+        [DEFAULT]
+        ...
+        verbose = True
 
 To configure notifications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,7 +165,7 @@ To finalize installation
 
 .. only:: obs
 
-   1. Start the Telemetry agent and configure it to start when the
+   #. Start the Telemetry agent and configure it to start when the
       system boots:
 
       .. code-block:: console
@@ -175,7 +175,7 @@ To finalize installation
 
 .. only:: rdo
 
-   1. Start the Telemetry agent and configure it to start when the
+   #. Start the Telemetry agent and configure it to start when the
       system boots:
 
       .. code-block:: console
@@ -193,13 +193,13 @@ To finalize installation
 
 .. only:: ubuntu
 
-   1. Restart the agent:
+   #. Restart the agent:
 
       .. code-block:: console
 
          # service ceilometer-agent-compute restart
 
-   2. Restart the Compute service:
+   #. Restart the Compute service:
 
       .. code-block:: console
 

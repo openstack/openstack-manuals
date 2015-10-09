@@ -6,7 +6,7 @@ services.
 
 .. only:: obs or ubuntu
 
-   1. For security reasons, disable the temporary authentication
+   #. For security reasons, disable the temporary authentication
       token mechanism:
 
       Edit the ``/etc/keystone/keystone-paste.ini``
@@ -16,7 +16,7 @@ services.
 
 .. only:: rdo
 
-   1. For security reasons, disable the temporary authentication
+   #. For security reasons, disable the temporary authentication
       token mechanism:
 
       Edit the ``/usr/share/keystone/keystone-dist-paste.ini``

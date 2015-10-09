@@ -255,7 +255,7 @@ services also support other SQL databases including
 Install and configure the database server
 -----------------------------------------
 
-1. Install the packages:
+#. Install the packages:
 
    .. only:: rdo or ubuntu or obs
 
@@ -353,7 +353,7 @@ To finalize installation
 
 .. only:: ubuntu or debian
 
-   1. Restart the database service:
+   #. Restart the database service:
 
       .. code-block:: console
 
@@ -361,7 +361,7 @@ To finalize installation
 
 .. only:: rdo or obs
 
-   1. Start the database service and configure it to start when the system
+   #. Start the database service and configure it to start when the system
       boots:
 
       .. only:: rdo

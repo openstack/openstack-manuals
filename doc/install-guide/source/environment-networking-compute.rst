@@ -25,39 +25,39 @@ Configure network interfaces
 
    .. only:: ubuntu or debian
 
-      a. Edit the ``/etc/network/interfaces`` file to contain the following:
+      * Edit the ``/etc/network/interfaces`` file to contain the following:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            # The public network interface
-            auto INTERFACE_NAME
-            iface  INTERFACE_NAME inet manual
-            up ip link set dev $IFACE up
-            down ip link set dev $IFACE down
+           # The public network interface
+           auto INTERFACE_NAME
+           iface  INTERFACE_NAME inet manual
+           up ip link set dev $IFACE up
+           down ip link set dev $IFACE down
 
    .. only:: rdo
 
-      a. Edit the ``/etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME`` file
-         to contain the following:
+      * Edit the ``/etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME`` file
+        to contain the following:
 
-         Do not change the ``HWADDR`` and ``UUID`` keys.
+        Do not change the ``HWADDR`` and ``UUID`` keys.
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            DEVICE=INTERFACE_NAME
-            TYPE=Ethernet
-            ONBOOT="yes"
-            BOOTPROTO="none"
+           DEVICE=INTERFACE_NAME
+           TYPE=Ethernet
+           ONBOOT="yes"
+           BOOTPROTO="none"
 
    .. only:: obs
 
-      a. Edit the ``/etc/sysconfig/network/ifcfg-INTERFACE_NAME`` file to
-         contain the following:
+      * Edit the ``/etc/sysconfig/network/ifcfg-INTERFACE_NAME`` file to
+        contain the following:
 
-         .. code-block:: ini
+        .. code-block:: ini
 
-            STARTMODE='auto'
-            BOOTPROTO='static'
+           STARTMODE='auto'
+           BOOTPROTO='static'
 
 #. Reboot the system to activate the changes.
 
