@@ -177,34 +177,34 @@ the volume to boot an instance.
 
    The parameters are:
 
-   -  ``--flavor`` FLAVOR. The flavor ID or name.
+   - ``--flavor`` FLAVOR. The flavor ID or name.
 
-   -  ``--block-device``
-      source=SOURCE,id=ID,dest=DEST,size=SIZE,shutdown=PRESERVE,bootindex=INDEX
+   - ``--block-device``
+     source=SOURCE,id=ID,dest=DEST,size=SIZE,shutdown=PRESERVE,bootindex=INDEX
 
-         **source=SOURCE**
-             The type of object used to create the block device. Valid values
-             are ``volume``, ``snapshot``, ``image``, and ``blank``.
+     **source=SOURCE**
+       The type of object used to create the block device. Valid values
+       are ``volume``, ``snapshot``, ``image``, and ``blank``.
 
-         **id=ID**
-             The ID of the source object.
+     **id=ID**
+       The ID of the source object.
 
-         **dest=DEST**
-             The type of the target virtual device. Valid values are ``volume``
-             and ``local``.
+     **dest=DEST**
+       The type of the target virtual device. Valid values are ``volume``
+       and ``local``.
 
-         **size=SIZE**
-             The size of the volume that is created.
+     **size=SIZE**
+       The size of the volume that is created.
 
-         **shutdown={preserve\|remove}**
-             What to do with the volume when the instance is deleted.
-             ``preserve`` does not delete the volume. ``remove`` deletes the
-             volume.
+     **shutdown={preserve\|remove}**
+       What to do with the volume when the instance is deleted.
+       ``preserve`` does not delete the volume. ``remove`` deletes the
+       volume.
 
-         **bootindex=INDEX**
-             Orders the boot disks. Use ``0`` to boot from this volume.
+     **bootindex=INDEX**
+       Orders the boot disks. Use ``0`` to boot from this volume.
 
-   -  ``NAME``. The name for the server.
+   - ``NAME``. The name for the server.
 
 #. Create a bootable volume from an image, before the instance boots. The
    volume is not deleted when the instance is terminated::
