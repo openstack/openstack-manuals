@@ -166,7 +166,7 @@ Create the service entity and API endpoints
       | service_id   | 34ab3d27262ac449cba6cfe704dbc11f |
       | service_name | keystone                         |
       | service_type | identity                         |
-      | url          | http://controller:5000/v2.0      |
+      | url          | http://controller:35357/v2.0     |
       +--------------+----------------------------------+
 
    .. note::
