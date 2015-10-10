@@ -39,8 +39,3 @@ When installing OpenStack Identity service, you must register each
 service in your OpenStack installation. Identity service can then track
 which OpenStack services are installed, and where they are located on
 the network.
-
-The following diagram shows the OpenStack Identity process flow:
-
-.. image:: figures/SCH_5002_V00_NUAC-Keystone.png
-   :alt: OpenStack Identity process flow
