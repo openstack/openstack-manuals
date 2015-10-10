@@ -31,8 +31,6 @@ For applications, `several SDKs <http://developer.openstack.org/#sdk>`__
 are available. Ultimately, all these access methods issue REST API calls
 to the various OpenStack services.
 
-.. TODO (DC) on line 30, Add link to get_started_openstack_dashboard.RST
-
 The following diagram shows the most common, but not the only possible,
 architecture for an OpenStack cloud:
 

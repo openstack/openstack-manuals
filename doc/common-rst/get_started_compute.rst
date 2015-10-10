@@ -30,8 +30,6 @@ OpenStack Compute consists of the following areas and their components:
   service <http://docs.openstack.org/admin-guide-cloud/compute-networking-nova.html#metadata-service>`__
   in the OpenStack Cloud Administrator Guide.
 
-.. TODO Fix the link above when the file is converted.
-
   On Debian systems, it is included in the nova-api package, and can
   be selected through debconf.
 
