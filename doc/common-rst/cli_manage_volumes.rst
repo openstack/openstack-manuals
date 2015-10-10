@@ -18,12 +18,12 @@ workloads. You can migrate only detached volumes with no snapshots.
 
 Possible use cases for data migration include:
 
--  Bring down a physical storage device for maintenance without
+*  Bring down a physical storage device for maintenance without
    disrupting workloads.
 
--  Modify the properties of a volume.
+*  Modify the properties of a volume.
 
--  Free up space in a thinly-provisioned back end.
+*  Free up space in a thinly-provisioned back end.
 
 Migrate a volume with the :command:`cinder migrate` command, as shown in the
 following example:
@@ -276,10 +276,10 @@ owner, accepts the transfer by using the ID and key.
 
 Use cases include:
 
--  Create a custom bootable volume or a volume with a large data set and
+*  Create a custom bootable volume or a volume with a large data set and
    transfer it to a customer.
 
--  For bulk import of data to the cloud, the data ingress system creates
+*  For bulk import of data to the cloud, the data ingress system creates
    a new Block Storage volume, copies data from the physical device, and
    transfers device ownership to the end user.
 

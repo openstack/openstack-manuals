@@ -93,9 +93,9 @@ list, as follows:
 
    To store location metadata for images, which enables direct file access for a client, update the ``/etc/glance/glance-api.conf`` file with the following statements:
 
-   -  ``show_multiple_locations = True``
+   *  ``show_multiple_locations = True``
 
-   -  ``filesystem_store_metadata_file = filePath``, where filePath points to a JSON file that defines the mount point for OpenStack images on your system and a unique ID. For example:
+   *  ``filesystem_store_metadata_file = filePath``, where filePath points to a JSON file that defines the mount point for OpenStack images on your system and a unique ID. For example:
 
    .. code-block:: json
 
@@ -240,15 +240,15 @@ in the following tables.
 +-------------------------+--------------------------+
 | libvirt\_type setting   | Supported model values   |
 +=========================+==========================+
-| qemu or kvm             | -  ide                   |
+| qemu or kvm             | *  ide                   |
 |                         |                          |
-|                         | -  scsi                  |
+|                         | *  scsi                  |
 |                         |                          |
-|                         | -  virtio                |
+|                         | *  virtio                |
 +-------------------------+--------------------------+
-| xen                     | -  ide                   |
+| xen                     | *  ide                   |
 |                         |                          |
-|                         | -  xen                   |
+|                         | *  xen                   |
 +-------------------------+--------------------------+
 
 
@@ -259,31 +259,31 @@ in the following tables.
 +-------------------------+--------------------------+
 | libvirt\_type setting   | Supported model values   |
 +=========================+==========================+
-| qemu or kvm             | -  e1000                 |
+| qemu or kvm             | *  e1000                 |
 |                         |                          |
-|                         | -  ne2k\_pci             |
+|                         | *  ne2k\_pci             |
 |                         |                          |
-|                         | -  pcnet                 |
+|                         | *  pcnet                 |
 |                         |                          |
-|                         | -  rtl8139               |
+|                         | *  rtl8139               |
 |                         |                          |
-|                         | -  virtio                |
+|                         | *  virtio                |
 +-------------------------+--------------------------+
-| xen                     | -  e1000                 |
+| xen                     | *  e1000                 |
 |                         |                          |
-|                         | -  netfront              |
+|                         | *  netfront              |
 |                         |                          |
-|                         | -  ne2k\_pci             |
+|                         | *  ne2k\_pci             |
 |                         |                          |
-|                         | -  pcnet                 |
+|                         | *  pcnet                 |
 |                         |                          |
-|                         | -  rtl8139               |
+|                         | *  rtl8139               |
 +-------------------------+--------------------------+
-| vmware                  | -  VirtualE1000          |
+| vmware                  | *  VirtualE1000          |
 |                         |                          |
-|                         | -  VirtualPCNet32        |
+|                         | *  VirtualPCNet32        |
 |                         |                          |
-|                         | -  VirtualVmxnet         |
+|                         | *  VirtualVmxnet         |
 +-------------------------+--------------------------+
 
 Troubleshoot image creation
@@ -293,9 +293,9 @@ If you encounter problems in creating an image in Image service or
 Compute, the following information may help you troubleshoot the
 creation process.
 
--  Ensure that the version of qemu you are using is version 0.14 or
+*  Ensure that the version of qemu you are using is version 0.14 or
    later. Earlier versions of qemu result in an ``unknown option -s``
    error message in the ``nova-compute.log`` file.
 
--  Examine the ``/var/log/nova-api.log`` and
+*  Examine the ``/var/log/nova-api.log`` and
    ``/var/log/nova-compute.log`` log files for error messages.
