@@ -55,7 +55,7 @@ command-line clients, and provides installation instructions as needed.
 |                       |                                                     |
 |                       | **MacOS**                                           |
 |                       |                                                     |
-|                       | .. code::                                           |
+|                       | .. code-block:: console                             |
 |                       |                                                     |
 |                       |   # easy_install pip                                |
 |                       |                                                     |
@@ -66,7 +66,7 @@ command-line clients, and provides installation instructions as needed.
 |                       | use the ``easy_install`` command from the setuptools|
 |                       | package:                                            |
 |                       |                                                     |
-|                       | .. code::                                           |
+|                       | .. code-block:: console                             |
 |                       |                                                     |
 |                       |     C:\>easy_install pip                            |
 |                       |                                                     |
@@ -76,7 +76,7 @@ command-line clients, and provides installation instructions as needed.
 |                       |                                                     |
 |                       | **Ubuntu and Debian**                               |
 |                       |                                                     |
-|                       | .. code::                                           |
+|                       | .. code-block:: console                             |
 |                       |                                                     |
 |                       |     # apt-get install python-dev python-pip         |
 |                       |                                                     |
@@ -89,7 +89,7 @@ command-line clients, and provides installation instructions as needed.
 |                       | A packaged version enables you to use yum to install|
 |                       | the package:                                        |
 |                       |                                                     |
-|                       | .. code::                                           |
+|                       | .. code-block:: console                             |
 |                       |                                                     |
 |                       |     # yum install python-devel python-pip           |
 |                       |                                                     |
@@ -108,7 +108,7 @@ command-line clients, and provides installation instructions as needed.
 |                       | enables you to use or zypper to install the package.|
 |                       | First, add the Open Build Service repository:       |
 |                       |                                                     |
-|                       | .. code::                                           |
+|                       | .. code-block:: console                             |
 |                       |                                                     |
 |                       |     # zypper addrepo -f obs://Cloud:OpenStack: \    |
 |                       |     Kilo/SLE_12 Kilo                                |
@@ -116,7 +116,7 @@ command-line clients, and provides installation instructions as needed.
 |                       | Then install pip and use it to manage client        |
 |                       | installation:                                       |
 |                       |                                                     |
-|                       | .. code::                                           |
+|                       | .. code-block:: console                             |
 |                       |                                                     |
 |                       |     # zypper install python-devel python-pip        |
 |                       |                                                     |
@@ -129,7 +129,7 @@ command-line clients, and provides installation instructions as needed.
 |                       | You can install pip and use it to manage client     |
 |                       | installation:                                       |
 |                       |                                                     |
-|                       | .. code::                                           |
+|                       | .. code-block:: console                             |
 |                       |                                                     |
 |                       |     # zypper install python-devel python-pip        |
 |                       |                                                     |
@@ -185,7 +185,7 @@ Common OpenStack client supporting multiple services:
 The following example shows the command for installing the nova client
 with ``pip``.
 
-.. code::
+.. code-block:: console
 
   # pip install python-novaclient
 
@@ -200,13 +200,17 @@ or remove a package.
 
 Install each client separately by using the following command:
 
--  For Mac OS X or Linux::
+-  For Mac OS X or Linux:
 
-     # pip install python-PROJECTclient
+   .. code-block:: console
 
--  For Microsoft Windows::
+      # pip install python-PROJECTclient
 
-     C:\>pip install python-PROJECTclient
+-  For Microsoft Windows:
+
+   .. code-block:: console
+
+      C:\>pip install python-PROJECTclient
 
 .. _Installing_from_packages:
 
@@ -218,41 +222,55 @@ that can be installed without ``pip``.
 
 -  On Red Hat Enterprise Linux, CentOS, or Fedora, use ``yum`` to install
    the clients from the packaged versions available in
-   `RDO <https://www.rdoproject.org/>`__::
+   `RDO <https://www.rdoproject.org/>`__:
 
-     # yum install python-PROJECTclient
+   .. code-block:: console
+
+      # yum install python-PROJECTclient
 
 - For Ubuntu or Debian, use ``apt-get`` to install the clients from the
-  packaged versions::
+  packaged versions:
+
+  .. code-block:: console
 
      # apt-get install python-PROJECTclient
 
 -  For openSUSE, use ``zypper`` to install the clients from the distribution
-   packages service::
+   packages service:
 
-     # zypper install python-PROJECTclient
+   .. code-block:: console
+
+      # zypper install python-PROJECTclient
 
 -  For SUSE Linux Enterprise Server, use ``zypper`` to install the clients from
    the distribution packages in the Open Build Service. First, add the Open
-   Build Service repository::
+   Build Service repository:
 
-     # zypper addrepo -f obs://Cloud:OpenStack:Kilo/SLE_12 Kilo
+   .. code-block:: console
 
-   Then you can install the packages::
+      # zypper addrepo -f obs://Cloud:OpenStack:Kilo/SLE_12 Kilo
 
-     # zypper install python-PROJECTclient
+   Then you can install the packages:
+
+   .. code-block:: console
+
+      # zypper install python-PROJECTclient
 
 Upgrade or remove clients
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To upgrade a client, add the ``--upgrade`` option to the ``pip install``
-command::
+command:
 
-  # pip install --upgrade python-PROJECTclient
+.. code-block:: console
 
-To remove the client, run the ``pip uninstall`` command::
+   # pip install --upgrade python-PROJECTclient
 
-  # pip uninstall python-PROJECTclient
+To remove the client, run the ``pip uninstall`` command:
+
+.. code-block:: console
+
+   # pip uninstall python-PROJECTclient
 
 What's next
 ~~~~~~~~~~~

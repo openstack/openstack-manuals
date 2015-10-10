@@ -42,9 +42,11 @@ On any shell from which you want to run OpenStack commands, source the
 ``PROJECT-openrc.sh`` file for the respective project.
 
 In the following example, the ``demo-openrc.sh`` file is sourced for
-the demo project::
+the demo project:
 
-  $ source demo-openrc.sh
+.. code-block:: console
+
+   $ source demo-openrc.sh
 
 When you are prompted for an OpenStack password, enter the password for
 the user who downloaded the ``PROJECT-openrc.sh`` file.
@@ -56,23 +58,27 @@ Alternatively, you can create the ``PROJECT-openrc.sh`` file from
 scratch, if you cannot download the file from the dashboard.
 
 In a text editor, create a file named ``PROJECT-openrc.sh`` and add
-the following authentication information::
+the following authentication information:
 
-  export OS_USERNAME=username
-  export OS_PASSWORD=password
-  export OS_TENANT_NAME=projectName
-  export OS_AUTH_URL=https://identityHost:portNumber/v2.0
-  # The following lines can be omitted
-  export OS_TENANT_ID=tenantIDString
-  export OS_REGION_NAME=regionName
-  export OS_CACERT=/path/to/cacertFile
+.. code-block:: shell
+
+   export OS_USERNAME=username
+   export OS_PASSWORD=password
+   export OS_TENANT_NAME=projectName
+   export OS_AUTH_URL=https://identityHost:portNumber/v2.0
+   # The following lines can be omitted
+   export OS_TENANT_ID=tenantIDString
+   export OS_REGION_NAME=regionName
+   export OS_CACERT=/path/to/cacertFile
 
 On any shell from which you want to run OpenStack commands, source the
 ``PROJECT-openrc.sh`` file for the respective project. In this
 example, you source the ``admin-openrc.sh`` file for the admin
-project::
+project:
 
-  $ source admin-openrc.sh
+.. code-block:: console
+
+   $ source admin-openrc.sh
 
 .. note::
 
@@ -99,9 +105,11 @@ environment variable settings by using the options that are listed at
 the end of the ``help`` output of the various client commands. For
 example, you can override the ``OS_PASSWORD`` setting in the
 ``PROJECT-openrc.sh`` file by specifying a password on a
-:command:`openstack` command, as follows::
+:command:`openstack` command, as follows:
 
-  $ openstack --os-password PASSWORD service list
+.. code-block:: console
+
+   $ openstack --os-password PASSWORD service list
 
 Where ``PASSWORD`` is your password.
 

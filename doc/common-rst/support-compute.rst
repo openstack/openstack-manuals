@@ -53,9 +53,11 @@ including a complete report of the service's current state, and is sent to
 
 For example, if you redirect error output to ``nova-api-err.log``
 using :command:`nova-api 2>/var/log/nova/nova-api-err.log`,
-resulting in the process ID 8675, you can then run::
+resulting in the process ID 8675, you can then run:
 
-  # kill -USR1 8675
+.. code-block:: console
+
+   # kill -USR1 8675
 
 This command triggers the Guru Meditation report to be printed to
 ``/var/log/nova/nova-api-err.log``.
@@ -142,9 +144,11 @@ Next, check the log file for the instance in the ``/var/log/libvirt/qemu``
 directory to see if it exists and has any useful error messages in it.
 
 Finally, from the ``/var/lib/nova/instances`` directory for the instance,
-see if this command returns an error::
+see if this command returns an error:
 
-  # virsh create libvirt.xml
+.. code-block:: console
+
+   # virsh create libvirt.xml
 
 **Empty log output for Linux instances**
 
@@ -158,9 +162,11 @@ This occurs when the Compute service attempts to retrieve the log output
 of the instance via a serial console while the instance itself is not
 configured to send output to the console. To rectify this, append the
 following parameters to kernel arguments specified in the instance's boot
-loader::
+loader:
 
-  console=tty0 console=ttyS0,115200n8
+.. code-block:: ini
+
+   console=tty0 console=ttyS0,115200n8
 
 Upon rebooting, the instance will be configured to send output to the Compute
 service.
@@ -173,15 +179,20 @@ Reset the state of an instance
 
 If an instance remains in an intermediate state, such as ``deleting``, you
 can use the :command:`nova reset-state` command to manually reset the state
-of an instance to an error state. You can then delete the instance. For example::
+of an instance to an error state. You can then delete the instance. For
+example:
 
-  $ nova reset-state c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
-  $ nova delete c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
+.. code-block:: console
+
+   $ nova reset-state c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
+   $ nova delete c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
 
 You can also use the :option:`--active` parameter to force the instance back
-to an active state instead of an error state. For example::
+to an active state instead of an error state. For example:
 
-  $ nova reset-state --active c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
+.. code-block:: console
+
+   $ nova reset-state --active c6bbbf26-b40a-47e7-8d5c-eb17bf65c485
 
 
 .. _problems-with-injection:
@@ -194,7 +205,6 @@ If instances do not boot or boot slowly, investigate file injection as a cause.
 To disable injection in libvirt, set the following in ``nova.conf``:
 
 .. code-block:: ini
-   :linenos:
 
    [libvirt]
    inject_partition = -2
@@ -222,7 +232,6 @@ You can turn off the live snapshotting mechanism by setting up its value to
 ``True`` in the ``[workarounds]`` section of the ``nova.conf`` file:
 
 .. code-block:: ini
-   :linenos:
 
    [workarounds]
    disable_libvirt_livesnapshot = True

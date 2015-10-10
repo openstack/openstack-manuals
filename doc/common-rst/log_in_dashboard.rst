@@ -20,11 +20,7 @@ server role.
       support <https://github.com/kanaka/noVNC/wiki/Browser-support>`__.
 
 #. In the address bar, enter the host name or IP address for the
-   dashboard.
-
-   .. code::
-
-       https://ipAddressOrHostName/
+   dashboard, for example ``https://ipAddressOrHostName/``.
 
    .. note::
 

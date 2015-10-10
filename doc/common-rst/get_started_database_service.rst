@@ -35,7 +35,9 @@ This example is a high-level process flow for using Database services:
       followed by the :command:`trove show` command to get the IP address of
       it.
    #. Access the Database service instance using typical database access
-      commands. For example, with MySQL::
+      commands. For example, with MySQL:
+
+      .. code-block:: console
 
          $ mysql -u myuser -p -h TROVE_IP_ADDRESS mydb
 
