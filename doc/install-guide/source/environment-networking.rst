@@ -59,7 +59,7 @@ using :term:`NAT`.
 
 The example architectures assume use of the following networks:
 
-- Management on 10.0.0.0/24 with gateway 10.0.0.1
+* Management on 10.0.0.0/24 with gateway 10.0.0.1
 
   .. note::
 
@@ -67,7 +67,7 @@ The example architectures assume use of the following networks:
      nodes for administrative purposes such as package installation,
      security updates, :term:`DNS`, and :term:`NTP`.
 
-- Public on 203.0.113.0/24 with gateway 203.0.113.1
+* Public on 203.0.113.0/24 with gateway 203.0.113.1
 
   .. note::
 
