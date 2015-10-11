@@ -63,7 +63,7 @@ Flat DHCP Network Manager
     bridge into an Ethernet device (``flat_interface``, eth0 by
     default). For every instance, Compute allocates a fixed IP address
     and configures dnsmasq with the MAC ID and IP address for the VM.
-    dnsmasq does not take part in the IP address allocation process, it
+    Dnsmasq does not take part in the IP address allocation process, it
     only hands out IPs according to the mapping done by Compute.
     Instances receive their fixed IPs with the :command:`dhcpdiscover` command.
     These IPs are not assigned to any of the host's network interfaces,
@@ -199,7 +199,7 @@ Reference <http://docs.openstack.org/kilo/config-reference/content/>`__,
 and `the dnsmasq
 documentation <http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq.conf.example>`__.
 
-dnsmasq also acts as a caching DNS server for instances. You can specify
+Dnsmasq also acts as a caching DNS server for instances. You can specify
 the DNS server that dnsmasq uses by setting the ``dns_server``
 configuration option in :file:`/etc/nova/nova.conf`. This example configures
 dnsmasq to use Google's public DNS server:
@@ -208,7 +208,7 @@ dnsmasq to use Google's public DNS server:
 
     dns_server=8.8.8.8
 
-dnsmasq logs to syslog (typically :file:`/var/log/syslog` or
+Dnsmasq logs to syslog (typically :file:`/var/log/syslog` or
 :file:`/var/log/messages`, depending on Linux distribution). Logs can be
 useful for troubleshooting, especially in a situation where VM instances
 boot successfully but are not reachable over the network.
@@ -230,7 +230,7 @@ Configure Compute to use IPv6 addresses
 If you are using OpenStack Compute with ``nova-network``, you can put
 Compute into dual-stack mode, so that it uses both IPv4 and IPv6
 addresses for communication. In dual-stack mode, instances can acquire
-their IPv6 global unicast address by using a stateless address
+their IPv6 global unicast addresses by using a stateless address
 auto-configuration mechanism [RFC 4862/2462]. IPv4/IPv6 dual-stack mode
 works with both ``VlanManager`` and ``FlatDHCPManager`` networking
 modes.
@@ -296,7 +296,7 @@ command:
 
 - When you use ``VlanManager``, the command increments the subnet ID
   to create subnet prefixes. Guest VMs use this prefix to generate
-  their IPv6 global unicast address. For example:
+  their IPv6 global unicast addresses. For example:
 
   .. code:: console
 
@@ -476,7 +476,7 @@ instance-specific metadata. If you are running the nova-api service, you
 must have ``metadata`` as one of the elements listed in the
 ``enabled_apis`` configuration option in :file:`/etc/nova/nova.conf`. The
 default ``enabled_apis`` configuration setting includes the metadata
-service, so you should not need to modify it.
+service, so you do not need to modify it.
 
 Hosts access the service at ``169.254.169.254:80``, and this is
 translated to ``metadata_host:metadata_port`` by an iptables rule

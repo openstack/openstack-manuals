@@ -67,11 +67,11 @@ images, as less data needs to be copied across the network.
 A new empty ephemeral disk is also created, labeled ``vdb`` in this
 diagram. This disk is destroyed when you delete the instance.
 
-The compute node connects to the attached ``cinder-volume`` using ISCSI. The
+The compute node connects to the attached ``cinder-volume`` using iSCSI. The
 ``cinder-volume`` is mapped to the third disk, labeled ``vdc`` in this
 diagram. After the compute node provisions the vCPU and memory
 resources, the instance boots up from root volume ``vda``. The instance
-runs, and changes data on the disks (highlighted in red on the diagram).
+runs and changes data on the disks (highlighted in red on the diagram).
 If the volume store is located on a separate network, the
 ``my_block_storage_ip`` option specified in the storage node
 configuration file directs image traffic to the compute node.

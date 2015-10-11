@@ -184,8 +184,8 @@ Bandwidth I/O
     burst at peak speed (kilobytes). The rate is shared equally within
     domains connected to the network.
 
-    Below example sets network traffic bandwidth limits for existing
-    flavor as follow:
+    The example below sets network traffic bandwidth limits for existing
+    flavor as follows:
 
     -  Outbound traffic:
 
