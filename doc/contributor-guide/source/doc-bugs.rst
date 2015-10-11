@@ -88,7 +88,7 @@ definitions for available options for Status and Importance columns of any bug.
   automatically. Do not set this manually.
 * **Fix Released** - A fix is published to the site.
 
-.. Note::
+.. note::
 
    Since all documentation is released directly on docs.openstack.org, the
    "Fix Committed" status is deprecated. If a patch contains the line

@@ -599,7 +599,7 @@ If you make changes to the ``/etc/nova/nova.conf`` file while the
 ``nova-network`` service is running, you will need to restart the service to
 pick up the changes.
 
-.. Note::
+.. note::
 
    Floating IPs are implemented by using a source NAT (SNAT rule in
    iptables), so security groups can sometimes display inconsistent
@@ -623,7 +623,7 @@ Enable IP forwarding
 IP forwarding is disabled by default on most Linux distributions. You
 will need to enable it in order to use floating IPs.
 
-.. Note::
+.. note::
 
    IP forwarding only needs to be enabled on the nodes that run
    ``nova-network``. However, you will need to enable it on all compute
