@@ -9,7 +9,6 @@ example, the :command:`user-list` and :command:`tenant-create`
 commands can be invoked as follows:
 
 .. code-block:: bash
-   :linenos:
 
     # Using token auth env variables
     export OS_SERVICE_ENDPOINT=http://127.0.0.1:5000/v2.0/

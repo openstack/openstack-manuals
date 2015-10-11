@@ -369,7 +369,6 @@ retrieve the metadata, make a GET request to
     $ curl http://169.254.169.254/openstack/2012-08-10/meta_data.json
 
 .. code-block:: json
-   :linenos:
 
    {
       "uuid": "d8e02d56-2648-49a3-bf97-6be8f1204f38",
@@ -817,7 +816,6 @@ image.
 Edit the :file:`/etc/network/interfaces` file:
 
 .. code-block:: bash
-   :linenos:
 
    # The loopback network interface
    auto lo

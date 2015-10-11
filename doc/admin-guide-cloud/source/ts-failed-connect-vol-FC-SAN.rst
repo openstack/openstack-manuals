@@ -1,6 +1,3 @@
-.. highlight:: console
-   :linenothreshold: 5
-
 ==================================
 Failed to connect volume in FC SAN
 ==================================

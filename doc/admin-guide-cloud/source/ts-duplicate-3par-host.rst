@@ -1,6 +1,3 @@
-.. highlight:: console
-   :linenothreshold: 5
-
 ===================
 Duplicate 3PAR host
 ===================

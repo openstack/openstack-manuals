@@ -1,6 +1,3 @@
-.. highlight: python
-   :linenothreshold: 5
-
 ===========================================
 Configure access and security for instances
 ===========================================
@@ -19,7 +16,6 @@ openstack.org/developer/python-novaclient/api/novaclient.v1_1.keypairs
 .html#novaclient.v1_1.keypairs.KeypairManager.create>`__ method:
 
 .. code-block:: python
-   :linenos:
 
     import novaclient.v1_1.client as nvclient
     nova = nvclient.Client(...)
@@ -46,7 +42,6 @@ is to create the file with the appropriate permissions, as shown in the
 following example:
 
 .. code-block:: python
-   :linenos:
 
     import novaclient.v1_1.client as nvclient
     import os
@@ -74,7 +69,6 @@ openstack.org/developer/python-novaclient/api/novaclient.v1_1.keypairs
 import the public key to Compute:
 
 .. code-block:: python
-   :linenos:
 
     import novaclient.v1_1.client as nvclient
     import os.path
@@ -139,7 +133,6 @@ SecurityGroupManager.delete>`__ method, passing either a
 SecurityGroup>`__ object or group ID as an argument:
 
 .. code-block:: python
-   :linenos:
 
     import novaclient.v1_1.client as nvclient
     nova = nvclient.Client(...)
@@ -173,7 +166,6 @@ novaclient.v1_1.security_group_rules.html#novaclient.v1_1.
 security_group_rules.SecurityGroupRuleManager.create>`__ method:
 
 .. code-block:: python
-   :linenos:
 
     import novaclient.v1_1.client as nvclient
     nova = nvclient.Client(...)

@@ -203,7 +203,6 @@ Example Compute installation environment
    attention to the permissions (Compute should be able to write)
 
    .. code-block:: console
-      :linenos:
 
       $ ls -ld NOVA-INST-DIR/instances/
       drwxr-xr-x 2 nova nova 4096 2012-05-07 14:34 nova-install-dir/instances/

@@ -1,5 +1,3 @@
-.. highlight: ini
-
 .. _orchestration-stack-domain-users:
 
 ==================
@@ -96,7 +94,6 @@ You must complete the following steps to setup stack domain users:
    steps to :file:`heat.conf`:
 
    .. code-block:: ini
-      :linenos:
 
        stack_domain_admin_password = password
        stack_domain_admin = heat_domain_admin

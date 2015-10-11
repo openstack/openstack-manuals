@@ -1,6 +1,3 @@
-.. highlight: bash
-   :linenothreshold: 5
-
 ===============================================
 Migrate single instance to another compute host
 ===============================================
@@ -27,7 +24,6 @@ target host.
 #. To migrate of an instance and watch the status, use this example script:
 
    .. code-block:: bash
-     :linenos:
 
      #!/bin/bash
 

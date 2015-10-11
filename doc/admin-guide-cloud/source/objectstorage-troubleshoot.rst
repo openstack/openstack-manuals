@@ -112,7 +112,6 @@ you have lost.
 #. Load the ring and a new ringbuilder object in a Python REPL:
 
    .. code-block:: python
-      :linenos:
 
       >>> from swift.common.ring import RingData, RingBuilder
       >>> ring = RingData.load('/path/to/account.ring.gz')
@@ -120,7 +119,6 @@ you have lost.
 #. Start copying the data we have in the ring into the builder:
 
    .. code-block:: python
-      :linenos:
 
       >>> import math
       >>> partitions = len(ring._replica2part2dev_id[0])
@@ -158,7 +156,6 @@ you have lost.
 #. After it validates, save the builder and create a new ``account.builder``:
 
    .. code-block:: python
-      :linenos:
 
       >>> import pickle
       >>> pickle.dump(builder.to_dict(), open('account.builder', 'wb'), protocol=2)

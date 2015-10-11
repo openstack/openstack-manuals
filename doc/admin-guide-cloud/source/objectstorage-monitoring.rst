@@ -190,7 +190,6 @@ are no-ops. This avoids messy conditional logic each place a meter is
 recorded. These example usages show the new logging methods:
 
 .. code-block:: bash
-   :linenos:
 
     # swift/obj/replicator.py
     def update(self, job):
@@ -211,7 +210,6 @@ recorded. These example usages show the new logging methods:
             self.logger.timing_since('partition.update.timing', begin)
 
 .. code-block:: bash
-   :linenos:
 
     # swift/container/updater.py
     def process_container(self, dbfile):

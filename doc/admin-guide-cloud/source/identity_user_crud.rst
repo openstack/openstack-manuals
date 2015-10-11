@@ -11,7 +11,6 @@ filter, insert it after the "option:`*_body` middleware and before the
 :file:`keystone-paste.ini`. For example:
 
 .. code-block:: ini
-   :linenos:
 
     [filter:user_crud_extension]
     paste.filter_factory = keystone.contrib.user_crud:CrudExtension.factory

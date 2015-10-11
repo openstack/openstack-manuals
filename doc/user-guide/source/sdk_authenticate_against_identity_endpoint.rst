@@ -1,6 +1,3 @@
-.. highlight: python
-   :linenothreshold: 5
-
 =========================================
 Authenticate against an Identity endpoint
 =========================================
@@ -9,7 +6,6 @@ To authenticate against the Identity v2.0 endpoint, instantiate a
 `keystoneclient.v\_20.client.Client <http://docs.openstack.org/developer/python-keystoneclient/api/keystoneclient.v2_0.client.html#keystoneclient.v2_0.client.Client>`__ object:
 
 .. code-block:: python
-   :linenos:
 
    from os import environ as env
    import keystoneclient.v2_0.client as ksclient

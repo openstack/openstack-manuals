@@ -31,7 +31,6 @@ assignments in LDAP.
    ``keystone.assignment.backends.sql.Assignment``:
 
    .. code-block:: ini
-      :linenos:
 
       [assignment]
       #driver = keystone.assignment.backends.sql.Assignment
@@ -41,7 +40,6 @@ assignments in LDAP.
    their corresponding location in the ``keystone.conf`` file:
 
    .. code-block:: ini
-      :linenos:
 
       [ldap]
       role_tree_dn =
@@ -64,7 +62,6 @@ assignments in LDAP.
    permissions are applied to object types in the ``keystone.conf`` file:
 
    .. code-block:: ini
-      :linenos:
 
       [ldap]
       role_allow_create = False
@@ -95,7 +92,6 @@ Filters
   Use filters to control the scope of data presented through LDAP.
 
   .. code-block:: ini
-     :linenos:
 
      [ldap]
      project_filter = (member=cn=openstack-user,ou=workgroups,
@@ -115,7 +111,6 @@ Assignment attribute mapping
   update.
 
   .. code-block:: ini
-     :linenos:
 
      [ldap]
      role_id_attribute = cn
@@ -141,7 +136,6 @@ Enabled emulation
   enabled emulation.
 
   .. code-block:: ini
-     :linenos:
 
      [ldap]
      project_enabled_emulation = false

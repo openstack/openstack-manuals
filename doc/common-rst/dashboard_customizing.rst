@@ -1,8 +1,5 @@
 :orphan:
 
-.. highlight:: guess
-   :linenothreshold: 5
-
 =======================
 Customize the dashboard
 =======================

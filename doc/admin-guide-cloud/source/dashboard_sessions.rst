@@ -1,6 +1,3 @@
-.. highlight:: guess
-   :linenothreshold: 5
-
 ========================================
 Set up session storage for the Dashboard
 ========================================

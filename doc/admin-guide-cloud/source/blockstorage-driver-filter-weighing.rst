@@ -1,6 +1,3 @@
-.. highlight:: ini
-   :linenothreshold: 5
-
 ==========================================================
 Configure and use driver filter and weighing for scheduler
 ==========================================================

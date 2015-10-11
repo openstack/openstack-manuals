@@ -1,6 +1,3 @@
-.. highlight:: guess
-   :linenothreshold: 5
-
 .. _telemetry-data-collection:
 
 ===============

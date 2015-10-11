@@ -1,6 +1,3 @@
-.. highlight: python
-   :linenothreshold: 5
-
 ==========
 Networking
 ==========
@@ -21,7 +18,6 @@ As an example, see the sample shell file that sets these variables to
 get credentials:
 
 .. code-block:: bash
-   :linenos:
 
     export OS_USERNAME="admin"
     export OS_PASSWORD="password"
@@ -36,7 +32,6 @@ Get credentials
 The examples in this section use the ``get_credentials`` method:
 
 .. code-block:: python
-   :linenos:
 
     def get_credentials():
         d = {}
@@ -63,7 +58,6 @@ Get Nova credentials
 The examples in this section use the ``get_nova_credentials`` method:
 
 .. code-block:: python
-   :linenos:
 
     def get_nova_credentials():
         d = {}
@@ -92,7 +86,6 @@ The examples in this section use the ``print_values`` and
 ``print_values_server`` methods:
 
 .. code-block:: python
-   :linenos:
 
     def print_values(val, type):
         if type == 'ports':
@@ -133,7 +126,6 @@ Create network
 The following program creates a network:
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
@@ -167,7 +159,6 @@ List networks
 The following program lists networks:
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
@@ -190,7 +181,6 @@ Create ports
 The following program creates a port:
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
@@ -236,7 +226,6 @@ List ports
 The following program lists ports:
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
@@ -260,7 +249,6 @@ List server ports
 The following program lists the ports for a server:
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
@@ -307,7 +295,6 @@ port to a subnet.
 #. Import the following modules:
 
    .. code-block:: python
-      :linenos:
 
       from neutronclient.v2_0 import client
       import novaclient.v1_1.client as nvclient
@@ -328,7 +315,6 @@ port to a subnet.
 #. Create a router and add a port to the subnet:
 
    .. code-block:: python
-      :linenos:
 
       # Replace with network_id from your environment
 
@@ -360,7 +346,6 @@ Create router: complete code listing example
 --------------------------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
@@ -426,7 +411,6 @@ To delete a network:
 #. Delete the network:
 
    .. code-block:: python
-      :linenos:
 
       body_sample = {'network': {'name': network_name,
                      'admin_state_up': True}}
@@ -451,7 +435,6 @@ Delete network: complete code listing example
 ---------------------------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
@@ -490,7 +473,6 @@ This example queries OpenStack Networking to list all routers.
 #. Import the following modules:
 
    .. code-block:: python
-      :linenos:
 
       from neutronclient.v2_0 import client
       from credentials import get_credentials
@@ -508,7 +490,6 @@ This example queries OpenStack Networking to list all routers.
 #. List the routers:
 
    .. code-block:: python
-      :linenos:
 
       routers_list = neutron.list_routers(retrieve_all=True)
       print_values(routers_list, 'routers')
@@ -520,7 +501,6 @@ List routers: complete code listing example
 -------------------------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
@@ -570,7 +550,6 @@ List security groups: complete code listing example
 ---------------------------------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client
@@ -620,7 +599,6 @@ List subnets: complete code listing example
 -------------------------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from neutronclient.v2_0 import client

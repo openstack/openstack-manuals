@@ -80,7 +80,6 @@ such as user passwords.
 List of object attributes:
 
 .. code-block:: ini
-   :linenos:
 
     role:
          target.role.id

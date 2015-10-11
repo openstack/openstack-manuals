@@ -264,7 +264,6 @@ Example values for the above settings, assuming a cloud controller node
 running Compute and Networking with an IP address of 192.168.1.2:
 
 .. code-block:: ini
-   :linenos:
 
    [DEFAULT]
    security_group_api=neutron

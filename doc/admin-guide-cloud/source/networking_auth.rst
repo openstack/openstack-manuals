@@ -91,7 +91,6 @@ This extract is from the default :file:`policy.json` file:
    (tenant identifier is equal).
 
    .. code-block:: json
-      :linenos:
 
        {
         "admin_or_owner": [
@@ -128,7 +127,6 @@ This extract is from the default :file:`policy.json` file:
    not match any of the policies in ``policy.json``.
 
    .. code-block:: json
-      :linenos:
 
                 "rule:admin_or_owner"
             ]
@@ -166,7 +164,6 @@ This extract is from the default :file:`policy.json` file:
    *shared* evaluates successfully.
 
    .. code-block:: json
-      :linenos:
 
             [
                 "rule:shared"
@@ -181,7 +178,6 @@ This extract is from the default :file:`policy.json` file:
    attribute for a network to administrators only.
 
    .. code-block:: json
-      :linenos:
 
         ],
         "update_network": [
@@ -207,7 +203,6 @@ This extract is from the default :file:`policy.json` file:
    network where the port is attached.
 
    .. code-block:: json
-      :linenos:
 
             [
                 "rule:admin_or_network_owner"
@@ -236,7 +231,6 @@ define networks, see their resources, and permit administrative users to
 perform all other operations:
 
 .. code-block:: ini
-   :linenos:
 
     {
             "admin_or_owner": [["role:admin"], ["tenant_id:%(tenant_id)s"]],

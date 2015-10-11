@@ -1,6 +1,3 @@
-.. highlight: ini
-   :linenothreshold: 5
-
 .. _volume_backups:
 
 ===========================
@@ -106,7 +103,6 @@ following configuration options to the ``[DEFAULT]`` section of the
 :file:`cinder.conf` file and restart the Block Storage services:
 
 .. code-block:: ini
-   :linenos:
 
    backup_driver = cinder.backup.drivers.nfs
    backup_share = HOST:EXPORT_PATH
@@ -118,7 +114,6 @@ that non-default mount options be specified for the share, set these as
 follows:
 
 .. code-block:: ini
-   :linenos:
 
    backup_mount_options = MOUNT_OPTIONS
 
@@ -129,7 +124,6 @@ There are several other options whose default values may be overridden as
 appropriate for your environment:
 
 .. code-block:: ini
-   :linenos:
 
    backup_compression_algorithm = zlib
    backup_sha_block_size_bytes = 32768

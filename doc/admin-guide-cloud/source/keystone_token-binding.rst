@@ -13,7 +13,6 @@ You configure the authentication types for a token binding in the
 :file:`keystone.conf` file:
 
 .. code-block:: ini
-   :linenos:
 
    [token]
    bind = kerberos
@@ -21,7 +20,6 @@ You configure the authentication types for a token binding in the
 or
 
 .. code-block:: ini
-   :linenos:
 
    [token]
    bind = x509
@@ -52,7 +50,6 @@ option to one of these modes:
     mechanism for tokens:
 
     .. code-block:: ini
-       :linenos:
 
        [token]
        enforce_token_bind = kerberos
@@ -62,7 +59,6 @@ option to one of these modes:
     mechanism for tokens:
 
     .. code-block:: ini
-       :linenos:
 
        [token]
        enforce_token_bind = x509

@@ -133,7 +133,6 @@ Create a certificate request configuration file. For example, create the
 :file:`cert_req.conf` file, as follows:
 
 .. code-block:: ini
-   :linenos:
 
    [ req ]
    default_bits            = 4096

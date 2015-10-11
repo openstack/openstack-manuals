@@ -59,7 +59,6 @@ project.
    :file:`/etc/nova/nova.conf` file:
 
    .. code-block:: ini
-      :linenos:
 
       [trusted_computing]
       attestation_server = 10.1.71.206

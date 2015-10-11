@@ -1,8 +1,5 @@
 .. _volume_number_weigher:
 
-.. highlight: ini
-   :linenothreshold: 5
-
 =======================================
 Configure and use volume number weigher
 =======================================
@@ -33,7 +30,6 @@ This configuration defines two LVM volume groups: ``stack-volumes`` with
 This example configuration defines two back ends:
 
 .. code-block:: ini
-   :linenos:
 
    scheduler_default_weighers=VolumeNumberWeigher
    enabled_backends=lvmdriver-1,lvmdriver-2
