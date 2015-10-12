@@ -10,6 +10,7 @@ OpenStack services
    get_started_storage_concepts.rst
    get_started_object_storage.rst
    get_started_block_storage.rst
+   get_started_file_storage.rst
    get_started_openstack_networking.rst
    get_started_dashboard.rst
    get_started_identity.rst
