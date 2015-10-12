@@ -53,9 +53,9 @@ OpenStack Compute consists of the following areas and their components:
   database. It eliminates direct accesses to the cloud database made
   by the nova-compute service. The nova-conductor module scales
   horizontally. However, do not deploy it on nodes where the
-  nova-compute service runs. For more information, see `A new Nova
-  service:
-  nova-conductor <http://russellbryantnet.wordpress.com/2012/11/19/a-new-nova-service-nova-conductor/>`__.
+  nova-compute service runs. For more information, see `Configuration
+  Reference Guide <http://docs.openstack.org/liberty/config-reference/content/
+  section_conductor.html>`__.
 
 ``nova-cert`` module
   A server daemon that serves the Nova Cert service for X509
