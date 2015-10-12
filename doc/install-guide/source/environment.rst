@@ -4,13 +4,6 @@
 Environment
 ===========
 
-.. note::
-
-   The draft version of this guide focuses on the future Liberty
-   release and will not work for the current Kilo release. If you want
-   to install Kilo, you must use the `Kilo
-   version <http://docs.openstack.org>`__ of this guide instead.
-
 This section explains how to configure the controller and one compute
 node using the example architecture.
 

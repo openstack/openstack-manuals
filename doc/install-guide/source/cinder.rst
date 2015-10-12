@@ -19,7 +19,7 @@ The Block Storage API and scheduler services typically run on the controller
 nodes. Depending upon the drivers used, the volume service can run
 on controllers, compute nodes, or standalone storage nodes.
 For more information, see the
-`Configuration Reference <http://docs.openstack.org/kilo/
+`Configuration Reference <http://docs.openstack.org/liberty/
 config-reference/content/section_volume-drivers.html>`__.
 
 .. note::
