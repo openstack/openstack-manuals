@@ -14,6 +14,7 @@ OpenStack command-line clients
    cli_manage_services.rst
    common/cli_manage_images.rst
    common/cli_manage_volumes.rst
+   cli_manage_shares.rst
    cli_manage_flavors.rst
    cli_admin_manage_environment.rst
    cli_set_quotas.rst
