@@ -47,3 +47,26 @@ Bare Metal deployment
 #. Agent deploy process
 
 .. TODO Add the detail about the process of Bare Metal deployment.
+
+Use Bare Metal
+~~~~~~~~~~~~~~
+
+#. Install Bare Metal service.
+
+#. Setup Bare Metal driver in the compute node's :file:`nova.conf`.
+
+#. Setup TFTP folder and prepare PXE boot loader file.
+
+#. Prepare the baremetal flavor.
+
+#. Register the nodes with correct drivers.
+
+#. Configure the driver information.
+
+#. Register the ports information.
+
+#. Use nova boot to kick off the baremetal provision.
+
+#. Check nodes' provision state and power state.
+
+.. TODO Add the detail command line later on.
