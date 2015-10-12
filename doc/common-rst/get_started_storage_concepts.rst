@@ -6,32 +6,40 @@ The OpenStack stack uses the following storage types:
 
 .. list-table:: Storage types
    :header-rows: 1
-   :widths: 30 30 30
+   :widths: 30 30 30 30
 
    * - On-instance / ephemeral
      - Block storage (cinder)
      - Object Storage (swift)
+     - File Storage (manila)
    * - Runs operating systems and provides scratch space
      - Used for adding additional persistent storage to a virtual machine (VM)
      - Used for storing virtual machine images and data
+     - Used for providing file shares to a virtual machine
    * - Persists until VM is terminated
+     - Persists until deleted
      - Persists until deleted
      - Persists until deleted
    * - Access associated with a VM
      - Access associated with a VM
      - Available from anywhere
+     - Access can be provided to a VM
    * - Implemented as a filesystem underlying OpenStack Compute
      - Mounted via OpenStack Block Storage controlled protocol (for example, iSCSI)
      - REST API
+     - Provides Shared File System service via nfs, cifs, glusterfs, or hdfs protocol
    * - Encryption is available
      - Encryption is available
      - Work in progress - expected for the Mitaka release
+     - Encryption is not available yet
    * - Administrator configures size setting, based on flavors
      - Sizings based on need
      - Easily scalable for future growth
+     - Sizing based on need
    * - Example: 10 GB first disk, 30 GB/core second disk
      - Example: 1 TB "extra hard drive"
      - Example: 10s of TBs of data set storage
+     - Example: 1 TB of file share
 
 .. note::
 
