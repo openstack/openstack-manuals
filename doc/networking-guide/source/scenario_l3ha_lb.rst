@@ -19,7 +19,7 @@ constraints and to improve scaling. Also, this implementation does not address
 situations where one or more layer-3 agents fail and the underlying virtual
 networks continue to operate normally. Consider deploying
 :doc:`scenario_dvr_ovs` to increase performance in addition to redundancy. As
-of the Kilo release, you cannot combine the DVR and L3HA mechanisms.
+of the Liberty release, you cannot combine the DVR and L3HA mechanisms.
 
 .. note::
    The failover process only retains the state of network connections for
@@ -30,7 +30,7 @@ project (tenant) network. However, this configuration also supports VLAN
 external and project networks.
 
 .. note::
-   In the Juno (initial) and Kilo releases, L3HA with Linux bridge supports
+   In the releases prior to Liberty, L3HA with Linux bridge supports
    VLAN and VXLAN project networks. However, due to a bug, VXLAN project
    networks must use multicast instead of the layer-2 population mechanism.
 

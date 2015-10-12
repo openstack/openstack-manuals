@@ -12,7 +12,7 @@ The basics
 ~~~~~~~~~~
 
 OpenStack Networking has supported IPv6 tenant subnets in certain
-configurations since Juno, but the Kilo release adds a number of new
+configurations since Juno, but later releases added a number of new
 features, functionality and bug fixes to make it more robust. The
 focus of this page will be:
 
@@ -457,8 +457,8 @@ external (to the OpenStack Networking service) DHCPv6 server to manage your
 tenant network prefixes.
 
 .. note::
-   Prefix delegation will be in the upcoming Liberty release, it is
-   not available in the current OpenStack Kilo release. HA and DVR routers
+   Prefix delegation became available in the Liberty release, it is
+   not available in the Kilo release. HA and DVR routers
    are not currently supported by this feature.
 
 Configuring OpenStack Networking for prefix delegation

@@ -46,15 +46,15 @@ like the example above of stable/kilo.
 
    * - Installation Guide for openSUSE and SUSE Linux Enterprise Server
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/kilo/install-guide/install/zypper/content
+     - http://docs.openstack.org/liberty/install-guide-obs
 
    * - Installation Guide for Red Hat Enterprise Linux, CentOS, and Fedora
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/kilo/install-guide/install/yum/content
+     - http://docs.openstack.org/kilo/install-guide-rdo
 
    * - Installation Guide for Ubuntu 14.04 (LTS)
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/kilo/install-guide/install/apt/content
+     - http://docs.openstack.org/kilo/install-guide-ubuntu
 
 Guides for deployers and administrators
 ---------------------------------------
@@ -72,7 +72,7 @@ Guides for deployers and administrators
 
    * - Configuration Reference
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/config-reference
-     - http://docs.openstack.org/kilo/config-reference/content
+     - http://docs.openstack.org/liberty/config-reference/content
 
    * - Cloud Administrator Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/admin-guide-cloud
@@ -201,8 +201,8 @@ file contain the Jenkins build jobs that build to the docs.openstack.org
 and developer.openstack.org sites, copying built files via FTP.
 
 The release specific books are build for the currently supported branches
-(juno, kilo), development happens on the master branch. The continuously
-released books are only build on the master branch.
+(juno, kilo, liberty), development happens on the master branch. The
+continuously released books are only build on the master branch.
 
 Maven plug-in
 ~~~~~~~~~~~~~

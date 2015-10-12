@@ -272,7 +272,7 @@ Example Compute installation environment
 #. You can now configure other options for live migration. In most cases, you
    will not need to configure any options. For advanced configuration options,
    see the `OpenStack Configuration Reference Guide <http://docs.openstack.org/
-   kilo/config-reference/content/list-of-compute-config-options.html
+   liberty/config-reference/content/list-of-compute-config-options.html
    #config_table_nova_livemigration>`_.
 
 .. _true-live-migration-kvm-libvirt:

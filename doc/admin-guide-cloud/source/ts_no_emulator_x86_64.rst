@@ -15,6 +15,6 @@ On the KVM host, run ``cat /proc/cpuinfo``. Make sure the ``vmx`` or
 ``svm`` flags are set.
 
 Follow the instructions in the `enabling KVM
-section <http://docs.openstack.org/kilo/config-reference/content/kvm.html#section_kvm_enable>`__
+section <http://docs.openstack.org/liberty/config-reference/content/kvm.html#section_kvm_enable>`__
 of the Configuration Reference to enable hardware virtualization support
 in your BIOS.

@@ -297,12 +297,6 @@ an IP address between two instances to enable fast data plane failover.
      $ neutron port-update PORT_UUID --allowed-address-pairs type=dict
      list=true mac_address=MAC_ADDRESS,ip_address=IP_CIDR
 
-.. Note::
-
-    In releases earlier than Juno, OpenStack Networking prevents setting
-    an allowed address pair on a port that matches the MAC address and
-    one of the fixed IP addresses of the port.
-
 .. |FWaaS architecture| image:: ../../common/figures/fwaas.png
 
 

@@ -276,7 +276,7 @@ If you choose VFAT, the configuration drive is 64 MB.
 
 .. note::
 
-   In current version (Kilo) of OpenStack Compute, live migration with
+   In current version (Liberty) of OpenStack Compute, live migration with
    ``config_drive`` on local disk is forbidden due to the bug in libvirt
    of copying a read-only disk. However, if we use VFAT as the format of
    ``config_drive``, the function of live migration works well.

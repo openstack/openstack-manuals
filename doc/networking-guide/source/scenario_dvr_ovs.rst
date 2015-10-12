@@ -21,8 +21,8 @@ routing and SNAT services between project and external networks.
 
 .. note::
    In the Juno (initial) release, DVR supports VXLAN and GRE project networks.
-   In the Kilo release, DVR adds support for VLAN project networks. All
-   releases support flat and VLAN external networks.
+   In the Kilo release, support was added for DVR with VLAN project networks.
+   All releases support flat and VLAN external networks.
 
 Prerequisites
 ~~~~~~~~~~~~~

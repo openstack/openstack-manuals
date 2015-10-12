@@ -29,7 +29,7 @@ flavors that you can edit or add to.
 
    -  For more information about image configuration options, see the
       `Image
-      services <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-image-service.html>`__
+      services <http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-image-service.html>`__
       section of the OpenStack Configuration Reference.
 
    -  For more information about flavors, see :ref:`compute-flavors` or
@@ -286,7 +286,7 @@ these steps:
    `glance-api` service does not start.
 
    To view a sample configuration file, see
-   `glance-api.conf <http://docs.openstack.org/kilo/config-reference/content/section_glance-api.conf.html>`__.
+   `glance-api.conf <http://docs.openstack.org/liberty/config-reference/content/section_glance-api.conf.html>`__.
 
 #. Optionally, in the :file:`glance-api.conf` file, specify whether roles or
    policies are used in the property protections configuration file::
@@ -296,7 +296,7 @@ these steps:
    The default is ``roles``.
 
    To view a sample configuration file, see
-   `glance-api.conf <http://docs.openstack.org/kilo/config-reference/content/section_glance-api.conf.html>`__.
+   `glance-api.conf <http://docs.openstack.org/liberty/config-reference/content/section_glance-api.conf.html>`__.
 
 Image download: how it works
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -330,7 +330,7 @@ Compute nodes also implement caching of images, meaning that if an image
 has been used before it won't necessarily be downloaded every time.
 Information on the configuration options for caching on compute nodes
 can be found in the `Configuration
-Reference <http://docs.openstack.org/kilo/config-reference/content/>`__.
+Reference <http://docs.openstack.org/liberty/config-reference/content/>`__.
 
 Instance building blocks
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -426,7 +426,7 @@ Guide <http://docs.openstack.org/user-guide/index.html>`__.
 Control where instances run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The `OpenStack Configuration
-Reference <http://docs.openstack.org/kilo/config-reference/content/>`__
+Reference <http://docs.openstack.org/liberty/config-reference/content/>`__
 provides detailed information on controlling where your instances run,
 including ensuring a set of instances run on different compute nodes for
 service resiliency or on the same node for high performance
