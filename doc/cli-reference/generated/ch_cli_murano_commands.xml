@@ -15,7 +15,7 @@
         interface (CLI) for the Application catalog API and its extensions.
 
        This chapter documents <command>murano</command> version
-        <literal>0.6.3</literal>.
+        <literal>0.7.1</literal>.
     </para>
 
     <para>For help on a specific <command>murano</command>
@@ -27,7 +27,7 @@
        <title>murano usage</title>
         <screen><computeroutput>usage: murano [--version] [-d] [-v] [-k] [--os-cacert &lt;ca-certificate&gt;]
               [--cert-file CERT_FILE] [--key-file KEY_FILE]
-              [--ca-file CA_FILE] [--api-timeout API_TIMEOUT]
+              [--ca-file OS_CACERT] [--api-timeout API_TIMEOUT]
               [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
               [--os-tenant-id OS_TENANT_ID] [--os-tenant-name OS_TENANT_NAME]
               [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
@@ -331,7 +331,7 @@
     <term><command>--version</command></term>
     <listitem>
       <para>
-        show program's version number and exit
+        Show program's version number and exit.
       </para>
     </listitem>
   </varlistentry>
@@ -339,7 +339,7 @@
     <term><command>-d, --debug</command></term>
     <listitem>
       <para>
-        Defaults to <code>env[MURANOCLIENT_DEBUG]</code>
+        Defaults to <code>env[MURANOCLIENT_DEBUG]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -347,7 +347,7 @@
     <term><command>-v, --verbose</command></term>
     <listitem>
       <para>
-        Print more verbose output
+        Print more verbose output.
       </para>
     </listitem>
   </varlistentry>
@@ -367,7 +367,8 @@
     <listitem>
       <para>
       Specify a CA bundle file to use in verifying a TLS
-      (https) server certificate. Defaults to <code>env[OS_CACERT]</code>
+      (https) server certificate. Defaults to
+      <code>env[OS_CACERT]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -392,12 +393,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--ca-file CA_FILE</command></term>
+    <term><command>--ca-file OS_CACERT</command></term>
     <listitem>
       <para>
-        Path of CA SSL certificate(s) used to verify the
-      remote server certificate. Without this option glance
-      looks for the default system CA certificates.
+        <emphasis>DEPRECATED!</emphasis> Use --os-cacert.
       </para>
     </listitem>
   </varlistentry>
@@ -406,7 +405,7 @@
     <listitem>
       <para>
       Number of seconds to wait for an API response,
-      defaults to system socket timeout
+      defaults to system socket timeout.
       </para>
     </listitem>
   </varlistentry>
@@ -414,7 +413,7 @@
     <term><command>--os-username OS_USERNAME</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_USERNAME]</code>
+      Defaults to <code>env[OS_USERNAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -422,7 +421,7 @@
     <term><command>--os-password OS_PASSWORD</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_PASSWORD]</code>
+      Defaults to <code>env[OS_PASSWORD]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -430,7 +429,7 @@
     <term><command>--os-tenant-id OS_TENANT_ID</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_TENANT_ID]</code>
+      Defaults to <code>env[OS_TENANT_ID]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -438,7 +437,7 @@
     <term><command>--os-tenant-name OS_TENANT_NAME</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_TENANT_NAME]</code>
+      Defaults to <code>env[OS_TENANT_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -446,7 +445,7 @@
     <term><command>--os-auth-url OS_AUTH_URL</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_AUTH_URL]</code>
+      Defaults to <code>env[OS_AUTH_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -454,7 +453,7 @@
     <term><command>--os-region-name OS_REGION_NAME</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_REGION_NAME]</code>
+      Defaults to <code>env[OS_REGION_NAME]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -462,7 +461,7 @@
     <term><command>--os-auth-token OS_AUTH_TOKEN</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_AUTH_TOKEN]</code>
+      Defaults to <code>env[OS_AUTH_TOKEN]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -479,7 +478,7 @@
     <term><command>--murano-url MURANO_URL</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[MURANO_URL]</code>
+      Defaults to <code>env[MURANO_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -487,7 +486,7 @@
     <term><command>--glance-url GLANCE_URL</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[GLANCE_URL]</code>
+      Defaults to <code>env[GLANCE_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -495,7 +494,7 @@
     <term><command>--murano-api-version MURANO_API_VERSION</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[MURANO_API_VERSION]</code> or 1
+      Defaults to <code>env[MURANO_API_VERSION]</code> or 1.
       </para>
     </listitem>
   </varlistentry>
@@ -503,7 +502,7 @@
     <term><command>--os-service-type OS_SERVICE_TYPE</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_SERVICE_TYPE]</code>
+      Defaults to <code>env[OS_SERVICE_TYPE]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -511,7 +510,7 @@
     <term><command>--os-endpoint-type OS_ENDPOINT_TYPE</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_ENDPOINT_TYPE]</code>
+      Defaults to <code>env[OS_ENDPOINT_TYPE]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -528,7 +527,7 @@
     <listitem>
       <para>
       Defaults to <code>env[MURANO_REPO_URL]</code> or
-      http://storage.apps.openstack.org
+      http://apps.openstack.org/api/v1/murano_repo/liberty/
       </para>
     </listitem>
   </varlistentry>
@@ -545,7 +544,7 @@ List applications, added to specified environment.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        Environment ID to show applications from
+        Environment ID to show applications from.
       </para>
     </listitem>
   </varlistentry>
@@ -557,7 +556,7 @@ List applications, added to specified environment.
     <listitem>
       <para>
       Level of detalization to show. Leave empty to browse
-      all applications in the environment
+      all applications in the environment.
       </para>
     </listitem>
   </varlistentry>
@@ -578,7 +577,7 @@ searched in the same directory.
     <term><command>&lt;FILE&gt;</command></term>
     <listitem>
       <para>
-        Bundle URL, bundle name, or path to the bundle file
+        Bundle URL, bundle name, or path to the bundle file.
       </para>
     </listitem>
   </varlistentry>
@@ -589,7 +588,7 @@ searched in the same directory.
     <term><command>--is-public</command></term>
     <listitem>
       <para>
-        Make packages available to users from other tenants
+        Make packages available to users from other tenants.
       </para>
     </listitem>
   </varlistentry>
@@ -597,7 +596,7 @@ searched in the same directory.
     <term><command>--exists-action {a,s,u}</command></term>
     <listitem>
       <para>
-      Default action when a package already exists
+      Default action when a package already exists.
       </para>
     </listitem>
   </varlistentry>
@@ -615,7 +614,7 @@ to specified path. If path doesn't exist it will be created.
     <term><command>&lt;BUNDLE&gt;</command></term>
     <listitem>
       <para>
-        Bundle URL, bundle name, or path to the bundle file
+        Bundle URL, bundle name, or path to the bundle file.
       </para>
     </listitem>
   </varlistentry>
@@ -627,7 +626,7 @@ to specified path. If path doesn't exist it will be created.
     <listitem>
       <para>
       Path to the directory to store packages. If not set
-      will use current directory
+      will use current directory.
       </para>
     </listitem>
   </varlistentry>
@@ -635,7 +634,7 @@ to specified path. If path doesn't exist it will be created.
     <term><command>--no-images</command></term>
     <listitem>
       <para>
-        If set will skip images downloading
+        If set will skip images downloading.
       </para>
     </listitem>
   </varlistentry>
@@ -652,7 +651,7 @@ Create a category.
     <term><command>&lt;CATEGORY_NAME&gt;</command></term>
     <listitem>
       <para>
-        Category name
+        Category name.
       </para>
     </listitem>
   </varlistentry>
@@ -669,7 +668,7 @@ Delete a category.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        ID of a category(ies) to delete
+        ID of a category(ies) to delete.
       </para>
     </listitem>
   </varlistentry>
@@ -693,7 +692,7 @@ Display category details.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        ID of a category(s) to show
+        ID of a category(s) to show.
       </para>
     </listitem>
   </varlistentry>
@@ -710,7 +709,7 @@ List deployments for an environment.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        Environment ID for which to list deployments
+        Environment ID for which to list deployments.
       </para>
     </listitem>
   </varlistentry>
@@ -727,7 +726,7 @@ Add application to the environment template.
     <term><command>&lt;ENV_TEMPLATE_NAME&gt;</command></term>
     <listitem>
       <para>
-        Environment template name
+        Environment template name.
       </para>
     </listitem>
   </varlistentry>
@@ -752,7 +751,7 @@ Create an environment template.
     <term><command>&lt;ENV_TEMPLATE_NAME&gt;</command></term>
     <listitem>
       <para>
-        Environment template name
+        Environment template name.
       </para>
     </listitem>
   </varlistentry>
@@ -769,7 +768,7 @@ Delete application from the environment template.
     <term><command>&lt;ENV_TEMPLATE_ID&gt;</command></term>
     <listitem>
       <para>
-        Environment template ID
+        Environment template ID.
       </para>
     </listitem>
   </varlistentry>
@@ -777,7 +776,7 @@ Delete application from the environment template.
     <term><command>&lt;ENV_TEMPLATE_APP_ID&gt;</command></term>
     <listitem>
       <para>
-      Application ID
+      Application ID.
       </para>
     </listitem>
   </varlistentry>
@@ -794,7 +793,7 @@ Delete an environment template.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        ID of environment(s) template to delete
+        ID of environment(s) template to delete.
       </para>
     </listitem>
   </varlistentry>
@@ -818,7 +817,7 @@ Display environment template details.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        Environment template ID
+        Environment template ID.
       </para>
     </listitem>
   </varlistentry>
@@ -835,7 +834,7 @@ Update an environment template.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        Environment template ID
+        Environment template ID.
       </para>
     </listitem>
   </varlistentry>
@@ -843,7 +842,7 @@ Update an environment template.
     <term><command>&lt;ENV_TEMPLATE_NAME&gt;</command></term>
     <listitem>
       <para>
-        Environment template name
+        Environment template name.
       </para>
     </listitem>
   </varlistentry>
@@ -865,7 +864,7 @@ environment. To view actions available in a given environment use
     <term><command>id</command></term>
     <listitem>
       <para>
-        ID of Environment to call action against
+        ID of Environment to call action against.
       </para>
     </listitem>
   </varlistentry>
@@ -873,10 +872,10 @@ environment. To view actions available in a given environment use
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--action-id &lt;ACTION&gt; ID</command></term>
+    <term><command>--action-id &lt;ACTION&gt;</command></term>
     <listitem>
       <para>
-        of action to run
+        ID of action to run.
       </para>
     </listitem>
   </varlistentry>
@@ -901,7 +900,7 @@ Get result of `TASK` in environment `ID`.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        ID of Environment where task is being executed
+        ID of Environment where task is being executed.
       </para>
     </listitem>
   </varlistentry>
@@ -909,10 +908,10 @@ Get result of `TASK` in environment `ID`.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--task-id &lt;TASK&gt; ID</command></term>
+    <term><command>--task-id &lt;TASK&gt;</command></term>
     <listitem>
       <para>
-        of action to run
+        ID of action to run.
       </para>
     </listitem>
   </varlistentry>
@@ -934,7 +933,7 @@ substituted with uuids. For more info on jsonpatch see RFC 6902
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        ID of Environment to edit
+        ID of Environment to edit.
       </para>
     </listitem>
   </varlistentry>
@@ -942,7 +941,7 @@ substituted with uuids. For more info on jsonpatch see RFC 6902
     <term><command>FILE</command></term>
     <listitem>
       <para>
-        File to read jsonpatch from (defaults to stdin)
+        File to read jsonpatch from (defaults to stdin).
       </para>
     </listitem>
   </varlistentry>
@@ -972,7 +971,7 @@ Create an environment.
     <term><command>&lt;ENVIRONMENT_NAME&gt;</command></term>
     <listitem>
       <para>
-        Environment name
+        Environment name.
       </para>
     </listitem>
   </varlistentry>
@@ -983,7 +982,7 @@ Create an environment.
     <term><command>--join-net-id &lt;NET_ID&gt;</command></term>
     <listitem>
       <para>
-      Network id to join
+      Network id to join.
       </para>
     </listitem>
   </varlistentry>
@@ -991,7 +990,7 @@ Create an environment.
     <term><command>--join-subnet-id &lt;SUBNET_ID&gt;</command></term>
     <listitem>
       <para>
-      Subnetwork id to join
+      Subnetwork id to join.
       </para>
     </listitem>
   </varlistentry>
@@ -1008,7 +1007,7 @@ Delete an environment.
     <term><command>&lt;NAME or ID&gt;</command></term>
     <listitem>
       <para>
-        Id or name of environment(s) to delete
+        Id or name of environment(s) to delete.
       </para>
     </listitem>
   </varlistentry>
@@ -1020,7 +1019,7 @@ Delete an environment.
     <listitem>
       <para>
         If set will abandon environment without deleting any of its
-      resources
+      resources.
       </para>
     </listitem>
   </varlistentry>
@@ -1037,7 +1036,7 @@ Start deployment of a murano environment session.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        ID of Environment to deploy
+        ID of Environment to deploy.
       </para>
     </listitem>
   </varlistentry>
@@ -1048,7 +1047,7 @@ Start deployment of a murano environment session.
     <term><command>--session-id &lt;SESSION&gt;</command></term>
     <listitem>
       <para>
-      ID of configuration session to deploy
+      ID of configuration session to deploy.
       </para>
     </listitem>
   </varlistentry>
@@ -1065,7 +1064,7 @@ List the environments.
     <term><command>--all-tenants</command></term>
     <listitem>
       <para>
-        Allows to list environments from all tenants (admin only)
+        Allows to list environments from all tenants (admin only).
       </para>
     </listitem>
   </varlistentry>
@@ -1082,7 +1081,7 @@ Rename an environment.
     <term><command>&lt;NAME or ID&gt;</command></term>
     <listitem>
       <para>
-        Environment ID or name
+        Environment ID or name.
       </para>
     </listitem>
   </varlistentry>
@@ -1090,7 +1089,7 @@ Rename an environment.
     <term><command>&lt;ENVIRONMENT_NAME&gt;</command></term>
     <listitem>
       <para>
-        A name to which the environment will be renamed
+        A name to which the environment will be renamed.
       </para>
     </listitem>
   </varlistentry>
@@ -1107,7 +1106,7 @@ Creates a new configuration session for environment ID.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        ID of Environment to add session to
+        ID of Environment to add session to.
       </para>
     </listitem>
   </varlistentry>
@@ -1125,7 +1124,7 @@ Display environment details.
     <term><command>&lt;NAME or ID&gt;</command></term>
     <listitem>
       <para>
-        Environment ID or name
+        Environment ID or name.
       </para>
     </listitem>
   </varlistentry>
@@ -1144,8 +1143,8 @@ Display environment details.
     <term><command>--only-apps</command></term>
     <listitem>
       <para>
-        Only print apps of the environment. (useful for
-      automation)
+        Only print apps of the environment (useful for
+      automation).
       </para>
     </listitem>
   </varlistentry>
@@ -1168,7 +1167,7 @@ Create an application package.
     <listitem>
       <para>
       Path to the Heat template to import as an Application
-      Definition
+      Definition.
       </para>
     </listitem>
   </varlistentry>
@@ -1176,7 +1175,7 @@ Create an application package.
     <term><command>-c &lt;CLASSES_DIRECTORY&gt;, --classes-dir &lt;CLASSES_DIRECTORY&gt;</command></term>
     <listitem>
       <para>
-      Path to the directory containing application classes
+      Path to the directory containing application classes.
       </para>
     </listitem>
   </varlistentry>
@@ -1184,7 +1183,8 @@ Create an application package.
     <term><command>-r &lt;RESOURCES_DIRECTORY&gt;, --resources-dir &lt;RESOURCES_DIRECTORY&gt;</command></term>
     <listitem>
       <para>
-      Path to the directory containing application resources
+      Path to the directory containing application
+      resources.
       </para>
     </listitem>
   </varlistentry>
@@ -1192,7 +1192,7 @@ Create an application package.
     <term><command>-n &lt;DISPLAY_NAME&gt;, --name &lt;DISPLAY_NAME&gt;</command></term>
     <listitem>
       <para>
-      Display name of the Application in Catalog
+      Display name of the Application in Catalog.
       </para>
     </listitem>
   </varlistentry>
@@ -1200,7 +1200,7 @@ Create an application package.
     <term><command>-f &lt;full-name&gt;, --full-name &lt;full-name&gt;</command></term>
     <listitem>
       <para>
-      Fully-qualified name of the Application in Catalog
+      Fully-qualified name of the Application in Catalog.
       </para>
     </listitem>
   </varlistentry>
@@ -1208,7 +1208,7 @@ Create an application package.
     <term><command>-a &lt;AUTHOR&gt;, --author &lt;AUTHOR&gt;</command></term>
     <listitem>
       <para>
-      Name of the publisher
+      Name of the publisher.
       </para>
     </listitem>
   </varlistentry>
@@ -1216,7 +1216,7 @@ Create an application package.
     <term><command>--tags [&lt;TAG1 TAG2&gt; [&lt;TAG1 TAG2&gt; ...]]</command></term>
     <listitem>
       <para>
-      A list of keywords connected to the application
+      A list of keywords connected to the application.
       </para>
     </listitem>
   </varlistentry>
@@ -1224,7 +1224,7 @@ Create an application package.
     <term><command>-d &lt;DESCRIPTION&gt;, --description &lt;DESCRIPTION&gt;</command></term>
     <listitem>
       <para>
-      Detailed description for the Application in Catalog
+      Detailed description for the Application in Catalog.
       </para>
     </listitem>
   </varlistentry>
@@ -1232,7 +1232,7 @@ Create an application package.
     <term><command>-o &lt;PACKAGE_NAME&gt;, --output &lt;PACKAGE_NAME&gt;</command></term>
     <listitem>
       <para>
-      The name of the output file archive to save locally
+      The name of the output file archive to save locally.
       </para>
     </listitem>
   </varlistentry>
@@ -1240,7 +1240,7 @@ Create an application package.
     <term><command>-u &lt;UI_DEFINITION&gt;, --ui &lt;UI_DEFINITION&gt;</command></term>
     <listitem>
       <para>
-      Dynamic UI form definition
+      Dynamic UI form definition.
       </para>
     </listitem>
   </varlistentry>
@@ -1248,7 +1248,7 @@ Create an application package.
     <term><command>--type TYPE</command></term>
     <listitem>
       <para>
-        Package type. Possible values: Application or Library
+        Package type. Possible values: Application or Library.
       </para>
     </listitem>
   </varlistentry>
@@ -1256,7 +1256,7 @@ Create an application package.
     <term><command>-l &lt;LOGO&gt;, --logo &lt;LOGO&gt;</command></term>
     <listitem>
       <para>
-      Path to the package logo
+      Path to the package logo.
       </para>
     </listitem>
   </varlistentry>
@@ -1273,7 +1273,7 @@ Delete a package.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        Package ID to delete
+        Package ID to delete.
       </para>
     </listitem>
   </varlistentry>
@@ -1290,7 +1290,7 @@ Download a package to a filename or stdout.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        Package ID to download
+        Package ID to download.
       </para>
     </listitem>
   </varlistentry>
@@ -1298,7 +1298,8 @@ Download a package to a filename or stdout.
     <term><command>file</command></term>
     <listitem>
       <para>
-        Filename for download (defaults to stdout)
+        Filename to save package to. If it is not specified and there is no
+      stdout redirection the package won't be saved.
       </para>
     </listitem>
   </varlistentry>
@@ -1320,7 +1321,7 @@ be separated with a space and have to be already present in murano.
     <listitem>
       <para>
         URL of the murano zip package, FQPN, or path to zip
-      package
+      package.
       </para>
     </listitem>
   </varlistentry>
@@ -1331,7 +1332,7 @@ be separated with a space and have to be already present in murano.
     <term><command>-c [&lt;CATEGORY&gt; [&lt;CATEGORY&gt; ...]], --categories [&lt;CATEGORY&gt; [&lt;CATEGORY&gt; ...]]</command></term>
     <listitem>
       <para>
-      Category list to attach
+      Category list to attach.
       </para>
     </listitem>
   </varlistentry>
@@ -1340,7 +1341,7 @@ be separated with a space and have to be already present in murano.
     <listitem>
       <para>
         Make the package available for users from other
-      tenants
+      tenants.
       </para>
     </listitem>
   </varlistentry>
@@ -1349,7 +1350,7 @@ be separated with a space and have to be already present in murano.
     <listitem>
       <para>
         Version of the package to use from repository (ignored
-      when importing with multiple packages)
+      when importing with multiple packages).
       </para>
     </listitem>
   </varlistentry>
@@ -1357,7 +1358,7 @@ be separated with a space and have to be already present in murano.
     <term><command>--exists-action {a,s,u}</command></term>
     <listitem>
       <para>
-      Default action when a package already exists
+      Default action when a package already exists.
       </para>
     </listitem>
   </varlistentry>
@@ -1392,7 +1393,7 @@ specified path. If path doesn't exist it will be created.
     <term><command>&lt;PACKAGE&gt;</command></term>
     <listitem>
       <para>
-        Package URL or name
+        Package URL or name.
       </para>
     </listitem>
   </varlistentry>
@@ -1404,7 +1405,7 @@ specified path. If path doesn't exist it will be created.
     <listitem>
       <para>
       Path to the directory to store package. If not set
-      will use current directory
+      will use current directory.
       </para>
     </listitem>
   </varlistentry>
@@ -1413,7 +1414,7 @@ specified path. If path doesn't exist it will be created.
     <listitem>
       <para>
         Version of the package to use from repository (ignored
-      when saving with multiple packages)
+      when saving with multiple packages).
       </para>
     </listitem>
   </varlistentry>
@@ -1421,7 +1422,7 @@ specified path. If path doesn't exist it will be created.
     <term><command>--no-images</command></term>
     <listitem>
       <para>
-        If set will skip images downloading
+        If set will skip images downloading.
       </para>
     </listitem>
   </varlistentry>
@@ -1438,7 +1439,7 @@ Display details for a package.
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        Package ID to show
+        Package ID to show.
       </para>
     </listitem>
   </varlistentry>
@@ -1459,7 +1460,7 @@ Edit the package in question
     <term><command>&lt;ID&gt;</command></term>
     <listitem>
       <para>
-        Package ID to update
+        Package ID to update.
       </para>
     </listitem>
   </varlistentry>
@@ -1470,7 +1471,7 @@ Edit the package in question
     <term><command>--is-public {true|false}</command></term>
     <listitem>
       <para>
-      Make package available to users from other tenants
+      Make package available to users from other tenants.
       </para>
     </listitem>
   </varlistentry>
@@ -1478,7 +1479,7 @@ Edit the package in question
     <term><command>--enabled {true|false}</command></term>
     <listitem>
       <para>
-      Make package active and available for deployments
+      Make package active and available for deployments.
       </para>
     </listitem>
   </varlistentry>
@@ -1486,7 +1487,7 @@ Edit the package in question
     <term><command>--name NAME</command></term>
     <listitem>
       <para>
-        New name for the package
+        New name for the package.
       </para>
     </listitem>
   </varlistentry>
@@ -1494,7 +1495,7 @@ Edit the package in question
     <term><command>--description DESCRIPTION</command></term>
     <listitem>
       <para>
-      New package description
+      New package description.
       </para>
     </listitem>
   </varlistentry>
@@ -1502,7 +1503,7 @@ Edit the package in question
     <term><command>--tags [&lt;TAG&gt; [&lt;TAG&gt; ...]]</command></term>
     <listitem>
       <para>
-      A list of keywords connected to the application
+      A list of keywords connected to the application.
       </para>
     </listitem>
   </varlistentry>
