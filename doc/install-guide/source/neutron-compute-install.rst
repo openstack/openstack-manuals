@@ -7,7 +7,7 @@ group>` for instances.
 Prerequisites
 -------------
 
-Before you install and configure OpenStack Networking, you must
+Before you install and configure OpenStack Networking, you must configure
 kernel networking parameters to disable reverse-path filtering:
 
 #. Edit the ``/etc/sysctl.conf`` file to contain the following parameters:
