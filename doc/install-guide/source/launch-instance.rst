@@ -128,3 +128,14 @@ volume and attach it to an instance.
    :maxdepth: 1
 
    launch-instance-cinder.rst
+
+Orchestration
+-------------
+
+If your environment includes the Orchestration service, you can create
+a stack that launches an instance.
+
+.. toctree::
+   :maxdepth: 1
+
+   launch-instance-heat.rst

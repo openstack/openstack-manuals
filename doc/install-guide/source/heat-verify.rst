@@ -1,9 +1,9 @@
-================
-Verify operation
-================
+.. _heat-verify:
 
-This section describes how to verify operation of the Orchestration
-module (heat).
+Verify operation
+~~~~~~~~~~~~~~~~
+
+Verify operation of the Orchestration module.
 
 #. Source the ``admin`` tenant credentials:
 
@@ -11,64 +11,22 @@ module (heat).
 
       $ source admin-openrc.sh
 
-#. The Orchestration module uses templates to describe stacks.
-   To learn about the template language, see `the Template Guide
-   <http://docs.openstack.org/developer/heat/template_guide/index.html>`__
-   in the `Heat developer documentation
-   <http://docs.openstack.org/developer/heat/index.html>`__.
-
-   Create a test template in the ``test-stack.yml``
-   file with the following content:
-
-   .. code-block:: yaml
-
-      heat_template_version: 2014-10-16
-      description: A simple server.
-
-      parameters:
-        ImageID:
-          type: string
-          description: Image use to boot a server
-        NetID:
-          type: string
-          description: Network ID for the server
-
-      resources:
-        server:
-          type: OS::Nova::Server
-          properties:
-            image: { get_param: ImageID }
-            flavor: m1.tiny
-            networks:
-            - network: { get_param: NetID }
-
-      outputs:
-        private_ip:
-          description: IP address of the server in the private network
-          value: { get_attr: [ server, first_address ] }</programlisting>
-
-#. Use the :command:`heat stack-create` command to create a stack from the
-   template:
+#. List service components to verify successful launch and
+   registration of each process:
 
    .. code-block:: console
 
-      $ NET_ID=$(nova net-list | awk '/ demo-net / { print $2 }')
-      $ heat stack-create -f test-stack.yml \
-        -P "ImageID=cirros;NetID=$NET_ID" testStack
-      +--------------------------------------+------------+--------------------+----------------------+
-      | id                                   | stack_name | stack_status       | creation_time        |
-      +--------------------------------------+------------+--------------------+----------------------+
-      | 477d96b4-d547-4069-938d-32ee990834af | testStack  | CREATE_IN_PROGRESS | 2014-04-06T15:11:01Z |
-      +--------------------------------------+------------+--------------------+----------------------+
+      $ heat service-list
+      +------------+-------------+--------------------------------------+------------+--------+----------------------------+--------+
+      | hostname   | binary      | engine_id                            | host       | topic  | updated_at                 | status |
+      +------------+-------------+--------------------------------------+------------+--------+----------------------------+--------+
+      | controller | heat-engine | 3e85d1ab-a543-41aa-aa97-378c381fb958 | controller | engine | 2015-10-13T14:16:06.000000 | up     |
+      | controller | heat-engine | 45dbdcf6-5660-4d5f-973a-c4fc819da678 | controller | engine | 2015-10-13T14:16:06.000000 | up     |
+      | controller | heat-engine | 51162b63-ecb8-4c6c-98c6-993af899c4f7 | controller | engine | 2015-10-13T14:16:06.000000 | up     |
+      | controller | heat-engine | 8d7edc6d-77a6-460d-bd2a-984d76954646 | controller | engine | 2015-10-13T14:16:06.000000 | up     |
+      +------------+-------------+--------------------------------------+------------+--------+----------------------------+--------+
 
-#. Use the :command:`heat stack-list` command to verify
-   successful creation of the stack:
+   .. note::
 
-   .. code-block:: console
-
-      $ heat stack-list
-      +--------------------------------------+------------+-----------------+----------------------+
-      | id                                   | stack_name | stack_status    | creation_time        |
-      +--------------------------------------+------------+-----------------+----------------------+
-      | 477d96b4-d547-4069-938d-32ee990834af | testStack  | CREATE_COMPLETE | 2014-04-06T15:11:01Z |
-      +--------------------------------------+------------+-----------------+----------------------+
+      This output should indicate four ``heat-engine`` components
+      on the controller node.

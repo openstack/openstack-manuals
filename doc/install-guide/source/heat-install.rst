@@ -1,14 +1,15 @@
-===================================
-Install and configure Orchestration
-===================================
+.. _heat-install:
+
+Install and configure
+~~~~~~~~~~~~~~~~~~~~~
 
 This section describes how to install and configure the
 Orchestration module, code-named heat, on the controller node.
 
 .. only:: obs or rdo or ubuntu
 
-   To configure prerequisites
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Prerequisites
+   -------------
 
    Before you install and configure Orchestration, you must create a
    database, service credentials, and API endpoints.
@@ -54,30 +55,27 @@ Orchestration module, code-named heat, on the controller node.
 
         .. code-block:: console
 
-           $ openstack user create --password-prompt heat
+           $ openstack user create --domain default --password-prompt heat
            User Password:
            Repeat User Password:
-           +----------+----------------------------------+
-           | Field    | Value                            |
-           +----------+----------------------------------+
-           | email    | None                             |
-           | enabled  | True                             |
-           | id       | 7fd67878dcd04d0393469ef825a7e005 |
-           | name     | heat                             |
-           | username | heat                             |
-           +----------+----------------------------------+
+           +-----------+----------------------------------+
+           | Field     | Value                            |
+           +-----------+----------------------------------+
+           | domain_id | default                          |
+           | enabled   | True                             |
+           | id        | ca2e175b851943349be29a328cc5e360 |
+           | name      | heat                             |
+           +-----------+----------------------------------+
 
       * Add the ``admin`` role to the ``heat`` user:
 
         .. code-block:: console
 
            $ openstack role add --project service --user heat admin
-           +-------+----------------------------------+
-           | Field | Value                            |
-           +-------+----------------------------------+
-           | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
-           | name  | admin                            |
-           +-------+----------------------------------+
+
+        .. note::
+
+           This command provides no output.
 
       * Create the ``heat_stack_owner`` role:
 
@@ -87,21 +85,19 @@ Orchestration module, code-named heat, on the controller node.
            +-------+----------------------------------+
            | Field | Value                            |
            +-------+----------------------------------+
-           | id    | c0a1cbee7261446abc873392f616de87 |
+           | id    | 15e34f0c4fed4e68b3246275883c8630 |
            | name  | heat_stack_owner                 |
            +-------+----------------------------------+
 
-      * Add the ``heat_stack_owner`` role to the ``demo`` tenant and user:
+      * Add the ``heat_stack_owner`` role to the ``demo`` project and user:
 
         .. code-block:: console
 
            $ openstack role add --project demo --user demo heat_stack_owner
-           +-------+----------------------------------+
-           | Field | Value                            |
-           +-------+----------------------------------+
-           | id    | c0a1cbee7261446abc873392f616de87 |
-           | name  | heat_stack_owner                 |
-           +-------+----------------------------------+
+
+        .. note::
+
+           This command provides no output.
 
         .. note::
 
@@ -116,7 +112,7 @@ Orchestration module, code-named heat, on the controller node.
            +-------+----------------------------------+
            | Field | Value                            |
            +-------+----------------------------------+
-           | id    | e01546b1a81c4e32a6d14a9259e60154 |
+           | id    | 88849d41a55d4d1d91e4f11bffd8fc5c |
            | name  | heat_stack_user                  |
            +-------+----------------------------------+
 
@@ -139,10 +135,11 @@ Orchestration module, code-named heat, on the controller node.
            +-------------+----------------------------------+
            | description | Orchestration                    |
            | enabled     | True                             |
-           | id          | 031112165cad4c2bb23e84603957de29 |
+           | id          | 727841c6f5df4773baa4e8a5ae7d72eb |
            | name        | heat                             |
            | type        | orchestration                    |
            +-------------+----------------------------------+
+
            $ openstack service create --name heat-cfn \
              --description "Orchestration"  cloudformation
            +-------------+----------------------------------+
@@ -150,7 +147,7 @@ Orchestration module, code-named heat, on the controller node.
            +-------------+----------------------------------+
            | description | Orchestration                    |
            | enabled     | True                             |
-           | id          | 297740d74c0a446bbff867acdccb33fa |
+           | id          | c42cede91a4e47c3b10c8aedc8d890c6 |
            | name        | heat-cfn                         |
            | type        | cloudformation                   |
            +-------------+----------------------------------+
@@ -161,104 +158,110 @@ Orchestration module, code-named heat, on the controller node.
 
          $ openstack endpoint create --region RegionOne \
            orchestration public http://controller:8004/v1/%\(tenant_id\)s
-           +--------------+----------------------------------+
-           | Field        | Value                            |
-           +--------------+----------------------------------+
-           | enabled      | True                             |
-           | id           | 340be3625e9b4239a6415d034e98aace |
-           | interface    | public                           |
-           | region       | RegionOne                        |
-           | region_id    | RegionOne                        |
-           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
-           | service_name | heat                             |
-           | service_type | orchestration                    |
-           | url          | http://controller:8004           |
-           +--------------+----------------------------------+
+         +--------------+-----------------------------------------+
+         | Field        | Value                                   |
+         +--------------+-----------------------------------------+
+         | enabled      | True                                    |
+         | id           | 3f4dab34624e4be7b000265f25049609        |
+         | interface    | public                                  |
+         | region       | RegionOne                               |
+         | region_id    | RegionOne                               |
+         | service_id   | 727841c6f5df4773baa4e8a5ae7d72eb        |
+         | service_name | heat                                    |
+         | service_type | orchestration                           |
+         | url          | http://controller:8004/v1/%(tenant_id)s |
+         +--------------+-----------------------------------------+
+
          $ openstack endpoint create --region RegionOne \
            orchestration internal http://controller:8004/v1/%\(tenant_id\)s
-           +--------------+----------------------------------+
-           | Field        | Value                            |
-           +--------------+----------------------------------+
-           | enabled      | True                             |
-           | id           | 340be3625e9b4239a6415d034e98aace |
-           | interface    | internal                         |
-           | region       | RegionOne                        |
-           | region_id    | RegionOne                        |
-           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
-           | service_name | heat                             |
-           | service_type | orchestration                    |
-           | url          | http://controller:8004           |
-           +--------------+----------------------------------+
+         +--------------+-----------------------------------------+
+         | Field        | Value                                   |
+         +--------------+-----------------------------------------+
+         | enabled      | True                                    |
+         | id           | 9489f78e958e45cc85570fec7e836d98        |
+         | interface    | internal                                |
+         | region       | RegionOne                               |
+         | region_id    | RegionOne                               |
+         | service_id   | 727841c6f5df4773baa4e8a5ae7d72eb        |
+         | service_name | heat                                    |
+         | service_type | orchestration                           |
+         | url          | http://controller:8004/v1/%(tenant_id)s |
+         +--------------+-----------------------------------------+
+
          $ openstack endpoint create --region RegionOne \
            orchestration admin http://controller:8004/v1/%\(tenant_id\)s
-           +--------------+----------------------------------+
-           | Field        | Value                            |
-           +--------------+----------------------------------+
-           | enabled      | True                             |
-           | id           | 340be3625e9b4239a6415d034e98aace |
-           | interface    | admin                            |
-           | region       | RegionOne                        |
-           | region_id    | RegionOne                        |
-           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
-           | service_name | heat                             |
-           | service_type | orchestration                    |
-           | url          | http://controller:8004           |
-           +--------------+----------------------------------+
+         +--------------+-----------------------------------------+
+         | Field        | Value                                   |
+         +--------------+-----------------------------------------+
+         | enabled      | True                                    |
+         | id           | 76091559514b40c6b7b38dde790efe99        |
+         | interface    | admin                                   |
+         | region       | RegionOne                               |
+         | region_id    | RegionOne                               |
+         | service_id   | 727841c6f5df4773baa4e8a5ae7d72eb        |
+         | service_name | heat                                    |
+         | service_type | orchestration                           |
+         | url          | http://controller:8004/v1/%(tenant_id)s |
+         +--------------+-----------------------------------------+
 
          $ openstack endpoint create --region RegionOne \
            cloudformation public http://controller:8000/v1
-           +--------------+----------------------------------+
-           | Field        | Value                            |
-           +--------------+----------------------------------+
-           | enabled      | True                             |
-           | id           | 340be3625e9b4239a6415d034e98aace |
-           | interface    | public                           |
-           | region       | RegionOne                        |
-           | region_id    | RegionOne                        |
-           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
-           | service_name | heat-cfn                         |
-           | service_type | cloudformation                   |
-           | url          | http://controller:8000           |
-           +--------------+----------------------------------+
+         +--------------+----------------------------------+
+         | Field        | Value                            |
+         +--------------+----------------------------------+
+         | enabled      | True                             |
+         | id           | b3ea082e019c4024842bf0a80555052c |
+         | interface    | public                           |
+         | region       | RegionOne                        |
+         | region_id    | RegionOne                        |
+         | service_id   | c42cede91a4e47c3b10c8aedc8d890c6 |
+         | service_name | heat-cfn                         |
+         | service_type | cloudformation                   |
+         | url          | http://controller:8000/v1        |
+         +--------------+----------------------------------+
 
          $ openstack endpoint create --region RegionOne \
            cloudformation internal http://controller:8000/v1
-           +--------------+----------------------------------+
-           | Field        | Value                            |
-           +--------------+----------------------------------+
-           | enabled      | True                             |
-           | id           | 340be3625e9b4239a6415d034e98aace |
-           | interface    | internal                         |
-           | region       | RegionOne                        |
-           | region_id    | RegionOne                        |
-           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
-           | service_name | heat-cfn                         |
-           | service_type | cloudformation                   |
-           | url          | http://controller:8000           |
-           +--------------+----------------------------------+
+         +--------------+----------------------------------+
+         | Field        | Value                            |
+         +--------------+----------------------------------+
+         | enabled      | True                             |
+         | id           | 169df4368cdc435b8b115a9cb084044e |
+         | interface    | internal                         |
+         | region       | RegionOne                        |
+         | region_id    | RegionOne                        |
+         | service_id   | c42cede91a4e47c3b10c8aedc8d890c6 |
+         | service_name | heat-cfn                         |
+         | service_type | cloudformation                   |
+         | url          | http://controller:8000/v1        |
+         +--------------+----------------------------------+
 
          $ openstack endpoint create --region RegionOne \
            cloudformation admin http://controller:8000/v1
-           +--------------+----------------------------------+
-           | Field        | Value                            |
-           +--------------+----------------------------------+
-           | enabled      | True                             |
-           | id           | 340be3625e9b4239a6415d034e98aace |
-           | interface    | admin                            |
-           | region       | RegionOne                        |
-           | region_id    | RegionOne                        |
-           | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
-           | service_name | heat-cfn                         |
-           | service_type | cloudformation                   |
-           | url          | http://controller:8000           |
-           +--------------+----------------------------------+
+         +--------------+----------------------------------+
+         | Field        | Value                            |
+         +--------------+----------------------------------+
+         | enabled      | True                             |
+         | id           | 3d3edcd61eb343c1bbd629aa041ff88b |
+         | interface    | internal                         |
+         | region       | RegionOne                        |
+         | region_id    | RegionOne                        |
+         | service_id   | c42cede91a4e47c3b10c8aedc8d890c6 |
+         | service_name | heat-cfn                         |
+         | service_type | cloudformation                   |
+         | url          | http://controller:8000/v1        |
+         +--------------+----------------------------------+
 
-To install and configure the Orchestration components
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Install and configure components
+--------------------------------
+
+.. only:: obs or rdo or ubuntu
+
+   .. include:: shared/note_configuration_vary_by_distribution.rst
 
 .. only:: obs
 
-   #. Run the following commands to install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -267,7 +270,7 @@ To install and configure the Orchestration components
 
 .. only:: rdo
 
-   #. Run the following commands to install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
@@ -276,30 +279,16 @@ To install and configure the Orchestration components
 
 .. only:: ubuntu
 
-   #. Run the following commands to install the packages:
+   #. Install the packages:
 
       .. code-block:: console
 
-         # apt-get install heat-api heat-api-cfn heat-enginea \
+         # apt-get install heat-api heat-api-cfn heat-engine \
            python-heatclient
 
 .. only:: obs or rdo or ubuntu
 
-   2.
-
-      .. only:: rdo
-
-         .. Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1213476.
-
-         Copy the ``/usr/share/heat/heat-dist.conf`` file
-         to ``/etc/heat/heat.conf``.
-
-         .. code-block:: console
-
-            # cp /usr/share/heat/heat-dist.conf /etc/heat/heat.conf
-            # chown -R heat:heat /etc/heat/heat.conf
-
-      Edit the ``/etc/heat/heat.conf`` file and complete the following
+   2. Edit the ``/etc/heat/heat.conf`` file and complete the following
       actions:
 
       * In the ``[database]`` section, configure database access:
@@ -338,6 +327,13 @@ To install and configure the Orchestration components
 
            [keystone_authtoken]
            ...
+           auth_url = http://controller:35357
+           auth_plugin = password
+           project_domain_id = default
+           user_domain_id = default
+           project_name = service
+           username = heat
+           password = HEAT_PASS
            auth_uri = http://controller:5000/v2.0
            identity_uri = http://controller:35357
            admin_tenant_name = service
@@ -356,6 +352,11 @@ To install and configure the Orchestration components
            Comment out any ``auth_host``, ``auth_port``, and
            ``auth_protocol`` options because the
            ``identity_uri`` option replaces them.
+
+        .. note::
+
+           The contents of the [keystone_authtoken] section vary
+           slightly from other services.
 
       * In the ``[DEFAULT]`` section, configure the metadata and
         wait condition URLs:
@@ -388,9 +389,10 @@ To install and configure the Orchestration components
 
            [DEFAULT]
            ...
-           verbose = True</programlisting>
+           verbose = True
 
-   3.
+   3. Create a domain for users and projects managed by Orchestration
+      stacks.
 
       * Source the ``admin`` credentials to gain access to
         admin-only CLI commands:
@@ -399,16 +401,17 @@ To install and configure the Orchestration components
 
            $ source admin-openrc.sh
 
-      * Create the heat domain in Identity service:
+      * Create the heat domain in the Identity service:
 
         .. code-block:: console
 
-           $ heat-keystone-setup-domain \
-             --stack-user-domain-name heat_user_domain \
-             --stack-domain-admin heat_domain_admin \
-             --stack-domain-admin-password HEAT_DOMAIN_PASS
+           $ heat-keystone-setup-domain
 
-        Replace ``HEAT_DOMAIN_PASS`` with a suitable password.
+        .. note::
+
+           Do not add the output of this command to the
+           ``/etc/heat/heat.conf`` file because it already
+           contains these configuration options.
 
    4. Populate the Orchestration database:
 
@@ -441,8 +444,8 @@ To install and configure the Orchestration components
            ...
            auth_uri = http://controller:5000/v2.0
 
-To finalize installation
-~~~~~~~~~~~~~~~~~~~~~~~~
+Finalize installation
+---------------------
 
 .. only:: obs or rdo
 
