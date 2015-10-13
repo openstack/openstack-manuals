@@ -24,6 +24,7 @@ Contents
    compute.rst
    objectstorage.rst
    blockstorage.rst
+   shared_file_systems.rst
    networking.rst
    telemetry.rst
    database.rst
