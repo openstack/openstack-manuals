@@ -335,15 +335,29 @@ Install and configure the database server
       - In the ``[mysqld]`` section, set the following keys to enable
         useful options and the UTF-8 character set:
 
-        .. code-block:: ini
+        .. only:: rdo
 
-           [mysqld]
-           ...
-           default-storage-engine = innodb
-           innodb_file_per_table
-           collation-server = utf8_general_ci
-           init-connect = 'SET NAMES utf8'
-           character-set-server = utf8
+           .. code-block:: ini
+
+              [mysqld]
+              ...
+              default-storage-engine = innodb
+              innodb_file_per_table
+              collation-server = utf8_general_ci
+              init-connect = 'SET NAMES utf8'
+              character-set-server = utf8
+
+        .. only:: obs
+
+           .. code-block:: ini
+
+              [mysqld]
+              ...
+              default-storage-engine = innodb
+              innodb_file_per_table
+              collation-server = utf8_general_ci
+              character-set-server = utf8
+
 
 To finalize installation
 ------------------------
