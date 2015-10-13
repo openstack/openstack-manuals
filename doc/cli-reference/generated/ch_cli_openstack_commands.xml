@@ -15,7 +15,7 @@
        OpenStack command-line interface (CLI).
 
        This chapter documents <command>openstack</command> version
-        <literal>1.7.0</literal>.
+        <literal>1.7.1</literal>.
     </para>
 
     <para>For help on a specific <command>openstack</command>
@@ -227,10 +227,10 @@
     <listitem>
       <para>
       Select an authentication type. Available types:
-      v2token, admin_token, v2password, v3password,
-      v3scopedsaml, v3oidcpassword, v3unscopedadfs, token,
-      v3token, password, v3unscopedsaml, osc_password,
-      token_endpoint. Default: selected based on --os-
+      osc_password, token_endpoint, v2token, admin_token,
+      v2password, v3password, v3scopedsaml, v3oidcpassword,
+      v3unscopedadfs, token, v3token, password,
+      v3unscopedsaml. Default: selected based on --os-
       username/--os-token (Env: OS_AUTH_TYPE)
       </para>
     </listitem>
@@ -239,14 +239,14 @@
     <term><command>--os-project-domain-id &lt;auth-project-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Domain ID containing project With
+      With osc_password: Domain ID containing project With
+      v3password: Domain ID containing project With
       v3scopedsaml: Domain ID containing project With
       v3oidcpassword: Domain ID containing project With
       v3unscopedadfs: Domain ID containing project With
       token: Domain ID containing project With v3token:
       Domain ID containing project With password: Domain ID
       containing project With v3unscopedsaml: Domain ID
-      containing project With osc_password: Domain ID
       containing project (Env: OS_PROJECT_DOMAIN_ID)
       </para>
     </listitem>
@@ -267,14 +267,14 @@
     <term><command>--os-project-name &lt;auth-project-name&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Project name to scope to With
+      With osc_password: Project name to scope to With
+      v3password: Project name to scope to With
       v3scopedsaml: Project name to scope to With
       v3oidcpassword: Project name to scope to With
       v3unscopedadfs: Project name to scope to With token:
       Project name to scope to With v3token: Project name to
       scope to With password: Project name to scope to With
-      v3unscopedsaml: Project name to scope to With
-      osc_password: Project name to scope to (Env:
+      v3unscopedsaml: Project name to scope to (Env:
       OS_PROJECT_NAME)
       </para>
     </listitem>
@@ -283,12 +283,12 @@
     <term><command>--os-trust-id &lt;auth-trust-id&gt;</command></term>
     <listitem>
       <para>
-      With v2token: Trust ID With v2password: Trust ID With
-      v3password: Trust ID With v3scopedsaml: Trust ID With
-      v3oidcpassword: Trust ID With v3unscopedadfs: Trust ID
-      With token: Trust ID With v3token: Trust ID With
-      password: Trust ID With v3unscopedsaml: Trust ID With
-      osc_password: Trust ID (Env: OS_TRUST_ID)
+      With osc_password: Trust ID With v2token: Trust ID
+      With v2password: Trust ID With v3password: Trust ID
+      With v3scopedsaml: Trust ID With v3oidcpassword: Trust
+      ID With v3unscopedadfs: Trust ID With token: Trust ID
+      With v3token: Trust ID With password: Trust ID With
+      v3unscopedsaml: Trust ID (Env: OS_TRUST_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -305,15 +305,14 @@
     <term><command>--os-domain-name &lt;auth-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Domain name to scope to With
-      v3scopedsaml: Domain name to scope to With
-      v3oidcpassword: Domain name to scope to With
-      v3unscopedadfs: Domain name to scope to With token:
-      Domain name to scope to With v3token: Domain name to
-      scope to With password: Domain name to scope to With
-      v3unscopedsaml: Domain name to scope to With
-      osc_password: Domain name to scope to (Env:
-      OS_DOMAIN_NAME)
+      With osc_password: Domain name to scope to With
+      v3password: Domain name to scope to With v3scopedsaml:
+      Domain name to scope to With v3oidcpassword: Domain
+      name to scope to With v3unscopedadfs: Domain name to
+      scope to With token: Domain name to scope to With
+      v3token: Domain name to scope to With password: Domain
+      name to scope to With v3unscopedsaml: Domain name to
+      scope to (Env: OS_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -321,9 +320,9 @@
     <term><command>--os-user-domain-id &lt;auth-user-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With v3password: User's domain id With password:
-      User's domain id With osc_password: User's domain id
-      (Env: OS_USER_DOMAIN_ID)
+      With osc_password: User's domain id With v3password:
+      User's domain id With password: User's domain id (Env:
+      OS_USER_DOMAIN_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -350,14 +349,13 @@
     <term><command>--os-domain-id &lt;auth-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Domain ID to scope to With
-      v3scopedsaml: Domain ID to scope to With
-      v3oidcpassword: Domain ID to scope to With
-      v3unscopedadfs: Domain ID to scope to With token:
-      Domain ID to scope to With v3token: Domain ID to scope
-      to With password: Domain ID to scope to With
-      v3unscopedsaml: Domain ID to scope to With
-      osc_password: Domain ID to scope to (Env:
+      With osc_password: Domain ID to scope to With
+      v3password: Domain ID to scope to With v3scopedsaml:
+      Domain ID to scope to With v3oidcpassword: Domain ID
+      to scope to With v3unscopedadfs: Domain ID to scope to
+      With token: Domain ID to scope to With v3token: Domain
+      ID to scope to With password: Domain ID to scope to
+      With v3unscopedsaml: Domain ID to scope to (Env:
       OS_DOMAIN_ID)
       </para>
     </listitem>
@@ -366,9 +364,9 @@
     <term><command>--os-user-domain-name &lt;auth-user-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With v3password: User's domain name With password:
-      User's domain name With osc_password: User's domain
-      name (Env: OS_USER_DOMAIN_NAME)
+      With osc_password: User's domain name With v3password:
+      User's domain name With password: User's domain name
+      (Env: OS_USER_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -385,9 +383,9 @@
     <term><command>--os-user-id &lt;auth-user-id&gt;</command></term>
     <listitem>
       <para>
-      With v2password: User ID to login with With
-      v3password: User ID With password: User id With
-      osc_password: User id (Env: OS_USER_ID)
+      With osc_password: User id With v2password: User ID to
+      login with With v3password: User ID With password:
+      User id (Env: OS_USER_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -406,11 +404,11 @@
     <term><command>--os-username &lt;auth-username&gt;</command></term>
     <listitem>
       <para>
-      With v2password: Username to login with With
-      v3password: Username With v3oidcpassword: Username
-      With v3unscopedadfs: Username With password: Username
-      With v3unscopedsaml: Username With osc_password:
-      Username (Env: OS_USERNAME)
+      With osc_password: Username With v2password: Username
+      to login with With v3password: Username With
+      v3oidcpassword: Username With v3unscopedadfs: Username
+      With password: Username With v3unscopedsaml: Username
+      (Env: OS_USERNAME)
       </para>
     </listitem>
   </varlistentry>
@@ -418,15 +416,14 @@
     <term><command>--os-auth-url &lt;auth-auth-url&gt;</command></term>
     <listitem>
       <para>
-      With v2token: Authentication URL With v2password:
-      Authentication URL With v3password: Authentication URL
-      With v3scopedsaml: Authentication URL With
-      v3oidcpassword: Authentication URL With
-      v3unscopedadfs: Authentication URL With token:
-      Authentication URL With v3token: Authentication URL
-      With password: Authentication URL With v3unscopedsaml:
-      Authentication URL With osc_password: Authentication
-      URL (Env: OS_AUTH_URL)
+      With osc_password: Authentication URL With v2token:
+      Authentication URL With v2password: Authentication URL
+      With v3password: Authentication URL With v3scopedsaml:
+      Authentication URL With v3oidcpassword: Authentication
+      URL With v3unscopedadfs: Authentication URL With
+      token: Authentication URL With v3token: Authentication
+      URL With password: Authentication URL With
+      v3unscopedsaml: Authentication URL (Env: OS_AUTH_URL)
       </para>
     </listitem>
   </varlistentry>
@@ -452,15 +449,15 @@
     <term><command>--os-project-domain-name &lt;auth-project-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Domain name containing project With
+      With osc_password: Domain name containing project With
+      v3password: Domain name containing project With
       v3scopedsaml: Domain name containing project With
       v3oidcpassword: Domain name containing project With
       v3unscopedadfs: Domain name containing project With
       token: Domain name containing project With v3token:
       Domain name containing project With password: Domain
       name containing project With v3unscopedsaml: Domain
-      name containing project With osc_password: Domain name
-      containing project (Env: OS_PROJECT_DOMAIN_NAME)
+      name containing project (Env: OS_PROJECT_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -468,11 +465,11 @@
     <term><command>--os-password &lt;auth-password&gt;</command></term>
     <listitem>
       <para>
-      With v2password: Password to use With v3password:
-      User's password With v3oidcpassword: Password With
-      v3unscopedadfs: Password With password: User's
-      password With v3unscopedsaml: Password With
-      osc_password: User's password (Env: OS_PASSWORD)
+      With osc_password: User's password With v2password:
+      Password to use With v3password: User's password With
+      v3oidcpassword: Password With v3unscopedadfs: Password
+      With password: User's password With v3unscopedsaml:
+      Password (Env: OS_PASSWORD)
       </para>
     </listitem>
   </varlistentry>
@@ -480,9 +477,9 @@
     <term><command>--os-endpoint &lt;auth-endpoint&gt;</command></term>
     <listitem>
       <para>
-      With admin_token: The endpoint that will always be
-      used With token_endpoint: The endpoint that will
-      always be used (Env: OS_ENDPOINT)
+      With token_endpoint: The endpoint that will always be
+      used With admin_token: The endpoint that will always
+      be used (Env: OS_ENDPOINT)
       </para>
     </listitem>
   </varlistentry>
@@ -499,12 +496,12 @@
     <term><command>--os-token &lt;auth-token&gt;</command></term>
     <listitem>
       <para>
+      With token_endpoint: The token that will always be
+      used With token_endpoint: Authentication token to use
       With v2token: Token With admin_token: The token that
       will always be used With v3scopedsaml: Token to
       authenticate with With token: Token to authenticate
-      with With v3token: Token to authenticate with With
-      token_endpoint: The token that will always be used
-      With token_endpoint: Authentication token to use (Env:
+      with With v3token: Token to authenticate with (Env:
       OS_TOKEN)
       </para>
     </listitem>
@@ -513,15 +510,14 @@
     <term><command>--os-project-id &lt;auth-project-id&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Project ID to scope to With
-      v3scopedsaml: Project ID to scope to With
-      v3oidcpassword: Project ID to scope to With
-      v3unscopedadfs: Project ID to scope to With token:
-      Project ID to scope to With v3token: Project ID to
-      scope to With password: Project ID to scope to With
-      v3unscopedsaml: Project ID to scope to With
-      osc_password: Project ID to scope to (Env:
-      OS_PROJECT_ID)
+      With osc_password: Project ID to scope to With
+      v3password: Project ID to scope to With v3scopedsaml:
+      Project ID to scope to With v3oidcpassword: Project ID
+      to scope to With v3unscopedadfs: Project ID to scope
+      to With token: Project ID to scope to With v3token:
+      Project ID to scope to With password: Project ID to
+      scope to With v3unscopedsaml: Project ID to scope to
+      (Env: OS_PROJECT_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -2899,10 +2895,10 @@ Save an image locally
                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                            [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                            [--prefix PREFIX] [--name &lt;name&gt;]
-                           [--architecture &lt;architecture&gt;] [--protected]
-                           [--instance-uuid &lt;instance_uuid&gt;]
-                           [--min-disk &lt;disk-gb&gt;] [--visibility &lt;visibility&gt;]
-                           [--kernel-id &lt;kernel-id&gt;]
+                           [--architecture &lt;architecture&gt;]
+                           [--protected | --unprotected] [--public]
+                           [--private] [--instance-uuid &lt;instance_uuid&gt;]
+                           [--min-disk &lt;disk-gb&gt;] [--kernel-id &lt;kernel-id&gt;]
                            [--os-version &lt;os-version&gt;]
                            [--disk-format &lt;disk-format&gt;]
                            [--os-distro &lt;os-distro&gt;] [--owner &lt;owner&gt;]
@@ -2957,6 +2953,30 @@ Set image properties
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--unprotected</command></term>
+    <listitem>
+      <para>
+        Allow image to be deleted (default)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--public</command></term>
+    <listitem>
+      <para>
+        Image is accessible to the public
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--private</command></term>
+    <listitem>
+      <para>
+        Image is inaccessible to the public (default)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--instance-uuid &lt;instance_uuid&gt;</command></term>
     <listitem>
       <para>
@@ -2969,15 +2989,6 @@ Set image properties
     <listitem>
       <para>
         Minimum disk size needed to boot image, in gigabytes
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--visibility &lt;visibility&gt;</command></term>
-    <listitem>
-      <para>
-      Scope of image accessibility. Valid values: ['public',
-      'private']
       </para>
     </listitem>
   </varlistentry>
