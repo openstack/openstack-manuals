@@ -21,6 +21,7 @@ Contents
    docs-structure.rst
    content-specs.rst
    docs_builds.rst
+   build-locally.rst
    writing-style.rst
    json_conventions.rst
    doc-bugs.rst
