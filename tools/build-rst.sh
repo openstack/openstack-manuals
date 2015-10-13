@@ -74,6 +74,8 @@ else
     BUILD_DIR="$DIRECTORY/$BUILD/html"
 fi
 
+DOCTREES="${BUILD_DIR}.doctrees"
+
 if [ -z "$TAG" ] ; then
     echo "Checking $DIRECTORY..."
 else
@@ -83,12 +85,14 @@ fi
 if [ "$LINKCHECK" = "1" ] ; then
     # Show sphinx-build invocation for easy reproduction
     set -x
-    sphinx-build -E -W -b linkcheck $TAG_OPT $DIRECTORY/source $BUILD_DIR
+    sphinx-build -E -W -d $DOCTREES -b linkcheck $TAG_OPT \
+        $DIRECTORY/source $BUILD_DIR
     set +x
 else
     # Show sphinx-build invocation for easy reproduction
     set -x
-    sphinx-build -E -W -b html $TAG_OPT $DIRECTORY/source $BUILD_DIR
+    sphinx-build -E -W  -d $DOCTREES -b html $TAG_OPT \
+        $DIRECTORY/source $BUILD_DIR
     set +x
 
     # Copy RST
