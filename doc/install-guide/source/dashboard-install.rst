@@ -90,7 +90,13 @@ To configure the dashboard
      ``/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py``
      file and complete the following actions:
 
-.. only:: rdo or ubuntu or debian
+.. only:: rdo
+
+   * Edit the
+     ``/etc/openstack-dashboard/local_settings``
+     file and complete the following actions:
+
+.. only:: ubuntu or debian
 
    * Edit the
      ``/etc/openstack-dashboard/local_settings.py``
