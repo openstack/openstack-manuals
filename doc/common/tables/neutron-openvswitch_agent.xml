@@ -41,6 +41,10 @@
         <td>(BoolOpt) Set or un-set the don't fragment (DF) bit on outgoing IP packet carrying GRE/VXLAN tunnel.</td>
       </tr>
       <tr>
+        <td><option>drop_flows_on_start</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Reset flow table on start. Setting this to True will cause brief traffic interruption.</td>
+      </tr>
+      <tr>
         <td><option>enable_distributed_routing</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) Make the l2 agent run in DVR mode.</td>
       </tr>
@@ -65,6 +69,10 @@
         <td>(IntOpt) Set new timeout in seconds for new rpc calls after agent receives SIGTERM. If value is set to 0, rpc timeout won't be changed</td>
       </tr>
       <tr>
+        <td><option>tunnel_csum</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Set or un-set the tunnel header checksum  on outgoing IP packet carrying GRE/VXLAN tunnel.</td>
+      </tr>
+      <tr>
         <td><option>tunnel_types</option> = <replaceable></replaceable></td>
         <td>(ListOpt) Network types supported by the agent (gre and/or vxlan).</td>
       </tr>
@@ -77,18 +85,15 @@
         <td>(IntOpt) The UDP port to use for VXLAN tunnels.</td>
       </tr>
       <tr>
-        <th colspan="2">[CISCO_N1K]</th>
-      </tr>
-      <tr>
-        <td><option>local_ip</option> = <replaceable>10.0.0.3</replaceable></td>
-        <td>(StrOpt) N1K Local IP</td>
-      </tr>
-      <tr>
         <th colspan="2">[OVS]</th>
       </tr>
       <tr>
         <td><option>bridge_mappings</option> = <replaceable></replaceable></td>
         <td>(ListOpt) List of &lt;physical_network&gt;:&lt;bridge&gt;. Deprecated for ofagent.</td>
+      </tr>
+      <tr>
+        <td><option>datapath_type</option> = <replaceable>system</replaceable></td>
+        <td>(StrOpt) OVS datapath to use.</td>
       </tr>
       <tr>
         <td><option>int_peer_patch_port</option> = <replaceable>patch-tun</replaceable></td>
@@ -103,8 +108,24 @@
         <td>(IPOpt) Local IP address of tunnel endpoint.</td>
       </tr>
       <tr>
+        <td><option>of_connect_timeout</option> = <replaceable>30</replaceable></td>
+        <td>(IntOpt) Timeout in seconds to wait for the local switch connecting the controller. Used only for 'native' driver.</td>
+      </tr>
+      <tr>
         <td><option>of_interface</option> = <replaceable>ovs-ofctl</replaceable></td>
         <td>(StrOpt) OpenFlow interface to use.</td>
+      </tr>
+      <tr>
+        <td><option>of_listen_address</option> = <replaceable>127.0.0.1</replaceable></td>
+        <td>(IPOpt) Address to listen on for OpenFlow connections. Used only for 'native' driver.</td>
+      </tr>
+      <tr>
+        <td><option>of_listen_port</option> = <replaceable>6633</replaceable></td>
+        <td>(IntOpt) Port to listen on for OpenFlow connections. Used only for 'native' driver.</td>
+      </tr>
+      <tr>
+        <td><option>of_request_timeout</option> = <replaceable>10</replaceable></td>
+        <td>(IntOpt) Timeout in seconds to wait for a single OpenFlow request. Used only for 'native' driver.</td>
       </tr>
       <tr>
         <td><option>ovsdb_connection</option> = <replaceable>tcp:127.0.0.1:6640</replaceable></td>

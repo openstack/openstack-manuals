@@ -33,6 +33,10 @@
         <td>(StrOpt) The physical network managed by the switches.</td>
       </tr>
       <tr>
+        <td><option>never_cache_ssh_connection</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Prevent caching ssh connections to Nexus device</td>
+      </tr>
+      <tr>
         <td><option>persistent_switch_config</option> = <replaceable>False</replaceable></td>
         <td>(BoolOpt) To make Nexus configuration persistent</td>
       </tr>
@@ -55,10 +59,6 @@
       <tr>
         <td><option>switch_heartbeat_time</option> = <replaceable>0</replaceable></td>
         <td>(IntOpt) Periodic time to check switch connection. (0=disabled)</td>
-      </tr>
-      <tr>
-        <td><option>switch_replay_count</option> = <replaceable>3</replaceable></td>
-        <td>(IntOpt) Number of times to attempt config replay with switch.</td>
       </tr>
       <tr>
         <td><option>vlan_name_prefix</option> = <replaceable>q-</replaceable></td>
@@ -151,14 +151,6 @@
         <td>(StrOpt) Cisco Nexus1000V default policy profile.</td>
       </tr>
       <tr>
-        <td><option>default_vlan_network_profile</option> = <replaceable>default-vlan-np</replaceable></td>
-        <td>(StrOpt) Cisco Nexus1000V default network profile for VLAN networks.</td>
-      </tr>
-      <tr>
-        <td><option>default_vxlan_network_profile</option> = <replaceable>default-vxlan-np</replaceable></td>
-        <td>(StrOpt) Cisco Nexus1000V default network profile for VXLAN networks.</td>
-      </tr>
-      <tr>
         <td><option>http_pool_size</option> = <replaceable>4</replaceable></td>
         <td>(IntOpt) Number of threads to use to make HTTP requests.</td>
       </tr>
@@ -177,6 +169,10 @@
       <tr>
         <td><option>poll_duration</option> = <replaceable>60</replaceable></td>
         <td>(IntOpt) Cisco Nexus1000V policy profile polling duration in seconds.</td>
+      </tr>
+      <tr>
+        <td><option>restrict_network_profiles</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Restrict the visibility of network profiles to the tenants.</td>
       </tr>
       <tr>
         <td><option>restrict_policy_profiles</option> = <replaceable>False</replaceable></td>
@@ -212,6 +208,17 @@
       <tr>
         <td><option>ucsm_username</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Username for UCS Manager. This is a required field to communicate with a Cisco UCS Manager.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[ml2_type_nexus_vxlan]</th>
+      </tr>
+      <tr>
+        <td><option>mcast_ranges</option> = <replaceable></replaceable></td>
+        <td>(ListOpt) List of multicast groups to be used for global VNIDsin the format - a:b,c,e:f.</td>
+      </tr>
+      <tr>
+        <td><option>vni_ranges</option> = <replaceable></replaceable></td>
+        <td>(ListOpt) List of global VNID ranges in the format - a:b, c:d.Multiple ranges can be separated by a comma</td>
       </tr>
     </tbody>
   </table>

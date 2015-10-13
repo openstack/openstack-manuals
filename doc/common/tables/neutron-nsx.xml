@@ -38,6 +38,14 @@
         <td>(ListOpt) Lists the NSX controllers in this cluster</td>
       </tr>
       <tr>
+        <td><option>nsx_default_interface_name</option> = <replaceable>breth0</replaceable></td>
+        <td>(StrOpt) Name of the interface on a L2 Gateway transport nodewhich should be used by default when setting up a network connection</td>
+      </tr>
+      <tr>
+        <td><option>nsx_l2gw_driver</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Class path for the L2 gateway backend driver</td>
+      </tr>
+      <tr>
         <td><option>nsx_password</option> = <replaceable>admin</replaceable></td>
         <td>(StrOpt) Password for NSX controllers in this cluster</td>
       </tr>
@@ -89,6 +97,43 @@
         <td>(StrOpt) The default option leverages service nodes to perform packet replication though one could set to this to 'source' to perform replication locally. This is useful if one does not want to deploy a service node(s). It must be set to 'service' for leveraging distributed routers.</td>
       </tr>
       <tr>
+        <th colspan="2">[NSX_DHCP]</th>
+      </tr>
+      <tr>
+        <td><option>default_lease_time</option> = <replaceable>43200</replaceable></td>
+        <td>(IntOpt) Default DHCP lease time</td>
+      </tr>
+      <tr>
+        <td><option>domain_name</option> = <replaceable>openstacklocal</replaceable></td>
+        <td>(StrOpt) Domain to use for building the hostnames</td>
+      </tr>
+      <tr>
+        <td><option>extra_domain_name_servers</option> = <replaceable></replaceable></td>
+        <td>(ListOpt) Comma separated list of additional domain name servers</td>
+      </tr>
+      <tr>
+        <th colspan="2">[NSX_LSN]</th>
+      </tr>
+      <tr>
+        <td><option>sync_on_missing_data</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Pull LSN information from NSX in case it is missing from the local data store. This is useful to rebuild the local store in case of server recovery.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[NSX_METADATA]</th>
+      </tr>
+      <tr>
+        <td><option>metadata_server_address</option> = <replaceable>127.0.0.1</replaceable></td>
+        <td>(StrOpt) IP address used by Metadata server.</td>
+      </tr>
+      <tr>
+        <td><option>metadata_server_port</option> = <replaceable>8775</replaceable></td>
+        <td>(IntOpt) TCP Port used by Metadata server.</td>
+      </tr>
+      <tr>
+        <td><option>metadata_shared_secret</option> = <replaceable></replaceable></td>
+        <td>(StrOpt) Shared secret to sign instance-id request</td>
+      </tr>
+      <tr>
         <th colspan="2">[NSX_SYNC]</th>
       </tr>
       <tr>
@@ -115,16 +160,48 @@
         <th colspan="2">[nsx_v3]</th>
       </tr>
       <tr>
+        <td><option>ca_file</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Specify a CA bundle file to use in verifying the NSX Manager server certificate.</td>
+      </tr>
+      <tr>
+        <td><option>default_bridge_cluster_uuid</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Default bridge cluster identifier for L2 gateway. This needs to be created in NSX before using the L2 gateway service plugin.</td>
+      </tr>
+      <tr>
         <td><option>default_edge_cluster_uuid</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Default edge cluster identifier</td>
       </tr>
       <tr>
+        <td><option>default_overlay_tz_uuid</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) This is the UUID of the default NSX overlay transport zone that will be used for creating tunneled isolated Neutron networks. It needs to be created in NSX before starting Neutron with the NSX plugin.</td>
+      </tr>
+      <tr>
+        <td><option>default_tier0_router_uuid</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Default tier0 router identifier</td>
+      </tr>
+      <tr>
+        <td><option>default_vlan_tz_uuid</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) This is the UUID of the default NSX VLAN transport zone that will be used for bridging between Neutron networks. It needs to be created in NSX before starting Neutron with the NSX plugin.</td>
+      </tr>
+      <tr>
+        <td><option>insecure</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) If true, the NSX Manager server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "ca_file" is set.</td>
+      </tr>
+      <tr>
+        <td><option>nsx_manager</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) IP address of the NSX manager</td>
+      </tr>
+      <tr>
         <td><option>nsx_password</option> = <replaceable>default</replaceable></td>
-        <td>(StrOpt) Password for NSX controllers in this cluster</td>
+        <td>(StrOpt) Password for the NSX manager</td>
       </tr>
       <tr>
         <td><option>nsx_user</option> = <replaceable>admin</replaceable></td>
-        <td>(StrOpt) User name for NSX controllers in this cluster</td>
+        <td>(StrOpt) User name for the NSX manager</td>
+      </tr>
+      <tr>
+        <td><option>retries</option> = <replaceable>10</replaceable></td>
+        <td>(IntOpt) Maximum number of times to retry API request</td>
       </tr>
       <tr>
         <th colspan="2">[nsxv]</th>
@@ -132,6 +209,10 @@
       <tr>
         <td><option>backup_edge_pool</option> = <replaceable>service:large:4:10, service:compact:4:10, vdr:large:4:10</replaceable></td>
         <td>(ListOpt) Defines edge pool using the format: &lt;edge_type&gt;:[edge_size]:&lt;min_edges&gt;:&lt;max_edges&gt;.edge_type: service,vdr. edge_size: compact, large, xlarge, quadlarge and default is large.</td>
+      </tr>
+      <tr>
+        <td><option>ca_file</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Specify a CA bundle file to use in verifying the NSXv server certificate.</td>
       </tr>
       <tr>
         <td><option>cluster_moid</option> = <replaceable></replaceable></td>
@@ -166,8 +247,20 @@
         <td>(StrOpt) Username to configure for Edge appliance login</td>
       </tr>
       <tr>
+        <td><option>edge_ha</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Enable HA for NSX Edges</td>
+      </tr>
+      <tr>
+        <td><option>exclusive_router_appliance_size</option> = <replaceable>compact</replaceable></td>
+        <td>(StrOpt) Edge appliance size to be used for creating exclusive router. Valid values: ['compact', 'large', 'xlarge', 'quadlarge']. This edge_appliance_size will be picked up if --router-size parameter is not specified while doing neutron router-create</td>
+      </tr>
+      <tr>
         <td><option>external_network</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Network ID for physical network connectivity</td>
+      </tr>
+      <tr>
+        <td><option>insecure</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) If true, the NSXv server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "ca_file" is set.</td>
       </tr>
       <tr>
         <td><option>locking_coordinator_url</option> = <replaceable>None</replaceable></td>
@@ -179,7 +272,11 @@
       </tr>
       <tr>
         <td><option>maximum_tunnels_per_vnic</option> = <replaceable>20</replaceable></td>
-        <td>(IntOpt) Maximum number of sub interfaces supported per vnic in edge. The value should be in 1-110.</td>
+        <td>(IntOpt) Maximum number of sub interfaces supported per vnic in edge.</td>
+      </tr>
+      <tr>
+        <td><option>metadata_initializer</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) If True, the server instance will attempt to initialize the metadata infrastructure</td>
       </tr>
       <tr>
         <td><option>metadata_shared_secret</option> = <replaceable>None</replaceable></td>
