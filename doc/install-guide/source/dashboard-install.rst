@@ -107,7 +107,7 @@ To configure the dashboard
 
   .. code-block:: ini
 
-     ALLOWED_HOSTS = '*'
+     ALLOWED_HOSTS = ['*', ]
 
 * Configure the ``memcached`` session storage service:
 
