@@ -18,6 +18,10 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
+        <td><option>interface_driver</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) The driver used to manage the virtual interface.</td>
+      </tr>
+      <tr>
         <td><option>loadbalancer_pool_scheduler_driver</option> = <replaceable>neutron_lbaas.services.loadbalancer.agent_scheduler.ChanceScheduler</replaceable></td>
         <td>(StrOpt) Driver to use for scheduling pool to a default loadbalancer agent</td>
       </tr>
@@ -26,74 +30,55 @@
         <td>(StrOpt) Driver to use for scheduling to a default loadbalancer agent</td>
       </tr>
       <tr>
-        <th colspan="2">[quotas]</th>
+        <td><option>periodic_interval</option> = <replaceable>40</replaceable></td>
+        <td>(IntOpt) Seconds between running periodic tasks</td>
       </tr>
       <tr>
-        <td><option>quota_vip</option> = <replaceable>10</replaceable></td>
-        <td>(StrOpt) Number of vips allowed per tenant.A negative value means unlimited.</td>
+        <td><option>loadbalancer_scheduler_driver</option> = <replaceable>neutron_lbaas.agent_scheduler.ChanceScheduler</replaceable></td>
+        <td>(StrOpt) Driver to use for scheduling to a default loadbalancer agent</td>
       </tr>
       <tr>
-        <td><option>quota_pool</option> = <replaceable>10</replaceable></td>
-        <td>(StrOpt)  Number of pools allowed per tenant.A negative value means unlimited.</td>
-      </tr>
-      <tr>
-        <td><option>quota_member</option> = <replaceable>-1</replaceable></td>
-        <td>(StrOpt)  Number of pool members allowed per tenant. A negative value means unlimited.</td>
-      </tr>
-      <tr>
-        <td><option>quota_health_monitor</option> = <replaceable>-1</replaceable></td>
-        <td>(StrOpt)  Number of health monitors allowed per tenant. A negative value means unlimited.</td>
-      </tr>
-      <tr>
-        <td><option>quota_loadbalancer</option> = <replaceable>10</replaceable></td>
-        <td>(StrOpt)  Number of loadbalancers allowed per tenant. A negative value means unlimited.</td>
-      </tr>
-      <tr>
-        <td><option>quota_listener</option> = <replaceable>-1</replaceable></td>
-        <td>(StrOpt)  Number of listeners allowed per tenant. A negative value means unlimited.</td>
-      </tr>
-      <tr>
-        <td><option>quota_healthmonitor</option> = <replaceable>-1</replaceable></td>
-        <td>(StrOpt)  Number of v2 health monitors allowed per tenant. A negative value means unlimited.</td>
+        <td><option>loadbalancer_pool_scheduler_driver</option> = <replaceable>neutron_lbaas.services.loadbalancer.agent_scheduler.ChanceScheduler</replaceable></td>
+        <td>(StrOpt) Driver to use for scheduling pool to a default loadbalancer agent</td>
       </tr>
       <tr>
         <th colspan="2">[service_auth]</th>
       </tr>
       <tr>
         <td><option>auth_url</option> = <replaceable>http://127.0.0.1:5000/v2.0</replaceable></td>
-        <td>(StrOpt) An auth_url that points to the root of a V2 identity server.</td>
+        <td>(StrOpt) Authentication endpoint</td>
       </tr>
       <tr>
-        <td><option>admin_tenant_name</option> = <replaceable>%SERVICE_TENANT_NAME%</replaceable></td>
-        <td>(StrOpt) Service tenant name.</td>
+        <td><option>admin_tenant_name</option> = <replaceable>admin</replaceable></td>
+        <td>(StrOpt) The service admin tenant name</td>
       </tr>
       <tr>
-        <td><option>admin_user</option> = <replaceable>%SERVICE_USER%</replaceable></td>
-        <td>(StrOpt) Service user.</td>
+        <td><option>admin_user</option> = <replaceable>admin</replaceable></td>
+        <td>(StrOpt) The service admin user name</td>
       </tr>
       <tr>
-        <td><option>admin_password</option> = <replaceable>%SERVICE_PASSWORD%</replaceable></td>
-        <td>(StrOpt) Service password.</td>
+        <td><option>admin_password</option> = <replaceable>password</replaceable></td>
+        <td>(StrOpt) The service admin password</td>
       </tr>
       <tr>
-        <td><option>admin_user_domain</option> = <replaceable>%SERVICE_USER_DOMAIN%</replaceable></td>
-        <td>(StrOpt) Service User Domain.</td>
+        <td><option>admin_user_domain</option> = <replaceable>admin</replaceable></td>
+        <td>(StrOpt) The admin user domain name</td>
       </tr>
       <tr>
-        <td><option>admin_project_domain</option> = <replaceable>%SERVICE_PROJECT_DOMAIN%</replaceable></td>
-        <td>(StrOpt) Service Project Domain.</td>
+        <td><option>admin_project_domain</option> = <replaceable>admin</replaceable></td>
+        <td>(StrOpt) The admin project domain name</td>
       </tr>
       <tr>
-        <td><option>region</option> = <replaceable>%REGION%</replaceable></td>
-        <td>(StrOpt) Region.</td>
+        <td><option>region</option> = <replaceable>RegionOne</replaceable></td>
+        <td>(StrOpt) The deployment region</td>
       </tr>
       <tr>
         <td><option>service_name</option> = <replaceable>lbaas</replaceable></td>
-        <td>(StrOpt) The name of the service.</td>
+        <td>(StrOpt) The name of the service</td>
       </tr>
       <tr>
         <td><option>auth_version</option> = <replaceable>2</replaceable></td>
-        <td>(StrOpt) The version of service authorization.</td>
+        <td>(StrOpt) The auth version used to authenticate</td>
       </tr>
       <tr>
         <th colspan="2">[service_providers]</th>
@@ -111,7 +96,46 @@
       </tr>
       <tr>
         <td><option>storage_path</option> = <replaceable>/var/lib/neutron-lbaas/certificates/</replaceable></td>
-        <td>(StrOpt) Absolute path of the certificate storage directory. Defaults to /var/lib/magnum/certificates/.</td>
+        <td>(StrOpt) Absolute path to the certificate storage directory. Defaults to env[OS_LBAAS_TLS_STORAGE].</td>
+      </tr>
+      <tr>
+        <th colspan="2">[service_auth]</th>
+      </tr>
+      <tr>
+        <td><option>admin_password</option> = <replaceable>password</replaceable></td>
+        <td>(StrOpt) The service admin password</td>
+      </tr>
+      <tr>
+        <td><option>admin_project_domain</option> = <replaceable>admin</replaceable></td>
+        <td>(StrOpt) The admin project domain name</td>
+      </tr>
+      <tr>
+        <td><option>admin_tenant_name</option> = <replaceable>admin</replaceable></td>
+        <td>(StrOpt) The service admin tenant name</td>
+      </tr>
+      <tr>
+        <td><option>admin_user</option> = <replaceable>admin</replaceable></td>
+        <td>(StrOpt) The service admin user name</td>
+      </tr>
+      <tr>
+        <td><option>admin_user_domain</option> = <replaceable>admin</replaceable></td>
+        <td>(StrOpt) The admin user domain name</td>
+      </tr>
+      <tr>
+        <td><option>auth_url</option> = <replaceable>http://127.0.0.1:5000/v2.0</replaceable></td>
+        <td>(StrOpt) Authentication endpoint</td>
+      </tr>
+      <tr>
+        <td><option>auth_version</option> = <replaceable>2</replaceable></td>
+        <td>(StrOpt) The auth version used to authenticate</td>
+      </tr>
+      <tr>
+        <td><option>region</option> = <replaceable>RegionOne</replaceable></td>
+        <td>(StrOpt) The deployment region</td>
+      </tr>
+      <tr>
+        <td><option>service_name</option> = <replaceable>lbaas</replaceable></td>
+        <td>(StrOpt) The name of the service</td>
       </tr>
     </tbody>
   </table>

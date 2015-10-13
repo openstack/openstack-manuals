@@ -15,100 +15,6 @@
     </thead>
     <tbody>
       <tr>
-        <th colspan="2">[CISCO]</th>
-      </tr>
-      <tr>
-        <td><option>model_class</option> = <replaceable>neutron.plugins.cisco.models.virt_phy_sw_v2.VirtualPhysicalSwitchModelV2</replaceable></td>
-        <td>(StrOpt) Model Class</td>
-      </tr>
-      <tr>
-        <td><option>nexus_l3_enable</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Enable L3 support on the Nexus switches</td>
-      </tr>
-      <tr>
-        <td><option>provider_vlan_auto_create</option> = <replaceable>True</replaceable></td>
-        <td>(BoolOpt) Provider VLANs are automatically created as needed on the Nexus switch</td>
-      </tr>
-      <tr>
-        <td><option>provider_vlan_auto_trunk</option> = <replaceable>True</replaceable></td>
-        <td>(BoolOpt) Provider VLANs are automatically trunked as needed on the ports of the Nexus switch</td>
-      </tr>
-      <tr>
-        <td><option>provider_vlan_name_prefix</option> = <replaceable>p-</replaceable></td>
-        <td>(StrOpt) VLAN Name prefix for provider vlans</td>
-      </tr>
-      <tr>
-        <td><option>svi_round_robin</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Distribute SVI interfaces over all switches</td>
-      </tr>
-      <tr>
-        <td><option>vlan_name_prefix</option> = <replaceable>q-</replaceable></td>
-        <td>(StrOpt) VLAN Name prefix</td>
-      </tr>
-      <tr>
-        <th colspan="2">[CISCO_N1K]</th>
-      </tr>
-      <tr>
-        <td><option>bridge_mappings</option> = <replaceable></replaceable></td>
-        <td>(StrOpt) N1K Bridge Mappings</td>
-      </tr>
-      <tr>
-        <td><option>default_network_profile</option> = <replaceable>default_network_profile</replaceable></td>
-        <td>(StrOpt) N1K default network profile</td>
-      </tr>
-      <tr>
-        <td><option>default_policy_profile</option> = <replaceable>service_profile</replaceable></td>
-        <td>(StrOpt) N1K default policy profile</td>
-      </tr>
-      <tr>
-        <td><option>enable_tunneling</option> = <replaceable>True</replaceable></td>
-        <td>(BoolOpt) N1K Enable Tunneling</td>
-      </tr>
-      <tr>
-        <td><option>http_pool_size</option> = <replaceable>4</replaceable></td>
-        <td>(IntOpt) Number of threads to use to make HTTP requests</td>
-      </tr>
-      <tr>
-        <td><option>http_timeout</option> = <replaceable>15</replaceable></td>
-        <td>(IntOpt) N1K http timeout duration in seconds</td>
-      </tr>
-      <tr>
-        <td><option>integration_bridge</option> = <replaceable>br-int</replaceable></td>
-        <td>(StrOpt) N1K Integration Bridge</td>
-      </tr>
-      <tr>
-        <td><option>network_node_policy_profile</option> = <replaceable>dhcp_pp</replaceable></td>
-        <td>(StrOpt) N1K policy profile for network node</td>
-      </tr>
-      <tr>
-        <td><option>network_vlan_ranges</option> = <replaceable>vlan:1:4095</replaceable></td>
-        <td>(StrOpt) N1K Network VLAN Ranges</td>
-      </tr>
-      <tr>
-        <td><option>poll_duration</option> = <replaceable>60</replaceable></td>
-        <td>(IntOpt) N1K Policy profile polling duration in seconds</td>
-      </tr>
-      <tr>
-        <td><option>restrict_network_profiles</option> = <replaceable>True</replaceable></td>
-        <td>(BoolOpt) Restrict tenants from accessing network profiles belonging to some other tenant</td>
-      </tr>
-      <tr>
-        <td><option>restrict_policy_profiles</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Restrict the visibility of policy profiles to the tenants</td>
-      </tr>
-      <tr>
-        <td><option>tenant_network_type</option> = <replaceable>local</replaceable></td>
-        <td>(StrOpt) N1K Tenant Network Type</td>
-      </tr>
-      <tr>
-        <td><option>tunnel_bridge</option> = <replaceable>br-tun</replaceable></td>
-        <td>(StrOpt) N1K Tunnel Bridge</td>
-      </tr>
-      <tr>
-        <td><option>vxlan_id_ranges</option> = <replaceable>5000:10000</replaceable></td>
-        <td>(StrOpt) N1K VXLAN ID Ranges</td>
-      </tr>
-      <tr>
         <th colspan="2">[cfg_agent]</th>
       </tr>
       <tr>
@@ -116,8 +22,20 @@
         <td>(IntOpt) Time in seconds for connecting to a hosting device</td>
       </tr>
       <tr>
+        <td><option>fw_svc_helper_class</option> = <replaceable>neutron_fwaas.services.firewall.drivers.cisco.csr_firewall_svc_helper.CsrFirewallServiceHelper</replaceable></td>
+        <td>(StrOpt) Path of the firewall service helper class.</td>
+      </tr>
+      <tr>
         <td><option>hosting_device_dead_timeout</option> = <replaceable>300</replaceable></td>
         <td>(IntOpt) The time in seconds until a backlogged hosting device is presumed dead. This value should be set up high enough to recover from a period of connectivity loss or high load when the device may not be responding.</td>
+      </tr>
+      <tr>
+        <td><option>routing_svc_helper_class</option> = <replaceable>networking_cisco.plugins.cisco.cfg_agent.service_helpers.routing_svc_helper.RoutingServiceHelper</replaceable></td>
+        <td>(StrOpt) Path of the routing service helper class.</td>
+      </tr>
+      <tr>
+        <td><option>rpc_loop_interval</option> = <replaceable>10</replaceable></td>
+        <td>(IntOpt) Interval when the process_services() loop executes in seconds. This is when the config agent lets each service helper to process its neutron resources.</td>
       </tr>
       <tr>
         <th colspan="2">[cisco_csr_ipsec]</th>
@@ -173,6 +91,10 @@
         <td>(StrOpt) Config agent driver for CSR1kv.</td>
       </tr>
       <tr>
+        <td><option>csr1kv_configdrive_template</option> = <replaceable>csr1kv_cfg_template</replaceable></td>
+        <td>(StrOpt) CSR1kv configdrive template file.</td>
+      </tr>
+      <tr>
         <td><option>csr1kv_device_driver</option> = <replaceable>networking_cisco.plugins.cisco.l3.hosting_device_drivers.csr1kv_hd_driver.CSR1kvHostingDeviceDriver</replaceable></td>
         <td>(StrOpt) Hosting device driver for CSR1kv.</td>
       </tr>
@@ -202,6 +124,29 @@
       <tr>
         <td><option>max_vsm_retries</option> = <replaceable>2</replaceable></td>
         <td>(IntOpt) Maximum number of retry attempts for VSM REST API.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[n1kv]</th>
+      </tr>
+      <tr>
+        <td><option>management_port_profile</option> = <replaceable>osn_mgmt_pp</replaceable></td>
+        <td>(StrOpt) Name of N1kv port profile for management ports.</td>
+      </tr>
+      <tr>
+        <td><option>t1_network_profile</option> = <replaceable>osn_t1_np</replaceable></td>
+        <td>(StrOpt) Name of N1kv network profile for T1 networks (i.e., trunk networks for VXLAN segmented traffic).</td>
+      </tr>
+      <tr>
+        <td><option>t1_port_profile</option> = <replaceable>osn_t1_pp</replaceable></td>
+        <td>(StrOpt) Name of N1kv port profile for T1 ports (i.e., ports carrying traffic from VXLAN segmented networks).</td>
+      </tr>
+      <tr>
+        <td><option>t2_network_profile</option> = <replaceable>osn_t2_np</replaceable></td>
+        <td>(StrOpt) Name of N1kv network profile for T2 networks (i.e., trunk networks for VLAN segmented traffic).</td>
+      </tr>
+      <tr>
+        <td><option>t2_port_profile</option> = <replaceable>osn_t2_pp</replaceable></td>
+        <td>(StrOpt) Name of N1kv port profile for T2 ports (i.e., ports carrying traffic from VLAN segmented networks).</td>
       </tr>
     </tbody>
   </table>

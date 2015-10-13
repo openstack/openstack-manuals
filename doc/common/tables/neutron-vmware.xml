@@ -18,8 +18,8 @@
         <th colspan="2">[DEFAULT]</th>
       </tr>
       <tr>
-        <td><option>default_interface_name</option> = <replaceable>breth0</replaceable></td>
-        <td>(StrOpt) Name of the interface on a L2 Gateway transport nodewhich should be used by default when setting up a network connection</td>
+        <td><option>default_interface_name</option> = <replaceable>FortyGigE1/0/1</replaceable></td>
+        <td>(StrOpt) default_interface_name of the l2 gateway</td>
       </tr>
       <tr>
         <th colspan="2">[OVSVAPP]</th>
@@ -27,10 +27,6 @@
       <tr>
         <td><option>agent_driver</option> = <replaceable>networking_vsphere.agent.ovsvapp_agent.OVSvAppL2Agent</replaceable></td>
         <td>(StrOpt) OVSvApp Agent implementation.</td>
-      </tr>
-      <tr>
-        <td><option>agent_maintenance</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Turn on this flag during agent updates to help prevent datapath outage.</td>
       </tr>
       <tr>
         <td><option>bridge_mappings</option> = <replaceable></replaceable></td>
@@ -41,12 +37,20 @@
         <td>(IntOpt) Do not fragment.</td>
       </tr>
       <tr>
+        <td><option>enable_ovsvapp_monitor</option> = <replaceable>True</replaceable></td>
+        <td>(BoolOpt) To monitor the OVSvApp Agents.</td>
+      </tr>
+      <tr>
         <td><option>integration_bridge</option> = <replaceable>br-int</replaceable></td>
         <td>(StrOpt) Integration Bridge.</td>
       </tr>
       <tr>
         <td><option>local_ip</option> = <replaceable></replaceable></td>
         <td>(StrOpt) Local IP address of VXLAN tunnel endpoint.</td>
+      </tr>
+      <tr>
+        <td><option>monitoring_ip</option> = <replaceable></replaceable></td>
+        <td>(StrOpt) IP address for monitoring OVS Status.</td>
       </tr>
       <tr>
         <td><option>network_manager</option> = <replaceable>networking_vsphere.drivers.manager.VcenterManager</replaceable></td>
@@ -69,6 +73,10 @@
         <td>(StrOpt) Tunnel Bridge for tunneling.</td>
       </tr>
       <tr>
+        <td><option>tunnel_csum</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Set or un-set the tunnel header checksum on outgoing IP packet carrying GRE/VXLAN tunnel.</td>
+      </tr>
+      <tr>
         <td><option>tunnel_types</option> = <replaceable>vxlan</replaceable></td>
         <td>(ListOpt) Tunnel network types supported by the OVSvApp Agent.</td>
       </tr>
@@ -88,7 +96,7 @@
         <td>(BoolOpt) Enable SSL certificate check for vCenter.</td>
       </tr>
       <tr>
-        <td><option>cert_path</option> = <replaceable>/etc/ssl/certs/certs.pem</replaceable></td>
+        <td><option>cert_path</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) Certificate chain path containing cacert of vCenters.</td>
       </tr>
       <tr>
@@ -130,6 +138,25 @@
       <tr>
         <td><option>wsdl_location</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) vCenter server wsdl location.</td>
+      </tr>
+      <tr>
+        <th colspan="2">[vmware]</th>
+      </tr>
+      <tr>
+        <td><option>console_delay_seconds</option> = <replaceable>None</replaceable></td>
+        <td>(IntOpt) Set this value if affected by an increased network latency causing repeated characters when typing in a remote console.</td>
+      </tr>
+      <tr>
+        <td><option>maximum_objects</option> = <replaceable>100</replaceable></td>
+        <td>(IntOpt) The maximum number of ObjectContent data objects that should be returned in a single result. A positive value will cause the operation to suspend the retrieval when the count of objects reaches the specified maximum. The server may still limit the count to something less than the configured value. Any remaining objects may be retrieved with additional requests.</td>
+      </tr>
+      <tr>
+        <td><option>serial_port_proxy_uri</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Identifies a proxy service that provides network access to the serial_port_service_uri. This option is ignored if serial_port_service_uri is not specified.</td>
+      </tr>
+      <tr>
+        <td><option>serial_port_service_uri</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Identifies the remote system that serial port traffic will be sent to. If this is not set, no serial ports will be added to the created VMs.</td>
       </tr>
     </tbody>
   </table>
