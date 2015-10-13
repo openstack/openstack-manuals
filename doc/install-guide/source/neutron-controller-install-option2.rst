@@ -265,7 +265,7 @@ The Linux bridge agent builds layer-2 (bridging and switching) virtual
 networking infrastructure for instances including VXLAN tunnels for private
 networks and handles security groups.
 
-#. Edit the ``/etc/neutron/plugins/ml2/linuxbridge_agent.conf`` file and
+#. Edit the ``/etc/neutron/plugins/ml2/linuxbridge_agent.ini`` file and
    complete the following actions:
 
    * In the ``[linux_bridge]`` section, map the public virtual network to the
