@@ -141,7 +141,7 @@ these suggested solutions.
 
       # echo 'include /var/lib/cinder/volumes/ *' >> /etc/tgt/conf.d/cinder.conf
 
--  No sign of attach call in the ``cinder-api log``.
+-  No sign of attach call in the ``cinder-api`` log.
 
    This is most likely going to be a minor adjustment to your :file:`nova.conf`
    file. Make sure that your :file:`nova.conf` has this entry
