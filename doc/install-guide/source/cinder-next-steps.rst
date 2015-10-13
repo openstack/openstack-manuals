@@ -1,3 +1,5 @@
+.. _cinder-next-steps:
+
 ==========
 Next steps
 ==========

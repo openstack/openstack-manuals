@@ -18,25 +18,31 @@ Create a volume
    .. code-block:: console
 
       $ cinder create --display-name volume1 1
-      +---------------------+--------------------------------------+
-      |       Property      |                Value                 |
-      +---------------------+--------------------------------------+
-      |     attachments     |                  []                  |
-      |  availability_zone  |                 nova                 |
-      |       bootable      |                false                 |
-      |      created_at     |      2015-09-22T13:36:19.457750      |
-      | display_description |                 None                 |
-      |     display_name    |               volume1                |
-      |      encrypted      |                False                 |
-      |          id         | 0a816b7c-e578-4290-bb74-c13b8b90d4e7 |
-      |       metadata      |                  {}                  |
-      |     multiattach     |                false                 |
-      |         size        |                  1                   |
-      |     snapshot_id     |                 None                 |
-      |     source_volid    |                 None                 |
-      |        status       |               creating               |
-      |     volume_type     |                 None                 |
-      +---------------------+--------------------------------------+
+      +---------------------------------------+--------------------------------------+
+      |                Property               |                Value                 |
+      +---------------------------------------+--------------------------------------+
+      |              attachments              |                  []                  |
+      |           availability_zone           |                 nova                 |
+      |                bootable               |                false                 |
+      |          consistencygroup_id          |                 None                 |
+      |               created_at              |      2015-10-12T16:02:29.000000      |
+      |              description              |                 None                 |
+      |               encrypted               |                False                 |
+      |                   id                  | 09e3743e-192a-4ada-b8ee-d35352fa65c4 |
+      |                metadata               |                  {}                  |
+      |              multiattach              |                False                 |
+      |                  name                 |               volume1                |
+      |      os-vol-tenant-attr:tenant_id     |   ed0b60bf607743088218b0a533d5943f   |
+      |   os-volume-replication:driver_data   |                 None                 |
+      | os-volume-replication:extended_status |                 None                 |
+      |           replication_status          |               disabled               |
+      |                  size                 |                  1                   |
+      |              snapshot_id              |                 None                 |
+      |              source_volid             |                 None                 |
+      |                 status                |               creating               |
+      |                user_id                |   58126687cbcc4888bfa9ab73a2256f27   |
+      |              volume_type              |                 None                 |
+      +---------------------------------------+--------------------------------------+
 
 #. After a short time, the volume status should change from ``creating``
    to ``available``:
@@ -44,11 +50,11 @@ Create a volume
    .. code-block:: console
 
       $ cinder list
-      +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
-      |                  ID                  |   Status  | Display Name | Size | Volume Type | Bootable | Attached to |
-      +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
-      | 0a816b7c-e578-4290-bb74-c13b8b90d4e7 | available |   volume1    |  1   |      -      |  false   |             |
-      +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+      +--------------------------------------+-----------+---------+------+-------------+----------+-------------+-------------+
+      |                  ID                  |   Status  |   Name  | Size | Volume Type | Bootable | Multiattach | Attached to |
+      +--------------------------------------+-----------+---------+------+-------------+----------+-------------+-------------+
+      | 09e3743e-192a-4ada-b8ee-d35352fa65c4 | available | volume1 |  1   |      -      |  false   |    False    |             |
+      +--------------------------------------+-----------+---------+------+-------------+----------+-------------+-------------+
 
 Attach the volume to an instance
 --------------------------------
@@ -64,19 +70,19 @@ Attach the volume to an instance
 
    **Example**
 
-   Attach the ``0a816b7c-e578-4290-bb74-c13b8b90d4e7`` volume to the
+   Attach the ``09e3743e-192a-4ada-b8ee-d35352fa65c4`` volume to the
    ``public-instance`` instance:
 
    .. code-block:: console
 
-      $ nova volume-attach public-instance1 0a816b7c-e578-4290-bb74-c13b8b90d4e7
+      $ nova volume-attach public-instance 09e3743e-192a-4ada-b8ee-d35352fa65c4
       +----------+--------------------------------------+
       | Property | Value                                |
       +----------+--------------------------------------+
       | device   | /dev/vdb                             |
       | id       | 158bea89-07db-4ac2-8115-66c0d6a4bb48 |
       | serverId | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf |
-      | volumeId | 0a816b7c-e578-4290-bb74-c13b8b90d4e7 |
+      | volumeId | 09e3743e-192a-4ada-b8ee-d35352fa65c4 |
       +----------+--------------------------------------+
 
 #. List volumes:
@@ -87,7 +93,7 @@ Attach the volume to an instance
       +--------------------------------------+-----------+--------------+------+-------------+--------------------------------------+
       | ID                                   | Status    | Display Name | Size | Volume Type | Attached to                          |
       +--------------------------------------+-----------+--------------+------+-------------+--------------------------------------+
-      | 158bea89-07db-4ac2-8115-66c0d6a4bb48 | in-use    |              | 1    | -           | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf |
+      | 09e3743e-192a-4ada-b8ee-d35352fa65c4 | in-use    |              | 1    | -           | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf |
       +--------------------------------------+-----------+--------------+------+-------------+--------------------------------------+
 
 #. Access your instance using SSH and use the ``fdisk`` command to verify
@@ -118,7 +124,8 @@ Attach the volume to an instance
 
    .. note::
 
-      You must create a partition table and file system to use the volume.
+      You must create a file system on the device and mount it
+      to use the volume.
 
 For more information about how to manage volumes, see the
 `OpenStack User Guide

@@ -1,127 +1,90 @@
-====================================
+.. _cinder-storage:
+
 Install and configure a storage node
-====================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This section describes how to install and configure storage nodes
 for the Block Storage service. For simplicity, this configuration
-references one storage node with an empty local block storage device
-``/dev/sdb`` that contains a suitable partition table with
-one partition ``/dev/sdb1`` occupying the entire device.
+references one storage node with an empty local block storage device.
+The instructions use ``/dev/sdb``, but you can substitute a different
+value for your particular node.
+
 The service provisions logical volumes on this device using the
 :term:`LVM <Logical Volume Manager (LVM)>` driver and provides them
 to instances via :term:`iSCSI` transport. You can follow these
 instructions with minor modifications to horizontally scale your
 environment with additional storage nodes.
 
-To configure prerequisites
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Prerequisites
+-------------
 
-You must configure the storage node before you install and
-configure the volume service on it. Similar to the controller node,
-the storage node contains one network interface on the
-:term:`management network`. The storage node also
-needs an empty block storage device of suitable size for your
-environment. For more information, see :ref:`environment`.
+Before you install and configure the Block Storage service on the
+storage node, you must prepare the storage device.
 
-#. Configure the management interface:
+.. note::
 
-   * IP address: ``10.0.0.41``
+   Perform these steps on the storage node.
 
-   * Network mask: ``255.255.255.0`` (or ``/24``)
+#. Install the supporting utility packages:
 
-   * Default gateway: ``10.0.0.1``
+   .. only:: obs
 
-#. Set the hostname of the node to ``block1``.
+      * Install the LVM packages:
 
-#. .. include:: shared/edit_hosts_file.txt
+        .. code-block:: console
 
-#. Install and configure :term:`NTP` using the instructions in
-   :ref:`environment-ntp`.
+           # zypper install lvm2
 
-.. only:: obs
+      * (Optional) If you intend to use non-raw image types such as QCOW2
+        and VMDK, install the QEMU package:
 
-   5. If you intend to use non-raw image types such as QCOW2 and VMDK,
-      install the QEMU support package:
+        .. code-block:: console
 
-      .. code-block:: console
+           # zypper install qemu
 
-         # zypper install qemu
+   .. only:: rdo
 
-   6. Install the LVM packages:
+      * Install the LVM packages:
 
-.. only:: rdo
+        .. code-block:: console
 
-   5. If you intend to use non-raw image types such as QCOW2 and VMDK,
-      install the QEMU support package:
+           # yum install lvm2
 
-      .. code-block:: console
+      * Start the LVM metadata service and configure it to start when the
+        system boots:
 
-         # yum install qemu
+        .. code-block:: console
 
-   6. Install the LVM packages:
+           # systemctl enable lvm2-lvmetad.service
+           # systemctl start lvm2-lvmetad.service
 
-      .. code-block:: console
+   .. only:: ubuntu
 
-         # yum install lvm2
+        .. code-block:: console
 
-      .. note::
-
-         Some distributions include LVM by default.
-
-      Start the LVM metadata service and configure it to start when the
-      system boots:
-
-      .. code-block:: console
-
-         # systemctl enable lvm2-lvmetad.service
-         # systemctl start lvm2-lvmetad.service
-
-.. only:: ubuntu
-
-   5. If you intend to use non-raw image types such as QCOW2 and VMDK,
-      install the QEMU support package:
-
-      .. code-block:: console
-
-         # apt-get install qemu
-
-      .. note::
-
-         Some distributions include LVM by default.
-
-   6. Install the LVM packages:
-
-      .. code-block:: console
-
-         # apt-get install lvm2
-
-      .. note::
-
-         Some distributions include LVM by default.
-
-
-7. Create the LVM physical volume ``/dev/sdb1``:
-
-   .. code-block:: console
-
-      # pvcreate /dev/sdb1
-      Physical volume "/dev/sdb1" successfully created
+           # apt-get install lvm2
 
    .. note::
 
-      If your system uses a different device name, adjust these
-      steps accordingly.
+      Some distributions include LVM by default.
 
-8. Create the LVM volume group ``cinder-volumes``:
+#. Create the LVM physical volume ``/dev/sdb``:
 
    .. code-block:: console
 
-      # vgcreate cinder-volumes /dev/sdb1
+      # pvcreate /dev/sdb
+      Physical volume "/dev/sdb" successfully created
+
+#. Create the LVM volume group ``cinder-volumes``:
+
+   .. code-block:: console
+
+      # vgcreate cinder-volumes /dev/sdb
       Volume group "cinder-volumes" successfully created
 
    The Block Storage service creates logical volumes in this volume group.
 
-9. Only instances can access Block Storage volumes. However, the
+#. Only instances can access Block Storage volumes. However, the
    underlying operating system manages the devices associated with
    the volumes. By default, the LVM volume scanning tool scans the
    ``/dev`` directory for block storage devices that
@@ -167,8 +130,8 @@ environment. For more information, see :ref:`environment`.
 
            filter = [ "a/sda/", "r/.*/"]
 
-Install and configure Block Storage volume components
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Install and configure components
+--------------------------------
 
 .. only:: obs
 
@@ -340,8 +303,8 @@ Install and configure Block Storage volume components
         ...
         verbose = True
 
-To finalize installation
-~~~~~~~~~~~~~~~~~~~~~~~~
+Finalize installation
+---------------------
 
 .. only:: obs
 

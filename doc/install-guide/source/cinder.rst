@@ -1,3 +1,5 @@
+.. _cinder:
+
 =============================
 Add the Block Storage service
 =============================
@@ -5,8 +7,8 @@ Add the Block Storage service
 .. toctree::
 
    common/get_started_block_storage.rst
-   cinder-controller-node.rst
-   cinder-storage-node.rst
+   cinder-controller-install.rst
+   cinder-storage-install.rst
    cinder-verify.rst
    cinder-next-steps.rst
 

@@ -1,17 +1,18 @@
-=====================================
+.. _cinder-controller:
+
 Install and configure controller node
-=====================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This section describes how to install and configure the Block
 Storage service, code-named cinder, on the controller node. This
 service requires at least one additional storage node that provides
 volumes to instances.
 
-To configure prerequisites
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Prerequisites
+-------------
 
 Before you install and configure the Block Storage service, you
-must create a database, service credentials, and API endpoint.
+must create a database, service credentials, and API endpoints.
 
 #. To create the database, complete these steps:
 
@@ -54,46 +55,29 @@ must create a database, service credentials, and API endpoint.
 
      .. code-block:: console
 
-        $ openstack user create --password-prompt cinder
+        $ openstack user create --domain default --password-prompt cinder
         User Password:
         Repeat User Password:
-        +----------+----------------------------------+
-        | Field    | Value                            |
-        +----------+----------------------------------+
-        | email    | None                             |
-        | enabled  | True                             |
-        | id       | 881ab2de4f7941e79504a759a83308be |
-        | name     | cinder                           |
-        | username | cinder                           |
-        +----------+----------------------------------+
+        +-----------+----------------------------------+
+        | Field     | Value                            |
+        +-----------+----------------------------------+
+        | domain_id | default                          |
+        | enabled   | True                             |
+        | id        | bb279f8ffc444637af38811a5e1f0562 |
+        | name      | cinder                           |
+        +-----------+----------------------------------+
 
    * Add the ``admin`` role to the ``cinder`` user:
 
      .. code-block:: console
 
         $ openstack role add --project service --user cinder admin
-        +-------+----------------------------------+
-        | Field | Value                            |
-        +-------+----------------------------------+
-        | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
-        | name  | admin                            |
-        +-------+----------------------------------+
 
-   * Create the ``cinder`` service entities:
+     .. note::
 
-     .. code-block:: console
+        This command provides no output.
 
-        $ openstack service create --name cinder \
-          --description "OpenStack Block Storage" volume
-        +-------------+----------------------------------+
-        | Field       | Value                            |
-        +-------------+----------------------------------+
-        | description | OpenStack Block Storage          |
-        | enabled     | True                             |
-        | id          | 1e494c3e22a24baaafcaf777d4d467eb |
-        | name        | cinder                           |
-        | type        | volume                           |
-        +-------------+----------------------------------+
+   * Create the ``cinderv2`` service entity:
 
      .. code-block:: console
 
@@ -104,63 +88,65 @@ must create a database, service credentials, and API endpoint.
         +-------------+----------------------------------+
         | description | OpenStack Block Storage          |
         | enabled     | True                             |
-        | id          | 16e038e449c94b40868277f1d801edb5 |
+        | id          | eb9fd245bdbc414695952e93f29fe3ac |
         | name        | cinderv2                         |
         | type        | volumev2                         |
         +-------------+----------------------------------+
-
-     .. note::
-
-        The Block Storage service requires both the ``volume`` and
-        ``volumev2`` services. However, both services use the same API
-        endpoint that references the Block Storage version 2 API.
 
 #. Create the Block Storage service API endpoints:
 
    .. code-block:: console
 
-      $ openstack endpoint create \
-        --publicurl http://controller:8776/v2/%\(tenant_id\)s \
-        --internalurl http://controller:8776/v2/%\(tenant_id\)s \
-        --adminurl http://controller:8776/v2/%\(tenant_id\)s \
-        --region RegionOne \
-        volume
+      $ openstack endpoint create --region RegionOne \
+        volumev2 public http://controller:8776/v2/%\(tenant_id\)s
       +--------------+-----------------------------------------+
       | Field        | Value                                   |
       +--------------+-----------------------------------------+
-      | adminurl     | http://controller:8776/v2/%(tenant_id)s |
-      | id           | d1b7291a2d794e26963b322c7f2a55a4        |
-      | internalurl  | http://controller:8776/v2/%(tenant_id)s |
-      | publicurl    | http://controller:8776/v2/%(tenant_id)s |
+      | enabled      | True                                    |
+      | id           | 513e73819e14460fb904163f41ef3759        |
+      | interface    | public                                  |
       | region       | RegionOne                               |
-      | service_id   | 1e494c3e22a24baaafcaf777d4d467eb        |
-      | service_name | cinder                                  |
-      | service_type | volume                                  |
-      +--------------+-----------------------------------------+
-
-   .. code-block:: console
-
-      $ openstack endpoint create \
-        --publicurl http://controller:8776/v2/%\(tenant_id\)s \
-        --internalurl http://controller:8776/v2/%\(tenant_id\)s \
-        --adminurl http://controller:8776/v2/%\(tenant_id\)s \
-        --region RegionOne \
-        volumev2
-      +--------------+-----------------------------------------+
-      | Field        | Value                                   |
-      +--------------+-----------------------------------------+
-      | adminurl     | http://controller:8776/v2/%(tenant_id)s |
-      | id           | 097b4a6fc8ba44b4b10d4822d2d9e076        |
-      | internalurl  | http://controller:8776/v2/%(tenant_id)s |
-      | publicurl    | http://controller:8776/v2/%(tenant_id)s |
-      | region       | RegionOne                               |
-      | service_id   | 16e038e449c94b40868277f1d801edb5        |
+      | region_id    | RegionOne                               |
+      | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
       | service_name | cinderv2                                |
       | service_type | volumev2                                |
+      | url          | http://controller:8776/v2/%(tenant_id)s |
       +--------------+-----------------------------------------+
 
-To install and configure Block Storage controller components
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      $ openstack endpoint create --region RegionOne \
+        volumev2 internal http://controller:8776/v2/%\(tenant_id\)s
+      +--------------+-----------------------------------------+
+      | Field        | Value                                   |
+      +--------------+-----------------------------------------+
+      | enabled      | True                                    |
+      | id           | 6436a8a23d014cfdb69c586eff146a32        |
+      | interface    | internal                                |
+      | region       | RegionOne                               |
+      | region_id    | RegionOne                               |
+      | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
+      | service_name | cinderv2                                |
+      | service_type | volumev2                                |
+      | url          | http://controller:8776/v2/%(tenant_id)s |
+      +--------------+-----------------------------------------+
+
+      $ openstack endpoint create --region RegionOne \
+        volumev2 admin http://controller:8776/v2/%\(tenant_id\)s
+      +--------------+-----------------------------------------+
+      | Field        | Value                                   |
+      +--------------+-----------------------------------------+
+      | enabled      | True                                    |
+      | id           | e652cf84dd334f359ae9b045a2c91d96        |
+      | interface    | admin                                   |
+      | region       | RegionOne                               |
+      | region_id    | RegionOne                               |
+      | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
+      | service_name | cinderv2                                |
+      | service_type | volumev2                                |
+      | url          | http://controller:8776/v2/%(tenant_id)s |
+      +--------------+-----------------------------------------+
+
+Install and configure components
+--------------------------------
 
 .. only:: obs
 
@@ -186,23 +172,7 @@ To install and configure Block Storage controller components
 
          # apt-get install cinder-api cinder-scheduler python-cinderclient
 
-2.
-
-   .. only:: rdo
-
-      .. Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1212900.
-
-      Copy the ``/usr/share/cinder/cinder-dist.conf`` file
-      to ``/etc/cinder/cinder.conf``.
-
-      .. code-block:: console
-
-         # cp /usr/share/cinder/cinder-dist.conf /etc/cinder/cinder.conf
-         # chown -R cinder:cinder /etc/cinder/cinder.conf
-
-
-
-   Edit the ``/etc/cinder/cinder.conf`` file and complete the
+2. Edit the ``/etc/cinder/cinder.conf`` file and complete the
    following actions:
 
    * In the ``[database]`` section, configure database access:
@@ -294,14 +264,30 @@ To install and configure Block Storage controller components
 
       # su -s /bin/sh -c "cinder-manage db sync" cinder
 
-To finalize installation
-~~~~~~~~~~~~~~~~~~~~~~~~
+Configure Compute to use Block Storage
+--------------------------------------
+
+* Edit the ``/etc/nova/nova.conf`` file and add the following
+  to it:
+
+  .. code-block:: ini
+
+     [cinder]
+     os_region_name = RegionOne
+
+Finalize installation
+---------------------
 
 .. only:: obs or rdo
 
+   #. Restart the Compute API service:
+
+      .. code-block:: console
+
+         # systemctl restart openstack-nova-api.service
+
    #. Start the Block Storage services and configure them to start when
       the system boots:
-
 
       .. code-block:: console
 
@@ -309,6 +295,12 @@ To finalize installation
          # systemctl start openstack-cinder-api.service openstack-cinder-scheduler.service
 
 .. only:: ubuntu
+
+   #. Restart the Compute API service:
+
+      .. code-block:: console
+
+         # service nova-api restart
 
    #. Restart the Block Storage services:
 
