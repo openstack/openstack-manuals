@@ -14,8 +14,8 @@ Typically, a specific retention time or undelete are not provided.
 However, you can set a ``delay_reaping`` value in the
 ``[account-reaper]`` section of the :file:`account-server.conf` file to
 delay the actual deletion of data. At this time, to undelete you have to update
-the account database replicas directly, setting the status column to an
-empty string and updating the put\_timestamp to be greater than the
+the account database replicas directly, set the status column to an
+empty string and update the put\_timestamp to be greater than the
 delete\_timestamp.
 
 .. note::

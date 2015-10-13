@@ -259,7 +259,7 @@ basic L3 operations:
 
        This port must be on an Networking subnet that is attached to
        a router uplinked to the external network used to create the floating
-       IP.Conceptually, this is because the router must be able to perform the
+       IP. Conceptually, this is because the router must be able to perform the
        Destination NAT (DNAT) rewriting of packets from the floating IP address
        (chosen from a subnet on the external network) to the internal fixed
        IP (chosen from a private subnet that is behind the router).
@@ -305,8 +305,8 @@ basic L3 operations:
 Security groups
 ~~~~~~~~~~~~~~~
 
-Security groups and security group rules allows administrators and
-tenants the ability to specify the type of traffic and direction
+Security groups and security group rules allow administrators and
+tenants to specify the type of traffic and direction
 (ingress/egress) that is allowed to pass through a port. A security
 group is a container for security group rules.
 
