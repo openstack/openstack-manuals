@@ -117,7 +117,7 @@ After you configure the GlusterFS service, complete these steps:
 #. Set :file:`/etc/cinder/glusterfs` to be readable by members of
    the ``cinder`` group::
 
-    # chmod 0640 FILE
+    # chmod 0640 /etc/cinder/glusterfs
 
 #. Configure OpenStack Block Storage to use the :file:`/etc/cinder/glusterfs`
    file created earlier. To do so, open the :file:`/etc/cinder/cinder.conf`
@@ -180,7 +180,7 @@ OpenStack Block Storage is now configured to use a GlusterFS back end.
    fully allocated at the time of creation. This leads to increased delays
    in volume creation.
 
-   However, should you choose to set glusterfs_sparsed_volumes to false, you
+   However, should you choose to set ``glusterfs_sparsed_volumes`` to false, you
    can do so directly in :file:`/etc/cinder/cinder.conf`.
 
    On distributions that include ``openstack-config``, you can configure this by
