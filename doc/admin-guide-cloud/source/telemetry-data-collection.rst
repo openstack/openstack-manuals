@@ -741,7 +741,7 @@ Sample configuration::
               target:
                   name: "disk.kilobytes"
                   unit: "KB"
-                  scale: "1.0 / 1024.0"
+                  scale: "volume * 1.0 / 1024.0"
 
 With ``map_from`` and ``map_to`` ::
 
@@ -754,7 +754,7 @@ With ``map_from`` and ``map_to`` ::
               target:
                   map_to:
                       name: "disk.\\1.kilobytes"
-                  scale: "1.0 / 1024.0"
+                  scale: "volume * 1.0 / 1024.0"
                   unit: "KB"
 
 **Aggregator transformer**
