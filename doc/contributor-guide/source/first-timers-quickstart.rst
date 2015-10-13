@@ -23,6 +23,10 @@ Other good first-time documentation tasks are bug triaging and bug fixing:
    confirmed by one other person. Fix it by committing the required changes
    to the OpenStack documetation.
 
+The following diagram shows the basic setup workflow:
+
+.. image:: figures/workflow-diagram.png
+      :alt: Workflow diagram
 
 Setting up for contribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
