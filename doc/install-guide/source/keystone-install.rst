@@ -97,7 +97,8 @@ database and an administration token.
             .. code-block:: console
 
                # zypper install openstack-keystone apache2-mod_wsgi \
-                 memcached python-python-memcached
+                 memcached python-python-memcached python-devel \
+                 python-pycrypto
 
    .. only:: obs or rdo
 
@@ -519,6 +520,12 @@ Finalize the installation
         # systemctl start httpd.service
 
 .. only:: obs
+
+   #. Activate the Apache module ``mod_version``:
+
+      .. code-block:: console
+
+         # a2enmod version
 
    #. Start the Apache HTTP service and configure it to start when the system boots:
 

@@ -282,7 +282,7 @@ Install and configure the database server
 
       .. code-block:: console
 
-         # zypper install mariadb-client mariadb python-mysql
+         # zypper install mariadb-client mariadb python-PyMySQL
 
 .. only:: ubuntu or debian
 
@@ -432,6 +432,27 @@ Configure the message queue service
 
          # systemctl enable rabbitmq-server.service
          # systemctl start rabbitmq-server.service
+
+   .. only:: obs
+
+      In case the message queue service does not start and gives ``nodedown`` error,
+      perform the following steps.
+
+      * Copy the ``/usr/lib/systemd/system/epmd.socket`` file to the
+        ``/etc/systemd/system`` directory.
+
+      * Edit the ``/etc/systemd/system/epmd.socket`` file to contain the following:
+
+        .. code-block:: ini
+
+           [Socket]
+           ...
+           ListenStream=MANAGEMENT_INTERFACE_IP_ADDRESS:4369
+
+        Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address of the
+        management network interface on your controller node.
+
+      * Start the message queue service again.
 
 #. Add the ``openstack`` user:
 
