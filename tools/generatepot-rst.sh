@@ -29,6 +29,11 @@ if [ "$USE_DOC" = "1" ] ; then
     TOPDIR="doc/"
 fi
 
+if [ -x "$(command -v getconf)" ]; then
+    NUMBER_OF_CORES=$(getconf _NPROCESSORS_ONLN)
+else
+    NUMBER_OF_CORES=2
+fi
 
 # We're not doing anything for this directory. But we need to handle
 # it by this script so that the common-rst.pot file gets registered.
@@ -53,7 +58,7 @@ fi
 if [ ${DOCNAME} = "firstapp" ] ; then
     TAG="-t libcloud  -t dotnet -t fog -t pkgcloud -t shade"
 fi
-sphinx-build -b gettext $TAG ${DIRECTORY}/source/ \
+sphinx-build -j $NUMBER_OF_CORES -b gettext $TAG ${DIRECTORY}/source/ \
     ${DIRECTORY}/source/locale/
 
 if [ "$REPOSITORY" = "openstack-manuals" ] ; then
