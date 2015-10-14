@@ -6,7 +6,7 @@ Launch an instance
 
 This section creates the necessary virtual networks to support launching
 one more instances. Networking option 1 includes one public virtual
-network and one instance that uses it. Networking option 1 includes one
+network and one instance that uses it. Networking option 2 includes one
 public virtual network, one private virtual network, and one instance
 that uses each network. The instructions in this section use command-line
 interface (CLI) tools on the controller node. For more information on the
