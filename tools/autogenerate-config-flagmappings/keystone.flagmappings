@@ -8,6 +8,7 @@ default_publisher_id amqp
 domain_id_immutable api
 executor_thread_pool_size common
 fatal_deprecations logging
+host redis
 instance_format logging
 instance_uuid_format logging
 list_limit api
@@ -20,8 +21,6 @@ logging_context_format_string logging
 logging_debug_format_suffix logging
 logging_default_format_string logging
 logging_exception_prefix logging
-matchmaker_heartbeat_freq rpc
-matchmaker_heartbeat_ttl rpc
 max_param_size api
 max_project_tree_depth api
 max_token_size api
@@ -31,6 +30,8 @@ memcached_servers common
 notification_driver amqp
 notification_format amqp
 notification_topics amqp
+password redis
+port redis
 public_endpoint api
 publish_errors logging
 pydev_debug_host debug
@@ -38,13 +39,15 @@ pydev_debug_port debug
 rpc_backend rpc
 rpc_cast_timeout rpc
 rpc_conn_pool_size rpc
+rpc_poll_timeout rpc
 rpc_response_timeout rpc
+rpc_zmq_all_req_rep zeromq
 rpc_zmq_bind_address zeromq
+rpc_zmq_concurrency zeromq
 rpc_zmq_contexts zeromq
 rpc_zmq_host zeromq
 rpc_zmq_ipc_dir zeromq
 rpc_zmq_matchmaker zeromq
-rpc_zmq_port zeromq
 rpc_zmq_topic_backlog zeromq
 secure_proxy_ssl_header api
 standard_threads debug
@@ -55,6 +58,8 @@ use_stderr logging
 use_syslog logging
 use_syslog_rfc_format logging
 verbose logging
+watch_log_file logging
+zmq_use_broker zeromq
 assignment/driver assignment
 audit/namespace debug
 auth/external auth
@@ -189,6 +194,7 @@ keystone_authtoken/memcache_secret_key auth_token
 keystone_authtoken/memcache_security_strategy auth_token
 keystone_authtoken/memcache_use_advanced_pool auth_token
 keystone_authtoken/memcached_servers common
+keystone_authtoken/region_name auth_token
 keystone_authtoken/revocation_cache_time auth_token
 keystone_authtoken/signing_dir auth_token
 keystone_authtoken/token_cache_time auth_token
@@ -282,7 +288,6 @@ ldap/user_tree_dn ldap
 matchmaker_redis/host redis
 matchmaker_redis/password redis
 matchmaker_redis/port redis
-matchmaker_ring/ringfile redis
 memcache/dead_retry cache
 memcache/pool_connection_get_timeout cache
 memcache/pool_maxsize cache
@@ -300,12 +305,17 @@ oslo_messaging_amqp/broadcast_prefix rpc
 oslo_messaging_amqp/container_name rpc
 oslo_messaging_amqp/group_request_prefix rpc
 oslo_messaging_amqp/idle_timeout rpc
+oslo_messaging_amqp/password rpc
+oslo_messaging_amqp/sasl_config_dir rpc
+oslo_messaging_amqp/sasl_config_name rpc
+oslo_messaging_amqp/sasl_mechanisms rpc
 oslo_messaging_amqp/server_request_prefix rpc
 oslo_messaging_amqp/ssl_ca_file rpc
 oslo_messaging_amqp/ssl_cert_file rpc
 oslo_messaging_amqp/ssl_key_file rpc
 oslo_messaging_amqp/ssl_key_password rpc
 oslo_messaging_amqp/trace rpc
+oslo_messaging_amqp/username rpc
 oslo_messaging_qpid/amqp_auto_delete qpid
 oslo_messaging_qpid/amqp_durable_queues qpid
 oslo_messaging_qpid/qpid_heartbeat qpid
@@ -403,6 +413,9 @@ token/expiration token
 token/hash_algorithm token
 token/provider token
 token/revoke_by_id token
+tokenless_auth/issuer_attribute tokenless
+tokenless_auth/protocol tokenless
+tokenless_auth/trusted_issuer tokenless
 trust/allow_redelegation trust
 trust/driver trust
 trust/enabled trust
