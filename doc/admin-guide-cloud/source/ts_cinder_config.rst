@@ -110,7 +110,7 @@ these suggested solutions.
    The OpenStack Block Storage uses ``tgtd`` as the default iSCSI helper
    and implements persistent targets. This means that in the case of a
    ``tgt`` restart or even a node reboot your existing volumes on that node
-   will be restored automatically with their original IQN.
+   will be restored automatically with their original :term:`IQN`.
 
    In order to make this possible the iSCSI target information needs to
    be stored in a file on creation that can be queried in case of

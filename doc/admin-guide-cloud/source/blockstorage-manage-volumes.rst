@@ -27,7 +27,7 @@ to a server instance.
 #. Use the :command:`cinder create` command to create a volume. This
    command creates an LV into the volume group (VG) ``cinder-volumes``.
 #. Use the nova :command:`volume-attach` command to attach the volume
-   to an instance. This command creates a unique iSCSI IQN that is
+   to an instance. This command creates a unique  :term:`IQN` that is
    exposed to the compute node.
 
    * The compute node, which runs the instance, now has an active
