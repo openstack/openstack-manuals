@@ -106,3 +106,24 @@ service quotas.
 #. Clear per-tenant quota limits::
 
       $ cinder quota-delete tenantID
+
+Remove a service
+~~~~~~~~~~~~~~~~
+
+#. Determine the binary and host of the service you want to remove::
+
+      $ cinder service-list
+      +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
+      |      Binary      |         Host         | Zone |  Status | State |         Updated_at         | Disabled Reason |
+      +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
+      | cinder-scheduler |       devstack       | nova | enabled |   up  | 2015-10-13T15:21:48.000000 |        -        |
+      |  cinder-volume   | devstack@lvmdriver-1 | nova | enabled |   up  | 2015-10-13T15:21:52.000000 |        -        |
+      +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
+
+#. Disable the service::
+
+      $ cinder service-disable <host> <binary>
+
+#. Remove the service from the database::
+
+      $ cinder-manage service remove <binary> <host>
