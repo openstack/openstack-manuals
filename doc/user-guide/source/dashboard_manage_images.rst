@@ -70,6 +70,9 @@ Follow this procedure to upload an image to a project:
    | and                           |                                 |
    | :guilabel:`Minimum RAM (MB)`  |                                 |
    +-------------------------------+---------------------------------+
+   | :guilabel:`Copy Data`         | Specify this option to copy     |
+   |                               | image data to the Image service.|
+   +-------------------------------+---------------------------------+
    | :guilabel:`Public`            | Select this check box to make   |
    |                               | the image public to all users   |
    |                               | with access to the current      |

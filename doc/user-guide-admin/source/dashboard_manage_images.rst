@@ -58,9 +58,17 @@ Guide <http://docs.openstack.org/image-guide/content/>`_.
    +-------------------------------+---------------------------------+
    | :guilabel:`Format`            | Select the image format.        |
    +-------------------------------+---------------------------------+
+   | :guilabel:`Architecture`      | Specify the architecture. For   |
+   |                               | example, ``i386`` for a 32-bit  |
+   |                               | architecture or ``x86_64`` for  |
+   |                               | a 64-bit architecture.          |
+   +-------------------------------+---------------------------------+
    | :guilabel:`Minimum Disk (GB)` | Leave these fields empty.       |
    | and                           |                                 |
    | :guilabel:`Minimum RAM (MB)`  |                                 |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Copy Data`         | Specify this option to copy     |
+   |                               | image data to the Image service.|
    +-------------------------------+---------------------------------+
    | :guilabel:`Public`            | Select this option to make the  |
    |                               | image public to all users.      |
