@@ -33,6 +33,10 @@
       <td>(BoolOpt) Whether to enable pre hooks or not.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] executor_thread_pool_size = 64</td>
+      <td>(IntOpt) Size of executor thread pool.</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] glusterfs_share_layout = None</td>
       <td>(StrOpt) Specifies GlusterFS share layout, that is, the method of associating backing GlusterFS resources to shares.</td>
     </tr>
@@ -125,12 +129,36 @@
       <td>(IntOpt) Number of workers for OpenStack Share API service.</td>
     </tr>
     <tr>
+      <td>[DEFAULT] password = </td>
+      <td>(StrOpt) Password for Redis server (optional).</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] periodic_hooks_interval = 300.0</td>
       <td>(FloatOpt) Interval in seconds between execution of periodic hooks. Used when option 'enable_periodic_hooks' is set to True. Default is 300.</td>
     </tr>
     <tr>
       <td>[DEFAULT] pool_weight_multiplier = 1.0</td>
       <td>(FloatOpt) Multiplier used for weighing pools which have existing share servers. Negative numbers mean to spread vs stack.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] port = 6379</td>
+      <td>(IntOpt) Use this port to connect to redis host.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] rpc_conn_pool_size = 30</td>
+      <td>(IntOpt) Size of RPC connection pool.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] rpc_poll_timeout = 1</td>
+      <td>(IntOpt) The default number of seconds that poll should wait. Poll raises timeout exception when timeout expired.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] rpc_zmq_all_req_rep = True</td>
+      <td>(BoolOpt) Use REQ/REP pattern for all methods CALL/CAST/FANOUT.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] rpc_zmq_concurrency = eventlet</td>
+      <td>(StrOpt) Type of concurrency used. Either "native" or "eventlet"</td>
     </tr>
     <tr>
       <td>[DEFAULT] suppress_post_hooks_errors = False</td>
@@ -175,6 +203,10 @@
     <tr>
       <td>[DEFAULT] wsgi_keep_alive = True</td>
       <td>(BoolOpt) If False, closes the client socket connection explicitly. Setting it to True to maintain backward compatibility. Recommended setting is set it to False.</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] zmq_use_broker = True</td>
+      <td>(BoolOpt) Shows whether zmq-messaging uses broker or not.</td>
     </tr>
     <tr>
       <td>[cors] allow_credentials = True</td>
@@ -227,6 +259,38 @@
     <tr>
       <td>[keystone_authtoken] region_name = None</td>
       <td>(StrOpt) The region in which the identity server can be found.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] password = </td>
+      <td>(StrOpt) Password for message broker authentication</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] sasl_config_dir = </td>
+      <td>(StrOpt) Path to directory that contains the SASL configuration</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] sasl_config_name = </td>
+      <td>(StrOpt) Name of configuration file (without .conf suffix)</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] sasl_mechanisms = </td>
+      <td>(StrOpt) Space separated list of acceptable SASL mechanisms</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_amqp] username = </td>
+      <td>(StrOpt) User name for message broker authentication</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_qpid] send_single_reply = False</td>
+      <td>(BoolOpt) Send a single AMQP reply to call message. The current behaviour since oslo-incubator is to send two AMQP replies - first one with the payload, a second one to ensure the other have finish to send the payload. We are going to remove it in the N release, but we must keep backward compatible at the same time. This option provides such compatibility - it defaults to False in Liberty and can be turned on for early adopters with a new installations or for testing. Please note, that this option will be removed in the Mitaka release.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] kombu_reconnect_timeout = 60</td>
+      <td>(IntOpt) How long to wait before considering a reconnect attempt to have failed. This value should not be longer than rpc_response_timeout.</td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] send_single_reply = False</td>
+      <td>(BoolOpt) Send a single AMQP reply to call message. The current behaviour since oslo-incubator is to send two AMQP replies - first one with the payload, a second one to ensure the other have finish to send the payload. We are going to remove it in the N release, but we must keep backward compatible at the same time. This option provides such compatibility - it defaults to False in Liberty and can be turned on for early adopters with a new installations or for testing. Please note, that this option will be removed in the Mitaka release.</td>
     </tr>
     <tr>
       <td>[oslo_middleware] max_request_body_size = 114688</td>
@@ -287,6 +351,11 @@
       <td>::</td>
     </tr>
     <tr>
+      <td>[DEFAULT] rpc_zmq_matchmaker</td>
+      <td>local</td>
+      <td>redis</td>
+    </tr>
+    <tr>
       <td>[DEFAULT] scheduler_default_filters</td>
       <td>AvailabilityZoneFilter, CapacityFilter, CapabilitiesFilter</td>
       <td>AvailabilityZoneFilter, CapacityFilter, CapabilitiesFilter, ConsistencyGroupFilter</td>
@@ -300,6 +369,16 @@
       <td>[DEFAULT] verbose</td>
       <td>False</td>
       <td>True</td>
+    </tr>
+    <tr>
+      <td>[matchmaker_redis] password</td>
+      <td>None</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>[oslo_messaging_rabbit] heartbeat_timeout_threshold</td>
+      <td>0</td>
+      <td>60</td>
     </tr>
   </table>
   <table>
@@ -339,6 +418,10 @@
     <tr>
       <td>[DEFAULT] sql_idle_timeout</td>
       <td>[database] idle_timeout</td>
+    </tr>
+    <tr>
+      <td>[DEFAULT] rpc_thread_pool_size</td>
+      <td>[DEFAULT] executor_thread_pool_size</td>
     </tr>
     <tr>
       <td>[DEFAULT] db_backend</td>
