@@ -21,5 +21,5 @@ You can run the object-auditor once as follows::
 
 .. note::
    This will run the object auditor on only the sda and sdb devices.
-   This parameter accepts a comma separated list of values.
+   This parameter accepts a comma-separated list of values.
 
