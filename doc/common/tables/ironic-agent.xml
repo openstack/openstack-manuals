@@ -22,14 +22,6 @@
         <td>(StrOpt) API version to use for communicating with the ramdisk agent.</td>
       </tr>
       <tr>
-        <td><option>agent_erase_devices_iterations</option> = <replaceable>1</replaceable></td>
-        <td>(IntOpt) Number of iterations to be run for erasing devices.</td>
-      </tr>
-      <tr>
-        <td><option>agent_erase_devices_priority</option> = <replaceable>None</replaceable></td>
-        <td>(IntOpt) Priority to run in-band erase devices via the Ironic Python Agent ramdisk. If unset, will use the priority set in the ramdisk (defaults to 10 for the GenericHardwareManager). If set to 0, will not run during cleaning.</td>
-      </tr>
-      <tr>
         <td><option>agent_pxe_append_params</option> = <replaceable>nofb nomodeset vga=normal</replaceable></td>
         <td>(StrOpt) DEPRECATED. Additional append parameters for baremetal PXE boot. This option is deprecated and will be removed in Mitaka release. Please use [pxe]pxe_append_params instead.</td>
       </tr>
@@ -44,6 +36,10 @@
       <tr>
         <td><option>manage_agent_boot</option> = <replaceable>True</replaceable></td>
         <td>(BoolOpt) Whether Ironic will manage booting of the agent ramdisk. If set to False, you will need to configure your mechanism to allow booting the agent ramdisk.</td>
+      </tr>
+      <tr>
+        <td><option>memory_consumed_by_agent</option> = <replaceable>0</replaceable></td>
+        <td>(IntOpt) The memory size in MiB consumed by agent when it is booted on a bare metal node. This is used for checking if the image can be downloaded and deployed on the bare metal node after booting agent ramdisk. This may be set according to the memory consumed by the agent ramdisk image.</td>
       </tr>
       <tr>
         <td><option>post_deploy_get_power_state_retries</option> = <replaceable>6</replaceable></td>
