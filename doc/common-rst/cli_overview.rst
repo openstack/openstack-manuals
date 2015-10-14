@@ -28,67 +28,70 @@ sizes of server instances.
 The following table lists the command-line client for each OpenStack
 service with its package name and description.
 
+**OpenStack services and clients**
+
 +----------------+----------+-----------------------+------------------------+
 |Service         |Client    |Package                |Description             |
 +================+==========+=======================+========================+
-|Application     |murano    |python-muranoclient    |Create and manage       |
+|Application     |murano    |python-muranoclient    |Creates and manages     |
 |catalog         |          |                       |applications.           |
 +----------------+----------+-----------------------+------------------------+
-|Block Storage   |cinder    |python-cinderclient    |Create and manage       |
+|Block Storage   |cinder    |python-cinderclient    |Creates and manages     |
 |                |          |                       |volumes.                |
 +----------------+----------+-----------------------+------------------------+
-|Compute         |nova      |python-novaclient      |Create and manage       |
+|Compute         |nova      |python-novaclient      |Creates and manages     |
 |                |          |                       |images, instances, and  |
 |                |          |                       |flavors.                |
 +----------------+----------+-----------------------+------------------------+
-|Containers      |magnum    |python-magnumclient    |Create and manage       |
+|Containers      |magnum    |python-magnumclient    |Creates and manages     |
 |service         |          |                       |containers.             |
 +----------------+----------+-----------------------+------------------------+
-|Database service|trove     |python-troveclient     |Create and manage       |
+|Database service|trove     |python-troveclient     |Creates and manages     |
 |                |          |                       |databases.              |
 +----------------+----------+-----------------------+------------------------+
-|Data processing |sahara    |python-saharaclient    |Create and manage       |
+|Data processing |sahara    |python-saharaclient    |Creates and manages     |
 |                |          |                       |Hadoop clusters on      |
 |                |          |                       |OpenStack.              |
 +----------------+----------+-----------------------+------------------------+
-|Deployment      |tuskar    |python-tuskarclient    |Plan Deployments.       |
+|Deployment      |tuskar    |python-tuskarclient    |Plans Deployments.      |
 |service         |          |                       |                        |
 +----------------+----------+-----------------------+------------------------+
-|Identity        |keystone  |python-keystoneclient  |Create and manage       |
+|Identity        |keystone  |python-keystoneclient  |Creates and manages     |
 |                |          |                       |users, tenants, roles,  |
 |                |          |                       |endpoints, and          |
 |                |          |                       |credentials.            |
 +----------------+----------+-----------------------+------------------------+
-|Image service   |glance    |python-glanceclient    |Create and manage       |
+|Image service   |glance    |python-glanceclient    |Creates and manages     |
 |                |          |                       |images.                 |
 +----------------+----------+-----------------------+------------------------+
-|Key Manager     |barbican  |python-barbicanclient  |Create and manage       |
+|Key Manager     |barbican  |python-barbicanclient  |Creates and manages     |
 |service         |          |                       |keys.                   |
 +----------------+----------+-----------------------+------------------------+
-|Networking      |neutron   |python-neutronclient   |Configure networks for  |
+|Networking      |neutron   |python-neutronclient   |Configures networks for |
 |                |          |                       |guest servers.          |
 +----------------+----------+-----------------------+------------------------+
-|Object Storage  |swift     |python-swiftclient     |Gather statistics, list |
-|                |          |                       |items, update metadata, |
-|                |          |                       |and upload, download,   |
-|                |          |                       |and delete files stored |
-|                |          |                       |by the Object Storage   |
-|                |          |                       |service. Gain access to |
+|Object Storage  |swift     |python-swiftclient     |Gathers statistics,     |
+|                |          |                       |lists items, updates    |
+|                |          |                       |metedata, and uploads,  |
+|                |          |                       |downloads, and deletes  |
+|                |          |                       |files stored by the     |
+|                |          |                       |Object Storage service. |
+|                |          |                       |Gains access to         |
 |                |          |                       |an Object Storage       |
 |                |          |                       |installation for ad hoc |
 |                |          |                       |processing.             |
 +----------------+----------+-----------------------+------------------------+
-|Orchestration   |heat      |python-heatclient      |Launch stacks from      |
-|                |          |                       |templates, view details |
+|Orchestration   |heat      |python-heatclient      |Launches stacks from    |
+|                |          |                       |templates, views details|
 |                |          |                       |of running stacks       |
 |                |          |                       |including events and    |
-|                |          |                       |resources, and update   |
-|                |          |                       |and delete stacks.      |
+|                |          |                       |resources, and updates  |
+|                |          |                       |and deletes stacks.     |
 +----------------+----------+-----------------------+------------------------+
-|Shared file     |manila    |python-manilaclient    |Create and manage       |
+|Shared file     |manila    |python-manilaclient    |Creates and manages     |
 |systems         |          |                       |shared file systems.    |
 +----------------+----------+-----------------------+------------------------+
-|Telemetry       |ceilometer|python-ceilometerclient|Create and collect      |
+|Telemetry       |ceilometer|python-ceilometerclient|Creates and collects    |
 |                |          |                       |measurements across     |
 |                |          |                       |OpenStack.              |
 +----------------+----------+-----------------------+------------------------+
