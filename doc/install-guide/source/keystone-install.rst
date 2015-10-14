@@ -97,8 +97,7 @@ database and an administration token.
             .. code-block:: console
 
                # zypper install openstack-keystone apache2-mod_wsgi \
-                 memcached python-python-memcached python-devel \
-                 python-pycrypto
+                 memcached python-python-memcached
 
    .. only:: obs or rdo
 
