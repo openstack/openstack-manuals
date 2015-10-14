@@ -105,5 +105,7 @@ else
     if [ "$TARGET" != "" ] ; then
         mkdir -p publish-docs/$TARGET
         rsync -a $BUILD_DIR/ publish-docs/$TARGET/
+        # Remove unneeded build artefact
+        rm -f publish-docs/$TARGET/.buildinfo
     fi
 fi
