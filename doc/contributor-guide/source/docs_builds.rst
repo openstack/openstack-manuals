@@ -80,7 +80,7 @@ Guides for deployers and administrators
 
    * - High Availability Guide
      - http://git.openstack.org/cgit/openstack/ha-guide
-     - http://docs.openstack.org/high-availability-guide/content
+     - http://docs.openstack.org/ha-guide
 
    * - Operations Guide
      - http://git.openstack.org/cgit/openstack/operations-guide/
