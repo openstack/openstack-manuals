@@ -9,7 +9,7 @@ define which actions users can perform. You assign roles to
 user-project pairs.
 
 You can define actions for OpenStack service roles in the
-``/etc/PROJECT``/policy.json files. For example, define actions for
+``/etc/PROJECT/policy.json`` files. For example, define actions for
 Compute service roles in the ``/etc/nova/policy.json`` file.
 
 You can manage projects, users, and roles independently from each other.
