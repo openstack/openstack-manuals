@@ -36,4 +36,8 @@ for tag in $TAGS; do
         mv publish-docs/draft/install-guide-debian/index-debian.html \
             publish-docs/draft/install-guide-debian/index.html
     fi
+    # Remove Debian specific content from other guides
+    if [[ "$tag" != "debian" ]]; then
+        rm -rf publish-docs/draft/install-guide-$tag/debconf
+    fi
 done
