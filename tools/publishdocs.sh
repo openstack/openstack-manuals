@@ -40,8 +40,10 @@ function copy_to_branch {
         for f in $(find publish-docs/$BRANCH -name "*.html"); do
             sed -i -e "s|/draft/|/$BRANCH/|g" $f
         done
-        # We don't need Debian Install Guide for Liberty
+        # Debian Install Guide for Liberty is not ready
         rm -rf publish-docs/$BRANCH/install-guide-debian
+        # RDO Install Guide for Liberty is not ready
+        rm -rf publish-docs/$BRANCH/install-guide-rdo
     fi
 }
 
