@@ -32,6 +32,8 @@ Create a network
 
    :guilabel:`Network Name`: Specify a name to identify the network.
 
+   :guilabel:`Admin State`: The state to start the network in.
+
    :guilabel:`Subnet` tab
 
    :guilabel:`Create Subnet`: Select this check box to create a subnet
@@ -51,7 +53,7 @@ Create a network
    :guilabel:`Disable Gateway`: Select this check box to disable a gateway IP
    address.
 
-   :guilabel:`Subnet Detail` tab
+   :guilabel:`Subnet Details` tab
 
    :guilabel:`Enable DHCP`: Select this check box to enable DHCP.
 
