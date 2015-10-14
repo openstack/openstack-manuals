@@ -145,9 +145,10 @@ After you configure the GlusterFS service, complete these steps:
    |
 
 #. Configure OpenStack Block Storage to use the correct volume driver,
-   namely ``cinder.volume.drivers.glusterfs``. To do so, open the
-   :file:`/etc/cinder/cinder.conf` configuration file and set the
-   ``volume_driver`` configuration key to ``cinder.volume.drivers.glusterfs``.
+   namely ``cinder.volume.drivers.glusterfs.GlusterfsDriver``. To do so,
+   open the :file:`/etc/cinder/cinder.conf` configuration file and set
+   the ``volume_driver`` configuration key to
+   ``cinder.volume.drivers.glusterfs.GlusterfsDriver``.
 
    On distributions that include ``openstack-config``, you can configure
    this by running the following command instead::
