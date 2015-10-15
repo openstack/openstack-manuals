@@ -247,7 +247,7 @@ Install and configure components
 
         [oslo_concurrency]
         ...
-        lock_path = /var/lock/cinder
+        lock_path = /var/lib/cinder/tmp
 
    * (Optional) To assist with troubleshooting, enable verbose
      logging in the ``[DEFAULT]`` section:
