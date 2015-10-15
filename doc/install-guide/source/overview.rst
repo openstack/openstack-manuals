@@ -94,13 +94,13 @@ After becoming familiar with basic installation, configuration, operation,
 and troubleshooting of these OpenStack services, you should consider the
 following steps toward deployment using a production architecture:
 
-- Determine and implement the necessary core and optional services to
+* Determine and implement the necessary core and optional services to
   meet performance and redundancy requirements.
 
-- Increase security using methods such as firewalls, encryption, and
+* Increase security using methods such as firewalls, encryption, and
   service policies.
 
-- Implement a deployment tool such as Ansible, Chef, Puppet, or Salt
+* Implement a deployment tool such as Ansible, Chef, Puppet, or Salt
   to automate deployment and management of the production environment.
 
 .. _overview-example-architectures:
@@ -115,10 +115,10 @@ services such as Block Storage and Object Storage require additional nodes.
 This example architecture differs from a minimal production architecture as
 follows:
 
-- Networking agents reside on the controller node instead of one or more
+* Networking agents reside on the controller node instead of one or more
   dedicated network nodes.
 
-- Overlay (tunnel) traffic for private networks traverses the management
+* Overlay (tunnel) traffic for private networks traverses the management
   network instead of a dedicated network.
 
 For more information on production architectures, see the

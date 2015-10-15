@@ -29,9 +29,9 @@ not require a significant amount of resources and the following minimum
 requirements should support a proof-of-concept environment with core services
 and several :term:`CirrOS` instances:
 
--  Controller Node: 1 processor, 2 GB memory, and 5 GB storage
+*  Controller Node: 1 processor, 2 GB memory, and 5 GB storage
 
--  Compute Node: 1 processor, 2 GB memory, and 10 GB storage
+*  Compute Node: 1 processor, 2 GB memory, and 10 GB storage
 
 To minimize clutter and provide more resources for OpenStack, we recommend
 a minimal installation of your Linux distribution. Also, you must install a
@@ -45,10 +45,10 @@ For first-time installation and testing purposes, many users elect to build
 each host as a :term:`virtual machine (VM)`. The primary benefits of VMs
 include the following:
 
--  One physical server can support multiple nodes, each with almost any
+*  One physical server can support multiple nodes, each with almost any
    number of network interfaces.
 
--  Ability to take periodic "snap shots" throughout the installation
+*  Ability to take periodic "snap shots" throughout the installation
    process and "roll back" to a working configuration in the event of a
    problem.
 
