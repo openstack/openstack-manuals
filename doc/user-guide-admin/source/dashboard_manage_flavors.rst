@@ -35,7 +35,9 @@ Create flavors
 
    =======================  =========================================
     **Name**                   Enter the flavor name.
-    **ID**                     OpenStack generates the flavor ID.
+    **ID**                     Unique ID (integer or UUID) for the
+                               new flavor. If specifying 'auto', a
+                               UUID will be automatically generated.
     **VCPUs**                  Enter the number of virtual CPUs to
                                use.
     **RAM MB**                 Enter the amount of RAM to use, in
