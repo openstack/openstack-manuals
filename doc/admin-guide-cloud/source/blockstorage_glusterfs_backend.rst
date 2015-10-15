@@ -169,27 +169,6 @@ After you configure the GlusterFS service, complete these steps:
 
 OpenStack Block Storage is now configured to use a GlusterFS back end.
 
-.. note::
-
-   In :file:`/etc/cinder/cinder.conf`, the ``glusterfs_sparsed_volumes`` configuration
-   key determines whether volumes are created as sparse files and grown
-   as needed or fully allocated up front. The default and recommended
-   value of this key is true, which ensures volumes are initially created
-   as sparse files.
-
-   Setting ``glusterfs_sparsed_volumes`` to false will result in volumes being
-   fully allocated at the time of creation. This leads to increased delays
-   in volume creation.
-
-   However, should you choose to set ``glusterfs_sparsed_volumes`` to false, you
-   can do so directly in :file:`/etc/cinder/cinder.conf`.
-
-   On distributions that include ``openstack-config``, you can configure this by
-   running the following command instead::
-
-    # openstack-config --set /etc/cinder/cinder.conf \
-      DEFAULT glusterfs_sparsed_volumes false
-
 .. warning::
 
    If a client host has SELinux enabled, the ``virt_use_fusefs`` boolean
