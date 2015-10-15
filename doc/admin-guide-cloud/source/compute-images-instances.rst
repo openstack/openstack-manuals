@@ -139,7 +139,7 @@ HTTP
     OpenStack Image service can read virtual machine images that are
     available on the Internet using HTTP. This store is read only.
 
-RADOS block device (RBD)
+RADOS Block Device (RBD)
     Stores images inside of a Ceph storage cluster using Ceph's RBD
     interface.
 
