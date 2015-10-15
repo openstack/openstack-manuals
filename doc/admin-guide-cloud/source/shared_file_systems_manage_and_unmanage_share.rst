@@ -27,7 +27,7 @@ share servers (created with share networks), so share service should have
 option ``driver_handles_share_servers = False`` in its configuration.
 You can unmanage a share that has no dependent snapshots.
 
-To unmanage managed share, run :command:``manila unmanage <share>`` command.
+To unmanage managed share, run :command:`manila unmanage <share>` command.
 Then try to print the information about it. The expected behaviour is that
 File System Storage service won't find the share:
 
@@ -42,7 +42,7 @@ File System Storage service won't find the share:
 Manage share
 ------------
 To register the non-managed share in File System Storage service you need to
-run :command:``manila manage`` command which has such arguments:
+run :command:`manila manage` command which has such arguments:
 
 .. code:: console
 
