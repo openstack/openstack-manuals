@@ -14,7 +14,7 @@ To import snapshot, create a new share with appropriate size, attach it to
 instance and then copy file from archive to attached file system.
 
 .. note::
-    You cannot delete share cannot while it has saved dependent snapshots.
+    You cannot delete a share while it has saved dependent snapshots.
 
 Create a snapshot from the share:
 
