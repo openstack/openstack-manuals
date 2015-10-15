@@ -1013,12 +1013,6 @@ supported to start multiple worker threads per collector process. The
 <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html>`__
 of the :file:`ceilometer.conf` configuration file.
 
-.. note::
-
-    Prior to the Juno release, it is not recommended to use multiple
-    workers per collector process when using PostgreSQL as the database
-    back end.
-
 Database dispatcher
 -------------------
 When the database dispatcher is configured as data store, you have the

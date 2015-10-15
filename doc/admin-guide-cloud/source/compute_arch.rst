@@ -72,7 +72,7 @@ availability zones. Compute supports the following hypervisors:
 -  `Xen <http://www.xen.org/support/documentation.html>`__
 
 For more information about hypervisors, see the
-`Hypervisors <http://docs.openstack.org/kilo/config-reference/content/section_compute-hypervisors.html>`__
+`Hypervisors <http://docs.openstack.org/liberty/config-reference/content/section_compute-hypervisors.html>`__
 section in the OpenStack Configuration Reference.
 
 Tenants, users, and roles
@@ -179,7 +179,7 @@ case, the root file system can be on the persistent volume, and its
 state is maintained, even if the instance is shut down. For more
 information about this type of configuration, see the `OpenStack
 Configuration Reference
-<http://docs.openstack.org/kilo/config-reference/content/>`__.
+<http://docs.openstack.org/liberty/config-reference/content/>`__.
 
 .. note::
 
@@ -196,7 +196,7 @@ In addition to the native compute API, OpenStack provides an
 EC2-compatible API. This API allows EC2 legacy workflows built for EC2
 to work with OpenStack. For more information and configuration options
 about this compatibility API, see the `OpenStack Configuration
-Reference <http://docs.openstack.org/kilo/config-reference/content/>`__.
+Reference <http://docs.openstack.org/liberty/config-reference/content/>`__.
 
 Numerous third-party tools and language-specific SDKs can be used to
 interact with OpenStack clouds, using both native and compatibility

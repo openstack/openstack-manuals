@@ -19,7 +19,7 @@ constraints and to improve scaling. Also, this implementation does not address
 situations where one or more layer-3 agents fail and the underlying virtual
 networks continue to operate normally. Consider deploying
 :doc:`scenario_dvr_ovs` to increase performance in addition to redundancy. As
-of the Kilo release, you cannot combine the DVR and L3HA mechanisms.
+of the Liberty release, you cannot combine the DVR and L3HA mechanisms.
 
 .. note::
    The failover process only retains the state of network connections for
@@ -30,7 +30,7 @@ project (tenant) network. However, this configuration also supports VLAN
 external networks, VLAN project networks, and GRE project networks.
 
 .. note::
-   Due to a bug in the Juno (initial) and Kilo releases, VXLAN and GRE project
+   Due to a bug in releases prior to Liberty, VXLAN and GRE project
    networks must use multicast instead of the layer-2 population mechanism.
 
 .. todo:

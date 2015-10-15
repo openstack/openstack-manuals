@@ -16,7 +16,7 @@ Before starting a migration, review the Configure migrations section.
        Although the :command:`nova` command is called :command:`live-migration`,
        under the default Compute configuration options, the instances
        are suspended before migration. For more information, see
-       `Configure migrations <http://docs.openstack.org/kilo/config-reference/content/list-of-compute-config-options.html>`_.
+       `Configure migrations <http://docs.openstack.org/liberty/config-reference/content/list-of-compute-config-options.html>`_.
        in the OpenStack Configuration Reference.
 
 **Migrating instances**

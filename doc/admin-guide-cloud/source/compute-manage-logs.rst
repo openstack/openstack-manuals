@@ -39,7 +39,7 @@ For more about the logging configuration syntax, including the
 on logging configuration files.
 
 For an example :file:`logging.conf` file with various defined handlers, see
-the `OpenStack Configuration Reference <http://docs.openstack.org/kilo/config-reference/content/>`__.
+the `OpenStack Configuration Reference <http://docs.openstack.org/liberty/config-reference/content/>`__.
 
 Syslog
 ~~~~~~
@@ -130,8 +130,8 @@ The serial console provides a way to examine kernel output and other
 system messages during troubleshooting if the instance lacks network
 connectivity.
 
-OpenStack Icehouse and earlier supports read-only access using the
-serial console using the ``os-GetSerialOutput`` server action. Most
+Read-only access from server serial console is possible
+using the ``os-GetSerialOutput`` server action. Most
 cloud images enable this feature by default. For more information, see
 :ref:`compute-common-errors-and-fixes`.
 

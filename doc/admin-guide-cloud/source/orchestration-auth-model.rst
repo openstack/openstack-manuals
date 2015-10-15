@@ -53,9 +53,6 @@ The following steps are executed for password authorization:
 Keystone trusts authorization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-OpenStack Identity trusts is a new authorization method available
-since the Icehouse release.
-
 A trust is an OpenStack Identity extension that provides a method
 to enable delegation, and optionally impersonation via OpenStack
 Identity. The key terminology is *trustor* (the user delegating) and

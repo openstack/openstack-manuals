@@ -26,14 +26,14 @@ associated components:
 
 -  `Installation Guide for openSUSE 13.2 and SUSE Linux Enterprise
    Server 12
-   <http://docs.openstack.org/kilo/install-guide/install/zypper/content/>`__
+   <http://docs.openstack.org/liberty/install-guide-obs/>`__
 
 -  `Installation Guide for Red Hat Enterprise Linux 7, CentOS 7, and
    Fedora
-   21 <http://docs.openstack.org/kilo/install-guide/install/yum/content/>`__
+   21 <http://docs.openstack.org/liberty/install-guide-rdo/>`__
 
 -  `Installation Guide for Ubuntu
-   14.04 <http://docs.openstack.org/kilo/install-guide/install/apt/content/>`__
+   14.04 <http://docs.openstack.org/liberty/install-guide-ubuntu/>`__
 
 The following books explain how to configure and run an OpenStack cloud:
 
@@ -44,7 +44,7 @@ The following books explain how to configure and run an OpenStack cloud:
    Guide <http://docs.openstack.org/admin-guide-cloud/>`__
 
 -  `Configuration
-   Reference <http://docs.openstack.org/juno/config-reference/content/>`__
+   Reference <http://docs.openstack.org/liberty/config-reference/content/>`__
 
 -  `Operations Guide <http://docs.openstack.org/ops/>`__
 
@@ -140,7 +140,7 @@ Some tips:
 
 -  Be sure to include the software and package versions that you are
    using, especially if you are using a development branch, such as,
-   ``"Juno release" vs git commit bc79c3ecc55929bac585d04a03475b72e06a3208``.
+   ``"Kilo release" vs git commit bc79c3ecc55929bac585d04a03475b72e06a3208``.
 
 -  Any deployment-specific information is helpful, such as whether you
    are using Ubuntu 14.04 or are performing a multi-node installation.

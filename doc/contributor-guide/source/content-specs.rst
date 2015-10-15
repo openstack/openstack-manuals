@@ -151,11 +151,11 @@ This guide has a review in place to get a license indicator in output:
 
 
 .. Links
-.. _`Installation Guide for openSUSE and SUSE Linux Enterprise Server`: http://docs.openstack.org/kilo/install-guide/install/zypper/content/
-.. _`Installation Guide for Red Hat Enterprise Linux, CentOS, and Fedora`: http://docs.openstack.org/kilo/install-guide/install/yum/content/
-.. _`Installation Guide for Ubuntu 12.04 and 14.04 (LTS) Server`: http://docs.openstack.org/kilo/install-guide/install/apt/content/
+.. _`Installation Guide for openSUSE and SUSE Linux Enterprise Server`: http://docs.openstack.org/liberty/install-guide-obs/
+.. _`Installation Guide for Red Hat Enterprise Linux, CentOS, and Fedora`: http://docs.openstack.org/liberty/install-guide-rdo/
+.. _`Installation Guide for Ubuntu 12.04 and 14.04 (LTS) Server`: http://docs.openstack.org/liberty/install-guide-ubuntu/
 
-.. _`OpenStack Configuration Reference`: http://docs.openstack.org/kilo/config-reference/content/
+.. _`OpenStack Configuration Reference`: http://docs.openstack.org/liberty/config-reference/content/
 
 .. _`release information`: https://wiki.openstack.org/wiki/Releases
 
