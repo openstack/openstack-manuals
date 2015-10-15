@@ -26,7 +26,7 @@ Install the packages:
 
    .. code-block:: console
 
-      # zypper addrepo -f http://download.opensuse.org/repositories/network:time/openSUSE_13.2/network:time.repo network_time
+      # zypper addrepo -f obs://network:time/openSUSE_13.2 network_time
       # zypper refresh
       # zypper install chrony
 
@@ -34,9 +34,21 @@ Install the packages:
 
    .. code-block:: console
 
-      # zypper addrepo -f http://download.opensuse.org/repositories/network:time/SLE_12/network:time.repo network_time
+      # zypper addrepo -f obs://network:time/SLE_12 network_time
       # zypper refresh
       # zypper install chrony
+
+   .. note::
+
+      The packages are signed by GPG key ``17280DDF``. You should
+      verify the fingerprint of the imported GPG key before using it.
+
+      .. code-block:: console
+
+         Key Name:         network OBS Project <network@build.opensuse.org>
+         Key Fingerprint:  0080689B E757A876 CB7DC269 62EB1A09 17280DDF
+         Key Created:      Tue 24 Sep 2013 04:04:12 PM UTC
+         Key Expires:      Thu 03 Dec 2015 04:04:12 PM UTC
 
 By default, the controller node synchronizes the time via a pool of
 public servers. However, you can optionally configure alternative servers such

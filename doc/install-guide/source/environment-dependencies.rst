@@ -100,16 +100,15 @@ these procedures on all nodes.
 
      .. note::
 
-        The packages are signed by GPG key 893A90DAD85F9316. You should
+        The packages are signed by GPG key ``D85F9316``. You should
         verify the fingerprint of the imported GPG key before using it.
 
         .. code-block:: console
 
-           Key ID: 893A90DAD85F9316
-           Key Name: Cloud:OpenStack OBS Project <Cloud:OpenStack@build.opensuse.org>
-           Key Fingerprint: 35B34E18ABC1076D66D5A86B893A90DAD85F9316
-           Key Created: Tue Oct  8 13:34:21 2013
-           Key Expires: Thu Dec 17 13:34:21 2015
+           Key Name:         Cloud:OpenStack OBS Project <Cloud:OpenStack@build.opensuse.org>
+           Key Fingerprint:  35B34E18 ABC1076D 66D5A86B 893A90DA D85F9316
+           Key Created:      Tue 08 Oct 2013 01:34:21 PM UTC
+           Key Expires:      Thu 17 Dec 2015 01:34:21 PM UTC
 
 .. only:: debian
 
