@@ -19,3 +19,4 @@ OpenStack command-line clients
    cli_admin_manage_environment.rst
    cli_set_quotas.rst
    analyzing-log-files-with-swift-cli.rst
+   cli_cinder_scheduling.rst
