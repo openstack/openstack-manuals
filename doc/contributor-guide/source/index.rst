@@ -24,6 +24,7 @@ Contents
    writing-style.rst
    json_conventions.rst
    doc-bugs.rst
+   blueprints-and-specs.rst
    docs-review.rst
    tools_and_content_overview.rst
 
