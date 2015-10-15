@@ -372,5 +372,5 @@ Here are a couple of examples:
   includes Role A.
 
 * Group B is granted Role B on Domain B. If User B is a member of
-  Domain B, if User B gets a token scoped to Domain B, the token also
+  Group B, when User B gets a token scoped to Domain B, the token also
   includes Role B.
