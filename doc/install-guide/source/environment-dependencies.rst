@@ -437,50 +437,70 @@ Install the message queue service
 Configure the message queue service
 -----------------------------------
 
-#. Start the message queue service and configure it to start when the
-   system boots:
+.. only:: rdo or obs
 
-   .. only:: rdo or obs
+   #. Start the message queue service and configure it to start when the
+      system boots:
 
       .. code-block:: console
 
          # systemctl enable rabbitmq-server.service
          # systemctl start rabbitmq-server.service
 
-   .. only:: obs
+      .. only:: obs
 
-      In case the message queue service does not start and gives ``nodedown`` error,
-      perform the following steps.
+         In case the message queue service does not start and
+         returns a ``nodedown`` error, perform the following actions:
 
-      * Copy the ``/usr/lib/systemd/system/epmd.socket`` file to the
-        ``/etc/systemd/system`` directory.
+         * Copy the ``/usr/lib/systemd/system/epmd.socket`` file to the
+           ``/etc/systemd/system`` directory.
 
-      * Edit the ``/etc/systemd/system/epmd.socket`` file to contain the following:
+         * Edit the ``/etc/systemd/system/epmd.socket`` file to contain
+           the following:
 
-        .. code-block:: ini
+           .. code-block:: ini
 
-           [Socket]
-           ...
-           ListenStream=MANAGEMENT_INTERFACE_IP_ADDRESS:4369
+              [Socket]
+              ...
+              ListenStream=MANAGEMENT_INTERFACE_IP_ADDRESS:4369
 
-        Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address of the
-        management network interface on your controller node.
+           Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address
+           of the management network interface on your controller node.
 
-      * Start the message queue service again.
+         * Start the message queue service again.
 
-#. Add the ``openstack`` user:
+   #. Add the ``openstack`` user:
 
-   .. code-block:: console
+      .. code-block:: console
 
-      # rabbitmqctl add_user openstack RABBIT_PASS
-        Creating user "openstack" ...
+         # rabbitmqctl add_user openstack RABBIT_PASS
+           Creating user "openstack" ...
 
-   Replace ``RABBIT_PASS`` with a suitable password.
+      Replace ``RABBIT_PASS`` with a suitable password.
 
-#. Permit configuration, write, and read access for the
-   ``openstack`` user:
+   #. Permit configuration, write, and read access for the
+      ``openstack`` user:
 
-   .. code-block:: console
+      .. code-block:: console
 
-      # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
-        Setting permissions for user "openstack" in vhost "/" ...
+         # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
+           Setting permissions for user "openstack" in vhost "/" ...
+
+.. only:: ubuntu or debian
+
+   #. Add the ``openstack`` user:
+
+      .. code-block:: console
+
+         # rabbitmqctl add_user openstack RABBIT_PASS
+           Creating user "openstack" ...
+
+      Replace ``RABBIT_PASS`` with a suitable password.
+
+   #. Permit configuration, write, and read access for the
+      ``openstack`` user:
+
+      .. code-block:: console
+
+         # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
+           Setting permissions for user "openstack" in vhost "/" ...
