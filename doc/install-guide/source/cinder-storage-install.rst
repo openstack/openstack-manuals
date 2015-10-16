@@ -139,7 +139,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # zypper install openstack-cinder-volume tgt python-mysql
+         # zypper install openstack-cinder-volume tgt python-PyMySQL
 
 .. only:: rdo
 
