@@ -15,3 +15,4 @@ Advanced configuration
    adv_config_debugging.rst
    adv_config_ipv6.rst
    adv_config_sriov.rst
+   adv_config_ipam.rst
