@@ -71,7 +71,7 @@ Defining your own filter and goodness functions
 You can define your own filter and goodness functions through the use of
 various properties that OpenStack Block Storage has exposed. Properties
 exposed include information about the volume request being made,
-``volume\_type`` settings, and back-end specific information about drivers.
+``volume_type`` settings, and back-end specific information about drivers.
 All of these allow for a lot of control over how the ideal back end for
 a volume request will be decided.
 
