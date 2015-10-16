@@ -76,7 +76,7 @@ Known limitations
 
 Environment example
 ~~~~~~~~~~~~~~~~~~~
-We recommend using Open vSwitch with VLAN as segration. This
+We recommend using Open vSwitch with VLAN as segregation. This
 way you can combine normal VMs without SR-IOV ports
 and instances with SR-IOV ports on a single neutron
 network.
