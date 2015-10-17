@@ -1,4 +1,4 @@
-﻿====================
+====================
 Deployment scenarios
 ====================
 
@@ -11,4 +11,4 @@ Deployment scenarios
    scenario_l3ha_ovs.rst
    scenario_l3ha_lb.rst
    scenario_provider_ovs.rst
-   deploy_scenario4b.rst
+   scenario_provider_lb.rst
