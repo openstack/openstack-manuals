@@ -69,18 +69,19 @@ The root of the generated HTML documentation is::
 
 RST guides
 ----------
-Then, you can see that the openstack-manuals/doc/user-guides is the RST based guide, So we can't use mvn command.
-You can use tox to prepare virtual environment and build it::
+Then, you can see some guides written in the RST format, so we can't use mvn command.
+You can use tox to prepare virtual environment and build all RST based guides::
 
     tox -e docs
 
-The root of the generated *End User Guide* HTML documentation is::
+You can also build a specific guide.
+For example, to build *OpenStack End User Guide*, use the following command::
 
-    openstack-manuals/doc/user-guides/build/html/index.html
+    tox -e build -- user-guide
 
-The root of the generated *Admin User Guide* HTML documentation is::
+You can find the root of the generated HTML documentation at::
 
-    openstack-manuals/doc/user-guides/build-admin/html/index.html
+    openstack-manuals/doc/user-guide/build/html/index.html
 
 Testing of changes and building of the manual
 =============================================
