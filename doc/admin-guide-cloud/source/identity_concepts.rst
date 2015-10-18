@@ -201,7 +201,6 @@ To restrict all Compute service requests to require this role, the
 resulting file looks like:
 
 .. code-block:: json
-   :linenos:
 
    {
       "admin_or_owner": "role:admin or project_id:%(project_id)s",

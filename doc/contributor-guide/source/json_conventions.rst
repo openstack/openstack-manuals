@@ -20,7 +20,6 @@ JSON formatting conventions
 Example:
 
 .. code-block:: json
-   :linenos:
 
    {
        "uuid": "d8e02d56-2648-49a3-bf97-6be8f1204f38",

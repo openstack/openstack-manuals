@@ -21,7 +21,6 @@ methods:
 -  Provide logging setting in :file:`neutron.conf`.
 
    .. code-block:: ini
-      :linenos:
 
       [DEFAULT]
       # Default log level is WARNING
@@ -57,7 +56,6 @@ To support DHCP agent, rpc\_notifier driver must be set. To set up the
 notification, edit notification options in :file:`neutron.conf`:
 
 .. code-block:: ini
-   :linenos:
 
    # Driver or drivers to handle sending notifications. (multi
    # valued)
@@ -80,7 +78,6 @@ queue bound to a topic exchange defined by ``control_exchange`` in
 :file:`neutron.conf`.
 
 .. code-block:: ini
-   :linenos:
 
    # ============ Notification System Options ====================
 
@@ -129,7 +126,6 @@ and ``notifications_two.info`` queues bound to a topic exchange defined
 by ``control_exchange`` in :file:`neutron.conf`.
 
 .. code-block:: ini
-   :linenos:
 
    # ============ Notification System Options =====================
 

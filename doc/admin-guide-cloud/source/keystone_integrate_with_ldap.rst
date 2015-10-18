@@ -59,7 +59,6 @@ end configuration examples. Modify these examples as needed.
 #. Define the destination LDAP server in the  :file:`keystone.conf` file:
 
    .. code-block:: ini
-      :linenos:
 
       [ldap]
       url = ldap://localhost
@@ -73,7 +72,6 @@ end configuration examples. Modify these examples as needed.
    the ``use_dumb_member`` variable.
 
    .. code-block:: ini
-      :linenos:
 
       [ldap]
       dumb_member = cn=dumb,dc=nonexistent
@@ -101,7 +99,6 @@ setting summary:
      chasing behavior for queries.
 
 .. code-block:: ini
-   :linenos:
 
    [ldap]
    query_scope = sub
@@ -115,7 +112,6 @@ Use ``debug_level`` to set the LDAP debugging level for LDAP calls.
 A value of zero means that debugging is not enabled.
 
 .. code-block:: ini
-   :linenos:
 
    [ldap]
    debug_level = 0
@@ -132,7 +128,6 @@ connection pool size, maximum retry, reconnect trials, timeout (-1
 indicates indefinite wait) and lifetime in seconds.
 
 .. code-block:: ini
-   :linenos:
 
       [ldap]
       use_pool = true
@@ -149,7 +144,6 @@ authentication. Configure connection pool size and lifetime in
 seconds.
 
 .. code-block:: ini
-   :linenos:
 
    [ldap]
    use_auth_pool = false

@@ -1,6 +1,5 @@
 .. _over_subscription:
 
-
 =====================================
 Oversubscription in thin provisioning
 =====================================
@@ -50,7 +49,6 @@ Capabilities
 Drivers can report the following capabilities for a back end or a pool:
 
 .. code-block:: ini
-   :linenos:
 
    thin_provisioning_support = True(or False)
    thick_provisioning_support = True(or False)
@@ -77,7 +75,6 @@ If volume type is provided as part of the volume creation request, it can
 have the following extra specs defined:
 
 .. code-block:: ini
-   :linenos:
 
    'capabilities:thin_provisioning_support': '<is> True' or '<is> False'
    'capabilities:thick_provisioning_support': '<is> True' or '<is> False'
@@ -88,7 +85,6 @@ have the following extra specs defined:
     ``thick_provisioning_support`` is not required. So the following works too:
 
 .. code-block:: ini
-   :linenos:
 
    'thin_provisioning_support': '<is> True' or '<is> False'
    'thick_provisioning_support': '<is> True' or '<is> False'

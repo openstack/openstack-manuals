@@ -1,6 +1,3 @@
-.. highlight: ini
-   :linenothreshold: 5
-
 .. _volume_backups_export_import:
 
 =================================

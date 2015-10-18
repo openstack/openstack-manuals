@@ -1,6 +1,3 @@
-.. highlight:: console
-   :linenothreshold: 5
-
 ========================================================================
 Addressing discrepancies in reported volume sizes for EqualLogic storage
 ========================================================================

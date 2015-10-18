@@ -36,7 +36,6 @@ enable it, simply follow the configuration options exposed in the default
 configuration file, or add it yourself according to the pattern below.
 
 .. code-block:: ini
-   :linenos:
 
    [cors]
    allowed_origin = https://first_ui.example.com
@@ -54,7 +53,6 @@ suffix to :code:`cors.` is legibility, we recommend using a reasonable
 human-readable string:
 
 .. code-block:: ini
-   :linenos:
 
    [cors.ironic_webclient]
    # CORS Configuration for a hypothetical ironic webclient, which overrides
@@ -82,7 +80,6 @@ running the service. Then, add the following configuration block to your
 :file:`paste.ini` file.
 
 .. code-block:: ini
-   :linenos:
 
    [filter:cors]
    paste.filter_factory = oslo_middleware.cors:filter_factory

@@ -1,8 +1,5 @@
 .. _volume_migration.rst:
 
-.. highlight: ini
-   :linenothreshold: 5
-
 ===============
 Migrate volumes
 ===============

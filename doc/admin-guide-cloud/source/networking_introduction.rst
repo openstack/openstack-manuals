@@ -174,7 +174,6 @@ FWaaS management options are also available in the OpenStack dashboard.
 #. Enable the FWaaS plug-in in the :file:`/etc/neutron/neutron.conf` file:
 
    .. code-block:: ini
-      :linenos:
 
        service_plugins = firewall
        [service_providers]

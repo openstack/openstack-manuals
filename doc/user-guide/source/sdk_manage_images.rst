@@ -1,6 +1,3 @@
-.. highlight: python
-   :linenothreshold: 5
-
 =============
 Manage images
 =============
@@ -123,7 +120,6 @@ To upload an image, call the ``glanceclient.v2.images.ImageManager.create``
 method:
 
 .. code-block:: python
-   :linenos:
 
     import glanceclient.v2.client as glclient
     imagefile = "/tmp/myimage.img"

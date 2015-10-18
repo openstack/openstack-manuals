@@ -15,7 +15,6 @@ be cached usually has a caching boolean value that toggles caching.
 So to enable only the token back end caching, set the values as follows:
 
 .. code-block:: ini
-   :linenos:
 
    [cache]
    enabled=true
@@ -123,7 +122,6 @@ Configure the Memcached back end example
 The following example shows how to configure the memcached back end:
 
 .. code-block:: ini
-   :linenos:
 
    [cache]
 

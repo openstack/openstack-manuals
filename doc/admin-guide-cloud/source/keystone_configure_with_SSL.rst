@@ -41,7 +41,6 @@ file. The following SSL configuration example uses the included sample
 certificates:
 
 .. code-block:: ini
-   :linenos:
 
     [eventlet_server_ssl]
     enable = True

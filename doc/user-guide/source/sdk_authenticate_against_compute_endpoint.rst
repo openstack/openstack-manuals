@@ -1,6 +1,3 @@
-.. highlight: python
-   :linenothreshold: 5
-
 =======================================
 Authenticate against a Compute endpoint
 =======================================
@@ -9,7 +6,6 @@ To authenticate against a Compute endpoint, instantiate a
 `novaclient.v\_1\_1.client.Client <http://docs.openstack.org/developer/python-novaclient/api/novaclient.v1_1.client.html#novaclient.v1_1.client.Client>`__ object:
 
 .. code-block:: python
-   :linenos:
 
    from os import environ as env
    import novaclient.v1_1.client as nvclient
@@ -23,7 +19,6 @@ Alternatively, you can instantiate a ``novaclient.client.Client`` object
 and pass the version number:
 
 .. code-block:: python
-   :linenos:
 
    from os import environ as env
    import novaclient.client
@@ -47,7 +42,6 @@ modifications required to instantiate a ``Client`` object that can
 authenticate against the Rackspace custom authentication back end.
 
 .. code-block:: python
-   :linenos:
 
    import novaclient.auth_plugin
    import novaclient.v1_1.client as nvclient
@@ -67,7 +61,6 @@ variable in your Python script to determine whether you need to load a
 custom authentication back end:
 
 .. code-block:: python
-   :linenos:
 
    import novaclient.auth_plugin
    import novaclient.v1_1.client as nvclient

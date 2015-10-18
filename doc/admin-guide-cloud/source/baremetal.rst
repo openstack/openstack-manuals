@@ -1,8 +1,5 @@
 .. _baremetal:
 
-.. highlight: ini
-   :linenothreshold:
-
 ==========
 Bare Metal
 ==========

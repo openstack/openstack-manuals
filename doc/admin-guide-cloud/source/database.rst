@@ -1,8 +1,5 @@
 .. _database:
 
-.. highlight: ini
-   :linenothreshold:
-
 ========
 Database
 ========
@@ -50,7 +47,6 @@ datastore version.
    instance you are using to build your image:
 
    .. code-block:: ini
-      :linenos:
 
       rabbit_host = controller
       rabbit_password = RABBIT_PASS

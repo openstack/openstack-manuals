@@ -1,8 +1,5 @@
 .. _ratelimit_volume_copy_bandwidth:
 
-.. highlight: ini
-   :linenothreshold: 5
-
 ================================
 Rate-limit volume copy bandwidth
 ================================
@@ -29,7 +26,6 @@ Example :file:`cinder.conf` configuration file to limit volume copy bandwidth
 of ``lvmdriver-1`` up to 100 MiB/s:
 
 .. code-block:: ini
-   :linenos:
 
    [lvmdriver-1]
    volume_group=cinder-volumes-1

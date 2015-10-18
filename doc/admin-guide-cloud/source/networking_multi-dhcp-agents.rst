@@ -58,7 +58,6 @@ Configuration
 #. Neutron configuration file :file:`/etc/neutron/neutron.conf`:
 
    .. code-block:: ini
-      :linenos:
 
        [DEFAULT]
        core_plugin = linuxbridge
@@ -71,7 +70,6 @@ Configuration
    :file:`/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini`:
 
    .. code-block:: ini
-      :linenos:
 
        [vlans]
        tenant_network_type = vlan
@@ -87,7 +85,6 @@ Configuration
 #. Neutron configuration file :file:`/etc/neutron/neutron.conf`:
 
    .. code-block:: ini
-      :linenos:
 
        [DEFAULT]
        rabbit_host = controlnode
@@ -99,7 +96,6 @@ Configuration
    :file:`/etc/neutron/plugins/linuxbridge/linuxbridge_conf.ini`:
 
    .. code-block:: ini
-      :linenos:
 
        [vlans]
        tenant_network_type = vlan
@@ -113,7 +109,6 @@ Configuration
 #. Update the nova configuration file :file:`/etc/nova/nova.conf`:
 
    .. code-block:: ini
-      :linenos:
 
        [DEFAULT]
        network_api_class=nova.network.neutronv2.api.API

@@ -1,6 +1,3 @@
-.. highlight:: console
-   :linenothreshold: 5
-
 =====================================
 HTTP bad request in cinder volume log
 =====================================

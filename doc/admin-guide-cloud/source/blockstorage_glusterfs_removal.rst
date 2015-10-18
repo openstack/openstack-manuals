@@ -1,8 +1,5 @@
 .. _glusterfs_removal:
 
-.. highlight: ini
-   :linenothreshold: 5
-
 ===============================================
 Gracefully remove a GlusterFS volume from usage
 ===============================================

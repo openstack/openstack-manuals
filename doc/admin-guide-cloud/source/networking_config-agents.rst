@@ -451,7 +451,6 @@ hyper-v-virtualization-platform.html>`__.
    networking-plugin-hyperv_agent.html>`__. Here is a sample config file:
 
    .. code-block:: ini
-      :linenos:
 
       [DEFAULT]
       verbose = true

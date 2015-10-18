@@ -20,7 +20,6 @@ administrators to use users and groups in LDAP.
    allows LDAP as an identity back end:
 
    .. code-block:: ini
-      :linenos:
 
       [identity]
       #driver = keystone.identity.backends.sql.Identity
@@ -30,7 +29,6 @@ administrators to use users and groups in LDAP.
    the corresponding location in the :file:`keystone.conf` file:
 
    .. code-block:: ini
-      :linenos:
 
       [ldap]
       user_tree_dn = ou=Users,dc=example,dc=org
@@ -53,7 +51,6 @@ administrators to use users and groups in LDAP.
    permissions are applied to object types in the :file:`keystone.conf`:
 
    .. code-block:: ini
-      :linenos:
 
       [ldap]
       user_allow_create = False
@@ -119,7 +116,6 @@ administrators to use users and groups in LDAP.
    :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf` file. For example:
 
    .. code-block:: ini
-      :linenos:
 
       [ldap]
       url = ldap://localhost
@@ -134,7 +130,6 @@ administrators to use users and groups in LDAP.
    :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf` file. For example:
 
    .. code-block:: ini
-      :linenos:
 
       [ldap]
       user_tree_dn = ou=Users,dc=example,dc=org
@@ -188,7 +183,6 @@ Filters
    Use filters to control the scope of data presented through LDAP.
 
    .. code-block:: ini
-      :linenos:
 
        [ldap]
        user_filter = (memberof=cn=openstack-users,ou=workgroups,dc=example,dc=org)
@@ -206,7 +200,6 @@ Identity attribute mapping
    in the :file:`keystone.conf` file:
 
    .. code-block:: ini
-      :linenos:
 
       [ldap]
       user_id_attribute      = cn
@@ -236,7 +229,6 @@ Enabled emulation
    emulation.
 
    .. code-block:: ini
-      :linenos:
 
       [ldap]
       user_enabled_emulation = false

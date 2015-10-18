@@ -277,7 +277,6 @@ Enable neutron sriov-agent (Compute)
    :file:`/etc/neutron/plugins/ml2/ml2_conf_sriov.ini`:
 
    .. code-block:: ini
-      :linenos:
 
       [securitygroup]
       firewall_driver = neutron.agent.firewall.NoopFirewallDriver

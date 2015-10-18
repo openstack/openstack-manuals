@@ -1,6 +1,3 @@
-.. highlight: ini
-   :linenothreshold: 3
-
 .. _orchestration-auth-model:
 
 =================================

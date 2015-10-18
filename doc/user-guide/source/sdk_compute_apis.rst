@@ -1,6 +1,3 @@
-.. highlight: python
-   :linenothreshold: 5
-
 =======
 Compute
 =======
@@ -22,7 +19,6 @@ Get OpenStack credentials (API v2)
 This example uses the ``get_nova_credentials_v2`` method:
 
 .. code-block:: python
-   :linenos:
 
     def get_nova_credentials_v2():
         d = {}
@@ -75,7 +71,6 @@ List server code listing example
 --------------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from credentials import get_nova_credentials_v2
@@ -141,7 +136,6 @@ Create server code listing example
 ----------------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     import time
@@ -198,7 +192,6 @@ The following program deletes a server (VM) by using the Compute API v2.
       and break from the for loop:
 
    .. code-block:: python
-      :linenos:
 
       servers_list = nova_client.servers.list()
       server_del = "vm1"
@@ -222,7 +215,6 @@ Delete server code example
 --------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
     from credentials import get_nova_credentials_v2
@@ -265,7 +257,6 @@ Compute API v2.
    server details as shown in the code listing below:
 
    .. code-block:: python
-      :linenos:
 
       def print_server(server):
           print("-"*35)
@@ -302,7 +293,6 @@ Compute API v2.
    ``name`` variable:
 
    .. code-block:: python
-      :linenos:
 
       server.update(name = n + '1')
 
@@ -322,7 +312,6 @@ Update server code listing example
 ----------------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
 
@@ -362,7 +351,6 @@ Compute API v2.
    flavor details:
 
    .. code-block:: python
-      :linenos:
 
       def print_flavors(flavor_list):
           for flavor in flavor_list:
@@ -397,7 +385,6 @@ List flavors code listing example
 ---------------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
 
@@ -429,7 +416,6 @@ the Compute API v2.
    floating\_ip object details:
 
    .. code-block:: python
-      :linenos:
 
       def print_values_ip(ip_list):
           ip_dict_lisl = []
@@ -468,7 +454,6 @@ List floating IPs code listing example
 --------------------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
 
@@ -498,7 +483,6 @@ The following program lists the hosts by using the Compute API v2.
    host object details:
 
    .. code-block:: python
-      :linenos:
 
       def print_hosts(host_list):
           for host in host_list:
@@ -534,7 +518,6 @@ List hosts code listing example
 -------------------------------
 
 .. code-block:: python
-   :linenos:
 
     #!/usr/bin/env python
 

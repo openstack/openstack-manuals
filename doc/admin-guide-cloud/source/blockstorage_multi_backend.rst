@@ -1,8 +1,5 @@
 .. _multi_backend:
 
-.. highlight: ini
-   :linenothreshold: 5
-
 ====================================
 Configure multiple-storage back ends
 ====================================
@@ -55,7 +52,6 @@ the ``[DEFAULT]`` configuration group are not used.
 These examples show three back ends:
 
 .. code-block:: ini
-   :linenos:
 
    enabled_backends=lvmdriver-1,lvmdriver-2,lvmdriver-3
    [lvmdriver-1]
@@ -87,7 +83,6 @@ provides more information. In addition, this example presents a
    Channel drivers.
 
 .. code-block:: ini
-   :linenos:
 
    [3par]
    use_multipath_for_image_xfer = true

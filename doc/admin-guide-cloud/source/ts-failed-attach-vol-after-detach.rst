@@ -1,6 +1,3 @@
-.. highlight:: console
-   :linenothreshold: 5
-
 =======================================
 Failed to attach volume after detaching
 =======================================

@@ -1,6 +1,3 @@
-.. highlight:: ini
-   :linenothreshold: 1
-
 ============================================
 Troubleshoot the Block Storage configuration
 ============================================

@@ -1,6 +1,3 @@
-.. highlight:: console
-   :linenothreshold: 5
-
 ==================
 Consistency groups
 ==================

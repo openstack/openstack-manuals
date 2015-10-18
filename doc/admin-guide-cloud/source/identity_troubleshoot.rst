@@ -31,7 +31,6 @@ configuration option. In your services configuration file, look for a
 section like this:
 
 .. code-block:: ini
-   :linenos:
 
     [keystone_authtoken]
     signing_dir = /var/cache/glance/api
