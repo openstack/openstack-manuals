@@ -32,16 +32,16 @@ create a MongoDB database, service credentials, and API endpoint.
 
       .. note::
 
-         The packages are signed by GPG key ``562111AC05905EA8``.
-         You should verify the fingerprint of the imported GPG key before
-         using it.
+         The packages are signed by GPG key ``05905EA8``. You should
+         verify the fingerprint of the imported GPG key before using it.
 
          .. code-block:: console
 
-            Key Name: server:database OBS Project &lt;server:database@build.opensuse.org&gt;
-            Key Fingerprint: 116EB86331583E47E63CDF4D562111AC05905EA8
-            Key Created: Thu Oct 11 20:08:39 2012
-            Key Expires: Sat Dec 20 20:08:39 2014
+            Key Name:         server:database OBS Project <server:database@build.opensuse.org>
+            Key Fingerprint:  116EB863 31583E47 E63CDF4D 562111AC 05905EA8
+            Key Created:      Mon 08 Dec 2014 09:54:12 AM UTC
+            Key Expires:      Wed 15 Feb 2017 09:54:12 AM UTC
+
 
       Install the MongoDB package:
 
