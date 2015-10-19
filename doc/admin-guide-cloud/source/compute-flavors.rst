@@ -132,6 +132,37 @@ CPU limits
        In this example, the instance of ``m1.low_cpu`` can only consume
        a maximum of 50% CPU of a physical CPU computing capability.
 
+Memory limits
+    For VMware, you can configure the memory limits with control parameters.
+
+    Use these optional parameters to limit the memory allocation,
+    guarantee minimum memory reservation, and to specify shares
+    used in case of resource contention:
+
+    -  ``memory_limit``: Specifies the upper limit for VMware machine
+       memory allocation in MB. The utilization of a virtual machine will
+       not exceed this limit, even if there are available resources. This
+       is typically used to ensure a consistent performance of
+       virtual machines independent of available resources.
+
+    -  ``memory_reservation``: Specifies the guaranteed minimum memory
+       reservation in MB for VMware. This means the specified amount of
+       memory will definitely be allocated to the machine.
+
+    -  ``memory_shares_level``: On VMware, specifies the allocation level.
+       This can be ``custom``, ``high``, ``normal`` or ``low``. If you choose
+       ``custom``, set the number of shares using ``memory_shares_share``.
+
+    -  ``memory_shares_share``: Specifies the number of shares allocated
+       in the event that ``custom`` is used. There is no unit for this
+       value. It is a relative measure based on the settings for other VMs.
+       For example:
+
+       .. code:: console
+
+           $ nova flavor-key m1.medium set quota:memory_shares_level=custom
+           $ nova flavor-key m1.medium set quota:memory_shares_share=15
+
 Disk tuning
     Using disk I/O quotas, you can set maximum disk write to 10 MB per
     second for a VM user. For example:
