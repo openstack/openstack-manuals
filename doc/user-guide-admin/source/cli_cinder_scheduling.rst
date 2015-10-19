@@ -29,24 +29,24 @@ Example Usages
 
 #. Create new volume on the same back end as Volume_A and Volume_B:
 
-   ..code::
+   .. code::
 
       $ cinder create --hint same_host=Volume_A-UUID --hint same_host=Volume_B-UUID SIZE
 
    Or:
 
-   ..code::
+   .. code::
 
       $ cinder create --hint same_host="[Volume_A-UUID, Volume_B-UUID]" SIZE
 
 #. Create new volume on a different back end than both Volume_A and Volume_B:
 
-   ..code::
+   .. code::
 
       $ cinder create --hint different_host=Volume_A-UUID --hint different_host=Volume_B-UUID SIZE
 
    Or:
 
-   ..code::
+   .. code::
 
       $ cinder create --hint different_host="[Volume_A-UUID, Volume_B-UUID]" SIZE
