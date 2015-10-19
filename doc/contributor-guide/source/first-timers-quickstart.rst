@@ -71,10 +71,32 @@ In the subsequent procedures, run commands from the gitbash command line.
 Set up a text editor
 --------------------
 
-To keep the documents clean and easy to compare, all OpenStack
-projects and the Documentation team require is that text is wrapped at
-`79 characters maximum`_, with no white spaces at the end of the line.
-It helps to configure the text editor to do that automatically.
+Use any text editor of your choice to work with the documentation. For
+example:
+
+* To edit **RST** content:
+
+  * https://wiki.gnome.org/Apps/Gedit
+  * https://wiki.typo3.org/Editors_%28reST%29#Open_source_.28.3D_free_of_cost.29
+
+* To edit **XML** content:
+
+  * If you prefer Vi, there are ways to make DocBook editing easier:
+
+    https://fedoraproject.org/wiki/Editing_DocBook_with_Vi
+
+  * If you prefer a text-based editor but with validation, you can use Emacs.
+    Here are some resources on DocBook and Emacs' NXML mode:
+
+    * http://paul.frields.org/2011/02/09/xml-editing-with-emacs/
+    * https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing
+    * http://infohost.nmt.edu/tcc/help/pubs/nxml/
+
+To keep the documents clean and easy to compare, all the OpenStack
+projects requirement is that text is wrapped at `79 characters maximum`_,
+with no white spaces at the end of the line.
+
+You can configure the text editor to do that automatically.
 
 For example, in :file:`.vimrc`:
 
@@ -145,19 +167,18 @@ See :ref:`troubleshoot_setup` if you have any difficulty with a repository
 setup.
 
 
-Commiting a change
-~~~~~~~~~~~~~~~~~~
+Committing a change
+~~~~~~~~~~~~~~~~~~~
 
 #. Update the repository and create a new topic branch as described in
    the `Starting a Change`_ section of the Infrastructure manual.
 
 #. Fix the bug in the docs.
 
-   Read the How to contribute to the documentation section, pay attention to
-   the Policies and conventions section, which describes Git commit messages,
-   backport procedures, and other conventions.
+   Read the :ref:`Writing style <stg_writing_style>` section, also pay
+   attention to the :ref:`RST formatting conventions <rst_conv>` section.
 
-#. Create your commit message. See `Commiting a change`_ for details.
+#. Create your commit message. See `Committing a change`_ for details.
 
 #. Create a patch for review.openstack.org following the `Submitting a Change
    for Review`_ instructions.
@@ -357,8 +378,6 @@ instead:
 .. _`Settings > SSH Public Keys`: https://review.openstack.org/#/settings/ssh-keys
 .. _`Starting Work on a New Project`: http://docs.openstack.org/infra/manual/developers.html#starting-work-on-a-new-project
 .. _`Starting a Change`: http://docs.openstack.org/infra/manual/developers.html#starting-a-change
-.. _`Commiting a change`: http://docs.openstack.org/infra/manual/developers.html#committing-a-change
+.. _`Committing a change`: http://docs.openstack.org/infra/manual/developers.html#committing-a-change
 .. _`Submitting a Change for Review`: http://docs.openstack.org/infra/manual/developers.html#submitting-a-change-for-review
 .. _`Updating a Change`: http://docs.openstack.org/infra/manual/developers.html#updating-a-change
-
-
