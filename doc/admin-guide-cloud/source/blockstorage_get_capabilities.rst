@@ -137,3 +137,82 @@ Example of return value::
      },
    }
  }
+
+Usage of volume type access extension
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Some volume types should be restricted only. For example, test volume types
+where you are testing a new technology or ultra high performance volumes
+(for special cases) where you do not want most users to be able to select
+these volumes. An administrator/operator can then define private volume types
+using cinder client.
+Volume type access extension adds the ability to manage volume type access.
+Volume types are public by default. Private volume types can be created by
+setting the 'is_public' Boolean field to 'False' at creation time. Access to a
+private volume type can be controlled by adding or removing a project from it.
+Private volume types without projects are only visible by users with the
+admin role/context.
+
+Create a public volume type by settting 'is_public' field to 'True'::
+
+ $ cinder type-create --description test1 --is-public True vol_Type1
+ +--------------------------------------+-----------+-------------+-----------+
+ |                  ID                  |    Name   | Description | Is_Public |
+ +--------------------------------------+-----------+-------------+-----------+
+ | 0a948c84-bad5-4fba-88a2-c062006e4f6b | vol_Type1 |    test1    |    True   |
+ +--------------------------------------+-----------+-------------+-----------+
+
+Create a private volume type by setting 'is_public' field to 'False'::
+
+ $ cinder type-create --description test2 --is-public False vol_Type2
+ +--------------------------------------+-----------+-------------+-----------+
+ |                  ID                  |    Name   | Description | Is_Public |
+ +--------------------------------------+-----------+-------------+-----------+
+ | fd508846-213f-4a07-aaf2-40518fb9a23f | vol_Type2 |    test2    |    False  |
+ +--------------------------------------+-----------+-------------+-----------+
+
+Get a list of the volume types::
+
+ $ cinder type-list
+ +--------------------------------------+-------------+-------------+-----------+
+ |                  ID                  |     Name    | Description | Is_Public |
+ +--------------------------------------+-------------+-------------+-----------+
+ | 0a948c84-bad5-4fba-88a2-c062006e4f6b | vol_Type1   |    test1    |    True   |
+ | 87e5be6f-9491-4ea5-9906-9ac56494bb91 | lvmdriver-1 |      -      |    True   |
+ | fd508846-213f-4a07-aaf2-40518fb9a23f | vol_Type2   |    test2    |   False   |
+ +--------------------------------------+-------------+-------------+-----------+
+
+Get a list of the projects::
+
+ $ openstack project list
+ +----------------------------------+--------------------+
+ | ID                               | Name               |
+ +----------------------------------+--------------------+
+ | 4105ead90a854100ab6b121266707f2b | alt_demo           |
+ | 4a22a545cedd4fcfa9836eb75e558277 | admin              |
+ | 71f9cdb1a3ab4b8e8d07d347a2e146bb | service            |
+ | c4860af62ffe465e99ed1bc08ef6082e | demo               |
+ | e4b648ba5108415cb9e75bff65fa8068 | invisible_to_admin |
+ +----------------------------------+--------------------+
+
+Add volume type access for the given demo project, using its project-id::
+
+ $ cinder type-access-add --volume-type vol_Type2 --project-id c4860af62ffe465e99ed1bc08ef6082e
+
+List the access information about the given volume type::
+
+ $ cinder type-access-list --volume-type vol_Type2
+ +--------------------------------------+----------------------------------+
+ |            Volume_type_ID            |            Project_ID            |
+ +--------------------------------------+----------------------------------+
+ | fd508846-213f-4a07-aaf2-40518fb9a23f | c4860af62ffe465e99ed1bc08ef6082e |
+ +--------------------------------------+----------------------------------+
+
+Remove volume type access for the given project::
+
+ $ cinder type-access-remove --volume-type vol_Type2 --project-id
+ c4860af62ffe465e99ed1bc08ef6082e
+ $ cinder type-access-list --volume-type vol_Type2
+ +----------------+------------+
+ | Volume_type_ID | Project_ID |
+ +----------------+------------+
+ +----------------+------------+
