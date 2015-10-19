@@ -50,7 +50,7 @@ A share network has these attributes:
 
 - The IP version of the network.
 
-- The network type, which is `vlan`, `vxlan`, `gre`, `flat`, or `local`.
+- The network type, which is `vlan`, `vxlan`, `gre`, or `flat`.
 
 If the network uses segmentation, a segmentation identifier. For example, VLAN,
 VXLAN, and GRE networks use segmentation.
