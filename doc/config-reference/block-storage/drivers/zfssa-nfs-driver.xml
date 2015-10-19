@@ -38,6 +38,9 @@
             <listitem>
                 <para>Volume migration</para>
             </listitem>
+            <listitem>
+                <para>Local cache of a bootable volume</para>
+            </listitem>
         </itemizedlist>
     </simplesect>
     <simplesect>
@@ -208,5 +211,48 @@ zfssa_https_port = <replaceable>443</replaceable></programlisting>
         <para>This driver shares additional NFS configuration options with the generic NFS driver.
             For a description of these, see <xref linkend="config_table_cinder_storage_nfs"/>.
         </para>
+    </simplesect>
+    <simplesect>
+        <title>ZFSSA local cache</title>
+        <para>The local cache feature enables ZFSSA drivers to serve the usage of bootable volumes significantly better. With the feature,
+              the first bootable volume created from an image is cached, so that subsequent volumes can be created directly from the cache,
+              instead of having image data transferred over the network multiple times.
+        </para>
+        <para>The following conditions must be met in order to use ZFSSA local cache feature:
+        </para>
+            <itemizedlist>
+              <listitem>
+                <para>A storage pool needs to be configured.</para>
+              </listitem>
+              <listitem>
+                <para>REST and NFS services need to be turned on.</para>
+              </listitem>
+              <listitem>
+                <para>On an OpenStack controller, <filename>cinder.conf</filename> needs to contain necessary properties used to configure and
+                    set up the ZFSSA NFS driver, including the following new properties:
+                    <itemizedlist>
+                      <listitem>
+                      <para><literal>zfssa_enable_local_cache</literal>: (True/False) To enable/disable the feature.</para>
+                      </listitem>
+                      <listitem>
+                      <para><literal>zfssa_cache_directory</literal>: The directory name inside zfssa_nfs_share where cache volumes are stored.</para>
+                      </listitem>
+                    </itemizedlist>
+
+                </para>
+              </listitem>
+            </itemizedlist>
+
+        <para>Every cache volume has two additional properties stored as WebDAV properties. It is important that they are not altered outside of
+            Block Storage when the driver is in use:
+        </para>
+            <itemizedlist>
+              <listitem>
+                <para><literal>image_id</literal>: stores the image id as in Image service.</para>
+              </listitem>
+              <listitem>
+                <para><literal>updated_at</literal>: stores the most current timestamp when the image is updated in Image service.</para>
+              </listitem>
+              </itemizedlist>
     </simplesect>
 </section>
