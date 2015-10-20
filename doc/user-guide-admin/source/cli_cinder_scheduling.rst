@@ -10,7 +10,7 @@ means that they are stored on different back ends.
 
 For information on how to set up multiple back ends for Cinder,
 refer to the guide for `Configuring multiple-storage back ends
-<http://docs.openstack.org/admin-guide-cloud/blockstorage_multi_backend.html/>`_.
+<http://docs.openstack.org/admin-guide-cloud/blockstorage_multi_backend.html>`__.
 
 Example Usages
 ~~~~~~~~~~~~~~
