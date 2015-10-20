@@ -25,8 +25,8 @@ VM host is down; otherwise, the evacuation fails with an error.
 
    $ nova evacuate EVACUATED_SERVER_NAME HOST_B
 
-   The instance is booted from a new disk, but preserves its
-   configuration including its ID, name, uid, IP address, and so on.
+   The instance is rebuilt from the original image or volume, but preserves
+   its configuration including its ID, name, uid, IP address, and so on.
    The command returns a password::
 
     +-----------+--------------+
