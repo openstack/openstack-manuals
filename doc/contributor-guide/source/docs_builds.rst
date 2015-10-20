@@ -248,7 +248,7 @@ To build with the latest SNAPSHOT version of the plug-in, do the following:
 
 #. Clone the clouddocs-maven-plugin::
 
-    git clone https://git.openstack.org/stackforge/clouddocs-maven-plugin
+    git clone https://git.openstack.org/openstack/clouddocs-maven-plugin
 
 #. Open the repository::
 
