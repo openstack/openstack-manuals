@@ -15,7 +15,7 @@
        OpenStack command-line interface (CLI).
 
        This chapter documents <command>openstack</command> version
-        <literal>1.7.1</literal>.
+        <literal>1.8.0</literal>.
     </para>
 
     <para>For help on a specific <command>openstack</command>
@@ -58,7 +58,8 @@
                  [--os-password &lt;auth-password&gt;]
                  [--os-endpoint &lt;auth-endpoint&gt;] [--os-url &lt;auth-url&gt;]
                  [--os-token &lt;auth-token&gt;] [--os-project-id &lt;auth-project-id&gt;]
-                 [--os-object-api-version &lt;object-api-version&gt;]</computeroutput></screen>
+                 [--os-object-api-version &lt;object-api-version&gt;]
+                 [--os-baremetal-api-version &lt;baremetal-api-version&gt;]</computeroutput></screen>
     </section>
     <section xml:id="openstackclient_command_optional">
         <title>openstack optional arguments</title>
@@ -227,10 +228,10 @@
     <listitem>
       <para>
       Select an authentication type. Available types:
-      osc_password, token_endpoint, v2token, admin_token,
-      v2password, v3password, v3scopedsaml, v3oidcpassword,
-      v3unscopedadfs, token, v3token, password,
-      v3unscopedsaml. Default: selected based on --os-
+      v2token, admin_token, v2password, v3password,
+      v3scopedsaml, v3oidcpassword, v3unscopedadfs, token,
+      v3token, password, v3unscopedsaml, osc_password,
+      token_endpoint. Default: selected based on --os-
       username/--os-token (Env: OS_AUTH_TYPE)
       </para>
     </listitem>
@@ -239,14 +240,14 @@
     <term><command>--os-project-domain-id &lt;auth-project-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Domain ID containing project With
-      v3password: Domain ID containing project With
+      With v3password: Domain ID containing project With
       v3scopedsaml: Domain ID containing project With
       v3oidcpassword: Domain ID containing project With
       v3unscopedadfs: Domain ID containing project With
       token: Domain ID containing project With v3token:
       Domain ID containing project With password: Domain ID
       containing project With v3unscopedsaml: Domain ID
+      containing project With osc_password: Domain ID
       containing project (Env: OS_PROJECT_DOMAIN_ID)
       </para>
     </listitem>
@@ -267,14 +268,14 @@
     <term><command>--os-project-name &lt;auth-project-name&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Project name to scope to With
-      v3password: Project name to scope to With
+      With v3password: Project name to scope to With
       v3scopedsaml: Project name to scope to With
       v3oidcpassword: Project name to scope to With
       v3unscopedadfs: Project name to scope to With token:
       Project name to scope to With v3token: Project name to
       scope to With password: Project name to scope to With
-      v3unscopedsaml: Project name to scope to (Env:
+      v3unscopedsaml: Project name to scope to With
+      osc_password: Project name to scope to (Env:
       OS_PROJECT_NAME)
       </para>
     </listitem>
@@ -283,12 +284,12 @@
     <term><command>--os-trust-id &lt;auth-trust-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Trust ID With v2token: Trust ID
-      With v2password: Trust ID With v3password: Trust ID
-      With v3scopedsaml: Trust ID With v3oidcpassword: Trust
-      ID With v3unscopedadfs: Trust ID With token: Trust ID
-      With v3token: Trust ID With password: Trust ID With
-      v3unscopedsaml: Trust ID (Env: OS_TRUST_ID)
+      With v2token: Trust ID With v2password: Trust ID With
+      v3password: Trust ID With v3scopedsaml: Trust ID With
+      v3oidcpassword: Trust ID With v3unscopedadfs: Trust ID
+      With token: Trust ID With v3token: Trust ID With
+      password: Trust ID With v3unscopedsaml: Trust ID With
+      osc_password: Trust ID (Env: OS_TRUST_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -305,14 +306,15 @@
     <term><command>--os-domain-name &lt;auth-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Domain name to scope to With
-      v3password: Domain name to scope to With v3scopedsaml:
-      Domain name to scope to With v3oidcpassword: Domain
-      name to scope to With v3unscopedadfs: Domain name to
-      scope to With token: Domain name to scope to With
-      v3token: Domain name to scope to With password: Domain
-      name to scope to With v3unscopedsaml: Domain name to
-      scope to (Env: OS_DOMAIN_NAME)
+      With v3password: Domain name to scope to With
+      v3scopedsaml: Domain name to scope to With
+      v3oidcpassword: Domain name to scope to With
+      v3unscopedadfs: Domain name to scope to With token:
+      Domain name to scope to With v3token: Domain name to
+      scope to With password: Domain name to scope to With
+      v3unscopedsaml: Domain name to scope to With
+      osc_password: Domain name to scope to (Env:
+      OS_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -320,9 +322,9 @@
     <term><command>--os-user-domain-id &lt;auth-user-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User's domain id With v3password:
-      User's domain id With password: User's domain id (Env:
-      OS_USER_DOMAIN_ID)
+      With v3password: User's domain id With password:
+      User's domain id With osc_password: User's domain id
+      (Env: OS_USER_DOMAIN_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -349,13 +351,14 @@
     <term><command>--os-domain-id &lt;auth-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Domain ID to scope to With
-      v3password: Domain ID to scope to With v3scopedsaml:
-      Domain ID to scope to With v3oidcpassword: Domain ID
-      to scope to With v3unscopedadfs: Domain ID to scope to
-      With token: Domain ID to scope to With v3token: Domain
-      ID to scope to With password: Domain ID to scope to
-      With v3unscopedsaml: Domain ID to scope to (Env:
+      With v3password: Domain ID to scope to With
+      v3scopedsaml: Domain ID to scope to With
+      v3oidcpassword: Domain ID to scope to With
+      v3unscopedadfs: Domain ID to scope to With token:
+      Domain ID to scope to With v3token: Domain ID to scope
+      to With password: Domain ID to scope to With
+      v3unscopedsaml: Domain ID to scope to With
+      osc_password: Domain ID to scope to (Env:
       OS_DOMAIN_ID)
       </para>
     </listitem>
@@ -364,9 +367,9 @@
     <term><command>--os-user-domain-name &lt;auth-user-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User's domain name With v3password:
-      User's domain name With password: User's domain name
-      (Env: OS_USER_DOMAIN_NAME)
+      With v3password: User's domain name With password:
+      User's domain name With osc_password: User's domain
+      name (Env: OS_USER_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -383,9 +386,9 @@
     <term><command>--os-user-id &lt;auth-user-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User id With v2password: User ID to
-      login with With v3password: User ID With password:
-      User id (Env: OS_USER_ID)
+      With v2password: User ID to login with With
+      v3password: User ID With password: User id With
+      osc_password: User id (Env: OS_USER_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -404,11 +407,11 @@
     <term><command>--os-username &lt;auth-username&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Username With v2password: Username
-      to login with With v3password: Username With
-      v3oidcpassword: Username With v3unscopedadfs: Username
-      With password: Username With v3unscopedsaml: Username
-      (Env: OS_USERNAME)
+      With v2password: Username to login with With
+      v3password: Username With v3oidcpassword: Username
+      With v3unscopedadfs: Username With password: Username
+      With v3unscopedsaml: Username With osc_password:
+      Username (Env: OS_USERNAME)
       </para>
     </listitem>
   </varlistentry>
@@ -416,14 +419,15 @@
     <term><command>--os-auth-url &lt;auth-auth-url&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Authentication URL With v2token:
-      Authentication URL With v2password: Authentication URL
-      With v3password: Authentication URL With v3scopedsaml:
-      Authentication URL With v3oidcpassword: Authentication
-      URL With v3unscopedadfs: Authentication URL With
-      token: Authentication URL With v3token: Authentication
-      URL With password: Authentication URL With
-      v3unscopedsaml: Authentication URL (Env: OS_AUTH_URL)
+      With v2token: Authentication URL With v2password:
+      Authentication URL With v3password: Authentication URL
+      With v3scopedsaml: Authentication URL With
+      v3oidcpassword: Authentication URL With
+      v3unscopedadfs: Authentication URL With token:
+      Authentication URL With v3token: Authentication URL
+      With password: Authentication URL With v3unscopedsaml:
+      Authentication URL With osc_password: Authentication
+      URL (Env: OS_AUTH_URL)
       </para>
     </listitem>
   </varlistentry>
@@ -449,15 +453,15 @@
     <term><command>--os-project-domain-name &lt;auth-project-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Domain name containing project With
-      v3password: Domain name containing project With
+      With v3password: Domain name containing project With
       v3scopedsaml: Domain name containing project With
       v3oidcpassword: Domain name containing project With
       v3unscopedadfs: Domain name containing project With
       token: Domain name containing project With v3token:
       Domain name containing project With password: Domain
       name containing project With v3unscopedsaml: Domain
-      name containing project (Env: OS_PROJECT_DOMAIN_NAME)
+      name containing project With osc_password: Domain name
+      containing project (Env: OS_PROJECT_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -465,11 +469,11 @@
     <term><command>--os-password &lt;auth-password&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User's password With v2password:
-      Password to use With v3password: User's password With
-      v3oidcpassword: Password With v3unscopedadfs: Password
-      With password: User's password With v3unscopedsaml:
-      Password (Env: OS_PASSWORD)
+      With v2password: Password to use With v3password:
+      User's password With v3oidcpassword: Password With
+      v3unscopedadfs: Password With password: User's
+      password With v3unscopedsaml: Password With
+      osc_password: User's password (Env: OS_PASSWORD)
       </para>
     </listitem>
   </varlistentry>
@@ -477,9 +481,9 @@
     <term><command>--os-endpoint &lt;auth-endpoint&gt;</command></term>
     <listitem>
       <para>
-      With token_endpoint: The endpoint that will always be
-      used With admin_token: The endpoint that will always
-      be used (Env: OS_ENDPOINT)
+      With admin_token: The endpoint that will always be
+      used With token_endpoint: The endpoint that will
+      always be used (Env: OS_ENDPOINT)
       </para>
     </listitem>
   </varlistentry>
@@ -496,12 +500,12 @@
     <term><command>--os-token &lt;auth-token&gt;</command></term>
     <listitem>
       <para>
-      With token_endpoint: The token that will always be
-      used With token_endpoint: Authentication token to use
       With v2token: Token With admin_token: The token that
       will always be used With v3scopedsaml: Token to
       authenticate with With token: Token to authenticate
-      with With v3token: Token to authenticate with (Env:
+      with With v3token: Token to authenticate with With
+      token_endpoint: The token that will always be used
+      With token_endpoint: Authentication token to use (Env:
       OS_TOKEN)
       </para>
     </listitem>
@@ -510,14 +514,15 @@
     <term><command>--os-project-id &lt;auth-project-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Project ID to scope to With
-      v3password: Project ID to scope to With v3scopedsaml:
-      Project ID to scope to With v3oidcpassword: Project ID
-      to scope to With v3unscopedadfs: Project ID to scope
-      to With token: Project ID to scope to With v3token:
-      Project ID to scope to With password: Project ID to
-      scope to With v3unscopedsaml: Project ID to scope to
-      (Env: OS_PROJECT_ID)
+      With v3password: Project ID to scope to With
+      v3scopedsaml: Project ID to scope to With
+      v3oidcpassword: Project ID to scope to With
+      v3unscopedadfs: Project ID to scope to With token:
+      Project ID to scope to With v3token: Project ID to
+      scope to With password: Project ID to scope to With
+      v3unscopedsaml: Project ID to scope to With
+      osc_password: Project ID to scope to (Env:
+      OS_PROJECT_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -527,6 +532,15 @@
       <para>
       Object API version, default=1 (Env:
       OS_OBJECT_API_VERSION)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-baremetal-api-version &lt;baremetal-api-version&gt;</command></term>
+    <listitem>
+      <para>
+      Baremetal API version, default=1.6 (Env:
+      OS_BAREMETAL_API_VERSION)
       </para>
     </listitem>
   </varlistentry>
@@ -1022,6 +1036,321 @@ Display backup details
     <listitem>
       <para>
         show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_create_with_identity_api_v2">
+        <title>openstack baremetal create</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal create [-h]
+                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                  [-c COLUMN] [--max-width &lt;integer&gt;]
+                                  [--noindent] [--prefix PREFIX]
+                                  [--chassis-uuid &lt;chassis&gt;] --driver &lt;driver&gt;
+                                  [--driver-info &lt;key=value&gt;]
+                                  [--property &lt;key=value&gt;]
+                                  [--extra &lt;key=value&gt;] [--uuid &lt;uuid&gt;]
+                                  [--name &lt;name&gt;]</computeroutput></screen>
+        <para>
+Register a new node with the baremetal service
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--chassis-uuid &lt;chassis&gt;</command></term>
+    <listitem>
+      <para>
+      UUID of the chassis that this node belongs to.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--driver &lt;driver&gt;</command></term>
+    <listitem>
+      <para>
+        Driver used to control the node [REQUIRED].
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--driver-info &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Key/value pair used by the driver, such as out-of-band
+      management credentials. Can be specified multiple
+      times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Key/value pair describing the physical characteristics
+      of the node. This is exported to Nova and used by the
+      scheduler. Can be specified multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--extra &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+        Record arbitrary key/value metadata. Can be specified
+      multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--uuid &lt;uuid&gt;</command></term>
+    <listitem>
+      <para>
+        Unique UUID for the node.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--name &lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Unique name for the node.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_delete_with_identity_api_v2">
+        <title>openstack baremetal delete</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal delete [-h] &lt;node&gt;</computeroutput></screen>
+        <para>
+Unregister a baremetal node
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;node&gt;</command></term>
+    <listitem>
+      <para>
+        Node to delete (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_list_with_identity_api_v2">
+        <title>openstack baremetal list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal list [-h]
+                                [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
+                                [--noindent]
+                                [--quote {all,minimal,none,nonnumeric}]
+                                [--limit &lt;limit&gt;] [--marker &lt;node&gt;]
+                                [--sort &lt;key&gt;[:&lt;direction&gt;]] [--maintenance]
+                                [--associated] [--long]</computeroutput></screen>
+        <para>
+List baremetal nodes
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of nodes to return per request, 0 for
+      no limit. Default is the maximum number used by the
+      Baremetal API Service.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker &lt;node&gt;</command></term>
+    <listitem>
+      <para>
+        Node UUID (for example, of the last node in the list
+      from a previous request). Returns the list of nodes
+      after this UUID.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort &lt;key&gt;[:&lt;direction&gt;]</command></term>
+    <listitem>
+      <para>
+      Sort output by selected keys and directions(asc or
+      desc) (default: asc), multiple keys and directions can
+      be specified separated by comma
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--maintenance</command></term>
+    <listitem>
+      <para>
+        List nodes in maintenance mode.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--associated</command></term>
+    <listitem>
+      <para>
+        List only nodes associated with an instance.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--long</command></term>
+    <listitem>
+      <para>
+        Show detailed information about the nodes.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_set_with_identity_api_v2">
+        <title>openstack baremetal set</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal set [-h] [--property &lt;path=value&gt;] &lt;node&gt;</computeroutput></screen>
+        <para>
+Set baremetal properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;node&gt;</command></term>
+    <listitem>
+      <para>
+        Name or UUID of the node.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;path=value&gt;</command></term>
+    <listitem>
+      <para>
+      Property to add to this baremetal host (repeat option
+      to set multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_show_with_identity_api_v2">
+        <title>openstack baremetal show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal show [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                [-c COLUMN] [--max-width &lt;integer&gt;]
+                                [--noindent] [--prefix PREFIX] [--instance]
+                                [--long]
+                                &lt;node&gt;</computeroutput></screen>
+        <para>
+Show baremetal node details
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;node&gt;</command></term>
+    <listitem>
+      <para>
+        Name or UUID of the node (or instance UUID if
+      --instance is specified)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--instance &lt;node&gt;</command></term>
+    <listitem>
+      <para>
+        is an instance UUID.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--long</command></term>
+    <listitem>
+      <para>
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_unset_with_identity_api_v2">
+        <title>openstack baremetal unset</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal unset [-h] [--property &lt;path&gt;] &lt;node&gt;</computeroutput></screen>
+        <para>
+Unset baremetal properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;node&gt;</command></term>
+    <listitem>
+      <para>
+        Name or UUID of the node.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;path&gt;</command></term>
+    <listitem>
+      <para>
+        Property to unset on this baremetal host (repeat option
+      to unset multiple properties)
       </para>
     </listitem>
   </varlistentry>
@@ -1674,6 +2003,43 @@ Save container contents locally
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_container_set_with_identity_api_v2">
+        <title>openstack container set</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 container set [-h] --property &lt;key=value&gt; &lt;container&gt;</computeroutput></screen>
+        <para>
+Set container properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Container to modify
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Set a property on this container (repeat option to set
+      multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_container_show_with_identity_api_v2">
         <title>openstack container show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 container show [-h]
@@ -1701,6 +2067,43 @@ Display container details
     <listitem>
       <para>
         show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_container_unset_with_identity_api_v2">
+        <title>openstack container unset</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 container unset [-h] --property &lt;key&gt; &lt;container&gt;</computeroutput></screen>
+        <para>
+Unset container properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Container to modify
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Property to remove from container (repeat option to remove
+      multiple properties)
       </para>
     </listitem>
   </varlistentry>
@@ -2891,19 +3294,17 @@ Save an image locally
     </section>
     <section xml:id="openstackclient_subcommand_image_set_with_identity_api_v2">
         <title>openstack image set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 image set [-h]
-                           [-f {html,json,json,shell,table,value,yaml,yaml}]
-                           [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
-                           [--prefix PREFIX] [--name &lt;name&gt;]
-                           [--architecture &lt;architecture&gt;]
-                           [--protected | --unprotected] [--public]
-                           [--private] [--instance-uuid &lt;instance_uuid&gt;]
-                           [--min-disk &lt;disk-gb&gt;] [--kernel-id &lt;kernel-id&gt;]
-                           [--os-version &lt;os-version&gt;]
-                           [--disk-format &lt;disk-format&gt;]
-                           [--os-distro &lt;os-distro&gt;] [--owner &lt;owner&gt;]
-                           [--ramdisk-id &lt;ramdisk-id&gt;] [--min-ram &lt;ram-mb&gt;]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 image set [-h] [--name &lt;name&gt;] [--owner &lt;project&gt;]
+                           [--min-disk &lt;disk-gb&gt;] [--min-ram &lt;ram-mb&gt;]
                            [--container-format &lt;container-format&gt;]
+                           [--disk-format &lt;disk-format&gt;]
+                           [--protected | --unprotected]
+                           [--public | --private] [--property &lt;key=value&gt;]
+                           [--tag &lt;tag&gt;] [--architecture &lt;architecture&gt;]
+                           [--instance-id &lt;instance-id&gt;]
+                           [--kernel-id &lt;kernel-id&gt;] [--os-distro &lt;os-distro&gt;]
+                           [--os-version &lt;os-version&gt;]
+                           [--ramdisk-id &lt;ramdisk-id&gt;]
                            &lt;image&gt;</computeroutput></screen>
         <para>
 Set image properties
@@ -2937,10 +3338,42 @@ Set image properties
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--architecture &lt;architecture&gt;</command></term>
+    <term><command>--owner &lt;project&gt;</command></term>
     <listitem>
       <para>
-      Operating system Architecture
+        New image owner project (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--min-disk &lt;disk-gb&gt;</command></term>
+    <listitem>
+      <para>
+        Minimum disk size needed to boot image, in gigabytes
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--min-ram &lt;ram-mb&gt;</command></term>
+    <listitem>
+      <para>
+        Minimum RAM size needed to boot image, in megabytes
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--container-format &lt;container-format&gt;</command></term>
+    <listitem>
+      <para>
+      Image container format (default: bare)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--disk-format &lt;disk-format&gt;</command></term>
+    <listitem>
+      <para>
+      Image disk format (default: raw)
       </para>
     </listitem>
   </varlistentry>
@@ -2977,18 +3410,36 @@ Set image properties
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--instance-uuid &lt;instance_uuid&gt;</command></term>
+    <term><command>--property &lt;key=value&gt;</command></term>
     <listitem>
       <para>
-      ID of instance used to create this image
+      Set a property on this image (repeat option to set
+      multiple properties)
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--min-disk &lt;disk-gb&gt;</command></term>
+    <term><command>--tag &lt;tag&gt;</command></term>
     <listitem>
       <para>
-        Minimum disk size needed to boot image, in gigabytes
+        Set a tag on this image (repeat option to set multiple
+      tags)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--architecture &lt;architecture&gt;</command></term>
+    <listitem>
+      <para>
+      Operating system architecture
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--instance-id &lt;instance-id&gt;</command></term>
+    <listitem>
+      <para>
+      ID of server instance used to create this image
       </para>
     </listitem>
   </varlistentry>
@@ -2996,27 +3447,7 @@ Set image properties
     <term><command>--kernel-id &lt;kernel-id&gt;</command></term>
     <listitem>
       <para>
-      ID of image in Glance that should be used as the
-      kernel when booting an AMI-style image
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-version &lt;os-version&gt;</command></term>
-    <listitem>
-      <para>
-      Operating system version as specified by the
-      distributor
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--disk-format &lt;disk-format&gt;</command></term>
-    <listitem>
-      <para>
-      Format of the disk. Valid values: ['None', 'ami',
-      'ari', 'aki', 'vhd', 'vmdk', 'raw', 'qcow2', 'vdi',
-      'iso']
+      ID of kernel image used to boot this disk image
       </para>
     </listitem>
   </varlistentry>
@@ -3024,15 +3455,15 @@ Set image properties
     <term><command>--os-distro &lt;os-distro&gt;</command></term>
     <listitem>
       <para>
-      Common name of operating system distribution
+      Operating system distribution name
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--owner &lt;owner&gt;</command></term>
+    <term><command>--os-version &lt;os-version&gt;</command></term>
     <listitem>
       <para>
-        New Owner of the image
+      Operating system distribution version
       </para>
     </listitem>
   </varlistentry>
@@ -3040,25 +3471,7 @@ Set image properties
     <term><command>--ramdisk-id &lt;ramdisk-id&gt;</command></term>
     <listitem>
       <para>
-      ID of image stored in Glance that should be used as
-      the ramdisk when booting an AMI-style image
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--min-ram &lt;ram-mb&gt;</command></term>
-    <listitem>
-      <para>
-        Amount of RAM (in MB) required to boot image
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--container-format &lt;container-format&gt;</command></term>
-    <listitem>
-      <para>
-      Format of the container. Valid values: ['None', 'ami',
-      'ari', 'aki', 'bare', 'ovf', 'ova']
+      ID of ramdisk image used to boot this disk image
       </para>
     </listitem>
   </varlistentry>
@@ -4028,6 +4441,51 @@ Save object locally
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_object_set_with_identity_api_v2">
+        <title>openstack object set</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object set [-h] --property &lt;key=value&gt; &lt;container&gt; &lt;object&gt;</computeroutput></screen>
+        <para>
+Set object properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Modify &lt;object&gt; from &lt;container&gt;
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;object&gt;</command></term>
+    <listitem>
+      <para>
+        Object to modify
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Set a property on this object (repeat option to set
+      multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_object_show_with_identity_api_v2">
         <title>openstack object show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object show [-h]
@@ -4063,6 +4521,123 @@ Display object details
     <listitem>
       <para>
         show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_object_store_account_set_with_identity_api_v2">
+        <title>openstack object store account set</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object store account set [-h] --property &lt;key=value&gt;</computeroutput></screen>
+        <para>
+Set account properties
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+      Set a property on this account (repeat option to set
+      multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_object_store_account_show_with_identity_api_v2">
+        <title>openstack object store account show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object store account show [-h]
+                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                           [-c COLUMN] [--max-width &lt;integer&gt;]
+                                           [--noindent] [--prefix PREFIX]</computeroutput></screen>
+        <para>
+Display account details
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_object_store_account_unset_with_identity_api_v2">
+        <title>openstack object store account unset</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object store account unset [-h] --property &lt;key&gt;</computeroutput></screen>
+        <para>
+Unset account properties
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Property to remove from account (repeat option to remove
+      multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_object_unset_with_identity_api_v2">
+        <title>openstack object unset</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object unset [-h] --property &lt;key&gt; &lt;container&gt; &lt;object&gt;</computeroutput></screen>
+        <para>
+Unset object properties
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;container&gt;</command></term>
+    <listitem>
+      <para>
+        Modify &lt;object&gt; from &lt;container&gt;
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;object&gt;</command></term>
+    <listitem>
+      <para>
+        Object to modify
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--property &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Property to remove from object (repeat option to remove
+      multiple properties)
       </para>
     </listitem>
   </varlistentry>
@@ -7393,7 +7968,7 @@ Delete volume(s)
                              [-f {csv,html,json,json,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
-                             [--status &lt;status&gt;] [--name &lt;name&gt;]
+                             [--name &lt;name&gt;] [--status &lt;status&gt;]
                              [--all-projects] [--long]</computeroutput></screen>
         <para>
 List volumes
@@ -7408,18 +7983,18 @@ List volumes
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--status &lt;status&gt;</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-        Filter results by status
+        Filter results by volume name
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--name &lt;name&gt;</command></term>
+    <term><command>--status &lt;status&gt;</command></term>
     <listitem>
       <para>
-        Filter results by name
+        Filter results by status
       </para>
     </listitem>
   </varlistentry>
