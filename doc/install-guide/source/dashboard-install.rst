@@ -160,8 +160,8 @@ To finalize installation
 
 .. only:: rdo
 
-   On RHEL and CentOS, configure SELinux to permit the web server
-   to connect to OpenStack services:
+   Configure SELinux to permit the web server to connect to OpenStack
+   services:
 
    .. code-block:: console
 
