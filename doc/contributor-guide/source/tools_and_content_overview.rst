@@ -129,7 +129,7 @@ Maven plugin
 ------------
 
 The Cloud Doc Tools Maven plug-in provides a build tool that Jenkins can use
-to build PDF and HTML from DocBook and WADL source files. It is maintained at http://git.openstack.org/cgit/stackforge/clouddocs-maven-plugin/tree/. We
+to build PDF and HTML from DocBook and WADL source files. It is maintained at http://git.openstack.org/cgit/openstack/clouddocs-maven-plugin/tree/. We
 track bugs against the output in the openstack-manuals Launchpad project.
 
 The release notes are available in the Git repository.
