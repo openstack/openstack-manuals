@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Installation Guide 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-19 06:29+0000\n"
+"POT-Creation-Date: 2015-10-21 06:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -252,7 +252,7 @@ msgstr ""
 #: ../cinder-storage-install.rst:146 ../cinder-storage-install.rst:158
 #: ../dashboard-install.rst:25 ../dashboard-install.rst:34
 #: ../dashboard-install.rst:43 ../dashboard-install.rst:51
-#: ../environment-dependencies.rst:254 ../environment-ntp-controller.rst:9
+#: ../environment-dependencies.rst:226 ../environment-ntp-controller.rst:9
 #: ../environment-ntp-other.rst:9 ../glance-install.rst:157
 #: ../glance-install.rst:165 ../glance-install.rst:176
 #: ../glance-install.rst:332 ../heat-install.rst:264 ../heat-install.rst:273
@@ -428,7 +428,7 @@ msgstr ""
 # #-#-#-#-#  dashboard-install.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  environment-dependencies.pot (Installation Guide 0.1)  #-#-#-#-#
 #: ../ceilometer-controller-install.rst:483 ../ceilometer-nova.rst:164
-#: ../dashboard-install.rst:159 ../environment-dependencies.rst:362
+#: ../dashboard-install.rst:169 ../environment-dependencies.rst:334
 msgid "To finalize installation"
 msgstr ""
 
@@ -1256,7 +1256,18 @@ msgid ""
 "Consider obtaining an official certificate for production environments."
 msgstr ""
 
-#: ../dashboard-install.rst:69
+#: ../dashboard-install.rst:67
+msgid ""
+"There are two modes of installation. One using ``/horizon`` as the URL, "
+"keeping your default vhost and only adding an Alias directive: this is the "
+"default. The other mode will remove the default Apache vhost and install the "
+"dashboard on the webroot. It was the only available option before the "
+"Liberty release. If you prefer to set the Apache configuration manually,  "
+"install the ``openstack-dashboard`` package instead of ``openstack-dashboard-"
+"apache``."
+msgstr ""
+
+#: ../dashboard-install.rst:79
 msgid ""
 "Ubuntu installs the ``openstack-dashboard-ubuntu-theme`` package as a "
 "dependency. Some users reported issues with this theme in previous releases. "
@@ -1264,102 +1275,101 @@ msgid ""
 "OpenStack theme."
 msgstr ""
 
-#: ../dashboard-install.rst:75
+#: ../dashboard-install.rst:85
 msgid "To configure the dashboard"
 msgstr ""
 
-#: ../dashboard-install.rst:79
+#: ../dashboard-install.rst:89
 msgid "Configure the web server:"
 msgstr ""
 
-#: ../dashboard-install.rst:89
+#: ../dashboard-install.rst:99
 msgid ""
 "Edit the ``/srv/www/openstack-dashboard/openstack_dashboard/local/"
 "local_settings.py`` file and complete the following actions:"
 msgstr ""
 
-#: ../dashboard-install.rst:95
+#: ../dashboard-install.rst:105
 msgid ""
 "Edit the ``/etc/openstack-dashboard/local_settings`` file and complete the "
 "following actions:"
 msgstr ""
 
-#: ../dashboard-install.rst:101
+#: ../dashboard-install.rst:111
 msgid ""
 "Edit the ``/etc/openstack-dashboard/local_settings.py`` file and complete "
 "the following actions:"
 msgstr ""
 
-#: ../dashboard-install.rst:105
+#: ../dashboard-install.rst:115
 msgid ""
 "Configure the dashboard to use OpenStack services on the ``controller`` node:"
 msgstr ""
 
-#: ../dashboard-install.rst:112
+#: ../dashboard-install.rst:122
 msgid "Allow all hosts to access the dashboard:"
 msgstr ""
 
-#: ../dashboard-install.rst:118
+#: ../dashboard-install.rst:128
 msgid "Configure the ``memcached`` session storage service:"
 msgstr ""
 
-#: ../dashboard-install.rst:131
+#: ../dashboard-install.rst:141
 msgid "Comment out any other session storage configuration."
 msgstr ""
 
-#: ../dashboard-install.rst:137
+#: ../dashboard-install.rst:147
 msgid ""
 "By default, SLES and openSUSE use an SQL database for session storage. For "
 "simplicity, we recommend changing the configuration to use ``memcached`` for "
 "session storage."
 msgstr ""
 
-#: ../dashboard-install.rst:141
+#: ../dashboard-install.rst:151
 msgid ""
 "Configure ``user`` as the default role for users that you create via the "
 "dashboard:"
 msgstr ""
 
-#: ../dashboard-install.rst:148
+#: ../dashboard-install.rst:158
 msgid "Optionally, configure the time zone:"
 msgstr ""
 
-#: ../dashboard-install.rst:154
+#: ../dashboard-install.rst:164
 msgid ""
 "Replace ``TIME_ZONE`` with an appropriate time zone identifier. For more "
 "information, see the `list of time zones <http://en.wikipedia.org/wiki/"
 "List_of_tz_database_time_zones>`__."
 msgstr ""
 
-#: ../dashboard-install.rst:163
+#: ../dashboard-install.rst:173
 msgid ""
-"On RHEL and CentOS, configure SELinux to permit the web server to connect to "
-"OpenStack services:"
+"Configure SELinux to permit the web server to connect to OpenStack services:"
 msgstr ""
 
-#: ../dashboard-install.rst:172
+#: ../dashboard-install.rst:182
 msgid ""
 "Due to a packaging bug, the dashboard CSS fails to load properly. Run the "
 "following command to resolve this issue:"
 msgstr ""
 
-#: ../dashboard-install.rst:179
+#: ../dashboard-install.rst:189
 msgid ""
 "For more information, see the `bug report <https://bugzilla.redhat.com/"
 "show_bug.cgi?id=1150678>`__."
 msgstr ""
 
-#: ../dashboard-install.rst:184
+#: ../dashboard-install.rst:194
 msgid "Reload the web server configuration:"
 msgstr ""
 
-#: ../dashboard-install.rst:192 ../dashboard-install.rst:206
+#: ../dashboard-install.rst:202 ../dashboard-install.rst:216
 msgid ""
 "Start the web server and session storage service and configure them to start "
 "when the system boots:"
 msgstr ""
 
-#: ../dashboard-install.rst:202 ../dashboard-install.rst:216
+#: ../dashboard-install.rst:212 ../dashboard-install.rst:226
 msgid "Restart the Apache HTTP service if it is already running."
 msgstr ""
 
@@ -1827,45 +1837,39 @@ msgid ""
 "OpenStack environment."
 msgstr ""
 
-#: ../environment-dependencies.rst:25 ../environment-dependencies.rst:63
-#: ../environment-dependencies.rst:74
+#: ../environment-dependencies.rst:25 ../environment-dependencies.rst:58
+#: ../environment-dependencies.rst:69
 msgid "Enable the OpenStack repository"
 msgstr ""
 
 #: ../environment-dependencies.rst:37
-msgid ""
-"On RHEL and CentOS, enable the `EPEL <https://fedoraproject.org/wiki/EPEL>`_ "
-"repository:"
+msgid "Enable the `EPEL <https://fedoraproject.org/wiki/EPEL>`_ repository:"
 msgstr ""
 
-#: ../environment-dependencies.rst:46
-msgid "Fedora does not require this repository."
-msgstr ""
-
-#: ../environment-dependencies.rst:48
+#: ../environment-dependencies.rst:43
 msgid "On RHEL, enable additional repositories using the subscription manager:"
 msgstr ""
 
-#: ../environment-dependencies.rst:58
-msgid "CentOS and Fedora do not require these repositories."
+#: ../environment-dependencies.rst:53
+msgid "CentOS does not require these repositories."
 msgstr ""
 
-#: ../environment-dependencies.rst:65
+#: ../environment-dependencies.rst:60
 msgid ""
 "Install the ``rdo-release-liberty`` package to enable the RDO repository:"
 msgstr ""
 
-#: ../environment-dependencies.rst:76
+#: ../environment-dependencies.rst:71
 msgid ""
 "Enable the Open Build Service repositories based on your openSUSE or SLES "
 "version:"
 msgstr ""
 
-#: ../environment-dependencies.rst:79
+#: ../environment-dependencies.rst:74
 msgid "**On openSUSE 13.2:**"
 msgstr ""
 
-#: ../environment-dependencies.rst:85
+#: ../environment-dependencies.rst:80
 msgid ""
 "The openSUSE distribution uses the concept of patterns to represent "
 "collections of packages. If you selected 'Minimal Server Selection (Text "
@@ -1874,21 +1878,21 @@ msgid ""
 "avoid this, remove the minimal\\_base-conflicts package:"
 msgstr ""
 
-#: ../environment-dependencies.rst:95
+#: ../environment-dependencies.rst:90
 msgid "**On SLES 12:**"
 msgstr ""
 
-#: ../environment-dependencies.rst:103
+#: ../environment-dependencies.rst:98
 msgid ""
 "The packages are signed by GPG key ``D85F9316``. You should verify the "
 "fingerprint of the imported GPG key before using it."
 msgstr ""
 
-#: ../environment-dependencies.rst:116
+#: ../environment-dependencies.rst:111
 msgid "Enable the backports repository"
 msgstr ""
 
-#: ../environment-dependencies.rst:118
+#: ../environment-dependencies.rst:113
 msgid ""
 "The Liberty release is available directly through the official Debian "
 "backports repository. To use this repository, follow the instruction from "
@@ -1896,80 +1900,60 @@ msgid ""
 "which basically suggest doing the following steps:"
 msgstr ""
 
-#: ../environment-dependencies.rst:125
+#: ../environment-dependencies.rst:120
 msgid ""
 "On all nodes, adding the Debian 8 (Jessie) backport repository to the source "
 "list:"
 msgstr ""
 
-#: ../environment-dependencies.rst:135
+#: ../environment-dependencies.rst:130
 msgid "Later you can use the following command to install a package:"
 msgstr ""
 
 # #-#-#-#-#  environment-dependencies.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  keystone-install.pot (Installation Guide 0.1)  #-#-#-#-#
-#: ../environment-dependencies.rst:142 ../keystone-install.rst:493
+#: ../environment-dependencies.rst:137 ../keystone-install.rst:493
 msgid "Finalize the installation"
 msgstr ""
 
-#: ../environment-dependencies.rst:146 ../environment-dependencies.rst:159
-#: ../environment-dependencies.rst:172
+#: ../environment-dependencies.rst:141 ../environment-dependencies.rst:154
+#: ../environment-dependencies.rst:167
 msgid "Upgrade the packages on your system:"
 msgstr ""
 
-#: ../environment-dependencies.rst:154 ../environment-dependencies.rst:167
-#: ../environment-dependencies.rst:180
+#: ../environment-dependencies.rst:149 ../environment-dependencies.rst:162
+#: ../environment-dependencies.rst:175
 msgid ""
 "If the upgrade process includes a new kernel, reboot your system to activate "
 "it."
 msgstr ""
 
-#: ../environment-dependencies.rst:185
+#: ../environment-dependencies.rst:180
 msgid ""
 "RHEL and CentOS enable :term:`SELinux` by default. Install the ``openstack-"
 "selinux`` package to automatically manage security policies for OpenStack "
 "services:"
 msgstr ""
 
-#: ../environment-dependencies.rst:195
-msgid "Fedora does not require this package."
-msgstr ""
-
-#: ../environment-dependencies.rst:197
-msgid ""
-"Because Fedora does not provide the ``openstack-selinux`` package ensure "
-"that SELinux is disabled."
-msgstr ""
-
-#: ../environment-dependencies.rst:205
-msgid ""
-"If ``SELinux status`` is ``enabled`` disable SELinux by editing the file ``/"
-"etc/selinux/config`` and restarting the system afterwards:"
-msgstr ""
-
-#: ../environment-dependencies.rst:214
-msgid "CentOS and RHEL do not require this step."
-msgstr ""
-
-#: ../environment-dependencies.rst:217
+#: ../environment-dependencies.rst:189
 msgid "Install the OpenStack client"
 msgstr ""
 
-#: ../environment-dependencies.rst:219
+#: ../environment-dependencies.rst:191
 msgid ""
 "Throughout the guide the OpenStack client will be used to perform actions on "
 "the installed services."
 msgstr ""
 
-#: ../environment-dependencies.rst:222 ../environment-dependencies.rst:415
+#: ../environment-dependencies.rst:194 ../environment-dependencies.rst:387
 msgid "Install the package:"
 msgstr ""
 
-#: ../environment-dependencies.rst:243
+#: ../environment-dependencies.rst:215
 msgid "SQL database"
 msgstr ""
 
-#: ../environment-dependencies.rst:245
+#: ../environment-dependencies.rst:217
 msgid ""
 "Most OpenStack services use an SQL database to store information. The "
 "database typically runs on the controller node. The procedures in this guide "
@@ -1978,63 +1962,63 @@ msgid ""
 ">`__."
 msgstr ""
 
-#: ../environment-dependencies.rst:252
+#: ../environment-dependencies.rst:224
 msgid "Install and configure the database server"
 msgstr ""
 
-#: ../environment-dependencies.rst:260
+#: ../environment-dependencies.rst:232
 msgid "The Python MySQL library is compatible with MariaDB."
 msgstr ""
 
-#: ../environment-dependencies.rst:288
+#: ../environment-dependencies.rst:260
 msgid "Choose a suitable password for the database root account."
 msgstr ""
 
-#: ../environment-dependencies.rst:290
+#: ../environment-dependencies.rst:262
 msgid ""
 "Create and edit the ``/etc/mysql/conf.d/mysqld_openstack.cnf`` file and "
 "complete the following actions:"
 msgstr ""
 
-#: ../environment-dependencies.rst:293 ../environment-dependencies.rst:323
+#: ../environment-dependencies.rst:265 ../environment-dependencies.rst:295
 msgid ""
 "In the ``[mysqld]`` section, set the ``bind-address`` key to the management "
 "IP address of the controller node to enable access by other nodes via the "
 "management network:"
 msgstr ""
 
-#: ../environment-dependencies.rst:304 ../environment-dependencies.rst:334
+#: ../environment-dependencies.rst:276 ../environment-dependencies.rst:306
 msgid ""
 "In the ``[mysqld]`` section, set the following keys to enable useful options "
 "and the UTF-8 character set:"
 msgstr ""
 
-#: ../environment-dependencies.rst:320
+#: ../environment-dependencies.rst:292
 msgid ""
 "Create and edit the ``/etc/my.cnf.d/mariadb_openstack.cnf`` file and "
 "complete the following actions:"
 msgstr ""
 
-#: ../environment-dependencies.rst:366
+#: ../environment-dependencies.rst:338
 msgid "Restart the database service:"
 msgstr ""
 
-#: ../environment-dependencies.rst:374
+#: ../environment-dependencies.rst:346
 msgid ""
 "Start the database service and configure it to start when the system boots:"
 msgstr ""
 
-#: ../environment-dependencies.rst:393
+#: ../environment-dependencies.rst:365
 msgid ""
 "Secure the database service by running the ``mysql_secure_installation`` "
 "script."
 msgstr ""
 
-#: ../environment-dependencies.rst:399
+#: ../environment-dependencies.rst:371
 msgid "Message queue"
 msgstr ""
 
-#: ../environment-dependencies.rst:401
+#: ../environment-dependencies.rst:373
 msgid ""
 "OpenStack uses a :term:`message queue` to coordinate operations and status "
 "information among services. The message queue service typically runs on the "
@@ -2047,56 +2031,56 @@ msgid ""
 "documentation associated with it."
 msgstr ""
 
-#: ../environment-dependencies.rst:413
+#: ../environment-dependencies.rst:385
 msgid "Install the message queue service"
 msgstr ""
 
-#: ../environment-dependencies.rst:437
+#: ../environment-dependencies.rst:409
 msgid "Configure the message queue service"
 msgstr ""
 
-#: ../environment-dependencies.rst:441
+#: ../environment-dependencies.rst:413
 msgid ""
 "Start the message queue service and configure it to start when the system "
 "boots:"
 msgstr ""
 
-#: ../environment-dependencies.rst:451
+#: ../environment-dependencies.rst:423
 msgid ""
 "In case the message queue service does not start and returns a ``nodedown`` "
 "error, perform the following actions:"
 msgstr ""
 
-#: ../environment-dependencies.rst:454
+#: ../environment-dependencies.rst:426
 msgid ""
 "Copy the ``/usr/lib/systemd/system/epmd.socket`` file to the ``/etc/systemd/"
 "system`` directory."
 msgstr ""
 
-#: ../environment-dependencies.rst:457
+#: ../environment-dependencies.rst:429
 msgid ""
 "Edit the ``/etc/systemd/system/epmd.socket`` file to contain the following:"
 msgstr ""
 
-#: ../environment-dependencies.rst:466
+#: ../environment-dependencies.rst:438
 msgid ""
 "Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address of the "
 "management network interface on your controller node."
 msgstr ""
 
-#: ../environment-dependencies.rst:469
+#: ../environment-dependencies.rst:441
 msgid "Start the message queue service again."
 msgstr ""
 
-#: ../environment-dependencies.rst:471 ../environment-dependencies.rst:490
+#: ../environment-dependencies.rst:443 ../environment-dependencies.rst:462
 msgid "Add the ``openstack`` user:"
 msgstr ""
 
-#: ../environment-dependencies.rst:478 ../environment-dependencies.rst:497
+#: ../environment-dependencies.rst:450 ../environment-dependencies.rst:469
 msgid "Replace ``RABBIT_PASS`` with a suitable password."
 msgstr ""
 
-#: ../environment-dependencies.rst:480 ../environment-dependencies.rst:499
+#: ../environment-dependencies.rst:452 ../environment-dependencies.rst:471
 msgid ""
 "Permit configuration, write, and read access for the ``openstack`` user:"
 msgstr ""
@@ -3379,8 +3363,7 @@ msgid "OpenStack Installation Guide for Debian"
 msgstr ""
 
 #: ../index-debian.rst:13
-msgid ""
-"OpenStack Installation Guide for Red Hat Enterprise Linux, CentOS, and Fedora"
+msgid "OpenStack Installation Guide for Red Hat Enterprise Linux and CentOS"
 msgstr ""
 
 #: ../index-debian.rst:19
@@ -3407,9 +3390,8 @@ msgstr ""
 
 #: ../index-debian.rst:46
 msgid ""
-"This guide shows you how to install OpenStack by using packages available "
-"through Fedora 22 as well as on Red Hat Enterprise Linux 7 and its "
-"derivatives through the EPEL repository."
+"This guide shows you how to install OpenStack by using packages available on "
+"Red Hat Enterprise Linux 7 and its derivatives through the EPEL repository."
 msgstr ""
 
 #: ../index-debian.rst:52
@@ -3441,22 +3423,23 @@ msgstr ""
 msgid "This guide documents OpenStack Liberty release."
 msgstr ""
 
-#: ../index-debian.rst:71
+#: ../index-debian.rst:73
 msgid ""
-"This guide is a work-in-progress and changing rapidly while we continue to "
-"test and enhance the guidance. Please note where there are open \"to do\" "
-"items and help where you are able."
+"This guide is a work-in-progress and is subject to frequent updates. Pre-"
+"release packages have been used for testing, and some instructions might not "
+"work with final versions. Please help us make this guide better by reporting "
+"any errors you encounter."
 msgstr ""
 
-#: ../index-debian.rst:76
+#: ../index-debian.rst:79
 msgid "Contents"
 msgstr ""
 
-#: ../index-debian.rst:100
+#: ../index-debian.rst:103
 msgid "Search in this guide"
 msgstr ""
 
-#: ../index-debian.rst:102
+#: ../index-debian.rst:105
 msgid ":ref:`search`"
 msgstr ""
 
