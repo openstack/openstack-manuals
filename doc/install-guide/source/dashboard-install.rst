@@ -62,6 +62,16 @@ To install the dashboard components
         SSL certificate. Consider obtaining an official certificate
         for production environments.
 
+     .. note::
+
+        There are two modes of installation. One using ``/horizon`` as the URL,
+        keeping your default vhost and only adding an Alias directive: this is
+        the default. The other mode will remove the default Apache vhost and install
+        the dashboard on the webroot. It was the only available option
+        before the Liberty release. If you prefer to set the Apache configuration
+        manually,  install the ``openstack-dashboard`` package instead of
+        ``openstack-dashboard-apache``.
+
 .. only:: ubuntu
 
    .. note::
@@ -179,7 +189,7 @@ To finalize installation
    For more information, see the `bug report
    <https://bugzilla.redhat.com/show_bug.cgi?id=1150678>`__.
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    Reload the web server configuration:
 
