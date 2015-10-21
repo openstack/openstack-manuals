@@ -71,4 +71,6 @@ Operations Guide <http://docs.openstack.org/ops/>`_.
    environment-security.rst
    environment-networking.rst
    environment-ntp.rst
-   environment-dependencies.rst
+   environment-packages.rst
+   environment-sql-database.rst
+   environment-messaging.rst
