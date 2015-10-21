@@ -8,9 +8,9 @@ OpenStack Installation Guide for Debian
 
 .. only:: rdo
 
-   =============================================================================
-   OpenStack Installation Guide for Red Hat Enterprise Linux, CentOS, and Fedora
-   =============================================================================
+   ====================================================================
+   OpenStack Installation Guide for Red Hat Enterprise Linux and CentOS
+   ====================================================================
 
 .. only:: obs
 
@@ -44,8 +44,8 @@ separately and configure them stand-alone or as connected entities.
 .. only:: rdo
 
    This guide shows you how to install OpenStack by using packages
-   available through Fedora 22 as well as on Red Hat Enterprise Linux
-   7 and its derivatives through the EPEL repository.
+   available on Red Hat Enterprise Linux 7 and its derivatives through
+   the EPEL repository.
 
 .. only:: ubuntu
 

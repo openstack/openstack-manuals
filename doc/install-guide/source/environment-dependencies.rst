@@ -34,16 +34,11 @@ these procedures on all nodes.
    Prerequisites
    -------------
 
-   #. On RHEL and CentOS, enable the
-      `EPEL <https://fedoraproject.org/wiki/EPEL>`_ repository:
+   #. Enable the `EPEL <https://fedoraproject.org/wiki/EPEL>`_ repository:
 
       .. code-block:: console
 
          # yum install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
-
-      .. note::
-
-         Fedora does not require this repository.
 
    #. On RHEL, enable additional repositories using the subscription
       manager:
@@ -55,7 +50,7 @@ these procedures on all nodes.
 
       .. note::
 
-         CentOS and Fedora do not require these repositories.
+         CentOS does not require these repositories.
 
 .. only:: rdo
 
@@ -189,29 +184,6 @@ Finalize the installation
       .. code-block:: console
 
          # yum install openstack-selinux
-
-      .. note::
-
-         Fedora does not require this package.
-
-   3. Because Fedora does not provide the ``openstack-selinux`` package
-      ensure that SELinux is disabled.
-
-      .. code-block:: console
-
-         # sestatus
-         SELinux status:                 disabled
-
-      If ``SELinux status`` is ``enabled`` disable SELinux by editing the file
-      ``/etc/selinux/config`` and restarting the system afterwards:
-
-      .. code-block:: ini
-
-         SELINUX=disabled
-
-      .. note::
-
-         CentOS and RHEL do not require this step.
 
 Install the OpenStack client
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
