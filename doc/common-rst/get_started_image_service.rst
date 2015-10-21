@@ -22,10 +22,10 @@ glance-registry
   Stores, processes, and retrieves metadata about images. Metadata
   includes items such as size and type.
 
-  .. note::
+  .. warning::
 
      The registry is a private internal service meant for use by
-     OpenStack Image service. Do not disclose it to users.
+     OpenStack Image service. Do not expose this service to users.
 
 Database
   Stores image metadata and you can choose your database depending on
