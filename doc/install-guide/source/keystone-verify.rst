@@ -62,12 +62,12 @@ services.
         token issue
       Password:
       +------------+----------------------------------+
-      |  Property  |              Value               |
+      | Field      | Value                            |
       +------------+----------------------------------+
-      |   expires  |       2014-10-10T12:51:33Z       |
-      |     id     | 1b87ceae9e08411ba4a16e4dada04802 |
+      | expires    | 2014-10-10T12:51:33Z             |
+      | id         | 1b87ceae9e08411ba4a16e4dada04802 |
       | project_id | 4aa51bb942be4dd0ac0555d7591f80a6 |
-      |  user_id   | 7004dfa0dda84d63aef81cf7f100af01 |
+      | user_id    | 7004dfa0dda84d63aef81cf7f100af01 |
       +------------+----------------------------------+
 
    .. note::
