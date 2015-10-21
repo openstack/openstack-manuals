@@ -4,21 +4,21 @@
 Troubleshoot Shared File Systems service
 ========================================
 
-Failures in share service during share creation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Failures in Share File Systems service during a share creation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If new shares go into ``error`` state during creation, follow next steps:
 
-1. Make sure, that share services are running into debug mode. If it is not
-   true, you will not get any tips from logs how to fix your issue.
+#. Make sure, that share services are running in debug mode. If the debug mode
+   is not set, you will not get any tips from logs how to fix your issue.
 
-2. Find what a share service holds specified share. Do to that, run command
-   :command:`manila show <share_id_or_name>` and find share host in the
-   output. Host uniquely identifies share service holds broken share.
+#. Find what share service holds a specified share. Do to that, run command
+   :command:`manila show <share_id_or_name>` and find a share host in the
+   output. Host uniquely identifies what share service holds the broken share.
 
-3. Look thought logs of this share service. Usually, it can be found at
+#. Look thought logs of this share service. Usually, it can be found at
    ``/etc/var/log/manila-share.log``. This log should contain kind of
-   traceback with extra information to help you find origin of issues.
+   traceback with extra information to help you to find the origin of issues.
 
 No valid host was found
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,30 +34,27 @@ To solve this issue look carefully through list of extra specs in share type
 and list of share service reported capabilities and make sure that extra specs
 are pointed in the right way.
 
-
 Created share is unreachable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default new share doesn't have any active access rules. So, to provide
+By default, a new share does not have any active access rules. To provide
 access to new created share, you need to create appropriate access rule with
 right value that defines access.
 
-Service become unavailable after upgrade
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Service becomes unavailable after upgrade
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-After upgrading Shared File Systems service from version v1 to version v2.x,
-please be attentive to update service endpoint in OpenStack Identity Service.
-Use :command:`keystone service-list` to get service type related to Shared
-File Systems service and then :command:`keystone service-list --service
-<share-service-type>`. You will get endpoints expected from running
-Shared File Systems service. Make sure that these endpoints are update.
-If it is not true, you need delete outdated endpoints and create a new one.
-
-
+After upgrading the Shared File Systems service from version v1 to version
+v2.x, please be attentive to update service endpoint in OpenStack Identity
+Service. Use :command:`keystone service-list` to get service type related to
+Shared File Systems service and then :command:`keystone service-list --service
+<share-service-type>` command. You will get endpoints expected from running
+Shared File Systems service. Make sure that these endpoints are updated.
+If it is not true, you need to delete outdated endpoints and create new ones.
 
 Failures during management of internal resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Some drivers in Shared File Systems service can create service entities, like
-servers and networks. If it is necessary to reach it you can login in
-tenant ``service`` and get manual control over it.
+servers and networks. If it is necessary to reach it you can log in to tenant
+``service`` and get manual control over it.
