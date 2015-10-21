@@ -200,9 +200,11 @@ repository. The :file:`zuul/layout.yaml` file and the
 file contain the Jenkins build jobs that build to the docs.openstack.org
 and developer.openstack.org sites, copying built files via FTP.
 
-The release specific books are build for the currently supported branches
-(juno, kilo, liberty), development happens on the master branch. The
-continuously released books are only build on the master branch.
+The release specific books are built for the currently supported branches
+(current and previous releases), development happens on the master branch.
+The continuously released books are only built on the master branch.
+
+.. _mvn:
 
 Maven plug-in
 ~~~~~~~~~~~~~
