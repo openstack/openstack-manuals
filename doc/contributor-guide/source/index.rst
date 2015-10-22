@@ -30,6 +30,8 @@ Contents
    tools_and_content_overview.rst
    cherry-pick.rst
 
+   common/glossary.rst
+
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
 
