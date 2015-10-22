@@ -5,9 +5,10 @@ OpenStack Documentation Contributor Guide
 Abstract
 ~~~~~~~~
 
-.. warning:: This guide is a work-in-progress and changing rapidly
-   while we continue to test and enhance the guidance. Please note
-   where there are open "to do" items and help where you are able to.
+This guide provides detailed instructions on the documentation contribution
+workflow and conventions to be considered by all contributors. Please
+follow these guidelines to keep the documentation structure, style, and
+syntax consistent.
 
 Contents
 ~~~~~~~~
@@ -15,21 +16,20 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   introduction.rst
    first-timers-quickstart.rst
+   additional-git-workflow.rst
+   writing-style.rst
    rst-conv.rst
    docbook-conv.rst
    docs-structure.rst
    content-specs.rst
-   docs_builds.rst
-   build-locally.rst
-   writing-style.rst
-   json_conventions.rst
+   tools-and-content-overview.rst
    doc-bugs.rst
-   blueprints-and-specs.rst
    docs-review.rst
-   tools_and_content_overview.rst
-   cherry-pick.rst
+   docs-builds.rst
+   build-locally.rst
+   blueprints-and-specs.rst
+   json-conventions.rst
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
