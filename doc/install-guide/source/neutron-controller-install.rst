@@ -259,23 +259,6 @@ Finalize installation
 
          # ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
 
-   #. Due to a packaging issue, the Linux bridge agent initialization script
-      explicitly looks for the Linux bridge plug-in configuration file rather
-      than the agent configuration file. Run the following commands to resolve
-      this issue:
-
-      .. code-block:: console
-
-         # cp /usr/lib/systemd/system/neutron-linuxbridge-agent.service \
-           /usr/lib/systemd/system/neutron-linuxbridge-agent.service.orig
-         # sed -i 's,openvswitch/linuxbridge_neutron_plugin.ini,ml2/linuxbridge_agent.ini,g' \
-           /usr/lib/systemd/system/neutron-linuxbridge-agent.service
-
-      .. note::
-
-         Future upgrades of the ``neutron-linuxbridge-agent`` package may
-         overwrite this modification.
-
    #. Populate the database:
 
       .. code-block:: console
@@ -288,12 +271,11 @@ Finalize installation
          Database population occurs later for Networking because the script
          requires complete server and plug-in configuration files.
 
-   #. Restart the Compute services:
+   #. Restart the Compute API service:
 
       .. code-block:: console
 
-         # systemctl restart openstack-nova-api.service openstack-nova-scheduler.service \
-           openstack-nova-conductor.service
+         # systemctl restart openstack-nova-api.service
 
    #. Start the Networking services and configure them to start when the system
       boots.
@@ -327,12 +309,11 @@ Finalize installation
 
          NEUTRON_PLUGIN_CONF="/etc/neutron/plugins/ml2/ml2_conf.ini"
 
-   #. Restart the Compute services:
+   #. Restart the Compute API service:
 
       .. code-block:: console
 
-         # systemctl restart openstack-nova-api.service openstack-nova-scheduler.service \
-           openstack-nova-conductor.service
+         # systemctl restart openstack-nova-api.service
 
    #. Start the Networking services and configure them to start when the system
       boots.
@@ -371,7 +352,7 @@ Finalize installation
          Database population occurs later for Networking because the script
          requires complete server and plug-in configuration files.
 
-   #. Restart the nova-api service:
+   #. Restart the Compute API service:
 
       .. code-block:: console
 

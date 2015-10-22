@@ -3,25 +3,6 @@ Networking Option 1: Provider networks
 
 Install and configure the Networking components on the *controller* node.
 
-Prerequisites
--------------
-
-Before you configure networking option 1, you must configure kernel
-parameters to disable reverse-path filtering.
-
-#. Edit the ``/etc/sysctl.conf`` file to contain the following parameters:
-
-   .. code-block:: ini
-
-      net.ipv4.conf.all.rp_filter=0
-      net.ipv4.conf.default.rp_filter=0
-
-#. Implement the changes:
-
-   .. code-block:: console
-
-      # sysctl -p
-
 Install the components
 ----------------------
 
@@ -183,6 +164,16 @@ Install the components
         Replace ``NOVA_PASS`` with the password you chose for the ``nova``
         user in the Identity service.
 
+      .. only:: rdo
+
+         * In the ``[oslo_concurrency]`` section, configure the lock path:
+
+           .. code-block:: ini
+
+              [oslo_concurrency]
+              ...
+              lock_path = /var/lib/neutron/tmp
+
       * (Optional) To assist with troubleshooting, enable verbose logging in
         the ``[DEFAULT]`` section:
 
@@ -247,6 +238,15 @@ and switching) virtual networking infrastructure for instances.
         ...
         flat_networks = public
 
+   * In the ``[securitygroup]`` section, enable :term:`ipset` to increase
+     efficiency of security group rules:
+
+     .. code-block:: ini
+
+        [securitygroup]
+        ...
+        enable_ipset = True
+
 Configure the Linux bridge agent
 --------------------------------
 
@@ -283,16 +283,14 @@ networks and handles security groups.
         ...
         prevent_arp_spoofing = True
 
-   * In the ``[securitygroup]`` section, enable security groups, enable
-     :term:`ipset`, and configure the Linux bridge :term:`iptables` firewall
-     driver:
+   * In the ``[securitygroup]`` section, enable security groups and
+     configure the Linux bridge :term:`iptables` firewall driver:
 
      .. code-block:: ini
 
         [securitygroup]
         ...
         enable_security_group = True
-        enable_ipset = True
         firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 
 Configure the DHCP agent
