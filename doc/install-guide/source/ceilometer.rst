@@ -1,3 +1,5 @@
+.. _install_ceilometer:
+
 ========================
 Add the Telemetry module
 ========================
