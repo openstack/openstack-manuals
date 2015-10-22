@@ -9,10 +9,10 @@ virtual network topologies which may include services such as a
 :term:`firewall`, a :term:`load balancer`, and a
 :term:`virtual private network (VPN)`.
 
-Networking provides the networks, subnets, and routers object
-abstractions. Each abstraction has functionality that mimics its
-physical counterpart: networks contain subnets, and routers route
-traffic between different subnet and networks.
+Networking provides networks, subnets, and routers as object abstractions.
+Each abstraction has functionality that mimics its physical counterpart:
+networks contain subnets, and routers route traffic between different
+subnets and networks.
 
 Each router has one gateway that connects to a network, and many
 interfaces connected to subnets. Subnets can access machines on other
