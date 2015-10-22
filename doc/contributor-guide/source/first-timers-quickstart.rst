@@ -33,10 +33,8 @@ Setting up for contribution
 
 To get started, complete the following steps:
 
-#. Set up your account. See `Account Setup`_ for details.
-
-#. Sign the agreement. See `Sign the appropriate Individual Contributor
-   License Agreement`_ for details.
+#. Set up your account and agree to the Individual Contributor License
+   Agreement (ICLA). See `Account Setup`_ for details.
 
 #. Join the Launchpad `OpenStack Documentation Bug Team`_.
 
