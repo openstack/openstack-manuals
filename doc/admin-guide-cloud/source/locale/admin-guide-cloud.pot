@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 06:27+0000\n"
+"POT-Creation-Date: 2015-10-22 06:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1623,7 +1623,7 @@ msgstr ""
 # #-#-#-#-#  keystone_secure_identity_to_ldap_backend.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 #: ../blockstorage_glusterfs_backend.rst:52
 #: ../blockstorage_glusterfs_backend.rst:96 ../blockstorage_nfs_backend.rst:41
-#: ../compute-flavors.rst:264 ../compute-flavors.rst:285
+#: ../compute-flavors.rst:295 ../compute-flavors.rst:316
 #: ../identity_service_api_protection.rst:19
 #: ../keystone_secure_identity_to_ldap_backend.rst:62
 msgid "Where:"
@@ -3901,71 +3901,117 @@ msgstr ""
 
 #: ../compute-flavors.rst:136
 msgid ""
+"For VMware, you can configure the memory limits with control parameters."
+msgstr ""
+
+#: ../compute-flavors.rst:138
+msgid ""
+"Use these optional parameters to limit the memory allocation, guarantee "
+"minimum memory reservation, and to specify shares used in case of resource "
+"contention:"
+msgstr ""
+
+#: ../compute-flavors.rst:142
+msgid ""
+"``memory_limit``: Specifies the upper limit for VMware machine memory "
+"allocation in MB. The utilization of a virtual machine will not exceed this "
+"limit, even if there are available resources. This is typically used to "
+"ensure a consistent performance of virtual machines independent of available "
+"resources."
+msgstr ""
+
+#: ../compute-flavors.rst:148
+msgid ""
+"``memory_reservation``: Specifies the guaranteed minimum memory reservation "
+"in MB for VMware. This means the specified amount of memory will definitely "
+"be allocated to the machine."
+msgstr ""
+
+#: ../compute-flavors.rst:152
+msgid ""
+"``memory_shares_level``: On VMware, specifies the allocation level. This can "
+"be ``custom``, ``high``, ``normal`` or ``low``. If you choose ``custom``, "
+"set the number of shares using ``memory_shares_share``."
+msgstr ""
+
+#: ../compute-flavors.rst:156
+msgid ""
+"``memory_shares_share``: Specifies the number of shares allocated in the "
+"event that ``custom`` is used. There is no unit for this value. It is a "
+"relative measure based on the settings for other VMs. For example:"
+msgstr ""
+
+#: ../compute-flavors.rst:164
+msgid "Memory limits"
+msgstr ""
+
+#: ../compute-flavors.rst:167
+msgid ""
 "Using disk I/O quotas, you can set maximum disk write to 10 MB per second "
 "for a VM user. For example:"
 msgstr ""
 
-#: ../compute-flavors.rst:143
+#: ../compute-flavors.rst:174
 msgid "The disk I/O options are:"
 msgstr ""
 
-#: ../compute-flavors.rst:145
+#: ../compute-flavors.rst:176
 msgid "disk\\_read\\_bytes\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:147
+#: ../compute-flavors.rst:178
 msgid "disk\\_read\\_iops\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:149
+#: ../compute-flavors.rst:180
 msgid "disk\\_write\\_bytes\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:151
+#: ../compute-flavors.rst:182
 msgid "disk\\_write\\_iops\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:153
+#: ../compute-flavors.rst:184
 msgid "disk\\_total\\_bytes\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:155
+#: ../compute-flavors.rst:186
 msgid "Disk tuning"
 msgstr ""
 
-#: ../compute-flavors.rst:155
+#: ../compute-flavors.rst:186
 msgid "disk\\_total\\_iops\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:158
+#: ../compute-flavors.rst:189
 msgid "The vif I/O options are:"
 msgstr ""
 
-#: ../compute-flavors.rst:160
+#: ../compute-flavors.rst:191
 msgid "vif\\_inbound\\_ average"
 msgstr ""
 
-#: ../compute-flavors.rst:162
+#: ../compute-flavors.rst:193
 msgid "vif\\_inbound\\_burst"
 msgstr ""
 
-#: ../compute-flavors.rst:164
+#: ../compute-flavors.rst:195
 msgid "vif\\_inbound\\_peak"
 msgstr ""
 
-#: ../compute-flavors.rst:166
+#: ../compute-flavors.rst:197
 msgid "vif\\_outbound\\_ average"
 msgstr ""
 
-#: ../compute-flavors.rst:168
+#: ../compute-flavors.rst:199
 msgid "vif\\_outbound\\_burst"
 msgstr ""
 
-#: ../compute-flavors.rst:170
+#: ../compute-flavors.rst:201
 msgid "vif\\_outbound\\_peak"
 msgstr ""
 
-#: ../compute-flavors.rst:172
+#: ../compute-flavors.rst:203
 msgid ""
 "Incoming and outgoing traffic can be shaped independently. The bandwidth "
 "element can have at most, one inbound and at most, one outbound child "
@@ -3976,7 +4022,7 @@ msgid ""
 "rate on the interface being shaped."
 msgstr ""
 
-#: ../compute-flavors.rst:181
+#: ../compute-flavors.rst:212
 msgid ""
 "There are also two optional attributes (integer): ``peak``, which specifies "
 "the maximum rate at which a bridge can send data (kilobytes/second), and "
@@ -3984,43 +4030,43 @@ msgid ""
 "The rate is shared equally within domains connected to the network."
 msgstr ""
 
-#: ../compute-flavors.rst:187
+#: ../compute-flavors.rst:218
 msgid ""
 "The example below sets network traffic bandwidth limits for existing flavor "
 "as follows:"
 msgstr ""
 
-#: ../compute-flavors.rst:190
+#: ../compute-flavors.rst:221
 msgid "Outbound traffic:"
 msgstr ""
 
-#: ../compute-flavors.rst:192 ../compute-flavors.rst:200
+#: ../compute-flavors.rst:223 ../compute-flavors.rst:231
 msgid "average: 256 Mbps (32768 kilobytes/second)"
 msgstr ""
 
-#: ../compute-flavors.rst:194 ../compute-flavors.rst:202
+#: ../compute-flavors.rst:225 ../compute-flavors.rst:233
 msgid "peak: 512 Mbps (65536 kilobytes/second)"
 msgstr ""
 
-#: ../compute-flavors.rst:196 ../compute-flavors.rst:204
+#: ../compute-flavors.rst:227 ../compute-flavors.rst:235
 msgid "burst: 65536 kilobytes"
 msgstr ""
 
-#: ../compute-flavors.rst:198
+#: ../compute-flavors.rst:229
 msgid "Inbound traffic:"
 msgstr ""
 
-#: ../compute-flavors.rst:218
+#: ../compute-flavors.rst:249
 msgid ""
 "All the speed limit values in above example are specified in kilobytes/"
 "second. And burst values are in kilobytes."
 msgstr ""
 
-#: ../compute-flavors.rst:219
+#: ../compute-flavors.rst:250
 msgid "Bandwidth I/O"
 msgstr ""
 
-#: ../compute-flavors.rst:222
+#: ../compute-flavors.rst:253
 msgid ""
 "For the libvirt driver, you can enable and set the behavior of a virtual "
 "hardware watchdog device for each flavor. Watchdog devices keep an eye on "
@@ -4029,94 +4075,94 @@ msgid ""
 "``hw:watchdog_action`` is not specified, the watchdog is disabled."
 msgstr ""
 
-#: ../compute-flavors.rst:229
+#: ../compute-flavors.rst:260
 msgid "To set the behavior, use:"
 msgstr ""
 
-#: ../compute-flavors.rst:235
+#: ../compute-flavors.rst:266
 msgid "Valid ACTION values are:"
 msgstr ""
 
-#: ../compute-flavors.rst:237
+#: ../compute-flavors.rst:268
 msgid "``disabled``—(default) The device is not attached."
 msgstr ""
 
-#: ../compute-flavors.rst:239
+#: ../compute-flavors.rst:270
 msgid "``reset``—Forcefully reset the guest."
 msgstr ""
 
-#: ../compute-flavors.rst:241
+#: ../compute-flavors.rst:272
 msgid "``poweroff``—Forcefully power off the guest."
 msgstr ""
 
-#: ../compute-flavors.rst:243
+#: ../compute-flavors.rst:274
 msgid "``pause``—Pause the guest."
 msgstr ""
 
-#: ../compute-flavors.rst:245
+#: ../compute-flavors.rst:276
 msgid "``none``—Only enable the watchdog; do nothing if the server hangs."
 msgstr ""
 
-#: ../compute-flavors.rst:250
+#: ../compute-flavors.rst:281
 msgid ""
 "Watchdog behavior set using a specific image's properties will override "
 "behavior set using flavors."
 msgstr ""
 
-#: ../compute-flavors.rst:251
+#: ../compute-flavors.rst:282
 msgid "Watchdog behavior"
 msgstr ""
 
-#: ../compute-flavors.rst:254
+#: ../compute-flavors.rst:285
 msgid ""
 "If a random-number generator device has been added to the instance through "
 "its image properties, the device can be enabled and configured using:"
 msgstr ""
 
-#: ../compute-flavors.rst:266
+#: ../compute-flavors.rst:297
 msgid ""
 "RATE-BYTES—(Integer) Allowed amount of bytes that the guest can read from "
 "the host's entropy per period."
 msgstr ""
 
-#: ../compute-flavors.rst:269
+#: ../compute-flavors.rst:300
 msgid "RATE-PERIOD—(Integer) Duration of the read period in seconds."
 msgstr ""
 
-#: ../compute-flavors.rst:269
+#: ../compute-flavors.rst:300
 msgid "Random-number generator"
 msgstr ""
 
-#: ../compute-flavors.rst:272
+#: ../compute-flavors.rst:303
 msgid ""
 "For the libvirt driver, you can define the topology of the processors in the "
 "virtual machine using properties. The properties with ``max`` limit the "
 "number that can be selected by the user with image properties."
 msgstr ""
 
-#: ../compute-flavors.rst:287
+#: ../compute-flavors.rst:318
 msgid ""
 "FLAVOR-SOCKETS—(Integer) The number of sockets for the guest VM. By this is "
 "set to the number of vCPUs requested."
 msgstr ""
 
-#: ../compute-flavors.rst:290
+#: ../compute-flavors.rst:321
 msgid ""
 "FLAVOR-CORES—(Integer) The number of cores per socket for the guest VM. By "
 "this is set to 1."
 msgstr ""
 
-#: ../compute-flavors.rst:293
+#: ../compute-flavors.rst:324
 msgid ""
 "FLAVOR-THREADS—(Integer) The number of threads per core for the guest VM. By "
 "this is set to 1."
 msgstr ""
 
-#: ../compute-flavors.rst:294
+#: ../compute-flavors.rst:325
 msgid "CPU toplogy"
 msgstr ""
 
-#: ../compute-flavors.rst:297
+#: ../compute-flavors.rst:328
 msgid ""
 "Flavors can also be assigned to particular projects. By default, a flavor is "
 "public and available to all projects. Private flavors are only accessible to "
@@ -4124,7 +4170,7 @@ msgid ""
 "assign a private flavor to a project, run these commands:"
 msgstr ""
 
-#: ../compute-flavors.rst:305
+#: ../compute-flavors.rst:336
 msgid "Project private flavors"
 msgstr ""
 
