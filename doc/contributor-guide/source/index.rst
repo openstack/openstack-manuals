@@ -31,6 +31,8 @@ Contents
    blueprints-and-specs.rst
    json-conventions.rst
 
+   common/glossary.rst
+
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
 

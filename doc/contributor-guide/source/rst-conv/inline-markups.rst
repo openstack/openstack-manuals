@@ -89,7 +89,8 @@ A term that appears in the glossary.
 +------------------------+---------------------------------------------------+
 | **Syntax**             | ``:term:`bare```                                  |
 +------------------------+---------------------------------------------------+
-| **Example of output**  |                                                   |
+| **Example of output**  | Upload the image to the Image service using       |
+|                        | the :term:`bare` container format.                |
 +------------------------+---------------------------------------------------+
 
 GUI element
