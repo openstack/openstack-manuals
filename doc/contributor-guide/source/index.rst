@@ -18,6 +18,7 @@ Contents
    introduction.rst
    first-timers-quickstart.rst
    rst-conv.rst
+   docbook-conv.rst
    docs-structure.rst
    content-specs.rst
    docs_builds.rst
