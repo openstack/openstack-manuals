@@ -100,21 +100,21 @@ the debconf interface. You can also manually edit the
 ``/etc/default/nova-consoleproxy`` file, and stop and start the console
 daemons.
 
-nova-objectstore daemon
+``nova-objectstore`` daemon
   An S3 interface for registering images with the OpenStack Image
   service. Used primarily for installations that must support
   euca2ools. The euca2ools tools talk to nova-objectstore in *S3
   language*, and nova-objectstore translates S3 requests into Image
   service requests.
 
-euca2ools client
+``euca2ools`` client
   A set of command-line interpreter commands for managing cloud
   resources. Although it is not an OpenStack module, you can configure
   nova-api to support this EC2 interface. For more information, see
   the `Eucalyptus 3.4
   Documentation <https://www.eucalyptus.com/docs/eucalyptus/3.4/index.html>`__.
 
-nova client
+``nova`` client
   Enables users to submit commands as a tenant administrator or end
   user.
 
