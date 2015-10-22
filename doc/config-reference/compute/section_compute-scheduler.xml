@@ -1030,6 +1030,24 @@ offset_weight_multiplier = 1.0</programlisting>
             which randomly selects from lists of filtered
             hosts.</para>
     </section>
+    <section xml:id="utilization-aware-scheduling">
+        <title>Utilization aware scheduling</title>
+        <?dbhtml stop-chunking?>
+        <para>It is possible to schedule VMs using advanced scheduling
+            decisions. These decisions are made based on enhanced
+            usage statistics encompassing data like memory cache
+            utilization, memory bandwidth utilization, or network
+            bandwidth utilization. This is disabled by default.
+            The administrator can configure how the metrics are
+            weighted in the configuration file by using the <literal>
+            weight_setting</literal> configuration option in
+            the <filename>nova.conf</filename> configuration file.
+            For example to configure metric1 with ratio1 and metric2
+            with ratio2:</para>
+            <programlisting language="ini">
+                weight_setting = "metric1=ratio1, metric2=ratio2"
+            </programlisting>
+    </section>
     <xi:include
         href="../../common/section_cli_nova_host_aggregates.xml"/>
     <section xml:id="compute-scheduler-config-ref">
