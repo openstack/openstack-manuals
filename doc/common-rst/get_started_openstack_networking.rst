@@ -26,7 +26,7 @@ OpenStack Networking plug-ins and agents
 
 Messaging queue
   Used by most OpenStack Networking installations to route information
-  between the neutron-server and various agents, as well as a database
+  between the neutron-server and various agents. Also acts as a database
   to store networking state for particular plug-ins.
 
 OpenStack Networking mainly interacts with OpenStack Compute to provide
