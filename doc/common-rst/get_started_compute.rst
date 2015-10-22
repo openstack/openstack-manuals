@@ -30,9 +30,6 @@ OpenStack Compute consists of the following areas and their components:
   service <http://docs.openstack.org/admin-guide-cloud/compute-networking-nova.html#metadata-service>`__
   in the OpenStack Cloud Administrator Guide.
 
-  On Debian systems, it is included in the nova-api package, and can
-  be selected through debconf.
-
 ``nova-compute`` service
   A worker daemon that creates and terminates virtual machine
   instances through hypervisor APIs. For example:
@@ -92,13 +89,6 @@ OpenStack Compute consists of the following areas and their components:
 
 ``nova-cert`` daemon
   x509 certificates.
-
-In Debian, a unique nova-consoleproxy package provides the
-nova-novncproxy, nova-spicehtml5proxy, and nova-xvpvncproxy packages. To
-select packages, edit the ``/etc/default/nova-consoleproxy`` file or use
-the debconf interface. You can also manually edit the
-``/etc/default/nova-consoleproxy`` file, and stop and start the console
-daemons.
 
 ``euca2ools`` client
   A set of command-line interpreter commands for managing cloud
