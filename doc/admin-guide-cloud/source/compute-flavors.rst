@@ -163,6 +163,40 @@ Memory limits
            $ nova flavor-key m1.medium set quota:memory_shares_level=custom
            $ nova flavor-key m1.medium set quota:memory_shares_share=15
 
+Disk I/O limits
+    For VMware, you can configure the resource limits for disk
+    with control parameters.
+
+    Use these optional parameters to limit the disk utilization,
+    guarantee disk allocation, and to specify shares
+    used in case of resource contention. This allows the VMWare
+    driver to enable disk allocations for the running instance.
+
+    -  ``disk_io_limit``: Specifies the upper limit for disk
+       utilization in I/O per second. The utilization of a
+       virtual machine will not exceed this limit, even
+       if there are available resources. The default value
+       is -1 which indicates unlimited usage.
+
+    -  ``disk_io_reservation``: Specifies the guaranteed minimum disk
+       allocation in terms of IOPS.
+
+    -  ``disk_io_shares_level``: Specifies the allocation
+       level. This can be ``custom``, ``high``, ``normal`` or ``low``.
+       If you choose custom, set the number of shares
+       using ``disk_io_shares_share``.
+
+    -  ``disk_io_shares_share``: Specifies the number of shares
+       allocated in the event that ``custom`` is used.
+       When there is resource contention, this value is used
+       to determine the resource allocation.
+
+       The example below sets the ``disk_io_reservation`` to 2000 IOPS.
+
+       .. code:: console
+
+           $ nova flavor-key m1.medium set quota:disk_io_reservation=2000
+
 Disk tuning
     Using disk I/O quotas, you can set maximum disk write to 10 MB per
     second for a VM user. For example:
