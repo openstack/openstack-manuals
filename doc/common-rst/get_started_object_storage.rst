@@ -44,7 +44,7 @@ swift-init
 
 swift-recon
   A cli tool used to retrieve various metrics and telemetry information
-  about a cluster, that has been collected by the swift-recon middleware.
+  about a cluster that has been collected by the swift-recon middleware.
 
 swift-ring-builder
   Storage ring build and rebalance utility. Documented in
