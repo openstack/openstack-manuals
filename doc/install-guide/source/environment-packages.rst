@@ -53,11 +53,21 @@ these procedures on all nodes.
    Enable the OpenStack repository
    -------------------------------
 
-   * Install the ``rdo-release-liberty`` package to enable the RDO repository:
+   On CentOS, the *extras* repository provides the RPM that enables the
+   OpenStack repository. CentOS includes the *extras* repository by
+   default, so you can simply install the package to enable the OpenStack
+   repository.
 
-     .. code-block:: console
+   .. code-block:: console
 
-        # yum install http://rdo.fedorapeople.org/openstack-liberty/rdo-release-liberty.rpm
+      # yum install centos-release-openstack-liberty
+
+   On RHEL, download and install the RDO repository RPM to enable the
+   OpenStack repository.
+
+   .. code-block:: console
+
+      # yum install https://rdoproject.org/repos/openstack-liberty/rdo-release-liberty.rpm
 
 .. only:: obs
 
@@ -132,77 +142,57 @@ these procedures on all nodes.
 Finalize the installation
 -------------------------
 
-.. only:: ubuntu or debian
+1. Upgrade the packages on your host:
 
-   * Upgrade the packages on your system:
+   .. only:: ubuntu or debian
 
-     .. code-block:: console
+      .. code-block:: console
 
-        # apt-get update && apt-get dist-upgrade
+         # apt-get update && apt-get dist-upgrade
 
-     .. note::
-
-      If the upgrade process includes a new kernel, reboot your system
-      to activate it.
-
-.. only:: rdo
-
-   #. Upgrade the packages on your system:
+   .. only:: rdo
 
       .. code-block:: console
 
          # yum upgrade
 
-      .. note::
+   .. only:: obs
 
-         If the upgrade process includes a new kernel, reboot your system
-         to activate it.
+      .. code-block:: console
 
-.. only:: obs
+         # zypper refresh && zypper dist-upgrade
 
-   * Upgrade the packages on your system:
+   .. note::
 
-     .. code-block:: console
+      If the upgrade process includes a new kernel, reboot your host
+      to activate it.
 
-        # zypper refresh && zypper dist-upgrade
+2. Install the OpenStack client:
 
-     .. note::
+   .. only:: debian or ubuntu
 
-        If the upgrade process includes a new kernel, reboot your system
-        to activate it.
+      .. code-block:: console
+
+         # apt-get install python-openstackclient
+
+   .. only:: rdo
+
+      .. code-block:: console
+
+         # yum install python-openstackclient
+
+   .. only:: obs
+
+      .. code-block:: console
+
+         # zypper install python-openstackclient
 
 .. only:: rdo
 
-   2. RHEL and CentOS enable :term:`SELinux` by default. Install the
+   3. RHEL and CentOS enable :term:`SELinux` by default. Install the
       ``openstack-selinux`` package to automatically manage security
       policies for OpenStack services:
 
       .. code-block:: console
 
          # yum install openstack-selinux
-
-Install the OpenStack client
-----------------------------
-
-Throughout the guide the OpenStack client will be used to perform actions on
-the installed services.
-
-* Install the package:
-
-.. only:: debian or ubuntu
-
-   .. code-block:: console
-
-      # apt-get install python-openstackclient
-
-.. only:: rdo
-
-   .. code-block:: console
-
-      # yum install python-openstackclient
-
-.. only:: obs
-
-   .. code-block:: console
-
-      # zypper install python-openstackclient
