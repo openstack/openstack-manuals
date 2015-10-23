@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 06:28+0000\n"
+"POT-Creation-Date: 2015-10-23 06:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1512,6 +1512,53 @@ msgstr ""
 msgid "Example of return value::"
 msgstr ""
 
+#: ../blockstorage_get_capabilities.rst:142
+msgid "Usage of volume type access extension"
+msgstr ""
+
+#: ../blockstorage_get_capabilities.rst:143
+msgid ""
+"Some volume types should be restricted only. For example, test volume types "
+"where you are testing a new technology or ultra high performance volumes "
+"(for special cases) where you do not want most users to be able to select "
+"these volumes. An administrator/operator can then define private volume "
+"types using cinder client. Volume type access extension adds the ability to "
+"manage volume type access. Volume types are public by default. Private "
+"volume types can be created by setting the 'is_public' Boolean field to "
+"'False' at creation time. Access to a private volume type can be controlled "
+"by adding or removing a project from it. Private volume types without "
+"projects are only visible by users with the admin role/context."
+msgstr ""
+
+#: ../blockstorage_get_capabilities.rst:155
+msgid "Create a public volume type by settting 'is_public' field to 'True'::"
+msgstr ""
+
+#: ../blockstorage_get_capabilities.rst:164
+msgid "Create a private volume type by setting 'is_public' field to 'False'::"
+msgstr ""
+
+#: ../blockstorage_get_capabilities.rst:173
+msgid "Get a list of the volume types::"
+msgstr ""
+
+#: ../blockstorage_get_capabilities.rst:184
+msgid "Get a list of the projects::"
+msgstr ""
+
+#: ../blockstorage_get_capabilities.rst:197
+msgid ""
+"Add volume type access for the given demo project, using its project-id::"
+msgstr ""
+
+#: ../blockstorage_get_capabilities.rst:201
+msgid "List the access information about the given volume type::"
+msgstr ""
+
+#: ../blockstorage_get_capabilities.rst:210
+msgid "Remove volume type access for the given project::"
+msgstr ""
+
 #: ../blockstorage_glusterfs_backend.rst:3
 msgid "Configure a GlusterFS back end"
 msgstr ""
@@ -1623,7 +1670,7 @@ msgstr ""
 # #-#-#-#-#  keystone_secure_identity_to_ldap_backend.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 #: ../blockstorage_glusterfs_backend.rst:52
 #: ../blockstorage_glusterfs_backend.rst:96 ../blockstorage_nfs_backend.rst:41
-#: ../compute-flavors.rst:295 ../compute-flavors.rst:316
+#: ../compute-flavors.rst:329 ../compute-flavors.rst:350
 #: ../identity_service_api_protection.rst:19
 #: ../keystone_secure_identity_to_ldap_backend.rst:62
 msgid "Where:"
@@ -2403,21 +2450,73 @@ msgid ""
 msgstr ""
 
 #: ../blockstorage_over_subscription.rst:97
-msgid "Capacity filter"
+msgid "Volume replication extra specs"
 msgstr ""
 
 #: ../blockstorage_over_subscription.rst:99
+msgid ""
+"OpenStack Block Storage has the ability to create volume replicas. Cloud "
+"administrators can define a storage policy that includes replication by "
+"adjusting the cinder volume driver. Volume replication for OpenStack Block "
+"Storage helps safeguard OpenStack environments from data loss during "
+"disaster recovery."
+msgstr ""
+
+#: ../blockstorage_over_subscription.rst:105
+msgid ""
+"To enable replication when creating volume types, configure the cinder "
+"volume with ``capabilities:replication=\"<is> True\"``."
+msgstr ""
+
+#: ../blockstorage_over_subscription.rst:108
+msgid ""
+"Each volume created with the replication capability set to `True` generates "
+"a copy of the volume on a storage back end."
+msgstr ""
+
+#: ../blockstorage_over_subscription.rst:111
+msgid ""
+"One use case for replication involves an OpenStack cloud environment "
+"installed accross two data centers located nearby each other. The distance "
+"between the two data centers in this use case is the length of a city."
+msgstr ""
+
+#: ../blockstorage_over_subscription.rst:116
+msgid ""
+"At each data center, a cinder host supports the Block Storage service. Both "
+"data centers include storage back ends."
+msgstr ""
+
+#: ../blockstorage_over_subscription.rst:119
+msgid ""
+"Depending on the storage requirements, there can be one or two cinder hosts. "
+"The cloud administrator accesses the :file:`/etc/cinder/cinder.conf` "
+"configuration file and sets ``capabilities:replication=\"<is> True\"``."
+msgstr ""
+
+#: ../blockstorage_over_subscription.rst:124
+msgid ""
+"If one data center experiences a service failure, cloud administrators can "
+"redeploy the VM. The VM will run using a replicated, backed up volume on a "
+"host in the second data center."
+msgstr ""
+
+#: ../blockstorage_over_subscription.rst:129
+msgid "Capacity filter"
+msgstr ""
+
+#: ../blockstorage_over_subscription.rst:131
 msgid ""
 "In the capacity filter, ``max_over_subscription_ratio`` is used when "
 "choosing a back end if ``thin_provisioning_support`` is True and "
 "``max_over_subscription_ratio`` is greater than 1.0."
 msgstr ""
 
-#: ../blockstorage_over_subscription.rst:104
+#: ../blockstorage_over_subscription.rst:136
 msgid "Capacity weigher"
 msgstr ""
 
-#: ../blockstorage_over_subscription.rst:106
+#: ../blockstorage_over_subscription.rst:138
 msgid ""
 "In the capacity weigher, virtual free capacity is used for ranking if "
 "``thin_provisioning_support`` is True. Otherwise, real free capacity will be "
@@ -3947,71 +4046,120 @@ msgstr ""
 
 #: ../compute-flavors.rst:167
 msgid ""
+"For VMware, you can configure the resource limits for disk with control "
+"parameters."
+msgstr ""
+
+#: ../compute-flavors.rst:170
+msgid ""
+"Use these optional parameters to limit the disk utilization, guarantee disk "
+"allocation, and to specify shares used in case of resource contention. This "
+"allows the VMWare driver to enable disk allocations for the running instance."
+msgstr ""
+
+#: ../compute-flavors.rst:175
+msgid ""
+"``disk_io_limit``: Specifies the upper limit for disk utilization in I/O per "
+"second. The utilization of a virtual machine will not exceed this limit, "
+"even if there are available resources. The default value is -1 which "
+"indicates unlimited usage."
+msgstr ""
+
+#: ../compute-flavors.rst:181
+msgid ""
+"``disk_io_reservation``: Specifies the guaranteed minimum disk allocation in "
+"terms of IOPS."
+msgstr ""
+
+#: ../compute-flavors.rst:184
+msgid ""
+"``disk_io_shares_level``: Specifies the allocation level. This can be "
+"``custom``, ``high``, ``normal`` or ``low``. If you choose custom, set the "
+"number of shares using ``disk_io_shares_share``."
+msgstr ""
+
+#: ../compute-flavors.rst:189
+msgid ""
+"``disk_io_shares_share``: Specifies the number of shares allocated in the "
+"event that ``custom`` is used. When there is resource contention, this value "
+"is used to determine the resource allocation."
+msgstr ""
+
+#: ../compute-flavors.rst:194
+msgid "The example below sets the ``disk_io_reservation`` to 2000 IOPS."
+msgstr ""
+
+#: ../compute-flavors.rst:198
+msgid "Disk I/O limits"
+msgstr ""
+
+#: ../compute-flavors.rst:201
+msgid ""
 "Using disk I/O quotas, you can set maximum disk write to 10 MB per second "
 "for a VM user. For example:"
 msgstr ""
 
-#: ../compute-flavors.rst:174
+#: ../compute-flavors.rst:208
 msgid "The disk I/O options are:"
 msgstr ""
 
-#: ../compute-flavors.rst:176
+#: ../compute-flavors.rst:210
 msgid "disk\\_read\\_bytes\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:178
+#: ../compute-flavors.rst:212
 msgid "disk\\_read\\_iops\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:180
+#: ../compute-flavors.rst:214
 msgid "disk\\_write\\_bytes\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:182
+#: ../compute-flavors.rst:216
 msgid "disk\\_write\\_iops\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:184
+#: ../compute-flavors.rst:218
 msgid "disk\\_total\\_bytes\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:186
+#: ../compute-flavors.rst:220
 msgid "Disk tuning"
 msgstr ""
 
-#: ../compute-flavors.rst:186
+#: ../compute-flavors.rst:220
 msgid "disk\\_total\\_iops\\_sec"
 msgstr ""
 
-#: ../compute-flavors.rst:189
+#: ../compute-flavors.rst:223
 msgid "The vif I/O options are:"
 msgstr ""
 
-#: ../compute-flavors.rst:191
+#: ../compute-flavors.rst:225
 msgid "vif\\_inbound\\_ average"
 msgstr ""
 
-#: ../compute-flavors.rst:193
+#: ../compute-flavors.rst:227
 msgid "vif\\_inbound\\_burst"
 msgstr ""
 
-#: ../compute-flavors.rst:195
+#: ../compute-flavors.rst:229
 msgid "vif\\_inbound\\_peak"
 msgstr ""
 
-#: ../compute-flavors.rst:197
+#: ../compute-flavors.rst:231
 msgid "vif\\_outbound\\_ average"
 msgstr ""
 
-#: ../compute-flavors.rst:199
+#: ../compute-flavors.rst:233
 msgid "vif\\_outbound\\_burst"
 msgstr ""
 
-#: ../compute-flavors.rst:201
+#: ../compute-flavors.rst:235
 msgid "vif\\_outbound\\_peak"
 msgstr ""
 
-#: ../compute-flavors.rst:203
+#: ../compute-flavors.rst:237
 msgid ""
 "Incoming and outgoing traffic can be shaped independently. The bandwidth "
 "element can have at most, one inbound and at most, one outbound child "
@@ -4022,7 +4170,7 @@ msgid ""
 "rate on the interface being shaped."
 msgstr ""
 
-#: ../compute-flavors.rst:212
+#: ../compute-flavors.rst:246
 msgid ""
 "There are also two optional attributes (integer): ``peak``, which specifies "
 "the maximum rate at which a bridge can send data (kilobytes/second), and "
@@ -4030,43 +4178,43 @@ msgid ""
 "The rate is shared equally within domains connected to the network."
 msgstr ""
 
-#: ../compute-flavors.rst:218
+#: ../compute-flavors.rst:252
 msgid ""
 "The example below sets network traffic bandwidth limits for existing flavor "
 "as follows:"
 msgstr ""
 
-#: ../compute-flavors.rst:221
+#: ../compute-flavors.rst:255
 msgid "Outbound traffic:"
 msgstr ""
 
-#: ../compute-flavors.rst:223 ../compute-flavors.rst:231
+#: ../compute-flavors.rst:257 ../compute-flavors.rst:265
 msgid "average: 256 Mbps (32768 kilobytes/second)"
 msgstr ""
 
-#: ../compute-flavors.rst:225 ../compute-flavors.rst:233
+#: ../compute-flavors.rst:259 ../compute-flavors.rst:267
 msgid "peak: 512 Mbps (65536 kilobytes/second)"
 msgstr ""
 
-#: ../compute-flavors.rst:227 ../compute-flavors.rst:235
+#: ../compute-flavors.rst:261 ../compute-flavors.rst:269
 msgid "burst: 65536 kilobytes"
 msgstr ""
 
-#: ../compute-flavors.rst:229
+#: ../compute-flavors.rst:263
 msgid "Inbound traffic:"
 msgstr ""
 
-#: ../compute-flavors.rst:249
+#: ../compute-flavors.rst:283
 msgid ""
 "All the speed limit values in above example are specified in kilobytes/"
 "second. And burst values are in kilobytes."
 msgstr ""
 
-#: ../compute-flavors.rst:250
+#: ../compute-flavors.rst:284
 msgid "Bandwidth I/O"
 msgstr ""
 
-#: ../compute-flavors.rst:253
+#: ../compute-flavors.rst:287
 msgid ""
 "For the libvirt driver, you can enable and set the behavior of a virtual "
 "hardware watchdog device for each flavor. Watchdog devices keep an eye on "
@@ -4075,94 +4223,94 @@ msgid ""
 "``hw:watchdog_action`` is not specified, the watchdog is disabled."
 msgstr ""
 
-#: ../compute-flavors.rst:260
+#: ../compute-flavors.rst:294
 msgid "To set the behavior, use:"
 msgstr ""
 
-#: ../compute-flavors.rst:266
+#: ../compute-flavors.rst:300
 msgid "Valid ACTION values are:"
 msgstr ""
 
-#: ../compute-flavors.rst:268
+#: ../compute-flavors.rst:302
 msgid "``disabled``—(default) The device is not attached."
 msgstr ""
 
-#: ../compute-flavors.rst:270
+#: ../compute-flavors.rst:304
 msgid "``reset``—Forcefully reset the guest."
 msgstr ""
 
-#: ../compute-flavors.rst:272
+#: ../compute-flavors.rst:306
 msgid "``poweroff``—Forcefully power off the guest."
 msgstr ""
 
-#: ../compute-flavors.rst:274
+#: ../compute-flavors.rst:308
 msgid "``pause``—Pause the guest."
 msgstr ""
 
-#: ../compute-flavors.rst:276
+#: ../compute-flavors.rst:310
 msgid "``none``—Only enable the watchdog; do nothing if the server hangs."
 msgstr ""
 
-#: ../compute-flavors.rst:281
+#: ../compute-flavors.rst:315
 msgid ""
 "Watchdog behavior set using a specific image's properties will override "
 "behavior set using flavors."
 msgstr ""
 
-#: ../compute-flavors.rst:282
+#: ../compute-flavors.rst:316
 msgid "Watchdog behavior"
 msgstr ""
 
-#: ../compute-flavors.rst:285
+#: ../compute-flavors.rst:319
 msgid ""
 "If a random-number generator device has been added to the instance through "
 "its image properties, the device can be enabled and configured using:"
 msgstr ""
 
-#: ../compute-flavors.rst:297
+#: ../compute-flavors.rst:331
 msgid ""
 "RATE-BYTES—(Integer) Allowed amount of bytes that the guest can read from "
 "the host's entropy per period."
 msgstr ""
 
-#: ../compute-flavors.rst:300
+#: ../compute-flavors.rst:334
 msgid "RATE-PERIOD—(Integer) Duration of the read period in seconds."
 msgstr ""
 
-#: ../compute-flavors.rst:300
+#: ../compute-flavors.rst:334
 msgid "Random-number generator"
 msgstr ""
 
-#: ../compute-flavors.rst:303
+#: ../compute-flavors.rst:337
 msgid ""
 "For the libvirt driver, you can define the topology of the processors in the "
 "virtual machine using properties. The properties with ``max`` limit the "
 "number that can be selected by the user with image properties."
 msgstr ""
 
-#: ../compute-flavors.rst:318
+#: ../compute-flavors.rst:352
 msgid ""
 "FLAVOR-SOCKETS—(Integer) The number of sockets for the guest VM. By this is "
 "set to the number of vCPUs requested."
 msgstr ""
 
-#: ../compute-flavors.rst:321
+#: ../compute-flavors.rst:355
 msgid ""
 "FLAVOR-CORES—(Integer) The number of cores per socket for the guest VM. By "
 "this is set to 1."
 msgstr ""
 
-#: ../compute-flavors.rst:324
+#: ../compute-flavors.rst:358
 msgid ""
 "FLAVOR-THREADS—(Integer) The number of threads per core for the guest VM. By "
 "this is set to 1."
 msgstr ""
 
-#: ../compute-flavors.rst:325
+#: ../compute-flavors.rst:359
 msgid "CPU toplogy"
 msgstr ""
 
-#: ../compute-flavors.rst:328
+#: ../compute-flavors.rst:362
 msgid ""
 "Flavors can also be assigned to particular projects. By default, a flavor is "
 "public and available to all projects. Private flavors are only accessible to "
@@ -4170,7 +4318,7 @@ msgid ""
 "assign a private flavor to a project, run these commands:"
 msgstr ""
 
-#: ../compute-flavors.rst:336
+#: ../compute-flavors.rst:370
 msgid "Project private flavors"
 msgstr ""
 
@@ -18249,45 +18397,45 @@ msgstr ""
 
 #: ../orchestration-introduction.rst:5
 msgid ""
-"Orchestration is a tool for orchestrating clouds that automatically "
-"configures and deploys resources in stacks. Such deployments can be simple — "
-"like deploying WordPress on Ubuntu with an SQL back end. And they can be "
-"quite complex, like launching a group of servers that autoscale: starting "
-"and stopping based on realtime CPU loading information from the Telemetry "
-"module."
+"The OpenStack Orchestration service, a tool for orchestrating clouds, "
+"automatically configures and deploys resources in stacks. The deployments "
+"can be simple, such as deploying WordPress on Ubuntu with an SQL back end. "
+"They can also be complex, such as starting a group of servers that auto "
+"scale by starting and stopping based on real-time CPU loading information "
+"from the Telemetry module."
 msgstr ""
 
 #: ../orchestration-introduction.rst:12
 msgid ""
 "Orchestration stacks are defined with templates, which are non-procedural "
-"documents describing tasks in terms of resources, parameters, inputs, "
-"constraints and dependencies. When Orchestration module was originally "
-"introduced, it worked with AWS CloudFormation templates, which are in JSON "
-"format."
+"documents that describe tasks in terms of resources, parameters, inputs, "
+"constraints, and dependencies. When the Orchestration service was originally "
+"introduced, it worked with AWS CloudFormation templates, which are in the "
+"JSON format."
 msgstr ""
 
 #: ../orchestration-introduction.rst:18
 msgid ""
-"Now, Orchestration also executes HOT (Heat Orchestration Template) templates "
-"written in YAML: a terse notation that loosely follows Python/Ruby-type "
-"structural conventions (colons, returns, indentation), so it is more easy to "
-"write, parse, grep, generate with tools, and maintain source-code management "
-"systems."
+"The Orchestration service also runs Heat Orchestration Template (HOT) "
+"templates that are written in YAML. YAML is a terse notation that loosely "
+"follows structural conventions (colons, returns, indentation) that are "
+"similar to Python or Ruby. Therefore, it is easier to write, parse, grep, "
+"generate with tools, and maintain source-code management systems."
 msgstr ""
 
 #: ../orchestration-introduction.rst:24
 msgid ""
-"Orchestration can be accessed via the CLI, and using RESTful queries. "
-"Orchestration module provides both an OpenStack-native REST API and a "
-"CloudFormation-compatible Query API. Orchestration is also integrated with "
-"OpenStack dashboard in order to launch stacks from templates through a web "
-"interface."
+"Orchestration can be accessed through a CLI and RESTful queries. The "
+"Orchestration service provides both an OpenStack-native REST API and a "
+"CloudFormation-compatible Query API. The Orchestration service is also "
+"integrated with the OpenStack dashboard to perform stack functions through a "
+"web interface."
 msgstr ""
 
 #: ../orchestration-introduction.rst:30
 msgid ""
-"For more details on how to use Orchestration module through a command line, "
-"see `OpenStack Command-Line Interface Reference`_."
+"For more information about using the Orchestration service through the "
+"command line, see the `OpenStack Command-Line Interface Reference`_."
 msgstr ""
 
 #: ../orchestration-stack-domain-users.rst:5
