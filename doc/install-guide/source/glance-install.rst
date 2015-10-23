@@ -54,7 +54,7 @@ configuration stores images on the local file system.
 
         .. code-block:: console
 
-           $ openstack user create --password-prompt glance
+           $ openstack user create --domain default --password-prompt glance
            User Password:
            Repeat User Password:
            +-----------+----------------------------------+
