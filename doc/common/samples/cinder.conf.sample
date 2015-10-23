@@ -2281,6 +2281,27 @@
 # these different properties. (string value)
 #extra_capabilities={}
 
+# The IBM Storwize/SVC driver exposes capabilities that can be
+# added to the extra specs of volume types, and used by the
+# filter scheduler to determine placement of new volumes.
+# Make sure to prefix these keys with capabilities, to indicate
+# that the scheduler should use them. Supported extra specs are:
+
+# Specify a back-end where the volume should be created.
+# (string value)back-end name = <name of the IBM Storwize/SVC
+# storage system>_<name of the pool (mdisk group)>
+#capabilities:volume_back-end_name=myV7000_openstackpool
+
+# Specify a back-end according to compression support.
+# (boolean value)
+#capabilities:compression_support='<myV7000_openstackpool> True'
+
+# Specify support of the Easy Tier feature. (boolean value)
+#capabilities:easytier_support='<myV7000_openstackpool> True'
+
+# Specify the connection protocol used to attach volumes of this
+# type to instances. Values are (iSCSI and FC).
+#capabilities:storage_protocol='<myV7000_openstackpool> FC'
 
 [BRCD_FABRIC_EXAMPLE]
 
