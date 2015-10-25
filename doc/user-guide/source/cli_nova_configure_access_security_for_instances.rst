@@ -10,6 +10,11 @@ You can create at least one key pair for each project. You can use the key
 pair for multiple instances that belong to that project. If you generate
 a key pair with an external tool, you can import it into OpenStack.
 
+.. note::
+   A key pair belongs to an individual user, not to a project.
+   To share a key pair across multiple users, each user
+   needs to import that key pair.
+
 If an image uses a static root password or a static key set (neither is
 recommended), you must not provide a key pair when you launch the
 instance.

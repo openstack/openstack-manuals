@@ -20,6 +20,11 @@ it into OpenStack. The key pair can be used for multiple instances that
 belong to a project. For more information, see the section
 :ref:`dashboard_import_keypair`.
 
+.. note::
+   A key pair belongs to an individual user, not to a project.
+   To share a key pair across multiple users, each user
+   needs to import that key pair.
+
 When an instance is created in OpenStack, it is automatically assigned a
 fixed IP address in the network to which the instance is assigned. This
 IP address is permanently associated with the instance until the
