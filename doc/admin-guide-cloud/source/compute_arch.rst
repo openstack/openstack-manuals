@@ -196,7 +196,8 @@ In addition to the native compute API, OpenStack provides an
 EC2-compatible API. This API allows EC2 legacy workflows built for EC2
 to work with OpenStack. For more information and configuration options
 about this compatibility API, see the `OpenStack Configuration
-Reference <http://docs.openstack.org/liberty/config-reference/content/>`__.
+Reference <http://docs.openstack.org/liberty/config-reference/content/
+configuring-ec2-api.html>`__.
 
 Numerous third-party tools and language-specific SDKs can be used to
 interact with OpenStack clouds, using both native and compatibility

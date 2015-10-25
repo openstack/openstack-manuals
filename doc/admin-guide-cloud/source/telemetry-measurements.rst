@@ -20,7 +20,7 @@ below.
     You may need to configure Telemetry or other OpenStack services in
     order to be able to collect all the samples you need. For further
     information about configuration requirements see the `Telemetry chapter
-    <http://docs.openstack.org/kilo/install-guide/install/apt/content/ch_ceilometer.html>`__
+    <http://docs.openstack.org/liberty/install-guide-ubuntu/ceilometer.html>`__
     in the OpenStack Installation Guide. Also check the `Telemetry manual
     installation <http://docs.openstack.org/developer/ceilometer/install/manual.html>`__
     description.
@@ -420,7 +420,7 @@ the compute host machines. In order to use that you need to set the
 ``compute_monitors`` option to ``ComputeDriverCPUMonitor`` in the
 :file:`nova.conf` configuration file. For further information see the
 Compute configuration section in the `Compute chapter
-<http://docs.openstack.org/kilo/config-reference/content/list-of-compute-config-options.html>`__
+<http://docs.openstack.org/liberty/config-reference/content/list-of-compute-config-options.html>`__
 of the OpenStack Configuration Reference.
 
 The following host machine related meters are collected for OpenStack

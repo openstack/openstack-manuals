@@ -185,7 +185,7 @@ the requested operations.
 To be able to use the ``ceilometer`` command, the
 python-ceilometerclient package needs to be installed and configured
 properly. For details about the installation process, see the `Telemetry
-chapter <http://docs.openstack.org/kilo/install-guide/install/apt/content/ch_ceilometer.html>`__
+chapter <http://docs.openstack.org/liberty/install-guide-ubuntu/ceilometer.html>`__
 in the OpenStack Installation Guide.
 
 .. note::
