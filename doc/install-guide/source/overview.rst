@@ -23,19 +23,19 @@ OpenStack with sufficient Linux experience:
    * - Service
      - Project name
      - Description
-   * - `Dashboard <http://www.openstack.org/software/openstack-dashboard/>`_
+   * - `Dashboard <http://www.openstack.org/software/releases/kilo/components/horizon>`_
      - `Horizon <http://docs.openstack.org/developer/horizon/>`_
      - Provides a web-based self-service portal
        to interact with underlying OpenStack services,
        such as launching an instance, assigning IP
        addresses and configuring access controls.
-   * - `Compute <http://www.openstack.org/software/openstack-compute/>`_
+   * - `Compute <http://www.openstack.org/software/releases/kilo/components/nova>`_
      - `Nova <http://docs.openstack.org/developer/nova/>`_
      - Manages the lifecycle of compute instances in an
        OpenStack environment. Responsibilities include
        spawning, scheduling and decommissioning of virtual
        machines on demand.
-   * - `Networking <http://www.openstack.org/software/openstack-networking/>`_
+   * - `Networking <http://www.openstack.org/software/releases/kilo/components/neutron>`_
      - `Neutron <http://docs.openstack.org/developer/neutron/>`_
      - Enables Network-Connectivity-as-a-Service for
        other OpenStack services, such as OpenStack Compute.
@@ -46,7 +46,7 @@ OpenStack with sufficient Linux experience:
    * -
      -
      - **Storage**
-   * - `Object Storage <http://www.openstack.org/software/openstack-storage/>`_
+   * - `Object Storage <http://www.openstack.org/software/releases/kilo/components/swift>`_
      - `Swift <http://docs.openstack.org/developer/swift/>`_
      - Stores and retrieves arbitrary unstructured
        data objects via a :term:`RESTful`, HTTP based API.
@@ -55,7 +55,7 @@ OpenStack with sufficient Linux experience:
        file server with mountable directories. In this case,
        it writes objects and files to multiple drives, ensuring the
        data is replicated across a server cluster.
-   * - `Block Storage <http://www.openstack.org/software/openstack-storage/>`_
+   * - `Block Storage <http://www.openstack.org/software/releases/kilo/components/cinder>`_
      - `Cinder <http://docs.openstack.org/developer/cinder/>`_
      - Provides persistent block storage to running instances. Its pluggable
        driver architecture facilitates the creation and management of
@@ -63,24 +63,24 @@ OpenStack with sufficient Linux experience:
    * -
      -
      - **Shared services**
-   * - `Identity service <http://www.openstack.org/software/openstack-shared-services/>`_
+   * - `Identity service <http://www.openstack.org/software/releases/kilo/components/keystone>`_
      - `Keystone <http://docs.openstack.org/developer/keystone/>`_
      - Provides an authentication and authorization service
        for other OpenStack services. Provides a catalog of endpoints
        for all OpenStack services.
-   * - `Image service <http://www.openstack.org/software/openstack-shared-services/>`_
+   * - `Image service <http://www.openstack.org/software/releases/kilo/components/glance>`_
      - `Glance <http://docs.openstack.org/developer/glance/>`_
      - Stores and retrieves virtual machine disk images.
        OpenStack Compute makes use of this during instance
        provisioning.
-   * - `Telemetry <http://www.openstack.org/software/openstack-shared-services/>`_
+   * - `Telemetry <http://www.openstack.org/software/releases/kilo/components/ceilometer>`_
      - `Ceilometer <http://docs.openstack.org/developer/ceilometer/>`_
      - Monitors and meters the OpenStack cloud for billing, benchmarking,
        scalability, and statistical purposes.
    * -
      -
      - **Higher-level services**
-   * - `Orchestration <http://www.openstack.org/software/openstack-shared-services/>`_
+   * - `Orchestration <http://www.openstack.org/software/releases/kilo/components/heat>`_
      - `Heat <http://docs.openstack.org/developer/heat/>`_
      - Orchestrates multiple composite cloud applications by using
        either the native :term:`HOT <Heat Orchestration Template (HOT)>` template
