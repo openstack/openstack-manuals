@@ -108,12 +108,12 @@ Manage an object
 #. In the :guilabel:`Copy Object` launch dialog box, enter the following
    values:
 
-* :guilabel:`Destination Container`: Choose the destination container from the
-  list.
-* :guilabel:`Path`: Specify a path in which the new copy should be stored
-  inside of the selected container.
-* :guilabel:`Destination object name`: Enter a name for the object in the new
-  container.
+   * :guilabel:`Destination Container`: Choose the destination container from
+     the list.
+   * :guilabel:`Path`: Specify a path in which the new copy should be stored
+     inside of the selected container.
+   * :guilabel:`Destination object name`: Enter a name for the object in the
+     new container.
 
 #. Click :guilabel:`Copy Object`.
 
