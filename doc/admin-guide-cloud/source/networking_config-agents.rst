@@ -517,5 +517,5 @@ complete basic operations on agents:
 **Basic operations on Networking agents**
 
 See the `OpenStack Command-Line Interface
-Reference <http://docs.openstack.org/cli-reference/content/index.html>`__
+Reference <http://docs.openstack.org/cli-reference/content/neutronclient_commands.html>`__
 for more information on Networking commands.

@@ -8,5 +8,5 @@ information is maintained in developer documentation at
 `docs.openstack.org/developer/swift/ <http://docs.openstack.org/developer/swift/>`__.
 
 See the `OpenStack Configuration
-Reference <http://docs.openstack.org/liberty/config-reference/content/>`__
+Reference <http://docs.openstack.org/liberty/config-reference/content/ch_configuring-object-storage.html>`__
 for a list of configuration options for Object Storage.
