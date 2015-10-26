@@ -2,10 +2,6 @@
 
 .. Don't remove or change title tag manually, which is used by the build tool.
 
-.. Be aware that index-debian and index need to have the same content
-   so that translations work. Only the strings from the file
-   index-debian gets send to our translation server.
-
 .. only:: rdo
 
    ====================================================================
@@ -78,25 +74,57 @@ This guide documents OpenStack Liberty release.
 Contents
 ~~~~~~~~
 
-.. toctree::
-   :maxdepth: 2
+.. Pseudo only directive for each distribution used by the build tool.
+   This pseudo only directive for toctree only works fine with Tox.
+   When you directly build this guide with Sphinx,
+   some navigation menu may not work properly.
 
-   common/conventions.rst
-   overview.rst
-   environment.rst
-   keystone.rst
-   glance.rst
-   nova.rst
-   neutron.rst
-   horizon.rst
-   cinder.rst
-   swift.rst
-   heat.rst
-   ceilometer.rst
-   launch-instance.rst
+.. only:: obs or rdo or ubuntu
 
-   common/app_support.rst
-   common/glossary.rst
+   .. toctree::
+      :maxdepth: 2
+
+      common/conventions.rst
+      overview.rst
+      environment.rst
+      keystone.rst
+      glance.rst
+      nova.rst
+      neutron.rst
+      horizon.rst
+      cinder.rst
+      swift.rst
+      heat.rst
+      ceilometer.rst
+      launch-instance.rst
+
+      common/app_support.rst
+      common/glossary.rst
+
+.. only:: debian
+
+   .. toctree::
+      :maxdepth: 2
+
+      common/conventions.rst
+      overview.rst
+      environment.rst
+      debconf/debconf.rst
+      keystone.rst
+      glance.rst
+      nova.rst
+      neutron.rst
+      horizon.rst
+      cinder.rst
+      swift.rst
+      heat.rst
+      ceilometer.rst
+      launch-instance.rst
+
+      common/app_support.rst
+      common/glossary.rst
+
+.. end of contents
 
 Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
