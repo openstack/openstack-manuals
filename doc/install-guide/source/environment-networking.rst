@@ -61,31 +61,23 @@ The example architectures assume use of the following networks:
 
 * Management on 10.0.0.0/24 with gateway 10.0.0.1
 
-  .. note::
-
-     This network requires a gateway to provide Internet access to all
-     nodes for administrative purposes such as package installation,
-     security updates, :term:`DNS`, and :term:`NTP`.
+  This network requires a gateway to provide Internet access to all
+  nodes for administrative purposes such as package installation,
+  security updates, :term:`DNS`, and :term:`NTP`.
 
 * Public on 203.0.113.0/24 with gateway 203.0.113.1
 
-  .. note::
-
-     This network requires a gateway to provide Internet access to
-     instances in your OpenStack environment.
+  This network requires a gateway to provide Internet access to
+  instances in your OpenStack environment.
 
 You can modify these ranges and gateways to work with your particular
 network infrastructure.
 
-.. note::
-
-   Network interface names vary by distribution. Traditionally,
-   interfaces use "eth" followed by a sequential number. To cover all
-   variations, this guide simply refers to the first interface as the
-   interface with the lowest number and the second interface as the
-   interface with the highest number.
-
-|
+Network interface names vary by distribution. Traditionally,
+interfaces use "eth" followed by a sequential number. To cover all
+variations, this guide simply refers to the first interface as the
+interface with the lowest number and the second interface as the
+interface with the highest number.
 
 Unless you intend to use the exact configuration provided in this
 example architecture, you must modify the networks in this procedure to
