@@ -4,8 +4,7 @@ Release names
 ~~~~~~~~~~~~~
 
 Use the names of the OpenStack releases as described on
-`this wiki page <https://wiki.openstack.org/wiki/Releases>`_.
-
+`the OpenStack Releases page <http://docs.openstack.org/releases/>`_.
 **Example:**
 
 Icehouse - a single word with only initial capital.
