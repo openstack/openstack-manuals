@@ -67,3 +67,62 @@ Use Bare Metal
 #. Check nodes' provision state and power state.
 
 .. TODO Add the detail command line later on.
+
+Troubleshooting
+~~~~~~~~~~~~~~~
+
+No valid host found error
+-------------------------
+
+Sometimes ``/var/log/nova/nova-conductor.log`` contains the following error:
+
+.. code::
+
+   NoValidHost: No valid host was found. There are not enough hosts available.
+
+The message "No valid host was found" means that the Compute service scheduler
+could not find a bare metal node suitable for booting the new instance.
+
+This means there will be some mismatch between resources that the Compute
+service expects to find and resources that Bare Metal service advertised to
+the Compute service.
+
+If this is true, check the following:
+
+#. Introspection should have succeeded for you before, or you should have
+   entered the required bare-metal node properties manually.
+   For each node in ``ironic node-list`` use:
+
+   .. code-block:: console
+
+      $ ironic node-show <IRONIC-NODE-UUID>
+
+   and make sure that ``properties`` JSON field has valid values for keys
+   ``cpus``, ``cpu_arch``, ``memory_mb`` and ``local_gb``.
+
+#. The flavor in the Compute service that you are using does not exceed the
+   bare-metal node properties above for a required number of nodes. Use:
+
+   .. code-block:: console
+
+      $ nova flavor-show <FLAVOR NAME>
+
+#. Make sure that enough nodes are in ``available`` state according to
+   ``ironic node-list``. Nodes in ``manageable`` state usually mean they
+   have failed introspection.
+
+#. Make sure nodes you are going to deploy to are not in maintenance mode.
+   Use ``ironic node-list`` to check. A node automatically going to
+   maintenance mode usually means the incorrect credentials for this node.
+   Check them and then remove maintenance mode:
+
+   .. code-block:: console
+
+      $ ironic node-set-maintenance <IRONIC-NODE-UUID> off
+
+#. It takes some time for nodes information to propagate from the Bare Metal
+   service to the Compute service after introspection. Our tooling usually
+   accounts for it, but if you did some steps manually, there may be a period
+   of time when nodes are not available to the Compute service yet. Check that
+   ``nova hypervisor-stats`` correctly shows total amount of resources in your
+   system.
