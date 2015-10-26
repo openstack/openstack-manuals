@@ -205,11 +205,12 @@ To finalize installation
    .. code-block:: console
 
       # systemctl enable apache2.service memcached.service
-      # systemctl start apache2.service memcached.service
+      # systemctl restart apache2.service memcached.service
 
    .. note::
 
-      Restart the Apache HTTP service if it is already running.
+      ``systemctl restart`` will restart the Apache HTTP service, or start it
+      if it is not running.
 
 .. only:: rdo
 
@@ -219,8 +220,9 @@ To finalize installation
    .. code-block:: console
 
       # systemctl enable httpd.service memcached.service
-      # systemctl start httpd.service memcached.service
+      # systemctl restart httpd.service memcached.service
 
    .. note::
 
-      Restart the Apache HTTP service if it is already running.
+      ``systemctl restart`` will restart the Apache HTTP service, or start it
+      if it is not running.
