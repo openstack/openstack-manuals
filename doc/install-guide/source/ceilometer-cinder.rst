@@ -19,7 +19,7 @@ following actions:
       [DEFAULT]
       ...
       control_exchange = cinder
-      notification_driver = messagingv2</programlisting>
+      notification_driver = messagingv2
 
 .. only:: obs or rdo
 
