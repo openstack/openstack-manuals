@@ -135,9 +135,12 @@
       <para>Start the web server and session storage service and configure
         them to start when the system boots:</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable httpd.service memcached.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start httpd.service memcached.service</userinput></screen>
+<prompt>#</prompt> <userinput>systemctl restart httpd.service memcached.service</userinput></screen>
       <screen os="opensuse;sles"><prompt>#</prompt> <userinput>systemctl enable apache2.service memcached.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start apache2.service memcached.service</userinput></screen>
+<prompt>#</prompt> <userinput>systemctl restart apache2.service memcached.service</userinput></screen>
+      <note os="rhel;centos;fedora;sles;opensuse">
+          <para>systemctl restart will restart the Apache HTTP service, or start it if it is not running.</para>
+      </note>
     </step>
   </procedure>
 </section>
