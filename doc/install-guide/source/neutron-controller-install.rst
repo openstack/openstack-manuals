@@ -150,6 +150,11 @@ specific to it.
    enables self-service (private) networks. If you want to use public
    (provider) and private (self-service) networks, choose option 2.
 
+Complete the procedure for your selected networking option by clicking
+one of the following links. After finishing that procedure, you will
+be directed back to this page to proceed with configuring the metadata
+agent.
+
 .. toctree::
    :maxdepth: 1
 
