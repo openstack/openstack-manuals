@@ -235,7 +235,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # yum install openstack-cinder python-cinderclient python-oslo-db
+         # yum install openstack-cinder python-cinderclient
 
 .. only:: ubuntu
 
