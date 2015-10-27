@@ -24,17 +24,33 @@ System architecture
 
 The Bare Metal module is composed of the following components:
 
-#. A RESTful API service
+#. An admin-only RESTful API service, by which privileged users, such
+   as cloud operators and other services within the cloud control
+   plane, may interact with the managed bare-metal servers.
 
-#. A conductor service
+#. A conductor service, which conducts all activity related to
+   bare-metal deployments. Functionality is exposed via the API
+   service. The Bare Metal service conductor and API service
+   communicate via RPC.
 
-#. Various drivers that support heterogeneous hardware
+#. Various drivers that support heterogeneous hardware, which enable
+   features specific to unique hardware platforms and leverage
+   divergent capabilities via a common API.
 
-#. A message queue
+#. A message queue, which is a central hub for passing messages, such
+   as RabbitMQ. It should use the same implementation as that of the
+   Compute service.
 
-#. A database for storing information about the resources
+#. A database for storing information about the resources. Among other
+   things, this includes the state of the conductors, nodes (physical
+   servers), and drivers.
 
-.. TODO Add the detail about each component.
+When a user requests to boot an instance, the request is passed to the
+Compute service via the Compute service API and scheduler. The Compute
+service hands over this request to the Bare Metal service, where the
+request passes from the Bare Metal service API, to the conductor which
+will invoke a driver to successfully provision a physical server for
+the user.
 
 Bare Metal deployment
 ~~~~~~~~~~~~~~~~~~~~~
