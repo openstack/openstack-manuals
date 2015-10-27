@@ -25,8 +25,6 @@ This section describes how to verify operation of the Telemetry module.
       +--------------+-------+-------+--------------------------------------+---------+------------+
       | image        | gauge | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
       | image.size   | gauge | B     | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
-      | image.update | delta | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
-      | image.upload | delta | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
       +--------------+-------+-------+--------------------------------------+---------+------------+
 
 #. Download an image from the Image service:
@@ -49,8 +47,6 @@ This section describes how to verify operation of the Telemetry module.
       | image.download | delta | B     | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
       | image.serve    | delta | B     | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
       | image.size     | gauge | B     | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
-      | image.update   | delta | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
-      | image.upload   | delta | image | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
       +----------------+-------+-------+--------------------------------------+---------+------------+
 
 #. Retrieve usage statistics from the ``image.download`` meter:
