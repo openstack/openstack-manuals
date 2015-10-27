@@ -148,6 +148,15 @@ each OpenStack service that are transformed to samples by Telemetry.
 |                    | snapshot.delete.\*     |                               |
 |                    |                        |                               |
 |                    | snapshot.update.\*     |                               |
+|                    |                        |                               |
+|                    | volume.backup.create.\ |                               |
+|                    | \*                     |                               |
+|                    |                        |                               |
+|                    | volume.backup.delete.\ |                               |
+|                    | \*                     |                               |
+|                    |                        |                               |
+|                    | volume.backup.restore.\|                               |
+|                    | \*                     |                               |
 +--------------------+------------------------+-------------------------------+
 
 .. note::

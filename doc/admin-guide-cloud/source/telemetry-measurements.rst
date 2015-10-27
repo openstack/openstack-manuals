@@ -741,6 +741,16 @@ The following meters are collected for OpenStack Block Storage:
 | snapshot.delete.(s\| Delta | snapsh\| snapshot | Notifica\| Deletion of the |
 | tart|end)          |       | ot     | ID       | tion     | snapshot        |
 +--------------------+-------+--------+----------+----------+-----------------+
+| volume.backup.crea\| Delta | volume | backup ID| Notifica\| Creation of the |
+| te.(start|end)     |       |        |          | tion     | volume backup   |
++--------------------+-------+--------+----------+----------+-----------------+
+| volume.backup.dele\| Delta | volume | backup ID| Notifica\| Deletion of the |
+| te.(start|end)     |       |        |          | tion     | volume backup   |
++--------------------+-------+--------+----------+----------+-----------------+
+| volume.backup.rest\| Delta | volume | backup ID| Notifica\| Restoration of  |
+| ore.(start|end)    |       |        |          | tion     | the volume back\|
+|                    |       |        |          |          | up              |
++--------------------+-------+--------+----------+----------+-----------------+
 
 .. _telemetry-object-storage-meter:
 
