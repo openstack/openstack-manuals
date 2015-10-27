@@ -168,27 +168,6 @@ To configure the dashboard
 To finalize installation
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. only:: rdo
-
-   Configure SELinux to permit the web server to connect to OpenStack
-   services:
-
-   .. code-block:: console
-
-      # setsebool -P httpd_can_network_connect on
-
-.. only:: rdo
-
-   Due to a packaging bug, the dashboard CSS fails to load properly.
-   Run the following command to resolve this issue:
-
-   .. code-block:: console
-
-      # chown -R apache:apache /usr/share/openstack-dashboard/static
-
-   For more information, see the `bug report
-   <https://bugzilla.redhat.com/show_bug.cgi?id=1150678>`__.
-
 .. only:: ubuntu or debian
 
    Reload the web server configuration:
@@ -209,8 +188,8 @@ To finalize installation
 
    .. note::
 
-      ``systemctl restart`` will restart the Apache HTTP service, or start it
-      if it is not running.
+      The ``systemctl restart`` command starts the Apache HTTP service if
+      not currently running.
 
 .. only:: rdo
 
@@ -224,5 +203,5 @@ To finalize installation
 
    .. note::
 
-      ``systemctl restart`` will restart the Apache HTTP service, or start it
-      if it is not running.
+      The ``systemctl restart`` command starts the Apache HTTP service if
+      not currently running.
