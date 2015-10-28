@@ -8,7 +8,7 @@ into data collection and storage.
 Data collection
 ---------------
 
-#. The Telemetry module collects a continuously growing set of data. Not
+#. The Telemetry service collects a continuously growing set of data. Not
    all the data will be relevant for a cloud administrator to monitor.
 
    -  Based on your needs, you can edit the :file:`pipeline.yaml` configuration

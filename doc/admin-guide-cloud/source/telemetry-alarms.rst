@@ -7,7 +7,7 @@ Alarms
 Alarms provide user-oriented Monitoring-as-a-Service for resources
 running on OpenStack. This type of monitoring ensures you can
 automatically scale in or out a group of instances through the
-Orchestration module, but you can also use alarms for general-purpose
+Orchestration service, but you can also use alarms for general-purpose
 awareness of your cloud resources' health.
 
 These alarms follow a tri-state model:
@@ -46,7 +46,7 @@ governed by:
 Combination rule alarms
 -----------------------
 
-The Telemetry module also supports the concept of a meta-alarm, which
+The Telemetry service also supports the concept of a meta-alarm, which
 aggregates over the current state of a set of underlying basic alarms
 combined via a logical operator (AND or OR).
 
@@ -67,7 +67,7 @@ ID). At the other extreme, you could have widely dimensioned alarms
 where this selection identifies many resources over which the
 statistic is aggregated. For example all instances booted from a
 particular image or all instances with matching user metadata (the
-latter is how the Orchestration module identifies autoscaling
+latter is how the Orchestration service identifies autoscaling
 groups).
 
 Alarm evaluation

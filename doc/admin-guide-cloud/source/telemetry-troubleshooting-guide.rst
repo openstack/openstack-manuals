@@ -4,7 +4,7 @@ Troubleshoot Telemetry
 Logging in Telemetry
 --------------------
 
-The Telemetry module has similar log settings as the other OpenStack
+The Telemetry service has similar log settings as the other OpenStack
 services. Multiple options are available to change the target of
 logging, the format of the log entries and the log levels.
 

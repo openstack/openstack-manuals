@@ -3,7 +3,7 @@ Backup and restore a database
 =============================
 
 You can use Database services to backup a database and store the backup
-artifact in the Object Storage module. Later on, if the original
+artifact in the Object Storage service. Later on, if the original
 database is damaged, you can use the backup artifact to restore the
 database. The restore process creates a database instance.
 

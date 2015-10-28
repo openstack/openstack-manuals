@@ -22,7 +22,7 @@ enterprises and service providers.
 System architecture
 ~~~~~~~~~~~~~~~~~~~
 
-The Bare Metal module is composed of the following components:
+The Bare Metal service is composed of the following components:
 
 #. An admin-only RESTful API service, by which privileged users, such
    as cloud operators and other services within the cloud control

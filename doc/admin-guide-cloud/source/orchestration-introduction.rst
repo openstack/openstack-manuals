@@ -7,7 +7,7 @@ automatically configures and deploys resources in stacks. The deployments can
 be simple, such as deploying WordPress on Ubuntu with an SQL back end. They can
 also be complex, such as starting a group of servers that auto scale by
 starting and stopping based on real-time CPU loading information from the
-Telemetry module.
+Telemetry service.
 
 Orchestration stacks are defined with templates, which are non-procedural
 documents that describe tasks in terms of resources, parameters, inputs,
