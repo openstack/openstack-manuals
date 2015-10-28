@@ -1,8 +1,8 @@
-==============================
-OpenStack Orchestration module
-==============================
+===============================
+OpenStack Orchestration service
+===============================
 
-The Orchestration module provides a template-based orchestration for
+The Orchestration service provides a template-based orchestration for
 describing a cloud application by running OpenStack API calls to
 generate running cloud applications. The software integrates other core
 components of OpenStack into a one-file template system. The templates
@@ -12,10 +12,10 @@ advanced functionality, such as instance high availability, instance
 auto-scaling, and nested stacks. This enables OpenStack core projects to
 receive a larger user base.
 
-The service enables deployers to integrate with the Orchestration module
+The service enables deployers to integrate with the Orchestration service
 directly or through custom plug-ins.
 
-The Orchestration module consists of the following components:
+The Orchestration service consists of the following components:
 
 ``heat`` command-line client
   A CLI that communicates with the heat-api to run AWS CloudFormation

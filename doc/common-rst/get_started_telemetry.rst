@@ -1,8 +1,8 @@
-==========================
-OpenStack Telemetry module
-==========================
+===========================
+OpenStack Telemetry service
+===========================
 
-The Telemetry module performs the following functions:
+The Telemetry service performs the following functions:
 
 - Efficiently polls metering data related to OpenStack services.
 
@@ -14,7 +14,7 @@ The Telemetry module performs the following functions:
 
 - Creates alarms when collected data breaks defined rules.
 
-The Telemetry module consists of the following components:
+The Telemetry service consists of the following components:
 
 A compute agent (``ceilometer-agent-compute``)
   Runs on each compute node and polls for resource utilization
