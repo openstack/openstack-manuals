@@ -44,7 +44,7 @@ To install and configure the agent
          telemetry_secret = TELEMETRY_SECRET
 
      Replace ``TELEMETRY_SECRET`` with the telemetry secret you
-     chose for the Telemetry module.
+     chose for the Telemetry service.
 
    * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
      configure ``RabbitMQ`` message queue access:
@@ -78,7 +78,7 @@ To install and configure the agent
         admin_password = CEILOMETER_PASS
 
      Replace ``CEILOMETER_PASS`` with the password you chose for the
-     Telemetry module database.
+     Telemetry service database.
 
      .. note::
 

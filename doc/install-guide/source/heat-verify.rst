@@ -3,7 +3,7 @@
 Verify operation
 ~~~~~~~~~~~~~~~~
 
-Verify operation of the Orchestration module.
+Verify operation of the Orchestration service.
 
 #. Source the ``admin`` tenant credentials:
 
