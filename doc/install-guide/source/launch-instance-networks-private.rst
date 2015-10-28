@@ -84,29 +84,36 @@ Create the private project network
    .. code-block:: console
 
       $ neutron subnet-create private PRIVATE_NETWORK_CIDR --name private \
-        --gateway PRIVATE_NETWORK_GATEWAY
+        --dns-nameserver DNS_RESOLVER --gateway PRIVATE_NETWORK_GATEWAY
 
    Replace ``PRIVATE_NETWORK_CIDR`` with the subnet you want to use on the
    private network. You can use any arbitrary value, although we recommend
    a network from `RFC 1918 <https://tools.ietf.org/html/rfc1918>`_.
+
+   Replace ``DNS_RESOLVER`` with the IP address of a DNS resolver. In
+   most cases, you can use one from the ``/etc/resolv.conf`` file on
+   the host.
 
    Replace ``PRIVATE_NETWORK_GATEWAY`` with the gateway you want to use on
    the private network, typically the ".1" IP address.
 
    **Example**
 
-   The private network uses 172.16.1.0/24 with a gateway on 172.16.1.1:
+   The private network uses 172.16.1.0/24 with a gateway on 172.16.1.1.
+   A DHCP server assigns each instance an IP address from 172.16.1.2
+   to 172.16.1.254. All instances use 8.8.4.4 as a DNS resolver.
 
    .. code-block:: console
 
-      $ neutron subnet-create private 172.16.1.0/24 --name private --gateway 172.16.1.1
+      $ neutron subnet-create private 172.16.1.0/24 --name private
+        --dns-nameserver 8.8.4.4 --gateway 172.16.1.1
       Created a new subnet:
       +-------------------+------------------------------------------------+
       | Field             | Value                                          |
       +-------------------+------------------------------------------------+
       | allocation_pools  | {"start": "172.16.1.2", "end": "172.16.1.254"} |
       | cidr              | 172.16.1.0/24                                  |
-      | dns_nameservers   |                                                |
+      | dns_nameservers   | 8.8.4.4                                        |
       | enable_dhcp       | True                                           |
       | gateway_ip        | 172.16.1.1                                     |
       | host_routes       |                                                |

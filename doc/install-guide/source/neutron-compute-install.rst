@@ -4,25 +4,6 @@ Install and configure compute node
 The compute node handles connectivity and :term:`security groups <security
 group>` for instances.
 
-Prerequisites
--------------
-
-Before you install and configure OpenStack Networking, you must configure
-kernel networking parameters to disable reverse-path filtering:
-
-#. Edit the ``/etc/sysctl.conf`` file to contain the following parameters:
-
-   .. code-block:: ini
-
-      net.ipv4.conf.all.rp_filter=0
-      net.ipv4.conf.default.rp_filter=0
-
-#. Implement the changes:
-
-   .. code-block:: console
-
-      # sysctl -p
-
 .. only:: ubuntu or rdo or obs
 
 Install the components
@@ -38,7 +19,7 @@ Install the components
 
    .. code-block:: console
 
-      # yum install openstack-neutron-linuxbridge
+      # yum install openstack-neutron openstack-neutron-linuxbridge
 
 .. only:: obs
 
@@ -131,6 +112,16 @@ authentication mechanism, message queue, and plug-in.
         Comment out or remove any other options in the
         ``[keystone_authtoken]`` section.
 
+   .. only:: rdo
+
+      * In the ``[oslo_concurrency]`` section, configure the lock path:
+
+        .. code-block:: ini
+
+           [oslo_concurrency]
+           ...
+           lock_path = /var/lib/neutron/tmp
+
    * (Optional) To assist with troubleshooting, enable verbose logging in the
      ``[DEFAULT]`` section:
 
@@ -197,23 +188,6 @@ Finalize installation
       .. code-block:: console
 
          # ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
-
-   #. Due to a packaging issue, the Linux bridge agent initialization script
-      explicitly looks for the Linux bridge plug-in configuration file rather
-      than the agent configuration file. Run the following commands to resolve
-      this issue:
-
-      .. code-block:: console
-
-         # cp /usr/lib/systemd/system/neutron-linuxbridge-agent.service \
-           /usr/lib/systemd/system/neutron-linuxbridge-agent.service.orig
-         # sed -i 's,openvswitch/linuxbridge_neutron_plugin.ini,ml2/linuxbridge_agent.ini,g' \
-           /usr/lib/systemd/system/neutron-linuxbridge-agent.service
-
-      .. note::
-
-         Future upgrades of the ``neutron-linuxbridge-agent`` package may
-         overwrite this modification.
 
    #. Restart the Compute service:
 

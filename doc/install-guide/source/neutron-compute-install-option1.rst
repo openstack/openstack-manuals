@@ -39,16 +39,14 @@ networks and handles security groups.
         ...
         prevent_arp_spoofing = True
 
-   * In the ``[securitygroup]`` section, enable security groups, enable
-     :term:`ipset`, and configure the Linux bridge :term:`iptables` firewall
-     driver:
+   * In the ``[securitygroup]`` section, enable security groups and
+     configure the Linux bridge :term:`iptables` firewall driver:
 
      .. code-block:: ini
 
         [securitygroup]
         ...
         enable_security_group = True
-        enable_ipset = True
         firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 
 Return to

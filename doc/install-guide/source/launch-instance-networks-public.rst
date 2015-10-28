@@ -89,7 +89,7 @@ Create the public network
 
       $ neutron subnet-create public PUBLIC_NETWORK_CIDR --name public \
         --allocation-pool start=START_IP_ADDRESS,end=END_IP_ADDRESS\
-        --gateway PUBLIC_NETWORK_GATEWAY
+        --dns-nameserver DNS_RESOLVER --gateway PUBLIC_NETWORK_GATEWAY
 
    Replace ``PUBLIC_NETWORK_CIDR`` with the subnet on the public physical
    network in CIDR notation.
@@ -99,26 +99,31 @@ Create the public network
    for instances. This range must not include any existing active IP
    addresses.
 
+   Replace ``DNS_RESOLVER`` with the IP address of a DNS resolver. In
+   most cases, you can use one from the ``/etc/resolv.conf`` file on
+   the host.
+
    Replace ``PUBLIC_NETWORK_GATEWAY`` with the gateway IP address on the
    public physical network, typically the ".1" IP address.
 
    **Example**
 
-   The public physical network uses 203.0.113.0/24 with a gateway on
-   203.0.113.1 and instances can use 203.0.113.101 to 203.0.113.200.
+   The public network uses 203.0.113.0/24 with a gateway on 203.0.113.1.
+   A DHCP server assigns each instance an IP address from 203.0.113.101
+   to 203.0.113.200. All instances use 8.8.4.4 as a DNS resolver.
 
    .. code-block:: console
 
       $ neutron subnet-create public 203.0.113.0/24 --name public \
         --allocation-pool start=203.0.113.101,end=203.0.113.200 \
-        --gateway 203.0.113.1
+        --dns-nameserver 8.8.4.4 --gateway 203.0.113.1
       Created a new subnet:
       +-------------------+----------------------------------------------------+
       | Field             | Value                                              |
       +-------------------+----------------------------------------------------+
       | allocation_pools  | {"start": "203.0.113.101", "end": "203.0.113.200"} |
       | cidr              | 203.0.113.0/24                                     |
-      | dns_nameservers   |                                                    |
+      | dns_nameservers   | 8.8.4.4                                            |
       | enable_dhcp       | True                                               |
       | gateway_ip        | 203.0.113.1                                        |
       | host_routes       |                                                    |
