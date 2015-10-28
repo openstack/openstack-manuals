@@ -4,61 +4,61 @@
 Share snapshots
 ===============
 
-The Shared File Systems service provides mechanism of snapshots to help users
-to restore theirs own data. Use :command:`manila snapshot-create` for it.
+The Shared File Systems service provides a snapshot mechanism to help users
+restore data by running the `manila snapshot-create` command.
 
 To export a snapshot, you can create shares from it, then mount new share to
 instance and then directly copy files from attached share into archive.
 
-To import snapshot, create a new share with appropriate size, attach it to
+To import a snapshot, create a new share with appropriate size, attach it to
 instance and then copy file from archive to attached file system.
 
 .. note::
-    You cannot delete a share while it has saved dependent snapshots.
+   You cannot delete a share while it has saved dependent snapshots.
 
 Create a snapshot from the share:
 
 .. code:: console
 
- $ manila snapshot-create Share1 --name Snapshot1 --description "Snapshot of Share1"
- +-------------+--------------------------------------+
- | Property    | Value                                |
- +-------------+--------------------------------------+
- | status      | creating                             |
- | share_id    | aca648eb-8c03-4394-a5cc-755066b7eb66 |
- | name        | Snapshot1                            |
- | created_at  | 2015-09-25T05:27:38.862040           |
- | share_proto | NFS                                  |
- | id          | 962e8126-35c3-47bb-8c00-f0ee37f42ddd |
- | size        | 1                                    |
- | share_size  | 1                                    |
- | description | Snapshot of Share1                   |
- +-------------+--------------------------------------+
+   $ manila snapshot-create Share1 --name Snapshot1 --description "Snapshot of Share1"
+   +-------------+--------------------------------------+
+   | Property    | Value                                |
+   +-------------+--------------------------------------+
+   | status      | creating                             |
+   | share_id    | aca648eb-8c03-4394-a5cc-755066b7eb66 |
+   | name        | Snapshot1                            |
+   | created_at  | 2015-09-25T05:27:38.862040           |
+   | share_proto | NFS                                  |
+   | id          | 962e8126-35c3-47bb-8c00-f0ee37f42ddd |
+   | size        | 1                                    |
+   | share_size  | 1                                    |
+   | description | Snapshot of Share1                   |
+   +-------------+--------------------------------------+
 
 Update name or description of a snapshot if it is needed:
 
 .. code:: console
 
- $ manila snapshot-rename Snapshot1 Snapshot_1 --description "Snapshot of Share1. Updated."
+   $ manila snapshot-rename Snapshot1 Snapshot_1 --description "Snapshot of Share1. Updated."
 
 Check that status of a snapshot is ``available``:
 
 .. code:: console
 
- $ manila snapshot-show Snapshot1
- +-------------+--------------------------------------+
- | Property    | Value                                |
- +-------------+--------------------------------------+
- | status      | available                            |
- | share_id    | aca648eb-8c03-4394-a5cc-755066b7eb66 |
- | name        | Snapshot1                            |
- | created_at  | 2015-09-25T05:27:38.000000           |
- | share_proto | NFS                                  |
- | id          | 962e8126-35c3-47bb-8c00-f0ee37f42ddd |
- | size        | 1                                    |
- | share_size  | 1                                    |
- | description | Snapshot of Share1                   |
- +-------------+--------------------------------------+
+   $ manila snapshot-show Snapshot1
+   +-------------+--------------------------------------+
+   | Property    | Value                                |
+   +-------------+--------------------------------------+
+   | status      | available                            |
+   | share_id    | aca648eb-8c03-4394-a5cc-755066b7eb66 |
+   | name        | Snapshot1                            |
+   | created_at  | 2015-09-25T05:27:38.000000           |
+   | share_proto | NFS                                  |
+   | id          | 962e8126-35c3-47bb-8c00-f0ee37f42ddd |
+   | size        | 1                                    |
+   | share_size  | 1                                    |
+   | description | Snapshot of Share1                   |
+   +-------------+--------------------------------------+
 
 To restore your data from snapshot, use :command:`manila create` with key
 ``--snapshot-id``. This creates a new share from exiting snapshot.
@@ -66,62 +66,62 @@ Create a share from a snapshot and check whether it is available:
 
 .. code:: console
 
- $ manila create nfs 1 --name Share2 --metadata source=snapshot --description "Share from a snapshot." --snapshot-id 962e8126-35c3-47bb-8c00-f0ee37f42ddd
- +-----------------------------+--------------------------------------+
- | Property                    | Value                                |
- +-----------------------------+--------------------------------------+
- | status                      | None                                 |
- | share_type_name             | default                              |
- | description                 | Share from a snapshot.               |
- | availability_zone           | None                                 |
- | share_network_id            | None                                 |
- | export_locations            | []                                   |
- | share_server_id             | None                                 |
- | host                        | None                                 |
- | snapshot_id                 | 962e8126-35c3-47bb-8c00-f0ee37f42ddd |
- | is_public                   | False                                |
- | task_state                  | None                                 |
- | snapshot_support            | True                                 |
- | id                          | b6b0617c-ea51-4450-848e-e7cff69238c7 |
- | size                        | 1                                    |
- | name                        | Share2                               |
- | share_type                  | c0086582-30a6-4060-b096-a42ec9d66b86 |
- | created_at                  | 2015-09-25T06:25:50.240417           |
- | export_location             | None                                 |
- | share_proto                 | NFS                                  |
- | consistency_group_id        | None                                 |
- | source_cgsnapshot_member_id | None                                 |
- | project_id                  | 20787a7ba11946adad976463b57d8a2f     |
- | metadata                    | {u'source': u'snapshot'}             |
- +-----------------------------+--------------------------------------+
+   $ manila create nfs 1 --name Share2 --metadata source=snapshot --description "Share from a snapshot." --snapshot-id 962e8126-35c3-47bb-8c00-f0ee37f42ddd
+   +-----------------------------+--------------------------------------+
+   | Property                    | Value                                |
+   +-----------------------------+--------------------------------------+
+   | status                      | None                                 |
+   | share_type_name             | default                              |
+   | description                 | Share from a snapshot.               |
+   | availability_zone           | None                                 |
+   | share_network_id            | None                                 |
+   | export_locations            | []                                   |
+   | share_server_id             | None                                 |
+   | host                        | None                                 |
+   | snapshot_id                 | 962e8126-35c3-47bb-8c00-f0ee37f42ddd |
+   | is_public                   | False                                |
+   | task_state                  | None                                 |
+   | snapshot_support            | True                                 |
+   | id                          | b6b0617c-ea51-4450-848e-e7cff69238c7 |
+   | size                        | 1                                    |
+   | name                        | Share2                               |
+   | share_type                  | c0086582-30a6-4060-b096-a42ec9d66b86 |
+   | created_at                  | 2015-09-25T06:25:50.240417           |
+   | export_location             | None                                 |
+   | share_proto                 | NFS                                  |
+   | consistency_group_id        | None                                 |
+   | source_cgsnapshot_member_id | None                                 |
+   | project_id                  | 20787a7ba11946adad976463b57d8a2f     |
+   | metadata                    | {u'source': u'snapshot'}             |
+   +-----------------------------+--------------------------------------+
 
- $ manila show Share2
- +-----------------------------+-------------------------------------------+
- | Property                    | Value                                     |
- +-----------------------------+-------------------------------------------+
- | status                      | available                                 |
- | share_type_name             | default                                   |
- | description                 | Share from a snapshot.                    |
- | availability_zone           | nova                                      |
- | share_network_id            | 5c3cbabb-f4da-465f-bc7f-fadbe047b85a      |
- | export_locations            | 10.254.0.3:/shares/share-1dc2a471-3d47-...|
- | share_server_id             | 41b7829d-7f6b-4c96-aea5-d106c2959961      |
- | host                        | manila@generic1#GENERIC1                  |
- | snapshot_id                 | 962e8126-35c3-47bb-8c00-f0ee37f42ddd      |
- | is_public                   | False                                     |
- | task_state                  | None                                      |
- | snapshot_support            | True                                      |
- | id                          | b6b0617c-ea51-4450-848e-e7cff69238c7      |
- | size                        | 1                                         |
- | name                        | Share2                                    |
- | share_type                  | c0086582-30a6-4060-b096-a42ec9d66b86      |
- | created_at                  | 2015-09-25T06:25:50.000000                |
- | share_proto                 | NFS                                       |
- | consistency_group_id        | None                                      |
- | source_cgsnapshot_member_id | None                                      |
- | project_id                  | 20787a7ba11946adad976463b57d8a2f          |
- | metadata                    | {u'source': u'snapshot'}                  |
- +-----------------------------+-------------------------------------------+
+   $ manila show Share2
+   +-----------------------------+-------------------------------------------+
+   | Property                    | Value                                     |
+   +-----------------------------+-------------------------------------------+
+   | status                      | available                                 |
+   | share_type_name             | default                                   |
+   | description                 | Share from a snapshot.                    |
+   | availability_zone           | nova                                      |
+   | share_network_id            | 5c3cbabb-f4da-465f-bc7f-fadbe047b85a      |
+   | export_locations            | 10.254.0.3:/shares/share-1dc2a471-3d47-...|
+   | share_server_id             | 41b7829d-7f6b-4c96-aea5-d106c2959961      |
+   | host                        | manila@generic1#GENERIC1                  |
+   | snapshot_id                 | 962e8126-35c3-47bb-8c00-f0ee37f42ddd      |
+   | is_public                   | False                                     |
+   | task_state                  | None                                      |
+   | snapshot_support            | True                                      |
+   | id                          | b6b0617c-ea51-4450-848e-e7cff69238c7      |
+   | size                        | 1                                         |
+   | name                        | Share2                                    |
+   | share_type                  | c0086582-30a6-4060-b096-a42ec9d66b86      |
+   | created_at                  | 2015-09-25T06:25:50.000000                |
+   | share_proto                 | NFS                                       |
+   | consistency_group_id        | None                                      |
+   | source_cgsnapshot_member_id | None                                      |
+   | project_id                  | 20787a7ba11946adad976463b57d8a2f          |
+   | metadata                    | {u'source': u'snapshot'}                  |
+   +-----------------------------+-------------------------------------------+
 
 You can soft-delete a snapshot using **manila snapshot-delete
 <snapshot_name_or_ID>**. If a snapshot is in busy state and during deleting

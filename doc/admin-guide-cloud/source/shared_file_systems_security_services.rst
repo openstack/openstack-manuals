@@ -41,60 +41,60 @@ Create a ``ldap`` security service:
 
 .. code:: console
 
- $ manila security-service-create ldap --dns-ip 8.8.8.8 --server 10.254.0.3 --name my_ldap_security_service
- +-------------+--------------------------------------+
- | Property    | Value                                |
- +-------------+--------------------------------------+
- | status      | new                                  |
- | domain      | None                                 |
- | password    | None                                 |
- | name        | my_ldap_security_service             |
- | dns_ip      | 8.8.8.8                              |
- | created_at  | 2015-09-25T10:19:06.019527           |
- | updated_at  | None                                 |
- | server      | 10.254.0.3                           |
- | user        | None                                 |
- | project_id  | 20787a7ba11946adad976463b57d8a2f     |
- | type        | ldap                                 |
- | id          | 413479b2-0d20-4c58-a9d3-b129fa592d8e |
- | description | None                                 |
- +-------------+--------------------------------------+
+   $ manila security-service-create ldap --dns-ip 8.8.8.8 --server 10.254.0.3 --name my_ldap_security_service
+   +-------------+--------------------------------------+
+   | Property    | Value                                |
+   +-------------+--------------------------------------+
+   | status      | new                                  |
+   | domain      | None                                 |
+   | password    | None                                 |
+   | name        | my_ldap_security_service             |
+   | dns_ip      | 8.8.8.8                              |
+   | created_at  | 2015-09-25T10:19:06.019527           |
+   | updated_at  | None                                 |
+   | server      | 10.254.0.3                           |
+   | user        | None                                 |
+   | project_id  | 20787a7ba11946adad976463b57d8a2f     |
+   | type        | ldap                                 |
+   | id          | 413479b2-0d20-4c58-a9d3-b129fa592d8e |
+   | description | None                                 |
+   +-------------+--------------------------------------+
 
 To create ``kerberos`` security service, run:
 
 .. code:: console
 
- $ manila security-service-create kerberos --server 10.254.0.3 --user demo --password secret --name my_kerberos_security_service --description "Kerberos security service"
- +-------------+--------------------------------------+
- | Property    | Value                                |
- +-------------+--------------------------------------+
- | status      | new                                  |
- | domain      | None                                 |
- | password    | secret                               |
- | name        | my_kerberos_security_service         |
- | dns_ip      | None                                 |
- | created_at  | 2015-09-25T10:26:03.211849           |
- | updated_at  | None                                 |
- | server      | 10.254.0.3                           |
- | user        | demo                                 |
- | project_id  | 20787a7ba11946adad976463b57d8a2f     |
- | type        | kerberos                             |
- | id          | 7f46a447-2534-453d-924d-bd7c8e63bbec |
- | description | Kerberos security service            |
- +-------------+--------------------------------------+
+   $ manila security-service-create kerberos --server 10.254.0.3 --user demo --password secret --name my_kerberos_security_service --description "Kerberos security service"
+   +-------------+--------------------------------------+
+   | Property    | Value                                |
+   +-------------+--------------------------------------+
+   | status      | new                                  |
+   | domain      | None                                 |
+   | password    | secret                               |
+   | name        | my_kerberos_security_service         |
+   | dns_ip      | None                                 |
+   | created_at  | 2015-09-25T10:26:03.211849           |
+   | updated_at  | None                                 |
+   | server      | 10.254.0.3                           |
+   | user        | demo                                 |
+   | project_id  | 20787a7ba11946adad976463b57d8a2f     |
+   | type        | kerberos                             |
+   | id          | 7f46a447-2534-453d-924d-bd7c8e63bbec |
+   | description | Kerberos security service            |
+   +-------------+--------------------------------------+
 
 To see the list of created security service use
 **manila security-service-list**:
 
 .. code:: console
 
- $ manila security-service-list
- +--------------------------------------+------------------------------+--------+----------+
- | id                                   | name                         | status | type     |
- +--------------------------------------+------------------------------+--------+----------+
- | 413479b2-0d20-4c58-a9d3-b129fa592d8e | my_ldap_security_service     | new    | ldap     |
- | 7f46a447-2534-453d-924d-bd7c8e63bbec | my_kerberos_security_service | new    | kerberos |
- +--------------------------------------+------------------------------+--------+----------+
+   $ manila security-service-list
+   +--------------------------------------+------------------------------+--------+----------+
+   | id                                   | name                         | status | type     |
+   +--------------------------------------+------------------------------+--------+----------+
+   | 413479b2-0d20-4c58-a9d3-b129fa592d8e | my_ldap_security_service     | new    | ldap     |
+   | 7f46a447-2534-453d-924d-bd7c8e63bbec | my_kerberos_security_service | new    | kerberos |
+   +--------------------------------------+------------------------------+--------+----------+
 
 You can add a security service to the existing
 :ref:`share network <shared_file_systems_share_networks>` that is not used yet
@@ -107,68 +107,68 @@ new attribute ``share_networks`` with associated share network ID.
 
 .. code:: console
 
- $ manila share-network-security-service-add share_net2 my_ldap_security_service
+   $ manila share-network-security-service-add share_net2 my_ldap_security_service
 
- $ manila security-service-show my_ldap_security_service
- +----------------+-------------------------------------------+
- | Property       | Value                                     |
- +----------------+-------------------------------------------+
- | status         | new                                       |
- | domain         | None                                      |
- | password       | None                                      |
- | name           | my_ldap_security_service                  |
- | dns_ip         | 8.8.8.8                                   |
- | created_at     | 2015-09-25T10:19:06.000000                |
- | updated_at     | None                                      |
- | server         | 10.254.0.3                                |
- | share_networks | [u'6d36c41f-d310-4aff-a0c2-ffd870e91cab'] |
- | user           | None                                      |
- | project_id     | 20787a7ba11946adad976463b57d8a2f          |
- | type           | ldap                                      |
- | id             | 413479b2-0d20-4c58-a9d3-b129fa592d8e      |
- | description    | None                                      |
- +----------------+-------------------------------------------+
+   $ manila security-service-show my_ldap_security_service
+   +----------------+-------------------------------------------+
+   | Property       | Value                                     |
+   +----------------+-------------------------------------------+
+   | status         | new                                       |
+   | domain         | None                                      |
+   | password       | None                                      |
+   | name           | my_ldap_security_service                  |
+   | dns_ip         | 8.8.8.8                                   |
+   | created_at     | 2015-09-25T10:19:06.000000                |
+   | updated_at     | None                                      |
+   | server         | 10.254.0.3                                |
+   | share_networks | [u'6d36c41f-d310-4aff-a0c2-ffd870e91cab'] |
+   | user           | None                                      |
+   | project_id     | 20787a7ba11946adad976463b57d8a2f          |
+   | type           | ldap                                      |
+   | id             | 413479b2-0d20-4c58-a9d3-b129fa592d8e      |
+   | description    | None                                      |
+   +----------------+-------------------------------------------+
 
 It is possible to see the list of security services associated with
 given share network. List security services for ``share_net2`` share network:
 
 .. code:: console
 
- $ manila share-network-security-service-list share_net2
- +--------------------------------------+--------------------------+--------+------+
- | id                                   | name                     | status | type |
- +--------------------------------------+--------------------------+--------+------+
- | 413479b2-0d20-4c58-a9d3-b129fa592d8e | my_ldap_security_service | new    | ldap |
- +--------------------------------------+--------------------------+--------+------+
+   $ manila share-network-security-service-list share_net2
+   +--------------------------------------+--------------------------+--------+------+
+   | id                                   | name                     | status | type |
+   +--------------------------------------+--------------------------+--------+------+
+   | 413479b2-0d20-4c58-a9d3-b129fa592d8e | my_ldap_security_service | new    | ldap |
+   +--------------------------------------+--------------------------+--------+------+
 
 You also can dissociate a security service from the share network
 and see that a security service now has empty list of share networks:
 
 .. code:: console
 
- $ manila share-network-security-service-remove share_net2 my_ldap_security_service
+   $ manila share-network-security-service-remove share_net2 my_ldap_security_service
 
- $ manila security-service-show my_ldap_security_service
- +----------------+--------------------------------------+
- | Property       | Value                                |
- +----------------+--------------------------------------+
- | status         | new                                  |
- | domain         | None                                 |
- | password       | None                                 |
- | name           | my_ldap_security_service             |
- | dns_ip         | 8.8.8.8                              |
- | created_at     | 2015-09-25T10:19:06.000000           |
- | updated_at     | None                                 |
- | server         | 10.254.0.3                           |
- | share_networks | []                                   |
- | user           | None                                 |
- | project_id     | 20787a7ba11946adad976463b57d8a2f     |
- | type           | ldap                                 |
- | id             | 413479b2-0d20-4c58-a9d3-b129fa592d8e |
- | description    | None                                 |
- +----------------+--------------------------------------+
+   $ manila security-service-show my_ldap_security_service
+   +----------------+--------------------------------------+
+   | Property       | Value                                |
+   +----------------+--------------------------------------+
+   | status         | new                                  |
+   | domain         | None                                 |
+   | password       | None                                 |
+   | name           | my_ldap_security_service             |
+   | dns_ip         | 8.8.8.8                              |
+   | created_at     | 2015-09-25T10:19:06.000000           |
+   | updated_at     | None                                 |
+   | server         | 10.254.0.3                           |
+   | share_networks | []                                   |
+   | user           | None                                 |
+   | project_id     | 20787a7ba11946adad976463b57d8a2f     |
+   | type           | ldap                                 |
+   | id             | 413479b2-0d20-4c58-a9d3-b129fa592d8e |
+   | description    | None                                 |
+   +----------------+--------------------------------------+
 
-Shared File Systems Storage allows you to update a security service fields
+Shared File Systems service allows you to update a security service fields
 using **manila security-service-update** command with optional arguments
 such as ``--dns-ip``, ``--server``, ``--domain``, ``--user``, ``--password``,
 ``--name``, or ``--description``.
@@ -178,4 +178,4 @@ run:
 
 .. code:: console
 
- $ manila security-service-delete my_ldap_security_service
+   $ manila security-service-delete my_ldap_security_service
