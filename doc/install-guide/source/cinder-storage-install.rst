@@ -147,11 +147,7 @@ Install and configure components
 
       .. code-block:: console
 
-         # yum install openstack-cinder targetcli python-oslo-db \
-           python-oslo-log python2-PyMySQL
-
-      .. Temporary workaround for bug:
-         https://bugzilla.redhat.com/show_bug.cgi?id=1212899
+         # yum install openstack-cinder targetcli python-oslo-policy
 
 .. only:: ubuntu
 
@@ -166,14 +162,14 @@ Install and configure components
 
    * In the ``[database]`` section, configure database access:
 
-      .. code-block:: ini
+     .. code-block:: ini
 
-         [database]
-         ...
-         connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
+        [database]
+        ...
+        connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
 
-      Replace ``CINDER_DBPASS`` with the password you chose for
-      the Block Storage database.
+     Replace ``CINDER_DBPASS`` with the password you chose for
+     the Block Storage database.
 
    * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
      configure ``RabbitMQ`` message queue access:
