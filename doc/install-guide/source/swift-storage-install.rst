@@ -112,14 +112,14 @@ storage nodes, you must prepare the storage devices.
 
 .. only:: ubuntu or debian
 
-   5. Edit the ``/etc/default/rsync`` file and enable the ``rsync``
+   7. Edit the ``/etc/default/rsync`` file and enable the ``rsync``
       service:
 
       .. code-block:: ini
 
          RSYNC_ENABLE=true
 
-   6. Start the ``rsync`` service:
+   8. Start the ``rsync`` service:
 
       .. code-block:: console
 
@@ -127,7 +127,7 @@ storage nodes, you must prepare the storage devices.
 
 .. only:: obs or rdo
 
-   5. Start the ``rsyncd`` service and configure it to start when the
+   7. Start the ``rsyncd`` service and configure it to start when the
       system boots:
 
       .. code-block:: console
@@ -168,31 +168,33 @@ Install and configure components
 
 .. only:: ubuntu or rdo or debian
 
-   2. Obtain the accounting, container, object, container-reconciler, and
-      object-expirer service configuration files from the Object Storage
-      source repository:
+   2. Obtain the accounting, container, and object service configuration
+      files from the Object Storage source repository:
 
       .. code-block:: console
 
-         # curl -o /etc/swift/account-server.conf \
-           https://git.openstack.org/cgit/openstack/swift/plain/etc/account-server.conf-sample?h=stable/liberty
-         # curl -o /etc/swift/container-server.conf \
-           https://git.openstack.org/cgit/openstack/swift/plain/etc/container-server.conf-sample?h=stable/liberty
-         # curl -o /etc/swift/object-server.conf \
-           https://git.openstack.org/cgit/openstack/swift/plain/etc/object-server.conf-sample?h=stable/liberty
-         # curl -o /etc/swift/container-reconciler.conf \
-           https://git.openstack.org/cgit/openstack/swift/plain/etc/container-reconciler.conf-sample?h=stable/liberty
-         # curl -o /etc/swift/object-expirer.conf \
-           https://git.openstack.org/cgit/openstack/swift/plain/etc/object-expirer.conf-sample?h=stable/liberty
+         # curl -o /etc/swift/account-server.conf https://git.openstack.org/cgit/openstack/swift/plain/etc/account-server.conf-sample?h=stable/liberty
+         # curl -o /etc/swift/container-server.conf https://git.openstack.org/cgit/openstack/swift/plain/etc/container-server.conf-sample?h=stable/liberty
+         # curl -o /etc/swift/object-server.conf https://git.openstack.org/cgit/openstack/swift/plain/etc/object-server.conf-sample?h=stable/liberty
 
    3.  .. include:: swift-storage-include1.txt
    4.  .. include:: swift-storage-include2.txt
    5.  .. include:: swift-storage-include3.txt
    6. Ensure proper ownership of the mount point directory structure:
 
-      .. code-block:: console
+      .. only:: ubuntu or debian or obs
 
-         # chown -R root:swift /srv/node
+         .. code-block:: console
+
+            # chown -R root:swift /srv/node
+
+      .. only:: rdo
+
+         .. code-block:: console
+
+            # chown -R swift:swift /srv/node
+
+.. only:: ubuntu
 
    7. Create the ``recon`` directory and ensure proper ownership of it:
 
