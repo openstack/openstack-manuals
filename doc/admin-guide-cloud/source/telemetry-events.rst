@@ -2,9 +2,9 @@
 Events
 ======
 
-In addition to meters, the Telemetry module collects events triggered
+In addition to meters, the Telemetry service collects events triggered
 within an OpenStack environment. This section provides a brief summary
-of the events format in the Telemetry module.
+of the events format in the Telemetry service.
 
 While a sample represents a single, numeric datapoint within a
 time-series, an event is a broader concept that represents the state of
@@ -14,7 +14,7 @@ general, events represent any action made in the OpenStack system.
 
 Event configuration
 ~~~~~~~~~~~~~~~~~~~
-To enable the creation and storage of events in the Telemetry module
+To enable the creation and storage of events in the Telemetry service
 ``store_events`` option needs to be set to ``True``. For further configuration
 options, see the event section in the `OpenStack Configuration Reference
 <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html>`__.
@@ -22,14 +22,14 @@ options, see the event section in the `OpenStack Configuration Reference
 .. note::
 
     It is advisable to set ``disable_non_metric_meters`` to ``True``
-    when enabling events in the Telemetry module. The Telemetry module
+    when enabling events in the Telemetry service. The Telemetry service
     historically represented events as metering data, which may create
     duplication of data if both events and non-metric meters are
     enabled.
 
 Event structure
 ~~~~~~~~~~~~~~~
-Events captured by the Telemetry module are represented by five key
+Events captured by the Telemetry service are represented by five key
 attributes:
 
 event\_type
@@ -83,7 +83,7 @@ fields in the notification exist and are non-null.
 
 .. note::
 
-    The default definition file included with the Telemetry module
+    The default definition file included with the Telemetry service
     contains a list of known notifications and useful traits. The
     mappings provided can be modified to include more or less data
     according to user requirements.

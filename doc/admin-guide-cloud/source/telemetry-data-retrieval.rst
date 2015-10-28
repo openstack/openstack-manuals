@@ -2,7 +2,7 @@
 Data retrieval
 ==============
 
-The Telemetry module offers several mechanisms from which the persisted
+The Telemetry service offers several mechanisms from which the persisted
 data can be accessed. As described in :ref:`telemetry-system-architecture` and
 in :ref:`telemetry-data-collection`, the collected information can be stored in
 one or more database back ends, which are hidden by the Telemetry RESTful API.
@@ -16,7 +16,7 @@ one or more database back ends, which are hidden by the Telemetry RESTful API.
 
 Telemetry v2 API
 ~~~~~~~~~~~~~~~~
-The Telemetry module provides a RESTful API, from which the collected
+The Telemetry service provides a RESTful API, from which the collected
 samples and all the related information can be retrieved, like the list
 of meters, alarm definitions and so forth.
 
@@ -177,7 +177,7 @@ in a single API request.
 
 Telemetry command line client and SDK
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The Telemetry module provides a command line client, with which the
+The Telemetry service provides a command line client, with which the
 collected data is available just as the alarm definition and retrieval
 options. The client uses the Telemetry RESTful API in order to execute
 the requested operations.
@@ -190,7 +190,7 @@ in the OpenStack Installation Guide.
 
 .. note::
 
-    The Telemetry module captures the user-visible resource usage data.
+    The Telemetry service captures the user-visible resource usage data.
     Therefore the database will not contain any data without the
     existence of these resources, like VM images in the OpenStack Image
     service.
@@ -465,7 +465,7 @@ reference.
 
 Publishers
 ~~~~~~~~~~
-The Telemetry module provides several transport methods to forward the
+The Telemetry service provides several transport methods to forward the
 data collected to the ceilometer-collector service or to an external
 system. The consumers of this data are widely different, like monitoring
 systems, for which data loss is acceptable and billing systems, which
@@ -478,7 +478,7 @@ storage through the message bus or to send it to one or more external
 consumers. One chain can contain multiple publishers.
 
 To solve the above mentioned problem, the notion of multi-publisher can
-be configured for each datapoint within the Telemetry module, allowing
+be configured for each datapoint within the Telemetry service, allowing
 the same technical meter or event to be published multiple times to
 multiple destinations, each potentially using a different transport.
 

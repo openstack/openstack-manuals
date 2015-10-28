@@ -2,7 +2,7 @@
 View cloud usage statistics
 ===========================
 
-The Telemetry module provides user-level usage data for
+The Telemetry service provides user-level usage data for
 OpenStack-based clouds, which can be used for customer billing, system
 monitoring, or alerts. Data can be collected by notifications sent by
 existing OpenStack components (for example, usage events emitted from

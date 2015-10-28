@@ -2,8 +2,8 @@
 Create and manage stacks
 ========================
 
-The Orchestration module enables you to orchestrate multiple composite
-cloud applications. This module supports use of both the Amazon Web
+The Orchestration service enables you to orchestrate multiple composite
+cloud applications. This service supports use of both the Amazon Web
 Services (AWS) CloudFormation template format through both a Query API
 that is compatible with CloudFormation and the native OpenStack
 :term:`Heat Orchestration Template (HOT)` format through a REST API.

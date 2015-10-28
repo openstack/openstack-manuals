@@ -4,7 +4,7 @@
 Measurements
 ============
 
-The Telemetry module collects meters within an OpenStack deployment.
+The Telemetry service collects meters within an OpenStack deployment.
 This section provides a brief summary about meters format and origin and
 also contains the list of available meters.
 
@@ -71,11 +71,11 @@ under the ``[filter:ceilometer]`` section in ``proxy-server.conf`` under the
 external and internal users.
 
 Measurements are grouped by services which are polled by
-Telemetry or emit notifications that this module consumes.
+Telemetry or emit notifications that this service consumes.
 
 .. note::
 
-    The Telemetry module supports storing notifications as events. This
+    The Telemetry service supports storing notifications as events. This
     functionality was added later, therefore the list of meters still
     contains existence type and other event related items. The proper
     way of using Telemetry is to configure it to use the event store and
@@ -373,7 +373,7 @@ The following meters are collected for OpenStack Compute:
 
         ceilometer sample-list -m instance -q metadata.instance_type=<value>
 
-The Telemetry module supports to create new meters by using
+The Telemetry service supports to create new meters by using
 transformers. For more details about transformers see
 :ref:`telemetry-transformers`. Among the meters gathered from libvirt and
 Hyper-V there are a few ones which are generated from other meters. The list of
@@ -1245,9 +1245,9 @@ The following meters are collected for FWaaS:
 | l.rule.update |       |         |            |           |                  |
 +---------------+-------+---------+------------+-----------+------------------+
 
-Orchestration module
-~~~~~~~~~~~~~~~~~~~~
-The following meters are collected for the Orchestration module:
+Orchestration service
+~~~~~~~~~~~~~~~~~~~~~
+The following meters are collected for the Orchestration service:
 
 +----------------+-------+------+----------+--------------+-------------------+
 | Name           | Type  | Unit | Resource | Origin       | Note              |

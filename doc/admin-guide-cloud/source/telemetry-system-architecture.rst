@@ -4,11 +4,11 @@
 System architecture
 ===================
 
-The Telemetry module uses an agent-based architecture. Several modules
+The Telemetry service uses an agent-based architecture. Several modules
 combine their responsibilities to collect data, store samples in a
 database, or provide an API service for handling incoming requests.
 
-The Telemetry module is built from the following agents and services:
+The Telemetry service is built from the following agents and services:
 
 ceilometer-api
     Presents aggregated metering data to consumers (such as billing
@@ -106,7 +106,7 @@ The list of supported database back ends:
 Supported hypervisors
 ~~~~~~~~~~~~~~~~~~~~~
 
-The Telemetry module collects information about the virtual machines,
+The Telemetry service collects information about the virtual machines,
 which requires close connection to the hypervisor that runs on the
 compute hosts.
 
@@ -168,7 +168,7 @@ external networking services:
 Users, roles and tenants
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-This module of OpenStack uses OpenStack Identity for authenticating and
+This service of OpenStack uses OpenStack Identity for authenticating and
 authorizing users. The required configuration options are listed in the
 `Telemetry
 section <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html>`__

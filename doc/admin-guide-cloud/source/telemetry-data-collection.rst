@@ -38,7 +38,7 @@ system state in OpenStack. Several notifications carry information that
 can be metered, like the CPU time of a VM instance created by OpenStack
 Compute service.
 
-The Telemetry module has a separate agent that is responsible for
+The Telemetry service has a separate agent that is responsible for
 consuming notifications, namely the notification agent. This component
 is responsible for consuming from the message bus and transforming
 notifications into events and measurement samples. Beginning in the Liberty
@@ -51,7 +51,7 @@ persisting the data into the configured database back end.
 The different OpenStack services emit several notifications about the
 various types of events that happen in the system during normal
 operation. Not all these notifications are consumed by the Telemetry
-module, as the intention is only to capture the billable events and
+service, as the intention is only to capture the billable events and
 notifications that can be used for monitoring or profiling purposes. The
 notification agent filters by the event type, that is contained by each
 notification message. The following table contains the event types by
@@ -113,7 +113,7 @@ each OpenStack service that are transformed to samples by Telemetry.
 |                    | l3.meter               |                               |
 +--------------------+------------------------+-------------------------------+
 | Orchestration      | orchestration.stack\   |                               |
-| module             | .create.end            |                               |
+| service            | .create.end            |                               |
 |                    |                        |                               |
 |                    | orchestration.stack\   |                               |
 |                    | .update.end            |                               |
@@ -201,7 +201,7 @@ notifications.
 
 Polling
 ~~~~~~~
-The Telemetry module is intended to store a complex picture of the
+The Telemetry service is intended to store a complex picture of the
 infrastructure. This goal requires additional information than what is
 provided by the events and notifications published by each service. Some
 information is not emitted directly, like resource usage of the VM
@@ -272,7 +272,7 @@ The following services can be polled with this agent:
 -  Energy consumption meters via `Kwapi <https://launchpad.net/kwapi>`__
    framework
 
-To install and configure this service use the `Install the Telemetry module
+To install and configure this service use the `Add the Telemetry service
 <http://docs.openstack.org/liberty/install-guide-ubuntu/ceilometer.html>`__
 section in the OpenStack Installation Guide.
 
@@ -311,7 +311,7 @@ provides a different set of meters.
 
 The list of collected meters can be found in :ref:`telemetry-compute-meters`.
 The support column provides the information that which meter is available for
-each hypervisor supported by the Telemetry module.
+each hypervisor supported by the Telemetry service.
 
 .. note::
 
@@ -451,9 +451,9 @@ in the :file:`ceilometer.conf` configuration file.
 
 Send samples to Telemetry
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-While most parts of the data collection in the Telemetry module are
+While most parts of the data collection in the Telemetry service are
 automated, Telemetry provides the possibility to submit samples via the
-REST API to allow users to send custom samples into this module.
+REST API to allow users to send custom samples into this service.
 
 This option makes it possible to send any kind of samples without the
 need of writing extra code lines or making configuration changes.
@@ -862,12 +862,12 @@ Example configuration::
 
 Meter definitions
 -----------------
-The Telemetry module collects a subset of the meters by filtering notifications
-emitted by other OpenStack services. Starting with the Liberty release, you can
-find the meter definitions in a separate configuration file, called
-:file:`ceilometer/meter/data/meter.yaml`. This enables operators/administrators
-to add new meters to Telemetry project by updating the :file:`meter.yaml`
-file without any need for additional code changes.
+The Telemetry service collects a subset of the meters by filtering
+notifications emitted by other OpenStack services. Starting with the Liberty
+release, you can find the meter definitions in a separate configuration file,
+called :file:`ceilometer/meter/data/meter.yaml`. This enables
+operators/administrators to add new meters to Telemetry project by updating
+the :file:`meter.yaml` file without any need for additional code changes.
 
 .. note::
 
@@ -972,7 +972,7 @@ the following format::
 This script outputs what volumes or snapshots were created, deleted, or
 exists in a given period of time and some information about these
 volumes or snapshots. Information about the existence and size of
-volumes and snapshots is store in the Telemetry module. This data is
+volumes and snapshots is store in the Telemetry service. This data is
 also stored as an event which is the recommended usage as it provides
 better indexing of data.
 
@@ -985,7 +985,7 @@ example, every 5 minutes::
 
 Storing samples
 ~~~~~~~~~~~~~~~
-The Telemetry module has a separate service that is responsible for
+The Telemetry service has a separate service that is responsible for
 persisting the data that comes from the pollsters or is received as
 notifications. The data can be stored in a file or a database back end,
 for which the list of supported databases can be found in
@@ -1051,7 +1051,7 @@ The level of support differs in case of the configured back end:
 
 HTTP dispatcher
 ---------------
-The Telemetry module supports sending samples to an external HTTP
+The Telemetry service supports sending samples to an external HTTP
 target. The samples are sent without any modification. To set this
 option as the collector's target, the ``dispatcher`` has to be changed
 to ``http`` in the :file:`ceilometer.conf` configuration file. For the list
@@ -1069,7 +1069,7 @@ in the OpenStack Configuration Reference.
 
 Gnocchi dispatcher
 ------------------
-The Telemetry module supports sending the metering data to Gnocchi back end
+The Telemetry service supports sending the metering data to Gnocchi back end
 through the gnocchi dispatcher. To set this option as the target, change the
 ``dispatcher`` to ``gnocchi`` in the :file:`ceilometer.conf`
 configuration file.

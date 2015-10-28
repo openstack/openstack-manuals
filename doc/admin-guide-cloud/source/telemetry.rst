@@ -12,13 +12,13 @@ and billing solutions cannot be designed in a common module that
 satisfies all. Providing users with measurements on cloud services is
 required to meet the "measured service" definition of cloud computing.
 
-The Telemetry module was originally designed to support billing
+The Telemetry service was originally designed to support billing
 systems for OpenStack cloud resources. This project only covers the
-metering portion of the required processing for billing. This module
+metering portion of the required processing for billing. This service
 collects information about the system and stores it in the form of
 samples in order to provide data about anything that can be billed.
 
-In addition to system measurements, the Telemetry module also
+In addition to system measurements, the Telemetry service also
 captures event notifications triggered when various actions are
 executed in the OpenStack system. This data is captured as Events and
 stored alongside metering data.
@@ -26,7 +26,7 @@ stored alongside metering data.
 The list of meters is continuously growing, which makes it possible
 to use the data collected by Telemetry for different purposes, other
 than billing. For example, the autoscaling feature in the
-Orchestration module can be triggered by alarms this module sets and
+Orchestration service can be triggered by alarms this module sets and
 then gets notified within Telemetry.
 
 The sections in this document contain information about the
