@@ -83,8 +83,7 @@ Create a stack using the ``demo-template.yml`` template.
 
    .. code-block:: console
 
-      $ heat stack-create -f demo-template.yml \
-        -P "ImageID=cirros;NetID=$NET_ID" stack
+      $ heat stack-create -f demo-template.yml -P "ImageID=cirros;NetID=$NET_ID" stack
       +--------------------------------------+------------+--------------------+---------------------+--------------+
       | id                                   | stack_name | stack_status       | creation_time       | updated_time |
       +--------------------------------------+------------+--------------------+---------------------+--------------+

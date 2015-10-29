@@ -12,7 +12,8 @@ Orchestration service, code-named heat, on the controller node.
    -------------
 
    Before you install and configure Orchestration, you must create a
-   database, service credentials, and API endpoints.
+   database, service credentials, API endpoints. Orchestration also
+   requires additional information in the Identity service.
 
    #. To create the database, complete these steps:
 
@@ -76,53 +77,6 @@ Orchestration service, code-named heat, on the controller node.
         .. note::
 
            This command provides no output.
-
-      * Create the ``heat_stack_owner`` role:
-
-        .. code-block:: console
-
-           $ openstack role create heat_stack_owner
-           +-------+----------------------------------+
-           | Field | Value                            |
-           +-------+----------------------------------+
-           | id    | 15e34f0c4fed4e68b3246275883c8630 |
-           | name  | heat_stack_owner                 |
-           +-------+----------------------------------+
-
-      * Add the ``heat_stack_owner`` role to the ``demo`` project and user:
-
-        .. code-block:: console
-
-           $ openstack role add --project demo --user demo heat_stack_owner
-
-        .. note::
-
-           This command provides no output.
-
-        .. note::
-
-           You must add the ``heat_stack_owner`` role to users
-           that manage stacks.
-
-      * Create the ``heat_stack_user`` role:
-
-        .. code-block:: console
-
-           $ openstack role create heat_stack_user
-           +-------+----------------------------------+
-           | Field | Value                            |
-           +-------+----------------------------------+
-           | id    | 88849d41a55d4d1d91e4f11bffd8fc5c |
-           | name  | heat_stack_user                  |
-           +-------+----------------------------------+
-
-        .. note::
-
-           The Orchestration service automatically assigns the
-           ``heat_stack_user`` role to users that it creates
-           during stack deployment. By default, this role restricts
-           :term:`API` operations. To avoid conflicts, do not add
-           this role to users with the ``heat_stack_owner`` role.
 
       * Create the ``heat`` and ``heat-cfn`` service entities:
 
@@ -204,6 +158,8 @@ Orchestration service, code-named heat, on the controller node.
          | url          | http://controller:8004/v1/%(tenant_id)s |
          +--------------+-----------------------------------------+
 
+      .. code-block:: console
+
          $ openstack endpoint create --region RegionOne \
            cloudformation public http://controller:8000/v1
          +--------------+----------------------------------+
@@ -251,6 +207,101 @@ Orchestration service, code-named heat, on the controller node.
          | service_type | cloudformation                   |
          | url          | http://controller:8000/v1        |
          +--------------+----------------------------------+
+
+   #. Orchestration requires additional information in the Identity service to
+      manage stacks. To add this information, complete these steps:
+
+      * Create the ``heat`` domain that contains projects and users
+        for stacks:
+
+        .. code-block:: console
+
+           $ openstack domain create --description "Stack projects and users" heat
+           +-------------+----------------------------------+
+           | Field       | Value                            |
+           +-------------+----------------------------------+
+           | description | Stack projects and users         |
+           | enabled     | True                             |
+           | id          | 0f4d1bd326f2454dacc72157ba328a47 |
+           | name        | heat                             |
+           +-------------+----------------------------------+
+
+      * Create the ``heat_domain_admin`` user to manage projects and users
+        in the ``heat`` domain:
+
+        .. code-block:: console
+
+          $ openstack user create --domain heat --password-prompt heat_domain_admin
+          User Password:
+          Repeat User Password:
+          +-----------+----------------------------------+
+          | Field     | Value                            |
+          +-----------+----------------------------------+
+          | domain_id | 0f4d1bd326f2454dacc72157ba328a47 |
+          | enabled   | True                             |
+          | id        | b7bd1abfbcf64478b47a0f13cd4d970a |
+          | name      | heat_domain_admin                |
+          +-----------+----------------------------------+
+
+      * Add the ``admin`` role to the ``heat_domain_admin`` user in the
+        ``heat`` domain to enable administrative stack management
+        privileges by the ``heat_domain_admin`` user:
+
+        .. code-block:: console
+
+           $ openstack role add --domain heat --user heat_domain_admin admin
+
+        .. note::
+
+           This command provides no output.
+
+      * Create the ``heat_stack_owner`` role:
+
+        .. code-block:: console
+
+           $ openstack role create heat_stack_owner
+           +-------+----------------------------------+
+           | Field | Value                            |
+           +-------+----------------------------------+
+           | id    | 15e34f0c4fed4e68b3246275883c8630 |
+           | name  | heat_stack_owner                 |
+           +-------+----------------------------------+
+
+      * Add the ``heat_stack_owner`` role to the ``demo`` project and user to
+        enable stack management by the ``demo`` user:
+
+        .. code-block:: console
+
+           $ openstack role add --project demo --user demo heat_stack_owner
+
+        .. note::
+
+           This command provides no output.
+
+        .. note::
+
+           You must add the ``heat_stack_owner`` role to each user
+           that manages stacks.
+
+      * Create the ``heat_stack_user`` role:
+
+        .. code-block:: console
+
+           $ openstack role create heat_stack_user
+           +-------+----------------------------------+
+           | Field | Value                            |
+           +-------+----------------------------------+
+           | id    | 88849d41a55d4d1d91e4f11bffd8fc5c |
+           | name  | heat_stack_user                  |
+           +-------+----------------------------------+
+
+        .. note::
+
+           The Orchestration service automatically assigns the
+           ``heat_stack_user`` role to users that it creates
+           during stack deployment. By default, this role restricts
+           :term:`API` operations. To avoid conflicts, do not add
+           this role to users with the ``heat_stack_owner`` role.
 
 Install and configure components
 --------------------------------
@@ -320,13 +371,15 @@ Install and configure components
         Replace ``RABBIT_PASS`` with the password you chose for the
         ``openstack`` account in ``RabbitMQ``.
 
-      * In the ``[keystone_authtoken]`` and ``[ec2authtoken]`` sections,
+      * In the ``[keystone_authtoken]``, ``[trustee]``,
+        ``[clients_keystone]``, and ``[ec2authtoken]`` sections,
         configure Identity service access:
 
         .. code-block:: ini
 
            [keystone_authtoken]
            ...
+           auth_uri = http://controller:5000
            auth_url = http://controller:35357
            auth_plugin = password
            project_domain_id = default
@@ -334,29 +387,28 @@ Install and configure components
            project_name = service
            username = heat
            password = HEAT_PASS
-           auth_uri = http://controller:5000/v2.0
-           identity_uri = http://controller:35357
-           admin_tenant_name = service
-           admin_user = heat
-           admin_password = HEAT_PASS
+
+           [trustee]
+           ...
+           auth_uri = http://controller:5000
+           auth_url = http://controller:35357
+           auth_plugin = password
+           project_domain_id = default
+           user_domain_id = default
+           project_name = service
+           username = heat
+           password = HEAT_PASS
+
+           [clients_keystone]
+           ...
+           auth_uri = http://controller:5000
 
            [ec2authtoken]
            ...
-           auth_uri = http://controller:5000/v2.0
+           auth_uri = http://controller:5000
 
         Replace ``HEAT_PASS`` with the password you chose for the
         ``heat`` user in the Identity service.
-
-        .. note::
-
-           Comment out any ``auth_host``, ``auth_port``, and
-           ``auth_protocol`` options because the
-           ``identity_uri`` option replaces them.
-
-        .. note::
-
-           The contents of the [keystone_authtoken] section vary
-           slightly from other services.
 
       * In the ``[DEFAULT]`` section, configure the metadata and
         wait condition URLs:
@@ -368,8 +420,8 @@ Install and configure components
            heat_metadata_server_url = http://controller:8000
            heat_waitcondition_server_url = http://controller:8000/v1/waitcondition
 
-      * In the ``[DEFAULT]`` section, configure information about the heat
-        Identity service domain:
+      * In the ``[DEFAULT]`` section, configure the stack domain and
+        administrative credentials:
 
         .. code-block:: ini
 
@@ -377,10 +429,10 @@ Install and configure components
            ...
            stack_domain_admin = heat_domain_admin
            stack_domain_admin_password = HEAT_DOMAIN_PASS
-           stack_user_domain_name = heat_user_domain
+           stack_user_domain_name = heat
 
-        Replace ``HEAT_DOMAIN_PASS`` with the password you chose for the admin
-        user of the ``heat`` user domain in the Identity service.
+        Replace ``HEAT_DOMAIN_PASS`` with the password you chose for the
+        ``heat_domain_admin`` user in the Identity service.
 
       * (Optional) To assist with troubleshooting, enable verbose
         logging in the ``[DEFAULT]`` section:
@@ -391,29 +443,7 @@ Install and configure components
            ...
            verbose = True
 
-   3. Create a domain for users and projects managed by Orchestration
-      stacks.
-
-      * Source the ``admin`` credentials to gain access to
-        admin-only CLI commands:
-
-        .. code-block:: console
-
-           $ source admin-openrc.sh
-
-      * Create the heat domain in the Identity service:
-
-        .. code-block:: console
-
-           $ heat-keystone-setup-domain
-
-        .. note::
-
-           Do not add the output of this command to the
-           ``/etc/heat/heat.conf`` file because it already
-           contains these configuration options.
-
-   4. Populate the Orchestration database:
+   3. Populate the Orchestration database:
 
       .. code-block:: console
 
