@@ -201,7 +201,8 @@ on local devices.
 
    .. code-block:: console
 
-      # swift-ring-builder object.builder add r1z1-10.0.0.51:6000/sdb 100
+      # swift-ring-builder object.builder add \
+        --region 1 --zone 1 --ip 10.0.0.51 --port 6000 --device sdb --weight 100
 
    Repeat this command for each storage device on each storage node. In the
    example architecture, use the command in four variations:
