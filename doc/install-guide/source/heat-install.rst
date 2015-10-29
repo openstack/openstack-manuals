@@ -4,7 +4,7 @@ Install and configure
 ~~~~~~~~~~~~~~~~~~~~~
 
 This section describes how to install and configure the
-Orchestration module, code-named heat, on the controller node.
+Orchestration service, code-named heat, on the controller node.
 
 .. only:: obs or rdo or ubuntu
 

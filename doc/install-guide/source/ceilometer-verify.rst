@@ -2,7 +2,7 @@
 Verify the Telemetry installation
 =================================
 
-This section describes how to verify operation of the Telemetry module.
+This section describes how to verify operation of the Telemetry service.
 
 .. note::
 

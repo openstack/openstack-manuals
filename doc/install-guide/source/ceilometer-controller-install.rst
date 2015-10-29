@@ -3,8 +3,8 @@ Install and configure controller node
 =====================================
 
 This section describes how to install and configure the Telemetry
-module, code-named ceilometer, on the controller node. The Telemetry
-module uses separate agents to collect measurements from each OpenStack
+service, code-named ceilometer, on the controller node. The Telemetry
+service uses separate agents to collect measurements from each OpenStack
 service in your environment.
 
 To configure prerequisites
@@ -114,7 +114,7 @@ MongoDB before proceeding further.
         | type        | metering                         |
         +-------------+----------------------------------+
 
-6. Create the Telemetry module API endpoint:
+6. Create the Telemetry service API endpoint:
 
    .. code-block:: console
 
@@ -166,8 +166,8 @@ MongoDB before proceeding further.
         | url          | http://controller:8777           |
         +--------------+----------------------------------+
 
-To install and configure the Telemetry module components
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To install and configure the Telemetry service components
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. only:: obs
 
@@ -222,7 +222,7 @@ To install and configure the Telemetry module components
         connection = mongodb://ceilometer:CEILOMETER_DBPASS@controller:27017/ceilometer
 
      Replace ``CEILOMETER_DBPASS`` with the password you chose for the
-     Telemetry module database. You must escape special characters such
+     Telemetry service database. You must escape special characters such
      as ':', '/', '+', and '@' in the connection string in accordance
      with RFC2396.
 
