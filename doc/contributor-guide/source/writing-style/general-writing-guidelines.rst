@@ -119,7 +119,7 @@ Write in second person
 ----------------------
 
 Users are more engaged with documentation when you use second person (that is,
-you address the user as `you`).
+you address the user as "you").
 
 Writing in second person has the following advantages:
 
@@ -135,17 +135,17 @@ Writing in second person has the following advantages:
 Use first person plural pronouns (we, our) judiciously. These pronouns
 emphasize the writer or OpenStack rather than the user, so before you use
 them, consider whether second person or imperative mood is more
-"user-friendly." However, use `we recommend` rather than `it is recommended`
-or `OpenStack recommends`.
+"user-friendly." However, use "we recommend" rather than "it is recommended"
+or "OpenStack recommends".
 
-Also, you can use `we` in the place of OpenStack if necessary.
+Also, you can use "we" in the place of OpenStack if necessary.
 
 Do not use first person to avoid naming the product or to avoid using passive
 voice. If the product is performing the action, use third person (the product
 as an actor). If you want to de-emphasize the agent of action and emphasize the
 object on which the action is performed, use passive voice.
 
-The first-person singular pronoun `I` is acceptable in the question part of
+The first-person singular pronoun "I" is acceptable in the question part of
 FAQs and when authors of blogs or signed articles are describing their own
 actions or opinions.
 
@@ -214,7 +214,7 @@ Describe the most common use case first
 
 Put the most common case in the main clause and at the beginning of a
 paragraph or section. You can introduce additional
-use cases by starting a sentence with `however` or `if`.
+use cases by starting a sentence with "however" or "if".
 
 Do not humanize inanimate objects
 ---------------------------------
@@ -244,7 +244,7 @@ Try to avoid the following words as much as possible:
 +------------------------+----------------------------------+
 | catastrophic           | serious                          |
 +------------------------+----------------------------------+
-| bad                    | Use `serious` or add explanation |
+| bad                    | Use "serious" or add explanation |
 +------------------------+----------------------------------+
 | fail                   | unable to                        |
 +------------------------+----------------------------------+
@@ -312,8 +312,8 @@ after the pronoun.
 Do not split infinitives
 ------------------------
 
-Do not place modifiers between `to` and the verb. Typically, placing
-an adverb or an adjective between `to` and a verb adds ambiguity to
+Do not place modifiers between "to" and the verb. Typically, placing
+an adverb or an adjective between "to" and a verb adds ambiguity to
 a sentence.
 
 However, in some cases it is acceptable.
@@ -326,7 +326,7 @@ Avoid personification
 ---------------------
 
 Do not express your fears or feelings in technical writing. Avoid
-the adverbs such as `probably`, `hopefully`, `basically`, and so on.
+the adverbs such as "probably", "hopefully", "basically", and so on.
 
 Do not use contractions
 -----------------------
@@ -346,4 +346,4 @@ Generally, do not contract the words.
 Eliminate needless politeness
 -----------------------------
 
-Do not use `please` and `thank you` in technical documentation.
+Do not use "please" and "thank you" in technical documentation.
