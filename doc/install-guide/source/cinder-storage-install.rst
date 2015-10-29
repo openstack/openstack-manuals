@@ -162,11 +162,21 @@ Install and configure components
 
    * In the ``[database]`` section, configure database access:
 
-     .. code-block:: ini
+     .. only:: ubuntu or obs
 
-        [database]
-        ...
-        connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
+        .. code-block:: ini
+
+           [database]
+           ...
+           connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
+
+     .. only:: rdo
+
+        .. code-block:: ini
+
+           [database]
+           ...
+           connection = mysql://cinder:CINDER_DBPASS@controller/cinder
 
      Replace ``CINDER_DBPASS`` with the password you chose for
      the Block Storage database.

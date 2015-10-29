@@ -128,11 +128,21 @@ database and an administration token.
 
          * In the ``[database]`` section, configure database access:
 
-           .. code-block:: ini
+           .. only:: ubuntu or obs
 
-              [database]
-              ...
-              connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
+              .. code-block:: ini
+
+                 [database]
+                 ...
+                 connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
+
+           .. only:: rdo
+
+              .. code-block:: ini
+
+                 [database]
+                 ...
+                 connection = mysql://keystone:KEYSTONE_DBPASS@controller/keystone
 
            Replace ``KEYSTONE_DBPASS`` with the password you chose for the database.
 

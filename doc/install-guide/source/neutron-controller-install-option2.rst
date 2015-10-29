@@ -68,11 +68,21 @@ Install the components
 
       * In the ``[database]`` section, configure database access:
 
-        .. code-block:: ini
+        .. only:: ubuntu or obs
 
-           [database]
-           ...
-           connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron
+           .. code-block:: ini
+
+              [database]
+              ...
+              connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron
+
+        .. only:: rdo
+
+           .. code-block:: ini
+
+              [database]
+              ...
+              connection = mysql://neutron:NEUTRON_DBPASS@controller/neutron
 
         Replace ``NEUTRON_DBPASS`` with the password you chose for the
         database.
