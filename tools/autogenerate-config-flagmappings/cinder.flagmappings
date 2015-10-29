@@ -30,7 +30,6 @@ backup_service_inithost_offload backups
 backup_sha_block_size_bytes backups_nfs
 backup_share backups_nfs
 backup_swift_auth backups_swift
-backup_swift_auth_insecure backups_swift
 backup_swift_auth_version backups_swift
 backup_swift_block_size backups_swift
 backup_swift_ca_cert_file backups_swift
@@ -104,7 +103,6 @@ dothill_verify_certificate dothill
 dothill_verify_certificate_path dothill
 dpl_pool prophetstor_dpl
 dpl_port prophetstor_dpl
-drbdmanage_devs_on_controller drbd
 drbdmanage_redundancy drbd
 driver_client_cert datera
 driver_client_cert_key datera
@@ -291,8 +289,6 @@ lvm_mirrors lvm
 lvm_type lvm
 managed_replication_target common
 management_ips api
-matchmaker_heartbeat_freq rpc
-matchmaker_heartbeat_ttl rpc
 max_age quota
 max_header_line api
 max_luns_per_storage_group emc
@@ -367,9 +363,11 @@ osapi_volume_extension api
 osapi_volume_listen api
 osapi_volume_listen_port api
 osapi_volume_workers api
+password api
 per_volume_size_limit api
 periodic_fuzzy_delay common
 periodic_interval common
+port api
 public_endpoint api
 publish_errors logging
 pure_api_token pure
@@ -408,13 +406,15 @@ rootwrap_config common
 rpc_backend rpc
 rpc_cast_timeout rpc
 rpc_conn_pool_size rpc
+rpc_poll_timeout rpc
 rpc_response_timeout rpc
+rpc_zmq_all_req_rep zeromq
 rpc_zmq_bind_address zeromq
+rpc_zmq_concurrency zeromq
 rpc_zmq_contexts zeromq
 rpc_zmq_host zeromq
 rpc_zmq_ipc_dir zeromq
 rpc_zmq_matchmaker zeromq
-rpc_zmq_port zeromq
 rpc_zmq_topic_backlog zeromq
 san_clustername san xiv
 san_ip san prophetstor_dpl xiv
@@ -448,7 +448,6 @@ sf_emulate_512 solidfire
 sf_enable_volume_mapping solidfire
 sf_svip solidfire
 sf_template_account_name solidfire
-sf_volume_prefix solidfire
 sheepdog_store_address sheepdog
 sheepdog_store_port sheepdog
 sio_force_delete emc_sio
@@ -499,7 +498,6 @@ storwize_svc_vol_compression storwize
 storwize_svc_vol_easytier storwize
 storwize_svc_vol_grainsize storwize
 storwize_svc_vol_iogrp storwize
-storwize_svc_vol_nofmtdisk storwize
 storwize_svc_vol_rsize storwize
 storwize_svc_vol_warning storwize
 storwize_svc_volpool_name storwize
@@ -569,6 +567,7 @@ vzstorage_mount_point_base vzstorage
 vzstorage_shares_config vzstorage
 vzstorage_sparsed_volumes vzstorage
 vzstorage_used_ratio vzstorage
+watch_log_file common
 windows_iscsi_lun_path windows
 wsgi_keep_alive common
 xiv_chap xiv
@@ -606,6 +605,7 @@ zfssa_target_interfaces zfssa-iscsi
 zfssa_target_password zfssa-iscsi
 zfssa_target_portal zfssa-iscsi
 zfssa_target_user zfssa-iscsi
+zmq_use_broker zeromq
 zoning_mode zoning
 BRCD_FABRIC_EXAMPLE/fc_fabric_address zoning_fabric
 BRCD_FABRIC_EXAMPLE/fc_fabric_password zoning_fabric
@@ -707,7 +707,6 @@ keystone_authtoken/token_cache_time auth_token
 matchmaker_redis/host redis
 matchmaker_redis/password redis
 matchmaker_redis/port redis
-matchmaker_ring/ringfile redis
 oslo_concurrency/disable_process_locking rpc
 oslo_concurrency/lock_path rpc
 oslo_messaging_amqp/allow_insecure_clients rpc
@@ -715,12 +714,17 @@ oslo_messaging_amqp/broadcast_prefix rpc
 oslo_messaging_amqp/container_name rpc
 oslo_messaging_amqp/group_request_prefix rpc
 oslo_messaging_amqp/idle_timeout rpc
+oslo_messaging_amqp/password rpc
+oslo_messaging_amqp/sasl_config_dir rpc
+oslo_messaging_amqp/sasl_config_name rpc
+oslo_messaging_amqp/sasl_mechanisms rpc
 oslo_messaging_amqp/server_request_prefix rpc
 oslo_messaging_amqp/ssl_ca_file rpc
 oslo_messaging_amqp/ssl_cert_file rpc
 oslo_messaging_amqp/ssl_key_file rpc
 oslo_messaging_amqp/ssl_key_password rpc
 oslo_messaging_amqp/trace rpc
+oslo_messaging_amqp/username rpc
 oslo_messaging_qpid/amqp_auto_delete qpid
 oslo_messaging_qpid/amqp_durable_queues qpid
 oslo_messaging_qpid/qpid_heartbeat qpid
