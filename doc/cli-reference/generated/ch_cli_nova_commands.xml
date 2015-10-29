@@ -15,7 +15,7 @@
         interface (CLI) for the OpenStack Compute API and its extensions.
 
        This chapter documents <command>nova</command> version
-        <literal>2.31.0</literal>.
+        <literal>2.33.0</literal>.
     </para>
 
     <para>For help on a specific <command>nova</command>
@@ -1488,10 +1488,53 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-evacuate</command></term>
+    <term><command>migration-list</command></term>
     <listitem>
       <para>
-        Evacuate all instances from failed host.
+        Print a list of migrations.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action</command></term>
+    <listitem>
+      <para>
+        Show an action.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>instance-action-list</command></term>
+    <listitem>
+      <para>
+        List actions on a server.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-meta</command></term>
+    <listitem>
+      <para>
+        Set or Delete metadata on all instances of a
+      host.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>host-servers-migrate</command></term>
+    <listitem>
+      <para>
+        Migrate all instances of the specified host to
+      other available hosts.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>list-extensions</command></term>
+    <listitem>
+      <para>
+        List all the os-api extensions that are
+      available.
       </para>
     </listitem>
   </varlistentry>
@@ -1560,44 +1603,36 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>migration-list</command></term>
+    <term><command>cell-capacities</command></term>
     <listitem>
       <para>
-        Print a list of migrations.
+        Get cell capacities for all cells or a given
+      cell.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>list-extensions</command></term>
+    <term><command>cell-show</command></term>
     <listitem>
       <para>
-        List all the os-api extensions that are
-      available.
+        Show details of a given cell.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>host-meta</command></term>
+    <term><command>host-evacuate</command></term>
     <listitem>
       <para>
-        Set or Delete metadata on all instances of a
-      host.
+        Evacuate all instances from failed host.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>instance-action</command></term>
+    <term><command>host-evacuate-live</command></term>
     <listitem>
       <para>
-        Show an action.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>instance-action-list</command></term>
-    <listitem>
-      <para>
-        List actions on a server.
+        Live migrate all instances of the specified
+      host to other available hosts.
       </para>
     </listitem>
   </varlistentry>
@@ -1673,41 +1708,6 @@
     <listitem>
       <para>
         Restore a soft-deleted server.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-evacuate-live</command></term>
-    <listitem>
-      <para>
-        Live migrate all instances of the specified
-      host to other available hosts.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>cell-capacities</command></term>
-    <listitem>
-      <para>
-        Get cell capacities for all cells or a given
-      cell.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>cell-show</command></term>
-    <listitem>
-      <para>
-        Show details of a given cell.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>host-servers-migrate</command></term>
-    <listitem>
-      <para>
-        Migrate all instances of the specified host to
-      other available hosts.
       </para>
     </listitem>
   </varlistentry>
@@ -3451,7 +3451,7 @@ Create a new flavor.
     <term><command>&lt;name&gt;</command></term>
     <listitem>
       <para>
-        Name of the new flavor.
+        Unique name of the new flavor.
       </para>
     </listitem>
   </varlistentry>
@@ -3459,8 +3459,8 @@ Create a new flavor.
     <term><command>&lt;id&gt;</command></term>
     <listitem>
       <para>
-        Unique ID (integer or UUID) for the new flavor. If
-      specifying 'auto', a UUID will be generated as ID.
+        Unique ID of the new flavor. Specifying 'auto' will
+      generated a UUID for the ID.
       </para>
     </listitem>
   </varlistentry>
@@ -4282,7 +4282,8 @@ Display the uptime of the specified hypervisor.
     </section>
     <section xml:id="novaclient_subcommand_image-create">
         <title>nova image-create</title>
-        <screen><computeroutput>usage: nova image-create [--show] [--poll] &lt;server&gt; &lt;name&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: nova image-create [--metadata &lt;key=value&gt;] [--show] [--poll]
+                         &lt;server&gt; &lt;name&gt;</computeroutput></screen>
         <para>
 Create a new image by taking a snapshot of a running server.
         </para>  <variablelist wordsize="10">
@@ -4307,6 +4308,16 @@ Create a new image by taking a snapshot of a running server.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
+    <term><command>--metadata &lt;key=value&gt;</command></term>
+    <listitem>
+      <para>
+        Record arbitrary key/value metadata to
+      /meta_data.json on the metadata server. Can be
+      specified multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--show</command></term>
     <listitem>
       <para>
@@ -4318,8 +4329,8 @@ Create a new image by taking a snapshot of a running server.
     <term><command>--poll</command></term>
     <listitem>
       <para>
-        Report the snapshot progress and poll until image creation is
-      complete.
+        Report the snapshot progress and poll until image
+      creation is complete.
       </para>
     </listitem>
   </varlistentry>
