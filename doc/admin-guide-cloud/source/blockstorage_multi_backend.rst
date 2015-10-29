@@ -39,7 +39,7 @@ configuration group for a back end (such as, ``[lvmdriver-1]``).
    service is replaced with a new host service. The new service appears
    with a name like ``host@backend``. Use::
 
-    $ cinder-manage volume update_host --currentname CURRENTNAME --newname CURRENTNAME@BACKEND
+    $ cinder-manage volume update_host --currenthost CURRENTHOST --newhost CURRENTHOST@BACKEND
 
    to convert current block devices to the new hostname.
 
