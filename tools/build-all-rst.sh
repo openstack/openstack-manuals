@@ -19,9 +19,9 @@ for guide in user-guide user-guide-admin networking-guide admin-guide-cloud cont
 done
 
 # Draft guides
-# for guide in guide_name; do
-#    tools/build-rst.sh doc/$guide --build build \
-#        --target "draft/$guide" $LINKCHECK
-# done
+for guide in arch-design-rst; do
+    tools/build-rst.sh doc/$guide --build build \
+        --target "draft/$guide" $LINKCHECK
+done
 
 tools/build-install-guides-rst.sh $LINKCHECK
