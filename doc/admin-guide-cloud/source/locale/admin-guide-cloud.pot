@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 06:28+0000\n"
+"POT-Creation-Date: 2015-10-30 06:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,7 @@ msgid "System architecture"
 msgstr ""
 
 #: ../baremetal.rst:25
-msgid "The Bare Metal module is composed of the following components:"
+msgid "The Bare Metal service is composed of the following components:"
 msgstr ""
 
 #: ../baremetal.rst:27
@@ -3907,7 +3907,8 @@ msgstr ""
 #: ../networking_arch.rst:29 ../networking_introduction.rst:29
 #: ../networking_introduction.rst:122 ../networking_multi-dhcp-agents.rst:40
 #: ../objectstorage-troubleshoot.rst:62
-#: ../shared_file_systems_crud_share.rst:191 ../telemetry-measurements.rst:31
+#: ../shared_file_systems_crud_share.rst:43
+#: ../shared_file_systems_crud_share.rst:383 ../telemetry-measurements.rst:31
 msgid "Description"
 msgstr ""
 
@@ -5000,7 +5001,7 @@ msgstr ""
 # #-#-#-#-#  ts-eql-volume-size.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 #: ../compute-live-migration-usage.rst:36
 #: ../compute-live-migration-usage.rst:109
-#: ../shared_file_systems_crud_share.rst:191 ../ts-eql-volume-size.rst:107
+#: ../shared_file_systems_crud_share.rst:383 ../ts-eql-volume-size.rst:107
 msgid "Status"
 msgstr ""
 
@@ -18743,79 +18744,80 @@ msgstr ""
 
 #: ../shared_file_systems_cgroups.rst:7
 msgid ""
-"Consistency groups enable you to create snapshots at the exact same point in "
-"time from multiple file system shares. For example, a database might place "
-"its tables, logs, and configuration on separate shares. To restore this "
-"database from a previous point in time, it makes sense to restore the logs, "
-"tables, and configuration together from the exact same point in time."
+"Consistency groups enable you to create snapshots from multiple file system "
+"shares at the same point in time. For example, a database might place its "
+"tables, logs, and configuration on separate shares. To restore this database "
+"from a previous point in time, it makes sense to restore the logs, tables, "
+"and configuration together from the exact same point in time."
 msgstr ""
 
 #: ../shared_file_systems_cgroups.rst:13
 msgid ""
-"Shared File system allows you to create a snapshot of the consistency group "
-"and restore all shares that were associated with the consistency group by "
-"creating a consistency group from a snapshot."
+"The Shared File System service allows you to create a snapshot of the "
+"consistency group and restore all shares that were associated with a "
+"consistency group."
 msgstr ""
 
 #: ../shared_file_systems_cgroups.rst:18
 msgid ""
 "The **consistency groups and snapshots** are realized as an **experimental** "
-"Shared File Systems API. Contributors can change or remove the experimental "
-"part of the Shared File Systems API without maintaining backward "
-"compatibility. The experimental API has ``\"X-OpenStack-Manila-API-"
-"Experimental: true\"`` header in their HTTP requests."
+"Shared File Systems API in Liberty release. Contributors can change or "
+"remove the experimental part of the Shared File Systems API in further "
+"releases without maintaining backward compatibility. The experimental API "
+"has ``\"X-OpenStack-Manila-API-Experimental: true\"`` header in their HTTP "
+"requests."
 msgstr ""
 
 #: ../shared_file_systems_cgroups.rst:29
 msgid ""
 "Before using consistency groups, make sure the Shared File System driver "
 "that you are running has consistency group support. You can check it in the "
-"manila scheduler reports. The ``consistency_group_support`` can have such "
-"values:"
+"``manila-scheduler`` service reports. The ``consistency_group_support`` can "
+"have such values:"
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:33
+#: ../shared_file_systems_cgroups.rst:34
 msgid ""
 "``pool`` or ``host``. Consistency groups are supported. Specifies the level "
 "of consistency groups support."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:36
+#: ../shared_file_systems_cgroups.rst:37
 msgid "``false``. Consistency groups are not supported."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:38
+#: ../shared_file_systems_cgroups.rst:39
 msgid ""
 "Create a new consistency group, specify a share network and one or more "
 "share types. In the example a consistency group ``cgroup1`` was created with "
 "specifying two comma-separated share types:"
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:62
+#: ../shared_file_systems_cgroups.rst:63
 msgid "Check that consistency group is in available status:"
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:84
+#: ../shared_file_systems_cgroups.rst:85
 msgid ""
 "To add a share to the consistency group you need to create a share with a "
 "``--consistency-group`` option where you specify the ID of the consistency "
 "group in ``available`` status:"
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:119
+#: ../shared_file_systems_cgroups.rst:120
 msgid ""
 "Admin can rename the consistency group or change its description using "
 "**manila cg-update** command, or delete it by **manila cg-delete**."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:122
+#: ../shared_file_systems_cgroups.rst:123
 msgid ""
 "As an administrator, you can also reset the state of a consistency group and "
 "force-delete a specified consistency group in any state. Use the :file:"
 "`policy.json` file to grant permissions for these actions to other roles."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:126
+#: ../shared_file_systems_cgroups.rst:127
 msgid ""
 "Use **manila cg-reset-state [--state <state>] <consistency_group>** to "
 "update the state of a consistency group explicitly. A valid value of a "
@@ -18823,30 +18825,30 @@ msgid ""
 "``error_deleting``. If no state is provided, available will be used."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:135
+#: ../shared_file_systems_cgroups.rst:136
 msgid ""
 "Use **manila cg-delete <consistency_group> [<consistency_group> ...]** to "
 "soft-delete one or more consistency group."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:139
+#: ../shared_file_systems_cgroups.rst:140
 msgid ""
 "The consistency group can be deleted only if it has no dependent :ref:"
 "`shared_file_systems_cgsnapshots`."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:146
+#: ../shared_file_systems_cgroups.rst:147
 msgid ""
 "Use **manila cg-delete --force <consistency_group> "
 "[<consistency_group> ...]** to force-delete a specified consistency group in "
 "any state."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:156
+#: ../shared_file_systems_cgroups.rst:157
 msgid "Consistency group snapshots"
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:158
+#: ../shared_file_systems_cgroups.rst:159
 msgid ""
 "You can create snapshots of consistency groups. To create a snapshot, you "
 "specify the ID or name of the consistency group that you want to snapshot. "
@@ -18854,21 +18856,21 @@ msgid ""
 "group from it."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:163
+#: ../shared_file_systems_cgroups.rst:164
 msgid "Create a snapshot of consistency group ``cgroup1``:"
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:180
+#: ../shared_file_systems_cgroups.rst:181
 msgid "Check the status of created consistency group snapshot:"
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:197
+#: ../shared_file_systems_cgroups.rst:198
 msgid ""
 "Admin can rename the consistency group snapshot or change its description "
 "using **cg-snapshot-update** command, or delete it by **cg-snapshot-delete**."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:200
+#: ../shared_file_systems_cgroups.rst:201
 msgid ""
 "A consistency group snapshot can have **members**. The consistency group "
 "snapshot members are the shares that belong to some consistency group. To "
@@ -18879,35 +18881,35 @@ msgid ""
 "quickly find which shares belong to a specified consistency group."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:208
+#: ../shared_file_systems_cgroups.rst:209
 msgid ""
 "You created the share ``Share2`` in ``cgroup1`` consistency group. Since you "
 "made a snapshot of it, you can see that the only member of the consistency "
 "group snapshot is ``Share2`` share:"
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:221
+#: ../shared_file_systems_cgroups.rst:222
 msgid ""
 "After you create a consistency group snapshot, you can create a consistency "
 "group from it:"
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:244
+#: ../shared_file_systems_cgroups.rst:245
 msgid "Check the list of consistency group. There are two groups now:"
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:256
+#: ../shared_file_systems_cgroups.rst:257
 msgid ""
 "Check a list of the shares. New share with ``ba52454e-2ea3-47fa-"
 "a683-3176a01295e6`` ID was created when you created a consistency group "
 "``cgroup2`` from a snapshot with a member."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:270
+#: ../shared_file_systems_cgroups.rst:271
 msgid "Print detailed information about new share:"
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:273
+#: ../shared_file_systems_cgroups.rst:274
 msgid ""
 "Pay attention on the ``source_cgsnapshot_member_id`` and "
 "``consistency_group_id`` fields in a new share. It has "
@@ -18916,7 +18918,7 @@ msgid ""
 "``cgroup2`` that was created from a snapshot."
 msgstr ""
 
-#: ../shared_file_systems_cgroups.rst:309
+#: ../shared_file_systems_cgroups.rst:310
 msgid ""
 "As an administrator, you can also reset the state of a consistency group "
 "snapshot with **cg-snapshot-reset-state** and force-delete a specified "
@@ -18930,18 +18932,21 @@ msgid "Share basic operations"
 msgstr ""
 
 #: ../shared_file_systems_crud_share.rst:8
-msgid "Create share"
+msgid "General concepts"
 msgstr ""
 
 #: ../shared_file_systems_crud_share.rst:10
-msgid "General concepts **to create file share**, you need to:"
+msgid "As general concepts, to create a file share and access it you need to:"
 msgstr ""
 
 #: ../shared_file_systems_crud_share.rst:12
+#: ../shared_file_systems_crud_share.rst:88
+#: ../shared_file_systems_crud_share.rst:201
 msgid ""
 "To create a share, use :command:`manila create` command and specify the "
-"required arguments: the size of the share and the Shared File Systems "
-"protocol (``NFS``, ``CIFS``, ``GlusterFS``, or ``HDFS`` are supported)."
+"required arguments: the size of the share and the shared file system "
+"protocol. ``NFS``, ``CIFS``, ``GlusterFS``, or ``HDFS`` share file system "
+"protocols are supported."
 msgstr ""
 
 #: ../shared_file_systems_crud_share.rst:17
@@ -18949,250 +18954,425 @@ msgid "You can also optionally specify the share network and the share type."
 msgstr ""
 
 #: ../shared_file_systems_crud_share.rst:19
+#: ../shared_file_systems_crud_share.rst:110
+#: ../shared_file_systems_crud_share.rst:224
 msgid ""
-"Use the :command:`manila create` command to create a share. This command "
-"does the following things:"
+"After the share becomes available, use the :command:`manila show` command to "
+"get the share export location."
 msgstr ""
 
 #: ../shared_file_systems_crud_share.rst:22
 msgid ""
-"If there is no available share servers, the Shared File Systems service "
-"service will launch new instance from service image, attach it to service "
-"network and register it as a new share server."
+"After getting the share export location, you can create an :ref:`access rule "
+"<access_to_share>` for the share, mount it and work with files on the remote "
+"file system."
 msgstr ""
 
 #: ../shared_file_systems_crud_share.rst:26
 msgid ""
-"Creates new volume of required size and attaches it to the service instance."
+"There are big number of the share drivers created by different vendors in "
+"the Shared File Systems service. As a Python class, each share driver can be "
+"set for the :ref:`back end <shared_file_systems_multi_backend>` and run in "
+"the back end to manage the share operations."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:29
-msgid ""
-"The NFS service on service instance is configured to use attached volume and "
-"expose NFS share."
+#: ../shared_file_systems_crud_share.rst:31
+msgid "Initially there are two driver modes for the back ends:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:32
-msgid ""
-"After share becomes available, use the :command:`manila show` command to get "
-"the share endpoint."
+#: ../shared_file_systems_crud_share.rst:33
+msgid "no share servers mode"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:35
-msgid ""
-"In the example to create a share, the default share type and the existing "
-"already share network are used."
+#: ../shared_file_systems_crud_share.rst:34
+msgid "share servers mode"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:39
+#: ../shared_file_systems_crud_share.rst:36
 msgid ""
-"There is no default share type just after you starting manila as the "
+"Each share driver supports one or two of possible back end modes that can be "
+"configured in :file:`manila.conf` file. The configuration option "
+"``driver_handles_share_servers`` in :file:`manila.conf` file sets the share "
+"servers mode or no share servers mode, and defines the driver mode for share "
+"storage life cycle management:"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:43
+msgid "Config option"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:43
+msgid "Mode"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:45
+msgid ""
+"An administrator rather than a share driver manages the bare metal storage "
+"with some net interface instead of the presence of the share servers."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:45
+msgid "driver_handles_share_servers = False"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:45
+msgid "no share servers"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:54
+msgid ""
+"The share driver creates the share server and manages, or handles, the share "
+"server life cycle."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:54
+msgid "driver_handles_share_servers = True"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:54
+msgid "share servers"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:62
+msgid ""
+"It is :ref:`the share types <shared_file_systems_share_types>` which have "
+"the extra specifications that help scheduler to filter back ends and choose "
+"the appropriate back end for the user that requested to create a share. The "
+"required extra boolean specification for each share type is "
+"``driver_handles_share_servers``. As an administrator, you can create the "
+"share types with the specifications you need. For details of managing the "
+"share types and configuration the back ends, see :ref:"
+"`shared_file_systems_share_types` and :ref:"
+"`shared_file_systems_multi_backend` documentation."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:71
+msgid "You can create a share in two described above modes:"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:73
+msgid ""
+"in a no share servers mode without specifying the share network and "
+"specifying the share type with ``driver_handles_share_servers = False`` "
+"parameter. See subsection :ref:`create_share_in_no_share_server_mode`."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:77
+msgid ""
+"in a share servers mode with specifying the share network and the share type "
+"with ``driver_handles_share_servers = True`` parameter. See subsection :ref:"
+"`create_share_in_share_server_mode`."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:84
+msgid "Create a share in no share servers mode"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:86
+msgid "To create a file share in no share servers mode, you need to:"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:93
+msgid ""
+"You should specify the :ref:`share type <shared_file_systems_share_types>` "
+"with ``driver_handles_share_servers = False`` extra specification."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:96
+msgid ""
+"You must not specify the ``share network`` because no share servers are "
+"created. In this mode the Shared File Systems service expects that "
+"administrator has some bare metal storage with some net interface."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:100
+#: ../shared_file_systems_crud_share.rst:212
+msgid ""
+"The :command:`manila create` command creates a share. This command does the "
+"following things:"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:103
+msgid ""
+"The :ref:`manila-scheduler <shared_file_systems_scheduling>` service will "
+"find the back end with ``driver_handles_share_servers = False`` mode due to "
+"filtering the extra specifications of the share type."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:107
+msgid ""
+"The shared is created using the storage that is specified in the found back "
+"end."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:113
+msgid ""
+"In the example to create a share, the created already share type named "
+"``my_type`` with ``driver_handles_share_servers = False`` extra "
+"specification is used."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:117
+#: ../shared_file_systems_crud_share.rst:236
+msgid "Check share types that exist, run:"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:128
+msgid ""
+"Create a private share with ``my_type`` share type, NFS shared file system "
+"protocol, and size 1 GB:"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:162
+msgid "New share ``Share2`` should have a status ``available``:"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:197
+msgid "Create a share in share servers mode"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:199
+msgid "To create a file share in share servers mode, you need to:"
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:206
+msgid ""
+"You should specify the :ref:`share type <shared_file_systems_share_types>` "
+"with ``driver_handles_share_servers = True`` extra specification."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:209
+msgid ""
+"You should specify the :ref:`share network "
+"<shared_file_systems_share_networks>`."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:215
+msgid ""
+"The :ref:`manila-scheduler <shared_file_systems_scheduling>` service will "
+"find the back end with ``driver_handles_share_servers = True`` mode due to "
+"filtering the extra specifications of the share type."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:219
+msgid ""
+"The share driver will create a share server with the share network. For "
+"details of creating the resources, see the `documentation <http://docs. "
+"openstack.org/developer/manila/devref/index.html#share-backends>`_ of the "
+"specific share driver."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:227
+msgid ""
+"In the example to create a share, the default share type and the already "
+"existing share network are used."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:231
+msgid ""
+"There is no default share type just after you started manila as the "
 "administrator. See :ref:`shared_file_systems_share_types` to create the "
 "default share type. To create a share network, use :ref:"
 "`shared_file_systems_share_networks`."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:44
-msgid "Check share types that exist, run:"
-msgstr ""
-
-#: ../shared_file_systems_crud_share.rst:55
+#: ../shared_file_systems_crud_share.rst:247
 msgid "Check share networks that exist, run:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:66
+#: ../shared_file_systems_crud_share.rst:258
 msgid ""
 "Create a public share with ``my_share_net`` network, ``default`` share type, "
 "NFS shared file system protocol, and size 1 GB:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:100
+#: ../shared_file_systems_crud_share.rst:292
 msgid ""
 "The share also can be created from a share snapshot. For details, see :ref:"
 "`shared_file_systems_snapshots`."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:103
+#: ../shared_file_systems_crud_share.rst:295
 msgid "See the share in a share list:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:114
+#: ../shared_file_systems_crud_share.rst:306
 msgid ""
 "Check the share status and see the share export location. After ``creating`` "
 "status share should have status ``available``:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:147
+#: ../shared_file_systems_crud_share.rst:339
 msgid ""
 "``is_public`` defines the level of visibility for the share: whether other "
 "tenants can or cannot see the share. By default, the share is private."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:151
+#: ../shared_file_systems_crud_share.rst:343
 msgid "Update share"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:153
+#: ../shared_file_systems_crud_share.rst:345
 msgid ""
 "Update the name, or description, or level of visibility for all tenants for "
 "the share if you need:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:188
+#: ../shared_file_systems_crud_share.rst:380
 msgid "A share can have one of these status values:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:193
+#: ../shared_file_systems_crud_share.rst:385
 msgid "The share is being created."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:193
+#: ../shared_file_systems_crud_share.rst:385
 msgid "creating"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:195
+#: ../shared_file_systems_crud_share.rst:387
 msgid "The share is being deleted."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:195
+#: ../shared_file_systems_crud_share.rst:387
 msgid "deleting"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:197
+#: ../shared_file_systems_crud_share.rst:389
 msgid "An error occurred during share creation."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:197
+#: ../shared_file_systems_crud_share.rst:389
 msgid "error"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:199
+#: ../shared_file_systems_crud_share.rst:391
 msgid "An error occurred during share deletion."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:199
+#: ../shared_file_systems_crud_share.rst:391
 msgid "error_deleting"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:201
+#: ../shared_file_systems_crud_share.rst:393
 msgid "The share is ready to use."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:201
+#: ../shared_file_systems_crud_share.rst:393
 msgid "available"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:203
+#: ../shared_file_systems_crud_share.rst:395
 msgid "Share manage started."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:203
+#: ../shared_file_systems_crud_share.rst:395
 msgid "manage_starting"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:205
+#: ../shared_file_systems_crud_share.rst:397
 msgid "Share manage failed."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:205
+#: ../shared_file_systems_crud_share.rst:397
 msgid "manage_error"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:207
+#: ../shared_file_systems_crud_share.rst:399
 msgid "Share unmanage started."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:207
+#: ../shared_file_systems_crud_share.rst:399
 msgid "unmanage_starting"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:209
+#: ../shared_file_systems_crud_share.rst:401
 msgid "Share cannot be unmanaged."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:209
+#: ../shared_file_systems_crud_share.rst:401
 msgid "unmanage_error"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:211
+#: ../shared_file_systems_crud_share.rst:403
 msgid "Share was unmanaged."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:211
+#: ../shared_file_systems_crud_share.rst:403
 msgid "unmanaged"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:213
+#: ../shared_file_systems_crud_share.rst:405
 msgid "The extend, or increase, share size request was issued successfully."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:213
+#: ../shared_file_systems_crud_share.rst:405
 msgid "extending"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:216
+#: ../shared_file_systems_crud_share.rst:408
 msgid "Extend share failed."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:216
+#: ../shared_file_systems_crud_share.rst:408
 msgid "extending_error"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:218
+#: ../shared_file_systems_crud_share.rst:410
 msgid "Share is being shrunk."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:218
+#: ../shared_file_systems_crud_share.rst:410
 msgid "shrinking"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:220
+#: ../shared_file_systems_crud_share.rst:412
 msgid "Failed to update quota on share shrinking."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:220
+#: ../shared_file_systems_crud_share.rst:412
 msgid "shrinking_error"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:223
+#: ../shared_file_systems_crud_share.rst:415
 msgid "Shrink share failed due to possible data loss."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:223
+#: ../shared_file_systems_crud_share.rst:415
 msgid "shrinking_possible_data_loss_error"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:230
+#: ../shared_file_systems_crud_share.rst:422
 msgid "Share metadata"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:232
+#: ../shared_file_systems_crud_share.rst:424
 msgid "If you want to set the metadata key-value pairs on the share, run:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:238
+#: ../shared_file_systems_crud_share.rst:430
 msgid "Get all metadata key-value pairs of the share:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:251
+#: ../shared_file_systems_crud_share.rst:443
 msgid "You can update the metadata:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:262
+#: ../shared_file_systems_crud_share.rst:454
 msgid ""
 "You also can unset the metadata using **manila metadata <share_name> unset "
 "<metadata_key(s)>**."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:266
+#: ../shared_file_systems_crud_share.rst:458
 msgid "Reset share state"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:268
+#: ../shared_file_systems_crud_share.rst:460
 msgid "As administrator, you can reset the state of a share."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:270
+#: ../shared_file_systems_crud_share.rst:462
 msgid ""
 "Use **manila reset-state [--state <state>] <share>** command to reset share "
 "state, where ``state`` indicates which state to assign the share. Options "
@@ -19200,88 +19380,93 @@ msgid ""
 "``error_deleting`` states."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:309
+#: ../shared_file_systems_crud_share.rst:501
 msgid "Delete and force-delete share"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:311
+#: ../shared_file_systems_crud_share.rst:503
 msgid ""
 "You also can force-delete a share. The shares cannot be deleted in "
 "transitional states. The transitional states are ``creating``, ``deleting``, "
 "``managing``, ``unmanaging``, ``extending``, and ``shrinking`` statuses for "
-"the shares. Force-deletion deletes an object in any state. Use the :file:`/"
-"etc/manila/policy.json` file to grant permissions for this action to other "
-"roles."
+"the shares. Force-deletion deletes an object in any state. Use the :file:"
+"`policy.json` file to grant permissions for this action to other roles."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:318
+#: ../shared_file_systems_crud_share.rst:511
+msgid ""
+"The configuration file ``policy.json`` may be used from different places. "
+"The path ``/etc/manila/policy.json`` is one of expected paths by default."
+msgstr ""
+
+#: ../shared_file_systems_crud_share.rst:514
 msgid ""
 "Use **manila delete <share_name_or_ID>** command to delete a specified share:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:324
+#: ../shared_file_systems_crud_share.rst:521
 msgid ""
-"Pay attention that if you specified the consistency group while creating a "
-"share (see :ref:`shared_file_systems_cgroups`), you should provide the ``--"
-"consistency-group`` parameter to delete the share:"
+"If you specified :ref:`the consistency group <shared_file_systems_cgroups>` "
+"while creating a share, you should provide the ``--consistency-group`` "
+"parameter to delete the share:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:333
+#: ../shared_file_systems_crud_share.rst:530
 msgid ""
 "If you try to delete the share in one of the transitional state using soft-"
 "deletion you'll get an error:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:342
+#: ../shared_file_systems_crud_share.rst:539
 msgid ""
 "A share cannot be deleted in a transitional status, that it why an error "
 "from ``python-manilaclient`` appeared."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:345
+#: ../shared_file_systems_crud_share.rst:542
 msgid "Print the list of all shares for all tenants:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:357
+#: ../shared_file_systems_crud_share.rst:554
 msgid ""
 "Force-delete Share2 and check that it is absent in the list of shares, run:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:372
+#: ../shared_file_systems_crud_share.rst:571
 msgid "Manage access to share"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:374
+#: ../shared_file_systems_crud_share.rst:573
 msgid ""
-"The Shared File Systems Storage Service allows to grant or deny access to a "
+"The Shared File Systems service allows to grant or deny access to a "
 "specified share, and list the permissions for a specified share."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:377
+#: ../shared_file_systems_crud_share.rst:576
 msgid ""
 "To grant or deny access to a share, specify one of these supported share "
 "access levels:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:380
+#: ../shared_file_systems_crud_share.rst:579
 msgid "**rw**. Read and write (RW) access. This is the default value."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:382
+#: ../shared_file_systems_crud_share.rst:581
 msgid "**ro**. Read-only (RO) access."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:384
+#: ../shared_file_systems_crud_share.rst:583
 msgid "You must also specify one of these supported authentication methods:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:386
+#: ../shared_file_systems_crud_share.rst:585
 msgid ""
 "**ip**. Authenticates an instance through its IP address. A valid format is "
 "``XX.XX.XX.XX`` or ``XX.XX.XX.XX/XX``. For example ``0.0.0.0/0``."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:389
+#: ../shared_file_systems_crud_share.rst:588
 msgid ""
 "**cert**. Authenticates an instance through a TLS certificate. Specify the "
 "TLS identity as the IDENTKEY. A valid value is any string up to 64 "
@@ -19289,70 +19474,70 @@ msgid ""
 "string depends on its interpretation."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:394
+#: ../shared_file_systems_crud_share.rst:593
 msgid ""
 "**user**. Authenticates by a specified user or group name. A valid value is "
 "an alphanumeric string that can contain some special characters and is from "
 "4 to 32 characters long."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:398
+#: ../shared_file_systems_crud_share.rst:597
 msgid ""
 "Try to mount NFS share with export path ``10.254.0.5:/shares/"
 "share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a`` on the node with IP address "
 "``10.254.0.4``:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:410
+#: ../shared_file_systems_crud_share.rst:609
 msgid ""
 "An error message \"Permission denied\" appeared, so you are not allowed to "
 "mount a share without an access rule. Allow access to the share with ``ip`` "
 "access type and ``10.254.0.4`` IP address:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:428
+#: ../shared_file_systems_crud_share.rst:627
 msgid "Try to mount a share again. This time it is mounted successfully:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:434
+#: ../shared_file_systems_crud_share.rst:633
 msgid ""
 "Since it is allowed node on 10.254.0.4 read and write access, try to create "
 "a file on a mounted share:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:444
+#: ../shared_file_systems_crud_share.rst:643
 msgid ""
 "Connect via SSH to the 10.254.0.5 node and check new file `my_file.txt` in "
 "the ``/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a`` directory:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:457
+#: ../shared_file_systems_crud_share.rst:656
 msgid ""
 "You have successfully created a file from instance that was given access by "
 "its IP address."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:460
+#: ../shared_file_systems_crud_share.rst:659
 msgid "Allow access to the share with ``user`` access type:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:477
+#: ../shared_file_systems_crud_share.rst:676
 msgid ""
 "Different share features are supported by different share drivers. For the "
-"example hereinabove was used the Generic (Cinder as back-end) driver that "
+"example, the Generic driver with the Block Storage service as a back-end "
 "doesn't support ``user`` and ``cert`` authentications methods. For details "
 "of supporting of features by different drivers, see `Manila share features "
-"support mapping <http://docs.openstack.org/developer/manila/devref/"
-"share_back_ends_feature _support_mapping.html>`_."
+"support mapping <http://docs.openstack.org/developer/manila/devref /"
+"share_back_ends_feature_support_mapping.html>`_."
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:485
+#: ../shared_file_systems_crud_share.rst:683
 msgid ""
 "To verify that the access rules (ACL) were configured correctly for a share, "
 "you list permissions for a share:"
 msgstr ""
 
-#: ../shared_file_systems_crud_share.rst:498
+#: ../shared_file_systems_crud_share.rst:696
 msgid ""
 "Deny access to the share and check that deleted access rule is absent in the "
 "access rule list:"
@@ -19404,8 +19589,8 @@ msgid ""
 "In the Shared File Systems service ``share`` is the fundamental resource "
 "unit allocated by the Shared File System service. It represents an "
 "allocation of a persistent, readable, and writable filesystem that can be "
-"accessed by OpenStack compute instances, or clients outside of OpenStack "
-"(depending on deployment configuration)."
+"accessed by OpenStack compute instances, or clients outside of OpenStack, "
+"which depends on deployment configuration."
 msgstr ""
 
 #: ../shared_file_systems_key_concepts.rst:17
@@ -19461,7 +19646,7 @@ msgstr ""
 msgid ""
 "``Share access rules`` define which users can access a particular ``share``. "
 "For example, access rules can be declared for NFS shares by listing the "
-"valid IP networks (using CIDR notation) which should have access to the "
+"valid IP networks, in CIDR notation, which should have access to the "
 "``share``."
 msgstr ""
 
@@ -19487,20 +19672,29 @@ msgstr ""
 #: ../shared_file_systems_key_concepts.rst:70
 msgid ""
 "A ``share network`` is an object that defines a relationship between a "
-"tenant's network/subnet (as defined in an OpenStack network service (Neutron "
-"or Nova-network)) and the ``shares`` created by the same tenant; that is, a "
-"tenant may find it desirable to provision ``shares`` such that only "
+"tenant's network and subnet, as defined in an OpenStack Networking service "
+"or Compute service, and the ``shares`` created by the same tenant; that is, "
+"a tenant may find it desirable to provision ``shares`` such that only "
 "instances connected to a particular OpenStack-defined network have access to "
 "the ``share``. Also, ``security services`` can be attached to ``share "
 "networks``, because most of auth protocols require some interaction with "
 "network services."
 msgstr ""
 
-#: ../shared_file_systems_key_concepts.rst:79
+#: ../shared_file_systems_key_concepts.rst:78
+msgid ""
+"The Shared File Systems service has the ability to work outside of "
+"OpenStack. That is due to the ``StandaloneNetworkPlugin`` that can be used "
+"with any network platform and does not require some specific network "
+"services in OpenStack like Compute or Networking service. You can set the "
+"network parameters in its configuration file."
+msgstr ""
+
+#: ../shared_file_systems_key_concepts.rst:85
 msgid "Share Servers"
 msgstr ""
 
-#: ../shared_file_systems_key_concepts.rst:81
+#: ../shared_file_systems_key_concepts.rst:87
 msgid ""
 "A ``share server`` is a logical entity that hosts the shares that are "
 "created on a specific ``share network``. A ``share server`` may be a "
@@ -19509,7 +19703,7 @@ msgid ""
 "to support the data path used to access ``shares``."
 msgstr ""
 
-#: ../shared_file_systems_key_concepts.rst:87
+#: ../shared_file_systems_key_concepts.rst:93
 msgid ""
 "``Share servers`` interact with network services to determine the "
 "appropriate IP addresses on which to export ``shares`` according to the "
@@ -19526,84 +19720,86 @@ msgstr ""
 msgid ""
 "To ``manage`` a share means that an administrator rather than a share driver "
 "manages the storage life cycle. This approach is appropriate when an "
-"administrator already has the custom non-manila share with its size, Shared "
-"File System protocol, export path and so on, and administrator wants to "
-"register it in the Shared File System Storage service."
+"administrator already has the custom non-manila share with its size, shared "
+"file system protocol, export path and so on, and administrator wants to "
+"register it in the Shared File System service."
 msgstr ""
 
 #: ../shared_file_systems_manage_and_unmanage_share.rst:13
 msgid ""
 "To ``unmanage`` a share means to unregister a specified share from the "
-"Shared File System Storage service. An administrator can manage the custom "
-"share back."
+"Shared File Systems service. An administrator can manage the custom share "
+"back."
 msgstr ""
 
-#: ../shared_file_systems_manage_and_unmanage_share.rst:16
-msgid ""
-"Since with the generic driver, shares are hosted on Compute VMs, in the "
-"examples the compute VM is used to create a new host and to create a share "
-"hosted on it."
-msgstr ""
-
-#: ../shared_file_systems_manage_and_unmanage_share.rst:23
+#: ../shared_file_systems_manage_and_unmanage_share.rst:19
 msgid "Unmanage share"
 msgstr ""
 
-#: ../shared_file_systems_manage_and_unmanage_share.rst:24
+#: ../shared_file_systems_manage_and_unmanage_share.rst:20
 msgid ""
-"You can ``unmanage`` share, to take manual control on share life cycle. The "
-"``unmanage`` operation is not supported for shares that were created on top "
-"of share servers (created with share networks), so share service should have "
+"You can ``unmanage`` a share, to unregister it from the Shared File System "
+"service, and take manual control on share life cycle. The ``unmanage`` "
+"operation is not supported for shares that were created on top of share "
+"servers and created with share networks), so share service should have "
 "option ``driver_handles_share_servers = False`` in its configuration. You "
 "can unmanage a share that has no dependent snapshots."
 msgstr ""
 
-#: ../shared_file_systems_manage_and_unmanage_share.rst:30
+#: ../shared_file_systems_manage_and_unmanage_share.rst:27
 msgid ""
 "To unmanage managed share, run :command:`manila unmanage <share>` command. "
 "Then try to print the information about it. The expected behaviour is that "
-"File System Storage service won't find the share:"
+"Shared File Systems service won't find the share:"
 msgstr ""
 
-#: ../shared_file_systems_manage_and_unmanage_share.rst:43
+#: ../shared_file_systems_manage_and_unmanage_share.rst:40
 msgid "Manage share"
 msgstr ""
 
-#: ../shared_file_systems_manage_and_unmanage_share.rst:44
+#: ../shared_file_systems_manage_and_unmanage_share.rst:41
 msgid ""
-"To register the non-managed share in File System Storage service you need to "
-"run :command:`manila manage` command which has such arguments:"
+"To register the non-managed share in File System service you need to run :"
+"command:`manila manage` command which has such arguments:"
 msgstr ""
 
-#: ../shared_file_systems_manage_and_unmanage_share.rst:54
+#: ../shared_file_systems_manage_and_unmanage_share.rst:51
 msgid "The positional arguments are:"
 msgstr ""
 
-#: ../shared_file_systems_manage_and_unmanage_share.rst:56
+#: ../shared_file_systems_manage_and_unmanage_share.rst:53
 msgid ""
 "service_host. The manage-share service host in this format: "
 "``host@backend#POOL`` which consists of the host name for the back end, the "
 "name of the back end and the pool name for the back end."
 msgstr ""
 
-#: ../shared_file_systems_manage_and_unmanage_share.rst:60
+#: ../shared_file_systems_manage_and_unmanage_share.rst:57
 msgid ""
 "protocol. The Shared File Systems protocol of the share to manage. A valid "
 "value is NFS, CIFS, GlusterFS, or HDFS."
 msgstr ""
 
-#: ../shared_file_systems_manage_and_unmanage_share.rst:63
+#: ../shared_file_systems_manage_and_unmanage_share.rst:60
 msgid ""
 "export_path. The share export path in the format appropriate for the "
 "protocol:"
 msgstr ""
 
-#: ../shared_file_systems_manage_and_unmanage_share.rst:66
+#: ../shared_file_systems_manage_and_unmanage_share.rst:63
 msgid "NFS protocol. 10.0.0.1:/foo_path."
 msgstr ""
 
-#: ../shared_file_systems_manage_and_unmanage_share.rst:68
+#: ../shared_file_systems_manage_and_unmanage_share.rst:65
 msgid "CIFS protocol. \\\\\\\\10.0.0.1\\\\foo_name_of_cifs_share."
+msgstr ""
+
+#: ../shared_file_systems_manage_and_unmanage_share.rst:67
+msgid "HDFS protocol. hdfs://10.0.0.1:foo_port/foo_share_name."
+msgstr ""
+
+#: ../shared_file_systems_manage_and_unmanage_share.rst:69
+msgid "GlusterFS. 10.0.0.1:/foo_volume."
 msgstr ""
 
 #: ../shared_file_systems_manage_and_unmanage_share.rst:71
@@ -19619,39 +19815,40 @@ msgid "To manage share, run:"
 msgstr ""
 
 #: ../shared_file_systems_manage_and_unmanage_share.rst:109
-msgid "Check that he share is available:"
+msgid "Check that the share is available:"
 msgstr ""
 
-#: ../shared_file_systems_multi_backend.rst:8
+#: ../shared_file_systems_multi_backend.rst:5
 msgid "Multi-storage configuration"
 msgstr ""
 
-#: ../shared_file_systems_multi_backend.rst:10
+#: ../shared_file_systems_multi_backend.rst:7
 msgid ""
-"Shared File Systems service can provide access to multiple file storage back "
-"ends. In general, workflow with multiple back ends look very similar to "
-"Block Storage service one, see :ref:`Configure multiple-storage back ends in "
-"Openstack Block Storage service <multi_backend>`."
+"The Shared File Systems service can provide access to multiple file storage "
+"back ends. In general, the workflow with multiple back ends looks very "
+"similar to the Block Storage service one, see :ref:`Configure multiple-"
+"storage back ends in Openstack Block Storage service <multi_backend>`."
 msgstr ""
 
-#: ../shared_file_systems_multi_backend.rst:15
+#: ../shared_file_systems_multi_backend.rst:12
 msgid ""
-"Using `manila.conf` you can spawn multiple share services.  To do it, you "
-"must set the `enabled_share_backends` flag in the `manila.conf` file. This "
-"flag defines the names (separated by a comma) of the configuration stanzas "
-"for the different back ends: one name is associated to one configuration "
-"group for a back end."
+"Using `manila.conf`, you can spawn multiple share services. To do it, you "
+"should set the `enabled_share_backends` flag in the `manila.conf` file. This "
+"flag defines the comma-separated names of the configuration stanzas for the "
+"different back ends: one name is associated to one configuration group for a "
+"back end."
 msgstr ""
 
-#: ../shared_file_systems_multi_backend.rst:21
+#: ../shared_file_systems_multi_backend.rst:18
 msgid "The following example runs three configured share services:"
 msgstr ""
 
-#: ../shared_file_systems_multi_backend.rst:58
+#: ../shared_file_systems_multi_backend.rst:54
 msgid ""
-"To spawn separate groups of share services you can use separate "
-"configuration files. If it is necessary to control each back end in separate "
-"way, you should provide a single configuration file per each back end."
+"To spawn separate groups of share services, you can use separate "
+"configuration files. If it is necessary to control each back end in a "
+"separate way, you should provide a single configuration file per each back "
+"end."
 msgstr ""
 
 #: ../shared_file_systems_network_plugins.rst:5
@@ -19663,129 +19860,131 @@ msgid ""
 "The Shared File Systems service architecture defines an abstraction layer "
 "for network resource provisioning and allowing administrators to choose from "
 "a different options for how network resources are assigned to their tenants’ "
-"networked storage. There are a set of network plugins that provide a variety "
-"of integration approaches with the network services that are available with "
-"OpenStack."
+"networked storage. There are a set of network plug-ins that provide a "
+"variety of integration approaches with the network services that are "
+"available with OpenStack."
 msgstr ""
 
 #: ../shared_file_systems_network_plugins.rst:14
 msgid ""
 "The Shared File Systems service may need a network resource provisioning if "
-"share service with specified driver works in mode, when share driver manage "
-"life cycle of share servers on its own. This behavior defines by flag "
-"``driver_handles_share_servers`` in share service configuration.  When "
-"``driver_handles_share_servers`` is set to ``True``, a share driver will be "
-"called to create share servers for shares using information provided within "
-"a share network. This information will be provided to one of the enabled "
-"network plugins that will handle reservation, creation and deletion of "
-"network resources including IP addresses and network interfaces."
+"share service with specified driver works in mode, when a share driver "
+"manages life cycle of share servers on its own. This behavior is defined by "
+"a flag ``driver_handles_share_servers`` in share service configuration.  "
+"When ``driver_handles_share_servers`` is set to ``True``, a share driver "
+"will be called to create share servers for shares using information provided "
+"within a share network. This information will be provided to one of the "
+"enabled network plug-ins that will handle reservation, creation and deletion "
+"of network resources including IP addresses and network interfaces."
 msgstr ""
 
 #: ../shared_file_systems_network_plugins.rst:25
-msgid "What network plugins are available?"
+msgid "What network plug-ins are available?"
 msgstr ""
 
 #: ../shared_file_systems_network_plugins.rst:27
 msgid ""
-"There are three different network plugins and five python classes in Manila:"
+"There are three different network plug-ins and five python classes in the "
+"Shared File Systems service:"
 msgstr ""
 
-#: ../shared_file_systems_network_plugins.rst:29
+#: ../shared_file_systems_network_plugins.rst:30
 msgid ""
-"Network plugin for using the OpenStack networking project `Neutron`. It "
-"allows one to use any network segmentation that Neutron supports. It is up "
-"to each share driver to support at least one network segmentation type."
+"Network plug-in for using the OpenStack Networking service. It allows to use "
+"any network segmentation that the Networking service supports. It is up to "
+"each share driver to support at least one network segmentation type."
 msgstr ""
 
-#: ../shared_file_systems_network_plugins.rst:33
+#: ../shared_file_systems_network_plugins.rst:34
 msgid ""
 "``manila.network.neutron.neutron_network_plugin.NeutronNetworkPlugin``. This "
-"is the default network plugin. It requires that ``neutron_net_id`` and "
-"``neutron_subnet_id`` are provided when defining the share network that will "
-"be used for the creation of share servers.  The user may define any number "
-"of share networks corresponding to the various physical network segments in "
-"a tenant environment."
+"is a default network plug-in. It requires the ``neutron_net_id`` and the "
+"``neutron_subnet_id`` to be provided when defining the share network that "
+"will be used for the creation of share servers. The user may define any "
+"number of share networks corresponding to the various physical network "
+"segments in a tenant environment."
 msgstr ""
 
-#: ../shared_file_systems_network_plugins.rst:40
+#: ../shared_file_systems_network_plugins.rst:41
 msgid ""
-"``manila.network.neutron.neutron_network_plugin.NeutronSingleNetworkPlug "
-"in``. This is a simplification of the previous case. It accepts values for "
-"``neutron_net_id`` and ``neutron_subnet_id`` from the Manila configuration "
-"file and uses one network for all shares."
+"``manila.network.neutron.neutron_network_plugin. "
+"NeutronSingleNetworkPlugin``. This is a simplification of the previous case. "
+"It accepts values for ``neutron_net_id`` and ``neutron_subnet_id`` from the "
+"``manila.conf`` configuration file and uses one network for all shares."
 msgstr ""
 
-#: ../shared_file_systems_network_plugins.rst:45
+#: ../shared_file_systems_network_plugins.rst:47
 msgid ""
 "When only a single network is needed, the NeutronSingleNetworkPlugin (1.b) "
 "is a simple solution. Otherwise NeutronNetworkPlugin (1.a) should be chosen."
 msgstr ""
 
-#: ../shared_file_systems_network_plugins.rst:48
+#: ../shared_file_systems_network_plugins.rst:50
 msgid ""
-"Network plugin for working with OpenStack networking from `Nova`. It "
-"supports either flat networks or VLAN-segmented networks."
+"Network plug-in for working with OpenStack Networking from the Compute "
+"service. It supports either flat networks or VLAN-segmented networks."
 msgstr ""
 
-#: ../shared_file_systems_network_plugins.rst:51
+#: ../shared_file_systems_network_plugins.rst:53
 msgid ""
-"``manila.network.nova_network_plugin.NovaNetworkPlugin``. This plugin serves "
-"the networking needs when ``Nova networking`` is configured in the cloud "
-"instead of Neutron. It requires a single parameter, ``nova_net_id``."
+"``manila.network.nova_network_plugin.NovaNetworkPlugin``. This plug-in "
+"serves the networking needs when ``Nova networking`` is configured in the "
+"cloud instead of Neutron. It requires a single parameter, ``nova_net_id``."
 msgstr ""
 
-#: ../shared_file_systems_network_plugins.rst:56
+#: ../shared_file_systems_network_plugins.rst:58
 msgid ""
-"``manila.network.nova_network_plugin.NovaSingleNetworkPlugin``. This one "
-"works in the same way as the previous one with one difference. It takes "
-"nova_net_id from the Shared File Systems service configuration file and "
-"creates share servers using only one network."
-msgstr ""
-
-#: ../shared_file_systems_network_plugins.rst:61
-msgid ""
-"When only a single network is needed, the NovaSingleNetworkPlugin (2.b) is a "
-"simple solution. Otherwise NovaNetworkPlugin (1.a) should be chosen."
+"``manila.network.nova_network_plugin.NovaSingleNetworkPlugin``. This plug-in "
+"works the same way as ``manila.network.nova_network_plugin."
+"NovaNetworkPlugin``, except it takes ``nova_net_id`` from the Shared File "
+"Systems service configuration file and creates the share servers using only "
+"one network."
 msgstr ""
 
 #: ../shared_file_systems_network_plugins.rst:64
 msgid ""
-"Network plugin for specifying networks independently from OpenStack "
-"networking services."
+"When only a single network is needed, the NovaSingleNetworkPlugin (2.b) is a "
+"simple solution. Otherwise NovaNetworkPlugin (2.a) should be chosen."
 msgstr ""
 
 #: ../shared_file_systems_network_plugins.rst:67
 msgid ""
+"Network plug-in for specifying networks independently from OpenStack "
+"networking services."
+msgstr ""
+
+#: ../shared_file_systems_network_plugins.rst:70
+msgid ""
 "``manila.network.standalone_network_plugin.StandaloneNetworkPlugin``. This "
 "plug-in uses a pre-existing network that is available to the manila-share "
 "host. This network may be handled either by OpenStack or be created "
-"independently by any other means. The plugin supports any type of network - "
-"flat and segmented. As above, it is completely up to the driver to support "
-"the network type for which the network plugin is configured."
+"independently by any other means. The plug-in supports any type of network - "
+"flat and segmented. As above, it is completely up to the share driver to "
+"support the network type for which the network plug-in is configured."
 msgstr ""
 
-#: ../shared_file_systems_network_plugins.rst:76
+#: ../shared_file_systems_network_plugins.rst:80
 msgid ""
-"These network plugins were introduced in the OpenStack Kilo release. In the "
+"These network plug-ins were introduced in the OpenStack Kilo release. In the "
 "OpenStack Juno version, only NeutronNetworkPlugin is available."
 msgstr ""
 
-#: ../shared_file_systems_network_plugins.rst:79
+#: ../shared_file_systems_network_plugins.rst:83
 msgid ""
-"More information about network plugins can be found in `Manila developer "
+"More information about network plug-ins can be found in `Manila developer "
 "documentation <http://docs.openstack.org/developer/manila/adminref/"
 "network_plugins.html>`_"
 msgstr ""
 
 #: ../shared_file_systems_networking.rst:7
 msgid ""
-"Instead of OpenStack Block Storage service, Shared File Systems service "
-"requires interaction with Networking service. The first of all, it because "
-"share services should have a possibility to manage share servers on its own. "
-"Also, lots of shared file systems provides have own access control systems "
-"and requires network connectivity with some external auth providers, like "
-"LDAP, Kerberos, or Microsoft Active Directory. So, management share services "
-"base on such back end needs some interacting with Networking service."
+"Unlike the OpenStack Block Storage service, the Shared File Systems service "
+"requires interaction with the Networking service. First of all, it is "
+"because the share services require the option to self-manage share servers. "
+"Also, for authentication and authorization of the clients, the Shared File "
+"Systems service can be optionally configured to work with different network "
+"authentication services, like LDAP, Kerberos protocols, or Microsoft Active "
+"Directory."
 msgstr ""
 
 #: ../shared_file_systems_quotas.rst:5
@@ -19799,45 +19998,19 @@ msgstr ""
 #: ../shared_file_systems_quotas.rst:10
 msgid ""
 "Limits are the resource limitations that are allowed for each tenant "
-"(project). An administrator can configure limits in the :file:`/etc/manila/"
-"manila.conf` file."
+"(project). An administrator can configure limits in the :file:`manila.conf` "
+"file."
 msgstr ""
 
-#: ../shared_file_systems_quotas.rst:14
-msgid ""
-"Users can query their rate and absolute limits. The absolute limits contain "
-"information about:"
+#: ../shared_file_systems_quotas.rst:13
+msgid "Users can query their rate and absolute limits."
 msgstr ""
 
-#: ../shared_file_systems_quotas.rst:17
-msgid "Total maximum share memory, in GBs."
-msgstr ""
-
-#: ../shared_file_systems_quotas.rst:19
-msgid "Total maximum snapshot memory, in GBs."
-msgstr ""
-
-#: ../shared_file_systems_quotas.rst:21
-msgid "Number of share-networks."
-msgstr ""
-
-#: ../shared_file_systems_quotas.rst:23
-msgid "Number of share-snapshots."
-msgstr ""
-
-#: ../shared_file_systems_quotas.rst:25
-msgid "Number of shares."
-msgstr ""
-
-#: ../shared_file_systems_quotas.rst:27
-msgid "Shares and total used memory, in GBs."
-msgstr ""
-
-#: ../shared_file_systems_quotas.rst:29
+#: ../shared_file_systems_quotas.rst:15
 msgid "To see the absolute limits, run:"
 msgstr ""
 
-#: ../shared_file_systems_quotas.rst:49
+#: ../shared_file_systems_quotas.rst:35
 msgid ""
 "Rate limits control the frequency at which users can issue specific API "
 "requests. Administrators use rate limiting to configure limits on the type "
@@ -19846,19 +20019,33 @@ msgid ""
 "processed during a one-minute period."
 msgstr ""
 
-#: ../shared_file_systems_quotas.rst:55
-msgid "To see the rate limits, run:"
+#: ../shared_file_systems_quotas.rst:41
+msgid ""
+"To set the API rate limits, add configuration to the :file:`etc/manila/api-"
+"paste.ini` file that is a part of the WSGI pipeline and defines the actual "
+"limits. You need to restart ``manila-api`` service after you edited :file:"
+"`etc/manila/api-paste.ini` file."
+msgstr ""
+
+#: ../shared_file_systems_quotas.rst:52
+msgid ""
+"Also, add ``ratelimit`` to ``noauth``, ``keystone``, ``keystone_nolimit`` "
+"parameters in ``[composite:openstack_share_api]`` group."
 msgstr ""
 
 #: ../shared_file_systems_quotas.rst:62
+msgid "To see the rate limits, run:"
+msgstr ""
+
+#: ../shared_file_systems_quotas.rst:76
 msgid "Quotas"
 msgstr ""
 
-#: ../shared_file_systems_quotas.rst:64
+#: ../shared_file_systems_quotas.rst:78
 msgid "Quota sets provide quotas management support."
 msgstr ""
 
-#: ../shared_file_systems_quotas.rst:66
+#: ../shared_file_systems_quotas.rst:80
 msgid ""
 "To list the quotas for a tenant or user, use **manila quota-show** command. "
 "If you specify the optional ``--user`` parameter, you get the quotas for "
@@ -19866,14 +20053,14 @@ msgid ""
 "quotas for the specified project."
 msgstr ""
 
-#: ../shared_file_systems_quotas.rst:84
+#: ../shared_file_systems_quotas.rst:98
 msgid ""
-"There are default quotas for a project that are set from :file:`/etc/manila/"
-"manila.conf` file. To list default quotas for a project, use **manila quota-"
-"defaults** command:"
+"There are default quotas for a project that are set from :file:`manila.conf` "
+"file. To list default quotas for a project, use **manila quota-defaults** "
+"command:"
 msgstr ""
 
-#: ../shared_file_systems_quotas.rst:101
+#: ../shared_file_systems_quotas.rst:115
 msgid ""
 "Administrator can update the quotas for a specified tenant or for a "
 "specified user by providing both ``--tenant`` and ``--user`` optional "
@@ -19881,21 +20068,15 @@ msgid ""
 "gigabytes``, and ``share-networks`` quotas."
 msgstr ""
 
-#: ../shared_file_systems_quotas.rst:110
+#: ../shared_file_systems_quotas.rst:124
 msgid ""
 "As administrator, you can also permit or deny the force-update of a quota "
 "that is already used and the requested value exceeds the configured quota. "
 "To force-update a quota, use ``force`` optional key."
 msgstr ""
 
-#: ../shared_file_systems_quotas.rst:118
+#: ../shared_file_systems_quotas.rst:132
 msgid "To revert quotas to default for a project or for a user, delete quotas:"
-msgstr ""
-
-#: ../shared_file_systems_quotas.rst:124
-msgid ""
-"It is possible to set quotas for a quota class and then check that the "
-"quotas were updated:"
 msgstr ""
 
 #: ../shared_file_systems_scheduling.rst:5
@@ -19904,46 +20085,47 @@ msgstr ""
 
 #: ../shared_file_systems_scheduling.rst:7
 msgid ""
-"Shared File Systems service provides unified access for variety of different "
-"types of shared file systems. To achieve this, Shared File Systems service "
-"use scheduler. Scheduler collects information from active share services and "
-"take decisions, what share service will be used to create new share. To "
-"manage this process Shared File Systems service provides Share types API."
+"The Shared File Systems service provides unified access for variety of "
+"different types of shared file systems. To achieve this, the Shared File "
+"Systems service uses a scheduler. The scheduler collects information from "
+"active share services and takes decisions, what share service will be used "
+"to create a new share. To manage this process, the Shared File Systems "
+"service provides Share types API."
 msgstr ""
 
-#: ../shared_file_systems_scheduling.rst:13
+#: ../shared_file_systems_scheduling.rst:14
 msgid ""
-"Share type is a list from key-value pairs called extra-specs. Some of them, "
-"called required and un-scoped extra-specs, scheduler uses for lookup the "
-"share service suitable for new share with specified share type. For more "
-"information about extra-specs and their type see `Capabilities and Extra-"
+"A share type is a list from key-value pairs called extra-specs. Some of "
+"them, called required and un-scoped extra-specs, scheduler uses for lookup "
+"the share service suitable for new share with specified share type. For more "
+"information about extra-specs and their type, see `Capabilities and Extra-"
 "Specs <http://docs.openstack.org/developer/manila/devref/"
 "capabilities_and_extra_spec s.html>`_ section in developer documentation."
 msgstr ""
 
-#: ../shared_file_systems_scheduling.rst:20
-msgid "In general scheduler workflow looks like:"
+#: ../shared_file_systems_scheduling.rst:21
+msgid "The general scheduler workflow in described below."
 msgstr ""
 
-#: ../shared_file_systems_scheduling.rst:22
+#: ../shared_file_systems_scheduling.rst:23
 msgid ""
-"Share services report information about number of existed pools, their "
+"Share services report information about number of existing pools, their "
 "capacities and capabilities."
 msgstr ""
 
-#: ../shared_file_systems_scheduling.rst:25
+#: ../shared_file_systems_scheduling.rst:26
 msgid ""
 "When request on share creation comes in, scheduler picks a service and pool "
 "that fits the need best to serve the request, using share type filters and "
 "back end capabilities. If back end capabilities passes thought all filters "
-"request to the selected back end where the target pool resides;"
+"request to the selected back end where the target pool resides."
 msgstr ""
 
-#: ../shared_file_systems_scheduling.rst:30
+#: ../shared_file_systems_scheduling.rst:31
 msgid ""
 "Share driver gets the message and lets the target pool serve the request as "
-"scheduler instructed. Share type extra-specs (scoped and un-scoped) are "
-"available for the driver implementation to use as-needed."
+"scheduler instructed. The scoped and un-scoped share type extra-specs are "
+"available for the driver implementation to use as needed."
 msgstr ""
 
 #: ../shared_file_systems_security_services.rst:5
@@ -20056,7 +20238,7 @@ msgstr ""
 
 #: ../shared_file_systems_security_services.rst:171
 msgid ""
-"Shared File Systems Storage allows you to update a security service fields "
+"Shared File Systems service allows you to update a security service fields "
 "using **manila security-service-update** command with optional arguments "
 "such as ``--dns-ip``, ``--server``, ``--domain``, ``--user``, ``--"
 "password``, ``--name``, or ``--description``."
@@ -20074,15 +20256,15 @@ msgstr ""
 
 #: ../shared_file_systems_services_manage.rst:7
 msgid ""
-"The Shared File Systems service provides API allows to Cloud Administrator "
-"manage running share services (`Share services API <http://developer."
-"openstack.org/api-ref-share-v2.html#share-services>`_). It hasn't exposed in "
-"CLI client yet. Using raw API calls, it is possible to get list of running "
-"services all kinds. To select only share services, you can pick items only "
-"have field ``binary`` equals to ``manila-share``. Aslo, you can enable and "
-"disable share services. Disabling means that share service excludes from "
-"scheduler cycle  and new shares will not be placed on disabled back end, but "
-"shares from this service stay available."
+"The Shared File Systems service provides API that allows to manage running "
+"share services (`Share services API <http://developer.openstack.org/api-ref-"
+"share-v2.html#share-services>`_). Using ``manila service-list`` command, it "
+"is possible to get a list of all kinds of running services. To select only "
+"share services, you can pick items that have field ``binary`` equals to "
+"``manila-share``. Also, you can enable or disable share services using raw "
+"API requests. Disabling means that share service excludes from scheduler "
+"cycle and new shares will not be placed on disabled back end, but shares "
+"from this service stay available."
 msgstr ""
 
 #: ../shared_file_systems_share_management.rst:5
@@ -20091,20 +20273,11 @@ msgstr ""
 
 #: ../shared_file_systems_share_management.rst:7
 msgid ""
-"The default configuration of the Shared File Systems service uses the "
-"OpenStack Block Storage based back end. In that case, the Shared File "
-"Systems service cares about everything (VMs, networking, keypairs, security "
-"groups) by itself. It is not production solution, but can help you to "
-"understand how the Shared File Systems service works."
-msgstr ""
-
-#: ../shared_file_systems_share_management.rst:13
-msgid ""
 "A share is a remote, mountable file system. You can mount a share to and "
 "access a share from several hosts by several users at a time."
 msgstr ""
 
-#: ../shared_file_systems_share_management.rst:16
+#: ../shared_file_systems_share_management.rst:10
 msgid ""
 "You can create a share and associate it with a network, list shares, and "
 "show information for, update, and delete a specified share. You can also "
@@ -20112,27 +20285,27 @@ msgid ""
 "share that you want to snapshot."
 msgstr ""
 
-#: ../shared_file_systems_share_management.rst:21
+#: ../shared_file_systems_share_management.rst:15
 msgid "The shares are based on of the supported Shared File Systems protocols:"
 msgstr ""
 
-#: ../shared_file_systems_share_management.rst:23
+#: ../shared_file_systems_share_management.rst:17
 msgid "*NFS*. Network File System (NFS)."
 msgstr ""
 
-#: ../shared_file_systems_share_management.rst:24
+#: ../shared_file_systems_share_management.rst:18
 msgid "*CIFS*. Common Internet File System (CIFS)."
 msgstr ""
 
-#: ../shared_file_systems_share_management.rst:25
+#: ../shared_file_systems_share_management.rst:19
 msgid "*GLUSTERFS*. Gluster file system (GlusterFS)."
 msgstr ""
 
-#: ../shared_file_systems_share_management.rst:26
+#: ../shared_file_systems_share_management.rst:20
 msgid "*HDFS*. Hadoop Distributed File System (HDFS)."
 msgstr ""
 
-#: ../shared_file_systems_share_management.rst:30
+#: ../shared_file_systems_share_management.rst:22
 msgid ""
 "The Shared File Systems service provides set of drivers that enable you to "
 "use various network file storage devices, instead of the base "
@@ -20146,20 +20319,21 @@ msgstr ""
 
 #: ../shared_file_systems_share_networks.rst:7
 msgid ""
-"Share network is an entity that encapsulates interaction with Networking "
-"service. If selected driver runs in mode requiring such kind of interaction, "
-"you need to specify share network when share creates."
+"Share network is an entity that encapsulates interaction with the OpenStack "
+"Networking service. If the share driver that you selected runs in a mode "
+"requiring Networking service interaction, specify the share network when "
+"creating a share network."
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:12
+#: ../shared_file_systems_share_networks.rst:13
 msgid "How to create share network"
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:14
+#: ../shared_file_systems_share_networks.rst:15
 msgid "List networks in a tenant, run:"
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:28
+#: ../shared_file_systems_share_networks.rst:29
 msgid ""
 "A share network stores network information that share servers can use where "
 "shares are hosted. You can associate a share with a single share network. "
@@ -20167,70 +20341,70 @@ msgid ""
 "share network through which instances can access the share."
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:33
+#: ../shared_file_systems_share_networks.rst:34
 msgid ""
 "When you create a share network, you can specify only one type of network:"
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:35
+#: ../shared_file_systems_share_networks.rst:36
 msgid ""
 "OpenStack Networking (neutron). Specify a network ID and subnet ID. In this "
 "case ``manila.network.nova_network_plugin.NeutronNetworkPlugin`` will be "
 "used."
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:39
+#: ../shared_file_systems_share_networks.rst:40
 msgid ""
 "Legacy networking (nova-network). Specify a network ID. In this case "
 "``manila.network.nova_network_plugin.NoveNetworkPlugin`` will be used."
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:43
+#: ../shared_file_systems_share_networks.rst:44
 msgid ""
 "For more information about supported plug-ins for share networks, see :ref:"
 "`shared_file_systems_network_plugins`."
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:46
+#: ../shared_file_systems_share_networks.rst:47
 msgid "A share network has these attributes:"
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:48
+#: ../shared_file_systems_share_networks.rst:49
 msgid ""
 "The IP block in Classless Inter-Domain Routing (CIDR) notation from which to "
 "allocate the network."
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:51
+#: ../shared_file_systems_share_networks.rst:52
 msgid "The IP version of the network."
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:53
+#: ../shared_file_systems_share_networks.rst:54
 msgid "The network type, which is `vlan`, `vxlan`, `gre`, or `flat`."
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:55
+#: ../shared_file_systems_share_networks.rst:56
 msgid ""
 "If the network uses segmentation, a segmentation identifier. For example, "
 "VLAN, VXLAN, and GRE networks use segmentation."
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:58
+#: ../shared_file_systems_share_networks.rst:59
 msgid "To create a share network with private network and subnetwork, run:"
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:81
+#: ../shared_file_systems_share_networks.rst:82
 msgid ""
 "The ``segmentation_id``, ``cidr``, ``ip_version``, and ``network_type`` "
 "share network attributes are automatically set to the values determined by "
 "the network provider."
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:85
+#: ../shared_file_systems_share_networks.rst:86
 msgid "Check network list, run:"
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:96
+#: ../shared_file_systems_share_networks.rst:97
 msgid ""
 "If you configured the Generic driver with ``driver_handles_share_servers = "
 "True`` (with the share servers) and had already some operations in the "
@@ -20239,13 +20413,13 @@ msgid ""
 "inner usage."
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:114
+#: ../shared_file_systems_share_networks.rst:115
 msgid ""
 "You also can see detailed information about the share network including "
 "``network_type``, ``segmentation_id`` fields:"
 msgstr ""
 
-#: ../shared_file_systems_share_networks.rst:138
+#: ../shared_file_systems_share_networks.rst:139
 msgid ""
 "You also can add and remove the security services to the share network. For "
 "details, see :ref:`shared_file_systems_security_services`."
@@ -20258,11 +20432,11 @@ msgstr ""
 #: ../shared_file_systems_share_resize.rst:7
 msgid ""
 "To change file share size, use :command:`manila extend` and :command:`manila "
-"shrink`. For most drivers it is safe operation. In case of using generic "
-"driver it is better to create share snapshot for backup."
+"shrink`. For most drivers it is safe operation. If you want to be sure that "
+"your data is safe, you can make a share back up by creating a snapshot of it."
 msgstr ""
 
-#: ../shared_file_systems_share_resize.rst:11
+#: ../shared_file_systems_share_resize.rst:12
 msgid ""
 "You can extend and shrink the share with **manila extend** and **manila "
 "shrink** commands correspondingly and specifying the share and new size that "
@@ -20271,17 +20445,17 @@ msgid ""
 "greater value than the current share size."
 msgstr ""
 
-#: ../shared_file_systems_share_resize.rst:17
+#: ../shared_file_systems_share_resize.rst:18
 msgid ""
 "While extending the share gets ``extending`` status that means that the "
 "increase share size request was issued successfully."
 msgstr ""
 
-#: ../shared_file_systems_share_resize.rst:20
+#: ../shared_file_systems_share_resize.rst:21
 msgid "To extend the share and check the result, run:"
 msgstr ""
 
-#: ../shared_file_systems_share_resize.rst:53
+#: ../shared_file_systems_share_resize.rst:54
 msgid ""
 "While shrinking the share gets ``shrinking`` status that means that the "
 "decrease share size request was issued successfully. To shrink the share and "
@@ -20295,13 +20469,13 @@ msgstr ""
 #: ../shared_file_systems_share_types.rst:7
 msgid ""
 "A share type enables you to filter or choose back ends before you create a "
-"share. A share type behaves in the same way as a Block Storage volume type "
-"behaves."
+"share and to set data for the share driver. A share type behaves in the same "
+"way as a Block Storage volume type behaves."
 msgstr ""
 
 #: ../shared_file_systems_share_types.rst:11
 msgid ""
-"In the manila configuration file :file:`/etc/manila/manila.conf` "
+"In the Shared File Systems configuration file :file:`manila.conf`, the "
 "administrator can set the share type used by default for the share creation "
 "and then create a default share type."
 msgstr ""
@@ -20435,9 +20609,9 @@ msgstr ""
 
 #: ../shared_file_systems_share_types.rst:129
 msgid ""
-"You can manage the access to the private for the different projects: add "
-"access, remove access, and get information about access for a specified "
-"private share type."
+"You can manage the access to the private share type for the different "
+"projects: add access, remove access, and get information about access for a "
+"specified private share type."
 msgstr ""
 
 #: ../shared_file_systems_share_types.rst:133
@@ -20479,9 +20653,8 @@ msgstr ""
 
 #: ../shared_file_systems_snapshots.rst:7
 msgid ""
-"The Shared File Systems service provides mechanism of snapshots to help "
-"users to restore theirs own data. Use :command:`manila snapshot-create` for "
-"it."
+"The Shared File Systems service provides a snapshot mechanism to help users "
+"restore data by running the `manila snapshot-create` command."
 msgstr ""
 
 #: ../shared_file_systems_snapshots.rst:10
@@ -20492,7 +20665,7 @@ msgstr ""
 
 #: ../shared_file_systems_snapshots.rst:13
 msgid ""
-"To import snapshot, create a new share with appropriate size, attach it to "
+"To import a snapshot, create a new share with appropriate size, attach it to "
 "instance and then copy file from archive to attached file system."
 msgstr ""
 
@@ -20541,7 +20714,7 @@ msgid "Troubleshoot Shared File Systems service"
 msgstr ""
 
 #: ../shared_file_systems_troubleshoot.rst:8
-msgid "Failures in share service during share creation"
+msgid "Failures in Share File Systems service during a share creation"
 msgstr ""
 
 #: ../shared_file_systems_troubleshoot.rst:10
@@ -20551,22 +20724,22 @@ msgstr ""
 
 #: ../shared_file_systems_troubleshoot.rst:12
 msgid ""
-"Make sure, that share services are running into debug mode. If it is not "
-"true, you will not get any tips from logs how to fix your issue."
+"Make sure, that share services are running in debug mode. If the debug mode "
+"is not set, you will not get any tips from logs how to fix your issue."
 msgstr ""
 
 #: ../shared_file_systems_troubleshoot.rst:15
 msgid ""
-"Find what a share service holds specified share. Do to that, run command :"
-"command:`manila show <share_id_or_name>` and find share host in the output. "
-"Host uniquely identifies share service holds broken share."
+"Find what share service holds a specified share. Do to that, run command :"
+"command:`manila show <share_id_or_name>` and find a share host in the "
+"output. Host uniquely identifies what share service holds the broken share."
 msgstr ""
 
 #: ../shared_file_systems_troubleshoot.rst:19
 msgid ""
 "Look thought logs of this share service. Usually, it can be found at ``/etc/"
 "var/log/manila-share.log``. This log should contain kind of traceback with "
-"extra information to help you find origin of issues."
+"extra information to help you to find the origin of issues."
 msgstr ""
 
 #: ../shared_file_systems_troubleshoot.rst:24
@@ -20590,40 +20763,41 @@ msgid ""
 "specs are pointed in the right way."
 msgstr ""
 
-#: ../shared_file_systems_troubleshoot.rst:39
+#: ../shared_file_systems_troubleshoot.rst:38
 msgid "Created share is unreachable"
 msgstr ""
 
-#: ../shared_file_systems_troubleshoot.rst:41
+#: ../shared_file_systems_troubleshoot.rst:40
 msgid ""
-"By default new share doesn't have any active access rules. So, to provide "
+"By default, a new share does not have any active access rules. To provide "
 "access to new created share, you need to create appropriate access rule with "
 "right value that defines access."
 msgstr ""
 
-#: ../shared_file_systems_troubleshoot.rst:46
-msgid "Service become unavailable after upgrade"
+#: ../shared_file_systems_troubleshoot.rst:45
+msgid "Service becomes unavailable after upgrade"
 msgstr ""
 
-#: ../shared_file_systems_troubleshoot.rst:48
+#: ../shared_file_systems_troubleshoot.rst:47
 msgid ""
-"After upgrading Shared File Systems service from version v1 to version v2.x, "
-"please be attentive to update service endpoint in OpenStack Identity "
+"After upgrading the Shared File Systems service from version v1 to version "
+"v2.x, please be attentive to update service endpoint in OpenStack Identity "
 "Service. Use :command:`keystone service-list` to get service type related to "
 "Shared File Systems service and then :command:`keystone service-list --"
-"service <share-service-type>`. You will get endpoints expected from running "
-"Shared File Systems service. Make sure that these endpoints are update. If "
-"it is not true, you need delete outdated endpoints and create a new one."
+"service <share-service-type>` command. You will get endpoints expected from "
+"running Shared File Systems service. Make sure that these endpoints are "
+"updated. If it is not true, you need to delete outdated endpoints and create "
+"new ones."
 msgstr ""
 
-#: ../shared_file_systems_troubleshoot.rst:59
+#: ../shared_file_systems_troubleshoot.rst:56
 msgid "Failures during management of internal resources"
 msgstr ""
 
-#: ../shared_file_systems_troubleshoot.rst:61
+#: ../shared_file_systems_troubleshoot.rst:58
 msgid ""
 "Some drivers in Shared File Systems service can create service entities, "
-"like servers and networks. If it is necessary to reach it you can login in "
+"like servers and networks. If it is necessary to reach it you can log in to "
 "tenant ``service`` and get manual control over it."
 msgstr ""
 
@@ -20635,7 +20809,7 @@ msgstr ""
 msgid ""
 "Alarms provide user-oriented Monitoring-as-a-Service for resources running "
 "on OpenStack. This type of monitoring ensures you can automatically scale in "
-"or out a group of instances through the Orchestration module, but you can "
+"or out a group of instances through the Orchestration service, but you can "
 "also use alarms for general-purpose awareness of your cloud resources' "
 "health."
 msgstr ""
@@ -20713,7 +20887,7 @@ msgstr ""
 
 #: ../telemetry-alarms.rst:49
 msgid ""
-"The Telemetry module also supports the concept of a meta-alarm, which "
+"The Telemetry service also supports the concept of a meta-alarm, which "
 "aggregates over the current state of a set of underlying basic alarms "
 "combined via a logical operator (AND or OR)."
 msgstr ""
@@ -20739,7 +20913,7 @@ msgid ""
 "the other extreme, you could have widely dimensioned alarms where this "
 "selection identifies many resources over which the statistic is aggregated. "
 "For example all instances booted from a particular image or all instances "
-"with matching user metadata (the latter is how the Orchestration module "
+"with matching user metadata (the latter is how the Orchestration service "
 "identifies autoscaling groups)."
 msgstr ""
 
@@ -21076,7 +21250,7 @@ msgstr ""
 
 #: ../telemetry-best-practices.rst:11
 msgid ""
-"The Telemetry module collects a continuously growing set of data. Not all "
+"The Telemetry service collects a continuously growing set of data. Not all "
 "the data will be relevant for a cloud administrator to monitor."
 msgstr ""
 
@@ -21311,7 +21485,7 @@ msgstr ""
 
 #: ../telemetry-data-collection.rst:41
 msgid ""
-"The Telemetry module has a separate agent that is responsible for consuming "
+"The Telemetry service has a separate agent that is responsible for consuming "
 "notifications, namely the notification agent. This component is responsible "
 "for consuming from the message bus and transforming notifications into "
 "events and measurement samples. Beginning in the Liberty release, the "
@@ -21325,7 +21499,7 @@ msgstr ""
 msgid ""
 "The different OpenStack services emit several notifications about the "
 "various types of events that happen in the system during normal operation. "
-"Not all these notifications are consumed by the Telemetry module, as the "
+"Not all these notifications are consumed by the Telemetry service, as the "
 "intention is only to capture the billable events and notifications that can "
 "be used for monitoring or profiling purposes. The notification agent filters "
 "by the event type, that is contained by each notification message. The "
@@ -21502,7 +21676,7 @@ msgstr ""
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-measurements.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 #: ../telemetry-data-collection.rst:115 ../telemetry-measurements.rst:1249
-msgid "Orchestration module"
+msgid "Orchestration service"
 msgstr ""
 
 #: ../telemetry-data-collection.rst:115
@@ -21654,7 +21828,7 @@ msgstr ""
 
 #: ../telemetry-data-collection.rst:204
 msgid ""
-"The Telemetry module is intended to store a complex picture of the "
+"The Telemetry service is intended to store a complex picture of the "
 "infrastructure. This goal requires additional information than what is "
 "provided by the events and notifications published by each service. Some "
 "information is not emitted directly, like resource usage of the VM instances."
@@ -21740,7 +21914,7 @@ msgstr ""
 
 #: ../telemetry-data-collection.rst:275
 msgid ""
-"To install and configure this service use the `Install the Telemetry module "
+"To install and configure this service use the `Add the Telemetry service "
 "<http://docs.openstack.org/liberty/install-guide-ubuntu/ceilometer.html>`__ "
 "section in the OpenStack Installation Guide."
 msgstr ""
@@ -21798,7 +21972,7 @@ msgstr ""
 msgid ""
 "The list of collected meters can be found in :ref:`telemetry-compute-"
 "meters`. The support column provides the information that which meter is "
-"available for each hypervisor supported by the Telemetry module."
+"available for each hypervisor supported by the Telemetry service."
 msgstr ""
 
 #: ../telemetry-data-collection.rst:318
@@ -21995,9 +22169,9 @@ msgstr ""
 
 #: ../telemetry-data-collection.rst:454
 msgid ""
-"While most parts of the data collection in the Telemetry module are "
+"While most parts of the data collection in the Telemetry service are "
 "automated, Telemetry provides the possibility to submit samples via the REST "
-"API to allow users to send custom samples into this module."
+"API to allow users to send custom samples into this service."
 msgstr ""
 
 #: ../telemetry-data-collection.rst:458
@@ -22581,7 +22755,7 @@ msgstr ""
 
 #: ../telemetry-data-collection.rst:865
 msgid ""
-"The Telemetry module collects a subset of the meters by filtering "
+"The Telemetry service collects a subset of the meters by filtering "
 "notifications emitted by other OpenStack services. Starting with the Liberty "
 "release, you can find the meter definitions in a separate configuration "
 "file, called :file:`ceilometer/meter/data/meter.yaml`. This enables "
@@ -22677,8 +22851,8 @@ msgid ""
 "This script outputs what volumes or snapshots were created, deleted, or "
 "exists in a given period of time and some information about these volumes or "
 "snapshots. Information about the existence and size of volumes and snapshots "
-"is store in the Telemetry module. This data is also stored as an event which "
-"is the recommended usage as it provides better indexing of data."
+"is store in the Telemetry service. This data is also stored as an event "
+"which is the recommended usage as it provides better indexing of data."
 msgstr ""
 
 #: ../telemetry-data-collection.rst:979
@@ -22693,7 +22867,7 @@ msgstr ""
 
 #: ../telemetry-data-collection.rst:988
 msgid ""
-"The Telemetry module has a separate service that is responsible for "
+"The Telemetry service has a separate service that is responsible for "
 "persisting the data that comes from the pollsters or is received as "
 "notifications. The data can be stored in a file or a database back end, for "
 "which the list of supported databases can be found in :ref:`telemetry-"
@@ -22804,7 +22978,7 @@ msgstr ""
 
 #: ../telemetry-data-collection.rst:1054
 msgid ""
-"The Telemetry module supports sending samples to an external HTTP target. "
+"The Telemetry service supports sending samples to an external HTTP target. "
 "The samples are sent without any modification. To set this option as the "
 "collector's target, the ``dispatcher`` has to be changed to ``http`` in the :"
 "file:`ceilometer.conf` configuration file. For the list of options that you "
@@ -22832,7 +23006,7 @@ msgstr ""
 
 #: ../telemetry-data-collection.rst:1072
 msgid ""
-"The Telemetry module supports sending the metering data to Gnocchi back end "
+"The Telemetry service supports sending the metering data to Gnocchi back end "
 "through the gnocchi dispatcher. To set this option as the target, change the "
 "``dispatcher`` to ``gnocchi`` in the :file:`ceilometer.conf` configuration "
 "file."
@@ -22852,11 +23026,11 @@ msgstr ""
 
 #: ../telemetry-data-retrieval.rst:5
 msgid ""
-"The Telemetry module offers several mechanisms from which the persisted data "
-"can be accessed. As described in :ref:`telemetry-system-architecture` and "
-"in :ref:`telemetry-data-collection`, the collected information can be stored "
-"in one or more database back ends, which are hidden by the Telemetry RESTful "
-"API."
+"The Telemetry service offers several mechanisms from which the persisted "
+"data can be accessed. As described in :ref:`telemetry-system-architecture` "
+"and in :ref:`telemetry-data-collection`, the collected information can be "
+"stored in one or more database back ends, which are hidden by the Telemetry "
+"RESTful API."
 msgstr ""
 
 #: ../telemetry-data-retrieval.rst:12
@@ -22873,7 +23047,7 @@ msgstr ""
 
 #: ../telemetry-data-retrieval.rst:19
 msgid ""
-"The Telemetry module provides a RESTful API, from which the collected "
+"The Telemetry service provides a RESTful API, from which the collected "
 "samples and all the related information can be retrieved, like the list of "
 "meters, alarm definitions and so forth."
 msgstr ""
@@ -23155,7 +23329,7 @@ msgstr ""
 
 #: ../telemetry-data-retrieval.rst:180
 msgid ""
-"The Telemetry module provides a command line client, with which the "
+"The Telemetry service provides a command line client, with which the "
 "collected data is available just as the alarm definition and retrieval "
 "options. The client uses the Telemetry RESTful API in order to execute the "
 "requested operations."
@@ -23172,7 +23346,7 @@ msgstr ""
 
 #: ../telemetry-data-retrieval.rst:193
 msgid ""
-"The Telemetry module captures the user-visible resource usage data. "
+"The Telemetry service captures the user-visible resource usage data. "
 "Therefore the database will not contain any data without the existence of "
 "these resources, like VM images in the OpenStack Image service."
 msgstr ""
@@ -23376,7 +23550,7 @@ msgstr ""
 
 #: ../telemetry-data-retrieval.rst:468
 msgid ""
-"The Telemetry module provides several transport methods to forward the data "
+"The Telemetry service provides several transport methods to forward the data "
 "collected to the ceilometer-collector service or to an external system. The "
 "consumers of this data are widely different, like monitoring systems, for "
 "which data loss is acceptable and billing systems, which require reliable "
@@ -23394,8 +23568,8 @@ msgstr ""
 #: ../telemetry-data-retrieval.rst:480
 msgid ""
 "To solve the above mentioned problem, the notion of multi-publisher can be "
-"configured for each datapoint within the Telemetry module, allowing the same "
-"technical meter or event to be published multiple times to multiple "
+"configured for each datapoint within the Telemetry service, allowing the "
+"same technical meter or event to be published multiple times to multiple "
 "destinations, each potentially using a different transport."
 msgstr ""
 
@@ -23596,9 +23770,9 @@ msgstr ""
 
 #: ../telemetry-events.rst:5
 msgid ""
-"In addition to meters, the Telemetry module collects events triggered within "
-"an OpenStack environment. This section provides a brief summary of the "
-"events format in the Telemetry module."
+"In addition to meters, the Telemetry service collects events triggered "
+"within an OpenStack environment. This section provides a brief summary of "
+"the events format in the Telemetry service."
 msgstr ""
 
 #: ../telemetry-events.rst:9
@@ -23616,7 +23790,7 @@ msgstr ""
 
 #: ../telemetry-events.rst:17
 msgid ""
-"To enable the creation and storage of events in the Telemetry module "
+"To enable the creation and storage of events in the Telemetry service "
 "``store_events`` option needs to be set to ``True``. For further "
 "configuration options, see the event section in the `OpenStack Configuration "
 "Reference <http://docs.openstack.org/kilo/config-reference/content/"
@@ -23626,7 +23800,7 @@ msgstr ""
 #: ../telemetry-events.rst:24
 msgid ""
 "It is advisable to set ``disable_non_metric_meters`` to ``True`` when "
-"enabling events in the Telemetry module. The Telemetry module historically "
+"enabling events in the Telemetry service. The Telemetry service historically "
 "represented events as metering data, which may create duplication of data if "
 "both events and non-metric meters are enabled."
 msgstr ""
@@ -23637,7 +23811,7 @@ msgstr ""
 
 #: ../telemetry-events.rst:32
 msgid ""
-"Events captured by the Telemetry module are represented by five key "
+"Events captured by the Telemetry service are represented by five key "
 "attributes:"
 msgstr ""
 
@@ -23739,7 +23913,7 @@ msgstr ""
 
 #: ../telemetry-events.rst:86
 msgid ""
-"The default definition file included with the Telemetry module contains a "
+"The default definition file included with the Telemetry service contains a "
 "list of known notifications and useful traits. The mappings provided can be "
 "modified to include more or less data according to user requirements."
 msgstr ""
@@ -23847,7 +24021,7 @@ msgstr ""
 
 #: ../telemetry-measurements.rst:7
 msgid ""
-"The Telemetry module collects meters within an OpenStack deployment. This "
+"The Telemetry service collects meters within an OpenStack deployment. This "
 "section provides a brief summary about meters format and origin and also "
 "contains the list of available meters."
 msgstr ""
@@ -23935,12 +24109,12 @@ msgstr ""
 #: ../telemetry-measurements.rst:73
 msgid ""
 "Measurements are grouped by services which are polled by Telemetry or emit "
-"notifications that this module consumes."
+"notifications that this service consumes."
 msgstr ""
 
 #: ../telemetry-measurements.rst:78
 msgid ""
-"The Telemetry module supports storing notifications as events. This "
+"The Telemetry service supports storing notifications as events. This "
 "functionality was added later, therefore the list of meters still contains "
 "existence type and other event related items. The proper way of using "
 "Telemetry is to configure it to use the event store and turn off the "
@@ -24656,7 +24830,7 @@ msgstr ""
 
 #: ../telemetry-measurements.rst:376
 msgid ""
-"The Telemetry module supports to create new meters by using transformers. "
+"The Telemetry service supports to create new meters by using transformers. "
 "For more details about transformers see :ref:`telemetry-transformers`. Among "
 "the meters gathered from libvirt and Hyper-V there are a few ones which are "
 "generated from other meters. The list of meters that are created by using "
@@ -26756,7 +26930,7 @@ msgid "network.serv\\ ices.firewal\\ l.rule.update"
 msgstr ""
 
 #: ../telemetry-measurements.rst:1250
-msgid "The following meters are collected for the Orchestration module:"
+msgid "The following meters are collected for the Orchestration service:"
 msgstr ""
 
 #: ../telemetry-measurements.rst:1257
@@ -26930,13 +27104,13 @@ msgstr ""
 
 #: ../telemetry-system-architecture.rst:7
 msgid ""
-"The Telemetry module uses an agent-based architecture. Several modules "
+"The Telemetry service uses an agent-based architecture. Several modules "
 "combine their responsibilities to collect data, store samples in a database, "
 "or provide an API service for handling incoming requests."
 msgstr ""
 
 #: ../telemetry-system-architecture.rst:11
-msgid "The Telemetry module is built from the following agents and services:"
+msgid "The Telemetry service is built from the following agents and services:"
 msgstr ""
 
 #: ../telemetry-system-architecture.rst:14
@@ -27108,7 +27282,7 @@ msgstr ""
 
 #: ../telemetry-system-architecture.rst:109
 msgid ""
-"The Telemetry module collects information about the virtual machines, which "
+"The Telemetry service collects information about the virtual machines, which "
 "requires close connection to the hypervisor that runs on the compute hosts."
 msgstr ""
 
@@ -27194,7 +27368,7 @@ msgstr ""
 
 #: ../telemetry-system-architecture.rst:171
 msgid ""
-"This module of OpenStack uses OpenStack Identity for authenticating and "
+"This service of OpenStack uses OpenStack Identity for authenticating and "
 "authorizing users. The required configuration options are listed in the "
 "`Telemetry section <http://docs.openstack.org/kilo/config-reference/content/"
 "ch_configuring-openstack-telemetry.html>`__ in the *OpenStack Configuration "
@@ -27225,7 +27399,7 @@ msgstr ""
 
 #: ../telemetry-troubleshooting-guide.rst:7
 msgid ""
-"The Telemetry module has similar log settings as the other OpenStack "
+"The Telemetry service has similar log settings as the other OpenStack "
 "services. Multiple options are available to change the target of logging, "
 "the format of the log entries and the log levels."
 msgstr ""
@@ -27371,25 +27545,26 @@ msgstr ""
 
 #: ../telemetry.rst:15
 msgid ""
-"The Telemetry module was originally designed to support billing systems for "
+"The Telemetry service was originally designed to support billing systems for "
 "OpenStack cloud resources. This project only covers the metering portion of "
-"the required processing for billing. This module collects information about "
+"the required processing for billing. This service collects information about "
 "the system and stores it in the form of samples in order to provide data "
 "about anything that can be billed."
 msgstr ""
 
 #: ../telemetry.rst:21
 msgid ""
-"In addition to system measurements, the Telemetry module also captures event "
-"notifications triggered when various actions are executed in the OpenStack "
-"system. This data is captured as Events and stored alongside metering data."
+"In addition to system measurements, the Telemetry service also captures "
+"event notifications triggered when various actions are executed in the "
+"OpenStack system. This data is captured as Events and stored alongside "
+"metering data."
 msgstr ""
 
 #: ../telemetry.rst:26
 msgid ""
 "The list of meters is continuously growing, which makes it possible to use "
 "the data collected by Telemetry for different purposes, other than billing. "
-"For example, the autoscaling feature in the Orchestration module can be "
+"For example, the autoscaling feature in the Orchestration service can be "
 "triggered by alarms this module sets and then gets notified within Telemetry."
 msgstr ""
 
