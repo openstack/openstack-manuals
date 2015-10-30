@@ -14,6 +14,13 @@ For a detailed description of the Networking API abstractions and their
 attributes, see the `OpenStack Networking API v2.0
 Reference <http://developer.openstack.org/api-ref-networking-v2.html>`__.
 
+.. Note::
+
+    If you use the Networking service, do not run the Compute
+    nova-network service (like you do in traditional Compute deployments).
+    When you configure networking, see the Compute-related topics in this
+    Networking section.
+
 Networking API
 ~~~~~~~~~~~~~~
 

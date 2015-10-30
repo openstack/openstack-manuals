@@ -11,9 +11,9 @@ advanced ``neutron`` and ``nova`` command-line interface (CLI) commands.
    :maxdepth: 2
 
    networking_introduction.rst
+   networking_arch.rst
    networking_config-plugins.rst
    networking_config-agents.rst
-   networking_arch.rst
    networking_config-identity.rst
    networking_adv-config.rst
    networking_multi-dhcp-agents.rst
