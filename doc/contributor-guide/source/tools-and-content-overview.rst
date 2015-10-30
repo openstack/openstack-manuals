@@ -47,7 +47,7 @@ audience.
 The developer documentation serves both Python developers who want to work on
 OpenStack code and web developers who work with the OpenStack API.
 
-What docs do where?
+What docs go where?
 ~~~~~~~~~~~~~~~~~~~
 
 Refer to :ref:`content-specs` for a description of many documents. A long
