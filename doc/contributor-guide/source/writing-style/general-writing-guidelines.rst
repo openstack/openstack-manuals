@@ -109,10 +109,9 @@ later (from the users' perspective).
 | **Do not use**                     | **Use**                               |
 +====================================+=======================================+
 | The product will prompt you to     | The product prompts you to verify     |
-| verify the deletion. After you log | the deletion.                         |
-| in, your account will then begin   | After you log in, your account you    |
-| the verification process.          | account begins the verification       |
-|                                    | process.                              |
+| verify the deletion. After you log | the deletion. After you log in, your  |
+| in, your account will then begin   | account begins the verification       |
+| the verification process.          | process.                              |
 +------------------------------------+---------------------------------------+
 
 Write in second person
