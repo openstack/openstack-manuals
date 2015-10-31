@@ -10,9 +10,11 @@ on the conversion, see `Doc Migration from DocBook to RST`_.
 
 To work on the RST source files, find the :file:`/doc/guide/source/` directory
 in a given OpenStack project. These files are built to
-*docs.openstack.org/<guide-name>*, for example, http://docs.openstack.org/user-guide-admin.
+*docs.openstack.org/<guide-name>*, for example,
+http://docs.openstack.org/user-guide-admin.
 
-Many cross-project manuals are in the http://git.openstack.org/cgit/openstack/openstack-manuals/tree/ project.
+Many cross-project manuals are in the
+http://git.openstack.org/cgit/openstack/openstack-manuals/tree/ project.
 
 To work on the DocBook and WADL source files for http://developer.openstack.org,
 look for the http://git.openstack.org/cgit/openstack/api-site project
@@ -31,8 +33,8 @@ following primary projects:
 * Identity service (keystone)
 * Image service (glance)
 * Networking service (neutron)
-* Block storage service (cinder)
-* Object storage service (swift)
+* Block Storage service (cinder)
+* Object Storage service (swift)
 
 The Documentation program has cross-project liaisons (CPLs) who assist with
 subject matter questions, reviews, doc bug triaging, and patching docs. Refer
