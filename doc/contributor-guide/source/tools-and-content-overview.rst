@@ -115,7 +115,7 @@ sites are wider coverage of doc strings, API doc, i18N methodology, and
 architecture concepts that can help developers.
 
 RST stands for ReStructured Text, a simple markup syntax that can be built
-with Sphinx. Read more at: `Sphinx documentation`_.
+with Sphinx. Read more at `Sphinx documentation`_.
 
 Operations Guide (DocBook 5)
 ----------------------------
@@ -141,5 +141,5 @@ The release notes are available in the Git repository.
 .. _`Speciality Teams`: https://wiki.openstack.org/wiki/Documentation/SpecialityTeams
 .. _`documentation cross-project liaisons`: https://wiki.openstack.org/wiki/CrossProjectLiaisons#Documentation
 .. _`openstack-doc-tools`: http://git.openstack.org/cgit/openstack/openstack-doc-tools/tree/README.rst
-.. _`Sphinx documentation`: http://sphinx-doc.org/rest.html.
+.. _`Sphinx documentation`: http://sphinx-doc.org/rest.html
 .. _`Transition Guide`: http://docbook.org/docs/howto/
