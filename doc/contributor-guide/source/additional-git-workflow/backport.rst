@@ -1,4 +1,3 @@
-
 .. _backport:
 
 Backport a change
@@ -12,15 +11,16 @@ Configuration Reference, and common directory). For example:
 
   .. code-block:: console
 
-     backport: icehouse
+     backport: liberty
 
 * To backport to multiple branches:
 
   .. code-block:: console
 
-     backport: icehouse kilo
+     backport: liberty kilo
 
-* If no backporting is needed:
+* If no backporting is needed, do not add the ``backport`` line,
+  or explicitly add:
 
   .. code-block:: console
 
