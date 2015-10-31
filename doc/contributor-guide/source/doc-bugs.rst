@@ -18,7 +18,7 @@ Bugs differ depending on:
 * The required changes:
 
   * Fix spelling errors or formatting
-  * Update exising content
+  * Update existing content
   * Add new content
 
 .. note::
