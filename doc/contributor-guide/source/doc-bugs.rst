@@ -62,6 +62,8 @@ across OpenStack:
 * Launchpad bug area `openstack-api-site`_ is used for the api-site API
   repository.
 
+.. _doc_bugs_triaging:
+
 Doc bug triaging guidelines
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

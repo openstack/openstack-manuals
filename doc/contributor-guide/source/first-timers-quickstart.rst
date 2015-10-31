@@ -16,7 +16,7 @@ Other good first-time documentation tasks are bug triaging and bug fixing:
    and https://bugs.launchpad.net/openstack-api-site/+bugs.
 
 #. When you can confirm a bug, give it a status based on
-   the documentation bug triaging guidelines.
+   the :ref:`documentation bug triaging guidelines <doc_bugs_triaging>`.
    You may skip this step and proceed with the bug fixing.
 
 #. If you are up for it, assign the bug to yourself after it has been
@@ -354,10 +354,6 @@ instead:
 
 
 .. Links
-
-.. TODO(OG): add the link to "documentation bug triaging guidelines"
-   and "How to contribute to the documentation" after they are converted
-   to RST
 
 .. _`Account Setup`: http://docs.openstack.org/infra/manual/developers.html#account-setup
 .. _`Sign the appropriate Individual Contributor License Agreement`: http://docs.openstack.org/infra/manual/developers.html#sign-the-appropriate-individual-contributor-license-agreement
