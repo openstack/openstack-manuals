@@ -50,11 +50,11 @@ like the example above of stable/kilo.
 
    * - Installation Guide for Red Hat Enterprise Linux and CentOS
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/kilo/install-guide-rdo
+     - http://docs.openstack.org/liberty/install-guide-rdo
 
    * - Installation Guide for Ubuntu 14.04 (LTS)
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - http://docs.openstack.org/kilo/install-guide-ubuntu
+     - http://docs.openstack.org/liberty/install-guide-ubuntu
 
 Guides for deployers and administrators
 ---------------------------------------
