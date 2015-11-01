@@ -12,7 +12,7 @@ The valid tags for the ``only`` directive are:
 
 * ``ubuntu`` for Ubuntu
 * ``debian`` for Debian
-* ``rdo`` for Red Hat Enterprise Linux, CentOS, and Fedora
+* ``rdo`` for Red Hat Enterprise Linux and CentOS
 * ``obs`` for openSUSE and SUSE Linux Enterprise
 
 **Input**

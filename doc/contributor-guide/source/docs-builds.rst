@@ -48,7 +48,7 @@ like the example above of stable/kilo.
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - http://docs.openstack.org/liberty/install-guide-obs
 
-   * - Installation Guide for Red Hat Enterprise Linux, CentOS, and Fedora
+   * - Installation Guide for Red Hat Enterprise Linux and CentOS
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - http://docs.openstack.org/kilo/install-guide-rdo
 

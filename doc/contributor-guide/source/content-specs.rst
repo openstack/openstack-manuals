@@ -25,7 +25,7 @@ multiple distributions based on the following packaging systems:
 
 * Installation Guide for Debian 7.0 - will be published with Liberty
 * `Installation Guide for openSUSE and SUSE Linux Enterprise Server`_
-* `Installation Guide for Red Hat Enterprise Linux, CentOS, and Fedora`_
+* `Installation Guide for Red Hat Enterprise Linux and CentOS`_
 * `Installation Guide for Ubuntu 12.04 and 14.04 (LTS) Server`_
 
 Guides for deployers and administrators
@@ -152,7 +152,7 @@ This guide has a review in place to get a license indicator in output:
 
 .. Links
 .. _`Installation Guide for openSUSE and SUSE Linux Enterprise Server`: http://docs.openstack.org/liberty/install-guide-obs/
-.. _`Installation Guide for Red Hat Enterprise Linux, CentOS, and Fedora`: http://docs.openstack.org/liberty/install-guide-rdo/
+.. _`Installation Guide for Red Hat Enterprise Linux and CentOS`: http://docs.openstack.org/liberty/install-guide-rdo/
 .. _`Installation Guide for Ubuntu 12.04 and 14.04 (LTS) Server`: http://docs.openstack.org/liberty/install-guide-ubuntu/
 
 .. _`OpenStack Configuration Reference`: http://docs.openstack.org/liberty/config-reference/content/
