@@ -108,12 +108,9 @@ done, follow the steps below to submit a patch review.
 How to build an existing patch locally
 --------------------------------------
 
-Before proceeding, make sure you have all the necessary tools installed and
+Before proceeding, make sure you have all the necessary
+:ref:`tools <setting_up_for_contribution>` installed and
 set up for contribution.
-
-.. TODO: OL make a link from the word 'tools' and refer to
-   https://wiki.openstack.org/wiki/Documentation/HowTo#Edit_OpenStack_RST_and.2For_DocBook_documentation
-   once this page is converted to RST.
 
 To build a patch locally:
 

@@ -28,6 +28,8 @@ The following diagram shows the basic setup workflow:
 .. image:: figures/workflow-diagram.png
       :alt: Workflow diagram
 
+.. _setting_up_for_contribution:
+
 Setting up for contribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
