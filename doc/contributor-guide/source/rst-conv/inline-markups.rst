@@ -101,9 +101,9 @@ Any part of interactive user interface.
 +------------------------+---------------------------------------------------+
 | **Markup**             | ``:guilabel:``                                    |
 +------------------------+---------------------------------------------------+
-| **Syntax**             | ``:guilabel:`Project tab```                       |
+| **Syntax**             | ``:guilabel:`Project```                           |
 +------------------------+---------------------------------------------------+
-| **Example of output**  | From the :guilabel:`Project tab` you can view and |
+| **Example of output**  | From the :guilabel:`Project` tab you can view and |
 |                        | manage the resources in a selected project.       |
 +------------------------+---------------------------------------------------+
 
