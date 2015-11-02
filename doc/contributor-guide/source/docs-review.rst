@@ -19,15 +19,13 @@ operations-guide, openstackdocstheme, and openstack-doc-tools projects.
 For the following repositories that are part of the Documentation program,
 special rules apply:
 
-* docs-specs: has a separate core team, see docs-specs section.
+* docs-specs: has a separate core team,
+  see :doc:`docs-specs <blueprints-and-specs>` section.
 * security-doc: has a separate core team consisting of Docs team members and
   Security team members. The rule here is that each patch needs an approval
   by a Docs core and a Security core.
 * training-guides: has a separate core team.
 * training-labs: has a separate core team.
-
-.. TODO: add a link to docs-specs section once converted to RST:
-   https://wiki.openstack.org/wiki/Documentation/HowTo#When_to_write_a_blueprint_description_in_docs-specs
 
 The current list of docs cores for openstack-manuals can be found at
 https://review.openstack.org/#/admin/groups/30,members.
