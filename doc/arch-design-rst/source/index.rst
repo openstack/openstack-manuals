@@ -26,6 +26,18 @@ Contents
 
    common/conventions.rst
 
+   introduction.rst
+   legal-security-requirements.rst
+   generalpurpose.rst
+   compute-focus.rst
+   storage-focus.rst
+   network-focus.rst
+   multi-site.rst
+   hybrid.rst
+   massively-scalable.rst
+   specialized.rst
+   references.rst
+
    common/app_support.rst
 
    common/glossary.rst
