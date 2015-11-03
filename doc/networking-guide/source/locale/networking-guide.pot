@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-19 06:29+0000\n"
+"POT-Creation-Date: 2015-11-03 06:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,11 +77,9 @@ msgstr ""
 # #-#-#-#-#  adv_config_service_chaining.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  adv_config_VPNaaS.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  migration_legacy_to_dvr.pot (Networking Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  migration_legacy_to_L3_HA.pot (Networking Guide 0.9)  #-#-#-#-#
 #: ../adv_config_VPNaaS.rst:5 ../adv_config_group_policy.rst:5
 #: ../adv_config_group_policy.rst:12 ../adv_config_operational.rst:5
-#: ../adv_config_service_chaining.rst:7 ../migration_legacy_to_L3_HA.rst:5
-#: ../migration_legacy_to_dvr.rst:5
+#: ../adv_config_service_chaining.rst:7 ../migration_legacy_to_dvr.rst:5
 msgid "TBD"
 msgstr ""
 
@@ -3297,12 +3295,109 @@ msgid ""
 "encapsulates layer-2 Ethernet frames over layer-4 UDP packets."
 msgstr ""
 
-#: ../migration.rst:3
+# #-#-#-#-#  migration_legacy_to_L3_HA.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  migration.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../migration.rst:3 ../migration_legacy_to_L3_HA.rst:22
 msgid "Migration"
 msgstr ""
 
 #: ../migration_legacy_to_L3_HA.rst:3
 msgid "Legacy to L3 HA"
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:5
+msgid ""
+"This section describes the process of migrating from a legacy router to an "
+"L3 HA router, which is available starting from the Mitaka release."
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:8
+msgid ""
+"Similar to the legacy scenario, all network traffic on a project network "
+"that requires routing actively traverses only one network node regardless of "
+"the quantity of network nodes providing HA for the router. Therefore, this "
+"high-availability implementation primarily addresses failure situations "
+"instead of bandwidth constraints that limit performance. However, it "
+"supports random distribution of routers on different network nodes to reduce "
+"the chances of bandwidth constraints and to improve scaling."
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:16
+msgid ""
+"This section summarizes parts of :doc:`scenario_l3ha_ovs` and :doc:"
+"`scenario_l3ha_lb`. For details regarding needed infrastructure and "
+"configuration to allow actual L3 HA deployment, read the relevant guide "
+"before continuing with the migration process."
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:24
+msgid ""
+"The migration process is quite simple, it involves turning down the router "
+"by setting the router's ``admin_state_up`` attribute to ``False``, upgrading "
+"the router to L3 HA and then setting the router's ``admin_state_up`` "
+"attribute back to ``True``."
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:30 ../migration_legacy_to_L3_HA.rst:104
+msgid ""
+"Once starting the migration, south-north connections (instances to internet) "
+"will be severed. New connections will be able to start only when the "
+"migration is complete."
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:34 ../migration_legacy_to_L3_HA.rst:108
+msgid "Here is the router we have used in our demonstration:"
+msgstr ""
+
+# #-#-#-#-#  migration_legacy_to_L3_HA.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario_dvr_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario_l3ha_lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario_l3ha_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario_legacy_lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario_legacy_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario_provider_lb.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  scenario_provider_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../migration_legacy_to_L3_HA.rst:53 ../migration_legacy_to_L3_HA.rst:127
+#: ../scenario_dvr_ovs.rst:730 ../scenario_dvr_ovs.rst:756
+#: ../scenario_dvr_ovs.rst:930 ../scenario_l3ha_lb.rst:422
+#: ../scenario_l3ha_lb.rst:448 ../scenario_l3ha_lb.rst:611
+#: ../scenario_l3ha_ovs.rst:432 ../scenario_l3ha_ovs.rst:458
+#: ../scenario_l3ha_ovs.rst:621 ../scenario_legacy_lb.rst:741
+#: ../scenario_legacy_lb.rst:763 ../scenario_legacy_ovs.rst:843
+#: ../scenario_legacy_ovs.rst:865 ../scenario_provider_lb.rst:491
+#: ../scenario_provider_lb.rst:512 ../scenario_provider_ovs.rst:542
+#: ../scenario_provider_ovs.rst:563
+msgid "Source the administrative project credentials."
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:54 ../migration_legacy_to_L3_HA.rst:128
+msgid ""
+"Set the admin_state_up to ``False``. This will severe south-north "
+"connections until admin_state_up is set to ``True`` again."
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:62 ../migration_legacy_to_L3_HA.rst:136
+msgid "Set the ``ha`` attribute of the router to ``True``."
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:69 ../migration_legacy_to_L3_HA.rst:143
+msgid ""
+"Set the admin_state_up to ``True``. This will severe south-north connections "
+"until admin_state_up is set to ``True`` again."
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:77 ../migration_legacy_to_L3_HA.rst:151
+msgid "Make sure that the router's ``ha`` attribute has changed to ``True``."
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:98
+msgid "L3 HA to Legacy"
+msgstr ""
+
+#: ../migration_legacy_to_L3_HA.rst:100
+msgid ""
+"To return to legacy mode, you turn down the router again, turning off L3 HA "
+"and starting the router again"
 msgstr ""
 
 #: ../migration_legacy_to_dvr.rst:3
@@ -5107,25 +5202,6 @@ msgstr ""
 #: ../scenario_legacy_ovs.rst:841 ../scenario_provider_lb.rst:489
 #: ../scenario_provider_ovs.rst:540
 msgid "Verify service operation"
-msgstr ""
-
-# #-#-#-#-#  scenario_dvr_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  scenario_l3ha_lb.pot (Networking Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  scenario_l3ha_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  scenario_legacy_lb.pot (Networking Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  scenario_legacy_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  scenario_provider_lb.pot (Networking Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  scenario_provider_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../scenario_dvr_ovs.rst:730 ../scenario_dvr_ovs.rst:756
-#: ../scenario_dvr_ovs.rst:930 ../scenario_l3ha_lb.rst:422
-#: ../scenario_l3ha_lb.rst:448 ../scenario_l3ha_lb.rst:611
-#: ../scenario_l3ha_ovs.rst:432 ../scenario_l3ha_ovs.rst:458
-#: ../scenario_l3ha_ovs.rst:621 ../scenario_legacy_lb.rst:741
-#: ../scenario_legacy_lb.rst:763 ../scenario_legacy_ovs.rst:843
-#: ../scenario_legacy_ovs.rst:865 ../scenario_provider_lb.rst:491
-#: ../scenario_provider_lb.rst:512 ../scenario_provider_ovs.rst:542
-#: ../scenario_provider_ovs.rst:563
-msgid "Source the administrative project credentials."
 msgstr ""
 
 # #-#-#-#-#  scenario_dvr_ovs.pot (Networking Guide 0.9)  #-#-#-#-#
