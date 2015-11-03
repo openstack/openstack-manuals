@@ -60,6 +60,11 @@ objects, has to be a multiple of ``backup_swift_block_size``. The default
 is 32768 for ``backup_swift_block_size``, and the default is 52428800 for
 ``backup_swift_object_size``.
 
+The configuration option ``backup_swift_enable_progress_timer`` in
+``cinder.conf`` is used when backing up the volume to Object Storage
+back end. This option enables or disables the timer. It is enabled by default
+to send the periodic progress notifications to the Telemetry service.
+
 This command also returns a backup ID. Use this backup ID when restoring
 the volume::
 
