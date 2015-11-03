@@ -134,7 +134,7 @@ updates to administrators and users. The notification_driver
 sends this information to users in a manner as close to real-time
 as possible.
 
-Notifications in real-time allow administrars to observe and resolve
+Notifications in real-time allow administrators to observe and resolve
 emergencies when the cloud environment experiences errors or faults.
 
 Administrators can also restrict notification delivery to certain
