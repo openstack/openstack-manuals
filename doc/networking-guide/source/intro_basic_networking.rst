@@ -169,6 +169,11 @@ would be written as ``255.255.255.0``. CIDR notation includes both the
 IP address and netmask, and this example would be written as
 ``192.168.1.5/24``.
 
+.. note::
+   Creating CIDR subnets including a multicast address or a loopback address
+   cannot be used in an OpenStack environment. For example, creating a subnet
+   using ``224.0.0.0/16`` or ``127.0.1.0/24`` is not supported.
+
 Sometimes we want to refer to a subnet, but not any particular IP
 address on the subnet. A common convention is to set the host
 identifier to all zeros to make reference to a subnet. For example, if
