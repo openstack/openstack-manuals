@@ -27,21 +27,21 @@
   </figure>
     <section xml:id="openstack-services-architecture">
         <title>OpenStack services architecture</title>
-        <para>The OpenStack Identity service, which is used by all other
+        <para>The Identity service, which is used by all other
             OpenStack components for authorization and the catalog of
             service endpoints, supports the concept of regions. A region
             is a logical construct used to group OpenStack services in
             close proximity to one another. The concept of
-            regions is flexible; it may can contain OpenStack service
+            regions is flexible; it may contain OpenStack service
             endpoints located within a distinct geographic region or regions.
             It may be smaller in scope, where a region is a single rack
             within a data center, with multiple regions existing in adjacent
             racks in the same data center.</para>
         <para>The majority of OpenStack components are designed to run
-          within the context of a single region. The OpenStack Compute
+          within the context of a single region. The Compute
           service is designed to manage compute resources within a region,
           with support for subdivisions of compute resources by using
-          availability zones and cells. The OpenStack Networking service
+          availability zones and cells. The Networking service
           can be used to manage network resources in the same broadcast
           domain or collection of switches that are linked. The OpenStack
           Block Storage service controls storage resources within a region
@@ -71,7 +71,7 @@
             HTTP caching layer, use a caching layer like Memcache to cache
             objects between the proxy and storage nodes.</para>
         <para>If the cloud is designed with a separate Object Storage
-            Service endpoint made available in each region, applications are
+            service endpoint made available in each region, applications are
             required to handle synchronization (if desired) and other management
             operations to ensure consistency across the nodes. For some
             applications, having multiple Object Storage Service endpoints
@@ -87,16 +87,16 @@
     </section>
     <section xml:id="arch-networking-multiple">
         <title>Networking</title>
-        <para>When connecting multiple regions together there are several design
+        <para>When connecting multiple regions together, there are several design
             considerations. The overlay network technology choice determines how
             packets are transmitted between regions and how the logical network
             and addresses present to the application. If there are security or
             regulatory requirements, encryption should be implemented to secure
             the traffic between regions. For networking inside a region, the
             overlay network technology for tenant networks is equally important.
-            The overlay technology and the network traffic of an application
-            generates or receives can be either complementary or be at cross
-            purpose. For example, using an overlay technology for an application
+            The overlay technology and the network traffic that an application
+            generates or receives can be either complementary or serve cross
+            purposes. For example, using an overlay technology for an application
             that transmits a large amount of small packets could add excessive
             latency or overhead to each packet if not configured
             properly.</para>
