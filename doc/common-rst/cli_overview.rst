@@ -72,7 +72,7 @@ service with its package name and description.
 +----------------+----------+-----------------------+------------------------+
 |Object Storage  |swift     |python-swiftclient     |Gathers statistics,     |
 |                |          |                       |lists items, updates    |
-|                |          |                       |metedata, and uploads,  |
+|                |          |                       |metadata, and uploads,  |
 |                |          |                       |downloads, and deletes  |
 |                |          |                       |files stored by the     |
 |                |          |                       |Object Storage service. |
