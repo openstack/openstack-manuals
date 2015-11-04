@@ -307,7 +307,7 @@ storage_vnx_authentication_type = global</programlisting>
                     </listitem>
                 </itemizedlist>
                 <para>
-                    This approach avoid the plain text password in your cinder
+                    This approach avoids the plain text password in your cinder
                     configuration file. Supply a security file as below:
                 </para>
                 <programlisting language="ini">storage_vnx_security_file_dir=&lt;path to security file&gt;</programlisting>
@@ -325,7 +325,7 @@ storage_vnx_authentication_type = global</programlisting>
                 <title>Driver name</title>
                 <itemizedlist>
                     <listitem>
-                        <para>For FC Driver, add following option:</para>
+                        <para>For the FC Driver, add the following option:</para>
                     </listitem>
                 </itemizedlist>
                 <programlisting language="ini">volume_driver=cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver</programlisting>
@@ -368,7 +368,7 @@ storage_vnx_authentication_type = global</programlisting>
             </para>
             <para>
               When a comma-separated list is given to
-              <literal>io_port_list</literal>, driver will only register the
+              <literal>io_port_list</literal>, the driver will only register the
               initiator to the ports specified in the list and only return
               target port(s) which belong to the target ports in the
               <literal>io_port_list</literal> instead of all target ports.
@@ -411,7 +411,7 @@ storage_vnx_authentication_type = global</programlisting>
                 </listitem>
                 <listitem>
                   <para>
-                    Driver will raise an exception if ports in
+                    The driver will raise an exception if ports in
                     <literal>io_port_list</literal> are not existed in VNX
                     during startup.
                   </para>
@@ -468,8 +468,8 @@ storage_vnx_authentication_type = global</programlisting>
               For volume attaching, the driver has a storage group on VNX for
               each compute node hosting the vm instances which are going to
               consume VNX Block Storage (using compute node's hostname as
-              storage group's name). All the volumes attached to the vm
-              instances in a computer node will be put into the storage group.
+              storage group's name). All the volumes attached to the VM
+              instances in a compute node will be put into the storage group.
               If <literal>destroy_empty_storage_group=True</literal>, the
               driver will remove the empty storage group after its last volume
               is detached. For data safety, it does not suggest to set
@@ -492,7 +492,7 @@ storage_vnx_authentication_type = global</programlisting>
           <section xml:id="fc-san-auto-zoning">
             <title>FC SAN auto zoning</title>
             <para>
-              EMC VNX FC driver supports FC SAN auto zoning when ZoneManager
+              The EMC VNX FC driver supports FC SAN auto zoning when ZoneManager
               is configured. Set <literal>zoning_mode</literal> to
               <literal>fabric</literal> in <literal>DEFAULT</literal> section
               to enable this feature. For ZoneManager configuration, please
@@ -585,13 +585,13 @@ storage_vnx_authentication_type = global</programlisting>
     <section xml:id="emc-vnx-extra-spec">
       <title>Extra spec options</title>
       <para>
-        Extra spec is used in volume types created in cinder as the
-        preferred property of volume.
+        Extra specs are used in volume types created in cinder as the
+        preferred property of the volume.
       </para>
       <para>
-        Block storage scheduler will use extra spec to find the suitable backend
-        for the volume. And Block storage driver will create volume based on the
-        properties specified by extra spec.
+        The Block storage scheduler will use extra specs to find the suitable back end
+        for the volume and the Block storage driver will create the volume based on the
+        properties specified by the extra spec.
       </para>
       <para>
         Use following command to create a volume type:
@@ -813,7 +813,7 @@ storage_vnx_authentication_type = global</programlisting>
         </para>
       </section>
       <section xml:id="snap-copy">
-        <title>Snap copy</title>
+        <title>Snap-copy</title>
         <itemizedlist>
           <listitem>
             <para>
@@ -844,14 +844,14 @@ storage_vnx_authentication_type = global</programlisting>
           </listitem>
         </itemizedlist>
         <para>
-          VNX driver supports snap copy which extremely accelerates the
+          The VNX driver supports snap-copy, which extremely accelerates the
           process for creating a copied volume.
         </para>
         <para>
           By default, the driver will do full data copy when creating a
           volume from a snapshot or cloning a volume, which is
-          time-consuming especially for large volumes. When snap copy is
-          used, driver will simply create a snapshot and mount it as a
+          time-consuming especially for large volumes. When the snap-copy is
+          used, the driver will simply create a snapshot and mount it as a
           volume for the 2 kinds of operations which will be instant even
           for large volumes.
         </para>
@@ -859,7 +859,7 @@ storage_vnx_authentication_type = global</programlisting>
           To enable this functionality, the source volume should have
           <literal>copytype:snap=True</literal> in the extra specs of its
           volume type. Then the new volume cloned from the source or copied
-          from the snapshot for the source, will be in fact a snap copy
+          from the snapshot for the source, will be in fact a snap-copy
           instead of a full copy. If a full copy is needed, retype/migration
           can be used to convert the snap-copy volume to a full-copy volume
           which may be time-consuming.
@@ -886,7 +886,7 @@ storage_vnx_authentication_type = global</programlisting>
           <listitem>
             <para>
               Clone and snapshot creation are not allowed on a copied volume
-              created through snap copy before it is converted to a full
+              created through the snap-copy before it is converted to a full
               copy.
             </para>
           </listitem>
@@ -1133,7 +1133,7 @@ devices {
       <section xml:id="storage-group-with-host-names-in-vnx">
         <title>Storage group with host names in VNX</title>
         <para>
-          When the driver notices tht there is no existing storage group
+          When the driver notices that there is no existing storage group
           that has the host name as the storage group name, it will create
           the storage group and also add the compute node's or Block Storage
           nodes' registered initiators into the storage group.
