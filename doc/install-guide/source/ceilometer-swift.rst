@@ -1,16 +1,19 @@
-====================================
-Configure the Object Storage service
-====================================
+Enable Object Storage meters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To retrieve storage-oriented events and samples, configure the
-Object Storage service to send notifications to the message bus.
+Telemetry uses a combination of polling and notifications to collect
+Object Storage meters.
 
-To configure prerequisites
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. note::
 
-The Telemetry service requires access to the Object Storage
-service using the ``ResellerAdmin`` role. Perform
-these steps on the controller node.
+   Your environment must include the Object Storage service.
+
+Prerequisites
+-------------
+
+The Telemetry service requires access to the Object Storage service
+using the ``ResellerAdmin`` role. Perform these steps on the controller
+node.
 
 #. Source the ``admin`` credentials to gain access to admin-only
    CLI commands.
@@ -31,21 +34,41 @@ these steps on the controller node.
       | name  | ResellerAdmin                    |
       +-------+----------------------------------+
 
-#. Add the ``ResellerAdmin`` role to the ``service`` tenant and
-   ``ceilometer`` user:
+#. Add the ``ResellerAdmin`` role to the ``ceilometer`` user:
 
    .. code-block:: console
 
       $ openstack role add --project service --user ceilometer ResellerAdmin
-      +-------+----------------------------------+
-      | Field | Value                            |
-      +-------+----------------------------------+
-      | id    | 462fa46c13fd4798a95a3bfbe27b5e54 |
-      | name  | ResellerAdmin                    |
-      +-------+----------------------------------+
 
-To configure notifications
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+   .. note::
+
+      This command provides no output.
+
+Install components
+------------------
+
+* Install the packages:
+
+  .. only:: ubuntu or debian
+
+     .. code-block:: console
+
+        # apt-get install python-ceilometermiddleware
+
+  .. only:: rdo
+
+     .. code-block:: console
+
+        # yum install python-ceilometermiddleware
+
+  .. only:: obs
+
+     .. code-block:: console
+
+        # zypper install python-ceilometermiddleware
+
+Configure Object Storage to use Telemetry
+-----------------------------------------
 
 Perform these steps on the controller and any other nodes that
 run the Object Storage proxy service.
@@ -60,23 +83,25 @@ run the Object Storage proxy service.
 
         [filter:keystoneauth]
         ...
-        operator_roles = admin,user,ResellerAdmin
+        operator_roles = admin, user, ResellerAdmin
 
    * In the ``[pipeline:main]`` section, add ``ceilometer``:
 
      .. code-block:: ini
 
         [pipeline:main]
-        ...
-        pipeline = authtoken cache healthcheck keystoneauth proxy-logging ceilometer proxy-server
+        pipeline = catch_errors gatekeeper healthcheck proxy-logging cache
+        container_sync bulk ratelimit authtoken keystoneauth container-quotas
+        account-quotas slo dlo versioned_writes proxy-logging ceilometer
+        proxy-server
 
    * In the ``[filter:ceilometer]`` section, configure notifications:
 
      .. code-block:: ini
 
         [filter:ceilometer]
-        ...
         paste.filter_factory = ceilometermiddleware.swift:filter_factory
+        ...
         control_exchange = swift
         url = rabbit://openstack:RABBIT_PASS@controller:5672/
         driver = messagingv2
@@ -86,34 +111,12 @@ run the Object Storage proxy service.
      Replace ``RABBIT_PASS`` with the password you chose for the
      ``openstack`` account in ``RabbitMQ``.
 
-#. Add the ``swift`` system user to the ``ceilometer`` system group
-   to permit access to the Telemetry configuration files by the
-   Object Storage service:
+Finalize installation
+---------------------
 
-   .. code-block:: console
+.. only:: rdo or obs
 
-      # usermod -a -G ceilometer swift
-
-.. only:: obs
-
-
-   3. Restart the Object Storage proxy service:
-
-      .. code-block:: console
-
-         # systemctl restart openstack-swift-proxy.service
-
-.. only:: rdo
-
-   3. Install the ``ceilometermiddleware`` package:
-
-      .. Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1214928
-
-      .. code-block:: console
-
-         # pip install ceilometermiddleware
-
-   4. Restart the Object Storage proxy service:
+   #. Restart the Object Storage proxy service:
 
       .. code-block:: console
 
@@ -121,7 +124,7 @@ run the Object Storage proxy service.
 
 .. only:: ubuntu
 
-   3. Restart the Object Storage proxy service:
+   #. Restart the Object Storage proxy service:
 
       .. code-block:: console
 

@@ -1,10 +1,11 @@
-===========================
-Configure the Image service
-===========================
+Enable Image service meters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To retrieve image-oriented events and samples, configure
-the Image service to send notifications to the message bus.
-Perform these steps on the controller node.
+Telemetry uses notifications to collect Image service meters. Perform
+these steps on the controller node.
+
+Configure the Image service to use Telemetry
+--------------------------------------------
 
 Edit the ``/etc/glance/glance-api.conf`` and
 ``/etc/glance/glance-registry.conf`` files and
@@ -26,9 +27,12 @@ complete the following actions:
    Replace ``RABBIT_PASS`` with the password you chose for
    the ``openstack`` account in ``RabbitMQ``.
 
+Finalize installation
+---------------------
+
 .. only:: obs or rdo
 
-   2. Restart the Image service:
+   #. Restart the Image service:
 
       .. code-block:: console
 
@@ -36,7 +40,7 @@ complete the following actions:
 
 .. only:: ubuntu
 
-   2. Restart the Image service:
+   #. Restart the Image service:
 
       .. code-block:: console
 

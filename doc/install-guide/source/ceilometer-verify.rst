@@ -1,8 +1,9 @@
-=================================
-Verify the Telemetry installation
-=================================
+Verify operation
+~~~~~~~~~~~~~~~~
 
-This section describes how to verify operation of the Telemetry service.
+Verify operation of the Telemetry service. These steps only include the
+Image service meters to reduce clutter. Environments with ceilometer
+integration for additional services contain more meters.
 
 .. note::
 
@@ -27,7 +28,7 @@ This section describes how to verify operation of the Telemetry service.
       | image.size   | gauge | B     | acafc7c0-40aa-4026-9673-b879898e1fc2 | None    | cf12a15... |
       +--------------+-------+-------+--------------------------------------+---------+------------+
 
-#. Download an image from the Image service:
+#. Download the CirrOS image from the Image service:
 
    .. code-block:: console
 
