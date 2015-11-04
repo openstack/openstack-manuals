@@ -42,8 +42,6 @@ function copy_to_branch {
         done
         # Debian Install Guide for Liberty is not ready
         rm -rf publish-docs/$BRANCH/install-guide-debian
-        # RDO Install Guide for Liberty is not ready
-        rm -rf publish-docs/$BRANCH/install-guide-rdo
     fi
 }
 
