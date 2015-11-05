@@ -26,11 +26,11 @@ The following terms are used over the document:
    * - Term
      - Definition
    * - PF
-     - Physical Function. This is the physical ethernet controller
+     - Physical Function. This is the physical Ethernet controller
        that supports SR-IOV.
    * - VF
      - Virtual Function. This is a virtual PCIe device created
-       from a physical ethernet controller.
+       from a physical Ethernet controller.
 
 
 In order to enable SR-IOV, the following steps are required:
@@ -96,18 +96,18 @@ Use eth3 as PF, which is also used
 as the interface for Open vSwitch VLAN and has access
 to the private networks of all machines.
 
-The step to create VFs differ between SR-IOV card ethernet controller
+The step to create VFs differ between SR-IOV card Ethernet controller
 manufacturers. Currently the following manufacturers are known to work:
 
 - Intel
 - Mellanox
 - QLogic
 
-For **Mellanox SR-IOV ethernet cards** see:
+For **Mellanox SR-IOV Ethernet cards** see:
 `Mellanox: HowTo Configure SR-IOV VFs
 <https://community.mellanox.com/docs/DOC-1484>`_
 
-To create the VFs on Ubuntu for **Intel SR-IOV ethernet cards**,
+To create the VFs on Ubuntu for **Intel SR-IOV Ethernet cards**,
 do the following:
 
 #. Make sure SR-IOV is enabled in BIOS, check for VT-d and
@@ -155,7 +155,7 @@ do the following:
       is through :file:`sysfs.conf` but for unknown reason
       changing :file:`sysfs.conf` does not have any effect on Ubuntu 14.04.
 
-For **QLogic SR-IOV ethernet cards** see:
+For **QLogic SR-IOV Ethernet cards** see:
 `User's Guide OpenStack Deployment with SR-IOV Configuration
 <http://www.qlogic.com/solutions/Documents/UsersGuide_OpenStack_SR-IOV.pdf>`_
 
