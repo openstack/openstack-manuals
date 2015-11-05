@@ -65,7 +65,7 @@ in this diagram. Your instances will start up faster if you use smaller
 images, as less data needs to be copied across the network.
 
 A new empty ephemeral disk is also created, labeled ``vdb`` in this
-diagram. This disk is destroyed when you delete the instance.
+diagram. This disk is deleted when you delete the instance.
 
 The compute node connects to the attached ``cinder-volume`` using iSCSI. The
 ``cinder-volume`` is mapped to the third disk, labeled ``vdc`` in this

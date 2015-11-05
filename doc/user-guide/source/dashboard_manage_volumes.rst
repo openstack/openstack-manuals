@@ -156,7 +156,7 @@ Delete a volume
 ~~~~~~~~~~~~~~~
 
 When you delete an instance, the data in its attached volumes is not
-destroyed.
+deleted.
 
 #. Log in to the dashboard.
 
