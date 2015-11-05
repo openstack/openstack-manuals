@@ -114,9 +114,9 @@ Ports
 -----
 
 A port is a connection point for attaching a single device, such as the NIC
-of a virtual server, to a virtual network. Also describes the associated
-network configuration, such as the MAC and IP addresses to be used on that
-port.
+of a virtual server, to a virtual network. The port also describes the
+associated network configuration, such as the MAC and IP addresses to be
+used on that port.
 
 Routers
 -------
@@ -147,7 +147,7 @@ egress. Rules can be added to this group in order to change the behavior.
 Extensions
 ----------
 
-The OpenStack networking service is extensible. Extensions serve two
+The OpenStack Networking service is extensible. Extensions serve two
 purposes: they allow the introduction of new features in the API
 without requiring a version change and they allow the introduction of
 vendor specific niche functionality. Applications can programmatically
