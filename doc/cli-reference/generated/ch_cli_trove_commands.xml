@@ -15,7 +15,7 @@
         interface (CLI) for the Database API and its extensions.
 
        This chapter documents <command>trove</command> version
-        <literal>1.3.0</literal>.
+        <literal>1.4.0</literal>.
     </para>
 
     <para>For help on a specific <command>trove</command>
@@ -31,7 +31,7 @@
              [--database-service-name &lt;database-service-name&gt;]
              [--endpoint-type &lt;endpoint-type&gt;]
              [--os-database-api-version &lt;database-api-ver&gt;]
-             [--retries &lt;retries&gt;] [--json] [--profile HMAC_KEY] [--insecure]
+             [--retries &lt;retries&gt;] [--json] [--insecure]
              [--os-cacert &lt;ca-certificate&gt;] [--os-cert &lt;certificate&gt;]
              [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;]
              [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
@@ -714,22 +714,6 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--profile HMAC_KEY HMAC</command></term>
-    <listitem>
-      <para>
-        key used to encrypt context data when
-      profiling the performance of an operation.
-      This key should be set to one of the HMAC
-      keys configured in Trove (they are found in
-      api-paste.ini, typically in /etc/trove).
-      Without the key, profiling will not be
-      triggered even if it is enabled on the
-      server side. Defaults to
-      <code>env[OS_PROFILE_HMACKEY]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--insecure</command></term>
     <listitem>
       <para>
@@ -1118,7 +1102,7 @@ Shows details of a backup.
     <section xml:id="troveclient_subcommand_cluster-create">
         <title>trove cluster-create</title>
         <screen><computeroutput>usage: trove cluster-create &lt;name&gt; &lt;datastore&gt; &lt;datastore_version&gt;
-                            [--instance &lt;flavor=flavor_name_or_id,volume=volume&gt;]</computeroutput></screen>
+                            [--instance &lt;opt=value,opt=value,...&gt;]</computeroutput></screen>
         <para>
 Creates a new cluster.
         </para>  <variablelist wordsize="10">
@@ -1135,7 +1119,7 @@ Creates a new cluster.
     <term><command>&lt;datastore&gt;</command></term>
     <listitem>
       <para>
-        A datastore name or UUID.
+        A datastore name or ID.
       </para>
     </listitem>
   </varlistentry>
@@ -1143,7 +1127,7 @@ Creates a new cluster.
     <term><command>&lt;datastore_version&gt;</command></term>
     <listitem>
       <para>
-        A datastore version name or UUID.
+        A datastore version name or ID.
       </para>
     </listitem>
   </varlistentry>
@@ -1151,11 +1135,17 @@ Creates a new cluster.
   <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--instance &lt;flavor=flavor_name_or_id,volume=volume&gt;</command></term>
+    <term><command>--instance &lt;opt=value,opt=value,...&gt;</command></term>
     <listitem>
       <para>
       Create an instance for the cluster. Specify
       multiple times to create multiple instances.
+      Valid options are: flavor=flavor_name_or_id,
+      volume=disk_size_in_GB, nic='net-id=net-
+      uuid,v4-fixed-ip=ip-addr,port-id=port-uuid'
+      (where net-id=network_id, v4-fixed-
+      ip=IPv4r_fixed_address, port-id=port_id),
+      availability_zone=AZ_hint_for_Nova.
       </para>
     </listitem>
   </varlistentry>
