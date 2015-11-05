@@ -383,7 +383,7 @@ VPNaaS
 VPNaaS supports IPv6, but support in Kilo and prior releases will have
 some bugs that may limit how it can be used. More thorough and
 complete testing and bug fixing is being done as part of the Liberty
-release. IPv6-based VPN as a service is configured similar to the IPv4
+release. IPv6-based VPN-as-a-Service is configured similar to the IPv4
 configuration. Either or both the ``peer_address`` and the
 ``peer_cidr`` can specified as an IPv6 address. The choice of
 addressing modes and router modes described above should not impact
