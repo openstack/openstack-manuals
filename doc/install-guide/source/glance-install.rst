@@ -367,37 +367,37 @@ Install and configure components
       .. image:: figures/debconf-screenshots/glance-common_pipeline_flavor.png
          :width: 100%
 
-Finalize installation
----------------------
+.. only:: obs or rdo or ubuntu
 
-.. only:: obs or rdo
+   Finalize installation
+   ---------------------
 
-   #. Start the Image service services and configure them to start when
-      the system boots:
+   .. only:: obs or rdo
 
-      .. code-block:: console
+      #. Start the Image service services and configure them to start when
+         the system boots:
 
-         # systemctl enable openstack-glance-api.service \
-           openstack-glance-registry.service
-         # systemctl start openstack-glance-api.service \
-           openstack-glance-registry.service
+         .. code-block:: console
 
-.. only:: ubuntu or debian
+            # systemctl enable openstack-glance-api.service \
+              openstack-glance-registry.service
+            # systemctl start openstack-glance-api.service \
+              openstack-glance-registry.service
 
-   #. Restart the Image service services:
+   .. only:: ubuntu
 
-      .. code-block:: console
+      #. Restart the Image service services:
 
-         # service glance-registry restart
-         # service glance-api restart
+         .. code-block:: console
 
-.. only:: ubuntu
+            # service glance-registry restart
+            # service glance-api restart
 
-   2. By default, the Ubuntu packages create an SQLite database.
+      #. By default, the Ubuntu packages create an SQLite database.
 
-      Because this configuration uses an SQL database server, you can
-      remove the SQLite database file:
+         Because this configuration uses an SQL database server, you can
+         remove the SQLite database file:
 
-      .. code-block:: console
+         .. code-block:: console
 
-         # rm -f /var/lib/glance/glance.sqlite
+            # rm -f /var/lib/glance/glance.sqlite
