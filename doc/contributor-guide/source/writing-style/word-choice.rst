@@ -40,7 +40,7 @@ The following table lists the preferred word or phrase choice.
 | command-line   | command line         |
 | (adj)          |                      |
 +----------------+----------------------+
-| datastore      | data store           |
+| data store     | datastore            |
 +----------------+----------------------+
 | delete         | destroy              |
 +----------------+----------------------+
