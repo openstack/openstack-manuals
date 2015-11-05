@@ -21,6 +21,7 @@ The following table lists the preferred word or phrase choice.
 | and so on      | etc.                 |
 +----------------+----------------------+
 | back end (noun)| backend, back-end    |
+|                |                      |
 |                | In general, avoid.   |
 |                | Use a more specific  |
 |                | term, such as        |
@@ -51,23 +52,26 @@ The following table lists the preferred word or phrase choice.
 +----------------+----------------------+
 | example        | i.e, e.g.            |
 +----------------+----------------------+
-| hostname       | host name, Hostname  |
+| host name      | hostname, Hostname   |
 +----------------+----------------------+
 | login (noun)   | logon, log-in        |
 +----------------+----------------------+
 | log in (verb)  | login                |
 +----------------+----------------------+
-| open           | launch               |
-+----------------+----------------------+
 | OpenStack      | openstack, Openstack |
 +----------------+----------------------+
+| run, issue,    | Avoid using "execute"|
+| start, enter   | unless it is the most|
+|                | appropriate term in  |
+|                | the context.         |
++----------------+----------------------+
 | select         | check                |
++----------------+----------------------+
+| setup (noun)   | set up, set-up       |
 +----------------+----------------------+
 | set up (verb)  | setup                |
 +----------------+----------------------+
 | an SQL         | a SQL                |
-+----------------+----------------------+
-| start          | execute              |
 +----------------+----------------------+
 | such as        | like                 |
 +----------------+----------------------+
