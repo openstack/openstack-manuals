@@ -87,10 +87,12 @@ A term that appears in the glossary.
 +------------------------+---------------------------------------------------+
 | **Markup**             | ``:term:``                                        |
 +------------------------+---------------------------------------------------+
-| **Syntax**             | ``:term:`bare```                                  |
+| **Syntax**             | ``:term:`IaaS```                                  |
+|                        | or ``:term:`services <service>```                 |
 +------------------------+---------------------------------------------------+
-| **Example of output**  | Upload the image to the Image service using       |
-|                        | the :term:`bare` container format.                |
+| **Example of output**  | OpenStack provides an :term:`IaaS` solution       |
+|                        | through a variety of complemental                 |
+|                        | :term:`services <service>`.                       |
 +------------------------+---------------------------------------------------+
 
 GUI element
