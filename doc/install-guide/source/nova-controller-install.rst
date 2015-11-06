@@ -4,142 +4,144 @@ Install and configure controller node
 This section describes how to install and configure the
 Compute service, code-named nova, on the controller node.
 
-Prerequisites
--------------
+.. only:: obs or rdo or ubuntu
 
-Before you install and configure the Compute service, you must
-create a database, service credentials, and API endpoints.
+   Prerequisites
+   -------------
 
-#. To create the database, complete these steps:
+   Before you install and configure the Compute service, you must
+   create a database, service credentials, and API endpoints.
 
-   * Use the database access client to connect to
-     the database server as the ``root`` user:
+   #. To create the database, complete these steps:
 
-     .. code-block:: console
+      * Use the database access client to connect to
+        the database server as the ``root`` user:
 
-        $ mysql -u root -p
+        .. code-block:: console
 
-   * Create the ``nova`` database:
+           $ mysql -u root -p
 
-     .. code-block:: console
+      * Create the ``nova`` database:
 
-        CREATE DATABASE nova;
+        .. code-block:: console
 
-   * Grant proper access to the ``nova`` database:
+           CREATE DATABASE nova;
 
-     .. code-block:: console
+      * Grant proper access to the ``nova`` database:
 
-        GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
-          IDENTIFIED BY 'NOVA_DBPASS';
-        GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
-          IDENTIFIED BY 'NOVA_DBPASS';
+        .. code-block:: console
 
-     Replace ``NOVA_DBPASS`` with a suitable password.
+           GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
+             IDENTIFIED BY 'NOVA_DBPASS';
+           GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
+             IDENTIFIED BY 'NOVA_DBPASS';
 
-   * Exit the database access client.
+        Replace ``NOVA_DBPASS`` with a suitable password.
 
-#. Source the ``admin`` credentials to gain access to
-   admin-only CLI commands:
+      * Exit the database access client.
 
-   .. code-block:: console
+   #. Source the ``admin`` credentials to gain access to
+      admin-only CLI commands:
 
-      $ source admin-openrc.sh
+      .. code-block:: console
 
-#. To create the service credentials, complete these steps:
+         $ source admin-openrc.sh
 
-   * Create the ``nova`` user:
+   #. To create the service credentials, complete these steps:
 
-     .. code-block:: console
+      * Create the ``nova`` user:
 
-        $ openstack user create --domain default --password-prompt nova
-        User Password:
-        Repeat User Password:
-        +-----------+----------------------------------+
-        | Field     | Value                            |
-        +-----------+----------------------------------+
-        | domain_id | default                          |
-        | enabled   | True                             |
-        | id        | 8c46e4760902464b889293a74a0c90a8 |
-        | name      | nova                             |
-        +-----------+----------------------------------+
+        .. code-block:: console
 
-   * Add the ``admin`` role to the ``nova`` user:
+           $ openstack user create --domain default --password-prompt nova
+           User Password:
+           Repeat User Password:
+           +-----------+----------------------------------+
+           | Field     | Value                            |
+           +-----------+----------------------------------+
+           | domain_id | default                          |
+           | enabled   | True                             |
+           | id        | 8c46e4760902464b889293a74a0c90a8 |
+           | name      | nova                             |
+           +-----------+----------------------------------+
 
-     .. code-block:: console
+      * Add the ``admin`` role to the ``nova`` user:
 
-        $ openstack role add --project service --user nova admin
+        .. code-block:: console
 
-     .. note::
+           $ openstack role add --project service --user nova admin
 
-        This command provides no output.
+        .. note::
 
-   * Create the ``nova`` service entity:
+           This command provides no output.
 
-     .. code-block:: console
+      * Create the ``nova`` service entity:
 
-        $ openstack service create --name nova \
-          --description "OpenStack Compute" compute
-        +-------------+----------------------------------+
-        | Field       | Value                            |
-        +-------------+----------------------------------+
-        | description | OpenStack Compute                |
-        | enabled     | True                             |
-        | id          | 060d59eac51b4594815603d75a00aba2 |
-        | name        | nova                             |
-        | type        | compute                          |
-        +-------------+----------------------------------+
+        .. code-block:: console
 
-#. Create the Compute service API endpoints:
+           $ openstack service create --name nova \
+             --description "OpenStack Compute" compute
+           +-------------+----------------------------------+
+           | Field       | Value                            |
+           +-------------+----------------------------------+
+           | description | OpenStack Compute                |
+           | enabled     | True                             |
+           | id          | 060d59eac51b4594815603d75a00aba2 |
+           | name        | nova                             |
+           | type        | compute                          |
+           +-------------+----------------------------------+
 
-   .. code-block:: console
+   #. Create the Compute service API endpoints:
 
-      $ openstack endpoint create --region RegionOne \
-        compute public http://controller:8774/v2/%\(tenant_id\)s
-      +--------------+-----------------------------------------+
-      | Field        | Value                                   |
-      +--------------+-----------------------------------------+
-      | enabled      | True                                    |
-      | id           | 3c1caa473bfe4390a11e7177894bcc7b        |
-      | interface    | public                                  |
-      | region       | RegionOne                               |
-      | region_id    | RegionOne                               |
-      | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
-      | service_name | nova                                    |
-      | service_type | compute                                 |
-      | url          | http://controller:8774/v2/%(tenant_id)s |
-      +--------------+-----------------------------------------+
+      .. code-block:: console
 
-      $ openstack endpoint create --region RegionOne \
-        compute internal http://controller:8774/v2/%\(tenant_id\)s
-      +--------------+-----------------------------------------+
-      | Field        | Value                                   |
-      +--------------+-----------------------------------------+
-      | enabled      | True                                    |
-      | id           | e3c918de680746a586eac1f2d9bc10ab        |
-      | interface    | internal                                |
-      | region       | RegionOne                               |
-      | region_id    | RegionOne                               |
-      | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
-      | service_name | nova                                    |
-      | service_type | compute                                 |
-      | url          | http://controller:8774/v2/%(tenant_id)s |
-      +--------------+-----------------------------------------+
+         $ openstack endpoint create --region RegionOne \
+           compute public http://controller:8774/v2/%\(tenant_id\)s
+         +--------------+-----------------------------------------+
+         | Field        | Value                                   |
+         +--------------+-----------------------------------------+
+         | enabled      | True                                    |
+         | id           | 3c1caa473bfe4390a11e7177894bcc7b        |
+         | interface    | public                                  |
+         | region       | RegionOne                               |
+         | region_id    | RegionOne                               |
+         | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
+         | service_name | nova                                    |
+         | service_type | compute                                 |
+         | url          | http://controller:8774/v2/%(tenant_id)s |
+         +--------------+-----------------------------------------+
 
-      $ openstack endpoint create --region RegionOne \
-        compute admin http://controller:8774/v2/%\(tenant_id\)s
-      +--------------+-----------------------------------------+
-      | Field        | Value                                   |
-      +--------------+-----------------------------------------+
-      | enabled      | True                                    |
-      | id           | 38f7af91666a47cfb97b4dc790b94424        |
-      | interface    | admin                                   |
-      | region       | RegionOne                               |
-      | region_id    | RegionOne                               |
-      | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
-      | service_name | nova                                    |
-      | service_type | compute                                 |
-      | url          | http://controller:8774/v2/%(tenant_id)s |
-      +--------------+-----------------------------------------+
+         $ openstack endpoint create --region RegionOne \
+           compute internal http://controller:8774/v2/%\(tenant_id\)s
+         +--------------+-----------------------------------------+
+         | Field        | Value                                   |
+         +--------------+-----------------------------------------+
+         | enabled      | True                                    |
+         | id           | e3c918de680746a586eac1f2d9bc10ab        |
+         | interface    | internal                                |
+         | region       | RegionOne                               |
+         | region_id    | RegionOne                               |
+         | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
+         | service_name | nova                                    |
+         | service_type | compute                                 |
+         | url          | http://controller:8774/v2/%(tenant_id)s |
+         +--------------+-----------------------------------------+
+
+         $ openstack endpoint create --region RegionOne \
+           compute admin http://controller:8774/v2/%\(tenant_id\)s
+         +--------------+-----------------------------------------+
+         | Field        | Value                                   |
+         +--------------+-----------------------------------------+
+         | enabled      | True                                    |
+         | id           | 38f7af91666a47cfb97b4dc790b94424        |
+         | interface    | admin                                   |
+         | region       | RegionOne                               |
+         | region_id    | RegionOne                               |
+         | service_id   | e702f6f497ed42e6a8ae3ba2e5871c78        |
+         | service_name | nova                                    |
+         | service_type | compute                                 |
+         | url          | http://controller:8774/v2/%(tenant_id)s |
+         +--------------+-----------------------------------------+
 
 Install and configure components
 --------------------------------
@@ -178,84 +180,116 @@ Install and configure components
            nova-consoleauth nova-novncproxy nova-scheduler \
            python-novaclient
 
+.. only:: debian
+
+   #. Install the packages:
+
+      .. code-block:: console
+
+         # apt-get install nova-api nova-cert nova-conductor \
+           nova-consoleauth nova-consoleproxy nova-scheduler \
+           python-novaclient
+
+      Respond to prompts for
+      :doc:`database management <debconf/debconf-dbconfig-common>`,
+      :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
+      :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
+      and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
+
 2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:
 
-   * In the ``[database]`` section, configure database access:
+   .. only:: obs or rdo or ubuntu
 
-     .. only:: ubuntu or obs
+      * In the ``[database]`` section, configure database access:
+
+        .. only:: ubuntu or obs
+
+           .. code-block:: ini
+
+              [database]
+              ...
+              connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
+
+        .. only:: rdo
+
+           .. code-block:: ini
+
+              [database]
+              ...
+              connection = mysql://nova:NOVA_DBPASS@controller/nova
+
+        Replace ``NOVA_DBPASS`` with the password you chose for
+        the Compute database.
+
+      * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
+        configure ``RabbitMQ`` message queue access:
 
         .. code-block:: ini
 
-           [database]
+           [DEFAULT]
            ...
-           connection = mysql+pymysql://nova:NOVA_DBPASS@controller/nova
+           rpc_backend = rabbit
 
-     .. only:: rdo
+           [oslo_messaging_rabbit]
+           ...
+           rabbit_host = controller
+           rabbit_userid = openstack
+           rabbit_password = RABBIT_PASS
+
+        Replace ``RABBIT_PASS`` with the password you chose for the
+        ``openstack`` account in ``RabbitMQ``.
+
+      * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
+        configure Identity service access:
 
         .. code-block:: ini
 
-           [database]
+           [DEFAULT]
            ...
-           connection = mysql://nova:NOVA_DBPASS@controller/nova
+           auth_strategy = keystone
 
-     Replace ``NOVA_DBPASS`` with the password you chose for
-     the Compute database.
+           [keystone_authtoken]
+           ...
+           auth_uri = http://controller:5000
+           auth_url = http://controller:35357
+           auth_plugin = password
+           project_domain_id = default
+           user_domain_id = default
+           project_name = service
+           username = nova
+           password = NOVA_PASS
 
-   * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-     configure ``RabbitMQ`` message queue access:
+        Replace ``NOVA_PASS`` with the password you chose for the
+        ``nova`` user in the Identity service.
 
-     .. code-block:: ini
+        .. note::
 
-        [DEFAULT]
-        ...
-        rpc_backend = rabbit
+           Comment out or remove any other options in the
+           ``[keystone_authtoken]`` section.
 
-        [oslo_messaging_rabbit]
-        ...
-        rabbit_host = controller
-        rabbit_userid = openstack
-        rabbit_password = RABBIT_PASS
+      * In the ``[DEFAULT]`` section, configure the ``my_ip`` option to
+        use the management interface IP address of the controller node:
 
-     Replace ``RABBIT_PASS`` with the password you chose for the
-     ``openstack`` account in ``RabbitMQ``.
+        .. code-block:: ini
 
-   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
-     configure Identity service access:
+           [DEFAULT]
+           ...
+           my_ip = 10.0.0.11
 
-     .. code-block:: ini
+   .. only:: debian
 
-        [DEFAULT]
-        ...
-        auth_strategy = keystone
+      * The ``.config`` and ``.postinst`` maintainer scripts of the
+        ``nova-common`` package detect automatically the IP address which
+        goes in the ``my_ip`` directive of the ``[DEFAULT]`` section. This
+        value will normally still be prompted, and you can check that it
+        is correct in the nova.conf after ``nova-common`` is installed:
 
-        [keystone_authtoken]
-        ...
-        auth_uri = http://controller:5000
-        auth_url = http://controller:35357
-        auth_plugin = password
-        project_domain_id = default
-        user_domain_id = default
-        project_name = service
-        username = nova
-        password = NOVA_PASS
+        .. code-block:: ini
 
-     Replace ``NOVA_PASS`` with the password you chose for the
-     ``nova`` user in the Identity service.
-
-     .. note::
-
-        Comment out or remove any other options in the
-        ``[keystone_authtoken]`` section.
-
-   * In the ``[DEFAULT]`` section, configure the ``my_ip`` option to
-     use the management interface IP address of the controller node:
-
-     .. code-block:: ini
-
-        [DEFAULT]
-        ...
-        my_ip = 10.0.0.11
+           [DEFAULT]
+           ...
+           my_ip = 10.0.0.11
 
    * In the ``[DEFAULT]`` section, enable support for the Networking service:
 
@@ -392,7 +426,7 @@ Finalize installation
           openstack-nova-scheduler.service openstack-nova-conductor.service \
           openstack-nova-novncproxy.service
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    * Restart the Compute services:
 
@@ -405,11 +439,13 @@ Finalize installation
         # service nova-conductor restart
         # service nova-novncproxy restart
 
-   * By default, the Ubuntu packages create an SQLite database.
+   .. only:: ubuntu
 
-     Because this configuration uses an SQL database server,
-     you can remove the SQLite database file:
+      * By default, the Ubuntu packages create an SQLite database.
 
-     .. code-block:: console
+        Because this configuration uses an SQL database server,
+        you can remove the SQLite database file:
 
-        # rm -f /var/lib/nova/nova.sqlite
+        .. code-block:: console
+
+           # rm -f /var/lib/nova/nova.sqlite
