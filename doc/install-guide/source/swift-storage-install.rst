@@ -182,19 +182,9 @@ Install and configure components
    5.  .. include:: swift-storage-include3.txt
    6. Ensure proper ownership of the mount point directory structure:
 
-      .. only:: ubuntu or debian or obs
+      .. code-block:: console
 
-         .. code-block:: console
-
-            # chown -R root:swift /srv/node
-
-      .. only:: rdo
-
-         .. code-block:: console
-
-            # chown -R swift:swift /srv/node
-
-.. only:: ubuntu
+         # chown -R swift:swift /srv/node
 
    7. Create the ``recon`` directory and ensure proper ownership of it:
 
