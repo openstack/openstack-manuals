@@ -4,6 +4,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0"
     xml:id="nimble-storage-volume-driver">
     <title>Nimble Storage volume driver</title>
+    <?dbhtml stop-chunking?>
     <para>Nimble Storage fully integrates with the OpenStack platform through
      the Nimble Cinder driver, allowing a host to configure and manage Nimble
       Storage array features through Block Storage interfaces.</para>
@@ -124,12 +125,15 @@ volume_backend_name = <replaceable>NIMBLE_BACKEND_NAME</replaceable>
         </listitem>
       </varlistentry>
     </variablelist>
-    <para>After updating the <filename>cinder.conf</filename>, the cinder-api,
-     cinder-scheduler, and cinder-volume needs to be restarted.</para>
+    <note>
+      <para>Restart the cinder-api, cinder-scheduler, and cinder-volume
+         services after updating the <filename>cinder.conf</filename>.</para>
+    </note>
   </section>
   <section xml:id="nimble-storage-driver-extra-specs">
-    <title>Nimble driver extra specs</title>
-    <para>The Nimble volume driver also supports the following extra spec options:
+    <title>Nimble driver extra spec options</title>
+    <para>The Nimble volume driver also supports the following extra spec
+       options:
     </para>
     <variablelist>
       <varlistentry>
@@ -145,6 +149,12 @@ volume_backend_name = <replaceable>NIMBLE_BACKEND_NAME</replaceable>
           <para>PERF_POL_NAME is the name of a performance policy which exists
              on the Nimble array and should be enabled for every volume in a
               volume-type</para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>'nimble:multi-initiator'='true'</term>
+        <listitem>
+          <para>Used to enable multi-initiator access for a volume-type</para>
         </listitem>
       </varlistentry>
     </variablelist>
