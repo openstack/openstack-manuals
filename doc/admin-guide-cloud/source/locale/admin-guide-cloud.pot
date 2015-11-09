@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-02 06:29+0000\n"
+"POT-Creation-Date: 2015-11-09 06:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -688,12 +688,12 @@ msgstr ""
 #: ../telemetry-measurements.rst:430 ../telemetry-measurements.rst:484
 #: ../telemetry-measurements.rst:528 ../telemetry-measurements.rst:589
 #: ../telemetry-measurements.rst:664 ../telemetry-measurements.rst:697
-#: ../telemetry-measurements.rst:752 ../telemetry-measurements.rst:802
-#: ../telemetry-measurements.rst:839 ../telemetry-measurements.rst:910
-#: ../telemetry-measurements.rst:973 ../telemetry-measurements.rst:1059
-#: ../telemetry-measurements.rst:1137 ../telemetry-measurements.rst:1202
-#: ../telemetry-measurements.rst:1253 ../telemetry-measurements.rst:1279
-#: ../telemetry-measurements.rst:1302 ../telemetry-measurements.rst:1322
+#: ../telemetry-measurements.rst:762 ../telemetry-measurements.rst:812
+#: ../telemetry-measurements.rst:849 ../telemetry-measurements.rst:920
+#: ../telemetry-measurements.rst:983 ../telemetry-measurements.rst:1069
+#: ../telemetry-measurements.rst:1147 ../telemetry-measurements.rst:1212
+#: ../telemetry-measurements.rst:1263 ../telemetry-measurements.rst:1289
+#: ../telemetry-measurements.rst:1312 ../telemetry-measurements.rst:1332
 msgid "Type"
 msgstr ""
 
@@ -2841,15 +2841,23 @@ msgstr ""
 
 #: ../blockstorage_volume_backups.rst:63
 msgid ""
+"The configuration option ``backup_swift_enable_progress_timer`` in ``cinder."
+"conf`` is used when backing up the volume to Object Storage back end. This "
+"option enables or disables the timer. It is enabled by default to send the "
+"periodic progress notifications to the Telemetry service."
+msgstr ""
+
+#: ../blockstorage_volume_backups.rst:68
+msgid ""
 "This command also returns a backup ID. Use this backup ID when restoring the "
 "volume::"
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:68
+#: ../blockstorage_volume_backups.rst:73
 msgid "When restoring from a full backup, it is a full restore."
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:70
+#: ../blockstorage_volume_backups.rst:75
 msgid ""
 "When restoring from an incremental backup, a list of backups is built based "
 "on the IDs of the parent backups. A full restore is performed based on the "
@@ -2857,7 +2865,7 @@ msgid ""
 "laying on top of it in order."
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:75
+#: ../blockstorage_volume_backups.rst:80
 msgid ""
 "You can view a backup list with the :command:`cinder backup-list` command. "
 "Optional arguments to clarify the status of your backups include: running "
@@ -2866,13 +2874,13 @@ msgid ""
 "details of the tenants associated with the listed backups."
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:82
+#: ../blockstorage_volume_backups.rst:87
 msgid ""
 "Because volume backups are dependent on the Block Storage database, you must "
 "also back up your Block Storage database regularly to ensure data recovery."
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:87
+#: ../blockstorage_volume_backups.rst:92
 msgid ""
 "Alternatively, you can export and save the metadata of selected volume "
 "backups. Doing so precludes the need to back up the entire Block Storage "
@@ -2880,31 +2888,31 @@ msgid ""
 "survive a catastrophic database failure."
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:92
+#: ../blockstorage_volume_backups.rst:97
 msgid ""
 "If you specify a UUID encryption key when setting up the volume "
 "specifications, the backup metadata ensures that the key will remain valid "
 "when you back up and restore the volume."
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:96
+#: ../blockstorage_volume_backups.rst:101
 msgid ""
 "For more information about how to export and import volume backup metadata, "
 "see the section called :ref:`volume_backups_export_import`."
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:99
+#: ../blockstorage_volume_backups.rst:104
 msgid "By default, the swift object store is used for the backup repository."
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:101
+#: ../blockstorage_volume_backups.rst:106
 msgid ""
 "If instead you want to use an NFS export as the backup repository, add the "
 "following configuration options to the ``[DEFAULT]`` section of the :file:"
 "`cinder.conf` file and restart the Block Storage services:"
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:110
+#: ../blockstorage_volume_backups.rst:115
 msgid ""
 "For the ``backup_share`` option, replace *HOST* with the DNS resolvable host "
 "name or the IP address of the storage server for the NFS share, and "
@@ -2912,19 +2920,19 @@ msgid ""
 "non-default mount options be specified for the share, set these as follows:"
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:120
+#: ../blockstorage_volume_backups.rst:125
 msgid ""
 "*MOUNT_OPTIONS* is a comma-separated string of NFS mount options as detailed "
 "in the NFS man page."
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:123
+#: ../blockstorage_volume_backups.rst:128
 msgid ""
 "There are several other options whose default values may be overridden as "
 "appropriate for your environment:"
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:132
+#: ../blockstorage_volume_backups.rst:137
 msgid ""
 "The option ``backup_compression_algorithm`` can be set to ``bz2`` or "
 "``None``. The latter can be a useful setting when the server providing the "
@@ -2932,7 +2940,7 @@ msgid ""
 "on the backup data."
 msgstr ""
 
-#: ../blockstorage_volume_backups.rst:137
+#: ../blockstorage_volume_backups.rst:142
 msgid ""
 "The option ``backup_file_size`` must be a multiple of "
 "``backup_sha_block_size_bytes``. It is effectively the maximum file size to "
@@ -3930,13 +3938,13 @@ msgstr ""
 #: ../telemetry-measurements.rst:97 ../telemetry-measurements.rst:430
 #: ../telemetry-measurements.rst:484 ../telemetry-measurements.rst:528
 #: ../telemetry-measurements.rst:589 ../telemetry-measurements.rst:664
-#: ../telemetry-measurements.rst:697 ../telemetry-measurements.rst:752
-#: ../telemetry-measurements.rst:802 ../telemetry-measurements.rst:839
-#: ../telemetry-measurements.rst:910 ../telemetry-measurements.rst:973
-#: ../telemetry-measurements.rst:1059 ../telemetry-measurements.rst:1137
-#: ../telemetry-measurements.rst:1202 ../telemetry-measurements.rst:1253
-#: ../telemetry-measurements.rst:1279 ../telemetry-measurements.rst:1302
-#: ../telemetry-measurements.rst:1322 ../ts-eql-volume-size.rst:107
+#: ../telemetry-measurements.rst:697 ../telemetry-measurements.rst:762
+#: ../telemetry-measurements.rst:812 ../telemetry-measurements.rst:849
+#: ../telemetry-measurements.rst:920 ../telemetry-measurements.rst:983
+#: ../telemetry-measurements.rst:1069 ../telemetry-measurements.rst:1147
+#: ../telemetry-measurements.rst:1212 ../telemetry-measurements.rst:1263
+#: ../telemetry-measurements.rst:1289 ../telemetry-measurements.rst:1312
+#: ../telemetry-measurements.rst:1332 ../ts-eql-volume-size.rst:107
 msgid "Name"
 msgstr ""
 
@@ -5078,7 +5086,7 @@ msgstr ""
 # #-#-#-#-#  database.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 #: ../compute-live-migration-usage.rst:71 ../database.rst:108
-#: ../telemetry-data-collection.rst:682
+#: ../telemetry-data-collection.rst:691
 msgid "name"
 msgstr ""
 
@@ -8221,9 +8229,9 @@ msgstr ""
 
 # #-#-#-#-#  compute-security.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-measurements.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-security.rst:82 ../telemetry-measurements.rst:934
-#: ../telemetry-measurements.rst:937 ../telemetry-measurements.rst:940
-#: ../telemetry-measurements.rst:980
+#: ../compute-security.rst:82 ../telemetry-measurements.rst:944
+#: ../telemetry-measurements.rst:947 ../telemetry-measurements.rst:950
+#: ../telemetry-measurements.rst:990
 msgid "port"
 msgstr ""
 
@@ -9669,7 +9677,7 @@ msgstr ""
 
 # #-#-#-#-#  database.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../database.rst:5 ../telemetry-data-collection.rst:1034
+#: ../database.rst:5 ../telemetry-data-collection.rst:1043
 msgid "Database"
 msgstr ""
 
@@ -11989,9 +11997,9 @@ msgstr ""
 #: ../keystone_integrate_with_ldap.rst:30
 msgid ""
 "For the OpenStack Identity service to access LDAP servers, you must enable "
-"the ``authlogin_nsswitch_use_ldap`` boolean value for SELinux on the "
-"Openstack Identity server. To enable and make the option persistent across "
-"reboots, set the following boolean value as the root user:"
+"the ``authlogin_nsswitch_use_ldap`` boolean value for SELinux on the server "
+"running the OpenStack Identity service. To enable and make the option "
+"persistent across reboots, set the following boolean value as the root user:"
 msgstr ""
 
 #: ../keystone_integrate_with_ldap.rst:40
@@ -13494,8 +13502,8 @@ msgstr ""
 # #-#-#-#-#  networking_adv-features.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 #: ../networking_adv-features.rst:695 ../networking_adv-features.rst:700
-#: ../networking_adv-features.rst:705 ../telemetry-data-collection.rst:1036
-#: ../telemetry-data-collection.rst:1040
+#: ../networking_adv-features.rst:705 ../telemetry-data-collection.rst:1045
+#: ../telemetry-data-collection.rst:1049
 msgid "Yes"
 msgstr ""
 
@@ -13538,8 +13546,8 @@ msgstr ""
 
 # #-#-#-#-#  networking_adv-features.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../networking_adv-features.rst:710 ../telemetry-data-collection.rst:1044
-#: ../telemetry-data-collection.rst:1048
+#: ../networking_adv-features.rst:710 ../telemetry-data-collection.rst:1053
+#: ../telemetry-data-collection.rst:1057
 msgid "No"
 msgstr ""
 
@@ -15204,12 +15212,12 @@ msgstr ""
 #: ../telemetry-measurements.rst:430 ../telemetry-measurements.rst:484
 #: ../telemetry-measurements.rst:528 ../telemetry-measurements.rst:589
 #: ../telemetry-measurements.rst:664 ../telemetry-measurements.rst:697
-#: ../telemetry-measurements.rst:752 ../telemetry-measurements.rst:802
-#: ../telemetry-measurements.rst:839 ../telemetry-measurements.rst:910
-#: ../telemetry-measurements.rst:973 ../telemetry-measurements.rst:1059
-#: ../telemetry-measurements.rst:1137 ../telemetry-measurements.rst:1202
-#: ../telemetry-measurements.rst:1253 ../telemetry-measurements.rst:1279
-#: ../telemetry-measurements.rst:1302 ../telemetry-measurements.rst:1322
+#: ../telemetry-measurements.rst:762 ../telemetry-measurements.rst:812
+#: ../telemetry-measurements.rst:849 ../telemetry-measurements.rst:920
+#: ../telemetry-measurements.rst:983 ../telemetry-measurements.rst:1069
+#: ../telemetry-measurements.rst:1147 ../telemetry-measurements.rst:1212
+#: ../telemetry-measurements.rst:1263 ../telemetry-measurements.rst:1289
+#: ../telemetry-measurements.rst:1312 ../telemetry-measurements.rst:1332
 msgid "Resource"
 msgstr ""
 
@@ -15512,56 +15520,60 @@ msgid ""
 msgstr ""
 
 #: ../networking_introduction.rst:220
+msgid "Apply the settings by restarting the web server."
+msgstr ""
+
+#: ../networking_introduction.rst:222
 msgid ""
 "Restart the neutron-l3-agent and neutron-server services to apply the "
 "settings."
 msgstr ""
 
-#: ../networking_introduction.rst:223
+#: ../networking_introduction.rst:225
 msgid "**To configure Firewall-as-a-Service**"
 msgstr ""
 
-#: ../networking_introduction.rst:225
+#: ../networking_introduction.rst:227
 msgid ""
 "Create the firewall rules and create a policy that contains them. Then, "
 "create a firewall that applies the policy."
 msgstr ""
 
-#: ../networking_introduction.rst:228
+#: ../networking_introduction.rst:230
 msgid "Create a firewall rule:"
 msgstr ""
 
-#: ../networking_introduction.rst:235
+#: ../networking_introduction.rst:237
 msgid ""
 "The Networking client requires a protocol value; if the rule is protocol "
 "agnostic, you can use the ``any`` value."
 msgstr ""
 
-#: ../networking_introduction.rst:238
+#: ../networking_introduction.rst:240
 msgid "Create a firewall policy:"
 msgstr ""
 
-#: ../networking_introduction.rst:245
+#: ../networking_introduction.rst:247
 msgid ""
 "Separate firewall rule IDs or names with spaces. The order in which you "
 "specify the rules is important."
 msgstr ""
 
-#: ../networking_introduction.rst:248
+#: ../networking_introduction.rst:250
 msgid ""
 "You can create a firewall policy without any rules and add rules later, as "
 "follows:"
 msgstr ""
 
-#: ../networking_introduction.rst:251
+#: ../networking_introduction.rst:253
 msgid "To add multiple rules, use the update operation."
 msgstr ""
 
-#: ../networking_introduction.rst:253
+#: ../networking_introduction.rst:255
 msgid "To add a single rule, use the insert-rule operation."
 msgstr ""
 
-#: ../networking_introduction.rst:255
+#: ../networking_introduction.rst:257
 msgid ""
 "For more details, see `Networking command-line client <http://docs.openstack."
 "org/cli-reference/content/ neutronclient_commands."
@@ -15569,28 +15581,28 @@ msgid ""
 "Command-Line Interface Reference."
 msgstr ""
 
-#: ../networking_introduction.rst:263
+#: ../networking_introduction.rst:265
 msgid ""
 "FWaaS always adds a default ``deny all`` rule at the lowest precedence of "
 "each policy. Consequently, a firewall policy with no rules blocks all "
 "traffic by default."
 msgstr ""
 
-#: ../networking_introduction.rst:267
+#: ../networking_introduction.rst:269
 msgid "Create a firewall:"
 msgstr ""
 
-#: ../networking_introduction.rst:275
+#: ../networking_introduction.rst:277
 msgid ""
 "The firewall remains in PENDING\\_CREATE state until you create a Networking "
 "router and attach an interface to it."
 msgstr ""
 
-#: ../networking_introduction.rst:278
+#: ../networking_introduction.rst:280
 msgid "**Allowed-address-pairs.**"
 msgstr ""
 
-#: ../networking_introduction.rst:280
+#: ../networking_introduction.rst:282
 msgid ""
 "``Allowed-address-pairs`` enables you to specify mac_address/"
 "ip_address(cidr) pairs that pass through a port regardless of subnet. This "
@@ -15598,88 +15610,88 @@ msgid ""
 "between two instances to enable fast data plane failover."
 msgstr ""
 
-#: ../networking_introduction.rst:287
+#: ../networking_introduction.rst:289
 msgid ""
 "Currently, only the ML2, Open vSwitch, and VMware NSX plug-ins support the "
 "allowed-address-pairs extension."
 msgstr ""
 
-#: ../networking_introduction.rst:290
+#: ../networking_introduction.rst:292
 msgid "**Basic allowed-address-pairs operations.**"
 msgstr ""
 
-#: ../networking_introduction.rst:292
+#: ../networking_introduction.rst:294
 msgid "Create a port with a specified allowed address pair:"
 msgstr ""
 
-#: ../networking_introduction.rst:299
+#: ../networking_introduction.rst:301
 msgid "Update a port by adding allowed address pairs:"
 msgstr ""
 
-#: ../networking_introduction.rst:310
+#: ../networking_introduction.rst:312
 msgid "Virtual-Private-Network-as-a-Service (VPNaaS)"
 msgstr ""
 
-#: ../networking_introduction.rst:312
+#: ../networking_introduction.rst:314
 msgid ""
 "The VPNaaS extension enables OpenStack tenants to extend private networks "
 "across the internet."
 msgstr ""
 
-#: ../networking_introduction.rst:315
+#: ../networking_introduction.rst:317
 msgid "This extension introduces these resources:"
 msgstr ""
 
-#: ../networking_introduction.rst:317
+#: ../networking_introduction.rst:319
 msgid ""
 ":term:`service`. A parent object that associates VPN with a specific subnet "
 "and router."
 msgstr ""
 
-#: ../networking_introduction.rst:320
+#: ../networking_introduction.rst:322
 msgid ""
 "The Internet Key Exchange (IKE) policy that identifies the authentication "
 "and encryption algorithm to use during phase one and two negotiation of a "
 "VPN connection."
 msgstr ""
 
-#: ../networking_introduction.rst:324
+#: ../networking_introduction.rst:326
 msgid ""
 "The IP security policy that specifies the authentication and encryption "
 "algorithm and encapsulation mode to use for the established VPN connection."
 msgstr ""
 
-#: ../networking_introduction.rst:328
+#: ../networking_introduction.rst:330
 msgid ""
 "Details for the site-to-site IPsec connection, including the peer CIDRs, "
 "MTU, authentication mode, peer address, DPD settings, and status."
 msgstr ""
 
-#: ../networking_introduction.rst:331
+#: ../networking_introduction.rst:333
 msgid "This initial implementation of the VPNaaS extension provides:"
 msgstr ""
 
-#: ../networking_introduction.rst:333
+#: ../networking_introduction.rst:335
 msgid "Site-to-site VPN that connects two private networks."
 msgstr ""
 
-#: ../networking_introduction.rst:335
+#: ../networking_introduction.rst:337
 msgid "Multiple VPN connections per tenant."
 msgstr ""
 
-#: ../networking_introduction.rst:337
+#: ../networking_introduction.rst:339
 msgid ""
 "IKEv1 policy support with 3des, aes-128, aes-256, or aes-192 encryption."
 msgstr ""
 
-#: ../networking_introduction.rst:339
+#: ../networking_introduction.rst:341
 msgid ""
 "IPSec policy support with 3des, aes-128, aes-192, or aes-256 encryption, "
 "sha1 authentication, ESP, AH, or AH-ESP transform protocol, and tunnel or "
 "transport mode encapsulation."
 msgstr ""
 
-#: ../networking_introduction.rst:343
+#: ../networking_introduction.rst:345
 msgid ""
 "Dead Peer Detection (DPD) with hold, clear, restart, disabled, or restart-by-"
 "peer actions."
@@ -21470,7 +21482,7 @@ msgid ""
 "using SNMP, or by using the APIs of other OpenStack services."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:29 ../telemetry-data-collection.rst:203
+#: ../telemetry-data-collection.rst:29 ../telemetry-data-collection.rst:212
 msgid "Polling"
 msgstr ""
 
@@ -21520,17 +21532,17 @@ msgstr ""
 
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-measurements.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../telemetry-data-collection.rst:61 ../telemetry-data-collection.rst:1034
+#: ../telemetry-data-collection.rst:61 ../telemetry-data-collection.rst:1043
 #: ../telemetry-measurements.rst:97 ../telemetry-measurements.rst:430
 #: ../telemetry-measurements.rst:484 ../telemetry-measurements.rst:528
 #: ../telemetry-measurements.rst:589 ../telemetry-measurements.rst:664
-#: ../telemetry-measurements.rst:697 ../telemetry-measurements.rst:752
-#: ../telemetry-measurements.rst:802 ../telemetry-measurements.rst:839
-#: ../telemetry-measurements.rst:910 ../telemetry-measurements.rst:973
-#: ../telemetry-measurements.rst:1059 ../telemetry-measurements.rst:1137
-#: ../telemetry-measurements.rst:1202 ../telemetry-measurements.rst:1253
-#: ../telemetry-measurements.rst:1279 ../telemetry-measurements.rst:1302
-#: ../telemetry-measurements.rst:1322
+#: ../telemetry-measurements.rst:697 ../telemetry-measurements.rst:762
+#: ../telemetry-measurements.rst:812 ../telemetry-measurements.rst:849
+#: ../telemetry-measurements.rst:920 ../telemetry-measurements.rst:983
+#: ../telemetry-measurements.rst:1069 ../telemetry-measurements.rst:1147
+#: ../telemetry-measurements.rst:1212 ../telemetry-measurements.rst:1263
+#: ../telemetry-measurements.rst:1289 ../telemetry-measurements.rst:1312
+#: ../telemetry-measurements.rst:1332
 msgid "Note"
 msgstr ""
 
@@ -21611,8 +21623,8 @@ msgstr ""
 
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-measurements.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../telemetry-data-collection.rst:83 ../telemetry-data-collection.rst:264
-#: ../telemetry-measurements.rst:906
+#: ../telemetry-data-collection.rst:83 ../telemetry-data-collection.rst:273
+#: ../telemetry-measurements.rst:916
 msgid "OpenStack Networking"
 msgstr ""
 
@@ -21682,7 +21694,7 @@ msgstr ""
 
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-measurements.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../telemetry-data-collection.rst:115 ../telemetry-measurements.rst:1249
+#: ../telemetry-data-collection.rst:115 ../telemetry-measurements.rst:1259
 msgid "Orchestration service"
 msgstr ""
 
@@ -21708,7 +21720,7 @@ msgstr ""
 
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-measurements.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../telemetry-data-collection.rst:130 ../telemetry-data-collection.rst:268
+#: ../telemetry-data-collection.rst:130 ../telemetry-data-collection.rst:277
 #: ../telemetry-measurements.rst:693
 msgid "OpenStack Block Storage"
 msgstr ""
@@ -21765,7 +21777,19 @@ msgstr ""
 msgid "snapshot.update.\\*"
 msgstr ""
 
+#: ../telemetry-data-collection.rst:152
+msgid "volume.backup.create.\\ \\*"
+msgstr ""
+
 #: ../telemetry-data-collection.rst:155
+msgid "volume.backup.delete.\\ \\*"
+msgstr ""
+
+#: ../telemetry-data-collection.rst:158
+msgid "volume.backup.restore.\\ \\*"
+msgstr ""
+
+#: ../telemetry-data-collection.rst:164
 msgid ""
 "Some services require additional configuration to emit the notifications "
 "using the correct control exchange on the message queue and so forth. These "
@@ -21773,7 +21797,7 @@ msgid ""
 "service that needs it."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:160
+#: ../telemetry-data-collection.rst:169
 msgid ""
 "Specific notifications from the Compute service are important for "
 "administrators and users. Configuring nova_notifications in the :file:`nova."
@@ -21784,18 +21808,18 @@ msgid ""
 "Guide."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:171
+#: ../telemetry-data-collection.rst:180
 msgid ""
 "When the ``store_events`` option is set to True in :file:`ceilometer.conf`, "
 "Prior to the Kilo release, the notification agent needed database access in "
 "order to work properly."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:176
+#: ../telemetry-data-collection.rst:185
 msgid "Middleware for the OpenStack Object Storage service"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:177
+#: ../telemetry-data-collection.rst:186
 msgid ""
 "A subset of Object Store statistics requires additional middleware to be "
 "installed behind the proxy of Object Store. This additional component emits "
@@ -21805,7 +21829,7 @@ msgid ""
 "``notification`` as origin."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:184
+#: ../telemetry-data-collection.rst:193
 msgid ""
 "The instructions on how to install this middleware can be found in "
 "`Configure the Object Storage service for Telemetry <http://docs.openstack."
@@ -21813,11 +21837,11 @@ msgid ""
 "OpenStack Installation Guide."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:190
+#: ../telemetry-data-collection.rst:199
 msgid "Telemetry middleware"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:191
+#: ../telemetry-data-collection.rst:200
 msgid ""
 "Telemetry provides the capability of counting the HTTP requests and "
 "responses for each API endpoint in OpenStack. This is achieved by storing a "
@@ -21825,7 +21849,7 @@ msgid ""
 "response``, ``http.request`` or ``http.response``."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:196
+#: ../telemetry-data-collection.rst:205
 msgid ""
 "It is recommended that these notifications be consumed as events rather than "
 "samples to better index the appropriate values and avoid massive load on the "
@@ -21833,7 +21857,7 @@ msgid ""
 "samples if the services are configured to emit ``http.*`` notifications."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:204
+#: ../telemetry-data-collection.rst:213
 msgid ""
 "The Telemetry service is intended to store a complex picture of the "
 "infrastructure. This goal requires additional information than what is "
@@ -21841,7 +21865,7 @@ msgid ""
 "information is not emitted directly, like resource usage of the VM instances."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:210
+#: ../telemetry-data-collection.rst:219
 msgid ""
 "Therefore Telemetry uses another method to gather this data by polling the "
 "infrastructure including the APIs of the different OpenStack services and "
@@ -21850,7 +21874,7 @@ msgid ""
 "architecture to fulfill the requirements against the data collection."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:217
+#: ../telemetry-data-collection.rst:226
 msgid ""
 "There are three types of agents supporting the polling mechanism, the "
 "compute agent, the central agent, and the IPMI agent. Under the hood, all "
@@ -21861,89 +21885,89 @@ msgid ""
 "components."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:225
+#: ../telemetry-data-collection.rst:234
 msgid "Running ceilometer-agent-compute is exactly the same as::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:230
+#: ../telemetry-data-collection.rst:239
 msgid "Running ceilometer-agent-central is exactly the same as::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:235
+#: ../telemetry-data-collection.rst:244
 msgid "Running ceilometer-agent-ipmi is exactly the same as::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:240
+#: ../telemetry-data-collection.rst:249
 msgid ""
 "In addition to loading all the polling plug-ins registered in the specified "
 "namespaces, the ceilometer-polling agent can also specify the polling plug-"
 "ins to be loaded by using the ``pollster-list`` option::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:249
+#: ../telemetry-data-collection.rst:258
 msgid "HA deployment is NOT supported if the ``pollster-list`` option is used."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:254
+#: ../telemetry-data-collection.rst:263
 msgid "The ceilometer-polling service is available since Kilo release."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:257
+#: ../telemetry-data-collection.rst:266
 msgid "Central agent"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:258
+#: ../telemetry-data-collection.rst:267
 msgid ""
 "This agent is responsible for polling public REST APIs to retrieve "
 "additional information on OpenStack resources not already surfaced via "
 "notifications, and also for polling hardware resources over SNMP."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:262
+#: ../telemetry-data-collection.rst:271
 msgid "The following services can be polled with this agent:"
 msgstr ""
 
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-measurements.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../telemetry-data-collection.rst:266 ../telemetry-measurements.rst:748
+#: ../telemetry-data-collection.rst:275 ../telemetry-measurements.rst:758
 msgid "OpenStack Object Storage"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:270
+#: ../telemetry-data-collection.rst:279
 msgid "Hardware resources via SNMP"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:272
+#: ../telemetry-data-collection.rst:281
 msgid ""
 "Energy consumption meters via `Kwapi <https://launchpad.net/kwapi>`__ "
 "framework"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:275
+#: ../telemetry-data-collection.rst:284
 msgid ""
 "To install and configure this service use the `Add the Telemetry service "
 "<http://docs.openstack.org/liberty/install-guide-ubuntu/ceilometer.html>`__ "
 "section in the OpenStack Installation Guide."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:279
+#: ../telemetry-data-collection.rst:288
 msgid ""
 "The central agent does not need direct database connection. The samples "
 "collected by this agent are sent via AMQP to the notification agent to be "
 "processed."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:285
+#: ../telemetry-data-collection.rst:294
 msgid ""
 "Prior to the Liberty release, data from the polling agents was processed "
 "locally and published accordingly rather than by the notification agent."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:289
+#: ../telemetry-data-collection.rst:298
 msgid "Compute agent"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:290
+#: ../telemetry-data-collection.rst:299
 msgid ""
 "This agent is responsible for collecting resource usage data of VM instances "
 "on individual compute nodes within an OpenStack deployment. This mechanism "
@@ -21952,7 +21976,7 @@ msgid ""
 "the host machines to locally retrieve this information."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:297
+#: ../telemetry-data-collection.rst:306
 msgid ""
 "A compute agent instance has to be installed on each and every compute node, "
 "installation instructions can be found in the `Install the Compute agent for "
@@ -21960,13 +21984,13 @@ msgid ""
 "nova.html>`__ section in the OpenStack Installation Guide."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:303
+#: ../telemetry-data-collection.rst:312
 msgid ""
 "Just like the central agent, this component also does not need a direct "
 "database connection. The samples are sent via AMQP to the notification agent."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:306
+#: ../telemetry-data-collection.rst:315
 msgid ""
 "The list of supported hypervisors can be found in :ref:`telemetry-supported-"
 "hypervisors`. The compute agent uses the API of the hypervisor installed on "
@@ -21975,22 +21999,22 @@ msgid ""
 "different set of meters."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:312
+#: ../telemetry-data-collection.rst:321
 msgid ""
 "The list of collected meters can be found in :ref:`telemetry-compute-"
 "meters`. The support column provides the information that which meter is "
 "available for each hypervisor supported by the Telemetry service."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:318
+#: ../telemetry-data-collection.rst:327
 msgid "Telemetry supports Libvirt, which hides the hypervisor under it."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:323
+#: ../telemetry-data-collection.rst:332
 msgid "IPMI agent"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:324
+#: ../telemetry-data-collection.rst:333
 msgid ""
 "This agent is responsible for collecting IPMI sensor data and Intel Node "
 "Manager data on individual compute nodes within an OpenStack deployment. "
@@ -21999,7 +22023,7 @@ msgid ""
 "distributions."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:329
+#: ../telemetry-data-collection.rst:338
 msgid ""
 "An IPMI agent instance could be installed on each and every compute node "
 "with IPMI support, except when the node is managed by the Bare metal service "
@@ -22010,37 +22034,37 @@ msgid ""
 "the IPMI agent only on an IPMI capable node for performance reasons."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:338
+#: ../telemetry-data-collection.rst:347
 msgid ""
 "Just like the central agent, this component also does not need direct "
 "database access. The samples are sent via AMQP to the notification agent."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:341
+#: ../telemetry-data-collection.rst:350
 msgid ""
 "The list of collected meters can be found in :ref:`telemetry-bare-metal-"
 "service`."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:346
+#: ../telemetry-data-collection.rst:355
 msgid ""
 "Do not deploy both the IPMI agent and the Bare metal service on one compute "
 "node. If ``conductor.send_sensor_data`` is set, this misconfiguration causes "
 "duplicated IPMI sensor samples."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:354
+#: ../telemetry-data-collection.rst:363
 msgid "Support for HA deployment"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:355
+#: ../telemetry-data-collection.rst:364
 msgid ""
 "Both the polling agents and notification agents can run in an HA deployment, "
 "which means that multiple instances of these services can run in parallel "
 "with workload partitioning among these running instances."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:359
+#: ../telemetry-data-collection.rst:368
 msgid ""
 "The `Tooz <https://pypi.python.org/pypi/tooz>`__ library provides the "
 "coordination within the groups of service instances. It provides an API "
@@ -22048,33 +22072,33 @@ msgid ""
 "applications."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:364
+#: ../telemetry-data-collection.rst:373
 msgid ""
 "Tooz supports `various drivers <http://docs.openstack.org/developer/tooz/"
 "drivers.html>`__ including the following back end solutions:"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:368
+#: ../telemetry-data-collection.rst:377
 msgid ""
 "`Zookeeper <http://zookeeper.apache.org/>`__. Recommended solution by the "
 "Tooz project."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:371
+#: ../telemetry-data-collection.rst:380
 msgid "`Redis <http://redis.io/>`__. Recommended solution by the Tooz project."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:374
+#: ../telemetry-data-collection.rst:383
 msgid "`Memcached <http://memcached.org/>`__. Recommended for testing."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:376
+#: ../telemetry-data-collection.rst:385
 msgid ""
 "You must configure a supported Tooz driver for the HA deployment of the "
 "Telemetry services."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:379
+#: ../telemetry-data-collection.rst:388
 msgid ""
 "For information about the required configuration options that have to be set "
 "in the :file:`ceilometer.conf` configuration file for both the central and "
@@ -22083,11 +22107,11 @@ msgid ""
 "in the OpenStack Configuration Reference."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:386
+#: ../telemetry-data-collection.rst:395
 msgid "Notification agent HA deployment"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:387
+#: ../telemetry-data-collection.rst:396
 msgid ""
 "In the Kilo release, workload partitioning support was added to the "
 "notification agent. This is particularly useful as the pipeline processing "
@@ -22095,7 +22119,7 @@ msgid ""
 "larger amount of load."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:392
+#: ../telemetry-data-collection.rst:401
 msgid ""
 "To enable workload partitioning by notification agent, the ``backend_url`` "
 "option must be set in the :file:`ceilometer.conf` configuration file. "
@@ -22105,7 +22129,7 @@ msgid ""
 "Configuration Reference."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:399
+#: ../telemetry-data-collection.rst:408
 msgid ""
 "In Liberty, the notification agent creates multiple queues to divide the "
 "workload across all active agents. The number of queues can be controled by "
@@ -22117,30 +22141,30 @@ msgid ""
 "of active agents."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:409
+#: ../telemetry-data-collection.rst:418
 msgid "Polling agent HA deployment"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:413
+#: ../telemetry-data-collection.rst:422
 msgid ""
 "Without the ``backend_url`` option being set only one instance of both the "
 "central and compute agent service is able to run and function correctly."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:417
+#: ../telemetry-data-collection.rst:426
 msgid ""
 "The availability check of the instances is provided by heartbeat messages. "
 "When the connection with an instance is lost, the workload will be "
 "reassigned within the remained instances in the next polling cycle."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:424
+#: ../telemetry-data-collection.rst:433
 msgid ""
 "``Memcached`` uses a ``timeout`` value, which should always be set to a "
 "value that is higher than the ``heartbeat`` value set for Telemetry."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:428
+#: ../telemetry-data-collection.rst:437
 msgid ""
 "For backward compatibility and supporting existing deployments, the central "
 "agent configuration also supports using different configuration files for "
@@ -22151,7 +22175,7 @@ msgid ""
 "telemetry.html>`__ in the OpenStack Configuration Reference."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:438
+#: ../telemetry-data-collection.rst:447
 msgid ""
 "For each sub-group of the central agent pool with the same "
 "``partitioning_group_prefix`` a disjoint subset of meters must be polled, "
@@ -22161,7 +22185,7 @@ msgid ""
 "processing`."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:445
+#: ../telemetry-data-collection.rst:454
 msgid ""
 "To enable the compute agent to run multiple instances simultaneously with "
 "workload partitioning, the ``workload_partitioning`` option has to be set to "
@@ -22170,24 +22194,24 @@ msgid ""
 "file:`ceilometer.conf` configuration file."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:453
+#: ../telemetry-data-collection.rst:462
 msgid "Send samples to Telemetry"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:454
+#: ../telemetry-data-collection.rst:463
 msgid ""
 "While most parts of the data collection in the Telemetry service are "
 "automated, Telemetry provides the possibility to submit samples via the REST "
 "API to allow users to send custom samples into this service."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:458
+#: ../telemetry-data-collection.rst:467
 msgid ""
 "This option makes it possible to send any kind of samples without the need "
 "of writing extra code lines or making configuration changes."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:461
+#: ../telemetry-data-collection.rst:470
 msgid ""
 "The samples that can be sent to Telemetry are not limited to the actual "
 "existing meters. There is a possibility to provide data for any new, "
@@ -22195,36 +22219,36 @@ msgid ""
 "request."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:466
+#: ../telemetry-data-collection.rst:475
 msgid ""
 "If the sample corresponds to an existing meter, then the fields like ``meter-"
 "type`` and meter name should be matched accordingly."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:469
+#: ../telemetry-data-collection.rst:478
 msgid ""
 "The required fields for sending a sample using the command line client are:"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:472
+#: ../telemetry-data-collection.rst:481
 msgid "ID of the corresponding resource. (``--resource-id``)"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:474
+#: ../telemetry-data-collection.rst:483
 msgid "Name of meter. (``--meter-name``)"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:476
+#: ../telemetry-data-collection.rst:485
 msgid "Type of meter. (``--meter-type``)"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:478
+#: ../telemetry-data-collection.rst:487
 msgid "Predefined meter types:"
 msgstr ""
 
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-measurements.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../telemetry-data-collection.rst:480 ../telemetry-measurements.rst:37
+#: ../telemetry-data-collection.rst:489 ../telemetry-measurements.rst:37
 #: ../telemetry-measurements.rst:101 ../telemetry-measurements.rst:105
 #: ../telemetry-measurements.rst:109 ../telemetry-measurements.rst:113
 #: ../telemetry-measurements.rst:122 ../telemetry-measurements.rst:126
@@ -22265,33 +22289,33 @@ msgstr ""
 #: ../telemetry-measurements.rst:655 ../telemetry-measurements.rst:668
 #: ../telemetry-measurements.rst:672 ../telemetry-measurements.rst:701
 #: ../telemetry-measurements.rst:704 ../telemetry-measurements.rst:709
-#: ../telemetry-measurements.rst:712 ../telemetry-measurements.rst:756
-#: ../telemetry-measurements.rst:759 ../telemetry-measurements.rst:762
-#: ../telemetry-measurements.rst:776 ../telemetry-measurements.rst:779
-#: ../telemetry-measurements.rst:806 ../telemetry-measurements.rst:808
-#: ../telemetry-measurements.rst:811 ../telemetry-measurements.rst:814
-#: ../telemetry-measurements.rst:819 ../telemetry-measurements.rst:822
-#: ../telemetry-measurements.rst:914 ../telemetry-measurements.rst:924
-#: ../telemetry-measurements.rst:934 ../telemetry-measurements.rst:943
-#: ../telemetry-measurements.rst:953 ../telemetry-measurements.rst:977
-#: ../telemetry-measurements.rst:980 ../telemetry-measurements.rst:1021
-#: ../telemetry-measurements.rst:1024 ../telemetry-measurements.rst:1027
-#: ../telemetry-measurements.rst:1030 ../telemetry-measurements.rst:1033
-#: ../telemetry-measurements.rst:1035 ../telemetry-measurements.rst:1038
-#: ../telemetry-measurements.rst:1063 ../telemetry-measurements.rst:1067
-#: ../telemetry-measurements.rst:1071 ../telemetry-measurements.rst:1075
-#: ../telemetry-measurements.rst:1083 ../telemetry-measurements.rst:1141
-#: ../telemetry-measurements.rst:1145 ../telemetry-measurements.rst:1170
-#: ../telemetry-measurements.rst:1184 ../telemetry-measurements.rst:1206
-#: ../telemetry-measurements.rst:1210 ../telemetry-measurements.rst:1234
-#: ../telemetry-measurements.rst:1306 ../telemetry-measurements.rst:1309
-#: ../telemetry-measurements.rst:1312 ../telemetry-measurements.rst:1328
+#: ../telemetry-measurements.rst:712 ../telemetry-measurements.rst:766
+#: ../telemetry-measurements.rst:769 ../telemetry-measurements.rst:772
+#: ../telemetry-measurements.rst:786 ../telemetry-measurements.rst:789
+#: ../telemetry-measurements.rst:816 ../telemetry-measurements.rst:818
+#: ../telemetry-measurements.rst:821 ../telemetry-measurements.rst:824
+#: ../telemetry-measurements.rst:829 ../telemetry-measurements.rst:832
+#: ../telemetry-measurements.rst:924 ../telemetry-measurements.rst:934
+#: ../telemetry-measurements.rst:944 ../telemetry-measurements.rst:953
+#: ../telemetry-measurements.rst:963 ../telemetry-measurements.rst:987
+#: ../telemetry-measurements.rst:990 ../telemetry-measurements.rst:1031
+#: ../telemetry-measurements.rst:1034 ../telemetry-measurements.rst:1037
+#: ../telemetry-measurements.rst:1040 ../telemetry-measurements.rst:1043
+#: ../telemetry-measurements.rst:1045 ../telemetry-measurements.rst:1048
+#: ../telemetry-measurements.rst:1073 ../telemetry-measurements.rst:1077
+#: ../telemetry-measurements.rst:1081 ../telemetry-measurements.rst:1085
+#: ../telemetry-measurements.rst:1093 ../telemetry-measurements.rst:1151
+#: ../telemetry-measurements.rst:1155 ../telemetry-measurements.rst:1180
+#: ../telemetry-measurements.rst:1194 ../telemetry-measurements.rst:1216
+#: ../telemetry-measurements.rst:1220 ../telemetry-measurements.rst:1244
+#: ../telemetry-measurements.rst:1316 ../telemetry-measurements.rst:1319
+#: ../telemetry-measurements.rst:1322 ../telemetry-measurements.rst:1338
 msgid "Gauge"
 msgstr ""
 
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-measurements.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../telemetry-data-collection.rst:482 ../telemetry-data-collection.rst:652
+#: ../telemetry-data-collection.rst:491 ../telemetry-data-collection.rst:661
 #: ../telemetry-measurements.rst:35 ../telemetry-measurements.rst:355
 #: ../telemetry-measurements.rst:676 ../telemetry-measurements.rst:679
 #: ../telemetry-measurements.rst:682 ../telemetry-measurements.rst:685
@@ -22299,67 +22323,69 @@ msgstr ""
 #: ../telemetry-measurements.rst:720 ../telemetry-measurements.rst:723
 #: ../telemetry-measurements.rst:727 ../telemetry-measurements.rst:730
 #: ../telemetry-measurements.rst:734 ../telemetry-measurements.rst:738
-#: ../telemetry-measurements.rst:741 ../telemetry-measurements.rst:765
-#: ../telemetry-measurements.rst:768 ../telemetry-measurements.rst:771
-#: ../telemetry-measurements.rst:843 ../telemetry-measurements.rst:846
-#: ../telemetry-measurements.rst:849 ../telemetry-measurements.rst:852
-#: ../telemetry-measurements.rst:855 ../telemetry-measurements.rst:858
-#: ../telemetry-measurements.rst:861 ../telemetry-measurements.rst:864
-#: ../telemetry-measurements.rst:867 ../telemetry-measurements.rst:870
-#: ../telemetry-measurements.rst:873 ../telemetry-measurements.rst:876
-#: ../telemetry-measurements.rst:879 ../telemetry-measurements.rst:882
-#: ../telemetry-measurements.rst:885 ../telemetry-measurements.rst:888
-#: ../telemetry-measurements.rst:891 ../telemetry-measurements.rst:896
-#: ../telemetry-measurements.rst:900 ../telemetry-measurements.rst:917
-#: ../telemetry-measurements.rst:921 ../telemetry-measurements.rst:927
-#: ../telemetry-measurements.rst:931 ../telemetry-measurements.rst:937
-#: ../telemetry-measurements.rst:940 ../telemetry-measurements.rst:946
-#: ../telemetry-measurements.rst:950 ../telemetry-measurements.rst:957
-#: ../telemetry-measurements.rst:960 ../telemetry-measurements.rst:963
-#: ../telemetry-measurements.rst:1097 ../telemetry-measurements.rst:1101
-#: ../telemetry-measurements.rst:1105 ../telemetry-measurements.rst:1109
-#: ../telemetry-measurements.rst:1113 ../telemetry-measurements.rst:1117
-#: ../telemetry-measurements.rst:1121 ../telemetry-measurements.rst:1126
-#: ../telemetry-measurements.rst:1152 ../telemetry-measurements.rst:1156
-#: ../telemetry-measurements.rst:1160 ../telemetry-measurements.rst:1165
-#: ../telemetry-measurements.rst:1174 ../telemetry-measurements.rst:1179
-#: ../telemetry-measurements.rst:1188 ../telemetry-measurements.rst:1192
-#: ../telemetry-measurements.rst:1216 ../telemetry-measurements.rst:1220
-#: ../telemetry-measurements.rst:1224 ../telemetry-measurements.rst:1229
-#: ../telemetry-measurements.rst:1238 ../telemetry-measurements.rst:1243
-#: ../telemetry-measurements.rst:1257 ../telemetry-measurements.rst:1260
-#: ../telemetry-measurements.rst:1263 ../telemetry-measurements.rst:1266
-#: ../telemetry-measurements.rst:1269 ../telemetry-measurements.rst:1283
-#: ../telemetry-measurements.rst:1288 ../telemetry-measurements.rst:1292
+#: ../telemetry-measurements.rst:741 ../telemetry-measurements.rst:744
+#: ../telemetry-measurements.rst:747 ../telemetry-measurements.rst:750
+#: ../telemetry-measurements.rst:775 ../telemetry-measurements.rst:778
+#: ../telemetry-measurements.rst:781 ../telemetry-measurements.rst:853
+#: ../telemetry-measurements.rst:856 ../telemetry-measurements.rst:859
+#: ../telemetry-measurements.rst:862 ../telemetry-measurements.rst:865
+#: ../telemetry-measurements.rst:868 ../telemetry-measurements.rst:871
+#: ../telemetry-measurements.rst:874 ../telemetry-measurements.rst:877
+#: ../telemetry-measurements.rst:880 ../telemetry-measurements.rst:883
+#: ../telemetry-measurements.rst:886 ../telemetry-measurements.rst:889
+#: ../telemetry-measurements.rst:892 ../telemetry-measurements.rst:895
+#: ../telemetry-measurements.rst:898 ../telemetry-measurements.rst:901
+#: ../telemetry-measurements.rst:906 ../telemetry-measurements.rst:910
+#: ../telemetry-measurements.rst:927 ../telemetry-measurements.rst:931
+#: ../telemetry-measurements.rst:937 ../telemetry-measurements.rst:941
+#: ../telemetry-measurements.rst:947 ../telemetry-measurements.rst:950
+#: ../telemetry-measurements.rst:956 ../telemetry-measurements.rst:960
+#: ../telemetry-measurements.rst:967 ../telemetry-measurements.rst:970
+#: ../telemetry-measurements.rst:973 ../telemetry-measurements.rst:1107
+#: ../telemetry-measurements.rst:1111 ../telemetry-measurements.rst:1115
+#: ../telemetry-measurements.rst:1119 ../telemetry-measurements.rst:1123
+#: ../telemetry-measurements.rst:1127 ../telemetry-measurements.rst:1131
+#: ../telemetry-measurements.rst:1136 ../telemetry-measurements.rst:1162
+#: ../telemetry-measurements.rst:1166 ../telemetry-measurements.rst:1170
+#: ../telemetry-measurements.rst:1175 ../telemetry-measurements.rst:1184
+#: ../telemetry-measurements.rst:1189 ../telemetry-measurements.rst:1198
+#: ../telemetry-measurements.rst:1202 ../telemetry-measurements.rst:1226
+#: ../telemetry-measurements.rst:1230 ../telemetry-measurements.rst:1234
+#: ../telemetry-measurements.rst:1239 ../telemetry-measurements.rst:1248
+#: ../telemetry-measurements.rst:1253 ../telemetry-measurements.rst:1267
+#: ../telemetry-measurements.rst:1270 ../telemetry-measurements.rst:1273
+#: ../telemetry-measurements.rst:1276 ../telemetry-measurements.rst:1279
+#: ../telemetry-measurements.rst:1293 ../telemetry-measurements.rst:1298
+#: ../telemetry-measurements.rst:1302
 msgid "Delta"
 msgstr ""
 
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-measurements.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../telemetry-data-collection.rst:484 ../telemetry-measurements.rst:33
-#: ../telemetry-measurements.rst:1326
+#: ../telemetry-data-collection.rst:493 ../telemetry-measurements.rst:33
+#: ../telemetry-measurements.rst:1336
 msgid "Cumulative"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:486
+#: ../telemetry-data-collection.rst:495
 msgid "Unit of meter. (``--meter-unit``)"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:488
+#: ../telemetry-data-collection.rst:497
 msgid "Volume of sample. (``--sample-volume``)"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:490
+#: ../telemetry-data-collection.rst:499
 msgid ""
 "To send samples to Telemetry using the command line client, the following "
 "command should be invoked::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:514
+#: ../telemetry-data-collection.rst:523
 msgid "Data collection and processing"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:515
+#: ../telemetry-data-collection.rst:524
 msgid ""
 "The mechanism by which data is collected and processed is called a pipeline. "
 "Pipelines, at the configuration level, describe a coupling between sources "
@@ -22367,21 +22393,21 @@ msgid ""
 "data."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:520
+#: ../telemetry-data-collection.rst:529
 msgid ""
 "A source is a producer of data: samples or events. In effect, it is a set of "
 "pollsters or notification handlers emitting datapoints for a set of matching "
 "meters and event types."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:524
+#: ../telemetry-data-collection.rst:533
 msgid ""
 "Each source configuration encapsulates name matching, polling interval "
 "determination, optional resource enumeration or discovery, and mapping to "
 "one or more sinks for publication."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:528
+#: ../telemetry-data-collection.rst:537
 msgid ""
 "Data gathered can be used for different purposes, which can impact how "
 "frequently it needs to be published. Typically, a meter published for "
@@ -22389,7 +22415,7 @@ msgid ""
 "may be needed for performance tuning every minute."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:535
+#: ../telemetry-data-collection.rst:544
 msgid ""
 "Rapid polling cadences should be avoided, as it results in a huge amount of "
 "data in a short time frame, which may negatively affect the performance of "
@@ -22397,13 +22423,13 @@ msgid ""
 "recommend you do not use small granularity values like 10 seconds."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:541
+#: ../telemetry-data-collection.rst:550
 msgid ""
 "A sink, on the other hand, is a consumer of data, providing logic for the "
 "transformation and publication of data emitted from related sources."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:544
+#: ../telemetry-data-collection.rst:553
 msgid ""
 "In effect, a sink describes a chain of handlers. The chain starts with zero "
 "or more transformers and ends with one or more publishers. The first "
@@ -22413,11 +22439,11 @@ msgid ""
 "described in :ref:`telemetry-publishers`."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:554
+#: ../telemetry-data-collection.rst:563
 msgid "Pipeline configuration"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:555
+#: ../telemetry-data-collection.rst:564
 msgid ""
 "Pipeline configuration by default, is stored in separate configuration "
 "files, called :file:`pipeline.yaml` and :file:`event_pipeline.yaml`, next to "
@@ -22430,18 +22456,18 @@ msgid ""
 "can be defined in one pipeline configuration file."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:565
+#: ../telemetry-data-collection.rst:574
 msgid "The meter pipeline definition looks like the following::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:583
+#: ../telemetry-data-collection.rst:592
 msgid ""
 "The interval parameter in the sources section should be defined in seconds. "
 "It determines the polling cadence of sample injection into the pipeline, "
 "where samples are produced under the direct control of an agent."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:588
+#: ../telemetry-data-collection.rst:597
 msgid ""
 "There are several ways to define the list of meters for a pipeline source. "
 "The list of valid meters can be found in :ref:`telemetry-measurements`. "
@@ -22449,33 +22475,33 @@ msgid ""
 "excluded meters, with which a source should operate:"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:593
+#: ../telemetry-data-collection.rst:602
 msgid ""
 "To include all meters, use the ``*`` wildcard symbol. It is highly advisable "
 "to select only the meters that you intend on using to avoid flooding the "
 "metering database with unused data."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:597
+#: ../telemetry-data-collection.rst:606
 msgid "To define the list of meters, use either of the following:"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:599
+#: ../telemetry-data-collection.rst:608
 msgid "To define the list of included meters, use the ``meter_name`` syntax."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:602
+#: ../telemetry-data-collection.rst:611
 msgid "To define the list of excluded meters, use the ``!meter_name`` syntax."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:605
+#: ../telemetry-data-collection.rst:614
 msgid ""
 "For meters, which have variants identified by a complex name field, use the "
 "wildcard symbol to select all, e.g. for \"instance:m1.tiny\", use \"instance:"
 "\\*\"."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:611
+#: ../telemetry-data-collection.rst:620
 msgid ""
 "Please be aware that we do not have any duplication check between pipelines "
 "and if you add a meter to multiple pipelines then it is assumed the "
@@ -22483,27 +22509,27 @@ msgid ""
 "specified sinks."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:616
+#: ../telemetry-data-collection.rst:625
 msgid "The above definition methods can be used in the following combinations:"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:618
+#: ../telemetry-data-collection.rst:627
 msgid "Use only the wildcard symbol."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:620
+#: ../telemetry-data-collection.rst:629
 msgid "Use the list of included meters."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:622
+#: ../telemetry-data-collection.rst:631
 msgid "Use the list of excluded meters."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:624
+#: ../telemetry-data-collection.rst:633
 msgid "Use wildcard symbol with the list of excluded meters."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:628
+#: ../telemetry-data-collection.rst:637
 msgid ""
 "At least one of the above variations should be included in the meters "
 "section. Included and excluded meters cannot co-exist in the same pipeline. "
@@ -22511,118 +22537,118 @@ msgid ""
 "section."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:633
+#: ../telemetry-data-collection.rst:642
 msgid ""
 "The optional resources section of a pipeline source allows a static list of "
 "resource URLs to be configured for polling."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:636
+#: ../telemetry-data-collection.rst:645
 msgid ""
 "The transformers section of a pipeline sink provides the possibility to add "
 "a list of transformer definitions. The available transformers are:"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:640
+#: ../telemetry-data-collection.rst:649
 msgid "Name of transformer"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:640
+#: ../telemetry-data-collection.rst:649
 msgid "Reference name for configuration"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:642
+#: ../telemetry-data-collection.rst:651
 msgid "Accumulator"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:642
+#: ../telemetry-data-collection.rst:651
 msgid "accumulator"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:644
+#: ../telemetry-data-collection.rst:653
 msgid "Aggregator"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:644
+#: ../telemetry-data-collection.rst:653
 msgid "aggregator"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:646
+#: ../telemetry-data-collection.rst:655
 msgid "Arithmetic"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:646
+#: ../telemetry-data-collection.rst:655
 msgid "arithmetic"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:648
+#: ../telemetry-data-collection.rst:657
 msgid "Rate of change"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:648
+#: ../telemetry-data-collection.rst:657
 msgid "rate\\_of\\_change"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:650
+#: ../telemetry-data-collection.rst:659
 msgid "Unit conversion"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:650
+#: ../telemetry-data-collection.rst:659
 msgid "unit\\_conversion"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:652
+#: ../telemetry-data-collection.rst:661
 msgid "delta"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:655
+#: ../telemetry-data-collection.rst:664
 msgid ""
 "The publishers section contains the list of publishers, where the samples "
 "data should be sent after the possible transformations."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:658
+#: ../telemetry-data-collection.rst:667
 msgid "Similarly, the event pipeline definition looks like the following::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:672
+#: ../telemetry-data-collection.rst:681
 msgid "The event filter uses the same filtering logic as the meter pipeline."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:677
+#: ../telemetry-data-collection.rst:686
 msgid "Transformers"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:679
+#: ../telemetry-data-collection.rst:688
 msgid "The definition of transformers can contain the following fields:"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:682
+#: ../telemetry-data-collection.rst:691
 msgid "Name of the transformer."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:685
+#: ../telemetry-data-collection.rst:694
 msgid "Parameters of the transformer."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:685
+#: ../telemetry-data-collection.rst:694
 msgid "parameters"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:687
+#: ../telemetry-data-collection.rst:696
 msgid ""
 "The parameters section can contain transformer specific fields, like source "
 "and target fields with different subfields in case of the rate of change, "
 "which depends on the implementation of the transformer."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:691
+#: ../telemetry-data-collection.rst:700
 msgid ""
 "In the case of the transformer that creates the ``cpu_util`` meter, the "
 "definition looks like the following::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:703
+#: ../telemetry-data-collection.rst:712
 msgid ""
 "The rate of change the transformer generates is the ``cpu_util`` meter from "
 "the sample values of the ``cpu`` counter, which represents cumulative CPU "
@@ -22632,49 +22658,49 @@ msgid ""
 "sequential values of the ``cpu`` meter."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:710
+#: ../telemetry-data-collection.rst:719
 msgid ""
 "The definition for the disk I/O rate, which is also generated by the rate of "
 "change transformer::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:726
+#: ../telemetry-data-collection.rst:735
 msgid "**Unit conversion transformer**"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:728
+#: ../telemetry-data-collection.rst:737
 msgid ""
 "Transformer to apply a unit conversion. It takes the volume of the meter and "
 "multiplies it with the given ``scale`` expression. Also supports "
 "``map_from`` and ``map_to`` like the rate of change transformer."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:732
+#: ../telemetry-data-collection.rst:741
 msgid "Sample configuration::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:742
+#: ../telemetry-data-collection.rst:751
 msgid "With ``map_from`` and ``map_to`` ::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:756
+#: ../telemetry-data-collection.rst:765
 msgid "**Aggregator transformer**"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:758
+#: ../telemetry-data-collection.rst:767
 msgid ""
 "A transformer that sums up the incoming samples until enough samples have "
 "come in or a timeout has been reached."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:761
+#: ../telemetry-data-collection.rst:770
 msgid ""
 "Timeout can be specified with the ``retention_time`` option. If we want to "
 "flush the aggregation after a set number of samples have been aggregated, we "
 "can specify the size parameter."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:765
+#: ../telemetry-data-collection.rst:774
 msgid ""
 "The volume of the created sample is the sum of the volumes of samples that "
 "came into the transformer. Samples can be aggregated by the attributes "
@@ -22685,40 +22711,40 @@ msgid ""
 "attribute)."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:773
+#: ../telemetry-data-collection.rst:782
 msgid ""
 "To aggregate 60s worth of samples by ``resource_metadata`` and keep the "
 "``resource_metadata`` of the latest received sample::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:782
+#: ../telemetry-data-collection.rst:791
 msgid ""
 "To aggregate each 15 samples by ``user_id`` and ``resource_metadata`` and "
 "keep the ``user_id`` of the first received sample and drop the "
 "``resource_metadata``::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:793
+#: ../telemetry-data-collection.rst:802
 msgid "**Accumulator transformer**"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:795
+#: ../telemetry-data-collection.rst:804
 msgid ""
 "This transformer simply caches the samples until enough samples have arrived "
 "and then flushes them all down the pipeline at once::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:803
+#: ../telemetry-data-collection.rst:812
 msgid "**Muli meter arithmetic transformer**"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:805
+#: ../telemetry-data-collection.rst:814
 msgid ""
 "This transformer enables us to perform arithmetic calculations over one or "
 "more meters and/or their metadata, for example::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:810
+#: ../telemetry-data-collection.rst:819
 msgid ""
 "A new sample is created with the properties described in the ``target`` "
 "section of the transformer's configuration. The sample's volume is the "
@@ -22726,41 +22752,41 @@ msgid ""
 "from the same resource."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:817
+#: ../telemetry-data-collection.rst:826
 msgid "The calculation is limited to meters with the same interval."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:819 ../telemetry-data-collection.rst:852
+#: ../telemetry-data-collection.rst:828 ../telemetry-data-collection.rst:861
 msgid "Example configuration::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:830
+#: ../telemetry-data-collection.rst:839
 msgid ""
 "To demonstrate the use of metadata, here is the implementation of a silly "
 "meter that shows average CPU time per core::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:844
+#: ../telemetry-data-collection.rst:853
 msgid ""
 "Expression evaluation gracefully handles NaNs and exceptions. In such a case "
 "it does not create a new sample but only logs a warning."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:847
+#: ../telemetry-data-collection.rst:856
 msgid "**Delta transformer**"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:849
+#: ../telemetry-data-collection.rst:858
 msgid ""
 "This transformer calculates the change between two sample datapoints of a "
 "resource. It can be configured to capture only the positive growth deltas."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:864
+#: ../telemetry-data-collection.rst:873
 msgid "Meter definitions"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:865
+#: ../telemetry-data-collection.rst:874
 msgid ""
 "The Telemetry service collects a subset of the meters by filtering "
 "notifications emitted by other OpenStack services. Starting with the Liberty "
@@ -22770,18 +22796,18 @@ msgid ""
 "the :file:`meter.yaml` file without any need for additional code changes."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:874
+#: ../telemetry-data-collection.rst:883
 msgid ""
 "The :file:`meter.yaml` file should be modified with care. Unless intended do "
 "not remove any existing meter definitions from the file. Also, the collected "
 "meters can differ in some cases from what is referenced in the documentation."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:879
+#: ../telemetry-data-collection.rst:888
 msgid "A standard meter definition looks like the following::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:891
+#: ../telemetry-data-collection.rst:900
 msgid ""
 "The definition above shows a simple meter definition with some fields, from "
 "which ``name``, ``event_type``, ``type``, ``unit``, and ``volume`` are "
@@ -22789,7 +22815,7 @@ msgid ""
 "the meter."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:896
+#: ../telemetry-data-collection.rst:905
 msgid ""
 "If you take a look at the :file:`meter.yaml` file, it contains the sample "
 "definitions for all the meters that Telemetry is collecting from "
@@ -22802,48 +22828,48 @@ msgid ""
 "define it like ``$.payload.size``."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:906
+#: ../telemetry-data-collection.rst:915
 msgid ""
 "A notification message may contain multiple meters. You can use ``*`` in the "
 "meter definition to capture all the meters and generate samples "
 "respectively. You can use wild cards as shown in the following example::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:921
+#: ../telemetry-data-collection.rst:930
 msgid ""
 "In the above example, the ``name`` field is a json path with matching a list "
 "of meter names defined in the notification message."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:924
+#: ../telemetry-data-collection.rst:933
 msgid ""
 "You can even use complex operations on json paths. In the following example, "
 "``volume`` and ``resource_id`` fields perform an arithmetic and string "
 "concatenation::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:938
+#: ../telemetry-data-collection.rst:947
 msgid ""
 "You will find some existence meters in the :file:`meter.yaml`. These meters "
 "have a ``volume`` as ``1`` and are at the bottom of the yaml file with a "
 "note suggesting that these will be removed in Mitaka release."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:942
+#: ../telemetry-data-collection.rst:951
 msgid "For example, the meter definition for existence meters is as follows::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:956
+#: ../telemetry-data-collection.rst:965
 msgid ""
 "These meters are not loaded by default. To load these meters, flip the "
 "`disable_non_metric_meters` option in the :file:`ceilometer.conf` file."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:961
+#: ../telemetry-data-collection.rst:970
 msgid "Block Storage audit script setup to get notifications"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:962
+#: ../telemetry-data-collection.rst:971
 msgid ""
 "If you want to collect OpenStack Block Storage notification on demand, you "
 "can use ``cinder-volume-usage-audit`` from OpenStack Block Storage. This "
@@ -22853,7 +22879,7 @@ msgid ""
 "format::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:972
+#: ../telemetry-data-collection.rst:981
 msgid ""
 "This script outputs what volumes or snapshots were created, deleted, or "
 "exists in a given period of time and some information about these volumes or "
@@ -22862,17 +22888,17 @@ msgid ""
 "which is the recommended usage as it provides better indexing of data."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:979
+#: ../telemetry-data-collection.rst:988
 msgid ""
 "Using this script via cron you can get notifications periodically, for "
 "example, every 5 minutes::"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:987
+#: ../telemetry-data-collection.rst:996
 msgid "Storing samples"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:988
+#: ../telemetry-data-collection.rst:997
 msgid ""
 "The Telemetry service has a separate service that is responsible for "
 "persisting the data that comes from the pollsters or is received as "
@@ -22882,7 +22908,7 @@ msgid ""
 "using an HTTP dispatcher."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:995
+#: ../telemetry-data-collection.rst:1004
 msgid ""
 "The ``ceilometer-collector`` service receives the data as messages from the "
 "message bus of the configured AMQP service. It sends these datapoints "
@@ -22890,11 +22916,11 @@ msgid ""
 "a host machine from which it has access to the configured dispatcher."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1003
+#: ../telemetry-data-collection.rst:1012
 msgid "Multiple dispatchers can be configured for Telemetry at one time."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1005
+#: ../telemetry-data-collection.rst:1014
 msgid ""
 "Multiple ``ceilometer-collector`` processes can be run at a time. It is also "
 "supported to start multiple worker threads per collector process. The "
@@ -22904,11 +22930,11 @@ msgid ""
 "conf` configuration file."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1013
+#: ../telemetry-data-collection.rst:1022
 msgid "Database dispatcher"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1014
+#: ../telemetry-data-collection.rst:1023
 msgid ""
 "When the database dispatcher is configured as data store, you have the "
 "option to set a ``time_to_live`` option (ttl) for samples. By default the "
@@ -22916,7 +22942,7 @@ msgid ""
 "in the database forever."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1019
+#: ../telemetry-data-collection.rst:1028
 msgid ""
 "The time to live value is specified in seconds. Each sample has a time "
 "stamp, and the ``ttl`` value indicates that a sample will be deleted from "
@@ -22925,7 +22951,7 @@ msgid ""
 "samples older than 600 seconds will be purged from the database."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1026
+#: ../telemetry-data-collection.rst:1035
 msgid ""
 "Certain databases support native TTL expiration. In cases where this is not "
 "possible, a command-line script, which you can use for this purpose is "
@@ -22933,57 +22959,57 @@ msgid ""
 "database in a consistent state."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1031
+#: ../telemetry-data-collection.rst:1040
 msgid "The level of support differs in case of the configured back end:"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1034
+#: ../telemetry-data-collection.rst:1043
 msgid "TTL value support"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1036
+#: ../telemetry-data-collection.rst:1045
 msgid "MongoDB"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1036
+#: ../telemetry-data-collection.rst:1045
 msgid ""
 "MongoDB has native TTL support for deleting samples that are older than the "
 "configured ttl value."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1040
+#: ../telemetry-data-collection.rst:1049
 msgid "SQL-based back ends"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1040
+#: ../telemetry-data-collection.rst:1049
 msgid ""
 "ceilometer-expirer has to be used for deleting samples and its related data "
 "from the database."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1044
+#: ../telemetry-data-collection.rst:1053
 msgid "HBase"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1044
+#: ../telemetry-data-collection.rst:1053
 msgid ""
 "Telemetry's HBase support does not include native TTL nor ceilometer-expirer "
 "support."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1048
+#: ../telemetry-data-collection.rst:1057
 msgid "DB2 NoSQL"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1048
+#: ../telemetry-data-collection.rst:1057
 msgid "DB2 NoSQL does not have native TTL nor ceilometer-expirer support."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1053
+#: ../telemetry-data-collection.rst:1062
 msgid "HTTP dispatcher"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1054
+#: ../telemetry-data-collection.rst:1063
 msgid ""
 "The Telemetry service supports sending samples to an external HTTP target. "
 "The samples are sent without any modification. To set this option as the "
@@ -22994,11 +23020,11 @@ msgid ""
 "html>`__ in the OpenStack Configuration Reference."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1063
+#: ../telemetry-data-collection.rst:1072
 msgid "File dispatcher"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1064
+#: ../telemetry-data-collection.rst:1073
 msgid ""
 "You can store samples in a file by setting the ``dispatcher`` option in the :"
 "file:`ceilometer.conf` file. For the list of configuration options, see the "
@@ -23007,11 +23033,11 @@ msgid ""
 "Configuration Reference."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1071
+#: ../telemetry-data-collection.rst:1080
 msgid "Gnocchi dispatcher"
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1072
+#: ../telemetry-data-collection.rst:1081
 msgid ""
 "The Telemetry service supports sending the metering data to Gnocchi back end "
 "through the gnocchi dispatcher. To set this option as the target, change the "
@@ -23019,7 +23045,7 @@ msgid ""
 "file."
 msgstr ""
 
-#: ../telemetry-data-collection.rst:1077
+#: ../telemetry-data-collection.rst:1086
 msgid ""
 "For the list of options that you need to set, see the `dispatcher_gnocchi "
 "section <http://docs.openstack.org/liberty/config-reference/content/"
@@ -24140,13 +24166,13 @@ msgstr ""
 #: ../telemetry-measurements.rst:97 ../telemetry-measurements.rst:430
 #: ../telemetry-measurements.rst:484 ../telemetry-measurements.rst:528
 #: ../telemetry-measurements.rst:589 ../telemetry-measurements.rst:664
-#: ../telemetry-measurements.rst:697 ../telemetry-measurements.rst:752
-#: ../telemetry-measurements.rst:802 ../telemetry-measurements.rst:839
-#: ../telemetry-measurements.rst:910 ../telemetry-measurements.rst:973
-#: ../telemetry-measurements.rst:1059 ../telemetry-measurements.rst:1137
-#: ../telemetry-measurements.rst:1202 ../telemetry-measurements.rst:1253
-#: ../telemetry-measurements.rst:1279 ../telemetry-measurements.rst:1302
-#: ../telemetry-measurements.rst:1322
+#: ../telemetry-measurements.rst:697 ../telemetry-measurements.rst:762
+#: ../telemetry-measurements.rst:812 ../telemetry-measurements.rst:849
+#: ../telemetry-measurements.rst:920 ../telemetry-measurements.rst:983
+#: ../telemetry-measurements.rst:1069 ../telemetry-measurements.rst:1147
+#: ../telemetry-measurements.rst:1212 ../telemetry-measurements.rst:1263
+#: ../telemetry-measurements.rst:1289 ../telemetry-measurements.rst:1312
+#: ../telemetry-measurements.rst:1332
 msgid "Origin"
 msgstr ""
 
@@ -24157,21 +24183,21 @@ msgstr ""
 #: ../telemetry-measurements.rst:97 ../telemetry-measurements.rst:430
 #: ../telemetry-measurements.rst:484 ../telemetry-measurements.rst:528
 #: ../telemetry-measurements.rst:589 ../telemetry-measurements.rst:664
-#: ../telemetry-measurements.rst:697 ../telemetry-measurements.rst:752
-#: ../telemetry-measurements.rst:802 ../telemetry-measurements.rst:839
-#: ../telemetry-measurements.rst:910 ../telemetry-measurements.rst:973
-#: ../telemetry-measurements.rst:1059 ../telemetry-measurements.rst:1137
-#: ../telemetry-measurements.rst:1202 ../telemetry-measurements.rst:1253
-#: ../telemetry-measurements.rst:1279 ../telemetry-measurements.rst:1302
-#: ../telemetry-measurements.rst:1322
+#: ../telemetry-measurements.rst:697 ../telemetry-measurements.rst:762
+#: ../telemetry-measurements.rst:812 ../telemetry-measurements.rst:849
+#: ../telemetry-measurements.rst:920 ../telemetry-measurements.rst:983
+#: ../telemetry-measurements.rst:1069 ../telemetry-measurements.rst:1147
+#: ../telemetry-measurements.rst:1212 ../telemetry-measurements.rst:1263
+#: ../telemetry-measurements.rst:1289 ../telemetry-measurements.rst:1312
+#: ../telemetry-measurements.rst:1332
 msgid "Unit"
 msgstr ""
 
 #: ../telemetry-measurements.rst:99 ../telemetry-measurements.rst:432
 #: ../telemetry-measurements.rst:666 ../telemetry-measurements.rst:699
-#: ../telemetry-measurements.rst:754 ../telemetry-measurements.rst:912
-#: ../telemetry-measurements.rst:975 ../telemetry-measurements.rst:1255
-#: ../telemetry-measurements.rst:1324
+#: ../telemetry-measurements.rst:764 ../telemetry-measurements.rst:922
+#: ../telemetry-measurements.rst:985 ../telemetry-measurements.rst:1265
+#: ../telemetry-measurements.rst:1334
 msgid "**Meters added in the Icehouse release or earlier**"
 msgstr ""
 
@@ -24252,8 +24278,8 @@ msgstr ""
 
 #: ../telemetry-measurements.rst:109 ../telemetry-measurements.rst:126
 #: ../telemetry-measurements.rst:158 ../telemetry-measurements.rst:161
-#: ../telemetry-measurements.rst:765 ../telemetry-measurements.rst:768
-#: ../telemetry-measurements.rst:771
+#: ../telemetry-measurements.rst:775 ../telemetry-measurements.rst:778
+#: ../telemetry-measurements.rst:781
 msgid "Notific\\ ation"
 msgstr ""
 
@@ -24303,26 +24329,26 @@ msgstr ""
 #: ../telemetry-measurements.rst:633 ../telemetry-measurements.rst:637
 #: ../telemetry-measurements.rst:641 ../telemetry-measurements.rst:645
 #: ../telemetry-measurements.rst:650 ../telemetry-measurements.rst:655
-#: ../telemetry-measurements.rst:756 ../telemetry-measurements.rst:759
-#: ../telemetry-measurements.rst:762 ../telemetry-measurements.rst:776
-#: ../telemetry-measurements.rst:779 ../telemetry-measurements.rst:806
-#: ../telemetry-measurements.rst:808 ../telemetry-measurements.rst:811
-#: ../telemetry-measurements.rst:814 ../telemetry-measurements.rst:819
-#: ../telemetry-measurements.rst:822 ../telemetry-measurements.rst:977
-#: ../telemetry-measurements.rst:980 ../telemetry-measurements.rst:983
-#: ../telemetry-measurements.rst:986 ../telemetry-measurements.rst:989
-#: ../telemetry-measurements.rst:992 ../telemetry-measurements.rst:995
-#: ../telemetry-measurements.rst:998 ../telemetry-measurements.rst:1001
-#: ../telemetry-measurements.rst:1004 ../telemetry-measurements.rst:1007
-#: ../telemetry-measurements.rst:1011 ../telemetry-measurements.rst:1015
-#: ../telemetry-measurements.rst:1018 ../telemetry-measurements.rst:1021
-#: ../telemetry-measurements.rst:1024 ../telemetry-measurements.rst:1027
-#: ../telemetry-measurements.rst:1030 ../telemetry-measurements.rst:1033
-#: ../telemetry-measurements.rst:1035 ../telemetry-measurements.rst:1038
-#: ../telemetry-measurements.rst:1042 ../telemetry-measurements.rst:1045
-#: ../telemetry-measurements.rst:1079 ../telemetry-measurements.rst:1083
-#: ../telemetry-measurements.rst:1087 ../telemetry-measurements.rst:1091
-#: ../telemetry-measurements.rst:1326 ../telemetry-measurements.rst:1328
+#: ../telemetry-measurements.rst:766 ../telemetry-measurements.rst:769
+#: ../telemetry-measurements.rst:772 ../telemetry-measurements.rst:786
+#: ../telemetry-measurements.rst:789 ../telemetry-measurements.rst:816
+#: ../telemetry-measurements.rst:818 ../telemetry-measurements.rst:821
+#: ../telemetry-measurements.rst:824 ../telemetry-measurements.rst:829
+#: ../telemetry-measurements.rst:832 ../telemetry-measurements.rst:987
+#: ../telemetry-measurements.rst:990 ../telemetry-measurements.rst:993
+#: ../telemetry-measurements.rst:996 ../telemetry-measurements.rst:999
+#: ../telemetry-measurements.rst:1002 ../telemetry-measurements.rst:1005
+#: ../telemetry-measurements.rst:1008 ../telemetry-measurements.rst:1011
+#: ../telemetry-measurements.rst:1014 ../telemetry-measurements.rst:1017
+#: ../telemetry-measurements.rst:1021 ../telemetry-measurements.rst:1025
+#: ../telemetry-measurements.rst:1028 ../telemetry-measurements.rst:1031
+#: ../telemetry-measurements.rst:1034 ../telemetry-measurements.rst:1037
+#: ../telemetry-measurements.rst:1040 ../telemetry-measurements.rst:1043
+#: ../telemetry-measurements.rst:1045 ../telemetry-measurements.rst:1048
+#: ../telemetry-measurements.rst:1052 ../telemetry-measurements.rst:1055
+#: ../telemetry-measurements.rst:1089 ../telemetry-measurements.rst:1093
+#: ../telemetry-measurements.rst:1097 ../telemetry-measurements.rst:1101
+#: ../telemetry-measurements.rst:1336 ../telemetry-measurements.rst:1338
 msgid "Pollster"
 msgstr ""
 
@@ -24358,7 +24384,7 @@ msgstr ""
 #: ../telemetry-measurements.rst:119 ../telemetry-measurements.rst:355
 #: ../telemetry-measurements.rst:437 ../telemetry-measurements.rst:440
 #: ../telemetry-measurements.rst:443 ../telemetry-measurements.rst:446
-#: ../telemetry-measurements.rst:1038
+#: ../telemetry-measurements.rst:1048
 msgid "ns"
 msgstr ""
 
@@ -24449,12 +24475,12 @@ msgstr ""
 #: ../telemetry-measurements.rst:334 ../telemetry-measurements.rst:340
 #: ../telemetry-measurements.rst:626 ../telemetry-measurements.rst:630
 #: ../telemetry-measurements.rst:685 ../telemetry-measurements.rst:688
-#: ../telemetry-measurements.rst:759 ../telemetry-measurements.rst:765
-#: ../telemetry-measurements.rst:768 ../telemetry-measurements.rst:779
-#: ../telemetry-measurements.rst:808 ../telemetry-measurements.rst:822
-#: ../telemetry-measurements.rst:963 ../telemetry-measurements.rst:989
-#: ../telemetry-measurements.rst:992 ../telemetry-measurements.rst:1045
-#: ../telemetry-measurements.rst:1087 ../telemetry-measurements.rst:1091
+#: ../telemetry-measurements.rst:769 ../telemetry-measurements.rst:775
+#: ../telemetry-measurements.rst:778 ../telemetry-measurements.rst:789
+#: ../telemetry-measurements.rst:818 ../telemetry-measurements.rst:832
+#: ../telemetry-measurements.rst:973 ../telemetry-measurements.rst:999
+#: ../telemetry-measurements.rst:1002 ../telemetry-measurements.rst:1055
+#: ../telemetry-measurements.rst:1097 ../telemetry-measurements.rst:1101
 msgid "B"
 msgstr ""
 
@@ -24938,12 +24964,12 @@ msgstr ""
 #: ../telemetry-measurements.rst:458 ../telemetry-measurements.rst:461
 #: ../telemetry-measurements.rst:488 ../telemetry-measurements.rst:491
 #: ../telemetry-measurements.rst:494 ../telemetry-measurements.rst:498
-#: ../telemetry-measurements.rst:501 ../telemetry-measurements.rst:1257
-#: ../telemetry-measurements.rst:1260 ../telemetry-measurements.rst:1263
-#: ../telemetry-measurements.rst:1266 ../telemetry-measurements.rst:1269
-#: ../telemetry-measurements.rst:1283 ../telemetry-measurements.rst:1288
-#: ../telemetry-measurements.rst:1292 ../telemetry-measurements.rst:1306
-#: ../telemetry-measurements.rst:1309 ../telemetry-measurements.rst:1312
+#: ../telemetry-measurements.rst:501 ../telemetry-measurements.rst:1267
+#: ../telemetry-measurements.rst:1270 ../telemetry-measurements.rst:1273
+#: ../telemetry-measurements.rst:1276 ../telemetry-measurements.rst:1279
+#: ../telemetry-measurements.rst:1293 ../telemetry-measurements.rst:1298
+#: ../telemetry-measurements.rst:1302 ../telemetry-measurements.rst:1316
+#: ../telemetry-measurements.rst:1319 ../telemetry-measurements.rst:1322
 msgid "Notification"
 msgstr ""
 
@@ -25063,9 +25089,9 @@ msgid "The following meters are recorded for the Bare metal service:"
 msgstr ""
 
 #: ../telemetry-measurements.rst:486 ../telemetry-measurements.rst:530
-#: ../telemetry-measurements.rst:707 ../telemetry-measurements.rst:841
-#: ../telemetry-measurements.rst:1061 ../telemetry-measurements.rst:1139
-#: ../telemetry-measurements.rst:1204 ../telemetry-measurements.rst:1281
+#: ../telemetry-measurements.rst:707 ../telemetry-measurements.rst:851
+#: ../telemetry-measurements.rst:1071 ../telemetry-measurements.rst:1149
+#: ../telemetry-measurements.rst:1214 ../telemetry-measurements.rst:1291
 msgid "**Meters added in the Juno release**"
 msgstr ""
 
@@ -25107,7 +25133,7 @@ msgid "Current reading from sensor"
 msgstr ""
 
 #: ../telemetry-measurements.rst:498 ../telemetry-measurements.rst:532
-#: ../telemetry-measurements.rst:1328
+#: ../telemetry-measurements.rst:1338
 msgid "W"
 msgstr ""
 
@@ -25185,10 +25211,10 @@ msgid "hardware.ipmi.node\\ .temperature"
 msgstr ""
 
 #: ../telemetry-measurements.rst:539 ../telemetry-measurements.rst:591
-#: ../telemetry-measurements.rst:715 ../telemetry-measurements.rst:804
-#: ../telemetry-measurements.rst:894 ../telemetry-measurements.rst:1095
-#: ../telemetry-measurements.rst:1150 ../telemetry-measurements.rst:1214
-#: ../telemetry-measurements.rst:1304
+#: ../telemetry-measurements.rst:715 ../telemetry-measurements.rst:814
+#: ../telemetry-measurements.rst:904 ../telemetry-measurements.rst:1105
+#: ../telemetry-measurements.rst:1160 ../telemetry-measurements.rst:1224
+#: ../telemetry-measurements.rst:1314
 msgid "**Meters added in the Kilo release**"
 msgstr ""
 
@@ -25476,12 +25502,12 @@ msgid "Existence of the image"
 msgstr ""
 
 #: ../telemetry-measurements.rst:668 ../telemetry-measurements.rst:672
-#: ../telemetry-measurements.rst:953 ../telemetry-measurements.rst:1063
-#: ../telemetry-measurements.rst:1067 ../telemetry-measurements.rst:1071
-#: ../telemetry-measurements.rst:1075 ../telemetry-measurements.rst:1141
-#: ../telemetry-measurements.rst:1145 ../telemetry-measurements.rst:1170
-#: ../telemetry-measurements.rst:1184 ../telemetry-measurements.rst:1206
-#: ../telemetry-measurements.rst:1210
+#: ../telemetry-measurements.rst:963 ../telemetry-measurements.rst:1073
+#: ../telemetry-measurements.rst:1077 ../telemetry-measurements.rst:1081
+#: ../telemetry-measurements.rst:1085 ../telemetry-measurements.rst:1151
+#: ../telemetry-measurements.rst:1155 ../telemetry-measurements.rst:1180
+#: ../telemetry-measurements.rst:1194 ../telemetry-measurements.rst:1216
+#: ../telemetry-measurements.rst:1220
 msgid "Notifica\\ tion, Po\\ llster"
 msgstr ""
 
@@ -25514,35 +25540,37 @@ msgstr ""
 #: ../telemetry-measurements.rst:720 ../telemetry-measurements.rst:723
 #: ../telemetry-measurements.rst:727 ../telemetry-measurements.rst:730
 #: ../telemetry-measurements.rst:734 ../telemetry-measurements.rst:738
-#: ../telemetry-measurements.rst:741 ../telemetry-measurements.rst:843
-#: ../telemetry-measurements.rst:846 ../telemetry-measurements.rst:849
-#: ../telemetry-measurements.rst:852 ../telemetry-measurements.rst:855
-#: ../telemetry-measurements.rst:858 ../telemetry-measurements.rst:861
-#: ../telemetry-measurements.rst:864 ../telemetry-measurements.rst:867
-#: ../telemetry-measurements.rst:870 ../telemetry-measurements.rst:873
-#: ../telemetry-measurements.rst:876 ../telemetry-measurements.rst:879
-#: ../telemetry-measurements.rst:882 ../telemetry-measurements.rst:885
-#: ../telemetry-measurements.rst:888 ../telemetry-measurements.rst:891
-#: ../telemetry-measurements.rst:896 ../telemetry-measurements.rst:900
-#: ../telemetry-measurements.rst:914 ../telemetry-measurements.rst:917
-#: ../telemetry-measurements.rst:921 ../telemetry-measurements.rst:924
+#: ../telemetry-measurements.rst:741 ../telemetry-measurements.rst:744
+#: ../telemetry-measurements.rst:747 ../telemetry-measurements.rst:750
+#: ../telemetry-measurements.rst:853 ../telemetry-measurements.rst:856
+#: ../telemetry-measurements.rst:859 ../telemetry-measurements.rst:862
+#: ../telemetry-measurements.rst:865 ../telemetry-measurements.rst:868
+#: ../telemetry-measurements.rst:871 ../telemetry-measurements.rst:874
+#: ../telemetry-measurements.rst:877 ../telemetry-measurements.rst:880
+#: ../telemetry-measurements.rst:883 ../telemetry-measurements.rst:886
+#: ../telemetry-measurements.rst:889 ../telemetry-measurements.rst:892
+#: ../telemetry-measurements.rst:895 ../telemetry-measurements.rst:898
+#: ../telemetry-measurements.rst:901 ../telemetry-measurements.rst:906
+#: ../telemetry-measurements.rst:910 ../telemetry-measurements.rst:924
 #: ../telemetry-measurements.rst:927 ../telemetry-measurements.rst:931
 #: ../telemetry-measurements.rst:934 ../telemetry-measurements.rst:937
-#: ../telemetry-measurements.rst:940 ../telemetry-measurements.rst:943
-#: ../telemetry-measurements.rst:946 ../telemetry-measurements.rst:950
-#: ../telemetry-measurements.rst:957 ../telemetry-measurements.rst:960
-#: ../telemetry-measurements.rst:963 ../telemetry-measurements.rst:1097
-#: ../telemetry-measurements.rst:1101 ../telemetry-measurements.rst:1105
-#: ../telemetry-measurements.rst:1109 ../telemetry-measurements.rst:1113
-#: ../telemetry-measurements.rst:1117 ../telemetry-measurements.rst:1121
-#: ../telemetry-measurements.rst:1126 ../telemetry-measurements.rst:1152
-#: ../telemetry-measurements.rst:1156 ../telemetry-measurements.rst:1160
-#: ../telemetry-measurements.rst:1165 ../telemetry-measurements.rst:1174
-#: ../telemetry-measurements.rst:1179 ../telemetry-measurements.rst:1188
-#: ../telemetry-measurements.rst:1192 ../telemetry-measurements.rst:1216
-#: ../telemetry-measurements.rst:1220 ../telemetry-measurements.rst:1224
-#: ../telemetry-measurements.rst:1229 ../telemetry-measurements.rst:1234
-#: ../telemetry-measurements.rst:1238 ../telemetry-measurements.rst:1243
+#: ../telemetry-measurements.rst:941 ../telemetry-measurements.rst:944
+#: ../telemetry-measurements.rst:947 ../telemetry-measurements.rst:950
+#: ../telemetry-measurements.rst:953 ../telemetry-measurements.rst:956
+#: ../telemetry-measurements.rst:960 ../telemetry-measurements.rst:967
+#: ../telemetry-measurements.rst:970 ../telemetry-measurements.rst:973
+#: ../telemetry-measurements.rst:1107 ../telemetry-measurements.rst:1111
+#: ../telemetry-measurements.rst:1115 ../telemetry-measurements.rst:1119
+#: ../telemetry-measurements.rst:1123 ../telemetry-measurements.rst:1127
+#: ../telemetry-measurements.rst:1131 ../telemetry-measurements.rst:1136
+#: ../telemetry-measurements.rst:1162 ../telemetry-measurements.rst:1166
+#: ../telemetry-measurements.rst:1170 ../telemetry-measurements.rst:1175
+#: ../telemetry-measurements.rst:1184 ../telemetry-measurements.rst:1189
+#: ../telemetry-measurements.rst:1198 ../telemetry-measurements.rst:1202
+#: ../telemetry-measurements.rst:1226 ../telemetry-measurements.rst:1230
+#: ../telemetry-measurements.rst:1234 ../telemetry-measurements.rst:1239
+#: ../telemetry-measurements.rst:1244 ../telemetry-measurements.rst:1248
+#: ../telemetry-measurements.rst:1253
 msgid "Notifica\\ tion"
 msgstr ""
 
@@ -25585,7 +25613,8 @@ msgstr ""
 #: ../telemetry-measurements.rst:701 ../telemetry-measurements.rst:717
 #: ../telemetry-measurements.rst:720 ../telemetry-measurements.rst:723
 #: ../telemetry-measurements.rst:727 ../telemetry-measurements.rst:730
-#: ../telemetry-measurements.rst:734
+#: ../telemetry-measurements.rst:734 ../telemetry-measurements.rst:744
+#: ../telemetry-measurements.rst:747 ../telemetry-measurements.rst:750
 msgid "volume"
 msgstr ""
 
@@ -25694,105 +25723,134 @@ msgstr ""
 msgid "snapshot.delete.(s\\ tart|end)"
 msgstr ""
 
-#: ../telemetry-measurements.rst:749
-msgid "The following meters are collected for OpenStack Object Storage:"
+#: ../telemetry-measurements.rst:744
+msgid "Creation of the volume backup"
 msgstr ""
 
-#: ../telemetry-measurements.rst:756
-msgid "Number of objec\\ ts"
+#: ../telemetry-measurements.rst:744 ../telemetry-measurements.rst:747
+#: ../telemetry-measurements.rst:750
+msgid "backup ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:756 ../telemetry-measurements.rst:776
-#: ../telemetry-measurements.rst:806 ../telemetry-measurements.rst:819
-msgid "object"
+#: ../telemetry-measurements.rst:744
+msgid "volume.backup.crea\\ te.(start|end)"
 msgstr ""
 
-#: ../telemetry-measurements.rst:756 ../telemetry-measurements.rst:759
-#: ../telemetry-measurements.rst:762 ../telemetry-measurements.rst:765
-#: ../telemetry-measurements.rst:768 ../telemetry-measurements.rst:771
-#: ../telemetry-measurements.rst:806 ../telemetry-measurements.rst:808
-#: ../telemetry-measurements.rst:811 ../telemetry-measurements.rst:814
-msgid "storage ID"
+#: ../telemetry-measurements.rst:747
+msgid "Deletion of the volume backup"
 msgstr ""
 
-#: ../telemetry-measurements.rst:756
-msgid "storage.objects"
+#: ../telemetry-measurements.rst:747
+msgid "volume.backup.dele\\ te.(start|end)"
 msgstr ""
 
-#: ../telemetry-measurements.rst:759 ../telemetry-measurements.rst:808
-msgid "Total size of s\\ tored objects"
+#: ../telemetry-measurements.rst:750
+msgid "Restoration of the volume back\\ up"
+msgstr ""
+
+#: ../telemetry-measurements.rst:750
+msgid "volume.backup.rest\\ ore.(start|end)"
 msgstr ""
 
 #: ../telemetry-measurements.rst:759
+msgid "The following meters are collected for OpenStack Object Storage:"
+msgstr ""
+
+#: ../telemetry-measurements.rst:766
+msgid "Number of objec\\ ts"
+msgstr ""
+
+#: ../telemetry-measurements.rst:766 ../telemetry-measurements.rst:786
+#: ../telemetry-measurements.rst:816 ../telemetry-measurements.rst:829
+msgid "object"
+msgstr ""
+
+#: ../telemetry-measurements.rst:766 ../telemetry-measurements.rst:769
+#: ../telemetry-measurements.rst:772 ../telemetry-measurements.rst:775
+#: ../telemetry-measurements.rst:778 ../telemetry-measurements.rst:781
+#: ../telemetry-measurements.rst:816 ../telemetry-measurements.rst:818
+#: ../telemetry-measurements.rst:821 ../telemetry-measurements.rst:824
+msgid "storage ID"
+msgstr ""
+
+#: ../telemetry-measurements.rst:766
+msgid "storage.objects"
+msgstr ""
+
+#: ../telemetry-measurements.rst:769 ../telemetry-measurements.rst:818
+msgid "Total size of s\\ tored objects"
+msgstr ""
+
+#: ../telemetry-measurements.rst:769
 msgid "storage.objects.si\\ ze"
 msgstr ""
 
-#: ../telemetry-measurements.rst:762 ../telemetry-measurements.rst:811
+#: ../telemetry-measurements.rst:772 ../telemetry-measurements.rst:821
 msgid "Number of conta\\ iners"
 msgstr ""
 
-#: ../telemetry-measurements.rst:762
+#: ../telemetry-measurements.rst:772
 msgid "conta\\ iner"
 msgstr ""
 
-#: ../telemetry-measurements.rst:762
+#: ../telemetry-measurements.rst:772
 msgid "storage.objects.co\\ ntainers"
 msgstr ""
 
-#: ../telemetry-measurements.rst:765
+#: ../telemetry-measurements.rst:775
 msgid "Number of incom\\ ing bytes"
 msgstr ""
 
-#: ../telemetry-measurements.rst:765
+#: ../telemetry-measurements.rst:775
 msgid "storage.objects.in\\ coming.bytes"
 msgstr ""
 
-#: ../telemetry-measurements.rst:768
+#: ../telemetry-measurements.rst:778
 msgid "Number of outgo\\ ing bytes"
 msgstr ""
 
-#: ../telemetry-measurements.rst:768
+#: ../telemetry-measurements.rst:778
 msgid "storage.objects.ou\\ tgoing.bytes"
 msgstr ""
 
-#: ../telemetry-measurements.rst:771
+#: ../telemetry-measurements.rst:781
 msgid "Number of API r\\ equests against OpenStack Obje\\ ct Storage"
 msgstr ""
 
-#: ../telemetry-measurements.rst:771
+#: ../telemetry-measurements.rst:781
 msgid "requ\\ est"
 msgstr ""
 
-#: ../telemetry-measurements.rst:771
+#: ../telemetry-measurements.rst:781
 msgid "storage.api.request"
 msgstr ""
 
-#: ../telemetry-measurements.rst:776 ../telemetry-measurements.rst:819
+#: ../telemetry-measurements.rst:786 ../telemetry-measurements.rst:829
 msgid "Number of objec\\ ts in container"
 msgstr ""
 
-#: ../telemetry-measurements.rst:776 ../telemetry-measurements.rst:779
-#: ../telemetry-measurements.rst:819 ../telemetry-measurements.rst:822
+#: ../telemetry-measurements.rst:786 ../telemetry-measurements.rst:789
+#: ../telemetry-measurements.rst:829 ../telemetry-measurements.rst:832
 msgid "storage ID\\ /container"
 msgstr ""
 
-#: ../telemetry-measurements.rst:776
+#: ../telemetry-measurements.rst:786
 msgid "storage.containers\\ .objects"
 msgstr ""
 
-#: ../telemetry-measurements.rst:779
+#: ../telemetry-measurements.rst:789
 msgid "Total size of s\\ tored objects i\\ n container"
 msgstr ""
 
-#: ../telemetry-measurements.rst:779
+#: ../telemetry-measurements.rst:789
 msgid "storage.containers\\ .objects.size"
 msgstr ""
 
-#: ../telemetry-measurements.rst:785
+#: ../telemetry-measurements.rst:795
 msgid "Ceph Object Storage"
 msgstr ""
 
-#: ../telemetry-measurements.rst:786
+#: ../telemetry-measurements.rst:796
 msgid ""
 "In order to gather meters from Ceph, you have to install and configure the "
 "Ceph Object Gateway (radosgw) as it is described in the `Installation Manual "
@@ -25803,62 +25861,62 @@ msgid ""
 "configured."
 msgstr ""
 
-#: ../telemetry-measurements.rst:794
+#: ../telemetry-measurements.rst:804
 msgid ""
 "In order to access Ceph from Telemetry, you need to specify a ``service "
 "group`` for ``radosgw`` in the ``ceilometer.conf`` configuration file along "
 "with ``access_key`` and ``secret_key`` of the ``admin`` user mentioned above."
 msgstr ""
 
-#: ../telemetry-measurements.rst:799
+#: ../telemetry-measurements.rst:809
 msgid "The following meters are collected for Ceph Object Storage:"
 msgstr ""
 
-#: ../telemetry-measurements.rst:806
+#: ../telemetry-measurements.rst:816
 msgid "Number of objects"
 msgstr ""
 
-#: ../telemetry-measurements.rst:806
+#: ../telemetry-measurements.rst:816
 msgid "radosgw.objects"
 msgstr ""
 
-#: ../telemetry-measurements.rst:808
+#: ../telemetry-measurements.rst:818
 msgid "radosgw.objects.\\ size"
 msgstr ""
 
-#: ../telemetry-measurements.rst:811
+#: ../telemetry-measurements.rst:821
 msgid "contai\\ ner"
 msgstr ""
 
-#: ../telemetry-measurements.rst:811
+#: ../telemetry-measurements.rst:821
 msgid "radosgw.objects.\\ containers"
 msgstr ""
 
-#: ../telemetry-measurements.rst:814
+#: ../telemetry-measurements.rst:824
 msgid "Number of API r\\ equests against Ceph Object Ga\\ teway (radosgw)"
 msgstr ""
 
-#: ../telemetry-measurements.rst:814
+#: ../telemetry-measurements.rst:824
 msgid "radosgw.api.requ\\ est"
 msgstr ""
 
-#: ../telemetry-measurements.rst:814
+#: ../telemetry-measurements.rst:824
 msgid "request"
 msgstr ""
 
-#: ../telemetry-measurements.rst:819
+#: ../telemetry-measurements.rst:829
 msgid "radosgw.containe\\ rs.objects"
 msgstr ""
 
-#: ../telemetry-measurements.rst:822
+#: ../telemetry-measurements.rst:832
 msgid "Total size of s\\ tored objects in container"
 msgstr ""
 
-#: ../telemetry-measurements.rst:822
+#: ../telemetry-measurements.rst:832
 msgid "radosgw.containe\\ rs.objects.size"
 msgstr ""
 
-#: ../telemetry-measurements.rst:829
+#: ../telemetry-measurements.rst:839
 msgid ""
 "The ``usage`` related information may not be updated right after an upload "
 "or download, because the Ceph Object Gateway needs time to update the usage "
@@ -25866,1246 +25924,1246 @@ msgid ""
 "minutes to generate the usage logs."
 msgstr ""
 
-#: ../telemetry-measurements.rst:835
+#: ../telemetry-measurements.rst:845
 msgid "OpenStack Identity"
 msgstr ""
 
-#: ../telemetry-measurements.rst:836
+#: ../telemetry-measurements.rst:846
 msgid "The following meters are collected for OpenStack Identity:"
 msgstr ""
 
-#: ../telemetry-measurements.rst:843
+#: ../telemetry-measurements.rst:853
 msgid "User successful\\ ly authenticated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:843
+#: ../telemetry-measurements.rst:853
 msgid "identity.authent\\ icate.success"
 msgstr ""
 
-#: ../telemetry-measurements.rst:843 ../telemetry-measurements.rst:846
-#: ../telemetry-measurements.rst:849 ../telemetry-measurements.rst:852
-#: ../telemetry-measurements.rst:855 ../telemetry-measurements.rst:858
+#: ../telemetry-measurements.rst:853 ../telemetry-measurements.rst:856
+#: ../telemetry-measurements.rst:859 ../telemetry-measurements.rst:862
+#: ../telemetry-measurements.rst:865 ../telemetry-measurements.rst:868
 msgid "user"
 msgstr ""
 
-#: ../telemetry-measurements.rst:843 ../telemetry-measurements.rst:846
-#: ../telemetry-measurements.rst:849 ../telemetry-measurements.rst:852
-#: ../telemetry-measurements.rst:855 ../telemetry-measurements.rst:858
+#: ../telemetry-measurements.rst:853 ../telemetry-measurements.rst:856
+#: ../telemetry-measurements.rst:859 ../telemetry-measurements.rst:862
+#: ../telemetry-measurements.rst:865 ../telemetry-measurements.rst:868
 msgid "user ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:846
+#: ../telemetry-measurements.rst:856
 msgid "User pending au\\ thentication"
 msgstr ""
 
-#: ../telemetry-measurements.rst:846
+#: ../telemetry-measurements.rst:856
 msgid "identity.authent\\ icate.pending"
 msgstr ""
 
-#: ../telemetry-measurements.rst:849
+#: ../telemetry-measurements.rst:859
 msgid "User failed to authenticate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:849
+#: ../telemetry-measurements.rst:859
 msgid "identity.authent\\ icate.failure"
 msgstr ""
 
-#: ../telemetry-measurements.rst:852
+#: ../telemetry-measurements.rst:862
 msgid "User is created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:852
+#: ../telemetry-measurements.rst:862
 msgid "identity.user.cr\\ eated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:855
+#: ../telemetry-measurements.rst:865
 msgid "User is deleted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:855
+#: ../telemetry-measurements.rst:865
 msgid "identity.user.de\\ leted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:858
+#: ../telemetry-measurements.rst:868
 msgid "User is updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:858
+#: ../telemetry-measurements.rst:868
 msgid "identity.user.up\\ dated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:861
+#: ../telemetry-measurements.rst:871
 msgid "Group is created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:861 ../telemetry-measurements.rst:864
-#: ../telemetry-measurements.rst:867
+#: ../telemetry-measurements.rst:871 ../telemetry-measurements.rst:874
+#: ../telemetry-measurements.rst:877
 msgid "group"
 msgstr ""
 
-#: ../telemetry-measurements.rst:861 ../telemetry-measurements.rst:864
-#: ../telemetry-measurements.rst:867
+#: ../telemetry-measurements.rst:871 ../telemetry-measurements.rst:874
+#: ../telemetry-measurements.rst:877
 msgid "group ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:861
+#: ../telemetry-measurements.rst:871
 msgid "identity.group.c\\ reated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:864
+#: ../telemetry-measurements.rst:874
 msgid "Group is deleted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:864
+#: ../telemetry-measurements.rst:874
 msgid "identity.group.d\\ eleted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:867
+#: ../telemetry-measurements.rst:877
 msgid "Group is updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:867
+#: ../telemetry-measurements.rst:877
 msgid "identity.group.u\\ pdated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:870
+#: ../telemetry-measurements.rst:880
 msgid "Role is created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:870
+#: ../telemetry-measurements.rst:880
 msgid "identity.role.cr\\ eated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:870 ../telemetry-measurements.rst:873
-#: ../telemetry-measurements.rst:876
+#: ../telemetry-measurements.rst:880 ../telemetry-measurements.rst:883
+#: ../telemetry-measurements.rst:886
 msgid "role"
 msgstr ""
 
-#: ../telemetry-measurements.rst:870 ../telemetry-measurements.rst:873
-#: ../telemetry-measurements.rst:876 ../telemetry-measurements.rst:896
-#: ../telemetry-measurements.rst:900
+#: ../telemetry-measurements.rst:880 ../telemetry-measurements.rst:883
+#: ../telemetry-measurements.rst:886 ../telemetry-measurements.rst:906
+#: ../telemetry-measurements.rst:910
 msgid "role ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:873
+#: ../telemetry-measurements.rst:883
 msgid "Role is deleted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:873
+#: ../telemetry-measurements.rst:883
 msgid "identity.role.de\\ leted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:876
+#: ../telemetry-measurements.rst:886
 msgid "Role is updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:876
+#: ../telemetry-measurements.rst:886
 msgid "identity.role.up\\ dated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:879
+#: ../telemetry-measurements.rst:889
 msgid "Project is crea\\ ted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:879
+#: ../telemetry-measurements.rst:889
 msgid "identity.project\\ .created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:879 ../telemetry-measurements.rst:882
-#: ../telemetry-measurements.rst:885
+#: ../telemetry-measurements.rst:889 ../telemetry-measurements.rst:892
+#: ../telemetry-measurements.rst:895
 msgid "project"
 msgstr ""
 
-#: ../telemetry-measurements.rst:879 ../telemetry-measurements.rst:882
-#: ../telemetry-measurements.rst:885
+#: ../telemetry-measurements.rst:889 ../telemetry-measurements.rst:892
+#: ../telemetry-measurements.rst:895
 msgid "project ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:882
+#: ../telemetry-measurements.rst:892
 msgid "Project is dele\\ ted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:882
+#: ../telemetry-measurements.rst:892
 msgid "identity.project\\ .deleted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:885
+#: ../telemetry-measurements.rst:895
 msgid "Project is upda\\ ted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:885
+#: ../telemetry-measurements.rst:895
 msgid "identity.project\\ .updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:888
+#: ../telemetry-measurements.rst:898
 msgid "Trust is created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:888
+#: ../telemetry-measurements.rst:898
 msgid "identity.trust.c\\ reated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:888 ../telemetry-measurements.rst:891
+#: ../telemetry-measurements.rst:898 ../telemetry-measurements.rst:901
 msgid "trust"
 msgstr ""
 
-#: ../telemetry-measurements.rst:888 ../telemetry-measurements.rst:891
+#: ../telemetry-measurements.rst:898 ../telemetry-measurements.rst:901
 msgid "trust ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:891
+#: ../telemetry-measurements.rst:901
 msgid "Trust is deleted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:891
+#: ../telemetry-measurements.rst:901
 msgid "identity.trust.d\\ eleted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:896
+#: ../telemetry-measurements.rst:906
 msgid "Role is added to an actor on a target"
 msgstr ""
 
-#: ../telemetry-measurements.rst:896
+#: ../telemetry-measurements.rst:906
 msgid "identity.role_as\\ signment.created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:896 ../telemetry-measurements.rst:900
+#: ../telemetry-measurements.rst:906 ../telemetry-measurements.rst:910
 msgid "role_a\\ ssignm\\ ent"
 msgstr ""
 
-#: ../telemetry-measurements.rst:900
+#: ../telemetry-measurements.rst:910
 msgid "Role is removed from an actor on a target"
 msgstr ""
 
-#: ../telemetry-measurements.rst:900
+#: ../telemetry-measurements.rst:910
 msgid "identity.role_as\\ signment.deleted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:907
+#: ../telemetry-measurements.rst:917
 msgid "The following meters are collected for OpenStack Networking:"
 msgstr ""
 
-#: ../telemetry-measurements.rst:914
+#: ../telemetry-measurements.rst:924
 msgid "Existence of ne\\ twork"
 msgstr ""
 
-#: ../telemetry-measurements.rst:914 ../telemetry-measurements.rst:917
-#: ../telemetry-measurements.rst:921
+#: ../telemetry-measurements.rst:924 ../telemetry-measurements.rst:927
+#: ../telemetry-measurements.rst:931
 msgid "networ\\ k"
 msgstr ""
 
-#: ../telemetry-measurements.rst:914
+#: ../telemetry-measurements.rst:924
 msgid "network"
 msgstr ""
 
-#: ../telemetry-measurements.rst:914 ../telemetry-measurements.rst:917
-#: ../telemetry-measurements.rst:921
+#: ../telemetry-measurements.rst:924 ../telemetry-measurements.rst:927
+#: ../telemetry-measurements.rst:931
 msgid "network ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:917
+#: ../telemetry-measurements.rst:927
 msgid "Creation reques\\ ts for this net\\ work"
 msgstr ""
 
-#: ../telemetry-measurements.rst:917
+#: ../telemetry-measurements.rst:927
 msgid "network.create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:921
+#: ../telemetry-measurements.rst:931
 msgid "Update requests for this network"
 msgstr ""
 
-#: ../telemetry-measurements.rst:921
+#: ../telemetry-measurements.rst:931
 msgid "network.update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:924
+#: ../telemetry-measurements.rst:934
 msgid "Existence of su\\ bnet"
 msgstr ""
 
-#: ../telemetry-measurements.rst:924 ../telemetry-measurements.rst:927
-#: ../telemetry-measurements.rst:931
+#: ../telemetry-measurements.rst:934 ../telemetry-measurements.rst:937
+#: ../telemetry-measurements.rst:941
 msgid "subnet"
 msgstr ""
 
-#: ../telemetry-measurements.rst:924 ../telemetry-measurements.rst:927
-#: ../telemetry-measurements.rst:931
+#: ../telemetry-measurements.rst:934 ../telemetry-measurements.rst:937
+#: ../telemetry-measurements.rst:941
 msgid "subnet ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:927
+#: ../telemetry-measurements.rst:937
 msgid "Creation reques\\ ts for this sub\\ net"
 msgstr ""
 
-#: ../telemetry-measurements.rst:927
+#: ../telemetry-measurements.rst:937
 msgid "subnet.create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:931
+#: ../telemetry-measurements.rst:941
 msgid "Update requests for this subnet"
 msgstr ""
 
-#: ../telemetry-measurements.rst:931
+#: ../telemetry-measurements.rst:941
 msgid "subnet.update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:934 ../telemetry-measurements.rst:980
+#: ../telemetry-measurements.rst:944 ../telemetry-measurements.rst:990
 msgid "Existence of po\\ rt"
 msgstr ""
 
-#: ../telemetry-measurements.rst:934 ../telemetry-measurements.rst:937
-#: ../telemetry-measurements.rst:940
+#: ../telemetry-measurements.rst:944 ../telemetry-measurements.rst:947
+#: ../telemetry-measurements.rst:950
 msgid "port ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:937
+#: ../telemetry-measurements.rst:947
 msgid "Creation reques\\ ts for this port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:937
+#: ../telemetry-measurements.rst:947
 msgid "port.create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:940
+#: ../telemetry-measurements.rst:950
 msgid "Update requests for this port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:940
+#: ../telemetry-measurements.rst:950
 msgid "port.update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:943
+#: ../telemetry-measurements.rst:953
 msgid "Existence of ro\\ uter"
 msgstr ""
 
-#: ../telemetry-measurements.rst:943 ../telemetry-measurements.rst:946
-#: ../telemetry-measurements.rst:950
+#: ../telemetry-measurements.rst:953 ../telemetry-measurements.rst:956
+#: ../telemetry-measurements.rst:960
 msgid "router"
 msgstr ""
 
-#: ../telemetry-measurements.rst:943 ../telemetry-measurements.rst:946
-#: ../telemetry-measurements.rst:950
+#: ../telemetry-measurements.rst:953 ../telemetry-measurements.rst:956
+#: ../telemetry-measurements.rst:960
 msgid "router ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:946
+#: ../telemetry-measurements.rst:956
 msgid "Creation reques\\ ts for this rou\\ ter"
 msgstr ""
 
-#: ../telemetry-measurements.rst:946
+#: ../telemetry-measurements.rst:956
 msgid "router.create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:950
+#: ../telemetry-measurements.rst:960
 msgid "Update requests for this router"
 msgstr ""
 
-#: ../telemetry-measurements.rst:950
+#: ../telemetry-measurements.rst:960
 msgid "router.update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:953
+#: ../telemetry-measurements.rst:963
 msgid "Existence of IP"
 msgstr ""
 
-#: ../telemetry-measurements.rst:953 ../telemetry-measurements.rst:957
-#: ../telemetry-measurements.rst:960
+#: ../telemetry-measurements.rst:963 ../telemetry-measurements.rst:967
+#: ../telemetry-measurements.rst:970
 msgid "ip"
 msgstr ""
 
-#: ../telemetry-measurements.rst:953 ../telemetry-measurements.rst:957
-#: ../telemetry-measurements.rst:960
+#: ../telemetry-measurements.rst:963 ../telemetry-measurements.rst:967
+#: ../telemetry-measurements.rst:970
 msgid "ip ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:953
+#: ../telemetry-measurements.rst:963
 msgid "ip.floating"
 msgstr ""
 
-#: ../telemetry-measurements.rst:957
+#: ../telemetry-measurements.rst:967
 msgid "Creation reques\\ ts for this IP"
 msgstr ""
 
-#: ../telemetry-measurements.rst:957
+#: ../telemetry-measurements.rst:967
 msgid "ip.floating.cr\\ eate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:960
+#: ../telemetry-measurements.rst:970
 msgid "Update requests for this IP"
 msgstr ""
 
-#: ../telemetry-measurements.rst:960
+#: ../telemetry-measurements.rst:970
 msgid "ip.floating.up\\ date"
 msgstr ""
 
-#: ../telemetry-measurements.rst:963
+#: ../telemetry-measurements.rst:973
 msgid "Bytes through t\\ his l3 metering label"
 msgstr ""
 
-#: ../telemetry-measurements.rst:963
+#: ../telemetry-measurements.rst:973
 msgid "bandwidth"
 msgstr ""
 
-#: ../telemetry-measurements.rst:963
+#: ../telemetry-measurements.rst:973
 msgid "label ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:969
+#: ../telemetry-measurements.rst:979
 msgid "SDN controllers"
 msgstr ""
 
-#: ../telemetry-measurements.rst:970
+#: ../telemetry-measurements.rst:980
 msgid "The following meters are collected for SDN:"
 msgstr ""
 
-#: ../telemetry-measurements.rst:977
+#: ../telemetry-measurements.rst:987
 msgid "Existence of sw\\ itch"
 msgstr ""
 
-#: ../telemetry-measurements.rst:977
+#: ../telemetry-measurements.rst:987
 msgid "switch"
 msgstr ""
 
-#: ../telemetry-measurements.rst:977 ../telemetry-measurements.rst:980
-#: ../telemetry-measurements.rst:983 ../telemetry-measurements.rst:986
-#: ../telemetry-measurements.rst:989 ../telemetry-measurements.rst:992
-#: ../telemetry-measurements.rst:995 ../telemetry-measurements.rst:998
-#: ../telemetry-measurements.rst:1001 ../telemetry-measurements.rst:1004
-#: ../telemetry-measurements.rst:1007 ../telemetry-measurements.rst:1011
-#: ../telemetry-measurements.rst:1015 ../telemetry-measurements.rst:1018
-#: ../telemetry-measurements.rst:1021 ../telemetry-measurements.rst:1024
-#: ../telemetry-measurements.rst:1027 ../telemetry-measurements.rst:1030
-#: ../telemetry-measurements.rst:1033 ../telemetry-measurements.rst:1035
-#: ../telemetry-measurements.rst:1038 ../telemetry-measurements.rst:1042
-#: ../telemetry-measurements.rst:1045
+#: ../telemetry-measurements.rst:987 ../telemetry-measurements.rst:990
+#: ../telemetry-measurements.rst:993 ../telemetry-measurements.rst:996
+#: ../telemetry-measurements.rst:999 ../telemetry-measurements.rst:1002
+#: ../telemetry-measurements.rst:1005 ../telemetry-measurements.rst:1008
+#: ../telemetry-measurements.rst:1011 ../telemetry-measurements.rst:1014
+#: ../telemetry-measurements.rst:1017 ../telemetry-measurements.rst:1021
+#: ../telemetry-measurements.rst:1025 ../telemetry-measurements.rst:1028
+#: ../telemetry-measurements.rst:1031 ../telemetry-measurements.rst:1034
+#: ../telemetry-measurements.rst:1037 ../telemetry-measurements.rst:1040
+#: ../telemetry-measurements.rst:1043 ../telemetry-measurements.rst:1045
+#: ../telemetry-measurements.rst:1048 ../telemetry-measurements.rst:1052
+#: ../telemetry-measurements.rst:1055
 msgid "switch ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:980
+#: ../telemetry-measurements.rst:990
 msgid "switch.port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:983 ../telemetry-measurements.rst:986
-#: ../telemetry-measurements.rst:989 ../telemetry-measurements.rst:992
-#: ../telemetry-measurements.rst:995 ../telemetry-measurements.rst:998
-#: ../telemetry-measurements.rst:1001 ../telemetry-measurements.rst:1004
-#: ../telemetry-measurements.rst:1007 ../telemetry-measurements.rst:1011
-#: ../telemetry-measurements.rst:1015 ../telemetry-measurements.rst:1018
-#: ../telemetry-measurements.rst:1042 ../telemetry-measurements.rst:1045
-#: ../telemetry-measurements.rst:1079 ../telemetry-measurements.rst:1087
-#: ../telemetry-measurements.rst:1091
+#: ../telemetry-measurements.rst:993 ../telemetry-measurements.rst:996
+#: ../telemetry-measurements.rst:999 ../telemetry-measurements.rst:1002
+#: ../telemetry-measurements.rst:1005 ../telemetry-measurements.rst:1008
+#: ../telemetry-measurements.rst:1011 ../telemetry-measurements.rst:1014
+#: ../telemetry-measurements.rst:1017 ../telemetry-measurements.rst:1021
+#: ../telemetry-measurements.rst:1025 ../telemetry-measurements.rst:1028
+#: ../telemetry-measurements.rst:1052 ../telemetry-measurements.rst:1055
+#: ../telemetry-measurements.rst:1089 ../telemetry-measurements.rst:1097
+#: ../telemetry-measurements.rst:1101
 msgid "Cumula\\ tive"
 msgstr ""
 
-#: ../telemetry-measurements.rst:983
+#: ../telemetry-measurements.rst:993
 msgid "Packets receive\\ d on port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:983 ../telemetry-measurements.rst:986
-#: ../telemetry-measurements.rst:995 ../telemetry-measurements.rst:998
-#: ../telemetry-measurements.rst:1001 ../telemetry-measurements.rst:1004
-#: ../telemetry-measurements.rst:1007 ../telemetry-measurements.rst:1011
-#: ../telemetry-measurements.rst:1015 ../telemetry-measurements.rst:1027
-#: ../telemetry-measurements.rst:1030 ../telemetry-measurements.rst:1042
+#: ../telemetry-measurements.rst:993 ../telemetry-measurements.rst:996
+#: ../telemetry-measurements.rst:1005 ../telemetry-measurements.rst:1008
+#: ../telemetry-measurements.rst:1011 ../telemetry-measurements.rst:1014
+#: ../telemetry-measurements.rst:1017 ../telemetry-measurements.rst:1021
+#: ../telemetry-measurements.rst:1025 ../telemetry-measurements.rst:1037
+#: ../telemetry-measurements.rst:1040 ../telemetry-measurements.rst:1052
 msgid "packet"
 msgstr ""
 
-#: ../telemetry-measurements.rst:983
+#: ../telemetry-measurements.rst:993
 msgid "switch.port.re\\ ceive.packets"
 msgstr ""
 
-#: ../telemetry-measurements.rst:986
+#: ../telemetry-measurements.rst:996
 msgid "Packets transmi\\ tted on port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:986
+#: ../telemetry-measurements.rst:996
 msgid "switch.port.tr\\ ansmit.packets"
 msgstr ""
 
-#: ../telemetry-measurements.rst:989
+#: ../telemetry-measurements.rst:999
 msgid "Bytes received on port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:989
+#: ../telemetry-measurements.rst:999
 msgid "switch.port.re\\ ceive.bytes"
 msgstr ""
 
-#: ../telemetry-measurements.rst:992
+#: ../telemetry-measurements.rst:1002
 msgid "Bytes transmitt\\ ed on port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:992
+#: ../telemetry-measurements.rst:1002
 msgid "switch.port.tr\\ ansmit.bytes"
 msgstr ""
 
-#: ../telemetry-measurements.rst:995
+#: ../telemetry-measurements.rst:1005
 msgid "Drops received on port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:995
+#: ../telemetry-measurements.rst:1005
 msgid "switch.port.re\\ ceive.drops"
 msgstr ""
 
-#: ../telemetry-measurements.rst:998
+#: ../telemetry-measurements.rst:1008
 msgid "Drops transmitt\\ ed on port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:998
+#: ../telemetry-measurements.rst:1008
 msgid "switch.port.tr\\ ansmit.drops"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1001
+#: ../telemetry-measurements.rst:1011
 msgid "Errors received on port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1001
+#: ../telemetry-measurements.rst:1011
 msgid "switch.port.re\\ ceive.errors"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1004
+#: ../telemetry-measurements.rst:1014
 msgid "Errors transmit\\ ted on port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1004
+#: ../telemetry-measurements.rst:1014
 msgid "switch.port.tr\\ ansmit.errors"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1007
+#: ../telemetry-measurements.rst:1017
 msgid "Frame alignment errors receive\\ d on port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1007
+#: ../telemetry-measurements.rst:1017
 msgid "switch.port.re\\ ceive.frame\\_er\\ ror"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1011
+#: ../telemetry-measurements.rst:1021
 msgid "Overrun errors received on port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1011
+#: ../telemetry-measurements.rst:1021
 msgid "switch.port.re\\ ceive.overrun\\_\\ error"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1015
+#: ../telemetry-measurements.rst:1025
 msgid "CRC errors rece\\ ived on port"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1015
+#: ../telemetry-measurements.rst:1025
 msgid "switch.port.re\\ ceive.crc\\_error"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1018
+#: ../telemetry-measurements.rst:1028
 msgid "Collisions on p\\ ort"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1018
+#: ../telemetry-measurements.rst:1028
 msgid "count"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1018
+#: ../telemetry-measurements.rst:1028
 msgid "switch.port.co\\ llision.count"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1021
+#: ../telemetry-measurements.rst:1031
 msgid "Duration of tab\\ le"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1021
+#: ../telemetry-measurements.rst:1031
 msgid "switch.table"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1021 ../telemetry-measurements.rst:1306
-#: ../telemetry-measurements.rst:1309
+#: ../telemetry-measurements.rst:1031 ../telemetry-measurements.rst:1316
+#: ../telemetry-measurements.rst:1319
 msgid "table"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1024
+#: ../telemetry-measurements.rst:1034
 msgid "Active entries in table"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1024
+#: ../telemetry-measurements.rst:1034
 msgid "entry"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1024
+#: ../telemetry-measurements.rst:1034
 msgid "switch.table.a\\ ctive.entries"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1027
+#: ../telemetry-measurements.rst:1037
 msgid "Lookup packets for table"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1027
+#: ../telemetry-measurements.rst:1037
 msgid "switch.table.l\\ ookup.packets"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1030
+#: ../telemetry-measurements.rst:1040
 msgid "Packets matches for table"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1030
+#: ../telemetry-measurements.rst:1040
 msgid "switch.table.m\\ atched.packets"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1033
+#: ../telemetry-measurements.rst:1043
 msgid "Duration of flow"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1033
+#: ../telemetry-measurements.rst:1043
 msgid "flow"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1033
+#: ../telemetry-measurements.rst:1043
 msgid "switch.flow"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1035
+#: ../telemetry-measurements.rst:1045
 msgid "Duration of flow in seconds"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1035
+#: ../telemetry-measurements.rst:1045
 msgid "s"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1035
+#: ../telemetry-measurements.rst:1045
 msgid "switch.flow.du\\ ration.seconds"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1038
+#: ../telemetry-measurements.rst:1048
 msgid "Duration of flow in nanoseconds"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1038
+#: ../telemetry-measurements.rst:1048
 msgid "switch.flow.du\\ ration.nanosec\\ onds"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1042
+#: ../telemetry-measurements.rst:1052
 msgid "Packets received"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1042
+#: ../telemetry-measurements.rst:1052
 msgid "switch.flow.pa\\ ckets"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1045
+#: ../telemetry-measurements.rst:1055
 msgid "Bytes received"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1045
+#: ../telemetry-measurements.rst:1055
 msgid "switch.flow.by\\ tes"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1051
+#: ../telemetry-measurements.rst:1061
 msgid ""
 "These meters are available for OpenFlow based switches. In order to enable "
 "these meters, each driver needs to be properly configured."
 msgstr ""
 
-#: ../telemetry-measurements.rst:1055
+#: ../telemetry-measurements.rst:1065
 msgid "Load-Balancer-as-a-Service (LBaaS)"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1056
+#: ../telemetry-measurements.rst:1066
 msgid "The following meters are collected for LBaaS:"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1063
+#: ../telemetry-measurements.rst:1073
 msgid "Existence of a LB pool"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1063
+#: ../telemetry-measurements.rst:1073
 msgid "network.serv\\ ices.lb.pool"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1063 ../telemetry-measurements.rst:1097
-#: ../telemetry-measurements.rst:1101
+#: ../telemetry-measurements.rst:1073 ../telemetry-measurements.rst:1107
+#: ../telemetry-measurements.rst:1111
 msgid "pool"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1063 ../telemetry-measurements.rst:1079
-#: ../telemetry-measurements.rst:1083 ../telemetry-measurements.rst:1087
-#: ../telemetry-measurements.rst:1091 ../telemetry-measurements.rst:1097
-#: ../telemetry-measurements.rst:1101
+#: ../telemetry-measurements.rst:1073 ../telemetry-measurements.rst:1089
+#: ../telemetry-measurements.rst:1093 ../telemetry-measurements.rst:1097
+#: ../telemetry-measurements.rst:1101 ../telemetry-measurements.rst:1107
+#: ../telemetry-measurements.rst:1111
 msgid "pool ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1067
+#: ../telemetry-measurements.rst:1077
 msgid "Existence of a LB VIP"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1067
+#: ../telemetry-measurements.rst:1077
 msgid "network.serv\\ ices.lb.vip"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1067 ../telemetry-measurements.rst:1105
-#: ../telemetry-measurements.rst:1109
+#: ../telemetry-measurements.rst:1077 ../telemetry-measurements.rst:1115
+#: ../telemetry-measurements.rst:1119
 msgid "vip"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1067 ../telemetry-measurements.rst:1105
-#: ../telemetry-measurements.rst:1109
+#: ../telemetry-measurements.rst:1077 ../telemetry-measurements.rst:1115
+#: ../telemetry-measurements.rst:1119
 msgid "vip ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1071
+#: ../telemetry-measurements.rst:1081
 msgid "Existence of a LB member"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1071 ../telemetry-measurements.rst:1113
-#: ../telemetry-measurements.rst:1117
+#: ../telemetry-measurements.rst:1081 ../telemetry-measurements.rst:1123
+#: ../telemetry-measurements.rst:1127
 msgid "member"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1071 ../telemetry-measurements.rst:1113
-#: ../telemetry-measurements.rst:1117
+#: ../telemetry-measurements.rst:1081 ../telemetry-measurements.rst:1123
+#: ../telemetry-measurements.rst:1127
 msgid "member ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1071
+#: ../telemetry-measurements.rst:1081
 msgid "network.serv\\ ices.lb.memb\\ er"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1075
+#: ../telemetry-measurements.rst:1085
 msgid "Existence of a LB health probe"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1075 ../telemetry-measurements.rst:1121
-#: ../telemetry-measurements.rst:1126
+#: ../telemetry-measurements.rst:1085 ../telemetry-measurements.rst:1131
+#: ../telemetry-measurements.rst:1136
 msgid "health\\ _monit\\ or"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1075 ../telemetry-measurements.rst:1121
-#: ../telemetry-measurements.rst:1126
+#: ../telemetry-measurements.rst:1085 ../telemetry-measurements.rst:1131
+#: ../telemetry-measurements.rst:1136
 msgid "monitor ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1075
+#: ../telemetry-measurements.rst:1085
 msgid "network.serv\\ ices.lb.heal\\ th_monitor"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1079
+#: ../telemetry-measurements.rst:1089
 msgid "Total connectio\\ ns on a LB"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1079 ../telemetry-measurements.rst:1083
+#: ../telemetry-measurements.rst:1089 ../telemetry-measurements.rst:1093
 msgid "connec\\ tion"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1079
+#: ../telemetry-measurements.rst:1089
 msgid "network.serv\\ ices.lb.tota\\ l.connections"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1083
+#: ../telemetry-measurements.rst:1093
 msgid "Active connecti\\ ons on a LB"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1083
+#: ../telemetry-measurements.rst:1093
 msgid "network.serv\\ ices.lb.acti\\ ve.connections"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1087
+#: ../telemetry-measurements.rst:1097
 msgid "Number of incom\\ ing Bytes"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1087
+#: ../telemetry-measurements.rst:1097
 msgid "network.serv\\ ices.lb.inco\\ ming.bytes"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1091
+#: ../telemetry-measurements.rst:1101
 msgid "Number of outgo\\ ing Bytes"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1091
+#: ../telemetry-measurements.rst:1101
 msgid "network.serv\\ ices.lb.outg\\ oing.bytes"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1097
+#: ../telemetry-measurements.rst:1107
 msgid "LB pool was cre\\ ated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1097
+#: ../telemetry-measurements.rst:1107
 msgid "network.serv\\ ices.lb.pool\\ .create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1101
+#: ../telemetry-measurements.rst:1111
 msgid "LB pool was upd\\ ated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1101
+#: ../telemetry-measurements.rst:1111
 msgid "network.serv\\ ices.lb.pool\\ .update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1105
+#: ../telemetry-measurements.rst:1115
 msgid "LB VIP was crea\\ ted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1105
+#: ../telemetry-measurements.rst:1115
 msgid "network.serv\\ ices.lb.vip.\\ create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1109
+#: ../telemetry-measurements.rst:1119
 msgid "LB VIP was upda\\ ted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1109
+#: ../telemetry-measurements.rst:1119
 msgid "network.serv\\ ices.lb.vip.\\ update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1113
+#: ../telemetry-measurements.rst:1123
 msgid "LB member was c\\ reated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1113
+#: ../telemetry-measurements.rst:1123
 msgid "network.serv\\ ices.lb.memb\\ er.create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1117
+#: ../telemetry-measurements.rst:1127
 msgid "LB member was u\\ pdated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1117
+#: ../telemetry-measurements.rst:1127
 msgid "network.serv\\ ices.lb.memb\\ er.update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1121
+#: ../telemetry-measurements.rst:1131
 msgid "LB health probe was created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1121
+#: ../telemetry-measurements.rst:1131
 msgid "network.serv\\ ices.lb.heal\\ th_monitor.c\\ reate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1126
+#: ../telemetry-measurements.rst:1136
 msgid "LB health probe was updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1126
+#: ../telemetry-measurements.rst:1136
 msgid "network.serv\\ ices.lb.heal\\ th_monitor.u\\ pdate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1133
+#: ../telemetry-measurements.rst:1143
 msgid "VPN as a Service (VPNaaS)"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1134
+#: ../telemetry-measurements.rst:1144
 msgid "The following meters are collected for VPNaaS:"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1141
+#: ../telemetry-measurements.rst:1151
 msgid "Existence of a VPN"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1141
+#: ../telemetry-measurements.rst:1151
 msgid "network.serv\\ ices.vpn"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1141 ../telemetry-measurements.rst:1152
-#: ../telemetry-measurements.rst:1156
+#: ../telemetry-measurements.rst:1151 ../telemetry-measurements.rst:1162
+#: ../telemetry-measurements.rst:1166
 msgid "vpn ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1141 ../telemetry-measurements.rst:1152
-#: ../telemetry-measurements.rst:1156
+#: ../telemetry-measurements.rst:1151 ../telemetry-measurements.rst:1162
+#: ../telemetry-measurements.rst:1166
 msgid "vpnser\\ vice"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1145
+#: ../telemetry-measurements.rst:1155
 msgid "Existence of an IPSec connection"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1145 ../telemetry-measurements.rst:1160
-#: ../telemetry-measurements.rst:1165
+#: ../telemetry-measurements.rst:1155 ../telemetry-measurements.rst:1170
+#: ../telemetry-measurements.rst:1175
 msgid "connection ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1145 ../telemetry-measurements.rst:1160
-#: ../telemetry-measurements.rst:1165
+#: ../telemetry-measurements.rst:1155 ../telemetry-measurements.rst:1170
+#: ../telemetry-measurements.rst:1175
 msgid "ipsec\\_\\ site\\_c\\ onnect\\ ion"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1145
+#: ../telemetry-measurements.rst:1155
 msgid "network.serv\\ ices.vpn.con\\ nections"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1152
+#: ../telemetry-measurements.rst:1162
 msgid "VPN was created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1152
+#: ../telemetry-measurements.rst:1162
 msgid "network.serv\\ ices.vpn.cre\\ ate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1156
+#: ../telemetry-measurements.rst:1166
 msgid "VPN was updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1156
+#: ../telemetry-measurements.rst:1166
 msgid "network.serv\\ ices.vpn.upd\\ ate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1160
+#: ../telemetry-measurements.rst:1170
 msgid "IPSec connection was created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1160
+#: ../telemetry-measurements.rst:1170
 msgid "network.serv\\ ices.vpn.con\\ nections.cre\\ ate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1165
+#: ../telemetry-measurements.rst:1175
 msgid "IPSec connection was updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1165
+#: ../telemetry-measurements.rst:1175
 msgid "network.serv\\ ices.vpn.con\\ nections.upd\\ ate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1170
+#: ../telemetry-measurements.rst:1180
 msgid "Existence of an IPSec policy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1170 ../telemetry-measurements.rst:1174
-#: ../telemetry-measurements.rst:1179
+#: ../telemetry-measurements.rst:1180 ../telemetry-measurements.rst:1184
+#: ../telemetry-measurements.rst:1189
 msgid "ipsecp\\ olicy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1170 ../telemetry-measurements.rst:1174
-#: ../telemetry-measurements.rst:1179
+#: ../telemetry-measurements.rst:1180 ../telemetry-measurements.rst:1184
+#: ../telemetry-measurements.rst:1189
 msgid "ipsecpolicy ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1170
+#: ../telemetry-measurements.rst:1180
 msgid "network.serv\\ ices.vpn.ips\\ ecpolicy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1174
+#: ../telemetry-measurements.rst:1184
 msgid "IPSec policy was reated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1174
+#: ../telemetry-measurements.rst:1184
 msgid "network.serv\\ ices.vpn.ips\\ ecpolicy.cre\\ ate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1179
+#: ../telemetry-measurements.rst:1189
 msgid "IPSec policy was updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1179
+#: ../telemetry-measurements.rst:1189
 msgid "network.serv\\ ices.vpn.ips\\ ecpolicy.upd\\ ate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1184
+#: ../telemetry-measurements.rst:1194
 msgid "Existence of an Ike policy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1184 ../telemetry-measurements.rst:1188
-#: ../telemetry-measurements.rst:1192
+#: ../telemetry-measurements.rst:1194 ../telemetry-measurements.rst:1198
+#: ../telemetry-measurements.rst:1202
 msgid "ikepol\\ icy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1184 ../telemetry-measurements.rst:1188
-#: ../telemetry-measurements.rst:1192
+#: ../telemetry-measurements.rst:1194 ../telemetry-measurements.rst:1198
+#: ../telemetry-measurements.rst:1202
 msgid "ikepolicy ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1184
+#: ../telemetry-measurements.rst:1194
 msgid "network.serv\\ ices.vpn.ike\\ policy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1188
+#: ../telemetry-measurements.rst:1198
 msgid "Ike policy was created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1188
+#: ../telemetry-measurements.rst:1198
 msgid "network.serv\\ ices.vpn.ike\\ policy.create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1192
+#: ../telemetry-measurements.rst:1202
 msgid "Ike policy was updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1192
+#: ../telemetry-measurements.rst:1202
 msgid "network.serv\\ ices.vpn.ike\\ policy.update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1198
+#: ../telemetry-measurements.rst:1208
 msgid "Firewall as a Service (FWaaS)"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1199
+#: ../telemetry-measurements.rst:1209
 msgid "The following meters are collected for FWaaS:"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1206
+#: ../telemetry-measurements.rst:1216
 msgid "Existence of a firewall"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1206 ../telemetry-measurements.rst:1216
-#: ../telemetry-measurements.rst:1220
+#: ../telemetry-measurements.rst:1216 ../telemetry-measurements.rst:1226
+#: ../telemetry-measurements.rst:1230
 msgid "firewall"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1206 ../telemetry-measurements.rst:1210
 #: ../telemetry-measurements.rst:1216 ../telemetry-measurements.rst:1220
+#: ../telemetry-measurements.rst:1226 ../telemetry-measurements.rst:1230
 msgid "firewall ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1206
+#: ../telemetry-measurements.rst:1216
 msgid "network.serv\\ ices.firewall"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1210
+#: ../telemetry-measurements.rst:1220
 msgid "Existence of a firewall policy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1210 ../telemetry-measurements.rst:1224
-#: ../telemetry-measurements.rst:1229
+#: ../telemetry-measurements.rst:1220 ../telemetry-measurements.rst:1234
+#: ../telemetry-measurements.rst:1239
 msgid "firewa\\ ll_pol\\ icy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1210
+#: ../telemetry-measurements.rst:1220
 msgid "network.serv\\ ices.firewal\\ l.policy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1216
+#: ../telemetry-measurements.rst:1226
 msgid "Firewall was cr\\ eated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1216
+#: ../telemetry-measurements.rst:1226
 msgid "network.serv\\ ices.firewal\\ l.create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1220
+#: ../telemetry-measurements.rst:1230
 msgid "Firewall was up\\ dated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1220
+#: ../telemetry-measurements.rst:1230
 msgid "network.serv\\ ices.firewal\\ l.update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1224
+#: ../telemetry-measurements.rst:1234
 msgid "Firewall policy was created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1224
+#: ../telemetry-measurements.rst:1234
 msgid "network.serv\\ ices.firewal\\ l.policy.cre\\ ate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1224 ../telemetry-measurements.rst:1229
+#: ../telemetry-measurements.rst:1234 ../telemetry-measurements.rst:1239
 msgid "policy ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1229
+#: ../telemetry-measurements.rst:1239
 msgid "Firewall policy was updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1229
+#: ../telemetry-measurements.rst:1239
 msgid "network.serv\\ ices.firewal\\ l.policy.upd\\ ate"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1234
+#: ../telemetry-measurements.rst:1244
 msgid "Existence of a firewall rule"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1234 ../telemetry-measurements.rst:1238
-#: ../telemetry-measurements.rst:1243
+#: ../telemetry-measurements.rst:1244 ../telemetry-measurements.rst:1248
+#: ../telemetry-measurements.rst:1253
 msgid "firewa\\ ll_rule"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1234
+#: ../telemetry-measurements.rst:1244
 msgid "network.serv\\ ices.firewal\\ l.rule"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1234 ../telemetry-measurements.rst:1238
-#: ../telemetry-measurements.rst:1243
+#: ../telemetry-measurements.rst:1244 ../telemetry-measurements.rst:1248
+#: ../telemetry-measurements.rst:1253
 msgid "rule ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1238
+#: ../telemetry-measurements.rst:1248
 msgid "Firewall rule w\\ as created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1238
+#: ../telemetry-measurements.rst:1248
 msgid "network.serv\\ ices.firewal\\ l.rule.create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1243
+#: ../telemetry-measurements.rst:1253
 msgid "Firewall rule w\\ as updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1243
+#: ../telemetry-measurements.rst:1253
 msgid "network.serv\\ ices.firewal\\ l.rule.update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1250
+#: ../telemetry-measurements.rst:1260
 msgid "The following meters are collected for the Orchestration service:"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1257
+#: ../telemetry-measurements.rst:1267
 msgid "Stack was success\\ fully created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1257 ../telemetry-measurements.rst:1260
-#: ../telemetry-measurements.rst:1263 ../telemetry-measurements.rst:1266
-#: ../telemetry-measurements.rst:1269
+#: ../telemetry-measurements.rst:1267 ../telemetry-measurements.rst:1270
+#: ../telemetry-measurements.rst:1273 ../telemetry-measurements.rst:1276
+#: ../telemetry-measurements.rst:1279
 msgid "stack"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1257 ../telemetry-measurements.rst:1260
-#: ../telemetry-measurements.rst:1263 ../telemetry-measurements.rst:1266
-#: ../telemetry-measurements.rst:1269
+#: ../telemetry-measurements.rst:1267 ../telemetry-measurements.rst:1270
+#: ../telemetry-measurements.rst:1273 ../telemetry-measurements.rst:1276
+#: ../telemetry-measurements.rst:1279
 msgid "stack ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1257
+#: ../telemetry-measurements.rst:1267
 msgid "stack.create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1260
+#: ../telemetry-measurements.rst:1270
 msgid "Stack was success\\ fully updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1260
+#: ../telemetry-measurements.rst:1270
 msgid "stack.update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1263
+#: ../telemetry-measurements.rst:1273
 msgid "Stack was success\\ fully deleted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1263
+#: ../telemetry-measurements.rst:1273
 msgid "stack.delete"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1266
+#: ../telemetry-measurements.rst:1276
 msgid "Stack was success\\ fully resumed"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1266
+#: ../telemetry-measurements.rst:1276
 msgid "stack.resume"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1269
+#: ../telemetry-measurements.rst:1279
 msgid "Stack was success\\ fully suspended"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1269
+#: ../telemetry-measurements.rst:1279
 msgid "stack.suspend"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1274
+#: ../telemetry-measurements.rst:1284
 msgid "Data processing service for OpenStack"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1275
+#: ../telemetry-measurements.rst:1285
 msgid ""
 "The following meters are collected for the Data processing service for "
 "OpenStack:"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1283
+#: ../telemetry-measurements.rst:1293
 msgid "Cluster was successfully created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1283 ../telemetry-measurements.rst:1288
-#: ../telemetry-measurements.rst:1292
+#: ../telemetry-measurements.rst:1293 ../telemetry-measurements.rst:1298
+#: ../telemetry-measurements.rst:1302
 msgid "cluster"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1283 ../telemetry-measurements.rst:1288
-#: ../telemetry-measurements.rst:1292
+#: ../telemetry-measurements.rst:1293 ../telemetry-measurements.rst:1298
+#: ../telemetry-measurements.rst:1302
 msgid "cluster ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1283
+#: ../telemetry-measurements.rst:1293
 msgid "cluster.create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1288
+#: ../telemetry-measurements.rst:1298
 msgid "Cluster was successfully updated"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1288
+#: ../telemetry-measurements.rst:1298
 msgid "cluster.update"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1292
+#: ../telemetry-measurements.rst:1302
 msgid "Cluster was successfully deleted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1292
+#: ../telemetry-measurements.rst:1302
 msgid "cluster.delete"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1298
+#: ../telemetry-measurements.rst:1308
 msgid "Key Value Store module"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1299
+#: ../telemetry-measurements.rst:1309
 msgid "The following meters are collected for the Key Value Store module:"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1306
+#: ../telemetry-measurements.rst:1316
 msgid "Table was succe\\ ssfully created"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1306
+#: ../telemetry-measurements.rst:1316
 msgid "magnetodb.table.\\ create"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1306 ../telemetry-measurements.rst:1309
-#: ../telemetry-measurements.rst:1312
+#: ../telemetry-measurements.rst:1316 ../telemetry-measurements.rst:1319
+#: ../telemetry-measurements.rst:1322
 msgid "table ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1309
+#: ../telemetry-measurements.rst:1319
 msgid "Table was succe\\ ssfully deleted"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1309
+#: ../telemetry-measurements.rst:1319
 msgid "magnetodb.table\\ .delete"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1312
+#: ../telemetry-measurements.rst:1322
 msgid "Number of indices created in a table"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1312
+#: ../telemetry-measurements.rst:1322
 msgid "index"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1312
+#: ../telemetry-measurements.rst:1322
 msgid "magnetodb.table\\ .index.count"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1318
+#: ../telemetry-measurements.rst:1328
 msgid "Energy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1319
+#: ../telemetry-measurements.rst:1329
 msgid "The following energy related meters are available:"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1326
+#: ../telemetry-measurements.rst:1336
 msgid "Amount of energy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1326
+#: ../telemetry-measurements.rst:1336
 msgid "energy"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1326
+#: ../telemetry-measurements.rst:1336
 msgid "kWh"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1326 ../telemetry-measurements.rst:1328
+#: ../telemetry-measurements.rst:1336 ../telemetry-measurements.rst:1338
 msgid "probe ID"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1328
+#: ../telemetry-measurements.rst:1338
 msgid "Power consumption"
 msgstr ""
 
-#: ../telemetry-measurements.rst:1328
+#: ../telemetry-measurements.rst:1338
 msgid "power"
 msgstr ""
 
