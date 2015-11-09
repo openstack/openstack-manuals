@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2015-11-03 06:31+0000\n"
+"POT-Creation-Date: 2015-11-09 06:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1946,7 +1946,7 @@ msgstr ""
 msgid "It is possible to schedule VMs using advanced scheduling decisions. These decisions are made based on enhanced usage statistics encompassing data like memory cache utilization, memory bandwidth utilization, or network bandwidth utilization. This is disabled by default. The administrator can configure how the metrics are weighted in the configuration file by using the <literal> weight_setting</literal> configuration option in the <filename>nova.conf</filename> configuration file. For example to configure metric1 with ratio1 and metric2 with ratio2:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_compute-scheduler.xml:1057(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:1041(title)
+#: ./doc/config-reference/compute/section_compute-scheduler.xml:1057(title) ./doc/config-reference/compute/section_hypervisor_vmware.xml:1046(title)
 msgid "Configuration reference"
 msgstr ""
 
@@ -1984,7 +1984,7 @@ msgstr ""
 msgid "VMware vSphere"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:14(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:14(title) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:11(title)
 msgid "Introduction"
 msgstr ""
 
@@ -2600,123 +2600,127 @@ msgstr ""
 msgid "You can also use the <code>vmware_linked_clone</code> property in the OpenStack Image service to override the linked_clone mode on a per-image basis."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:865(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:864(para)
+msgid "If spawning a virtual machine image from ISO with a VMDK disk, the image is created and attached to the virtual machine as a blank disk. In that case <code>vmware_linked_clone</code> property for the image is just ignored."
+msgstr ""
+
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:870(para)
 msgid "If multiple compute nodes are running on the same host, or have a shared file system, you can enable them to use the same cache folder on the back-end data store. To configure this action, set the <placeholder-1/> option in the <filename>nova.conf</filename> file. Its value stands for the name prefix of the folder where cached images are stored."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:871(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:876(para)
 msgid "This can take effect only if compute nodes are running on the same host, or have a shared file system."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:873(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:878(para)
 msgid "You can automatically purge unused images after a specified period of time. To configure this action, set these options in the <literal>DEFAULT</literal> section in the <filename>nova.conf</filename> file:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:880(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:885(para)
 msgid "Set this option to <placeholder-1/> to specify that unused images should be removed after the duration specified in the <placeholder-2/> option. The default is <placeholder-3/>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:887(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:892(para)
 msgid "Specifies the duration in seconds after which an unused image is purged from the cache. The default is <placeholder-1/> (24 hours)."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:895(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:900(title)
 msgid "Networking with VMware vSphere"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:896(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:901(para)
 msgid "The VMware driver supports networking with the <systemitem class=\"service\">nova-network</systemitem> service or the OpenStack Networking Service. Depending on your installation, complete these configuration steps before you provision VMs:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:902(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:907(para)
 msgid "<emphasis role=\"bold\"> The <systemitem class=\"service\">nova-network</systemitem> service with the FlatManager or FlatDHCPManager</emphasis>. Create a port group with the same name as the <literal>flat_network_bridge</literal> value in the <filename>nova.conf</filename> file. The default value is <literal>br100</literal>. If you specify another value, the new value must be a valid Linux bridge identifier that adheres to Linux bridge naming conventions."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:911(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:916(para)
 msgid "All VM NICs are attached to this port group."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:912(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:917(para)
 msgid "Ensure that the flat interface of the node that runs the <systemitem class=\"service\">nova-network</systemitem> service has a path to this network."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:916(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:921(para)
 msgid "When configuring the port binding for this port group in vCenter, specify <literal>ephemeral</literal> for the port binding type. For more information, see <link xlink:href=\"http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1022312\">Choosing a port binding type in ESX/ESXi</link> in the VMware Knowledge Base."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:924(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:929(para)
 msgid "<emphasis role=\"bold\">The <systemitem class=\"service\">nova-network</systemitem> service with the VlanManager</emphasis>. Set the <literal>vlan_interface</literal> configuration option to match the ESX host interface that handles VLAN-tagged VM traffic."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:929(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:934(para)
 msgid "OpenStack Compute automatically creates the corresponding port groups."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:933(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:938(para)
 msgid "If you are using the OpenStack Networking Service: Before provisioning VMs, create a port group with the same name as the <literal>vmware.integration_bridge</literal> value in <filename>nova.conf</filename> (default is <literal>br-int</literal>). All VM NICs are attached to this port group for management by the OpenStack Networking plug-in."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:944(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:949(title)
 msgid "Volumes with VMware vSphere"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:945(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:950(para)
 msgid "The VMware driver supports attaching volumes from the OpenStack Block Storage service. The VMware VMDK driver for OpenStack Block Storage is recommended and should be used for managing volumes based on vSphere data stores. For more information about the VMware VMDK driver, see <link xlink:href=\"http://docs.openstack.org/trunk/config-reference/content/vmware-vmdk-driver.html\">VMware VMDK Driver</link>. Also an iSCSI volume driver provides limited support and can be used only for attachments."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:954(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:959(title)
 msgid "vSphere 5.0 and earlier additional set up"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:955(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:960(para)
 msgid "Users of vSphere 5.0 or earlier must host their WSDL files locally. These steps are applicable for vCenter 5.0 or ESXi 5.0 and you can either mirror the WSDL from the vCenter or ESXi server that you intend to use or you can download the SDK directly from VMware. These workaround steps fix a <link xlink:href=\"http://kb.vmware.com/selfservice/microsites/search.do?cmd=displayKC&amp;externalId=2010507\">known issue</link> with the WSDL that was resolved in later versions."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:961(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:966(para)
 msgid "When setting the VMwareVCDriver configuration options, you must include the <code>wsdl_location</code> option. For more information, see <link linkend=\"VMwareVCDriver_configuration_options\">VMwareVCDriver configuration options</link> above."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:967(title)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:972(title)
 msgid "To mirror WSDL from vCenter (or ESXi)"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:969(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:974(para)
 msgid "Set the <code>VMWAREAPI_IP</code> shell variable to the IP address for your vCenter or ESXi host from where you plan to mirror files. For example:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:975(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:980(para)
 msgid "Create a local file system directory to hold the WSDL files:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:980(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:985(para)
 msgid "Change into the new directory. <placeholder-1/>"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:984(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:989(para)
 msgid "Use your OS-specific tools to install a command-line tool that can download files like <placeholder-1/>."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:989(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:994(para)
 msgid "Download the files to the local file cache:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:999(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1004(para)
 msgid "Because the <filename>reflect-types.xsd</filename> and <filename>reflect-messagetypes.xsd</filename> files do not fetch properly, you must stub out these files. Use the following XML listing to replace the missing file content. The XML parser underneath Python can be very particular and if you put a space in the wrong place, it can break the parser. Copy the following contents and formatting carefully."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1016(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1021(para)
 msgid "Now that the files are locally present, tell the driver to look for the SOAP service WSDLs in the local file system and not on the remote vSphere server. Add the following setting to the <filename>nova.conf</filename> file for your <systemitem class=\"service\">nova-compute</systemitem> node:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1026(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1031(para)
 msgid "Alternatively, download the version appropriate SDK from <link xlink:href=\"http://www.vmware.com/support/developer/vc-sdk/\">http://www.vmware.com/support/developer/vc-sdk/</link> and copy it to the <filename>/opt/stack/vmware</filename> file. Make sure that the WSDL is available, in for example <filename>/opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl</filename>. You must point <filename>nova.conf</filename> to fetch this WSDL file from the local file system by using a URL."
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1033(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1038(para)
 msgid "When using the VMwareVCDriver (vCenter) with OpenStack Compute with vSphere version 5.0 or earlier, <filename>nova.conf</filename> must include the following extra config option:"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1042(para)
+#: ./doc/config-reference/compute/section_hypervisor_vmware.xml:1047(para)
 msgid "To customize the VMware driver, use the configuration option settings documented in <xref linkend=\"config_table_nova_vmware\"/>."
 msgstr ""
 
@@ -2932,7 +2936,7 @@ msgstr ""
 msgid "https://www.cloudbase.it"
 msgstr ""
 
-#: ./doc/config-reference/compute/section_hypervisor_hyper-v.xml:192(title) ./doc/config-reference/shared-file-systems/drivers/glusterfs-driver.xml:53(title) ./doc/config-reference/shared-file-systems/drivers/hdfs-native-driver.xml:88(title) ./doc/config-reference/shared-file-systems/drivers/ibm-gpfs-driver.xml:69(title) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:23(title) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:13(title) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:120(title) ./doc/config-reference/shared-file-systems/drivers/glusterfs-native-driver.xml:82(title) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:25(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:11(title) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:11(title)
+#: ./doc/config-reference/compute/section_hypervisor_hyper-v.xml:192(title) ./doc/config-reference/shared-file-systems/drivers/glusterfs-driver.xml:53(title) ./doc/config-reference/shared-file-systems/drivers/hdfs-native-driver.xml:88(title) ./doc/config-reference/shared-file-systems/drivers/ibm-gpfs-driver.xml:69(title) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:23(title) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:10(title) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:120(title) ./doc/config-reference/shared-file-systems/drivers/glusterfs-native-driver.xml:82(title) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:25(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:11(title) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:11(title)
 msgid "Requirements"
 msgstr ""
 
@@ -5374,7 +5378,7 @@ msgstr ""
 msgid "NFS (access by IP)"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/glusterfs-driver.xml:21(title) ./doc/config-reference/shared-file-systems/drivers/hdfs-native-driver.xml:38(title) ./doc/config-reference/shared-file-systems/drivers/ibm-gpfs-driver.xml:22(title) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:66(title) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:45(title) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:10(title) ./doc/config-reference/shared-file-systems/drivers/glusterfs-native-driver.xml:47(title) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:35(title) ./doc/config-reference/block-storage/drivers/zfssa-iscsi-driver.xml:93(title) ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:22(title) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:99(title) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:23(title) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:10(title) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:252(title) ./doc/config-reference/block-storage/drivers/violin-v6000-driver.xml:73(title) ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:38(title) ./doc/config-reference/block-storage/drivers/sheepdog-driver.xml:18(title) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:21(title) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:289(title) ./doc/config-reference/block-storage/drivers/violin-v7000-driver.xml:59(title) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:35(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:18(title) ./doc/config-reference/block-storage/drivers/hp-msa-driver.xml:48(title) ./doc/config-reference/block-storage/drivers/dothill-driver.xml:53(title) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:13(title) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:16(title) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:56(title) ./doc/config-reference/block-storage/drivers/lenovo-driver.xml:48(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:66(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:327(title) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:15(title)
+#: ./doc/config-reference/shared-file-systems/drivers/glusterfs-driver.xml:21(title) ./doc/config-reference/shared-file-systems/drivers/hdfs-native-driver.xml:38(title) ./doc/config-reference/shared-file-systems/drivers/ibm-gpfs-driver.xml:22(title) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:66(title) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:24(title) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:10(title) ./doc/config-reference/shared-file-systems/drivers/glusterfs-native-driver.xml:47(title) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:35(title) ./doc/config-reference/block-storage/drivers/zfssa-iscsi-driver.xml:93(title) ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:22(title) ./doc/config-reference/block-storage/drivers/hp-3par-driver.xml:99(title) ./doc/config-reference/block-storage/drivers/pure-storage-driver.xml:23(title) ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:10(title) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/vmware-vmdk-driver.xml:252(title) ./doc/config-reference/block-storage/drivers/violin-v6000-driver.xml:73(title) ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:38(title) ./doc/config-reference/block-storage/drivers/sheepdog-driver.xml:18(title) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:21(title) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:289(title) ./doc/config-reference/block-storage/drivers/violin-v7000-driver.xml:59(title) ./doc/config-reference/block-storage/drivers/emc-vmax-driver.xml:35(title) ./doc/config-reference/block-storage/drivers/xio-volume-driver.xml:17(title) ./doc/config-reference/block-storage/drivers/prophetstor-dpl-driver.xml:18(title) ./doc/config-reference/block-storage/drivers/hp-msa-driver.xml:48(title) ./doc/config-reference/block-storage/drivers/dothill-driver.xml:53(title) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:98(title) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:13(title) ./doc/config-reference/block-storage/drivers/scality-sofs-driver.xml:16(title) ./doc/config-reference/block-storage/drivers/hitachi-storage-volume-driver.xml:56(title) ./doc/config-reference/block-storage/drivers/lenovo-driver.xml:48(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:66(title) ./doc/config-reference/block-storage/drivers/hp-lefthand-driver.xml:327(title) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:15(title)
 msgid "Supported operations"
 msgstr ""
 
@@ -5490,7 +5494,7 @@ msgstr ""
 msgid "The driver does not provide read-only access level for shares."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/glusterfs-driver.xml:211(title) ./doc/config-reference/shared-file-systems/drivers/netapp-cluster-mode-driver.xml:90(title) ./doc/config-reference/shared-file-systems/drivers/hdfs-native-driver.xml:198(title) ./doc/config-reference/shared-file-systems/drivers/ibm-gpfs-driver.xml:233(title) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:462(title) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:247(title) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:494(title) ./doc/config-reference/shared-file-systems/drivers/glusterfs-native-driver.xml:264(title) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:131(title)
+#: ./doc/config-reference/shared-file-systems/drivers/glusterfs-driver.xml:211(title) ./doc/config-reference/shared-file-systems/drivers/netapp-cluster-mode-driver.xml:90(title) ./doc/config-reference/shared-file-systems/drivers/hdfs-native-driver.xml:198(title) ./doc/config-reference/shared-file-systems/drivers/ibm-gpfs-driver.xml:233(title) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:462(title) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:289(title) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:494(title) ./doc/config-reference/shared-file-systems/drivers/glusterfs-native-driver.xml:264(title) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:131(title)
 msgid "Driver configuration options"
 msgstr ""
 
@@ -5526,11 +5530,11 @@ msgstr ""
 msgid "Required licenses"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/netapp-cluster-mode-driver.xml:41(para) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:47(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:31(para)
+#: ./doc/config-reference/shared-file-systems/drivers/netapp-cluster-mode-driver.xml:41(para) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:47(para)
 msgid "NFS"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/netapp-cluster-mode-driver.xml:46(para) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:42(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:26(para)
+#: ./doc/config-reference/shared-file-systems/drivers/netapp-cluster-mode-driver.xml:46(para) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:42(para)
 msgid "CIFS"
 msgstr ""
 
@@ -5598,11 +5602,11 @@ msgstr ""
 msgid "Deny HDFS share access."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/hdfs-native-driver.xml:71(para) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:104(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:81(para)
+#: ./doc/config-reference/shared-file-systems/drivers/hdfs-native-driver.xml:71(para) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:104(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:48(para)
 msgid "Create snapshot."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/hdfs-native-driver.xml:76(para) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:109(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:86(para)
+#: ./doc/config-reference/shared-file-systems/drivers/hdfs-native-driver.xml:76(para) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:109(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:53(para)
 msgid "Delete snapshot."
 msgstr ""
 
@@ -5778,7 +5782,7 @@ msgstr ""
 msgid "&lt;NFS server&gt;"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/ibm-gpfs-driver.xml:199(para) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:362(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:210(para) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:266(para) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:102(para)
+#: ./doc/config-reference/shared-file-systems/drivers/ibm-gpfs-driver.xml:199(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:175(para) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:266(para) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:102(para)
 msgid "Restart of manila-share service is needed for the configuration changes to take effect."
 msgstr ""
 
@@ -5799,15 +5803,15 @@ msgid "EMC VNX driver"
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:5(para)
-msgid "EMC Shared File Systems service driver framework (EMCShareDriver) utilizes the EMC storage products to provide the shared file systems to OpenStack. The EMC driver is a plug-in based driver which is designed to use different plug-ins to manage different EMC storage products."
+msgid "The EMC Shared File Systems service driver framework (EMCShareDriver) utilizes the EMC storage products to provide the shared file systems to OpenStack. The EMC driver is a plug-in based driver which is designed to use different plug-ins to manage different EMC storage products."
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:11(para)
-msgid "VNX plug-in is the plug-in which manages the VNX to provide shared filesystems. EMC driver framework with VNX plug-in is referred to as VNX driver in this document."
+msgid "The VNX plug-in is the plug-in which manages the VNX to provide shared filesystems. The EMC driver framework with the VNX plug-in is referred to as the VNX driver in this document."
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:16(para)
-msgid "This driver performs the operations on VNX by XMLAPI and the File command line. Each back end manages one Data Mover of VNX. Multiple Shared File Systems service back ends need to be configured to manage multiple Data Movers."
+msgid "This driver performs the operations on VNX by XMLAPI and the file command line. Each back end manages one Data Mover of VNX. Multiple Shared File Systems service back ends need to be configured to manage multiple Data Movers."
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:26(para)
@@ -5815,7 +5819,7 @@ msgid "VNX OE for File version 7.1 or higher"
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:31(para)
-msgid "VNX Unified, File only, or Gateway system with single storage back end"
+msgid "VNX Unified, File only, or Gateway system with a single storage back end"
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:37(para)
@@ -5831,22 +5835,22 @@ msgid "ReplicationV2 (for create share from snapshot)"
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:67(para)
-msgid "The following operations will be supported on VNX array:"
+msgid "The following operations will be supported on the VNX array:"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:72(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:51(para) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:41(para)
+#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:72(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:28(para) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:41(para)
 msgid "Create CIFS/NFS share."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:77(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:56(para) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:46(para)
+#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:77(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:31(para) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:46(para)
 msgid "Delete CIFS/NFS share."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:82(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:61(para) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:51(para)
+#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:82(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:34(para) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:51(para)
 msgid "Allow CIFS/NFS share access."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:87(para) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:374(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:66(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:222(para)
+#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:87(para) ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:374(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:270(para)
 msgid "Only IP access type is supported for NFS."
 msgstr ""
 
@@ -5854,7 +5858,7 @@ msgstr ""
 msgid "Only user access type is supported for CIFS."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:99(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:76(para)
+#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:99(para) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:45(para)
 msgid "Deny CIFS/NFS share access."
 msgstr ""
 
@@ -5871,7 +5875,7 @@ msgid "Enable Unicode on Data Mover."
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:134(para)
-msgid "VNX driver requires that the Unicode is enabled on Data Mover."
+msgid "The VNX driver requires that the Unicode is enabled on Data Mover."
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:137(para)
@@ -5879,7 +5883,7 @@ msgid "CAUTION: After enabling Unicode, you cannot disable it. If there are some
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:142(para)
-msgid "To check the Unicode status on Data Mover, use the following VNX File command on VNX control station:"
+msgid "To check the Unicode status on Data Mover, use the following VNX File command on the VNX control station:"
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:147(para)
@@ -5995,7 +5999,7 @@ msgid "server_usermapper &lt;movername&gt; -enable where: &lt;movername&gt; = &l
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:291(para)
-msgid "For multiple protocol environment, refer to Configuring VNX User Mapping on [EMC support site](<link xlink:href=\"http://support.emc.com\">http://support.emc.com</link>) for additional information."
+msgid "For a multiple protocol environment, refer to Configuring VNX User Mapping on [EMC support site](<link xlink:href=\"http://support.emc.com\">http://support.emc.com</link>) for additional information."
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:299(para)
@@ -6003,14 +6007,14 @@ msgid "Network Connection."
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:304(para)
-msgid "In the current release, the share created by VNX driver uses the first network device (physical port on NIC) of Data Mover to access the network."
+msgid "In the current release, the share created by the VNX driver uses the first network device (physical port on NIC) of Data Mover to access the network."
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:309(para)
 msgid "Go to Unisphere to check the device list: Settings -&gt; Network -&gt; Settings for File (Unified system only) -&gt; Device."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:315(title) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:174(title) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:187(title) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:88(title) ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:209(title)
+#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:315(title) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:147(title) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:187(title) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:88(title) ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:209(title)
 msgid "Backend configuration"
 msgstr ""
 
@@ -6042,7 +6046,11 @@ msgstr ""
 msgid "emc_nas_pool_name is the pool name user wants to create volume from. The pools can be created using Unisphere for VNX."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:368(title) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:216(title) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:108(title)
+#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:362(para)
+msgid "Restart of the manila-share service is needed for the configuration changes to take effect."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/emc-vnx-driver.xml:368(title) ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:264(title) ./doc/config-reference/shared-file-systems/drivers/emc-isilon-driver.xml:108(title)
 msgid "Restrictions"
 msgstr ""
 
@@ -6091,110 +6099,230 @@ msgid "Huawei driver"
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:5(para)
-msgid "Huawei NAS driver is a plug-in based the Shared File Systems service. The Huawei NAS driver can be used to provide functions such as the share and snapshot for virtual machines(instances) in OpenStack. Huawei NAS driver enables the OceanStor V3 series V300R002 storage system to provide only network filesystems for OpenStack."
+msgid "Huawei NAS driver is a plug-in based on the Shared File Systems service. The Huawei NAS driver can be used to provide functions such as the share and snapshot for virtual machines, or instances, in OpenStack. Huawei NAS driver enables the OceanStor V3 series V300R002 storage system to provide only network filesystems for OpenStack."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:16(para)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:13(para)
 msgid "The OceanStor V3 series V300R002 storage system."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:21(para)
-msgid "The following licenses should be activated on V3 for File:"
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:18(para)
+msgid "The following licenses should be activated on V3 for File: CIFS, NFS, HyperSnap License (for snapshot)"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:36(para)
-msgid "HyperSnap License (for snapshot)"
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:25(para)
+msgid "The following operations are supported on V3 storage:"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:46(para)
-msgid "The following operations is supported on V3 storage:"
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:37(para)
+msgid "Only IP access type is supported for NFS(ro/rw)."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:71(para)
-msgid "* Only USER access type is supported for CIFS."
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:40(para)
+msgid "Only USER access type is supported for CIFS(ro/rw)."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:93(title)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:58(para)
+msgid "Manage CIFS/NFS share."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:61(para)
+msgid "Support pools in one backend."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:64(para)
+msgid "Extend share."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:67(para)
+msgid "Shrink share."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:70(para)
+msgid "Support multi RestURLs."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:75(title)
 msgid "Pre-configurations on Huawei"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:94(para)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:76(para)
 msgid "1. Create a driver configuration file. The driver configuration file name must be the same as the manila_huawei_conf_file item in the manila_conf configuration file."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:99(para)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:81(para)
 msgid "2. Configure Product. Product indicates the storage system type. For the OceanStor V3 series V300R002 storage systems, the driver configuration file is as follows:"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:124(para)
-msgid "Product is a type of a storage product. Set it to V3."
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:106(para)
+msgid "Product is a type of storage product. Set it to V3."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:129(para)
-msgid "LogicalPortIP is a IP address of the logical port."
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:109(para)
+msgid "LogicalPortIP is an IP address of the logical port."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:134(para)
-msgid "RestURL is a access address of the REST interface."
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:112(para)
+msgid "RestURL is an access address of the REST interface. Multi RestURLs can be configured in &lt;RestURL&gt; (separated by \";\"). When one of the RestURL fails to connect, the driver will retry another automatically."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:139(para)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:117(para)
 msgid "UserName is a user name of an administrator."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:144(para)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:122(para)
 msgid "UserPassword is a password of an administrator."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:149(para)
-msgid "AllocType is a type of file system space allocation. Valid values are Thick or Thin."
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:127(para)
+msgid "Thin_StoragePool is a name of a thin storage pool to be used."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:155(para)
-msgid "StoragePool is a name of a storage pool to be used."
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:130(para)
+msgid "Thick_StoragePool is a name of a thick storage pool to be used."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:160(para)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:133(para)
 msgid "WaitInterval is the interval time of querying the file system status."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:166(para)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:139(para)
 msgid "Timeout is the timeout period for waiting command execution of a device to complete."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:175(para)
-msgid "1. Modify the manila.conf Shared File Systems service configuration file and add share_driver and manila_huawei_conf_file items. Example for configuring a storage system:"
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:148(para)
+msgid "Modify the manila.conf Shared File Systems service configuration file and add share_driver and manila_huawei_conf_file items. Example for configuring a storage system:"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:183(para)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:152(para)
 msgid "share_driver = manila.share.drivers.huawei.huawei_nas.HuaweiNasDriver"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:189(para)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:158(para)
 msgid "manila_huawei_conf_file = /etc/manila/manila_huawei_conf.xml"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:194(para) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:205(para)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:163(para) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:205(para)
 msgid "driver_handles_share_servers = False"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:200(para)
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:169(para)
 msgid "As far as the Shared File Systems service requires share type for creation of shares, make sure that used share type has extra spec driver_handles_share_servers set to False otherwise Huawei back end will be filtered by manila-scheduler. If you do not provide share type with share creation request then default share type and its extra specs will be used."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:217(para)
-msgid "The Huawei driver has the following restrictions:"
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:178(title) ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:307(title)
+msgid "Share types"
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:227(para)
-msgid "Only USER access type is supported for CIFS."
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:179(para)
+msgid "When creating a share, a share type can be specified to determine where and how the share will be created. If a share type is not specified, the default_share_type set in the Manila configuration file is used."
 msgstr ""
 
-#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:232(para)
-msgid "Only one StoragePool can be configured in the configuration file."
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:182(para)
+msgid "The Shared File Systems service requires that the share type includes the driver_handles_share_servers extra-spec. This ensures that the share will be created on a backend that supports the requested driver_handles_share_servers (share networks) capability. For the Huawei driver, this must be set to False."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:186(para)
+msgid "Another common extra-spec used to determine where a share is created is share_backend_name. When this extra-spec is defined in the share type, the share will be created on a backend with a matching share_backend_name."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:193(para)
+msgid "capabilities:dedupe"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:196(para)
+msgid "capabilities:compression"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:199(para)
+msgid "capabilities:thin_provisioning"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:204(para)
+msgid "huawei_smartcache:cachename"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:202(para)
+msgid "capabilities:huawei_smartcache<placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:211(para)
+msgid "huawei_smartpartition:partitionname"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:209(para)
+msgid "capabilities:huawei_smartpartition<placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:189(para)
+msgid "The Shared File Systems service \"share types\" may contain qualified extra-specs, extra-specs that have significance for the backend driver and the CapabilityFilter. This commit makes the Huawei driver report the following boolean capabilities:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:219(para)
+msgid "capabilities:dedupe='&lt;is&gt; True' or '&lt;is&gt; False'"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:222(para)
+msgid "capabilities:compression='&lt;is&gt; True' or '&lt;is&gt; False'"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:225(para)
+msgid "capabilities:thin_provisioning='&lt;is&gt; True' or '&lt;is&gt; False'"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:228(para)
+msgid "capabilities:huawei_smartcache='&lt;is&gt; True' or '&lt;is&gt; False'"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:231(para)
+msgid "huawei_smartcache:cachename=test_cache_name"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:236(para)
+msgid "capabilities:huawei_smartpartition='&lt;is&gt; True' or '&lt;is&gt; False'"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:239(para)
+msgid "huawei_smartpartition:partitionname=test_partition_name"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:216(para)
+msgid "The scheduler will choose a host that supports the needed capability when the CapabilityFilter is used and a share type uses one or more of the following extra-specs:<placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:244(para)
+msgid "<literal>thin_provisioning</literal> will be reported as True for backends that use thin provisioned pool. Backends that use thin provisioning also support Manila's over-subscription feature. 'thin_provisioning' will be reported as False for backends that use thick provisioned pool."
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:248(para)
+msgid "<literal>dedupe</literal> will be reported as True for backends that use deduplication technology."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:249(para)
+msgid "<literal>compression</literal> will be reported as True for backends that use compression technology."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:250(para)
+msgid "<literal>huawei_smartcache</literal> will be reported as True for backends that use smartcache technology. Adds SSDs into a high-speed cache pool and divides the pool into multiple cache partitions to cache hotspot data in random and small read I/Os."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:253(para)
+msgid "<literal>huawei_smartpartition</literal> will be reported as True for backends that use smartpartition technology. Add share to the smartpartition named 'test_partition_name'. Allocates cache resources based on service characteristics, ensuring the quality of critical services."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:257(para)
+msgid "snapshot_support will be reported as True for backends that support all snapshot functionalities, including create_snapshot, delete_snapshot, and create_share_from_snapshot. Huawei Driver does not support create_share_from_snapshot API now, so make sure that used share type has extra spec snapshot_support set to False."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:265(para)
+msgid "The Huawei driver has the following restrictions:"
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:275(para)
+msgid "Only USER access type is supported for CIFS."
+msgstr ""
+
+#: ./doc/config-reference/shared-file-systems/drivers/huawei-nas-driver.xml:290(para)
 msgid "Configuration options specific to this driver are documented here: <xref linkend=\"config_table_manila_huawei\"/>."
 msgstr ""
 
@@ -6516,10 +6644,6 @@ msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:300(para)
 msgid "Configuring the VFS networking properly for client subnets"
-msgstr ""
-
-#: ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:307(title)
-msgid "Share types"
 msgstr ""
 
 #: ./doc/config-reference/shared-file-systems/drivers/hp-3par-share-driver.xml:308(para)
@@ -9058,31 +9182,31 @@ msgstr ""
 msgid "ScaleIO: Version 1.32"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:16(para)
+#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:24(para) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:101(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:16(para)
 msgid "Create, delete, clone, attach, and detach volumes"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:28(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:19(para)
+#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:28(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:27(para) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:104(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:19(para)
 msgid "Create and delete volume snapshots"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:31(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:26(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:22(para) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:27(para)
+#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:31(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:26(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:30(para) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:107(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:22(para) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:27(para)
 msgid "Create a volume from a snapshot"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:34(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:30(para)
+#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:34(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:33(para) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:110(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:30(para)
 msgid "Copy an image to a volume"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:37(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:28(para) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:33(para)
+#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:37(para) ./doc/config-reference/block-storage/drivers/huawei-storage-driver.xml:25(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:36(para) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:113(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:28(para) ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:33(para)
 msgid "Copy a volume to an image"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:40(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:31(para)
+#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:40(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:39(para) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:116(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:31(para)
 msgid "Extend a volume"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:43(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:45(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:34(para)
+#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:43(para) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:45(para) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:119(para) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:34(para)
 msgid "Get volume statistics"
 msgstr ""
 
@@ -9222,11 +9346,11 @@ msgstr ""
 msgid "Save the<filename>cinder.conf</filename>file and restart cinder by running the following command:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:111(title) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:136(title)
+#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:111(title) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:136(title) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:220(title)
 msgid "Configuration example"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:112(subtitle) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:137(subtitle)
+#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:112(subtitle) ./doc/config-reference/block-storage/drivers/emc-xtremio-driver.xml:137(subtitle) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:221(subtitle)
 msgid "cinder.conf example file"
 msgstr ""
 
@@ -9258,7 +9382,7 @@ msgstr ""
 msgid "SIO_PASSWD"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:130(title) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:291(caption) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:160(title)
+#: ./doc/config-reference/block-storage/drivers/emc-scaleio-driver.xml:130(title) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:291(caption) ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:215(title) ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:160(title)
 msgid "Configuration options"
 msgstr ""
 
@@ -10859,7 +10983,7 @@ msgid "Use the following instructions to update the configuration file for fibre
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/dell-storagecenter-driver.xml:140(para)
-msgid "The following table contains the configation options specific to the Dell Storage Center volume driver."
+msgid "The following table contains the configuration options specific to the Dell Storage Center volume driver."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/dell-equallogic-driver.xml:6(title)
@@ -11127,7 +11251,7 @@ msgid "If you are using Ubuntu 12.04, you also need to install <package>libc6-i3
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:135(para)
-msgid "Configure the driver as described in the \"Driver Configuration\" section."
+msgid "Configure the driver as described in the \"Driver configuration\" section."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:137(para)
@@ -11395,15 +11519,15 @@ msgid "The manage and unmanage are two new API extensions that add some new feat
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:597(para)
-msgid "The unmanage action on an existing volume removes the volume from OpenStack Block Storage DB, but keeps the actual volume in the back-end. From an OpenStack Block Storage perspective the volume would be deleted, but it would still exist for use outside of it."
+msgid "The unmanage action on an existing volume removes the volume from the OpenStack Block Storage DB, but keeps the actual volume in the back-end. From an OpenStack Block Storage perspective the volume would be deleted, but it would still exist for outside use."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:601(title)
 msgid "How to Manage:"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:602(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:668(para)
-msgid "On Dashboard:"
+#: ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:602(para)
+msgid "On the Dashboard:"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:606(para) ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:631(para)
@@ -11454,6 +11578,10 @@ msgstr ""
 msgid "How to Unmanage:"
 msgstr ""
 
+#: ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:668(para)
+msgid "On Dashboard:"
+msgstr ""
+
 #: ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:671(para)
 msgid "Under the tab [ System -&gt; Volumes ] choose a volume"
 msgstr ""
@@ -11463,7 +11591,7 @@ msgid "On the volume options, choose <guibutton>[ +Unmanage Volume ]</guibutton>
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:677(para)
-msgid "Check the data and Confirm."
+msgid "Check the data and confirm."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/hds-hnas-driver.xml:687(title)
@@ -11898,7 +12026,7 @@ msgid "The vmemclient library: This is the Violin Array Communications library t
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/violin-v6000-driver.xml:98(para)
-msgid "All listed operations are supported for both thick and thin luns. However, over-subscription is not supported."
+msgid "All listed operations are supported for both thick and thin LUNs. However, over-subscription is not supported."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/violin-v6000-driver.xml:106(title)
@@ -12232,7 +12360,7 @@ msgid "Use Security file"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:309(para)
-msgid "This approach avoid the plain text password in your cinder configuration file. Supply a security file as below:"
+msgid "This approach avoids the plain text password in your cinder configuration file. Supply a security file as below:"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:314(para)
@@ -12252,7 +12380,7 @@ msgid "Driver name"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:328(para)
-msgid "For FC Driver, add following option:"
+msgid "For the FC Driver, add the following option:"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:334(para)
@@ -12288,7 +12416,7 @@ msgid "If the user wants to register the initiators with some specific ports but
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:369(para)
-msgid "When a comma-separated list is given to <literal>io_port_list</literal>, driver will only register the initiator to the ports specified in the list and only return target port(s) which belong to the target ports in the <literal>io_port_list</literal> instead of all target ports."
+msgid "When a comma-separated list is given to <literal>io_port_list</literal>, the driver will only register the initiator to the ports specified in the list and only return target port(s) which belong to the target ports in the <literal>io_port_list</literal> instead of all target ports."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:378(para)
@@ -12312,7 +12440,7 @@ msgid "Rather than de-registered, the registered ports will be simply bypassed w
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:413(para)
-msgid "Driver will raise an exception if ports in <literal>io_port_list</literal> are not existed in VNX during startup."
+msgid "The driver will raise an exception if ports in <literal>io_port_list</literal> are not existed in VNX during startup."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:423(title)
@@ -12352,7 +12480,7 @@ msgid "Storage group automatic deletion"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:467(para)
-msgid "For volume attaching, the driver has a storage group on VNX for each compute node hosting the vm instances which are going to consume VNX Block Storage (using compute node's hostname as storage group's name). All the volumes attached to the vm instances in a computer node will be put into the storage group. If <literal>destroy_empty_storage_group=True</literal>, the driver will remove the empty storage group after its last volume is detached. For data safety, it does not suggest to set <literal>destroy_empty_storage_group=True</literal> unless the VNX is exclusively managed by one Block Storage node because consistent lock_path is required for operation synchronization for this behavior."
+msgid "For volume attaching, the driver has a storage group on VNX for each compute node hosting the vm instances which are going to consume VNX Block Storage (using compute node's hostname as storage group's name). All the volumes attached to the VM instances in a compute node will be put into the storage group. If <literal>destroy_empty_storage_group=True</literal>, the driver will remove the empty storage group after its last volume is detached. For data safety, it does not suggest to set <literal>destroy_empty_storage_group=True</literal> unless the VNX is exclusively managed by one Block Storage node because consistent lock_path is required for operation synchronization for this behavior."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:483(title)
@@ -12368,7 +12496,7 @@ msgid "FC SAN auto zoning"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:494(para)
-msgid "EMC VNX FC driver supports FC SAN auto zoning when ZoneManager is configured. Set <literal>zoning_mode</literal> to <literal>fabric</literal> in <literal>DEFAULT</literal> section to enable this feature. For ZoneManager configuration, please refer to Block Storage official guide."
+msgid "The EMC VNX FC driver supports FC SAN auto zoning when ZoneManager is configured. Set <literal>zoning_mode</literal> to <literal>fabric</literal> in <literal>DEFAULT</literal> section to enable this feature. For ZoneManager configuration, please refer to Block Storage official guide."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:503(title)
@@ -12432,11 +12560,11 @@ msgid "if <literal>ignore_pool_full_threshold</literal> is set to <literal>True<
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:587(para)
-msgid "Extra spec is used in volume types created in cinder as the preferred property of volume."
+msgid "Extra specs are used in volume types created in cinder as the preferred property of the volume."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:591(para)
-msgid "Block storage scheduler will use extra spec to find the suitable backend for the volume. And Block storage driver will create volume based on the properties specified by extra spec."
+msgid "The Block storage scheduler will use extra specs to find the suitable back end for the volume and the Block storage driver will create the volume based on the properties specified by the extra spec."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:596(para)
@@ -12572,7 +12700,7 @@ msgid "VNX has FAST Cache feature which requires the FAST Cache license activate
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:816(title)
-msgid "Snap copy"
+msgid "Snap-copy"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:819(para)
@@ -12580,15 +12708,15 @@ msgid "Key: <literal>copytype:snap</literal>"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:846(para)
-msgid "VNX driver supports snap copy which extremely accelerates the process for creating a copied volume."
+msgid "The VNX driver supports snap-copy, which extremely accelerates the process for creating a copied volume."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:850(para)
-msgid "By default, the driver will do full data copy when creating a volume from a snapshot or cloning a volume, which is time-consuming especially for large volumes. When snap copy is used, driver will simply create a snapshot and mount it as a volume for the 2 kinds of operations which will be instant even for large volumes."
+msgid "By default, the driver will do full data copy when creating a volume from a snapshot or cloning a volume, which is time-consuming especially for large volumes. When the snap-copy is used, the driver will simply create a snapshot and mount it as a volume for the 2 kinds of operations which will be instant even for large volumes."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:858(para)
-msgid "To enable this functionality, the source volume should have <literal>copytype:snap=True</literal> in the extra specs of its volume type. Then the new volume cloned from the source or copied from the snapshot for the source, will be in fact a snap copy instead of a full copy. If a full copy is needed, retype/migration can be used to convert the snap-copy volume to a full-copy volume which may be time-consuming."
+msgid "To enable this functionality, the source volume should have <literal>copytype:snap=True</literal> in the extra specs of its volume type. Then the new volume cloned from the source or copied from the snapshot for the source, will be in fact a snap-copy instead of a full copy. If a full copy is needed, retype/migration can be used to convert the snap-copy volume to a full-copy volume which may be time-consuming."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:869(para)
@@ -12604,7 +12732,7 @@ msgid "<literal>copytype:snap=True</literal> is not allowed in the volume type o
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:887(para)
-msgid "Clone and snapshot creation are not allowed on a copied volume created through snap copy before it is converted to a full copy."
+msgid "Clone and snapshot creation are not allowed on a copied volume created through the snap-copy before it is converted to a full copy."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:894(para)
@@ -12760,7 +12888,7 @@ msgid "Storage group with host names in VNX"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:1135(para)
-msgid "When the driver notices tht there is no existing storage group that has the host name as the storage group name, it will create the storage group and also add the compute node's or Block Storage nodes' registered initiators into the storage group."
+msgid "When the driver notices that there is no existing storage group that has the host name as the storage group name, it will create the storage group and also add the compute node's or Block Storage nodes' registered initiators into the storage group."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/emc-vnx-driver.xml:1141(para)
@@ -12960,7 +13088,7 @@ msgid "Sheepdog is an open-source distributed storage system that provides a vir
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/sheepdog-driver.xml:10(para)
-msgid "Sheepdog scales to several hundred nodes, and has powerful virtual disk management features like snapshot, cloning, rollback, thin provisioning."
+msgid "Sheepdog scales to several hundred nodes, and has powerful virtual disk management features like snapshotting, cloning, rollback, and thin provisioning."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/sheepdog-driver.xml:13(para)
@@ -12968,7 +13096,7 @@ msgid "More information can be found on <link xlink:href=\"http://sheepdog.githu
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/sheepdog-driver.xml:15(para)
-msgid "This driver enables use of Sheepdog through Qemu/KVM."
+msgid "This driver enables the use of Sheepdog through Qemu/KVM."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/sheepdog-driver.xml:19(para)
@@ -13399,8 +13527,8 @@ msgstr ""
 msgid "flashsystem_multihost_enabled"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:138(para)
-msgid "This option allows the driver to map a vdisk to more than one host at a time. This scenario occurs during migration of a virtual machine with an attached volume; the volume is simultaneously mapped to both the source and destination compute hosts. If your deployment does not require attaching vdisks to multiple hosts, setting this flag to <literal>False</literal> will provide addedsafety."
+#: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:138(para) ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:235(para)
+msgid "This option allows the driver to map a vdisk to more than one host at a time. This scenario occurs during migration of a virtual machine with an attached volume; the volume is simultaneously mapped to both the source and destination compute hosts. If your deployment does not require attaching vdisks to multiple hosts, setting this flag to <literal>False</literal> will provide added safety."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:157(title)
@@ -13431,10 +13559,6 @@ msgstr ""
 msgid "Connection protocol should be set to <literal>iSCSI</literal>"
 msgstr ""
 
-#: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:235(para)
-msgid "This option allows the driver to map a vdisk to more than one host at a time. This scenario occurs during migration of a virtual machine with an attached volume; the volume is simultaneously mapped to both the source and destination compute hosts. If your deployment does not require attaching vdisks to multiple hosts, setting this flag to <literal>False</literal> will provide added safety."
-msgstr ""
-
 #: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:250(literal)
 msgid "iscsi_ip_address"
 msgstr ""
@@ -13452,7 +13576,7 @@ msgid "flashsystem_iscsi_portid"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:269(para)
-msgid "On cluster of FlashSystem, port ID column is the first column <literal>id</literal> of the output of <literal>lsportip</literal>, not the sixth colume <literal>port_id</literal>."
+msgid "On cluster of FlashSystem, port ID column is the first column <literal>id</literal> of the output of <literal>lsportip</literal>, not the sixth column <literal>port_id</literal>."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/ibm-flashsystem-volume-driver.xml:267(para)
@@ -14793,6 +14917,136 @@ msgstr ""
 msgid "The SambaFS driver requires <placeholder-1/> version 1.7 or higher on Linux nodes, and <placeholder-2/> version 1.6 or higher on Windows nodes."
 msgstr ""
 
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:34(None)
+msgid "@@image: 'figures/blockbridge/bb-cinder-fig1.png'; md5=b6cb55e827fd9fafaf6859f06568bd9f"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:7(title)
+msgid "Blockbridge EPS"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:12(para)
+msgid "Blockbridge is software that transforms commodity infrastructure into secure multi-tenant storage that operates as a programmable service. It provides automatic encryption, secure deletion, quality of service, replication, and programmable security capabilities on your choice of hardware. Blockbridge uses micro-segmentation to provide isolation that allows you to concurrently operate OpenStack, Docker, and bare-metal workflows on shared resources. When used with OpenStack, isolated management domains are dynamically created on a per-project basis. All volumes and clones, within and between projects, are automatically cryptographically isolated and implement secure deletion."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:26(title)
+msgid "Architecture reference"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:29(title)
+msgid "Blockbridge architecture"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:40(title)
+msgid "Control paths"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:41(para)
+msgid "The Blockbridge driver is packaged with the core distribution of OpenStack. Operationally, it executes in the context of the Block Storage service. The driver communicates with an OpenStack-specific API provided by the Blockbridge EPS platform. Blockbridge optionally communicates with OpenStack Identity, Compute, and Block Storage services."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:50(title)
+msgid "Block storage API"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:51(para)
+msgid "Blockbridge is API driven software-defined storage. The system implements a native HTTP API that is tailored to the specific needs of OpenStack. Each Block Storage service operation maps to a single back-end API request that provides ACID semantics. The API is specifically designed to reduce, if not eliminate, the possibility of inconsistencies between the Block Storage service and external storage infrastructure in the event of hardware, software or data center failure."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:62(title)
+msgid "Extended management"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:63(para)
+msgid "OpenStack users may utilize Blockbridge interfaces to manage replication, auditing, statistics, and performance information on a per-project and per-volume basis. In addition, they can manage low-level data security functions including verification of data authenticity and encryption key delegation. Native integration with the Identity Service allows tenants to use a single set of credentials. Integration with Block storage and Compute services provides dynamic metadata mapping when using Blockbridge management APIs and tools."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:75(title)
+msgid "Attribute-based provisioning"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:76(para)
+msgid "Blockbridge organizes resources using descriptive identifiers called <emphasis>attributes</emphasis>. Attributes are assigned by administrators of the infrastructure. They are used to describe the characteristics of storage in an application-friendly way. Applications construct queries that describe storage provisioning constraints and the Blockbridge storage stack assembles the resources as described."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:83(para)
+msgid "Any given instance of a Blockbridge volume driver specifies a <emphasis>query</emphasis> for resources. For example, a query could specify <code>'+ssd +10.0.0.0 +6nines -production iops.reserve=1000 capacity.reserve=30%'</code>. This query is satisfied by selecting SSD resources, accessible on the 10.0.0.0 network, with high resiliency, for non-production workloads, with guaranteed IOPS of 1000 and a storage reservation for 30% of the volume capacity specified at create time. Queries and parameters are completely administrator defined: they reflect the layout, resource, and organizational goals of a specific deployment."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:125(title)
+msgid "Supported protocols"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:126(para)
+msgid "Blockbridge provides iSCSI access to storage. A unique iSCSI data fabric is programmatically assembled when a volume is attached to an instance. A fabric is disassembled when a volume is detached from an instance. Each volume is an isolated SCSI device that supports persistent reservations."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:134(title)
+msgid "Configuration steps"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:136(title)
+msgid "Create an authentication token"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:137(para)
+msgid "Whenever possible, avoid using password-based authentication. Even if you have created a role-restricted administrative user via Blockbridge, token-based authentication is preferred. You can generate persistent authentication tokens using the Blockbridge command-line tool as follows:"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:167(title)
+msgid "Create volume type"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:168(para)
+msgid "Before configuring and enabling the Blockbridge volume driver, register an OpenStack volume type and associate it with a <code>volume_backend_name</code>. In this example, a volume type, 'Production', is associated with the <code>volume_backend_name</code> 'blockbridge_prod': <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:178(title)
+msgid "Specify volume driver"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:179(para)
+msgid "Configure the Blockbridge volume driver in <filename>/etc/cinder/cinder.conf</filename>. Your <code>volume_backend_name</code> must match the value specified in the <placeholder-1/> command in the previous step. <placeholder-2/>"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:189(title)
+msgid "Specify API endpoint and authentication"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:190(para)
+msgid "Configure the API endpoint and authentication. The following example uses an authentication token. You must create your own as described <link linkend=\"bb-authentication-token\">above</link>. <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:199(title)
+msgid "Specify resource query"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:200(para)
+msgid "By default, a single pool is configured (implied) with a default resource query of <code>'+openstack'</code>. Within Blockbridge, datastore resources that advertise the 'openstack' attribute will be selected to fulfill OpenStack provisioning requests. If you prefer a more specific query, define a custom pool configuration. <placeholder-1/>"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:207(para)
+msgid "Pools support storage systems that offer multiple classes of service. You may wish to configure multiple pools to implement more sophisticated scheduling capabilities."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:241(title)
+msgid "Multiple volume types"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:242(para)
+msgid "Volume <emphasis>types</emphasis> are exposed to tenants, <emphasis>pools</emphasis> are not. To offer multiple classes of storage to OpenStack tenants, you should define multiple volume types. Simply repeat the process above for each desired type. Be sure to specify a unique <code>volume_backend_name</code> and pool configuration for each type. The <link linkend=\"bb-configuration-example\"><filename>cinder.conf</filename></link> example included with this documentation illustrates configuration of multiple types."
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:254(title)
+msgid "Testing resources"
+msgstr ""
+
+#: ./doc/config-reference/block-storage/drivers/blockbridge-eps-driver.xml:255(para)
+msgid "Blockbridge is freely available for testing purposes and deploys in seconds as a Docker container. This is the same container used to run continuous integration for OpenStack. For more information visit <link xlink:href=\"http://www.blockbridge.io\">www.blockbridge.io</link>."
+msgstr ""
+
 #: ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:6(title)
 msgid "Nimble Storage volume driver"
 msgstr ""
@@ -14878,7 +15132,7 @@ msgid "A volume back-end name which is specified in <filename> cinder.conf</file
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:121(para)
-msgid "The Nimble volume-type which is created from CLI and associated with <replaceable>NIMBLE_BACKEND_NAME</replaceable>."
+msgid "The Nimble volume-type which is created from the CLI and associated with <replaceable>NIMBLE_BACKEND_NAME</replaceable>."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:127(para)
@@ -14890,7 +15144,7 @@ msgid "Nimble driver extra specs"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:132(para)
-msgid "Nimble volume driver also supports the following extra specs options:"
+msgid "The Nimble volume driver also supports the following extra spec options:"
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/nimble-volume-driver.xml:136(term)
@@ -15442,7 +15696,7 @@ msgid "Create a new storage pool on the appliance if you do not want to use an e
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:67(para)
-msgid "Create a new project and share in the storage pool (<literal>mypool</literal>) if you do not want to use existing ones. This driver will create a project and share by the names specified in <filename>cinder.conf</filename>, if the a project or share by that name doesnt already exist in the storage pool (<literal>mypool</literal>). The project and share are named '<literal>NFSProject</literal>' and '<literal>nfs_share</literal>' in the sample <filename>cinder.conf</filename> entries below."
+msgid "Create a new project and share in the storage pool (<literal>mypool</literal>) if you do not want to use existing ones. This driver will create a project and share by the names specified in <filename>cinder.conf</filename>, if the a project or share by that name does not already exist in the storage pool (<literal>mypool</literal>). The project and share are named '<literal>NFSProject</literal>' and '<literal>nfs_share</literal>' in the sample <filename>cinder.conf</filename> entries below."
 msgstr ""
 
 #: ./doc/config-reference/block-storage/drivers/zfssa-nfs-driver.xml:73(para)
