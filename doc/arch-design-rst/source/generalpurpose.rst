@@ -2,6 +2,12 @@
 General purpose
 ===============
 
+.. toctree::
+   :maxdepth: 2
+
+   generalpurpose-architecture.rst
+
+
 An OpenStack general purpose cloud is often considered a starting
 point for building a cloud deployment. They are designed to balance
 the components and do not emphasize any particular aspect of the
