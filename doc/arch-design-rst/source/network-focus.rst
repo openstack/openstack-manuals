@@ -7,6 +7,9 @@ Network focused
 
    network-focus-user-requirements.rst
    network-focus-technical-considerations.rst
+   network-focus-operational-considerations.rst
+   network-focus-architecture.rst
+   network-focus-prescriptive-examples.rst
 
 All OpenStack deployments depend on network communication in order to function
 properly due to its service-based nature. In some cases, however, the network
