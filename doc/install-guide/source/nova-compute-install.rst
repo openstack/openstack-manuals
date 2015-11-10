@@ -42,7 +42,7 @@ Install and configure components
 
          # yum install openstack-nova-compute sysfsutils
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    #. Install the packages:
 
@@ -50,67 +50,97 @@ Install and configure components
 
          # apt-get install nova-compute sysfsutils
 
+      .. only:: debian
+
+         Respond to prompts for
+         :doc:`database management <debconf/debconf-dbconfig-common>`,
+         :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
+         and :doc:`message broker credentials <debconf/debconf-rabbitmq>`. Make
+         sure that you do not activate database management handling by debconf,
+         as a compute node should not access the central database.
+
 2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:
 
-   * In the ``[DEFAULT]`` and [oslo_messaging_rabbit]
-     sections, configure ``RabbitMQ`` message queue access:
+   .. only:: obs or rdo or ubuntu
 
-     .. code-block:: ini
+      * In the ``[DEFAULT]`` and [oslo_messaging_rabbit]
+        sections, configure ``RabbitMQ`` message queue access:
 
-        [DEFAULT]
-        ...
-        rpc_backend = rabbit
+        .. code-block:: ini
 
-        [oslo_messaging_rabbit]
-        ...
-        rabbit_host = controller
-        rabbit_userid = openstack
-        rabbit_password = RABBIT_PASS
+           [DEFAULT]
+           ...
+           rpc_backend = rabbit
 
-     Replace ``RABBIT_PASS`` with the password you chose for
-     the ``openstack`` account in ``RabbitMQ``.
+           [oslo_messaging_rabbit]
+           ...
+           rabbit_host = controller
+           rabbit_userid = openstack
+           rabbit_password = RABBIT_PASS
 
-   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
-     configure Identity service access:
+        Replace ``RABBIT_PASS`` with the password you chose for
+        the ``openstack`` account in ``RabbitMQ``.
 
-     .. code-block:: ini
+      * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
+        configure Identity service access:
 
-        [DEFAULT]
-        ...
-        auth_strategy = keystone
+        .. code-block:: ini
 
-        [keystone_authtoken]
-        ...
-        auth_uri = http://controller:5000
-        auth_url = http://controller:35357
-        auth_plugin = password
-        project_domain_id = default
-        user_domain_id = default
-        project_name = service
-        username = nova
-        password = NOVA_PASS
+           [DEFAULT]
+           ...
+           auth_strategy = keystone
 
-     Replace ``NOVA_PASS`` with the password you chose for the
-     ``nova`` user in the Identity service.
+           [keystone_authtoken]
+           ...
+           auth_uri = http://controller:5000
+           auth_url = http://controller:35357
+           auth_plugin = password
+           project_domain_id = default
+           user_domain_id = default
+           project_name = service
+           username = nova
+           password = NOVA_PASS
 
-     .. note::
+        Replace ``NOVA_PASS`` with the password you chose for the
+        ``nova`` user in the Identity service.
 
-        Comment out or remove any other options in the
-        ``[keystone_authtoken]`` section.
+        .. note::
 
-   * In the ``[DEFAULT]`` section, configure the ``my_ip`` option:
+           Comment out or remove any other options in the
+           ``[keystone_authtoken]`` section.
 
-     .. code-block:: ini
+   .. only:: debian
 
-        [DEFAULT]
-        ...
-        my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+      * In the ``[DEFAULT]`` section, check that the ``my_ip`` option
+        is correctly set (this value is handled by the config and postinst
+        scripts of the ``nova-common`` package using debconf):
 
-     Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address
-     of the management network interface on your compute node,
-     typically 10.0.0.31 for the first node in the
-     :ref:`example architecture <overview-example-architectures>`.
+        .. code-block:: ini
+
+           [DEFAULT]
+           ...
+           my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+
+        Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address
+        of the management network interface on your compute node,
+        typically 10.0.0.31 for the first node in the
+        :ref:`example architecture <overview-example-architectures>`.
+
+   .. only:: obs or rdo or ubuntu
+
+      * In the ``[DEFAULT]`` section, configure the ``my_ip`` option:
+
+        .. code-block:: ini
+
+           [DEFAULT]
+           ...
+           my_ip = MANAGEMENT_INTERFACE_IP_ADDRESS
+
+        Replace ``MANAGEMENT_INTERFACE_IP_ADDRESS`` with the IP address
+        of the management network interface on your compute node,
+        typically 10.0.0.31 for the first node in the
+        :ref:`example architecture <overview-example-architectures>`.
 
    * In the ``[DEFAULT]`` section, enable support for the Networking service:
 
@@ -192,7 +222,7 @@ Install and configure components
         ...
         verbose = True
 
-.. only:: obs
+.. only:: obs or debian
 
    3. Ensure the kernel module ``nbd`` is loaded.
 
@@ -200,8 +230,8 @@ Install and configure components
 
          # modprobe nbd
 
-   4. Ensure the module will be loaded on every boot by adding
-      ``nbd`` in the ``/etc/modules-load.d/nbd.conf`` file.
+   4. Ensure the module loads on every boot by adding ``nbd``
+      to the ``/etc/modules-load.d/nbd.conf`` file.
 
 Finalize installation
 ---------------------
@@ -243,6 +273,16 @@ Finalize installation
            ...
            virt_type = qemu
 
+   .. only:: debian
+
+      * Replace the ``nova-compute-kvm`` package with ``nova-compute-qemu``
+        which automatically changes the ``/etc/nova/nova-compute.conf``
+        file and installs the necessary dependencies:
+
+        .. code-block:: console
+
+           # apt-get install nova-compute-qemu
+
 .. only:: obs or rdo
 
    2. Start the Compute service including its dependencies and configure
@@ -253,13 +293,15 @@ Finalize installation
          # systemctl enable libvirtd.service openstack-nova-compute.service
          # systemctl start libvirtd.service openstack-nova-compute.service
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    2. Restart the Compute service:
 
       .. code-block:: console
 
          # service nova-compute restart
+
+.. only:: ubuntu
 
    3. By default, the Ubuntu packages create an SQLite database.
 
