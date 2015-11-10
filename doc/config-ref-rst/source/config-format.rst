@@ -1,0 +1,163 @@
+=========================
+Configuration file format
+=========================
+
+OpenStack uses the :term:`INI` file format for configuration files.
+An INI file is a simple text file that specifies options as
+``key=value`` pairs, grouped into sections.
+The ``DEFAULT`` section contains most of the configuration options.
+Lines starting with a hash sign (``#``) are comment lines.
+For example:
+
+.. code-block:: ini
+
+   [DEFAULT]
+   # Print debugging output (set logging level to DEBUG instead
+   # of default WARNING level). (boolean value)
+   debug = true
+   # Print more verbose output (set logging level to INFO instead
+   # of default WARNING level). (boolean value)
+   verbose = true
+
+   [database]
+   # The SQLAlchemy connection string used to connect to the
+   # database (string value)
+   connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
+
+Options can have different types for values.
+The comments in the sample config files always mention these.
+The following types are used by OpenStack:
+
+boolean value
+ Enables or disables an option. The allowed values are ``true`` and ``false``.
+
+ .. code-block:: ini
+
+    # Enable the experimental use of database reconnect on
+    # connection lost (boolean value)
+    use_db_reconnect = false
+
+floating point value
+ A floating point number like ``0.25`` or ``1000``.
+
+ .. code-block:: ini
+
+    # Sleep time in seconds for polling an ongoing async task
+    # (floating point value)
+    task_poll_interval = 0.5
+
+integer value
+ An integer number is a number without fractional components,
+ like ``0`` or ``42``.
+
+ .. code-block:: ini
+
+    # The port which the OpenStack Compute service listens on.
+    # (integer value)
+    compute_port = 8774
+
+list value
+ Represents values of other types, separated by commas.
+ As an example, the following sets ``allowed_rpc_exception_modules``
+ to a list containing the four elements ``oslo.messaging.exceptions``,
+ ``nova.exception``, ``cinder.exception``, and ``exceptions``:
+
+ .. code-block:: ini
+
+    # Modules of exceptions that are permitted to be recreated
+    # upon receiving exception data from an rpc call. (list value)
+    allowed_rpc_exception_modules = oslo.messaging.exceptions,nova.exception
+
+multi valued
+ A multi-valued option is a string value and can be given
+ more than once, all values will be used.
+
+ .. code-block:: ini
+
+    # Driver or drivers to handle sending notifications. (multi valued)
+    notification_driver = nova.openstack.common.notifier.rpc_notifier
+    notification_driver = ceilometer.compute.nova_notifier
+
+string value
+ Strings can be optionally enclosed with single or double quotes.
+
+ .. code-block:: ini
+
+    # Enables or disables publication of error events. (boolean value)
+    #publish_errors = false
+
+    # The format for an instance that is passed with the log message.
+    # (string value)
+    #instance_format = "[instance: %(uuid)s] "
+
+Sections
+~~~~~~~~
+
+Configuration options are grouped by section.
+Most configuration files support at least the following sections:
+
+[DEFAULT]
+ Contains most configuration options.
+ If the documentation for a configuration option does not
+ specify its section, assume that it appears in this section.
+
+[database]
+ Configuration options for the database that stores
+ the state of the OpenStack service.
+
+Substitution
+~~~~~~~~~~~~
+
+The configuration file supports variable substitution.
+After you set a configuration option, it can be referenced
+in later configuration values when you precede it with
+a ``$``, like ``$OPTION``.
+
+The following example uses the values of ``rabbit_host`` and
+``rabbit_port`` to define the value of the ``rabbit_hosts``
+option, in this case as ``controller:5672``.
+
+.. code-block:: ini
+
+   # The RabbitMQ broker address where a single node is used.
+   # (string value)
+   rabbit_host = controller
+
+   # The RabbitMQ broker port where a single node is used.
+   # (integer value)
+   rabbit_port = 5672
+
+   # RabbitMQ HA cluster host:port pairs. (list value)
+   rabbit_hosts = $rabbit_host:$rabbit_port
+
+To avoid substitution, use ``$$``, it is replaced by a single ``$``.
+For example, if your LDAP DNS password is ``$xkj432``, specify it, as follows:
+
+.. code-block:: ini
+
+   ldap_dns_password = $$xkj432
+
+The code uses the Python ``string.Template.safe_substitute()``
+method to implement variable substitution.
+For more details on how variable substitution is resolved, see
+http://docs.python.org/2/library/string.html#template-strings
+and `PEP 292 <http://www.python.org/dev/peps/pep-0292/>`_.
+
+Whitespace
+~~~~~~~~~~
+
+To include whitespace in a configuration value, use a quoted string.
+For example:
+
+.. code-block:: ini
+
+   ldap_dns_passsword='a password with spaces'
+
+Define an alternate location for a config file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Most services and the ``*-manage`` command-line clients load
+the configuration file.
+To define an alternate location for the configuration file,
+pass the ``--config-file CONFIG_FILE`` parameter
+when you start a service or call a ``*-manage`` command.

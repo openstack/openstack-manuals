@@ -1,8 +1,3 @@
-.. meta::
-   :description: This guide targets OpenStack Architects
-                 for architectural design
-   :keywords: Architecture, OpenStack
-
 =================================
 OpenStack Configuration Reference
 =================================
@@ -12,7 +7,7 @@ Abstract
 
 This document is for system administrators who want to look up configuration
 options. It contains lists of configuration options available with OpenStack
-and uses auto-generation to generate options and the d escriptions from the
+and uses auto-generation to generate options and the descriptions from the
 code for each project. It includes sample configuration files.
 
 .. warning:: This guide is a work-in-progress.
@@ -23,8 +18,24 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   common/conventions.rst
+   config-overview.rst
 
+   bare-metal.rst
+   block-storage.rst
+   compute.rst
+   dashboard.rst
+   database-service.rst
+   data-processing-service.rst
+   identity.rst
+   image-service.rst
+   networking.rst
+   object-storage.rst
+   orchestration.rst
+   telemetry.rst
+   shared-file-systems.rst
+
+   policy-json-file.rst
+   firewalls-default-ports.rst
    common/app_support.rst
 
    common/glossary.rst
