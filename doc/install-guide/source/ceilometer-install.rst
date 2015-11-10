@@ -1,14 +1,13 @@
-=====================================
-Install and configure controller node
-=====================================
+Install and configure
+~~~~~~~~~~~~~~~~~~~~~
 
 This section describes how to install and configure the Telemetry
 service, code-named ceilometer, on the controller node. The Telemetry
-service uses separate agents to collect measurements from each OpenStack
-service in your environment.
+service collects measurements from most OpenStack services and
+optionally triggers alarms.
 
-To configure prerequisites
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Prerequisites
+-------------
 
 Before you install and configure the Telemetry service, you must
 create a database, service credentials, and API endpoints. However,
@@ -73,30 +72,27 @@ MongoDB before proceeding further.
 
      .. code-block:: console
 
-        $ openstack user create --password-prompt ceilometer
+        $ openstack user create --domain default --password-prompt ceilometer
         User Password:
         Repeat User Password:
-        +----------+----------------------------------+
-        | Field    | Value                            |
-        +----------+----------------------------------+
-        | email    | None                             |
-        | enabled  | True                             |
-        | id       | b7657c9ea07a4556aef5d34cf70713a3 |
-        | name     | ceilometer                       |
-        | username | ceilometer                       |
-        +----------+----------------------------------+
+        +-----------+----------------------------------+
+        | Field     | Value                            |
+        +-----------+----------------------------------+
+        | domain_id | default                          |
+        | enabled   | True                             |
+        | id        | c859c96f57bd4989a8ea1a0b1d8ff7cd |
+        | name      | ceilometer                       |
+        +-----------+----------------------------------+
 
    * Add the ``admin`` role to the ``ceilometer`` user.
 
      .. code-block:: console
 
         $ openstack role add --project service --user ceilometer admin
-        +-------+----------------------------------+
-        | Field | Value                            |
-        +-------+----------------------------------+
-        | id    | cd2cb9a39e874ea69e5d4b896eb16128 |
-        | name  | admin                            |
-        +-------+----------------------------------+
+
+     .. note::
+
+        This command provides no output.
 
    * Create the ``ceilometer`` service entity:
 
@@ -109,65 +105,65 @@ MongoDB before proceeding further.
         +-------------+----------------------------------+
         | description | Telemetry                        |
         | enabled     | True                             |
-        | id          | 3405453b14da441ebb258edfeba96d83 |
+        | id          | 5fb7fd1bb2954fddb378d4031c28c0e4 |
         | name        | ceilometer                       |
         | type        | metering                         |
         +-------------+----------------------------------+
 
-6. Create the Telemetry service API endpoint:
+6. Create the Telemetry service API endpoints:
 
    .. code-block:: console
 
       $ openstack endpoint create --region RegionOne \
         metering public http://controller:8777
-        +--------------+----------------------------------+
-        | Field        | Value                            |
-        +--------------+----------------------------------+
-        | enabled      | True                             |
-        | id           | 340be3625e9b4239a6415d034e98aace |
-        | interface    | public                           |
-        | region       | RegionOne                        |
-        | region_id    | RegionOne                        |
-        | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
-        | service_name | celiometer                       |
-        | service_type | metering                         |
-        | url          | http://controller:8777           |
-        +--------------+----------------------------------+
+      +--------------+----------------------------------+
+      | Field        | Value                            |
+      +--------------+----------------------------------+
+      | enabled      | True                             |
+      | id           | b808b67b848d443e9eaaa5e5d796970c |
+      | interface    | public                           |
+      | region       | RegionOne                        |
+      | region_id    | RegionOne                        |
+      | service_id   | 5fb7fd1bb2954fddb378d4031c28c0e4 |
+      | service_name | ceilometer                       |
+      | service_type | metering                         |
+      | url          | http://controller:8777           |
+      +--------------+----------------------------------+
 
       $ openstack endpoint create --region RegionOne \
         metering internal http://controller:8777
-        +--------------+----------------------------------+
-        | Field        | Value                            |
-        +--------------+----------------------------------+
-        | enabled      | True                             |
-        | id           | 340be3625e9b4239a6415d034e98aace |
-        | interface    | internal                         |
-        | region       | RegionOne                        |
-        | region_id    | RegionOne                        |
-        | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
-        | service_name | celiometer                       |
-        | service_type | metering                         |
-        | url          | http://controller:8777           |
-        +--------------+----------------------------------+
+      +--------------+----------------------------------+
+      | Field        | Value                            |
+      +--------------+----------------------------------+
+      | enabled      | True                             |
+      | id           | c7009b1c2ee54b71b771fa3d0ae4f948 |
+      | interface    | internal                         |
+      | region       | RegionOne                        |
+      | region_id    | RegionOne                        |
+      | service_id   | 5fb7fd1bb2954fddb378d4031c28c0e4 |
+      | service_name | ceilometer                       |
+      | service_type | metering                         |
+      | url          | http://controller:8777           |
+      +--------------+----------------------------------+
 
       $ openstack endpoint create --region RegionOne \
         metering admin http://controller:8777
-        +--------------+----------------------------------+
-        | Field        | Value                            |
-        +--------------+----------------------------------+
-        | enabled      | True                             |
-        | id           | 340be3625e9b4239a6415d034e98aace |
-        | interface    | admin                            |
-        | region       | RegionOne                        |
-        | region_id    | RegionOne                        |
-        | service_id   | 8c2c7f1b9b5049ea9e63757b5533e6d2 |
-        | service_name | celiometer                       |
-        | service_type | metering                         |
-        | url          | http://controller:8777           |
-        +--------------+----------------------------------+
+      +--------------+----------------------------------+
+      | Field        | Value                            |
+      +--------------+----------------------------------+
+      | enabled      | True                             |
+      | id           | b2c00566d0604551b5fe1540c699db3d |
+      | interface    | admin                            |
+      | region       | RegionOne                        |
+      | region_id    | RegionOne                        |
+      | service_id   | 5fb7fd1bb2954fddb378d4031c28c0e4 |
+      | service_name | ceilometer                       |
+      | service_type | metering                         |
+      | url          | http://controller:8777           |
+      +--------------+----------------------------------+
 
-To install and configure the Telemetry service components
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Install and configure components
+--------------------------------
 
 .. only:: obs
 
@@ -204,13 +200,7 @@ To install and configure the Telemetry service components
            ceilometer-alarm-evaluator ceilometer-alarm-notifier \
            python-ceilometerclient
 
-2. Generate a random value to use as the telemetry secret:
-
-   .. code-block:: console
-
-      $ openssl rand -hex 10
-
-3. Edit the ``/etc/ceilometer/ceilometer.conf`` file and complete
+2. Edit the ``/etc/ceilometer/ceilometer.conf`` file and complete
    the following actions:
 
    * In the ``[database]`` section, configure database access:
@@ -255,19 +245,17 @@ To install and configure the Telemetry service components
 
         [keystone_authtoken]
         ...
-        auth_uri = http://controller:5000/v2.0
-        identity_uri = http://controller:35357
-        admin_tenant_name = service
-        admin_user = ceilometer
-        admin_password = CEILOMETER_PASS
+        auth_uri = http://controller:5000
+        auth_url = http://controller:35357
+        auth_plugin = password
+        project_domain_id = default
+        user_domain_id = default
+        project_name = service
+        username = ceilometer
+        password = CEILOMETER_PASS
 
      Replace ``CEILOMETER_PASS`` with the password you chose for
      the ``ceilometer`` user in the Identity service.
-
-     .. note::
-
-        Comment out any ``auth_host``, ``auth_port``, and ``auth_protocol``
-        options because the ``identity_uri`` option replaces them.
 
    * In the ``[service_credentials]`` section, configure service credentials:
 
@@ -285,17 +273,6 @@ To install and configure the Telemetry service components
      Replace ``CEILOMETER_PASS`` with the password you chose for
      the ``ceilometer`` user in the Identity service.
 
-   * In the ``[publisher]`` section, configure the telemetry secret:
-
-     .. code-block:: ini
-
-        [publisher]
-        ...
-        telemetry_secret = TELEMETRY_SECRET
-
-     Replace TELEMETRY_SECRET with the telemetry secret
-     that you generated in a previous step.
-
    .. only:: obs
 
       * In the ``[collector]`` section, configure the dispatcher:
@@ -306,7 +283,7 @@ To install and configure the Telemetry service components
            ...
            dispatcher = database
 
-      * (Optional) To assist with troubleshooting, enable verbose
+   * (Optional) To assist with troubleshooting, enable verbose
         logging in the ``[DEFAULT]`` section:
 
         .. code-block:: ini
@@ -315,19 +292,9 @@ To install and configure the Telemetry service components
            ...
            verbose = True
 
-   .. only:: rdo or ubuntu
+Finalize installation
+---------------------
 
-      * (Optional) To assist with troubleshooting, enable verbose
-        logging in the ``[DEFAULT]`` section:
-
-        .. code-block:: ini
-
-           [DEFAULT]
-           ...
-           verbose = True
-
-To finalize installation
-~~~~~~~~~~~~~~~~~~~~~~~~
 .. only:: obs
 
    #. Start the Telemetry services and configure them to start when the

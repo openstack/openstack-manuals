@@ -1,13 +1,15 @@
-===================================
-Configure the Block Storage service
-===================================
+Enable Block Storage meters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To retrieve volume-oriented events and samples, you must configure
-the Block Storage service to send notifications to the message bus.
-Perform these steps on the controller and storage nodes.
+Telemetry uses notifications to collect Block Storage service meters.
+Perform these steps on the controller and Block Storage nodes.
 
-To configure prerequisites
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. note::
+
+   Your environment must include the Block Storage service.
+
+Configure Cinder to use Telemetry
+---------------------------------
 
 Edit the ``/etc/cinder/cinder.conf`` file and complete the
 following actions:
@@ -18,18 +20,20 @@ following actions:
 
       [DEFAULT]
       ...
-      control_exchange = cinder
       notification_driver = messagingv2
+
+Finalize installation
+---------------------
 
 .. only:: obs or rdo
 
-   2. Restart the Block Storage services on the controller node:
+   #. Restart the Block Storage services on the controller node:
 
       .. code-block:: console
 
          # systemctl restart openstack-cinder-api.service openstack-cinder-scheduler.service
 
-   3. Restart the Block Storage services on the storage nodes:
+   #. Restart the Block Storage services on the storage nodes:
 
       .. code-block:: console
 
@@ -37,21 +41,21 @@ following actions:
 
 .. only:: ubuntu
 
-   2. Restart the Block Storage services on the controller node:
+   #. Restart the Block Storage services on the controller node:
 
       .. code-block:: console
 
          # service cinder-api restart
          # service cinder-scheduler restart
 
-   3. Restart the Block Storage services on the storage nodes:
+   #. Restart the Block Storage services on the storage nodes:
 
       .. code-block:: console
 
          # service cinder-volume restart
 
-4. Use the ``cinder-volume-usage-audit`` command to retrieve meters
-   on demand. For more information, see `Block Storage audit script
-   setup to get notifications <http://docs.openstack.org/admin-guide-cloud/
+3. Use the ``cinder-volume-usage-audit`` command on Block Storage nodes
+   to retrieve meters on demand. For more information, see the
+   `Cloud Administrator Guide <http://docs.openstack.org/admin-guide-cloud/
    telemetry-data-collection.html#block-storage-audit-script-setup-to-get-
    notifications>`__.

@@ -1,12 +1,11 @@
-=============================
-Configure the Compute service
-=============================
+Enable Compute service meters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Telemetry uses a combination of notifications and an agent to
-collect Compute meters. Perform these steps on each compute node.
+Telemetry uses a combination of notifications and an agent to collect
+Compute meters. Perform these steps on each compute node.
 
-To install and configure the agent
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Install and configure components
+--------------------------------
 
 .. only:: obs
 
@@ -35,17 +34,6 @@ To install and configure the agent
 2. Edit the ``/etc/ceilometer/ceilometer.conf`` file and
    complete the following actions:
 
-   * In the ``[publisher]`` section, configure the telemetry secret:
-
-     .. code-block:: ini
-
-         [publisher]
-         ...
-         telemetry_secret = TELEMETRY_SECRET
-
-     Replace ``TELEMETRY_SECRET`` with the telemetry secret you
-     chose for the Telemetry service.
-
    * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
      configure ``RabbitMQ`` message queue access:
 
@@ -64,27 +52,28 @@ To install and configure the agent
      Replace ``RABBIT_PASS`` with the password you chose for the
      ``openstack`` account in ``RabbitMQ``.
 
-   * In the ``[keystone_authtoken]`` section,
+   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
      configure Identity service access:
 
      .. code-block:: ini
 
+        [DEFAULT]
+        ...
+        auth_strategy = keystone
+
         [keystone_authtoken]
         ...
-        auth_uri = http://controller:5000/v2.0
-        identity_uri = http://controller:35357
-        admin_tenant_name = service
-        admin_user = ceilometer
-        admin_password = CEILOMETER_PASS
+        auth_uri = http://controller:5000
+        auth_url = http://controller:35357
+        auth_plugin = password
+        project_domain_id = default
+        user_domain_id = default
+        project_name = service
+        username = ceilometer
+        password = CEILOMETER_PASS
 
      Replace ``CEILOMETER_PASS`` with the password you chose for the
      Telemetry service database.
-
-     .. note::
-
-        Comment out any ``auth_host``, ``auth_port``, and
-        ``auth_protocol`` options because the ``identity_uri``
-        option replaces them.
 
    * In the ``[service_credentials]`` section, configure service
      credentials:
@@ -112,56 +101,23 @@ To install and configure the agent
         ...
         verbose = True
 
-To configure notifications
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configure Compute to use Telemetry
+----------------------------------
 
-Configure the Compute service to send notifications to the message bus.
+* Edit the ``/etc/nova/nova.conf`` file and configure
+  notifications in the ``[DEFAULT]`` section:
 
-Edit the ``/etc/nova/nova.conf`` file and configure
-notifications in the ``[DEFAULT]`` section:
+  .. code-block:: ini
 
-.. code-block:: ini
+     [DEFAULT]
+     ...
+     instance_usage_audit = True
+     instance_usage_audit_period = hour
+     notify_on_state_change = vm_and_task_state
+     notification_driver = messagingv2
 
-   [DEFAULT]
-   ...
-   instance_usage_audit = True
-   instance_usage_audit_period = hour
-   notify_on_state_change = vm_and_task_state
-   notification_driver = messagingv2
-
-The Nova notification_driver creates alerts and sends system state
-updates to administrators and users. The notification_driver
-sends this information to users in a manner as close to real-time
-as possible.
-
-Notifications in real-time allow administrators to observe and resolve
-emergencies when the cloud environment experiences errors or faults.
-
-Administrators can also restrict notification delivery to certain
-tenant groups. Users can view notifications through a web browser,
-without using a specific interface.
-
-Messages arrive in a specific format which includes: Message ID,
-Publisher ID, Event type, Timestamp, Priority, and Payload. See the
-`Notification System information <https://wiki.openstack.org/wiki/
-NotificationSystem#General_Notification_Message_Format>`__ for an
-example message format.
-
-Notification messages are placed on the OpenStack messaging system,
-which recruits AMQP to send information when an event triggers alerts.
-
-The ``nova.conf`` file uses the nova_notification driver by defualt.
-
-.. warning::
-
-   While you can use a customised notification_driver, we
-   recommend using the default settings. Using stable web hooks
-   for events, such as creating new instances, and using custom
-   notification drivers are not guaranteed to
-   deliver notifications in real-time.
-
-To finalize installation
-~~~~~~~~~~~~~~~~~~~~~~~~
+Finalize installation
+---------------------
 
 .. only:: obs
 
