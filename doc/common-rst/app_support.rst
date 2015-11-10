@@ -188,6 +188,9 @@ The following Launchpad Bugs areas are available:
 -  `Bugs: Telemetry
    (ceilometer) <https://bugs.launchpad.net/ceilometer>`__
 
+-  `Bugs: Telemetry v3
+   (gnocchi) <https://bugs.launchpad.net/gnocchi>`__
+
 -  `Bugs: Workflow service
    (mistral) <https://bugs.launchpad.net/mistral>`__
 

@@ -95,6 +95,10 @@ service with its package name and description.
 |                |          |                       |measurements across     |
 |                |          |                       |OpenStack.              |
 +----------------+----------+-----------------------+------------------------+
+|Telemetry v3    |gnocchi   |python-gnocchiclient   |Creates and collects    |
+|                |          |                       |measurements across     |
+|                |          |                       |OpenStack.              |
++----------------+----------+-----------------------+------------------------+
 |Workflow        |mistral   |python-mistralclient   |Workflow service        |
 |service         |          |                       |for OpenStack cloud.    |
 +----------------+----------+-----------------------+------------------------+
