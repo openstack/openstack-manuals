@@ -37,11 +37,11 @@ Once you verify the location of your certificate authority file:
    .. hlist::
       :columns: 1
 
-      * ``demand`` - The LDAP server always recieves certificate
+      * ``demand`` - The LDAP server always receives certificate
         requests. The session terminates if no certificate
         is provided, or if the certificate provided cannot be verified
         against the existing certificate authorities file.
-      * ``allow`` - The LDAP server always recieves certificate
+      * ``allow`` - The LDAP server always receives certificate
         requests. The session will proceed as normal even if a certificate
         is not provided. If a certificate is provided but it cannot be
         verified against the existing certificate authorities file, the

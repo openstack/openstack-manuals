@@ -299,6 +299,6 @@ locale_dirs = ['locale/']
 # -- Options for PDF output --------------------------------------------------
 
 pdf_documents = [
-    ('index', u'CloudAdminGuide', u'Cloud Adminstrator Guide',
+    ('index', u'CloudAdminGuide', u'Cloud Administrator Guide',
      u'OpenStack contributors')
 ]

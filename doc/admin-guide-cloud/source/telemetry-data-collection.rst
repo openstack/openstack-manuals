@@ -406,7 +406,7 @@ Additionally, ``workload_partitioning`` should be enabled in the
 .. note::
 
    In Liberty, the notification agent creates multiple queues to divide the
-   workload across all active agents. The number of queues can be controled by
+   workload across all active agents. The number of queues can be controlled by
    the ``pipeline_processing_queues`` option in the :file:`ceilometer.conf`
    configuration file. A larger value will result in better distribution of
    tasks but will also require more memory and longer startup time. It is
