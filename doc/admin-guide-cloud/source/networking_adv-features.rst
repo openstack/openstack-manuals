@@ -224,6 +224,12 @@ basic L3 operations:
           $ neutron router-create router1
           $ neutron router-interface-add router1 SUBNET1_UUID
           $ neutron router-interface-add router1 SUBNET2_UUID
+
+       An internal router port can have only one IPv4 subnet and multiple IPv6 subnets
+       that belong to the same network ID. When you call ``router-interface-add`` with an IPv6
+       subnet, this operation adds the interface to an existing internal port with the same
+       network ID. If a port with the same network ID does not exist, a new port is created.
+
    * - Connects a router to an external network, which enables that router to
        act as a NAT gateway for external connectivity.
      - .. code-block:: console
@@ -297,6 +303,9 @@ basic L3 operations:
      - .. code-block:: console
 
           $ neutron router-interface-delete router1 SUBNET_ID
+
+       If this subnet ID is the last subnet on the port, this operation deletes the port itself.
+
    * - Deletes the router.
      - .. code-block:: console
 
