@@ -374,15 +374,15 @@ Install and configure components
 
    .. only:: obs or rdo
 
-      #. Start the Image service services and configure them to start when
-         the system boots:
+      * Start the Image service services and configure them to start when
+        the system boots:
 
-         .. code-block:: console
+        .. code-block:: console
 
-            # systemctl enable openstack-glance-api.service \
-              openstack-glance-registry.service
-            # systemctl start openstack-glance-api.service \
-              openstack-glance-registry.service
+           # systemctl enable openstack-glance-api.service \
+             openstack-glance-registry.service
+           # systemctl start openstack-glance-api.service \
+             openstack-glance-registry.service
 
    .. only:: ubuntu
 

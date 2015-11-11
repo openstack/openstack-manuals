@@ -12,12 +12,12 @@ MongoDB.
    The installation of the NoSQL database server is only necessary when
    installing the Telemetry service as documented in :ref:`install_ceilometer`.
 
-Install and configure the database server
------------------------------------------
+Install and configure components
+--------------------------------
 
 .. only:: obs
 
-   #. Enable the Open Build Service repositories for MongoDB based on
+   1. Enable the Open Build Service repositories for MongoDB based on
       your openSUSE or SLES version:
 
       On openSUSE:
@@ -52,7 +52,7 @@ Install and configure the database server
 
 .. only:: rdo
 
-   #. Install the MongoDB package:
+   1. Install the MongoDB packages:
 
       .. code-block:: console
 
@@ -60,7 +60,7 @@ Install and configure the database server
 
 .. only:: ubuntu
 
-   #. Install the MongoDB package:
+   1. Install the MongoDB packages:
 
       .. code-block:: console
 
@@ -91,17 +91,7 @@ Install and configure the database server
         You can also disable journaling. For more information, see the
         `MongoDB manual <http://docs.mongodb.org/manual/>`__.
 
-      * Start the MongoDB service and configure it to start when
-        the system boots:
-
-        .. code-block:: console
-
-           # systemctl enable mongodb.service
-           # systemctl start mongodb.service
-
 .. only:: rdo
-
-   .. The use of mongod, and not mongodb, in the below screen is intentional.
 
    2. Edit the ``/etc/mongod.conf`` file and complete the following
       actions:
@@ -126,14 +116,6 @@ Install and configure the database server
         You can also disable journaling. For more information, see the
         `MongoDB manual <http://docs.mongodb.org/manual/>`__.
 
-      * Start the MongoDB service and configure it to start when
-        the system boots:
-
-        .. code-block:: console
-
-           # systemctl enable mongod.service
-           # systemctl start mongod.service
-
 .. only:: ubuntu
 
    2. Edit the ``/etc/mongodb.conf`` file and complete the following
@@ -156,14 +138,39 @@ Install and configure the database server
 
            smallfiles = true
 
-        If you change the journaling configuration, stop the MongoDB
-        service, remove the initial journal files, and start the service:
-
-        .. code-block:: console
-
-           # service mongodb stop
-           # rm /var/lib/mongodb/journal/prealloc.*
-           # service mongodb start
-
         You can also disable journaling. For more information, see the
         `MongoDB manual <http://docs.mongodb.org/manual/>`__.
+
+Finalize installation
+---------------------
+
+.. only:: ubuntu
+
+   * If you change the journaling configuration, stop the MongoDB
+     service, remove the initial journal files, and start the service:
+
+     .. code-block:: console
+
+        # service mongodb stop
+        # rm /var/lib/mongodb/journal/prealloc.*
+        # service mongodb start
+
+.. only:: rdo
+
+   * Start the MongoDB service and configure it to start when
+     the system boots:
+
+     .. code-block:: console
+
+        # systemctl enable mongod.service
+        # systemctl start mongod.service
+
+.. only:: obs
+
+   * Start the MongoDB service and configure it to start when
+     the system boots:
+
+     .. code-block:: console
+
+        # systemctl enable mongodb.service
+        # systemctl start mongodb.service

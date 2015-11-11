@@ -12,36 +12,32 @@ service because most distributions support it. If you prefer to
 implement a different message queue service, consult the documentation
 associated with it.
 
-Install the message queue service
----------------------------------
+Install and configure components
+--------------------------------
 
-* Install the package:
+1. Install the package:
 
-  .. only:: ubuntu or debian
+   .. only:: ubuntu or debian
 
-     .. code-block:: console
+      .. code-block:: console
 
-        # apt-get install rabbitmq-server
+         # apt-get install rabbitmq-server
 
-  .. only:: rdo
+   .. only:: rdo
 
-     .. code-block:: console
+      .. code-block:: console
 
-        # yum install rabbitmq-server
+         # yum install rabbitmq-server
 
-  .. only:: obs
+   .. only:: obs
 
-     .. code-block:: console
+      .. code-block:: console
 
-        # zypper install rabbitmq-server
-
-
-Configure the message queue service
------------------------------------
+         # zypper install rabbitmq-server
 
 .. only:: rdo or obs
 
-   #. Start the message queue service and configure it to start when the
+   2. Start the message queue service and configure it to start when the
       system boots:
 
       .. code-block:: console
@@ -71,7 +67,7 @@ Configure the message queue service
 
          * Start the message queue service again.
 
-   #. Add the ``openstack`` user:
+   3. Add the ``openstack`` user:
 
       .. code-block:: console
 
@@ -80,7 +76,7 @@ Configure the message queue service
 
       Replace ``RABBIT_PASS`` with a suitable password.
 
-   #. Permit configuration, write, and read access for the
+   4. Permit configuration, write, and read access for the
       ``openstack`` user:
 
       .. code-block:: console
@@ -90,7 +86,7 @@ Configure the message queue service
 
 .. only:: ubuntu or debian
 
-   #. Add the ``openstack`` user:
+   2. Add the ``openstack`` user:
 
       .. code-block:: console
 
@@ -99,7 +95,7 @@ Configure the message queue service
 
       Replace ``RABBIT_PASS`` with a suitable password.
 
-   #. Permit configuration, write, and read access for the
+   3. Permit configuration, write, and read access for the
       ``openstack`` user:
 
       .. code-block:: console

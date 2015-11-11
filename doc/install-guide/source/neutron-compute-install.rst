@@ -19,7 +19,7 @@ Install the components
 
    .. code-block:: console
 
-      # yum install openstack-neutron openstack-neutron-linuxbridge
+      # yum install openstack-neutron openstack-neutron-linuxbridge ebtables ipset
 
 .. only:: obs
 
@@ -60,76 +60,76 @@ authentication mechanism, message queue, and plug-in.
 
 .. include:: shared/note_configuration_vary_by_distribution.rst
 
-#. Edit the ``/etc/neutron/neutron.conf`` file and complete the following
-   actions:
+* Edit the ``/etc/neutron/neutron.conf`` file and complete the following
+  actions:
 
-   * In the ``[database]`` section, comment out any ``connection`` options
-     because compute nodes do not directly access the database.
+  * In the ``[database]`` section, comment out any ``connection`` options
+    because compute nodes do not directly access the database.
 
-   * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections, configure
-     RabbitMQ message queue access:
+  * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections, configure
+    RabbitMQ message queue access:
 
-     .. code-block:: ini
+    .. code-block:: ini
 
-        [DEFAULT]
-        ...
-        rpc_backend = rabbit
+       [DEFAULT]
+       ...
+       rpc_backend = rabbit
 
-        [oslo_messaging_rabbit]
-        ...
-        rabbit_host = controller
-        rabbit_userid = openstack
-        rabbit_password = RABBIT_PASS
+       [oslo_messaging_rabbit]
+       ...
+       rabbit_host = controller
+       rabbit_userid = openstack
+       rabbit_password = RABBIT_PASS
 
-     Replace ``RABBIT_PASS`` with the password you chose for the ``openstack``
-     account in RabbitMQ.
+    Replace ``RABBIT_PASS`` with the password you chose for the ``openstack``
+    account in RabbitMQ.
 
-   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections, configure
-     Identity service access:
+  * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections, configure
+    Identity service access:
 
-     .. code-block:: ini
+    .. code-block:: ini
 
-        [DEFAULT]
-        ...
-        auth_strategy = keystone
+       [DEFAULT]
+       ...
+       auth_strategy = keystone
 
-        [keystone_authtoken]
-        ...
-        auth_uri = http://controller:5000
-        auth_url = http://controller:35357
-        auth_plugin = password
-        project_domain_id = default
-        user_domain_id = default
-        project_name = service
-        username = neutron
-        password = NEUTRON_PASS
+       [keystone_authtoken]
+       ...
+       auth_uri = http://controller:5000
+       auth_url = http://controller:35357
+       auth_plugin = password
+       project_domain_id = default
+       user_domain_id = default
+       project_name = service
+       username = neutron
+       password = NEUTRON_PASS
 
-     Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
-     user in the Identity service.
+    Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
+    user in the Identity service.
 
-     .. note::
+    .. note::
 
-        Comment out or remove any other options in the
-        ``[keystone_authtoken]`` section.
+       Comment out or remove any other options in the
+       ``[keystone_authtoken]`` section.
 
-   .. only:: rdo
+  .. only:: rdo
 
-      * In the ``[oslo_concurrency]`` section, configure the lock path:
+     * In the ``[oslo_concurrency]`` section, configure the lock path:
 
-        .. code-block:: ini
+       .. code-block:: ini
 
-           [oslo_concurrency]
-           ...
-           lock_path = /var/lib/neutron/tmp
+          [oslo_concurrency]
+          ...
+          lock_path = /var/lib/neutron/tmp
 
-   * (Optional) To assist with troubleshooting, enable verbose logging in the
-     ``[DEFAULT]`` section:
+  * (Optional) To assist with troubleshooting, enable verbose logging in the
+    ``[DEFAULT]`` section:
 
-     .. code-block:: ini
+    .. code-block:: ini
 
-        [DEFAULT]
-        ...
-        verbose = True
+       [DEFAULT]
+       ...
+       verbose = True
 
 Configure networking options
 ----------------------------
@@ -154,26 +154,26 @@ configure services specific to it.
 Configure Compute to use Networking
 -----------------------------------
 
-#. Edit the ``/etc/nova/nova.conf`` file and complete the following actions:
+* Edit the ``/etc/nova/nova.conf`` file and complete the following actions:
 
-   * In the ``[neutron]`` section, configure access parameters:
+  * In the ``[neutron]`` section, configure access parameters:
 
-     .. code-block:: ini
+    .. code-block:: ini
 
-        [neutron]
-        ...
-        url = http://controller:9696
-        auth_url = http://controller:35357
-        auth_plugin = password
-        project_domain_id = default
-        user_domain_id = default
-        region_name = RegionOne
-        project_name = service
-        username = neutron
-        password = NEUTRON_PASS
+       [neutron]
+       ...
+       url = http://controller:9696
+       auth_url = http://controller:35357
+       auth_plugin = password
+       project_domain_id = default
+       user_domain_id = default
+       region_name = RegionOne
+       project_name = service
+       username = neutron
+       password = NEUTRON_PASS
 
-     Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
-     user in the Identity service.
+    Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
+    user in the Identity service.
 
 Finalize installation
 ---------------------

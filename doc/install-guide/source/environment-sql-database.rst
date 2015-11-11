@@ -7,16 +7,10 @@ guide use MariaDB or MySQL depending on the distribution. OpenStack
 services also support other SQL databases including
 `PostgreSQL <http://www.postgresql.org/>`__.
 
-Install and configure the database server
------------------------------------------
+Install and configure components
+--------------------------------
 
 #. Install the packages:
-
-   .. only:: rdo or ubuntu or obs
-
-      .. note::
-
-         The Python MySQL library is compatible with MariaDB.
 
    .. only:: ubuntu
 
@@ -34,7 +28,7 @@ Install and configure the database server
 
       .. code-block:: console
 
-         # yum install mariadb mariadb-server python2-PyMySQL
+         # yum install mariadb mariadb-server MySQL-python
 
    .. only:: obs
 
@@ -116,9 +110,8 @@ Install and configure the database server
               collation-server = utf8_general_ci
               character-set-server = utf8
 
-
-To finalize installation
-------------------------
+Finalize installation
+---------------------
 
 .. only:: ubuntu or debian
 

@@ -121,8 +121,7 @@ Finalize installation
 
 .. only:: obs
 
-   #. Start the Telemetry agent and configure it to start when the
-      system boots:
+   #. Start the agent and configure it to start when the system boots:
 
       .. code-block:: console
 
@@ -131,8 +130,7 @@ Finalize installation
 
 .. only:: rdo
 
-   #. Start the Telemetry agent and configure it to start when the
-      system boots:
+   #. Start the agent and configure it to start when the system boots:
 
       .. code-block:: console
 

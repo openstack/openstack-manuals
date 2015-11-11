@@ -247,7 +247,7 @@ on local devices.
 Distribute ring configuration files
 -----------------------------------
 
-Copy the ``account.ring.gz``, ``container.ring.gz``, and
-``object.ring.gz`` files to the ``/etc/swift`` directory
-on each storage node and any additional nodes running the
-proxy service.
+* Copy the ``account.ring.gz``, ``container.ring.gz``, and
+  ``object.ring.gz`` files to the ``/etc/swift`` directory
+  on each storage node and any additional nodes running the
+  proxy service.

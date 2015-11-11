@@ -314,23 +314,23 @@ Finalize installation
 
 .. only:: obs
 
-   #. Start the Block Storage volume service including its dependencies
-      and configure them to start when the system boots:
+   * Start the Block Storage volume service including its dependencies
+     and configure them to start when the system boots:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # systemctl enable openstack-cinder-volume.service tgtd.service
-         # systemctl start openstack-cinder-volume.service tgtd.service
+        # systemctl enable openstack-cinder-volume.service tgtd.service
+        # systemctl start openstack-cinder-volume.service tgtd.service
 
 .. only:: rdo
 
-   #. Start the Block Storage volume service including its dependencies
-      and configure them to start when the system boots:
+   * Start the Block Storage volume service including its dependencies
+     and configure them to start when the system boots:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # systemctl enable openstack-cinder-volume.service target.service
-         # systemctl start openstack-cinder-volume.service target.service
+        # systemctl enable openstack-cinder-volume.service target.service
+        # systemctl start openstack-cinder-volume.service target.service
 
 .. only:: ubuntu
 

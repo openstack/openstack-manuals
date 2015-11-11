@@ -489,19 +489,19 @@ Finalize installation
 
 .. only:: obs or rdo
 
-   #. Start the Orchestration services and configure them to start
-      when the system boots:
+   * Start the Orchestration services and configure them to start
+     when the system boots:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # systemctl enable openstack-heat-api.service \
-           openstack-heat-api-cfn.service openstack-heat-engine.service
-         # systemctl start openstack-heat-api.service \
-           openstack-heat-api-cfn.service openstack-heat-engine.service
+        # systemctl enable openstack-heat-api.service \
+          openstack-heat-api-cfn.service openstack-heat-engine.service
+        # systemctl start openstack-heat-api.service \
+          openstack-heat-api-cfn.service openstack-heat-engine.service
 
 .. only:: ubuntu or debian
 
-   #. Restart the Orchestration services:
+   1. Restart the Orchestration services:
 
       .. code-block:: console
 
