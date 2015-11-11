@@ -165,21 +165,25 @@
       <step>
         <para>Create the subnet:</para>
         <screen><prompt>$</prompt> <userinput>neutron subnet-create demo-net <replaceable>TENANT_NETWORK_CIDR</replaceable> \
-  --name demo-subnet --gateway <replaceable>TENANT_NETWORK_GATEWAY</replaceable></userinput></screen>
+  --name demo-subnet --dns-nameserver <replaceable>DNS_RESOLVER</replaceable> \
+  --gateway <replaceable>TENANT_NETWORK_GATEWAY</replaceable></userinput></screen>
         <para>Replace <replaceable>TENANT_NETWORK_CIDR</replaceable> with the
-          subnet you want to associate with the tenant network and
-          <replaceable>TENANT_NETWORK_GATEWAY</replaceable> with the gateway
-          you want to associate with it, typically the ".1" IP address.</para>
-        <para>Example using <literal>192.168.1.0/24</literal>:</para>
+          subnet you want to associate with the tenant network,
+          <replaceable>DNS_RESOLVER</replaceable> with the IP address of a
+          DNS resolver, and <replaceable>TENANT_NETWORK_GATEWAY</replaceable>
+          with the gateway you want to associate with the tenant network,
+          typically the ".1" IP address.</para>
+        <para>Example using <literal>192.168.1.0/24</literal> with DNS resolver
+          8.8.4.4 and gateway 192.168.1.1:</para>
         <screen><prompt>$</prompt> <userinput>neutron subnet-create demo-net 192.168.1.0/24 \
-  --name demo-subnet --gateway 192.168.1.1</userinput>
+  --name demo-subnet --dns-nameserver 8.8.4.4 --gateway 192.168.1.1</userinput>
 <computeroutput>Created a new subnet:
 +-------------------+------------------------------------------------------+
 | Field             | Value                                                |
 +-------------------+------------------------------------------------------+
 | allocation_pools  | {"start": "192.168.1.2", "end": "192.168.1.254"}     |
 | cidr              | 192.168.1.0/24                                       |
-| dns_nameservers   |                                                      |
+| dns_nameservers   | 8.8.4.4                                              |
 | enable_dhcp       | True                                                 |
 | gateway_ip        | 192.168.1.1                                          |
 | host_routes       |                                                      |
