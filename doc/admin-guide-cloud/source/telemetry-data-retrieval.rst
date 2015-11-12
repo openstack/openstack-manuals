@@ -9,7 +9,7 @@ one or more database back ends, which are hidden by the Telemetry RESTful API.
 
 .. note::
 
-    It is highly recommended not to access directly the database and
+    It is highly recommended not to access the database directly and
     read or modify any data in it. The API layer hides all the changes
     in the actual database schema and provides a standard interface to
     expose the samples, alarms and so forth.
@@ -233,8 +233,8 @@ resource, in an ascending order based on the name of the meter.
 
 Samples are collected for each meter that is present in the list of
 meters, except in case of instances that are not running or deleted from
-the OpenStack Compute database. If an instance is no more existing and
-there is ``time_to_live`` value is set in the :file:`ceilometer.conf`
+the OpenStack Compute database. If an instance no longer exists and
+there is a ``time_to_live`` value set in the :file:`ceilometer.conf`
 configuration file, then a group of samples are deleted in each
 expiration cycle. When the last sample is deleted for a meter, the
 database can be cleaned up by running ceilometer-expirer and the meter
@@ -349,7 +349,7 @@ and ``disk.read.bytes`` meters, the following command should be invoked::
     | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.4795e+11 | ns   | 2014-08-30T13:20:34 |
     +--------------------------------------+-----------------+------------+------------+------+---------------------+
 
-Ceilometer also captures data as Events, which represents the state of a
+Ceilometer also captures data as events, which represents the state of a
 resource. Refer to :doc:`/telemetry-events` for more information regarding
 Events.
 
@@ -388,8 +388,8 @@ following command can be executed:
 .. note::
 
    In Liberty, the data returned corresponds to the role and user. Non-admin
-   users will only returned events that are scoped to them. Admin users will
-   be returned all events related to the project they administer as well as
+   users will only return events that are scoped to them. Admin users will
+   return all events related to the project they administer as well as
    all unscoped events.
 
 Similar to querying meters, additional filter parameters can be given to
@@ -431,7 +431,7 @@ retrieve specific events:
    As of the Liberty release, the number of items returned will be
    restricted to the value defined by ``default_api_return_limit`` in the
    :file:`ceilometer.conf` configuration file. Alternatively, the value can
-   be set per query by passing ``limit`` option in request.
+   be set per query by passing the ``limit`` option in the request.
 
 
 Telemetry python bindings
@@ -501,7 +501,7 @@ rpc
     It can be specified in the form of
     ``rpc://?option1=value1&option2=value2``. It emits metering data
     over lossy AMQP. This method is synchronous and may experience
-    performance issues. This publisher is deprecated in Liberty in favour of
+    performance issues. This publisher is deprecated in Liberty in favor of
     the notifier publisher.
 
 udp
