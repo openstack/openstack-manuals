@@ -173,7 +173,7 @@ using **manila security-service-update** command with optional arguments
 such as ``--dns-ip``, ``--server``, ``--domain``, ``--user``, ``--password``,
 ``--name``, or ``--description``.
 
-To remove a security service, that is not assosiated with any share networks,
+To remove a security service, that is not associated with any share networks,
 run:
 
 .. code:: console
