@@ -12,7 +12,7 @@ The Telemetry service is built from the following agents and services:
 
 ceilometer-api
     Presents aggregated metering data to consumers (such as billing
-    engines, analytics tools and so forth).
+    engines and analytics tools).
 
 ceilometer-polling
     Polls for different kinds of meter data by using the polling
