@@ -109,7 +109,7 @@ Each volume created with the replication capability set to `True`
 generates a copy of the volume on a storage back end.
 
 One use case for replication involves an OpenStack cloud environment
-installed accross two data centers located nearby each other. The
+installed across two data centers located nearby each other. The
 distance between the two data centers in this use case is the length of
 a city.
 
