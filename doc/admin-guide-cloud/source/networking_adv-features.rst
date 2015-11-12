@@ -275,6 +275,15 @@ basic L3 operations:
 
           $ neutron floatingip-create EXT_NET_ID
           $ neutron floatingip-associate FLOATING_IP_ID INTERNAL_VM_PORT_ID
+
+   * - Creates a floating IP on a specific subnet in the external network.
+     - .. code-block:: console
+
+         $ neutron floatingip-create EXT_NET_ID SUBNET_ID
+
+       If there are multiple subnets in the external network, you can choose a specific
+       subnet based on quality and costs.
+
    * - Creates a floating IP address and associates it with a port, in a single step.
      - .. code-block:: console
 
