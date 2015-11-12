@@ -64,13 +64,13 @@ Bare Metal deployment
 Use Bare Metal
 ~~~~~~~~~~~~~~
 
-#. Install Bare Metal service.
+#. Install the Bare Metal service.
 
-#. Setup Bare Metal driver in the compute node's :file:`nova.conf`.
+#. Setup the Bare Metal driver in the compute node's :file:`nova.conf`.
 
 #. Setup TFTP folder and prepare PXE boot loader file.
 
-#. Prepare the baremetal flavor.
+#. Prepare the bare metal flavor.
 
 #. Register the nodes with correct drivers.
 
@@ -78,7 +78,7 @@ Use Bare Metal
 
 #. Register the ports information.
 
-#. Use nova boot to kick off the baremetal provision.
+#. Use nova boot to kick off the bare metal provision.
 
 #. Check nodes' provision state and power state.
 
