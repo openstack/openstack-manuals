@@ -149,7 +149,7 @@ Install and configure components
       .. code-block:: console
 
          # yum install openstack-swift-proxy python-swiftclient \
-           python-keystone-auth-token python-keystonemiddleware \
+           python-keystoneclient python-keystonemiddleware \
            memcached
 
    .. only:: obs
