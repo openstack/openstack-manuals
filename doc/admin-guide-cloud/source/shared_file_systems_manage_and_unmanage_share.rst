@@ -25,7 +25,7 @@ and created with share networks), so share service should have option
 a share that has no dependent snapshots.
 
 To unmanage managed share, run :command:`manila unmanage <share>` command.
-Then try to print the information about it. The expected behaviour is that
+Then try to print the information about it. The expected behavior is that
 Shared File Systems service won't find the share:
 
 .. code:: console
