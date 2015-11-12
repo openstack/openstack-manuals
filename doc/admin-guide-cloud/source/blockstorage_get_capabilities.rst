@@ -152,7 +152,7 @@ private volume type can be controlled by adding or removing a project from it.
 Private volume types without projects are only visible by users with the
 admin role/context.
 
-Create a public volume type by settting 'is_public' field to 'True'::
+Create a public volume type by setting 'is_public' field to 'True'::
 
  $ cinder type-create --description test1 --is-public True vol_Type1
  +--------------------------------------+-----------+-------------+-----------+
