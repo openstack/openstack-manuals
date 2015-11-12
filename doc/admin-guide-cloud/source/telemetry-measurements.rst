@@ -120,7 +120,7 @@ The following meters are collected for OpenStack Compute:
 |           | lative|      | ID       |          | Hyper-V |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
 | cpu_util  | Gauge | %    | instance | Pollster | Libvirt,| Average CPU      |
-|           |       |      | ID       |          | Hyper-V,| utilisation      |
+|           |       |      | ID       |          | Hyper-V,| utilization      |
 |           |       |      |          |          | vSphere |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
 | vcpus     | Gauge | vcpu | instance | Notific\ | Libvirt,| Number of virtual|
@@ -214,7 +214,7 @@ The following meters are collected for OpenStack Compute:
 |           |       |      |          |          |         | allocated memory |
 +-----------+-------+------+----------+----------+---------+------------------+
 | cpu_util  | Gauge | %    | instance | Pollster | Libvirt,| Average CPU      |
-|           |       |      | ID       |          | Hyper-V,| utilisation      |
+|           |       |      | ID       |          | Hyper-V,| utilization      |
 |           |       |      |          |          | vSphere,|                  |
 |           |       |      |          |          | XenAPI  |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
@@ -459,7 +459,7 @@ Compute:
 | iowait.percent      |       |      |          |             | percentage    |
 +---------------------+-------+------+----------+-------------+---------------+
 | compute.node.cpu.\  | Gauge | %    | host ID  | Notification| CPU           |
-| percent             |       |      |          |             | utilisation   |
+| percent             |       |      |          |             | utilization   |
 +---------------------+-------+------+----------+-------------+---------------+
 
 .. _telemetry-bare-metal-service:
@@ -1182,7 +1182,7 @@ The following meters are collected for VPNaaS:
 | ecpolicy      |       |         |            | llster    |                  |
 +---------------+-------+---------+------------+-----------+------------------+
 | network.serv\ | Delta | ipsecp\ | ipsecpolicy| Notifica\ | IPSec policy was |
-| ices.vpn.ips\ |       | olicy   | ID         | tion      | reated           |
+| ices.vpn.ips\ |       | olicy   | ID         | tion      | created          |
 | ecpolicy.cre\ |       |         |            |           |                  |
 | ate           |       |         |            |           |                  |
 +---------------+-------+---------+------------+-----------+------------------+
