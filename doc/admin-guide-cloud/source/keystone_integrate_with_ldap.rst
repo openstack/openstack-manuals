@@ -37,7 +37,7 @@ providing user authentication through the LDAP directory.
 
    # setsebool -P authlogin_nsswitch_use_ldap on
 
-Identity configuration is split into two separate back ends; identity
+The Identity configuration is split into two separate back ends; identity
 (back end for users and groups), and assignments (back end for domains,
 projects, roles, role assignments). To configure Identity, set options
 in the :file:`/etc/keystone/keystone.conf` file. See
@@ -123,7 +123,7 @@ A value of zero means that debugging is not enabled.
 
 **Connection pooling**
 
-Use ``use_pool`` to enable LDAP connection pooling. Configure
+Use ``use_pool`` to enable LDAP connection pooling. Configure the
 connection pool size, maximum retry, reconnect trials, timeout (-1
 indicates indefinite wait) and lifetime in seconds.
 
@@ -140,7 +140,7 @@ indicates indefinite wait) and lifetime in seconds.
 **Connection pooling for end user authentication**
 
 Use ``use_auth_pool`` to enable LDAP connection pooling for end user
-authentication. Configure connection pool size and lifetime in
+authentication. Configure the connection pool size and lifetime in
 seconds.
 
 .. code-block:: ini
@@ -150,13 +150,13 @@ seconds.
    auth_pool_size = 100
    auth_pool_connection_lifetime = 60
 
-When you have finished configuration, restart the OpenStack Identity
+When you have finished the configuration, restart the OpenStack Identity
 service::
 
    # service keystone restart
 
 .. warning::
 
-   During service restart, authentication and authorization are
+   During the service restart, authentication and authorization are
    unavailable.
 
