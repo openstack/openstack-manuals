@@ -1,0 +1,55 @@
+<section xml:id="Quobyte-driver"
+    xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>Quobyte driver</title>
+
+    <para>The <link xlink:href="http://www.quobyte.com/">Quobyte</link> volume
+    driver enables storing Block Storage service volumes on a Quobyte storage
+    back end. Block Storage service back ends are mapped to Quobyte volumes
+    and individual Block Storage service volumes are stored as files on a
+    Quobyte volume. Selection of the appropriate Quobyte volume is done by the
+    aforementioned back end configuration that specifies the Quobyte volume
+    explicitely.</para>
+
+    <note><para>Note the dual use of the term 'volume' in the context of Block
+    Storage service volumes and in the context of Quobyte volumes.
+    </para></note>
+
+    <para>For more information see
+    <link xlink:href="http://support.quobyte.com/">the Quobyte support webpage
+    </link>.</para>
+
+    <para>The Quobyte volume driver supports the following volume operations:
+    </para>
+    <itemizedlist>
+        <listitem><para>Create, delete, attach, and detach volumes</para>
+        </listitem>
+        <listitem><para>Secure NAS operation (Starting with Mitaka release
+        secure NAS operation is optional but still default)</para></listitem>
+        <listitem><para>Create and delete a snapshot</para></listitem>
+        <listitem><para>Create a volume from a snapshot</para></listitem>
+        <listitem><para>Extend a volume</para></listitem>
+        <listitem><para>Clone a volume</para></listitem>
+        <listitem><para>Copy a volume to image</para></listitem>
+        <listitem><para>Generic volume migration (no back end optimization)
+        </para></listitem>
+    </itemizedlist>
+
+
+    <note><para>When running VM instances off Quobyte volumes, ensure that the
+    <link xlink:href="https://wiki.openstack.org/wiki/Nova/Quobyte">
+    Quobyte Compute service driver</link> has been configured in your
+    OpenStack cloud.</para></note>
+
+    <para>To activate the Quobyte volume driver, configure the corresponding
+    volume_driver parameter:
+    <programlisting>volume_driver = cinder.volume.drivers.quobyte.QuobyteDriver
+    </programlisting></para>
+
+    <para>The following table contains the configuration options
+    supported by the Quobyte driver.</para>
+    <xi:include href="../../../common/tables/cinder-quobyte.xml" />
+
+</section>
