@@ -50,7 +50,7 @@ you edited :file:`etc/manila/api-paste.ini` file.
    limits = (POST, "*/shares", ^/shares, 120, MINUTE);(PUT, "*/shares", .*, 120, MINUTE);(DELETE, "*", .*, 120, MINUTE)
 
 Also, add ``ratelimit`` to ``noauth``, ``keystone``, ``keystone_nolimit``
-parameters in ``[composite:openstack_share_api]`` group.
+parameters in the ``[composite:openstack_share_api]`` group.
 
 .. code-block:: ini
 
@@ -77,7 +77,7 @@ Quotas
 
 Quota sets provide quotas management support.
 
-To list the quotas for a tenant or user, use **manila quota-show** command.
+To list the quotas for a tenant or user, use the **manila quota-show** command.
 If you specify the optional ``--user`` parameter, you get the quotas for this
 user in the specified tenant. If you omit this parameter, you get the quotas
 for the specified project.
@@ -95,9 +95,9 @@ for the specified project.
    | share_networks     | 10    |
    +--------------------+-------+
 
-There are default quotas for a project that are set from
-:file:`manila.conf` file. To list default quotas for a project, use
-**manila quota-defaults** command:
+There are default quotas for a project that are set from the
+:file:`manila.conf` file. To list the default quotas for a project, use
+the **manila quota-defaults** command:
 
 .. code:: console
 
@@ -112,10 +112,10 @@ There are default quotas for a project that are set from
    | share_networks     | 10    |
    +--------------------+-------+
 
-Administrator can update the quotas for a specified tenant or for a specified
-user by providing both ``--tenant`` and ``--user`` optional arguments.
-It is possible to update ``snapshots``, ``gigabytes``, ``snapshot-gigabytes``,
-and ``share-networks`` quotas.
+The administrator can update the quotas for a specified tenant or for a
+specified user by providing both the ``--tenant`` and ``--user`` optional
+arguments. It is possible to update the ``snapshots``, ``gigabytes``,
+``snapshot-gigabytes``, and ``share-networks`` quotas.
 
 .. code:: console
 
