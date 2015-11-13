@@ -14,6 +14,29 @@ Install the components
         neutron-plugin-linuxbridge-agent neutron-dhcp-agent \
         neutron-metadata-agent python-neutronclient
 
+.. only:: debian
+
+   .. code-block:: console
+
+      # apt-get install neutron-server neutron-linuxbridge-agent \
+        neutron-dhcp-agent neutron-metadata-agent python-neutronclient
+
+   Respond to prompts for `database
+   management <#debconf-dbconfig-common>`__, `Identity service
+   credentials <#debconf-keystone_authtoken>`__, `service endpoint
+   registration <#debconf-api-endpoints>`__, and `message queue
+   credentials <#debconf-rabbitmq>`__.
+
+   Select the ML2 plug-in:
+
+   .. image:: figures/debconf-screenshots/neutron_1_plugin_selection.png
+
+   .. note::
+
+      Selecting the ML2 plug-in also populates the ``core_plugin`` option
+      in the ``/etc/neutron/neutron.conf`` file with the appropriate values
+      (in this case, it is set to the value ``ml2``).
+
 .. only:: rdo
 
    .. code-block:: console
@@ -32,31 +55,44 @@ Install the components
 
 .. only:: debian
 
-   Install and configure the networking components
-   -----------------------------------------------
+   Configure the server component
+   ------------------------------
 
-   #. .. code-block:: console
+   #. Edit the ``/etc/neutron/neutron.conf`` file and complete the following
+      actions:
 
-         # apt-get install neutron-server neutron-plugin-linuxbridge-agent \
-           neutron-dhcp-agent neutron-metadata-agent
+      * In the ``[DEFAULT]`` section, disable additional plug-ins:
 
-      For networking option 2, also install the ``neutron-l3-agent`` package.
+        .. code-block:: ini
 
-   #. Respond to prompts for `database
-      management <#debconf-dbconfig-common>`__, `Identity service
-      credentials <#debconf-keystone_authtoken>`__, `service endpoint
-      registration <#debconf-api-endpoints>`__, and `message queue
-      credentials <#debconf-rabbitmq>`__.
+           [DEFAULT]
+           ...
+           service_plugins =
 
-   #. Select the ML2 plug-in:
+      * In the ``[DEFAULT]`` and ``[nova]`` sections, configure Networking to
+        notify Compute of network topology changes:
 
-      .. image:: figures/debconf-screenshots/neutron_1_plugin_selection.png
+        .. code-block:: ini
 
-      .. note::
+           [DEFAULT]
+           ...
+           notify_nova_on_port_status_changes = True
+           notify_nova_on_port_data_changes = True
+           nova_url = http://controller:8774/v2
 
-         Selecting the ML2 plug-in also populates the ``service_plugins`` and
-         ``allow_overlapping_ips`` options in the
-         ``/etc/neutron/neutron.conf`` file with the appropriate values.
+           [nova]
+           ...
+           auth_url = http://controller:35357
+           auth_plugin = password
+           project_domain_id = default
+           user_domain_id = default
+           region_name = RegionOne
+           project_name = service
+           username = nova
+           password = NOVA_PASS
+
+        Replace ``NOVA_PASS`` with the password you chose for the ``nova``
+        user in the Identity service.
 
 .. only:: ubuntu or rdo or obs
 
