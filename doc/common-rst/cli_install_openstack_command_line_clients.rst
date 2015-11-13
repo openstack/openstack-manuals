@@ -153,6 +153,8 @@ for each client. The following values are valid:
 
 -  ``glance`` - Image service API
 
+-  ``gnocchi`` - Telemetry API v3
+
 -  ``heat`` - Orchestration API
 
 -  ``magnum`` - Containers service API
