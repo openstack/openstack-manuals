@@ -3,7 +3,9 @@
   xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   version="5.0"
-  xml:id="ceilometer-swift">
+  xml:id="ceilometer-swift" os="ubuntu;debian;sles;opensuse">
+<!-- Does not work in RHEL/CentOS/Fedora:
+     https://bugzilla.redhat.com/show_bug.cgi?id=1214928 -->
   <title>Configure the Object Storage service</title>
   <para>To retrieve storage-oriented events and samples, configure the
     Object Storage service to send notifications to the message bus.</para>
@@ -85,15 +87,9 @@ log_level = WARN</programlisting>
         Telemetry configuration files by the Object Storage service:</para>
       <screen><prompt>#</prompt> <userinput>usermod -a -G ceilometer swift</userinput></screen>
     </step>
-    <step os="fedora;centos;rhel">
-      <!-- Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1214928. -->
-      <para>Install the <package>ceilometermiddleware</package> package:</para>
-      <screen><prompt>#</prompt> <userinput>pip install ceilometermiddleware</userinput></screen>
-    </step>
     <step>
       <para>Restart the Object Storage proxy service:</para>
       <screen os="ubuntu;debian"><prompt>#</prompt> <userinput>service swift-proxy restart</userinput></screen>
-      <screen os="rhel;centos;fedora;opensuse;sles"><prompt>#</prompt> <userinput>systemctl restart openstack-swift-proxy.service</userinput></screen>
     </step>
   </procedure>
 </section>
