@@ -5,7 +5,7 @@ Failed to connect volume in FC SAN
 Problem
 ~~~~~~~
 
-Compute node failed to connect to a volume in a Fibre Channel (FC) SAN
+The compute node failed to connect to a volume in a Fibre Channel (FC) SAN
 configuration. The WWN may not be zoned correctly in your FC SAN that
 links the compute host to the storage array::
 
