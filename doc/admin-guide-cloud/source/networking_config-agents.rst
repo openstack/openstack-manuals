@@ -319,12 +319,12 @@ The Neutron Metering agent resides beside neutron-l3-agent.
 Configure Load-Balancer-as-a-Service (LBaaS)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configure Load-Balancer-as-a-Service (LBaas) with the Open vSwitch or
+Configure Load-Balancer-as-a-Service (LBaaS) with the Open vSwitch or
 Linux Bridge plug-in. The Open vSwitch LBaaS driver is required when
 enabling LBaaS for OVS-based plug-ins, including BigSwitch, Floodlight,
 NEC, and NSX.
 
-**To configure LBaas with Open vSwitch or Linux Bridge plug-in**
+**To configure LBaaS with Open vSwitch or Linux Bridge plug-in**
 
 #. Install the agent:
 
