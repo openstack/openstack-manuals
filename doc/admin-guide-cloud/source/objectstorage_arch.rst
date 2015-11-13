@@ -77,7 +77,7 @@ hands in the datacenter and enterprise-grade drives if you don't.
 Factors to consider
 -------------------
 You should keep in mind the desired I/O performance for single-threaded
-requests . This system does not use RAID, so a single disk handles each
+requests. This system does not use RAID, so a single disk handles each
 request for an object. Disk performance impacts single-threaded response
 rates.
 
