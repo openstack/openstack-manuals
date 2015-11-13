@@ -11,8 +11,8 @@ Edit the ``/etc/glance/glance-api.conf`` and
 ``/etc/glance/glance-registry.conf`` files and
 complete the following actions:
 
-#. In the ``[DEFAULT]`` section, configure notifications
-   and RabbitMQ message broker access:
+#. In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
+   configure notifications and RabbitMQ message broker access:
 
    .. code-block:: ini
 
@@ -20,6 +20,9 @@ complete the following actions:
       ...
       notification_driver = messagingv2
       rpc_backend = rabbit
+
+      [oslo_messaging_rabbit]
+      ...
       rabbit_host = controller
       rabbit_userid = openstack
       rabbit_password = RABBIT_PASS
