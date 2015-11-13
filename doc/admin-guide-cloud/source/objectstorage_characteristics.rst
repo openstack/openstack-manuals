@@ -20,7 +20,7 @@ The key characteristics of Object Storage are that:
    performance, which allows a more cost-effective linear storage
    expansion than fork-lift upgrades.
 
--  Data doesn't have to be migrate to an entirely new storage system.
+-  Data does not have to be migrated to an entirely new storage system.
 
 -  New nodes can be added to the cluster without downtime.
 
