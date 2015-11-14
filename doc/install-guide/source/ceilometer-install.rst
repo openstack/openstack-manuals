@@ -284,7 +284,7 @@ Install and configure components
            dispatcher = database
 
    * (Optional) To assist with troubleshooting, enable verbose
-        logging in the ``[DEFAULT]`` section:
+     logging in the ``[DEFAULT]`` section:
 
         .. code-block:: ini
 
