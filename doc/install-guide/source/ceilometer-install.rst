@@ -286,11 +286,11 @@ Install and configure components
    * (Optional) To assist with troubleshooting, enable verbose
      logging in the ``[DEFAULT]`` section:
 
-        .. code-block:: ini
+     .. code-block:: ini
 
-           [DEFAULT]
-           ...
-           verbose = True
+        [DEFAULT]
+        ...
+        verbose = True
 
 Finalize installation
 ---------------------
