@@ -16,6 +16,11 @@ Thus this file covers the content of the following repositories:
 * training-labs
 
 Next release: Mitaka
-====================
+~~~~~~~~~~~~~~~~~~~~
 
 * Tracking of release notes in RELEASENOTES.rst file.
+
+HA Guide
+--------
+
+* Shared File Systems chapter added.
