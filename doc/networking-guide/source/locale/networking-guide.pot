@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-09 06:13+0000\n"
+"POT-Creation-Date: 2015-11-14 06:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -939,33 +939,39 @@ msgid "Configuring OpenStack Networking for prefix delegation"
 msgstr ""
 
 #: ../adv_config_ipv6.rst:467
-msgid "To enable prefix delegation, edit the :file:`etc/neutron.conf` file::"
+msgid ""
+"To enable prefix delegation, edit the :file:`etc/neutron.conf` file. If you "
+"are running OpenStack Liberty, make the following change::"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:473
+#: ../adv_config_ipv6.rst:472
+msgid "Otherwise if you are running OpenStack Mitaka, make this change::"
+msgstr ""
+
+#: ../adv_config_ipv6.rst:478
 msgid ""
 "If you are not using the default dibbler-based driver for prefix delegation, "
 "then you also need to set the driver in :file:`etc/neutron.conf`::"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:479
+#: ../adv_config_ipv6.rst:484
 msgid ""
 "Drivers other than the default one may require extra configuration, please "
 "refer to :ref:`extra-driver-conf`"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:482
+#: ../adv_config_ipv6.rst:487
 msgid ""
 "This tells OpenStack Networking to use the prefix delegation mechanism for "
 "subnet allocation when the user does not provide a CIDR or subnet pool id "
 "when creating a subnet."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:487
+#: ../adv_config_ipv6.rst:492
 msgid "Requirements"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:489
+#: ../adv_config_ipv6.rst:494
 msgid ""
 "To use this feature, you need a prefix delegation capable DHCPv6 server that "
 "is reachable from your OpenStack Networking node(s). This could be software "
@@ -975,7 +981,7 @@ msgid ""
 "from source at https://github.com/tomaszmrugalski/dibbler."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:496
+#: ../adv_config_ipv6.rst:501
 msgid ""
 "When using the reference implementation of the OpenStack Networking prefix "
 "delegation driver, Dibbler must also be installed on your OpenStack "
@@ -983,7 +989,7 @@ msgid ""
 "required."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:500
+#: ../adv_config_ipv6.rst:505
 msgid ""
 "This guide assumes that you are running a Dibbler server on the network node "
 "where the external network bridge exists. If you already have a prefix "
@@ -991,33 +997,33 @@ msgid ""
 "section."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:506
+#: ../adv_config_ipv6.rst:511
 msgid "Configuring the Dibbler server"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:508
+#: ../adv_config_ipv6.rst:513
 msgid ""
 "After installing Dibbler, edit the :file:`/etc/dibbler/server.conf` file:"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:521
+#: ../adv_config_ipv6.rst:526
 msgid "The options used in the configuration file above are:"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:523
+#: ../adv_config_ipv6.rst:528
 msgid ""
 ":code:`script`: Points to a script to be run when a prefix is delegated or "
 "released. This is only needed if you want instances on your subnets to have "
 "external network access. More on this below."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:526
+#: ../adv_config_ipv6.rst:531
 msgid ""
 ":code:`iface`: The name of the network interface on which to listen for "
 "prefix delegation messages."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:528
+#: ../adv_config_ipv6.rst:533
 msgid ""
 ":code:`pd-pool`: The larger prefix from which you want your delegated "
 "prefixes to come. The example given is sufficient if you do not need "
@@ -1025,13 +1031,13 @@ msgid ""
 "necessary."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:532
+#: ../adv_config_ipv6.rst:537
 msgid ""
 ":code:`pd-length`: The length that delegated prefixes will be. This must be "
 "64 to work with the current OpenStack Networking reference implementation."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:535
+#: ../adv_config_ipv6.rst:540
 msgid ""
 "To provide external network access to your instances, your Dibbler server "
 "also needs to create new routes for each delegated prefix. This is done "
@@ -1039,43 +1045,43 @@ msgid ""
 "lib/dibbler/pd-server.sh` file:"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:551
+#: ../adv_config_ipv6.rst:556
 msgid "The variables used in the script file above are:"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:553
+#: ../adv_config_ipv6.rst:558
 msgid ":code:`$PREFIX1`: The prefix being added/deleted by the Dibbler server."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:554
+#: ../adv_config_ipv6.rst:559
 msgid ":code:`$1`: The operation being performed."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:555
+#: ../adv_config_ipv6.rst:560
 msgid ":code:`$REMOTE_ADDR`: The IP address of the requesting Dibbler client."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:556
+#: ../adv_config_ipv6.rst:561
 msgid ""
 ":code:`$IFACE`: The network interface upon which the request was received."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:559
+#: ../adv_config_ipv6.rst:564
 msgid ""
 "The above is all you need in this scenario, but more information on "
 "installing, configuring, and running Dibbler is available in the Dibbler "
 "user guide, at http://klub.com.pl/dhcpv6/doc/dibbler-user.pdf."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:563
+#: ../adv_config_ipv6.rst:568
 msgid "To start your Dibbler server, run::"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:567
+#: ../adv_config_ipv6.rst:572
 msgid "Or to run in headless mode::"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:571
+#: ../adv_config_ipv6.rst:576
 msgid ""
 "When using DevStack, it is important to start your server after the :file:"
 "`stack.sh` script has finished to ensure that the required network "
@@ -1084,15 +1090,15 @@ msgstr ""
 
 # #-#-#-#-#  adv_config_ipv6.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  adv_config_qos.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../adv_config_ipv6.rst:576 ../adv_config_qos.rst:98
+#: ../adv_config_ipv6.rst:581 ../adv_config_qos.rst:98
 msgid "User workflow"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:578
+#: ../adv_config_ipv6.rst:583
 msgid "First, create a network and IPv6 subnet:"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:620
+#: ../adv_config_ipv6.rst:625
 msgid ""
 "The subnet is initially created with a temporary CIDR before one can be "
 "assigned by prefix delegation. Any number of subnets with this temporary "
@@ -1100,13 +1106,13 @@ msgid ""
 "automatically set to :code:`prefix_delegation`."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:625
+#: ../adv_config_ipv6.rst:630
 msgid ""
 "To trigger the prefix delegation process, create a router interface between "
 "this subnet and a router with an active interface on the external network:"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:635
+#: ../adv_config_ipv6.rst:640
 msgid ""
 "The prefix delegation mechanism then sends a request via the external "
 "network to your prefix delegation server, which replies with the delegated "
@@ -1114,52 +1120,52 @@ msgid ""
 "new IP addresses to all ports:"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:663
+#: ../adv_config_ipv6.rst:668
 msgid ""
 "If the prefix delegation server is configured to delegate globally routable "
 "prefixes and setup routes, then any instance with a port on this subnet "
 "should now have external network access."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:667
+#: ../adv_config_ipv6.rst:672
 msgid ""
 "Deleting the router interface causes the subnet to be reverted to the "
 "temporary CIDR, and all ports have their IPs updated. Prefix leases are "
 "released and renewed automatically as necessary."
 msgstr ""
 
-#: ../adv_config_ipv6.rst:672
+#: ../adv_config_ipv6.rst:677
 msgid "References"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:674
+#: ../adv_config_ipv6.rst:679
 msgid ""
 "The following link provides a great step by step tutorial on setting up IPv6 "
 "with OpenStack: http://www.debug-all.com/?p=52"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:680
+#: ../adv_config_ipv6.rst:685
 msgid "Extra configuration"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:683
+#: ../adv_config_ipv6.rst:688
 msgid "Neutron dhcpv6_pd_agent"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:684
+#: ../adv_config_ipv6.rst:689
 msgid ""
 "To enable the driver for the dhcpv6_pd_agent, set pd_dhcp_driver to this in :"
 "file:`etc/neutron.conf`::"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:689
+#: ../adv_config_ipv6.rst:694
 msgid ""
 "To allow the neutron-pd-agent to communicate with prefix delegation servers, "
 "you must set which network interface to use for external communication. In "
 "DevStack the default for this is br-ex::"
 msgstr ""
 
-#: ../adv_config_ipv6.rst:695
+#: ../adv_config_ipv6.rst:700
 msgid ""
 "Once you have stacked run the command below to start the neutron-pd-agent::"
 msgstr ""
