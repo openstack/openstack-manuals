@@ -19,7 +19,7 @@ for guide in user-guide user-guide-admin networking-guide admin-guide-cloud cont
 done
 
 # Draft guides
-for guide in arch-design-rst config-ref-rst; do
+for guide in arch-design-rst config-ref-rst image-guide-rst; do
     tools/build-rst.sh doc/$guide --build build \
         --target "draft/$guide" $LINKCHECK
 done
