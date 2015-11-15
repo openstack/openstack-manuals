@@ -24,3 +24,8 @@ HA Guide
 --------
 
 * Shared File Systems chapter added.
+
+Operations Guide
+----------------
+
+* Shared File Systems chapter added.
