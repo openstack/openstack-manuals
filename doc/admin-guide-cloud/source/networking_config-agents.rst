@@ -316,74 +316,49 @@ The Neutron Metering agent resides beside neutron-l3-agent.
 
        service_plugins = router,metering
 
-Configure Load-Balancer-as-a-Service (LBaaS)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configure Load-Balancer-as-a-Service (LBaaS v2)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configure Load-Balancer-as-a-Service (LBaaS) with the Open vSwitch or
-Linux Bridge plug-in. The Open vSwitch LBaaS driver is required when
-enabling LBaaS for OVS-based plug-ins, including BigSwitch, Floodlight,
-NEC, and NSX.
+For the back end, use either Octavia or Haproxy. This example uses Octavia.
 
-**To configure LBaaS with Open vSwitch or Linux Bridge plug-in**
+**To configure LBaaS V2**
 
-#. Install the agent:
+#. Install Octavia using your distribution's package manager.
 
-   .. code:: console
 
-       # apt-get install neutron-lbaas-agent haproxy
-
-#. Enable the HAProxy plug-in by using the ``service_provider`` option in
-   the :file:`/etc/neutron/neutron.conf` file:
+#. Edit the :file:`/etc/neutron/neutron_lbaas.conf` file and change
+   the ``service_provider`` parameter to enable Octavia:
 
    .. code:: ini
 
-       service_provider = LOADBALANCER:Haproxy:neutron_lbaas.services
-       loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver
-       :default
+       service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.
+       drivers.octavia.driver.OctaviaDriver:default
 
    .. Warning::
 
-       The ``service_provider`` option is already defined in the
-       :file:`/usr/share/neutron/neutron-dist.conf` file on Red Hat based
-       systems. Do not define it in :file:`neutron.conf` otherwise the
-       Networking services will fail to restart.
+       The ``service_provider`` option is already
+       defined in the :file:`/usr/share/neutron/neutron-dist.conf` file on
+       Red Hat based systems. Do not define it in :file:`neutron_lbaas.conf`
+       otherwise the Networking services will fail to restart.
 
-#. Enable the load-balancing plug-in by using the ``service_plugins``
-   option in the :file:`/etc/neutron/neutron.conf` file:
 
-   .. code:: ini
-
-       service_plugins = lbaas
-
-   If this option is already defined, add ``lbaas`` to the list, using a
-   comma as separator. For example:
+#. Edit the :file:`/etc/neutron/neutron.conf` file and add the
+   ``service_plugins`` parameter to enable the load-balancing plug-in:
 
    .. code:: ini
 
-       service_plugins = router,lbaas
+       device_driver = neutron_lbaas.services.loadbalancer.plugin.
+       LoadBalancerPluginv2
 
-#. Enable the HAProxy load balancer in the :file:`/etc/neutron/lbaas_agent.ini`
-   file:
-
-   .. code:: ini
-
-       device_driver = neutron_lbaas.services.loadbalancer.drivers
-       haproxy.namespace_driver.HaproxyNSDriver
-
-#. Select the required driver in the :file:`/etc/neutron/lbaas_agent.ini`
-   file:
-
-   Enable the Open vSwitch LBaaS driver:
+   If this option is already defined, add the load-balancing plug-in to
+   the list using a comma as a separator. For example:
 
    .. code:: ini
 
-       interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+       service_plugins = [already defined plugins],
+       neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
 
-   Or, enable the Linux Bridge LBaaS driver:
 
-   .. code:: ini
-
-       interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
 
 #. Create the required tables in the database:
 
@@ -391,10 +366,15 @@ NEC, and NSX.
 
        # neutron-db-manage --service lbaas upgrade head
 
-#. Apply the settings by restarting the neutron-server and
-   neutron-lbaas-agent services.
+#. Restart the neutron-server service.
+
 
 #. Enable load balancing in the Project section of the dashboard.
+
+   .. Warning::
+
+       Horizon panels are enabled only for LBaaSV1. LBaaSV2 panels are still
+       being developed.
 
    Change the ``enable_lb`` option to ``True`` in the :file:`local_settings`
    file (on Fedora, RHEL, and CentOS:
