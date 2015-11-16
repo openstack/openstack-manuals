@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-14 06:12+0000\n"
+"POT-Creation-Date: 2015-11-16 06:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5713,7 +5713,7 @@ msgstr ""
 # #-#-#-#-#  networking_use.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 #: ../compute-manage-volumes.rst:13 ../networking_adv-features.rst:207
 #: ../networking_adv-features.rst:375 ../networking_adv-features.rst:510
-#: ../networking_adv-features.rst:802 ../networking_config-agents.rst:491
+#: ../networking_adv-features.rst:802 ../networking_config-agents.rst:471
 #: ../networking_use.rst:47 ../networking_use.rst:123
 #: ../networking_use.rst:183 ../networking_use.rst:241
 msgid "Command"
@@ -12294,6 +12294,66 @@ msgstr ""
 msgid "``x509``"
 msgstr ""
 
+#: ../keystone_tokens.rst:3
+msgid "Keystone token providers"
+msgstr ""
+
+#: ../keystone_tokens.rst:5
+msgid ""
+"Tokens are used to interact with the various OpenStack APIs. The token type "
+"issued by keystone is configurable through the :file:`etc/keystone.conf` "
+"file. Currently, there are four supported token types and they include UUID, "
+"Fernet, PKI, and PKIZ."
+msgstr ""
+
+#: ../keystone_tokens.rst:11
+msgid "UUID tokens"
+msgstr ""
+
+#: ../keystone_tokens.rst:13
+msgid ""
+"UUID was the first token type supported and is currently the default token "
+"provider. UUID tokens are 32 bytes in length and must be persisted in a back "
+"end. Clients must pass their UUID token to the Identity service in order to "
+"validate it."
+msgstr ""
+
+#: ../keystone_tokens.rst:19
+msgid "Fernet tokens"
+msgstr ""
+
+#: ../keystone_tokens.rst:21
+msgid ""
+"Fernet tokens were introduced in the OpenStack Kilo release. Unlike the "
+"other token types mentioned in this document, Fernet tokens do not need to "
+"be persisted in a back end. ``AES256`` encryption is used to protect the "
+"information stored in the token and integrity is verified with a ``SHA256 "
+"HMAC`` signature. Only the Identity service should have access to the keys "
+"used to encrypt and decrypt Fernet tokens. Like UUID tokens, Fernet tokens "
+"must be passed back to the Identity service in order to validate them."
+msgstr ""
+
+#: ../keystone_tokens.rst:30
+msgid "PKI and PKIZ tokens"
+msgstr ""
+
+#: ../keystone_tokens.rst:32
+msgid ""
+"PKI tokens are signed documents that contain the authentication context, as "
+"well as the service catalog. Depending on the size of the OpenStack "
+"deployment, these tokens can be very long. The Identity service uses public/"
+"private key pairs and certificates in order to create and validate PKI "
+"tokens."
+msgstr ""
+
+#: ../keystone_tokens.rst:37
+msgid ""
+"The same concepts from PKI tokens apply to PKIZ tokens. The only difference "
+"between the two is PKIZ tokens are compressed to help mitigate the size "
+"issues of PKI. For more information on the certificate setup for PKI and "
+"PKIZ tokens, see the :ref:`keystone_certificates_for_pki`."
+msgstr ""
+
 #: ../keystone_use_trusts.rst:3
 msgid "Use trusts"
 msgstr ""
@@ -12865,7 +12925,7 @@ msgstr ""
 # #-#-#-#-#  networking_use.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 #: ../networking_adv-features.rst:206 ../networking_adv-features.rst:374
 #: ../networking_adv-features.rst:509 ../networking_adv-features.rst:801
-#: ../networking_config-agents.rst:491 ../networking_use.rst:47
+#: ../networking_config-agents.rst:471 ../networking_use.rst:47
 #: ../networking_use.rst:123 ../networking_use.rst:241
 msgid "Operation"
 msgstr ""
@@ -14459,86 +14519,69 @@ msgid ""
 msgstr ""
 
 #: ../networking_config-agents.rst:320
-msgid "Configure Load-Balancer-as-a-Service (LBaaS)"
+msgid "Configure Load-Balancer-as-a-Service (LBaaS v2)"
 msgstr ""
 
 #: ../networking_config-agents.rst:322
 msgid ""
-"Configure Load-Balancer-as-a-Service (LBaaS) with the Open vSwitch or Linux "
-"Bridge plug-in. The Open vSwitch LBaaS driver is required when enabling "
-"LBaaS for OVS-based plug-ins, including BigSwitch, Floodlight, NEC, and NSX."
+"For the back end, use either Octavia or Haproxy. This example uses Octavia."
 msgstr ""
 
-#: ../networking_config-agents.rst:327
-msgid "**To configure LBaaS with Open vSwitch or Linux Bridge plug-in**"
+#: ../networking_config-agents.rst:324
+msgid "**To configure LBaaS V2**"
+msgstr ""
+
+#: ../networking_config-agents.rst:326
+msgid "Install Octavia using your distribution's package manager."
 msgstr ""
 
 #: ../networking_config-agents.rst:329
-msgid "Install the agent:"
-msgstr ""
-
-#: ../networking_config-agents.rst:335
 msgid ""
-"Enable the HAProxy plug-in by using the ``service_provider`` option in the :"
-"file:`/etc/neutron/neutron.conf` file:"
+"Edit the :file:`/etc/neutron/neutron_lbaas.conf` file and change the "
+"``service_provider`` parameter to enable Octavia:"
 msgstr ""
 
-#: ../networking_config-agents.rst:346
+#: ../networking_config-agents.rst:339
 msgid ""
 "The ``service_provider`` option is already defined in the :file:`/usr/share/"
 "neutron/neutron-dist.conf` file on Red Hat based systems. Do not define it "
-"in :file:`neutron.conf` otherwise the Networking services will fail to "
+"in :file:`neutron_lbaas.conf` otherwise the Networking services will fail to "
 "restart."
 msgstr ""
 
-#: ../networking_config-agents.rst:351
+#: ../networking_config-agents.rst:345
 msgid ""
-"Enable the load-balancing plug-in by using the ``service_plugins`` option in "
-"the :file:`/etc/neutron/neutron.conf` file:"
+"Edit the :file:`/etc/neutron/neutron.conf` file and add the "
+"``service_plugins`` parameter to enable the load-balancing plug-in:"
 msgstr ""
 
-#: ../networking_config-agents.rst:358
+#: ../networking_config-agents.rst:353
 msgid ""
-"If this option is already defined, add ``lbaas`` to the list, using a comma "
-"as separator. For example:"
-msgstr ""
-
-#: ../networking_config-agents.rst:365
-msgid ""
-"Enable the HAProxy load balancer in the :file:`/etc/neutron/lbaas_agent.ini` "
-"file:"
-msgstr ""
-
-#: ../networking_config-agents.rst:373
-msgid ""
-"Select the required driver in the :file:`/etc/neutron/lbaas_agent.ini` file:"
-msgstr ""
-
-#: ../networking_config-agents.rst:376
-msgid "Enable the Open vSwitch LBaaS driver:"
-msgstr ""
-
-#: ../networking_config-agents.rst:382
-msgid "Or, enable the Linux Bridge LBaaS driver:"
+"If this option is already defined, add the load-balancing plug-in to the "
+"list using a comma as a separator. For example:"
 msgstr ""
 
 # #-#-#-#-#  networking_config-agents.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  networking_introduction.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../networking_config-agents.rst:388 ../networking_introduction.rst:202
+#: ../networking_config-agents.rst:363 ../networking_introduction.rst:202
 msgid "Create the required tables in the database:"
 msgstr ""
 
-#: ../networking_config-agents.rst:394
-msgid ""
-"Apply the settings by restarting the neutron-server and neutron-lbaas-agent "
-"services."
+#: ../networking_config-agents.rst:369
+msgid "Restart the neutron-server service."
 msgstr ""
 
-#: ../networking_config-agents.rst:397
+#: ../networking_config-agents.rst:372
 msgid "Enable load balancing in the Project section of the dashboard."
 msgstr ""
 
-#: ../networking_config-agents.rst:399
+#: ../networking_config-agents.rst:376
+msgid ""
+"Horizon panels are enabled only for LBaaSV1. LBaaSV2 panels are still being "
+"developed."
+msgstr ""
+
+#: ../networking_config-agents.rst:379
 msgid ""
 "Change the ``enable_lb`` option to ``True`` in the :file:`local_settings` "
 "file (on Fedora, RHEL, and CentOS: :file:`/etc/openstack-dashboard/"
@@ -14547,17 +14590,17 @@ msgid ""
 "dashboard/openstack_dashboard/local/local_settings .py`):"
 msgstr ""
 
-#: ../networking_config-agents.rst:414
+#: ../networking_config-agents.rst:394
 msgid ""
 "Apply the settings by restarting the web server. You can now view the Load "
 "Balancer management options in the Project view in the dashboard."
 msgstr ""
 
-#: ../networking_config-agents.rst:418
+#: ../networking_config-agents.rst:398
 msgid "Configure Hyper-V L2 agent"
 msgstr ""
 
-#: ../networking_config-agents.rst:420
+#: ../networking_config-agents.rst:400
 msgid ""
 "Before you install the OpenStack Networking Hyper-V L2 agent on a Hyper-V "
 "compute node, ensure the compute node has been configured correctly using "
@@ -14565,24 +14608,24 @@ msgid ""
 "content/ hyper-v-virtualization-platform.html>`__."
 msgstr ""
 
-#: ../networking_config-agents.rst:426
+#: ../networking_config-agents.rst:406
 msgid ""
 "**To install the OpenStack Networking Hyper-V agent and configure the node**"
 msgstr ""
 
-#: ../networking_config-agents.rst:428
+#: ../networking_config-agents.rst:408
 msgid "Download the OpenStack Networking code from the repository:"
 msgstr ""
 
-#: ../networking_config-agents.rst:435
+#: ../networking_config-agents.rst:415
 msgid "Install the OpenStack Networking Hyper-V Agent:"
 msgstr ""
 
-#: ../networking_config-agents.rst:442
+#: ../networking_config-agents.rst:422
 msgid "Copy the :file:`policy.json` file:"
 msgstr ""
 
-#: ../networking_config-agents.rst:448
+#: ../networking_config-agents.rst:428
 msgid ""
 "Create the :file:`C:\\etc\\neutron-hyperv-agent.conf` file and add the "
 "proper configuration options and the `Hyper-V related options <http://docs."
@@ -14590,60 +14633,60 @@ msgid ""
 "hyperv_agent.html>`__. Here is a sample config file:"
 msgstr ""
 
-#: ../networking_config-agents.rst:477
+#: ../networking_config-agents.rst:457
 msgid "Start the OpenStack Networking Hyper-V agent:"
 msgstr ""
 
-#: ../networking_config-agents.rst:485
+#: ../networking_config-agents.rst:465
 msgid "Basic operations on agents"
 msgstr ""
 
-#: ../networking_config-agents.rst:487
+#: ../networking_config-agents.rst:467
 msgid ""
 "This table shows examples of Networking commands that enable you to complete "
 "basic operations on agents:"
 msgstr ""
 
-#: ../networking_config-agents.rst:493
+#: ../networking_config-agents.rst:473
 msgid "List all available agents."
 msgstr ""
 
-#: ../networking_config-agents.rst:495
+#: ../networking_config-agents.rst:475
 msgid "``$ neutron agent-list``"
 msgstr ""
 
-#: ../networking_config-agents.rst:497
+#: ../networking_config-agents.rst:477
 msgid "Show information of a given agent."
 msgstr ""
 
-#: ../networking_config-agents.rst:500
+#: ../networking_config-agents.rst:480
 msgid "``$ neutron agent-show AGENT_ID``"
 msgstr ""
 
-#: ../networking_config-agents.rst:502
+#: ../networking_config-agents.rst:482
 msgid ""
 "Update the admin status and description for a specified agent. The command "
 "can be used to enable and disable agents by using ``--admin-state-up`` "
 "parameter set to ``False`` or ``True``."
 msgstr ""
 
-#: ../networking_config-agents.rst:508
+#: ../networking_config-agents.rst:488
 msgid "``$ neutron agent-update --admin`` ``-state-up False AGENT_ID``"
 msgstr ""
 
-#: ../networking_config-agents.rst:511
+#: ../networking_config-agents.rst:491
 msgid "Delete a given agent. Consider disabling the agent before deletion."
 msgstr ""
 
-#: ../networking_config-agents.rst:514
+#: ../networking_config-agents.rst:494
 msgid "``$ neutron agent-delete AGENT_ID``"
 msgstr ""
 
-#: ../networking_config-agents.rst:517
+#: ../networking_config-agents.rst:497
 msgid "**Basic operations on Networking agents**"
 msgstr ""
 
-#: ../networking_config-agents.rst:519
+#: ../networking_config-agents.rst:499
 msgid ""
 "See the `OpenStack Command-Line Interface Reference <http://docs.openstack."
 "org/cli-reference/content/neutronclient_commands.html>`__ for more "
