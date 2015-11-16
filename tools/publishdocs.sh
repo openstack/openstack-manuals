@@ -72,7 +72,7 @@ fi
 if [ "$PUBLISH" = "publish" ] ; then
     openstack-doc-test --check-build --publish
     # For publishing to both /draft and /BRANCH
-    copy_to_branch liberty
+    #copy_to_branch mitaka
 else
     openstack-doc-test --check-build
 fi
