@@ -1,7 +1,7 @@
 Prescriptive examples
 ~~~~~~~~~~~~~~~~~~~~~
 
-An organization design a large-scale web application with cloud
+An organization designs a large-scale web application with cloud
 principles in mind. The application scales horizontally in a bursting
 fashion and generates a high instance count. The application requires an
 SSL connection to secure data and must not lose connection state to
