@@ -79,29 +79,29 @@ includes firewall rules that deny remote access to instances. For Linux
 images such as CirrOS, we recommend allowing at least ICMP (ping) and
 secure shell (SSH).
 
-#. Add rules to the ``default`` security group:
+* Add rules to the ``default`` security group:
 
-   * Permit :term:`ICMP` (ping):
+  * Permit :term:`ICMP` (ping):
 
-     .. code-block:: console
+    .. code-block:: console
 
-        $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
-        +-------------+-----------+---------+-----------+--------------+
-        | IP Protocol | From Port | To Port | IP Range  | Source Group |
-        +-------------+-----------+---------+-----------+--------------+
-        | icmp        | -1        | -1      | 0.0.0.0/0 |              |
-        +-------------+-----------+---------+-----------+--------------+
+       $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+       +-------------+-----------+---------+-----------+--------------+
+       | IP Protocol | From Port | To Port | IP Range  | Source Group |
+       +-------------+-----------+---------+-----------+--------------+
+       | icmp        | -1        | -1      | 0.0.0.0/0 |              |
+       +-------------+-----------+---------+-----------+--------------+
 
-   * Permit secure shell (SSH) access:
+  * Permit secure shell (SSH) access:
 
-     .. code-block:: console
+    .. code-block:: console
 
-        $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
-        +-------------+-----------+---------+-----------+--------------+
-        | IP Protocol | From Port | To Port | IP Range  | Source Group |
-        +-------------+-----------+---------+-----------+--------------+
-        | tcp         | 22        | 22      | 0.0.0.0/0 |              |
-        +-------------+-----------+---------+-----------+--------------+
+       $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
+       +-------------+-----------+---------+-----------+--------------+
+       | IP Protocol | From Port | To Port | IP Range  | Source Group |
+       +-------------+-----------+---------+-----------+--------------+
+       | tcp         | 22        | 22      | 0.0.0.0/0 |              |
+       +-------------+-----------+---------+-----------+--------------+
 
 Launch an instance
 ------------------

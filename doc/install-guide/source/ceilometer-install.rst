@@ -297,53 +297,53 @@ Finalize installation
 
 .. only:: obs
 
-   #. Start the Telemetry services and configure them to start when the
-      system boots:
+   * Start the Telemetry services and configure them to start when the
+     system boots:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # systemctl enable openstack-ceilometer-api.service \
-           openstack-ceilometer-agent-notification.service \
-           openstack-ceilometer-agent-central.service \
-           openstack-ceilometer-collector.service \
-           openstack-ceilometer-alarm-evaluator.service \
-           openstack-ceilometer-alarm-notifier.service
-         # systemctl start openstack-ceilometer-api.service \
-           openstack-ceilometer-agent-notification.service \
-           openstack-ceilometer-agent-central.service \
-           openstack-ceilometer-collector.service \
-           openstack-ceilometer-alarm-evaluator.service \
-           openstack-ceilometer-alarm-notifier.service
+        # systemctl enable openstack-ceilometer-api.service \
+          openstack-ceilometer-agent-notification.service \
+          openstack-ceilometer-agent-central.service \
+          openstack-ceilometer-collector.service \
+          openstack-ceilometer-alarm-evaluator.service \
+          openstack-ceilometer-alarm-notifier.service
+        # systemctl start openstack-ceilometer-api.service \
+          openstack-ceilometer-agent-notification.service \
+          openstack-ceilometer-agent-central.service \
+          openstack-ceilometer-collector.service \
+          openstack-ceilometer-alarm-evaluator.service \
+          openstack-ceilometer-alarm-notifier.service
 
 .. only:: rdo
 
-   #. Start the Telemetry services and configure them to start when the
-      system boots:
+   * Start the Telemetry services and configure them to start when the
+     system boots:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # systemctl enable openstack-ceilometer-api.service \
-           openstack-ceilometer-notification.service \
-           openstack-ceilometer-central.service \
-           openstack-ceilometer-collector.service \
-           openstack-ceilometer-alarm-evaluator.service \
-           openstack-ceilometer-alarm-notifier.service
-         # systemctl start openstack-ceilometer-api.service \
-           openstack-ceilometer-notification.service \
-           openstack-ceilometer-central.service \
-           openstack-ceilometer-collector.service \
-           openstack-ceilometer-alarm-evaluator.service \
-           openstack-ceilometer-alarm-notifier.service
+        # systemctl enable openstack-ceilometer-api.service \
+          openstack-ceilometer-notification.service \
+          openstack-ceilometer-central.service \
+          openstack-ceilometer-collector.service \
+          openstack-ceilometer-alarm-evaluator.service \
+          openstack-ceilometer-alarm-notifier.service
+        # systemctl start openstack-ceilometer-api.service \
+          openstack-ceilometer-notification.service \
+          openstack-ceilometer-central.service \
+          openstack-ceilometer-collector.service \
+          openstack-ceilometer-alarm-evaluator.service \
+          openstack-ceilometer-alarm-notifier.service
 
 .. only:: ubuntu
 
-   #. Restart the Telemetry services:
+   * Restart the Telemetry services:
 
-      .. code-block:: console
+     .. code-block:: console
 
-         # service ceilometer-agent-central restart
-         # service ceilometer-agent-notification restart
-         # service ceilometer-api restart
-         # service ceilometer-collector restart
-         # service ceilometer-alarm-evaluator restart
-         # service ceilometer-alarm-notifier restart
+        # service ceilometer-agent-central restart
+        # service ceilometer-agent-notification restart
+        # service ceilometer-api restart
+        # service ceilometer-collector restart
+        # service ceilometer-alarm-evaluator restart
+        # service ceilometer-alarm-notifier restart

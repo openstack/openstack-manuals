@@ -14,13 +14,13 @@ Configure Cinder to use Telemetry
 Edit the ``/etc/cinder/cinder.conf`` file and complete the
 following actions:
 
-#. In the ``[DEFAULT]`` section, configure notifications:
+* In the ``[DEFAULT]`` section, configure notifications:
 
-   .. code-block:: ini
+  .. code-block:: ini
 
-      [DEFAULT]
-      ...
-      notification_driver = messagingv2
+     [DEFAULT]
+     ...
+     notification_driver = messagingv2
 
 Finalize installation
 ---------------------

@@ -1,3 +1,5 @@
+.. _keystone-install:
+
 Install and configure
 ~~~~~~~~~~~~~~~~~~~~~
 

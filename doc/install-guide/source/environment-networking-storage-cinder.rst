@@ -7,13 +7,13 @@ additional storage node.
 Configure network interfaces
 ----------------------------
 
-#. Configure the management interface:
+* Configure the management interface:
 
-   * IP address: ``10.0.0.41``
+  * IP address: ``10.0.0.41``
 
-   * Network mask: ``255.255.255.0`` (or ``/24``)
+  * Network mask: ``255.255.255.0`` (or ``/24``)
 
-   * Default gateway: ``10.0.0.1``
+  * Default gateway: ``10.0.0.1``
 
 Configure name resolution
 -------------------------

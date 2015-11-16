@@ -1,8 +1,7 @@
-================
 Verify operation
-================
+~~~~~~~~~~~~~~~~
 
-This section describes how to verify operation of the dashboard.
+Verify operation of the dashboard.
 
 .. only:: obs or debian
 

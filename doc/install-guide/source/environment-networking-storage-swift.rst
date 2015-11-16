@@ -10,13 +10,13 @@ First node
 Configure network interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Configure the management interface:
+* Configure the management interface:
 
-   * IP address: ``10.0.0.51``
+  * IP address: ``10.0.0.51``
 
-   * Network mask: ``255.255.255.0`` (or ``/24``)
+  * Network mask: ``255.255.255.0`` (or ``/24``)
 
-   * Default gateway: ``10.0.0.1``
+  * Default gateway: ``10.0.0.1``
 
 Configure name resolution
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -33,13 +33,13 @@ Second node
 Configure network interfaces
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#. Configure the management interface:
+* Configure the management interface:
 
-   * IP address: ``10.0.0.52``
+  * IP address: ``10.0.0.52``
 
-   * Network mask: ``255.255.255.0`` (or ``/24``)
+  * Network mask: ``255.255.255.0`` (or ``/24``)
 
-   * Default gateway: ``10.0.0.1``
+  * Default gateway: ``10.0.0.1``
 
 Configure name resolution
 ^^^^^^^^^^^^^^^^^^^^^^^^^

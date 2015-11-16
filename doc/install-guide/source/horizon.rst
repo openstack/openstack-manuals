@@ -18,6 +18,6 @@ This example deployment uses an Apache web server.
 
 .. toctree::
 
-   dashboard-install.rst
-   dashboard-verify.rst
-   dashboard-next-step.rst
+   horizon-install.rst
+   horizon-verify.rst
+   horizon-next-steps.rst

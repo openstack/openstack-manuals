@@ -53,21 +53,21 @@ these procedures on all nodes.
    Enable the OpenStack repository
    -------------------------------
 
-   On CentOS, the *extras* repository provides the RPM that enables the
-   OpenStack repository. CentOS includes the *extras* repository by
-   default, so you can simply install the package to enable the OpenStack
-   repository.
+   * On CentOS, the *extras* repository provides the RPM that enables the
+     OpenStack repository. CentOS includes the *extras* repository by
+     default, so you can simply install the package to enable the OpenStack
+     repository.
 
-   .. code-block:: console
+     .. code-block:: console
 
-      # yum install centos-release-openstack-liberty
+        # yum install centos-release-openstack-liberty
 
-   On RHEL, download and install the RDO repository RPM to enable the
-   OpenStack repository.
+   * On RHEL, download and install the RDO repository RPM to enable the
+     OpenStack repository.
 
-   .. code-block:: console
+     .. code-block:: console
 
-      # yum install https://rdoproject.org/repos/openstack-liberty/rdo-release-liberty.rpm
+        # yum install https://rdoproject.org/repos/openstack-liberty/rdo-release-liberty.rpm
 
 .. only:: obs
 
@@ -121,7 +121,6 @@ these procedures on all nodes.
    the instruction from the official
    `Debian website <http://backports.debian.org/Instructions/>`_,
    which basically suggest doing the following steps:
-
 
    #. On all nodes, adding the Debian 8 (Jessie) backport repository to
       the source list:

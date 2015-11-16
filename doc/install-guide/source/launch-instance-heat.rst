@@ -12,37 +12,37 @@ To learn about the template language, see `the Template Guide
 in the `Heat developer documentation
 <http://docs.openstack.org/developer/heat/index.html>`__.
 
-#. Create the ``demo-template.yml`` file with the following content:
+* Create the ``demo-template.yml`` file with the following content:
 
-   .. code-block:: yaml
+  .. code-block:: yaml
 
-      heat_template_version: 2015-10-15
-      description: Launch a basic instance using the ``m1.tiny`` flavor and one network.
+     heat_template_version: 2015-10-15
+     description: Launch a basic instance using the ``m1.tiny`` flavor and one network.
 
-      parameters:
-        ImageID:
-          type: string
-          description: Image to use for the instance.
-        NetID:
-          type: string
-          description: Network ID to use for the instance.
+     parameters:
+       ImageID:
+         type: string
+         description: Image to use for the instance.
+       NetID:
+         type: string
+         description: Network ID to use for the instance.
 
-      resources:
-        server:
-          type: OS::Nova::Server
-          properties:
-            image: { get_param: ImageID }
-            flavor: m1.tiny
-            networks:
-            - network: { get_param: NetID }
+     resources:
+       server:
+         type: OS::Nova::Server
+         properties:
+           image: { get_param: ImageID }
+           flavor: m1.tiny
+           networks:
+           - network: { get_param: NetID }
 
-      outputs:
-        instance_name:
-          description: Name of the instance.
-          value: { get_attr: [ server, name ] }
-        instance_ip:
-          description: IP address of the instance.
-          value: { get_attr: [ server, first_address ] }
+     outputs:
+       instance_name:
+         description: Name of the instance.
+         value: { get_attr: [ server, name ] }
+       instance_ip:
+         description: IP address of the instance.
+         value: { get_attr: [ server, first_address ] }
 
 Create a stack
 --------------

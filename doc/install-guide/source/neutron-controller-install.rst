@@ -171,86 +171,86 @@ Configure the metadata agent
 The :term:`metadata agent <Metadata agent>` provides configuration information
 such as credentials to instances.
 
-#. Edit the ``/etc/neutron/metadata_agent.ini`` file and complete the following
-   actions:
+* Edit the ``/etc/neutron/metadata_agent.ini`` file and complete the following
+  actions:
 
-   * In the ``[DEFAULT]`` section, configure access parameters:
+  * In the ``[DEFAULT]`` section, configure access parameters:
 
-     .. code-block:: ini
+    .. code-block:: ini
 
-        [DEFAULT]
-        ...
-        auth_uri = http://controller:5000
-        auth_url = http://controller:35357
-        auth_region = RegionOne
-        auth_plugin = password
-        project_domain_id = default
-        user_domain_id = default
-        project_name = service
-        username = neutron
-        password = NEUTRON_PASS
+       [DEFAULT]
+       ...
+       auth_uri = http://controller:5000
+       auth_url = http://controller:35357
+       auth_region = RegionOne
+       auth_plugin = password
+       project_domain_id = default
+       user_domain_id = default
+       project_name = service
+       username = neutron
+       password = NEUTRON_PASS
 
-     Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
-     user in the Identity service.
+    Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
+    user in the Identity service.
 
-   * In the ``[DEFAULT]`` section, configure the metadata host:
+  * In the ``[DEFAULT]`` section, configure the metadata host:
 
-     .. code-block:: ini
+    .. code-block:: ini
 
-        [DEFAULT]
-        ...
-        nova_metadata_ip = controller
+       [DEFAULT]
+       ...
+       nova_metadata_ip = controller
 
-   * In the ``[DEFAULT]`` section, configure the metadata proxy shared
-     secret:
+  * In the ``[DEFAULT]`` section, configure the metadata proxy shared
+    secret:
 
-     .. code-block:: ini
+    .. code-block:: ini
 
-        [DEFAULT]
-        ...
-        metadata_proxy_shared_secret = METADATA_SECRET
+       [DEFAULT]
+       ...
+       metadata_proxy_shared_secret = METADATA_SECRET
 
-     Replace ``METADATA_SECRET`` with a suitable secret for the metadata proxy.
+    Replace ``METADATA_SECRET`` with a suitable secret for the metadata proxy.
 
-   * (Optional) To assist with troubleshooting, enable verbose logging in the
-     ``[DEFAULT]`` section:
+  * (Optional) To assist with troubleshooting, enable verbose logging in the
+    ``[DEFAULT]`` section:
 
-     .. code-block:: ini
+    .. code-block:: ini
 
-        [DEFAULT]
-        ...
-        verbose = True
+       [DEFAULT]
+       ...
+       verbose = True
 
 Configure Compute to use Networking
 -----------------------------------
 
-#. Edit the ``/etc/nova/nova.conf`` file and perform the following actions:
+* Edit the ``/etc/nova/nova.conf`` file and perform the following actions:
 
-   * In the ``[neutron]`` section, configure access parameters, enable the
-     metadata proxy, and configure the secret:
+  * In the ``[neutron]`` section, configure access parameters, enable the
+    metadata proxy, and configure the secret:
 
-     .. code-block:: ini
+    .. code-block:: ini
 
-        [neutron]
-        ...
-        url = http://controller:9696
-        auth_url = http://controller:35357
-        auth_plugin = password
-        project_domain_id = default
-        user_domain_id = default
-        region_name = RegionOne
-        project_name = service
-        username = neutron
-        password = NEUTRON_PASS
+       [neutron]
+       ...
+       url = http://controller:9696
+       auth_url = http://controller:35357
+       auth_plugin = password
+       project_domain_id = default
+       user_domain_id = default
+       region_name = RegionOne
+       project_name = service
+       username = neutron
+       password = NEUTRON_PASS
 
-        service_metadata_proxy = True
-        metadata_proxy_shared_secret = METADATA_SECRET
+       service_metadata_proxy = True
+       metadata_proxy_shared_secret = METADATA_SECRET
 
-     Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
-     user in the Identity service.
+    Replace ``NEUTRON_PASS`` with the password you chose for the ``neutron``
+    user in the Identity service.
 
-     Replace ``METADATA_SECRET`` with the secret you chose for the metadata
-     proxy.
+    Replace ``METADATA_SECRET`` with the secret you chose for the metadata
+    proxy.
 
 Finalize installation
 ---------------------
