@@ -19,6 +19,7 @@ command-line client.
    keystone_configure_with_SSL.rst
    keystone_external_authentication.rst
    keystone_integrate_with_ldap.rst
+   keystone_tokens.rst
    keystone_token-binding.rst
    keystone_use_trusts.rst
    keystone_caching_layer.rst
