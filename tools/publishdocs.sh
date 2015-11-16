@@ -50,29 +50,38 @@ mkdir -p publish-docs
 # Build all RST guides
 tools/build-all-rst.sh
 
+# Not needed for any stable branch, left in but uncommented for
+# reference.
+
 # Build the www pages so that openstack-doc-test creates a link to
 # www/www-index.html.
-if [ "$PUBLISH" = "build" ] ; then
-    python tools/www-generator.py --source-directory www/ \
-        --output-directory publish-docs/www/
-    rsync -a www/static/ publish-docs/www/
-    # publish-docs/www-index.html is the trigger for openstack-doc-test
-    # to include the file.
-    mv publish-docs/www/www-index.html publish-docs/www-index.html
-fi
-if [ "$PUBLISH" = "publish" ] ; then
-    python tools/www-generator.py --source-directory www/ \
-        --output-directory publish-docs
-    rsync -a www/static/ publish-docs/
-    # Don't publish this file
-    rm publish-docs/www-index.html
-fi
+
+#if [ "$PUBLISH" = "build" ] ; then
+#    python tools/www-generator.py --source-directory www/ \
+#        --output-directory publish-docs/www/
+#    rsync -a www/static/ publish-docs/www/
+#    # publish-docs/www-index.html is the trigger for openstack-doc-test
+#    # to include the file.
+#    mv publish-docs/www/www-index.html publish-docs/www-index.html
+#fi
+
+#if [ "$PUBLISH" = "publish" ] ; then
+#    python tools/www-generator.py --source-directory www/ \
+#        --output-directory publish-docs
+#    rsync -a www/static/ publish-docs/
+#    # Don't publish this file
+#    rm publish-docs/www-index.html
+#fi
 
 # We only publish changed manuals.
+# For liberty, only publish config-reference as DocBook XML.
 if [ "$PUBLISH" = "publish" ] ; then
-    openstack-doc-test --check-build --publish
-    # For publishing to both /draft and /BRANCH
-    copy_to_branch liberty
+    openstack-doc-test --check-build --publish --only-book config-reference
+    # Do not publish Debian Guide for now
+    rm -rf publish-docs/liberty/install-guide-debian
+    # For publishing to both /draft and /BRANCH.
+    # Not needed on the branch.
+    #copy_to_branch liberty
 else
-    openstack-doc-test --check-build
+    openstack-doc-test --check-build --only-book config-reference
 fi
