@@ -72,6 +72,9 @@ function copy_glossary_xml {
         $GLOSSARY_SUB_DIR/../$ENT_DIR/openstack.ent)
 }
 
+# Not used for liberty
+exit 0
+
 case "$PROJECT_DIR" in
     api-site)
         copy_rst common-rst
