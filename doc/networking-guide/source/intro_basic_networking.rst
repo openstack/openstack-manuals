@@ -14,12 +14,11 @@ Ethernet, you will often hear terms such as *local network*, *layer
 2*, *L2*, *link layer* and *data link layer*.
 
 In an Ethernet network, the hosts connected to the network communicate
-by exchanging *frames*, which is the Ethernet terminology for packets.
-Every host on an Ethernet network is uniquely identified by an address
-called the media access control (MAC) address. In particular, in an
-OpenStack environment, every virtual machine instance has a unique MAC
-address, which is different from the MAC address of the compute host.
-A MAC address has 48 bits and is typically represented as a
+by exchanging *frames*. Every host on an Ethernet network is uniquely
+identified by an address called the media access control (MAC) address.
+In particular, in an OpenStack environment, every virtual machine instance
+has a unique MAC address, which is different from the MAC address of the
+compute host. A MAC address has 48 bits and is typically represented as a
 hexadecimal string, such as ``08:00:27:b9:88:74``. The MAC address is
 hard-coded into the NIC by the manufacturer, although modern NICs
 allow you to change the MAC address programatically. In Linux, you can
