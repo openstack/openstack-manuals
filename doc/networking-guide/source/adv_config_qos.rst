@@ -83,6 +83,7 @@ If tenants are trusted to administrate their own QoS policies in
 your cloud, neutron's file :file:`policy.json` can be modified to allow this.
 
 Modify ``/etc/neutron/policy.json`` policy entries as follows::
+
      "get_policy": "rule:regular_user",
      "create_policy": "rule:regular_user",
      "update_policy": "rule:regular_user",
