@@ -11,6 +11,7 @@ force_raw_images common
 grub_config_template common
 hash_distribution_replicas common
 hash_partition_exponent common
+hash_ring_reset_interval common
 host common
 instance_format logging
 instance_uuid_format logging
@@ -25,10 +26,12 @@ logging_context_format_string logging
 logging_debug_format_suffix logging
 logging_default_format_string logging
 logging_exception_prefix logging
+logging_user_identity_format logging
 memcached_servers common
 my_ip common
 notification_driver amqp
 notification_topics amqp
+notification_transport_url amqp
 parallel_image_downloads common
 password redis
 pecan_debug debug
@@ -44,11 +47,14 @@ rpc_poll_timeout rpc
 rpc_response_timeout rpc
 rpc_zmq_all_req_rep zeromq
 rpc_zmq_bind_address zeromq
+rpc_zmq_bind_port_retries zeromq
 rpc_zmq_concurrency zeromq
 rpc_zmq_contexts zeromq
 rpc_zmq_host zeromq
 rpc_zmq_ipc_dir zeromq
 rpc_zmq_matchmaker zeromq
+rpc_zmq_max_port zeromq
+rpc_zmq_min_port zeromq
 rpc_zmq_topic_backlog zeromq
 state_path common
 syslog_log_facility logging
@@ -165,7 +171,9 @@ glance/swift_endpoint_url glance
 glance/swift_store_multiple_containers_seed glance
 glance/swift_temp_url_duration glance
 glance/swift_temp_url_key glance
+glance/temp_url_endpoint_type glance
 iboot/max_retry iboot
+iboot/reboot_delay iboot
 iboot/retry_interval iboot
 ilo/clean_priority_clear_secure_boot_keys ilo
 ilo/clean_priority_erase_devices ilo
@@ -243,6 +251,12 @@ neutron/cleaning_network_uuid neutron
 neutron/retries neutron
 neutron/url neutron
 neutron/url_timeout neutron
+oneview/allow_insecure_connections oneview
+oneview/manager_url oneview
+oneview/max_polling_attempts oneview
+oneview/password oneview
+oneview/tls_cacert_file oneview
+oneview/username oneview
 oslo_concurrency/disable_process_locking rpc
 oslo_concurrency/lock_path rpc
 oslo_messaging_amqp/allow_insecure_clients rpc
@@ -311,6 +325,7 @@ pxe/image_cache_size pxe
 pxe/image_cache_ttl pxe
 pxe/images_path pxe
 pxe/instance_master_path pxe
+pxe/ip_version pxe
 pxe/ipxe_boot_script pxe
 pxe/ipxe_enabled pxe
 pxe/pxe_append_params pxe
@@ -324,6 +339,9 @@ pxe/uefi_pxe_config_template pxe
 seamicro/action_timeout seamicro
 seamicro/max_retry seamicro
 snmp/power_timeout snmp
+snmp/reboot_delay snmp
+ssh/get_vm_name_attempts ssh
+ssh/get_vm_name_retry_interval ssh
 ssh/libvirt_uri ssh
 swift/swift_max_retries swift
 virtualbox/port virtualbox

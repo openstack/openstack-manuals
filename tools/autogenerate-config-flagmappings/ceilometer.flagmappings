@@ -6,8 +6,8 @@ control_exchange amqp
 database_connection database
 debug logging
 default_log_levels logging
-dispatcher rpc
 dns_control_exchange exchange
+event_dispatchers dispatchers
 event_pipeline_cfg_file api
 executor_thread_pool_size common
 fatal_deprecations logging
@@ -33,12 +33,15 @@ logging_context_format_string logging
 logging_debug_format_suffix logging
 logging_default_format_string logging
 logging_exception_prefix logging
+logging_user_identity_format logging
 magnetodb_control_exchange magnetodb
 magnum_control_exchange exchange
 memcached_servers common
+meter_dispatchers dispatchers
 neutron_control_exchange exchange
 notification_driver amqp
 notification_topics amqp
+notification_transport_url amqp
 nova_control_exchange exchange
 nova_http_log_debug debug
 password redis
@@ -62,11 +65,14 @@ rpc_poll_timeout rpc
 rpc_response_timeout rpc
 rpc_zmq_all_req_rep zeromq
 rpc_zmq_bind_address zeromq
+rpc_zmq_bind_port_retries zeromq
 rpc_zmq_concurrency zeromq
 rpc_zmq_contexts zeromq
 rpc_zmq_host zeromq
 rpc_zmq_ipc_dir zeromq
 rpc_zmq_matchmaker zeromq
+rpc_zmq_max_port zeromq
+rpc_zmq_min_port zeromq
 rpc_zmq_topic_backlog zeromq
 sahara_control_exchange exchange
 sample_source exchange
@@ -144,7 +150,6 @@ database/max_retries database
 database/metering_connection database
 database/metering_time_to_live database
 database/min_pool_size database
-database/mongodb_replica_set database
 database/mysql_sql_mode database
 database/pool_timeout database
 database/retry_interval database
@@ -156,7 +161,6 @@ dispatcher_file/backup_count collector
 dispatcher_file/file_path collector
 dispatcher_file/max_bytes collector
 dispatcher_gnocchi/archive_policy dispatcher_gnocchi
-dispatcher_gnocchi/archive_policy_file dispatcher_gnocchi
 dispatcher_gnocchi/filter_project dispatcher_gnocchi
 dispatcher_gnocchi/filter_service_activity dispatcher_gnocchi
 dispatcher_gnocchi/resources_definition_file dispatcher_gnocchi
