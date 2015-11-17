@@ -17,6 +17,6 @@ created in a different Domain.
 Solution
 ~~~~~~~~
 
-The ``hp3par_domain`` configuration items either need to be updated to
+The ``hpe3par_domain`` configuration items either need to be updated to
 use the domain the 3PAR host currently resides in, or the 3PAR host
 needs to be moved to the domain that the volume was created in.
