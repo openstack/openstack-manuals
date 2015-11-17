@@ -16,4 +16,5 @@ throughout all technical publications.
    writing-style/word-choice.rst
    writing-style/openstack-components.rst
    writing-style/release-names.rst
+   writing-style/ui-terminology.rst
    writing-style/code-conventions.rst

@@ -1,3 +1,5 @@
+.. _inline_elements_rst:
+
 ===============
 Inline elements
 ===============
@@ -94,6 +96,8 @@ A term that appears in the glossary.
 |                        | through a variety of complemental                 |
 |                        | :term:`services <service>`.                       |
 +------------------------+---------------------------------------------------+
+
+.. _gui_element:
 
 GUI element
 ~~~~~~~~~~~
