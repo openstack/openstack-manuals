@@ -196,10 +196,26 @@ Keep sentences short
 
 Short and simple sentences are easier to read and understand.
 
-Follow the principles of minimalism
------------------------------------
+Avoid ambiguous titles
+----------------------
 
-If you can describe an idea in one word, do not use two words.
+Each title should include a clear description of the page’s subject.
+
++-------------------------+------------------------+
+| **Ambiguous**           | **Better**             |
++=========================+========================+
+| Update metadata         | Update flavor metadata |
++-------------------------+------------------------+
+
+Also, ensure that you follow the documentation guidelines for titles.
+For more information,
+see http://docs.openstack.org/contributor-guide/rst-conv/titles.html.
+
+Be clear and concise
+--------------------
+
+Follow the principles of minimalism. If you can describe
+an idea in one word, do not use two words.
 Eliminate all redundant modifiers, such as adjectives and adverbs.
 
 Write objectively
@@ -346,3 +362,32 @@ Eliminate needless politeness
 -----------------------------
 
 Do not use "please" and "thank you" in technical documentation.
+
+Use consistent terminology
+--------------------------
+
+Use consistent terms across OpenStack content. Avoid multiple
+variations or spellings to refer to the same service, function,
+UI element, and so on.
+
+**Example of usage**
+
++------------------------+----------------------------------+
+| **Do not use**         | **Use**                          |
++========================+==================================+
+| Firewall as a service  | Firewall-as-a-Service            |
++------------------------+----------------------------------+
+| active-active          | active/active                    |
++------------------------+----------------------------------+
+| module                 | service                          |
++------------------------+----------------------------------+
+
+If you suspect the subject was previously described, search the
+OpenStack documentation and look for a precedence.
+
+Use spelling and grammar checking tools
+---------------------------------------
+
+Run text through spelling and grammar checking tools, if available.
+Correcting mistakes, especially to larger sections of new content,
+helps eliminate rework later.
