@@ -16,6 +16,15 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   common/conventions.rst
+   introduction.rst
+   obtain-images.rst
+   openstack-images.rst
+   modify-images.rst
+   create-images-manually.rst
+   create-images-automatically.rst
+   convert-images.rst
+
    common/app_support.rst
 
    common/glossary.rst
