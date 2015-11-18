@@ -16,5 +16,5 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``available_devices`` = ````
+   * - ``available_devices`` = `` ``
      - (ListOpt) List of all available devices

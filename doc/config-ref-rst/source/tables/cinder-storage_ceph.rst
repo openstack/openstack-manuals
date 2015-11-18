@@ -22,7 +22,7 @@
      - (IntOpt) Interval value (in seconds) between connection retries to ceph cluster.
    * - ``rados_connection_retries`` = ``3``
      - (IntOpt) Number of retries if connection to ceph cluster failed.
-   * - ``rbd_ceph_conf`` = ````
+   * - ``rbd_ceph_conf`` = `` ``
      - (StrOpt) Path to the ceph configuration file
    * - ``rbd_cluster_name`` = ``ceph``
      - (StrOpt) The name of ceph cluster

@@ -18,9 +18,9 @@
      -
    * - ``allow_availability_zone_fallback`` = ``False``
      - (BoolOpt) If the requested Cinder availability zone is unavailable, fall back to the value of default_availability_zone, then storage_availability_zone, instead of failing.
-   * - ``chap_password`` = ````
+   * - ``chap_password`` = `` ``
      - (StrOpt) Password for specified CHAP account name.
-   * - ``chap_username`` = ````
+   * - ``chap_username`` = `` ``
      - (StrOpt) CHAP user name.
    * - ``chiscsi_conf`` = ``/etc/chelsio-iscsi/chiscsi.conf``
      - (StrOpt) Chiscsi (CXT) global defaults configuration file
@@ -56,7 +56,7 @@
      - (StrOpt) Name of this node.  This can be an opaque identifier. It is not necessarily a host name, FQDN, or IP address.
    * - ``iet_conf`` = ``/etc/iet/ietd.conf``
      - (StrOpt) IET configuration file
-   * - ``iscsi_secondary_ip_addresses`` = ````
+   * - ``iscsi_secondary_ip_addresses`` = `` ``
      - (ListOpt) The list of secondary IP addresses of the iSCSI daemon
    * - ``max_over_subscription_ratio`` = ``20.0``
      - (FloatOpt) Float representation of the over subscription ratio when thin provisioning is involved. Default ratio is 20.0, meaning provisioned capacity can be 20 times of the total physical capacity. If the ratio is 10.5, it means provisioned capacity can be 10.5 times of the total physical capacity. A ratio of 1.0 means provisioned capacity cannot exceed the total physical capacity. A ratio lower than 1.0 will be ignored and the default value will be used instead.
@@ -64,7 +64,7 @@
      - (ListOpt) Memcached servers or None for in process cache.
    * - ``monkey_patch`` = ``False``
      - (BoolOpt) Enable monkey patching
-   * - ``monkey_patch_modules`` = ````
+   * - ``monkey_patch_modules`` = `` ``
      - (ListOpt) List of modules/decorators to monkey patch
    * - ``my_ip`` = ``10.0.0.1``
      - (StrOpt) IP address of this host

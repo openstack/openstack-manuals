@@ -16,35 +16,35 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``dns_account_id`` = ````
+   * - ``dns_account_id`` = `` ``
      - (StrOpt) Tenant ID for DNSaaS.
-   * - ``dns_auth_url`` = ````
+   * - ``dns_auth_url`` = `` ``
      - (StrOpt) Authentication URL for DNSaaS.
-   * - ``dns_domain_id`` = ````
+   * - ``dns_domain_id`` = `` ``
      - (StrOpt) Domain ID used for adding DNS entries.
-   * - ``dns_domain_name`` = ````
+   * - ``dns_domain_name`` = `` ``
      - (StrOpt) Domain name used for adding DNS entries.
    * - ``dns_driver`` = ``trove.dns.driver.DnsDriver``
      - (StrOpt) Driver for DNSaaS.
    * - ``dns_endpoint_url`` = ``0.0.0.0``
      - (StrOpt) Endpoint URL for DNSaaS.
-   * - ``dns_hostname`` = ````
+   * - ``dns_hostname`` = `` ``
      - (StrOpt) Hostname used for adding DNS entries.
    * - ``dns_instance_entry_factory`` = ``trove.dns.driver.DnsInstanceEntryFactory``
      - (StrOpt) Factory for adding DNS entries.
-   * - ``dns_management_base_url`` = ````
+   * - ``dns_management_base_url`` = `` ``
      - (StrOpt) Management URL for DNSaaS.
-   * - ``dns_passkey`` = ````
+   * - ``dns_passkey`` = `` ``
      - (StrOpt) Passkey for DNSaaS.
-   * - ``dns_region`` = ````
+   * - ``dns_region`` = `` ``
      - (StrOpt) Region name for DNSaaS.
-   * - ``dns_service_type`` = ````
+   * - ``dns_service_type`` = `` ``
      - (StrOpt) Service Type for DNSaaS.
    * - ``dns_time_out`` = ``120``
      - (IntOpt) Maximum time (in seconds) to wait for a DNS entry add.
    * - ``dns_ttl`` = ``300``
      - (IntOpt) Time (in seconds) before a refresh of DNS information occurs.
-   * - ``dns_username`` = ````
+   * - ``dns_username`` = `` ``
      - (StrOpt) Username for DNSaaS.
    * - ``trove_dns_support`` = ``False``
      - (BoolOpt) Whether Trove should add DNS entries on create (using Designate DNSaaS).

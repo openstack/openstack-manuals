@@ -24,13 +24,13 @@
      - (BoolOpt) Enable the preview Stack Adopt feature.
    * - ``encrypt_parameters_and_properties`` = ``False``
      - (BoolOpt) Encrypt template parameters that were marked as hidden and also all the resource properties before storing them in database.
-   * - ``heat_metadata_server_url`` = ````
+   * - ``heat_metadata_server_url`` = `` ``
      - (StrOpt) URL of the Heat metadata server.
    * - ``heat_stack_user_role`` = ``heat_stack_user``
      - (StrOpt) Keystone role for heat template-defined users.
    * - ``heat_waitcondition_server_url`` = ``None``
      - (StrOpt) URL of the Heat waitcondition server.
-   * - ``heat_watch_server_url`` = ````
+   * - ``heat_watch_server_url`` = `` ``
      - (StrOpt) URL of the Heat CloudWatch server.
    * - ``hidden_stack_tags`` = ``data-processing-cluster``
      - (ListOpt) Stacks containing these tag names will be hidden. Multiple tags should be given in a comma-delimited list (eg. hidden_stack_tags=hide_me,me_too).
@@ -50,17 +50,17 @@
      - (StrOpt) Keystone domain ID which contains heat template-defined users. If this option is set, stack_user_domain_name option will be ignored.
    * - ``stack_user_domain_name`` = ``None``
      - (StrOpt) Keystone domain name which contains heat template-defined users. If `stack_user_domain_id` option is set, this option is ignored.
-   * - ``trusts_delegated_roles`` = ````
+   * - ``trusts_delegated_roles`` = `` ``
      - (ListOpt) Subset of trustor roles to be delegated to heat. If left unset, all roles of a user will be delegated to heat when creating a stack.
    * - **[auth_password]**
      -
-   * - ``allowed_auth_uris`` = ````
+   * - ``allowed_auth_uris`` = `` ``
      - (ListOpt) Allowed keystone endpoints for auth_uri when multi_cloud is enabled. At least one endpoint needs to be specified.
    * - ``multi_cloud`` = ``False``
      - (BoolOpt) Allow orchestration of multiple clouds.
    * - **[ec2authtoken]**
      -
-   * - ``allowed_auth_uris`` = ````
+   * - ``allowed_auth_uris`` = `` ``
      - (ListOpt) Allowed keystone endpoints for auth_uri when multi_cloud is enabled. At least one endpoint needs to be specified.
    * - ``auth_uri`` = ``None``
      - (StrOpt) Authentication Endpoint URI.

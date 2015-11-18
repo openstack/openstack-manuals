@@ -32,7 +32,7 @@
      - (StrOpt) The user project name
    * - ``os_region_name`` = ``None``
      - (StrOpt) Region name to use for OpenStack service endpoints.
-   * - ``os_tenant_id`` = ````
+   * - ``os_tenant_id`` = `` ``
      - (StrOpt) Tenant ID to use for OpenStack service access.
    * - ``os_tenant_name`` = ``admin``
      - (StrOpt) Tenant name to use for OpenStack service access.

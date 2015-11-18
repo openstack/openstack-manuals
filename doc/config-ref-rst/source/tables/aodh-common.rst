@@ -36,7 +36,7 @@
      - (ListOpt) Memcached servers or None for in process cache.
    * - ``notifier_rpc_topic`` = ``alarm_notifier``
      - (StrOpt) The topic that aodh uses for alarm notifier messages.
-   * - ``password`` = ````
+   * - ``password`` = `` ``
      - (StrOpt) Password for Redis server (optional).
    * - ``port`` = ``6379``
      - (IntOpt) Use this port to connect to redis host.
@@ -44,9 +44,9 @@
      - (IntOpt) Maximum number of alarms defined for a project.
    * - ``record_history`` = ``True``
      - (BoolOpt) Record alarm change events.
-   * - ``rest_notifier_certificate_file`` = ````
+   * - ``rest_notifier_certificate_file`` = `` ``
      - (StrOpt) SSL Client certificate for REST notifier.
-   * - ``rest_notifier_certificate_key`` = ````
+   * - ``rest_notifier_certificate_key`` = `` ``
      - (StrOpt) SSL Client private key for REST notifier.
    * - ``rest_notifier_max_retries`` = ``0``
      - (IntOpt) Number of retries for REST notifier

@@ -18,7 +18,7 @@
      -
    * - ``enabled`` = ``True``
      - (BoolOpt) DEPRECATED: Whether the V2.1 API is enabled or not. This option will be removed in the near future.
-   * - ``extensions_blacklist`` = ````
+   * - ``extensions_blacklist`` = `` ``
      - (ListOpt) DEPRECATED: A list of v2.1 API extensions to never load. Specify the extension aliases here. This option will be removed in the near future. After that point you have to run all of the API.
-   * - ``extensions_whitelist`` = ````
+   * - ``extensions_whitelist`` = `` ``
      - (ListOpt) DEPRECATED: If the list is not empty then a v2.1 API extension will only be loaded if it exists in this list. Specify the extension aliases here. This option will be removed in the near future. After that point you have to run all of the API.

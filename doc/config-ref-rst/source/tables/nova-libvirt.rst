@@ -28,17 +28,17 @@
      - (BoolOpt) Write a checksum for files in _base to disk
    * - ``checksum_interval_seconds`` = ``3600``
      - (IntOpt) How frequently to checksum base images
-   * - ``connection_uri`` = ````
+   * - ``connection_uri`` = `` ``
      - (StrOpt) Override the default libvirt URI (which is dependent on virt_type)
    * - ``cpu_mode`` = ``None``
      - (StrOpt) Set to "host-model" to clone the host CPU feature flags; to "host-passthrough" to use the host CPU model exactly; to "custom" to use a named CPU model; to "none" to not set any CPU model. If virt_type="kvm|qemu", it will default to "host-model", otherwise it will default to "none"
    * - ``cpu_model`` = ``None``
      - (StrOpt) Set to a named libvirt CPU model (see names listed in /usr/share/libvirt/cpu_map.xml). Only has effect if cpu_mode="custom" and virt_type="kvm|qemu"
-   * - ``disk_cachemodes`` = ````
+   * - ``disk_cachemodes`` = `` ``
      - (ListOpt) Specific cachemodes to use for different disk types e.g: file=directsync,block=none
    * - ``disk_prefix`` = ``None``
      - (StrOpt) Override the default disk prefix for the devices attached to a server, which is dependent on virt_type. (valid options are: sd, xvd, uvd, vd)
-   * - ``gid_maps`` = ````
+   * - ``gid_maps`` = `` ``
      - (ListOpt) List of guid targets and ranges.Syntax is guest-gid:host-gid:countMaximum of 5 allowed.
    * - ``hw_disk_discard`` = ``None``
      - (StrOpt) Discard option for nova managed disks. Need Libvirt(1.0.6) Qemu1.5 (raw format) Qemu1.6(qcow2 format)
@@ -46,7 +46,7 @@
      - (ListOpt) For qemu or KVM guests, set this option to specify a default machine type per host architecture. You can find a list of supported machine types in your environment by checking the output of the "virsh capabilities"command. The format of the value for this config option is host-arch=machine-type. For example: x86_64=machinetype1,armv7l=machinetype2
    * - ``image_info_filename_pattern`` = ``$instances_path/$image_cache_subdirectory_name/%(image)s.info``
      - (StrOpt) Allows image information files to be stored in non-standard locations
-   * - ``images_rbd_ceph_conf`` = ````
+   * - ``images_rbd_ceph_conf`` = `` ``
      - (StrOpt) Path to the ceph configuration file to use
    * - ``images_rbd_pool`` = ``rbd``
      - (StrOpt) The RADOS pool in which rbd volumes are stored
@@ -90,7 +90,7 @@
      - (BoolOpt) Create sparse logical volumes (with virtualsize) if this flag is set to True.
    * - ``sysinfo_serial`` = ``auto``
      - (StrOpt) The data source used to the populate the host "serial" UUID exposed to guest in the virtual BIOS.
-   * - ``uid_maps`` = ````
+   * - ``uid_maps`` = `` ``
      - (ListOpt) List of uid targets and ranges.Syntax is guest-uid:host-uid:countMaximum of 5 allowed.
    * - ``use_usb_tablet`` = ``True``
      - (BoolOpt) Sync virtual and real mouse cursors in Windows VMs

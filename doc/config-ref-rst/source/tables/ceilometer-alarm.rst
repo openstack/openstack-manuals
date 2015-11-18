@@ -26,9 +26,9 @@
      - (IntOpt) Maximum number of alarms defined for a project.
    * - ``record_history`` = ``True``
      - (BoolOpt) Record alarm change events.
-   * - ``rest_notifier_certificate_file`` = ````
+   * - ``rest_notifier_certificate_file`` = `` ``
      - (StrOpt) SSL Client certificate for REST notifier.
-   * - ``rest_notifier_certificate_key`` = ````
+   * - ``rest_notifier_certificate_key`` = `` ``
      - (StrOpt) SSL Client private key for REST notifier.
    * - ``rest_notifier_max_retries`` = ``0``
      - (IntOpt) Number of retries for REST notifier

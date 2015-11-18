@@ -22,7 +22,7 @@
      - (StrOpt) Pool or Vdisk name to use for volume creation.
    * - ``hpmsa_backend_type`` = ``virtual``
      - (StrOpt) linear (for Vdisk) or virtual (for Pool).
-   * - ``hpmsa_iscsi_ips`` = ````
+   * - ``hpmsa_iscsi_ips`` = `` ``
      - (ListOpt) List of comma-separated target iSCSI IP addresses.
    * - ``hpmsa_verify_certificate`` = ``False``
      - (BoolOpt) Whether to verify HPMSA array SSL certificate.

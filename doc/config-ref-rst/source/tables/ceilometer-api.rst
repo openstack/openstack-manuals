@@ -28,7 +28,7 @@
      - (BoolOpt) Refresh Event Pipeline configuration on-the-fly.
    * - ``refresh_pipeline_cfg`` = ``False``
      - (BoolOpt) Refresh Pipeline configuration on-the-fly.
-   * - ``reserved_metadata_keys`` = ````
+   * - ``reserved_metadata_keys`` = `` ``
      - (ListOpt) List of metadata keys reserved for metering use. And these keys are additional to the ones included in the namespace.
    * - ``reserved_metadata_length`` = ``256``
      - (IntOpt) Limit on length of reserved metadata values.

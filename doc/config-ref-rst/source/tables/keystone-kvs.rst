@@ -16,7 +16,7 @@
      - Description
    * - **[kvs]**
      -
-   * - ``backends`` = ````
+   * - ``backends`` = `` ``
      - (ListOpt) Extra dogpile.cache backend modules to register with the dogpile.cache library.
    * - ``config_prefix`` = ``keystone.kvs``
      - (StrOpt) Prefix for building the configuration dictionary for the KVS region. This should not need to be changed unless there is another dogpile.cache region with the same configuration name.

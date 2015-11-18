@@ -26,7 +26,7 @@
      - (StrOpt) Qpid broker hostname.
    * - ``qpid_hosts`` = ``$qpid_hostname:$qpid_port``
      - (ListOpt) Qpid HA cluster host:port pairs.
-   * - ``qpid_password`` = ````
+   * - ``qpid_password`` = `` ``
      - (StrOpt) Password for Qpid connection.
    * - ``qpid_port`` = ``5672``
      - (IntOpt) Qpid broker port.
@@ -34,13 +34,13 @@
      - (StrOpt) Transport to use, either 'tcp' or 'ssl'.
    * - ``qpid_receiver_capacity`` = ``1``
      - (IntOpt) The number of prefetched messages held by receiver.
-   * - ``qpid_sasl_mechanisms`` = ````
+   * - ``qpid_sasl_mechanisms`` = `` ``
      - (StrOpt) Space separated list of SASL mechanisms to use for auth.
    * - ``qpid_tcp_nodelay`` = ``True``
      - (BoolOpt) Whether to disable the Nagle algorithm.
    * - ``qpid_topology_version`` = ``1``
      - (IntOpt) The qpid topology version to use.  Version 1 is what was originally used by impl_qpid.  Version 2 includes some backwards-incompatible changes that allow broker federation to work.  Users should update to version 2 when they are able to take everything down, as it requires a clean break.
-   * - ``qpid_username`` = ````
+   * - ``qpid_username`` = `` ``
      - (StrOpt) Username for Qpid connection.
    * - ``send_single_reply`` = ``False``
      - (BoolOpt) Send a single AMQP reply to call message. The current behaviour since oslo-incubator is to send two AMQP replies - first one with the payload, a second one to ensure the other have finish to send the payload. We are going to remove it in the N release, but we must keep backward compatible at the same time. This option provides such compatibility - it defaults to False in Liberty and can be turned on for early adopters with a new installations or for testing. Please note, that this option will be removed in the Mitaka release.

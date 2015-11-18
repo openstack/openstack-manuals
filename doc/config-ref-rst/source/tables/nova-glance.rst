@@ -20,7 +20,7 @@
      - (StrOpt) Base URL that will be presented to users in links to glance resources
    * - **[glance]**
      -
-   * - ``allowed_direct_url_schemes`` = ````
+   * - ``allowed_direct_url_schemes`` = `` ``
      - (ListOpt) A list of url scheme that can be downloaded directly via the direct_url.  Currently supported schemes: [file].
    * - ``api_insecure`` = ``False``
      - (BoolOpt) Allow to perform insecure SSL (https) requests to glance
@@ -36,5 +36,5 @@
      - (StrOpt) Default protocol to use when connecting to glance. Set to https for SSL.
    * - **[image_file_url]**
      -
-   * - ``filesystems`` = ````
+   * - ``filesystems`` = `` ``
      - (ListOpt) List of file systems that are configured in this file in the image_file_url:<list entry name> sections

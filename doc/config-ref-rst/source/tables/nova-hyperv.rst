@@ -22,7 +22,7 @@
      - (BoolOpt) Enables metrics collections for an instance by using Hyper-V's metric APIs. Collected data can by retrieved by other apps and services, e.g.: Ceilometer. Requires Hyper-V / Windows Server 2012 and above
    * - ``force_hyperv_utils_v1`` = ``False``
      - (BoolOpt) Force V1 WMI utility classes
-   * - ``instances_path_share`` = ````
+   * - ``instances_path_share`` = `` ``
      - (StrOpt) The name of a Windows share name mapped to the "instances_path" dir and used by the resize feature to copy files to the target host. If left blank, an administrative share will be used, looking for the same "instances_path" used locally
    * - ``limit_cpu_features`` = ``False``
      - (BoolOpt) Required for live migration among hosts with different CPU features

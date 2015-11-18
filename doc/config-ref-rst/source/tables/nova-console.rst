@@ -16,7 +16,7 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``console_allowed_origins`` = ````
+   * - ``console_allowed_origins`` = `` ``
      - (ListOpt) Allowed Origin header hostnames for access to console proxy servers
    * - ``console_public_hostname`` = ``localhost``
      - (StrOpt) Publicly visible name for this console host

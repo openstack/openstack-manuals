@@ -16,7 +16,7 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``hp3par_api_url`` = ````
+   * - ``hp3par_api_url`` = `` ``
      - (StrOpt) 3PAR WSAPI Server Url like https://<3par ip>:8080/api/v1
    * - ``hp3par_debug`` = ``False``
      - (BoolOpt) Enable HTTP debugging to 3PAR
@@ -24,17 +24,17 @@
      - (StrOpt) The File Provisioning Group (FPG) to use
    * - ``hp3par_fstore_per_share`` = ``False``
      - (BoolOpt) Use one filestore per share
-   * - ``hp3par_password`` = ````
+   * - ``hp3par_password`` = `` ``
      - (StrOpt) 3PAR password for the user specified in hp3par_username
-   * - ``hp3par_san_ip`` = ````
+   * - ``hp3par_san_ip`` = `` ``
      - (StrOpt) IP address of SAN controller
-   * - ``hp3par_san_login`` = ````
+   * - ``hp3par_san_login`` = `` ``
      - (StrOpt) Username for SAN controller
-   * - ``hp3par_san_password`` = ````
+   * - ``hp3par_san_password`` = `` ``
      - (StrOpt) Password for SAN controller
    * - ``hp3par_san_ssh_port`` = ``22``
      - (PortOpt) SSH port to use with SAN
-   * - ``hp3par_share_ip_address`` = ````
+   * - ``hp3par_share_ip_address`` = `` ``
      - (StrOpt) The IP address for shares not using a share server
-   * - ``hp3par_username`` = ````
+   * - ``hp3par_username`` = `` ``
      - (StrOpt) 3PAR username with the 'edit' role

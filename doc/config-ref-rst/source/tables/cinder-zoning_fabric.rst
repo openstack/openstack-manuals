@@ -16,13 +16,13 @@
      - Description
    * - **[BRCD_FABRIC_EXAMPLE]**
      -
-   * - ``fc_fabric_address`` = ````
+   * - ``fc_fabric_address`` = `` ``
      - (StrOpt) Management IP of fabric
-   * - ``fc_fabric_password`` = ````
+   * - ``fc_fabric_password`` = `` ``
      - (StrOpt) Password for user
    * - ``fc_fabric_port`` = ``22``
      - (PortOpt) Connecting port
-   * - ``fc_fabric_user`` = ````
+   * - ``fc_fabric_user`` = `` ``
      - (StrOpt) Fabric user ID
    * - ``principal_switch_wwn`` = ``None``
      - (StrOpt) Principal switch WWN of the fabric

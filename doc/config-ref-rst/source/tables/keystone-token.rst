@@ -18,7 +18,7 @@
      -
    * - ``allow_rescope_scoped_token`` = ``True``
      - (BoolOpt) Allow rescoping of scoped token. Setting allow_rescoped_scoped_token to false prevents a user from exchanging a scoped token for any other token.
-   * - ``bind`` = ````
+   * - ``bind`` = `` ``
      - (ListOpt) External auth mechanisms that should add bind information to token, e.g., kerberos,x509.
    * - ``cache_time`` = ``None``
      - (IntOpt) Time to cache tokens (in seconds). This has no effect unless global and token caching are enabled.
