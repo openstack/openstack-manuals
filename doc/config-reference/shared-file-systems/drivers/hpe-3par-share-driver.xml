@@ -1,15 +1,15 @@
-<section xml:id="hp-3par-share-driver" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="hpe-3par-share-driver" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-  <title>HP 3PAR driver</title>
+  <title>HPE 3PAR driver</title>
   <para>
-    The HP 3PAR driver provides NFS and CIFS shared file systems
-    to OpenStack using HP 3PAR's File Persona capabilities.
+    The HPE 3PAR driver provides NFS and CIFS shared file systems
+    to OpenStack using HPE 3PAR's File Persona capabilities.
   </para>
   <simplesect>
     <title>Supported operations</title>
     <para>
-      The following operations are supported with HP 3PAR File Persona:
+      The following operations are supported with HPE 3PAR File Persona:
     </para>
     <itemizedlist>
       <listitem>
@@ -124,17 +124,17 @@
     <itemizedlist>
       <listitem>
         <para>
-          hp3parclient version 3.2.1 or newer from PyPI.
+          python-3parclient version 4.0.0 or newer from PyPI.
         </para>
       </listitem>
     </itemizedlist>
     <para>
-      On the HP 3PAR array:
+      On the HPE 3PAR array:
     </para>
     <itemizedlist>
       <listitem>
         <para>
-          HP 3PAR Operating System software version 3.2.1 MU3 or higher.
+          HPE 3PAR Operating System software version 3.2.1 MU3 or higher.
         </para>
       </listitem>
       <listitem>
@@ -151,11 +151,11 @@
     </itemizedlist>
   </simplesect>
   <simplesect>
-    <title>Pre-configuration on the HP 3PAR</title>
+    <title>Pre-configuration on the HPE 3PAR</title>
     <itemizedlist>
       <listitem>
         <para>
-          HP 3PAR File Persona must be initialized and started (startfs).
+          HPE 3PAR File Persona must be initialized and started (startfs).
         </para>
       </listitem>
       <listitem>
@@ -187,7 +187,7 @@
     <title>Backend configuration</title>
     <para>
       The following parameters need to be configured in the Shared
-      File Systems service configuration file for the HP 3PAR driver:
+      File Systems service configuration file for the HPE 3PAR driver:
     </para>
     <itemizedlist>
       <listitem>
@@ -198,7 +198,7 @@
       <listitem>
         <para>
           share_driver =
-          manila.share.drivers.hp.hp_3par_driver.HP3ParShareDriver
+          manila.share.drivers.hpe.hpe_3par_driver.HPE3ParShareDriver
         </para>
       </listitem>
       <listitem>
@@ -208,57 +208,57 @@
       </listitem>
       <listitem>
         <para>
-          hp3par_fpg = &lt;FPG to use for share creation&gt;
+          hpe3par_fpg = &lt;FPG to use for share creation&gt;
         </para>
       </listitem>
       <listitem>
         <para>
-          hp3par_share_ip_address = &lt;IP address to use for share
+          hpe3par_share_ip_address = &lt;IP address to use for share
           export location&gt;
         </para>
       </listitem>
       <listitem>
         <para>
-          hp3par_san_ip = &lt;IP address for SSH access to the SAN
+          hpe3par_san_ip = &lt;IP address for SSH access to the SAN
           controller&gt;
         </para>
       </listitem>
       <listitem>
         <para>
-          hp3par_api_url = &lt;3PAR WS API Server URL&gt;
+          hpe3par_api_url = &lt;3PAR WS API Server URL&gt;
         </para>
       </listitem>
       <listitem>
         <para>
-          hp3par_username = &lt;3PAR username with the 'edit' role&gt;
+          hpe3par_username = &lt;3PAR username with the 'edit' role&gt;
         </para>
       </listitem>
       <listitem>
         <para>
-          hp3par_password = &lt;3PAR password for the user specified in
-          hp3par_username&gt;
+          hpe3par_password = &lt;3PAR password for the user specified in
+          hpe3par_username&gt;
         </para>
       </listitem>
       <listitem>
         <para>
-          hp3par_san_login = &lt;Username for SSH access to the SAN
+          hpe3par_san_login = &lt;Username for SSH access to the SAN
           controller&gt;
         </para>
       </listitem>
       <listitem>
         <para>
-          hp3par_san_password = &lt;Password for SSH access to the SAN
+          hpe3par_san_password = &lt;Password for SSH access to the SAN
           controller&gt;
         </para>
       </listitem>
       <listitem>
         <para>
-          hp3par_debug = &lt;False or True for extra debug logging&gt;
+          hpe3par_debug = &lt;False or True for extra debug logging&gt;
         </para>
       </listitem>
     </itemizedlist>
     <para>
-      The hp3par_share_ip_address must be a valid IP address for the
+      The hpe3par_share_ip_address must be a valid IP address for the
       configured FPG's VFS. This IP address is used in export locations
       for shares that are created. Networking must be configured to
       allow connectivity from clients to shares.
@@ -318,7 +318,7 @@
       driver_handles_share_servers extra-spec. This ensures that the
       share will be created on a back end that supports the requested
       driver_handles_share_servers (share networks) capability. For the
-      HP 3PAR driver, this must be set to False.
+      HPE 3PAR driver, this must be set to False.
     </para>
     <para>
       Another common Shared File Systems service extra-spec used to determine
@@ -328,17 +328,17 @@
       matching share_backend_name.
     </para>
     <para>
-      The HP 3PAR driver automatically reports capabilities based on the
+      The HPE 3PAR driver automatically reports capabilities based on the
       FPG used for each back end. Share types with extra specs can be
       created by an administrator to control which share types are
       allowed to use FPGs with or without specific capabilities. The
       following extra-specs are used with the capabilities filter and
-      the HP 3PAR driver:
+      the HPE 3PAR driver:
     </para>
     <itemizedlist>
       <listitem>
         <para>
-          hp3par_flash_cache = '&lt;is&gt; True' or '&lt;is&gt; False'
+          hpe3par_flash_cache = '&lt;is&gt; True' or '&lt;is&gt; False'
         </para>
       </listitem>
       <listitem>
@@ -353,7 +353,7 @@
       </listitem>
     </itemizedlist>
     <para>
-      hp3par_flash_cache will be reported as True for back ends that have
+      hpe3par_flash_cache will be reported as True for back ends that have
       3PAR's Adaptive Flash Cache enabled.
     </para>
     <para>
@@ -369,26 +369,26 @@
     <para>
       Scoped extra-specs are used to influence vendor-specific
       implementation details. Scoped extra-specs use a prefix followed
-      by a colon. For HP 3PAR these extra-specs have a prefix of hp3par.
+      by a colon. For HPE 3PAR these extra-specs have a prefix of hpe3par.
     </para>
     <para>
-      The following HP 3PAR extra-specs are used when creating CIFS
+      The following HPE 3PAR extra-specs are used when creating CIFS
       (SMB) shares:
     </para>
     <itemizedlist>
       <listitem>
         <para>
-          hp3par:smb_access_based_enum = true or false
+          hpe3par:smb_access_based_enum = true or false
         </para>
       </listitem>
       <listitem>
         <para>
-          hp3par:smb_continuous_avail = true or false
+          hpe3par:smb_continuous_avail = true or false
         </para>
       </listitem>
       <listitem>
         <para>
-          hp3par:smb_cache = off, manual, optimized or auto
+          hpe3par:smb_cache = off, manual, optimized or auto
         </para>
       </listitem>
     </itemizedlist>
@@ -400,8 +400,7 @@
     <para>
       smb_continuous_avail (Continuous Availability) specifies if SMB3
       continuous availability features should be enabled for this share.
-      If not specified, the default is true. This setting will be
-      ignored with hp3parclient 3.2.1 or earlier.
+      If not specified, the default is true.
     </para>
     <para>
       smb_cache specifies client-side caching for offline files. Valid
@@ -442,13 +441,13 @@
       </listitem>
     </itemizedlist>
     <para>
-      The following HP 3PAR extra-specs are used when creating NFS
+      The following HPE 3PAR extra-specs are used when creating NFS
       shares:
     </para>
     <itemizedlist>
       <listitem>
         <para>
-          hp3par:nfs_options = Comma separated list of NFS export
+          hpe3par:nfs_options = Comma separated list of NFS export
           options.
         </para>
       </listitem>
@@ -465,36 +464,36 @@
         </listitem>
         <listitem>
           <para>
-            no_subtree_check and fsid are not allowed per HP 3PAR CLI
+            no_subtree_check and fsid are not allowed per HPE 3PAR CLI
             support.
           </para>
         </listitem>
         <listitem>
           <para>
             (in)secure and (no_)root_squash are not allowed because the
-            HP 3PAR driver controls those settings.
+            HPE 3PAR driver controls those settings.
           </para>
         </listitem>
       </itemizedlist>
     </blockquote>
     <para>
-      All other NFS options are forwarded to the HP 3PAR as part of
-      share creation. The HP 3PAR will do additional validation at share
-      creation time. Refer to HP 3PAR CLI help for more details.
+      All other NFS options are forwarded to the HPE 3PAR as part of
+      share creation. The HPE 3PAR will do additional validation at share
+      creation time. Refer to HPE 3PAR CLI help for more details.
     </para>
   </simplesect>
   <!--
   <simplesect>
     <title>Driver options</title>
     <para>The following table contains the configuration options specific to this driver.</para>
-    <xi:include href="../../../common/tables/manila-hp3par.xml"/>
+    <xi:include href="../../../common/tables/manila-hpe3par.xml"/>
   </simplesect>
   -->
   <simplesect>
         <title>Driver configuration options</title>
         <para>
             Configuration options specific to this driver are documented here:
-            <xref linkend="config_table_manila_hp3par"/>.
+            <xref linkend="config_table_manila_hpe3par"/>.
         </para>
   </simplesect>
 </section>
