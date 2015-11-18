@@ -48,5 +48,5 @@
      - (IntOpt) Number of minutes to lockout if triggered.
    * - ``lockout_window`` = ``15``
      - (IntOpt) Number of minutes for lockout window.
-   * - ``region_list`` = ````
+   * - ``region_list`` = `` ``
      - (ListOpt) List of region=fqdn pairs separated by commas

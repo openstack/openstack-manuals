@@ -18,7 +18,7 @@
      -
    * - ``boot_script_template`` = ``$pybasedir/nova/cloudpipe/bootscript.template``
      - (StrOpt) Template for cloudpipe instance boot script
-   * - ``dmz_cidr`` = ````
+   * - ``dmz_cidr`` = `` ``
      - (ListOpt) A list of dmz ranges that should be accepted
    * - ``dmz_mask`` = ``255.255.255.0``
      - (StrOpt) Netmask to push into openvpn config

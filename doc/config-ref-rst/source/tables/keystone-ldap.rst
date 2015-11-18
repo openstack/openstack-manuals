@@ -30,7 +30,7 @@
      - (IntOpt) Sets the LDAP debugging level for LDAP calls. A value of 0 means that debugging is not enabled. This value is a bitmask, consult your LDAP documentation for possible values.
    * - ``dumb_member`` = ``cn=dumb,dc=nonexistent``
      - (StrOpt) DN of the "dummy member" to use when "use_dumb_member" is enabled.
-   * - ``group_additional_attribute_mapping`` = ````
+   * - ``group_additional_attribute_mapping`` = `` ``
      - (ListOpt) Additional attribute mappings for groups. Attribute mapping format is <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the LDAP entry and user_attr is the Identity API attribute.
    * - ``group_allow_create`` = ``True``
      - (BoolOpt) Allow group creation in LDAP backend.
@@ -38,7 +38,7 @@
      - (BoolOpt) Allow group deletion in LDAP backend.
    * - ``group_allow_update`` = ``True``
      - (BoolOpt) Allow group update in LDAP backend.
-   * - ``group_attribute_ignore`` = ````
+   * - ``group_attribute_ignore`` = `` ``
      - (ListOpt) List of attributes stripped off the group on update.
    * - ``group_desc_attribute`` = ``description``
      - (StrOpt) LDAP attribute mapped to group description.
@@ -68,7 +68,7 @@
      - (IntOpt) Maximum count of reconnect trials.
    * - ``pool_size`` = ``10``
      - (IntOpt) Connection pool size.
-   * - ``project_additional_attribute_mapping`` = ````
+   * - ``project_additional_attribute_mapping`` = `` ``
      - (ListOpt) Additional attribute mappings for projects. Attribute mapping format is <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the LDAP entry and user_attr is the Identity API attribute.
    * - ``project_allow_create`` = ``True``
      - (BoolOpt) Allow project creation in LDAP backend.
@@ -76,7 +76,7 @@
      - (BoolOpt) Allow project deletion in LDAP backend.
    * - ``project_allow_update`` = ``True``
      - (BoolOpt) Allow project update in LDAP backend.
-   * - ``project_attribute_ignore`` = ````
+   * - ``project_attribute_ignore`` = `` ``
      - (ListOpt) List of attributes stripped off the project on update.
    * - ``project_desc_attribute`` = ``description``
      - (StrOpt) LDAP attribute mapped to project description.
@@ -104,7 +104,7 @@
      - (StrOpt) Search base for projects. Defaults to the suffix value.
    * - ``query_scope`` = ``one``
      - (StrOpt) The LDAP scope for queries, "one" represents oneLevel/singleLevel and "sub" represents subtree/wholeSubtree options.
-   * - ``role_additional_attribute_mapping`` = ````
+   * - ``role_additional_attribute_mapping`` = `` ``
      - (ListOpt) Additional attribute mappings for roles. Attribute mapping format is <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the LDAP entry and user_attr is the Identity API attribute.
    * - ``role_allow_create`` = ``True``
      - (BoolOpt) Allow role creation in LDAP backend.
@@ -112,7 +112,7 @@
      - (BoolOpt) Allow role deletion in LDAP backend.
    * - ``role_allow_update`` = ``True``
      - (BoolOpt) Allow role update in LDAP backend.
-   * - ``role_attribute_ignore`` = ````
+   * - ``role_attribute_ignore`` = `` ``
      - (ListOpt) List of attributes stripped off the role on update.
    * - ``role_filter`` = ``None``
      - (StrOpt) LDAP search filter for roles.
@@ -146,7 +146,7 @@
      - (BoolOpt) Enable TLS for communicating with LDAP servers.
    * - ``user`` = ``None``
      - (StrOpt) User BindDN to query the LDAP server.
-   * - ``user_additional_attribute_mapping`` = ````
+   * - ``user_additional_attribute_mapping`` = `` ``
      - (ListOpt) List of additional LDAP attributes used for mapping additional attribute mappings for users. Attribute mapping format is <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the LDAP entry and user_attr is the Identity API attribute.
    * - ``user_allow_create`` = ``True``
      - (BoolOpt) Allow user creation in LDAP backend.

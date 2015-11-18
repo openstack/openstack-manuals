@@ -30,7 +30,7 @@
      -
    * - ``default_swift_reference`` = ``ref1``
      - (StrOpt) The reference to the default swift account/backing store parameters to use for adding new images.
-   * - ``swift_store_admin_tenants`` = ````
+   * - ``swift_store_admin_tenants`` = `` ``
      - (ListOpt) A list of tenants that will be granted read/write access on all Swift containers created by Glance in multi-tenant mode.
    * - ``swift_store_auth_address`` = ``None``
      - (StrOpt) The address where the Swift authentication service is listening. (deprecated - use "auth_address" in swift_store_config_file)

@@ -20,13 +20,13 @@
      - (IntOpt) Number of times a VMware vSphere API may be retried.
    * - ``ca_file`` = ``None``
      - (StrOpt) CA bundle file to use in verifying the vCenter server certificate.
-   * - ``host_ip`` = ````
+   * - ``host_ip`` = `` ``
      - (StrOpt) IP address of the VMware vSphere host.
-   * - ``host_password`` = ````
+   * - ``host_password`` = `` ``
      - (StrOpt) Password of VMware vSphere.
    * - ``host_port`` = ``443``
      - (PortOpt) Port of the VMware vSphere host.
-   * - ``host_username`` = ````
+   * - ``host_username`` = `` ``
      - (StrOpt) Username of VMware vSphere.
    * - ``insecure`` = ``False``
      - (BoolOpt) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification. This option is ignored if "ca_file" is set.

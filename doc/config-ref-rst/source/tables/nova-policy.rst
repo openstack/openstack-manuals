@@ -24,7 +24,7 @@
      - (IntOpt) Number of seconds between subsequent usage refreshes. This defaults to 0(off) to avoid additional load but it is useful to turn on to help keep quota usage up to date and reduce the impact of out of sync usage issues. Note that quotas are not updated on a periodic task, they will update on a new reservation if max_age has passed since the last reservation
    * - ``max_local_block_devices`` = ``3``
      - (IntOpt) Maximum number of devices that will result in a local image being created on the hypervisor node. A negative number means unlimited. Setting max_local_block_devices to 0 means that any request that attempts to create a local disk will fail. This option is meant to limit the number of local discs (so root local disc that is the result of --image being used, and any other ephemeral and swap disks). 0 does not mean that images will be automatically converted to volumes and boot instances from volumes - it just means that all requests that attempt to create a local disk will fail.
-   * - ``osapi_compute_unique_server_name_scope`` = ````
+   * - ``osapi_compute_unique_server_name_scope`` = `` ``
      - (StrOpt) When set, compute API will consider duplicate hostnames invalid within the specified scope, regardless of case. Should be empty, "project" or "global".
    * - ``osapi_max_limit`` = ``1000``
      - (IntOpt) The maximum number of items returned in a single response from a collection resource

@@ -16,11 +16,11 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``nova_proxy_admin_pass`` = ````
+   * - ``nova_proxy_admin_pass`` = `` ``
      - (StrOpt) Admin password used to connect to Nova.
-   * - ``nova_proxy_admin_tenant_id`` = ````
+   * - ``nova_proxy_admin_tenant_id`` = `` ``
      - (StrOpt) Admin tenant ID used to connect to Nova.
-   * - ``nova_proxy_admin_tenant_name`` = ````
+   * - ``nova_proxy_admin_tenant_name`` = `` ``
      - (StrOpt) Admin tenant name used to connect to Nova.
-   * - ``nova_proxy_admin_user`` = ````
+   * - ``nova_proxy_admin_user`` = `` ``
      - (StrOpt) Admin username used to connect to Nova.

@@ -16,15 +16,15 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``zfssa_initiator`` = ````
+   * - ``zfssa_initiator`` = `` ``
      - (StrOpt) iSCSI initiator IQNs. (comma separated)
-   * - ``zfssa_initiator_config`` = ````
+   * - ``zfssa_initiator_config`` = `` ``
      - (StrOpt) iSCSI initiators configuration.
-   * - ``zfssa_initiator_group`` = ````
+   * - ``zfssa_initiator_group`` = `` ``
      - (StrOpt) iSCSI initiator group.
-   * - ``zfssa_initiator_password`` = ````
+   * - ``zfssa_initiator_password`` = `` ``
      - (StrOpt) Secret of the iSCSI initiator CHAP user.
-   * - ``zfssa_initiator_user`` = ````
+   * - ``zfssa_initiator_user`` = `` ``
      - (StrOpt) iSCSI initiator CHAP user (name).
    * - ``zfssa_lun_compression`` = ``off``
      - (StrOpt) Data compression.
@@ -38,7 +38,7 @@
      - (StrOpt) Storage pool name.
    * - ``zfssa_project`` = ``None``
      - (StrOpt) Project name.
-   * - ``zfssa_replication_ip`` = ````
+   * - ``zfssa_replication_ip`` = `` ``
      - (StrOpt) IP address used for replication data. (maybe the same as data ip)
    * - ``zfssa_rest_timeout`` = ``None``
      - (IntOpt) REST connection timeout. (seconds)
@@ -46,9 +46,9 @@
      - (StrOpt) iSCSI target group name.
    * - ``zfssa_target_interfaces`` = ``None``
      - (StrOpt) Network interfaces of iSCSI targets. (comma separated)
-   * - ``zfssa_target_password`` = ````
+   * - ``zfssa_target_password`` = `` ``
      - (StrOpt) Secret of the iSCSI target CHAP user.
    * - ``zfssa_target_portal`` = ``None``
      - (StrOpt) iSCSI target portal (Data-IP:Port, w.x.y.z:3260).
-   * - ``zfssa_target_user`` = ````
+   * - ``zfssa_target_user`` = `` ``
      - (StrOpt) iSCSI target CHAP user (name).

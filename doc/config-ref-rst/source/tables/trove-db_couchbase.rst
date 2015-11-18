@@ -36,7 +36,7 @@
      - (BoolOpt) Enable the automatic creation of the root user for the service during instance-create. The generated password for the root user is immediately returned in the response of instance-create as the 'password' field.
    * - ``tcp_ports`` = ``8091, 8092, 4369, 11209-11211, 21100-21199``
      - (ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
-   * - ``udp_ports`` = ````
+   * - ``udp_ports`` = `` ``
      - (ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``volume_support`` = ``True``
      - (BoolOpt) Whether to provision a Cinder volume for datadir.
@@ -62,7 +62,7 @@
      - (BoolOpt) Enable the automatic creation of the root user for the service during instance-create. The generated password for the root user is immediately returned in the response of instance-create as the "password" field.
    * - ``tcp_ports`` = ``5984``
      - (ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
-   * - ``udp_ports`` = ````
+   * - ``udp_ports`` = `` ``
      - (ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``volume_support`` = ``True``
      - (BoolOpt) Whether to provision a Cinder volume for datadir.

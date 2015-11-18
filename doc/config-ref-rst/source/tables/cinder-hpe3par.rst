@@ -16,23 +16,23 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``hpe3par_api_url`` = ````
+   * - ``hpe3par_api_url`` = `` ``
      - (StrOpt) 3PAR WSAPI Server Url like https://<3par ip>:8080/api/v1
    * - ``hpe3par_cpg`` = ``OpenStack``
      - (ListOpt) List of the CPG(s) to use for volume creation
-   * - ``hpe3par_cpg_snap`` = ````
+   * - ``hpe3par_cpg_snap`` = `` ``
      - (StrOpt) The CPG to use for Snapshots for volumes. If empty the userCPG will be used.
    * - ``hpe3par_debug`` = ``False``
      - (BoolOpt) Enable HTTP debugging to 3PAR
    * - ``hpe3par_iscsi_chap_enabled`` = ``False``
      - (BoolOpt) Enable CHAP authentication for iSCSI connections.
-   * - ``hpe3par_iscsi_ips`` = ````
+   * - ``hpe3par_iscsi_ips`` = `` ``
      - (ListOpt) List of target iSCSI addresses to use.
-   * - ``hpe3par_password`` = ````
+   * - ``hpe3par_password`` = `` ``
      - (StrOpt) 3PAR password for the user specified in hpe3par_username
-   * - ``hpe3par_snapshot_expiration`` = ````
+   * - ``hpe3par_snapshot_expiration`` = `` ``
      - (StrOpt) The time in hours when a snapshot expires  and is deleted.  This must be larger than expiration
-   * - ``hpe3par_snapshot_retention`` = ````
+   * - ``hpe3par_snapshot_retention`` = `` ``
      - (StrOpt) The time in hours to retain a snapshot.  You can't delete it before this expires.
-   * - ``hpe3par_username`` = ````
+   * - ``hpe3par_username`` = `` ``
      - (StrOpt) 3PAR username with the 'edit' role

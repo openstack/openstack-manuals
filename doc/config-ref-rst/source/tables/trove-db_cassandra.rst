@@ -34,7 +34,7 @@
      - (StrOpt) Root controller implementation for cassandra.
    * - ``tcp_ports`` = ``7000, 7001, 9042, 9160``
      - (ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
-   * - ``udp_ports`` = ````
+   * - ``udp_ports`` = `` ``
      - (ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``volume_support`` = ``True``
      - (BoolOpt) Whether to provision a Cinder volume for datadir.

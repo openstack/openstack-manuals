@@ -26,9 +26,9 @@
      - (BoolOpt) Flag to enable local caching: True, False.
    * - ``zfssa_https_port`` = ``443``
      - (StrOpt) HTTPS port number
-   * - ``zfssa_nfs_mount_options`` = ````
+   * - ``zfssa_nfs_mount_options`` = `` ``
      - (StrOpt) Options to be passed while mounting share over nfs
-   * - ``zfssa_nfs_pool`` = ````
+   * - ``zfssa_nfs_pool`` = `` ``
      - (StrOpt) Storage pool name.
    * - ``zfssa_nfs_project`` = ``NFSProject``
      - (StrOpt) Project name.

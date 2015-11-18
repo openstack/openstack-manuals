@@ -56,7 +56,7 @@
      - (StrOpt) Class that implements datastore-specific task manager logic.
    * - ``tcp_ports`` = ``2500, 27017``
      - (ListOpt) List of TCP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
-   * - ``udp_ports`` = ````
+   * - ``udp_ports`` = `` ``
      - (ListOpt) List of UDP ports and/or port ranges to open in the security group (only applicable if trove_security_groups_support is True).
    * - ``volume_support`` = ``True``
      - (BoolOpt) Whether to provision a Cinder volume for datadir.

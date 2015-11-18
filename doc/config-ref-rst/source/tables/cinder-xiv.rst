@@ -16,13 +16,13 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``san_clustername`` = ````
+   * - ``san_clustername`` = `` ``
      - (StrOpt) Cluster name to use for creating volumes
-   * - ``san_ip`` = ````
+   * - ``san_ip`` = `` ``
      - (StrOpt) IP address of SAN controller
    * - ``san_login`` = ``admin``
      - (StrOpt) Username for SAN controller
-   * - ``san_password`` = ````
+   * - ``san_password`` = `` ``
      - (StrOpt) Password for SAN controller
    * - ``xiv_chap`` = ``disabled``
      - (StrOpt) CHAP authentication mode, effective only for iscsi (disabled|enabled)

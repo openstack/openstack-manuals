@@ -26,5 +26,5 @@
      - (BoolOpt) If set, then the server's certificate will not be verified.
    * - ``key_file`` = ``None``
      - (StrOpt) Optional PEM-formatted file that contains the private key.
-   * - ``url`` = ````
+   * - ``url`` = `` ``
      - (StrOpt) Optional heat url in format like http://0.0.0.0:8004/v1/%(tenant_id)s.

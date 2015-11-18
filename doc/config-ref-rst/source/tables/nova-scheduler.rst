@@ -28,9 +28,9 @@
      - (FloatOpt) Virtual disk to physical disk allocation ratio
    * - ``io_ops_weight_multiplier`` = ``-1.0``
      - (FloatOpt) Multiplier used for weighing host io ops. Negative numbers mean a preference to choose light workload compute hosts.
-   * - ``isolated_hosts`` = ````
+   * - ``isolated_hosts`` = `` ``
      - (ListOpt) Host reserved for specific images
-   * - ``isolated_images`` = ````
+   * - ``isolated_images`` = `` ``
      - (ListOpt) Images to run on isolated host
    * - ``max_instances_per_host`` = ``50``
      - (IntOpt) Ignore hosts that have too many instances
@@ -60,7 +60,7 @@
      - (IntOpt) New instances will be scheduled on a host chosen randomly from a subset of the N best hosts. This property defines the subset size that a host is chosen from. A value of 1 chooses the first host returned by the weighing functions. This value must be at least 1. Any value less than 1 will be ignored, and 1 will be used instead
    * - ``scheduler_instance_sync_interval`` = ``120``
      - (IntOpt) Waiting time interval (seconds) between sending the scheduler a list of current instance UUIDs to verify that its view of instances is in sync with nova. If the CONF option `scheduler_tracks_instance_changes` is False, changing this option will have no effect.
-   * - ``scheduler_json_config_location`` = ````
+   * - ``scheduler_json_config_location`` = `` ``
      - (StrOpt) Absolute path to scheduler configuration JSON file.
    * - ``scheduler_manager`` = ``nova.scheduler.manager.SchedulerManager``
      - (StrOpt) Full class name for the Manager for scheduler
@@ -94,5 +94,5 @@
      - (FloatOpt) Multiplier used for weighing metrics.
    * - ``weight_of_unavailable`` = ``-10000.0``
      - (FloatOpt) The final weight value to be returned if required is set to False and any one of the metrics set by weight_setting is unavailable.
-   * - ``weight_setting`` = ````
+   * - ``weight_setting`` = `` ``
      - (ListOpt) How the metrics are going to be weighed. This should be in the form of "<name1>=<ratio1>, <name2>=<ratio2>, ...", where <nameX> is one of the metrics to be weighed, and <ratioX> is the corresponding ratio. So for "name1=1.0, name2=-1.0" The final weight would be name1.value * 1.0 + name2.value * -1.0.

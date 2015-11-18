@@ -42,7 +42,7 @@
      - (MultiStrOpt) If set, uses specific DNS server for dnsmasq. Can be specified multiple times.
    * - ``dns_update_periodic_interval`` = ``-1``
      - (IntOpt) Number of seconds to wait between runs of updates to DNS entries.
-   * - ``dnsmasq_config_file`` = ````
+   * - ``dnsmasq_config_file`` = `` ``
      - (StrOpt) Override the default dnsmasq settings with this file
    * - ``ebtables_exec_attempts`` = ``3``
      - (IntOpt) Number of times to retry ebtables commands on failure.
@@ -72,15 +72,15 @@
      - (StrOpt) Default IPv4 gateway
    * - ``injected_network_template`` = ``$pybasedir/nova/virt/interfaces.template``
      - (StrOpt) Template file for injected network
-   * - ``instance_dns_domain`` = ````
+   * - ``instance_dns_domain`` = `` ``
      - (StrOpt) Full class name for the DNS Zone for instance IPs
    * - ``instance_dns_manager`` = ``nova.network.noop_dns_driver.NoopDNSDriver``
      - (StrOpt) Full class name for the DNS Manager for instance IPs
-   * - ``iptables_bottom_regex`` = ````
+   * - ``iptables_bottom_regex`` = `` ``
      - (StrOpt) Regular expression to match the iptables rule that should always be on the bottom.
    * - ``iptables_drop_action`` = ``DROP``
      - (StrOpt) The table that iptables to jump to when a packet is to be dropped.
-   * - ``iptables_top_regex`` = ````
+   * - ``iptables_top_regex`` = `` ``
      - (StrOpt) Regular expression to match the iptables rule that should always be on the top.
    * - ``l3_lib`` = ``nova.network.l3.LinuxNetL3``
      - (StrOpt) Indicates underlying L3 management library

@@ -30,7 +30,7 @@
      - (StrOpt) Path of Manila host's private SSH key file.
    * - ``glusterfs_server_password`` = ``None``
      - (StrOpt) Remote GlusterFS server node's login password. This is not required if 'glusterfs_path_to_private_key' is configured.
-   * - ``glusterfs_servers`` = ````
+   * - ``glusterfs_servers`` = `` ``
      - (ListOpt) List of GlusterFS servers that can be used to create shares. Each GlusterFS server should be of the form [remoteuser@]<volserver>, and they are assumed to belong to distinct Gluster clusters.
    * - ``glusterfs_share_layout`` = ``None``
      - (StrOpt) Specifies GlusterFS share layout, that is, the method of associating backing GlusterFS resources to shares.

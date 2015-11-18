@@ -26,7 +26,7 @@
      - (BoolOpt) Services to be added to the available pool on create
    * - ``enabled_apis`` = ``ec2, osapi_compute, metadata``
      - (ListOpt) A list of APIs to enable by default
-   * - ``enabled_ssl_apis`` = ````
+   * - ``enabled_ssl_apis`` = `` ``
      - (ListOpt) A list of APIs with enabled SSL
    * - ``instance_name_template`` = ``instance-%08x``
      - (StrOpt) Template string to be used to generate instance names
@@ -38,7 +38,7 @@
      - (ListOpt) These are image properties which a snapshot should not inherit from an instance
    * - ``null_kernel`` = ``nokernel``
      - (StrOpt) Kernel image that indicates not to use a kernel, but to use a raw disk image instead
-   * - ``osapi_compute_ext_list`` = ````
+   * - ``osapi_compute_ext_list`` = `` ``
      - (ListOpt) DEPRECATED: Specify list of extensions to load when using osapi_compute_extension option with nova.api.openstack.compute.legacy_v2.contrib.select_extensions This option will be removed in the near future. After that point you have to run all of the API.
    * - ``osapi_compute_extension`` = ``['nova.api.openstack.compute.legacy_v2.contrib.standard_extensions']``
      - (MultiStrOpt) osapi compute extension to load. This option will be removed in the near future. After that point you have to run all of the API.
