@@ -330,13 +330,14 @@ To mount the second partition, as root:
 .. code-block:: console
 
    # mkdir /mnt/image
-   # mount /dev/mapper/loop0p2 /mnt
+   # mount /dev/mapper/loop0p2 /mnt/image
 
 Once you are done, to clean up:
 
 .. code-block:: console
 
-   # umount /mnt
+   # umount /mnt/image
+   # rmdir /mnt/image
    # kpartx -d /dev/loop0
    # losetup -d /dev/loop0
 
@@ -418,13 +419,14 @@ they can be mounted directly:
 .. code-block:: console
 
    # mkdir /mnt/image
-   # mount /dev/nbd3p2 /mnt
+   # mount /dev/nbd3p2 /mnt/image
 
 When you are done, clean up:
 
 .. code-block:: console
 
-   # umount /mnt
+   # umount /mnt/image
+   # rmdir /mnt/image
    # qemu-nbd -d /dev/nbd0
 
 Mount a qcow2 image (with LVM)
