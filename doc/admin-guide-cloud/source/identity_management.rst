@@ -21,6 +21,7 @@ command-line client.
    keystone_integrate_with_ldap.rst
    keystone_tokens.rst
    keystone_token-binding.rst
+   keystone_fernet_token_faq.rst
    keystone_use_trusts.rst
    keystone_caching_layer.rst
    identity_user_crud.rst

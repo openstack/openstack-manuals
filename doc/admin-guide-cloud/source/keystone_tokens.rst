@@ -4,7 +4,7 @@ Keystone token providers
 
 Tokens are used to interact with the various OpenStack APIs. The token type
 issued by keystone is configurable through the :file:`etc/keystone.conf` file.
-Currently, there are four supported token types and they include UUID, Fernet,
+Currently, there are four supported token types and they include UUID, fernet,
 PKI, and PKIZ.
 
 UUID tokens
@@ -18,13 +18,14 @@ validate it.
 Fernet tokens
 ~~~~~~~~~~~~~
 
-Fernet tokens were introduced in the OpenStack Kilo release. Unlike the other
-token types mentioned in this document, Fernet tokens do not need to be
-persisted in a back end. ``AES256`` encryption is used to protect the
+The fernet token format was introduced in the OpenStack Kilo release. Unlike
+the other token types mentioned in this document, fernet tokens do not need to
+be persisted in a back end. ``AES256`` encryption is used to protect the
 information stored in the token and integrity is verified with a ``SHA256
 HMAC`` signature. Only the Identity service should have access to the keys used
-to encrypt and decrypt Fernet tokens. Like UUID tokens, Fernet tokens must be
-passed back to the Identity service in order to validate them.
+to encrypt and decrypt fernet tokens. Like UUID tokens, fernet tokens must be
+passed back to the Identity service in order to validate them. For more
+information on the fernet token type, see the :ref:`keystone_fernet_token_faq`.
 
 PKI and PKIZ tokens
 ~~~~~~~~~~~~~~~~~~~
