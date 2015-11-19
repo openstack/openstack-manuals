@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-18 06:16+0000\n"
+"POT-Creation-Date: 2015-11-19 06:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1222,8 +1222,9 @@ msgstr ""
 #: ../adv_config_qos.rst:29
 msgid ""
 "Details about the DB models, API extension, and use cases are out of the "
-"scope of this guide but can be found here: `qos spec <http://specs.openstack."
-"org/openstack/neutron-specs/specs/liberty/qos-api-extension.html>`"
+"scope of this guide but can be found in the `Neutron QoS specification "
+"<http://specs.openstack.org/openstack/neutron-specs/specs/liberty/qos-api-"
+"extension.html>`_."
 msgstr ""
 
 #: ../adv_config_qos.rst:35
@@ -1954,7 +1955,7 @@ msgstr ""
 # #-#-#-#-#  config_ml2_plug_in.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  intro_basic_networking.pot (Networking Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  intro_os_networking_service.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../config_ml2_plug_in.rst:88 ../intro_basic_networking.rst:228
+#: ../config_ml2_plug_in.rst:88 ../intro_basic_networking.rst:227
 #: ../intro_os_networking_service.rst:51
 msgid "DHCP"
 msgstr ""
@@ -2054,19 +2055,18 @@ msgstr ""
 #: ../intro_basic_networking.rst:16
 msgid ""
 "In an Ethernet network, the hosts connected to the network communicate by "
-"exchanging *frames*, which is the Ethernet terminology for packets. Every "
-"host on an Ethernet network is uniquely identified by an address called the "
-"media access control (MAC) address. In particular, in an OpenStack "
-"environment, every virtual machine instance has a unique MAC address, which "
-"is different from the MAC address of the compute host. A MAC address has 48 "
-"bits and is typically represented as a hexadecimal string, such as "
-"``08:00:27:b9:88:74``. The MAC address is hard-coded into the NIC by the "
-"manufacturer, although modern NICs allow you to change the MAC address "
-"programatically. In Linux, you can retrieve the MAC address of a NIC using "
-"the ``ip`` command::"
+"exchanging *frames*. Every host on an Ethernet network is uniquely "
+"identified by an address called the media access control (MAC) address. In "
+"particular, in an OpenStack environment, every virtual machine instance has "
+"a unique MAC address, which is different from the MAC address of the compute "
+"host. A MAC address has 48 bits and is typically represented as a "
+"hexadecimal string, such as ``08:00:27:b9:88:74``. The MAC address is hard-"
+"coded into the NIC by the manufacturer, although modern NICs allow you to "
+"change the MAC address programatically. In Linux, you can retrieve the MAC "
+"address of a NIC using the ``ip`` command::"
 msgstr ""
 
-#: ../intro_basic_networking.rst:32
+#: ../intro_basic_networking.rst:31
 msgid ""
 "Conceptually, you can think of an Ethernet network as a single bus that each "
 "of the network hosts connects to. In early implementations, an Ethernet "
@@ -2079,7 +2079,7 @@ msgid ""
 "Ethernet network referred to as a *layer 2 segment*."
 msgstr ""
 
-#: ../intro_basic_networking.rst:43
+#: ../intro_basic_networking.rst:42
 msgid ""
 "In an Ethernet network, every host on the network can send a frame directly "
 "to every other host. An Ethernet network also supports broadcasts, so that "
@@ -2090,7 +2090,7 @@ msgid ""
 "*broadcast domain*."
 msgstr ""
 
-#: ../intro_basic_networking.rst:51
+#: ../intro_basic_networking.rst:50
 msgid ""
 "When a NIC receives an Ethernet frame, by default the NIC checks to see if "
 "the destination MAC address matches the address of the NIC (or the broadcast "
@@ -2102,7 +2102,7 @@ msgid ""
 "have the appropriate NICs configured for promiscuous mode."
 msgstr ""
 
-#: ../intro_basic_networking.rst:61
+#: ../intro_basic_networking.rst:60
 msgid ""
 "As mentioned earlier, modern Ethernet networks use switches to interconnect "
 "the network hosts. A switch is a box of networking hardware with a large "
@@ -2119,11 +2119,11 @@ msgid ""
 "connection of switches and hosts behaves like a single network."
 msgstr ""
 
-#: ../intro_basic_networking.rst:79
+#: ../intro_basic_networking.rst:78
 msgid "VLANs"
 msgstr ""
 
-#: ../intro_basic_networking.rst:81
+#: ../intro_basic_networking.rst:80
 msgid ""
 "VLAN is a networking technology that enables a single switch to act as if it "
 "was multiple independent switches. Specifically, two hosts that are "
@@ -2134,7 +2134,7 @@ msgid ""
 "1 and 4095. We say \"VLAN 15\" to refer to the VLAN with numerical ID of 15."
 msgstr ""
 
-#: ../intro_basic_networking.rst:90
+#: ../intro_basic_networking.rst:89
 msgid ""
 "To understand how VLANs work, let's consider VLAN applications in a "
 "traditional IT environment, where physical hosts are attached to a physical "
@@ -2149,7 +2149,7 @@ msgid ""
 "VLANs."
 msgstr ""
 
-#: ../intro_basic_networking.rst:102
+#: ../intro_basic_networking.rst:101
 msgid ""
 "Now consider the scenario that all of the switchports in the first switch "
 "become occupied, and so the organization buys a second switch and connects "
@@ -2161,7 +2161,7 @@ msgid ""
 "switch 2, it must communicate that the frame is associated with VLAN ID 10."
 msgstr ""
 
-#: ../intro_basic_networking.rst:112
+#: ../intro_basic_networking.rst:111
 msgid ""
 "If two switches are to be connected together, and the switches are "
 "configured for VLANs, then the switchports used for cross-connecting the "
@@ -2171,7 +2171,7 @@ msgid ""
 "only hosts on the matching VLAN are eligible to receive the frame."
 msgstr ""
 
-#: ../intro_basic_networking.rst:119
+#: ../intro_basic_networking.rst:118
 msgid ""
 "When a switchport is configured to pass frames from all VLANs and tag them "
 "with the VLAN IDs it is called a *trunk port*. IEEE 802.1Q is the network "
@@ -2179,14 +2179,14 @@ msgid ""
 "trunking is being used."
 msgstr ""
 
-#: ../intro_basic_networking.rst:124
+#: ../intro_basic_networking.rst:123
 msgid ""
 "Note that if you are using VLANs on your physical switches to implement "
 "tenant isolation in your OpenStack cloud, you must ensure that all of your "
 "switchports are configured as trunk ports."
 msgstr ""
 
-#: ../intro_basic_networking.rst:128
+#: ../intro_basic_networking.rst:127
 msgid ""
 "It is important that you select a VLAN range that your current network "
 "infrastructure is not using. For example, if you estimate that your cloud "
@@ -2196,25 +2196,25 @@ msgid ""
 "range."
 msgstr ""
 
-#: ../intro_basic_networking.rst:134
+#: ../intro_basic_networking.rst:133
 msgid ""
 "Trunking is used to connect between different switches. Each trunk uses a "
 "tag to identify which VLAN is in use. This ensures that switches on the same "
 "VLAN can communicate."
 msgstr ""
 
-#: ../intro_basic_networking.rst:142
+#: ../intro_basic_networking.rst:141
 msgid "Subnets and ARP"
 msgstr ""
 
-#: ../intro_basic_networking.rst:144
+#: ../intro_basic_networking.rst:143
 msgid ""
 "While NICs use MAC addresses to address network hosts, TCP/IP applications "
 "use IP addresses. The Address Resolution Protocol (ARP) bridges the gap "
 "between Ethernet and IP by translating IP addresses into MAC addresses."
 msgstr ""
 
-#: ../intro_basic_networking.rst:148
+#: ../intro_basic_networking.rst:147
 msgid ""
 "IP addresses are broken up into two parts: a *network number* and a *host "
 "identifier*. Two hosts are on the same *subnet* if they have the same "
@@ -2226,26 +2226,26 @@ msgid ""
 "local network, otherwise ARP does not work properly."
 msgstr ""
 
-#: ../intro_basic_networking.rst:157
+#: ../intro_basic_networking.rst:156
 msgid ""
 "To calculate the network number of an IP address, you must know the "
 "*netmask* associated with the address. A netmask indicates how many of the "
 "bits in the 32-bit IP address make up the network number."
 msgstr ""
 
-#: ../intro_basic_networking.rst:161
+#: ../intro_basic_networking.rst:160
 msgid "There are two syntaxes for expressing a netmask:"
 msgstr ""
 
-#: ../intro_basic_networking.rst:163
+#: ../intro_basic_networking.rst:162
 msgid "dotted quad"
 msgstr ""
 
-#: ../intro_basic_networking.rst:164
+#: ../intro_basic_networking.rst:163
 msgid "classless inter-domain routing (CIDR)"
 msgstr ""
 
-#: ../intro_basic_networking.rst:166
+#: ../intro_basic_networking.rst:165
 msgid ""
 "Consider an IP address of 192.168.1.5, where the first 24 bits of the "
 "address are the network number. In dotted quad notation, the netmask would "
@@ -2253,14 +2253,14 @@ msgid ""
 "and netmask, and this example would be written as ``192.168.1.5/24``."
 msgstr ""
 
-#: ../intro_basic_networking.rst:173
+#: ../intro_basic_networking.rst:172
 msgid ""
 "Creating CIDR subnets including a multicast address or a loopback address "
 "cannot be used in an OpenStack environment. For example, creating a subnet "
 "using ``224.0.0.0/16`` or ``127.0.1.0/24`` is not supported."
 msgstr ""
 
-#: ../intro_basic_networking.rst:177
+#: ../intro_basic_networking.rst:176
 msgid ""
 "Sometimes we want to refer to a subnet, but not any particular IP address on "
 "the subnet. A common convention is to set the host identifier to all zeros "
@@ -2268,7 +2268,7 @@ msgid ""
 "``10.10.53.24/16``, then we would say the subnet is ``10.10.0.0/16``."
 msgstr ""
 
-#: ../intro_basic_networking.rst:183
+#: ../intro_basic_networking.rst:182
 msgid ""
 "To understand how ARP translates IP addresses to MAC addresses, consider the "
 "following example. Assume host *A* has an IP address of ``192.168.1.5/24`` "
@@ -2278,40 +2278,40 @@ msgid ""
 "host *B*."
 msgstr ""
 
-#: ../intro_basic_networking.rst:190
+#: ../intro_basic_networking.rst:189
 msgid ""
 "The first time host *A* attempts to communicate with host *B*, the "
 "destination MAC address is not known. Host *A* makes an ARP request to the "
 "local network. The request is a broadcast with a message like this:"
 msgstr ""
 
-#: ../intro_basic_networking.rst:195
+#: ../intro_basic_networking.rst:194
 msgid ""
 "*To: everybody (ff:ff:ff:ff:ff:ff). I am looking for the computer who has IP "
 "address 192.168.1.7. Signed: MAC address fc:99:47:49:d4:a0*."
 msgstr ""
 
-#: ../intro_basic_networking.rst:198
+#: ../intro_basic_networking.rst:197
 msgid "Host *B* responds with a response like this:"
 msgstr ""
 
-#: ../intro_basic_networking.rst:200
+#: ../intro_basic_networking.rst:199
 msgid ""
 "*To: fc:99:47:49:d4:a0. I have IP address 192.168.1.7. Signed: MAC address "
 "54:78:1a:86:00:a5.*"
 msgstr ""
 
-#: ../intro_basic_networking.rst:203
+#: ../intro_basic_networking.rst:202
 msgid "Host *A* then sends Ethernet frames to host *B*."
 msgstr ""
 
-#: ../intro_basic_networking.rst:205
+#: ../intro_basic_networking.rst:204
 msgid ""
 "You can initiate an ARP request manually using the *arping* command. For "
 "example, to send an ARP request to IP address ``10.30.0.132``::"
 msgstr ""
 
-#: ../intro_basic_networking.rst:216
+#: ../intro_basic_networking.rst:215
 msgid ""
 "To reduce the number of ARP requests, operating systems maintain an ARP "
 "cache that contains the mappings of IP addresses to MAC address. On a Linux "
@@ -2319,14 +2319,14 @@ msgid ""
 "command::"
 msgstr ""
 
-#: ../intro_basic_networking.rst:230
+#: ../intro_basic_networking.rst:229
 msgid ""
 "Hosts connected to a network use the Dynamic Host Configuration Protocol (:"
 "term:`DHCP`) to dynamically obtain IP addresses. A DHCP server hands out the "
 "IP addresses to network hosts, which are the DHCP clients."
 msgstr ""
 
-#: ../intro_basic_networking.rst:235
+#: ../intro_basic_networking.rst:234
 msgid ""
 "DHCP clients locate the DHCP server by sending a UDP_ packet from port 68 to "
 "address ``255.255.255.255`` on port 67. Address ``255.255.255.255`` is the "
@@ -2338,49 +2338,49 @@ msgid ""
 "client. The exchange looks like this:"
 msgstr ""
 
-#: ../intro_basic_networking.rst:245
+#: ../intro_basic_networking.rst:244
 msgid ""
 "The client sends a discover (\"I’m a client at MAC address ``08:00:27:"
 "b9:88:74``, I need an IP address\")"
 msgstr ""
 
-#: ../intro_basic_networking.rst:247
+#: ../intro_basic_networking.rst:246
 msgid ""
 "The server sends an offer (\"OK ``08:00:27:b9:88:74``, I’m offering IP "
 "address ``10.10.0.112``\")"
 msgstr ""
 
-#: ../intro_basic_networking.rst:249
+#: ../intro_basic_networking.rst:248
 msgid ""
 "The client sends a request (\"Server ``10.10.0.131``, I would like to have "
 "IP ``10.10.0.112``\")"
 msgstr ""
 
-#: ../intro_basic_networking.rst:251
+#: ../intro_basic_networking.rst:250
 msgid ""
 "The server sends an acknowledgement (\"OK ``08:00:27:b9:88:74``, IP "
 "``10.10.0.112`` is yours\")"
 msgstr ""
 
-#: ../intro_basic_networking.rst:255
+#: ../intro_basic_networking.rst:254
 msgid ""
 "OpenStack uses a third-party program called dnsmasq_ to implement the DHCP "
 "server. Dnsmasq writes to the syslog, where you can observe the DHCP request "
 "and replies::"
 msgstr ""
 
-#: ../intro_basic_networking.rst:265
+#: ../intro_basic_networking.rst:264
 msgid ""
 "When troubleshooting an instance that is not reachable over the network, it "
 "can be helpful to examine this log to verify that all four steps of the DHCP "
 "protocol were carried out for the instance in question."
 msgstr ""
 
-#: ../intro_basic_networking.rst:274
+#: ../intro_basic_networking.rst:273
 msgid "IP"
 msgstr ""
 
-#: ../intro_basic_networking.rst:276
+#: ../intro_basic_networking.rst:275
 msgid ""
 "The Internet Protocol (IP) specifies how to route packets between hosts that "
 "are connected to different local networks. IP relies on special network "
@@ -2390,14 +2390,14 @@ msgid ""
 "networks it is connected to."
 msgstr ""
 
-#: ../intro_basic_networking.rst:283
+#: ../intro_basic_networking.rst:282
 msgid ""
 "In the OSI model of networking protocols, IP occupies the third layer, which "
 "is known as the network layer. When discussing IP, you will often hear terms "
 "such as *layer 3*, *L3*, and *network layer*."
 msgstr ""
 
-#: ../intro_basic_networking.rst:287
+#: ../intro_basic_networking.rst:286
 msgid ""
 "A host sending a packet to an IP address consults its *routing table* to "
 "determine which machine on the local network(s) the packet should be sent "
@@ -2406,17 +2406,17 @@ msgid ""
 "routers that are on these local networks."
 msgstr ""
 
-#: ../intro_basic_networking.rst:293
+#: ../intro_basic_networking.rst:292
 msgid ""
 "On a Linux machine, any of the following commands displays the routing "
 "table::"
 msgstr ""
 
-#: ../intro_basic_networking.rst:299
+#: ../intro_basic_networking.rst:298
 msgid "Here is an example of output from ``ip route show``::"
 msgstr ""
 
-#: ../intro_basic_networking.rst:307
+#: ../intro_basic_networking.rst:306
 msgid ""
 "Line 1 of the output specifies the location of the default route, which is "
 "the effective routing rule if none of the other rules match. The router "
@@ -2426,45 +2426,45 @@ msgid ""
 "with the client's IP address and a netmask."
 msgstr ""
 
-#: ../intro_basic_networking.rst:314
+#: ../intro_basic_networking.rst:313
 msgid ""
 "Line 2 of the output specifies that IPs in the 10.0.2.0/24 subnet are on the "
 "local network associated with the network interface eth0."
 msgstr ""
 
-#: ../intro_basic_networking.rst:317
+#: ../intro_basic_networking.rst:316
 msgid ""
 "Line 3 of the output specifies that IPs in the 192.168.27.0/24 subnet are on "
 "the local network associated with the network interface eth1."
 msgstr ""
 
-#: ../intro_basic_networking.rst:320
+#: ../intro_basic_networking.rst:319
 msgid ""
 "Line 4 of the output specifies that IPs in the 192.168.122/24 subnet are on "
 "the local network associated with the network interface virbr0."
 msgstr ""
 
-#: ../intro_basic_networking.rst:323
+#: ../intro_basic_networking.rst:322
 msgid ""
 "The output of the ``route -n`` and ``netstat -rn`` commands are formatted in "
 "a slightly different way. This example shows how the same routes would be "
 "formatted using these commands::"
 msgstr ""
 
-#: ../intro_basic_networking.rst:335
+#: ../intro_basic_networking.rst:334
 msgid ""
 "The ``ip route get`` command outputs the route for a destination IP address. "
 "From the above example, destination IP address 10.0.2.14 is on the local "
 "network of eth0 and would be sent directly::"
 msgstr ""
 
-#: ../intro_basic_networking.rst:342
+#: ../intro_basic_networking.rst:341
 msgid ""
 "The destination IP address 93.184.216.34 is not on any of the connected "
 "local networks and would be forwarded to the default gateway at 10.0.2.2::"
 msgstr ""
 
-#: ../intro_basic_networking.rst:348
+#: ../intro_basic_networking.rst:347
 msgid ""
 "It is common for a packet to hop across multiple routers to reach its final "
 "destination. On a Linux machine, the ``traceroute`` and more recent ``mtr`` "
@@ -2472,11 +2472,11 @@ msgid ""
 "traverses along its path to its destination."
 msgstr ""
 
-#: ../intro_basic_networking.rst:356
+#: ../intro_basic_networking.rst:355
 msgid "TCP/UDP/ICMP"
 msgstr ""
 
-#: ../intro_basic_networking.rst:358
+#: ../intro_basic_networking.rst:357
 msgid ""
 "For networked software applications to communicate over an IP network, they "
 "must use a protocol layered atop IP. These protocols occupy the fourth layer "
@@ -2486,7 +2486,7 @@ msgid ""
 "associated numbers."
 msgstr ""
 
-#: ../intro_basic_networking.rst:367
+#: ../intro_basic_networking.rst:366
 msgid ""
 "The *Transmission Control Protocol* (TCP) is the most commonly used layer 4 "
 "protocol in networked applications. TCP is a *connection-oriented* protocol: "
@@ -2495,19 +2495,19 @@ msgid ""
 "interaction in a TCP-based application proceeds as follows:"
 msgstr ""
 
-#: ../intro_basic_networking.rst:375
+#: ../intro_basic_networking.rst:374
 msgid "Client connects to server."
 msgstr ""
 
-#: ../intro_basic_networking.rst:376
+#: ../intro_basic_networking.rst:375
 msgid "Client and server exchange data."
 msgstr ""
 
-#: ../intro_basic_networking.rst:377
+#: ../intro_basic_networking.rst:376
 msgid "Client or server disconnects."
 msgstr ""
 
-#: ../intro_basic_networking.rst:379
+#: ../intro_basic_networking.rst:378
 msgid ""
 "Because a network host may have multiple TCP-based applications running, TCP "
 "uses an addressing scheme called *ports* to uniquely identify TCP-based "
@@ -2516,7 +2516,7 @@ msgid ""
 "time, a restriction that is enforced by the operating system."
 msgstr ""
 
-#: ../intro_basic_networking.rst:385
+#: ../intro_basic_networking.rst:384
 msgid ""
 "A TCP server is said to *listen* on a port. For example, an SSH server "
 "typically listens on port 22. For a client to connect to a server using TCP, "
@@ -2524,7 +2524,7 @@ msgid ""
 "TCP port."
 msgstr ""
 
-#: ../intro_basic_networking.rst:390
+#: ../intro_basic_networking.rst:389
 msgid ""
 "The operating system of the TCP client application automatically assigns a "
 "port number to the client. The client owns this port number until the TCP "
@@ -2532,7 +2532,7 @@ msgid ""
 "port number. These types of ports are referred to as *ephemeral ports*."
 msgstr ""
 
-#: ../intro_basic_networking.rst:396
+#: ../intro_basic_networking.rst:395
 msgid ""
 "IANA maintains a `registry of port numbers`_ for many TCP-based services, as "
 "well as services that use other layer 4 protocols that employ ports. "
@@ -2543,7 +2543,7 @@ msgid ""
 "deployment."
 msgstr ""
 
-#: ../intro_basic_networking.rst:409
+#: ../intro_basic_networking.rst:408
 msgid ""
 "The most common application programming interface (API) for writing TCP-"
 "based applications is called *Berkeley sockets*, also known as *BSD sockets* "
@@ -2561,7 +2561,7 @@ msgid ""
 "*reliable* protocol."
 msgstr ""
 
-#: ../intro_basic_networking.rst:424
+#: ../intro_basic_networking.rst:423
 msgid ""
 "The *User Datagram Protocol* (UDP) is another layer 4 protocol that is the "
 "basis of several well-known networking protocols. UDP is a *connectionless* "
@@ -2573,7 +2573,7 @@ msgid ""
 "they were sent in."
 msgstr ""
 
-#: ../intro_basic_networking.rst:433
+#: ../intro_basic_networking.rst:432
 msgid ""
 "UDP, like TCP, uses the notion of ports to distinguish between different "
 "applications running on the same system. Note, however, that operating "
@@ -2582,7 +2582,7 @@ msgid ""
 "separate application to be associated with UDP port 16543."
 msgstr ""
 
-#: ../intro_basic_networking.rst:439
+#: ../intro_basic_networking.rst:438
 msgid ""
 "Like TCP, the sockets API is the most common API for writing UDP-based "
 "applications. The sockets API provides a *message-oriented* interface for "
@@ -2592,14 +2592,14 @@ msgid ""
 "responsible for implementing this functionality in the application code."
 msgstr ""
 
-#: ../intro_basic_networking.rst:446
+#: ../intro_basic_networking.rst:445
 msgid ""
 "DHCP_, the Domain Name System (DNS), the Network Time Protocol (NTP), and :"
 "ref:`VXLAN` are examples of UDP-based protocols used in OpenStack "
 "deployments."
 msgstr ""
 
-#: ../intro_basic_networking.rst:449
+#: ../intro_basic_networking.rst:448
 msgid ""
 "UDP has support for one-to-many communication: sending a single packet to "
 "multiple hosts. An application can broadcast a UDP packet to all of the "
@@ -2613,7 +2613,7 @@ msgid ""
 "routing. VXLAN is an example of a UDP-based protocol that uses IP multicast."
 msgstr ""
 
-#: ../intro_basic_networking.rst:461
+#: ../intro_basic_networking.rst:460
 msgid ""
 "The *Internet Control Message Protocol* (ICMP) is a protocol used for "
 "sending control messages over an IP network. For example, a router that "
@@ -2624,7 +2624,7 @@ msgid ""
 "\"don't fragment\" flag is set)."
 msgstr ""
 
-#: ../intro_basic_networking.rst:469
+#: ../intro_basic_networking.rst:468
 msgid ""
 "The *ping* and *mtr* Linux command-line tools are two examples of network "
 "utilities that use ICMP."
