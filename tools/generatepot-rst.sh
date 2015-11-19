@@ -84,6 +84,8 @@ sphinx-build -j $NUMBER_OF_CORES -b gettext $TAG ${DIRECTORY}/source/ \
 
 if [[ "$REPOSITORY" = "openstack-manuals" && "$DOCNAME" = "common-rst" ]] ; then
     # Do not come here, exit at the above block.
+    # dummy method to avoid syntax error
+    exit 0
     # In case of common-rst, we use the working directory 'common-rst-work'.
     # Copies the generated POT to common-rst/source/locale
     # and finally removes the working directory.
