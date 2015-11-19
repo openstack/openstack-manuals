@@ -12,10 +12,10 @@
     <title>Image service command-line client</title>
 
     <para>The <command>glance</command> client is the command-line
-        interface (CLI) for the OpenStack Image service API and its extensions.
+        interface (CLI) for the Image service API and its extensions.
 
        This chapter documents <command>glance</command> version
-        <literal>1.1.0</literal>.
+        <literal>1.2.0</literal>.
     </para>
 
     <para>For help on a specific <command>glance</command>
@@ -25,25 +25,29 @@
 
     <section xml:id="glanceclient_command_usage">
        <title>glance usage</title>
-        <screen><computeroutput>usage: glance [--version] [-d] [-v] [--get-schema] [--timeout TIMEOUT]
-              [--no-ssl-compression] [-f] [--os-image-url OS_IMAGE_URL]
-              [--os-image-api-version OS_IMAGE_API_VERSION] [-k]
-              [--os-cert OS_CERT] [--cert-file OS_CERT] [--os-key OS_KEY]
-              [--key-file OS_KEY] [--os-cacert &lt;ca-certificate-file&gt;]
-              [--ca-file OS_CACERT] [--os-username OS_USERNAME]
-              [--os-user-id OS_USER_ID]
-              [--os-user-domain-id OS_USER_DOMAIN_ID]
-              [--os-user-domain-name OS_USER_DOMAIN_NAME]
+        <screen><computeroutput>usage: glance [--version] [-d] [-v] [--get-schema] [--no-ssl-compression] [-f]
+              [--os-image-url OS_IMAGE_URL]
+              [--os-image-api-version OS_IMAGE_API_VERSION] [--insecure]
+              [--os-cacert &lt;ca-certificate&gt;] [--os-cert &lt;certificate&gt;]
+              [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;]
+              [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
+              [--os-domain-name OS_DOMAIN_NAME]
               [--os-project-id OS_PROJECT_ID]
               [--os-project-name OS_PROJECT_NAME]
               [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
               [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
-              [--os-password OS_PASSWORD] [--os-tenant-id OS_TENANT_ID]
-              [--os-tenant-name OS_TENANT_NAME] [--os-auth-url OS_AUTH_URL]
+              [--os-trust-id OS_TRUST_ID] [--os-user-id OS_USER_ID]
+              [--os-user-name OS_USERNAME]
+              [--os-user-domain-id OS_USER_DOMAIN_ID]
+              [--os-user-domain-name OS_USER_DOMAIN_NAME]
+              [--os-password OS_PASSWORD] [--key-file OS_KEY]
+              [--ca-file OS_CACERT] [--cert-file OS_CERT]
+              [--os-tenant-id OS_TENANT_ID] [--os-tenant-name OS_TENANT_NAME]
               [--os-region-name OS_REGION_NAME]
               [--os-auth-token OS_AUTH_TOKEN]
               [--os-service-type OS_SERVICE_TYPE]
-              [--os-endpoint-type OS_ENDPOINT_TYPE]</computeroutput></screen>
+              [--os-endpoint-type OS_ENDPOINT_TYPE]
+              &lt;subcommand&gt; ...</computeroutput></screen>
     </section>
     <section xml:id="glanceclient_command_optional">
         <title>glance optional arguments</title>
@@ -68,7 +72,7 @@
     <term><command>-v, --verbose</command></term>
     <listitem>
       <para>
-        Print more verbose output
+        Print more verbose output.
       </para>
     </listitem>
   </varlistentry>
@@ -79,14 +83,6 @@
         Ignores cached copy and forces retrieval of schema
       that generates portions of the help text. Ignored with
       API version 1.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--timeout TIMEOUT</command></term>
-    <listitem>
-      <para>
-        Number of seconds to wait for a response
       </para>
     </listitem>
   </varlistentry>
@@ -129,41 +125,151 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-k, --insecure</command></term>
+    <term><command>--insecure</command></term>
     <listitem>
       <para>
-        Explicitly allow glanceclient to perform "insecure
-      SSL" (https) requests. The server's certificate will
-      not be verified against any certificate authorities.
-      This option should be used with caution.
+        Explicitly allow client to perform "insecure" TLS
+      (https) requests. The server's certificate will not be
+      verified against any certificate authorities. This
+      option should be used with caution.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-cert OS_CERT</command></term>
+    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
     <listitem>
       <para>
-        Path of certificate file to use in SSL connection.
-      This file can optionally be prepended with the private
-      key.
+      Specify a CA bundle file to use in verifying a TLS
+      (https) server certificate. Defaults to
+      <code>env[OS_CACERT]</code>.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--cert-file OS_CERT</command></term>
+    <term><command>--os-cert &lt;certificate&gt;</command></term>
     <listitem>
       <para>
-        <emphasis>DEPRECATED!</emphasis> Use --os-cert.
+      Defaults to <code>env[OS_CERT]</code>.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-key OS_KEY</command></term>
+    <term><command>--os-key &lt;key&gt;</command></term>
     <listitem>
       <para>
-        Path of client key to use in SSL connection. This
-      option is not necessary if your key is prepended to
-      your cert file.
+        Defaults to <code>env[OS_KEY]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--timeout &lt;seconds&gt;</command></term>
+    <listitem>
+      <para>
+        Set request timeout (in seconds).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-url OS_AUTH_URL</command></term>
+    <listitem>
+      <para>
+      Authentication URL
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-id OS_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Domain ID to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-name OS_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Domain name to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id OS_PROJECT_ID</command></term>
+    <listitem>
+      <para>
+      Project ID to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-name OS_PROJECT_NAME</command></term>
+    <listitem>
+      <para>
+      Project name to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-id OS_PROJECT_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Domain ID containing project
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-name OS_PROJECT_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Domain name containing project
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-trust-id OS_TRUST_ID</command></term>
+    <listitem>
+      <para>
+      Trust ID
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-id OS_USER_ID</command></term>
+    <listitem>
+      <para>
+      User ID
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-name OS_USERNAME, --os-username OS_USERNAME</command></term>
+    <listitem>
+      <para>
+      Username
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id OS_USER_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      User's domain id
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name OS_USER_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      User's domain name
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-password OS_PASSWORD</command></term>
+    <listitem>
+      <para>
+      User's password
       </para>
     </listitem>
   </varlistentry>
@@ -176,16 +282,6 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-cacert &lt;ca-certificate-file&gt;</command></term>
-    <listitem>
-      <para>
-      Path of CA TLS certificate(s) used to verify the
-      remote server's certificate. Without this option
-      glance looks for the default system CA certificates.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--ca-file OS_CACERT</command></term>
     <listitem>
       <para>
@@ -194,78 +290,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-username OS_USERNAME</command></term>
+    <term><command>--cert-file OS_CERT</command></term>
     <listitem>
       <para>
-      Defaults to <code>env[OS_USERNAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-user-id OS_USER_ID</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_USER_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-user-domain-id OS_USER_DOMAIN_ID</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_USER_DOMAIN_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-user-domain-name OS_USER_DOMAIN_NAME</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_USER_DOMAIN_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-id OS_PROJECT_ID</command></term>
-    <listitem>
-      <para>
-      Another way to specify tenant ID. This option is
-      mutually exclusive with --os-tenant-id. Defaults to
-      <code>env[OS_PROJECT_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-name OS_PROJECT_NAME</command></term>
-    <listitem>
-      <para>
-      Another way to specify tenant name. This option is
-      mutually exclusive with --os-tenant-name. Defaults to
-      <code>env[OS_PROJECT_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-domain-id OS_PROJECT_DOMAIN_ID</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_PROJECT_DOMAIN_ID]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-project-domain-name OS_PROJECT_DOMAIN_NAME</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_PROJECT_DOMAIN_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-password OS_PASSWORD</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_PASSWORD]</code>.
+        <emphasis>DEPRECATED!</emphasis> Use --os-cert.
       </para>
     </listitem>
   </varlistentry>
@@ -282,14 +310,6 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_TENANT_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-auth-url OS_AUTH_URL</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_AUTH_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -344,6 +364,7 @@
                            [--property &lt;key=value&gt;] [--human-readable]
                            [--progress]</computeroutput></screen>
         <para>
+Create a new image.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -952,7 +973,7 @@ Share a specific image with a tenant.
     <term><command>&lt;TENANT_ID&gt;</command></term>
     <listitem>
       <para>
-        Tenant to add as member
+        Tenant to add as member.
       </para>
     </listitem>
   </varlistentry>
@@ -1064,6 +1085,7 @@ Describe a specific model.
                            [--property &lt;key=value&gt;] [--file &lt;FILE&gt;]
                            [--progress]</computeroutput></screen>
         <para>
+Create a new image.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -1241,9 +1263,26 @@ Describe a specific model.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="glanceclient_subcommand_image-deactivate_v2">
+        <title>glance image-deactivate (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-deactivate &lt;IMAGE_ID&gt;</computeroutput></screen>
+        <para>
+Deactivate specified image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of image to deactivate.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="glanceclient_subcommand_image-delete_v2">
         <title>glance image-delete (v2)</title>
-        <screen><computeroutput>usage: glance --os-image-api-version 2 image-delete &lt;IMAGE_ID&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-delete &lt;IMAGE_ID&gt; [&lt;IMAGE_ID&gt; ...]</computeroutput></screen>
         <para>
 Delete specified image.
         </para>  <variablelist wordsize="10">
@@ -1252,7 +1291,7 @@ Delete specified image.
     <term><command>&lt;IMAGE_ID&gt;</command></term>
     <listitem>
       <para>
-        ID of image to delete.
+        ID of image(s) to delete.
       </para>
     </listitem>
   </varlistentry>
@@ -1397,6 +1436,23 @@ List images you can access.
       the form of &lt;key&gt;[:&lt;asc|desc&gt;]. Valid keys: name,
       status, container_format, disk_format, size, id,
       created_at, updated_at. OPTIONAL.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="glanceclient_subcommand_image-reactivate_v2">
+        <title>glance image-reactivate (v2)</title>
+        <screen><computeroutput>usage: glance --os-image-api-version 2 image-reactivate &lt;IMAGE_ID&gt;</computeroutput></screen>
+        <para>
+Reactivate specified image.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;IMAGE_ID&gt;</command></term>
+    <listitem>
+      <para>
+        ID of image to reactivate.
       </para>
     </listitem>
   </varlistentry>
