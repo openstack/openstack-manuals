@@ -129,15 +129,21 @@
       <para>Start the web server and session storage service and configure
         them to start when the system boots:</para>
       <screen os="rhel;centos;fedora"><prompt>#</prompt> <userinput>systemctl enable httpd.service memcached.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start httpd.service memcached.service</userinput></screen>
+<prompt>#</prompt> <userinput>systemctl restart httpd.service memcached.service</userinput></screen>
       <para os="sles">On SLES:</para>
-      <screen os="sles"><prompt>#</prompt> <userinput>service apache2 start</userinput>
-<prompt>#</prompt> <userinput>service memcached start</userinput>
+      <screen os="sles"><prompt>#</prompt> <userinput>service apache2 restart</userinput>
+<prompt>#</prompt> <userinput>service memcached restart</userinput>
 <prompt>#</prompt> <userinput>chkconfig apache2 on</userinput>
 <prompt>#</prompt> <userinput>chkconfig memcached on</userinput></screen>
       <para os="opensuse">On openSUSE:</para>
       <screen os="opensuse"><prompt>#</prompt> <userinput>systemctl enable apache2.service memcached.service</userinput>
-<prompt>#</prompt> <userinput>systemctl start apache2.service memcached.service</userinput></screen>
+<prompt>#</prompt> <userinput>systemctl restart apache2.service memcached.service</userinput></screen>
+      <note os="rhel;centos;fedora;opensuse">
+          <para><command>systemctl restart</command> restarts or starts each service if not currently running.</para>
+      </note>
+      <note os="sles">
+          <para><command>service restart</command> restarts or starts each service if not currently running.</para>
+      </note>
     </step>
   </procedure>
 </section>
