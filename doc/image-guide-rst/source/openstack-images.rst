@@ -291,6 +291,8 @@ to install the ``cloud-init`` package into your image,
 which is configured by default to treat user data as
 an executable script, and sets the host name.
 
+.. _write-to-console:
+
 Ensure image writes boot log to console
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
