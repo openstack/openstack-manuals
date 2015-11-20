@@ -23,7 +23,7 @@
    * - ``cell_type`` = ``compute``
      - (StrOpt) Type of cell
    * - ``cells_config`` = ``None``
-     - (StrOpt) Configuration file from which to read cells configuration.  If given, overrides reading cells from the database.
+     - (StrOpt) Configuration file from which to read cells configuration. If given, overrides reading cells from the database.
    * - ``db_check_interval`` = ``60``
      - (IntOpt) Interval, in seconds, for getting fresh cell information from the database.
    * - ``driver`` = ``nova.cells.rpc_driver.CellsRPCDriver``
@@ -33,7 +33,7 @@
    * - ``instance_update_num_instances`` = ``1``
      - (IntOpt) Number of instances to update per periodic task run
    * - ``instance_update_sync_database_limit`` = ``100``
-     - (IntOpt) Number of instances to pull from the database at one time for a sync.  If there are more instances to update the results will be paged through
+     - (IntOpt) Number of instances to pull from the database at one time for a sync. If there are more instances to update the results will be paged through
    * - ``instance_updated_at_threshold`` = ``3600``
      - (IntOpt) Number of seconds after an instance was updated or deleted to continue to update cells
    * - ``manager`` = ``nova.cells.manager.CellsManager``

@@ -33,6 +33,6 @@
    * - ``nas_secure_file_permissions`` = ``auto``
      - (StrOpt) Set more secure file permissions on network-attached storage volume files to restrict broad other/world access. If set to False, volumes are created with open permissions. If set to True, volumes are created with permissions for the cinder user and group (660). If set to auto, a check is done to determine if this is a new installation: True is used if so, otherwise False. Default is auto.
    * - ``nas_share_path`` = `` ``
-     - (StrOpt) Path to the share to use for storing Cinder volumes. For example:  "/srv/export1" for an NFS server export available at 10.0.5.10:/srv/export1 .
+     - (StrOpt) Path to the share to use for storing Cinder volumes. For example: "/srv/export1" for an NFS server export available at 10.0.5.10:/srv/export1 .
    * - ``nas_ssh_port`` = ``22``
      - (PortOpt) SSH port to use to connect to NAS system.

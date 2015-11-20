@@ -17,10 +17,6 @@
    * - **[DEFAULT]**
      -
    * - ``drbdmanage_devs_on_controller`` = ``True``
-     - (BoolOpt) If set, the c-vol node will receive a useable
-                /dev/drbdX device, even if the actual data is stored on
-                other nodes only.
-                This is useful for debugging, maintenance, and to be
-                able to do the iSCSI export from the c-vol node.
+     - (BoolOpt) If set, the c-vol node will receive a useable /dev/drbdX device, even if the actual data is stored on other nodes only. This is useful for debugging, maintenance, and to be able to do the iSCSI export from the c-vol node.
    * - ``drbdmanage_redundancy`` = ``1``
      - (StrOpt) Number of nodes that should replicate the data.

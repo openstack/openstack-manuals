@@ -51,7 +51,7 @@
    * - ``instance_usage_audit`` = ``False``
      - (BoolOpt) Generate periodic compute.instance.exists notifications
    * - ``instance_usage_audit_period`` = ``month``
-     - (StrOpt) Time period to generate instance usages for.  Time period must be hour, day, month or year
+     - (StrOpt) Time period to generate instance usages for. Time period must be hour, day, month or year
    * - ``instances_path`` = ``$state_path/instances``
      - (StrOpt) Where instances are stored on disk
    * - ``max_concurrent_builds`` = ``10``

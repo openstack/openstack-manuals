@@ -21,7 +21,7 @@
    * - **[glance]**
      -
    * - ``allowed_direct_url_schemes`` = `` ``
-     - (ListOpt) A list of url scheme that can be downloaded directly via the direct_url.  Currently supported schemes: [file].
+     - (ListOpt) A list of url scheme that can be downloaded directly via the direct_url. Currently supported schemes: [file].
    * - ``api_insecure`` = ``False``
      - (BoolOpt) Allow to perform insecure SSL (https) requests to glance
    * - ``api_servers`` = ``None``

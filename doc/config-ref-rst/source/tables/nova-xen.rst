@@ -53,7 +53,7 @@
    * - ``connection_password`` = ``None``
      - (StrOpt) Password for connection to XenServer/Xen Cloud Platform. Used only if compute_driver=xenapi.XenAPIDriver
    * - ``connection_url`` = ``None``
-     - (StrOpt) URL for connection to XenServer/Xen Cloud Platform. A special value of unix://local can be used to connect to the local unix socket.  Required if compute_driver=xenapi.XenAPIDriver
+     - (StrOpt) URL for connection to XenServer/Xen Cloud Platform. A special value of unix://local can be used to connect to the local unix socket. Required if compute_driver=xenapi.XenAPIDriver
    * - ``connection_username`` = ``root``
      - (StrOpt) Username for connection to XenServer/Xen Cloud Platform. Used only if compute_driver=xenapi.XenAPIDriver
    * - ``default_os_type`` = ``linux``

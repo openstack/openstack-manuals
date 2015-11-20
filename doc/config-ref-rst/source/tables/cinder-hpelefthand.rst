@@ -8,7 +8,7 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. list-table:: Description of HP LeftHand/StoreVirtual driver configuration options
+.. list-table:: Description of HPE LeftHand/StoreVirtual driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -16,15 +16,15 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``hplefthand_api_url`` = ``None``
-     - (StrOpt) HP LeftHand WSAPI Server Url like https://<LeftHand ip>:8081/lhos
-   * - ``hplefthand_clustername`` = ``None``
-     - (StrOpt) HP LeftHand cluster name
-   * - ``hplefthand_debug`` = ``False``
+   * - ``hpelefthand_api_url`` = ``None``
+     - (StrOpt) HPE LeftHand WSAPI Server Url like https://<LeftHand ip>:8081/lhos
+   * - ``hpelefthand_clustername`` = ``None``
+     - (StrOpt) HPE LeftHand cluster name
+   * - ``hpelefthand_debug`` = ``False``
      - (BoolOpt) Enable HTTP debugging to LeftHand
-   * - ``hplefthand_iscsi_chap_enabled`` = ``False``
+   * - ``hpelefthand_iscsi_chap_enabled`` = ``False``
      - (BoolOpt) Configure CHAP authentication for iSCSI connections (Default: Disabled)
-   * - ``hplefthand_password`` = ``None``
-     - (StrOpt) HP LeftHand Super user password
-   * - ``hplefthand_username`` = ``None``
-     - (StrOpt) HP LeftHand Super user username
+   * - ``hpelefthand_password`` = ``None``
+     - (StrOpt) HPE LeftHand Super user password
+   * - ``hpelefthand_username`` = ``None``
+     - (StrOpt) HPE LeftHand Super user username

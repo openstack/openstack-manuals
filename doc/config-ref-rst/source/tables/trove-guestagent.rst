@@ -31,7 +31,7 @@
    * - ``guest_id`` = ``None``
      - (StrOpt) ID of the Guest Instance.
    * - ``guest_info`` = ``guest_info.conf``
-     - (StrOpt) The guest info filename found in the injected config location.  If a full path is specified then it will be used as the path to the guest info file
+     - (StrOpt) The guest info filename found in the injected config location. If a full path is specified then it will be used as the path to the guest info file
    * - ``mount_options`` = ``defaults,noatime``
      - (StrOpt) Options to use when mounting a volume.
    * - ``storage_namespace`` = ``trove.guestagent.strategies.storage.swift``

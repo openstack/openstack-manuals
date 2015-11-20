@@ -34,8 +34,8 @@
      - (IntOpt) Exponent to determine number of hash partitions to use when distributing load across conductors. Larger values will result in more even distribution of load and less load when rebalancing the ring, but more memory usage. Number of partitions per conductor is (2^hash_partition_exponent). This determines the granularity of rebalancing: given 10 hosts, and an exponent of the 2, there are 40 partitions in the ring.A few thousand partitions should make rebalancing smooth in most cases. The default is suitable for up to a few hundred conductors. Too many partitions has a CPU impact.
    * - ``hash_ring_reset_interval`` = ``180``
      - (IntOpt) Interval (in seconds) between hash ring resets.
-   * - ``host`` = ``shock.local.net``
-     - (StrOpt) Name of this node.  This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address. However, the node name must be valid within an AMQP key, and if using ZeroMQ, a valid hostname, FQDN, or IP address.
+   * - ``host`` = ``sd-52009.dedibox.fr``
+     - (StrOpt) Name of this node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address. However, the node name must be valid within an AMQP key, and if using ZeroMQ, a valid hostname, FQDN, or IP address.
    * - ``isolinux_bin`` = ``/usr/lib/syslinux/isolinux.bin``
      - (StrOpt) Path to isolinux binary file.
    * - ``isolinux_config_template`` = ``$pybasedir/common/isolinux_config.template``

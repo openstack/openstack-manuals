@@ -23,7 +23,7 @@
    * - ``backlog`` = ``4096``
      - (IntOpt) The backlog value that will be used when creating the TCP listener socket.
    * - ``bind_host`` = ``0.0.0.0``
-     - (StrOpt) Address to bind the server.  Useful when selecting a particular network interface.
+     - (StrOpt) Address to bind the server. Useful when selecting a particular network interface.
    * - ``bind_port`` = ``None``
      - (PortOpt) The port on which the server will listen.
    * - ``data_api`` = ``glance.db.sqlalchemy.api``

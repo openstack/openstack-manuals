@@ -121,7 +121,7 @@
    * - ``share_snapshot_name_template`` = ``share-snapshot-%s``
      - (StrOpt) Template string to be used to generate share snapshot names.
    * - ``share_usage_audit_period`` = ``month``
-     - (StrOpt) Time period to generate share usages for.  Time period must be hour, day, month or year.
+     - (StrOpt) Time period to generate share usages for. Time period must be hour, day, month or year.
    * - ``share_volume_fstype`` = ``ext4``
      - (StrOpt) Filesystem type of the share volume.
    * - ``smb_template_config_path`` = ``$state_path/smb.conf``

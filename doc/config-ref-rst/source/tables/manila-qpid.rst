@@ -39,7 +39,7 @@
    * - ``qpid_tcp_nodelay`` = ``True``
      - (BoolOpt) Whether to disable the Nagle algorithm.
    * - ``qpid_topology_version`` = ``1``
-     - (IntOpt) The qpid topology version to use.  Version 1 is what was originally used by impl_qpid.  Version 2 includes some backwards-incompatible changes that allow broker federation to work.  Users should update to version 2 when they are able to take everything down, as it requires a clean break.
+     - (IntOpt) The qpid topology version to use. Version 1 is what was originally used by impl_qpid. Version 2 includes some backwards-incompatible changes that allow broker federation to work. Users should update to version 2 when they are able to take everything down, as it requires a clean break.
    * - ``qpid_username`` = `` ``
      - (StrOpt) Username for Qpid connection.
    * - ``send_single_reply`` = ``False``

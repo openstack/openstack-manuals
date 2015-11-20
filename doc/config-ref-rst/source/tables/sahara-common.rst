@@ -75,7 +75,7 @@
    * - ``remote`` = ``ssh``
      - (StrOpt) A method for Sahara to execute commands on VMs.
    * - ``rootwrap_command`` = ``sudo sahara-rootwrap /etc/sahara/rootwrap.conf``
-     - (StrOpt) Rootwrap command to leverage.  Use in conjunction with use_rootwrap=True
+     - (StrOpt) Rootwrap command to leverage. Use in conjunction with use_rootwrap=True
    * - ``swift_topology_file`` = ``etc/sahara/swift.topology``
      - (StrOpt) File with Swift topology.It should contain mapping between Swift nodes and racks.
    * - ``use_external_key_manager`` = ``False``

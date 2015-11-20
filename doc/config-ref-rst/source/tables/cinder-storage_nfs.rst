@@ -17,13 +17,13 @@
    * - **[DEFAULT]**
      -
    * - ``nfs_mount_attempts`` = ``3``
-     - (IntOpt) The number of attempts to mount NFS shares before raising an error.  At least one attempt will be made to mount an NFS share, regardless of the value specified.
+     - (IntOpt) The number of attempts to mount NFS shares before raising an error. At least one attempt will be made to mount an NFS share, regardless of the value specified.
    * - ``nfs_mount_options`` = ``None``
      - (StrOpt) Mount options passed to the NFS client. See section of the NFS man page for details.
    * - ``nfs_mount_point_base`` = ``$state_path/mnt``
      - (StrOpt) Base dir containing mount points for NFS shares.
    * - ``nfs_oversub_ratio`` = ``1.0``
-     - (FloatOpt) This will compare the allocated to available space on the volume destination.  If the ratio exceeds this number, the destination will no longer be valid. Note that this option is deprecated in favor of "max_oversubscription_ratio" and will be removed in the Mitaka release.
+     - (FloatOpt) This will compare the allocated to available space on the volume destination. If the ratio exceeds this number, the destination will no longer be valid. Note that this option is deprecated in favor of "max_oversubscription_ratio" and will be removed in the Mitaka release.
    * - ``nfs_shares_config`` = ``/etc/cinder/nfs_shares``
      - (StrOpt) File with the list of available NFS shares
    * - ``nfs_sparsed_volumes`` = ``True``

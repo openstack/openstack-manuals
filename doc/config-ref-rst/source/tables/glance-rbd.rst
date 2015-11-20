@@ -22,7 +22,7 @@
      - (StrOpt) Ceph configuration file path. If <None>, librados will locate the default config. If using cephx authentication, this file should include a reference to the right keyring in a client.<USER> section
    * - ``rbd_store_chunk_size`` = ``8``
      - (IntOpt) RADOS images will be chunked into objects of this size (in megabytes). For best performance, this should be a power of two.
-   * - ``rbd_store_pool`` = ``images``
+   * - ``rbd_store_pool`` = ``localhost``
      - (StrOpt) RADOS pool in which images are stored.
    * - ``rbd_store_user`` = ``None``
      - (StrOpt) RADOS user to authenticate as (only applicable if using Cephx. If <None>, a default will be chosen based on the client. section in rbd_store_ceph_conf)

@@ -39,4 +39,4 @@
    * - ``rbd_user`` = ``None``
      - (StrOpt) The RADOS client name for accessing rbd volumes - only set when using cephx authentication
    * - ``volume_tmp_dir`` = ``None``
-     - (StrOpt) Directory where temporary image files are stored when the volume driver does not write them directly to the volume.  Warning: this option is now deprecated, please use image_conversion_dir instead.
+     - (StrOpt) Directory where temporary image files are stored when the volume driver does not write them directly to the volume. Warning: this option is now deprecated, please use image_conversion_dir instead.

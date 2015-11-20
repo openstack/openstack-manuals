@@ -37,7 +37,7 @@
    * - ``log_file`` = ``None``
      - (StrOpt) (Optional) Name of log file to output to. If no default is set, logging will go to stdout. This option is ignored if log_config_append is set.
    * - ``log_format`` = ``None``
-     - (StrOpt) DEPRECATED. A logging.Formatter log message format string which may use any of the available logging.LogRecord attributes. This option is deprecated.  Please use logging_context_format_string and logging_default_format_string instead. This option is ignored if log_config_append is set.
+     - (StrOpt) DEPRECATED. A logging.Formatter log message format string which may use any of the available logging.LogRecord attributes. This option is deprecated. Please use logging_context_format_string and logging_default_format_string instead. This option is ignored if log_config_append is set.
    * - ``logging_context_format_string`` = ``%(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user_identity)s] %(instance)s%(message)s``
      - (StrOpt) Format string to use for log messages with context.
    * - ``logging_debug_format_suffix`` = ``%(funcName)s %(pathname)s:%(lineno)d``

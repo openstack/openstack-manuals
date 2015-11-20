@@ -17,11 +17,11 @@
    * - **[DEFAULT]**
      -
    * - ``gpfs_images_dir`` = ``None``
-     - (StrOpt) Specifies the path of the Image service repository in GPFS.  Leave undefined if not storing images in GPFS.
+     - (StrOpt) Specifies the path of the Image service repository in GPFS. Leave undefined if not storing images in GPFS.
    * - ``gpfs_images_share_mode`` = ``None``
-     - (StrOpt) Specifies the type of image copy to be used.  Set this when the Image service repository also uses GPFS so that image files can be transferred efficiently from the Image service to the Block Storage service. There are two valid values: "copy" specifies that a full copy of the image is made; "copy_on_write" specifies that copy-on-write optimization strategy is used and unmodified blocks of the image file are shared efficiently.
+     - (StrOpt) Specifies the type of image copy to be used. Set this when the Image service repository also uses GPFS so that image files can be transferred efficiently from the Image service to the Block Storage service. There are two valid values: "copy" specifies that a full copy of the image is made; "copy_on_write" specifies that copy-on-write optimization strategy is used and unmodified blocks of the image file are shared efficiently.
    * - ``gpfs_max_clone_depth`` = ``0``
-     - (IntOpt) Specifies an upper limit on the number of indirections required to reach a specific block due to snapshots or clones.  A lengthy chain of copy-on-write snapshots or clones can have a negative impact on performance, but improves space utilization.  0 indicates unlimited clone depth.
+     - (IntOpt) Specifies an upper limit on the number of indirections required to reach a specific block due to snapshots or clones. A lengthy chain of copy-on-write snapshots or clones can have a negative impact on performance, but improves space utilization. 0 indicates unlimited clone depth.
    * - ``gpfs_mount_point_base`` = ``None``
      - (StrOpt) Specifies the path of the GPFS directory where Block Storage volume and snapshot files are stored.
    * - ``gpfs_sparse_volumes`` = ``True``

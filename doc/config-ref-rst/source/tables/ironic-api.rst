@@ -16,6 +16,8 @@
      - Description
    * - **[api]**
      -
+   * - ``api_workers`` = ``None``
+     - (IntOpt) Number of workers for OpenStack Ironic API service. The default is equal to the number of CPUs available if that can be determined, else a default worker count of 1 is returned.
    * - ``host_ip`` = ``0.0.0.0``
      - (StrOpt) The IP address on which ironic-api listens.
    * - ``max_limit`` = ``1000``
@@ -55,7 +57,7 @@
    * - **[oslo_middleware]**
      -
    * - ``max_request_body_size`` = ``114688``
-     - (IntOpt) The maximum body size for each  request, in bytes.
+     - (IntOpt) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
      - (StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
    * - **[oslo_versionedobjects]**

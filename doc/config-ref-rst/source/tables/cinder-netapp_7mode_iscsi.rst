@@ -19,7 +19,7 @@
    * - ``netapp_login`` = ``None``
      - (StrOpt) Administrative user account name used to access the storage system or proxy server.
    * - ``netapp_partner_backend_name`` = ``None``
-     - (StrOpt) The name of the config.conf stanza for a Data ONTAP (7-mode) HA partner.  This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode, and it is required if the storage protocol selected is FC.
+     - (StrOpt) The name of the config.conf stanza for a Data ONTAP (7-mode) HA partner. This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode, and it is required if the storage protocol selected is FC.
    * - ``netapp_password`` = ``None``
      - (StrOpt) Password for the administrative user account specified in the netapp_login option.
    * - ``netapp_pool_name_search_pattern`` = ``(.+)``
@@ -29,7 +29,7 @@
    * - ``netapp_server_port`` = ``None``
      - (IntOpt) The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.
    * - ``netapp_size_multiplier`` = ``1.2``
-     - (FloatOpt) The quantity to be multiplied by the requested volume size to ensure enough space is available on the virtual storage server (Vserver) to fulfill the volume creation request.  Note: this option is deprecated and will be removed in favor of "reserved_percentage" in the Mitaka release.
+     - (FloatOpt) The quantity to be multiplied by the requested volume size to ensure enough space is available on the virtual storage server (Vserver) to fulfill the volume creation request. Note: this option is deprecated and will be removed in favor of "reserved_percentage" in the Mitaka release.
    * - ``netapp_storage_family`` = ``ontap_cluster``
      - (StrOpt) The storage family type used on the storage system; valid values are ontap_7mode for using Data ONTAP operating in 7-Mode, ontap_cluster for using clustered Data ONTAP, or eseries for using E-Series.
    * - ``netapp_storage_protocol`` = ``None``

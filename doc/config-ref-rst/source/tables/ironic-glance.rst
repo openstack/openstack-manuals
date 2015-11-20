@@ -17,7 +17,7 @@
    * - **[glance]**
      -
    * - ``allowed_direct_url_schemes`` = `` ``
-     - (ListOpt) A list of URL schemes that can be downloaded directly via the direct_url.  Currently supported schemes: [file].
+     - (ListOpt) A list of URL schemes that can be downloaded directly via the direct_url. Currently supported schemes: [file].
    * - ``auth_strategy`` = ``keystone``
      - (StrOpt) Authentication strategy to use when connecting to glance. Only "keystone" and "noauth" are currently supported by ironic.
    * - ``glance_api_insecure`` = ``False``

@@ -79,7 +79,7 @@
    * - ``memcache_secret_key`` = ``None``
      - (StrOpt) (Optional, mandatory if memcache_security_strategy is defined) This string is used for key derivation.
    * - ``memcache_security_strategy`` = ``None``
-     - (StrOpt) (Optional) If defined, indicate whether token data should be authenticated or authenticated and encrypted. Acceptable values are MAC or ENCRYPT.  If MAC, token data is authenticated (with HMAC) in the cache. If ENCRYPT, token data is encrypted and authenticated in the cache. If the value is not one of these options or empty, auth_token will raise an exception on initialization.
+     - (StrOpt) (Optional) If defined, indicate whether token data should be authenticated or authenticated and encrypted. Acceptable values are MAC or ENCRYPT. If MAC, token data is authenticated (with HMAC) in the cache. If ENCRYPT, token data is encrypted and authenticated in the cache. If the value is not one of these options or empty, auth_token will raise an exception on initialization.
    * - ``memcache_use_advanced_pool`` = ``False``
      - (BoolOpt) (Optional) Use the advanced (eventlet safe) memcached client pool. The advanced pool will only work under python 2.x.
    * - ``memcached_servers`` = ``None``

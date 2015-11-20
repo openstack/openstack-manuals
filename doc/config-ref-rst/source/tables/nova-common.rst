@@ -27,7 +27,7 @@
    * - ``executor_thread_pool_size`` = ``64``
      - (IntOpt) Size of executor thread pool.
    * - ``host`` = ``localhost``
-     - (StrOpt) Name of this node.  This can be an opaque identifier.  It is not necessarily a hostname, FQDN, or IP address. However, the node name must be valid within an AMQP key, and if using ZeroMQ, a valid hostname, FQDN, or IP address
+     - (StrOpt) Name of this node. This can be an opaque identifier. It is not necessarily a hostname, FQDN, or IP address. However, the node name must be valid within an AMQP key, and if using ZeroMQ, a valid hostname, FQDN, or IP address
    * - ``memcached_servers`` = ``None``
      - (ListOpt) Memcached servers or None for in process cache.
    * - ``my_ip`` = ``10.0.0.1``
@@ -35,7 +35,7 @@
    * - ``notify_api_faults`` = ``False``
      - (BoolOpt) If set, send api.fault notifications on caught exceptions in the API service.
    * - ``notify_on_state_change`` = ``None``
-     - (StrOpt) If set, send compute.instance.update notifications on instance state changes.  Valid values are None for no notifications, "vm_state" for notifications on VM state changes, or "vm_and_task_state" for notifications on VM and task state changes.
+     - (StrOpt) If set, send compute.instance.update notifications on instance state changes. Valid values are None for no notifications, "vm_state" for notifications on VM state changes, or "vm_and_task_state" for notifications on VM and task state changes.
    * - ``pybasedir`` = ``/usr/lib/python/site-packages/nova``
      - (StrOpt) Directory where the nova python module is installed
    * - ``report_interval`` = ``10``
@@ -59,7 +59,7 @@
    * - ``destroy_after_evacuate`` = ``True``
      - (BoolOpt) DEPRECATED: Whether to destroy instances on startup when we suspect they have previously been evacuated. This can result in data loss if undesired. See https://launchpad.net/bugs/1419785
    * - ``disable_libvirt_livesnapshot`` = ``True``
-     - (BoolOpt) When using libvirt 1.2.2 live snapshots fail intermittently under load.  This config option provides a mechanism to enable live snapshot while this is resolved.  See https://bugs.launchpad.net/nova/+bug/1334398
+     - (BoolOpt) When using libvirt 1.2.2 live snapshots fail intermittently under load. This config option provides a mechanism to enable live snapshot while this is resolved. See https://bugs.launchpad.net/nova/+bug/1334398
    * - ``disable_rootwrap`` = ``False``
      - (BoolOpt) This option allows a fallback to sudo for performance reasons. For example see https://bugs.launchpad.net/nova/+bug/1415106
    * - ``handle_virt_lifecycle_events`` = ``True``

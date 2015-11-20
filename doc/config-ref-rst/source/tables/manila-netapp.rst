@@ -37,7 +37,7 @@
    * - ``netapp_storage_family`` = ``ontap_cluster``
      - (StrOpt) The storage family type used on the storage system; valid values include ontap_cluster for using clustered Data ONTAP.
    * - ``netapp_trace_flags`` = ``None``
-     - (StrOpt) Comma-separated list of options that control which trace info is written to the debug logs.  Values include method and api.
+     - (StrOpt) Comma-separated list of options that control which trace info is written to the debug logs. Values include method and api.
    * - ``netapp_transport_type`` = ``http``
      - (StrOpt) The transport protocol used when communicating with the storage system or proxy server. Valid values are http or https.
    * - ``netapp_volume_name_template`` = ``share_%(share_id)s``

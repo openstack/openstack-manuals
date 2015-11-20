@@ -29,13 +29,13 @@
    * - **[cells]**
      -
    * - ``rpc_driver_queue_base`` = ``cells.intercell``
-     - (StrOpt) Base queue name to use when communicating between cells.  Various topics by message type will be appended to this.
+     - (StrOpt) Base queue name to use when communicating between cells. Various topics by message type will be appended to this.
    * - **[oslo_concurrency]**
      -
    * - ``disable_process_locking`` = ``False``
      - (BoolOpt) Enables or disables inter-process locks.
    * - ``lock_path`` = ``None``
-     - (StrOpt) Directory to use for lock files.  For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.
+     - (StrOpt) Directory to use for lock files. For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.
    * - **[oslo_messaging_amqp]**
      -
    * - ``allow_insecure_clients`` = ``False``

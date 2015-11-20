@@ -25,7 +25,7 @@
    * - ``smbfs_mount_point_base`` = ``$state_path/mnt``
      - (StrOpt) Base dir containing mount points for smbfs shares.
    * - ``smbfs_oversub_ratio`` = ``1.0``
-     - (FloatOpt) This will compare the allocated to available space on the volume destination.  If the ratio exceeds this number, the destination will no longer be valid.
+     - (FloatOpt) This will compare the allocated to available space on the volume destination. If the ratio exceeds this number, the destination will no longer be valid.
    * - ``smbfs_shares_config`` = ``/etc/cinder/smbfs_shares``
      - (StrOpt) File with the list of available smbfs shares.
    * - ``smbfs_sparsed_volumes`` = ``True``

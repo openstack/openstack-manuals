@@ -16,6 +16,8 @@
      - Description
    * - **[profiler]**
      -
+   * - ``hmac_keys`` = ``SECRET_KEY``
+     - (StrOpt) Secret key to use to sign tracing messages.
    * - ``profiler_enabled`` = ``False``
      - (BoolOpt) If False fully disable profiling feature.
    * - ``trace_sqlalchemy`` = ``False``

@@ -51,13 +51,13 @@
    * - **[cache]**
      -
    * - ``backend`` = ``dogpile.cache.null``
-     - (StrOpt) Dogpile.cache backend module. It is recommended that Memcache with pooling (oslo_cache.memcache_pool) or Redis (dogpile.cache.redis) be used in production deployments.  Small workloads (single process) like devstack can use the dogpile.cache.memory backend.
+     - (StrOpt) Dogpile.cache backend module. It is recommended that Memcache with pooling (oslo_cache.memcache_pool) or Redis (dogpile.cache.redis) be used in production deployments. Small workloads (single process) like devstack can use the dogpile.cache.memory backend.
    * - ``backend_argument`` = ``[]``
      - (MultiStrOpt) Arguments supplied to the backend module. Specify this option once per argument to be passed to the dogpile.cache backend. Example format: "<argname>:<value>".
    * - ``config_prefix`` = ``cache.oslo``
      - (StrOpt) Prefix for building the configuration dictionary for the cache region. This should not need to be changed unless there is another dogpile.cache region with the same configuration name.
    * - ``debug_cache_backend`` = ``False``
-     - (BoolOpt) Extra debugging from the cache backend (cache keys, get/set/delete/etc calls). This is only really useful if you need to see the specific cache-backend get/set/delete calls with the keys/values.  Typically this should be left set to false.
+     - (BoolOpt) Extra debugging from the cache backend (cache keys, get/set/delete/etc calls). This is only really useful if you need to see the specific cache-backend get/set/delete calls with the keys/values. Typically this should be left set to false.
    * - ``enabled`` = ``False``
      - (BoolOpt) Global toggle for caching.
    * - ``expiration_time`` = ``600``

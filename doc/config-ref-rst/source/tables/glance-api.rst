@@ -47,7 +47,7 @@
    * - ``max_request_id_length`` = ``64``
      - (IntOpt) Limits request ID length.
    * - ``owner_is_tenant`` = ``True``
-     - (BoolOpt) When true, this option sets the owner of an image to be the tenant. Otherwise, the owner of the  image will be the authenticated user issuing the request.
+     - (BoolOpt) When true, this option sets the owner of an image to be the tenant. Otherwise, the owner of the image will be the authenticated user issuing the request.
    * - ``public_endpoint`` = ``None``
      - (StrOpt) Public url to use for versions endpoint. The default is None, which will use the request's host_url attribute to populate the URL base. If Glance is operating behind a proxy, you will want to change this to represent the proxy's URL.
    * - ``send_identity_headers`` = ``False``
@@ -55,7 +55,7 @@
    * - ``show_multiple_locations`` = ``False``
      - (BoolOpt) Whether to include the backend image locations in image properties. For example, if using the file system store a URL of "file:///path/to/image" will be returned to the user in the 'direct_url' meta-data field. Revealing storage location can be a security risk, so use this setting with caution! Setting this to true overrides the show_image_direct_url option.
    * - ``tcp_keepidle`` = ``600``
-     - (IntOpt) The value for the socket option TCP_KEEPIDLE.  This is the time in seconds that the connection must be idle before TCP starts sending keepalive probes.
+     - (IntOpt) The value for the socket option TCP_KEEPIDLE. This is the time in seconds that the connection must be idle before TCP starts sending keepalive probes.
    * - ``use_user_token`` = ``True``
      - (BoolOpt) Whether to pass through the user token when making requests to the registry. To prevent failures with token expiration during big files upload, it is recommended to set this parameter to False.If "use_user_token" is not in effect, then admin credentials can be specified.
    * - **[glance_store]**
@@ -69,7 +69,7 @@
    * - **[oslo_middleware]**
      -
    * - ``max_request_body_size`` = ``114688``
-     - (IntOpt) The maximum body size for each  request, in bytes.
+     - (IntOpt) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
      - (StrOpt) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by an SSL termination proxy.
    * - **[paste_deploy]**
