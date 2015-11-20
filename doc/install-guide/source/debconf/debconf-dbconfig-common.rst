@@ -74,7 +74,7 @@ After you create this file, run this command:
 
 The Identity service is installed with MySQL as the database back end,
 ``keystonedb`` as database name, and the localhost socket file. The
-corresponding DNS will then be:
+corresponding DSN (Database Source Name) will then be:
 
 .. code-block:: ini
 
