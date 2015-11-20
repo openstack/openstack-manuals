@@ -260,7 +260,7 @@ Finalize installation
 
      .. note::
 
-        The ``systemctl restart`` command starts the Apache HTTP service if
+        The ``systemctl restart`` command starts each service if
         not currently running.
 
 .. only:: rdo
@@ -275,5 +275,5 @@ Finalize installation
 
      .. note::
 
-        The ``systemctl restart`` command starts the Apache HTTP service if
+        The ``systemctl restart`` command starts each service if
         not currently running.
