@@ -5,7 +5,11 @@ General purpose
 .. toctree::
    :maxdepth: 2
 
+   generalpurpose-user-requirements.rst
+   generalpurpose-tech-considerations.rst
+   generalpurpose-operational-considerations.rst
    generalpurpose-architecture.rst
+   generalpurpose-prescriptive-example.rst
 
 
 An OpenStack general purpose cloud is often considered a starting
