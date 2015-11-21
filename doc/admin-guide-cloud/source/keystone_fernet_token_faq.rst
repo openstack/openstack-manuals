@@ -1,5 +1,5 @@
 ===================================
-fernet - Frequently Asked Questions
+Fernet - Frequently Asked Questions
 ===================================
 
 The following questions have been asked periodically since the initial release

@@ -25,7 +25,7 @@ information stored in the token and integrity is verified with a ``SHA256
 HMAC`` signature. Only the Identity service should have access to the keys used
 to encrypt and decrypt fernet tokens. Like UUID tokens, fernet tokens must be
 passed back to the Identity service in order to validate them. For more
-information on the fernet token type, see the :ref:`keystone_fernet_token_faq`.
+information on the fernet token type, see the :doc:`keystone_fernet_token_faq`.
 
 PKI and PKIZ tokens
 ~~~~~~~~~~~~~~~~~~~
@@ -38,4 +38,4 @@ pairs and certificates in order to create and validate PKI tokens.
 The same concepts from PKI tokens apply to PKIZ tokens. The only difference
 between the two is PKIZ tokens are compressed to help mitigate the size issues
 of PKI. For more information on the certificate setup for PKI and PKIZ tokens,
-see the :ref:`keystone_certificates_for_pki`.
+see the :doc:`keystone_certificates_for_pki`.
