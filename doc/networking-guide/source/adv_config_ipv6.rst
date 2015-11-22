@@ -247,8 +247,8 @@ addressing and network information is provided to tenant instances:
 * ``ipv6_address_mode``: Determines how instances obtain IPv6 address,
   default gateway, or optional information.
 
-For the above two attributes to be effective, ``enable_dhcp`` must be
-set to True in file :file:`neutron.conf`.
+For the above two attributes to be effective, ``enable_dhcp`` of the
+subnet object must be set to True.
 
 Using SLAAC for addressing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
