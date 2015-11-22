@@ -202,6 +202,7 @@ If the device defined by the PCI address or devname corresponds to a SR-IOV PF,
 all VFs under the PF will match the entry. Multiple pci_passthrough_whitelist
 entries per host are supported.
 
+.. _configure_sriov_neutron_server:
 
 Configure neutron-server (Controller)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -270,7 +271,7 @@ Enable neutron sriov-agent (Compute)
 
 .. note::
    You only need to enable the sriov-agent if you decided to keep
-   ``agent_required=True`` in the step `Configure neutron-server (Controller)`_.
+   ``agent_required=True`` in the step :ref:`configure_sriov_neutron_server`.
    If you set ``agent_required=False``, you can safely skip this step.
 
 #. On each compute node edit the file
