@@ -84,7 +84,7 @@ UEC tarball
 
 VMDK
  VMware ESXi hypervisor uses the
- `VMDK <http://www.vmware.com/technical-resources/interfaces/vmdk.html>`_
+ `VMDK <https://developercenter.vmware.com/web/sdk/60/vddk>`_
  (Virtual Machine Disk) format for images.
 
 VDI
