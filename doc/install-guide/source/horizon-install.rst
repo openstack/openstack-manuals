@@ -1,6 +1,8 @@
 Install and configure
 ~~~~~~~~~~~~~~~~~~~~~
 
+DO NOT TRANSLATE.
+
 This section describes how to install and configure the dashboard
 on the controller node.
 
