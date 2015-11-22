@@ -3,7 +3,7 @@ Create images manually
 ======================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    net-running.rst
    virt-manager.rst
