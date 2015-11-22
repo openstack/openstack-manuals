@@ -168,7 +168,7 @@ datastore version.
         - ``mysql``
 
       * - glance ID
-        - The ID of the guest image you just added to the Identity
+        - The ID of the guest image you just added to the Image
           service. You can get this ID by using the glance
           :command:`image-show` IMAGE_NAME command.
         - bb75f870-0c33-4907-8467-1367f8cb15b6
