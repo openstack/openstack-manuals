@@ -31,6 +31,8 @@ of the European Union and the requirements of the
 in the United States.
 Consult a local regulatory body for more information.
 
+.. _security:
+
 Security
 ~~~~~~~~
 
