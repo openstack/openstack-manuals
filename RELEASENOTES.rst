@@ -29,3 +29,10 @@ Operations Guide
 ----------------
 
 * Shared File Systems chapter added.
+
+Translations
+------------
+
+* Japanese
+
+  * Publish networking guide as draft.
