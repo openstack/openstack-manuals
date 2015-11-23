@@ -15,7 +15,7 @@ backup types.
 After you upload an image, you cannot change it.
 
 For details about image creation, see the `Virtual Machine Image
-Guide <http://docs.openstack.org/image-guide/content/>`__.
+Guide <http://docs.openstack.org/image-guide/>`__.
 
 List or get details for images (glance)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

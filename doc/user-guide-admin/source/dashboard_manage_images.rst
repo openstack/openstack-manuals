@@ -18,7 +18,7 @@ Create images
 ~~~~~~~~~~~~~
 
 For details about image creation, see the `Virtual Machine Image
-Guide <http://docs.openstack.org/image-guide/content/>`_.
+Guide <http://docs.openstack.org/image-guide/>`_.
 
 #. Log in to the dashboard.
 

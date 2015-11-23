@@ -92,7 +92,7 @@ Guides for deployers and administrators
 
    * - Virtual Machine Image Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/image-guide
-     - http://docs.openstack.org/image-guide/content
+     - http://docs.openstack.org/image-guide/
 
 Guides for end users
 --------------------
