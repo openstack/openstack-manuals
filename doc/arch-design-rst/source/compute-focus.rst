@@ -2,6 +2,13 @@
 Compute focused
 ===============
 
+.. toctree::
+   :maxdepth: 2
+
+   compute-focus-technical-considerations.rst
+   compute-focus-operational-considerations.rst
+   compute-focus-architecture.rst
+
 Compute-focused clouds are a specialized subset of the general
 purpose OpenStack cloud architecture. A compute-focused cloud
 specifically supports compute intensive workloads.
