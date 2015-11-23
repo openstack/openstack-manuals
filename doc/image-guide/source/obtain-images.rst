@@ -107,11 +107,11 @@ Official Debian images
 Since January 2015, `Debian provides images for direct download
 <http://cdimage.debian.org/cdimage/openstack/>`_.
 They are now made at the same time as the CD and DVD images of Debian.
-However, until Debian 8.0 (aka Jessie) is out, these images are the
-weekly built images of the testing distribution.
+Therefore, images are available on each point release of Debian. Also,
+weekly images of the testing distribution are available.
 
 If you wish to build your own images of Debian 7.0 (aka Wheezy, the
-current stable release of Debian), you can use the package which is
+old stable release of Debian), you can use the package which is
 used to build the official Debian images.
 It is named ``openstack-debian-images``, and it provides a simple
 script for building them.
