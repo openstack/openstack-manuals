@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _cinder-storwize:
+
 .. list-table:: Description of IBM Storwise driver configuration options
    :header-rows: 1
    :class: config-ref-table
@@ -27,7 +29,7 @@
    * - ``storwize_svc_multihostmap_enabled`` = ``True``
      - (BoolOpt) Allows vdisk to multi host mapping
    * - ``storwize_svc_multipath_enabled`` = ``False``
-     - (BoolOpt) Connect with multipath (FC only; iSCSI multipath is controlled by Nova)
+     - (BoolOpt) This option no longer has any affect. It is deprecated and will be removed in the next release.
    * - ``storwize_svc_stretched_cluster_partner`` = ``None``
      - (StrOpt) If operating in stretched cluster mode, specify the name of the pool in which mirrored copies are stored.Example: "pool2"
    * - ``storwize_svc_vol_autoexpand`` = ``True``

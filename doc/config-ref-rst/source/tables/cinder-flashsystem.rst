@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _cinder-flashsystem:
+
 .. list-table:: Description of IBM FlashSystem volume driver configuration options
    :header-rows: 1
    :class: config-ref-table
@@ -23,4 +25,4 @@
    * - ``flashsystem_multihostmap_enabled`` = ``True``
      - (BoolOpt) Allows vdisk to multi host mapping. (Default is True)
    * - ``flashsystem_multipath_enabled`` = ``False``
-     - (BoolOpt) Connect with multipath (FC only).(Default is false.)
+     - (BoolOpt) This option no longer has any affect. It is deprecated and will be removed in the next release.

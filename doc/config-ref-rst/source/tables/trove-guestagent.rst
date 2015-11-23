@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _trove-guestagent:
+
 .. list-table:: Description of guest agent configuration options
    :header-rows: 1
    :class: config-ref-table

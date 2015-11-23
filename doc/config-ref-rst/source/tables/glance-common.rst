@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _glance-common:
+
 .. list-table:: Description of common configuration options
    :header-rows: 1
    :class: config-ref-table
@@ -56,7 +58,7 @@
      - (BoolOpt) Whether to include the backend image storage location in image properties. Revealing storage location can be a security risk, so use this setting with caution!
    * - ``user_storage_quota`` = ``0``
      - (StrOpt) Set a system wide quota for every user. This value is the total capacity that a user can use across all storage systems. A value of 0 means unlimited.Optional unit can be specified for the value. Accepted units are B, KB, MB, GB and TB representing Bytes, KiloBytes, MegaBytes, GigaBytes and TeraBytes respectively. If no unit is specified then Bytes is assumed. Note that there should not be any space between value and unit and units are case sensitive.
-   * - ``workers`` = ``4``
+   * - ``workers`` = ``2``
      - (IntOpt) The number of child process workers that will be created to service requests. The default will be equal to the number of CPUs available.
    * - **[glance_store]**
      -
