@@ -283,9 +283,10 @@ Power requirements
  Ensure that the physical data center provides the necessary power
  for the selected network hardware.
 
-    .. note::
-       This may be an issue for spine switches in a leaf and spine
-       fabric, or end of row (EoR) switches.
+.. note::
+
+   This may be an issue for spine switches in a leaf and spine
+   fabric, or end of row (EoR) switches.
 
 There is no single best practice architecture for the networking
 hardware supporting a general purpose OpenStack cloud that will apply to
