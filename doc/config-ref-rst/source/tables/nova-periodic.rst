@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _nova-periodic:
+
 .. list-table:: Description of periodic configuration options
    :header-rows: 1
    :class: config-ref-table

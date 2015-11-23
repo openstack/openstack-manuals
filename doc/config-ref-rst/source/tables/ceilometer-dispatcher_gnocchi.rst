@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _ceilometer-dispatcher_gnocchi:
+
 .. list-table:: Description of Gnocchi dispatcher configuration options
    :header-rows: 1
    :class: config-ref-table

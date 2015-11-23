@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _cinder-hgst:
+
 .. list-table:: Description of HGST volume driver configuration options
    :header-rows: 1
    :class: config-ref-table

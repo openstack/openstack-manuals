@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _ironic-irmc:
+
 .. list-table:: Description of iRMC configuration options
    :header-rows: 1
    :class: config-ref-table

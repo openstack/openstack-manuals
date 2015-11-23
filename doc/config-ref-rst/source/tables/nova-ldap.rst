@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _nova-ldap:
+
 .. list-table:: Description of LDAP configuration options
    :header-rows: 1
    :class: config-ref-table

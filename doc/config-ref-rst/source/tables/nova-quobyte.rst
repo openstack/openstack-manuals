@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _nova-quobyte:
+
 .. list-table:: Description of Quobyte USP volume driver configuration options
    :header-rows: 1
    :class: config-ref-table

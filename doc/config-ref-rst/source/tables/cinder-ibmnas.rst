@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _cinder-ibmnas:
+
 .. list-table:: Description of IBM SONAS and Storwise V7000 volume driver configuration options
    :header-rows: 1
    :class: config-ref-table

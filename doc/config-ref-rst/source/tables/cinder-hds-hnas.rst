@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _cinder-hds-hnas:
+
 .. list-table:: Description of HDS HNAS iSCSI and NFS driver configuration options
    :header-rows: 1
    :class: config-ref-table

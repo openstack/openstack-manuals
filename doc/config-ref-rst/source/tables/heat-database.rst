@@ -8,6 +8,8 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
+.. _heat-database:
+
 .. list-table:: Description of database configuration options
    :header-rows: 1
    :class: config-ref-table
