@@ -8,215 +8,217 @@ Storage service, code-named cinder, on the controller node. This
 service requires at least one additional storage node that provides
 volumes to instances.
 
-Prerequisites
--------------
+.. only:: obs or rdo or ubuntu
 
-Before you install and configure the Block Storage service, you
-must create a database, service credentials, and API endpoints.
+   Prerequisites
+   -------------
 
-#. To create the database, complete these steps:
+   Before you install and configure the Block Storage service, you
+   must create a database, service credentials, and API endpoints.
 
-   * Use the database access client to connect to the database
-     server as the ``root`` user:
+   #. To create the database, complete these steps:
 
-     .. code-block:: console
+      * Use the database access client to connect to the database
+        server as the ``root`` user:
 
-        $ mysql -u root -p
+        .. code-block:: console
 
-   * Create the ``cinder`` database:
+           $ mysql -u root -p
 
-     .. code-block:: console
+      * Create the ``cinder`` database:
 
-        CREATE DATABASE cinder;
+        .. code-block:: console
 
-   * Grant proper access to the ``cinder`` database:
+           CREATE DATABASE cinder;
 
-     .. code-block:: console
+      * Grant proper access to the ``cinder`` database:
 
-        GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
-          IDENTIFIED BY 'CINDER_DBPASS';
-        GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
-          IDENTIFIED BY 'CINDER_DBPASS';
+        .. code-block:: console
 
-     Replace ``CINDER_DBPASS`` with a suitable password.
+           GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' \
+             IDENTIFIED BY 'CINDER_DBPASS';
+           GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' \
+             IDENTIFIED BY 'CINDER_DBPASS';
 
-   * Exit the database access client.
+        Replace ``CINDER_DBPASS`` with a suitable password.
 
-#. Source the ``admin`` credentials to gain access to admin-only
-   CLI commands:
+      * Exit the database access client.
 
-   .. code-block:: console
+   #. Source the ``admin`` credentials to gain access to admin-only
+      CLI commands:
 
-      $ source admin-openrc.sh
+      .. code-block:: console
 
-#. To create the service credentials, complete these steps:
+         $ source admin-openrc.sh
 
-   * Create a ``cinder`` user:
+   #. To create the service credentials, complete these steps:
 
-     .. code-block:: console
+      * Create a ``cinder`` user:
 
-        $ openstack user create --domain default --password-prompt cinder
-        User Password:
-        Repeat User Password:
-        +-----------+----------------------------------+
-        | Field     | Value                            |
-        +-----------+----------------------------------+
-        | domain_id | default                          |
-        | enabled   | True                             |
-        | id        | bb279f8ffc444637af38811a5e1f0562 |
-        | name      | cinder                           |
-        +-----------+----------------------------------+
+        .. code-block:: console
 
-   * Add the ``admin`` role to the ``cinder`` user:
+           $ openstack user create --domain default --password-prompt cinder
+           User Password:
+           Repeat User Password:
+           +-----------+----------------------------------+
+           | Field     | Value                            |
+           +-----------+----------------------------------+
+           | domain_id | default                          |
+           | enabled   | True                             |
+           | id        | bb279f8ffc444637af38811a5e1f0562 |
+           | name      | cinder                           |
+           +-----------+----------------------------------+
 
-     .. code-block:: console
+      * Add the ``admin`` role to the ``cinder`` user:
 
-        $ openstack role add --project service --user cinder admin
+        .. code-block:: console
 
-     .. note::
+           $ openstack role add --project service --user cinder admin
 
-        This command provides no output.
+        .. note::
 
-   * Create the ``cinder`` and ``cinderv2`` service entities:
+           This command provides no output.
 
-     .. code-block:: console
+      * Create the ``cinder`` and ``cinderv2`` service entities:
 
-        $ openstack service create --name cinder \
-          --description "OpenStack Block Storage" volume
-        +-------------+----------------------------------+
-        | Field       | Value                            |
-        +-------------+----------------------------------+
-        | description | OpenStack Block Storage          |
-        | enabled     | True                             |
-        | id          | ab3bbbef780845a1a283490d281e7fda |
-        | name        | cinder                           |
-        | type        | volume                           |
-        +-------------+----------------------------------+
+        .. code-block:: console
 
-     .. code-block:: console
+           $ openstack service create --name cinder \
+             --description "OpenStack Block Storage" volume
+           +-------------+----------------------------------+
+           | Field       | Value                            |
+           +-------------+----------------------------------+
+           | description | OpenStack Block Storage          |
+           | enabled     | True                             |
+           | id          | ab3bbbef780845a1a283490d281e7fda |
+           | name        | cinder                           |
+           | type        | volume                           |
+           +-------------+----------------------------------+
 
-        $ openstack service create --name cinderv2 \
-          --description "OpenStack Block Storage" volumev2
-        +-------------+----------------------------------+
-        | Field       | Value                            |
-        +-------------+----------------------------------+
-        | description | OpenStack Block Storage          |
-        | enabled     | True                             |
-        | id          | eb9fd245bdbc414695952e93f29fe3ac |
-        | name        | cinderv2                         |
-        | type        | volumev2                         |
-        +-------------+----------------------------------+
+        .. code-block:: console
 
-   .. note::
+           $ openstack service create --name cinderv2 \
+             --description "OpenStack Block Storage" volumev2
+           +-------------+----------------------------------+
+           | Field       | Value                            |
+           +-------------+----------------------------------+
+           | description | OpenStack Block Storage          |
+           | enabled     | True                             |
+           | id          | eb9fd245bdbc414695952e93f29fe3ac |
+           | name        | cinderv2                         |
+           | type        | volumev2                         |
+           +-------------+----------------------------------+
 
-      The Block Storage services requires two service entities.
+      .. note::
 
-#. Create the Block Storage service API endpoints:
+         The Block Storage services require two service entities.
 
-   .. code-block:: console
+   #. Create the Block Storage service API endpoints:
 
-      $ openstack endpoint create --region RegionOne \
-        volume public http://controller:8776/v1/%\(tenant_id\)s
-        +--------------+-----------------------------------------+
-        | Field        | Value                                   |
-        +--------------+-----------------------------------------+
-        | enabled      | True                                    |
-        | id           | 03fa2c90153546c295bf30ca86b1344b        |
-        | interface    | public                                  |
-        | region       | RegionOne                               |
-        | region_id    | RegionOne                               |
-        | service_id   | ab3bbbef780845a1a283490d281e7fda        |
-        | service_name | cinder                                  |
-        | service_type | volume                                  |
-        | url          | http://controller:8776/v1/%(tenant_id)s |
-        +--------------+-----------------------------------------+
+      .. code-block:: console
 
-      $ openstack endpoint create --region RegionOne \
-        volume internal http://controller:8776/v1/%\(tenant_id\)s
-        +--------------+-----------------------------------------+
-        | Field        | Value                                   |
-        +--------------+-----------------------------------------+
-        | enabled      | True                                    |
-        | id           | 94f684395d1b41068c70e4ecb11364b2        |
-        | interface    | internal                                |
-        | region       | RegionOne                               |
-        | region_id    | RegionOne                               |
-        | service_id   | ab3bbbef780845a1a283490d281e7fda        |
-        | service_name | cinder                                  |
-        | service_type | volume                                  |
-        | url          | http://controller:8776/v1/%(tenant_id)s |
-        +--------------+-----------------------------------------+
+         $ openstack endpoint create --region RegionOne \
+           volume public http://controller:8776/v1/%\(tenant_id\)s
+           +--------------+-----------------------------------------+
+           | Field        | Value                                   |
+           +--------------+-----------------------------------------+
+           | enabled      | True                                    |
+           | id           | 03fa2c90153546c295bf30ca86b1344b        |
+           | interface    | public                                  |
+           | region       | RegionOne                               |
+           | region_id    | RegionOne                               |
+           | service_id   | ab3bbbef780845a1a283490d281e7fda        |
+           | service_name | cinder                                  |
+           | service_type | volume                                  |
+           | url          | http://controller:8776/v1/%(tenant_id)s |
+           +--------------+-----------------------------------------+
 
-      $ openstack endpoint create --region RegionOne \
-        volume admin http://controller:8776/v1/%\(tenant_id\)s
-        +--------------+-----------------------------------------+
-        | Field        | Value                                   |
-        +--------------+-----------------------------------------+
-        | enabled      | True                                    |
-        | id           | 4511c28a0f9840c78bacb25f10f62c98        |
-        | interface    | admin                                   |
-        | region       | RegionOne                               |
-        | region_id    | RegionOne                               |
-        | service_id   | ab3bbbef780845a1a283490d281e7fda        |
-        | service_name | cinder                                  |
-        | service_type | volume                                  |
-        | url          | http://controller:8776/v1/%(tenant_id)s |
-        +--------------+-----------------------------------------+
+         $ openstack endpoint create --region RegionOne \
+           volume internal http://controller:8776/v1/%\(tenant_id\)s
+           +--------------+-----------------------------------------+
+           | Field        | Value                                   |
+           +--------------+-----------------------------------------+
+           | enabled      | True                                    |
+           | id           | 94f684395d1b41068c70e4ecb11364b2        |
+           | interface    | internal                                |
+           | region       | RegionOne                               |
+           | region_id    | RegionOne                               |
+           | service_id   | ab3bbbef780845a1a283490d281e7fda        |
+           | service_name | cinder                                  |
+           | service_type | volume                                  |
+           | url          | http://controller:8776/v1/%(tenant_id)s |
+           +--------------+-----------------------------------------+
 
-   .. code-block:: console
+         $ openstack endpoint create --region RegionOne \
+           volume admin http://controller:8776/v1/%\(tenant_id\)s
+           +--------------+-----------------------------------------+
+           | Field        | Value                                   |
+           +--------------+-----------------------------------------+
+           | enabled      | True                                    |
+           | id           | 4511c28a0f9840c78bacb25f10f62c98        |
+           | interface    | admin                                   |
+           | region       | RegionOne                               |
+           | region_id    | RegionOne                               |
+           | service_id   | ab3bbbef780845a1a283490d281e7fda        |
+           | service_name | cinder                                  |
+           | service_type | volume                                  |
+           | url          | http://controller:8776/v1/%(tenant_id)s |
+           +--------------+-----------------------------------------+
 
-      $ openstack endpoint create --region RegionOne \
-        volumev2 public http://controller:8776/v2/%\(tenant_id\)s
-      +--------------+-----------------------------------------+
-      | Field        | Value                                   |
-      +--------------+-----------------------------------------+
-      | enabled      | True                                    |
-      | id           | 513e73819e14460fb904163f41ef3759        |
-      | interface    | public                                  |
-      | region       | RegionOne                               |
-      | region_id    | RegionOne                               |
-      | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
-      | service_name | cinderv2                                |
-      | service_type | volumev2                                |
-      | url          | http://controller:8776/v2/%(tenant_id)s |
-      +--------------+-----------------------------------------+
+      .. code-block:: console
 
-      $ openstack endpoint create --region RegionOne \
-        volumev2 internal http://controller:8776/v2/%\(tenant_id\)s
-      +--------------+-----------------------------------------+
-      | Field        | Value                                   |
-      +--------------+-----------------------------------------+
-      | enabled      | True                                    |
-      | id           | 6436a8a23d014cfdb69c586eff146a32        |
-      | interface    | internal                                |
-      | region       | RegionOne                               |
-      | region_id    | RegionOne                               |
-      | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
-      | service_name | cinderv2                                |
-      | service_type | volumev2                                |
-      | url          | http://controller:8776/v2/%(tenant_id)s |
-      +--------------+-----------------------------------------+
+         $ openstack endpoint create --region RegionOne \
+           volumev2 public http://controller:8776/v2/%\(tenant_id\)s
+         +--------------+-----------------------------------------+
+         | Field        | Value                                   |
+         +--------------+-----------------------------------------+
+         | enabled      | True                                    |
+         | id           | 513e73819e14460fb904163f41ef3759        |
+         | interface    | public                                  |
+         | region       | RegionOne                               |
+         | region_id    | RegionOne                               |
+         | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
+         | service_name | cinderv2                                |
+         | service_type | volumev2                                |
+         | url          | http://controller:8776/v2/%(tenant_id)s |
+         +--------------+-----------------------------------------+
 
-      $ openstack endpoint create --region RegionOne \
-        volumev2 admin http://controller:8776/v2/%\(tenant_id\)s
-      +--------------+-----------------------------------------+
-      | Field        | Value                                   |
-      +--------------+-----------------------------------------+
-      | enabled      | True                                    |
-      | id           | e652cf84dd334f359ae9b045a2c91d96        |
-      | interface    | admin                                   |
-      | region       | RegionOne                               |
-      | region_id    | RegionOne                               |
-      | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
-      | service_name | cinderv2                                |
-      | service_type | volumev2                                |
-      | url          | http://controller:8776/v2/%(tenant_id)s |
-      +--------------+-----------------------------------------+
+         $ openstack endpoint create --region RegionOne \
+           volumev2 internal http://controller:8776/v2/%\(tenant_id\)s
+         +--------------+-----------------------------------------+
+         | Field        | Value                                   |
+         +--------------+-----------------------------------------+
+         | enabled      | True                                    |
+         | id           | 6436a8a23d014cfdb69c586eff146a32        |
+         | interface    | internal                                |
+         | region       | RegionOne                               |
+         | region_id    | RegionOne                               |
+         | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
+         | service_name | cinderv2                                |
+         | service_type | volumev2                                |
+         | url          | http://controller:8776/v2/%(tenant_id)s |
+         +--------------+-----------------------------------------+
 
-   .. note::
+         $ openstack endpoint create --region RegionOne \
+           volumev2 admin http://controller:8776/v2/%\(tenant_id\)s
+         +--------------+-----------------------------------------+
+         | Field        | Value                                   |
+         +--------------+-----------------------------------------+
+         | enabled      | True                                    |
+         | id           | e652cf84dd334f359ae9b045a2c91d96        |
+         | interface    | admin                                   |
+         | region       | RegionOne                               |
+         | region_id    | RegionOne                               |
+         | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
+         | service_name | cinderv2                                |
+         | service_type | volumev2                                |
+         | url          | http://controller:8776/v2/%(tenant_id)s |
+         +--------------+-----------------------------------------+
 
-      The Block Storage services requires endpoints for each service
-      entity.
+      .. note::
+
+         The Block Storage services require endpoints for each service
+         entity.
 
 Install and configure components
 --------------------------------
@@ -237,7 +239,7 @@ Install and configure components
 
          # yum install openstack-cinder python-cinderclient
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    #. Install the packages:
 
@@ -245,75 +247,85 @@ Install and configure components
 
          # apt-get install cinder-api cinder-scheduler python-cinderclient
 
+      .. only:: debian
+
+         Respond to prompts for
+         :doc:`database management <debconf/debconf-dbconfig-common>`,
+         :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
+         :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
+         and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
+
 2. Edit the ``/etc/cinder/cinder.conf`` file and complete the
    following actions:
 
-   * In the ``[database]`` section, configure database access:
+   .. only:: obs or rdo or ubuntu
 
-     .. only:: ubuntu or obs
+      * In the ``[database]`` section, configure database access:
+
+        .. only:: ubuntu or obs
+
+           .. code-block:: ini
+
+              [database]
+              ...
+              connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
+
+        .. only:: rdo
+
+           .. code-block:: ini
+
+              [database]
+              ...
+              connection = mysql://cinder:CINDER_DBPASS@controller/cinder
+
+        Replace ``CINDER_DBPASS`` with the password you chose for the
+        Block Storage database.
+
+      * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
+        configure ``RabbitMQ`` message queue access:
 
         .. code-block:: ini
 
-           [database]
+           [DEFAULT]
            ...
-           connection = mysql+pymysql://cinder:CINDER_DBPASS@controller/cinder
+           rpc_backend = rabbit
 
-     .. only:: rdo
+           [oslo_messaging_rabbit]
+           ...
+           rabbit_host = controller
+           rabbit_userid = openstack
+           rabbit_password = RABBIT_PASS
+
+        Replace ``RABBIT_PASS`` with the password you chose for the
+        ``openstack`` account in ``RabbitMQ``.
+
+      * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
+        configure Identity service access:
 
         .. code-block:: ini
 
-           [database]
+           [DEFAULT]
            ...
-           connection = mysql://cinder:CINDER_DBPASS@controller/cinder
+           auth_strategy = keystone
 
-     Replace ``CINDER_DBPASS`` with the password you chose for the
-     Block Storage database.
+           [keystone_authtoken]
+           ...
+           auth_uri = http://controller:5000
+           auth_url = http://controller:35357
+           auth_plugin = password
+           project_domain_id = default
+           user_domain_id = default
+           project_name = service
+           username = cinder
+           password = CINDER_PASS
 
-   * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-     configure ``RabbitMQ`` message queue access:
+        Replace ``CINDER_PASS`` with the password you chose for
+        the ``cinder`` user in the Identity service.
 
-     .. code-block:: ini
+        .. note::
 
-        [DEFAULT]
-        ...
-        rpc_backend = rabbit
-
-        [oslo_messaging_rabbit]
-        ...
-        rabbit_host = controller
-        rabbit_userid = openstack
-        rabbit_password = RABBIT_PASS
-
-     Replace ``RABBIT_PASS`` with the password you chose for the
-     ``openstack`` account in ``RabbitMQ``.
-
-   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
-     configure Identity service access:
-
-     .. code-block:: ini
-
-        [DEFAULT]
-        ...
-        auth_strategy = keystone
-
-        [keystone_authtoken]
-        ...
-        auth_uri = http://controller:5000
-        auth_url = http://controller:35357
-        auth_plugin = password
-        project_domain_id = default
-        user_domain_id = default
-        project_name = service
-        username = cinder
-        password = CINDER_PASS
-
-     Replace ``CINDER_PASS`` with the password you chose for
-     the ``cinder`` user in the Identity service.
-
-     .. note::
-
-        Comment out or remove any other options in the
-        ``[keystone_authtoken]`` section.
+           Comment out or remove any other options in the
+           ``[keystone_authtoken]`` section.
 
    * In the ``[DEFAULT]`` section, configure the ``my_ip`` option to
      use the management interface IP address of the controller node:
@@ -324,13 +336,15 @@ Install and configure components
         ...
         my_ip = 10.0.0.11
 
-   * In the ``[oslo_concurrency]`` section, configure the lock path:
+   .. only:: obs or rdo or ubuntu
 
-     .. code-block:: ini
+      * In the ``[oslo_concurrency]`` section, configure the lock path:
 
-        [oslo_concurrency]
-        ...
-        lock_path = /var/lib/cinder/tmp
+        .. code-block:: ini
+
+           [oslo_concurrency]
+           ...
+           lock_path = /var/lib/cinder/tmp
 
    * (Optional) To assist with troubleshooting, enable verbose
      logging in the ``[DEFAULT]`` section:
@@ -341,11 +355,13 @@ Install and configure components
         ...
         verbose = True
 
-3. Populate the Block Storage database:
+.. only:: obs or rdo or ubuntu
 
-   .. code-block:: console
+   3. Populate the Block Storage database:
 
-      # su -s /bin/sh -c "cinder-manage db sync" cinder
+      .. code-block:: console
+
+         # su -s /bin/sh -c "cinder-manage db sync" cinder
 
 Configure Compute to use Block Storage
 --------------------------------------
@@ -377,7 +393,7 @@ Finalize installation
          # systemctl enable openstack-cinder-api.service openstack-cinder-scheduler.service
          # systemctl start openstack-cinder-api.service openstack-cinder-scheduler.service
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    #. Restart the Compute API service:
 
@@ -392,7 +408,9 @@ Finalize installation
          # service cinder-scheduler restart
          # service cinder-api restart
 
-   #. By default, the Ubuntu packages create an SQLite database.
+.. only:: ubuntu
+
+   3. By default, the Ubuntu packages create an SQLite database.
 
       Because this configuration uses an SQL database server,
       you can remove the SQLite database file:
