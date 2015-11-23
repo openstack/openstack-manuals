@@ -19,7 +19,7 @@ web-based API.
    compute-images-instances.rst
    compute-networking-nova.rst
    compute-system-admin.rst
-   common/support-compute.rst
+   support-compute.rst
 
 .. TODO (bmoss)
    ../common/section_compute-configure-console.xml
