@@ -29,7 +29,7 @@ This is a custom in-house application written for this specific purpose.
 
 This solution is depicted in the figure below:
 
-.. figure:: ../figures/Multi-Cloud_Priv-Pub3.png
+.. figure:: figures/Multi-Cloud_Priv-Pub3.png
    :width: 100%
 
 This example shows two clouds with a Cloud Management
@@ -60,7 +60,7 @@ to take advantage of additional capacity and to scale applications.
 
 The following diagram demonstrates an OpenStack-to-AWS hybrid cloud:
 
-.. figure:: ../figures/Multi-Cloud_Priv-AWS4.png
+.. figure:: figures/Multi-Cloud_Priv-AWS4.png
    :width: 100%
 
 Company B states that its developers are already using AWS
@@ -101,7 +101,7 @@ To achieve these objectives, Company C replicates data to
 a second cloud in a geographically distant location.
 The following diagram describes this system:
 
-.. figure:: ../figures/Multi-Cloud_failover2.png
+.. figure:: figures/Multi-Cloud_failover2.png
    :width: 100%
 
 This example includes two private OpenStack clouds connected with a CMP.

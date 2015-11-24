@@ -5,11 +5,11 @@ Hybrid
 .. toctree::
    :maxdepth: 2
 
-   hybrid/user-requirements-hybrid.rst
-   hybrid/technical-considerations-hybrid.rst
-   hybrid/architecture-hybrid.rst
-   hybrid/operational-considerations-hybrid.rst
-   hybrid/prescriptive-examples-hybrid.rst
+   hybrid-user-requirements.rst
+   hybrid-technical-considerations.rst
+   hybrid-architecture.rst
+   hybrid-operational-considerations.rst
+   hybrid-prescriptive-examples.rst
 
 A :term:`hybrid cloud` design is one that uses more than one cloud.
 For example, designs that use both an OpenStack-based private

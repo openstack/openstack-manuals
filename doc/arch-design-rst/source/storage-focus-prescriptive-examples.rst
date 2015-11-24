@@ -16,7 +16,7 @@ requirement.
 Swift is a highly scalable object store that is part of the OpenStack
 project. This diagram explains the example architecture:
 
-.. figure:: /figures/Storage_Object.png
+.. figure:: figures/Storage_Object.png
 
 The example REST interface, presented as a traditional Object store
 running on traditional spindles, does not require a high performance
@@ -67,7 +67,7 @@ OpenStack has integration with Hadoop to manage the Hadoop cluster
 within the cloud. The following diagram shows an OpenStack store with a
 high performance requirement:
 
-.. figure:: /figures/Storage_Hadoop3.png
+.. figure:: figures/Storage_Hadoop3.png
 
 The hardware requirements and configuration are similar to those of the
 High Performance Database example below. In this case, the architecture
@@ -95,7 +95,7 @@ database example below, a portion of the SSD pool can act as a block
 device to the Database server. In the high performance analytics
 example, the inline SSD cache layer accelerates the REST interface.
 
-.. figure:: /figures/Storage_Database_+_Object5.png
+.. figure:: figures/Storage_Database_+_Object5.png
 
 In this example, Ceph presents a Swift-compatible REST interface, as
 well as a block level storage from a distributed storage cluster. It is

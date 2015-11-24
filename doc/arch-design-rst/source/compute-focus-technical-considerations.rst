@@ -151,11 +151,11 @@ largest flavor is half that size again. The following figure provides a
 visual representation of this concept for a general purpose computing
 design:
 
-.. figure:: /figures/Compute_Tech_Bin_Packing_General1.png
+.. figure:: figures/Compute_Tech_Bin_Packing_General1.png
 
 The following figure displays a CPU-optimized, packed server:
 
-.. figure:: /figures/Compute_Tech_Bin_Packing_CPU_optimized1.png
+.. figure:: figures/Compute_Tech_Bin_Packing_CPU_optimized1.png
 
 These default flavors are well suited to typical configurations of
 commodity server hardware. To maximize utilization, however, it may be
