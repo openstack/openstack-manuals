@@ -69,7 +69,7 @@ VBoxManage: VDI (VirtualBox) to raw
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you've created a VDI image using VirtualBox, you can convert
-it to raw format using the :program:`VBoxManage` command-line tool
+it to raw format using the ``VBoxManage`` command-line tool
 that ships with VirtualBox. On Mac OS X, and Linux, VirtualBox
 stores images by default in the ``~/VirtualBox VMs/`` directory.
 The following example creates a raw image in the current directory
