@@ -66,8 +66,8 @@ Here is the router we have used in our demonstration:
       $ neutron router-update router --ha=True
       Updated router: router
 
-#. Set the admin_state_up to ``True``. This will severe south-north
-   connections until admin_state_up is set to ``True`` again.
+#. Set the admin_state_up to ``True``.
+   After this, south-north connections can start.
 
    .. code-block:: console
 
@@ -140,15 +140,15 @@ Here is the router we have used in our demonstration:
       $ neutron router-update router --ha=False
       Updated router: router
 
-#. Set the admin_state_up to ``True``. This will severe south-north
-   connections until admin_state_up is set to ``True`` again.
+#. Set the admin_state_up to ``True``.
+   After this, south-north connections can start.
 
    .. code-block:: console
 
       $ neutron router-update router --admin_state_up=True
       Updated router: router
 
-#. Make sure that the router's ``ha`` attribute has changed to ``True``.
+#. Make sure that the router's ``ha`` attribute has changed to ``False``.
 
    .. code-block:: console
 
