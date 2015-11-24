@@ -133,34 +133,7 @@ tenant:
 
 .. code::
 
-    $ openstack user list
-    +--------+-------+
-    | ID     | Name  |
-    +--------+-------+
-    | 892585 | alice |
-    +--------+-------+
-
-.. code::
-
-    $ openstack role list
-    +--------+---------------+
-    | ID     | Name          |
-    +--------+---------------+
-    | 9a764e | compute-user  |
-    +--------+---------------+
-
-.. code::
-
-    $ openstack project list
-    +--------+--------------------+
-    | ID     | Name               |
-    +--------+--------------------+
-    | 6b8fd2 | acme               |
-    +--------+--------------------+
-
-.. code::
-
-    $ openstack role add --project 6b8fd2 --user 892585 9a764e
+    $ openstack role add --project acme --user alice compute-user
 
 A user can have different roles in different tenants. For example, Alice
 might also have the ``admin`` role in the ``Cyberdyne`` tenant. A user
