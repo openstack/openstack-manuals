@@ -30,6 +30,11 @@ Operations Guide
 
 * Shared File Systems chapter added.
 
+Virtual Machine Image Guide
+---------------------------
+
+* RST conversion finished.
+
 Translations
 ------------
 

@@ -8,8 +8,6 @@ Abstract
 This guide describes how to obtain, create, and modify virtual
 machine images that are compatible with OpenStack.
 
-.. warning:: This guide is a work-in-progress.
-
 Contents
 ~~~~~~~~
 
