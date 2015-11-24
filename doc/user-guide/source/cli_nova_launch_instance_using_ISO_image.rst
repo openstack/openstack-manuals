@@ -66,7 +66,7 @@ system as using ISO images on regular computers. When the installation
 is finished and system is rebooted, the instance asks you again to
 install the operating system, which means your instance is not usable.
 If you have problems with image creation, please check the
-`Virtual Machine Image Guide <http://docs.openstack.org/image-guide/content/ch_creating_images_manually.html>`_
+`Virtual Machine Image Guide <http://docs.openstack.org/image-guide/create_images_manually.html>`_
 for reference.
 
 .. _Make_instance_booted_from_ISO_image_functional:

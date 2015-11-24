@@ -163,7 +163,7 @@ This guide has a review in place to get a license indicator in output:
 .. _`OpenStack Cloud Administrator Guide`: http://docs.openstack.org/admin-guide-cloud/index.html
 .. _`OpenStack High Availability Guide`: http://docs.openstack.org/ha-guide/index.html
 .. _`OpenStack Security Guide`: http://docs.openstack.org/sec/
-.. _`Virtual Machine Image Guide`: http://docs.openstack.org/image-guide/content/
+.. _`Virtual Machine Image Guide`: http://docs.openstack.org/image-guide/
 
 .. _`OpenStack End User Guide`: http://docs.openstack.org/user-guide/index.html
 .. _`OpenStack Admin User Guide`: http://docs.openstack.org/user-guide-admin/index.html

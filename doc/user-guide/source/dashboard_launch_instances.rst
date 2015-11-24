@@ -42,7 +42,7 @@ copy of the image on the compute node where the instance starts.
    Image service and are available for this project.
 
    For details on creating images, see `Creating images
-   manually <http://docs.openstack.org/image-guide/content/ch_creating_images_manually.html>`__
+   manually <http://docs.openstack.org/image-guide/create-images-manually.html>`__
    in the *OpenStack Virtual Machine Image Guide*.
 
 #. Select an image and click :guilabel:`Launch Instance`.

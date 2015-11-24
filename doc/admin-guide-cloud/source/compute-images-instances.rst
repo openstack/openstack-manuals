@@ -25,7 +25,7 @@ flavors that you can edit or add to.
 
    -  For more information about creating and troubleshooting images,
       see the `OpenStack Virtual Machine Image
-      Guide <http://docs.openstack.org/image-guide/content/>`__.
+      Guide <http://docs.openstack.org/image-guide/>`__.
 
    -  For more information about image configuration options, see the
       `Image

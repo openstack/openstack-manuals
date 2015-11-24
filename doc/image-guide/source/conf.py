@@ -54,7 +54,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Virtual Machine Image Guide'
-bug_tag = u'image-guide-rst'
+bug_tag = u'image-guide'
 copyright = u'2015, OpenStack contributors'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -71,7 +71,7 @@ release = '0.9'
 #   gitsha: The SHA checksum of the bug description. Automatically extracted from git log.
 #   bug_tag: Tag for categorizing the bug. Must be set manually.
 # These variables are passed to the logabug code via html_context.
-giturl = u'http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/image-guide-rst/source'
+giturl = u'http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/image-guide/source'
 git_cmd = "/usr/bin/git log | head -n1 | cut -f2 -d' '"
 gitsha = os.popen(git_cmd).read().strip('\n')
 html_context = {"gitsha": gitsha, "bug_tag": bug_tag,
@@ -203,7 +203,7 @@ html_show_sourcelink = False
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'image-guide-rst'
+htmlhelp_basename = 'image-guide'
 
 # If true, publish source files
 html_copy_source = False
