@@ -30,11 +30,11 @@ Application
 A software application within a line of text.
 
 +------------------------+---------------------------------------------------+
-| **Markup**             | ``:program:``                                     |
+| **Markup**             | `````` (double backticks)                         |
 +------------------------+---------------------------------------------------+
-| **Syntax**             | ``:program:`RabbitMQ```                           |
+| **Syntax**             | ````RabbitMQ````                                  |
 +------------------------+---------------------------------------------------+
-| **Example of output**  | Configure :program:`RabbitMQ`.                    |
+| **Example of output**  | Configure ``RabbitMQ``.                           |
 +------------------------+---------------------------------------------------+
 
 Code
