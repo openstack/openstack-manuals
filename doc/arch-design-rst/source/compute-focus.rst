@@ -8,6 +8,7 @@ Compute focused
    compute-focus-technical-considerations.rst
    compute-focus-operational-considerations.rst
    compute-focus-architecture.rst
+   compute-focus-prescriptive-examples.rst
 
 Compute-focused clouds are a specialized subset of the general
 purpose OpenStack cloud architecture. A compute-focused cloud
