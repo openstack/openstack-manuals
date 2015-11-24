@@ -119,9 +119,13 @@ Identity user management examples:
 
   .. note::
 
-     Individual services, such as Compute and the Image service,
-     assign meaning to roles. In the Identity service, a role is
-     simply a name.
+     Individual services assign meaning to roles, typically through
+     limiting or granting access to users with the role to the
+     operations that the service supports. Role access is typically
+     configured in the service's ``policy.json`` file. For example,
+     to limit Compute access to the ``compute-user`` role, edit the
+     Compute service's ``policy.json`` file to require this role for
+     Compute operations.
 
 The Identity service assigns a tenant and a role to a user. You might
 assign the ``compute-user`` role to the ``alice`` user in the ``acme``
