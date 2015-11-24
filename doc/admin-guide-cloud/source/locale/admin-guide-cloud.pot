@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-23 06:15+0000\n"
+"POT-Creation-Date: 2015-11-24 06:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10360,24 +10360,28 @@ msgstr ""
 
 #: ../identity_concepts.rst:122
 msgid ""
-"Individual services, such as Compute and the Image service, assign meaning "
-"to roles. In the Identity service, a role is simply a name."
+"Individual services assign meaning to roles, typically through limiting or "
+"granting access to users with the role to the operations that the service "
+"supports. Role access is typically configured in the service's ``policy."
+"json`` file. For example, to limit Compute access to the ``compute-user`` "
+"role, edit the Compute service's ``policy.json`` file to require this role "
+"for Compute operations."
 msgstr ""
 
-#: ../identity_concepts.rst:126
+#: ../identity_concepts.rst:130
 msgid ""
 "The Identity service assigns a tenant and a role to a user. You might assign "
 "the ``compute-user`` role to the ``alice`` user in the ``acme`` tenant:"
 msgstr ""
 
-#: ../identity_concepts.rst:161
+#: ../identity_concepts.rst:165
 msgid ""
 "A user can have different roles in different tenants. For example, Alice "
 "might also have the ``admin`` role in the ``Cyberdyne`` tenant. A user can "
 "also have multiple roles in the same tenant."
 msgstr ""
 
-#: ../identity_concepts.rst:165
+#: ../identity_concepts.rst:169
 msgid ""
 "The :file:`/etc/[SERVICE_CODENAME]/policy.json` file controls the tasks that "
 "users can perform for a given service. For example, the :file:`/etc/nova/"
@@ -10387,14 +10391,14 @@ msgid ""
 "access policy for the Identity service."
 msgstr ""
 
-#: ../identity_concepts.rst:173
+#: ../identity_concepts.rst:177
 msgid ""
 "The default :file:`policy.json` files in the Compute, Identity, and Image "
 "services recognize only the ``admin`` role. Any user with any role in a "
 "tenant can access all operations that do not require the ``admin`` role."
 msgstr ""
 
-#: ../identity_concepts.rst:178
+#: ../identity_concepts.rst:182
 msgid ""
 "To restrict users from performing operations in, for example, the Compute "
 "service, you must create a role in the Identity service and then modify the :"
@@ -10402,90 +10406,90 @@ msgid ""
 "operations."
 msgstr ""
 
-#: ../identity_concepts.rst:183
+#: ../identity_concepts.rst:187
 msgid ""
 "For example, the following line in the :file:`/etc/nova/policy.json` file "
 "does not restrict which users can create volumes:"
 msgstr ""
 
-#: ../identity_concepts.rst:190
+#: ../identity_concepts.rst:194
 msgid ""
 "If the user has any role in a tenant, he can create volumes in that tenant."
 msgstr ""
 
-#: ../identity_concepts.rst:193
+#: ../identity_concepts.rst:197
 msgid ""
 "To restrict the creation of volumes to users who have the ``compute-user`` "
 "role in a particular tenant, you add ``\"role:compute-user\"``:"
 msgstr ""
 
-#: ../identity_concepts.rst:200
+#: ../identity_concepts.rst:204
 msgid ""
 "To restrict all Compute service requests to require this role, the resulting "
 "file looks like:"
 msgstr ""
 
-#: ../identity_concepts.rst:304
+#: ../identity_concepts.rst:308
 msgid "Service management"
 msgstr ""
 
-#: ../identity_concepts.rst:306
+#: ../identity_concepts.rst:310
 msgid ""
 "The Identity service provides identity, token, catalog, and policy services. "
 "It consists of:"
 msgstr ""
 
-#: ../identity_concepts.rst:310
+#: ../identity_concepts.rst:314
 msgid ""
 "Can be run in a WSGI-capable web server such as Apache httpd to provide the "
 "Identity service. The service and administrative APIs are run as separate "
 "instances of the WSGI service."
 msgstr ""
 
-#: ../identity_concepts.rst:312
+#: ../identity_concepts.rst:316
 msgid "keystone Web Server Gateway Interface (WSGI) service"
 msgstr ""
 
-#: ../identity_concepts.rst:315
+#: ../identity_concepts.rst:319
 msgid ""
 "Each has a pluggable back end that allow different ways to use the "
 "particular service. Most support standard back ends like LDAP or SQL."
 msgstr ""
 
-#: ../identity_concepts.rst:316
+#: ../identity_concepts.rst:320
 msgid "Identity service functions"
 msgstr ""
 
-#: ../identity_concepts.rst:319
+#: ../identity_concepts.rst:323
 msgid ""
 "Starts both the service and administrative APIs in a single process. Using "
 "federation with keystone-all is not supported. keystone-all is deprecated in "
 "favor of the WSGI service."
 msgstr ""
 
-#: ../identity_concepts.rst:321
+#: ../identity_concepts.rst:325
 msgid "keystone-all"
 msgstr ""
 
-#: ../identity_concepts.rst:323
+#: ../identity_concepts.rst:327
 msgid ""
 "The Identity service also maintains a user that corresponds to each service, "
 "such as, a user named ``nova`` for the Compute service, and a special "
 "service tenant called ``service``."
 msgstr ""
 
-#: ../identity_concepts.rst:327
+#: ../identity_concepts.rst:331
 msgid ""
 "For information about how to create services and endpoints, see the "
 "`OpenStack Admin User Guide <http://docs.openstack.org/user-guide-admin/ "
 "cli_manage_services.html>`__."
 msgstr ""
 
-#: ../identity_concepts.rst:332
+#: ../identity_concepts.rst:336
 msgid "Groups"
 msgstr ""
 
-#: ../identity_concepts.rst:334
+#: ../identity_concepts.rst:338
 msgid ""
 "A group is a collection of users in a domain. Administrators can create "
 "groups and add users to them. A role can then be assigned to the group, "
@@ -10493,68 +10497,68 @@ msgid ""
 "v3."
 msgstr ""
 
-#: ../identity_concepts.rst:339
+#: ../identity_concepts.rst:343
 msgid "Identity API V3 provides the following group-related operations:"
 msgstr ""
 
-#: ../identity_concepts.rst:341
+#: ../identity_concepts.rst:345
 msgid "Create a group"
 msgstr ""
 
-#: ../identity_concepts.rst:343
+#: ../identity_concepts.rst:347
 msgid "Delete a group"
 msgstr ""
 
-#: ../identity_concepts.rst:345
+#: ../identity_concepts.rst:349
 msgid "Update a group (change its name or description)"
 msgstr ""
 
-#: ../identity_concepts.rst:347
+#: ../identity_concepts.rst:351
 msgid "Add a user to a group"
 msgstr ""
 
-#: ../identity_concepts.rst:349
+#: ../identity_concepts.rst:353
 msgid "Remove a user from a group"
 msgstr ""
 
-#: ../identity_concepts.rst:351
+#: ../identity_concepts.rst:355
 msgid "List group members"
 msgstr ""
 
-#: ../identity_concepts.rst:353
+#: ../identity_concepts.rst:357
 msgid "List groups for a user"
 msgstr ""
 
-#: ../identity_concepts.rst:355
+#: ../identity_concepts.rst:359
 msgid "Assign a role on a tenant to a group"
 msgstr ""
 
-#: ../identity_concepts.rst:357
+#: ../identity_concepts.rst:361
 msgid "Assign a role on a domain to a group"
 msgstr ""
 
-#: ../identity_concepts.rst:359
+#: ../identity_concepts.rst:363
 msgid "Query role assignments to groups"
 msgstr ""
 
-#: ../identity_concepts.rst:363
+#: ../identity_concepts.rst:367
 msgid ""
 "The Identity service server might not allow all operations. For example, if "
 "you use the Identity server with the LDAP Identity back end and group "
 "updates are disabled, a request to create, delete, or update a group fails."
 msgstr ""
 
-#: ../identity_concepts.rst:368
+#: ../identity_concepts.rst:372
 msgid "Here are a couple of examples:"
 msgstr ""
 
-#: ../identity_concepts.rst:370
+#: ../identity_concepts.rst:374
 msgid ""
 "Group A is granted Role A on Tenant A. If User A is a member of Group A, "
 "when User A gets a token scoped to Tenant A, the token also includes Role A."
 msgstr ""
 
-#: ../identity_concepts.rst:374
+#: ../identity_concepts.rst:378
 msgid ""
 "Group B is granted Role B on Domain B. If User B is a member of Group B, "
 "when User B gets a token scoped to Domain B, the token also includes Role B."
@@ -21328,6 +21332,326 @@ msgid ""
 "Some drivers in the Shared File Systems service can create service entities, "
 "like servers and networks. If it is necessary to reach it you can log in to "
 "tenant ``service`` and get manual control over it."
+msgstr ""
+
+#: ../support-compute.rst:7
+msgid "Troubleshoot Compute"
+msgstr ""
+
+#: ../support-compute.rst:9
+msgid ""
+"Common problems for Compute typically involve misconfigured networking or "
+"credentials that are not sourced properly in the environment. Also, most "
+"flat networking configurations do not enable :command:`ping` or :command:"
+"`ssh` from a compute node to the instances that run on that node. Another "
+"common problem is trying to run 32-bit images on a 64-bit compute node. This "
+"section shows you how to troubleshoot Compute."
+msgstr ""
+
+#: ../support-compute.rst:21
+msgid "Compute service logging"
+msgstr ""
+
+#: ../support-compute.rst:23
+msgid ""
+"Compute stores a log file for each service in ``/var/log/nova``. For "
+"example, ``nova-compute.log`` is the log for the ``nova-compute`` service. "
+"You can set the following options to format log strings for the ``nova.log`` "
+"module in the ``nova.conf`` file:"
+msgstr ""
+
+#: ../support-compute.rst:29
+msgid "``logging_context_format_string``"
+msgstr ""
+
+#: ../support-compute.rst:31
+msgid "``logging_default_format_string``"
+msgstr ""
+
+#: ../support-compute.rst:33
+msgid ""
+"If the log level is set to ``debug``, you can also specify "
+"``logging_debug_format_suffix`` to append extra formatting. For information "
+"about what variables are available for the formatter see http://docs.python."
+"org/library/logging.html#formatter-objects."
+msgstr ""
+
+#: ../support-compute.rst:38
+msgid ""
+"You have two options for logging for OpenStack Compute based on "
+"configuration settings. In ``nova.conf``, include the ``logfile`` option to "
+"enable logging. Alternatively you can set ``use_syslog = 1`` so that the "
+"nova daemon logs to syslog."
+msgstr ""
+
+#: ../support-compute.rst:47
+msgid "Guru Meditation reports"
+msgstr ""
+
+#: ../support-compute.rst:49
+msgid ""
+"A Guru Meditation report is sent by the Compute service upon receipt of the "
+"``SIGUSR1`` signal. This report is a general-purpose error report, including "
+"a complete report of the service's current state, and is sent to ``stderr``."
+msgstr ""
+
+#: ../support-compute.rst:54
+msgid ""
+"For example, if you redirect error output to ``nova-api-err.log`` using :"
+"command:`nova-api 2>/var/log/nova/nova-api-err.log`, resulting in the "
+"process ID 8675, you can then run:"
+msgstr ""
+
+#: ../support-compute.rst:62
+msgid ""
+"This command triggers the Guru Meditation report to be printed to ``/var/log/"
+"nova/nova-api-err.log``."
+msgstr ""
+
+#: ../support-compute.rst:65
+msgid "The report has the following sections:"
+msgstr ""
+
+#: ../support-compute.rst:67
+msgid ""
+"Package: Displays information about the package to which the process "
+"belongs, including version information."
+msgstr ""
+
+#: ../support-compute.rst:70
+msgid ""
+"Threads: Displays stack traces and thread IDs for each of the threads within "
+"the process."
+msgstr ""
+
+#: ../support-compute.rst:73
+msgid ""
+"Green Threads: Displays stack traces for each of the green threads within "
+"the process (green threads do not have thread IDs)."
+msgstr ""
+
+#: ../support-compute.rst:76
+msgid ""
+"Configuration: Lists all configuration options currently accessible through "
+"the CONF object for the current process."
+msgstr ""
+
+#: ../support-compute.rst:79
+msgid ""
+"For more information, see `Guru Meditation Reports <http://docs.openstack."
+"org/developer/nova/devref/gmr.html>`_."
+msgstr ""
+
+#: ../support-compute.rst:85
+msgid "Common errors and fixes for Compute"
+msgstr ""
+
+#: ../support-compute.rst:87
+msgid ""
+"The `ask.openstack.org <http://ask.openstack.org>`_ site offers a place to "
+"ask and answer questions, and you can also mark questions as frequently "
+"asked questions. This section describes some errors people have posted "
+"previously. Bugs are constantly being fixed, so online resources are a great "
+"way to get the most up-to-date errors and fixes."
+msgstr ""
+
+#: ../support-compute.rst:93
+msgid "**Credential errors, 401, and 403 forbidden errors**"
+msgstr ""
+
+#: ../support-compute.rst:95
+msgid ""
+"Missing credentials cause a ``403 forbidden`` error. To resolve this issue, "
+"use one of these methods:"
+msgstr ""
+
+#: ../support-compute.rst:99
+msgid ""
+"Gets the ``novarc`` file from the project ZIP file, saves existing "
+"credentials in case of override, and manually sources the ``novarc`` file."
+msgstr ""
+
+#: ../support-compute.rst:101
+msgid "Manual method"
+msgstr ""
+
+#: ../support-compute.rst:104
+msgid "Generates ``novarc`` from the project ZIP file and sources it for you."
+msgstr ""
+
+#: ../support-compute.rst:104
+msgid "Script method"
+msgstr ""
+
+#: ../support-compute.rst:106
+msgid ""
+"When you run ``nova-api`` the first time, it generates the certificate "
+"authority information, including ``openssl.cnf``. If you start the CA "
+"services before this, you might not be able to create your ZIP file. Restart "
+"the services. When your CA information is available, create your ZIP file."
+msgstr ""
+
+#: ../support-compute.rst:112
+msgid ""
+"Also, check your HTTP proxy settings to see whether they cause problems with "
+"``novarc`` creation."
+msgstr ""
+
+#: ../support-compute.rst:115
+msgid "**Instance errors**"
+msgstr ""
+
+#: ../support-compute.rst:117
+msgid ""
+"Sometimes a particular instance shows ``pending`` or you cannot SSH to it. "
+"Sometimes the image itself is the problem. For example, when you use flat "
+"manager networking, you do not have a DHCP server and certain images do not "
+"support interface injection; you cannot connect to them. The fix for this "
+"problem is to use an image that does support this method, such as Ubuntu, "
+"which obtains an IP address correctly with FlatManager network settings."
+msgstr ""
+
+#: ../support-compute.rst:125
+msgid ""
+"To troubleshoot other possible problems with an instance, such as an "
+"instance that stays in a spawning state, check the directory for the "
+"particular instance under ``/var/lib/nova/instances`` on the ``nova-"
+"compute`` host and make sure that these files are present:"
+msgstr ""
+
+#: ../support-compute.rst:130
+msgid "``libvirt.xml``"
+msgstr ""
+
+#: ../support-compute.rst:131
+msgid "``disk``"
+msgstr ""
+
+#: ../support-compute.rst:132
+msgid "``disk-raw``"
+msgstr ""
+
+#: ../support-compute.rst:133
+msgid "``kernel``"
+msgstr ""
+
+#: ../support-compute.rst:134
+msgid "``ramdisk``"
+msgstr ""
+
+#: ../support-compute.rst:135
+msgid "``console.log``, after the instance starts."
+msgstr ""
+
+#: ../support-compute.rst:137
+msgid ""
+"If any files are missing, empty, or very small, the ``nova-compute`` service "
+"did not successfully download the images from the Image service."
+msgstr ""
+
+#: ../support-compute.rst:140
+msgid ""
+"Also check ``nova-compute.log`` for exceptions. Sometimes they do not appear "
+"in the console output."
+msgstr ""
+
+#: ../support-compute.rst:143
+msgid ""
+"Next, check the log file for the instance in the ``/var/log/libvirt/qemu`` "
+"directory to see if it exists and has any useful error messages in it."
+msgstr ""
+
+#: ../support-compute.rst:146
+msgid ""
+"Finally, from the ``/var/lib/nova/instances`` directory for the instance, "
+"see if this command returns an error:"
+msgstr ""
+
+#: ../support-compute.rst:153
+msgid "**Empty log output for Linux instances**"
+msgstr ""
+
+#: ../support-compute.rst:155
+msgid ""
+"You can view the log output of running instances from either the :guilabel:"
+"`Log` tab of the dashboard or the output of :command:`nova console-log`. In "
+"some cases, the log output of a running Linux instance will be empty or only "
+"display a single character (for example, the `?` character)."
+msgstr ""
+
+#: ../support-compute.rst:161
+msgid ""
+"This occurs when the Compute service attempts to retrieve the log output of "
+"the instance via a serial console while the instance itself is not "
+"configured to send output to the console. To rectify this, append the "
+"following parameters to kernel arguments specified in the instance's boot "
+"loader:"
+msgstr ""
+
+#: ../support-compute.rst:171
+msgid ""
+"Upon rebooting, the instance will be configured to send output to the "
+"Compute service."
+msgstr ""
+
+#: ../support-compute.rst:178
+msgid "Reset the state of an instance"
+msgstr ""
+
+#: ../support-compute.rst:180
+msgid ""
+"If an instance remains in an intermediate state, such as ``deleting``, you "
+"can use the :command:`nova reset-state` command to manually reset the state "
+"of an instance to an error state. You can then delete the instance. For "
+"example:"
+msgstr ""
+
+#: ../support-compute.rst:190
+msgid ""
+"You can also use the :option:`--active` parameter to force the instance back "
+"to an active state instead of an error state. For example:"
+msgstr ""
+
+#: ../support-compute.rst:201
+msgid "Injection problems"
+msgstr ""
+
+#: ../support-compute.rst:203
+msgid ""
+"If instances do not boot or boot slowly, investigate file injection as a "
+"cause."
+msgstr ""
+
+#: ../support-compute.rst:205
+msgid "To disable injection in libvirt, set the following in ``nova.conf``:"
+msgstr ""
+
+#: ../support-compute.rst:212
+msgid ""
+"If you have not enabled the configuration drive and you want to make user-"
+"specified files available from the metadata server for to improve "
+"performance and avoid boot failure if injection fails, you must disable "
+"injection."
+msgstr ""
+
+#: ../support-compute.rst:222
+msgid "Disable live snapshotting"
+msgstr ""
+
+#: ../support-compute.rst:224
+msgid ""
+"If you use libvirt version ``1.2.2``, you may experience problems with live "
+"snapshots creation. Occasionally, libvirt of the specified version fails to "
+"perform the live snapshotting under load that presupposes a concurrent "
+"creation of multiple snapshots."
+msgstr ""
+
+#: ../support-compute.rst:229
+msgid ""
+"To effectively disable the libvirt live snapshotting, until the problem is "
+"resolved, configure the ``disable_libvirt_livesnapshot`` option. You can "
+"turn off the live snapshotting mechanism by setting up its value to ``True`` "
+"in the ``[workarounds]`` section of the ``nova.conf`` file:"
 msgstr ""
 
 #: ../telemetry-alarms.rst:5
