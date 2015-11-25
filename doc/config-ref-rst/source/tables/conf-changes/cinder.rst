@@ -21,11 +21,7 @@ New, updated, and deprecated options in Mitaka for OpenStack Block Storage
    * - ``[DEFAULT] cb_update_qos_group = iops, latency, graceallowed``
      - ``(ListOpt) These values will be used for CloudByte storage's updateQosGroup API call.``
    * - ``[DEFAULT] drbdmanage_devs_on_controller = True``
-     - ``(BoolOpt) If set, the c-vol node will receive a useable
-                /dev/drbdX device, even if the actual data is stored on
-                other nodes only.
-                This is useful for debugging, maintenance, and to be
-                able to do the iSCSI export from the c-vol node.``
+     - ``(BoolOpt) If set, the c-vol node will receive a useable /dev/drbdX device, even if the actual data is stored on other nodes only. This is useful for debugging, maintenance, and to be able to do the iSCSI export from the c-vol node.``
    * - ``[DEFAULT] hpe3par_api_url =``
      - ``(StrOpt) 3PAR WSAPI Server Url like https://<3par ip>:8080/api/v1``
    * - ``[DEFAULT] hpe3par_cpg = OpenStack``

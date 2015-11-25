@@ -13,7 +13,7 @@ Block Storage
    block-storage/fc-zoning.rst
    block-storage/volume-encryption.rst
    block-storage/volume-misc.rst
-   block-storage/cinder-conf-changes-liberty.rst
+   tables/conf-changes/cinder.rst
 
 The OpenStack Block Storage service works with many different storage
 drivers that you can configure by using these instructions.
