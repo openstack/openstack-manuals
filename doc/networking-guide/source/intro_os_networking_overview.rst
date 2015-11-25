@@ -13,17 +13,17 @@ define network connectivity and addressing in the cloud. The Networking
 service enables operators to leverage different networking technologies
 to power their cloud networking. The Networking service also provides an
 API to configure and manage a variety of network services ranging from L3
-forwarding and NAT to load balancing, perimeter firewalls, and virtual
-private networks.
+forwarding and :term:`NAT` to load balancing, perimeter firewalls, and
+virtual private networks.
 
 It includes the following components:
 
 API server
   The OpenStack Networking API includes support for Layer 2 networking
-  and IP address management (IPAM), as well as an extension for a
-  Layer 3 router construct that enables routing between Layer 2
-  networks and gateways to external networks. OpenStack Networking
-  includes a growing list of plug-ins that enable interoperability
+  and :term:`IP address management (IPAM) <IP Address Management (IPAM)>`, as
+  well as an extension for a Layer 3 router construct that enables routing
+  between Layer 2 networks and gateways to external networks. OpenStack
+  Networking includes a growing list of plug-ins that enable interoperability
   with various commercial and open source network technologies,
   including routers, switches, virtual switches and software-defined
   networking (SDN) controllers.
