@@ -16,13 +16,13 @@ Here we describe several tools available that allow you to modify images.
 guestfish
 ~~~~~~~~~
 
-The :program:`guestfish` program is a tool from the
+The ``guestfish`` program is a tool from the
 `libguestfs <http://libguestfs.org/>`_ project that allows
 you to modify the files inside of a virtual machine image.
 
 .. note::
 
-   :program:`guestfish` does not mount the image directly into the
+   ``guestfish`` does not mount the image directly into the
    local file system. Instead, it provides you with a shell
    interface that enables you to view, edit, and delete files.
    Many of :command:`guestfish` commands, such as :command:`touch`,
@@ -148,7 +148,7 @@ guestmount
 
 For some types of changes, you may find it easier to
 mount the image's file system directly in the guest.
-The :program:`guestmount` program, also from the
+The ``guestmount`` program, also from the
 libguestfs project, allows you to do so.
 
 #. For example, to mount the root partition from our
