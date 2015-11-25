@@ -59,18 +59,40 @@ This screen configures the region name for the service. For example,
 The Debian package post installation scripts will then perform the below
 commands for you:
 
-.. code-block:: ini
+.. code-block:: console
 
-   PKG_SERVICE_ID=$(pkgos_get_id keystone --os-token ${AUTH_TOKEN} \
-     --os-endpoint http://${KEYSTONE_ENDPOINT_IP}:35357/v2.0/ service-create \
-     --name ${SERVICE_NAME} --type ${SERVICE_TYPE} --description "${SERVICE_DESC}")
-   keystone --os-token ${AUTH_TOKEN} \
-     --os-endpoint http://${KEYSTONE_ENDPOINT_IP}:35357/v2.0/
-      endpoint-create \
-     --region "${REGION_NAME}" --service_id ${PKG_SERVICE_ID} \
-     --publicurl http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL} \
-     --internalurl http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL} \
-     --adminurl http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL})
+   # openstack --os-token ${AUTH_TOKEN} \
+     --os-url=http://${KEYSTONE_ENDPOINT_IP}:35357/v3/ \
+     --os-domain-name default \
+     --os-identity-api-version=3 \
+     service create \
+     --name=${SERVICE_NAME} \
+     --description="${SERVICE_DESC}" \
+     ${SERVICE_TYPE}
+
+   # openstack --os-token ${AUTH_TOKEN} \
+     --os-url=http://${KEYSTONE_ENDPOINT_IP}:35357/v3/ \
+     --os-domain-name default \
+     --os-identity-api-version=3 \
+     endpoint create \
+     --region "${REGION_NAME}" \
+     ${SERVICE_NAME} public http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL}
+
+   # openstack --os-token ${AUTH_TOKEN} \
+     --os-url=http://${KEYSTONE_ENDPOINT_IP}:35357/v3/ \
+     --os-domain-name default \
+     --os-identity-api-version=3 \
+     endpoint create \
+     --region "${REGION_NAME}" \
+     ${SERVICE_NAME} internal http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL}
+
+   # openstack --os-token ${AUTH_TOKEN} \
+     --os-url=http://${KEYSTONE_ENDPOINT_IP}:35357/v3/ \
+     --os-domain-name default \
+     --os-identity-api-version=3 \
+     endpoint create \
+     --region "${REGION_NAME}" \
+     ${SERVICE_NAME} admin http://${PKG_ENDPOINT_IP}:${SERVICE_PORT}${SERVICE_URL}
 
 The values of ``AUTH_TOKEN``, ``KEYSTONE_ENDPOINT_IP``,
 ``PKG_ENDPOINT_IP``, and ``REGION_NAME`` depend on the answer you will
