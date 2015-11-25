@@ -14,31 +14,25 @@ Each abstraction has functionality that mimics its physical counterpart:
 networks contain subnets, and routers route traffic between different
 subnets and networks.
 
-Each router has one gateway that connects to a network, and many
-interfaces connected to subnets. Subnets can access machines on other
-subnets connected to the same router.
-
 Any given Networking set up has at least one external network. Unlike
 the other networks, the external network is not merely a virtually
 defined network. Instead, it represents a view into a slice of the
 physical, external network accessible outside the OpenStack
 installation. IP addresses on the external network are accessible by
-anybody physically on the outside network. Because the external network
-merely represents a view into the outside network, DHCP is disabled on
-this network.
+anybody physically on the outside network.
 
 In addition to external networks, any Networking set up has one or more
 internal networks. These software-defined networks connect directly to
 the VMs. Only the VMs on any given internal network, or those on subnets
-connected through interfaces to a similar router, can access VMs
-connected to that network directly.
+connected through interfaces to a similar router, can access VMs connected
+to that network directly.
 
 For the outside network to access VMs, and vice versa, routers between
 the networks are needed. Each router has one gateway that is connected
-to a network and many interfaces that are connected to subnets. Like a
-physical router, subnets can access machines on other subnets that are
-connected to the same router, and machines can access the outside
-network through the gateway for the router.
+to an external network and one or more interfaces connected to internal
+networks. Like a physical router, subnets can access machines on other
+subnets that are connected to the same router, and machines can access the
+outside network through the gateway for the router.
 
 Additionally, you can allocate IP addresses on external networks to
 ports on the internal network. Whenever something is connected to a
