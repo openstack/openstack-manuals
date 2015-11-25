@@ -10,7 +10,7 @@ the need to create workarounds and processes to fill identified gaps.
 For your chosen cloud management platform, note the relative
 levels of support for both monitoring and orchestration.
 
-.. figure:: ../figures/Multi-Cloud_Priv-AWS4.png
+.. figure:: figures/Multi-Cloud_Priv-AWS4.png
    :width: 100%
 
 Image portability

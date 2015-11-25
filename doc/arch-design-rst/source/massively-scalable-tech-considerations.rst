@@ -104,4 +104,4 @@ A number of host aggregates enable targeting of virtual machine instances
 using flavors, that require special capabilities shared by the target hosts
 such as SSDs, 10 GbE networks, or GPU cards.
 
-.. figure:: /figures/Massively_Scalable_Cells_regions_azs.png
+.. figure:: figures/Massively_Scalable_Cells_regions_azs.png
