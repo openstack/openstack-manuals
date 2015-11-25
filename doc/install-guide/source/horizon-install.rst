@@ -250,12 +250,10 @@ Finalize installation
 
 .. only:: obs
 
-   * Start the web server and session storage service and configure
-     them to start when the system boots:
+   * Restart the web server and session storage service:
 
      .. code-block:: console
 
-        # systemctl enable apache2.service memcached.service
         # systemctl restart apache2.service memcached.service
 
      .. note::
@@ -265,12 +263,10 @@ Finalize installation
 
 .. only:: rdo
 
-   * Start the web server and session storage service and configure
-     them to start when the system boots:
+   * Restart the web server and session storage service:
 
      .. code-block:: console
 
-        # systemctl enable httpd.service memcached.service
         # systemctl restart httpd.service memcached.service
 
      .. note::
