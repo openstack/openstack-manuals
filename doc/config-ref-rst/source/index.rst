@@ -31,8 +31,8 @@ Contents
    networking.rst
    object-storage.rst
    orchestration.rst
-   telemetry.rst
    shared-file-systems.rst
+   telemetry.rst
 
    policy-json-file.rst
    firewalls-default-ports.rst
