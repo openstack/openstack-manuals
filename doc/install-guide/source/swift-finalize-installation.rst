@@ -23,8 +23,8 @@ Finalize installation
 
            [swift-hash]
            ...
-           swift_hash_path_suffix = HASH_PATH_PREFIX
-           swift_hash_path_prefix = HASH_PATH_SUFFIX
+           swift_hash_path_suffix = HASH_PATH_SUFFIX
+           swift_hash_path_prefix = HASH_PATH_PREFIX
 
         Replace HASH_PATH_PREFIX and HASH_PATH_SUFFIX with unique values.
 
@@ -57,8 +57,8 @@ Finalize installation
 
            [swift-hash]
            ...
-           swift_hash_path_suffix = HASH_PATH_PREFIX
-           swift_hash_path_prefix = HASH_PATH_SUFFIX
+           swift_hash_path_suffix = HASH_PATH_SUFFIX
+           swift_hash_path_prefix = HASH_PATH_PREFIX
 
         Replace HASH_PATH_PREFIX and HASH_PATH_SUFFIX with unique values.
 
