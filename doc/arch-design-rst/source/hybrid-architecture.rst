@@ -121,7 +121,7 @@ Verify and test critical cloud endpoint features.
   endpoint and any traffic that traverses the multiple clouds.
   Business and regulatory requirements dictate what security
   approach to take. For more information, see the
-  :ref:`Security Requirements Chapter <security>`
+  :ref:`Security requirements <security>` chapter.
 
 Data
 ~~~~

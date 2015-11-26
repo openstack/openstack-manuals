@@ -3,11 +3,11 @@ Architecture
 
 Consider the following factors when selecting storage hardware:
 
-*  Cost
+* Cost
 
-*  Performance
+* Performance
 
-*  Reliability
+* Reliability
 
 Storage-focused OpenStack clouds must address I/O intensive workloads.
 These workloads are not CPU intensive, nor are they consistently network
@@ -19,20 +19,20 @@ scalability of a storage-focused OpenStack design architecture. Several
 factors impact the design process, including:
 
 Cost
-    The cost of components affects which storage architecture and
-    hardware you choose.
+ The cost of components affects which storage architecture and
+ hardware you choose.
 
 Performance
-    The latency of storage I/O requests indicates performance.
-    Performance requirements affect which solution you choose.
+ The latency of storage I/O requests indicates performance.
+ Performance requirements affect which solution you choose.
 
 Scalability
-    Scalability refers to how the storage solution performs as it
-    expands to its maximum size. Storage solutions that perform well in
-    small configurations but have degraded performance in large
-    configurations are not scalable. A solution that performs well at
-    maximum expansion is scalable. Large deployments require a storage
-    solution that performs well as it expands.
+ Scalability refers to how the storage solution performs as it
+ expands to its maximum size. Storage solutions that perform well in
+ small configurations but have degraded performance in large
+ configurations are not scalable. A solution that performs well at
+ maximum expansion is scalable. Large deployments require a storage
+ solution that performs well as it expands.
 
 Latency is a key consideration in a storage-focused OpenStack cloud.
 Using solid-state disks (SSDs) to minimize latency and, to reduce CPU
@@ -57,22 +57,22 @@ Considerations affecting storage architecture (and corresponding storage
 hardware) of a Storage-focused OpenStack cloud include:
 
 Connectivity
-    Based on the selected storage solution, ensure the connectivity
-    matches the storage solution requirements. We recommended confirming
-    that the network characteristics minimize latency to boost the
-    overall performance of the design.
+ Based on the selected storage solution, ensure the connectivity
+ matches the storage solution requirements. We recommended confirming
+ that the network characteristics minimize latency to boost the
+ overall performance of the design.
 
 Latency
-    Determine if the use case has consistent or highly variable latency.
+ Determine if the use case has consistent or highly variable latency.
 
 Throughput
-    Ensure that the storage solution throughput is optimized for your
-    application requirements.
+ Ensure that the storage solution throughput is optimized for your
+ application requirements.
 
 Server hardware
-    Use of DAS impacts the server hardware choice and affects host
-    density, instance density, power density, OS-hypervisor, and
-    management tools.
+ Use of DAS impacts the server hardware choice and affects host
+ density, instance density, power density, OS-hypervisor, and
+ management tools.
 
 Compute (server) hardware selection
 -----------------------------------
@@ -80,20 +80,20 @@ Compute (server) hardware selection
 Four opposing factors determine the compute (server) hardware selection:
 
 Server density
-    A measure of how many servers can fit into a given measure of
-    physical space, such as a rack unit [U].
+ A measure of how many servers can fit into a given measure of
+ physical space, such as a rack unit [U].
 
 Resource capacity
-    The number of CPU cores, how much RAM, or how much storage a given
-    server delivers.
+ The number of CPU cores, how much RAM, or how much storage a given
+ server delivers.
 
 Expandability
-    The number of additional resources you can add to a server before it
-    reaches capacity.
+ The number of additional resources you can add to a server before it
+ reaches capacity.
 
 Cost
-    The relative cost of the hardware weighed against the level of
-    design effort needed to build the system.
+ The relative cost of the hardware weighed against the level of
+ design effort needed to build the system.
 
 You must weigh the dimensions against each other to determine the best
 design for the desired purpose. For example, increasing server density
@@ -113,28 +113,28 @@ primary consideration.
 Some server hardware form factors are better suited to storage-focused
 designs than others. The following is a list of these form factors:
 
-*  Most blade servers support dual-socket multi-core CPUs. Choose either
-   full width or full height blades to avoid the limit. High density
-   blade servers support up to 16 servers in only 10 rack units using
-   half height or half width blades.
+* Most blade servers support dual-socket multi-core CPUs. Choose either
+  full width or full height blades to avoid the limit. High density
+  blade servers support up to 16 servers in only 10 rack units using
+  half height or half width blades.
 
-.. warning::
+  .. warning::
 
-   This decreases density by 50% (only 8 servers in 10 U) if a full
-   width or full height option is used.
+     This decreases density by 50% (only 8 servers in 10 U) if a full
+     width or full height option is used.
 
-*  1U rack-mounted servers have the ability to offer greater server
-   density than a blade server solution, but are often limited to
-   dual-socket, multi-core CPU configurations.
+* 1U rack-mounted servers have the ability to offer greater server
+  density than a blade server solution, but are often limited to
+  dual-socket, multi-core CPU configurations.
 
-.. note::
+  .. note::
 
-   Due to cooling requirements, it is rare to see 1U rack-mounted
-   servers with more than 2 CPU sockets.
+     Due to cooling requirements, it is rare to see 1U rack-mounted
+     servers with more than 2 CPU sockets.
 
-   To obtain greater than dual-socket support in a 1U rack-mount form
-   factor, customers need to buy their systems from Original Design
-   Manufacturers (ODMs) or second-tier manufacturers.
+  To obtain greater than dual-socket support in a 1U rack-mount form
+  factor, customers need to buy their systems from Original Design
+  Manufacturers (ODMs) or second-tier manufacturers.
 
 .. warning::
 
@@ -142,39 +142,39 @@ designs than others. The following is a list of these form factors:
    vendor policies or concerns with support and hardware warranties
    of non-tier 1 vendors.
 
-*  2U rack-mounted servers provide quad-socket, multi-core CPU support
-   but with a corresponding decrease in server density (half the density
-   offered by 1U rack-mounted servers).
+* 2U rack-mounted servers provide quad-socket, multi-core CPU support
+  but with a corresponding decrease in server density (half the density
+  offered by 1U rack-mounted servers).
 
-*  Larger rack-mounted servers, such as 4U servers, often provide even
-   greater CPU capacity. Commonly supporting four or even eight CPU
-   sockets. These servers have greater expandability but such servers
-   have much lower server density and usually greater hardware cost.
+* Larger rack-mounted servers, such as 4U servers, often provide even
+  greater CPU capacity. Commonly supporting four or even eight CPU
+  sockets. These servers have greater expandability but such servers
+  have much lower server density and usually greater hardware cost.
 
-*  Rack-mounted servers that support multiple independent servers in a
-   single 2U or 3U enclosure, "sled servers", deliver increased density
-   as compared to a typical 1U-2U rack-mounted servers.
+* Rack-mounted servers that support multiple independent servers in a
+  single 2U or 3U enclosure, "sled servers", deliver increased density
+  as compared to a typical 1U-2U rack-mounted servers.
 
 Other factors that influence server hardware selection for a
 storage-focused OpenStack design architecture include:
 
 Instance density
-    In this architecture, instance density and CPU-RAM oversubscription
-    are lower. You require more hosts to support the anticipated scale,
-    especially if the design uses dual-socket hardware designs.
+ In this architecture, instance density and CPU-RAM oversubscription
+ are lower. You require more hosts to support the anticipated scale,
+ especially if the design uses dual-socket hardware designs.
 
 Host density
-    Another option to address the higher host count is to use a
-    quad-socket platform. Taking this approach decreases host density
-    which also increases rack count. This configuration affects the
-    number of power connections and also impacts network and cooling
-    requirements.
+ Another option to address the higher host count is to use a
+ quad-socket platform. Taking this approach decreases host density
+ which also increases rack count. This configuration affects the
+ number of power connections and also impacts network and cooling
+ requirements.
 
 Power and cooling density
-    The power and cooling density requirements might be lower than with
-    blade, sled, or 1U server designs due to lower host density (by
-    using 2U, 3U or even 4U server designs). For data centers with older
-    infrastructure, this might be a desirable feature.
+ The power and cooling density requirements might be lower than with
+ blade, sled, or 1U server designs due to lower host density (by
+ using 2U, 3U or even 4U server designs). For data centers with older
+ infrastructure, this might be a desirable feature.
 
 Storage-focused OpenStack design architecture server hardware selection
 should focus on a "scale-up" versus "scale-out" solution. The
@@ -189,46 +189,46 @@ Networking hardware selection
 Key considerations for the selection of networking hardware include:
 
 Port count
-    The user requires networking hardware that has the requisite port
-    count.
+ The user requires networking hardware that has the requisite port
+ count.
 
 Port density
-    The physical space required to provide the requisite port count
-    affects the network design. A switch that provides 48 10 GbE ports
-    in 1U has a much higher port density than a switch that provides 24
-    10 GbE ports in 2U. On a general scale, a higher port density leaves
-    more rack space for compute or storage components which is
-    preferred. It is also important to consider fault domains and power
-    density. Finally, higher density switches are more expensive,
-    therefore it is important not to over design the network.
+ The physical space required to provide the requisite port count
+ affects the network design. A switch that provides 48 10 GbE ports
+ in 1U has a much higher port density than a switch that provides 24
+ 10 GbE ports in 2U. On a general scale, a higher port density leaves
+ more rack space for compute or storage components which is
+ preferred. It is also important to consider fault domains and power
+ density. Finally, higher density switches are more expensive,
+ therefore it is important not to over design the network.
 
 Port speed
-    The networking hardware must support the proposed network speed, for
-    example: 1 GbE, 10 GbE, or 40 GbE (or even 100 GbE).
+ The networking hardware must support the proposed network speed, for
+ example: 1 GbE, 10 GbE, or 40 GbE (or even 100 GbE).
 
 Redundancy
-    User requirements for high availability and cost considerations
-    influence the required level of network hardware redundancy. Achieve
-    network redundancy by adding redundant power supplies or paired
-    switches.
+ User requirements for high availability and cost considerations
+ influence the required level of network hardware redundancy. Achieve
+ network redundancy by adding redundant power supplies or paired
+ switches.
 
-.. note::
+ .. note::
 
-   If this is a requirement, the hardware must support this
-   configuration. User requirements determine if a completely
-   redundant network infrastructure is required.
+    If this is a requirement, the hardware must support this
+    configuration. User requirements determine if a completely
+    redundant network infrastructure is required.
 
 Power requirements
-    Ensure that the physical data center provides the necessary power
-    for the selected network hardware. This is not an issue for top of
-    rack (ToR) switches, but may be an issue for spine switches in a
-    leaf and spine fabric, or end of row (EoR) switches.
+ Ensure that the physical data center provides the necessary power
+ for the selected network hardware. This is not an issue for top of
+ rack (ToR) switches, but may be an issue for spine switches in a
+ leaf and spine fabric, or end of row (EoR) switches.
 
 Protocol support
-    It is possible to gain more performance out of a single storage
-    system by using specialized network technologies such as RDMA, SRP,
-    iSER and SCST. The specifics for using these technologies is beyond
-    the scope of this book.
+ It is possible to gain more performance out of a single storage
+ system by using specialized network technologies such as RDMA, SRP,
+ iSER and SCST. The specifics for using these technologies is beyond
+ the scope of this book.
 
 Software selection
 ------------------
@@ -236,11 +236,11 @@ Software selection
 Factors that influence the software selection for a storage-focused
 OpenStack architecture design include:
 
-*  Operating system (OS) and hypervisor
+* Operating system (OS) and hypervisor
 
-*  OpenStack components
+* OpenStack components
 
-*  Supplemental software
+* Supplemental software
 
 Design decisions made in each of these areas impacts the rest of the
 OpenStack architecture design.
@@ -256,55 +256,55 @@ hardware and work with the networking hardware selection and topology.
 Operating system and hypervisor selection affect the following areas:
 
 Cost
-    Selecting a commercially supported hypervisor, such as Microsoft
-    Hyper-V, results in a different cost model than a
-    community-supported open source hypervisor like Kinstance or Xen.
-    Similarly, choosing Ubuntu over Red Hat (or vice versa) impacts cost
-    due to support contracts. However, business or application
-    requirements might dictate a specific or commercially supported
-    hypervisor.
+ Selecting a commercially supported hypervisor, such as Microsoft
+ Hyper-V, results in a different cost model than a
+ community-supported open source hypervisor like Kinstance or Xen.
+ Similarly, choosing Ubuntu over Red Hat (or vice versa) impacts cost
+ due to support contracts. However, business or application
+ requirements might dictate a specific or commercially supported
+ hypervisor.
 
 Supportability
-    Staff must have training with the chosen hypervisor. Consider the
-    cost of training when choosing a solution. The support of a
-    commercial product such as Red Hat, SUSE, or Windows, is the
-    responsibility of the OS vendor. If an open source platform is
-    chosen, the support comes from in-house resources.
+ Staff must have training with the chosen hypervisor. Consider the
+ cost of training when choosing a solution. The support of a
+ commercial product such as Red Hat, SUSE, or Windows, is the
+ responsibility of the OS vendor. If an open source platform is
+ chosen, the support comes from in-house resources.
 
 Management tools
-    Ubuntu and Kinstance use different management tools than VMware
-    vSphere. Although both OS and hypervisor combinations are supported
-    by OpenStack, there are varying impacts to the rest of the design as
-    a result of the selection of one combination versus the other.
+ Ubuntu and Kinstance use different management tools than VMware
+ vSphere. Although both OS and hypervisor combinations are supported
+ by OpenStack, there are varying impacts to the rest of the design as
+ a result of the selection of one combination versus the other.
 
 Scale and performance
-    Ensure the selected OS and hypervisor combination meet the
-    appropriate scale and performance requirements needed for this
-    storage focused OpenStack cloud. The chosen architecture must meet
-    the targeted instance-host ratios with the selected OS-hypervisor
-    combination.
+ Ensure the selected OS and hypervisor combination meet the
+ appropriate scale and performance requirements needed for this
+ storage focused OpenStack cloud. The chosen architecture must meet
+ the targeted instance-host ratios with the selected OS-hypervisor
+ combination.
 
 Security
-    Ensure the design can accommodate the regular periodic installation
-    of application security patches while maintaining the required
-    workloads. The frequency of security patches for the proposed
-    OS-hypervisor combination impacts performance and the patch
-    installation process could affect maintenance windows.
+ Ensure the design can accommodate the regular periodic installation
+ of application security patches while maintaining the required
+ workloads. The frequency of security patches for the proposed
+ OS-hypervisor combination impacts performance and the patch
+ installation process could affect maintenance windows.
 
 Supported features
-    Selecting the OS-hypervisor combination often determines the
-    required features of OpenStack. Certain features are only available
-    with specific OSes or hypervisors. For example, if certain features
-    are not available, you might need to modify the design to meet user
-    requirements.
+ Selecting the OS-hypervisor combination often determines the
+ required features of OpenStack. Certain features are only available
+ with specific OSes or hypervisors. For example, if certain features
+ are not available, you might need to modify the design to meet user
+ requirements.
 
 Interoperability
-    The OS-hypervisor combination should be chosen based on the
-    interoperability with one another, and other OS-hyervisor
-    combinations. Operational and troubleshooting tools for one
-    OS-hypervisor combination may differ from the tools used for another
-    OS-hypervisor combination. As a result, the design must address if
-    the two sets of tools need to interoperate.
+ The OS-hypervisor combination should be chosen based on the
+ interoperability with one another, and other OS-hyervisor
+ combinations. Operational and troubleshooting tools for one
+ OS-hypervisor combination may differ from the tools used for another
+ OS-hypervisor combination. As a result, the design must address if
+ the two sets of tools need to interoperate.
 
 OpenStack components
 --------------------
@@ -326,20 +326,20 @@ storage-intensive processing.
 A storage-focused OpenStack design architecture uses the following
 components:
 
-*  OpenStack Identity (keystone)
+* OpenStack Identity (keystone)
 
-*  OpenStack dashboard (horizon)
+* OpenStack dashboard (horizon)
 
-*  OpenStack Compute (nova) (including the use of multiple hypervisor
+* OpenStack Compute (nova) (including the use of multiple hypervisor
    drivers)
 
-*  OpenStack Object Storage (swift) (or another object storage solution)
+* OpenStack Object Storage (swift) (or another object storage solution)
 
-*  OpenStack Block Storage (cinder)
+* OpenStack Block Storage (cinder)
 
-*  OpenStack Image service (glance)
+* OpenStack Image service (glance)
 
-*  OpenStack Networking (neutron) or legacy networking (nova-network)
+* OpenStack Networking (neutron) or legacy networking (nova-network)
 
 Excluding certain OpenStack components may limit or constrain the
 functionality of other components. If a design opts to include
@@ -360,7 +360,7 @@ themselves. Some examples include HAProxy, Keepalived, and various
 routing daemons (like Quagga). The OpenStack High Availability Guide
 describes some of these software packages, HAProxy in particular. See
 the `Network controller cluster stack
-chapter <http://docs.openstack.org/ha-guide/networking-ha.html>`__ of
+chapter <http://docs.openstack.org/ha-guide/networking-ha.html>`_ of
 the OpenStack High Availability Guide.
 
 Management software
@@ -368,18 +368,18 @@ Management software
 
 Management software includes software for providing:
 
-*  Clustering
+* Clustering
 
-*  Logging
+* Logging
 
-*  Monitoring
+* Monitoring
 
-*  Alerting
+* Alerting
 
 .. important::
 
-    The factors for determining which software packages in this category
-    to select is outside the scope of this design guide.
+   The factors for determining which software packages in this category
+   to select is outside the scope of this design guide.
 
 The availability design requirements determine the selection of
 Clustering Software, such as Corosync or Pacemaker. The availability of
@@ -402,12 +402,12 @@ If you require any of these software packages, the design must account
 for the additional resource consumption. Some other potential design
 impacts include:
 
-*  OS-Hypervisor combination: Ensure that the selected logging,
-   monitoring, or alerting tools support the proposed OS-hypervisor
-   combination.
+* OS-Hypervisor combination: Ensure that the selected logging,
+  monitoring, or alerting tools support the proposed OS-hypervisor
+  combination.
 
-*  Network hardware: The network hardware selection needs to be
-   supported by the logging, monitoring, and alerting software.
+* Network hardware: The network hardware selection needs to be
+  supported by the logging, monitoring, and alerting software.
 
 Database software
 -----------------
@@ -422,7 +422,7 @@ databases are available.
 
 .. note::
 
-    Telemetry uses MongoDB.
+   Telemetry uses MongoDB.
 
 The chosen high availability database solution changes according to the
 selected database. MySQL, for example, provides several options. Use a
@@ -430,11 +430,11 @@ replication technology such as Galera for active-active clustering. For
 active-passive use some form of shared storage. Each of these potential
 solutions has an impact on the design:
 
-*  Solutions that employ Galera/MariaDB require at least three MySQL
-   nodes.
+* Solutions that employ Galera/MariaDB require at least three MySQL
+  nodes.
 
-*  MongoDB has its own design considerations for high availability.
+* MongoDB has its own design considerations for high availability.
 
-*  OpenStack design, generally, does not include shared storage.
-   However, for some high availability designs, certain components might
-   require it depending on the specific implementation.
+* OpenStack design, generally, does not include shared storage.
+  However, for some high availability designs, certain components might
+  require it depending on the specific implementation.

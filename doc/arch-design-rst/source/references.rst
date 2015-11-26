@@ -34,7 +34,7 @@ characteristics to images.
 `ManageIQ Cloud Management Platform <http://manageiq.org/>`_
 : An Open Source Cloud Management Platform for managing multiple clouds.
 
-`N-Tron Network Availability</link>
+`N-Tron Network Availability
 <http://www.n-tron.com/pdf/network_availability.pdf>`_
 : Research white paper on network availability.
 

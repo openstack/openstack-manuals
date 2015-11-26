@@ -94,7 +94,7 @@ protects against unauthorized access to services.
 
 Choose a networking service based on the requirements of your instances.
 The architecture and design of your cloud will impact whether you choose
-OpenStack Networking(neutron), or legacy networking (nova-network).
+OpenStack Networking (neutron), or legacy networking (nova-network).
 
 Legacy networking (nova-network)
  The legacy networking (nova-network) service is primarily a layer-2

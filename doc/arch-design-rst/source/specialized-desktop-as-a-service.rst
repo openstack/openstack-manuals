@@ -45,4 +45,3 @@ Diagram
 ~~~~~~~
 
 .. figure:: figures/Specialized_VDI1.png
-   :width: 100%

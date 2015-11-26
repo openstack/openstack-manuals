@@ -21,7 +21,7 @@ specifically supports compute intensive workloads.
 
 Compute-focused workloads may include the following use cases:
 
-* High performance computing (HPC)</para>
+* High performance computing (HPC)
 * Big data analytics using Hadoop or other distributed data stores
 * Continuous integration/continuous deployment (CI/CD)
 * Platform-as-a-Service (PaaS)

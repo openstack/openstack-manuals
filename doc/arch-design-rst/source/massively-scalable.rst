@@ -6,7 +6,7 @@ Massively scalable
    :maxdepth: 2
 
    massively-scalable-user-requirements.rst
-   massively-scalable-tech-considerations.rst
+   massively-scalable-technical-considerations.rst
    massively-scalable-operational-considerations.rst
 
 A massively scalable architecture is a cloud implementation
