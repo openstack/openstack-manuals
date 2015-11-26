@@ -30,3 +30,4 @@ class RemoteCodeBlock(code.CodeBlock):
 
 def setup(app):
     app.add_directive('remote-code-block', RemoteCodeBlock)
+    return {'parallel_read_safe': True}
