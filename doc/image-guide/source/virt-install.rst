@@ -42,7 +42,7 @@ The KVM hypervisor starts the virtual machine with the
 libvirt name, ``centos-6.4``, with 1024 MB of RAM.
 The virtual machine also has a virtual CD-ROM drive associated
 with the ``/data/CentOS-6.4-x86_64-netinstall.iso`` file and
-a local 10&nbsp;GB hard disk in qcow2 format that is stored
+a local 10 GB hard disk in qcow2 format that is stored
 in the host at ``/data/centos-6.4.qcow2``.
 It configures networking to use libvirt default network.
 There is a VNC server that is listening on all interfaces,
