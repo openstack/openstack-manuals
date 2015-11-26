@@ -67,6 +67,9 @@ service with its package name and description.
 |Key Manager     |barbican  |python-barbicanclient  |Creates and manages     |
 |service         |          |                       |keys.                   |
 +----------------+----------+-----------------------+------------------------+
+|Monitoring      |monasca   |python-monascaclient   |Monitoring solution.    |
+|                |          |                       |                        |
++----------------+----------+-----------------------+------------------------+
 |Networking      |neutron   |python-neutronclient   |Configures networks for |
 |                |          |                       |guest servers.          |
 +----------------+----------+-----------------------+------------------------+
