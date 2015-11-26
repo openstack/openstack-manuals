@@ -39,9 +39,8 @@ Diagram
 OpenStack hosted SDN controller:
 
 .. figure:: figures/Specialized_SDN_hosted.png
-   :width: 100%
 
 OpenStack participating in an SDN controller network:
 
 .. figure:: figures/Specialized_SDN_external.png
-   :width: 100%
+

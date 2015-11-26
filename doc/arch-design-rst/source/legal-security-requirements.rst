@@ -166,7 +166,7 @@ offers private Cloud-as-a-Service.
 More information on OpenStack Security can be found in the
 `OpenStack Security Guide <http://docs.openstack.org/security-guide>`_.
 
-Networking Security
+Networking security
 ~~~~~~~~~~~~~~~~~~~
 
 Consider security implications and requirements before designing the

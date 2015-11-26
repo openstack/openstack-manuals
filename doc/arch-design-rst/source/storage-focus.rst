@@ -5,7 +5,7 @@ Storage focused
 .. toctree::
    :maxdepth: 2
 
-   storage-focus-tech-considerations.rst
+   storage-focus-technical-considerations.rst
    storage-focus-operational-considerations.rst
    storage-focus-architecture.rst
    storage-focus-prescriptive-examples.rst

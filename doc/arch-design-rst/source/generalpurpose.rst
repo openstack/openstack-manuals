@@ -6,7 +6,7 @@ General purpose
    :maxdepth: 2
 
    generalpurpose-user-requirements.rst
-   generalpurpose-tech-considerations.rst
+   generalpurpose-technical-considerations.rst
    generalpurpose-operational-considerations.rst
    generalpurpose-architecture.rst
    generalpurpose-prescriptive-example.rst
