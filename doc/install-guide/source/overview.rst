@@ -122,7 +122,7 @@ follows:
   network instead of a dedicated network.
 
 For more information on production architectures, see the
-`Architecture Design Guide <http://docs.openstack.org/arch-design/content/>`__,
+`Architecture Design Guide <http://docs.openstack.org/arch-design/>`__,
 `Operations Guide <http://docs.openstack.org/ops/>`__, and
 `Networking Guide <http://docs.openstack.org/networking-guide/>`__.
 

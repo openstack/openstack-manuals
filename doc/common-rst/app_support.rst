@@ -37,7 +37,7 @@ associated components:
 The following books explain how to configure and run an OpenStack cloud:
 
 -  `Architecture Design
-   Guide <http://docs.openstack.org/arch-design/content/>`__
+   Guide <http://docs.openstack.org/arch-design/>`__
 
 -  `Cloud Administrator
    Guide <http://docs.openstack.org/admin-guide-cloud/>`__
