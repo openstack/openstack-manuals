@@ -163,6 +163,8 @@ for each client. The following values are valid:
 
 -  ``mistral`` - Workflow service API
 
+-  ``monasca`` - Monitoring API
+
 -  ``murano`` - Application catalog API
 
 -  ``neutron`` - Networking API
