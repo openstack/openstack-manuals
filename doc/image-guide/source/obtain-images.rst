@@ -154,14 +154,6 @@ Official images from other Linux distributions
 As of this writing, we are not aware of other distributions that
 provide images for download.
 
-Rackspace Cloud Builders (multiple distros) images
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Rackspace Cloud Builders maintains a list of pre-built images from
-various distributions (Red Hat, CentOS, Fedora, Ubuntu).
-Links to these images can be found at `rackerjoe/oz-image-build
-on GitHub <https://github.com/rackerjoe/oz-image-build>`_.
-
 Microsoft Windows images
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
