@@ -35,6 +35,11 @@ Virtual Machine Image Guide
 
 * RST conversion finished.
 
+Architecture Design Guide
+-------------------------
+
+* Completed RST conversion.
+
 Translations
 ------------
 
