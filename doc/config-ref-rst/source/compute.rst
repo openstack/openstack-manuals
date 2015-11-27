@@ -6,6 +6,7 @@ Compute
    :maxdepth: 1
 
    compute/scheduler.rst
+   compute/cells.rst
    compute/conductor.rst
    compute/nova-conf-samples.rst
    compute/nova-logs.rst
