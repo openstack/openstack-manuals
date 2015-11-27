@@ -5,6 +5,7 @@ Compute
 .. toctree::
    :maxdepth: 1
 
+   compute/conductor.rst
    compute/nova-conf-samples.rst
    compute/nova-logs.rst
    compute/config-samples.rst
