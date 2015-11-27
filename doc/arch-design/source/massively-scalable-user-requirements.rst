@@ -81,10 +81,8 @@ perspective:
   requirements; other jurisdictional legal or compliance requirements; image
   consistency-availability; storage replication and availability (both block
   and file/object storage); and authentication, authorization, and auditing
-  (AAA). See Multi-site for more details on requirements and considerations
-  for multi-site OpenStack clouds.
-
-.. TODO (MZ) Add a link to the sentence above (See Multi-site).
+  (AAA). See :doc:`multi-site` for more details on requirements and
+  considerations for multi-site OpenStack clouds.
 
 * The design architecture of a massively scalable OpenStack cloud must address
   considerations around physical facilities such as space, floor weight, rack
