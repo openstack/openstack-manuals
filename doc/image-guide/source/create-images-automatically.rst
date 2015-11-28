@@ -176,6 +176,16 @@ to automate the building, converting, and uploading images
 to different cloud providers. It uses Oz as its back-end and
 includes support for OpenStack-based clouds.
 
+KIWI
+~~~~
+
+The `KIWI OS image builder <http://github.com/openSUSE/kiwi>`_
+provides an operating system image builder for various Linux supported
+hardware platforms as well as for virtualization and cloud systems. It
+allows building of images based on openSUSE, SUSE Linux Enterprise,
+and Red Hat Enterprise Linux. The `openSUSE Documentation
+<https://doc.opensuse.org/#kiwi-doc>`_ explains how to use KIWI.
+
 SUSE Studio
 ~~~~~~~~~~~
 
