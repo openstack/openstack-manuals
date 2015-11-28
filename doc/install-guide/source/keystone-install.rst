@@ -8,46 +8,48 @@ Identity service, code-named keystone, on the controller node. For
 performance, this configuration deploys the Apache HTTP server to handle
 requests and Memcached to store tokens instead of an SQL database.
 
-Prerequisites
--------------
+.. only:: obs or rdo or ubuntu
 
-Before you configure the OpenStack Identity service, you must create a
-database and an administration token.
+   Prerequisites
+   -------------
 
-#. To create the database, complete the following actions:
+   Before you configure the OpenStack Identity service, you must create a
+   database and an administration token.
 
-   * Use the database access client to connect to the database server as the
-     ``root`` user:
+   #. To create the database, complete the following actions:
 
-     .. code-block:: console
+      * Use the database access client to connect to the database server as the
+        ``root`` user:
 
-        $ mysql -u root -p
+        .. code-block:: console
 
-   * Create the ``keystone`` database:
+           $ mysql -u root -p
 
-     .. code-block:: console
+      * Create the ``keystone`` database:
 
-        CREATE DATABASE keystone;
+        .. code-block:: console
 
-   * Grant proper access to the ``keystone`` database:
+           CREATE DATABASE keystone;
 
-     .. code-block:: console
+      * Grant proper access to the ``keystone`` database:
 
-        GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
-          IDENTIFIED BY 'KEYSTONE_DBPASS';
-        GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
-          IDENTIFIED BY 'KEYSTONE_DBPASS';
+        .. code-block:: console
 
-     Replace ``KEYSTONE_DBPASS`` with a suitable password.
+           GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' \
+             IDENTIFIED BY 'KEYSTONE_DBPASS';
+           GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' \
+             IDENTIFIED BY 'KEYSTONE_DBPASS';
 
-   * Exit the database access client.
+        Replace ``KEYSTONE_DBPASS`` with a suitable password.
 
-#. Generate a random value to use as the administration token during
-   initial configuration:
+      * Exit the database access client.
 
-   .. code-block:: console
+   #. Generate a random value to use as the administration token during
+      initial configuration:
 
-      $ openssl rand -hex 10
+      .. code-block:: console
+
+         $ openssl rand -hex 10
 
 .. only:: obs or rdo or ubuntu
 
@@ -202,11 +204,6 @@ database and an administration token.
 
          # apt-get install keystone
 
-      .. note::
-
-         python-keystoneclient will automatically be installed as it is a
-         dependency of the keystone package.
-
    #. Respond to prompts for :doc:`debconf/debconf-dbconfig-common`,
       which will fill the below database access directive.
 
@@ -216,7 +213,7 @@ database and an administration token.
          ...
          connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
 
-      If you decide to not use ``dbconfig-common``, then you will have to
+      If you decide to not use ``dbconfig-common``, then you have to
       create the database and manage its access rights yourself, and run the
       following by hand.
 
@@ -249,19 +246,55 @@ database and an administration token.
          ...
          admin_token = ADMIN_TOKEN
 
-   #. Create the ``admin`` tenant and user:
+   #. Create the ``admin`` project and user:
 
       During the final stage of the package installation, it is possible to
-      automatically create an admin tenant and an admin user. This can later
-      be used for other OpenStack services to contact the Identity service.
-      This is the equivalent of running the below commands:
+      automatically create an ``admin`` and ``service`` project, and an ``admin`` user.
+      This can later be used for other OpenStack services to contact the
+      Identity service. This is the equivalent of running the below commands:
 
       .. code-block:: console
 
-         # openstack project create --description "Admin Tenant" admin
-         # openstack user create --password ADMIN_PASS --email root@localhost admin
-         # openstack role create admin
-         # openstack role add --project demo --user demo user
+         # openstack --os-token ${AUTH_TOKEN} \
+           --os-url=http://127.0.0.1:35357/v3/ \
+           --os-domain-name default \
+           --os-identity-api-version=3 \
+           project create --or-show \
+           admin --domain default \
+           --description "Default Debian admin project"
+
+         # openstack --os-token ${AUTH_TOKEN} \
+           --os-url=http://127.0.0.1:35357/v3/ \
+           --os-domain-name default \
+           --os-identity-api-version=3 \
+           project create --or-show \
+           service --domain default \
+           --description "Default Debian admin project"
+
+         # openstack --os-token ${AUTH_TOKEN} \
+           --os-url=http://127.0.0.1:35357/v3/ \
+           --os-domain-name default \
+           --os-identity-api-version=3 \
+           user create --or-show \
+           --password ADMIN_PASS \
+           --project admin \
+           --email root@localhost \
+           --enable \
+           admin \
+           --domain default \
+           --description "Default Debian admin user"
+
+         # openstack --os-token ${AUTH_TOKEN} \
+           --os-url=http://127.0.0.1:35357/v3/ \
+           --os-domain-name default \
+           --os-identity-api-version=3 \
+           role create --or-show admin
+
+         # openstack  --os-token ${AUTH_TOKEN} \
+           --os-url=http://127.0.0.1:35357/v3/ \
+           --os-domain-name default \
+           --os-identity-api-version=3 \
+           role add --project admin --user admin admin
 
       .. image:: figures/debconf-screenshots/keystone_2_register_admin_tenant_yes_no.png
          :scale: 50
@@ -284,13 +317,32 @@ database and an administration token.
 
       .. code-block:: console
 
-         # openstack service create --name keystone --description "OpenStack Identity"  identity
-         # keystone endpoint-create \
-           --publicurl http://controller:5000/v2.0 \
-           --internalurl http://controller:5000/v2.0 \
-           --adminurl http://controller:35357/v2.0 \
-           --region RegionOne \
+         # openstack --os-token ${AUTH_TOKEN} \
+           --os-url=http://127.0.0.1:35357/v3/ \
+           --os-domain-name default \
+           --os-identity-api-version=3 \
+           service create \
+           --name keystone \
+           --description "OpenStack Identity" \
            identity
+
+         # openstack --os-token ${AUTH_TOKEN} \
+           --os-url=http://127.0.0.1:35357/v3/ \
+           --os-domain-name default \
+           --os-identity-api-version=3 \
+           keystone public http://controller:5000/v2.0
+
+         # openstack --os-token ${AUTH_TOKEN} \
+           --os-url=http://127.0.0.1:35357/v3/ \
+           --os-domain-name default \
+           --os-identity-api-version=3 \
+           keystone internal http://controller:5000/v2.0
+
+         # openstack --os-token ${AUTH_TOKEN} \
+           --os-url=http://127.0.0.1:35357/v3/ \
+           --os-domain-name default \
+           --os-identity-api-version=3 \
+           keystone admin http://controller:35357/v2.0
 
       .. image:: figures/debconf-screenshots/keystone_7_register_endpoint.png
 
@@ -501,46 +553,48 @@ database and an administration token.
 
             # chown -R keystone:keystone /etc/keystone
 
-Finalize the installation
--------------------------
+.. only:: ubuntu or rdo or obs
 
-.. only:: ubuntu
+   Finalize the installation
+   -------------------------
 
-   #. Restart the Apache HTTP server:
+   .. only:: ubuntu
 
-      .. code-block:: console
+      #. Restart the Apache HTTP server:
 
-         # service apache2 restart
+         .. code-block:: console
 
-   #. By default, the Ubuntu packages create an SQLite database.
+            # service apache2 restart
 
-      Because this configuration uses an SQL database server, you can remove
-      the SQLite database file:
+      #. By default, the Ubuntu packages create an SQLite database.
 
-      .. code-block:: console
+         Because this configuration uses an SQL database server, you can remove
+         the SQLite database file:
 
-         # rm -f /var/lib/keystone/keystone.db
+         .. code-block:: console
 
-.. only:: rdo
+            # rm -f /var/lib/keystone/keystone.db
 
-   * Start the Apache HTTP service and configure it to start when the system boots:
+   .. only:: rdo
 
-     .. code-block:: console
+      * Start the Apache HTTP service and configure it to start when the system boots:
 
-        # systemctl enable httpd.service
-        # systemctl start httpd.service
+        .. code-block:: console
 
-.. only:: obs
+           # systemctl enable httpd.service
+           # systemctl start httpd.service
 
-   #. Activate the Apache module ``mod_version``:
+   .. only:: obs
 
-      .. code-block:: console
+      #. Activate the Apache module ``mod_version``:
 
-         # a2enmod version
+         .. code-block:: console
 
-   #. Start the Apache HTTP service and configure it to start when the system boots:
+            # a2enmod version
 
-      .. code-block:: console
+      #. Start the Apache HTTP service and configure it to start when the system boots:
 
-         # systemctl enable apache2.service
-         # systemctl start apache2.service
+         .. code-block:: console
+
+            # systemctl enable apache2.service
+            # systemctl start apache2.service
