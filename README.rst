@@ -13,10 +13,10 @@ It includes these manuals:
  * Cloud Administrator Guide
  * Command-Line Interface Reference
  * Configuration Reference
+ * Documentation Contributor Guide
  * End User Guide
- * Heat Orchestration Template reference
- * HOT Guide
  * Installation Guides
+ * Networking Guide
  * Virtual Machine Image Guide
 
 In addition to the guides, this repository contains:
