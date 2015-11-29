@@ -16,36 +16,39 @@ Requirements
 -  The following licenses should be activated on V3 for File: CIFS, NFS,
    HyperSnap License (for snapshot)
 
-Supported operations
-~~~~~~~~~~~~~~~~~~~~
+Supported shared filesystems and operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following operations are supported on V3 storage:
+The driver supports CIFS and NFS shares.
 
--  Create CIFS/NFS share.
+The following operations are supported:
 
--  Delete CIFS/NFS share.
+- Create a share.
 
--  Allow CIFS/NFS share access.
+- Delete a share.
 
-   -  Only IP access type is supported for NFS(ro/rw).
+- Allow share access.
 
-   -  Only USER access type is supported for CIFS(ro/rw).
+  Note the following limitations:
 
--  Deny CIFS/NFS share access.
+  - Only IP access type is supported for NFS.
 
--  Create snapshot.
+  - Only user access is supported for CIFS.
 
--  Delete snapshot.
+- Deny share access.
 
--  Manage CIFS/NFS share.
+- Create a snapshot.
 
--  Support pools in one backend.
+- Delete a snapshot.
 
--  Extend share.
+- Create a share from a snapshot.
 
--  Shrink share.
+- Support pools in one backend.
 
--  Support multi RestURLs.
+- Extend a share.
+
+- Shrink a share.
+
 
 Pre-configurations on Huawei
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -34,28 +34,31 @@ Requirements
 
    -  ReplicationV2 (for create share from snapshot)
 
-Supported operations
-~~~~~~~~~~~~~~~~~~~~
+Supported shared filesystems and operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following operations will be supported on the VNX array:
+The driver supports CIFS and NFS shares.
 
--  Create CIFS/NFS share.
+The following operations are supported:
 
--  Delete CIFS/NFS share.
+-  Create a share.
 
--  Allow CIFS/NFS share access.
+-  Delete a share.
+
+-  Allow share access.
+
+   Note the following limitations:
 
    -  Only IP access type is supported for NFS.
-
    -  Only user access type is supported for CIFS.
 
--  Deny CIFS/NFS share access.
+-  Deny share access.
 
--  Create snapshot.
+-  Create a snapshot.
 
--  Delete snapshot.
+-  Delete a snapshot.
 
--  Create share from snapshot.
+-  Create a share from a snapshot.
 
 While the generic driver creates shared filesystems based on cinder
 volumes attached to nova VMs, the VNX driver performs similar operations

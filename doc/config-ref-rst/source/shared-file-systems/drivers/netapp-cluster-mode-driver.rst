@@ -16,12 +16,37 @@ previously known as vServers) as representations of the Shared File
 Systems service share server interface, configures logical interfaces
 (LIFs) and stores shares there.
 
-Supported shared filesystems
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Supported shared filesystems and operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  NFS (access by IP)
+The driver supports CIFS and NFS shares.
 
--  CIFS (authentication by user)
+The following operations are supported:
+
+- Create a share.
+
+- Delete a share.
+
+- Allow share access.
+
+  Note the following limitations:
+
+  - Only IP access type is supported for NFS.
+
+  - Only user access type is supported for CIFS.
+
+- Deny share access.
+
+- Create a snapshot.
+
+- Delete a snapshot.
+
+- Create a share from a snapshot.
+
+- Extend a share.
+
+- Shrink a share.
+
 
 Required licenses
 ~~~~~~~~~~~~~~~~~

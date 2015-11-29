@@ -20,28 +20,31 @@ Requirements
 
 - Isilon cluster running OneFS 7.2 or higher
 
-Supported operations
-~~~~~~~~~~~~~~~~~~~~
+Supported shared filesystems and operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following operations are supported on an Isilon cluster:
+The drivers supports CIFS and NFS shares.
 
-- Create CIFS/NFS share.
+The following operations are supported:
 
-- Delete CIFS/NFS share.
+- Create a share.
 
-- Allow CIFS/NFS share access.
+- Delete a share.
 
-   - Only IP access type is supported for NFS and CIFS.
+- Allow share access.
 
-   - Only RW access is supported.
+  Note the following limitations:
 
-- Deny CIFS/NFS share access
+  - Only IP access type is supported.
+  - Only read-write access is supported.
 
-- Create snapshot
+- Deny share access.
 
-- Delete snapshot
+- Create a snapshot.
 
-- Create share from snapshot
+- Delete a snapshot.
+
+- Create a share from a snapshot.
 
 Backend configuration
 ~~~~~~~~~~~~~~~~~~~~~

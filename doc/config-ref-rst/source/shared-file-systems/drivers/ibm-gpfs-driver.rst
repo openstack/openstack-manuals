@@ -7,29 +7,32 @@ high-performance, clustered file system, developed by IBM, as the
 storage back end for serving file shares to the Shared File Systems
 service clients.
 
-Supported shared filesystems
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Supported shared filesystems and operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  NFS (access by IP)
+The driver supports NFS shares.
 
-Supported operations
-~~~~~~~~~~~~~~~~~~~~
+The following operations are supported:
 
--  Create NFS share.
+- Create a share.
 
--  Delete NFS share.
+- Delete a share.
 
--  Create share snapshot.
+- Allow share access.
 
--  Delete share snapshot.
+  Note the following limitations:
 
--  Create share from a share snapshot.
+  - Only IP access type is supported.
 
--  Allow NFS share access.
+  - Only read-write access level is supported.
 
-   -  Currently only 'rw' access level is supported.
+- Deny share access.
 
--  Deny NFS share access.
+- Create a snapshot.
+
+- Delete a snapshot.
+
+- Create a share from a snapshot.
 
 Requirements
 ~~~~~~~~~~~~

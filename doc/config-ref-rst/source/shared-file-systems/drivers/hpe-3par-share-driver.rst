@@ -5,47 +5,59 @@ HPE 3PAR driver
 The HPE 3PAR driver provides NFS and CIFS shared file systems to
 OpenStack using HPE 3PAR's File Persona capabilities.
 
-Supported operations
-~~~~~~~~~~~~~~~~~~~~
+Supported shared filesystems and operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following operations are supported with HPE 3PAR File Persona:
+The driver supports CIFS and NFS shares.
 
--  Create/delete NFS and CIFS shares.
+The following operations are supported:
 
-   -  Shares are not accessible until access rules allow access.
+- Create a share.
 
--  Allow/deny NFS share access.
+- Delete a share.
 
-   -  IP access rules are required for NFS share access.
+- Allow share access.
 
-   -  User access rules are not allowed for NFS shares.
+  Note the following limitations for NFS shares:
 
-   -  Access level (RW/RO) is ignored.
+  - Only IP access type is supported.
 
-   -  Shares created from snapshots are always read-only.
+  - Access level (read-write or read-only) is ignored.
 
-   -  Shares not created from snapshots are read-write (and subject to
-      ACLs).
+  - Shares created from snapshots are always read-only.
 
--  Allow/deny CIFS share access.
+  - Shares not created from snapshots are read-write and subject to
+    ACLs.
 
-   -  Both IP and user access rules are required for CIFS share access.
+  Note the following limitations for CIFS shares:
 
-   -  User access requires a 3PAR local user (LDAP and AD is not yet
-      supported).
+  - Both IP and user access rules are required for CIFS share access.
 
-   -  Access level (RW/RO) is ignored.
+  - User access requires a 3PAR local user, since LDAP and AD is not yet
+    supported.
 
-   -  Shares created from snapshots are always read-only.
+  - Access level (read-write or read-only) is ignored.
 
-   -  Shares not created from snapshots are read-write (and subject to
-      ACLs).
+  - Shares created from snapshots are always read-only.
 
--  Create/delete snapshots.
+  - Shares not created from snapshots are read-write (and subject to
+    ACLs).
 
--  Create shares from snapshots.
+- Deny share access.
 
-   -  Shares created from snapshots are always read-only.
+- Create a snapshot.
+
+- Delete a snapshot.
+
+- Create a share from a snapshot.
+
+  Note the following limitations for shares:
+
+  - Shares created from snapshots are always read-only.
+
+- Extend a share.
+
+- Shrink a share.
 
 Share networks are not supported. Shares are created directly on the
 3PAR without the use of a share server or service VM. Network
