@@ -11,5 +11,6 @@ you can configure by using these instructions.
    shared-file-systems/drivers.rst
    shared-file-systems/log-files.rst
    shared-file-systems/sample-configuration-files.rst
+   shared-file-systems/rpc.rst
    shared-file-systems/misc.rst
    tables/conf-changes/manila.rst
