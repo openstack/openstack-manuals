@@ -75,9 +75,10 @@ The Isilon driver has the following restrictions:
 
 -  Quotas are not yet supported.
 
-Driver configuration options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Driver options
+~~~~~~~~~~~~~~
 
-Configuration options specific to this driver are documented here:
+The following table contains the configuration options specific to the
+share driver.
 
 .. include:: ../../tables/manila-emc.rst

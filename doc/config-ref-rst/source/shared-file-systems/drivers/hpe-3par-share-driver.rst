@@ -253,9 +253,10 @@ All other NFS options are forwarded to the HPE 3PAR as part of share
 creation. The HPE 3PAR will do additional validation at share creation
 time. Refer to HPE 3PAR CLI help for more details.
 
-Driver configuration options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Driver options
+~~~~~~~~~~~~~~
 
-Configuration options specific to this driver are documented here:
+The following table contains the configuration options specific to the
+share driver.
 
 .. include:: ../../tables/manila-hpe3par.rst

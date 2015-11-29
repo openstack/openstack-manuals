@@ -130,5 +130,8 @@ The following configuration parameters are optional:
    name of the trashcan directory in GlusterFS volumes must not be
    changed from the default.
 
-Configuration options specific to this driver are documented here:
+Driver options
+~~~~~~~~~~~~~~
+
+Configuration options specific to this driver are documented here in
 :ref:`manila-glusterfs`.
