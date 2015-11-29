@@ -64,8 +64,8 @@ stack and the :command:`ceilometer` client to measure resources.
 
 #. Create an auto-scaling stack by running the following command.
    The :option:`-f` option specifies the name of the stack template
-   file, and the :option:`-P` option specifies the :code:`KeyName`
-   parameter as :code:`heat_key`::
+   file, and the :option:`-P` option specifies the ``KeyName``
+   parameter as ``heat_key``::
 
      $ heat stack-create -f cfn/F17/AutoScalingCeilometer.yaml -P "KeyName=heat_key"
 
