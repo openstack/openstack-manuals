@@ -70,6 +70,8 @@ is the default scheduler for scheduling virtual machine instances.
 It supports filtering and weighting to make informed decisions on
 where a new instance should be created.
 
+.. _compute-scheduler-filters:
+
 Filters
 ~~~~~~~
 
