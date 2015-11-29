@@ -276,12 +276,12 @@ routers being configured to send RA packets, when they are created.
 This results in the following values set for the address configuration
 flags in the RA messages:
 
-* Auto Configuration Flag = 1 Managed
-* Configuration Flag = 0
-* Other Configuration Flag = 0 New or existing
+* Auto Configuration Flag = 1
+* Managed Configuration Flag = 0
+* Other Configuration Flag = 0
 
-Neutron networks that contain a SLAAC enabled IPv6 subnet will result
-in all neutron ports attached to the network receiving IPv6 addresses.
+New or existing Neutron networks that contain a SLAAC enabled IPv6 subnet will
+result in all neutron ports attached to the network receiving IPv6 addresses.
 This is because when RA broadcast messages are sent out on a neutron
 network, they are received by all IPv6 capable ports on the network,
 and each port will then configure an IPv6 address based on the
