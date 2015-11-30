@@ -271,8 +271,8 @@ The VNX driver has the following restrictions:
    site <http://support.emc.com>`_ for the limitations and configure the
    quotas accordingly.
 
-Driver configuration options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Driver options
+~~~~~~~~~~~~~~
 
-Configuration options specific to this driver are documented here:
+Configuration options specific to this driver are documented in
 :ref:`manila-emc`.

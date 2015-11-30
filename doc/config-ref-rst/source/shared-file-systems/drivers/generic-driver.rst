@@ -118,6 +118,9 @@ Known restrictions
    is not effective because generic driver shrinks only filesystem size
    and doesn't shrink the size of cinder volume.
 
+Driver options
+~~~~~~~~~~~~~~
+
 The following table contains the configuration options specific to this
 driver.
 

@@ -93,9 +93,10 @@ Known restrictions
 
 -  The driver does not provide read-only access level for shares.
 
-Driver configuration options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Driver options
+~~~~~~~~~~~~~~
 
-Configuration options specific to this driver are documented here:
+The following table contains the configuration options specific to the
+share driver.
 
 .. include:: ../../tables/manila-glusterfs.rst

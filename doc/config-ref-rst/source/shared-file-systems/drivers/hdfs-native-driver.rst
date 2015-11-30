@@ -86,9 +86,10 @@ Known restrictions
 
 - Only support for single HDFS namenode in Kilo release.
 
-Driver configuration options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Driver options
+~~~~~~~~~~~~~~
 
-Configuration options specific to this driver are documented here:
+The following table contains the configuration options specific to the
+share driver.
 
 .. include:: ../../tables/manila-hdfs.rst
