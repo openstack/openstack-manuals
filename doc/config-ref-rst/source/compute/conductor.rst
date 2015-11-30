@@ -26,4 +26,4 @@ This will be especially beneficial for operations that cross multiple
 compute nodes, such as migrations or resizes.
 
 To customize the ``Conductor``, use the configuration option settings
-documented in the table ":ref:`nova-conductor`".
+documented in the table :ref:`nova-conductor`.

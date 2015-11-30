@@ -16,7 +16,7 @@ For a list of configuration options, see the tables in this guide.
 
 To learn more about the ``nova.conf`` configuration file,
 review the general purpose configuration options documented in
-the table ":ref:`nova-common`".
+the table :ref:`nova-common`.
 
 .. important::
 

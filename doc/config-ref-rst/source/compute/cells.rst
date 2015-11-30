@@ -188,7 +188,7 @@ In the child cell, run the following, as root:
      --port 5672 --virtual_host api_vhost --woffset 1.0 --wscale 1.0
 
 To customize the Compute cells, use the configuration
-option settings documented in the table ":ref:`nova-cells`".
+option settings documented in the table :ref:`nova-cells`.
 
 Cell scheduling configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -201,7 +201,7 @@ available to prioritize cells for scheduling:
 scheduler_filter_classes
   List of filter classes. By default ``nova.cells.filters.all_filters``
   is specified, which maps to all cells filters included with Compute
-  (see the section called ":ref:`Filters <compute-scheduler-filters>`").
+  (see the section called :ref:`Filters <compute-scheduler-filters>`).
 
 scheduler_weight_classes
   List of weight classes.
