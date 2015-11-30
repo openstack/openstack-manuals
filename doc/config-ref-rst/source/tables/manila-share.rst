@@ -22,8 +22,6 @@
      - (BoolOpt) If set to True, then Manila will delete all share servers which were unused more than specified time .If set to False - automatic deletion of share servers will be disabled.
    * - ``backlog`` = ``4096``
      - (IntOpt) Number of backlog requests to configure the socket with.
-   * - ``connect_share_server_to_tenant_network`` = ``False``
-     - (BoolOpt) Attach share server directly to share network. Used only with Neutron.
    * - ``default_share_type`` = ``None``
      - (StrOpt) Default share type to use.
    * - ``delete_share_server_with_last_share`` = ``False``
@@ -44,18 +42,6 @@
      - (IntOpt) Size of executor thread pool.
    * - ``hook_drivers`` = `` ``
      - (ListOpt) Driver(s) to perform some additional actions before and after share driver actions and on a periodic basis. Default is [].
-   * - ``interface_driver`` = ``manila.network.linux.interface.OVSInterfaceDriver``
-     - (StrOpt) Vif driver. Used only with Neutron.
-   * - ``manila_service_keypair_name`` = ``manila-service``
-     - (StrOpt) Keypair name that will be created and used for service instances.
-   * - ``max_time_to_attach`` = ``120``
-     - (IntOpt) Maximum time to wait for attaching cinder volume.
-   * - ``max_time_to_build_instance`` = ``300``
-     - (IntOpt) Maximum time in seconds to wait for creating service instance.
-   * - ``max_time_to_create_volume`` = ``180``
-     - (IntOpt) Maximum time to wait for creating cinder volume.
-   * - ``max_time_to_extend_volume`` = ``180``
-     - (IntOpt) Maximum time to wait for extending cinder volume.
    * - ``migration_create_delete_share_timeout`` = ``300``
      - (IntOpt) Timeout for creating and deleting share instances when performing share migration (seconds).
    * - ``migration_data_copy_node_ip`` = ``None``
@@ -74,66 +60,24 @@
      - (IntOpt) Time to wait for access rules to be allowed/denied on backends when migrating shares using generic approach (seconds).
    * - ``network_config_group`` = ``None``
      - (StrOpt) Name of the configuration group in the Manila conf file to look for network config options.If not set, the share backend's config group will be used.If an option is not found within provided group, then'DEFAULT' group will be used for search of option.
-   * - ``ovs_integration_bridge`` = ``br-int``
-     - (StrOpt) Name of Open vSwitch bridge to use.
-   * - ``path_to_private_key`` = ``~/.ssh/id_rsa``
-     - (StrOpt) Path to host's private key.
-   * - ``path_to_public_key`` = ``~/.ssh/id_rsa.pub``
-     - (StrOpt) Path to hosts public key.
    * - ``root_helper`` = ``sudo``
      - (StrOpt) Deprecated: command to use for running commands as root.
-   * - ``service_image_name`` = ``manila-service-image``
-     - (StrOpt) Name of image in Glance, that will be used for service instance creation.
-   * - ``service_instance_flavor_id`` = ``100``
-     - (IntOpt) ID of flavor, that will be used for service instance creation.
-   * - ``service_instance_name_or_id`` = ``None``
-     - (StrOpt) Name or ID of service instance in Nova to use for share exports. Used only when share servers handling is disabled.
-   * - ``service_instance_name_template`` = ``manila_service_instance_%s``
-     - (StrOpt) Name of service instance.
-   * - ``service_instance_network_helper_type`` = ``neutron``
-     - (StrOpt) Allowed values are ['nova', 'neutron'].
-   * - ``service_instance_password`` = ``None``
-     - (StrOpt) Password for service instance user.
-   * - ``service_instance_security_group`` = ``manila-service``
-     - (StrOpt) Security group name, that will be used for service instance creation.
-   * - ``service_instance_smb_config_path`` = ``$share_mount_path/smb.conf``
-     - (StrOpt) Path to SMB config in service instance.
-   * - ``service_instance_user`` = ``None``
-     - (StrOpt) User in service instance that will be used for authentication.
-   * - ``service_net_name_or_ip`` = ``None``
-     - (StrOpt) Can be either name of network that is used by service instance within Nova to get IP address or IP address itself for managing shares there. Used only when share servers handling is disabled.
-   * - ``service_network_cidr`` = ``10.254.0.0/16``
-     - (StrOpt) CIDR of manila service network. Used only with Neutron.
-   * - ``service_network_division_mask`` = ``28``
-     - (IntOpt) This mask is used for dividing service network into subnets, IP capacity of subnet with this mask directly defines possible amount of created service VMs per tenant's subnet. Used only with Neutron.
-   * - ``service_network_name`` = ``manila_service_network``
-     - (StrOpt) Name of manila service network. Used only with Neutron.
    * - ``share_backend_name`` = ``None``
      - (StrOpt) The backend name for a given driver implementation.
    * - ``share_driver`` = ``manila.share.drivers.generic.GenericShareDriver``
      - (StrOpt) Driver to use for share creation.
-   * - ``share_helpers`` = ``CIFS=manila.share.drivers.generic.CIFSHelper, NFS=manila.share.drivers.generic.NFSHelper``
-     - (ListOpt) Specify list of share export helpers.
    * - ``share_manager`` = ``manila.share.manager.ShareManager``
      - (StrOpt) Full class name for the share manager.
-   * - ``share_mount_path`` = ``/shares``
-     - (StrOpt) Parent path in service instance where shares will be mounted.
    * - ``share_name_template`` = ``share-%s``
      - (StrOpt) Template string to be used to generate share names.
    * - ``share_snapshot_name_template`` = ``share-snapshot-%s``
      - (StrOpt) Template string to be used to generate share snapshot names.
    * - ``share_usage_audit_period`` = ``month``
      - (StrOpt) Time period to generate share usages for. Time period must be hour, day, month or year.
-   * - ``share_volume_fstype`` = ``ext4``
-     - (StrOpt) Filesystem type of the share volume.
-   * - ``smb_template_config_path`` = ``$state_path/smb.conf``
-     - (StrOpt) Path to smb config.
    * - ``suppress_post_hooks_errors`` = ``False``
      - (BoolOpt) Whether to suppress post hook errors (allow driver's results to pass through) or not.
    * - ``suppress_pre_hooks_errors`` = ``False``
      - (BoolOpt) Whether to suppress pre hook errors (allow driver perform actions) or not.
-   * - ``tenant_net_name_or_ip`` = ``None``
-     - (StrOpt) Can be either name of network that is used by service instance within Nova to get IP address or IP address itself for exporting shares. Used only when share servers handling is disabled.
    * - ``unmanage_remove_access_rules`` = ``False``
      - (BoolOpt) If set to True, then manila will deny access and remove all access rules on share unmanage.If set to False - nothing will be changed.
    * - ``unused_share_server_cleanup_interval`` = ``10``
