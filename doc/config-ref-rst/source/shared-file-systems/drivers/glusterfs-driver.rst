@@ -6,23 +6,26 @@ GlusterFS driver uses GlusterFS, an open source distributed file system,
 as the storage back end for serving file shares to the Shared File
 Systems clients.
 
-Supported shared filesystems
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Supported shared filesystems and operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  NFS (access by IP)
+The driver supports NFS shares.
 
-Supported operations
-~~~~~~~~~~~~~~~~~~~~
+The following operations are supported:
 
--  Create NFS share.
+-  Create a share.
 
--  Delete NFS share.
+-  Delete a share.
 
--  Allow NFS share access.
+-  Allow share access.
 
-   -  only 'rw' access
+   Note the following limitations:
 
--  Deny NFS share access.
+   - Only IP access type is supported
+
+   - Only read-write access is supported.
+
+-  Deny share access.
 
 Requirements
 ~~~~~~~~~~~~

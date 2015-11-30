@@ -20,31 +20,31 @@ The storage back end and Shared File Systems service hosts should be in
 a flat network, otherwise, the L3 connectivity between them should
 exist.
 
-Supported shared filesystems
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Supported shared filesystems and operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  HDFS (authentication by user)
+The driver supports HDFS shares.
 
-Supported operations
-~~~~~~~~~~~~~~~~~~~~
+The following operations are supported:
 
-- Create HDFS share.
+- Create a share.
 
-- Delete HDFS share.
+- Delete a share.
 
-- Allow HDFS share access.
+- Allow share access.
 
-   - Only support user access type.
+  Note the following limitations:
 
-   - Support level of access (ro/rw).
+  - Only user access type is supported.
 
-- Deny HDFS share access.
+- Deny share access.
 
-- Create snapshot.
+- Create a snapshot.
 
-- Delete snapshot.
+- Delete a snapshot.
 
-- Create share from snapshot.
+- Create a share from a snapshot.
+
 
 Requirements
 ~~~~~~~~~~~~

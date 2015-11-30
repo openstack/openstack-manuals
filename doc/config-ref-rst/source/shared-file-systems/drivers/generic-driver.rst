@@ -60,12 +60,35 @@ Requirements for service image
    -  ``/etc/mtab`` (temporary file with mounted filesystems used by
       ``mount``)
 
-Supported shared filesystems
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Supported shared filesystems and operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  NFS (access by IP)
+The driver supports CIFS and NFS shares.
 
--  CIFS (access by IP)
+The following operations are supported:
+
+- Create a share.
+
+- Delete a share.
+
+- Allow share access.
+
+  Note the following limitations:
+
+  - Only IP access type is supported for NFS and CIFS.
+
+- Deny share access.
+
+- Create a snapshot.
+
+- Delete a snapshot.
+
+- Create a share from a snapshot.
+
+- Extend a share.
+
+- Shrink a share.
+
 
 Known restrictions
 ~~~~~~~~~~~~~~~~~~

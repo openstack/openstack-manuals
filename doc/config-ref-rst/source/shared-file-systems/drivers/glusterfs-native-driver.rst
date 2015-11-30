@@ -20,11 +20,6 @@ Network approach
 L3 connectivity between the storage back end and the host running the
 Shared File Systems share service should exist.
 
-Supported shared filesystems
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
--  GlusterFS (access by TLS Certificates (``cert`` access type))
-
 Multi-tenancy model
 ~~~~~~~~~~~~~~~~~~~
 
@@ -32,20 +27,30 @@ The driver does not support network segmented multi-tenancy model.
 Instead multi-tenancy is supported using tenant specific TLS
 certificates.
 
-Supported operations
-~~~~~~~~~~~~~~~~~~~~
+Supported shared filesystems and operations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  Create GlusterFS share.
+The driver supports GlusterFS shares.
 
--  Delete GlusterFS share.
+The following operations are supported:
 
--  Allow GlusterFS share access (rw).
+- Create a share.
 
--  Deny GlusterFS share access.
+- Delete a share.
 
--  Create GlusterFS snapshot.
+- Allow share access.
 
--  Delete GlusterFS snapshot.
+  Note the following limitations:
+
+  - Only access by TLS Certificates (``cert`` access type) is supported.
+
+  - Only read-write access is supported.
+
+- Deny share access.
+
+- Create a snapshot.
+
+- Delete a snapshot.
 
 Requirements
 ~~~~~~~~~~~~
