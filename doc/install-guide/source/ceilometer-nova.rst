@@ -23,7 +23,7 @@ Install and configure components
 
          # yum install openstack-ceilometer-compute python-ceilometerclient python-pecan
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    #. Install the packages:
 
@@ -145,7 +145,7 @@ Finalize installation
 
          # systemctl restart openstack-nova-compute.service
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    #. Restart the agent:
 
