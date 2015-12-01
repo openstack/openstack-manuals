@@ -41,7 +41,7 @@ Finalize installation
 
         # systemctl restart openstack-glance-api.service openstack-glance-registry.service
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    * Restart the Image service:
 
