@@ -32,7 +32,7 @@
      - (IntOpt) The maximum number of items returned in a single response from a collection resource.
    * - ``osapi_share_base_URL`` = ``None``
      - (StrOpt) Base URL to be presented to users in links to the Share API
-   * - ``osapi_share_ext_list`` = `` ``
+   * - ``osapi_share_ext_list`` =
      - (ListOpt) Specify list of extensions to load when using osapi_share_extension option with manila.api.contrib.select_extensions.
    * - ``osapi_share_extension`` = ``['manila.api.contrib.standard_extensions']``
      - (MultiStrOpt) The osapi share extension to load.

@@ -23,10 +23,12 @@
      - Logging level
    * - ``log_max_line_length`` = ``0``
      - Caps the length of log lines to the value given; no limit if set to 0, the default.
+   * - ``log_name`` = ``drive-audit``
+     - Label used when logging
    * - ``log_to_console`` = ``False``
      - No help text available for this option.
    * - ``minutes`` = ``60``
-     - Number of minutes to look back in `/var/log/kern.log`
+     - Number of minutes to look back in
    * - ``recon_cache_path`` = ``/var/cache/swift``
      - Directory where stats for a few items will be stored
    * - ``regex_pattern_1`` = ``\berror\b.*\b(dm-[0-9]{1,2}\d?)\b``

@@ -18,7 +18,7 @@
      - Description
    * - **[federation]**
      -
-   * - ``assertion_prefix`` = `` ``
+   * - ``assertion_prefix`` =
      - (StrOpt) Value to be used when filtering assertion parameters from the environment.
    * - ``driver`` = ``sql``
      - (StrOpt) Entrypoint for the federation backend driver in the keystone.federation namespace.

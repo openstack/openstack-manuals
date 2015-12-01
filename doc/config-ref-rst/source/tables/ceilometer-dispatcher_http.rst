@@ -22,7 +22,7 @@
      - (BoolOpt) The flag that indicates if only cadf message should be posted. If false, all meters will be posted. This is deprecated in favor of keystonemiddleware's audit middleware functionality
    * - ``event_target`` = ``None``
      - (StrOpt) The target for event data where the http request will be sent to. If this is not set, it will default to same as Sample target.
-   * - ``target`` = `` ``
+   * - ``target`` =
      - (StrOpt) The target where the http request will be sent. If this is not set, no data will be posted. For example: target = http://hostname:1234/path
    * - ``timeout`` = ``5``
      - (IntOpt) The max time in seconds to wait for a request to timeout.

@@ -30,7 +30,7 @@
      - (StrOpt) Default scheduler driver to use
    * - ``scheduler_host_manager`` = ``cinder.scheduler.host_manager.HostManager``
      - (StrOpt) The scheduler host manager class to use
-   * - ``scheduler_json_config_location`` = `` ``
+   * - ``scheduler_json_config_location`` =
      - (StrOpt) Absolute path to scheduler configuration JSON file.
    * - ``scheduler_manager`` = ``cinder.scheduler.manager.SchedulerManager``
      - (StrOpt) Full class name for the Manager for scheduler

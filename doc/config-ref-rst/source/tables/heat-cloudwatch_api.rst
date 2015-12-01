@@ -20,7 +20,7 @@
      -
    * - ``enable_cloud_watch_lite`` = ``False``
      - (BoolOpt) Enable the legacy OS::Heat::CWLiteAlarm resource.
-   * - ``heat_watch_server_url`` = `` ``
+   * - ``heat_watch_server_url`` =
      - (StrOpt) URL of the Heat CloudWatch server.
    * - **[heat_api_cloudwatch]**
      -

@@ -32,7 +32,7 @@
      - (StrOpt) Ironic conductor node's "NFS" or "CIFS" root path
    * - ``remote_image_share_type`` = ``CIFS``
      - (StrOpt) Share type of virtual media, either "NFS" or "CIFS"
-   * - ``remote_image_user_domain`` = `` ``
+   * - ``remote_image_user_domain`` =
      - (StrOpt) Domain name of remote_image_user_name
    * - ``remote_image_user_name`` = ``None``
      - (StrOpt) User name of remote_image_server

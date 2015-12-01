@@ -40,7 +40,7 @@
      - (StrOpt) Fully qualified class name to use as a keystone backend.
    * - ``memcached_servers`` = ``None``
      - (ListOpt) Memcached servers or None for in process cache.
-   * - ``password`` = `` ``
+   * - ``password`` =
      - (StrOpt) Password for Redis server (optional).
    * - ``periodic_interval`` = ``60``
      - (IntOpt) Seconds between running periodic tasks.
@@ -76,7 +76,7 @@
      - (ListOpt) Memcache servers in the format of "host:port". (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
    * - ``memcache_socket_timeout`` = ``3``
      - (IntOpt) Timeout in seconds for every call to a server. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
-   * - ``proxies`` = `` ``
+   * - ``proxies`` =
      - (ListOpt) Proxy classes to import that will affect the way the dogpile.cache backend functions. See the dogpile.cache documentation on changing-backend-behavior.
    * - **[constraint_validation_cache]**
      -

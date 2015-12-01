@@ -24,7 +24,7 @@
      - (StrOpt) Pool or Vdisk name to use for volume creation.
    * - ``lenovo_backend_type`` = ``virtual``
      - (StrOpt) linear (for VDisk) or virtual (for Pool).
-   * - ``lenovo_iscsi_ips`` = `` ``
+   * - ``lenovo_iscsi_ips`` =
      - (ListOpt) List of comma-separated target iSCSI IP addresses.
    * - ``lenovo_verify_certificate`` = ``False``
      - (BoolOpt) Whether to verify Lenovo array SSL certificate.

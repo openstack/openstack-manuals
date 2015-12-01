@@ -22,7 +22,7 @@
      - (FloatOpt) Enables dynamic memory allocation (ballooning) when set to a value greater than 1. The value expresses the ratio between the total RAM assigned to an instance and its startup RAM amount. For example a ratio of 2.0 for an instance with 1024MB of RAM implies 512MB of RAM allocated at startup
    * - ``enable_instance_metrics_collection`` = ``False``
      - (BoolOpt) Enables metrics collections for an instance by using Hyper-V's metric APIs. Collected data can by retrieved by other apps and services, e.g.: Ceilometer. Requires Hyper-V / Windows Server 2012 and above
-   * - ``instances_path_share`` = `` ``
+   * - ``instances_path_share`` =
      - (StrOpt) The name of a Windows share name mapped to the "instances_path" dir and used by the resize feature to copy files to the target host. If left blank, an administrative share will be used, looking for the same "instances_path" used locally
    * - ``limit_cpu_features`` = ``False``
      - (BoolOpt) Required for live migration among hosts with different CPU features

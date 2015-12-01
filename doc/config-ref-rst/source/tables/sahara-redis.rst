@@ -20,7 +20,7 @@
      -
    * - ``host`` = ``127.0.0.1``
      - (StrOpt) Host to locate redis.
-   * - ``password`` = `` ``
+   * - ``password`` =
      - (StrOpt) Password for Redis server (optional).
    * - ``port`` = ``6379``
      - (IntOpt) Use this port to connect to redis host.
@@ -28,7 +28,7 @@
      -
    * - ``host`` = ``127.0.0.1``
      - (StrOpt) Host to locate redis.
-   * - ``password`` = `` ``
+   * - ``password`` =
      - (StrOpt) Password for Redis server (optional).
    * - ``port`` = ``6379``
      - (IntOpt) Use this port to connect to redis host.

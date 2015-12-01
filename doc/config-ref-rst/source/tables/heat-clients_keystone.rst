@@ -18,7 +18,7 @@
      - Description
    * - **[clients_keystone]**
      -
-   * - ``auth_uri`` = `` ``
+   * - ``auth_uri`` =
      - (StrOpt) Unversioned keystone url in format like http://0.0.0.0:5000.
    * - ``ca_file`` = ``None``
      - (StrOpt) Optional CA cert file to use in SSL connections.

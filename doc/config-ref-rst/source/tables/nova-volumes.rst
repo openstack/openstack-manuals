@@ -72,7 +72,7 @@
      - (IntOpt) Number of times to rescan iSCSI target to find volume
    * - ``num_iser_scan_tries`` = ``5``
      - (IntOpt) Number of times to rescan iSER target to find volume
-   * - ``qemu_allowed_storage_drivers`` = `` ``
+   * - ``qemu_allowed_storage_drivers`` =
      - (ListOpt) Protocols listed here will be accessed directly from QEMU. Currently supported protocols: [gluster]
    * - ``rbd_secret_uuid`` = ``None``
      - (StrOpt) The libvirt UUID of the secret for the rbd_uservolumes
@@ -82,7 +82,7 @@
      - (StrOpt) Path or URL to Scality SOFS configuration file
    * - ``scality_sofs_mount_point`` = ``$state_path/scality``
      - (StrOpt) Base dir where Scality SOFS shall be mounted
-   * - ``smbfs_mount_options`` = `` ``
+   * - ``smbfs_mount_options`` =
      - (StrOpt) Mount options passed to the SMBFS client. See mount.cifs man page for details. Note that the libvirt-qemu uid and gid must be specified.
    * - ``smbfs_mount_point_base`` = ``$state_path/mnt``
      - (StrOpt) Directory where the SMBFS shares are mounted on the compute node

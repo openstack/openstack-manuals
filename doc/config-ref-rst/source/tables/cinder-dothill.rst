@@ -24,7 +24,7 @@
      - (StrOpt) Pool or Vdisk name to use for volume creation.
    * - ``dothill_backend_type`` = ``virtual``
      - (StrOpt) linear (for Vdisk) or virtual (for Pool).
-   * - ``dothill_iscsi_ips`` = `` ``
+   * - ``dothill_iscsi_ips`` =
      - (ListOpt) List of comma-separated target iSCSI IP addresses.
    * - ``dothill_verify_certificate`` = ``False``
      - (BoolOpt) Whether to verify DotHill array SSL certificate.

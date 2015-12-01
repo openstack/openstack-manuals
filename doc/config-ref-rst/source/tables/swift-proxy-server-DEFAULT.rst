@@ -10,7 +10,7 @@
    * - Configuration option = Default value
      - Description
    * - ``admin_key`` = ``secret_admin_key``
-     - to use for admin calls that are HMAC signed. Default is empty, which will disable admin calls to /info. the proxy server. For most cases, this should be `egg:swift#proxy`. request whenever it has to failover to a handoff node
+     - to use for admin calls that are HMAC signed. Default is empty, which will disable admin calls to /info. the proxy server. For most cases, this should be
    * - ``backlog`` = ``4096``
      - Maximum number of allowed pending TCP connections
    * - ``bind_ip`` = ``0.0.0.0``
@@ -24,7 +24,7 @@
    * - ``client_timeout`` = ``60``
      - Timeout to read one chunk from a client external services
    * - ``cors_allow_origin`` = `` ``
-     - is a list of hosts that are included with any CORS request by default and returned with the Access-Control-Allow-Origin header in addition to what the container has set. to call to setup custom log handlers. for eventlet the proxy server. For most cases, this should be `egg:swift#proxy`. request whenever it has to failover to a handoff node
+     - is a list of hosts that are included with any CORS request by default and returned with the Access-Control-Allow-Origin header in addition to what the container has set. to call to setup custom log handlers. for eventlet the proxy server. For most cases, this should be
    * - ``disallowed_sections`` = ``swift.valid_api_versions, container_quotas, tempurl``
      - No help text available for this option.
    * - ``eventlet_debug`` = ``false``

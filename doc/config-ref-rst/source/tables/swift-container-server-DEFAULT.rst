@@ -20,7 +20,7 @@
    * - ``bind_timeout`` = ``30``
      - Seconds to attempt bind before giving up
    * - ``db_preallocation`` = ``off``
-     - If you don't mind the extra disk space usage in overhead, you can turn this on to preallocate disk space with SQLite databases to decrease fragmentation. underlying filesystem does not support it. to setup custom log handlers. bytes you'd like fallocate to reserve, whether there is space for the given file size or not. This is useful for systems that behave badly when they completely run out of space; you can make the services pretend they're out of space early. server. For most cases, this should be `egg:swift#account`. replication passes account can be reclaimed
+     - If you don't mind the extra disk space usage in overhead, you can turn this on to preallocate disk space with SQLite databases to decrease fragmentation. underlying filesystem does not support it. to setup custom log handlers. bytes you'd like fallocate to reserve, whether there is space for the given file size or not. This is useful for systems that behave badly when they completely run out of space; you can make the services pretend they're out of space early. server. For most cases, this should be
    * - ``devices`` = ``/srv/node``
      - Parent directory of where devices are mounted
    * - ``disable_fallocate`` = ``false``
@@ -28,7 +28,7 @@
    * - ``eventlet_debug`` = ``false``
      - If true, turn on debug logging for eventlet
    * - ``fallocate_reserve`` = ``0``
-     - You can set fallocate_reserve to the number of bytes you'd like fallocate to reserve, whether there is space for the given file size or not. This is useful for systems that behave badly when they completely run out of space; you can make the services pretend they're out of space early. server. For most cases, this should be `egg:swift#object`.
+     - You can set fallocate_reserve to the number of bytes you'd like fallocate to reserve, whether there is space for the given file size or not. This is useful for systems that behave badly when they completely run out of space; you can make the services pretend they're out of space early. server. For most cases, this should be
    * - ``log_address`` = ``/dev/log``
      - Location where syslog sends the logs to
    * - ``log_custom_handlers`` = `` ``

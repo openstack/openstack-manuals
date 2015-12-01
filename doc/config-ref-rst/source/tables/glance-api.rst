@@ -22,7 +22,7 @@
      - (StrOpt) Role used to identify an authenticated user as administrator.
    * - ``allow_anonymous_access`` = ``False``
      - (BoolOpt) Allow unauthenticated users to access the API with read-only privileges. This only applies when using ContextMiddleware.
-   * - ``available_plugins`` = `` ``
+   * - ``available_plugins`` =
      - (ListOpt) A list of artifacts that are allowed in the format name or name-version. Empty list means that any artifact can be loaded.
    * - ``client_socket_timeout`` = ``900``
      - (IntOpt) Timeout for client connections' socket operations. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.
@@ -82,5 +82,5 @@
      - (StrOpt) Partial name of a pipeline in your paste configuration file with the service name removed. For example, if your paste section name is [pipeline:glance-api-keystone] use the value "keystone"
    * - **[store_type_location_strategy]**
      -
-   * - ``store_type_preference`` = `` ``
+   * - ``store_type_preference`` =
      - (ListOpt) The store names to use to get store preference order. The name must be registered by one of the stores defined by the 'stores' config option. This option will be applied when you using 'store_type' option as image location strategy defined by the 'location_strategy' config option.

@@ -18,5 +18,5 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``heat_metadata_server_url`` = `` ``
+   * - ``heat_metadata_server_url`` =
      - (StrOpt) URL of the Heat metadata server.

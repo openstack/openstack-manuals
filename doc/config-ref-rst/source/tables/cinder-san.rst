@@ -18,17 +18,17 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``san_clustername`` = `` ``
+   * - ``san_clustername`` =
      - (StrOpt) Cluster name to use for creating volumes
-   * - ``san_ip`` = `` ``
+   * - ``san_ip`` =
      - (StrOpt) IP address of SAN controller
    * - ``san_is_local`` = ``False``
      - (BoolOpt) Execute commands locally instead of over SSH; use if the volume service is running on the SAN device
    * - ``san_login`` = ``admin``
      - (StrOpt) Username for SAN controller
-   * - ``san_password`` = `` ``
+   * - ``san_password`` =
      - (StrOpt) Password for SAN controller
-   * - ``san_private_key`` = `` ``
+   * - ``san_private_key`` =
      - (StrOpt) Filename of private key to use for SSH authentication
    * - ``san_secondary_ip`` = ``None``
      - (StrOpt) VNX secondary SP IP Address.

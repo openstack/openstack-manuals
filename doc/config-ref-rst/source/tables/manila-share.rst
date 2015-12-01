@@ -40,7 +40,7 @@
      - (ListOpt) Specify list of protocols to be allowed for share creation. Available values are '('NFS', 'CIFS', 'GLUSTERFS', 'HDFS')'
    * - ``executor_thread_pool_size`` = ``64``
      - (IntOpt) Size of executor thread pool.
-   * - ``hook_drivers`` = `` ``
+   * - ``hook_drivers`` =
      - (ListOpt) Driver(s) to perform some additional actions before and after share driver actions and on a periodic basis. Default is [].
    * - ``migration_create_delete_share_timeout`` = ``300``
      - (IntOpt) Timeout for creating and deleting share instances when performing share migration (seconds).

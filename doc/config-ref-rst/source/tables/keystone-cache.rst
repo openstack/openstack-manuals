@@ -42,7 +42,7 @@
      - (ListOpt) Memcache servers in the format of "host:port". (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
    * - ``memcache_socket_timeout`` = ``3``
      - (IntOpt) Timeout in seconds for every call to a server. (dogpile.cache.memcache and oslo_cache.memcache_pool backends only).
-   * - ``proxies`` = `` ``
+   * - ``proxies`` =
      - (ListOpt) Proxy classes to import that will affect the way the dogpile.cache backend functions. See the dogpile.cache documentation on changing-backend-behavior.
    * - **[memcache]**
      -

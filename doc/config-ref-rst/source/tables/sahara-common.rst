@@ -54,7 +54,7 @@
      - (IntOpt) Maximum length of job binary data in kilobytes that may be stored or retrieved in a single operation.
    * - ``job_canceling_timeout`` = ``300``
      - (IntOpt) Timeout for canceling job execution (in seconds). Sahara will try to cancel job execution during this time.
-   * - ``job_workflow_postfix`` = `` ``
+   * - ``job_workflow_postfix`` =
      - (StrOpt) Postfix for storing jobs in hdfs. Will be added to '/user/<hdfs user>/' path.
    * - ``memcached_servers`` = ``None``
      - (ListOpt) Memcached servers or None for in process cache.
@@ -72,7 +72,7 @@
      - (IntOpt) Max interval size between periodic tasks execution in seconds.
    * - ``plugins`` = ``vanilla, hdp, spark, cdh``
      - (ListOpt) List of plugins to be loaded. Sahara preserves the order of the list when returning it.
-   * - ``proxy_command`` = `` ``
+   * - ``proxy_command`` =
      - (StrOpt) Proxy command used to connect to instances. If set, this command should open a netcat socket, that Sahara will use for SSH and HTTP connections. Use {host} and {port} to describe the destination. Other available keywords: {tenant_id}, {network_id}, {router_id}.
    * - ``remote`` = ``ssh``
      - (StrOpt) A method for Sahara to execute commands on VMs.

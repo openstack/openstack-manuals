@@ -34,7 +34,7 @@
      - (PortOpt) The port that the iSCSI daemon is listening on
    * - ``iscsi_protocol`` = ``iscsi``
      - (StrOpt) Determines the iSCSI protocol for new iSCSI volumes, created with tgtadm or lioadm target helpers. In order to enable RDMA, this parameter should be set with the value "iser". The supported iSCSI protocol values are "iscsi" and "iser".
-   * - ``iscsi_target_flags`` = `` ``
+   * - ``iscsi_target_flags`` =
      - (StrOpt) Sets the target-specific flags for the iSCSI target. Only used for tgtadm to specify backing device flags using bsoflags option. The specified string is passed as is to the underlying tool.
    * - ``iscsi_target_prefix`` = ``iqn.2010-10.org.openstack:``
      - (StrOpt) Prefix for iSCSI volumes

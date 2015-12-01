@@ -52,7 +52,7 @@
    * - ``recoverable_node_timeout`` = ``node_timeout``
      - Request timeout to external services for requests that, on failure, can be recovered from. For example, object GET. from a client external services
    * - ``request_node_count`` = ``2 * replicas``
-     - * replicas Set to the number of nodes to contact for a normal request. You can use '* replicas' at the end to have it use the number given times the number of replicas for the ring being used for the request. conf file for values will only be shown to the list of swift_owners. The exact default definition of a swift_owner is headers> up to the auth system in use, but usually indicates administrative responsibilities. paste.deploy to use for auth. To use tempauth set to: `egg:swift#tempauth` each request
+     - replicas Set to the number of nodes to contact for a normal request. You can use '* replicas' at the end to have it use the number given times the number of replicas for the ring being used for the request. conf file for values will only be shown to the list of swift_owners. The exact default definition of a swift_owner is headers> up to the auth system in use, but usually indicates administrative responsibilities. paste.deploy to use for auth. To use tempauth set to:
    * - ``set log_address`` = ``/dev/log``
      - Location where syslog sends the logs to
    * - ``set log_facility`` = ``LOG_LOCAL0``
@@ -64,7 +64,7 @@
    * - ``sorting_method`` = ``shuffle``
      - No help text available for this option.
    * - ``swift_owner_headers`` = ``x-container-read, x-container-write, x-container-sync-key, x-container-sync-to, x-account-meta-temp-url-key, x-account-meta-temp-url-key-2, x-container-meta-temp-url-key, x-container-meta-temp-url-key-2, x-account-access-control``
-     - These are the headers whose conf file for values will only be shown to the list of swift_owners. The exact default definition of a swift_owner is headers> up to the auth system in use, but usually indicates administrative responsibilities. paste.deploy to use for auth. To use tempauth set to: `egg:swift#tempauth` each request
+     - These are the headers whose conf file for values will only be shown to the list of swift_owners. The exact default definition of a swift_owner is headers> up to the auth system in use, but usually indicates administrative responsibilities. paste.deploy to use for auth. To use tempauth set to:
    * - ``timing_expiry`` = ``300``
      - No help text available for this option.
    * - ``use`` = ``egg:swift#proxy``

@@ -12,7 +12,7 @@
    * - ``allow_overrides`` = ``true``
      - This option allows middleware higher in the WSGI pipeline to override auth processing, useful for middleware such as tempurl and formpost. If you know you are not going to use such middleware and you want a bit of extra security, you can set this to False.
    * - ``auth_prefix`` = ``/auth/``
-     - The HTTP request path prefix for the auth service. Swift itself reserves anything beginning with the letter `v`.
+     - The HTTP request path prefix for the auth service. Swift itself reserves anything beginning with the letter
    * - ``require_group`` = `` ``
      - No help text available for this option.
    * - ``reseller_prefix`` = ``AUTH``

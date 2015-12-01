@@ -26,7 +26,7 @@
      - (StrOpt) This option is deprecated and may be removed in a future release. Single shared secret with the Keystone configuration used for bootstrapping a Keystone installation, or otherwise bypassing the normal authentication process. This option should not be used, use `admin_user` and `admin_password` instead.
    * - ``admin_user`` = ``None``
      - (StrOpt) Service username.
-   * - ``auth_admin_prefix`` = `` ``
+   * - ``auth_admin_prefix`` =
      - (StrOpt) Prefix to prepend at the beginning of the path. Deprecated, use identity_uri.
    * - ``auth_host`` = ``127.0.0.1``
      - (StrOpt) Host providing the admin Identity API endpoint. Deprecated, use identity_uri.

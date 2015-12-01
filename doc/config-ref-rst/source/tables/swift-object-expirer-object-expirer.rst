@@ -20,7 +20,7 @@
    * - ``process`` = ``0``
      - (it will actually accept(2) N + 1). Setting this to one (1) will only handle one request at a time, without accepting another request concurrently.
    * - ``processes`` = ``0``
-     - for each port (disk) in the ring. If you have 24 disks per server, and this setting is 4, then each storage node will have 1 + (24 * 4) = 97 total object-server processes running. This gives complete I/O isolation, drastically reducing the impact of slow disks on storage node performance. The object-replicator and object-reconstructor need to see this setting too, so it must be in the [DEFAULT] section. See :ref:`server-per-port-configuration`.
+     - for each port (disk) in the ring. If you have 24 disks per server, and this setting is 4, then each storage node will have 1 + (24 * 4) = 97 total object-server processes running. This gives complete I/O isolation, drastically reducing the impact of slow disks on storage node performance. The object-replicator and object-reconstructor need to see this setting too, so it must be in the [DEFAULT] section. See
    * - ``reclaim_age`` = ``604800``
      - Time elapsed in seconds before an object can be reclaimed
    * - ``recon_cache_path`` = ``/var/cache/swift``

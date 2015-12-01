@@ -22,7 +22,7 @@
    * - ``conn_timeout`` = ``0.5``
      - Connection timeout to external services
    * - ``container_update_timeout`` = ``1.0``
-     - Time to wait while sending a container update on object update. object server. For most cases, this should be `egg:swift#object`. request
+     - Time to wait while sending a container update on object update. object server. For most cases, this should be
    * - ``devices`` = ``/srv/node``
      - Parent directory of where devices are mounted
    * - ``disable_fallocate`` = ``false``
@@ -36,7 +36,7 @@
    * - ``expiring_objects_container_divisor`` = ``86400``
      - No help text available for this option.
    * - ``fallocate_reserve`` = ``0``
-     - You can set fallocate_reserve to the number of bytes you'd like fallocate to reserve, whether there is space for the given file size or not. This is useful for systems that behave badly when they completely run out of space; you can make the services pretend they're out of space early. server. For most cases, this should be `egg:swift#object`.
+     - You can set fallocate_reserve to the number of bytes you'd like fallocate to reserve, whether there is space for the given file size or not. This is useful for systems that behave badly when they completely run out of space; you can make the services pretend they're out of space early. server. For most cases, this should be
    * - ``log_address`` = ``/dev/log``
      - Location where syslog sends the logs to
    * - ``log_custom_handlers`` = `` ``

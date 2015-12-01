@@ -50,27 +50,27 @@
      - (StrOpt) address prefix when sending to any server in group
    * - ``idle_timeout`` = ``0``
      - (IntOpt) Timeout for inactive connections (in seconds)
-   * - ``password`` = `` ``
+   * - ``password`` =
      - (StrOpt) Password for message broker authentication
-   * - ``sasl_config_dir`` = `` ``
+   * - ``sasl_config_dir`` =
      - (StrOpt) Path to directory that contains the SASL configuration
-   * - ``sasl_config_name`` = `` ``
+   * - ``sasl_config_name`` =
      - (StrOpt) Name of configuration file (without .conf suffix)
-   * - ``sasl_mechanisms`` = `` ``
+   * - ``sasl_mechanisms`` =
      - (StrOpt) Space separated list of acceptable SASL mechanisms
    * - ``server_request_prefix`` = ``exclusive``
      - (StrOpt) address prefix used when sending to a specific server
-   * - ``ssl_ca_file`` = `` ``
+   * - ``ssl_ca_file`` =
      - (StrOpt) CA certificate PEM file to verify server certificate
-   * - ``ssl_cert_file`` = `` ``
+   * - ``ssl_cert_file`` =
      - (StrOpt) Identifying certificate PEM file to present to clients
-   * - ``ssl_key_file`` = `` ``
+   * - ``ssl_key_file`` =
      - (StrOpt) Private key PEM file used to sign cert_file certificate
    * - ``ssl_key_password`` = ``None``
      - (StrOpt) Password for decrypting ssl_key_file (if encrypted)
    * - ``trace`` = ``False``
      - (BoolOpt) Debug: dump AMQP frames to stdout
-   * - ``username`` = `` ``
+   * - ``username`` =
      - (StrOpt) User name for message broker authentication
    * - **[upgrade_levels]**
      -

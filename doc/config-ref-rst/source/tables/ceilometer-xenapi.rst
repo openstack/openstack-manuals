@@ -24,5 +24,3 @@
      - (StrOpt) URL for connection to XenServer/Xen Cloud Platform.
    * - ``connection_username`` = ``root``
      - (StrOpt) Username for connection to XenServer/Xen Cloud Platform.
-   * - ``login_timeout`` = ``10``
-     - (IntOpt) Timeout in seconds for XenAPI login.

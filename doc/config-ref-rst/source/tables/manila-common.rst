@@ -32,7 +32,7 @@
      - (ListOpt) Memcached servers or None for in process cache.
    * - ``monkey_patch`` = ``False``
      - (BoolOpt) Whether to log monkey patching.
-   * - ``monkey_patch_modules`` = `` ``
+   * - ``monkey_patch_modules`` =
      - (ListOpt) List of modules or decorators to monkey patch.
    * - ``my_ip`` = ``10.0.0.1``
      - (StrOpt) IP address of this host.
