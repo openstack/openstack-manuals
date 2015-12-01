@@ -24,14 +24,19 @@ utility.
    warning can be ignored.
 
 For best performance, we recommend that your environment meets or exceeds
-the hardware requirements in :ref:`figure-hwreqs`. However, OpenStack does
-not require a significant amount of resources and the following minimum
-requirements should support a proof-of-concept environment with core services
-and several :term:`CirrOS` instances:
+the hardware requirements in :ref:`figure-hwreqs`.
 
-*  Controller Node: 1 processor, 2 GB memory, and 5 GB storage
+The following minimum requirements should support a proof-of-concept
+environment with core services and several :term:`CirrOS` instances:
+
+*  Controller Node: 1 processor, 4 GB memory, and 5 GB storage
 
 *  Compute Node: 1 processor, 2 GB memory, and 10 GB storage
+
+As the number of OpenStack services and virtual machines increases, so do the
+hardware requirements for best performance. If performance degrades after
+enabling additional services or virtual machines, consider adding hardware
+resources to your environment.
 
 To minimize clutter and provide more resources for OpenStack, we recommend
 a minimal installation of your Linux distribution. Also, you must install a
