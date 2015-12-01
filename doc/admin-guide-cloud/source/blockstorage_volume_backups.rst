@@ -146,3 +146,13 @@ will be stored in multiple files in the backup repository. The
 ``backup_sha_block_size_bytes`` option determines the size of blocks from the
 cinder volume being backed up on which digital signatures are calculated in
 order to enable incremental backup capability.
+
+You also have the option of resetting the state of a backup. When creating or
+restoring a backup, sometimes it may get stuck in the creating or restoring
+states due to problems like the database or rabbitmq being down. In situations
+like these resetting the state of the backup can restore it to a functional
+status.
+
+Run this command to restore the state of a backup::
+
+   $ cinder backup-reset-state [--state STATE] BACKUP_ID-1 BACKUP_ID-2 ...
