@@ -15,7 +15,7 @@ unlike other services, the Telemetry service uses a NoSQL database.
 See :ref:`environment-nosql-database` to install and configure
 MongoDB before proceeding further.
 
-.. only:: obs or ubuntu
+.. only:: obs or ubuntu or debian
 
    1. Create the ``ceilometer`` database:
 
@@ -110,7 +110,7 @@ MongoDB before proceeding further.
         | type        | metering                         |
         +-------------+----------------------------------+
 
-6. Create the Telemetry service API endpoints:
+4. Create the Telemetry service API endpoints:
 
    .. code-block:: console
 
@@ -189,7 +189,7 @@ Install and configure components
            openstack-ceilometer-central openstack-ceilometer-alarm \
            python-ceilometerclient
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    #. Install the packages:
 
@@ -199,6 +199,13 @@ Install and configure components
            ceilometer-agent-central ceilometer-agent-notification \
            ceilometer-alarm-evaluator ceilometer-alarm-notifier \
            python-ceilometerclient
+
+      .. only:: debian
+
+         Respond to prompts for
+         :doc:`Identity service credentials <debconf/debconf-keystone-authtoken>`,
+         :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
+         and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
 
 2. Edit the ``/etc/ceilometer/ceilometer.conf`` file and complete
    the following actions:
@@ -216,46 +223,48 @@ Install and configure components
      as ':', '/', '+', and '@' in the connection string in accordance
      with RFC2396.
 
-   * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
-     configure ``RabbitMQ`` message queue access:
+   .. only:: obs or rdo or ubuntu
 
-     .. code-block:: ini
+      * In the ``[DEFAULT]`` and ``[oslo_messaging_rabbit]`` sections,
+        configure ``RabbitMQ`` message queue access:
 
-        [DEFAULT]
-        ...
-        rpc_backend = rabbit
+        .. code-block:: ini
 
-        [oslo_messaging_rabbit]
-        ...
-        rabbit_host = controller
-        rabbit_userid = openstack
-        rabbit_password = RABBIT_PASS
+           [DEFAULT]
+           ...
+           rpc_backend = rabbit
 
-     Replace ``RABBIT_PASS`` with the password you chose for the
-     ``openstack`` account in ``RabbitMQ``.
+           [oslo_messaging_rabbit]
+           ...
+           rabbit_host = controller
+           rabbit_userid = openstack
+           rabbit_password = RABBIT_PASS
 
-   * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
-     configure Identity service access:
+        Replace ``RABBIT_PASS`` with the password you chose for the
+        ``openstack`` account in ``RabbitMQ``.
 
-     .. code-block:: ini
+      * In the ``[DEFAULT]`` and ``[keystone_authtoken]`` sections,
+        configure Identity service access:
 
-        [DEFAULT]
-        ...
-        auth_strategy = keystone
+        .. code-block:: ini
 
-        [keystone_authtoken]
-        ...
-        auth_uri = http://controller:5000
-        auth_url = http://controller:35357
-        auth_plugin = password
-        project_domain_id = default
-        user_domain_id = default
-        project_name = service
-        username = ceilometer
-        password = CEILOMETER_PASS
+           [DEFAULT]
+           ...
+           auth_strategy = keystone
 
-     Replace ``CEILOMETER_PASS`` with the password you chose for
-     the ``ceilometer`` user in the Identity service.
+           [keystone_authtoken]
+           ...
+           auth_uri = http://controller:5000
+           auth_url = http://controller:35357
+           auth_plugin = password
+           project_domain_id = default
+           user_domain_id = default
+           project_name = service
+           username = ceilometer
+           password = CEILOMETER_PASS
+
+        Replace ``CEILOMETER_PASS`` with the password you chose for
+        the ``ceilometer`` user in the Identity service.
 
    * In the ``[service_credentials]`` section, configure service credentials:
 
@@ -335,7 +344,7 @@ Finalize installation
           openstack-ceilometer-alarm-evaluator.service \
           openstack-ceilometer-alarm-notifier.service
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    * Restart the Telemetry services:
 
