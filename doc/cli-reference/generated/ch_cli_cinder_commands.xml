@@ -9,13 +9,13 @@
 
     <?dbhtml stop-chunking?>
 
-    <title>Block Storage command-line client</title>
+    <title>Block Storage service command-line client</title>
 
     <para>The <command>cinder</command> client is the command-line
-        interface (CLI) for the OpenStack Block Storage API and its extensions.
+        interface (CLI) for the Block Storage service API and its extensions.
 
        This chapter documents <command>cinder</command> version
-        <literal>1.4.0</literal>.
+        <literal>1.5.0</literal>.
     </para>
 
     <para>For help on a specific <command>cinder</command>
@@ -28,8 +28,8 @@
         <screen><computeroutput>usage: cinder [--version] [-d] [--os-auth-system &lt;auth-system&gt;]
               [--service-type &lt;service-type&gt;] [--service-name &lt;service-name&gt;]
               [--volume-service-name &lt;volume-service-name&gt;]
-              [--endpoint-type &lt;endpoint-type&gt;]
               [--os-endpoint-type &lt;os-endpoint-type&gt;]
+              [--endpoint-type &lt;endpoint-type&gt;]
               [--os-volume-api-version &lt;volume-api-ver&gt;]
               [--bypass-url &lt;bypass-url&gt;] [--retries &lt;retries&gt;]
               [--os-auth-strategy &lt;auth-strategy&gt;]
@@ -102,6 +102,14 @@
     <listitem>
       <para>
         Lists all backups.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>backup-reset-state</command></term>
+    <listitem>
+      <para>
+        Explicitly updates the backup state.
       </para>
     </listitem>
   </varlistentry>
@@ -327,6 +335,14 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>image-metadata-show</command></term>
+    <listitem>
+      <para>
+      Shows volume image metadata.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>list</command></term>
     <listitem>
       <para>
@@ -523,6 +539,38 @@
     <listitem>
       <para>
         Renames a volume.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>replication-disable</command></term>
+    <listitem>
+      <para>
+      Disables volume replication on a given volume.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>replication-enable</command></term>
+    <listitem>
+      <para>
+        Enables volume replication on a given volume.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>replication-failover</command></term>
+    <listitem>
+      <para>
+      Failover a volume to a secondary target
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>replication-list-targets</command></term>
+    <listitem>
+      <para>
+      List replication targets available for a volume.
       </para>
     </listitem>
   </varlistentry>
@@ -779,10 +827,19 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>type-show</command></term>
+    <listitem>
+      <para>
+        Show volume type details.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>type-update</command></term>
     <listitem>
       <para>
-        Updates volume type name and/or description.
+        Updates volume type name ,description and/or
+      is_public.
       </para>
     </listitem>
   </varlistentry>
@@ -882,20 +939,20 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--endpoint-type &lt;endpoint-type&gt;</command></term>
-    <listitem>
-      <para>
-      <emphasis>DEPRECATED!</emphasis> Use --os-endpoint-type.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--os-endpoint-type &lt;os-endpoint-type&gt;</command></term>
     <listitem>
       <para>
       Endpoint type, which is publicURL or internalURL.
       Default=<code>env[OS_ENDPOINT_TYPE]</code> or nova
       <code>env[CINDER_ENDPOINT_TYPE]</code> or publicURL.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--endpoint-type &lt;endpoint-type&gt;</command></term>
+    <listitem>
+      <para>
+      <emphasis>DEPRECATED!</emphasis> Use --os-endpoint-type.
       </para>
     </listitem>
   </varlistentry>
@@ -913,7 +970,7 @@
     <listitem>
       <para>
       Use this API endpoint instead of the Service Catalog.
-      Defaults to <code>env[CINDERCLIENT_BYPASS_URL]</code>
+      Defaults to <code>env[CINDERCLIENT_BYPASS_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -931,7 +988,7 @@
       <para>
       Authentication strategy (Env: OS_AUTH_STRATEGY,
       default keystone). For now, any other value will
-      disable the authentication
+      disable the authentication.
       </para>
     </listitem>
   </varlistentry>
@@ -980,7 +1037,7 @@
     <term><command>--os-user-id &lt;auth-user-id&gt;</command></term>
     <listitem>
       <para>
-      Authentication user ID (Env: OS_USER_ID)
+      Authentication user ID (Env: OS_USER_ID).
       </para>
     </listitem>
   </varlistentry>
@@ -1050,7 +1107,7 @@
     <term><command>--os-token &lt;token&gt;</command></term>
     <listitem>
       <para>
-        Defaults to <code>env[OS_TOKEN]</code>
+        Defaults to <code>env[OS_TOKEN]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -1058,7 +1115,7 @@
     <term><command>--os-url &lt;url&gt;</command></term>
     <listitem>
       <para>
-        Defaults to <code>env[OS_URL]</code>
+        Defaults to <code>env[OS_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -1255,7 +1312,9 @@ Import backup metadata record.
     <section xml:id="cinderclient_subcommand_backup-list">
         <title>cinder backup-list</title>
         <screen><computeroutput>usage: cinder backup-list [--all-tenants [&lt;all_tenants&gt;]] [--name &lt;name&gt;]
-                          [--status &lt;status&gt;] [--volume-id &lt;volume-id&gt;]</computeroutput></screen>
+                          [--status &lt;status&gt;] [--volume-id &lt;volume-id&gt;]
+                          [--marker &lt;marker&gt;] [--limit &lt;limit&gt;]
+                          [--sort &lt;key&gt;[:&lt;direction&gt;]]</computeroutput></screen>
         <para>
 Lists all backups.
         </para>  <variablelist wordsize="10">
@@ -1289,6 +1348,65 @@ Lists all backups.
     <listitem>
       <para>
       Filters results by a volume ID. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker &lt;marker&gt;</command></term>
+    <listitem>
+      <para>
+        Begin returning backups that appear later in the
+      backup list than that represented by this id.
+      Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of backups to return. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort &lt;key&gt;[:&lt;direction&gt;]</command></term>
+    <listitem>
+      <para>
+      Comma-separated list of sort keys and directions in
+      the form of &lt;key&gt;[:&lt;asc|desc&gt;]. Valid keys: id,
+      status, size, availability_zone, name, bootable,
+      created_at. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_backup-reset-state">
+        <title>cinder backup-reset-state</title>
+        <screen><computeroutput>usage: cinder backup-reset-state [--state &lt;state&gt;] &lt;backup&gt; [&lt;backup&gt; ...]</computeroutput></screen>
+        <para>
+Explicitly updates the backup state.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;backup&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the backup to modify.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--state &lt;state&gt;</command></term>
+    <listitem>
+      <para>
+        The state to assign to the backup. Valid values are
+      "available", "error", "creating", "deleting", and
+      "error_deleting". Default=available.
       </para>
     </listitem>
   </varlistentry>
@@ -1680,7 +1798,7 @@ Creates a volume.
     <term><command>&lt;size&gt;</command></term>
     <listitem>
       <para>
-        Size of volume, in GBs. (Required unless snapshot-id
+        Size of volume, in GiBs. (Required unless snapshot-id
       /source-volid is specified).
       </para>
     </listitem>
@@ -2012,7 +2130,7 @@ Attempts to extend size of an existing volume.
     <term><command>&lt;new_size&gt;</command></term>
     <listitem>
       <para>
-        New size of volume, in GBs.
+        New size of volume, in GiBs.
       </para>
     </listitem>
   </varlistentry>
@@ -2106,6 +2224,23 @@ Sets or deletes volume image metadata.
       <para>
         Metadata key and value pair to set or unset. For unset, specify
       only the key.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_image-metadata-show">
+        <title>cinder image-metadata-show</title>
+        <screen><computeroutput>usage: cinder image-metadata-show &lt;volume&gt;</computeroutput></screen>
+        <para>
+Shows volume image metadata.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume.
       </para>
     </listitem>
   </varlistentry>
@@ -2399,7 +2534,8 @@ Migrates volume to a new host.
     <term><command>&lt;host&gt;</command></term>
     <listitem>
       <para>
-        Destination host.
+        Destination host. Takes the form: host@backend-
+      name#pool
       </para>
     </listitem>
   </varlistentry>
@@ -2931,6 +3067,82 @@ Renames a volume.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="cinderclient_subcommand_replication-disable">
+        <title>cinder replication-disable</title>
+        <screen><computeroutput>usage: cinder replication-disable &lt;volume&gt;</computeroutput></screen>
+        <para>
+Disables volume replication on a given volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume to disable replication.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_replication-enable">
+        <title>cinder replication-enable</title>
+        <screen><computeroutput>usage: cinder replication-enable &lt;volume&gt;</computeroutput></screen>
+        <para>
+Enables volume replication on a given volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume to enable replication.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_replication-failover">
+        <title>cinder replication-failover</title>
+        <screen><computeroutput>usage: cinder replication-failover &lt;volume&gt; &lt;secondary&gt;</computeroutput></screen>
+        <para>
+Failover a volume to a secondary target
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume to failover.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;secondary&gt;</command></term>
+    <listitem>
+      <para>
+        A unqiue identifier that represents a failover target.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_replication-list-targets">
+        <title>cinder replication-list-targets</title>
+        <screen><computeroutput>usage: cinder replication-list-targets &lt;volume&gt;</computeroutput></screen>
+        <para>
+List replication targets available for a volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume to list available replication targets.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="cinderclient_subcommand_replication-promote">
         <title>cinder replication-promote</title>
         <screen><computeroutput>usage: cinder replication-promote &lt;volume&gt;</computeroutput></screen>
@@ -3274,7 +3486,9 @@ Removes one or more snapshots.
     <section xml:id="cinderclient_subcommand_snapshot-list">
         <title>cinder snapshot-list</title>
         <screen><computeroutput>usage: cinder snapshot-list [--all-tenants [&lt;0|1&gt;]] [--name &lt;name&gt;]
-                            [--status &lt;status&gt;] [--volume-id &lt;volume-id&gt;]</computeroutput></screen>
+                            [--status &lt;status&gt;] [--volume-id &lt;volume-id&gt;]
+                            [--marker &lt;marker&gt;] [--limit &lt;limit&gt;]
+                            [--sort &lt;key&gt;[:&lt;direction&gt;]]</computeroutput></screen>
         <para>
 Lists all snapshots.
         </para>  <variablelist wordsize="10">
@@ -3308,6 +3522,35 @@ Lists all snapshots.
     <listitem>
       <para>
       Filters results by a volume ID. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker &lt;marker&gt;</command></term>
+    <listitem>
+      <para>
+        Begin returning snapshots that appear later in the
+      snapshot list than that represented by this id.
+      Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of snapshots to return. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort &lt;key&gt;[:&lt;direction&gt;]</command></term>
+    <listitem>
+      <para>
+      Comma-separated list of sort keys and directions in
+      the form of &lt;key&gt;[:&lt;asc|desc&gt;]. Valid keys: id,
+      status, size, availability_zone, name, bootable,
+      created_at. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -3757,11 +4000,30 @@ Sets or unsets extra_spec for a volume type.
 Lists available 'volume types'. (Admin only will see private types)
         </para>
     </section>
+    <section xml:id="cinderclient_subcommand_type-show">
+        <title>cinder type-show</title>
+        <screen><computeroutput>usage: cinder type-show &lt;volume_type&gt;</computeroutput></screen>
+        <para>
+Show volume type details.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume_type&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="cinderclient_subcommand_type-update">
         <title>cinder type-update</title>
-        <screen><computeroutput>usage: cinder type-update [--name &lt;name&gt;] [--description &lt;description&gt;] &lt;id&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: cinder type-update [--name &lt;name&gt;] [--description &lt;description&gt;]
+                          [--is-public &lt;is-public&gt;]
+                          &lt;id&gt;</computeroutput></screen>
         <para>
-Updates volume type name and/or description.
+Updates volume type name ,description and/or is_public.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -3788,6 +4050,14 @@ Updates volume type name and/or description.
     <listitem>
       <para>
       Description of the volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--is-public &lt;is-public&gt;</command></term>
+    <listitem>
+      <para>
+      Make type accessible to the public or not.
       </para>
     </listitem>
   </varlistentry>
@@ -4019,7 +4289,9 @@ Import backup metadata record.
     <section xml:id="cinderclient_subcommand_backup-list_v2">
         <title>cinder backup-list (v2)</title>
         <screen><computeroutput>usage: cinder --os-volume-api-version 2 backup-list [--all-tenants [&lt;all_tenants&gt;]] [--name &lt;name&gt;]
-                          [--status &lt;status&gt;] [--volume-id &lt;volume-id&gt;]</computeroutput></screen>
+                          [--status &lt;status&gt;] [--volume-id &lt;volume-id&gt;]
+                          [--marker &lt;marker&gt;] [--limit &lt;limit&gt;]
+                          [--sort &lt;key&gt;[:&lt;direction&gt;]]</computeroutput></screen>
         <para>
 Lists all backups.
         </para>  <variablelist wordsize="10">
@@ -4053,6 +4325,65 @@ Lists all backups.
     <listitem>
       <para>
       Filters results by a volume ID. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker &lt;marker&gt;</command></term>
+    <listitem>
+      <para>
+        Begin returning backups that appear later in the
+      backup list than that represented by this id.
+      Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of backups to return. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort &lt;key&gt;[:&lt;direction&gt;]</command></term>
+    <listitem>
+      <para>
+      Comma-separated list of sort keys and directions in
+      the form of &lt;key&gt;[:&lt;asc|desc&gt;]. Valid keys: id,
+      status, size, availability_zone, name, bootable,
+      created_at. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_backup-reset-state_v2">
+        <title>cinder backup-reset-state (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 backup-reset-state [--state &lt;state&gt;] &lt;backup&gt; [&lt;backup&gt; ...]</computeroutput></screen>
+        <para>
+Explicitly updates the backup state.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;backup&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the backup to modify.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--state &lt;state&gt;</command></term>
+    <listitem>
+      <para>
+        The state to assign to the backup. Valid values are
+      "available", "error", "creating", "deleting", and
+      "error_deleting". Default=available.
       </para>
     </listitem>
   </varlistentry>
@@ -4444,7 +4775,7 @@ Creates a volume.
     <term><command>&lt;size&gt;</command></term>
     <listitem>
       <para>
-        Size of volume, in GBs. (Required unless snapshot-id
+        Size of volume, in GiBs. (Required unless snapshot-id
       /source-volid is specified).
       </para>
     </listitem>
@@ -4776,7 +5107,7 @@ Attempts to extend size of an existing volume.
     <term><command>&lt;new_size&gt;</command></term>
     <listitem>
       <para>
-        New size of volume, in GBs.
+        New size of volume, in GiBs.
       </para>
     </listitem>
   </varlistentry>
@@ -4870,6 +5201,23 @@ Sets or deletes volume image metadata.
       <para>
         Metadata key and value pair to set or unset. For unset, specify
       only the key.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_image-metadata-show_v2">
+        <title>cinder image-metadata-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 image-metadata-show &lt;volume&gt;</computeroutput></screen>
+        <para>
+Shows volume image metadata.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume.
       </para>
     </listitem>
   </varlistentry>
@@ -5163,7 +5511,8 @@ Migrates volume to a new host.
     <term><command>&lt;host&gt;</command></term>
     <listitem>
       <para>
-        Destination host.
+        Destination host. Takes the form: host@backend-
+      name#pool
       </para>
     </listitem>
   </varlistentry>
@@ -5695,6 +6044,82 @@ Renames a volume.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="cinderclient_subcommand_replication-disable_v2">
+        <title>cinder replication-disable (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 replication-disable &lt;volume&gt;</computeroutput></screen>
+        <para>
+Disables volume replication on a given volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume to disable replication.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_replication-enable_v2">
+        <title>cinder replication-enable (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 replication-enable &lt;volume&gt;</computeroutput></screen>
+        <para>
+Enables volume replication on a given volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume to enable replication.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_replication-failover_v2">
+        <title>cinder replication-failover (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 replication-failover &lt;volume&gt; &lt;secondary&gt;</computeroutput></screen>
+        <para>
+Failover a volume to a secondary target
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume to failover.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;secondary&gt;</command></term>
+    <listitem>
+      <para>
+        A unqiue identifier that represents a failover target.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="cinderclient_subcommand_replication-list-targets_v2">
+        <title>cinder replication-list-targets (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 replication-list-targets &lt;volume&gt;</computeroutput></screen>
+        <para>
+List replication targets available for a volume.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume&gt;</command></term>
+    <listitem>
+      <para>
+        ID of volume to list available replication targets.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="cinderclient_subcommand_replication-promote_v2">
         <title>cinder replication-promote (v2)</title>
         <screen><computeroutput>usage: cinder --os-volume-api-version 2 replication-promote &lt;volume&gt;</computeroutput></screen>
@@ -6038,7 +6463,9 @@ Removes one or more snapshots.
     <section xml:id="cinderclient_subcommand_snapshot-list_v2">
         <title>cinder snapshot-list (v2)</title>
         <screen><computeroutput>usage: cinder --os-volume-api-version 2 snapshot-list [--all-tenants [&lt;0|1&gt;]] [--name &lt;name&gt;]
-                            [--status &lt;status&gt;] [--volume-id &lt;volume-id&gt;]</computeroutput></screen>
+                            [--status &lt;status&gt;] [--volume-id &lt;volume-id&gt;]
+                            [--marker &lt;marker&gt;] [--limit &lt;limit&gt;]
+                            [--sort &lt;key&gt;[:&lt;direction&gt;]]</computeroutput></screen>
         <para>
 Lists all snapshots.
         </para>  <variablelist wordsize="10">
@@ -6072,6 +6499,35 @@ Lists all snapshots.
     <listitem>
       <para>
       Filters results by a volume ID. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker &lt;marker&gt;</command></term>
+    <listitem>
+      <para>
+        Begin returning snapshots that appear later in the
+      snapshot list than that represented by this id.
+      Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of snapshots to return. Default=None.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort &lt;key&gt;[:&lt;direction&gt;]</command></term>
+    <listitem>
+      <para>
+      Comma-separated list of sort keys and directions in
+      the form of &lt;key&gt;[:&lt;asc|desc&gt;]. Valid keys: id,
+      status, size, availability_zone, name, bootable,
+      created_at. Default=None.
       </para>
     </listitem>
   </varlistentry>
@@ -6521,11 +6977,30 @@ Sets or unsets extra_spec for a volume type.
 Lists available 'volume types'. (Admin only will see private types)
         </para>
     </section>
+    <section xml:id="cinderclient_subcommand_type-show_v2">
+        <title>cinder type-show (v2)</title>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 type-show &lt;volume_type&gt;</computeroutput></screen>
+        <para>
+Show volume type details.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;volume_type&gt;</command></term>
+    <listitem>
+      <para>
+        Name or ID of the volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="cinderclient_subcommand_type-update_v2">
         <title>cinder type-update (v2)</title>
-        <screen><computeroutput>usage: cinder --os-volume-api-version 2 type-update [--name &lt;name&gt;] [--description &lt;description&gt;] &lt;id&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: cinder --os-volume-api-version 2 type-update [--name &lt;name&gt;] [--description &lt;description&gt;]
+                          [--is-public &lt;is-public&gt;]
+                          &lt;id&gt;</computeroutput></screen>
         <para>
-Updates volume type name and/or description.
+Updates volume type name ,description and/or is_public.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -6552,6 +7027,14 @@ Updates volume type name and/or description.
     <listitem>
       <para>
       Description of the volume type.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--is-public &lt;is-public&gt;</command></term>
+    <listitem>
+      <para>
+      Make type accessible to the public or not.
       </para>
     </listitem>
   </varlistentry>
