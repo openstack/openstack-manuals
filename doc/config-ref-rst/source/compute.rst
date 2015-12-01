@@ -9,6 +9,8 @@ Compute
    compute/logging.rst
    compute/authentication-authorization.rst
    compute/resize.rst
+   compute/database-connections.rst
+   compute/rpc.rst
    compute/scheduler.rst
    compute/cells.rst
    compute/conductor.rst
