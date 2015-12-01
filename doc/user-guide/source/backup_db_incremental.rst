@@ -13,7 +13,7 @@ handles the complexities of applying the chain of incremental backups.
 This example shows you how to use incremental backups with a MySQL
 database.
 
-**Assumptions. **\ Assume that you have created a regular
+**Assumptions.** Assume that you have created a regular
 backup for the following database instance:
 
 -  Instance name: ``guest1``

@@ -21,7 +21,7 @@ Each cluster includes:
 
 This example shows you how to set up a MongoDB sharded cluster.
 
-.. note:: **Before you begin. **\ Make sure that:
+.. note:: **Before you begin.** Make sure that:
 
    -  The administrative user has registered a MongoDB datastore type and
       version.
@@ -93,7 +93,7 @@ Set up clustering
        +-------------------+--------------------------------------+
 
 
-   .. note:: **Your application connects to this IP address. **\ The trove
+   .. note:: **Your application connects to this IP address.** The trove
       ``cluster-show`` command displays the IP address of the query router.
       This is the IP address your application uses to retrieve data from
       the database.
@@ -114,19 +114,19 @@ Set up clustering
        | b37634fb-e33c-4846-8fe8-cf2b2c95e731 | cluster1-rs1-3 | 7         |    2 |
        +--------------------------------------+----------------+-----------+------+
 
-   **Naming conventions for replication sets and instances. **\ Note
+   **Naming conventions for replication sets and instances.** Note
    that the ``Name`` column displays an instance name that includes the
    replication set name. The replication set names and instance names
    are automatically generated, following these rules:
 
-   -  **Replication set name. **\ This name consists of the cluster
+   -  **Replication set name.** This name consists of the cluster
       name, followed by the string -rs\ *n*, where *n* is 1 for
       the first replication set you create, 2 for the second replication
       set, and so on. In this example, the cluster name is ``cluster1``,
       and there is only one replication set, so the replication set name
       is ``cluster1-rs1``.
 
-   -  **Instance name. **\ This name consists of the replication set
+   -  **Instance name.** This name consists of the replication set
       name followed by the string -*n*, where *n* is 1 for the
       first instance in a replication set, 2 for the second
       instance, and so on. In this example, the instance names are

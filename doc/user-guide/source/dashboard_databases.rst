@@ -12,7 +12,7 @@ handling complex administrative tasks.
 Create a database instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Prerequisites. **\ Before you create a database instance, you need to
+**Prerequisites.** Before you create a database instance, you need to
 configure a default datastore and make sure you have an appropriate
 flavor for the type of database instance you want.
 
@@ -53,7 +53,7 @@ flavor for the type of database instance you want.
    Make sure an appropriate flavor exists for the type of
    database instance you want.
 
-**Create database instance. **\ Once you have configured a default
+**Create database instance.** Once you have configured a default
 datastore and verified that you have an appropriate flavor, you can
 create a database instance.
 

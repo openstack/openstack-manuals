@@ -62,7 +62,7 @@ Create and access a database
       administrative user must create a custom flavor by using the nova
       ``flavor-create`` command.
 
-   **MySQL example. **\ This example creates a flavor that you can use
+   **MySQL example.** This example creates a flavor that you can use
    with a MySQL database. This example has the following attributes:
 
    -  Flavor name: ``mysql_minimum``

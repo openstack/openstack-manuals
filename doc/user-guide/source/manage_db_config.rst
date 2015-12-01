@@ -202,7 +202,7 @@ Bulk-configure a database or databases
    As you can see, the ``sync_binlog`` option is now set to ``1``, as
    specified in the ``group1`` configuration group.
 
-**Conclusion. **\ Using a configuration group to set a single option on
+**Conclusion.** Using a configuration group to set a single option on
 a single database is obviously a trivial example. However, configuration
 groups can provide major efficiencies when you consider that:
 
@@ -214,7 +214,7 @@ groups can provide major efficiencies when you consider that:
 Used in this way, configuration groups let you modify your database
 cloud configuration, on the fly, on a massive scale.
 
-**Maintenance. **\ There are also a number of useful maintenance
+**Maintenance.** There are also a number of useful maintenance
 features for working with configuration groups. You can:
 
 -  Disassociate a configuration group from a database instance, using
