@@ -19,11 +19,35 @@ Share drivers
 To use different share drivers for the Shared File Systems service, use the
 parameters described in these sections.
 
+The Shared File Systems service can handle multiple drivers at once.
+The configuration for all of them follows a common paradigm:
+
+#. In file ``manila.conf``, configure the option
+   ``enabled_backends`` with the list of names for your configuration.
+
+   For example, if you want to enable two drivers and name them
+   ``Driver1`` and ``Driver2``:
+
+   .. code-block:: ini
+
+      [Default]
+      ...
+      enabled_backends = Driver1 Driver2
+
+#. Configure a separate section for each driver using these
+   names. You need to define in each section at least the option
+   ``share_driver`` and assign it the value of your driver. In this
+   example it is the generic driver:
+
+   .. code-block:: ini
+
+      [Driver1]
+      share_driver = manila.share.drivers.generic.GenericShareDriver
+      ...
+
+      [Driver2]
+      share_driver = manila.share.drivers.generic.GenericShareDriver
+      ...
+
 The share drivers are included in the `Shared File Systems repository
 <https://git.openstack.org/cgit/openstack/manila/tree/manila/share/drivers>`_.
-To set a share driver, use the ``share_driver`` flag. For example, to
-use the generic reference driver:
-
-.. code-block:: ini
-
-            share_driver = manila.share.drivers.generic.GenericShareDriver
