@@ -13,6 +13,7 @@ Compute
    compute/rpc.rst
    compute/api.rst
    compute/ec2-api.rst
+   compute/hypervisors.rst
    compute/scheduler.rst
    compute/cells.rst
    compute/conductor.rst
