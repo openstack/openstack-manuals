@@ -91,6 +91,9 @@ service with its package name and description.
 |                |          |                       |resources, and updates  |
 |                |          |                       |and deletes stacks.     |
 +----------------+----------+-----------------------+------------------------+
+|Rating          |cloudkitty|python-cloudkittyclient|Rating service.         |
+|service         |          |                       |                        |
++----------------+----------+-----------------------+------------------------+
 |Shared file     |manila    |python-manilaclient    |Creates and manages     |
 |systems         |          |                       |shared file systems.    |
 +----------------+----------+-----------------------+------------------------+

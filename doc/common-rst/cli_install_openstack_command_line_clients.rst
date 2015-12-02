@@ -151,6 +151,8 @@ for each client. The following values are valid:
 
 -  ``cinder`` - Block Storage API and extensions
 
+-  ``cloudkitty`` - Rating service API
+
 -  ``glance`` - Image service API
 
 -  ``gnocchi`` - Telemetry API v3

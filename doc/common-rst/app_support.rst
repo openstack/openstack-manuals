@@ -185,6 +185,8 @@ The following Launchpad Bugs areas are available:
 
 -  `Bugs: Orchestration (heat) <https://bugs.launchpad.net/heat>`__
 
+-  `Bugs: Rating (cloudkitty) <https://bugs.launchpad.net/cloudkitty>`__
+
 -  `Bugs: Shared file systems (manila) <https://bugs.launchpad.net/manila>`__
 
 -  `Bugs: Telemetry
