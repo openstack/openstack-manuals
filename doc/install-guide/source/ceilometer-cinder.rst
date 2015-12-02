@@ -39,7 +39,7 @@ Finalize installation
 
          # systemctl restart openstack-cinder-volume.service
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    #. Restart the Block Storage services on the controller node:
 
