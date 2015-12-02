@@ -287,6 +287,8 @@ extra specs key as the key to be matched if no namespace is present;
 this action is highly discouraged because it conflicts with
 :ref:`AggregateInstanceExtraSpecsFilter` filter when you enable both filters.
 
+.. _ComputeFilter:
+
 ComputeFilter
 -------------
 
@@ -490,6 +492,8 @@ use the ``--hint`` flag. For example:
 
 This filter should not be enabled at the same time as
 :ref:`GroupAffinityFilter` or neither filter will work properly.
+
+.. _ImagePropertiesFilter:
 
 ImagePropertiesFilter
 ---------------------

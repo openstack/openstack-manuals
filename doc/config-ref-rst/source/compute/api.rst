@@ -63,7 +63,6 @@ Normally, you install OpenStack Compute with the following limits enabled:
 
 .. list-table:: Default API rate limits
    :header-rows: 1
-   :class: config-ref-table
 
    * - HTTP method
      - API URI
