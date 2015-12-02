@@ -14,6 +14,7 @@ Share drivers
    drivers/huawei-nas-driver.rst
    drivers/ibm-gpfs-driver.rst
    drivers/netapp-cluster-mode-driver.rst
+   drivers/quobyte-driver.rst
 
 
 To use different share drivers for the Shared File Systems service, use the
