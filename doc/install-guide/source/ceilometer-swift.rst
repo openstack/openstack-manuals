@@ -122,7 +122,7 @@ Finalize installation
 
         # systemctl restart openstack-swift-proxy.service
 
-.. only:: ubuntu
+.. only:: ubuntu or debian
 
    * Restart the Object Storage proxy service:
 
