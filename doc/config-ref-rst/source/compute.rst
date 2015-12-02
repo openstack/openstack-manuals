@@ -11,6 +11,8 @@ Compute
    compute/resize.rst
    compute/database-connections.rst
    compute/rpc.rst
+   compute/api.rst
+   compute/ec2-api.rst
    compute/scheduler.rst
    compute/cells.rst
    compute/conductor.rst
