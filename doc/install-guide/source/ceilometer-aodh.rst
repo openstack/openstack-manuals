@@ -15,7 +15,7 @@ database, service credentials, and API endpoints. Similar to other Telemetry
 module services, this guide configures a NoSQL database. For more information,
 see :ref:`environment-nosql-database`.
 
-.. only:: ubuntu
+.. only:: obs or ubuntu
 
    1. Create the ``aodh`` database:
 
@@ -172,6 +172,17 @@ Install and configure components
    options. Also, an ellipsis (...) in the configuration snippets indicates
    potential default configuration options that you should retain.
 
+.. only:: obs
+
+   #. Install the packages:
+
+      .. code-block:: console
+
+         # zypper install openstack-aodh-api \
+           openstack-aodh-evaluator openstack-aodh-notifier \
+           openstack-aodh-listener openstack-aodh-expirer \
+           python-aodhclient
+
 .. only:: rdo
 
    #. Install the packages:
@@ -290,6 +301,22 @@ Install and configure components
 
 Finalize installation
 ~~~~~~~~~~~~~~~~~~~~~
+
+.. only:: obs
+
+   #. Start the Telemetry Alarming services and configure them to start
+      when the system boots:
+
+      .. code-block:: console
+
+         # systemctl enable openstack-aodh-api.service \
+           openstack-aodh-evaluator.service \
+           openstack-aodh-notifier.service \
+           openstack-aodh-listener.service
+         # systemctl start openstack-aodh-api.service \
+           openstack-aodh-evaluator.service \
+           openstack-aodh-notifier.service \
+           openstack-aodh-listener.service
 
 .. only:: rdo
 
