@@ -2,7 +2,7 @@
 IBM GPFS driver
 ===============
 
-GPFS driver uses IBM General Parallel File System (GPFS), a
+The GPFS driver uses IBM General Parallel File System (GPFS), a
 high-performance, clustered file system, developed by IBM, as the
 storage back end for serving file shares to the Shared File Systems
 service clients.
@@ -49,7 +49,7 @@ Requirements
 -  Create a GPFS cluster and create a filesystem on the cluster, that
    will be used to create the Shared File Systems service shares.
 
--  Enable quotas for the GPFS file system (mmchfs -Q yes).
+-  Enable quotas for the GPFS file system, use :command:`mmchfs -Q yes`.
 
 -  Establish network connection between the Shared File Systems Service
    host and the storage back end.
@@ -60,41 +60,32 @@ Shared File Systems service driver configuration setting
 The following parameters in the Shared File Systems service
 configuration file need to be set:
 
--  share_driver = manila.share.drivers.ibm.gpfs.GPFSShareDriver
+.. code-block:: ini
 
--  gpfs_share_export_ip = <IP to be added to GPFS export string>
+   share_driver = manila.share.drivers.ibm.gpfs.GPFSShareDriver
+   gpfs_share_export_ip = <IP to be added to GPFS export string>
 
--  If the back-end GPFS server is not running on the Shared File Systems
-   service host machine, the following options are required to SSH to
-   the remote GPFS back-end server:
+If the back-end GPFS server is not running on the Shared File Systems
+service host machine, the following options are required to SSH to
+the remote GPFS back-end server:
 
-   -  gpfs_ssh_login = <GPFS server SSH login name>
+.. code-block:: ini
 
-      and one of the following settings is required to execute commands
-      over SSH:
+   gpfs_ssh_login = <GPFS server SSH login name>
 
-   -  gpfs_ssh_private_key = <path to GPFS server SSH private key for
-      login>
+Also one of the following settings is required to execute commands
+over SSH:
 
-   -  gpfs_ssh_password = <GPFS server SSH login password>
+.. code-block:: ini
 
-The following configuration parameters are optional:
+   gpfs_ssh_private_key = <path to GPFS server SSH private key for login>
 
--  gpfs_mount_point_base = <base folder where exported shares are
-   located>
+or:
 
--  gpfs_nfs_server_type = <KNFS\|GNFS>
+.. code-block:: ini
 
--  gpfs_nfs_server_list = <list of the fully qualified NFS server
-   names>
+   gpfs_ssh_password = <GPFS server SSH login password>
 
--  gpfs_ssh_port = <ssh port number>
-
--  knfs_export_options = <options to use when creating a share using
-   kernel> <NFS server>
-
-Restart of manila-share service is needed for the configuration changes
-to take effect.
 
 Known restrictions
 ~~~~~~~~~~~~~~~~~~
