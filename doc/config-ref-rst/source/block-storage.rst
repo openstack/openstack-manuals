@@ -11,6 +11,7 @@ Block Storage
    block-storage/block-storage-sample-configuration-files.rst
    block-storage/cinder-log-files.rst
    block-storage/fc-zoning.rst
+   block-storage/nested-quota.rst
    block-storage/volume-encryption.rst
    block-storage/volume-misc.rst
    tables/conf-changes/cinder.rst
