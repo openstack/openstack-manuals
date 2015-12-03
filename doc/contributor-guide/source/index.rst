@@ -19,6 +19,7 @@ Contents
    first-timers-quickstart.rst
    additional-git-workflow.rst
    writing-style.rst
+   topic-structure.rst
    rst-conv.rst
    docbook-conv.rst
    docs-structure.rst
@@ -30,7 +31,6 @@ Contents
    build-locally.rst
    blueprints-and-specs.rst
    json-conventions.rst
-
    common/glossary.rst
 
 Search in this guide
