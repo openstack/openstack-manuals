@@ -93,47 +93,23 @@ Pre-configuration on the HPE 3PAR
 
 -  A local user in the Administrators group is needed for CIFS shares.
 
-Backend configuration
-~~~~~~~~~~~~~~~~~~~~~
+Back end configuration
+~~~~~~~~~~~~~~~~~~~~~~
 
 The following parameters need to be configured in the Shared File
 Systems service configuration file for the HPE 3PAR driver:
 
--  share_backend_name = <back end name to enable>
+.. code-block:: ini
 
--  share_driver =
-   manila.share.drivers.hpe.hpe_3par_driver.HPE3ParShareDriver
+   share_driver = manila.share.drivers.hpe.hpe_3par_driver.HPE3ParShareDriver
+   driver_handles_share_servers = False
+   hpe3par_share_ip_address = IP_address
 
--  driver_handles_share_servers = False
-
--  hpe3par_fpg = <FPG to use for share creation>
-
--  hpe3par_share_ip_address = <IP address to use for share export
-   location>
-
--  hpe3par_san_ip = <IP address for SSH access to the SAN controller>
-
--  hpe3par_api_url = <3PAR WS API Server URL>
-
--  hpe3par_username = <3PAR username with the 'edit' role>
-
--  hpe3par_password = <3PAR password for the user specified in
-   hpe3par_username>
-
--  hpe3par_san_login = <Username for SSH access to the SAN controller>
-
--  hpe3par_san_password = <Password for SSH access to the SAN
-   controller>
-
--  hpe3par_debug = <False or True for extra debug logging>
-
-The hpe3par_share_ip_address must be a valid IP address for the
-configured FPG's VFS. This IP address is used in export locations for
-shares that are created. Networking must be configured to allow
+The option ``hpe3par_share_ip_address`` must be a valid IP address for
+the configured FPG's VFS. This IP address is used in export locations
+for shares that are created. Networking must be configured to allow
 connectivity from clients to shares.
 
-Restart of manila-share service is needed for the configuration changes
-to take effect.
 
 Network approach
 ~~~~~~~~~~~~~~~~
@@ -144,33 +120,33 @@ Shared File Systems service host is required for share management.
 Connectivity between the clients and the VFS is required for mounting
 and using the shares. This includes:
 
--  Routing from the client to the external network
+-  Routing from the client to the external network.
 
--  Assigning the client an external IP address (e.g., a floating IP)
+-  Assigning the client an external IP address, for example a floating IP.
 
 -  Configuring the Shared File Systems service host networking properly
-   for IP forwarding
+   for IP forwarding.
 
--  Configuring the VFS networking properly for client subnets
+-  Configuring the VFS networking properly for client subnets.
 
 Share types
 ~~~~~~~~~~~
 
-When creating a share, a share type can be specified to determine where
-and how the share will be created. If a share type is not specified, the
-default_share_type set in the Shared File Systems service
-configuration file is used.
+When creating a share, a share type can be specified to determine
+where and how the share will be created. If a share type is not
+specified, the value from the option ``default_share_type`` set in the
+Shared File Systems service configuration file is used.
 
 The Shared File Systems service requires that the share type includes
-the driver_handles_share_servers extra-spec. This ensures that the
+the ``driver_handles_share_servers`` extra-spec. This ensures that the
 share will be created on a back end that supports the requested
-driver_handles_share_servers (share networks) capability. For the HPE
-3PAR driver, this must be set to False.
+``driver_handles_share_servers`` (share networks) capability. For the
+HPE 3PAR driver, this must be set to ``False``.
 
 Another common Shared File Systems service extra-spec used to determine
-where a share is created is share_backend_name. When this extra-spec
+where a share is created is ``share_backend_name``. When this extra-spec
 is defined in the share type, the share will be created on a back end
-with a matching share_backend_name.
+with a matching ``share_backend_name``.
 
 The HPE 3PAR driver automatically reports capabilities based on the FPG
 used for each back end. Share types with extra specs can be created by
