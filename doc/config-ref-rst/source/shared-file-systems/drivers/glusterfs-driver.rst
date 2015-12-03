@@ -46,34 +46,24 @@ Shared File Systems service driver configuration setting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following parameters in the Shared File Systems service's
-configuration file need to be set:
+configuration file ``manila.conf`` need to be set:
 
--  ``share_driver = manila.share.drivers.glusterfs.GlusterfsShareDriver``
+.. code-block:: ini
 
--  If the back-end GlusterFS server runs on the Shared File Systems
-   service host machine,
+   share_driver = manila.share.drivers.glusterfs.GlusterfsShareDriver
 
-   -  ``glusterfs_target = <glustervolserver>:/<glustervolid>``
+If the back-end GlusterFS server runs on the Shared File Systems
+service host machine:
 
-   And if the back-end GlusterFS server runs remotely,
+.. code-block:: ini
 
-   -  ``glusterfs_target = <username>@<glustervolserver>:/<glustervolid>``
+   glusterfs_target = <glustervolserver>:/<glustervolid>
 
-The following configuration parameters are optional:
+If the back-end GlusterFS server runs remotely:
 
--  glusterfs_nfs_server_type =
-       <NFS server type used by the GlusterFS back end, Gluster or
-       Ganesha. Gluster is the default type>
+.. code-block:: ini
 
--  glusterfs_mount_point_base =
-       <base path of GlusterFS volume mounted on the Shared File Systems
-       service host>
-
--  ``glusterfs_path_to_private_key = <path to Shared File Systems
-   service host's private key file>``
-
--  ``glusterfs_server_password = <password of remote GlusterFS server
-   machine>``
+   glusterfs_target = <username>@<glustervolserver>:/<glustervolid>
 
 Known restrictions
 ~~~~~~~~~~~~~~~~~~
