@@ -90,3 +90,47 @@ files, ``console`` for console inputs and outputs, and so on.
    [DEFAULT]
    # List of directories to load filter definitions from (separated by ',').
 
+
+.. _remote-block:
+
+Literal block using a remote file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
++-----------------+-----------------------------------------------------+
+| **Directive**   | ``remote-code-block``                               |
++-----------------+-----------------------------------------------------+
+| **Arguments**   | ``python`` (default), ``ruby``, ``c``, ``console``, |
+|                 | ``ini``, and others                                 |
++-----------------+-----------------------------------------------------+
+| **Options**     | ``linenos``, ``emphasize-lines``                    |
++-----------------+-----------------------------------------------------+
+| **Description** | * Specifies the highlighting language directly.     |
+|                 | * Preserves line breaks and whitespaces.            |
++-----------------+-----------------------------------------------------+
+
+This directive behaves exactly like the ``code-block`` directive, but gets the
+content from a remote URL (``http`` or ``https``).
+
+``remote-code-block`` is a custom directive.
+
+**Input**
+
+.. code::
+
+   .. remote-code-block:: ini
+
+      http://git.openstack.org/cgit/openstack/nova/tree/etc/nova/api-paste.ini?h=stable/liberty
+
+**Output**
+
+.. code-block:: ini
+
+   ############
+   # Metadata #
+   ############
+   [composite:metadata]
+   use = egg:Paste#urlmap
+   /: meta
+
+   [pipeline:meta]
+   pipeline = cors ec2faultwrap logrequest metaapp
