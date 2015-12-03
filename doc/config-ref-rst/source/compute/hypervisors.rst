@@ -30,7 +30,7 @@ The following hypervisors are supported:
   program to launch the virtual machine. The supported formats
   include raw images, the qcow2, and VMware formats.
 
-* `LXC <http://lxc.sourceforge.net/>`_ - Linux Containers
+* `LXC <https://linuxcontainers.org/>`_ - Linux Containers
   (through libvirt), used to run Linux-based virtual machines.
 
 * `QEMU <http://wiki.qemu.org/Manual>`_ - Quick EMUlator,
@@ -40,7 +40,7 @@ The following hypervisors are supported:
   generally only used for development purposes.
 
 * `VMware vSphere
-  <http://www.vmware.com/products/vsphere-hypervisor/support.html>`_
+  <https://www.vmware.com/support/vsphere-hypervisor>`_
   4.1 update 1 and newer, runs VMware-based Linux and Windows images
   through a connection with a vCenter server or directly with an ESXi host.
 
@@ -48,12 +48,12 @@ The following hypervisors are supported:
   Hypervisor using libvirt as management interface into ``nova-compute``
   to run Linux, Windows, FreeBSD and NetBSD virtual machines.
 
-* `XenServer <http://www.xenserver.org>`_ - XenServer,
+* `XenServer <http://xenserver.org>`_ - XenServer,
   Xen Cloud Platform (XCP) and other XAPI based Xen variants runs Linux
   or Windows virtual machines. You must install the ``nova-compute``
   service in a para-virtualized VM.
 
-* `Hyper-V <http://www.microsoft.com/en-us/server-cloud/windows-server/
-  server-virtualization-features.aspx>`_ - Server virtualization with
-  Microsoft Hyper-V, use to run Windows, Linux, and FreeBSD virtual machines.
+* `Hyper-V <http://www.microsoft.com/en-us/server-cloud/solutions/
+  virtualization.aspx>`_ - Server virtualization with Microsoft Hyper-V,
+  use to run Windows, Linux, and FreeBSD virtual machines.
   Runs ``nova-compute`` natively on the Windows virtualization platform.
