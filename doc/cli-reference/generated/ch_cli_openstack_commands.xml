@@ -15,7 +15,7 @@
        OpenStack command-line interface (CLI).
 
        This chapter documents <command>openstack</command> version
-        <literal>1.9.0</literal>.
+        <literal>2.0.0</literal>.
     </para>
 
     <para>For help on a specific <command>openstack</command>
@@ -60,6 +60,8 @@
                  [--os-token &lt;auth-token&gt;] [--os-project-id &lt;auth-project-id&gt;]
                  [--os-object-api-version &lt;object-api-version&gt;]
                  [--os-policy-api-version &lt;policy-api-version&gt;]
+                 [--inspector-api-version INSPECTOR_API_VERSION]
+                 [--inspector-url INSPECTOR_URL]
                  [--os-queues-api-version &lt;queues-api-version&gt;]
                  [--os-dns-api-version &lt;dns-api-version&gt;]
                  [--os-baremetal-api-version &lt;baremetal-api-version&gt;]</computeroutput></screen>
@@ -231,10 +233,10 @@
     <listitem>
       <para>
       Select an authentication type. Available types:
-      v2token, admin_token, v2password, v3password,
-      v3scopedsaml, v3oidcpassword, v3unscopedadfs, token,
-      v3token, password, v3unscopedsaml, osc_password,
-      token_endpoint. Default: selected based on --os-
+      osc_password, token_endpoint, v2token, admin_token,
+      v2password, v3password, v3scopedsaml, v3oidcpassword,
+      v3unscopedadfs, token, v3token, password,
+      v3unscopedsaml. Default: selected based on --os-
       username/--os-token (Env: OS_AUTH_TYPE)
       </para>
     </listitem>
@@ -243,14 +245,14 @@
     <term><command>--os-project-domain-id &lt;auth-project-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Domain ID containing project With
+      With osc_password: Domain ID containing project With
+      v3password: Domain ID containing project With
       v3scopedsaml: Domain ID containing project With
       v3oidcpassword: Domain ID containing project With
       v3unscopedadfs: Domain ID containing project With
       token: Domain ID containing project With v3token:
       Domain ID containing project With password: Domain ID
       containing project With v3unscopedsaml: Domain ID
-      containing project With osc_password: Domain ID
       containing project (Env: OS_PROJECT_DOMAIN_ID)
       </para>
     </listitem>
@@ -271,14 +273,14 @@
     <term><command>--os-project-name &lt;auth-project-name&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Project name to scope to With
+      With osc_password: Project name to scope to With
+      v3password: Project name to scope to With
       v3scopedsaml: Project name to scope to With
       v3oidcpassword: Project name to scope to With
       v3unscopedadfs: Project name to scope to With token:
       Project name to scope to With v3token: Project name to
       scope to With password: Project name to scope to With
-      v3unscopedsaml: Project name to scope to With
-      osc_password: Project name to scope to (Env:
+      v3unscopedsaml: Project name to scope to (Env:
       OS_PROJECT_NAME)
       </para>
     </listitem>
@@ -287,12 +289,12 @@
     <term><command>--os-trust-id &lt;auth-trust-id&gt;</command></term>
     <listitem>
       <para>
-      With v2token: Trust ID With v2password: Trust ID With
-      v3password: Trust ID With v3scopedsaml: Trust ID With
-      v3oidcpassword: Trust ID With v3unscopedadfs: Trust ID
-      With token: Trust ID With v3token: Trust ID With
-      password: Trust ID With v3unscopedsaml: Trust ID With
-      osc_password: Trust ID (Env: OS_TRUST_ID)
+      With osc_password: Trust ID With v2token: Trust ID
+      With v2password: Trust ID With v3password: Trust ID
+      With v3scopedsaml: Trust ID With v3oidcpassword: Trust
+      ID With v3unscopedadfs: Trust ID With token: Trust ID
+      With v3token: Trust ID With password: Trust ID With
+      v3unscopedsaml: Trust ID (Env: OS_TRUST_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -309,15 +311,14 @@
     <term><command>--os-domain-name &lt;auth-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Domain name to scope to With
-      v3scopedsaml: Domain name to scope to With
-      v3oidcpassword: Domain name to scope to With
-      v3unscopedadfs: Domain name to scope to With token:
-      Domain name to scope to With v3token: Domain name to
-      scope to With password: Domain name to scope to With
-      v3unscopedsaml: Domain name to scope to With
-      osc_password: Domain name to scope to (Env:
-      OS_DOMAIN_NAME)
+      With osc_password: Domain name to scope to With
+      v3password: Domain name to scope to With v3scopedsaml:
+      Domain name to scope to With v3oidcpassword: Domain
+      name to scope to With v3unscopedadfs: Domain name to
+      scope to With token: Domain name to scope to With
+      v3token: Domain name to scope to With password: Domain
+      name to scope to With v3unscopedsaml: Domain name to
+      scope to (Env: OS_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -325,9 +326,9 @@
     <term><command>--os-user-domain-id &lt;auth-user-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With v3password: User's domain id With password:
-      User's domain id With osc_password: User's domain id
-      (Env: OS_USER_DOMAIN_ID)
+      With osc_password: User's domain id With v3password:
+      User's domain id With password: User's domain id (Env:
+      OS_USER_DOMAIN_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -354,14 +355,13 @@
     <term><command>--os-domain-id &lt;auth-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Domain ID to scope to With
-      v3scopedsaml: Domain ID to scope to With
-      v3oidcpassword: Domain ID to scope to With
-      v3unscopedadfs: Domain ID to scope to With token:
-      Domain ID to scope to With v3token: Domain ID to scope
-      to With password: Domain ID to scope to With
-      v3unscopedsaml: Domain ID to scope to With
-      osc_password: Domain ID to scope to (Env:
+      With osc_password: Domain ID to scope to With
+      v3password: Domain ID to scope to With v3scopedsaml:
+      Domain ID to scope to With v3oidcpassword: Domain ID
+      to scope to With v3unscopedadfs: Domain ID to scope to
+      With token: Domain ID to scope to With v3token: Domain
+      ID to scope to With password: Domain ID to scope to
+      With v3unscopedsaml: Domain ID to scope to (Env:
       OS_DOMAIN_ID)
       </para>
     </listitem>
@@ -370,9 +370,9 @@
     <term><command>--os-user-domain-name &lt;auth-user-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With v3password: User's domain name With password:
-      User's domain name With osc_password: User's domain
-      name (Env: OS_USER_DOMAIN_NAME)
+      With osc_password: User's domain name With v3password:
+      User's domain name With password: User's domain name
+      (Env: OS_USER_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -389,9 +389,9 @@
     <term><command>--os-user-id &lt;auth-user-id&gt;</command></term>
     <listitem>
       <para>
-      With v2password: User ID to login with With
-      v3password: User ID With password: User id With
-      osc_password: User id (Env: OS_USER_ID)
+      With osc_password: User id With v2password: User ID to
+      login with With v3password: User ID With password:
+      User id (Env: OS_USER_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -410,11 +410,11 @@
     <term><command>--os-username &lt;auth-username&gt;</command></term>
     <listitem>
       <para>
-      With v2password: Username to login with With
-      v3password: Username With v3oidcpassword: Username
-      With v3unscopedadfs: Username With password: Username
-      With v3unscopedsaml: Username With osc_password:
-      Username (Env: OS_USERNAME)
+      With osc_password: Username With v2password: Username
+      to login with With v3password: Username With
+      v3oidcpassword: Username With v3unscopedadfs: Username
+      With password: Username With v3unscopedsaml: Username
+      (Env: OS_USERNAME)
       </para>
     </listitem>
   </varlistentry>
@@ -422,15 +422,14 @@
     <term><command>--os-auth-url &lt;auth-auth-url&gt;</command></term>
     <listitem>
       <para>
-      With v2token: Authentication URL With v2password:
-      Authentication URL With v3password: Authentication URL
-      With v3scopedsaml: Authentication URL With
-      v3oidcpassword: Authentication URL With
-      v3unscopedadfs: Authentication URL With token:
-      Authentication URL With v3token: Authentication URL
-      With password: Authentication URL With v3unscopedsaml:
-      Authentication URL With osc_password: Authentication
-      URL (Env: OS_AUTH_URL)
+      With osc_password: Authentication URL With v2token:
+      Authentication URL With v2password: Authentication URL
+      With v3password: Authentication URL With v3scopedsaml:
+      Authentication URL With v3oidcpassword: Authentication
+      URL With v3unscopedadfs: Authentication URL With
+      token: Authentication URL With v3token: Authentication
+      URL With password: Authentication URL With
+      v3unscopedsaml: Authentication URL (Env: OS_AUTH_URL)
       </para>
     </listitem>
   </varlistentry>
@@ -456,15 +455,15 @@
     <term><command>--os-project-domain-name &lt;auth-project-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Domain name containing project With
+      With osc_password: Domain name containing project With
+      v3password: Domain name containing project With
       v3scopedsaml: Domain name containing project With
       v3oidcpassword: Domain name containing project With
       v3unscopedadfs: Domain name containing project With
       token: Domain name containing project With v3token:
       Domain name containing project With password: Domain
       name containing project With v3unscopedsaml: Domain
-      name containing project With osc_password: Domain name
-      containing project (Env: OS_PROJECT_DOMAIN_NAME)
+      name containing project (Env: OS_PROJECT_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -472,11 +471,11 @@
     <term><command>--os-password &lt;auth-password&gt;</command></term>
     <listitem>
       <para>
-      With v2password: Password to use With v3password:
-      User's password With v3oidcpassword: Password With
-      v3unscopedadfs: Password With password: User's
-      password With v3unscopedsaml: Password With
-      osc_password: User's password (Env: OS_PASSWORD)
+      With osc_password: User's password With v2password:
+      Password to use With v3password: User's password With
+      v3oidcpassword: Password With v3unscopedadfs: Password
+      With password: User's password With v3unscopedsaml:
+      Password (Env: OS_PASSWORD)
       </para>
     </listitem>
   </varlistentry>
@@ -484,9 +483,9 @@
     <term><command>--os-endpoint &lt;auth-endpoint&gt;</command></term>
     <listitem>
       <para>
-      With admin_token: The endpoint that will always be
-      used With token_endpoint: The endpoint that will
-      always be used (Env: OS_ENDPOINT)
+      With token_endpoint: The endpoint that will always be
+      used With admin_token: The endpoint that will always
+      be used (Env: OS_ENDPOINT)
       </para>
     </listitem>
   </varlistentry>
@@ -503,12 +502,12 @@
     <term><command>--os-token &lt;auth-token&gt;</command></term>
     <listitem>
       <para>
+      With token_endpoint: The token that will always be
+      used With token_endpoint: Authentication token to use
       With v2token: Token With admin_token: The token that
       will always be used With v3scopedsaml: Token to
       authenticate with With token: Token to authenticate
-      with With v3token: Token to authenticate with With
-      token_endpoint: The token that will always be used
-      With token_endpoint: Authentication token to use (Env:
+      with With v3token: Token to authenticate with (Env:
       OS_TOKEN)
       </para>
     </listitem>
@@ -517,15 +516,14 @@
     <term><command>--os-project-id &lt;auth-project-id&gt;</command></term>
     <listitem>
       <para>
-      With v3password: Project ID to scope to With
-      v3scopedsaml: Project ID to scope to With
-      v3oidcpassword: Project ID to scope to With
-      v3unscopedadfs: Project ID to scope to With token:
-      Project ID to scope to With v3token: Project ID to
-      scope to With password: Project ID to scope to With
-      v3unscopedsaml: Project ID to scope to With
-      osc_password: Project ID to scope to (Env:
-      OS_PROJECT_ID)
+      With osc_password: Project ID to scope to With
+      v3password: Project ID to scope to With v3scopedsaml:
+      Project ID to scope to With v3oidcpassword: Project ID
+      to scope to With v3unscopedadfs: Project ID to scope
+      to With token: Project ID to scope to With v3token:
+      Project ID to scope to With password: Project ID to
+      scope to With v3unscopedsaml: Project ID to scope to
+      (Env: OS_PROJECT_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -544,6 +542,24 @@
       <para>
       Policy API version, default=1 (Env:
       OS_POLICY_API_VERSION)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--inspector-api-version INSPECTOR_API_VERSION</command></term>
+    <listitem>
+      <para>
+      inspector API version, only 1 is supported now (env:
+      INSPECTOR_VERSION).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--inspector-url INSPECTOR_URL</command></term>
+    <listitem>
+      <para>
+      inspector URL, defaults to localhost (env:
+      INSPECTOR_URL).
       </para>
     </listitem>
   </varlistentry>
@@ -1157,6 +1173,217 @@ Unregister a baremetal node
     <listitem>
       <para>
         Node to delete (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_introspection_rule_delete_with_identity_api_v2">
+        <title>openstack baremetal introspection rule delete</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule delete [-h] uuid</computeroutput></screen>
+        <para>
+Delete an introspection rule.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>uuid</command></term>
+    <listitem>
+      <para>
+        rule UUID
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_introspection_rule_import_with_identity_api_v2">
+        <title>openstack baremetal introspection rule import</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule import [-h] file</computeroutput></screen>
+        <para>
+Import one or several introspection rules from a json file.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>file</command></term>
+    <listitem>
+      <para>
+        JSON file to import, may contain one or several rules
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_introspection_rule_list_with_identity_api_v2">
+        <title>openstack baremetal introspection rule list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule list [-h]
+                                                   [-f {csv,json,table,value,yaml}]
+                                                   [-c COLUMN]
+                                                   [--max-width &lt;integer&gt;]
+                                                   [--noindent]
+                                                   [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
+        <para>
+List all introspection rules.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_introspection_rule_purge_with_identity_api_v2">
+        <title>openstack baremetal introspection rule purge</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule purge [-h]</computeroutput></screen>
+        <para>
+Drop all introspection rules.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_introspection_rule_show_with_identity_api_v2">
+        <title>openstack baremetal introspection rule show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule show [-h]
+                                                   [-f {json,shell,table,value,yaml}]
+                                                   [-c COLUMN]
+                                                   [--max-width &lt;integer&gt;]
+                                                   [--noindent]
+                                                   [--prefix PREFIX]
+                                                   uuid</computeroutput></screen>
+        <para>
+Show an introspection rule.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>uuid</command></term>
+    <listitem>
+      <para>
+        rule UUID
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_introspection_start_with_identity_api_v2">
+        <title>openstack baremetal introspection start</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection start [-h]
+                                               [--new-ipmi-username NEW_IPMI_USERNAME]
+                                               [--new-ipmi-password NEW_IPMI_PASSWORD]
+                                               uuid [uuid ...]</computeroutput></screen>
+        <para>
+Start the introspection.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>uuid</command></term>
+    <listitem>
+      <para>
+        baremetal node UUID(s)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--new-ipmi-username NEW_IPMI_USERNAME</command></term>
+    <listitem>
+      <para>
+      if set, *Ironic Inspector* will update IPMI user name
+      to this value
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--new-ipmi-password NEW_IPMI_PASSWORD</command></term>
+    <listitem>
+      <para>
+      if set, *Ironic Inspector* will update IPMI password
+      to this value
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_baremetal_introspection_status_with_identity_api_v2">
+        <title>openstack baremetal introspection status</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection status [-h]
+                                                [-f {json,shell,table,value,yaml}]
+                                                [-c COLUMN]
+                                                [--max-width &lt;integer&gt;]
+                                                [--noindent] [--prefix PREFIX]
+                                                uuid</computeroutput></screen>
+        <para>
+Get introspection status.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>uuid</command></term>
+    <listitem>
+      <para>
+        baremetal node UUID
       </para>
     </listitem>
   </varlistentry>
@@ -4471,14 +4698,14 @@ Display image details
         <title>openstack ip fixed add</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ip fixed add [-h] &lt;network&gt; &lt;server&gt;</computeroutput></screen>
         <para>
-Add fixed-ip command
+Add fixed IP address to server
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;network&gt;</command></term>
     <listitem>
       <para>
-        Name of the network to fetch an IP address from
+        Network to fetch an IP address from (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -4486,7 +4713,7 @@ Add fixed-ip command
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Name of the server to receive the IP address
+        Server to receive the IP address (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -4507,14 +4734,14 @@ Add fixed-ip command
         <title>openstack ip fixed remove</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ip fixed remove [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
         <para>
-Remove fixed-ip command
+Remove fixed IP address from server
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;ip-address&gt;</command></term>
     <listitem>
       <para>
-        IP address to remove from server
+        IP address to remove from server (name only)
       </para>
     </listitem>
   </varlistentry>
@@ -4522,7 +4749,7 @@ Remove fixed-ip command
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Name of the server to remove the IP address from
+        Server to remove the IP address from (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -4543,14 +4770,14 @@ Remove fixed-ip command
         <title>openstack ip floating add</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating add [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
         <para>
-Add floating-ip to server
+Add floating IP address to server
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;ip-address&gt;</command></term>
     <listitem>
       <para>
-        IP address to add to server
+        IP address to add to server (name only)
       </para>
     </listitem>
   </varlistentry>
@@ -4582,14 +4809,14 @@ Add floating-ip to server
                                     [--noindent] [--prefix PREFIX]
                                     &lt;pool&gt;</computeroutput></screen>
         <para>
-Create new floating-ip
+Create new floating IP address
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;pool&gt;</command></term>
     <listitem>
       <para>
-        Pool to fetch floating IP from
+        Pool to fetch IP address from (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -4610,14 +4837,14 @@ Create new floating-ip
         <title>openstack ip floating delete</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating delete [-h] &lt;ip-address&gt;</computeroutput></screen>
         <para>
-Delete a floating-ip
+Delete a floating IP address
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;ip-address&gt;</command></term>
     <listitem>
       <para>
-        IP address to delete
+        IP address to delete (ID only)
       </para>
     </listitem>
   </varlistentry>
@@ -4641,7 +4868,7 @@ Delete a floating-ip
                                   [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
-List floating-ips
+List floating IP addresses
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -4661,7 +4888,7 @@ List floating-ips
                                        [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
-List floating-ip-pools
+List pools of floating IP addresses
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -4678,14 +4905,14 @@ List floating-ip-pools
         <title>openstack ip floating remove</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating remove [-h] &lt;ip-address&gt; &lt;server&gt;</computeroutput></screen>
         <para>
-Remove floating-ip from server
+Remove floating IP address from server
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;ip-address&gt;</command></term>
     <listitem>
       <para>
-        IP address to remove from server
+        IP address to remove from server (name only)
       </para>
     </listitem>
   </varlistentry>
@@ -5903,45 +6130,6 @@ Display project details
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="openstackclient_subcommand_project_usage_list_with_identity_api_v2">
-        <title>openstack project usage list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 project usage list [-h] [-f {csv,json,table,value,yaml}]
-                                    [-c COLUMN] [--max-width &lt;integer&gt;]
-                                    [--noindent]
-                                    [--quote {all,minimal,none,nonnumeric}]
-                                    [--start &lt;start&gt;] [--end &lt;end&gt;]</computeroutput></screen>
-        <para>
-List resource usage per project
-        </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
-  <varlistentry>
-    <term><command>-h, --help</command></term>
-    <listitem>
-      <para>
-        show this help message and exit
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--start &lt;start&gt;</command></term>
-    <listitem>
-      <para>
-        Usage range start date, ex 2012-01-20 (default: 4
-      weeks ago)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--end &lt;end&gt;</command></term>
-    <listitem>
-      <para>
-        Usage range end date, ex 2012-01-20 (default:
-      tomorrow)
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
     <section xml:id="openstackclient_subcommand_ptr_record_list_with_identity_api_v2">
         <title>openstack ptr record list</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ptr record list [-h] [-f {csv,json,table,value,yaml}]
@@ -7083,7 +7271,7 @@ Delete a security group
     <term><command>&lt;group&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of security group to delete
+        Security group to delete (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -7108,7 +7296,7 @@ Delete a security group
                                      [--quote {all,minimal,none,nonnumeric}]
                                      [--all-projects]</computeroutput></screen>
         <para>
-List all security groups
+List security groups
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
@@ -7148,7 +7336,7 @@ Create a new security group rule
     <term><command>&lt;group&gt;</command></term>
     <listitem>
       <para>
-        Create rule in this security group
+        Create rule in this security group (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -7201,7 +7389,7 @@ Delete a security group rule
     <term><command>&lt;rule&gt;</command></term>
     <listitem>
       <para>
-        Security group rule ID to delete
+        Security group rule to delete (ID only)
       </para>
     </listitem>
   </varlistentry>
@@ -7227,14 +7415,14 @@ Delete a security group rule
                                           [--quote {all,minimal,none,nonnumeric}]
                                           &lt;group&gt;</computeroutput></screen>
         <para>
-List all security group rules
+List security group rules
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;group&gt;</command></term>
     <listitem>
       <para>
-        List all rules in this security group
+        List all rules in this security group (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -7267,7 +7455,7 @@ Set security group properties
     <term><command>&lt;group&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of security group to change
+        Security group to modify (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -7294,7 +7482,7 @@ Set security group properties
     <term><command>--description &lt;description&gt;</command></term>
     <listitem>
       <para>
-      New security group name
+      New security group description
       </para>
     </listitem>
   </varlistentry>
@@ -7307,14 +7495,14 @@ Set security group properties
                                      [--noindent] [--prefix PREFIX]
                                      &lt;group&gt;</computeroutput></screen>
         <para>
-Show a specific security group
+Display security group details
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;group&gt;</command></term>
     <listitem>
       <para>
-        Name or ID of security group to change
+        Security group to display (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -7694,7 +7882,7 @@ Create a new disk image from a running server
                              [--all-projects] [--project &lt;project&gt;]
                              [--project-domain &lt;project-domain&gt;]
                              [--user &lt;user&gt;] [--user-domain &lt;user-domain&gt;]
-                             [--long]</computeroutput></screen>
+                             [--long] [--marker &lt;marker&gt;] [--limit &lt;limit&gt;]</computeroutput></screen>
         <para>
 List servers
         </para>  <variablelist wordsize="10">
@@ -7827,6 +8015,27 @@ List servers
     <listitem>
       <para>
         List additional fields in output
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker &lt;marker&gt;</command></term>
+    <listitem>
+      <para>
+        The last server (name or ID) of the previous page.
+      Display list of servers after marker. Display all
+      servers if not specified.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit &lt;limit&gt;</command></term>
+    <listitem>
+      <para>
+        Maximum number of servers to display. If limit equals
+      -1, all servers will be displayed. If limit is greater
+      than 'osapi_max_limit' option of Nova API,
+      'osapi_max_limit' will be used instead.
       </para>
     </listitem>
   </varlistentry>
@@ -8244,16 +8453,16 @@ Scale server to a new flavor
     </section>
     <section xml:id="openstackclient_subcommand_server_resume_with_identity_api_v2">
         <title>openstack server resume</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server resume [-h] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server resume [-h] &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
         <para>
-Resume server
+Resume server(s)
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Server (name or ID)
+        Server(s) to resume (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -8320,6 +8529,34 @@ Set server properties
       <para>
       Property to add/change for this server (repeat option
       to set multiple properties)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_server_shelve_with_identity_api_v2">
+        <title>openstack server shelve</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server shelve [-h] &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
+        <para>
+Shelve server(s)
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;server&gt;</command></term>
+    <listitem>
+      <para>
+        Server(s) to shelve (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
       </para>
     </listitem>
   </varlistentry>
@@ -8526,16 +8763,16 @@ Stop server(s).
     </section>
     <section xml:id="openstackclient_subcommand_server_suspend_with_identity_api_v2">
         <title>openstack server suspend</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server suspend [-h] &lt;server&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server suspend [-h] &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
         <para>
-Suspend server
+Suspend server(s)
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
     <term><command>&lt;server&gt;</command></term>
     <listitem>
       <para>
-        Server (name or ID)
+        Server(s) to suspend (name or ID)
       </para>
     </listitem>
   </varlistentry>
@@ -8668,6 +8905,34 @@ Unset server properties
       <para>
         Property key to remove from server (repeat to unset
       multiple values)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_server_unshelve_with_identity_api_v2">
+        <title>openstack server unshelve</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server unshelve [-h] &lt;server&gt; [&lt;server&gt; ...]</computeroutput></screen>
+        <para>
+Unshelve server(s)
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;server&gt;</command></term>
+    <listitem>
+      <para>
+        Server(s) to unshelve (name or ID)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
       </para>
     </listitem>
   </varlistentry>
@@ -8907,7 +9172,7 @@ Delete snapshot(s)
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
-                               [--long]</computeroutput></screen>
+                               [--all-projects] [--long]</computeroutput></screen>
         <para>
 List snapshots
         </para>  <variablelist wordsize="10">
@@ -8917,6 +9182,14 @@ List snapshots
     <listitem>
       <para>
         show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--all-projects</command></term>
+    <listitem>
+      <para>
+        Include all projects (admin only)
       </para>
     </listitem>
   </varlistentry>
