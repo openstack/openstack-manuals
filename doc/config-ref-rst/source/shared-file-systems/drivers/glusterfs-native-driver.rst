@@ -58,7 +58,7 @@ Requirements
 -  Install glusterfs-server package, version >= 3.6.x, on the storage
    back end.
 
--  Install glusterfs and glusterfs-fuse package, version >=3.6.x, on the
+-  Install glusterfs and glusterfs-fuse package, version >= 3.6.x, on the
    Shared File Systems service host.
 
 -  Establish network connection between the Shared File Systems service
@@ -70,14 +70,19 @@ Shared File Systems service driver configuration setting
 The following parameters in the Shared File Systems service's
 configuration file need to be set:
 
--  ``share_driver =
-   manila.share.drivers.glusterfs_native.GlusterfsNativeShareDriver``
+.. code-block:: ini
 
--  ``glusterfs_servers`` = List of GlusterFS servers which provide volumes
-   that can be used to create shares. The servers are expected to be
-   of distinct Gluster clusters (ie. should not be gluster peers).
-   Each server should be of the form
-   ``[<remoteuser>@]<glustervolserver>``.
+   share_driver = manila.share.drivers.glusterfs_native.GlusterfsNativeShareDriver
+   glusterfs_servers = glustervolserver
+   glusterfs_volume_pattern = manila-share-volume-\d+$
+
+The parameters are:
+
+``glusterfs_servers``
+   List of GlusterFS servers which provide volumes that can be used to
+   create shares. The servers are expected to be of distinct Gluster
+   clusters, so they should not be Gluster peers. Each server should
+   be of the form ``[<remoteuser>@]<glustervolserver>``.
 
    The optional ``<remoteuser>@`` part of the server URI indicates
    SSH access for cluster management (see related optional
@@ -86,45 +91,31 @@ configuration file need to be set:
    assumed to be part of the GlusterFS cluster the server belongs
    to).
 
--  ``glusterfs_volume_pattern`` = Regular expression template
-   used to filter GlusterFS volumes for share creation. The regex
-   template can contain the #{size} parameter which matches a number
-   (sequence of digits) and the value shall be interpreted as size
-   of the volume in GB. Examples: ``manila-share-volume-\d+$``,
-   ``manila-share-volume-#{size}G-\d+$``; with matching volume
-   names, respectively: *manila-share-volume-12*,
-   *manila-share-volume-3G-13*". In latter example, the number that
-   matches ``#{size}``, that is, 3, is an indication that the size
-   of volume is 3G.
+``glusterfs_volume_pattern``
+   Regular expression template used to filter GlusterFS volumes for
+   share creation. The regular expression template can contain the
+   ``#{size}`` parameter which matches a number and the value will be
+   interpreted as size of the volume in GB. Examples:
+   ``manila-share-volume-\d+$``,
+   ``manila-share-volume-#{size}G-\d+$``; with matching volume names,
+   respectively: ``manila-share-volume-1??,
+   ``manila-share-volume-3G-13``. In the latter example, the number
+   that matches ``#{size}``, which is 3, is an indication that the
+   size of volume is 3 GB. On share creation, the Shared File Systems
+   service picks volumes at least as large as the requested one.
 
-The following configuration parameters are optional:
+When setting up GlusterFS shares, note the following:
 
--  ``glusterfs_mount_point_base`` = <base path of GlusterFS volume
-   mounted on the Shared File Systems service host>
+- GlusterFS volumes are not created on demand. A pre-existing set of
+  GlusterFS volumes should be supplied by the GlusterFS cluster(s),
+  conforming to the naming convention encoded by
+  ``glusterfs_volume_pattern``. However, the GlusterFS endpoint is
+  allowed to extend this set any time, so the Shared File Systems
+  service and GlusterFS endpoints are expected to communicate volume
+  supply and demand out-of-band.
 
--  ``glusterfs_path_to_private_key`` = <path to Shared File Systems
-   service host's private key file>
-
--  ``glusterfs_server_password`` = <password of remote GlusterFS server
-   machine>
-
--  GlusterFS volumes are not created on demand. A pre-existing set of
-   GlusterFS volumes should be supplied by the GlusterFS cluster(s),
-   conforming to the naming convention encoded by
-   ``glusterfs_volume_pattern``. However, the GlusterFS endpoint is
-   allowed to extend this set any time (so the Shared File Systems
-   service and GlusterFS endpoints are expected to communicate volume
-   supply/demand out-of-band). ``glusterfs_volume_pattern`` can include
-   a size hint (with ``#{size}`` syntax), which, if present, requires
-   the GlusterFS end to indicate the size of the shares in GB in the
-   name. (On share creation, the Shared File Systems service picks
-   volumes *at least* as big as the requested one.)
-
--  Certificate setup (also known as trust setup) between instance and
+-  Certificate setup, also known as trust setup, between instance and
    storage back end is out of band of the Shared File Systems service.
-
--  Support for ``create_share_from_snapshot`` is planned for Liberty
-   release.
 
 -  For the Shared File Systems service to use GlusterFS volumes, the
    name of the trashcan directory in GlusterFS volumes must not be
