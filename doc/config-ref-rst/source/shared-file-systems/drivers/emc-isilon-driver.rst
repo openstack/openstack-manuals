@@ -46,8 +46,8 @@ The following operations are supported:
 
 - Create a share from a snapshot.
 
-Backend configuration
-~~~~~~~~~~~~~~~~~~~~~
+Back end configuration
+~~~~~~~~~~~~~~~~~~~~~~
 
 The following parameters need to be configured in the Shared File
 Systems service configuration file for the Isilon driver:
@@ -59,9 +59,6 @@ Systems service configuration file for the Isilon driver:
     emc_nas_server = <IP address of Isilon cluster>
     emc_nas_login = <username>
     emc_nas_password = <password>
-
-Restart of manila-share service is needed for the configuration changes
-to take effect.
 
 Restrictions
 ~~~~~~~~~~~~

@@ -2,22 +2,22 @@
 HDFS native driver
 ==================
 
-HDFS native driver is a plug-in based on the Shared File Systems
-service, which uses Hadoop distributed file system (HDFS), a distributed
+The HDFS native driver is a plug-in for the Shared File Systems
+service. It uses Hadoop distributed file system (HDFS), a distributed
 file system designed to hold very large amounts of data, and provide
 high-throughput access to the data.
 
-A Shared File Systems service share in this driver is a subdirectory in
-hdfs root directory. Instances talk directly to the HDFS storage back
-end with ``hdfs`` protocol. And access to each share is allowed by user
-based access type, which is aligned with HDFS ACLs to support access
-control of multiple users and groups.
+A Shared File Systems service share in this driver is a subdirectory
+in the hdfs root directory. Instances talk directly to the HDFS
+storage back end using the ``hdfs`` protocol. Access to each share
+is allowed by user based access type, which is aligned with HDFS ACLs
+to support access control of multiple users and groups.
 
 Network configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
-The storage back end and Shared File Systems service hosts should be in
-a flat network, otherwise, the L3 connectivity between them should
+The storage back end and Shared File Systems service hosts should be
+in a flat network, otherwise L3 connectivity between them should
 exist.
 
 Supported shared filesystems and operations
@@ -60,22 +60,12 @@ Requirements
 Shared File Systems service driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- share_driver = manila.share.drivers.hdfs.hdfs_native.HDFSNativeShareDriver
+To enable the driver, set the ``share_driver`` option in file
+``manila.conf`` and add other options as appropriate.
 
-- hdfs_namenode_ip = the IP address of the HDFS namenode, and only
-  single namenode is supported now
+.. code-block:: ini
 
-- hdfs_namenode_port = the port of the HDFS namenode service
-
-- hdfs_ssh_port = HDFS namenode SSH port
-
-- hdfs_ssh_name = HDFS namenode SSH login name
-
-- hdfs_ssh_pw = HDFS namenode SSH login password, this parameter is
-  not necessary, if the following hdfs_ssh_private_key is configured
-
-- hdfs_ssh_private_key = Path to the HDFS namenode private key to
-  ssh login
+   share_driver = manila.share.drivers.hdfs.hdfs_native.HDFSNativeShareDriver
 
 Known restrictions
 ~~~~~~~~~~~~~~~~~~
