@@ -98,7 +98,7 @@ The parameters are:
    interpreted as size of the volume in GB. Examples:
    ``manila-share-volume-\d+$``,
    ``manila-share-volume-#{size}G-\d+$``; with matching volume names,
-   respectively: ``manila-share-volume-1??,
+   respectively: ``manila-share-volume-12``,
    ``manila-share-volume-3G-13``. In the latter example, the number
    that matches ``#{size}``, which is 3, is an indication that the
    size of volume is 3 GB. On share creation, the Shared File Systems
