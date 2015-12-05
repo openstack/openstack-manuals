@@ -86,10 +86,6 @@
      - (IntOpt) This mask is used for dividing service network into subnets, IP capacity of subnet with this mask directly defines possible amount of created service VMs per tenant's subnet. Used only with Neutron.
    * - ``service_network_name`` = ``manila_service_network``
      - (StrOpt) Name of manila service network. Used only with Neutron.
-   * - ``share_backend_name`` = ``None``
-     - (StrOpt) The backend name for a given driver implementation.
-   * - ``share_driver`` = ``manila.share.drivers.generic.GenericShareDriver``
-     - (StrOpt) Driver to use for share creation.
    * - ``share_helpers`` = ``CIFS=manila.share.drivers.generic.CIFSHelper, NFS=manila.share.drivers.generic.NFSHelper``
      - (ListOpt) Specify list of share export helpers.
    * - ``share_mount_path`` = ``/shares``

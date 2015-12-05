@@ -16,7 +16,7 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
+   * - **[hnas1]**
      -
    * - ``hds_hnas_cluster_admin_ip0`` = ``None``
      - (StrOpt) The IP of the clusters admin node. Only set in HNAS multinode clusters.
@@ -36,3 +36,7 @@
      - (IntOpt) The time (in seconds) to wait for stalled HNAS jobs before aborting.
    * - ``hds_hnas_user`` = ``None``
      - (StrOpt) HNAS username Base64 String in order to perform tasks such as create file-systems and network interfaces.
+   * - ``share_backend_name`` = ``None``
+     - (StrOpt) The backend name for a given driver implementation.
+   * - ``share_driver`` = ``manila.share.drivers.generic.GenericShareDriver``
+     - (StrOpt) Driver to use for share creation.

@@ -72,40 +72,40 @@
         <td>(IntOpt) Number of cinderclient retries on failed HTTP calls.</td>
       </tr>
       <tr>
-        <td><option>cinder_volume_type</option> = <replaceable>%volume_type%</replaceable></td>
-        <td>(StrOpt) Name or id of the Cinder volume type which will be used for all volumes created by driver.</td>
+        <td><option>cinder_volume_type</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Name or id of cinder volume type which will be used for all volumes created by driver.</td>
       </tr>
       <tr>
-        <td><option>connect_share_server_to_tenant_network</option> = <replaceable>False/True</replaceable></td>
-        <td>(BoolOpt) Attach share server directly to share network. Used only with Neutron and only applies when the option driver_handles_share_servers is set to True and one of either Generic or Windows drivers is used.</td>
+        <td><option>connect_share_server_to_tenant_network</option> = <replaceable>False</replaceable></td>
+        <td>(BoolOpt) Attach share server directly to share network. Used only with Neutron.</td>
       </tr>
       <tr>
-        <td><option>driver_handles_share_servers</option> = <replaceable>False</replaceable></td>
-        <td>(BoolOpt) Required option that defines driver mode. Possible values are True/False.</td>
+        <td><option>driver_handles_share_servers</option> = <replaceable>None</replaceable></td>
+        <td>(BoolOpt) There are two possible approaches for share drivers in Manila. First is when share driver is able to handle share-servers and second when not. Drivers can support either both or only one of these approaches. So, set this opt to True if share driver is able to handle share servers and it is desired mode else set False. It is set to None by default to make this choice intentional.</td>
       </tr>
       <tr>
         <td><option>interface_driver</option> = <replaceable>manila.network.linux.interface.OVSInterfaceDriver</replaceable></td>
-        <td>(StrOpt) Vif driver. Used only with Neutron and only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(StrOpt) Vif driver. Used only with Neutron.</td>
       </tr>
       <tr>
         <td><option>manila_service_keypair_name</option> = <replaceable>manila-service</replaceable></td>
-        <td>(StrOpt) Keypair name that will be created and used for service instances. This option only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(StrOpt) Keypair name that will be created and used for service instances.</td>
       </tr>
       <tr>
         <td><option>max_time_to_attach</option> = <replaceable>120</replaceable></td>
-        <td>(IntOpt) Maximum time to wait for attachment of a Cinder volume.</td>
+        <td>(IntOpt) Maximum time to wait for attaching cinder volume.</td>
       </tr>
       <tr>
         <td><option>max_time_to_build_instance</option> = <replaceable>300</replaceable></td>
-        <td>(IntOpt) Maximum time in seconds to wait for creating service instance. This option only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(IntOpt) Maximum time in seconds to wait for creating service instance.</td>
       </tr>
       <tr>
         <td><option>max_time_to_create_volume</option> = <replaceable>180</replaceable></td>
-        <td>(IntOpt) Maximum time to wait for creation of a Cinder volume.</td>
+        <td>(IntOpt) Maximum time to wait for creating cinder volume.</td>
       </tr>
       <tr>
         <td><option>max_time_to_extend_volume</option> = <replaceable>180</replaceable></td>
-        <td>(IntOpt) Maximum time to wait for extention of a Cinder volume.</td>
+        <td>(IntOpt) Maximum time to wait for extending cinder volume.</td>
       </tr>
       <tr>
         <td><option>ovs_integration_bridge</option> = <replaceable>br-int</replaceable></td>
@@ -117,71 +117,63 @@
       </tr>
       <tr>
         <td><option>path_to_public_key</option> = <replaceable>~/.ssh/id_rsa.pub</replaceable></td>
-        <td>(StrOpt) Path to hosts public key. This option only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(StrOpt) Path to hosts public key.</td>
       </tr>
       <tr>
         <td><option>service_image_name</option> = <replaceable>manila-service-image</replaceable></td>
-        <td>(StrOpt) Name of image in Glance, that will be used for service instance creation. This option only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(StrOpt) Name of image in Glance, that will be used for service instance creation.</td>
       </tr>
       <tr>
         <td><option>service_instance_flavor_id</option> = <replaceable>100</replaceable></td>
-        <td>(IntOpt) ID of flavor, that will be used for service instance creation. This option only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(IntOpt) ID of flavor, that will be used for service instance creation.</td>
       </tr>
       <tr>
-        <td><option>service_instance_name_or_id</option> = <replaceable>%nova_vm_name_or_id%</replaceable></td>
-        <td>(StrOpt) Name or ID of service instance in Nova to use for share exports. Used only when share servers handling is disabled. This option only applies when the option driver_handles_share_servers is set to False.</td>
+        <td><option>service_instance_name_or_id</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Name or ID of service instance in Nova to use for share exports. Used only when share servers handling is disabled.</td>
       </tr>
       <tr>
         <td><option>service_instance_name_template</option> = <replaceable>manila_service_instance_%s</replaceable></td>
-        <td>(StrOpt) Template that will be used for naming of Nova VMs that are used and service instances. This option only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(StrOpt) Name of service instance.</td>
       </tr>
       <tr>
         <td><option>service_instance_network_helper_type</option> = <replaceable>neutron</replaceable></td>
-        <td>(StrOpt) Type of network helper for the Generic driver. Possible values are 'neutron' and 'nova'. This option only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(StrOpt) Allowed values are ['nova', 'neutron'].</td>
       </tr>
       <tr>
-        <td><option>service_instance_password</option> = <replaceable>%password%</replaceable></td>
-        <td>(StrOpt) Password for service instance user. Optional, will be used in ase SSH keys are not set up.</td>
+        <td><option>service_instance_password</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Password for service instance user.</td>
       </tr>
       <tr>
         <td><option>service_instance_security_group</option> = <replaceable>manila-service</replaceable></td>
-        <td>(StrOpt) Security group name, that will be used for service instance creation. This option only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(StrOpt) Security group name, that will be used for service instance creation.</td>
       </tr>
       <tr>
         <td><option>service_instance_smb_config_path</option> = <replaceable>$share_mount_path/smb.conf</replaceable></td>
         <td>(StrOpt) Path to SMB config in service instance.</td>
       </tr>
       <tr>
-        <td><option>service_instance_user</option> = <replaceable>%username%</replaceable></td>
+        <td><option>service_instance_user</option> = <replaceable>None</replaceable></td>
         <td>(StrOpt) User in service instance that will be used for authentication.</td>
       </tr>
       <tr>
-        <td><option>service_net_name_or_ip</option> = <replaceable>%nova_vm_net_name_or_ip%</replaceable></td>
-        <td>(StrOpt) Can be either name of network that is used by service instance within Nova to get IP address or IP address itself for managing shares there. This option only applies when the option driver_handles_share_servers is set to False.</td>
+        <td><option>service_net_name_or_ip</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Can be either name of network that is used by service instance within Nova to get IP address or IP address itself for managing shares there. Used only when share servers handling is disabled.</td>
       </tr>
       <tr>
         <td><option>service_network_cidr</option> = <replaceable>10.254.0.0/16</replaceable></td>
-        <td>(StrOpt) CIDR of manila service network. Used only with Neutron and only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(StrOpt) CIDR of manila service network. Used only with Neutron.</td>
       </tr>
       <tr>
         <td><option>service_network_division_mask</option> = <replaceable>28</replaceable></td>
-        <td>(IntOpt) This mask is used for dividing service network into subnets, IP capacity of subnet with this mask directly defines possible amount of created service VMs per tenant's subnet. Used only with Neutron and only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(IntOpt) This mask is used for dividing service network into subnets, IP capacity of subnet with this mask directly defines possible amount of created service VMs per tenant's subnet. Used only with Neutron.</td>
       </tr>
       <tr>
         <td><option>service_network_name</option> = <replaceable>manila_service_network</replaceable></td>
-        <td>(StrOpt) Name of manila service network. Used only with Neutron and only applies when the option driver_handles_share_servers is set to True.</td>
+        <td>(StrOpt) Name of manila service network. Used only with Neutron.</td>
       </tr>
       <tr>
-        <td><option>share_backend_name</option> = <replaceable>Cinder_Volumes</replaceable></td>
-        <td>(StrOpt) The backend name for the Generic driver.</td>
-      </tr>
-      <tr>
-        <td><option>share_driver</option> = <replaceable>manila.share.drivers.generic.GenericShareDriver</replaceable></td>
-        <td>(StrOpt) path to Generic driver.</td>
-      </tr>
-      <tr>
-        <td><option>share_helpers</option> = <replaceable>CIFS=manila.share.drivers.generic.CIFSHelper,NFS=manila.share.drivers.generic.NFSHelper</replaceable></td>
-        <td>(ListOpt) List of share export helpers.</td>
+        <td><option>share_helpers</option> = <replaceable>CIFS=manila.share.drivers.generic.CIFSHelper, NFS=manila.share.drivers.generic.NFSHelper</replaceable></td>
+        <td>(ListOpt) Specify list of share export helpers.</td>
       </tr>
       <tr>
         <td><option>share_mount_path</option> = <replaceable>/shares</replaceable></td>
@@ -189,19 +181,19 @@
       </tr>
       <tr>
         <td><option>share_volume_fstype</option> = <replaceable>ext4</replaceable></td>
-        <td>(StrOpt) Filesystem type of the share volume. Possible values are 'ext4' and 'ext3'</td>
+        <td>(StrOpt) Filesystem type of the share volume.</td>
       </tr>
       <tr>
-        <td><option>tenant_net_name_or_ip</option> = <replaceable>%nova_vm_tenant_net_name_or_ip%</replaceable></td>
-        <td>(StrOpt) Can be either name of network that is used by service instance within Nova to get IP address or IP address itself for exporting shares. This option only applies when the option driver_handles_share_servers is set to False.</td>
+        <td><option>tenant_net_name_or_ip</option> = <replaceable>None</replaceable></td>
+        <td>(StrOpt) Can be either name of network that is used by service instance within Nova to get IP address or IP address itself for exporting shares. Used only when share servers handling is disabled.</td>
       </tr>
       <tr>
         <td><option>volume_name_template</option> = <replaceable>manila-share-%s</replaceable></td>
-        <td>(StrOpt) Name template for Cinder volumes.</td>
+        <td>(StrOpt) Volume name template.</td>
       </tr>
       <tr>
         <td><option>volume_snapshot_name_template</option> = <replaceable>manila-snapshot-%s</replaceable></td>
-        <td>(StrOpt) Name template for Cinder snapshots..</td>
+        <td>(StrOpt) Volume snapshot name template.</td>
       </tr>
     </tbody>
   </table>
