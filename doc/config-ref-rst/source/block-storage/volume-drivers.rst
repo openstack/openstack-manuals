@@ -33,6 +33,7 @@ Volume drivers
    drivers/nfs-volume-driver.rst
    drivers/prophetstor-dpl-driver.rst
    drivers/pure-storage-driver.rst
+   drivers/quobyte-driver.rst
    drivers/scality-sofs-driver.rst
    drivers/sheepdog-driver.rst
    drivers/smbfs-volume-driver.rst
