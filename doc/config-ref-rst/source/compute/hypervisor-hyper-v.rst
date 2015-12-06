@@ -190,6 +190,8 @@ to use the installer and its features can be found here:
 
 https://www.cloudbase.it
 
+.. _windows-requirements:
+
 Requirements
 ~~~~~~~~~~~~
 
