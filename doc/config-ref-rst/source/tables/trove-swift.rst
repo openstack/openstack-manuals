@@ -23,4 +23,4 @@
    * - ``swift_service_type`` = ``object-store``
      - (StrOpt) Service type to use when searching catalog.
    * - ``swift_url`` = ``None``
-     - (StrOpt) URL ending in AUTH_.
+     - (StrOpt) URL ending in AUTH\_.
