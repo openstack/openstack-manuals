@@ -62,10 +62,6 @@
      - (StrOpt) Name of the configuration group in the Manila conf file to look for network config options.If not set, the share backend's config group will be used.If an option is not found within provided group, then'DEFAULT' group will be used for search of option.
    * - ``root_helper`` = ``sudo``
      - (StrOpt) Deprecated: command to use for running commands as root.
-   * - ``share_backend_name`` = ``None``
-     - (StrOpt) The backend name for a given driver implementation.
-   * - ``share_driver`` = ``manila.share.drivers.generic.GenericShareDriver``
-     - (StrOpt) Driver to use for share creation.
    * - ``share_manager`` = ``manila.share.manager.ShareManager``
      - (StrOpt) Full class name for the share manager.
    * - ``share_name_template`` = ``share-%s``

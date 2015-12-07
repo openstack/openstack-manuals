@@ -20,6 +20,8 @@
      -
    * - ``max_age`` = ``0``
      - (IntOpt) Number of seconds between subsequent usage refreshes.
+   * - ``max_gigabytes`` = ``10000``
+     - (IntOpt) Maximum number of volume gigabytes to allow per host.
    * - ``quota_driver`` = ``manila.quota.DbQuotaDriver``
      - (StrOpt) Default driver to use for quota checks.
    * - ``quota_gigabytes`` = ``1000``

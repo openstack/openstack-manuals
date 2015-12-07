@@ -52,6 +52,8 @@
      - (StrOpt) Path to the rootwrap configuration file to use for running commands as root.
    * - ``service_down_time`` = ``60``
      - (IntOpt) Maximum time since last check-in for up service.
+   * - ``smb_template_config_path`` = ``$state_path/smb.conf``
+     - (StrOpt) Path to smb config.
    * - ``sql_idle_timeout`` = ``3600``
      - (IntOpt) Timeout before idle SQL connections are reaped.
    * - ``sql_max_retries`` = ``10``

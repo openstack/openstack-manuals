@@ -26,7 +26,7 @@
      - (ListOpt) Which filter class names to use for filtering hosts when not specified in the request.
    * - ``scheduler_default_weighers`` = ``CapacityWeigher``
      - (ListOpt) Which weigher class names to use for weighing hosts.
-   * - ``scheduler_driver`` = ``manila.scheduler.filter_scheduler.FilterScheduler``
+   * - ``scheduler_driver`` = ``manila.scheduler.drivers.filter.FilterScheduler``
      - (StrOpt) Default scheduler driver to use.
    * - ``scheduler_host_manager`` = ``manila.scheduler.host_manager.HostManager``
      - (StrOpt) The scheduler host manager class to use.
