@@ -332,7 +332,7 @@ routes would be formatted using these commands::
     192.168.122.0   0.0.0.0         255.255.255.0   U         0 0          0 virbr0
 
 The ``ip route get`` command outputs the route for a destination IP address.
-From the above example, destination IP address 10.0.2.14 is on the
+From the below example, destination IP address 10.0.2.14 is on the
 local network of eth0 and would be sent directly::
 
     $ ip route get 10.0.2.14
