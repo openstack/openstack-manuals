@@ -1,0 +1,201 @@
+[DEFAULT]
+
+#
+# From oslo.log
+#
+
+# Print debugging output (set logging level to DEBUG instead of default INFO
+# level). (boolean value)
+#debug = false
+
+# If set to false, will disable INFO logging level, making WARNING the default.
+# (boolean value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#verbose = true
+
+# The name of a logging configuration file. This file is appended to any
+# existing logging configuration files. For details about logging configuration
+# files, see the Python logging module documentation. Note that when logging
+# configuration files are used then all logging configuration is set in the
+# configuration file and other logging configuration options are ignored (for
+# example, log_format). (string value)
+# Deprecated group/name - [DEFAULT]/log_config
+#log_config_append = <None>
+
+# DEPRECATED. A logging.Formatter log message format string which may use any
+# of the available logging.LogRecord attributes. This option is deprecated.
+# Please use logging_context_format_string and logging_default_format_string
+# instead. This option is ignored if log_config_append is set. (string value)
+#log_format = <None>
+
+# Format string for %%(asctime)s in log records. Default: %(default)s . This
+# option is ignored if log_config_append is set. (string value)
+#log_date_format = %Y-%m-%d %H:%M:%S
+
+# (Optional) Name of log file to output to. If no default is set, logging will
+# go to stdout. This option is ignored if log_config_append is set. (string
+# value)
+# Deprecated group/name - [DEFAULT]/logfile
+#log_file = <None>
+
+# (Optional) The base directory used for relative --log-file paths. This option
+# is ignored if log_config_append is set. (string value)
+# Deprecated group/name - [DEFAULT]/logdir
+#log_dir = <None>
+
+# (Optional) Uses logging handler designed to watch file system. When log file
+# is moved or removed this handler will open a new log file with specified path
+# instantaneously. It makes sense only if log-file option is specified and
+# Linux platform is used. This option is ignored if log_config_append is set.
+# (boolean value)
+#watch_log_file = false
+
+# Use syslog for logging. Existing syslog format is DEPRECATED and will be
+# changed later to honor RFC5424. This option is ignored if log_config_append
+# is set. (boolean value)
+#use_syslog = false
+
+# (Optional) Enables or disables syslog rfc5424 format for logging. If enabled,
+# prefixes the MSG part of the syslog message with APP-NAME (RFC5424). The
+# format without the APP-NAME is deprecated in Kilo, and will be removed in
+# Mitaka, along with this option. This option is ignored if log_config_append
+# is set. (boolean value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#use_syslog_rfc_format = true
+
+# Syslog facility to receive log lines. This option is ignored if
+# log_config_append is set. (string value)
+#syslog_log_facility = LOG_USER
+
+# Log output to standard error. This option is ignored if log_config_append is
+# set. (boolean value)
+#use_stderr = true
+
+# Format string to use for log messages with context. (string value)
+#logging_context_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user_identity)s] %(instance)s%(message)s
+
+# Format string to use for log messages without context. (string value)
+#logging_default_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s
+
+# Data to append to log format when level is DEBUG. (string value)
+#logging_debug_format_suffix = %(funcName)s %(pathname)s:%(lineno)d
+
+# Prefix each line of exception output with this format. (string value)
+#logging_exception_prefix = %(asctime)s.%(msecs)03d %(process)d ERROR %(name)s %(instance)s
+
+# List of logger=LEVEL pairs. This option is ignored if log_config_append is
+# set. (list value)
+#default_log_levels = amqp=WARN,amqplib=WARN,boto=WARN,qpid=WARN,sqlalchemy=WARN,suds=INFO,oslo.messaging=INFO,iso8601=WARN,requests.packages.urllib3.connectionpool=WARN,urllib3.connectionpool=WARN,websocket=WARN,requests.packages.urllib3.util.retry=WARN,urllib3.util.retry=WARN,keystonemiddleware=WARN,routes.middleware=WARN,stevedore=WARN,taskflow=WARN
+
+# Enables or disables publication of error events. (boolean value)
+#publish_errors = false
+
+# The format for an instance that is passed with the log message. (string
+# value)
+#instance_format = "[instance: %(uuid)s] "
+
+# The format for an instance UUID that is passed with the log message. (string
+# value)
+#instance_uuid_format = "[instance: %(uuid)s] "
+
+# Format string for user_identity field of the logging_context_format_string
+# (string value)
+#logging_user_identity_format = %(user)s %(tenant)s %(domain)s %(user_domain)s %(project_domain)s
+
+# Enables or disables fatal status of deprecations. (boolean value)
+#fatal_deprecations = false
+
+
+[agent]
+
+#
+# From neutron.ml2.linuxbridge.agent
+#
+
+# The number of seconds the agent will wait between polling for local device
+# changes. (integer value)
+#polling_interval = 2
+
+# Set new timeout in seconds for new rpc calls after agent receives SIGTERM. If
+# value is set to 0, rpc timeout won't be changed (integer value)
+#quitting_rpc_timeout = 10
+
+# Enable suppression of ARP responses that don't match an IP address that
+# belongs to the port from which they originate. Note: This prevents the VMs
+# attached to this agent from spoofing, it doesn't protect them from other
+# devices which have the capability to spoof (e.g. bare metal or VMs attached
+# to agents without this flag set to True). Spoofing rules will not be added to
+# any ports that have port security disabled. For LinuxBridge, this requires
+# ebtables. For OVS, it requires a version that supports matching ARP headers.
+# (boolean value)
+#prevent_arp_spoofing = true
+
+
+[linux_bridge]
+
+#
+# From neutron.ml2.linuxbridge.agent
+#
+
+# Comma-separated list of <physical_network>:<physical_interface> tuples
+# mapping physical network names to the agent's node-specific physical network
+# interfaces to be used for flat and VLAN networks. All physical networks
+# listed in network_vlan_ranges on the server should have mappings to
+# appropriate interfaces on each agent. (list value)
+#physical_interface_mappings =
+
+# List of <physical_network>:<physical_bridge> (list value)
+#bridge_mappings =
+
+
+[securitygroup]
+
+#
+# From neutron.ml2.linuxbridge.agent
+#
+
+# Driver for security groups firewall in the L2 agent (string value)
+#firewall_driver = <None>
+
+# Controls whether the neutron security group API is enabled in the server. It
+# should be false when using no security groups or using the nova security
+# group API. (boolean value)
+#enable_security_group = true
+
+# Use ipset to speed-up the iptables based security groups. Enabling ipset
+# support requires that ipset is installed on L2 agent node. (boolean value)
+#enable_ipset = true
+
+
+[vxlan]
+
+#
+# From neutron.ml2.linuxbridge.agent
+#
+
+# Enable VXLAN on the agent. Can be enabled when agent is managed by ml2 plugin
+# using linuxbridge mechanism driver (boolean value)
+#enable_vxlan = true
+
+# TTL for vxlan interface protocol packets. (integer value)
+#ttl = <None>
+
+# TOS for vxlan interface protocol packets. (integer value)
+#tos = <None>
+
+# Multicast group(s) for vxlan interface. A range of group addresses may be
+# specified by using CIDR notation. Specifying a range allows different VNIs to
+# use different group addresses, reducing or eliminating spurious broadcast
+# traffic to the tunnel endpoints. To reserve a unique group for each possible
+# (24-bit) VNI, use a /8 such as 239.0.0.0/8. This setting must be the same on
+# all the agents. (string value)
+#vxlan_group = 224.0.0.1
+
+# Local IP address of the VXLAN endpoints. (ip address value)
+#local_ip = <None>
+
+# Extension to use alongside ml2 plugin's l2population mechanism driver. It
+# enables the plugin to populate VXLAN forwarding table. (boolean value)
+#l2_population = false
