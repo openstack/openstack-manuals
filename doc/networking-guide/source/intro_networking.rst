@@ -41,3 +41,4 @@ components:
    intro_networking_components.rst
    intro_tunnel_technologies.rst
    intro_network_namespaces.rst
+   intro_network_address_translation.rst

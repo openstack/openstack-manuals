@@ -1,4 +1,9 @@
-﻿==========================
+﻿.. meta::
+   :description: This guide targets OpenStack administrators seeking
+                 to deploy and manage OpenStack Networking (neutron).
+   :keywords: neutron, networking, OpenStack
+
+==========================
 OpenStack Networking Guide
 ==========================
 
@@ -20,6 +25,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   common/conventions.rst
    intro_networking.rst
    intro_os_networking.rst
    config.rst

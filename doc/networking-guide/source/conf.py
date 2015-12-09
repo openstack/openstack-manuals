@@ -38,7 +38,7 @@ import openstackdocstheme
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = ['sphinx.ext.todo']
 
 # Add any paths that contain templates here, relative to this directory.
 # templates_path = ['_templates']
@@ -87,7 +87,8 @@ html_context = {"pwd": pwd, "gitsha": gitsha, "bug_tag": bug_tag}
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['common/cli*', 'common/log_in_dashboard.rst']
+exclude_patterns = ['common/cli*', 'common/nova*',
+                    'common/log_in_dashboard.rst']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.

@@ -26,7 +26,7 @@ Tenant network types
 --------------------
 
 Similar info in:
-http://docs.openstack.org/admin-guide-cloud/content/tenant-provider-networks.html
+http://docs.openstack.org/admin-guide-cloud/networking_adv-features.html#provider-networks
 
 * Local
 
@@ -93,4 +93,3 @@ Metadata
 ^^^^^^^^
 
 * Configuration file
-
