@@ -8,8 +8,7 @@ Abstract
 This guide targets OpenStack administrators seeking to deploy and
 manage OpenStack Networking (neutron).
 
-This guide documents OpenStack Kilo, OpenStack Juno, and OpenStack
-Icehouse releases.
+This guide documents the OpenStack Kilo release.
 
 .. warning:: This guide is a work-in-progress and changing rapidly
    while we continue to test and enhance the guidance. Please note
