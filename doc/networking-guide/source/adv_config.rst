@@ -6,6 +6,7 @@ Advanced configuration
    :maxdepth: 2
 
    adv_config_operational.rst
+   adv_config_network_rbac.rst
    adv_config_LBaaS.rst
    adv_config_FwaaS.rst
    adv_config_VPNaaS.rst
