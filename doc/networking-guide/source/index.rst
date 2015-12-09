@@ -13,8 +13,7 @@ Abstract
 This guide targets OpenStack administrators seeking to deploy and
 manage OpenStack Networking (neutron).
 
-This guide documents OpenStack Liberty, OpenStack Kilo, and OpenStack
-Juno releases.
+This guide documents the OpenStack Mitaka release.
 
 .. warning:: This guide is a work-in-progress and changing rapidly
    while we continue to test and enhance the guidance. Please note
