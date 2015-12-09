@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-08 06:25+0000\n"
+"POT-Creation-Date: 2015-12-09 06:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1160,6 +1160,154 @@ msgstr ""
 #: ../adv_config_ipv6.rst:699
 msgid ""
 "Once you have stacked run the command below to start the neutron-pd-agent::"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:3
+msgid "Role-Based Access Control for networks"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:5
+msgid ""
+"A new policy framework was added during Liberty to enable both operators and "
+"users to grant specific projects access to resources. As of the Liberty "
+"release, the only access that can be granted via this feature is regular "
+"port creation permissions on networks."
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:12
+msgid "Sharing a network with specific projects"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:14
+msgid ""
+"Sharing a network with a specific project is accomplished by creating a "
+"policy entry that permits the target project the ``access_as_shared`` action "
+"on that network."
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:18
+msgid "First, we create a network we want to share:"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:42
+msgid ""
+"Now we create the policy entry using the :command:`rbac-create` command (In "
+"this example, the ID of the project we want to share with is "
+"``e28769db97d9449da658bc6931fcb683``):"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:62
+msgid ""
+"The ``target-tenant`` parameter specifies the project that we wanted to gain "
+"access to the network. The ``action`` parameter specifies what we want the "
+"project to be allowed to do. The ``type`` parameter says that the target "
+"object is a network. The final parameter is the ID of the network we are "
+"granting access to."
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:68
+msgid ""
+"Project ``e28769db97d9449da658bc6931fcb683`` will now be able to see the "
+"network when running :command:`net-list` and :command:`net-show` and will "
+"also be able to create ports on that network. No other users (other than "
+"admins and the owner) will be able to see the network."
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:73
+msgid ""
+"To remove access for that project, just delete the policy that allows it "
+"using the :command:`rbac-delete` command:"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:81
+msgid ""
+"If that project has ports on the network, the server will prevent the policy "
+"from being deleted until the ports have been deleted:"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:90
+msgid ""
+"This process can be repeated any number of times to share a network with an "
+"arbitrary number of projects."
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:94
+msgid "How the 'shared' flag relates to these entries"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:96
+msgid ""
+"As introduced in other guide entries, neutron provides a means of making a "
+"network available to every project. This is accomplished using the "
+"``shared`` flag on the network:"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:122
+msgid ""
+"This is the equivalent of creating a policy on the network that permits "
+"every project to perform the action ``access_as_shared`` on that network. In "
+"fact, neutron treats them as the same thing, so we should be able to see a "
+"policy entry for that network using the :command:`rbac-list` command:"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:137
+msgid "Then we can use the :command:`rbac-show` command to see the details:"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:153
+msgid ""
+"Above we can see that the entry allows the action ``access_as_shared`` on "
+"object ``9a4af544-7158-456d-b180-95f2e11eaa8c`` of type ``network`` to "
+"target_tenant ``*``, which is a wildcard that represents all projects."
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:157
+msgid ""
+"As of Liberty, the ``shared`` flag is just a mapping to the underlying RBAC "
+"policies for a network. Setting the flag to ``True`` on a network creates a "
+"wildcard RBAC entry. Setting it to ``False`` removes the wildcard entry."
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:162
+msgid ""
+"When a :command:`net-list` or :command:`net-show` is done, the ``shared`` "
+"flag is calculated by the server based on the calling project and the RBAC "
+"entries for each network. If there is a wildcard entry, the ``shared`` flag "
+"is always set to ``True``. If there are only entries that share with "
+"specific projects, only the projects the network is shared to will see the "
+"flag as ``True`` and the rest will see the flag as ``False``."
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:172
+msgid "Preventing regular users from sharing networks with each other"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:174
+msgid ""
+"The default ``policy.json`` shipped with neutron will not allow regular "
+"users to share networks with every other project using a wildcard; however, "
+"it will allow them to share networks with specific project IDs."
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:179
+msgid ""
+"If an operator wants to prevent normal users from doing this, the ``"
+"\"create_rbac_policy\":`` entry in ``policy.json`` can be adjusted from ``"
+"\"\"`` to ``\"rule:admin_only\"``."
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:185
+msgid "Limitations"
+msgstr ""
+
+#: ../adv_config_network_rbac.rst:187
+msgid ""
+"A non-admin user that shares a network with another project using this "
+"feature will not be able to see or delete the ports created under the other "
+"project. This is because the neutron database operations automatically limit "
+"database queries to objects owned by the requesting user's project unless "
+"that user is an admin or a service user. This issue is being tracked by the "
+"following bug: https://bugs.launchpad.net/neutron/+bug/1498790"
 msgstr ""
 
 #: ../adv_config_operational.rst:3
