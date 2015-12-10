@@ -26,9 +26,9 @@ Download a CentOS install ISO
 Start the installation process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Start the installation process using either :command:`virt-manager`
-or :command:`virt-install` as described in the previous section.
-If you use :command:`virt-install`, do not forget to connect your
+Start the installation process using either the :command:`virt-manager`
+or the :command:`virt-install` command as described in the previous section.
+If you use the :command:`virt-install` command, do not forget to connect your
 VNC client to the virtual machine.
 
 Assume that:
@@ -38,7 +38,7 @@ Assume that:
   to manipulate the state of the image.
 * You saved the netinstall ISO image to the ``/data/isos`` directory.
 
-If you use :command:`virt-install`, the commands should look
+If you use the :command:`virt-install` command, the commands should look
 something like this:
 
 .. code-block:: console
@@ -66,7 +66,7 @@ Configure TCP/IP
 ~~~~~~~~~~~~~~~~
 
 The default TCP/IP settings are fine.
-In particular, ensure that Enable IPv4 support is enabled
+In particular, ensure that ``Enable IPv4 support`` is enabled
 with DHCP, which is the default.
 
 .. figure:: figures/centos-tcpip.png
@@ -212,7 +212,7 @@ the instance performs these tasks, use one of these methods:
 * Install a ``cloud-init`` RPM, which is a port of the Ubuntu
   `cloud-init <https://launchpad.net/cloud-init>`_ package.
   This is the recommended approach.
-* Modify ``/etc/rc.local`` to fetch desired information from
+* Modify the ``/etc/rc.local`` file to fetch desired information from
   the metadata service, as described in the next section.
 
 Use cloud-init to fetch the public key
@@ -362,7 +362,7 @@ Use the :command:`virsh undefine vm-image` command to inform libvirt:
 Image is complete
 ~~~~~~~~~~~~~~~~~
 
-The underlying image file that you created with
-:command:`qemu-img create` is ready to be uploaded.
+The underlying image file that you created with the
+:command:`qemu-img create` command is ready to be uploaded.
 For example, you can upload the ``/tmp/centos-6.4.qcow2``
 image to the Image service.

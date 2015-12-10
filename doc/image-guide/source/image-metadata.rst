@@ -18,9 +18,9 @@ hosts that satisfy that property.
    ``scheduler_default_filter`` value in the ``/etc/nova/nova.conf`` file.
 
 You can add metadata to Image service images by using the
-``--property key=value`` parameter with the ``glance image-create``
-or ``glance image-update`` command.
-More than one property can be specified. For example:
+``--property key=value`` parameter with the
+:command:`glance image-create` or :command:`glance image-update`
+command. More than one property can be specified. For example:
 
 .. code-block:: console
 
@@ -34,7 +34,7 @@ For a complete list of valid property keys and values, refer to the
 cli-reference/content/chapter_cli-glance-property.html>`_.
 
 All associated properties for an image can be displayed using the
-``glance image-show`` command. For example:
+:command:`glance image-show` command. For example:
 
 .. code-block:: console
 

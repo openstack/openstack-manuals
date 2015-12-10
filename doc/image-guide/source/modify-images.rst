@@ -10,7 +10,7 @@ Here we describe several tools available that allow you to modify images.
 
    Do not attempt to use these tools to modify an image
    that is attached to a running virtual machine.
-   These tools are designed only to modify images that
+   These tools are designed only to modify the images that
    are not currently running.
 
 guestfish
@@ -36,7 +36,7 @@ any traces of the MAC address that was assigned to the virtual
 network interface card when the image was first created.
 This is because the MAC address is different when the virtual
 machine images boots.
-This example shows how to use guestfish to remove
+This example shows how to use the ``guestfish`` to remove
 references to the old MAC address by deleting the
 ``/etc/udev/rules.d/70-persistent-net.rules`` file and
 removing the ``HWADDR`` line from the
@@ -267,7 +267,7 @@ resize to 50 GB.
 Loop devices, kpartx, network block devices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you do not have access to libguestfs, you can mount
+If you do not have access to the libguestfs, you can mount
 image file systems directly in the host using loop
 devices, kpartx, and network block devices.
 
@@ -344,8 +344,8 @@ Once you are done, to clean up:
 Mount a raw image (with LVM)
 ----------------------------
 
-If your partitions are managed with LVM, use losetup
-and kpartx as in the previous example to expose the
+If your partitions are managed with LVM, use :command:`losetup`
+and :command:`kpartx` commands as in the previous example to expose the
 partitions to the host.
 
 .. code-block:: console
@@ -356,7 +356,8 @@ partitions to the host.
    # kpartx -av /dev/loop0
 
 Next, you need to use the :command:`vgscan` command to identify the LVM
-volume groups and then :command:`vgchange` to expose the volumes as devices:
+volume groups and then the :command:`vgchange` command to expose the volumes
+as devices:
 
 .. code-block:: console
 
@@ -410,7 +411,7 @@ there should be one new device created for each partition:
 .. note::
 
    If the network block device you selected was already in use,
-   the initial ``qemu-nbd`` command will fail silently, and the
+   the initial :command:`qemu-nbd` command will fail silently, and the
    ``/dev/nbd3p{1,2,3}`` device files will not be created.
 
 If the image partitions are not managed with LVM,

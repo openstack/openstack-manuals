@@ -155,7 +155,7 @@ You should alter the following files:
 .. note::
 
    If you delete the network persistent rules files,
-   you may get a udev kernel warning at boot time,
+   you may get a ``udev kernel`` warning at boot time,
    which is why we recommend replacing them with empty files instead.
 
 Ensure ssh server runs
@@ -218,7 +218,7 @@ and add it to a user account.
 
 To fetch the ssh public key and add it to the root account,
 edit the ``/etc/rc.local`` file and add the following lines
-before the line "touch /var/lock/subsys/local".
+before the line ``touch /var/lock/subsys/local``.
 This code fragment is taken from the
 `rackerjoe oz-image-build CentOS 6 template <https://github.com/
 rackerjoe/oz-image-build/blob/master/templates/centos60_x86_64.tdl>`_.
@@ -284,7 +284,7 @@ As the OpenStack metadata service is compatible with version
 Amazon EC2 documentation on
 `Using Instance Metadata <http://docs.amazonwebservices.com/
 AWSEC2/2009-04-04/UserGuide/AESDG-chapter-instancedata.html>`_
-for details on how to retrieve user data.
+for details on how to retrieve the user data.
 
 The easiest way to support this type of functionality is
 to install the ``cloud-init`` package into your image,
@@ -300,7 +300,7 @@ You must configure the image so that the kernel writes
 the boot log to the ``ttyS0`` device. In particular, the
 ``console=ttyS0`` argument must be passed to the kernel on boot.
 
-If your image uses grub2 as the boot loader,
+If your image uses ``grub2`` as the boot loader,
 there should be a line in the grub configuration file.
 For example, ``/boot/grub/grub.cfg``, which looks something like this:
 
@@ -311,7 +311,7 @@ For example, ``/boot/grub/grub.cfg``, which looks something like this:
 If ``console=ttyS0`` does not appear, you must modify your grub
 configuration. In general, you should not update the ``grub.cfg``
 directly, since it is automatically generated.
-Instead, you should edit ``/etc/default/grub`` and modify the
+Instead, you should edit the ``/etc/default/grub`` file and modify the
 value of the ``GRUB_CMDLINE_LINUX_DEFAULT`` variable:
 
 .. code-block:: bash
@@ -319,7 +319,7 @@ value of the ``GRUB_CMDLINE_LINUX_DEFAULT`` variable:
    GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS0"
 
 Next, update the grub configuration. On Debian-based
-operating-systems such as Ubuntu, run this command:
+operating systems such as Ubuntu, run this command:
 
 .. code-block:: console
 
@@ -346,12 +346,12 @@ boots a kernel that has been compiled with Xen support.
 Manage the image cache
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Use options in ``nova.conf`` to control whether, and for how long,
-unused base images are stored in ``/var/lib/nova/instances/_base/``.
+Use options in the ``nova.conf`` file to control whether, and for how long,
+unused base images are stored in the ``/var/lib/nova/instances/_base/``.
 If you have configured live migration of instances, all your compute
 nodes share one common ``/var/lib/nova/instances/`` directory.
 
-For information about libvirt images in OpenStack, see
+For information about the libvirt images in OpenStack, see
 `The life of an OpenStack libvirt image from Pádraig Brady
 <http://www.pixelbeat.org/docs/openstack_libvirt_images/>`_.
 
@@ -403,5 +403,5 @@ In the ``/var/log/compute/compute.log`` file, look for the identifier:
 Because 86400 seconds (24 hours) is the default time for
 ``remove_unused_original_minimum_age_seconds``,
 you can either wait for that time interval to see the base image
-removed, or set the value to a shorter time period in ``nova.conf``.
-Restart all nova services after changing a setting in ``nova.conf``.
+removed, or set the value to a shorter time period in the ``nova.conf`` file.
+Restart all nova services after changing a setting in the ``nova.conf`` file.

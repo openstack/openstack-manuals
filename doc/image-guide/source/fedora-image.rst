@@ -123,7 +123,7 @@ This procedure lets you create a Fedora 20 image.
 
 
 #. Run the following commands from the host to eject the disk and
-   reboot using :command:`virsh`, as root.
+   reboot using the :command:`virsh` command, as root.
 
    .. code-block:: console
 
@@ -147,7 +147,7 @@ This procedure lets you create a Fedora 20 image.
       # yum install acpid
       # chkconfig acpid on
 
-#. Install ``cloud-init`` package inside the Fedora guest by adding
+#. Install the ``cloud-init`` package inside the Fedora guest by adding
    the EPEL repo:
 
    The ``cloud-init`` package automatically fetches the public key
@@ -215,5 +215,6 @@ This procedure lets you create a Fedora 20 image.
 
       # virsh undefine fedora-20
 
-The underlying image file that you created with
-:command:`qemu-img create` is ready to be uploaded to the Image service.
+The underlying image file that you created with the
+:command:`qemu-img create` command is ready to be uploaded to the
+Image service.

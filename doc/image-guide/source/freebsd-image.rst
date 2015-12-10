@@ -151,8 +151,8 @@ a FreeBSD 9.2 image, follow these steps with the noted differences.
 
 #. Select the time zone appropriate to your environment.
 
-#. From the list of services to start on boot, you must select ``ssh``.
-   Optionally, select other services.
+#. From the list of services to start on boot, you must select
+   :guilabel:`ssh`. Optionally, select other services.
 
 #. Optionally, add users.
 

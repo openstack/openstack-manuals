@@ -13,10 +13,10 @@ machine images (which some people call "virtual appliances").
 This guide describes how to obtain, create, and modify virtual machine
 images that are compatible with OpenStack.
 
-To keep things brief, we will sometimes use the term image instead of
-virtual machine image.
+To keep things brief, we will sometimes use the term ``image``
+instead of virtual machine image.
 
-What is a virtual machine image?
+**What is a virtual machine image?**
 
 A virtual machine image is a single file which contains a virtual disk
 that has a bootable operating system installed on it.
@@ -29,7 +29,7 @@ Raw
  supported by both KVM and Xen hypervisors.
  You can think of a raw image as being the bit-equivalent of
  a block device file, created as if somebody had copied, say,
- ``/dev/sda`` to a file using the ``dd`` command.
+ ``/dev/sda`` to a file using the :command:`dd` command.
 
  .. note::
 

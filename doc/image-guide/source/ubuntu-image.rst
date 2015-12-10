@@ -90,7 +90,7 @@ Internet, we recommend "Install security updates automatically".
 Software selection: OpenSSH server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Choose ``OpenSSH server`` so that you will be able to SSH into
+Choose :guilabel:`OpenSSH server` so that you will be able to SSH into
 the virtual machine when it launches inside of an OpenStack cloud.
 
 .. figure:: figures/ubuntu-software-selection.png
@@ -98,7 +98,7 @@ the virtual machine when it launches inside of an OpenStack cloud.
 Install GRUB boot loader
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Select "Yes" when asked about installing the GRUB boot loader
+Select :guilabel:`Yes` when asked about installing the GRUB boot loader
 to the master boot record.
 
 .. figure:: figures/ubuntu-grub.png
@@ -144,7 +144,7 @@ You can confirm the appropriate target using the
 
 Run the following commands in the host as root to start up
 the machine again as paused, eject the disk and resume.
-If you are using virt-manager, you may use the GUI instead.
+If you are using ``virt-manager``, you may use the GUI instead.
 
 .. code-block:: console
 
@@ -164,7 +164,7 @@ Log in to newly created image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you boot for the first time after install, it may ask
-you about authentication tools, you can just choose ``Exit``.
+you about authentication tools, you can just choose :guilabel:`Exit`.
 Then, log in as root using the root password you specified.
 
 Install cloud-init
@@ -187,15 +187,15 @@ service used by images in Amazon EC2.
 
 To set the metadata source to be used by the image run the
 :command:`dpkg-reconfigure` command against the ``cloud-init``
-package. When prompted select the ``EC2`` data source:
+package. When prompted select the :guilabel:`EC2` data source:
 
 .. code-block:: console
 
    # dpkg-reconfigure cloud-init
 
 The account varies by distribution.
-On Ubuntu-based virtual machines, the account is called "ubuntu".
-On Fedora-based virtual machines, the account is called "ec2-user".
+On Ubuntu-based virtual machines, the account is called ``ubuntu``.
+On Fedora-based virtual machines, the account is called ``ec2-user``.
 
 You can change the name of the account used by cloud-init by editing the
 ``/etc/cloud/cloud.cfg`` file and adding a line with a different user.
@@ -246,6 +246,6 @@ Use the :command:`virsh undefine vm-image` command to inform libvirt:
 Image is complete
 ~~~~~~~~~~~~~~~~~
 
-The underlying image file that you created with
-:command:`qemu-img create`, such as ``/tmp/trusty.qcow2``,
+The underlying image file that you created with the
+:command:`qemu-img create` command, such as ``/tmp/trusty.qcow2``,
 is now ready for uploading to the Image service.
