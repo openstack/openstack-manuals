@@ -11,7 +11,7 @@ if [[ $# > 0 ]] ; then
     fi
 fi
 
-for guide in user-guide user-guide-admin networking-guide admin-guide-cloud \
+for guide in user-guide user-guide-admin admin-guide-cloud \
     contributor-guide image-guide arch-design; do
     tools/build-rst.sh doc/$guide $GLOSSARY --build build \
         --target $guide $LINKCHECK
@@ -20,7 +20,9 @@ for guide in user-guide user-guide-admin networking-guide admin-guide-cloud \
 done
 
 # Draft guides
-for guide in config-ref-rst; do
+# This includes guides that we publish from stable branches
+# as versioned like the networking-guide.
+for guide in config-ref-rst networking-guide; do
     tools/build-rst.sh doc/$guide --build build \
         --target "draft/$guide" $LINKCHECK
 done
