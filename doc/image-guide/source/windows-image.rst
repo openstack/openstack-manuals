@@ -3,7 +3,7 @@ Example: Microsoft Windows image
 ================================
 
 This example creates a Windows Server 2012 qcow2 image,
-using :command:`virt-install` and the KVM hypervisor.
+using the :command:`virt-install` command and the KVM hypervisor.
 
 #. Follow these steps to prepare the installation:
 
@@ -42,8 +42,8 @@ using :command:`virt-install` and the KVM hypervisor.
    When requested to choose an installation target, click
    :guilabel:`Load driver` and browse the file system to select
    the ``E:\WIN8\AMD64`` folder. The Windows installer displays
-   a list of drivers to install. Select the VirtIO SCSI and
-   network drivers, and continue the installation.
+   a list of drivers to install. Select the :guilabel:`VirtIO SCSI` and
+   :guilabel:`network drivers`, and continue the installation.
 
    Once the installation is completed, the VM restarts.
    Define a password for the administrator when prompted.
@@ -57,7 +57,7 @@ using :command:`virt-install` and the KVM hypervisor.
 
       C:\pnputil -i -a E:\WIN8\AMD64\*.INF
 
-#. To allow :term:`Cloudbase-Init` to run scripts during an instance
+#. To allow the :term:`Cloudbase-Init` to run scripts during an instance
    boot, set the PowerShell execution policy to be unrestricted:
 
    .. code-block:: console
@@ -65,7 +65,7 @@ using :command:`virt-install` and the KVM hypervisor.
       C:\powershell
       C:\Set-ExecutionPolicy Unrestricted
 
-#. Download and install Cloudbase-Init:
+#. Download and install the ``Cloudbase-Init``:
 
    .. code-block:: console
 

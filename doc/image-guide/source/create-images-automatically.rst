@@ -160,7 +160,7 @@ VeeWee
 
 `VeeWee <https://github.com/jedi4ever/veewee>`_ is often used
 to build `Vagrant <http://vagrantup.com>`_ boxes,
-but it can also be used to build KVM images.
+but it can also be used to build the KVM images.
 
 Packer
 ~~~~~~
