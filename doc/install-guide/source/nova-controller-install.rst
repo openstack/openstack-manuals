@@ -196,6 +196,20 @@ Install and configure components
       :doc:`service endpoint registration <debconf/debconf-api-endpoints>`,
       and :doc:`message broker credentials <debconf/debconf-rabbitmq>`.
 
+      .. note::
+
+         ``nova-api-metadata`` is included in the ``nova-api`` package,
+         and can be selected through debconf.
+
+      .. note::
+
+         A unique ``nova-consoleproxy`` package provides the
+         ``nova-novncproxy``, ``nova-spicehtml5proxy``, and
+         ``nova-xvpvncproxy`` packages. To select packages, edit the
+         ``/etc/default/nova-consoleproxy`` file or use the debconf interface.
+         You can also manually edit the ``/etc/default/nova-consoleproxy``
+         file, and stop and start the console daemons.
+
 2. Edit the ``/etc/nova/nova.conf`` file and
    complete the following actions:
 
