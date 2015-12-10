@@ -18,8 +18,7 @@ Create a network
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Network` tab and
    click :guilabel:`Networks` category.
@@ -34,12 +33,12 @@ Create a network
 
    :guilabel:`Admin State`: The state to start the network in.
 
-   :guilabel:`Subnet` tab
-
    :guilabel:`Create Subnet`: Select this check box to create a subnet
 
    You do not have to specify a subnet when you create a network, but if
    you do not specify a subnet, any attached instance receives an Error status.
+
+   :guilabel:`Subnet` tab
 
    :guilabel:`Subnet Name`: Specify a name for the subnet.
 
@@ -72,8 +71,7 @@ Create a router
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Network` tab and
    click :guilabel:`Routers` category.
@@ -81,14 +79,9 @@ Create a router
 #. Click :guilabel:`Create Router`.
 
 #. In the :guilabel:`Create Router` dialog box, specify a name for the router
-   and click :guilabel:`Create Router`.
+   and :guilabel:`External Network`, and click :guilabel:`Create Router`.
 
    The new router is now displayed in the :guilabel:`Routers` tab.
-
-#. Click the new router's :guilabel:`Set Gateway` button.
-
-#. In the :guilabel:`External Network` field, specify the network to which the
-   router will connect, and then click :guilabel:`Set Gateway`.
 
 #. To connect a private network to the newly created router, perform the
    following steps:

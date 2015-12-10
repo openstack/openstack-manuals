@@ -2,8 +2,7 @@
 Log in to the dashboard
 =======================
 
-The dashboard is available on the node with the ``nova-dashboard``
-server role.
+The dashboard is generally installed on the controller node.
 
 #. Ask the cloud operator for the host name or public IP address from
    which you can access the dashboard, and for your user name and

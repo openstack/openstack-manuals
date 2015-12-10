@@ -15,9 +15,11 @@ management of images to cloud administrators or operators only. If you
 have the appropriate privileges, you can use the dashboard to upload and
 manage images in the admin project.
 
-.. note:: You can also use the :command:`glance` and :command:`nova`
-   command-line clients or the Image service and Compute APIs to
-   manage images.
+.. note::
+
+   You can also use the :command:`openstack`, :command:`glance` and
+   :command:`nova` command-line clients or the Image service and Compute
+   APIs to manage images.
 
 Upload an image
 ~~~~~~~~~~~~~~~
@@ -26,8 +28,7 @@ Follow this procedure to upload an image to a project:
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Images` category.
@@ -66,9 +67,9 @@ Follow this procedure to upload an image to a project:
    |                               | architecture or ``x86_64`` for  |
    |                               | a 64-bit architecture.          |
    +-------------------------------+---------------------------------+
-   | :guilabel:`Minimum Disk (GB)` | Leave these fields empty.       |
-   | and                           |                                 |
-   | :guilabel:`Minimum RAM (MB)`  |                                 |
+   | :guilabel:`Minimum Disk (GB)` | Leave this field empty.         |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Minimum RAM (MB)`  | Leave this field empty.         |
    +-------------------------------+---------------------------------+
    | :guilabel:`Copy Data`         | Specify this option to copy     |
    |                               | image data to the Image service.|
@@ -96,25 +97,19 @@ Follow this procedure to update an existing image.
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
-
-#. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
-   click :guilabel:`Images` category.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. Select the image that you want to edit.
 
-#. In the :guilabel:`Actions` column, click :guilabel:`More` and then
+#. In the :guilabel:`Actions` column, click the menu button and then
    select :guilabel:`Edit Image` from the list.
 
-#. In the :guilabel:`Update Image` dialog box, you can perform the
-   following actions:
+#. In the :guilabel:`Update Image` dialog box, you can perform various
+   actions. For example:
 
-   -  Change the name of the image.
-
-   -  Select the :guilabel:`Public` check box to make the image public.
-
-   -  Clear the :guilabel:`Public` check box to make the image private.
+   *  Change the name of the image.
+   *  Select the :guilabel:`Public` check box to make the image public.
+   *  Clear the :guilabel:`Public` check box to make the image private.
 
 #. Click :guilabel:`Update Image`.
 
@@ -126,8 +121,7 @@ with the appropriate permissions can delete images.
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Images` category.

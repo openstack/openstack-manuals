@@ -18,8 +18,7 @@ Create a container
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
    click :guilabel:`Containers` category.
@@ -39,8 +38,7 @@ Upload an object
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
    click :guilabel:`Containers` category.
@@ -51,7 +49,7 @@ Upload an object
 
    The :guilabel:`Upload Object To Container: <name>` dialog box
    appears.
-   *``<name>``* is the name of the container to which you are uploading
+   ``<name>`` is the name of the container to which you are uploading
    the object.
 
 #. Enter a name for the object.
@@ -72,15 +70,14 @@ Manage an object
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
    click :guilabel:`Containers` category.
 
 #. Select the container in which you want to store your object.
 
-#. Click :guilabel:`More` and choose :guilabel:`Edit` from the dropdown list.
+#. Click the menu button and choose :guilabel:`Edit` from the dropdown list.
 
    The :guilabel:`Edit Object` dialog box is displayed.
 
@@ -88,22 +85,21 @@ Manage an object
 
 #. Click :guilabel:`Update Object`.
 
-.. note:: To delete an object, click the :guilabel:`More` button and select
+.. note:: To delete an object, click the menu button and select
    :guilabel:`Delete Object`.
 
 **To copy an object from one container to another**
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
    click :guilabel:`Containers` category.
 
 #. Select the container in which you want to store your object.
 
-#. Click :guilabel:`More` and choose :guilabel:`Copy` from the dropdown list.
+#. Click the menu button and choose :guilabel:`Copy` from the dropdown list.
 
 #. In the :guilabel:`Copy Object` launch dialog box, enter the following
    values:
@@ -126,8 +122,7 @@ metadata and URL info in advance.
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
    click :guilabel:`Containers` category.
@@ -136,10 +131,10 @@ metadata and URL info in advance.
 
 #. Click :guilabel:`Upload Object`.
 
-   The :guilabel:`Upload Object To Container`: *``<name>``* dialog box is
+   The :guilabel:`Upload Object To Container`: ``<name>`` dialog box is
    displayed.
 
-   *``<name>``* is the name of the container to which you are uploading
+   ``<name>`` is the name of the container to which you are uploading
    the object.
 
 #. Enter a name for the object.
@@ -154,8 +149,7 @@ name.
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and
    click :guilabel:`Containers` category.
@@ -164,8 +158,8 @@ name.
 
 #. Click :guilabel:`Create Pseudo-folder`.
 
-   The :guilabel:`Create Pseudo-Folder in Container` *``<name> ``* dialog box
-   is displayed. *``<name> ``* is the name of the container to which you
+   The :guilabel:`Create Pseudo-Folder in Container` ``<name>`` dialog box
+   is displayed. ``<name>`` is the name of the container to which you
    are uploading the object.
 
 #. Enter a name for the pseudo-folder.
@@ -174,4 +168,3 @@ name.
    Object Storage.
 
 #. Click :guilabel:`Create`.
-

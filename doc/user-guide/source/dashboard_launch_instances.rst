@@ -32,8 +32,7 @@ copy of the image on the compute node where the instance starts.
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Images` category.
@@ -114,13 +113,26 @@ copy of the image on the compute node where the instance starts.
       from image` is chosen by default.
 
    Image Name
-      This field changes based on your previous selection. Since you have
+      This field changes based on your previous selection. If you have
       chosen to launch an instance using an image, the :guilabel:`Image Name`
       field displays. Select the image name from the dropdown list.
 
+   Instance Snapshot
+      This field changes based on your previous selection. If you have
+      chosen to launch an instance using a snapshot, the
+      :guilabel:`Instance Snapshot` field displays.
+      Select the snapshot name from the dropdown list.
+
+   Volume
+      This field changes based on your previous selection. If you have
+      chosen to launch an instance using a volume, the :guilabel:`Volume`
+      field displays. Select the volume name from the dropdown list.
+      If you want to delete the volume on instance terminate,
+      check the :guilabel:`Delete on Terminate` option.
+
    :guilabel:`Access & Security` tab
 
-   Keypair
+   Key Pair
       Specify a key pair.
 
       If the image uses a static root password or a static key set
@@ -144,7 +156,7 @@ copy of the image on the compute node where the instance starts.
 
    :guilabel:`Post-Creation` tab
 
-   Customization Script
+   Customization Script Source
       Specify a customization script that runs after your instance
       launches.
 
@@ -196,8 +208,7 @@ uptime for all your instances.
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Overview` category.
@@ -212,8 +223,7 @@ Create an instance snapshot
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click the :guilabel:`Instances` category.
@@ -235,16 +245,14 @@ Manage an instance
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Instances` category.
 
 #. Select an instance.
 
-#. In the :guilabel:`More` list in the :guilabel:`Actions` column, select the
-   state.
+#. In the menu list in the :guilabel:`Actions` column, select the state.
 
    You can resize or rebuild an instance. You can also choose to view
    the instance console log, edit instance or the security groups.

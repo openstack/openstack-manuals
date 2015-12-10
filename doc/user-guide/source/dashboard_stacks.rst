@@ -26,8 +26,7 @@ Launch a stack
 ~~~~~~~~~~~~~~
 
 #. Log in to the dashboard.
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 #. On the :guilabel:`Project` tab, open the :guilabel:`Orchestration` tab and
    click :guilabel:`Stacks` category.
 #. Click :guilabel:`Launch Stack`.
@@ -121,8 +120,7 @@ Manage a stack
 ~~~~~~~~~~~~~~
 
 #. Log in to the dashboard.
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 #. On the :guilabel:`Project` tab, open the :guilabel:`Orchestration` tab and
    click :guilabel:`Stacks` category.
 #. Select the stack that you want to update.
@@ -141,8 +139,7 @@ Delete a stack
 When you delete a stack, you cannot undo this action.
 
 #. Log in to the dashboard.
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 #. On the :guilabel:`Project` tab, open the :guilabel:`Orchestration` tab and
    click :guilabel:`Stacks` category.
 #. Select the stack that you want to delete.
