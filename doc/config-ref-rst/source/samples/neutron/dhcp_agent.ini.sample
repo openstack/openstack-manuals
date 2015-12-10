@@ -1,0 +1,214 @@
+[DEFAULT]
+
+#
+# From neutron.base.agent
+#
+
+# Name of Open vSwitch bridge to use (string value)
+#ovs_integration_bridge = br-int
+
+# Uses veth for an OVS interface or not. Support kernels with limited namespace
+# support (e.g. RHEL 6.5) so long as ovs_use_veth is set to True. (boolean
+# value)
+#ovs_use_veth = false
+
+# MTU setting for device. (integer value)
+#network_device_mtu = <None>
+
+# The driver used to manage the virtual interface. (string value)
+#interface_driver = <None>
+
+# Timeout in seconds for ovs-vsctl commands. If the timeout expires, ovs
+# commands will fail with ALARMCLOCK error. (integer value)
+#ovs_vsctl_timeout = 10
+
+#
+# From neutron.dhcp.agent
+#
+
+# The DHCP agent will resync its state with Neutron to recover from any
+# transient notification or RPC errors. The interval is number of seconds
+# between attempts. (integer value)
+#resync_interval = 5
+
+# The driver used to manage the DHCP server. (string value)
+#dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
+
+# The DHCP server can assist with providing metadata support on isolated
+# networks. Setting this value to True will cause the DHCP server to append
+# specific host routes to the DHCP request. The metadata service will only be
+# activated when the subnet does not contain any router port. The guest
+# instance must be configured to request host routes via DHCP (Option 121).
+# This option doesn't have any effect when force_metadata is set to True.
+# (boolean value)
+#enable_isolated_metadata = false
+
+# In some cases the Neutron router is not present to provide the metadata IP
+# but the DHCP server can be used to provide this info. Setting this value will
+# force the DHCP server to append specific host routes to the DHCP request. If
+# this option is set, then the metadata service will be activated for all the
+# networks. (boolean value)
+#force_metadata = false
+
+# Allows for serving metadata requests coming from a dedicated metadata access
+# network whose CIDR is 169.254.169.254/16 (or larger prefix), and is connected
+# to a Neutron router from which the VMs send metadata:1 request. In this case
+# DHCP Option 121 will not be injected in VMs, as they will be able to reach
+# 169.254.169.254 through a router. This option requires
+# enable_isolated_metadata = True. (boolean value)
+#enable_metadata_network = false
+
+# Number of threads to use during sync process. Should not exceed connection
+# pool size configured on server. (integer value)
+#num_sync_threads = 4
+
+# Location to store DHCP server config files (string value)
+#dhcp_confs = $state_path/dhcp
+
+# Domain to use for building the hostnames.This option is deprecated. It has
+# been moved to neutron.conf as dns_domain. It will removed from here in a
+# future release (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#dhcp_domain = openstacklocal
+
+# Override the default dnsmasq settings with this file (string value)
+#dnsmasq_config_file =
+
+# Comma-separated list of the DNS servers which will be used as forwarders.
+# (list value)
+# Deprecated group/name - [DEFAULT]/dnsmasq_dns_server
+#dnsmasq_dns_servers = <None>
+
+# Base log dir for dnsmasq logging. The log contains DHCP and DNS log
+# information and is useful for debugging issues with either DHCP or DNS. If
+# this section is null, disable dnsmasq log. (string value)
+#dnsmasq_base_log_dir = <None>
+
+# Limit number of leases to prevent a denial-of-service. (integer value)
+#dnsmasq_lease_max = 16777216
+
+# Use broadcast in DHCP replies (boolean value)
+#dhcp_broadcast_reply = false
+
+#
+# From oslo.log
+#
+
+# Print debugging output (set logging level to DEBUG instead of default INFO
+# level). (boolean value)
+#debug = false
+
+# If set to false, will disable INFO logging level, making WARNING the default.
+# (boolean value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#verbose = true
+
+# The name of a logging configuration file. This file is appended to any
+# existing logging configuration files. For details about logging configuration
+# files, see the Python logging module documentation. Note that when logging
+# configuration files are used then all logging configuration is set in the
+# configuration file and other logging configuration options are ignored (for
+# example, log_format). (string value)
+# Deprecated group/name - [DEFAULT]/log_config
+#log_config_append = <None>
+
+# DEPRECATED. A logging.Formatter log message format string which may use any
+# of the available logging.LogRecord attributes. This option is deprecated.
+# Please use logging_context_format_string and logging_default_format_string
+# instead. This option is ignored if log_config_append is set. (string value)
+#log_format = <None>
+
+# Format string for %%(asctime)s in log records. Default: %(default)s . This
+# option is ignored if log_config_append is set. (string value)
+#log_date_format = %Y-%m-%d %H:%M:%S
+
+# (Optional) Name of log file to output to. If no default is set, logging will
+# go to stdout. This option is ignored if log_config_append is set. (string
+# value)
+# Deprecated group/name - [DEFAULT]/logfile
+#log_file = <None>
+
+# (Optional) The base directory used for relative --log-file paths. This option
+# is ignored if log_config_append is set. (string value)
+# Deprecated group/name - [DEFAULT]/logdir
+#log_dir = <None>
+
+# (Optional) Uses logging handler designed to watch file system. When log file
+# is moved or removed this handler will open a new log file with specified path
+# instantaneously. It makes sense only if log-file option is specified and
+# Linux platform is used. This option is ignored if log_config_append is set.
+# (boolean value)
+#watch_log_file = false
+
+# Use syslog for logging. Existing syslog format is DEPRECATED and will be
+# changed later to honor RFC5424. This option is ignored if log_config_append
+# is set. (boolean value)
+#use_syslog = false
+
+# (Optional) Enables or disables syslog rfc5424 format for logging. If enabled,
+# prefixes the MSG part of the syslog message with APP-NAME (RFC5424). The
+# format without the APP-NAME is deprecated in Kilo, and will be removed in
+# Mitaka, along with this option. This option is ignored if log_config_append
+# is set. (boolean value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#use_syslog_rfc_format = true
+
+# Syslog facility to receive log lines. This option is ignored if
+# log_config_append is set. (string value)
+#syslog_log_facility = LOG_USER
+
+# Log output to standard error. This option is ignored if log_config_append is
+# set. (boolean value)
+#use_stderr = true
+
+# Format string to use for log messages with context. (string value)
+#logging_context_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user_identity)s] %(instance)s%(message)s
+
+# Format string to use for log messages without context. (string value)
+#logging_default_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s
+
+# Data to append to log format when level is DEBUG. (string value)
+#logging_debug_format_suffix = %(funcName)s %(pathname)s:%(lineno)d
+
+# Prefix each line of exception output with this format. (string value)
+#logging_exception_prefix = %(asctime)s.%(msecs)03d %(process)d ERROR %(name)s %(instance)s
+
+# List of logger=LEVEL pairs. This option is ignored if log_config_append is
+# set. (list value)
+#default_log_levels = amqp=WARN,amqplib=WARN,boto=WARN,qpid=WARN,sqlalchemy=WARN,suds=INFO,oslo.messaging=INFO,iso8601=WARN,requests.packages.urllib3.connectionpool=WARN,urllib3.connectionpool=WARN,websocket=WARN,requests.packages.urllib3.util.retry=WARN,urllib3.util.retry=WARN,keystonemiddleware=WARN,routes.middleware=WARN,stevedore=WARN,taskflow=WARN
+
+# Enables or disables publication of error events. (boolean value)
+#publish_errors = false
+
+# The format for an instance that is passed with the log message. (string
+# value)
+#instance_format = "[instance: %(uuid)s] "
+
+# The format for an instance UUID that is passed with the log message. (string
+# value)
+#instance_uuid_format = "[instance: %(uuid)s] "
+
+# Format string for user_identity field of the logging_context_format_string
+# (string value)
+#logging_user_identity_format = %(user)s %(tenant)s %(domain)s %(user_domain)s %(project_domain)s
+
+# Enables or disables fatal status of deprecations. (boolean value)
+#fatal_deprecations = false
+
+
+[AGENT]
+
+#
+# From neutron.base.agent
+#
+
+# Seconds between nodes reporting state to server; should be less than
+# agent_down_time, best if it is half or less than agent_down_time. (floating
+# point value)
+#report_interval = 30
+
+# Log agent heartbeats (boolean value)
+#log_agent_heartbeats = false
