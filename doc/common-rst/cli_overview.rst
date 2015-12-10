@@ -39,6 +39,9 @@ service with its package name and description.
 |Block Storage   |cinder    |python-cinderclient    |Creates and manages     |
 |                |          |                       |volumes.                |
 +----------------+----------+-----------------------+------------------------+
+|Clustering      |senlin    |python-senlinclient    |Creates and manages     |
+|service         |          |                       |clustering services.    |
++----------------+----------+-----------------------+------------------------+
 |Compute         |nova      |python-novaclient      |Creates and manages     |
 |                |          |                       |images, instances, and  |
 |                |          |                       |flavors.                |

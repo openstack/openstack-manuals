@@ -175,6 +175,8 @@ for each client. The following values are valid:
 
 -  ``sahara`` - Data Processing API
 
+-  ``senlin`` - Clustering service API
+
 -  ``swift`` - Object Storage API
 
 -  ``trove`` - Database service API
