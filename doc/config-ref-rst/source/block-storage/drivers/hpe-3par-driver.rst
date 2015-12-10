@@ -82,14 +82,6 @@ following capabilities in the OpenStack Block Storage API
 ``cinder.api.contrib.types_extra_specs`` volume type extra specs extension
 module:
 
-* ``hpe3par:cpg``
-
-  .. warning::
-
-     This setting is ignored as of Kilo. Instead, use the ``hpe3par_cpg``
-     setting in ``cinder.conf`` to list the valid CPGs for a backend. CPGs
-     should now be controlled by configuring separate backends with pools.
-
 * ``hpe3par:snap_cpg``
 
 * ``hpe3par:provisioning``
@@ -170,11 +162,7 @@ pairs and associate them with a volume type, run the following commands:
 
    $ cinder help qos-create
 
-.. code-block:: console
-
    $ cinder help qos-key
-
-.. code-block:: console
 
    $ cinder help qos-associate
 
@@ -182,28 +170,34 @@ pairs and associate them with a volume type, run the following commands:
 The following keys require that the HPE 3PAR StoreServ storage array has a
 Priority Optimization license installed.
 
-* ``hpe3par:vvs`` - The virtual volume set name that has been predefined by
-  the Administrator with Quality of Service (QoS) rules associated to it. If
-  you specify extra_specs ``hpe3par:vvs``, the qos_specs ``minIOPS``,
-  ``maxIOPS``, ``minBWS``, and ``maxBWS`` settings are ignored.
+``hpe3par:vvs``
+ The virtual volume set name that has been predefined by the Administrator
+ with Quality of Service (QoS) rules associated to it. If you specify
+ extra_specs ``hpe3par:vvs``, the qos_specs ``minIOPS``, ``maxIOPS``,
+ ``minBWS``, and ``maxBWS`` settings are ignored.
 
-* ``minBWS`` - The QoS I/O issue bandwidth minimum goal in MBs. If not set,
-  the I/O issue bandwidth rate has no minimum goal.
+``minBWS``
+ The QoS I/O issue bandwidth minimum goal in MBs. If not set, the I/O issue
+ bandwidth rate has no minimum goal.
 
-* ``maxBWS`` - The QoS I/O issue bandwidth rate limit in MBs. If not set, the
-  I/O issue bandwidth rate has no limit.
+``maxBWS``
+ The QoS I/O issue bandwidth rate limit in MBs. If not set, the I/O issue
+ bandwidth rate has no limit.
 
-* ``minIOPS`` - The QoS I/O issue count minimum goal. If not set, the I/O
-  issue count has no minimum goal.
+``minIOPS``
+ The QoS I/O issue count minimum goal. If not set, the I/O issue count has no
+ minimum goal.
 
-* ``maxIOPS`` - The QoS I/O issue count rate limit. If not set, the I/O issue
-  count rate has no limit.
+``maxIOPS``
+ The QoS I/O issue count rate limit. If not set, the I/O issue count rate has
+ no limit.
 
-* ``latency`` - The latency goal in milliseconds.
+``latency``
+ The latency goal in milliseconds.
 
-* ``priority`` - The priority of the QoS rule over other rules. If not
-  set, the priority is ``normal``, valid values are ``low``, ``normal`` and
-  ``high``.
+``priority``
+ The priority of the QoS rule over other rules. If not set, the priority is
+ ``normal``, valid values are ``low``, ``normal`` and ``high``.
 
 .. note::
 
