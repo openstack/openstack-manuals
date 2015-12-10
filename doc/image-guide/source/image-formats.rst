@@ -63,3 +63,5 @@ ari
  An Amazon ramdisk image.
 ami
  An Amazon machine image.
+docker
+ A docker container format.
