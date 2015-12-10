@@ -15,28 +15,28 @@ the information contained in a virtual machine disk image.
 
 Set the disk format for your image to one of the following values:
 
-raw
- An unstructured disk image format; if you have a file
- without an extension it is possibly a raw format.
-vhd
- The VHD disk format, a common disk format used by virtual
- machine monitors from VMware, Xen, Microsoft, VirtualBox, and others.
-vmdk
- Common disk format supported by many common virtual machine monitors.
-vdi
- Supported by VirtualBox virtual machine monitor and the QEMU emulator.
+aki
+ An Amazon kernel image.
+ami
+ An Amazon machine image.
+ari
+ An Amazon ramdisk image.
 iso
  An archive format for the data contents of an optical disc,
  such as CD-ROM.
 qcow2
  Supported by the QEMU emulator that can expand dynamically
  and supports Copy on Write.
-aki
- An Amazon kernel image.
-ari
- An Amazon ramdisk image.
-ami
- An Amazon machine image.
+raw
+ An unstructured disk image format; if you have a file
+ without an extension it is possibly a raw format.
+vdi
+ Supported by VirtualBox virtual machine monitor and the QEMU emulator.
+vhd
+ The VHD disk format, a common disk format used by virtual
+ machine monitors from VMware, Xen, Microsoft, VirtualBox, and others.
+vmdk
+ Common disk format supported by many common virtual machine monitors.
 
 Container formats
 ~~~~~~~~~~~~~~~~~
@@ -53,15 +53,15 @@ a file format that also contains metadata about the actual virtual machine.
 You can set the container format for your image to one of the following
 values:
 
-bare
- The image does not have a container or metadata envelope.
-ovf
- The OVF container format.
 aki
  An Amazon kernel image.
-ari
- An Amazon ramdisk image.
 ami
  An Amazon machine image.
+ari
+ An Amazon ramdisk image.
+bare
+ The image does not have a container or metadata envelope.
 docker
  A docker container format.
+ovf
+ The OVF container format.
