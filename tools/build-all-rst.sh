@@ -21,10 +21,10 @@ fi
 #    GLOSSARY=""
 #done
 #
-## Draft guides
-#for guide in arch-design-rst config-ref-rst image-guide-rst; do
-#    tools/build-rst.sh doc/$guide --build build \
-#        --target "draft/$guide" $LINKCHECK
-#done
+# Versioned RST guides
+for guide in networking-guide; do
+    tools/build-rst.sh doc/$guide --glossary --build build \
+        --target "liberty/$guide" $LINKCHECK
+done
 
 tools/build-install-guides-rst.sh $LINKCHECK
