@@ -51,8 +51,7 @@ group rules to a project, if your cloud requires them.
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Access & Security` category. The
@@ -67,6 +66,7 @@ group rules to a project, if your cloud requires them.
 
    * **Rule**: ``SSH``
    * **Remote**: ``CIDR``
+   * **CIDR**: ``0.0.0.0/0``
 
    .. note:: To accept requests from a particular range of IP
       addresses, specify the IP address block in the
@@ -82,8 +82,9 @@ group rules to a project, if your cloud requires them.
 #. In the :guilabel:`Add Rule` dialog box, enter the following values:
 
    * **Rule**: ``All ICMP``
-   * **Remote**: ``Ingress``
-
+   * **Direction**: ``Ingress``
+   * **Remote**: ``CIDR``
+   * **CIDR**: ``0.0.0.0/0``
 
 #. Click :guilabel:`Add`.
 
@@ -99,8 +100,7 @@ Create at least one key pair for each project.
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Access & Security` category.
@@ -123,8 +123,7 @@ Import a key pair
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Access & Security` category.
@@ -180,8 +179,7 @@ and the association of that address with a specific instance.
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Access & Security` category.
@@ -215,6 +213,4 @@ and the association of that address with a specific instance.
    :guilabel:`Disassociate` button.
 
 To release the floating IP address back into the pool of addresses,
-click the :guilabel:`More` button and select the :guilabel:`Release
-Floating IP` option.
-
+the :guilabel:`Release Floating IP` option at the :guilabel:`Actions` column.

@@ -13,8 +13,7 @@ Create a volume
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Volumes` category.
@@ -28,22 +27,22 @@ Create a volume
    :guilabel:`Description`: Optionally, provide a brief description for the
    volume.
 
-   :guilabel:`Type`: Leave this field blank.
-
-   :guilabel:`Size (GB)`: The size of the volume in gibibytes (GiB).
-
    :guilabel:`Volume Source`: Select one of the following options:
 
    * No source, empty volume: Creates an empty volume. An empty volume does
      not contain a file system or a partition table.
 
-   * Image: If you choose this option, a new field for Use image as a source
-     displays. You can select the image from the list.
+   * Image: If you choose this option, a new field for :guilabel:`Use image
+     as a source` displays. You can select the image from the list.
 
    * Volume: If you choose this option, a new field for
      :guilabel:`Use volume as a source` displays. You can select the volume
      from the list. Options to use a snapshot or a volume as the source for a
      volume are displayed only if there are existing snapshots or volumes.
+
+   :guilabel:`Type`: Leave this field blank.
+
+   :guilabel:`Size (GB)`: The size of the volume in gibibytes (GiB).
 
    :guilabel:`Availability Zone`: Select the Availability Zone from the list.
    By default, this value is set to the availability zone given by the cloud
@@ -62,8 +61,7 @@ You can attach a volume to one instance at a time.
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Volumes` category.
@@ -94,8 +92,7 @@ Detach a volume from an instance
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click the :guilabel:`Volumes` category.
@@ -111,15 +108,14 @@ Create a snapshot from a volume
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Volumes` category.
 
 #. Select a volume from which to create a snapshot.
 
-#. From the :guilabel:`More` list, select :guilabel:`Create Snapshot`.
+#. In the :guilabel:`Actions` column, click :guilabel:`Create Snapshot`.
 
 #. In the dialog box that opens, enter a snapshot name and a brief
    description.
@@ -133,8 +129,7 @@ Edit a volume
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Volumes` category.
@@ -160,8 +155,7 @@ deleted.
 
 #. Log in to the dashboard.
 
-#. From the CURRENT PROJECT on the :guilabel:`Project` tab, select the
-   appropriate project.
+#. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
    click :guilabel:`Volumes` category.
@@ -171,4 +165,3 @@ deleted.
 #. Click :guilabel:`Delete Volumes` and confirm your choice.
 
    A message indicates whether the action was successful.
-
