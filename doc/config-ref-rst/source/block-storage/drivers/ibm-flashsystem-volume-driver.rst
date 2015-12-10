@@ -47,12 +47,12 @@ Data Path configuration
 
 Using Fiber Channel (FC), each FlashSystem node should have at least one
 WWPN port configured. If the ``flashsystem_multipath_enabled`` flag is
-set to ``True`` in the Cinder configuration file, the driver uses all
-available WWPNs to attach the volume to the instance. If the flag is not set,
-the driver uses the WWPN associated with the volume's preferred node (if
-available). Otherwise, it uses the first available WWPN of the system.
-The driver obtains the WWPNs directly from the storage system. You do
-not need to provide these WWPNs to the driver.
+set to ``True`` in the Block Storage service configuration file, the driver
+uses all available WWPNs to attach the volume to the instance. If the flag is
+not set, the driver uses the WWPN associated with the volume's preferred node
+(if available). Otherwise, it uses the first available WWPN of the system. The
+driver obtains the WWPNs directly from the storage system. You do not need to
+provide these WWPNs to the driver.
 
 .. note::
 
@@ -108,7 +108,7 @@ To enable the IBM FlashSystem FC driver, configure the following options in the
      - Enable multipath for FC connections
    * - ``flashsystem_multihost_enabled``
      - Optional
-     - True
+     - ``True``
      - Enable mapping vdisks to multiple hosts  [1]_
 
 .. [1]
@@ -181,7 +181,7 @@ in the ``cinder.conf`` configuration file:
      - Connection protocol should be set to ``iSCSI``
    * - ``flashsystem_multihost_enabled``
      - Optional
-     - True
+     - ``True``
      - Enable mapping vdisks to multiple hosts  [2]_
    * - ``iscsi_ip_address``
      - Required
@@ -190,7 +190,7 @@ in the ``cinder.conf`` configuration file:
    * - ``flashsystem_iscsi_portid``
      - Required
      -
-     - Set to the id of the iscsi_ip_address obtained by FlashSystem GUI or CLI  [4]_
+     - Set to the id of the ``iscsi_ip_address`` obtained by FlashSystem GUI or CLI  [4]_
 
 .. [2]
    This option allows the driver to map a vdisk to more than one host at
@@ -201,7 +201,7 @@ in the ``cinder.conf`` configuration file:
    ``False`` will provide added safety.
 
 .. [3]
-   On the cluster of the FlashSystem, the iSCSI IP address column is the
+   On the cluster of the FlashSystem, the ``iscsi_ip_address`` column is the
    seventh column ``IP_address`` of the output of ``lsportip``.
 
 .. [4]
@@ -209,8 +209,8 @@ in the ``cinder.conf`` configuration file:
    column ``id`` of the output of ``lsportip``,
    not the sixth column ``port_id``.
 
-Limitation and known issues
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Limitations and known issues
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 IBM FlashSystem only works when:
 
