@@ -13,3 +13,4 @@ Administrator Guide <http://docs.openstack.org/admin-guide-cloud/>`__.
    networking/networking_options_reference.rst
    networking/networking_log.rst
    networking/sample-configuration-files.rst
+   tables/conf-changes/neutron.rst
