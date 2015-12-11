@@ -28,24 +28,22 @@ Create flavors
 #. In the :guilabel:`Admin` tab, open the :guilabel:`System`
    tab and click the :guilabel:`Flavors` category.
 #. Click :guilabel:`Create Flavor`.
-#. In the :guilabel:`Create Flavor` window, enter or select
-   the parameters for the flavor.
+#. In the :guilabel:`Create Flavor` window, enter or select the
+   parameters for the flavor in the :guilabel:`Flavor Information` tab.
 
-   **Flavor info tab**
-
-   =======================  =========================================
+   =========================  =======================================
     **Name**                   Enter the flavor name.
     **ID**                     Unique ID (integer or UUID) for the
                                new flavor. If specifying 'auto', a
                                UUID will be automatically generated.
     **VCPUs**                  Enter the number of virtual CPUs to
                                use.
-    **RAM MB**                 Enter the amount of RAM to use, in
+    **RAM (MB)**               Enter the amount of RAM to use, in
                                megabytes.
-    **Root Disk GB**           Enter the amount of disk space in
+    **Root Disk (GB)**         Enter the amount of disk space in
                                gigabytes to use for the root (/)
                                partition.
-    **Ephemeral Disk GB**      Enter the amount of disk space in
+    **Ephemeral Disk (GB)**    Enter the amount of disk space in
                                gigabytes to use for the ephemeral
                                partition. If unspecified, the value
                                is 0 by default.
@@ -56,10 +54,10 @@ Create flavors
                                terminated, all data on the ephemeral
                                disk is lost. Ephemeral disks are not
                                included in any snapshots.
-    **Swap Disk MB**           Enter the amount of swap space (in
+    **Swap Disk (MB)**         Enter the amount of swap space (in
                                megabytes) to use. If unspecified,
                                the default is 0.
-   =======================  =========================================
+   =========================  =======================================
 
 #. In the :guilabel:`Flavor Access` tab, you can control access to
    the flavor by moving projects from the :guilabel:`All Projects`
@@ -74,8 +72,7 @@ Update flavors
 ~~~~~~~~~~~~~~
 
 #. Log in to the dashboard.
-
-   Choose the :guilabel:`admin` project from the drop-down list at
+#. Choose the :guilabel:`admin` project from the drop-down list at
    the top of the page.
 #. In the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Flavors` category.
@@ -155,8 +152,7 @@ Delete flavors
 ~~~~~~~~~~~~~~
 
 #. Log in to the dashboard.
-
-   Choose the :guilabel:`admin` project from the drop-down list at
+#. Choose the :guilabel:`admin` project from the drop-down list at
    the top of the page.
 #. In the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Flavors` category.

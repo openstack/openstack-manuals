@@ -43,28 +43,29 @@ Control the state of an instance
 
 #. Select the instance for which you want to change the state.
 
-#. In the :guilabel:`More` drop-down list in the :guilabel:`Actions` column,
+#. From the drop-down list in the :guilabel:`Actions` column,
    select the state.
 
    Depending on the current state of the instance, you can choose to
    pause, un-pause, suspend, resume, soft or hard reboot, or terminate
-   an instance (items in red are dangerous).
+   an instance (actions in red color are dangerous).
 
 .. figure:: figures/change_instance_state.png
 
-   **Figure Dashboard—Instance Actions**
+   **Figure Dashboard — Instance Actions**
 
 
 Track usage
 ~~~~~~~~~~~
 
-Use the Overview category to track usage of instances for each project.
+Use the :guilabel:`Overview` category to track usage of instances
+for each project.
 
 You can track costs per month by showing meters like number of VCPUs,
 disks, RAM, and uptime of all your instances.
 
-#. Log in to the Dashboard and choose the admin project from the CURRENT
-   PROJECT drop-down list.
+#. Log in to the Dashboard and choose the admin project from the
+   drop-down list at the top of the page.
 
 #. On the :guilabel:`Admin` tab, click the :guilabel:`Instances` category.
 
@@ -72,4 +73,3 @@ disks, RAM, and uptime of all your instances.
    that month.
 
 #. Click :guilabel:`Download CSV Summary` to download a CSV summary.
-
