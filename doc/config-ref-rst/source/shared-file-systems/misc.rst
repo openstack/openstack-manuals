@@ -13,7 +13,6 @@ These options can also be set in the ``manila.conf`` file.
 .. include:: ../tables/manila-cors.rst
 .. include:: ../tables/manila-database.rst
 .. include:: ../tables/manila-ganesha.rst
-.. include:: ../tables/manila-hds_hnas.rst
 .. include:: ../tables/manila-logging.rst
 .. include:: ../tables/manila-quota.rst
 .. include:: ../tables/manila-redis.rst

@@ -10,6 +10,7 @@ Share drivers
    drivers/glusterfs-driver.rst
    drivers/glusterfs-native-driver.rst
    drivers/hdfs-native-driver.rst
+   drivers/hitachi-hnas-driver.rst
    drivers/hpe-3par-share-driver.rst
    drivers/huawei-nas-driver.rst
    drivers/ibm-gpfs-driver.rst
