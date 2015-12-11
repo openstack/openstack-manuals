@@ -13,6 +13,8 @@ Notices take these forms:
 
 .. important:: Something you must be aware of before proceeding.
 
+.. tip:: An extra but helpful piece of practical advice.
+
 .. warning:: Critical information about the risk of data loss or security
        issues.
 
