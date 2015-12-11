@@ -5,10 +5,10 @@ EMC VNX driver
 EMC VNX driver consists of EMCCLIISCSIDriver and EMCCLIFCDriver, and supports
 both iSCSI and FC protocol. ``EMCCLIISCSIDriver`` (VNX iSCSI driver) and
 ``EMCCLIFCDriver`` (VNX FC driver) are separately based on the ``ISCSIDriver``
-and ``FCDriver`` defined in Block Storage.
+and ``FCDriver`` defined in the Block Storage service.
 
 The VNX iSCSI driver and VNX FC driver perform the volume operations by
-executing Navisphere CLI (NaviSecCLI) which is a command line interface used
+executing Navisphere CLI (NaviSecCLI) which is a command-line interface used
 for management, diagnostics, and reporting functions for VNX.
 
 System requirements
@@ -16,8 +16,7 @@ System requirements
 
 -  VNX Operational Environment for Block version 5.32 or higher.
 
--  VNX Snapshot and Thin Provisioning license should be activated for
-   VNX.
+-  VNX Snapshot and Thin Provisioning license should be activated for VNX.
 
 -  Navisphere CLI v7.32 or higher is installed along with the driver.
 
@@ -66,7 +65,7 @@ different platforms:
 
    .. code-block:: console
 
-       $ /opt/Navisphere/bin/naviseccli security -certificate -setLevel low
+      $ /opt/Navisphere/bin/naviseccli security -certificate -setLevel low
 
 Check array software
 --------------------
@@ -90,15 +89,15 @@ Make sure your have the following software installed for certain features:
 **Required software**
 
 You can check the status of your array software in the :guilabel:`Software`
-page of :guilabel:`"Storage System Properties`. Here is how it looks like:
+page of :guilabel:`Storage System Properties`. Here is how it looks like:
 
 .. figure:: ../../figures/emc-enabler.png
 
 Network configuration
 ---------------------
 
-For the FC Driver, FC zoning is properly configured between hosts and
-VNX. Check :ref:`register-fc-port-with-vnx` for reference.
+For the FC Driver, FC zoning is properly configured between the hosts and
+the VNX. Check :ref:`register-fc-port-with-vnx` for reference.
 
 For the iSCSI Driver, make sure your VNX iSCSI port is accessible by
 your hosts. Check :ref:`register-iscsi-port-with-vnx` for reference.
@@ -112,8 +111,8 @@ If you are trying to setup multipath, refer to :ref:`multipath-setup`.
 
 .. _emc-vnx-conf:
 
-Backend configuration
-~~~~~~~~~~~~~~~~~~~~~
+Back-end configuration
+~~~~~~~~~~~~~~~~~~~~~~
 
 
 Make the following changes in the ``/etc/cinder/cinder.conf`` file.
@@ -121,51 +120,51 @@ Make the following changes in the ``/etc/cinder/cinder.conf`` file.
 Minimum configuration
 ---------------------
 
-Here is a sample of a minimum back-end configuration. See following
+Here is a sample of a minimum back-end configuration. See the following
 sections for the detail of each option. Replace ``EMCCLIFCDriver``
 with ``EMCCLIISCSIDriver`` if you are using the iSCSI driver.
 
 .. code-block:: ini
 
-    [DEFAULT]
-    enabled_backends = vnx_array1
+   [DEFAULT]
+   enabled_backends = vnx_array1
 
-    [vnx_array1]
-    san_ip = 10.10.72.41
-    san_login = sysadmin
-    san_password = sysadmin
-    naviseccli_path = /opt/Navisphere/bin/naviseccli
-    volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
-    initiator_auto_registration = True
+   [vnx_array1]
+   san_ip = 10.10.72.41
+   san_login = sysadmin
+   san_password = sysadmin
+   naviseccli_path = /opt/Navisphere/bin/naviseccli
+   volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
+   initiator_auto_registration = True
 
-Multi-backend configuration
----------------------------
+Multiple back-end configuration
+-------------------------------
 
-Here is a sample of a multi-back-end configuration. See following
+Here is a sample of a multiple back-end configuration. See the following
 sections for the detail of each option. Replace ``EMCCLIFCDriver``
 with ``EMCCLIISCSIDriver`` if you are using the iSCSI driver.
 
 .. code-block:: ini
 
-    [DEFAULT]
-    enabled_backends = backendA, backendB
+   [DEFAULT]
+   enabled_backends = backendA, backendB
 
-    [backendA]
-    storage_vnx_pool_names = Pool_01_SAS, Pool_02_FLASH
-    san_ip = 10.10.72.41
-    storage_vnx_security_file_dir = /etc/secfile/array1
-    naviseccli_path = /opt/Navisphere/bin/naviseccli
-    volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
-    initiator_auto_registration = True
+   [backendA]
+   storage_vnx_pool_names = Pool_01_SAS, Pool_02_FLASH
+   san_ip = 10.10.72.41
+   storage_vnx_security_file_dir = /etc/secfile/array1
+   naviseccli_path = /opt/Navisphere/bin/naviseccli
+   volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
+   initiator_auto_registration = True
 
-    [backendB]
-    storage_vnx_pool_names = Pool_02_SAS
-    san_ip = 10.10.26.101
-    san_login = username
-    san_password = password
-    naviseccli_path = /opt/Navisphere/bin/naviseccli
-    volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
-    initiator_auto_registration = True
+   [backendB]
+   storage_vnx_pool_names = Pool_02_SAS
+   san_ip = 10.10.26.101
+   san_login = username
+   san_password = password
+   naviseccli_path = /opt/Navisphere/bin/naviseccli
+   volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
+   initiator_auto_registration = True
 
 For more details on multi-backends, see `OpenStack Cloud Administration Guide
 <http://docs.openstack.org/admin-guide-cloud/index.html>`__
@@ -179,8 +178,8 @@ Specify the SP A and SP B IP to connect:
 
 .. code-block:: ini
 
-    san_ip = <IP of VNX Storage Processor A>
-    san_secondary_ip = <IP of VNX Storage Processor B>
+   san_ip = <IP of VNX Storage Processor A>
+   san_secondary_ip = <IP of VNX Storage Processor B>
 
 **VNX login credentials**
 
@@ -217,7 +216,7 @@ Specify the absolute path to your naviseccli:
 
 .. code-block:: ini
 
-    naviseccli_path = /opt/Navisphere/bin/naviseccli
+   naviseccli_path = /opt/Navisphere/bin/naviseccli
 
 **Driver name**
 
@@ -225,13 +224,13 @@ Specify the absolute path to your naviseccli:
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
+      volume_driver = cinder.volume.drivers.emc.emc_cli_fc.EMCCLIFCDriver
 
 -  For iSCSI Driver, add the following option:
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.emc.emc_cli_iscsi.EMCCLIISCSIDriver
+      volume_driver = cinder.volume.drivers.emc.emc_cli_iscsi.EMCCLIISCSIDriver
 
 Optional configurations
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -244,7 +243,7 @@ already exist in VNX.
 
 .. code-block:: ini
 
-    storage_vnx_pool_names = pool 1, pool 2
+   storage_vnx_pool_names = pool 1, pool 2
 
 If this value is not specified, all pools of the array will be used.
 
@@ -254,7 +253,7 @@ When ``initiator_auto_registration`` is set to ``True``, the driver will
 automatically register initiators to all working target ports of the VNX array
 during volume attaching (The driver will skip those initiators that have
 already been registered) if the option ``io_port_list`` is not specified in
-``cinder.conf``.
+the ``cinder.conf`` file.
 
 If the user wants to register the initiators with some specific ports but not
 register with the other ports, this functionality should be disabled.
@@ -268,7 +267,7 @@ of all target ports.
 
    .. code-block:: ini
 
-       io_port_list = a-1,B-3
+      io_port_list = a-1,B-3
 
    ``a`` or ``B`` is *Storage Processor*, number ``1`` and ``3`` are
    *Port ID*.
@@ -277,18 +276,18 @@ of all target ports.
 
    .. code-block:: ini
 
-       io_port_list = a-1-0,B-3-0
+      io_port_list = a-1-0,B-3-0
 
    ``a`` or ``B`` is *Storage Processor*, the first numbers ``1`` and ``3`` are
    *Port ID* and the second number ``0`` is *Virtual Port ID*
 
 .. note::
 
-    -  Rather than de-registered, the registered ports will be simply
-       bypassed whatever they are in ``io_port_list`` or not.
+   -  Rather than de-registered, the registered ports will be simply
+      bypassed whatever they are in ``io_port_list`` or not.
 
-    -  The driver will raise an exception if ports in ``io_port_list``
-       are not existed in VNX during startup.
+   -  The driver will raise an exception if ports in ``io_port_list``
+      do not exist in VNX during startup.
 
 Force delete volumes in storage group
 -------------------------------------
@@ -300,16 +299,16 @@ the volumes which are in storage group. Option
 the ``available`` volumes in this tricky situation.
 
 When ``force_delete_lun_in_storagegroup`` is set to ``True`` in the back-end
-section, the driver will move the volumes out of storage groups and then delete
-them if the user tries to delete the volumes that remain in storage group on
-the VNX array.
+section, the driver will move the volumes out of the storage groups and then
+delete them if the user tries to delete the volumes that remain in the storage
+group on the VNX array.
 
 The default value of ``force_delete_lun_in_storagegroup`` is ``False``.
 
 Over subscription in thin provisioning
 --------------------------------------
 
-Over subscription allows that the sum of all volumes' capacity (provisioned
+Over subscription allows that the sum of all volume's capacity (provisioned
 capacity) to be larger than the pool's total capacity.
 
 ``max_over_subscription_ratio`` in the back-end section is the ratio of
@@ -325,8 +324,8 @@ Storage group automatic deletion
 
 For volume attaching, the driver has a storage group on VNX for each compute
 node hosting the vm instances which are going to consume VNX Block Storage
-(using compute node's hostname as storage group's name).  All the volumes
-attached to the VM instances in a compute node will be put into the storage
+(using compute node's host name as storage group's name).  All the volumes
+attached to the VM instances in a Compute node will be put into the storage
 group. If ``destroy_empty_storage_group`` is set to ``True``, the driver will
 remove the empty storage group after its last volume is detached. For data
 safety, it does not suggest to set ``destroy_empty_storage_group=True`` unless
@@ -343,7 +342,7 @@ deregister all the initiators of the host after its storage group is deleted.
 FC SAN auto zoning
 ------------------
 
-The EMC VNX FC driver supports FC SAN auto zoning when ZoneManager is
+The EMC VNX FC driver supports FC SAN auto zoning when ``ZoneManager`` is
 configured. Set ``zoning_mode`` to ``fabric`` in the ``[DEFAULT]`` section to
 enable this feature. For ZoneManager configuration, refer to Block
 Storage official guide.
@@ -380,12 +379,12 @@ chosen in a relative random way.
 Here is an example. VNX will connect ``host1`` with ``10.0.0.1`` and
 ``10.0.0.2``. And it will connect ``host2`` with ``10.0.0.3``.
 
-The key name (``host1`` in the example) should be the output of the command
-:command:`hostname`.
+The key name (``host1`` in the example) should be the output of
+:command:`hostname` command.
 
 .. code-block:: ini
 
-    iscsi_initiators = {"host1":["10.0.0.1", "10.0.0.2"],"host2":["10.0.0.3"]}
+   iscsi_initiators = {"host1":["10.0.0.1", "10.0.0.2"],"host2":["10.0.0.3"]}
 
 Default timeout
 ---------------
@@ -395,22 +394,23 @@ etc. For example, LUN migration is a typical long running operation, which
 depends on the LUN size and the load of the array. An upper bound in the
 specific deployment can be set to avoid unnecessary long wait.
 
-The default value for this option is infinite.
+The default value for this option is ``infinite``.
 
 .. code-block:: ini
 
-    default_timeout = 10
+   default_timeout = 10
 
 Max LUNs per storage group
 --------------------------
 
-``max_luns_per_storage_group`` specify the max number of LUNs in a storage
-group. Default value is 255. It is also the max value supportedby VNX.
+The ``max_luns_per_storage_group`` specify the maximum number of LUNs in a
+storage group. Default value is 255. It is also the maximum value supported by
+VNX.
 
 Ignore pool full threshold
 --------------------------
 
-if ``ignore_pool_full_threshold`` is set to ``True``, driver will force LUN
+If ``ignore_pool_full_threshold`` is set to ``True``, driver will force LUN
 creation even if the full threshold of pool is reached. Default to ``False``.
 
 Extra spec options
@@ -419,21 +419,21 @@ Extra spec options
 Extra specs are used in volume types created in Block Storage as the preferred
 property of the volume.
 
-The Block storage scheduler will use extra specs to find the suitable back end
-for the volume and the Block storage driver will create the volume based on the
+The Block Storage scheduler will use extra specs to find the suitable back end
+for the volume and the Block Storage driver will create the volume based on the
 properties specified by the extra spec.
 
-Use following command to create a volume type:
+Use the following command to create a volume type:
 
 .. code-block:: console
 
-    $ cinder type-create "demoVolumeType"
+   $ cinder type-create "demoVolumeType"
 
-Use following command to update the extra spec of a volume type:
+Use the following command to update the extra spec of a volume type:
 
 .. code-block:: console
 
-    $ cinder type-key "demoVolumeType" set provisioning:type=thin
+   $ cinder type-key "demoVolumeType" set provisioning:type=thin
 
 The following sections describe the VNX extra keys.
 
@@ -448,49 +448,49 @@ Provisioning type
 
       Volume is fully provisioned.
 
-      Run the foloowing command to create a ``thick`` volume type:
+      Run the following commands to create a ``thick`` volume type:
 
       .. code-block:: console
 
-          $ cinder type-create "ThickVolumeType"
-          $ cinder type-key "ThickVolumeType" set provisioning:type=thick thick_provisioning_support='<is> True'
+         $ cinder type-create "ThickVolumeType"
+         $ cinder type-key "ThickVolumeType" set provisioning:type=thick thick_provisioning_support='<is> True'
 
    -  ``thin``
 
       Volume is virtually provisioned.
 
-      Run the following command to create a ``thin`` volume type:
+      Run the following commands to create a ``thin`` volume type:
 
       .. code-block:: console
 
-          $ cinder type-create "ThinVolumeType"
-          $ cinder type-key "ThinVolumeType" set provisioning:type=thin thin_provisioning_support='<is> True'
+         $ cinder type-create "ThinVolumeType"
+         $ cinder type-key "ThinVolumeType" set provisioning:type=thin thin_provisioning_support='<is> True'
 
    -  ``deduplicated``
 
       Volume is ``thin`` and deduplication is enabled. The administrator shall
-      go to VNX to configure the system level deduplication settings.  To
+      go to VNX to configure the system level deduplication settings. To
       create a deduplicated volume, the VNX Deduplication license must be
       activated on VNX, and specify ``deduplication_support=True`` to let Block
       Storage scheduler find the proper volume back end.
 
-      Run the following command to create a ``deduplicated`` volume type:
+      Run the following commands to create a ``deduplicated`` volume type:
 
       .. code-block:: console
 
-          $ cinder type-create "DeduplicatedVolumeType"
-          $ cinder type-key "DeduplicatedVolumeType" set provisioning:type=deduplicated deduplication_support='<is> True'
+         $ cinder type-create "DeduplicatedVolumeType"
+         $ cinder type-key "DeduplicatedVolumeType" set provisioning:type=deduplicated deduplication_support='<is> True'
 
    -  ``compressed``
 
       Volume is ``thin`` and compression is enabled. The administrator shall go
       to the VNX to configure the system level compression settings. To create
-      a compressed volume, the VNX Compression license must be activated on VNX
-      , and use ``compression_support=True`` to let Block Storage scheduler
+      a compressed volume, the VNX Compression license must be activated on
+      VNX, and use ``compression_support=True`` to let Block Storage scheduler
       find a volume back end. VNX does not support creating snapshots on a
       compressed volume.
 
-      Run the following command to create a ``compressed`` volume type:
+      Run the following commands to create a ``compressed`` volume type:
 
       .. code-block:: console
 
@@ -501,18 +501,18 @@ Provisioning type
 
 .. note::
 
-    ``provisioning:type`` replaces the old spec key
-    ``storagetype:provisioning``. The latter one will be obsoleted in the next
-    release. If both ``provisioning:type`` and ``storagetype:provisioning``
-    are set in the volume type, the value of ``provisioning:type`` will be
-    used.
+   ``provisioning:type`` replaces the old spec key
+   ``storagetype:provisioning``. The latter one will be obsoleted in the next
+   release. If both ``provisioning:type`` and ``storagetype:provisioning``
+   are set in the volume type, the value of ``provisioning:type`` will be
+   used.
 
 Storage tiering support
 -----------------------
 
 -  Key: ``storagetype:tiering``
 
--  Possible Values:
+-  Possible values:
 
    -  ``StartHighThenAuto``
 
@@ -533,24 +533,24 @@ activated on the VNX. The OpenStack administrator can use the extra spec key
 end which manages a VNX with FAST license activated. Here are the five
 supported values for the extra spec key ``storagetype:tiering``:
 
-Run the following command to create a volume type with tiering policy:
+Run the following commands to create a volume type with tiering policy:
 
 .. code-block:: console
 
-    $ cinder type-create "ThinVolumeOnLowestAvaibleTier"
-    $ cinder type-key "CompressedVolumeOnLowestAvaibleTier" set provisioning:type=thin storagetype:tiering=Auto fast_support='<is> True'
+   $ cinder type-create "ThinVolumeOnLowestAvaibleTier"
+   $ cinder type-key "CompressedVolumeOnLowestAvaibleTier" set provisioning:type=thin storagetype:tiering=Auto fast_support='<is> True'
 
 .. note::
 
-    Tiering policy can not be applied to a deduplicated volume. Tiering
-    policy of the deduplicated LUN align with the settings of the pool.
+   The tiering policy cannot be applied to a deduplicated volume. Tiering
+   policy of the deduplicated LUN align with the settings of the pool.
 
 FAST cache support
 ------------------
 
 -  Key: ``fast_cache_enabled``
 
--  Possible Values:
+-  Possible values:
 
    -  ``True``
 
@@ -567,7 +567,7 @@ Snap-copy
 
 -  Key: ``copytype:snap``
 
--  Possible Values:
+-  Possible values:
 
    -  ``True``
 
@@ -578,10 +578,10 @@ Snap-copy
 The VNX driver supports snap-copy, which extremely accelerates the process for
 creating a copied volume.
 
-By default, the driver will do full data copy when creating a volume from a
+By default, the driver will do a full data copy while creating a volume from a
 snapshot or cloning a volume, which is time-consuming especially for large
 volumes. When the snap-copy is used, the driver will simply create a snapshot
-and mount it as a volume for the 2 kinds of operations which will be instant
+and mount it as a volume for the two types of operations which will be instant
 even for large volumes.
 
 To enable this functionality, the source volume should have
@@ -593,8 +593,8 @@ volume which may be time-consuming.
 
 .. code-block:: console
 
-    $ cinder type-create "SnapCopy"
-    $ cinder type-key "SnapCopy" set copytype:snap=True
+   $ cinder type-create "SnapCopy"
+   $ cinder type-key "SnapCopy" set copytype:snap=True
 
 User can determine whether the volume is a snap-copy volume or not by
 showing its metadata. If the ``lun_type`` in metadata is ``smp``, the
@@ -602,7 +602,7 @@ volume is a snap-copy volume. Otherwise, it is a full-copy volume.
 
 .. code-block:: console
 
-    $ cinder metadata-show <volume>
+   $ cinder metadata-show <volume>
 
 **Constraints**
 
@@ -622,7 +622,7 @@ Pool name
 
 -  Key: ``pool_name``
 
--  Possible Values: name of the storage pool managed by cinder
+-  Possible values: name of the storage pool managed by cinder
 
 -  Default: None
 
@@ -631,12 +631,12 @@ that manages multiple pools, a volume type with a extra spec specified storage
 pool should be created first, then the user can use this volume type to create
 the volume.
 
-Run the following command to create the volume type:
+Run the following commands to create the volume type:
 
 .. code-block:: console
 
-    $ cinder type-create "HighPerf"
-    $ cinder type-key "HighPerf" set pool_name=Pool_02_SASFLASH volume_backend_name=vnx_41
+   $ cinder type-create "HighPerf"
+   $ cinder type-key "HighPerf" set pool_name=Pool_02_SASFLASH volume_backend_name=vnx_41
 
 
 Advanced features
@@ -650,7 +650,7 @@ to set a volume as read-only.
 
 .. code-block:: console
 
-    $ cinder readonly-mode-update <volume> True
+   $ cinder readonly-mode-update <volume> True
 
 After a volume is marked as read-only, the driver will forward the
 information when a hypervisor is attaching the volume and the hypervisor
@@ -682,20 +682,20 @@ Multipath setup
 Enabling multipath volume access is recommended for robust data access.
 The major configuration includes:
 
-#. Install ``multipath-tools``, ``sysfsutils`` and ``sg3-utils`` on
+#. Install ``multipath-tools``, ``sysfsutils`` and ``sg3-utils`` on the
    nodes hosting Nova-Compute and Cinder-Volume services. Check
    the operating system manual for the system distribution for specific
    installation steps. For Red Hat based distributions, they should be
    ``device-mapper-multipath``, ``sysfsutils`` and ``sg3_utils``.
 
-#. Specify ``use_multipath_for_image_xfer=true`` in ``cinder.conf`` for each
-   FC/iSCSI back end.
+#. Specify ``use_multipath_for_image_xfer=true`` in the ``cinder.conf`` file
+   for each FC/iSCSI back end.
 
-#. Specify ``iscsi_use_multipath=True`` in ``libvirt`` section of
-   ``nova.conf``. This option is valid for both iSCSI and FC driver.
+#. Specify ``iscsi_use_multipath=True`` in ``libvirt`` section of the
+   ``nova.conf`` file. This option is valid for both iSCSI and FC driver.
 
 For multipath-tools, here is an EMC recommended sample of
-``/etc/multipath.conf``.
+``/etc/multipath.conf`` file.
 
 ``user_friendly_names`` is not specified in the configuration and thus
 it will take the default value ``no``. It is not recommended to set it
@@ -703,47 +703,47 @@ to ``yes`` because it may fail operations such as VM live migration.
 
 .. code-block:: none
 
-    blacklist {
-        # Skip the files under /dev that are definitely not FC/iSCSI devices
-        # Different system may need different customization
-        devnode "^(ram|raw|loop|fd|md|dm-|sr|scd|st)[0-9]*"
-        devnode "^hd[a-z][0-9]*"
-        devnode "^cciss!c[0-9]d[0-9]*[p[0-9]*]"
+   blacklist {
+       # Skip the files under /dev that are definitely not FC/iSCSI devices
+       # Different system may need different customization
+       devnode "^(ram|raw|loop|fd|md|dm-|sr|scd|st)[0-9]*"
+       devnode "^hd[a-z][0-9]*"
+       devnode "^cciss!c[0-9]d[0-9]*[p[0-9]*]"
 
-        # Skip LUNZ device from VNX
-        device {
-            vendor "DGC"
-            product "LUNZ"
-            }
-    }
+       # Skip LUNZ device from VNX
+       device {
+           vendor "DGC"
+           product "LUNZ"
+           }
+   }
 
-    defaults {
-        user_friendly_names no
-        flush_on_last_del yes
-    }
+   defaults {
+       user_friendly_names no
+       flush_on_last_del yes
+   }
 
-    devices {
-        # Device attributed for EMC CLARiiON and VNX series ALUA
-        device {
-            vendor "DGC"
-            product ".*"
-            product_blacklist "LUNZ"
-            path_grouping_policy group_by_prio
-            path_selector "round-robin 0"
-            path_checker emc_clariion
-            features "1 queue_if_no_path"
-            hardware_handler "1 alua"
-            prio alua
-            failback immediate
-        }
-    }
+   devices {
+       # Device attributed for EMC CLARiiON and VNX series ALUA
+       device {
+           vendor "DGC"
+           product ".*"
+           product_blacklist "LUNZ"
+           path_grouping_policy group_by_prio
+           path_selector "round-robin 0"
+           path_checker emc_clariion
+           features "1 queue_if_no_path"
+           hardware_handler "1 alua"
+           prio alua
+           failback immediate
+       }
+   }
 
 .. note::
 
-    When multipath is used in OpenStack, multipath faulty devices may
-    come out in Nova-Compute nodes due to different issues (`Bug
-    1336683 <https://bugs.launchpad.net/nova/+bug/1336683>`__ is a
-    typical example).
+   When multipath is used in OpenStack, multipath faulty devices may
+   come out in Nova-Compute nodes due to different issues (`Bug
+   1336683 <https://bugs.launchpad.net/nova/+bug/1336683>`__ is a
+   typical example).
 
 A solution to completely avoid faulty devices has not been found yet.
 ``faulty_device_cleanup.py`` mitigates this issue when VNX iSCSI storage is
@@ -761,9 +761,10 @@ iSCSI port cache
 
 EMC VNX iSCSI driver caches the iSCSI ports information, so that the user
 should restart the ``cinder-volume`` service or wait for seconds (which is
-configured by ``periodic_interval`` in ``cinder.conf``) before any volume
-attachment operation after changing the iSCSI port configurations. Otherwise
-the attachment may fail because the old iSCSI port configurations were used.
+configured by ``periodic_interval`` in the ``cinder.conf`` file) before any
+volume attachment operation after changing the iSCSI port configurations.
+Otherwise the attachment may fail because the old iSCSI port configurations
+were used.
 
 No extending for volume with snapshots
 --------------------------------------
@@ -785,7 +786,7 @@ Storage group with host names in VNX
 
 When the driver notices that there is no existing storage group that has the
 host name as the storage group name, it will create the storage group and also
-add the compute node's or Block Storage nodes' registered initiators into the
+add the compute node's or Block Storage node's registered initiators into the
 storage group.
 
 If the driver notices that the storage group already exists, it will assume
@@ -811,7 +812,7 @@ In following scenarios, VNX storage-assisted volume migration will not be
 triggered:
 
 1. Volume migration between back ends with different storage protocol,
-   ex, FC and iSCSI.
+   for example, FC and iSCSI.
 
 2. Volume is to be migrated across arrays.
 
@@ -824,19 +825,20 @@ Authenticate by security file
 -----------------------------
 
 VNX credentials are necessary when the driver connects to the VNX system.
-Credentials in global, local and ldap scopes are supported.  There are two
-approaches to provide the credentials.
+Credentials in ``global``, ``local`` and ``ldap`` scopes are supported. There
+are two approaches to provide the credentials.
 
 The recommended one is using the Navisphere CLI security file to provide the
 credentials which can get rid of providing the plain text credentials in the
 configuration file. Following is the instruction on how to do this.
 
-#. Find out the Linux user id of the ``cinder-volume` processes. Assuming the
+#. Find out the Linux user id of the ``cinder-volume`` processes. Assuming the
    ``cinder-volume`` service is running by the account ``cinder``.
 
 #. Run ``su`` as root user.
 
-#. In ``/etc/passwd``, change ``cinder:x:113:120::/var/lib/cinder:/bin/false``
+#. In ``/etc/passwd`` file, change
+   ``cinder:x:113:120::/var/lib/cinder:/bin/false``
    to ``cinder:x:113:120::/var/lib/cinder:/bin/bash`` (This temporary change is
    to make step 4 work.)
 
@@ -851,13 +853,14 @@ configuration file. Following is the instruction on how to do this.
         -AddUserSecurity -user admin -password admin -scope 0 -secfilepath <location>'
 
 #. Change ``cinder:x:113:120::/var/lib/cinder:/bin/bash`` back to
-   ``cinder:x:113:120::/var/lib/cinder:/bin/false`` in ``/etc/passwd``
+   ``cinder:x:113:120::/var/lib/cinder:/bin/false`` in ``/etc/passwd`` file.
 
 #. Remove the credentials options ``san_login``, ``san_password`` and
-   ``storage_vnx_authentication_type`` from cinder.conf. (normally it is
-   ``/etc/cinder/cinder.conf``). Add option ``storage_vnx_security_file_dir``
-   and set its value to the directory path of your security file generated in
-   step 4. Omit this option if ``-secfilepath`` is not used in step 4.
+   ``storage_vnx_authentication_type`` from ``cinder.conf`` file. (normally
+   it is ``/etc/cinder/cinder.conf`` file). Add option
+   ``storage_vnx_security_file_dir`` and set its value to the directory path of
+   your security file generated in the above step. Omit this option if
+   ``-secfilepath`` is not used in the above step.
 
 #. Restart the ``cinder-volume`` service to validate the change.
 
@@ -869,11 +872,11 @@ Register FC port with VNX
 
 This configuration is only required when ``initiator_auto_registration=False``.
 
-To access VNX storage, the compute nodes should be registered on VNX first if
+To access VNX storage, the Compute nodes should be registered on VNX first if
 initiator auto registration is not enabled.
 
-To perform "Copy Image to Volume" and "Copy Volume to Image" operations, the
-nodes running the ``cinder-volume`` service (Block Storage nodes) must be
+To perform ``Copy Image to Volume`` and ``Copy Volume to Image`` operations,
+the nodes running the ``cinder-volume`` service (Block Storage nodes) must be
 registered with the VNX as well.
 
 The steps mentioned below are for the compute nodes. Follow the same
@@ -881,28 +884,31 @@ steps for the Block Storage nodes also (The steps can be skipped if initiator
 auto registration is enabled).
 
 #. Assume ``20:00:00:24:FF:48:BA:C2:21:00:00:24:FF:48:BA:C2`` is the WWN of a
-   FC initiator port name of the compute node whose hostname and IP are
+   FC initiator port name of the compute node whose host name and IP are
    ``myhost1`` and ``10.10.61.1``. Register
    ``20:00:00:24:FF:48:BA:C2:21:00:00:24:FF:48:BA:C2`` in Unisphere:
 
-#. Login to Unisphere, go to FNM0000000000->Hosts->Initiators.
+#. Log in to :guilabel:`Unisphere`, go to
+   :menuselection:`FNM0000000000 > Hosts > Initiators`.
 
 #. Refresh and wait until the initiator
    ``20:00:00:24:FF:48:BA:C2:21:00:00:24:FF:48:BA:C2`` with SP Port ``A-1``
    appears.
 
-#. Click the Register button, select CLARiiON/VNX and enter the hostname (which
-   is the output of the :command:`hostname` command) and IP address:
+#. Click the :guilabel:`Register` button, select :guilabel:`CLARiiON/VNX`
+   and enter the host name (which is the output of the :command:`hostname`
+   command) and IP address:
 
    -  Hostname: ``myhost1``
 
    -  IP: ``10.10.61.1``
 
-   -  Click Register.
+   -  Click :guilabel:`Register`.
 
-#. Then host ``10.10.61.1`` will appear under Hosts->Host List as well.
+#. Then host ``10.10.61.1`` will appear under
+   :menuselection:`Hosts > Host List` as well.
 
-#. Register the wwn with more ports if needed.
+#. Register the ``wwn`` with more ports if needed.
 
 .. _register-iscsi-port-with-vnx:
 
@@ -914,15 +920,15 @@ This configuration is only required when ``initiator_auto_registration=False``.
 To access VNX storage, the compute nodes should be registered on VNX first if
 initiator auto registration is not enabled.
 
-To perform "Copy Image to Volume" and "Copy Volume to Image" operations, the
-nodes running the ``cinder-volume`` service (Block Storage nodes) must be
+To perform ``Copy Image to Volume`` and ``Copy Volume to Image`` operations,
+the nodes running the ``cinder-volume`` service (Block Storage nodes) must be
 registered with the VNX as well.
 
 The steps mentioned below are for the compute nodes. Follow the
 same steps for the Block Storage nodes also (The steps can be skipped if
 initiator auto registration is enabled).
 
-#. On the compute node with IP address ``10.10.61.1`` and hostname ``myhost1``,
+#. On the compute node with IP address ``10.10.61.1`` and host name ``myhost1``,
    execute the following commands (assuming ``10.10.61.35`` is the iSCSI
    target):
 
@@ -938,20 +944,20 @@ initiator auto registration is enabled).
 
          # iscsiadm -m discovery -t st -p 10.10.61.35
 
-   #. Enter ``/etc/iscsi``:
+   #. Change directory to ``/etc/iscsi`` :
 
       .. code-block:: console
 
          # cd /etc/iscsi
 
-   #. Find out the iqn of the node:
+   #. Find out the ``iqn`` of the node:
 
       .. code-block:: console
 
          # more initiatorname.iscsi
 
-#. Login to VNX from the compute node using the target corresponding to the SPA
-   port:
+#. Log in to :guilabel:`VNX` from the compute node using the target
+   corresponding to the SPA port:
 
    .. code-block:: console
 
@@ -961,41 +967,44 @@ initiator auto registration is enabled).
    the compute node. Register ``iqn.1993-08.org.debian:01:1a2b3c4d5f6g`` in
    Unisphere:
 
-   #. Login to Unisphere, go to FNM0000000000->Hosts->Initiators.
+   #. Log in to :guilabel:`Unisphere`, go to
+      :menuselection:`FNM0000000000 > Hosts > Initiators`.
 
    #. Refresh and wait until the initiator
    ``iqn.1993-08.org.debian:01:1a2b3c4d5f6g`` with SP Port ``A-8v0`` appears.
 
-   #. Click the Register button, select CLARiiON/VNX and enter the hostname
+   #. Click the :guilabel:`Register` button, select :guilabel:`CLARiiON/VNX`
+      and enter the host name
       (which is the output of the :command:`hostname` command) and IP address:
 
       -  Hostname: ``myhost1``
 
       -  IP: ``10.10.61.1``
 
-      -  Click Register
+      -  Click :guilabel:`Register`.
 
-   #. Then host ``10.10.61.1`` will appear under Hosts->Host List as well.
+   #. Then host ``10.10.61.1`` will appear under
+      :menuselection:`Hosts > Host List` as well.
 
-#. Logout iSCSI on the node:
+#. Log out :guilabel:`iSCSI` on the node:
 
    .. code-block:: console
 
       # iscsiadm -m node -u
 
-#. Login to VNX from the compute node using the target corresponding to the SPB
-   port:
+#. Log in to :guilabel:`VNX` from the compute node using the target
+   corresponding to the SPB port:
 
    .. code-block:: console
 
       # iscsiadm -m node -T iqn.1992-04.com.emc:cx.apm01234567890.b8 -p 10.10.61.36 -l
 
-#. In Unisphere register the initiator with the SPB port.
+#. In ``Unisphere``, register the initiator with the SPB port.
 
-#. Logout iSCSI on the node:
+#. Log out :guilabel:`iSCSI` on the node:
 
    .. code-block:: console
 
       # iscsiadm -m node -u
 
-#. Register the iqn with more ports if needed.
+#. Register the ``iqn`` with more ports if needed.
