@@ -2,9 +2,6 @@
 Shared File Systems
 ===================
 
-The Shared File Systems service works with many different drivers that
-you can configure by using these instructions.
-
 .. toctree::
 
    shared-file-systems/overview.rst
@@ -14,3 +11,7 @@ you can configure by using these instructions.
    shared-file-systems/rpc.rst
    shared-file-systems/misc.rst
    tables/conf-changes/manila.rst
+
+The Shared File Systems service works with many different drivers that
+you can configure by using these instructions.
+
