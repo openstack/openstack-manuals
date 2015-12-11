@@ -50,7 +50,7 @@ Create an encrypted volume type
      back end (cinder).
    Cipher
      Specifies the encryption algorithm.
-   Key Size
+   Key Size (bits)
      Specifies the encryption key size.
 
 #. Click :guilabel:`Create Volume Type Encryption`.

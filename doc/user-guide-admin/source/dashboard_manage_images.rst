@@ -32,7 +32,7 @@ Guide <http://docs.openstack.org/image-guide/>`_.
 
    .. figure:: figures/create_image.png
 
-   **Figure Dashboard—Create Image**
+   **Figure Dashboard — Create Image**
 
 #. In the :guilabel:`Create An Image` window, enter or select the
    following values:
@@ -63,9 +63,9 @@ Guide <http://docs.openstack.org/image-guide/>`_.
    |                               | architecture or ``x86_64`` for  |
    |                               | a 64-bit architecture.          |
    +-------------------------------+---------------------------------+
-   | :guilabel:`Minimum Disk (GB)` | Leave these fields empty.       |
-   | and                           |                                 |
-   | :guilabel:`Minimum RAM (MB)`  |                                 |
+   | :guilabel:`Minimum Disk (GB)` | Leave this field empty.         |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Minimum RAM (MB)`  | Leave this field empty.         |
    +-------------------------------+---------------------------------+
    | :guilabel:`Copy Data`         | Specify this option to copy     |
    |                               | image data to the Image service.|
@@ -96,7 +96,8 @@ Update images
 
    Select the :guilabel:`Public` check box to make the image public.
    Clear this check box to make the image private. You cannot change
-   the kernel ID, RAM disk ID, or architecture attributes for an image.
+   the :guilabel:`Kernel ID`, :guilabel:`Ramdisk ID`, or
+   :guilabel:`Architecture` attributes for an image.
 #. Click :guilabel:`Update Image`.
 
 Delete images

@@ -10,8 +10,8 @@ multiple key-value pairs. You can assign the same key-value pair to
 multiple aggregates.
 
 The scheduler uses this information to make scheduling decisions. For
-information, see
-`Scheduling <http://docs.openstack.org/liberty/config-reference/content/section_compute-scheduler.html>`__.
+information, see `Scheduling <http://docs.openstack.org/liberty/
+config-reference/content/section_compute-scheduler.html>`__.
 
 To create a host aggregate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -27,11 +27,11 @@ To create a host aggregate
 #. Click :guilabel:`Create Host Aggregate`.
 
 #. In the :guilabel:`Create Host Aggregate` dialog box, enter or select the
-   following values on the :guilabel:`Host Aggregate Info` tab:
+   following values on the :guilabel:`Host Aggregate Information` tab:
 
-   -  Name: The host aggregate name.
+   -  :guilabel:`Name`: The host aggregate name.
 
-   -  Availability Zone: The cloud provider defines the default
+   -  :guilabel:`Availability Zone`: The cloud provider defines the default
       availability zone, such as ``us-west``, ``apac-south``, or
       ``nova``. You can target the host aggregate, as follows:
 
