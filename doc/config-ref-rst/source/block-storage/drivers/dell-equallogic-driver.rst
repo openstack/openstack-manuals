@@ -9,12 +9,13 @@ Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
 -  Create, delete, attach, and detach volumes.
-
 -  Create, list, and delete volume snapshots.
-
 -  Clone a volume.
 
-The Block Storage service supports:
+Configuration
+~~~~~~~~~~~~~
+
+The OpenStack Block Storage service supports:
 
 -  Multiple instances of Dell EqualLogic Groups or Dell EqualLogic Group
    Storage Pools and multiple pools on a single array.
@@ -22,28 +23,24 @@ The Block Storage service supports:
 -  Multiple instances of Dell EqualLogic Groups or Dell EqualLogic Group
    Storage Pools or multiple pools on a single array.
 
-The Dell EqualLogic volume driver's ability to access the EqualLogic
-Group is dependent upon the generic block storage driver's SSH settings
-in the ``/etc/cinder/cinder.conf`` file (see the section called
-`Block Storage sample configuration files
-<http://docs.openstack.org/liberty/config-reference/
-content/section_block-storage-sample-configuration-files.html>`_
-for reference).
+The Dell EqualLogic volume driver's ability to access the EqualLogic Group is
+dependent upon the generic block storage driver's SSH settings in the
+``/etc/cinder/cinder.conf`` file (see
+:ref:`block-storage-sample-configuration-file` for reference).
 
 .. include:: ../../tables/cinder-eqlx.rst
 
 Default (single-instance) configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 The following sample ``/etc/cinder/cinder.conf`` configuration lists the
 relevant settings for a typical Block Storage service using a single
 Dell EqualLogic Group:
 
 .. code-block:: ini
-   :linenos:
 
     [DEFAULT]
-    #Required settings
+    # Required settings
 
     volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
     san_ip = IP_EQLX
@@ -52,7 +49,7 @@ Dell EqualLogic Group:
     eqlx_group_name = EQLX_GROUP
     eqlx_pool = EQLX_POOL
 
-    #Optional settings
+    # Optional settings
 
     san_thin_provision = true|false
     eqlx_use_chap = true|false
@@ -67,77 +64,76 @@ Dell EqualLogic Group:
 
 In this example, replace the following variables accordingly:
 
-IP\_EQLX
- The IP address used to reach the Dell EqualLogic Group through SSH.
- This field has no default value.
+IP_EQLX
+    The IP address used to reach the Dell EqualLogic Group through SSH.
+    This field has no default value.
 
-SAN\_UNAME
- The user name to login to the Group manager via SSH at the
- ``san_ip``. Default user name is ``grpadmin``.
+SAN_UNAME
+    The user name to login to the Group manager via SSH at the
+    ``san_ip``. Default user name is ``grpadmin``.
 
-SAN\_PW
- The corresponding password of SAN\_UNAME. Not used when
- ``san_private_key`` is set. Default password is ``password``.
+SAN_PW
+    The corresponding password of SAN_UNAME. Not used when
+    ``san_private_key`` is set. Default password is ``password``.
 
-EQLX\_GROUP
- The group to be used for a pool where the Block Storage service will
- create volumes and snapshots. Default group is ``group-0``.
+EQLX_GROUP
+    The group to be used for a pool where the Block Storage service will
+    create volumes and snapshots. Default group is ``group-0``.
 
-EQLX\_POOL
- The pool where the Block Storage service will create volumes and
- snapshots. Default pool is ``default``. This option cannot be used
- for multiple pools utilized by the Block Storage service on a single
- Dell EqualLogic Group.
+EQLX_POOL
+    The pool where the Block Storage service will create volumes and
+    snapshots. Default pool is ``default``. This option cannot be used
+    for multiple pools utilized by the Block Storage service on a single
+    Dell EqualLogic Group.
 
-EQLX\_UNAME
- The CHAP login account for each volume in a pool, if
- ``eqlx_use_chap`` is set to ``true``. Default account name is
- ``chapadmin``.
+EQLX_UNAME
+    The CHAP login account for each volume in a pool, if
+    ``eqlx_use_chap`` is set to ``true``. Default account name is
+    ``chapadmin``.
 
-EQLX\_PW
- The corresponding password of EQLX\_UNAME. The default password is
- randomly generated in hexadecimal, so you must set this password
- manually.
+EQLX_PW
+    The corresponding password of EQLX_UNAME. The default password is
+    randomly generated in hexadecimal, so you must set this password
+    manually.
 
-SAN\_KEY\_PATH (optional)
- The filename of the private key used for SSH authentication. This
- provides password-less login to the EqualLogic Group. Not used when
- ``san_password`` is set. There is no default value.
+SAN_KEY_PATH (optional)
+    The filename of the private key used for SSH authentication. This
+    provides password-less login to the EqualLogic Group. Not used when
+    ``san_password`` is set. There is no default value.
 
 In addition, enable thin provisioning for SAN volumes using the default
 ``san_thin_provision = true`` setting.
 
-Multi back-end Dell EqualLogic configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Multi back-end configuration
+----------------------------
 
 The following example shows the typical configuration for a Block
 Storage service that uses two Dell EqualLogic back ends:
 
 .. code-block:: ini
-   :linenos:
 
     enabled_backends = backend1,backend2
     san_ssh_port = 22
-    ​ssh_conn_timeout = 30
-    ​san_thin_provision = true
-          ​
-    ​[backend1]
-    ​volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
-    ​volume_backend_name = backend1
-    ​san_ip = IP_EQLX1
-    ​san_login = SAN_UNAME
-    san_password = SAN_PW
-    ​eqlx_group_name = EQLX_GROUP
-    ​eqlx_pool = EQLX_POOL
-          ​
-    ​[backend2]
-    ​volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
-    ​volume_backend_name = backend2
-    ​san_ip = IP_EQLX2
+    ssh_conn_timeout = 30
+    san_thin_provision = true
+
+    [backend1]
+    volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
+    volume_backend_name = backend1
+    san_ip = IP_EQLX1
     san_login = SAN_UNAME
     san_password = SAN_PW
-    ​eqlx_group_name = EQLX_GROUP
-    ​eqlx_pool = EQLX_POOL
+    eqlx_group_name = EQLX_GROUP
+    eqlx_pool = EQLX_POOL
+
+    [backend2]
+    volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
+    volume_backend_name = backend2
+    san_ip = IP_EQLX2
+    san_login = SAN_UNAME
+    san_password = SAN_PW
+    eqlx_group_name = EQLX_GROUP
+    eqlx_pool = EQLX_POOL
 
 In this example:
 

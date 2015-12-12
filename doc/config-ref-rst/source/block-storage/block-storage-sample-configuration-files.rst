@@ -1,3 +1,5 @@
+.. _block-storage-sample-configuration-file:
+
 ========================================
 Block Storage sample configuration files
 ========================================
