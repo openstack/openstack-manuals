@@ -6,24 +6,31 @@ The high performance XtremIO All Flash Array (AFA) offers Block Storage
 services to OpenStack. Using the driver, OpenStack Block Storage hosts
 can connect to an XtremIO Storage cluster.
 
-This section explains how to configure and connect an OpenStack block
-storage host to an XtremIO storage cluster.
+This section explains how to configure and connect the block
+storage nodes to an XtremIO storage cluster.
 
 Support matrix
 ~~~~~~~~~~~~~~
 
-Xtremapp version 3.0 and 4.0 are supported.
+XtremApp version 3.0 and 4.0 are supported.
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
 -  Create, delete, clone, attach, and detach volumes.
+
 -  Create and delete volume snapshots.
+
 -  Create a volume from a snapshot.
+
 -  Copy an image to a volume.
+
 -  Copy a volume to an image.
+
 -  Extend a volume.
+
 -  Manage and unmanage a volume.
+
 -  Get volume statistics.
 
 XtremIO Block Storage driver configuration
@@ -74,7 +81,7 @@ In XtremIO version 4.0, a single XMS can manage multiple cluster back ends. In
 such setups, the administrator is required to specify the cluster name (in
 addition to the XMS IP). Each cluster must be defined as a separate back end.
 
-To retrieve the Cluster Name, run the :command:`show-clusters` CLI command.
+To retrieve the cluster name, run the :command:`show-clusters` CLI command.
 
 Configure the cluster name by adding the following parameter:
 
