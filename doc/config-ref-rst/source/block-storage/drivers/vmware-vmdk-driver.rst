@@ -9,9 +9,9 @@ iSCSI, FiberChannel, and vSAN.
 
 .. warning::
 
-    The VMware ESX VMDK driver is deprecated as of the Icehouse release and
-    might be removed in Juno or a subsequent release. The VMware vCenter VMDK
-    driver continues to be fully supported.
+   The VMware ESX VMDK driver is deprecated as of the Icehouse release and
+   might be removed in Juno or a subsequent release. The VMware vCenter VMDK
+   driver continues to be fully supported.
 
 Functional context
 ~~~~~~~~~~~~~~~~~~
@@ -44,14 +44,14 @@ In the ``nova.conf`` file, use this option to define the Compute driver:
 
 .. code-block:: ini
 
-    compute_driver = vmwareapi.VMwareVCDriver
+   compute_driver = vmwareapi.VMwareVCDriver
 
 In the ``cinder.conf`` file, use this option to define the volume
 driver:
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.vmware.vmdk.VMwareVcVmdkDriver
+   volume_driver = cinder.volume.drivers.vmware.vmdk.VMwareVcVmdkDriver
 
 The following table lists various options that the drivers support for the
 OpenStack Block Storage configuration (``cinder.conf``):
@@ -105,9 +105,9 @@ using the appropriate ``vmdk_type``:
 
 .. code-block:: console
 
-    $ cinder type-create thick_volume
-    $ cinder type-key thick_volume set vmware:vmdk_type=thick
-    $ cinder create --volume-type thick_volume --display-name volume1 1
+   $ cinder type-create thick_volume
+   $ cinder type-key thick_volume set vmware:vmdk_type=thick
+   $ cinder create --volume-type thick_volume --display-name volume1 1
 
 Clone type
 ~~~~~~~~~~
@@ -138,17 +138,17 @@ created from an image:
 
 .. code-block:: console
 
-    $ cinder type-create fast_clone
-    $ cinder type-key fast_clone set vmware:clone_type=linked
-    $ cinder create --image-id 9cb87f4f-a046-47f5-9b7c-d9487b3c7cd4 \
-      --volume-type fast_clone --display-name source-vol 1
-    $ cinder create --source-volid 25743b9d-3605-462b-b9eb-71459fe2bb35 \
-      --display-name dest-vol 1
+   $ cinder type-create fast_clone
+   $ cinder type-key fast_clone set vmware:clone_type=linked
+   $ cinder create --image-id 9cb87f4f-a046-47f5-9b7c-d9487b3c7cd4 \
+     --volume-type fast_clone --display-name source-vol 1
+   $ cinder create --source-volid 25743b9d-3605-462b-b9eb-71459fe2bb35 \
+     --display-name dest-vol 1
 
 .. note::
 
-    The VMware ESX VMDK driver ignores the extra spec entry and always creates
-    a ``full`` clone.
+   The VMware ESX VMDK driver ignores the extra spec entry and always creates
+   a ``full`` clone.
 
 Use vCenter storage policies to specify back-end data stores
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -173,8 +173,8 @@ automatically supported.
 
 .. note::
 
-    You must configure any data stores that you configure for the Block
-    Storage service for the Compute service.
+   You must configure any data stores that you configure for the Block
+   Storage service for the Compute service.
 
 **To configure back-end data stores by using storage policies**
 
@@ -185,7 +185,7 @@ automatically supported.
 
    .. note::
 
-       The tag value serves as the policy. For details, see :ref:`vmware-spbm`.
+      The tag value serves as the policy. For details, see :ref:`vmware-spbm`.
 
 #. Set the extra spec key ``vmware:storage_profile`` in the desired Block
    Storage volume types to the policy name that you created in the previous
@@ -203,9 +203,9 @@ automatically supported.
 
 .. note::
 
-    Any volume that is created without an associated policy (that is to say,
-    without an associated volume type that specifies ``vmware:storage_profile``
-    extra spec), there is no policy-based placement for that volume.
+   Any volume that is created without an associated policy (that is to say,
+   without an associated volume type that specifies ``vmware:storage_profile``
+   extra spec), there is no policy-based placement for that volume.
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
@@ -216,16 +216,16 @@ The VMware vCenter and ESX VMDK drivers support these operations:
 
    .. note::
 
-       When a volume is attached to an instance, a reconfigure operation is
-       performed on the instance to add the volume's VMDK to it. The user must
-       manually rescan and mount the device from within the guest operating
-       system.
+      When a volume is attached to an instance, a reconfigure operation is
+      performed on the instance to add the volume's VMDK to it. The user must
+      manually rescan and mount the device from within the guest operating
+      system.
 
 -  Create, list, and delete volume snapshots.
 
    .. note::
 
-       Allowed only if volume is not attached to an instance.
+      Allowed only if volume is not attached to an instance.
 
 -  Create a volume from a snapshot.
 
@@ -233,48 +233,48 @@ The VMware vCenter and ESX VMDK drivers support these operations:
 
    .. note::
 
-       Only images in ``vmdk`` disk format with ``bare`` container format are
-       supported. The ``vmware_disktype`` property of the image can be
-       ``preallocated``, ``sparse``, ``streamOptimized`` or ``thin``.
+      Only images in ``vmdk`` disk format with ``bare`` container format are
+      supported. The ``vmware_disktype`` property of the image can be
+      ``preallocated``, ``sparse``, ``streamOptimized`` or ``thin``.
 
 -  Copy a volume to an image.
 
    .. note::
 
-       -  Allowed only if the volume is not attached to an instance.
-       -  This operation creates a ``streamOptimized`` disk image.
+      -  Allowed only if the volume is not attached to an instance.
+      -  This operation creates a ``streamOptimized`` disk image.
 
 -  Clone a volume.
 
    .. note::
 
-       Supported only if the source volume is not attached to an instance.
+      Supported only if the source volume is not attached to an instance.
 
 -  Backup a volume.
 
    .. note::
 
-       This operation creates a backup of the volume in ``streamOptimized``
-       disk format.
+      This operation creates a backup of the volume in ``streamOptimized``
+      disk format.
 
 -  Restore backup to new or existing volume.
 
    .. note::
 
-       Supported only if the existing volume doesn't contain snapshots.
+      Supported only if the existing volume doesn't contain snapshots.
 
 -  Change the type of a volume.
 
    .. note::
 
-       This operation is supported only if the volume state is ``available``.
+      This operation is supported only if the volume state is ``available``.
 
 -  Extend a volume.
 
    .. note::
 
-       Although the VMware ESX VMDK driver supports these operations, it has
-       not been extensively tested.
+      Although the VMware ESX VMDK driver supports these operations, it has
+      not been extensively tested.
 
 
 .. _vmware-spbm:
@@ -283,7 +283,7 @@ Storage policy-based configuration in vCenter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can configure Storage Policy-Based Management (SPBM) profiles for vCenter
-data stores supporting the Compute, Image Service, and Block Storage components
+data stores supporting the Compute, Image service, and Block Storage components
 of an OpenStack implementation.
 
 In a vSphere OpenStack deployment, SPBM enables you to delegate several data
@@ -307,7 +307,7 @@ Create storage policies in vCenter
 
 #. In vCenter, create the tag that identifies the data stores:
 
-   #. From the Home screen, click Tags.
+   #. From the :guilabel:`Home` screen, click :guilabel:`Tags`.
 
    #. Specify a name for the tag.
 

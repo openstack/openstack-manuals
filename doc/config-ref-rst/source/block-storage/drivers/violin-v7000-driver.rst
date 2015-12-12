@@ -2,7 +2,7 @@
 Violin Memory 7000 Series FSP volume driver
 ===========================================
 
-The OpenStack V7000 driver package from Violin Memory adds block storage
+The OpenStack V7000 driver package from Violin Memory adds Block Storage
 service support for Violin 7300 Flash Storage Platforms (FSPs) and 7700 FSP
 controllers.
 
@@ -53,16 +53,16 @@ Supported operations
 
 .. note::
 
-    Listed operations are supported for thick, thin, and dedup luns,
-    with the exception of cloning. Cloning operations are supported only
-    on thick luns.
+   Listed operations are supported for thick, thin, and dedup luns,
+   with the exception of cloning. Cloning operations are supported only
+   on thick luns.
 
 Driver configuration
 ~~~~~~~~~~~~~~~~~~~~
 
-Once the array is configured per the installation guide, it is simply a matter
-of editing the cinder configuration file to add or modify the parameters. The
-driver currently only supports fibre channel configuration.
+Once the array is configured as per the installation guide, it is simply a
+matter of editing the cinder configuration file to add or modify the
+parameters. The driver currently only supports fibre channel configuration.
 
 Fibre channel configuration
 ---------------------------
@@ -72,13 +72,13 @@ variables using the guide in the following section:
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.violin.v7000_fcp.V7000FCPDriver
-    volume_backend_name = vmem_violinfsp
-    extra_capabilities = VMEM_CAPABILITIES
-    san_ip = VMEM_MGMT_IP
-    san_login = VMEM_USER_NAME
-    san_password = VMEM_PASSWORD
-    use_multipath_for_image_xfer = true
+   volume_driver = cinder.volume.drivers.violin.v7000_fcp.V7000FCPDriver
+   volume_backend_name = vmem_violinfsp
+   extra_capabilities = VMEM_CAPABILITIES
+   san_ip = VMEM_MGMT_IP
+   san_login = VMEM_USER_NAME
+   san_password = VMEM_PASSWORD
+   use_multipath_for_image_xfer = true
 
 Configuration parameters
 ------------------------
@@ -86,17 +86,18 @@ Configuration parameters
 Description of configuration value placeholders:
 
 VMEM_CAPABILITIES
-    User defined capabilities, a JSON formatted string specifying key/value
-    pairs (string value). The ones particularly supported are dedup and thin.
-    Only these two capabilities are listed here in cinder.conf, indicating this
-    backend be selected for creating luns which have a volume type associated
-    with them that have 'dedup' or 'thin' extra_specs specified. For example,
-    if the FSP is configured to support dedup luns, set the associated driver
-    capabilities to: {"dedup":"True","thin":"True"}.
+    User defined capabilities, a JSON formatted string specifying key-value
+    pairs (string value). The ones particularly supported are
+    ``dedup`` and ``thin``. Only these two capabilities are listed here in
+    ``cinder.conf`` file, indicating this backend be selected for creating
+    luns which have a volume type associated with them that have ``dedup``
+    or ``thin`` extra_specs specified. For example, if the FSP is configured
+    to support dedup luns, set the associated driver capabilities
+    to: {"dedup":"True","thin":"True"}.
 
 VMEM_MGMT_IP
-    External IP address or hostname of the Violin 7300 Memory Gateway.  This
-    can be an IP address or hostname.
+    External IP address or host name of the Violin 7300 Memory Gateway.  This
+    can be an IP address or host name.
 
 VMEM_USER_NAME
     Log-in user name for the Violin 7300 Memory Gateway or 7700 FSP controller.

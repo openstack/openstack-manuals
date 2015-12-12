@@ -6,8 +6,8 @@ The X-IO volume driver for OpenStack Block Storage enables ISE products to be
 managed by OpenStack Block Storage nodes. This driver can be configured to work
 with iSCSI and Fibre Channel storage protocols. The X-IO volume driver allows
 the cloud operator to take advantage of ISE features like Quality of Service
-and Continuous Adaptive Data Placement (CADP). It also supports creating thin
-volumes and specifying volume media affinity.
+(QOS) and Continuous Adaptive Data Placement (CADP). It also supports
+creating thin volumes and specifying volume media affinity.
 
 Requirements
 ~~~~~~~~~~~~
@@ -44,21 +44,21 @@ Fibre Channel
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.xio.XIOISEFCDriver
-    san_ip = 1.2.3.4              # the address of your ISE REST management interface
-    san_login = administrator     # your ISE management admin login
-    san_password = password       # your ISE management admin password
+   volume_driver = cinder.volume.drivers.xio.XIOISEFCDriver
+   san_ip = 1.2.3.4              # the address of your ISE REST management interface
+   san_login = administrator     # your ISE management admin login
+   san_password = password       # your ISE management admin password
 
 iSCSI
 -----
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.xio.XIOISEISCSIDriver
-    san_ip = 1.2.3.4              # the address of your ISE REST management interface
-    san_login = administrator     # your ISE management admin login
-    san_password = password       # your ISE management admin password
-    iscsi_ip_address = ionet_ip   # ip address to one ISE port connected to the IONET
+   volume_driver = cinder.volume.drivers.xio.XIOISEISCSIDriver
+   san_ip = 1.2.3.4              # the address of your ISE REST management interface
+   san_login = administrator     # your ISE management admin login
+   san_password = password       # your ISE management admin password
+   iscsi_ip_address = ionet_ip   # ip address to one ISE port connected to the IONET
 
 Optional configuration parameters
 ---------------------------------
@@ -115,13 +115,13 @@ storage:
 
 .. code-block:: console
 
-    $ cinder type-create xio1-flash
-    $ cinder type-key xio1-flash set Affinity:Type=flash
+   $ cinder type-create xio1-flash
+   $ cinder type-key xio1-flash set Affinity:Type=flash
 
 Create a volume type called xio1 and set QoS min and max:
 
 .. code-block:: console
 
-    $ cinder type-create xio1
-    $ cinder type-key xio1 set QoS:minIOPS=20
-    $ cinder type-key xio1 set QoS:maxIOPS=5000
+   $ cinder type-create xio1
+   $ cinder type-key xio1 set QoS:minIOPS=20
+   $ cinder type-key xio1 set QoS:maxIOPS=5000

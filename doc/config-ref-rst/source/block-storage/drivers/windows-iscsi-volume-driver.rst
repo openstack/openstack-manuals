@@ -8,7 +8,7 @@ Being entirely a software solution, consider it in particular for mid-sized
 networks where the costs of a SAN might be excessive.
 
 The Windows Block Storage driver works with OpenStack Compute on any
-hypervisor. It includes snapshotting support and the "boot from volume"
+hypervisor. It includes snapshotting support and the ``boot from volume``
 feature.
 
 This driver creates volumes backed by fixed-type VHD images on Windows Server
@@ -36,12 +36,12 @@ independent Python environment, in order to avoid conflicts with existing
 applications, dynamically generates a ``cinder.conf`` file based on the
 parameters provided by you.
 
-cinder-volume will be configured to run as a Windows Service, which can
+``cinder-volume`` will be configured to run as a Windows Service, which can
 be restarted using:
 
 .. code-block:: none
 
-    PS C:\> net stop cinder-volume ; net start cinder-volume
+   PS C:\> net stop cinder-volume ; net start cinder-volume
 
 The installer can also be used in unattended mode. More details about how to
 use the installer and its features can be found at https://www.cloudbase.it.
@@ -49,7 +49,7 @@ use the installer and its features can be found at https://www.cloudbase.it.
 Windows Server configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The required service in order to run cinder-volume on Windows is
+The required service in order to run ``cinder-volume`` on Windows is
 ``wintarget``. This will require the iSCSI Target Server Windows feature
 to be installed. You can install it by running the following command:
 
@@ -80,7 +80,7 @@ Once installed, run the following to clone the OpenStack Block Storage code:
 
 .. code-block:: none
 
-    PS C:\> git.exe clone https://github.com/openstack/cinder.git
+   PS C:\> git.exe clone https://github.com/openstack/cinder.git
 
 Configure cinder-volume
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -90,20 +90,20 @@ configuration sample for using the Windows iSCSI Driver:
 
 .. code-block:: ini
 
-    [DEFAULT]
-    auth_strategy = keystone
-    volume_name_template = volume-%s
-    volume_driver = cinder.volume.drivers.windows.WindowsDriver
-    glance_api_servers = IP_ADDRESS:9292
-    rabbit_host = IP_ADDRESS
-    rabbit_port = 5672
-    sql_connection = mysql+pymysql://root:Passw0rd@IP_ADDRESS/cinder
-    windows_iscsi_lun_path = C:\iSCSIVirtualDisks
-    verbose = True
-    rabbit_password = Passw0rd
-    logdir = C:\OpenStack\Log\
-    image_conversion_dir = C:\ImageConversionDir
-    debug = True
+   [DEFAULT]
+   auth_strategy = keystone
+   volume_name_template = volume-%s
+   volume_driver = cinder.volume.drivers.windows.WindowsDriver
+   glance_api_servers = IP_ADDRESS:9292
+   rabbit_host = IP_ADDRESS
+   rabbit_port = 5672
+   sql_connection = mysql+pymysql://root:Passw0rd@IP_ADDRESS/cinder
+   windows_iscsi_lun_path = C:\iSCSIVirtualDisks
+   verbose = True
+   rabbit_password = Passw0rd
+   logdir = C:\OpenStack\Log\
+   image_conversion_dir = C:\ImageConversionDir
+   debug = True
 
 The following table contains a reference to the only driver specific
 option that will be used by the Block Storage Windows driver:
@@ -113,11 +113,11 @@ option that will be used by the Block Storage Windows driver:
 Run cinder-volume
 -----------------
 
-After configuring cinder-volume using the ``cinder.conf`` file, you may
+After configuring ``cinder-volume`` using the ``cinder.conf`` file, you may
 use the following commands to install and run the service (note that you
 must replace the variables with the proper paths):
 
 .. code-block:: none
 
-    PS C:\> python $CinderClonePath\setup.py install
-    PS C:\> cmd /c C:\python27\python.exe c:\python27\Scripts\cinder-volume" --config-file $CinderConfPath
+   PS C:\> python $CinderClonePath\setup.py install
+   PS C:\> cmd /c C:\python27\python.exe c:\python27\Scripts\cinder-volume" --config-file $CinderConfPath

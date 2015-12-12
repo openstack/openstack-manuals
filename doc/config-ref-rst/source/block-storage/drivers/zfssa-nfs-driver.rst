@@ -14,7 +14,7 @@ Oracle ZFS Storage Appliance Software version ``2013.1.2.0`` or later.
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
-- Create, delete, attach and detach volumes.
+- Create, delete, attach, and detach volumes.
 
 - Create and delete snapshots.
 
@@ -35,14 +35,14 @@ Supported operations
 Appliance configuration
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Appliance configuration using the command line interface (CLI) is
+Appliance configuration using the command-line interface (CLI) is
 described below. To access the CLI, ensure SSH remote access is enabled,
 which is the default. You can also perform configuration using the
 browser user interface (BUI) or the RESTful API. Please refer to the
 `Oracle ZFS Storage Appliance
 documentation <http://www.oracle.com/technetwork/documentation/oracle-unified-ss-193371.html>`__
 for details on how to configure the Oracle ZFS Storage Appliance using
-the BUI, CLI and RESTful API.
+the BUI, CLI, and RESTful API.
 
 #. Log in to the Oracle ZFS Storage Appliance CLI and enable the REST
    service. REST service needs to stay online for this driver to function.
@@ -57,10 +57,10 @@ the BUI, CLI and RESTful API.
 
 #. Create a new project and share in the storage pool (``mypool``) if you do
    not want to use existing ones. This driver will create a project and share
-   by the names specified in ``cinder.conf``, if the a project or share by that
-   name does not already exist in the storage pool (``mypool``). The project
-   and share are named ``NFSProject`` and ``nfs_share``' in the sample
-   ``cinder.conf`` entries below.
+   by the names specified in the ``cinder.conf`` file, if a project and share
+   by that name does not already exist in the storage pool (``mypool``).
+   The project and share are named ``NFSProject`` and ``nfs_share``' in the
+   sample ``cinder.conf`` file as entries below.
 
 #. To perform driver operations, create a role with the following
    authorizations:
@@ -103,7 +103,7 @@ the BUI, CLI and RESTful API.
       zfssa:configuration roles OpenStackRole auth (uncommitted)> set project=NFSProject
       zfssa:configuration roles OpenStackRole auth (uncommitted)> set share=nfs_share
 
-#. The following properties only need to be set when a share or a project has
+#. The following properties only need to be set when a share and project has
    not been created following the steps above and wish to allow the driver to
    create them for you.
 
@@ -170,8 +170,8 @@ the BUI, CLI and RESTful API.
 
    .. note::
 
-       For better performance and reliability, it is recommended to configure a
-       separate subnet exclusively for data traffic in your cloud environment.
+      For better performance and reliability, it is recommended to configure a
+      separate subnet exclusively for data traffic in your cloud environment.
 
    .. code-block:: none
 
@@ -267,17 +267,20 @@ feature:
    necessary properties used to configure and set up the ZFSSA NFS
    driver, including the following new properties:
 
-   -  ``zfssa_enable_local_cache``: (True/False) To enable/disable the
-      feature.
+   zfssa_enable_local_cache
+        (True/False) To enable/disable the feature.
 
-   -  ``zfssa_cache_directory``: The directory name inside
-      zfssa_nfs_share where cache volumes are stored.
+   zfssa_cache_directory
+        The directory name inside zfssa_nfs_share where cache volumes
+        are stored.
 
 Every cache volume has two additional properties stored as WebDAV
 properties. It is important that they are not altered outside of Block
 Storage when the driver is in use:
 
--  ``image_id``: stores the image id as in Image service.
+image_id
+  stores the image id as in Image service.
 
--  ``updated_at``: stores the most current timestamp when the image is
-   updated in Image service.
+updated_at
+  stores the most current timestamp when the image is
+  updated in Image service.
