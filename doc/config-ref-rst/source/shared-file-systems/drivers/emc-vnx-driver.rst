@@ -186,11 +186,12 @@ Pre-configurations on VNX
    the first network device (physical port on NIC) of Data Mover to
    access the network.
 
-   Go to Unisphere to check the device list: Settings -> Network ->
-   Settings for File (Unified system only) -> Device.
+   Go to :guilabel:`Unisphere` to check the device list:
+   :menuselection:`Settings > Network > Settings for File (Unified system
+   only) > Device`.
 
-The following parameters need to be configured in
-``/etc/manila/manila.conf`` for the VNX driver:
+The following parameters need to be configured in the
+``/etc/manila/manila.conf`` file for the VNX driver:
 
 .. code-block:: ini
 
@@ -202,23 +203,24 @@ The following parameters need to be configured in
    emc_nas_pool_name = <pool name>
    share_driver = manila.share.drivers.emc.driver.EMCShareDriver
 
--  ``emc_share_backend`` is the plug-in name. Set it to ``vnx`` for
-   the VNX driver.
+emc_share_backend
+    The plug-in name. Set it to ``vnx`` for the VNX driver.
 
--  ``emc_nas_server`` is the control station IP address of the VNX
-   system to be managed.
+emc_nas_server
+    The control station IP address of the VNX system to be managed.
 
--  ``emc_nas_password`` and ``emc_nas_login`` fields are used to
-   provide credentials to the VNX system. Only local users of VNX File
-   is supported.
+emc_nas_password and emc_nas_login
+    They are the fields that are used to provide credentials to the
+    VNX system. Only local users of VNX File is supported.
 
--  ``emc_nas_server_container`` field is the name of the Data Mover to
-   serve the share service.
+emc_nas_server_container
+    It is the name of the Data Mover to serve the share service.
 
--  ``emc_nas_pool_name`` is the pool name user wants to create volume
-   from. The pools can be created using Unisphere for VNX.
+emc_nas_pool_name
+    It is the pool name user wants to create volume from. The pools
+    can be created using Unisphere for VNX.
 
-Restart of the manila-share service is needed for the configuration
+Restart of the ``manila-share`` service is needed for the configuration
 changes to take effect.
 
 The VNX driver has the following restrictions:
@@ -235,7 +237,7 @@ The VNX driver has the following restrictions:
    communicate with the hosts in the VLANs. To create shares for
    different VLANs with same subnet address, use different Data Movers.
 
--  The 'Active Directory' security service is the only supported
+-  The ``Active Directory`` security service is the only supported
    security service type and it is required to create CIFS shares.
 
 -  Only one security service can be configured for each share network.

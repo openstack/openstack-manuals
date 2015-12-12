@@ -24,7 +24,7 @@ parameters described in these sections.
 The Shared File Systems service can handle multiple drivers at once.
 The configuration for all of them follows a common paradigm:
 
-#. In file ``manila.conf``, configure the option
+#. In the configuration file ``manila.conf``, configure the option
    ``enabled_backends`` with the list of names for your configuration.
 
    For example, if you want to enable two drivers and name them

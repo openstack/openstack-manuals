@@ -7,11 +7,11 @@ and Block Storage service volumes. There are two modules that handle
 them in the Shared File Systems service:
 
 -  The ``service_instance`` module creates VMs in Compute with a
-   predefined image called "service image". This module can be used by
+   predefined image called ``service image``. This module can be used by
    any driver for provisioning of service VMs to be able to separate
    share resources among tenants.
 
--  The 'generic' module operates with Block Storage service volumes
+-  The ``generic`` module operates with Block Storage service volumes
    and VMs created by the ``service_instance`` module, then creates
    shared filesystems based on volumes attached to VMs.
 
@@ -21,7 +21,7 @@ Network configurations
 Each driver can handle networking in its own way, see:
 https://wiki.openstack.org/wiki/manila/Networking.
 
-One of two possible configurations can be chosen for share provisioning
+One of the two possible configurations can be chosen for share provisioning
 using the ``service_instance`` module:
 
 - Service VM has one network interface from a network that is

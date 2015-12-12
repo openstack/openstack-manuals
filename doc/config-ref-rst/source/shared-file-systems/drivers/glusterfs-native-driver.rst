@@ -8,11 +8,11 @@ Systems service clients.
 
 A Shared File Systems service share is a GlusterFS volume. This driver
 uses flat-network (share-server-less) model. Instances directly talk
-with the GlusterFS back end storage pool. The instances use 'glusterfs'
+with the GlusterFS back end storage pool. The instances use ``glusterfs``
 protocol to mount the GlusterFS shares. Access to each share is allowed
 via TLS Certificates. Only the instance which has the TLS trust
 established with the GlusterFS back end can mount and hence use the
-share. Currently only 'rw' access is supported.
+share. Currently only ``read-write (rw)`` access is supported.
 
 Network approach
 ~~~~~~~~~~~~~~~~
