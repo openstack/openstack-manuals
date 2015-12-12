@@ -225,6 +225,31 @@ KVM as a hypervisor is supported on POWER system's PowerNV platform.
    Because a KVM installation can change user group membership,
    you might need to log in again for changes to take effect.
 
+Configure Compute backing storage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Backing Storage is the storage used to provide the expanded operating system
+image, and any ephemeral storage. Inside the virtual machine, this is normally
+presented as two virtual hard disks (for example, ``/dev/vda`` and ``/dev/vdb``
+respectively). However, inside OpenStack, this can be derived from one of three
+methods: ``lvm``, ``qcow`` or ``raw``, chosen using the ``images_type`` option
+in ``nova.conf`` on the compute node.
+
+QCOW is the default backing store. It uses a copy-on-write philosophy to delay
+allocation of storage until it is actually needed. This means that the space
+required for the backing of an image can be significantly less on the real disk
+than what seems available in the virtual machine operating system.
+
+RAW creates files without any sort of file formatting, effectively creating
+files with the plain binary one would normally see on a real disk. This can
+increase performance, but means that the entire size of the virtual disk is
+reserved on the physical disk.
+
+Local `LVM volumes
+<http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)>`__ can also be
+used. Set ``images_volume_group = nova_local`` where ``nova_local`` is the name
+of the LVM group you have created.
+
 Specify the CPU model of KVM guests
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
