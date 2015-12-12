@@ -70,7 +70,7 @@ Configuring the array
 
    -  The rest of the options will be repeated for each storage pool in a
       given array: the appropriate Cinder driver name; IP address or
-      hostname of the array management interface; the username and password
+      host name of the array management interface; the username and password
       of an array user account with ``manage`` privileges; and the iSCSI IP
       addresses for the array if using the iSCSI transport protocol.
 
