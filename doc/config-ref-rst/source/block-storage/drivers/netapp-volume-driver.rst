@@ -2,7 +2,7 @@
 NetApp unified driver
 =====================
 
-The NetApp unified driver is a block storage driver that supports
+The NetApp unified driver is a Block Storage driver that supports
 multiple storage families and protocols. A storage family corresponds to
 storage systems built on different NetApp technologies such as clustered
 Data ONTAP, Data ONTAP operating in 7-Mode, and E-Series. The storage
@@ -17,25 +17,24 @@ families and protocols.
 
 .. note::
 
-    With the Juno release of OpenStack, Block Storage has
-    introduced the concept of "storage pools", in which a single
-    Block Storage back end may present one or more logical
-    storage resource pools from which Block Storage will
-    select a storage location when provisioning volumes.
+   With the Juno release of OpenStack, Block Storage has
+   introduced the concept of storage pools, in which a single
+   Block Storage back end may present one or more logical
+   storage resource pools from which Block Storage will
+   select a storage location when provisioning volumes.
 
-    In releases prior to Juno, the NetApp unified driver contained some
-    "scheduling" logic that determined which NetApp storage container
-    (namely, a FlexVol volume for Data ONTAP, or a dynamic disk pool for
-    E-Series) that a new Block Storage volume would be placed
-    into.
+   In releases prior to Juno, the NetApp unified driver contained some
+   scheduling logic that determined which NetApp storage container
+   (namely, a FlexVol volume for Data ONTAP, or a dynamic disk pool for
+   E-Series) that a new Block Storage volume would be placed into.
 
-    With the introduction of pools, all scheduling logic is performed
-    completely within the Block Storage scheduler, as each
-    NetApp storage container is directly exposed to the Block
-    Storage scheduler as a storage pool. Previously, the NetApp
-    unified driver presented an aggregated view to the scheduler and
-    made a final placement decision as to which NetApp storage container
-    the Block Storage volume would be provisioned into.
+   With the introduction of pools, all scheduling logic is performed
+   completely within the Block Storage scheduler, as each
+   NetApp storage container is directly exposed to the Block
+   Storage scheduler as a storage pool. Previously, the NetApp
+   unified driver presented an aggregated view to the scheduler and
+   made a final placement decision as to which NetApp storage container
+   the Block Storage volume would be provisioned into.
 
 NetApp clustered Data ONTAP storage family
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,40 +63,40 @@ clustered Data ONTAP instance.
 Configure the volume driver, storage family, and storage protocol to the
 NetApp unified driver, clustered Data ONTAP, and iSCSI respectively by
 setting the ``volume_driver``, ``netapp_storage_family`` and
-``netapp_storage_protocol`` options in ``cinder.conf`` as follows:
+``netapp_storage_protocol`` options in the ``cinder.conf`` file as follows:
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
-    netapp_storage_family = ontap_cluster
-    netapp_storage_protocol = iscsi
-    netapp_vserver = openstack-vserver
-    netapp_server_hostname = myhostname
-    netapp_server_port = port
-    netapp_login = username
-    netapp_password = password
+   volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
+   netapp_storage_family = ontap_cluster
+   netapp_storage_protocol = iscsi
+   netapp_vserver = openstack-vserver
+   netapp_server_hostname = myhostname
+   netapp_server_port = port
+   netapp_login = username
+   netapp_password = password
 
 .. note::
 
-    To use the iSCSI protocol, you must override the default value of
-    ``netapp_storage_protocol`` with ``iscsi``.
+   To use the iSCSI protocol, you must override the default value of
+   ``netapp_storage_protocol`` with ``iscsi``.
 
 .. include:: ../../tables/cinder-netapp_cdot_iscsi.rst
 
 .. note::
 
-    If you specify an account in the ``netapp_login`` that only has
-    virtual storage server (Vserver) administration privileges (rather
-    than cluster-wide administration privileges), some advanced features
-    of the NetApp unified driver will not work and you may see warnings
-    in the Block Storage logs.
+   If you specify an account in the ``netapp_login`` that only has
+   virtual storage server (Vserver) administration privileges (rather
+   than cluster-wide administration privileges), some advanced features
+   of the NetApp unified driver will not work and you may see warnings
+   in the Block Storage logs.
 
 .. tip::
 
-    For more information on these options and other deployment and
-    operational scenarios, visit the `NetApp OpenStack Deployment and
-    Operations
-    Guide <http://netapp.github.io/openstack-deploy-ops-guide/>`__.
+   For more information on these options and other deployment and
+   operational scenarios, visit the `NetApp OpenStack Deployment and
+   Operations
+   Guide <http://netapp.github.io/openstack-deploy-ops-guide/>`__.
 
 NetApp NFS configuration for clustered Data ONTAP
 -------------------------------------------------
@@ -118,35 +117,35 @@ instance.
 Configure the volume driver, storage family, and storage protocol to NetApp
 unified driver, clustered Data ONTAP, and NFS respectively by setting the
 ``volume_driver``, ``netapp_storage_family``, and ``netapp_storage_protocol``
-options in ``cinder.conf`` as follows:
+options in the ``cinder.conf`` file as follows:
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
-    netapp_storage_family = ontap_cluster
-    netapp_storage_protocol = nfs
-    netapp_vserver = openstack-vserver
-    netapp_server_hostname = myhostname
-    netapp_server_port = port
-    netapp_login = username
-    netapp_password = password
-    nfs_shares_config = /etc/cinder/nfs_shares
+   volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
+   netapp_storage_family = ontap_cluster
+   netapp_storage_protocol = nfs
+   netapp_vserver = openstack-vserver
+   netapp_server_hostname = myhostname
+   netapp_server_port = port
+   netapp_login = username
+   netapp_password = password
+   nfs_shares_config = /etc/cinder/nfs_shares
 
 .. include:: ../../tables/cinder-netapp_cdot_nfs.rst
 
 .. note::
 
-    Additional NetApp NFS configuration options are shared with the
-    generic NFS driver. These options can be found here:
-    :ref:`cinder-storage_nfs`.
+   Additional NetApp NFS configuration options are shared with the
+   generic NFS driver. These options can be found here:
+   :ref:`cinder-storage_nfs`.
 
 .. note::
 
-    If you specify an account in the ``netapp_login`` that only has
-    virtual storage server (Vserver) administration privileges (rather
-    than cluster-wide administration privileges), some advanced features
-    of the NetApp unified driver will not work and you may see warnings
-    in the Block Storage logs.
+   If you specify an account in the ``netapp_login`` that only has
+   virtual storage server (Vserver) administration privileges (rather
+   than cluster-wide administration privileges), some advanced features
+   of the NetApp unified driver will not work and you may see warnings
+   in the Block Storage logs.
 
 NetApp NFS Copy Offload client
 ------------------------------
@@ -281,31 +280,31 @@ in 7-Mode storage system.
 Configure the volume driver, storage family and storage protocol to the NetApp
 unified driver, Data ONTAP operating in 7-Mode, and iSCSI respectively by
 setting the ``volume_driver``, ``netapp_storage_family`` and
-``netapp_storage_protocol`` options in ``cinder.conf`` as follows:
+``netapp_storage_protocol`` options in the ``cinder.conf`` file as follows:
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
-    netapp_storage_family = ontap_7mode
-    netapp_storage_protocol = iscsi
-    netapp_server_hostname = myhostname
-    netapp_server_port = 80
-    netapp_login = username
-    netapp_password = password
+   volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
+   netapp_storage_family = ontap_7mode
+   netapp_storage_protocol = iscsi
+   netapp_server_hostname = myhostname
+   netapp_server_port = 80
+   netapp_login = username
+   netapp_password = password
 
 .. note::
 
-    To use the iSCSI protocol, you must override the default value of
-    ``netapp_storage_protocol`` with ``iscsi``.
+   To use the iSCSI protocol, you must override the default value of
+   ``netapp_storage_protocol`` with ``iscsi``.
 
 .. include:: ../../tables/cinder-netapp_7mode_iscsi.rst
 
 .. tip::
 
-    For more information on these options and other deployment and
-    operational scenarios, visit the `NetApp OpenStack Deployment and
-    Operations
-    Guide <http://netapp.github.io/openstack-deploy-ops-guide/>`__.
+   For more information on these options and other deployment and
+   operational scenarios, visit the `NetApp OpenStack Deployment and
+   Operations
+   Guide <http://netapp.github.io/openstack-deploy-ops-guide/>`__.
 
 NetApp NFS configuration for Data ONTAP operating in 7-Mode
 -----------------------------------------------------------
@@ -327,33 +326,33 @@ operating in 7-Mode storage system.
 Configure the volume driver, storage family, and storage protocol to the NetApp
 unified driver, Data ONTAP operating in 7-Mode, and NFS respectively by setting
 the ``volume_driver``, ``netapp_storage_family`` and
-``netapp_storage_protocol`` options in ``cinder.conf`` as follows:
+``netapp_storage_protocol`` options in the ``cinder.conf`` file as follows:
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
-    netapp_storage_family = ontap_7mode
-    netapp_storage_protocol = nfs
-    netapp_server_hostname = myhostname
-    netapp_server_port = 80
-    netapp_login = username
-    netapp_password = password
-    nfs_shares_config = /etc/cinder/nfs_shares
+   volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
+   netapp_storage_family = ontap_7mode
+   netapp_storage_protocol = nfs
+   netapp_server_hostname = myhostname
+   netapp_server_port = 80
+   netapp_login = username
+   netapp_password = password
+   nfs_shares_config = /etc/cinder/nfs_shares
 
 .. include:: ../../tables/cinder-netapp_7mode_nfs.rst
 
 .. note::
 
-    Additional NetApp NFS configuration options are shared with the
-    generic NFS driver. For a description of these, see
-    :ref:`cinder-storage_nfs`.
+   Additional NetApp NFS configuration options are shared with the
+   generic NFS driver. For a description of these, see
+   :ref:`cinder-storage_nfs`.
 
 .. tip::
 
-    For more information on these options and other deployment and
-    operational scenarios, visit the `NetApp OpenStack Deployment and
-    Operations
-    Guide <http://netapp.github.io/openstack-deploy-ops-guide/>`__.
+   For more information on these options and other deployment and
+   operational scenarios, visit the `NetApp OpenStack Deployment and
+   Operations
+   Guide <http://netapp.github.io/openstack-deploy-ops-guide/>`__.
 
 NetApp E-Series storage family
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -393,38 +392,38 @@ options must be correctly configured:
 Configure the volume driver, storage family, and storage protocol to the
 NetApp unified driver, E-Series, and iSCSI respectively by setting the
 ``volume_driver``, ``netapp_storage_family`` and
-``netapp_storage_protocol`` options in ``cinder.conf`` as follows:
+``netapp_storage_protocol`` options in the ``cinder.conf`` file as follows:
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
-    netapp_storage_family = eseries
-    netapp_storage_protocol = iscsi
-    netapp_server_hostname = myhostname
-    netapp_server_port = 80
-    netapp_login = username
-    netapp_password = password
-    netapp_controller_ips = 1.2.3.4,5.6.7.8
-    netapp_sa_password = arrayPassword
-    netapp_storage_pools = pool1,pool2
-    use_multipath_for_image_xfer = True
+   volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
+   netapp_storage_family = eseries
+   netapp_storage_protocol = iscsi
+   netapp_server_hostname = myhostname
+   netapp_server_port = 80
+   netapp_login = username
+   netapp_password = password
+   netapp_controller_ips = 1.2.3.4,5.6.7.8
+   netapp_sa_password = arrayPassword
+   netapp_storage_pools = pool1,pool2
+   use_multipath_for_image_xfer = True
 
 .. note::
 
-    To use the E-Series driver, you must override the default value of
-    ``netapp_storage_family`` with ``eseries``.
+   To use the E-Series driver, you must override the default value of
+   ``netapp_storage_family`` with ``eseries``.
 
-    To use the iSCSI protocol, you must override the default value of
-    ``netapp_storage_protocol`` with ``iscsi``.
+   To use the iSCSI protocol, you must override the default value of
+   ``netapp_storage_protocol`` with ``iscsi``.
 
 .. include:: ../../tables/cinder-netapp_eseries_iscsi.rst
 
 .. tip::
 
-    For more information on these options and other deployment and
-    operational scenarios, visit the `NetApp OpenStack Deployment and
-    Operations
-    Guide <http://netapp.github.io/openstack-deploy-ops-guide/>`__.
+   For more information on these options and other deployment and
+   operational scenarios, visit the `NetApp OpenStack Deployment and
+   Operations
+   Guide <http://netapp.github.io/openstack-deploy-ops-guide/>`__.
 
 Upgrading prior NetApp drivers to the NetApp unified driver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -445,60 +444,60 @@ a pre-Havana release to the unified driver format.
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.iscsi.NetAppDirectCmodeISCSIDriver
+      volume_driver = cinder.volume.drivers.netapp.iscsi.NetAppDirectCmodeISCSIDriver
 
    NetApp unified driver configuration:
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
-       netapp_storage_family = ontap_cluster
-       netapp_storage_protocol = iscsi
+      volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
+      netapp_storage_family = ontap_cluster
+      netapp_storage_protocol = iscsi
 
 -  NetApp NFS direct driver for Clustered Data ONTAP in Grizzly (or
    earlier):
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.nfs.NetAppDirectCmodeNfsDriver
+      volume_driver = cinder.volume.drivers.netapp.nfs.NetAppDirectCmodeNfsDriver
 
    NetApp unified driver configuration:
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
-       netapp_storage_family = ontap_cluster
-       netapp_storage_protocol = nfs
+      volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
+      netapp_storage_family = ontap_cluster
+      netapp_storage_protocol = nfs
 
 -  NetApp iSCSI direct driver for Data ONTAP operating in 7-Mode storage
    controller in Grizzly (or earlier):
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.iscsi.NetAppDirect7modeISCSIDriver
+      volume_driver = cinder.volume.drivers.netapp.iscsi.NetAppDirect7modeISCSIDriver
 
    NetApp unified driver configuration:
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
-       netapp_storage_family = ontap_7mode
-       netapp_storage_protocol = iscsi
+      volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
+      netapp_storage_family = ontap_7mode
+      netapp_storage_protocol = iscsi
 
 -  NetApp NFS direct driver for Data ONTAP operating in 7-Mode storage
    controller in Grizzly (or earlier):
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.nfs.NetAppDirect7modeNfsDriver
+      volume_driver = cinder.volume.drivers.netapp.nfs.NetAppDirect7modeNfsDriver
 
    NetApp unified driver configuration:
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
-       netapp_storage_family = ontap_7mode
-       netapp_storage_protocol = nfs
+      volume_driver = cinder.volume.drivers.netapp.common.NetAppDriver
+      netapp_storage_family = ontap_7mode
+      netapp_storage_protocol = nfs
 
 Deprecated NetApp drivers
 -------------------------
@@ -510,30 +509,30 @@ deprecated in Havana.
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.iscsi.NetAppCmodeISCSIDriver
+      volume_driver = cinder.volume.drivers.netapp.iscsi.NetAppCmodeISCSIDriver
 
 -  NetApp NFS driver for clustered Data ONTAP:
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.nfs.NetAppCmodeNfsDriver
+      volume_driver = cinder.volume.drivers.netapp.nfs.NetAppCmodeNfsDriver
 
 -  NetApp iSCSI driver for Data ONTAP operating in 7-Mode storage
    controller:
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.iscsi.NetAppISCSIDriver
+      volume_driver = cinder.volume.drivers.netapp.iscsi.NetAppISCSIDriver
 
 -  NetApp NFS driver for Data ONTAP operating in 7-Mode storage
    controller:
 
    .. code-block:: ini
 
-       volume_driver = cinder.volume.drivers.netapp.nfs.NetAppNFSDriver
+      volume_driver = cinder.volume.drivers.netapp.nfs.NetAppNFSDriver
 
 .. note::
 
-    For support information on deprecated NetApp drivers in the Havana
-    release, visit the `NetApp OpenStack Deployment and Operations
-    Guide <http://netapp.github.io/openstack-deploy-ops-guide/>`__.
+   For support information on deprecated NetApp drivers in the Havana
+   release, visit the `NetApp OpenStack Deployment and Operations
+   Guide <http://netapp.github.io/openstack-deploy-ops-guide/>`__.
