@@ -39,28 +39,28 @@ Dell EqualLogic Group:
 
 .. code-block:: ini
 
-    [DEFAULT]
-    # Required settings
+   [DEFAULT]
+   # Required settings
 
-    volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
-    san_ip = IP_EQLX
-    san_login = SAN_UNAME
-    san_password = SAN_PW
-    eqlx_group_name = EQLX_GROUP
-    eqlx_pool = EQLX_POOL
+   volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
+   san_ip = IP_EQLX
+   san_login = SAN_UNAME
+   san_password = SAN_PW
+   eqlx_group_name = EQLX_GROUP
+   eqlx_pool = EQLX_POOL
 
-    # Optional settings
+   # Optional settings
 
-    san_thin_provision = true|false
-    eqlx_use_chap = true|false
-    eqlx_chap_login = EQLX_UNAME
-    eqlx_chap_password = EQLX_PW
-    eqlx_cli_max_retries = 5
-    san_ssh_port = 22
-    ssh_conn_timeout = 30
-    san_private_key = SAN_KEY_PATH
-    ssh_min_pool_conn = 1
-    ssh_max_pool_conn = 5
+   san_thin_provision = true|false
+   eqlx_use_chap = true|false
+   eqlx_chap_login = EQLX_UNAME
+   eqlx_chap_password = EQLX_PW
+   eqlx_cli_max_retries = 5
+   san_ssh_port = 22
+   ssh_conn_timeout = 30
+   san_private_key = SAN_KEY_PATH
+   ssh_min_pool_conn = 1
+   ssh_max_pool_conn = 5
 
 In this example, replace the following variables accordingly:
 
@@ -104,36 +104,36 @@ SAN_KEY_PATH (optional)
 In addition, enable thin provisioning for SAN volumes using the default
 ``san_thin_provision = true`` setting.
 
-Multi back-end configuration
-----------------------------
+Multiple back-end configuration
+-------------------------------
 
 The following example shows the typical configuration for a Block
 Storage service that uses two Dell EqualLogic back ends:
 
 .. code-block:: ini
 
-    enabled_backends = backend1,backend2
-    san_ssh_port = 22
-    ssh_conn_timeout = 30
-    san_thin_provision = true
+   enabled_backends = backend1,backend2
+   san_ssh_port = 22
+   ssh_conn_timeout = 30
+   san_thin_provision = true
 
-    [backend1]
-    volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
-    volume_backend_name = backend1
-    san_ip = IP_EQLX1
-    san_login = SAN_UNAME
-    san_password = SAN_PW
-    eqlx_group_name = EQLX_GROUP
-    eqlx_pool = EQLX_POOL
+   [backend1]
+   volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
+   volume_backend_name = backend1
+   san_ip = IP_EQLX1
+   san_login = SAN_UNAME
+   san_password = SAN_PW
+   eqlx_group_name = EQLX_GROUP
+   eqlx_pool = EQLX_POOL
 
-    [backend2]
-    volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
-    volume_backend_name = backend2
-    san_ip = IP_EQLX2
-    san_login = SAN_UNAME
-    san_password = SAN_PW
-    eqlx_group_name = EQLX_GROUP
-    eqlx_pool = EQLX_POOL
+   [backend2]
+   volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
+   volume_backend_name = backend2
+   san_ip = IP_EQLX2
+   san_login = SAN_UNAME
+   san_password = SAN_PW
+   eqlx_group_name = EQLX_GROUP
+   eqlx_pool = EQLX_POOL
 
 In this example:
 
