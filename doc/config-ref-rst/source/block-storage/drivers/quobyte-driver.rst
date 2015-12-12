@@ -7,12 +7,12 @@ Storage service volumes on a Quobyte storage back end. Block Storage service
 back ends are mapped to Quobyte volumes and individual Block Storage service
 volumes are stored as files on a Quobyte volume.  Selection of the appropriate
 Quobyte volume is done by the aforementioned back end configuration that
-specifies the Quobyte volume explicitely.
+specifies the Quobyte volume explicitly.
 
 .. note::
 
-    Note the dual use of the term 'volume' in the context of Block Storage
-    service volumes and in the context of Quobyte volumes.
+   Note the dual use of the term ``volume`` in the context of Block Storage
+   service volumes and in the context of Quobyte volumes.
 
 For more information see `the Quobyte support webpage
 <http://support.quobyte.com/>`__.
@@ -41,9 +41,9 @@ The Quobyte volume driver supports the following volume operations:
 
 .. note::
 
-    When running VM instances off Quobyte volumes, ensure that the `Quobyte
-    Compute service driver <https://wiki.openstack.org/wiki/Nova/Quobyte>`__
-    has been configured in your OpenStack cloud.
+   When running VM instances off Quobyte volumes, ensure that the `Quobyte
+   Compute service driver <https://wiki.openstack.org/wiki/Nova/Quobyte>`__
+   has been configured in your OpenStack cloud.
 
 Configuration
 ~~~~~~~~~~~~~
@@ -53,7 +53,7 @@ To activate the Quobyte volume driver, configure the corresponding
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.quobyte.QuobyteDriver
+   volume_driver = cinder.volume.drivers.quobyte.QuobyteDriver
 
 The following table contains the configuration options supported by the
 Quobyte driver:

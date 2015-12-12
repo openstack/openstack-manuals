@@ -12,13 +12,21 @@ Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
 * Create, delete, clone, attach, and detach volumes
+
 * Create and delete volume snapshots
+
 * Create a volume from a snapshot
+
 * Copy an image to a volume
+
 * Copy a volume to an image
+
 * Extend a volume
+
 * Get volume statistics
+
 * Manage and unmanage a volume
+
 * Enable encryption and default performance policy for a volume-type
   extra-specs
 
@@ -43,7 +51,7 @@ within the ``[default]`` section as follows.
    san_password = NIMBLE_PASSWORD
    volume_driver = cinder.volume.drivers.nimble.NimbleISCSIDriver
 
-In case of multi back-end configuration, for example, configuration
+In case of multiple back-end configuration, for example, configuration
 which supports multiple Nimble Storage arrays or a single Nimble Storage
 array with arrays from other vendors, use the following parameters.
 
@@ -59,7 +67,7 @@ array with arrays from other vendors, use the following parameters.
    volume_driver = cinder.volume.drivers.nimble.NimbleISCSIDriver
    volume_backend_name = NIMBLE_BACKEND_NAME
 
-In case of multi back-end configuration, Nimble Storage volume type
+In case of multiple back-end configuration, Nimble Storage volume type
 is created and associated with a back-end name as follows.
 
 .. note::
@@ -77,14 +85,14 @@ NIMBLE_MGMT_IP
   Management IP address of Nimble Storage array/group.
 
 NIMBLE_USER
-  Nimble Storage account login with minimum "power user" (admin) privilege
+  Nimble Storage account login with minimum ``power user`` (admin) privilege
   if RBAC is used.
 
 NIMBLE_PASSWORD
   Password of the admin account for nimble array.
 
 NIMBLE_BACKEND_NAME
-  A volume back-end name which is specified in ``cinder.conf``.
+  A volume back-end name which is specified in the ``cinder.conf`` file.
   This is also used while assigning a back-end name to the Nimble volume type.
 
 NIMBLE_VOLUME_TYPE
@@ -94,7 +102,7 @@ NIMBLE_VOLUME_TYPE
   .. note::
 
      Restart the ``cinder-api``, ``cinder-scheduler``, and ``cinder-volume``
-     services after updating the ``cinder.conf``.
+     services after updating the ``cinder.conf`` file.
 
 Nimble driver extra spec options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

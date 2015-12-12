@@ -42,16 +42,16 @@ configuration file:
 
 .. code-block:: ini
 
-    [DEFAULT]
-    enabled_backends = scality-1
+   [DEFAULT]
+   enabled_backends = scality-1
 
-    [scality-1]
-    volume_driver = cinder.volume.drivers.scality.ScalityDriver
-    volume_backend_name = scality-1
+   [scality-1]
+   volume_driver = cinder.volume.drivers.scality.ScalityDriver
+   volume_backend_name = scality-1
 
-    scality_sofs_config = /etc/sfused.conf
-    scality_sofs_mount_point = /cinder
-    scality_sofs_volume_dir = cinder/volumes
+   scality_sofs_config = /etc/sfused.conf
+   scality_sofs_mount_point = /cinder
+   scality_sofs_volume_dir = cinder/volumes
 
 Compute configuration
 ~~~~~~~~~~~~~~~~~~~~~
@@ -61,8 +61,8 @@ file:
 
 .. code-block:: ini
 
-    [libvirt]
-    scality_sofs_mount_point = /cinder
-    scality_sofs_config = /etc/sfused.conf
+   [libvirt]
+   scality_sofs_mount_point = /cinder
+   scality_sofs_config = /etc/sfused.conf
 
 .. include:: ../../tables/cinder-scality.rst
