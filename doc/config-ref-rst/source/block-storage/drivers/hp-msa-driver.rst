@@ -3,9 +3,9 @@ HP MSA Fibre Channel and iSCSI drivers
 ======================================
 
 The ``HPMSAFCDriver`` and ``HPMSAISCSIDriver`` Cinder drivers allow HP MSA
-2040 or 1040 arrays to be used for block storage in OpenStack deployments.
+2040 or 1040 arrays to be used for Block Storage in OpenStack deployments.
 
-System Requirements
+System requirements
 ~~~~~~~~~~~~~~~~~~~
 
 To use the HP MSA drivers, the following are required:
@@ -62,18 +62,18 @@ Configuring the array
 #. Edit the ``cinder.conf`` file to define a storage back end entry for each
    storage pool on the array that will be managed by OpenStack. Each entry
    consists of a unique section name, surrounded by square brackets, followed
-   by options specified in ``key=value`` format.
+   by options specified in a ``key=value`` format.
 
    * The ``hpmsa_backend_name`` value specifies the name of the storage pool
      or vdisk on the array.
 
    * The ``volume_backend_name`` option value can be a unique value, if you
      wish to be able to assign volumes to a specific storage pool on the
-     array, or a name that's shared among multiple storage pools to let the
+     array, or a name that is shared among multiple storage pools to let the
      volume scheduler choose where new volumes are allocated.
 
    * The rest of the options will be repeated for each storage pool in a given
-     array: the appropriate Cinder driver name; IP address or hostname of the
+     array: the appropriate Cinder driver name; IP address or host name of the
      array management interface; the username and password of an array user
      account with ``manage`` privileges; and the iSCSI IP addresses for the
      array if using the iSCSI transport protocol.
@@ -151,9 +151,9 @@ Configuring the array
 
 
 #. Create a new volume type for each distinct ``volume_backend_name`` value
-   that you added to ``cinder.conf``. The example below assumes that the same
-   ``volume_backend_name=hpmsa-array`` option was specified in all of the
-   entries, and specifies that the volume type ``hpmsa`` can be used to
+   that you added in the ``cinder.conf`` file. The example below assumes that
+   the same ``volume_backend_name=hpmsa-array`` option was specified in all
+   of the entries, and specifies that the volume type ``hpmsa`` can be used to
    allocate volumes from any of them.
 
    **Example of creating a volume type**
@@ -161,10 +161,10 @@ Configuring the array
    .. code-block:: console
 
       $ cinder type-create hpmsa
-
       $ cinder type-key hpmsa set volume_backend_name=hpmsa-array
 
-#. After modifying ``cinder.conf``, restart the cinder-volume service.
+#. After modifying the ``cinder.conf`` file, restart the ``cinder-volume``
+   service.
 
 Driver-specific options
 ~~~~~~~~~~~~~~~~~~~~~~~
