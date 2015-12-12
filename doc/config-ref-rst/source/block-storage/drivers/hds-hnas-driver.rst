@@ -35,17 +35,17 @@ For NFS:
   ``hide and disable access``.
 
   Also, in the ``Access Configuration`` set the option ``norootsquash``,
-  e.g. ``"* (rw, norootsquash)"``, so HNAS cinder driver can change the
-  permissions of its volumes.
+  For example, ``"* (rw, norootsquash)"``, so HNAS cinder driver can change
+  the permissions of its volumes.
 
   In order to use the hardware accelerated features of NFS HNAS,
   we recommend setting ``max-nfs-version`` to 3. Refer to the HNAS
-  command line reference to see how to configure this option.
+  command-line reference to see how to configure this option.
 
 For iSCSI:
   You need to set an iSCSI domain.
 
-Block storage host requirements
+Block Storage host requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The HNAS driver is supported for Red Hat Enterprise Linux OpenStack Platform,
@@ -211,7 +211,7 @@ These are the configuration options available for each service label:
        ``nfs_shares_config`` option in the ``cinder.conf`` configuration file.
 
 These are the configuration options available to the ``config`` section of
-the XML config file:
+the XML configuration file:
 
 .. list-table:: Configuration options
    :header-rows: 1
@@ -269,7 +269,7 @@ Service labels
 
 HNAS driver supports differentiated types of service using the service
 labels. It is possible to create up to four types of them, as gold,
-platinum, silver and ssd, for example.
+platinum, silver, and ssd, for example.
 
 After creating the services in the XML configuration file, you must
 configure one ``volume_type`` per service. Each ``volume_type`` must
@@ -286,8 +286,8 @@ filters.
    $ cinder type-create platinum-tier
    $ cinder type-key platinum set service_label=platinum
 
-Multi-back-end configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Multiple back-end configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you use multiple back ends and intend to enable the creation of a
 volume in a specific back end, you must configure volume types to set
@@ -311,9 +311,9 @@ algorithm selects the pool with the largest available free space.
 SSH configuration
 ~~~~~~~~~~~~~~~~~
 
-Instead of using :command:`SSC` on the Block Storage host and storing its
-credentials in the XML configuration file, the HNAS driver supports
-:command:`SSH` authentication. To configure that:
+Instead of using :command:`SSC` commands on the Block Storage host and
+storing its credentials in the XML configuration file, the HNAS driver
+supports :command:`SSH` authentication. To configure that:
 
 #. If you don't have a pair of public keys already generated,
    create one on the Block Storage host (leave the pass-phrase empty):
@@ -336,7 +336,7 @@ credentials in the XML configuration file, the HNAS driver supports
 
       $ ssh [manager|supervisor]@<smu-ip> 'mkdir -p /var/opt/mercury-main/home/[manager|supervisor]/ssh_keys/'
 
-#. Copy the public key to the "ssh_keys" directory:
+#. Copy the public key to the ``ssh_keys`` directory:
 
    .. code-block:: console
 
@@ -363,8 +363,8 @@ credentials in the XML configuration file, the HNAS driver supports
 ``<cluster_admin_ip0>`` is ``localhost`` for single node deployments.
 This should return a list of available file systems on HNAS.
 
-Edit the XML config file
-~~~~~~~~~~~~~~~~~~~~~~~~
+Edit the XML configuration file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Set the ``username``.
 
@@ -373,13 +373,13 @@ Edit the XML config file
 
 #. Set the private key path:
    ``<ssh_private_key>/opt/hds/ssh/hnaskey</ssh_private_key>``
-   under ``<config>`` section.
+   under the ``<config>`` section.
 
 #. If the HNAS is in a multi-cluster configuration set
    ``<cluster_admin_ip0>`` to the cluster node admin IP.
    In a single node HNAS, leave it empty.
 
-#. Restart cinder services.
+#. Restart the cinder services.
 
 .. warning::
 
@@ -408,7 +408,7 @@ On the Dashboard:
 
 For NFS:
 
-#. Under the :guilabel:`System` -> :guilabel:`Volumes` tab,
+#. Under the :menuselection:`System > Volumes` tab,
    choose the option :guilabel:`Manage Volume`.
 
 #. Fill the fields :guilabel:`Identifier`, :guilabel:`Host`,
@@ -424,7 +424,7 @@ For NFS:
 
 For iSCSI:
 
-#. Under the :guilabel:`System` -> :guilabel:`Volumes` tab,
+#. Under the :menuselection:`System > Volumes` tab,
    choose the option :guilabel:`Manage Volume`.
 
 #. Fill the fields :guilabel:`Identifier`, :guilabel:`Host`,
@@ -468,9 +468,9 @@ Unmanage
 
 On the Dashboard:
 
-#. Under the :guilabel:`System` -> :guilabel:`Volumes` tab, choose a volume
+#. Under the :menuselection:`System > Volumes` tab, choose a volume.
 
-#. On the volume options, choose :guilabel:`Unmanage Volume`
+#. On the volume options, choose :guilabel:`Unmanage Volume`.
 
 #. Check the data and confirm.
 

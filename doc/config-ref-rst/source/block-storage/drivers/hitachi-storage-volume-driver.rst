@@ -53,9 +53,9 @@ Set up Hitachi storage
 
 You need to specify settings as described below. For details about each step,
 see the user's guide of the storage device. Use a storage administrative
-software such as Storage Navigator to set up the storage device so that LDEVs
-and host groups can be created and deleted, and LDEVs can be connected to the
-server and can be asynchronously copied.
+software such as ``Storage Navigator`` to set up the storage device so that
+LDEVs and host groups can be created and deleted, and LDEVs can be connected
+to the server and can be asynchronously copied.
 
 #. Create a Dynamic Provisioning pool.
 
@@ -69,7 +69,7 @@ server and can be asynchronously copied.
 
 #. For the ports at the storage, create host groups (iSCSI targets) whose
    names begin with HBSD- for the controller node and each compute node.
-   Then register a WWN (initiator IQN) for each of the Controller node and
+   Then register a WWN (initiator IQN) for each of the controller node and
    compute nodes.
 
 #. For VSP G1000/VSP/HUS VM, perform the following:
@@ -105,7 +105,7 @@ if Hitachi Gigabit Fibre Channel adaptor is used:
 Set up Hitachi storage volume driver
 ------------------------------------
 
-#. Create directory:
+#. Create a directory:
 
    .. code-block:: console
 
@@ -131,7 +131,7 @@ Set up Hitachi storage volume driver
 
       $ cinder extra-specs-list
 
-#. Edit ``/etc/cinder/cinder.conf`` as follows.
+#. Edit the ``/etc/cinder/cinder.conf`` file as follows.
 
    If you use Fibre Channel:
 
@@ -145,7 +145,8 @@ Set up Hitachi storage volume driver
 
       volume_driver = cinder.volume.drivers.hitachi.hbsd_iscsi.HBSDISCSIDriver
 
-   Also, set ``volume_backend_name`` created by :command:`cinder type-key`:
+   Also, set ``volume_backend_name`` created by :command:`cinder type-key`
+   command:
 
    .. code-block:: ini
 
@@ -155,7 +156,7 @@ Set up Hitachi storage volume driver
 
    .. include:: ../../tables/cinder-hitachi-hbsd.rst
 
-#. Restart Block Storage service.
+#. Restart the Block Storage service.
 
    When the startup is done, "MSGID0003-I: The storage backend can be used."
    is output into ``/var/log/cinder/volume.log`` as follows:
