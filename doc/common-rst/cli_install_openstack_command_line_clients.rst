@@ -57,7 +57,7 @@ command-line clients, and provides installation instructions as needed.
 |                       |                                                     |
 |                       | .. code-block:: console                             |
 |                       |                                                     |
-|                       |   # easy_install pip                                |
+|                       |    # easy_install pip                               |
 |                       |                                                     |
 |                       | **Microsoft Windows**                               |
 |                       |                                                     |
@@ -68,7 +68,7 @@ command-line clients, and provides installation instructions as needed.
 |                       |                                                     |
 |                       | .. code-block:: console                             |
 |                       |                                                     |
-|                       |     C:\>easy_install pip                            |
+|                       |    C:\>easy_install pip                             |
 |                       |                                                     |
 |                       | Another option is to use the unofficial binary      |
 |                       | installer provided by Christoph Gohlke              |
@@ -78,7 +78,7 @@ command-line clients, and provides installation instructions as needed.
 |                       |                                                     |
 |                       | .. code-block:: console                             |
 |                       |                                                     |
-|                       |     # apt-get install python-dev python-pip         |
+|                       |    # apt-get install python-dev python-pip          |
 |                       |                                                     |
 |                       | Note that extra dependencies may be required, per   |
 |                       | operating system, depending on the package being    |
@@ -91,7 +91,7 @@ command-line clients, and provides installation instructions as needed.
 |                       |                                                     |
 |                       | .. code-block:: console                             |
 |                       |                                                     |
-|                       |     # yum install python-devel python-pip           |
+|                       |    # yum install python-devel python-pip            |
 |                       |                                                     |
 |                       | There are also packaged versions of the clients     |
 |                       | available in `RDO <https://www.rdoproject.org/>`__  |
@@ -110,15 +110,15 @@ command-line clients, and provides installation instructions as needed.
 |                       |                                                     |
 |                       | .. code-block:: console                             |
 |                       |                                                     |
-|                       |     # zypper addrepo -f obs://Cloud:OpenStack: \    |
-|                       |     Kilo/SLE_12 Kilo                                |
+|                       |    # zypper addrepo -f obs://Cloud:OpenStack: \     |
+|                       |    Kilo/SLE_12 Kilo                                 |
 |                       |                                                     |
 |                       | Then install pip and use it to manage client        |
 |                       | installation:                                       |
 |                       |                                                     |
 |                       | .. code-block:: console                             |
 |                       |                                                     |
-|                       |     # zypper install python-devel python-pip        |
+|                       |    # zypper install python-devel python-pip         |
 |                       |                                                     |
 |                       | There are also packaged versions of the clients     |
 |                       | available that enable zypper to install the clients |
@@ -131,7 +131,7 @@ command-line clients, and provides installation instructions as needed.
 |                       |                                                     |
 |                       | .. code-block:: console                             |
 |                       |                                                     |
-|                       |     # zypper install python-devel python-pip        |
+|                       |    # zypper install python-devel python-pip         |
 |                       |                                                     |
 |                       | There are also packaged versions of the clients     |
 |                       | available that enable zypper to install the clients |
@@ -195,7 +195,7 @@ with ``pip``.
 
 .. code-block:: console
 
-  # pip install python-novaclient
+   # pip install python-novaclient
 
 Installing with pip
 -------------------
@@ -267,14 +267,14 @@ that can be installed without ``pip``.
 Upgrade or remove clients
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To upgrade a client, add the ``--upgrade`` option to the ``pip install``
-command:
+To upgrade a client, add the :option:`--upgrade` option to the
+:command:`pip install` command:
 
 .. code-block:: console
 
    # pip install --upgrade python-PROJECTclient
 
-To remove the client, run the ``pip uninstall`` command:
+To remove the client, run the :command:`pip uninstall` command:
 
 .. code-block:: console
 

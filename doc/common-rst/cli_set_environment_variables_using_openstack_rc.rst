@@ -15,10 +15,10 @@ with the OpenStack services that run in the cloud.
 
 .. note::
 
-  Defining environment variables using an environment file is not a
-  common practice on Microsoft Windows. Environment variables are
-  usually defined in the :guilabel:`Advanced` tab of the :guilabel:`System
-  Properties` dialog box.
+   Defining environment variables using an environment file is not a
+   common practice on Microsoft Windows. Environment variables are
+   usually defined in the :menuselection:`Advanced > System Properties`
+   dialog box.
 
 Download and source the OpenStack RC file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -82,20 +82,20 @@ project:
 
 .. note::
 
-  You are not prompted for the password with this method. The password
-  lives in clear text format in the ``PROJECT-openrc.sh`` file.
-  Restrict the permissions on this file to avoid security problems.
-  You can also remove the ``OS_PASSWORD`` variable from the file, and
-  use the ``--password`` parameter with OpenStack client commands
-  instead.
+   You are not prompted for the password with this method. The password
+   lives in clear text format in the ``PROJECT-openrc.sh`` file.
+   Restrict the permissions on this file to avoid security problems.
+   You can also remove the ``OS_PASSWORD`` variable from the file, and
+   use the :option:`--password` parameter with OpenStack client commands
+   instead.
 
 .. note::
 
-  You must set the ``OS_CACERT`` environment variable when using the
-  https protocol in the ``OS_AUTH_URL`` environment setting because
-  the verification process for the TLS (HTTPS) server certificate uses
-  the one indicated in the environment. This certificate will be used
-  when verifying the TLS (HTTPS) server certificate.
+   You must set the ``OS_CACERT`` environment variable when using the
+   https protocol in the ``OS_AUTH_URL`` environment setting because
+   the verification process for the TLS (HTTPS) server certificate uses
+   the one indicated in the environment. This certificate will be used
+   when verifying the TLS (HTTPS) server certificate.
 
 Override environment variable values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,7 +120,7 @@ or command-line argument. It is not safe to specify the password using
 either of these methods.
 
 For example, when you specify your password using the command-line
-client with the ``--os-password`` argument, anyone with access to your
+client with the :option:`--os-password` argument, anyone with access to your
 computer can view it in plain text with the ``ps`` field.
 
 To avoid storing the password in plain text, you can prompt for the

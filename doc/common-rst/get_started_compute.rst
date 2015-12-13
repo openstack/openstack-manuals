@@ -4,10 +4,10 @@ OpenStack Compute
 
 Use OpenStack Compute to host and manage cloud computing systems.
 OpenStack Compute is a major part of an Infrastructure-as-a-Service
-(IaaS) system. The main modules are implemented in Python.
+(:term:`IaaS`) system. The main modules are implemented in Python.
 
-OpenStack Compute interacts with OpenStack Identity for authentication,
-OpenStack Image service for disk and server images, and OpenStack
+OpenStack Compute interacts with OpenStack Identity for authentication;
+OpenStack Image service for disk and server images; and OpenStack
 dashboard for the user and administrative interface. Image access is
 limited by projects, and by users; quotas are limited per project (the
 number of instances, for example). OpenStack Compute can scale
@@ -24,9 +24,9 @@ OpenStack Compute consists of the following areas and their components:
   activities, such as running an instance.
 
 ``nova-api-metadata`` service
-  Accepts metadata requests from instances. The nova-api-metadata
+  Accepts metadata requests from instances. The ``nova-api-metadata``
   service is generally used when you run in multi-host mode with
-  nova-network installations. For details, see `Metadata
+  ``nova-network`` installations. For details, see `Metadata
   service <http://docs.openstack.org/admin-guide-cloud/compute-networking-nova.html#metadata-service>`__
   in the OpenStack Cloud Administrator Guide.
 
@@ -49,11 +49,11 @@ OpenStack Compute consists of the following areas and their components:
   determines on which compute server host it runs.
 
 ``nova-conductor`` module
-  Mediates interactions between the nova-compute service and the
+  Mediates interactions between the ``nova-compute`` service and the
   database. It eliminates direct accesses to the cloud database made
-  by the nova-compute service. The nova-conductor module scales
+  by the ``nova-compute`` service. The ``nova-conductor`` module scales
   horizontally. However, do not deploy it on nodes where the
-  nova-compute service runs. For more information, see `Configuration
+  ``nova-compute`` service runs. For more information, see `Configuration
   Reference Guide <http://docs.openstack.org/liberty/config-reference/content/
   section_conductor.html>`__.
 
@@ -63,13 +63,13 @@ OpenStack Compute consists of the following areas and their components:
   ``euca-bundle-image``. Only needed for the EC2 API.
 
 ``nova-network worker`` daemon
-  Similar to the nova-compute service, accepts networking tasks from
+  Similar to the ``nova-compute`` service, accepts networking tasks from
   the queue and manipulates the network. Performs tasks such as
   setting up bridging interfaces or changing IPtables rules.
 
 ``nova-consoleauth`` daemon
   Authorizes tokens for users that console proxies provide. See
-  nova-novncproxy and nova-xvpvncproxy. This service must be running
+  ``nova-novncproxy`` and ``nova-xvpvncproxy``. This service must be running
   for console proxies to work. You can run proxies of either type
   against a single nova-consoleauth service in a cluster
   configuration. For information, see `About
