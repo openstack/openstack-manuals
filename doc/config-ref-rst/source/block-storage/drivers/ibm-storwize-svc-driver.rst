@@ -25,18 +25,18 @@ IP addresses directly to the driver.
 
 .. note::
 
-    If using iSCSI, ensure that the compute nodes have iSCSI network
-    access to the Storwize family or SVC system.
+   If using iSCSI, ensure that the compute nodes have iSCSI network
+   access to the Storwize family or SVC system.
 
 .. note::
 
-    OpenStack Nova's Grizzly version supports iSCSI multipath. Once this
-    is configured on the Nova host (outside the scope of this
-    documentation), multipath is enabled.
+   OpenStack Nova's Grizzly version supports iSCSI multipath. Once this
+   is configured on the Nova host (outside the scope of this
+   documentation), multipath is enabled.
 
 If using Fibre Channel (FC), each Storwize family or SVC node should
 have at least one WWPN port configured. If the
-``storwize_svc_multipath_enabled`` flag is set to True in the Cinder
+``storwize_svc_multipath_enabled`` flag is set to ``True`` in the Cinder
 configuration file, the driver uses all available WWPNs to attach the
 volume to the instance. If the flag is not
 set, the driver uses the WWPN associated with the volume's preferred
@@ -46,8 +46,8 @@ you do not need to provide these WWPNs directly to the driver.
 
 .. note::
 
-    If using FC, ensure that the compute nodes have FC connectivity to
-    the Storwize family or SVC system.
+   If using FC, ensure that the compute nodes have FC connectivity to
+   the Storwize family or SVC system.
 
 iSCSI CHAP authentication
 -------------------------
@@ -55,25 +55,25 @@ iSCSI CHAP authentication
 If using iSCSI for data access and the
 ``storwize_svc_iscsi_chap_enabled`` is set to ``True``, the driver will
 associate randomly-generated CHAP secrets with all hosts on the Storwize
-family system. OpenStack compute nodes use these secrets when creating
+family system. The compute nodes use these secrets when creating
 iSCSI connections.
 
 .. note::
 
-    CHAP secrets are added to existing hosts as well as newly-created
-    ones. If the CHAP option is enabled, hosts will not be able to
-    access the storage without the generated secrets.
+   CHAP secrets are added to existing hosts as well as newly-created
+   ones. If the CHAP option is enabled, hosts will not be able to
+   access the storage without the generated secrets.
 
 .. note::
 
-    Not all OpenStack Compute drivers support CHAP authentication.
-    Please check compatibility before using.
+   Not all OpenStack Compute drivers support CHAP authentication.
+   Please check compatibility before using.
 
 .. note::
 
-    CHAP secrets are passed from OpenStack Block Storage to Compute in
-    clear text. This communication should be secured to ensure that CHAP
-    secrets are not discovered.
+   CHAP secrets are passed from OpenStack Block Storage to Compute in
+   clear text. This communication should be secured to ensure that CHAP
+   secrets are not discovered.
 
 Configure storage pools
 -----------------------
@@ -96,8 +96,8 @@ configured to be port 22 (SSH).
 
 .. note::
 
-    Make sure the compute node running the cinder-volume management
-    driver has SSH network access to the storage system.
+   Make sure the compute node running the cinder-volume management
+   driver has SSH network access to the storage system.
 
 To allow the driver to communicate with the Storwize family or SVC
 system, you must provide the driver with a user on the storage system.
@@ -110,9 +110,9 @@ be stored in a secure manner.
 
 .. note::
 
-    When creating a new user on the Storwize or SVC system, make sure
-    the user belongs to the Administrator group or to another group that
-    has an Administrator role.
+   When creating a new user on the Storwize or SVC system, make sure
+   the user belongs to the Administrator group or to another group that
+   has an Administrator role.
 
 If using password authentication, assign a password to the user on the
 Storwize or SVC system. The driver configuration flags for the user and
@@ -121,11 +121,11 @@ password are ``san_login`` and ``san_password``, respectively.
 If you are using the SSH key pair authentication, create SSH private and
 public keys using the instructions below or by any other method.
 Associate the public key with the user by uploading the public key:
-select the "choose file" option in the Storwize family or SVC management
-GUI under "SSH public key". Alternatively, you may associate the SSH
-public key using the command line interface; details can be found in the
-Storwize and SVC documentation. The private key should be provided to
-the driver using the ``san_private_key`` configuration flag.
+select the :guilabel:`choose file` option in the Storwize family or SVC
+management GUI under :guilabel:`SSH public key`. Alternatively, you may
+associate the SSH public key using the command-line interface; details can
+be found in the Storwize and SVC documentation. The private key should be
+provided to the driver using the ``san_private_key`` configuration flag.
 
 Create a SSH key pair with OpenSSH
 ----------------------------------
@@ -146,11 +146,11 @@ The command also prompts for a pass phrase, which should be empty.
 The private key file should be provided to the driver using the
 ``san_private_key`` configuration flag. The public key should be
 uploaded to the Storwize family or SVC system using the storage
-management GUI or command line interface.
+management GUI or command-line interface.
 
 .. note::
 
-    Ensure that Cinder has read permissions on the private key file.
+   Ensure that Cinder has read permissions on the private key file.
 
 Configure the Storwize family and SVC driver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -159,11 +159,11 @@ Enable the Storwize family and SVC driver
 -----------------------------------------
 
 Set the volume driver to the Storwize family and SVC driver by setting
-the ``volume_driver`` option in ``cinder.conf`` as follows:
+the ``volume_driver`` option in the ``cinder.conf`` file as follows:
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.ibm.storwize_svc.StorwizeSVCDriver
+   volume_driver = cinder.volume.drivers.ibm.storwize_svc.StorwizeSVCDriver
 
 .. _config_flags:
 
@@ -314,7 +314,7 @@ be over-ridden using volume types, which are described below.
    volumes is disabled at creation. The default value is ``False`` and a
    value of ``True`` means that fast format is disabled. Details about
    this option can be found in the ``–nofmtdisk`` flag of the Storwize
-   family and SVC command line interface ``mkvdisk`` command.
+   family and SVC command-line interface :command:`mkvdisk` command.
 
 .. include:: ../../tables/cinder-storwize.rst
 
@@ -348,7 +348,7 @@ use them. The following ``extra specs`` are supported:
 
    .. code-block:: ini
 
-       capabilities:compression_support='<is> True'
+      capabilities:compression_support='<is> True'
 
 -  ``capabilities:easytier_support`` - Similar semantics as the
    ``compression_support`` key, but for specifying according to support
@@ -356,26 +356,27 @@ use them. The following ``extra specs`` are supported:
 
    .. code-block:: ini
 
-       capabilities:easytier_support='<is> True'
+      capabilities:easytier_support='<is> True'
 
 -  ``capabilities:storage_protocol`` - Specifies the connection protocol
    used to attach volumes of this type to instances. Legal values are
    ``iSCSI`` and ``FC``. This ``extra specs`` value is used for both placement
    and setting the protocol used for this volume. In the example syntax,
-   note <in> is used as opposed to <is> used in the previous examples.
+   note ``<in>`` is used as opposed to ``<is>`` which is used in the
+   previous examples.
 
    .. code-block:: ini
 
-     capabilities:storage_protocol='<in> FC'
+      capabilities:storage_protocol='<in> FC'
 
 Configure per-volume creation options
 -------------------------------------
 
 Volume types can also be used to pass options to the IBM Storwize/SVC
 driver, which over-ride the default values set in the configuration
-file. Contrary to the previous examples where the "capabilities" scope
+file. Contrary to the previous examples where the ``capabilities`` scope
 was used to pass parameters to the Cinder scheduler, options can be
-passed to the IBM Storwize/SVC driver with the "drivers" scope.
+passed to the IBM Storwize/SVC driver with the ``drivers`` scope.
 
 The following ``extra specs`` keys are supported by the IBM Storwize/SVC
 driver:
@@ -435,7 +436,7 @@ QOS
 The Storwize driver provides QOS support for storage volumes by
 controlling the I/O amount. QOS is enabled by editing the
 ``etc/cinder/cinder.conf`` file and setting the
-``storwize_svc_allow_tenant_qos`` to True.
+``storwize_svc_allow_tenant_qos`` to ``True``.
 
 There are three ways to set the Storwize ``IOThrotting`` parameter for
 storage volumes:

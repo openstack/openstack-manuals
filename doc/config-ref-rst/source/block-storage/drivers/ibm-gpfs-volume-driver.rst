@@ -29,7 +29,7 @@ block device.
    Installation Guide and GPFS: Administration and Programming
    Reference.
 
-Optionally, the Image Service can be configured to store images on a
+Optionally, the Image service can be configured to store images on a
 GPFS file system. When a Block Storage volume is created from an image,
 if both image data and volume data reside in the same GPFS file system,
 the data from image file is moved efficiently to the volume file using
@@ -68,7 +68,7 @@ options supported by the GPFS volume driver.
 
 .. include:: ../../tables/cinder-storage_gpfs.rst
 
-This example shows the creation of a 50GB volume with an ext4 file
+This example shows the creation of a 50GB volume with an ``ext4`` file
 system labeled ``newfs`` and direct IO enabled:
 
 .. code-block:: console
@@ -85,6 +85,6 @@ uses copy-on-write optimization strategy to minimize data movement.
 
 Similarly when a new volume is created from a snapshot or from an
 existing volume, the same approach is taken. The same approach is also
-used when a new volume is created from an Image Service image, if the
+used when a new volume is created from an Image service image, if the
 source image is in raw format, and ``gpfs_images_share_mode`` is set to
 ``copy_on_write``.
