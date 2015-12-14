@@ -140,9 +140,9 @@ volume migration:
   target in the remote replication service of the ZFSSA configured to the
   source backend. The remote replication target needs to be configured even
   when the source and the destination for volume migration are the same ZFSSA.
-  Define ``zfssa_replication_ip`` in the ``cinder.conf`` of the source backend
-  as the IP address used to register the target ZFSSA in the remote replication
-  service of the source ZFSSA.
+  Define ``zfssa_replication_ip`` in the ``cinder.conf`` file of the source
+  backend as the IP address used to register the target ZFSSA in the remote
+  replication service of the source ZFSSA.
 
 - The name of the iSCSI target group(``zfssa_target_group``) on the source and
   the destination ZFSSA is the same.
@@ -199,10 +199,10 @@ Supported extra specs
 ~~~~~~~~~~~~~~~~~~~~~
 
 Extra specs provide the OpenStack storage admin the flexibility to create
-volumes with different characteristics from the ones specified in
-``cinder.conf``. The admin will specify the volume properties as keys at volume
-type creation. When a user requests a volume of this volume type, the volume
-will be created with the properties specified as extra specs.
+volumes with different characteristics from the ones specified in the
+``cinder.conf`` file. The admin will specify the volume properties as keys
+at volume type creation. When a user requests a volume of this volume type,
+the volume will be created with the properties specified as extra specs.
 
 The following extra specs scoped keys are supported by the driver:
 
@@ -214,8 +214,8 @@ The following extra specs scoped keys are supported by the driver:
 
 -  ``zfssa:logbias``
 
-Volume types can be created using the ``cinder type-create``. Extra spec
-keys can be added using ``cinder type-key`` command.
+Volume types can be created using the :command:`cinder type-create` command.
+Extra spec keys can be added using :command:`cinder type-key` command.
 
 Driver options
 ~~~~~~~~~~~~~~
