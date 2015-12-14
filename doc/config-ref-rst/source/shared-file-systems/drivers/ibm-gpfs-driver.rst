@@ -51,7 +51,7 @@ Requirements
 
 -  Enable quotas for the GPFS file system, use :command:`mmchfs -Q yes`.
 
--  Establish network connection between the Shared File Systems Service
+-  Establish network connection between the Shared File Systems service
    host and the storage back end.
 
 Shared File Systems service driver configuration setting
@@ -95,9 +95,9 @@ Known restrictions
    network.
 
 -  While using remote GPFS node, with Ganesha NFS,
-   'gpfs_ssh_private_key' for remote login to the GPFS node must be
+   ``gpfs_ssh_private_key`` for remote login to the GPFS node must be
    specified and there must be a passwordless authentication already
-   setup between the manila-share service and the remote GPFS node.
+   setup between the ``manila-share`` service and the remote GPFS node.
 
 Driver options
 ~~~~~~~~~~~~~~

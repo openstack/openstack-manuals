@@ -57,35 +57,35 @@ steps:
 #. Install and configure an OpenStack environment with default Shared File
    System parameters and services. Refer to OpenStack Manila configuration
    reference.
-#. Configure HNAS parameters on manila.conf.
+#. Configure HNAS parameters in the ``manila.conf`` file.
 #. Prepare the network.
 #. Configure and create share type.
 #. Restart the services.
 #. Configure the network.
 
-In the following sections we cover steps 3, 4, 5, 6 and 7. Steps 1 and 2 are
-not in the scope of this document.
+The first two steps are not in the scope of this document. We cover all the
+remaining steps in the following sections.
 
 Step 3 - HNAS parameter configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Below is an example of a minimal configuration of HNAS driver:
 
 .. code-block:: ini
 
-      [DEFAULT]
-      enabled_share_backends = hnas1
-      enabled_share_protocols = NFS
-      [hnas1]
-      share_backend_name = HNAS1
-      share_driver = manila.share.drivers.hitachi.hds_hnas.HDSHNASDriver
-      driver_handles_share_servers = False
-      hds_hnas_ip = 172.24.44.15
-      hds_hnas_user = supervisor
-      hds_hnas_password = supervisor
-      hds_hnas_evs_id = 1
-      hds_hnas_evs_ip = 10.0.1.20
-      hds_hnas_file_system_name = FS-Manila
+   [DEFAULT]
+   enabled_share_backends = hnas1
+   enabled_share_protocols = NFS
+   [hnas1]
+   share_backend_name = HNAS1
+   share_driver = manila.share.drivers.hitachi.hds_hnas.HDSHNASDriver
+   driver_handles_share_servers = False
+   hds_hnas_ip = 172.24.44.15
+   hds_hnas_user = supervisor
+   hds_hnas_password = supervisor
+   hds_hnas_evs_id = 1
+   hds_hnas_evs_ip = 10.0.1.20
+   hds_hnas_file_system_name = FS-Manila
 
 The following table contains the configuration options specific to the
 share driver.
@@ -95,7 +95,7 @@ share driver.
 Step 4 - prepare the network
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the driver mode used by HNAS Driver (DHSS = False), the driver does not
+In the driver mode used by HNAS Driver (DHSS = ``False``), the driver does not
 handle network configuration, it is up to the administrator to configure it.
 It is mandatory that HNAS management interface is reachable from Shared File
 System node through Admin network, while the selected EVS data interface is
@@ -115,25 +115,25 @@ Run in **Networking node**:
 
 .. code-block:: console
 
-      # ifconfig eth1 0
-      # ovs-vsctl add-br br-eth1
-      # ovs-vsctl add-port br-eth1 eth1
-      # ifconfig eth1 up
+   # ifconfig eth1 0
+   # ovs-vsctl add-br br-eth1
+   # ovs-vsctl add-port br-eth1 eth1
+   # ifconfig eth1 up
 
-Edit ``/etc/neutron/plugins/ml2/ml2_conf.ini`` (default directory), change the
-following settings as follows in their respective tags:
+Edit the ``/etc/neutron/plugins/ml2/ml2_conf.ini`` (default directory),
+change the following settings as follows in their respective tags:
 
 .. code-block:: ini
 
-      [ml2]
-      type_drivers = flat,vlan,vxlan,gre
-      mechanism_drivers = openvswitch
-      [ml2_type_flat]
-      flat_networks = physnet1,physnet2
-      [ml2_type_vlan]
-      network_vlan_ranges = physnet1:1000:1500,physnet2:2000:2500
-      [ovs]
-      bridge_mappings = physnet1:br-ex,physnet2:br-eth1
+   [ml2]
+   type_drivers = flat,vlan,vxlan,gre
+   mechanism_drivers = openvswitch
+   [ml2_type_flat]
+   flat_networks = physnet1,physnet2
+   [ml2_type_vlan]
+   network_vlan_ranges = physnet1:1000:1500,physnet2:2000:2500
+   [ovs]
+   bridge_mappings = physnet1:br-ex,physnet2:br-eth1
 
 You may have to repeat the last line above in another file on the Compute node,
 if it exists it is located in:
@@ -148,8 +148,8 @@ be the ID of EVS in use, such as in the following example:
 
 .. code-block:: console
 
-      $ console-context --evs 3 route-net-add --gateway 192.168.1.1 \
-        10.0.0.0/24
+   $ console-context --evs 3 route-net-add --gateway 192.168.1.1 \
+     10.0.0.0/24
 
 Step 5 - share type configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -162,13 +162,14 @@ System driver, this must be set to ``False``.
 
 .. code-block:: console
 
-      $ manila type-create hitachi False
+   $ manila type-create hitachi False
 
 Step 6 - restart the services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Restart all Shared File Systems services (manila-share, manila-scheduler and
-manila-api) and Networking services (neutron-\*).
+Restart all Shared File Systems services
+(``manila-share``, ``manila-scheduler`` and ``manila-api``) and
+Networking services (``neutron-\*``).
 
 Step 7 - configure the network
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -176,37 +177,39 @@ Step 7 - configure the network
 In Networking node it is necessary to create a network, a subnet and to add
 this subnet interface to a router:
 
-Create a network to the given tenant (demo), providing the DEMO_ID (this can be
-fetched using :command:`openstack project list`), a name for the network, the
-name of the physical network over which the virtual network is implemented and
-the type of the physical mechanism by which the virtual network is
-implemented:
+Create a network to the given tenant (demo), providing the DEMO_ID (this can
+be fetched using :command:`openstack project list` command), a name for the
+network, the name of the physical network over which the virtual network is
+implemented and the type of the physical mechanism by which the virtual
+network is implemented:
 
 .. code-block:: console
 
-      $ neutron net-create --tenant-id <DEMO_ID> hnas_network \
-        --provider:physical_network=physnet2 --provider:network_type=flat
+   $ neutron net-create --tenant-id <DEMO_ID> hnas_network \
+     --provider:physical_network=physnet2 --provider:network_type=flat
 
 Create a subnet to same tenant (demo), providing the DEMO_ID (this can be
-fetched using :command:`openstack project list`), the gateway IP of this
-subnet, a name for the subnet, the network ID created in the previous step
-(this can be fetched using :command:`neutron net-list`) and CIDR of subnet:
+fetched using :command:`openstack project list` command), the gateway IP of
+this subnet, a name for the subnet, the network ID created in the previous
+step (this can be fetched using :command:`neutron net-list` command) and
+CIDR of subnet:
 
 .. code-block:: console
 
-      $ neutron subnet-create --tenant-id <DEMO_ID> --gateway <GATEWAY> \
-        --name hnas_subnet <NETWORK_ID> <SUBNET_CIDR>
+   $ neutron subnet-create --tenant-id <DEMO_ID> --gateway <GATEWAY> \
+     --name hnas_subnet <NETWORK_ID> <SUBNET_CIDR>
 
 Finally, add the subnet interface to a router, providing the router ID and
 subnet ID created in the previous step (can be fetched using :command:`neutron
-subnet-list`):
+subnet-list` command):
 
 .. code-block:: console
 
-      $ neutron router-interface-add <ROUTER_ID> <SUBNET_ID>
+   $ neutron router-interface-add <ROUTER_ID> <SUBNET_ID>
 
 Manage and unmanage shares
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Shared File Systems has the ability to manage and unmanage shares. If there is
 a share in the storage and it is not in OpenStack, you can manage that share
 and use it as a Shared File Systems share. HNAS drivers use virtual-volumes

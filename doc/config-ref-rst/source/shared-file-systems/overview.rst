@@ -7,17 +7,20 @@ Compute instances can consume.
 
 The Shared File Systems service provides:
 
--  ``manila-api``. A WSGI app that authenticates and routes requests
+manila-api
+   A WSGI app that authenticates and routes requests
    throughout the Shared File Systems service. It supports the OpenStack
    APIs.
 
--  ``manila-scheduler``. Schedules and routes requests to the appropriate
+manila-scheduler
+   Schedules and routes requests to the appropriate
    share service. The scheduler uses configurable filters and weighers
    to route requests. The Filter Scheduler is the default and enables
    filters on things like Capacity, Availability Zone, Share Types, and
    Capabilities as well as custom filters.
 
--  ``manila-share``. Manages back-end devices that provide shared file
+manila-share
+   Manages back-end devices that provide shared file
    systems. A manila-share service can run in one of two modes, with or
    without handling of share servers. Share servers export file shares
    via share networks. When share servers are not used, the networking

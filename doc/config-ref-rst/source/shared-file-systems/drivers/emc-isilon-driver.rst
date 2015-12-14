@@ -10,7 +10,7 @@ plug-ins to manage different EMC storage products.
 The Isilon driver is a plug-in for the EMC framework which allows the
 Shared File Systems service to interface with an Isilon back end to
 provide a shared filesystem. The EMC driver framework with the Isilon
-plug-in is referred to as the "Isilon Driver" in this document.
+plug-in is referred to as the ``Isilon Driver`` in this document.
 
 This Isilon Driver interfaces with an Isilon cluster via the REST Isilon
 Platform API (PAPI) and the RESTful Access to Namespace API (RAN).
@@ -54,11 +54,11 @@ Systems service configuration file for the Isilon driver:
 
 .. code-block:: ini
 
-    share_driver = manila.share.drivers.emc.driver.EMCShareDriver
-    emc_share_backend = isilon
-    emc_nas_server = <IP address of Isilon cluster>
-    emc_nas_login = <username>
-    emc_nas_password = <password>
+   share_driver = manila.share.drivers.emc.driver.EMCShareDriver
+   emc_share_backend = isilon
+   emc_nas_server = <IP address of Isilon cluster>
+   emc_nas_login = <username>
+   emc_nas_password = <password>
 
 Restrictions
 ~~~~~~~~~~~~
