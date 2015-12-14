@@ -14,10 +14,11 @@ general, events represent any action made in the OpenStack system.
 
 Event configuration
 ~~~~~~~~~~~~~~~~~~~
+
 To enable the creation and storage of events in the Telemetry service
 ``store_events`` option needs to be set to ``True``. For further configuration
 options, see the event section in the `OpenStack Configuration Reference
-<http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html>`__.
+<http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__.
 
 .. note::
 
@@ -29,6 +30,7 @@ options, see the event section in the `OpenStack Configuration Reference
 
 Event structure
 ~~~~~~~~~~~~~~~
+
 Events captured by the Telemetry service are represented by five key
 attributes:
 
@@ -70,7 +72,7 @@ conversion is specified by a config file.
 Event conversion
 ----------------
 The conversion from notifications to events is driven by a configuration
-file defined by the ``definitions_cfg_file`` in the :file:`ceilometer.conf`
+file defined by the ``definitions_cfg_file`` in the ``ceilometer.conf``
 configuration file.
 
 This includes descriptions of how to map fields in the notification body
@@ -93,7 +95,7 @@ empty set of definitions will be assumed. By default, any notifications
 that do not have a corresponding event definition in the definitions
 file will be converted to events with a set of minimal traits. This can
 be changed by setting the option ``drop_unmatched_notifications`` in the
-:file:`ceilometer.conf` file. If this is set to True, any unmapped
+``ceilometer.conf`` file. If this is set to ``True``, any unmapped
 notifications will be dropped.
 
 The basic set of traits (all are TEXT type) that will be added to all
@@ -104,6 +106,7 @@ added, but their definitions can be overridden for a given event\_type.
 
 Event definitions format
 ------------------------
+
 The event definitions file is in YAML format. It consists of a list of
 event definitions, which are mappings. Order is significant, the list of
 definitions is scanned in reverse order to find a definition which

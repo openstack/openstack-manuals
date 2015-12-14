@@ -9,13 +9,14 @@ one or more database back ends, which are hidden by the Telemetry RESTful API.
 
 .. note::
 
-    It is highly recommended not to access the database directly and
-    read or modify any data in it. The API layer hides all the changes
-    in the actual database schema and provides a standard interface to
-    expose the samples, alarms and so forth.
+   It is highly recommended not to access the database directly and
+   read or modify any data in it. The API layer hides all the changes
+   in the actual database schema and provides a standard interface to
+   expose the samples, alarms and so forth.
 
 Telemetry v2 API
 ~~~~~~~~~~~~~~~~
+
 The Telemetry service provides a RESTful API, from which the collected
 samples and all the related information can be retrieved, like the list
 of meters, alarm definitions and so forth.
@@ -31,6 +32,7 @@ the `Telemetry API Reference
 
 Query
 -----
+
 The API provides some additional functionalities, like querying the
 collected data set. For the samples and alarms API endpoints, both
 simple and complex query styles are available, whereas for the other
@@ -102,14 +104,14 @@ The following logical operators can be used:
 
 .. note::
 
-    The ``not`` operator has different behavior in MongoDB and in the
-    SQLAlchemy-based database engines. If the ``not`` operator is
-    applied on a non existent metadata field then the result depends on
-    the database engine. In case of MongoDB, it will return every sample
-    as the ``not`` operator is evaluated true for every sample where the
-    given field does not exist. On the other hand the SQL-based database
-    engine will return an empty result because of the underlying
-    ``join`` operation.
+   The ``not`` operator has different behavior in MongoDB and in the
+   SQLAlchemy-based database engines. If the ``not`` operator is
+   applied on a non existent metadata field then the result depends on
+   the database engine. In case of MongoDB, it will return every sample
+   as the ``not`` operator is evaluated true for every sample where the
+   given field does not exist. On the other hand the SQL-based database
+   engine will return an empty result because of the underlying
+   ``join`` operation.
 
 Complex query supports specifying a list of ``orderby`` expressions.
 This means that the result of the query can be ordered based on the
@@ -125,12 +127,13 @@ The ``filter``, ``orderby`` and ``limit`` fields are optional.
 
 .. note::
 
-    As opposed to the simple query, complex query is available via a
-    separate API endpoint. For more information see the `Telemetry v2 Web API
-    Reference <http://docs.openstack.org/developer/ceilometer/webapi/v2.html#v2-web-api>`__.
+   As opposed to the simple query, complex query is available via a
+   separate API endpoint. For more information see the `Telemetry v2 Web API
+   Reference <http://docs.openstack.org/developer/ceilometer/webapi/v2.html#v2-web-api>`__.
 
 Statistics
 ----------
+
 The sample data can be used in various ways for several purposes, like
 billing or profiling. In external systems the data is often used in the
 form of aggregated statistics. The Telemetry API provides several
@@ -155,7 +158,7 @@ Telemetry supports the following statistics and aggregation functions:
 
 .. note::
 
-    The ``aggregate.param`` option is required.
+   The ``aggregate.param`` option is required.
 
 ``count``
     Number of samples in each period.
@@ -175,14 +178,15 @@ Telemetry supports the following statistics and aggregation functions:
 The simple query and the statistics functionality can be used together
 in a single API request.
 
-Telemetry command line client and SDK
+Telemetry command-line client and SDK
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The Telemetry service provides a command line client, with which the
+
+The Telemetry service provides a command-line client, with which the
 collected data is available just as the alarm definition and retrieval
 options. The client uses the Telemetry RESTful API in order to execute
 the requested operations.
 
-To be able to use the ``ceilometer`` command, the
+To be able to use the :command:`ceilometer` command, the
 python-ceilometerclient package needs to be installed and configured
 properly. For details about the installation process, see the `Telemetry
 chapter <http://docs.openstack.org/liberty/install-guide-ubuntu/ceilometer.html>`__
@@ -190,14 +194,14 @@ in the OpenStack Installation Guide.
 
 .. note::
 
-    The Telemetry service captures the user-visible resource usage data.
-    Therefore the database will not contain any data without the
-    existence of these resources, like VM images in the OpenStack Image
-    service.
+   The Telemetry service captures the user-visible resource usage data.
+   Therefore the database will not contain any data without the
+   existence of these resources, like VM images in the OpenStack Image
+   service.
 
-Similarly to other OpenStack command line clients, the ``ceilometer``
+Similarly to other OpenStack command-line clients, the ``ceilometer``
 client uses OpenStack Identity for authentication. The proper
-credentials and ``--auth_url`` parameter have to be defined via command
+credentials and :option:`--auth_url` parameter have to be defined via command
 line parameters or environment variables.
 
 This section provides some examples without the aim of completeness.
@@ -205,7 +209,9 @@ These commands can be used for instance for validating an installation
 of Telemetry.
 
 To retrieve the list of collected meters, the following command should
-be used::
+be used:
+
+.. code-block:: console
 
     $ ceilometer meter-list
     +------------------------+------------+------+------------------------------------------+----------------------------------+----------------------------------+
@@ -222,7 +228,7 @@ be used::
     | ...                                                                                                                                                         |
     +------------------------+------------+------+------------------------------------------+----------------------------------+----------------------------------+
 
-The ``ceilometer`` command was run with ``admin`` rights, which means
+The :command:`ceilometer` command was run with ``admin`` rights, which means
 that all the data is accessible in the database. For more information
 about access right see :ref:`telemetry-users-roles-tenants`. As it can be seen
 in the above example, there are two VM instances existing in the system, as
@@ -234,7 +240,7 @@ resource, in an ascending order based on the name of the meter.
 Samples are collected for each meter that is present in the list of
 meters, except in case of instances that are not running or deleted from
 the OpenStack Compute database. If an instance no longer exists and
-there is a ``time_to_live`` value set in the :file:`ceilometer.conf`
+there is a ``time_to_live`` value set in the ``ceilometer.conf``
 configuration file, then a group of samples are deleted in each
 expiration cycle. When the last sample is deleted for a meter, the
 database can be cleaned up by running ceilometer-expirer and the meter
@@ -242,12 +248,16 @@ will not be present in the list above anymore. For more information
 about the expiration procedure see :ref:`telemetry-storing-samples`.
 
 The Telemetry API supports simple query on the meter endpoint. The query
-functionality has the following syntax::
+functionality has the following syntax:
 
-    --query <field1><operator1><value1>;...;<field_n><operator_n><value_n>
+.. code-block:: console
+
+   --query <field1><operator1><value1>;...;<field_n><operator_n><value_n>
 
 The following command needs to be invoked to request the meters of one
-VM instance::
+VM instance:
+
+.. code-block:: console
 
     $ ceilometer meter-list --query resource=bb52e52b-1e42-4751-b3ac-45c52d83ba07
     +-------------------------+------------+-----------+--------------------------------------+----------------------------------+----------------------------------+
@@ -274,46 +284,50 @@ VM instance::
 As it was described above, the whole set of samples can be retrieved
 that are stored for a meter or filtering the result set by using one of
 the available query types. The request for all the samples of the
-``cpu`` meter without any additional filtering looks like the following::
+``cpu`` meter without any additional filtering looks like the following:
 
-    $ ceilometer sample-list --meter cpu
-    +--------------------------------------+-------+------------+------------+------+---------------------+
-    | Resource ID                          | Meter | Type       | Volume     | Unit | Timestamp           |
-    +--------------------------------------+-------+------------+------------+------+---------------------+
-    | c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b | cpu   | cumulative | 5.4863e+11 | ns   | 2014-08-31T11:17:03 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu   | cumulative | 5.7848e+11 | ns   | 2014-08-31T11:17:03 |
-    | c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b | cpu   | cumulative | 5.4811e+11 | ns   | 2014-08-31T11:07:05 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu   | cumulative | 5.7797e+11 | ns   | 2014-08-31T11:07:05 |
-    | c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b | cpu   | cumulative | 5.3589e+11 | ns   | 2014-08-31T10:27:19 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu   | cumulative | 5.6397e+11 | ns   | 2014-08-31T10:27:19 |
-    | ...                                                                                                 |
-    +--------------------------------------+-------+------------+------------+------+---------------------+
+.. code-block:: console
+
+   $ ceilometer sample-list --meter cpu
+   +--------------------------------------+-------+------------+------------+------+---------------------+
+   | Resource ID                          | Meter | Type       | Volume     | Unit | Timestamp           |
+   +--------------------------------------+-------+------------+------------+------+---------------------+
+   | c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b | cpu   | cumulative | 5.4863e+11 | ns   | 2014-08-31T11:17:03 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu   | cumulative | 5.7848e+11 | ns   | 2014-08-31T11:17:03 |
+   | c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b | cpu   | cumulative | 5.4811e+11 | ns   | 2014-08-31T11:07:05 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu   | cumulative | 5.7797e+11 | ns   | 2014-08-31T11:07:05 |
+   | c8d2e153-a48f-4cec-9e93-86e7ac6d4b0b | cpu   | cumulative | 5.3589e+11 | ns   | 2014-08-31T10:27:19 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu   | cumulative | 5.6397e+11 | ns   | 2014-08-31T10:27:19 |
+   | ...                                                                                                 |
+   +--------------------------------------+-------+------------+------------+------+---------------------+
 
 The result set of the request contains the samples for both instances
 ordered by the timestamp field in the default descending order.
 
 The simple query makes it possible to retrieve only a subset of the
 collected samples. The following command can be executed to request the
-``cpu`` samples of only one of the VM instances::
+``cpu`` samples of only one of the VM instances:
 
-    $ ceilometer sample-list --meter cpu --query resource=bb52e52b-1e42-4751-
-      b3ac-45c52d83ba07
-    +--------------------------------------+------+------------+------------+------+---------------------+
-    | Resource ID                          | Name | Type       | Volume     | Unit | Timestamp           |
-    +--------------------------------------+------+------------+------------+------+---------------------+
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.7906e+11 | ns   | 2014-08-31T11:27:08 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.7848e+11 | ns   | 2014-08-31T11:17:03 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.7797e+11 | ns   | 2014-08-31T11:07:05 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.6397e+11 | ns   | 2014-08-31T10:27:19 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.6207e+11 | ns   | 2014-08-31T10:17:03 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.3831e+11 | ns   | 2014-08-31T08:41:57 |
-    | ...                                                                                                |
-    +--------------------------------------+------+------------+------------+------+---------------------+
+.. code-block:: console
+
+   $ ceilometer sample-list --meter cpu --query resource=bb52e52b-1e42-4751-
+     b3ac-45c52d83ba07
+   +--------------------------------------+------+------------+------------+------+---------------------+
+   | Resource ID                          | Name | Type       | Volume     | Unit | Timestamp           |
+   +--------------------------------------+------+------------+------------+------+---------------------+
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.7906e+11 | ns   | 2014-08-31T11:27:08 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.7848e+11 | ns   | 2014-08-31T11:17:03 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.7797e+11 | ns   | 2014-08-31T11:07:05 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.6397e+11 | ns   | 2014-08-31T10:27:19 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.6207e+11 | ns   | 2014-08-31T10:17:03 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu  | cumulative | 5.3831e+11 | ns   | 2014-08-31T08:41:57 |
+   | ...                                                                                                |
+   +--------------------------------------+------+------------+------------+------+---------------------+
 
 As it can be seen on the output above, the result set contains samples
 for only one instance of the two.
 
-The ``ceilometer query-samples`` command is used to execute rich
+The :command:`ceilometer query-samples` command is used to execute rich
 queries. This command accepts the following parameters:
 
 ``--filter``
@@ -333,30 +347,32 @@ For more information about complex queries see
 As the complex query functionality provides the possibility of using
 complex operators, it is possible to retrieve a subset of samples for a
 given VM instance. To request for the first six samples for the ``cpu``
-and ``disk.read.bytes`` meters, the following command should be invoked::
+and ``disk.read.bytes`` meters, the following command should be invoked:
 
-    $ ceilometer query-samples --filter '{"and": \
-      [{"=":{"resource":"bb52e52b-1e42-4751-b3ac-45c52d83ba07"}},{"or":[{"=":{"counter_name":"cpu"}}, \
-      {"=":{"counter_name":"disk.read.bytes"}}]}]}' --orderby '[{"timestamp":"asc"}]' --limit 6
-    +--------------------------------------+-----------------+------------+------------+------+---------------------+
-    | Resource ID                          | Meter           | Type       | Volume     | Unit | Timestamp           |
-    +--------------------------------------+-----------------+------------+------------+------+---------------------+
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | disk.read.bytes | cumulative | 385334.0   | B    | 2014-08-30T13:00:46 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.2132e+11 | ns   | 2014-08-30T13:00:47 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.4295e+11 | ns   | 2014-08-30T13:10:51 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | disk.read.bytes | cumulative | 601438.0   | B    | 2014-08-30T13:10:51 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | disk.read.bytes | cumulative | 601438.0   | B    | 2014-08-30T13:20:33 |
-    | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.4795e+11 | ns   | 2014-08-30T13:20:34 |
-    +--------------------------------------+-----------------+------------+------------+------+---------------------+
+.. code-block:: console
+
+   $ ceilometer query-samples --filter '{"and": \
+     [{"=":{"resource":"bb52e52b-1e42-4751-b3ac-45c52d83ba07"}},{"or":[{"=":{"counter_name":"cpu"}}, \
+     {"=":{"counter_name":"disk.read.bytes"}}]}]}' --orderby '[{"timestamp":"asc"}]' --limit 6
+   +--------------------------------------+-----------------+------------+------------+------+---------------------+
+   | Resource ID                          | Meter           | Type       | Volume     | Unit | Timestamp           |
+   +--------------------------------------+-----------------+------------+------------+------+---------------------+
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | disk.read.bytes | cumulative | 385334.0   | B    | 2014-08-30T13:00:46 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.2132e+11 | ns   | 2014-08-30T13:00:47 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.4295e+11 | ns   | 2014-08-30T13:10:51 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | disk.read.bytes | cumulative | 601438.0   | B    | 2014-08-30T13:10:51 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | disk.read.bytes | cumulative | 601438.0   | B    | 2014-08-30T13:20:33 |
+   | bb52e52b-1e42-4751-b3ac-45c52d83ba07 | cpu             | cumulative | 1.4795e+11 | ns   | 2014-08-30T13:20:34 |
+   +--------------------------------------+-----------------+------------+------------+------+---------------------+
 
 Ceilometer also captures data as events, which represents the state of a
-resource. Refer to :doc:`/telemetry-events` for more information regarding
+resource. Refer to ``/telemetry-events`` for more information regarding
 Events.
 
 To retrieve a list of recent events that occurred in the system, the
 following command can be executed:
 
-.. code:: console
+.. code-block:: console
 
     $ ceilometer event-list
     +--------------------------------------+---------------+----------------------------+-----------------------------------------------------------------+
@@ -395,7 +411,7 @@ following command can be executed:
 Similar to querying meters, additional filter parameters can be given to
 retrieve specific events:
 
-.. code:: console
+.. code-block:: console
 
     $ ceilometer event-list -q 'event_type=compute.instance.exists; \
       instance_type=m1.tiny'
@@ -430,31 +446,36 @@ retrieve specific events:
 
    As of the Liberty release, the number of items returned will be
    restricted to the value defined by ``default_api_return_limit`` in the
-   :file:`ceilometer.conf` configuration file. Alternatively, the value can
-   be set per query by passing the ``limit`` option in the request.
+   ``ceilometer.conf`` configuration file. Alternatively, the value can
+   be set per query by passing the :option:`limit` option in the request.
 
 
-Telemetry python bindings
+Telemetry Python bindings
 -------------------------
-The command line client library provides python bindings in order to use
+
+The command-line client library provides python bindings in order to use
 the Telemetry Python API directly from python programs.
 
 The first step in setting up the client is to create a client instance
-with the proper credentials::
+with the proper credentials:
 
-    >>> import ceilometerclient.client
-    >>> cclient = ceilometerclient.client.get_client(VERSION, username=USERNAME, password=PASSWORD, tenant_name=PROJECT_NAME, auth_url=AUTH_URL)
+.. code-block:: python
+
+   >>> import ceilometerclient.client
+   >>> cclient = ceilometerclient.client.get_client(VERSION, username=USERNAME, password=PASSWORD, tenant_name=PROJECT_NAME, auth_url=AUTH_URL)
 
 The ``VERSION`` parameter can be ``1`` or ``2``, specifying the API
 version to be used.
 
-The method calls look like the following::
+The method calls look like the following:
 
-    >>> cclient.meters.list()
-     [<Meter ...>, ...]
+.. code-block:: python
 
-    >>> cclient.samples.list()
-     [<Sample ...>, ...]
+   >>> cclient.meters.list()
+    [<Meter ...>, ...]
+
+   >>> cclient.samples.list()
+    [<Sample ...>, ...]
 
 For further details about the python-ceilometerclient package, see the
 `Python bindings to the OpenStack Ceilometer
@@ -465,8 +486,9 @@ reference.
 
 Publishers
 ~~~~~~~~~~
+
 The Telemetry service provides several transport methods to forward the
-data collected to the ceilometer-collector service or to an external
+data collected to the ``ceilometer-collector`` service or to an external
 system. The consumers of this data are widely different, like monitoring
 systems, for which data loss is acceptable and billing systems, which
 require reliable data transportation. Telemetry provides methods to
@@ -515,9 +537,9 @@ file
 
 .. note::
 
-        If a file name and location is not specified, this publisher
-        does not log any meters, instead it logs a warning message in
-        the configured log file for Telemetry.
+   If a file name and location is not specified, this publisher
+   does not log any meters, instead it logs a warning message in
+   the configured log file for Telemetry.
 
 kafka
     It can be specified in the form of:
@@ -528,10 +550,10 @@ kafka
 
 .. note::
 
-    If the topic parameter is missing, this publisher brings out
-    metering data under a topic name, ``ceilometer``. When the port
-    number is not specified, this publisher uses 9092 as the
-    broker's port.
+   If the topic parameter is missing, this publisher brings out
+   metering data under a topic name, ``ceilometer``. When the port
+   number is not specified, this publisher uses 9092 as the
+   broker's port.
 
 The following options are available for ``rpc`` and ``notifier``. The
 policy option can be used by ``kafka`` publisher:
@@ -583,9 +605,11 @@ The following options are available for the ``file`` publisher:
 
 The default publisher is ``notifier``, without any additional options
 specified. A sample ``publishers`` section in the
-:file:`/etc/ceilometer/pipeline.yaml` looks like the following::
+``/etc/ceilometer/pipeline.yaml`` looks like the following:
 
-    publishers:
-        - udp://10.0.0.2:1234
-        - rpc://?per_meter_topic=1 (deprecated in Liberty)
-        - notifier://?policy=drop&max_queue_length=512&topic=custom_target
+.. code-block:: yaml
+
+   publishers:
+       - udp://10.0.0.2:1234
+       - rpc://?per_meter_topic=1 (deprecated in Liberty)
+       - notifier://?policy=drop&max_queue_length=512&topic=custom_target

@@ -143,6 +143,7 @@ minute periods. The notification in this case is simply a log message,
 though it could alternatively be a webhook URL.
 
 .. note::
+
     Alarm names must be unique for the alarms associated with an
     individual project.
     The cloud administrator can limit the maximum resulting actions
@@ -163,16 +164,17 @@ meter. This period matching illustrates an important general
 principal to keep in mind for alarms:
 
 .. note::
-    The alarm period should be a whole number multiple (1 or more)
-    of the interval configured in the pipeline corresponding to the
-    target meter.
+
+   The alarm period should be a whole number multiple (1 or more)
+   of the interval configured in the pipeline corresponding to the
+   target meter.
 
 Otherwise the alarm will tend to flit in and out of the
 ``insufficient data`` state due to the mismatch between the actual
 frequency of datapoints in the metering store and the statistics
 queries used to compare against the alarm threshold. If a shorter
 alarm period is needed, then the corresponding interval should be
-adjusted in the :file:`pipeline.yaml` file.
+adjusted in the ``pipeline.yaml`` file.
 
 Other notable alarm attributes that may be set on creation, or via a
 subsequent update, include:
@@ -186,11 +188,11 @@ description
 
 enabled
   True if evaluation and actioning is to be enabled for this alarm
-  (defaults to True).
+  (defaults to ``True``).
 
 repeat-actions
   True if actions should be repeatedly notified while the alarm
-  remains in the target state (defaults to False).
+  remains in the target state (defaults to ``False``).
 
 ok-action
   An action to invoke when the alarm state transitions to ``ok``.
@@ -250,6 +252,7 @@ could indicate that:
   minute).
 
 .. note::
+
    The visibility of alarms depends on the role and project
    associated with the user issuing the query:
 
@@ -316,4 +319,5 @@ or even deleted permanently (an irreversible step):
    $ ceilometer alarm-delete ALARM_ID
 
 .. note::
+
     By default, alarm history is retained for deleted alarms.

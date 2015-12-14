@@ -54,8 +54,8 @@ ceilometer-alarm-notifier
     .. note::
 
        The ``ceilometer-polling`` service is available since the Kilo release.
-       It is intended to replace ceilometer-agent-central,
-       ceilometer-agent-compute, and ceilometer-agent-ipmi.
+       It is intended to replace ``ceilometer-agent-central``,
+       ``ceilometer-agent-compute``, and ``ceilometer-agent-ipmi``.
 
 Besides the ``ceilometer-agent-compute`` and the ``ceilometer-agent-ipmi``
 services, all the other services are placed on one or more controller
@@ -65,7 +65,6 @@ The Telemetry architecture highly depends on the AMQP service both for
 consuming notifications coming from OpenStack services and internal
 communication.
 
-|
 
 .. _telemetry-supported-databases:
 
@@ -73,12 +72,12 @@ Supported databases
 ~~~~~~~~~~~~~~~~~~~
 
 The other key external component of Telemetry is the database, where
-events, samples, alarm definitions and alarms are stored.
+events, samples, alarm definitions, and alarms are stored.
 
 .. note::
 
    Multiple database back ends can be configured in order to store
-   events, samples and alarms separately.
+   events, samples, and alarms separately.
 
 The list of supported database back ends:
 
@@ -92,14 +91,6 @@ The list of supported database back ends:
 
 -  `HBase <http://hbase.apache.org/>`__
 
--  `DB2(deprecated) <http://www-01.ibm.com/software/data/db2/>`__
-
-.. note::
-
-   DB2 nosql support is deprecated as of Liberty and will be removed in Mitaka
-   as the product is no longer in development.
-
-|
 
 .. _telemetry-supported-hypervisors:
 
@@ -110,20 +101,17 @@ The Telemetry service collects information about the virtual machines,
 which requires close connection to the hypervisor that runs on the
 compute hosts.
 
-The list of supported hypervisors is:
+The following is a list of supported hypervisors.
 
--  The following hypervisors are supported via
-   `Libvirt <http://libvirt.org/>`__:
+-  The following hypervisors are supported via `libvirt <http://libvirt.org/>`__
 
-   -  `Kernel-based Virtual Machine
-      (KVM) <http://www.linux-kvm.org/page/Main_Page>`__
+   *  `Kernel-based Virtual Machine (KVM) <http://www.linux-kvm.org/page/Main_Page>`__
 
-   -  `Quick Emulator (QEMU) <http://wiki.qemu.org/Main_Page>`__
+   *  `Quick Emulator (QEMU) <http://wiki.qemu.org/Main_Page>`__
 
-   -  `Linux Containers (LXC) <https://linuxcontainers.org/>`__
+   *  `Linux Containers (LXC) <https://linuxcontainers.org/>`__
 
-   -  `User-mode Linux
-      (UML) <http://user-mode-linux.sourceforge.net/>`__
+   *  `User-mode Linux (UML) <http://user-mode-linux.sourceforge.net/>`__
 
    .. note::
 
@@ -134,10 +122,8 @@ The list of supported hypervisors is:
 
 -  `XEN <http://www.xenproject.org/help/documentation.html>`__
 
--  `VMWare
-   vSphere <http://www.vmware.com/products/vsphere-hypervisor/support.html>`__
+-  `VMware vSphere <http://www.vmware.com/products/vsphere-hypervisor/support.html>`__
 
-|
 
 Supported networking services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -161,22 +147,21 @@ external networking services:
 
    -  `OpenContrail <http://www.opencontrail.org/>`__
 
-|
 
 .. _telemetry-users-roles-tenants:
 
-Users, roles and tenants
-~~~~~~~~~~~~~~~~~~~~~~~~
+Users, roles, and tenants
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This service of OpenStack uses OpenStack Identity for authenticating and
 authorizing users. The required configuration options are listed in the
 `Telemetry
-section <http://docs.openstack.org/kilo/config-reference/content/ch_configuring-openstack-telemetry.html>`__
+section <http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-telemetry.html>`__
 in the *OpenStack Configuration Reference*.
 
-The system uses two roles:`admin` and `non-admin`. The authorization happens
-before processing each API request. The amount of returned data depends on the
-role the requestor owns.
+The system uses two roles:``admin`` and ``non-admin``. The authorization
+happens before processing each API request. The amount of returned data
+depends on the role the requestor owns.
 
 The creation of alarm definitions also highly depends on the role of the
 user, who initiated the action. Further details about :ref:`telemetry-alarms`

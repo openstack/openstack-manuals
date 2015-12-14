@@ -11,13 +11,13 @@ Data collection
 #. The Telemetry service collects a continuously growing set of data. Not
    all the data will be relevant for a cloud administrator to monitor.
 
-   -  Based on your needs, you can edit the :file:`pipeline.yaml` configuration
+   -  Based on your needs, you can edit the ``pipeline.yaml`` configuration
       file to include a selected number of meters while disregarding the
       rest.
 
    -  By default, Telemetry service polls the service APIs every 10
       minutes. You can change the polling interval on a per meter basis by
-      editing the :file:`pipeline.yaml` configuration file.
+      editing the ``pipeline.yaml`` configuration file.
 
       .. warning::
 
@@ -36,7 +36,7 @@ Data collection
    polling requests by enabling the jitter support. This adds a random
    delay on how the polling agents send requests to the service APIs. To
    enable jitter, set ``shuffle_time_before_polling_task`` in the
-   :file:`ceilometer.conf` configuration file to an integer greater
+   ``ceilometer.conf`` configuration file to an integer greater
    than 0.
 
 #. If you are using Juno or later releases, based on the number of
@@ -68,22 +68,22 @@ Data storage
    For example, this open-ended query might return an unpredictable amount
    of data:
 
-   ::
+   .. code-block:: console
 
-     $ ceilometer sample-list --meter cpu -q 'resource_id=INSTANCE_ID_1'
+      $ ceilometer sample-list --meter cpu -q 'resource_id=INSTANCE_ID_1'
 
    Whereas, this well-formed query returns a more reasonable amount of
    data, hence better performance:
 
-   ::
+   .. code-block:: console
 
-     $ ceilometer sample-list --meter cpu -q 'resource_id=INSTANCE_ID_1;timestamp > 2015-05-01T00:00:00;timestamp < 2015-06-01T00:00:00'
+      $ ceilometer sample-list --meter cpu -q 'resource_id=INSTANCE_ID_1;timestamp > 2015-05-01T00:00:00;timestamp < 2015-06-01T00:00:00'
 
    .. note::
 
       As of the Liberty release, the number of items returned will be
       restricted to the value defined by ``default_api_return_limit`` in the
-      :file:`ceilometer.conf` configuration file. Alternatively, the value can
+      ``ceilometer.conf`` configuration file. Alternatively, the value can
       be set per query by passing ``limit`` option in request.
 
 #. You can install the API behind ``mod_wsgi``, as it provides more
