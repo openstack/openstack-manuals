@@ -6,11 +6,11 @@ You can show basic statistics on resource usage for hosts and instances.
 
 .. note::
 
-  For more sophisticated monitoring, see the
-  `ceilometer <https://launchpad.net/ceilometer>`__ project. You can
-  also use tools, such as `Ganglia <http://ganglia.info/>`__ or
-  `Graphite <http://graphite.wikidot.com/>`__, to gather more detailed
-  data.
+   For more sophisticated monitoring, see the
+   `ceilometer <https://launchpad.net/ceilometer>`__ project. You can
+   also use tools, such as `Ganglia <http://ganglia.info/>`__ or
+   `Graphite <http://graphite.wikidot.com/>`__, to gather more detailed
+   data.
 
 Show host usage statistics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,48 +83,48 @@ Show instance usage statistics
 
       .. code-block:: console
 
-        $ nova list
-        +----------+----------------------+--------+------------+-------------+------------------+
-        | ID       | Name                 | Status | Task State | Power State | Networks         |
-        +----------+----------------------+--------+------------+-------------+------------------+
-        | 84c6e... | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
-        | 8a995... | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
-        +----------+----------------------+--------+------------+-------------+------------------+
+         $ nova list
+         +----------+----------------------+--------+------------+-------------+------------------+
+         | ID       | Name                 | Status | Task State | Power State | Networks         |
+         +----------+----------------------+--------+------------+-------------+------------------+
+         | 84c6e... | myCirrosServer       | ACTIVE | None       | Running     | private=10.0.0.3 |
+         | 8a995... | myInstanceFromVolume | ACTIVE | None       | Running     | private=10.0.0.4 |
+         +----------+----------------------+--------+------------+-------------+------------------+
 
    #. Get diagnostic statistics:
 
       .. code-block:: console
 
-        $ nova diagnostics myCirrosServer
-        +------------------+----------------+
-        | Property         | Value          |
-        +------------------+----------------+
-        | vnet1_rx         | 1210744        |
-        | cpu0_time        | 19624610000000 |
-        | vda_read         | 0              |
-        | vda_write        | 0              |
-        | vda_write_req    | 0              |
-        | vnet1_tx         | 863734         |
-        | vnet1_tx_errors  | 0              |
-        | vnet1_rx_drop    | 0              |
-        | vnet1_tx_packets | 3855           |
-        | vnet1_tx_drop    | 0              |
-        | vnet1_rx_errors  | 0              |
-        | memory           | 2097152        |
-        | vnet1_rx_packets | 5485           |
-        | vda_read_req     | 0              |
-        | vda_errors       | -1             |
-        +------------------+----------------+
+         $ nova diagnostics myCirrosServer
+         +------------------+----------------+
+         | Property         | Value          |
+         +------------------+----------------+
+         | vnet1_rx         | 1210744        |
+         | cpu0_time        | 19624610000000 |
+         | vda_read         | 0              |
+         | vda_write        | 0              |
+         | vda_write_req    | 0              |
+         | vnet1_tx         | 863734         |
+         | vnet1_tx_errors  | 0              |
+         | vnet1_rx_drop    | 0              |
+         | vnet1_tx_packets | 3855           |
+         | vnet1_tx_drop    | 0              |
+         | vnet1_rx_errors  | 0              |
+         | memory           | 2097152        |
+         | vnet1_rx_packets | 5485           |
+         | vda_read_req     | 0              |
+         | vda_errors       | -1             |
+         +------------------+----------------+
 
 -  Get summary statistics for each tenant:
 
    .. code-block:: console
 
-       $ nova usage-list
-       Usage from 2013-06-25 to 2013-07-24:
-       +----------------------------------+-----------+--------------+-----------+---------------+
-       | Tenant ID                        | Instances | RAM MB-Hours | CPU Hours | Disk GB-Hours |
-       +----------------------------------+-----------+--------------+-----------+---------------+
-       | b70d90d65e464582b6b2161cf3603ced | 1         | 344064.44    | 672.00    | 0.00          |
-       | 66265572db174a7aa66eba661f58eb9e | 3         | 671626.76    | 327.94    | 6558.86       |
-       +----------------------------------+-----------+--------------+-----------+---------------+
+      $ nova usage-list
+      Usage from 2013-06-25 to 2013-07-24:
+      +----------------------------------+-----------+--------------+-----------+---------------+
+      | Tenant ID                        | Instances | RAM MB-Hours | CPU Hours | Disk GB-Hours |
+      +----------------------------------+-----------+--------------+-----------+---------------+
+      | b70d90d65e464582b6b2161cf3603ced | 1         | 344064.44    | 672.00    | 0.00          |
+      | 66265572db174a7aa66eba661f58eb9e | 3         | 671626.76    | 327.94    | 6558.86       |
+      +----------------------------------+-----------+--------------+-----------+---------------+

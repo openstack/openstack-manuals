@@ -4,7 +4,7 @@ Overview
 
 Each OpenStack project provides a command-line client, which enables
 you to access the project API through easy-to-use commands. For
-example, the Compute service provides a nova command-line client.
+example, the Compute service provides a ``nova`` command-line client.
 
 You can run the commands from the command line, or include the
 commands within scripts to automate tasks. If you provide OpenStack

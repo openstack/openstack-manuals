@@ -21,62 +21,63 @@ List or get details for images (glance)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To get a list of images and to then get further details about a single
-image, use ``glance image-list`` and ``glance image-show``.
+image, use :command:`glance image-list` and :command:`glance image-show`
+commands.
 
 .. code-block:: console
 
-  $ glance image-list
-  +----------+---------------------------------+-------------+------------------+----------+--------+
-  | ID       | Name                            | Disk Format | Container Format | Size     | Status |
-  +----------+---------------------------------+-------------+------------------+----------+--------+
-  | 397e7... | cirros-0.3.2-x86_64-uec         | ami         | ami              | 25165824 | active |
-  | df430... | cirros-0.3.2-x86_64-uec-kernel  | aki         | aki              | 4955792  | active |
-  | 3cf85... | cirros-0.3.2-x86_64-uec-ramdisk | ari         | ari              | 3714968  | active |
-  | 7e514... | myCirrosImage                   | ami         | ami              | 14221312 | active |
-  +----------+---------------------------------+-------------+------------------+----------+--------+
+   $ glance image-list
+   +----------+---------------------------------+-------------+------------------+----------+--------+
+   | ID       | Name                            | Disk Format | Container Format | Size     | Status |
+   +----------+---------------------------------+-------------+------------------+----------+--------+
+   | 397e7... | cirros-0.3.2-x86_64-uec         | ami         | ami              | 25165824 | active |
+   | df430... | cirros-0.3.2-x86_64-uec-kernel  | aki         | aki              | 4955792  | active |
+   | 3cf85... | cirros-0.3.2-x86_64-uec-ramdisk | ari         | ari              | 3714968  | active |
+   | 7e514... | myCirrosImage                   | ami         | ami              | 14221312 | active |
+   +----------+---------------------------------+-------------+------------------+----------+--------+
 
 .. code-block:: console
 
-  $ glance image-show myCirrosImage
+   $ glance image-show myCirrosImage
 
-  +---------------------------------------+--------------------------------------+
-  | Property                              | Value                                |
-  +---------------------------------------+--------------------------------------+
-  | Property 'base_image_ref'             | 397e713c-b95b-4186-ad46-6126863ea0a9 |
-  | Property 'image_location'             | snapshot                             |
-  | Property 'image_state'                | available                            |
-  | Property 'image_type'                 | snapshot                             |
-  | Property 'instance_type_ephemeral_gb' | 0                                    |
-  | Property 'instance_type_flavorid'     | 2                                    |
-  | Property 'instance_type_id'           | 5                                    |
-  | Property 'instance_type_memory_mb'    | 2048                                 |
-  | Property 'instance_type_name'         | m1.small                             |
-  | Property 'instance_type_root_gb'      | 20                                   |
-  | Property 'instance_type_rxtx_factor'  | 1                                    |
-  | Property 'instance_type_swap'         | 0                                    |
-  | Property 'instance_type_vcpu_weight'  | None                                 |
-  | Property 'instance_type_vcpus'        | 1                                    |
-  | Property 'instance_uuid'              | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 |
-  | Property 'kernel_id'                  | df430cc2-3406-4061-b635-a51c16e488ac |
-  | Property 'owner_id'                   | 66265572db174a7aa66eba661f58eb9e     |
-  | Property 'ramdisk_id'                 | 3cf852bd-2332-48f4-9ae4-7d926d50945e |
-  | Property 'user_id'                    | 376744b5910b4b4da7d8e6cb483b06a8     |
-  | checksum                              | 8e4838effa1969ad591655d6485c7ba8     |
-  | container_format                      | ami                                  |
-  | created_at                            | 2013-07-22T19:45:58                  |
-  | deleted                               | False                                |
-  | disk_format                           | ami                                  |
-  | id                                    | 7e5142af-1253-4634-bcc6-89482c5f2e8a |
-  | is_public                             | False                                |
-  | min_disk                              | 0                                    |
-  | min_ram                               | 0                                    |
-  | name                                  | myCirrosImage                        |
-  | owner                                 | 66265572db174a7aa66eba661f58eb9e     |
-  | protected                             | False                                |
-  | size                                  | 14221312                             |
-  | status                                | active                               |
-  | updated_at                            | 2013-07-22T19:46:42                  |
-  +---------------------------------------+--------------------------------------+
+   +---------------------------------------+--------------------------------------+
+   | Property                              | Value                                |
+   +---------------------------------------+--------------------------------------+
+   | Property 'base_image_ref'             | 397e713c-b95b-4186-ad46-6126863ea0a9 |
+   | Property 'image_location'             | snapshot                             |
+   | Property 'image_state'                | available                            |
+   | Property 'image_type'                 | snapshot                             |
+   | Property 'instance_type_ephemeral_gb' | 0                                    |
+   | Property 'instance_type_flavorid'     | 2                                    |
+   | Property 'instance_type_id'           | 5                                    |
+   | Property 'instance_type_memory_mb'    | 2048                                 |
+   | Property 'instance_type_name'         | m1.small                             |
+   | Property 'instance_type_root_gb'      | 20                                   |
+   | Property 'instance_type_rxtx_factor'  | 1                                    |
+   | Property 'instance_type_swap'         | 0                                    |
+   | Property 'instance_type_vcpu_weight'  | None                                 |
+   | Property 'instance_type_vcpus'        | 1                                    |
+   | Property 'instance_uuid'              | 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5 |
+   | Property 'kernel_id'                  | df430cc2-3406-4061-b635-a51c16e488ac |
+   | Property 'owner_id'                   | 66265572db174a7aa66eba661f58eb9e     |
+   | Property 'ramdisk_id'                 | 3cf852bd-2332-48f4-9ae4-7d926d50945e |
+   | Property 'user_id'                    | 376744b5910b4b4da7d8e6cb483b06a8     |
+   | checksum                              | 8e4838effa1969ad591655d6485c7ba8     |
+   | container_format                      | ami                                  |
+   | created_at                            | 2013-07-22T19:45:58                  |
+   | deleted                               | False                                |
+   | disk_format                           | ami                                  |
+   | id                                    | 7e5142af-1253-4634-bcc6-89482c5f2e8a |
+   | is_public                             | False                                |
+   | min_disk                              | 0                                    |
+   | min_ram                               | 0                                    |
+   | name                                  | myCirrosImage                        |
+   | owner                                 | 66265572db174a7aa66eba661f58eb9e     |
+   | protected                             | False                                |
+   | size                                  | 14221312                             |
+   | status                                | active                               |
+   | updated_at                            | 2013-07-22T19:46:42                  |
+   +---------------------------------------+--------------------------------------+
 
 When viewing a list of images, you can also use ``grep`` to filter the
 list, as follows:
@@ -118,17 +119,17 @@ list, as follows:
 Create or update an image (glance)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To create an image, use ``glance image-create``:
+To create an image, use :command:`glance image-create`:
 
 .. code-block:: console
 
-  $ glance image-create imageName
+   $ glance image-create imageName
 
-To update an image by name or ID, use ``glance image-update``:
+To update an image by name or ID, use :command:`glance image-update`:
 
 .. code-block:: console
 
-  $ glance image-update imageName
+   $ glance image-update imageName
 
 The following list explains the optional arguments that you can use with
 the ``create`` and ``update`` commands to modify image properties. For
@@ -145,7 +146,7 @@ Reference <http://docs.openstack.org/cli-reference/content/index.html>`__.
 
 ``--container-format CONTAINER_FORMAT``
   The container format of the image. Acceptable formats are ami, ari,
-  aki, bare, and ovf.
+  aki, bare, docker, and ovf.
 
 ``--owner TENANT_ID --size SIZE``
   The tenant who should own the image. The size of image data, in
@@ -172,7 +173,7 @@ Reference <http://docs.openstack.org/cli-reference/content/index.html>`__.
   Hash of image data to use for verification.
 
 ``--copy-from IMAGE_URL``
-  Similar to ``--location`` in usage, but indicates that the image
+  Similar to :option:`--location` in usage, but indicates that the image
   server should immediately copy the data and store it in its
   configured image store.
 
@@ -201,8 +202,8 @@ CentOS 6.3 image in qcow2 format and configure it for public access:
 
 .. code-block:: console
 
-  $ glance image-create --name centos63-image --disk-format qcow2 \
-    --container-format bare --is-public True --file ./centos63.qcow2
+   $ glance image-create --name centos63-image --disk-format qcow2 \
+     --container-format bare --is-public True --file ./centos63.qcow2
 
 The following example shows how to update an existing image with a
 properties that describe the disk bus, the CD-ROM bus, and the VIF
@@ -210,15 +211,15 @@ model:
 
 .. code-block:: console
 
-  $ glance image-update \
-      --property hw_disk_bus=scsi \
-      --property hw_cdrom_bus=ide \
-      --property hw_vif_model=e1000 \
-      f16-x86_64-openstack-sda
+   $ glance image-update \
+       --property hw_disk_bus=scsi \
+       --property hw_cdrom_bus=ide \
+       --property hw_vif_model=e1000 \
+       f16-x86_64-openstack-sda
 
 Currently the libvirt virtualization tool determines the disk, CD-ROM,
 and VIF device models based on the configured hypervisor type
-(``libvirt_type`` in ``/etc/nova/nova.conf``). For the sake of optimal
+(``libvirt_type`` in ``/etc/nova/nova.conf`` file). For the sake of optimal
 performance, libvirt defaults to using virtio for both disk and VIF
 (NIC) models. The disadvantage of this approach is that it is not
 possible to run operating systems that lack virtio drivers, for example,

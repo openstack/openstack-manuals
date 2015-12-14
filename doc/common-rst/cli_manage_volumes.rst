@@ -32,7 +32,7 @@ following example:
 
    $ cinder migrate volumeID destinationHost --force-host-copy True|False
 
-In this example, ``--force-host-copy True`` forces the generic
+In this example, :option:`--force-host-copy True` forces the generic
 host-based migration mechanism and bypasses any driver optimizations.
 
 .. note::
@@ -147,7 +147,7 @@ Attach a volume to an instance
 
    .. code-block:: console
 
-     $ cinder show 573e024d-5235-49ce-8332-be1576d323f8
+      $ cinder show 573e024d-5235-49ce-8332-be1576d323f8
 
    The output shows that the volume is attached to the server with ID
    ``84c6e57d-a6b1-44b6-81eb-fcb36afd31b5``, is in the nova availability
@@ -155,32 +155,32 @@ Attach a volume to an instance
 
    .. code-block:: console
 
-     +------------------------------+------------------------------------------+
-     |           Property           |                Value                     |
-     +------------------------------+------------------------------------------+
-     |         attachments          |         [{u'device': u'/dev/vdb',        |
-     |                              |        u'server_id': u'84c6e57d-a        |
-     |                              |           u'id': u'573e024d-...          |
-     |                              |        u'volume_id': u'573e024d...       |
-     |      availability_zone       |                  nova                    |
-     |           bootable           |                  true                    |
-     |          created_at          |       2013-07-25T17:02:12.000000         |
-     |     display_description      |                  None                    |
-     |         display_name         |             my-new-volume                |
-     |              id              |   573e024d-5235-49ce-8332-be1576d323f8   |
-     |           metadata           |                   {}                     |
-     |    os-vol-host-attr:host     |                devstack                  |
-     | os-vol-tenant-attr:tenant_id |     66265572db174a7aa66eba661f58eb9e     |
-     |             size             |                   8                      |
-     |         snapshot_id          |                  None                    |
-     |         source_volid         |                  None                    |
-     |            status            |                 in-use                   |
-     |    volume_image_metadata     |       {u'kernel_id': u'df430cc2...,      |
-     |                              |        u'image_id': u'397e713c...,       |
-     |                              |        u'ramdisk_id': u'3cf852bd...,     |
-     |                              |u'image_name': u'cirros-0.3.2-x86_64-uec'}|
-     |         volume_type          |                  None                    |
-     +------------------------------+------------------------------------------+
+      +------------------------------+------------------------------------------+
+      |           Property           |                Value                     |
+      +------------------------------+------------------------------------------+
+      |         attachments          |         [{u'device': u'/dev/vdb',        |
+      |                              |        u'server_id': u'84c6e57d-a        |
+      |                              |           u'id': u'573e024d-...          |
+      |                              |        u'volume_id': u'573e024d...       |
+      |      availability_zone       |                  nova                    |
+      |           bootable           |                  true                    |
+      |          created_at          |       2013-07-25T17:02:12.000000         |
+      |     display_description      |                  None                    |
+      |         display_name         |             my-new-volume                |
+      |              id              |   573e024d-5235-49ce-8332-be1576d323f8   |
+      |           metadata           |                   {}                     |
+      |    os-vol-host-attr:host     |                devstack                  |
+      | os-vol-tenant-attr:tenant_id |     66265572db174a7aa66eba661f58eb9e     |
+      |             size             |                   8                      |
+      |         snapshot_id          |                  None                    |
+      |         source_volid         |                  None                    |
+      |            status            |                 in-use                   |
+      |    volume_image_metadata     |       {u'kernel_id': u'df430cc2...,      |
+      |                              |        u'image_id': u'397e713c...,       |
+      |                              |        u'ramdisk_id': u'3cf852bd...,     |
+      |                              |u'image_name': u'cirros-0.3.2-x86_64-uec'}|
+      |         volume_type          |                  None                    |
+      +------------------------------+------------------------------------------+
 
 .. _Resize_a_volume:
 
@@ -193,9 +193,9 @@ Resize a volume
 
    .. code-block:: console
 
-     $ nova volume-detach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5   573e024d-5235-49ce-8332-be1576d323f8
+      $ nova volume-detach 84c6e57d-a6b1-44b6-81eb-fcb36afd31b5   573e024d-5235-49ce-8332-be1576d323f8
 
-   The ``volume-detach`` command does not return any output.
+   The :command:`volume-detach` command does not return any output.
 
 #. List volumes:
 
@@ -218,7 +218,7 @@ Resize a volume
 
       $ cinder extend 573e024d-5235-49ce-8332-be1576d323f8 10
 
-   The ``extend`` command does not return any output.
+   The :command:`extend` command does not return any output.
 
 Delete a volume
 ~~~~~~~~~~~~~~~
@@ -233,7 +233,7 @@ Delete a volume
 
       $ cinder delete my-new-volume
 
-   The delete command does not return any output.
+   The :command:`delete` command does not return any output.
 
 #. List the volumes again, and note that the status of your volume is
    ``deleting``:
@@ -264,15 +264,15 @@ Transfer a volume
 ~~~~~~~~~~~~~~~~~
 
 You can transfer a volume from one owner to another by using the
-``cinder transfer*`` commands. The volume donor, or original owner,
+:command:`cinder transfer*` commands. The volume donor, or original owner,
 creates a transfer request and sends the created transfer ID and
 authorization key to the volume recipient. The volume recipient, or new
 owner, accepts the transfer by using the ID and key.
 
 .. note::
 
-  The procedure for volume transfer is intended for tenants (both the
-  volume donor and recipient) within the same cloud.
+   The procedure for volume transfer is intended for tenants (both the
+   volume donor and recipient) within the same cloud.
 
 Use cases include:
 
@@ -319,26 +319,26 @@ Create a volume transfer request
 
    .. code-block:: console
 
-     +------------+--------------------------------------+
-     |  Property  |                Value                 |
-     +------------+--------------------------------------+
-     |  auth_key  |           b2c8e585cbc68a80           |
-     | created_at |      2013-10-14T15:20:10.121458      |
-     |     id     | 6e4e9aa4-bed5-4f94-8f76-df43232f44dc |
-     |    name    |                 None                 |
-     | volume_id  | a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f |
-     +------------+--------------------------------------+
+      +------------+--------------------------------------+
+      |  Property  |                Value                 |
+      +------------+--------------------------------------+
+      |  auth_key  |           b2c8e585cbc68a80           |
+      | created_at |      2013-10-14T15:20:10.121458      |
+      |     id     | 6e4e9aa4-bed5-4f94-8f76-df43232f44dc |
+      |    name    |                 None                 |
+      | volume_id  | a1cdace0-08e4-4dc7-b9dc-457e9bcfe25f |
+      +------------+--------------------------------------+
 
    .. note::
 
-     Optionally, you can specify a name for the transfer by using the
-     ``--display-name displayName`` parameter.
+      Optionally, you can specify a name for the transfer by using the
+      ``--display-name displayName`` parameter.
 
    .. note::
 
-     While the ``auth_key`` property is visible in the output of
-     ``cinder transfer-create VOLUME_ID``, it will not be available in
-     subsequent ``cinder transfer-show TRANSFER_ID`` commands.
+      While the ``auth_key`` property is visible in the output of
+      ``cinder transfer-create VOLUME_ID``, it will not be available in
+      subsequent ``cinder transfer-show TRANSFER_ID`` commands.
 
 #. Send the volume transfer ID and authorization key to the new owner (for
    example, by email).
@@ -392,8 +392,8 @@ Accept a volume transfer request
 
    .. note::
 
-     If you do not have a sufficient quota for the transfer, the transfer
-     is refused.
+      If you do not have a sufficient quota for the transfer, the transfer
+      is refused.
 
 Delete a volume transfer
 ------------------------
