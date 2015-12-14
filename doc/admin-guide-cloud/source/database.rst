@@ -21,19 +21,18 @@ levels, and automates complex administrative tasks such as
 deployment, configuration, patching, backups, restores, and
 monitoring.
 
-Create a datastore
-~~~~~~~~~~~~~~~~~~
+Create a data store
+~~~~~~~~~~~~~~~~~~~
 
-An administrative user can create datastores for a variety of
+An administrative user can create data stores for a variety of
 databases.
 
-This section assumes you do not yet have a MySQL datastore, and shows
-you how to create a MySQL datastore and populate it with a MySQL 5.5
-datastore version.
+This section assumes you do not yet have a MySQL data store, and shows
+you how to create a MySQL data store and populate it with a MySQL 5.5
+data store version.
 
-|
 
-**To create a datastore**
+**To create a data store**
 
 #. **Create a trove image**
 
@@ -41,9 +40,9 @@ datastore version.
    example, MySQL, MongoDB, Cassandra.
 
    This image must have the trove guest agent installed, and it must
-   have the :file:`trove-guestagent.conf` file configured to connect to
-   your OpenStack environment. To configure :file:`trove-guestagent.conf`,
-   add the following lines to :file:`trove-guestagent.conf` on the guest
+   have the ``trove-guestagent.conf`` file configured to connect to
+   your OpenStack environment. To configure ``trove-guestagent.conf``,
+   add the following lines to ``trove-guestagent.conf`` on the guest
    instance you are using to build your image:
 
    .. code-block:: ini
@@ -63,34 +62,36 @@ datastore version.
    You need to register your guest image with the Image service.
 
    In this example, you use the glance :command:`image-create`
-   command to register a ``mysql-5.5.qcow2`` image::
+   command to register a ``mysql-5.5.qcow2`` image.
 
-     $ glance image-create --name mysql-5.5 --disk-format qcow2 --container-format bare --is-public True < mysql-5.5.qcow2
-     +------------------+--------------------------------------+
-     | Property         | Value                                |
-     +------------------+--------------------------------------+
-     | checksum         | d41d8cd98f00b204e9800998ecf8427e     |
-     | container_format | bare                                 |
-     | created_at       | 2014-05-23T21:01:18                  |
-     | deleted          | False                                |
-     | deleted_at       | None                                 |
-     | disk_format      | qcow2                                |
-     | id               | bb75f870-0c33-4907-8467-1367f8cb15b6 |
-     | is_public        | True                                 |
-     | min_disk         | 0                                    |
-     | min_ram          | 0                                    |
-     | name             | mysql-5.5                            |
-     | owner            | 1448da1223124bb291f5ae8e9af4270d     |
-     | protected        | False                                |
-     | size             | 0                                    |
-     | status           | active                               |
-     | updated_at       | 2014-05-23T21:01:22                  |
-     | virtual_size     | None                                 |
-     +------------------+--------------------------------------+
+   .. code-block:: console
 
-#. **Create the datastore**
+      $ glance image-create --name mysql-5.5 --disk-format qcow2 --container-format bare --is-public True < mysql-5.5.qcow2
+      +------------------+--------------------------------------+
+      | Property         | Value                                |
+      +------------------+--------------------------------------+
+      | checksum         | d41d8cd98f00b204e9800998ecf8427e     |
+      | container_format | bare                                 |
+      | created_at       | 2014-05-23T21:01:18                  |
+      | deleted          | False                                |
+      | deleted_at       | None                                 |
+      | disk_format      | qcow2                                |
+      | id               | bb75f870-0c33-4907-8467-1367f8cb15b6 |
+      | is_public        | True                                 |
+      | min_disk         | 0                                    |
+      | min_ram          | 0                                    |
+      | name             | mysql-5.5                            |
+      | owner            | 1448da1223124bb291f5ae8e9af4270d     |
+      | protected        | False                                |
+      | size             | 0                                    |
+      | status           | active                               |
+      | updated_at       | 2014-05-23T21:01:22                  |
+      | virtual_size     | None                                 |
+      +------------------+--------------------------------------+
 
-   Create the datastore that will house the new image. To do this, use
+#. **Create the data store**
+
+   Create the data store that will house the new image. To do this, use
    the :command:`trove-manage` :command:`datastore_update` command.
 
    This example uses the following arguments:
@@ -106,10 +107,10 @@ datastore version.
         - The configuration file to use.
         - :option:`--config-file=/etc/trove/trove.conf`
       * - name
-        - Name you want to use for this datastore.
+        - Name you want to use for this data store.
         - ``mysql``
       * - default version
-        - You can attach multiple versions/images to a datastore. For
+        - You can attach multiple versions/images to a data store. For
           example, you might have a MySQL 5.5 version and a MySQL 5.6
           version. You can designate one version as the default, which
           the system uses if a user does not explicitly request a
@@ -121,15 +122,17 @@ datastore version.
 
    |
 
-   Example::
+   Example:
 
-    $ trove-manage --config-file=/etc/trove/trove.conf datastore_update mysql ""
+   .. code-block:: console
 
-#. **Add a version to the new datastore**
+      $ trove-manage --config-file=/etc/trove/trove.conf datastore_update mysql ""
 
-   Now that you have a MySQL datastore, you can add a version to it,
-   using the trove-manage :command:`datastore_version_update` command.
-   The version indicates which guest image to use.
+#. **Add a version to the new data store**
+
+   Now that you have a MySQL data store, you can add a version to it,
+   using the :command:`trove-manage` :command:`datastore_version_update`
+   command. The version indicates which guest image to use.
 
    This example uses the following arguments:
 
@@ -145,18 +148,18 @@ datastore version.
         - The configuration file to use.
         - :option:`--config-file=/etc/trove/trove.conf`
 
-      * - datastore
-        - The name of the datastore you just created via
-          trove-manage :command:`datastore_update`.
+      * - data store
+        - The name of the data store you just created via
+          ``trove-manage`` :command:`datastore_update`.
         - ``mysql``
 
       * - version name
-        - The name of the version you are adding to the datastore.
+        - The name of the version you are adding to the data store.
         - ``mysql-5.5``
 
-      * - datastore manager
-        - Which datastore manager to use for this version. Typically,
-          the datastore manager is identified by one of the following
+      * - data store manager
+        - Which data store manager to use for this version. Typically,
+          the data store manager is identified by one of the following
           strings, depending on the database:
 
           * mysql
@@ -175,7 +178,7 @@ datastore version.
 
       * - packages
         - If you want to put additional packages on each guest that
-          you create with this datastore version, you can list the
+          you create with this data store version, you can list the
           package names here.
         - ``""``
 
@@ -190,28 +193,30 @@ datastore version.
 
    |
 
-   Example::
+   Example:
 
-    $ trove-manage --config-file=/etc/trove/trove.conf datastore_version_update mysql mysql-5.5 mysql GLANCE_ID "" 1
+   .. code-block:: console
+
+      $ trove-manage --config-file=/etc/trove/trove.conf datastore_version_update mysql mysql-5.5 mysql GLANCE_ID "" 1
 
    **Optional.** Set your new version as the default version. To do
-   this, use the trove-manage :command:`datastore_update` command again,
-   this time specifying the version you just created.
+   this, use the :command:`trove-manage` :command:`datastore_update`
+   command again, this time specifying the version you just created.
 
-   ::
+   .. code-block:: console
 
-    $ trove-manage --config-file=/etc/trove/trove.conf datastore_update mysql mysql-5.5
+      $ trove-manage --config-file=/etc/trove/trove.conf datastore_update mysql mysql-5.5
 
 #. **Load validation rules for configuration groups**
 
    .. note::
 
-     **Applies only to MySQL and Percona datastores**
+     **Applies only to MySQL and Percona data stores**
 
-     * If you just created a MySQL or Percona datastore, then you need
+     * If you just created a MySQL or Percona data store, then you need
        to load the appropriate validation rules, as described in this
        step.
-     * If you just created a different datastore, skip this step.
+     * If you just created a different data store, skip this step.
 
    **Background.** You can manage database configuration tasks by using
    configuration groups. Configuration groups let you set configuration
@@ -220,7 +225,7 @@ datastore version.
    When you set up a configuration group using the trove
    :command:`configuration-create` command, this command compares the configuration
    values you are setting against a list of valid configuration values
-   that are stored in the :file:`validation-rules.json` file.
+   that are stored in the ``validation-rules.json`` file.
 
    .. list-table::
       :header-rows: 1
@@ -232,55 +237,61 @@ datastore version.
 
       * - Ubuntu 14.04
         - :file:`/usr/lib/python2.7/dist-packages/trove/templates/DATASTORE_NAME`
-        - DATASTORE_NAME is the name of either the MySQL datastore or
-          the Percona datastore. This is typically either ``mysql``
+        - DATASTORE_NAME is the name of either the MySQL data store or
+          the Percona data store. This is typically either ``mysql``
           or ``percona``.
 
       * - RHEL 7, CentOS 7, Fedora 20, and Fedora 21
         - :file:`/usr/lib/python2.7/site-packages/trove/templates/DATASTORE_NAME`
-        - DATASTORE_NAME is the name of either the MySQL datastore or
-          the Percona datastore. This is typically either ``mysql`` or ``percona``.
+        - DATASTORE_NAME is the name of either the MySQL data store or
+          the Percona data store. This is typically either ``mysql`` or ``percona``.
 
    |
 
-   Therefore, as part of creating a datastore, you need to load the
-   :file:`validation-rules.json` file, using the :command:`trove-manage`
+   Therefore, as part of creating a data store, you need to load the
+   ``validation-rules.json`` file, using the :command:`trove-manage`
    :command:`db_load_datastore_config_parameters` command. This command
    takes the following arguments:
 
-   * Datastore name
-   * Datastore version
-   * Full path to the :file:`validation-rules.json` file
+   * Data store name
+   * Data store version
+   * Full path to the ``validation-rules.json`` file
 
    |
 
-   This example loads the :file:`validation-rules.json` file for a MySQL
-   database on Ubuntu 14.04::
+   This example loads the ``validation-rules.json`` file for a MySQL
+   database on Ubuntu 14.04:
 
-     $ trove-manage db_load_datastore_config_parameters mysql mysql-5.5 /usr/lib/python2.7/dist-packages/trove/templates/mysql/validation-rules.json
+   .. code-block:: console
 
-#. **Validate datastore**
+      $ trove-manage db_load_datastore_config_parameters mysql mysql-5.5 /usr/lib/python2.7/dist-packages/trove/templates/mysql/validation-rules.json
 
-   To validate your new datastore and version, start by listing the
-   datastores on your system::
+#. **Validate data store**
 
-     $ trove datastore-list
-     +--------------------------------------+--------------+
-     |                  id                  |     name     |
-     +--------------------------------------+--------------+
-     | 10000000-0000-0000-0000-000000000001 | Legacy MySQL |
-     | e5dc1da3-f080-4589-a4c2-eff7928f969a |    mysql     |
-     +--------------------------------------+--------------+
+   To validate your new data store and version, start by listing the
+   data stores on your system:
 
-   Take the ID of the MySQL datastore and pass it in with the
-   :command:`datastore-version-list` command::
+   .. code-block:: console
 
-     $ trove datastore-version-list DATASTORE_ID
-     +--------------------------------------+-----------+
-     |                  id                  |    name   |
-     +--------------------------------------+-----------+
-     | 36a6306b-efd8-4d83-9b75-8b30dd756381 | mysql-5.5 |
-     +--------------------------------------+-----------+
+      $ trove datastore-list
+      +--------------------------------------+--------------+
+      |                  id                  |     name     |
+      +--------------------------------------+--------------+
+      | 10000000-0000-0000-0000-000000000001 | Legacy MySQL |
+      | e5dc1da3-f080-4589-a4c2-eff7928f969a |    mysql     |
+      +--------------------------------------+--------------+
+
+   Take the ID of the MySQL data store and pass it in with the
+   :command:`datastore-version-list` command:
+
+   .. code-block:: console
+
+      $ trove datastore-version-list DATASTORE_ID
+      +--------------------------------------+-----------+
+      |                  id                  |    name   |
+      +--------------------------------------+-----------+
+      | 36a6306b-efd8-4d83-9b75-8b30dd756381 | mysql-5.5 |
+      +--------------------------------------+-----------+
 
 Configure a cluster
 ~~~~~~~~~~~~~~~~~~~
@@ -297,7 +308,7 @@ query router(s) and config server(s).
 
 **Configuration.** By default, the system creates one query router and
 one config server per cluster. You can change this by editing
-the :file:`/etc/trove/trove.conf` file. These settings are in the
+the ``/etc/trove/trove.conf`` file. These settings are in the
 ``mongodb`` section of the file:
 
 .. list-table::
