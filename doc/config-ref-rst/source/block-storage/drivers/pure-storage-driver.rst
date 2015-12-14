@@ -50,8 +50,8 @@ You need to configure both your Purity array and your OpenStack cluster.
 
 .. note::
 
-    These instructions assume that the ``cinder-api`` and ``cinder-scheduler``
-    services are installed and configured in your OpenStack cluster.
+   These instructions assume that the ``cinder-api`` and ``cinder-scheduler``
+   services are installed and configured in your OpenStack cluster.
 
 Configure the OpenStack Block Storage service
 ---------------------------------------------
@@ -111,16 +111,16 @@ Pure Storage FlashArray as back-end storage.
 
    .. code-block:: ini
 
-       [DEFAULT]
-       enabled_backends = puredriver-1
-       default_volume_type = puredriver-1
+      [DEFAULT]
+      enabled_backends = puredriver-1
+      default_volume_type = puredriver-1
 
-       [puredriver-1]
-       volume_backend_name = puredriver-1
-       volume_driver = PURE_VOLUME_DRIVER
-       san_ip = IP_PURE_MGMT
-       pure_api_token = PURE_API_TOKEN
-       use_multipath_for_image_xfer = True
+      [puredriver-1]
+      volume_backend_name = puredriver-1
+      volume_driver = PURE_VOLUME_DRIVER
+      san_ip = IP_PURE_MGMT
+      pure_api_token = PURE_API_TOKEN
+      use_multipath_for_image_xfer = True
 
    Replace the following variables accordingly:
 
@@ -139,14 +139,14 @@ Pure Storage FlashArray as back-end storage.
 
 .. note::
 
-    The volume driver automatically creates Purity host objects for
-    initiators as needed. If CHAP authentication is enabled via the
-    ``use_chap_auth`` setting, you must ensure there are no manually
-    created host objects with IQN's that will be used by the OpenStack
-    Block Storage service. The driver will only modify credentials on hosts that
-    it manages.
+   The volume driver automatically creates Purity host objects for
+   initiators as needed. If CHAP authentication is enabled via the
+   ``use_chap_auth`` setting, you must ensure there are no manually
+   created host objects with IQN's that will be used by the OpenStack
+   Block Storage service. The driver will only modify credentials on hosts that
+   it manages.
 
 .. note::
 
-    If using the PureFCDriver it is recommended to use the OpenStack
-    Block Storage Fibre Channel Zone Manager.
+   If using the PureFCDriver it is recommended to use the OpenStack
+   Block Storage Fibre Channel Zone Manager.

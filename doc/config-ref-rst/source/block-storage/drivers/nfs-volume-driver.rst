@@ -25,7 +25,7 @@ Enable the NFS driver and related options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To use Cinder with the NFS driver, first set the ``volume_driver``
-in ``cinder.conf``:
+in the ``cinder.conf`` configuration file:
 
 .. code-block:: ini
 
@@ -66,7 +66,7 @@ How to use the NFS driver
 
 #. Add your list of NFS servers to the file you specified with the
    ``nfs_shares_config`` option. For example, if the value of this option
-   was set to ``/etc/cinder/shares.txt``, then:
+   was set to ``/etc/cinder/shares.txt`` file, then:
 
    .. code-block:: console
 
@@ -78,13 +78,13 @@ How to use the NFS driver
    Comments are allowed in this file. They begin with a ``#``.
 
 #. Configure the ``nfs_mount_point_base`` option. This is a directory
-   where ``cinder-volume`` mounts all NFS shares stored in ``shares.txt``.
-   For this example, ``/var/lib/cinder/nfs`` is used. You can, of course,
-   use the default value of ``$state_path/mnt``.
+   where ``cinder-volume`` mounts all NFS shares stored in the ``shares.txt``
+   file. For this example, ``/var/lib/cinder/nfs`` is used. You can,
+   of course, use the default value of ``$state_path/mnt``.
 
 #. Start the ``cinder-volume`` service. ``/var/lib/cinder/nfs`` should
-   now contain a directory for each NFS share specified in ``shares.txt``.
-   The name of each directory is a hashed name:
+   now contain a directory for each NFS share specified in the ``shares.txt``
+   file. The name of each directory is a hashed name:
 
    .. code-block:: console
 

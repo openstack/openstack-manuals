@@ -16,11 +16,17 @@ Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
 * Create, delete, attach, and detach volumes.
+
 * Create, list, and delete volume snapshots.
+
 * Create a volume from a snapshot.
+
 * Copy an image to a volume.
+
 * Copy a volume to an image.
+
 * Clone a volume.
+
 * Extend a volume.
 
 Enable the Fibre Channel or iSCSI drivers
@@ -29,7 +35,8 @@ Enable the Fibre Channel or iSCSI drivers
 The ``DPLFCDriver`` and ``DPLISCSIDriver`` are installed with the OpenStack
 software.
 
-#. Query storage pool id for configure ``dpl_pool`` of the ``cinder.conf``.
+#. Query storage pool id to configure ``dpl_pool`` of the ``cinder.conf``
+   file.
 
    a. Log on to the storage system with administrator access.
 
@@ -44,8 +51,8 @@ software.
          $ flvcli show pool list
          - d5bd40b58ea84e9da09dcf25a01fdc07 : default_pool_dc07
 
-   c. Use ``d5bd40b58ea84e9da09dcf25a01fdc07`` to config the ``dpl_pool`` of
-      ``/etc/cinder/cinder.conf``.
+   c. Use ``d5bd40b58ea84e9da09dcf25a01fdc07`` to configure the ``dpl_pool`` of
+      ``/etc/cinder/cinder.conf`` file.
 
       .. note::
 

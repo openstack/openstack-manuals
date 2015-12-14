@@ -36,11 +36,11 @@ Sheepdog driver supports these operations:
 Configuration
 ~~~~~~~~~~~~~
 
-Set the following option in ``cinder.conf``:
+Set the following option in the ``cinder.conf`` file:
 
 .. code-block:: ini
 
-    volume_driver = cinder.volume.drivers.sheepdog.SheepdogDriver
+   volume_driver = cinder.volume.drivers.sheepdog.SheepdogDriver
 
 The following table contains the configuration options supported by the
 Sheepdog driver:
