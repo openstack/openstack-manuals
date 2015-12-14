@@ -17,7 +17,7 @@ It supports basic volume operations, including snapshot and clone.
    nova/+bug/1177103>`_ for more information.
 
 To use Block Storage with GlusterFS, first set the ``volume_driver`` in
-``cinder.conf``:
+the ``cinder.conf`` file:
 
 .. code-block:: ini
 
