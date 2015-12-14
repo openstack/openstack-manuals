@@ -15,14 +15,14 @@ Configure volume copy bandwidth limit
 
 To configure the volume copy bandwidth limit, set the
 ``volume_copy_bps_limit`` option in the configuration groups for each
-back end in the :file:`cinder.conf` file. This option takes the integer of
+back end in the ``cinder.conf`` file. This option takes the integer of
 maximum bandwidth allowed for volume data copy in byte per second. If
 this option is set to ``0``, the rate-limit is disabled.
 
 While multiple volume data copy operations are running in the same back
 end, the specified bandwidth is divided to each copy.
 
-Example :file:`cinder.conf` configuration file to limit volume copy bandwidth
+Example ``cinder.conf`` configuration file to limit volume copy bandwidth
 of ``lvmdriver-1`` up to 100 MiB/s:
 
 .. code-block:: ini

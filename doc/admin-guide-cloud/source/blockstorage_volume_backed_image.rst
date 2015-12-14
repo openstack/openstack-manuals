@@ -19,31 +19,41 @@ Configure the Volume-backed image
 Volume-backed image feature requires locations information from the cinder
 store of the Image service. To enable the Image service to use the cinder
 store, add ``cinder`` to the ``stores`` option in the ``glance_store`` section
-of the :file:`glance-api.conf` file::
+of the ``glance-api.conf`` file:
 
-    stores = file, http, swift, cinder
+.. code-block:: ini
+
+   stores = file, http, swift, cinder
 
 To expose locations information, set the following options in the ``DEFAULT``
-section of the :file:`glance-api.conf` file::
+section of the ``glance-api.conf`` file:
 
-    show_multiple_locations = True
+.. code-block:: ini
+
+   show_multiple_locations = True
 
 To enable the Block Storage services to create a new volume by cloning Image-
 Volume, set the following options in the ``DEFAULT`` section of the
-:file:`cinder.conf` file. For example::
+``cinder.conf`` file. For example:
 
-    glance_api_version = 2
-    allowed_direct_url_schemes = cinder
+.. code-block:: ini
+
+   glance_api_version = 2
+   allowed_direct_url_schemes = cinder
 
 To enable the :command:`cinder upload-to-image` command to create an image
-that refers an Image-Volume, set the following options in each back-end
-section of the :file:`cinder.conf` file::
+that refers an ``Image-Volume``, set the following options in each back-end
+section of the ``cinder.conf`` file:
 
-    image_upload_use_cinder_backend = True
+.. code-block:: ini
+
+   image_upload_use_cinder_backend = True
 
 By default, the :command:`upload-to-image` command creates the Image-Volume in
 the current tenant. To store the Image-Volume into the internal tenant, set the
-following options in each back-end section of the :file:`cinder.conf` file::
+following options in each back-end section of the ``cinder.conf`` file:
+
+.. code-block:: ini
 
     image_upload_use_internal_tenant = True
 
@@ -52,7 +62,9 @@ Creating a Volume-backed image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To register an existing volume as a new Volume-backed image, use the following
-commands::
+commands:
+
+.. code-block:: console
 
   $ glance image-create --disk-format raw --container-format bare --name <name>
 
@@ -62,11 +74,14 @@ If the ``image_upload_use_cinder_backend`` option is enabled, the following
 command creates a new Image-Volume by cloning the specified volume and then
 registers its location to a new image. The disk format and the container format
 must be raw and bare (default). Otherwise, the image is uploaded to the default
-store of the Image service.::
+store of the Image service.
 
-  $ cinder upload-to-image <volume> <image-name>
+.. code-block:: console
+
+   $ cinder upload-to-image <volume> <image-name>
 
 .. note::
+
    Currently, the cinder store of the Image services does not support uploading
    and downloading of image data. By this limitation, Volume-backed images can
    only be used to create a new volume.

@@ -23,7 +23,7 @@ Enable multiple-storage back ends
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To enable a multiple-storage back ends, you must set the
-`enabled_backends` flag in the :file:`cinder.conf` file.
+`enabled_backends` flag in the ``cinder.conf`` file.
 This flag defines the names (separated by a comma) of the configuration
 groups for the different back ends: one name is associated to one
 configuration group for a back end (such as, ``[lvmdriver-1]``).
@@ -34,14 +34,16 @@ configuration group for a back end (such as, ``[lvmdriver-1]``).
 
 .. note::
 
-   After setting the `enabled_backends` flag on an existing cinder
+   After setting the ``enabled_backends`` flag on an existing cinder
    service, and restarting the Block Storage services, the original ``host``
    service is replaced with a new host service. The new service appears
-   with a name like ``host@backend``. Use::
+   with a name like ``host@backend``. Use:
 
-    $ cinder-manage volume update_host --currenthost CURRENTHOST --newhost CURRENTHOST@BACKEND
+   .. code-block:: console
 
-   to convert current block devices to the new hostname.
+      $ cinder-manage volume update_host --currenthost CURRENTHOST --newhost CURRENTHOST@BACKEND
+
+   to convert current block devices to the new host name.
 
 The options for a configuration group must be defined in the group
 (or default options are used). All the standard Block Storage
@@ -110,43 +112,50 @@ multiple-storage back ends. The filter scheduler:
 
 The scheduler uses filters and weights to pick the best back end to
 handle the request. The scheduler uses volume types to explicitly create
-volumes on specific back ends.
+volumes on specific back ends. For more information about filter and weighing,
+see :ref:`filter_weigh_scheduler`.
 
-.. TODO: when filter/weighing scheduler documentation will be up, a ref
-         should be added here
 
 Volume type
 ~~~~~~~~~~~
 
 Before using it, a volume type has to be declared to Block Storage.
-This can be done by the following command::
+This can be done by the following command:
 
- $ cinder --os-username admin --os-tenant-name admin type-create lvm
+.. code-block:: console
+
+   $ cinder --os-username admin --os-tenant-name admin type-create lvm
 
 Then, an extra-specification has to be created to link the volume
-type to a back end name. Run this command::
+type to a back end name. Run this command:
 
- $ cinder --os-username admin --os-tenant-name admin type-key lvm set \
-   volume_backend_name=LVM_iSCSI
+.. code-block:: console
+
+   $ cinder --os-username admin --os-tenant-name admin type-key lvm set \
+     volume_backend_name=LVM_iSCSI
 
 This example creates a ``lvm`` volume type with
 ``volume_backend_name=LVM_iSCSI`` as extra-specifications.
 
-Create another volume type::
+Create another volume type:
 
- $ cinder --os-username admin --os-tenant-name admin type-create lvm_gold
+.. code-block:: console
 
- $ cinder --os-username admin --os-tenant-name admin type-key lvm_gold set \
-   volume_backend_name=LVM_iSCSI_b
+   $ cinder --os-username admin --os-tenant-name admin type-create lvm_gold
+
+   $ cinder --os-username admin --os-tenant-name admin type-key lvm_gold set \
+     volume_backend_name=LVM_iSCSI_b
 
 This second volume type is named ``lvm_gold`` and has ``LVM_iSCSI_b`` as
 back end name.
 
 .. note::
 
-   To list the extra-specifications, use this command::
+   To list the extra-specifications, use this command:
 
-    $ cinder --os-username admin --os-tenant-name admin extra-specs-list
+   .. code-block:: console
+
+      $ cinder --os-username admin --os-tenant-name admin extra-specs-list
 
 .. note::
 
@@ -162,15 +171,15 @@ When you create a volume, you must specify the volume type.
 The extra-specifications of the volume type are used to determine which
 back end has to be used.
 
-::
+.. code-block:: console
 
-$ cinder create --volume_type lvm --display_name test_multi_backend 1
+   $ cinder create --volume_type lvm --display_name test_multi_backend 1
 
-Considering the :file:`cinder.conf` described previously, the scheduler
+Considering the ``cinder.conf`` described previously, the scheduler
 creates this volume on ``lvmdriver-1`` or ``lvmdriver-2``.
 
-::
+.. code-block:: console
 
-$ cinder create --volume_type lvm_gold --display_name test_multi_backend 1
+   $ cinder create --volume_type lvm_gold --display_name test_multi_backend 1
 
 This second volume is created on ``lvmdriver-3``.

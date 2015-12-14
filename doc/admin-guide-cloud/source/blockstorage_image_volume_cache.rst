@@ -28,15 +28,19 @@ protects normal users from having to see the cached image-volumes, but does
 not make them globally hidden.
 
 To enable the Block Storage services to have access to an Internal Tenant, set
-the following options in the :file:`cinder.conf` file::
+the following options in the ``cinder.conf`` file:
 
-    cinder_internal_tenant_project_id = PROJECT_ID
-    cinder_internal_tenant_user_id = USER_ID
+.. code-block:: ini
 
-Example :file:`cinder.conf` configuration file::
+   cinder_internal_tenant_project_id = PROJECT_ID
+   cinder_internal_tenant_user_id = USER_ID
 
-    cinder_internal_tenant_project_id = b7455b8974bb4064ad247c8f375eae6c
-    cinder_internal_tenant_user_id = f46924c112a14c80ab0a24a613d95eef
+Example ``cinder.conf`` configuration file:
+
+.. code-block:: ini
+
+   cinder_internal_tenant_project_id = b7455b8974bb4064ad247c8f375eae6c
+   cinder_internal_tenant_user_id = f46924c112a14c80ab0a24a613d95eef
 
 .. note::
 
@@ -48,26 +52,32 @@ Configure the Image-Volume cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To enable the Image-Volume cache, set the following configuration option in
-:file:`cinder.conf`::
+``cinder.conf``:
 
-    image_volume_cache_enabled = True
+.. code-block:: ini
+
+   image_volume_cache_enabled = True
 
 This can be scoped per back end definition or in the default options.
 
 There are optional configuration settings that can limit the size of the cache.
 These can also be scoped per back end or in the default options in
-:file:`cinder.conf`::
+``cinder.conf``:
 
-    image_volume_cache_max_size_gb = SIZE_GB
-    image_volume_cache_max_count = MAX_COUNT
+.. code-block:: ini
+
+   image_volume_cache_max_size_gb = SIZE_GB
+   image_volume_cache_max_count = MAX_COUNT
 
 By default they will be set to 0, which means unlimited.
 
 For example, a configuration which would limit the max size to 200 GB and 50
-cache entries will be configured as::
+cache entries will be configured as:
 
-    image_volume_cache_max_size_gb = 200
-    image_volume_cache_max_count = 50
+.. code-block:: ini
+
+   image_volume_cache_max_size_gb = 200
+   image_volume_cache_max_count = 50
 
 Notifications
 ~~~~~~~~~~~~~

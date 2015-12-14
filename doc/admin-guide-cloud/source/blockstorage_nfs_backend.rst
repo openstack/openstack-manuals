@@ -29,14 +29,17 @@ that hosts the ``cinder`` volume service.
 #. Log in as ``root`` to the system hosting the ``cinder`` volume
    service.
 
-#. Create a text file named :file:`nfsshares` in :file:`/etc/cinder/`.
+#. Create a text file named ``nfsshares`` in the ``/etc/cinder/`` directory.
 
-#. Add an entry to :file:`/etc/cinder/nfsshares` for each NFS share
+#. Add an entry to ``/etc/cinder/nfsshares`` for each NFS share
    that the ``cinder`` volume service should use for back end storage.
    Each entry should be a separate line, and should use the following
    format:
 
-   ``HOST:SHARE``
+   .. code-block:: ini
+
+      HOST:SHARE
+
 
    Where:
 
@@ -46,27 +49,33 @@ that hosts the ``cinder`` volume service.
 
    |
 
-#. Set :file:`/etc/cinder/nfsshares` to be owned by the ``root`` user and
-   the ``cinder`` group::
+#. Set ``/etc/cinder/nfsshares`` to be owned by the ``root`` user and
+   the ``cinder`` group:
 
-     # chown root:cinder /etc/cinder/nfsshares
+   .. code-block:: console
 
-#. Set :file:`/etc/cinder/nfsshares` to be readable by members of the
-   cinder group::
+      # chown root:cinder /etc/cinder/nfsshares
 
-     # chmod 0640 /etc/cinder/nfsshares
+#. Set ``/etc/cinder/nfsshares`` to be readable by members of the
+   cinder group:
 
-#. Configure the cinder volume service to use the
-   :file:`/etc/cinder/nfsshares` file created earlier. To do so, open
-   the :file:`/etc/cinder/cinder.conf` configuration file and set
+   .. code-block:: console
+
+      # chmod 0640 /etc/cinder/nfsshares
+
+#. Configure the ``cinder`` volume service to use the
+   ``/etc/cinder/nfsshares`` file created earlier. To do so, open
+   the ``/etc/cinder/cinder.conf`` configuration file and set
    the ``nfs_shares_config`` configuration key
-   to :file:`/etc/cinder/nfsshares`.
+   to ``/etc/cinder/nfsshares``.
 
    On distributions that include ``openstack-config``, you can configure
-   this by running the following command instead::
+   this by running the following command instead:
 
-    # openstack-config --set /etc/cinder/cinder.conf \
-      DEFAULT nfs_shares_config /etc/cinder/nfsshares
+   .. code-block:: console
+
+      # openstack-config --set /etc/cinder/cinder.conf \
+        DEFAULT nfs_shares_config /etc/cinder/nfsshares
 
    The following distributions include openstack-config:
 
@@ -80,47 +89,40 @@ that hosts the ``cinder`` volume service.
 
    * SUSE Linux Enterprise
 
-   |
 
 #. Optionally, provide any additional NFS mount options required in
    your environment in the ``nfs_mount_options`` configuration key
-   of :file:`/etc/cinder/cinder.conf`. If your NFS shares do not
+   of ``/etc/cinder/cinder.conf``. If your NFS shares do not
    require any additional mount options (or if you are unsure),
    skip this step.
 
    On distributions that include ``openstack-config``, you can
-   configure this by running the following command instead::
+   configure this by running the following command instead:
 
-    # openstack-config --set /etc/cinder/cinder.conf \
-      DEFAULT nfs_mount_options OPTIONS
+   .. code-block:: console
+
+      # openstack-config --set /etc/cinder/cinder.conf \
+        DEFAULT nfs_mount_options OPTIONS
 
    Replace OPTIONS with the mount options to be used when accessing
    NFS shares. See the manual page for NFS for more information on
    available mount options (:command:`man nfs`).
 
 #. Configure the ``cinder`` volume service to use the correct volume
-   driver, namely cinder.volume.drivers.nfs.NfsDriver. To do so,
-   open the :file:`/etc/cinder/cinder.conf` configuration file and
+   driver, namely ``cinder.volume.drivers.nfs.NfsDriver``. To do so,
+   open the ``/etc/cinder/cinder.conf`` configuration file and
    set the volume_driver configuration key
    to ``cinder.volume.drivers.nfs.NfsDriver``.
 
    On distributions that include ``openstack-config``, you can configure
-   this by running the following command instead::
+   this by running the following command instead:
 
-    # openstack-config --set /etc/cinder/cinder.conf \
-      DEFAULT volume_driver cinder.volume.drivers.nfs.NfsDriver
+   .. code-block:: console
+
+      # openstack-config --set /etc/cinder/cinder.conf \
+        DEFAULT volume_driver cinder.volume.drivers.nfs.NfsDriver
 
 #. You can now restart the service to apply the configuration.
-
-   To restart the ``cinder`` volume service on CentOS, Fedora,
-   openSUSE, Red Hat Enterprise Linux, or SUSE Linux Enterprise,
-   run::
-
-    # service openstack-cinder-volume restart
-
-   To restart the ``cinder`` volume service on Ubuntu or Debian, run::
-
-    # service cinder-volume restart
 
    .. note::
 
@@ -134,22 +136,26 @@ that hosts the ``cinder`` volume service.
       to increased delays in volume creation.
 
       However, should you choose to set ``nfs_sparsed_volumes`` to
-      false, you can do so directly in :file:`/etc/cinder/cinder.conf`.
+      ``false``, you can do so directly in ``/etc/cinder/cinder.conf``.
 
       On distributions that include ``openstack-config``, you can
-      configure this by running the following command instead::
+      configure this by running the following command instead:
 
-        # openstack-config --set /etc/cinder/cinder.conf \
-          DEFAULT nfs_sparsed_volumes false
+      .. code-block:: console
+
+         # openstack-config --set /etc/cinder/cinder.conf \
+           DEFAULT nfs_sparsed_volumes false
 
    .. warning::
 
       If a client host has SELinux enabled, the ``virt_use_nfs``
       boolean should also be enabled if the host requires access to
       NFS volumes on an instance. To enable this boolean, run the
-      following command as the ``root`` user::
+      following command as the ``root`` user:
 
-        # setsebool -P virt_use_nfs on
+      .. code-block:: console
+
+         # setsebool -P virt_use_nfs on
 
       This command also makes the boolean persistent across reboots.
       Run this command on all client hosts that require access to NFS

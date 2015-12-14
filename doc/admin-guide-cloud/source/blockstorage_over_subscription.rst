@@ -14,7 +14,7 @@ Configure oversubscription settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To support oversubscription in thin provisioning, a flag
-``max_over_subscription_ratio`` is introduced into :file:`cinder.conf`.
+``max_over_subscription_ratio`` is introduced into ``cinder.conf``.
 This is a float representation of the oversubscription ratio when thin
 provisioning is involved. Default ratio is 20.0, meaning provisioned
 capacity can be 20 times of the total physical capacity. A ratio of 10.5
@@ -25,23 +25,23 @@ instead.
 
 .. note::
 
-    ``max_over_subscription_ratio`` can be configured for each back end when
-    multiple-storage back ends are enabled. It is provided as a reference
-    implementation and is used by the LVM driver. However, it is not a
-    requirement for a driver to use this option from :file:`cinder.conf`.
+   ``max_over_subscription_ratio`` can be configured for each back end when
+   multiple-storage back ends are enabled. It is provided as a reference
+   implementation and is used by the LVM driver. However, it is not a
+   requirement for a driver to use this option from ``cinder.conf``.
 
-    ``max_over_subscription_ratio`` is for configuring a back end. For a
-    driver that supports multiple pools per back end, it can report this
-    ratio for each pool. The LVM driver does not support multiple pools.
+   ``max_over_subscription_ratio`` is for configuring a back end. For a
+   driver that supports multiple pools per back end, it can report this
+   ratio for each pool. The LVM driver does not support multiple pools.
 
 The existing ``reserved_percentage`` flag is used to prevent over provisioning.
 This flag represents the percentage of the back-end capacity that is reserved.
 
 .. note::
 
-    There is a change on how ``reserved_percentage`` is used. It was measured
-    against the free capacity in the past. Now it is measured against the total
-    capacity.
+   There is a change on how ``reserved_percentage`` is used. It was measured
+   against the free capacity in the past. Now it is measured against the total
+   capacity.
 
 Capabilities
 ~~~~~~~~~~~~
@@ -58,14 +58,14 @@ Drivers can report the following capabilities for a back end or a pool:
 Where ``PROVISIONED_CAPACITY`` is the apparent allocated space indicating
 how much capacity has been provisioned and ``MAX_RATIO`` is the maximum
 oversubscription ratio. For the LVM driver, it is
-``max_over_subscription_ratio`` in :file:`cinder.conf`.
+``max_over_subscription_ratio`` in ``cinder.conf``.
 
 Two capabilities are added here to allow a back end or pool to claim support
 for thin provisioning, or thick provisioning, or both.
 
 The LVM driver reports ``thin_provisioning_support=True`` and
 ``thick_provisioning_support=False`` if the ``lvm_type`` flag in
-:file:`cinder.conf` is ``thin``. Otherwise it reports
+``cinder.conf`` is ``thin``. Otherwise it reports
 ``thin_provisioning_support=False`` and ``thick_provisioning_support=True``.
 
 Volume type extra specs
@@ -81,8 +81,8 @@ have the following extra specs defined:
 
 .. note::
 
-    ``capabilities`` scope key before ``thin_provisioning_support`` and
-    ``thick_provisioning_support`` is not required. So the following works too:
+   ``capabilities`` scope key before ``thin_provisioning_support`` and
+   ``thick_provisioning_support`` is not required. So the following works too:
 
 .. code-block:: ini
 
@@ -105,7 +105,7 @@ data loss during disaster recovery.
 To enable replication when creating volume types, configure the cinder
 volume with ``capabilities:replication="<is> True"``.
 
-Each volume created with the replication capability set to `True`
+Each volume created with the replication capability set to ``True``
 generates a copy of the volume on a storage back end.
 
 One use case for replication involves an OpenStack cloud environment
@@ -118,7 +118,7 @@ Both data centers include storage back ends.
 
 Depending on the storage requirements, there can be one or two cinder
 hosts. The cloud administrator accesses the
-:file:`/etc/cinder/cinder.conf` configuration file and sets
+``/etc/cinder/cinder.conf`` configuration file and sets
 ``capabilities:replication="<is> True"``.
 
 If one data center experiences a service failure, cloud administrators

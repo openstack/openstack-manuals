@@ -3,7 +3,7 @@ Manage volumes
 ==============
 
 The default OpenStack Block Storage service implementation is an
-iSCSI solution that uses Logical Volume Manager (LVM) for Linux.
+iSCSI solution that uses :term:`Logical Volume Manager (LVM)` for Linux.
 
 .. note::
 
@@ -23,7 +23,7 @@ to a server instance.
 **To create and attach a volume to an instance**
 
 #. Configure the OpenStack Compute and the OpenStack Block Storage
-   services through the :file:`cinder.conf` file.
+   services through the ``cinder.conf`` file.
 #. Use the :command:`cinder create` command to create a volume. This
    command creates an LV into the volume group (VG) ``cinder-volumes``.
 #. Use the nova :command:`volume-attach` command to attach the volume
@@ -31,10 +31,10 @@ to a server instance.
    exposed to the compute node.
 
    * The compute node, which runs the instance, now has an active
-     iSCSI session and new local storage (usually a :file:`/dev/sdX`
+     iSCSI session and new local storage (usually a ``/dev/sdX``
      disk).
    * Libvirt uses that local storage as storage for the instance. The
-     instance gets a new disk (usually a :file:`/dev/vdX` disk).
+     instance gets a new disk (usually a ``/dev/vdX`` disk).
 
 For this particular walk through, one cloud controller runs
 ``nova-api``, ``nova-scheduler``, ``nova-objectstore``,
