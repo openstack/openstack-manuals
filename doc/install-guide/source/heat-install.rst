@@ -300,7 +300,8 @@ Orchestration service, code-named heat, on the controller node.
            The Orchestration service automatically assigns the
            ``heat_stack_user`` role to users that it creates
            during stack deployment. By default, this role restricts
-           :term:`API` operations. To avoid conflicts, do not add
+           :term:`API <Application Programming Interface (API)>` operations.
+           To avoid conflicts, do not add
            this role to users with the ``heat_stack_owner`` role.
 
 Install and configure components
