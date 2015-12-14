@@ -12,9 +12,9 @@ was difficult to maintain, and did not allow advanced filters. The
 To use rootwrap, prefix the Compute command with :command:`nova-rootwrap`. For
 example:
 
-..  code:: console
+.. code-block:: console
 
-    $ sudo nova-rootwrap /etc/nova/rootwrap.conf command
+   $ sudo nova-rootwrap /etc/nova/rootwrap.conf command
 
 A generic ``sudoers`` entry lets the Compute user run :command:`nova-rootwrap`
 as root. The :command:`nova-rootwrap` code looks for filter definition
@@ -23,11 +23,11 @@ them. It then checks if the command requested by Compute matches one of
 those filters and, if so, executes the command (as root). If no filter
 matches, it denies the request.
 
-..  note::
+.. note::
 
-    Be aware of issues with using NFS and root-owned files. The NFS
-    share must be configured with the ``no_root_squash`` option enabled,
-    in order for rootwrap to work correctly.
+   Be aware of issues with using NFS and root-owned files. The NFS
+   share must be configured with the ``no_root_squash`` option enabled,
+   in order for rootwrap to work correctly.
 
 Rootwrap is fully controlled by the root user. The root user
 owns the sudoers entry which allows Compute to run a specific
@@ -41,13 +41,13 @@ filters definition files. This chain ensures that the Compute
 user itself is not in control of the configuration or modules
 used by the :command:`nova-rootwrap` executable.
 
-Rootwrap is configured using the :file:`rootwrap.conf` file. Because
+Rootwrap is configured using the ``rootwrap.conf`` file. Because
 it's in the trusted security path, it must be owned and writable
 by only the root user. The file's location is specified in both
-the sudoers entry and in the :file:`nova.conf` configuration file
+the sudoers entry and in the ``nova.conf`` configuration file
 with the ``rootwrap_config=entry`` parameter.
 
-The :file:`rootwrap.conf` file uses an INI file format with these
+The ``rootwrap.conf`` file uses an INI file format with these
 sections and parameters:
 
 .. list-table:: **rootwrap.conf configuration options**
@@ -65,9 +65,9 @@ sections and parameters:
        root user.
 
 If the root wrapper is not performing correctly, you can add a
-workaround option into the :file:`nova.conf` configuration file. This
+workaround option into the ``nova.conf`` configuration file. This
 workaround re-configures the root wrapper configuration to fall back to
-running commands as sudo, and is a Kilo release feature.
+running commands as ``sudo``, and is a Kilo release feature.
 
 Including this workaround in your configuration file safeguards your
 environment from issues that can impair root wrapper performance. Tool
@@ -76,13 +76,13 @@ changes that have impacted
 for example, are a known issue that affects root wrapper performance.
 
 To set up this workaround, configure the ``disable_rootwrap`` option in
-the ``[workaround]`` section of the :file:`nova.conf` configuration file.
+the ``[workaround]`` section of the ``nova.conf`` configuration file.
 
 The filters definition files contain lists of filters that rootwrap will
 use to allow or deny a specific command. They are generally suffixed by
 ``.filters`` . Since they are in the trusted security path, they need to
 be owned and writable only by the root user. Their location is specified
-in the :file:`rootwrap.conf` file.
+in the ``rootwrap.conf`` file.
 
 Filter definition files use an INI file format with a ``[Filters]``
 section and several lines, each with a unique parameter name, which

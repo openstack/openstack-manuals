@@ -7,11 +7,11 @@ Configure migrations
 .. :ref:`_configuring-migrations-kvm-libvirt`
 .. :ref:`_configuring-migrations-xenserver`
 
-..  note::
+.. note::
 
-    Only cloud administrators can perform live migrations. If your cloud
-    is configured to use cells, you can perform live migration within
-    but not between cells.
+   Only cloud administrators can perform live migrations. If your cloud
+   is configured to use cells, you can perform live migration within
+   but not between cells.
 
 Migration enables an administrator to move a virtual-machine instance
 from one compute host to another. This feature is useful when a compute
@@ -65,8 +65,8 @@ Shared storage
 
 -  **Hypervisor:** KVM with libvirt
 
--  **Shared storage:** :file:`NOVA-INST-DIR/instances/` (for example,
-   :file:`/var/lib/nova/instances`) has to be mounted by shared storage.
+-  **Shared storage:** ``NOVA-INST-DIR/instances/`` (for example,
+   ``/var/lib/nova/instances``) has to be mounted by shared storage.
    This guide uses NFS but other options, including the
    `OpenStack Gluster Connector <http://gluster.org/community/documentation//index.php/OSConnect>`_
    are available.
@@ -90,7 +90,7 @@ Shared storage
    amount of downtime.
 
 -  This guide assumes the default value for ``instances_path`` in
-   your :file:`nova.conf` file (:file:`NOVA-INST-DIR/instances`). If you
+   your ``nova.conf`` file (``NOVA-INST-DIR/instances``). If you
    have changed the ``state_path`` or ``instances_path`` variables,
    modify the commands accordingly.
 
@@ -118,7 +118,7 @@ Example Compute installation environment
       ``nova-compute``.
 
    Ensure that ``NOVA-INST-DIR`` (set with ``state_path`` in the
-   :file:`nova.conf` file) is the same on all hosts.
+   ``nova.conf`` file) is the same on all hosts.
 
 -  In this example, ``HostA`` is the NFSv4 server that exports
    ``NOVA-INST-DIR/instances`` directory. ``HostB`` and ``HostC`` are
@@ -131,7 +131,7 @@ Example Compute installation environment
    with each other. As a test, use the :command:`ping` command to ping each host
    from one another:
 
-   .. code:: console
+   .. code-block:: console
 
       $ ping HostA
       $ ping HostB
@@ -155,46 +155,46 @@ Example Compute installation environment
    or `CentOS/Red Hat: Setup NFS v4.0 File Server <http://www.cyberciti.biz/faq/centos-fedora-rhel-nfs-v4-configuration/>`_
 
 #. Configure the NFS server at ``HostA`` by adding the following line to
-   the :file:`/etc/exports` file:
+   the ``/etc/exports`` file:
 
-   .. code:: ini
+   .. code-block:: ini
 
       NOVA-INST-DIR/instances HostA/255.255.0.0(rw,sync,fsid=0,no_root_squash)
 
    Change the subnet mask (``255.255.0.0``) to the appropriate value to
    include the IP addresses of ``HostB`` and ``HostC``. Then restart the
-   NFS server:
+   ``NFS`` server:
 
-   .. code:: console
+   .. code-block:: console
 
       # /etc/init.d/nfs-kernel-server restart
       # /etc/init.d/idmapd restart
 
-#. On both compute nodes, enable the 'execute/search' bit on your shared
+#. On both compute nodes, enable the ``execute/search`` bit on your shared
    directory to allow qemu to be able to use the images within the
    directories. On all hosts, run the following command:
 
-   .. code:: console
+   .. code-block:: console
 
       $ chmod o+x NOVA-INST-DIR/instances
 
 #. Configure NFS on ``HostB`` and ``HostC`` by adding the following line to
-   the :file:`/etc/fstab` file
+   the ``/etc/fstab`` file
 
-   .. code:: console
+   .. code-block:: console
 
       HostA:/ /NOVA-INST-DIR/instances nfs4 defaults 0 0
 
    Ensure that you can mount the exported directory
 
-   .. code:: console
+   .. code-block:: console
 
       $ mount -a -v
 
-   Check that ``HostA`` can see the :file:`NOVA-INST-DIR/instances/`
+   Check that ``HostA`` can see the ``NOVA-INST-DIR/instances/``
    directory
 
-   .. code:: console
+   .. code-block:: console
 
       $ ls -ld NOVA-INST-DIR/instances/
       drwxr-xr-x 2 nova nova 4096 2012-05-19 14:34 nova-install-dir/instances/
@@ -231,10 +231,10 @@ Example Compute installation environment
    -  libvirtd TCP socket, with TLS for encryption and Kerberos for
       authentication
 
-   Restart libvirt. After you run the command, ensure that libvirt is
+   Restart ``libvirt``. After you run the command, ensure that libvirt is
    successfully restarted
 
-   .. code:: console
+   .. code-block:: console
 
       # stop libvirt-bin && start libvirt-bin
       $ ps -ef | grep libvirt
@@ -249,9 +249,9 @@ Example Compute installation environment
    see the `libvirt documentation <http://libvirt.org/remote.html#Remote_libvirtd_configuration>`_.
 
 #. Configure the downtime required for the migration by adjusting these
-   parameters in the :file:`nova.conf` file:
+   parameters in the ``nova.conf`` file:
 
-   .. code:: ini
+   .. code-block:: ini
 
       live_migration_downtime
       live_migration_downtime_steps
@@ -281,9 +281,9 @@ Enabling true live migration
 
 Prior to the Kilo release, the Compute service did not use the libvirt
 live migration function by default. To enable this function, add the
-following line to the ``[libvirt]`` section of the :file:`nova.conf` file:
+following line to the ``[libvirt]`` section of the ``nova.conf`` file:
 
-.. code:: ini
+.. code-block:: ini
 
    live_migration_flag=VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE,VIR_MIGRATE_TUNNELLED
 
@@ -303,18 +303,18 @@ the section called shared storage, except that ``NOVA-INST-DIR/instances``
 is local to each host rather than shared. No NFS client or server
 configuration is required.
 
-..  note::
+.. note::
 
-    -  To use block migration, you must use the :option:`--block-migrate`
-       parameter with the live migration command.
+   -  To use block migration, you must use the :option:`--block-migrate`
+      parameter with the live migration command.
 
-    -  Block migration is incompatible with read-only devices such as
-       CD-ROMs and `Configuration Drive (config_drive) <http://docs.openstack.org/user-guide/cli_config_drive.html>`_.
+   -  Block migration is incompatible with read-only devices such as
+      CD-ROMs and `Configuration Drive (config_drive) <http://docs.openstack.org/user-guide/cli_config_drive.html>`_.
 
-    -  Since the ephemeral drives are copied over the network in block
-       migration, migrations of instances with heavy I/O loads may never
-       complete if the drives are writing faster than the data can be
-       copied over the network.
+   -  Since the ephemeral drives are copied over the network in block
+      migration, migrations of instances with heavy I/O loads may never
+      complete if the drives are writing faster than the data can be
+      copied over the network.
 
 .. _configuring-migrations-xenserver:
 
@@ -337,11 +337,11 @@ Shared storage
 
 -  **Shared storage**. An NFS export, visible to all XenServer hosts.
 
-   ..  note::
+   .. note::
 
-       For the supported NFS versions, see the
-       `NFS VHD <http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/reference.html#id1002701>`_
-       section of the XenServer Administrator's Guide.
+      For the supported NFS versions, see the
+      `NFS VHD <http://docs.vmd.citrix.com/XenServer/6.0.0/1.0/en_gb/reference.html#id1002701>`_
+      section of the XenServer Administrator's Guide.
 
 To use shared storage live migration with XenServer hypervisors, the
 hosts must be joined to a XenServer pool. To create that pool, a host
@@ -355,23 +355,23 @@ by the XAPI plug-ins to establish the pool.
    XenServer Administrator's Guide.
 
 #. Configure all compute nodes to use the default storage repository
-   (``sr``) for pool operations. Add this line to your :file:`nova.conf`
+   (``sr``) for pool operations. Add this line to your ``nova.conf``
    configuration files on all compute nodes:
 
-   .. code:: ini
+   .. code-block:: ini
 
       sr_matching_filter=default-sr:true
 
 #. Create a host aggregate. This command creates the aggregate, and then
    displays a table that contains the ID of the new aggregate
 
-   .. code:: console
+   .. code-block:: console
 
       $ nova aggregate-create POOL_NAME AVAILABILITY_ZONE
 
    Add metadata to the aggregate, to mark it as a hypervisor pool
 
-   .. code:: console
+   .. code-block:: console
 
       $ nova aggregate-set-metadata AGGREGATE_ID hypervisor_pool=true
 
@@ -379,7 +379,7 @@ by the XAPI plug-ins to establish the pool.
 
    Make the first compute node part of that aggregate
 
-   .. code:: console
+   .. code-block:: console
 
       $ nova aggregate-add-host AGGREGATE_ID MASTER_COMPUTE_NAME
 
@@ -387,7 +387,7 @@ by the XAPI plug-ins to establish the pool.
 
 #. Add hosts to the pool
 
-   .. code:: console
+   .. code-block:: console
 
       $ nova aggregate-add-host AGGREGATE_ID COMPUTE_HOST_NAME
 

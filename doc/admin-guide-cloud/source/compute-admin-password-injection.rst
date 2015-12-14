@@ -16,41 +16,36 @@ By default, the dashboard will display the ``admin`` password and allow
 the user to modify it.
 
 If you do not want to support password injection, disable the password
-fields by editing the dashboard's :file:`local_settings` file. On
-Fedora/RHEL/CentOS, the file location is
-:file:`/etc/openstack-dashboard/local_settings`. On Ubuntu and Debian, it is
-:file:`/etc/openstack-dashboard/local_settings.py`. On openSUSE and SUSE
-Linux Enterprise Server, it is
-:file:`/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py`
+fields by editing the dashboard's ``local_settings.py`` file.
 
-.. code:: ini
+.. code-block:: none
 
-    OPENSTACK_HYPERVISOR_FEATURES = {
-    ...
-        'can_set_password': False,
-    }
+   OPENSTACK_HYPERVISOR_FEATURES = {
+   ...
+       'can_set_password': False,
+   }
 
 **Password injection on libvirt-based hypervisors**
 
 For hypervisors that use the libvirt back end (such as KVM, QEMU, and
 LXC), admin password injection is disabled by default. To enable it, set
-this option in :file:`/etc/nova/nova.conf`:
+this option in ``/etc/nova/nova.conf``:
 
-.. code:: ini
+.. code-block:: ini
 
-    [libvirt]
-    inject_password=true
+   [libvirt]
+   inject_password=true
 
 When enabled, Compute will modify the password of the admin account by
-editing the :file:`/etc/shadow` file inside the virtual machine instance.
+editing the ``/etc/shadow`` file inside the virtual machine instance.
 
-..  note::
+.. note::
 
-    Users can only use :command:`ssh` to access the instance by using the admin
-    password if the virtual machine image is a Linux distribution, and it has
-    been configured to allow users to use :command:`ssh` as the root user. This
-    is not the case for `Ubuntu cloud images`_ which, by default, does not
-    allow users to use :command:`ssh` to access the root account.
+   Users can only use :command:`ssh` to access the instance by using the admin
+   password if the virtual machine image is a Linux distribution, and it has
+   been configured to allow users to use :command:`ssh` as the root user. This
+   is not the case for `Ubuntu cloud images`_ which, by default, does not
+   allow users to use :command:`ssh` to access the root account.
 
 **Password injection and XenAPI (XenServer/XCP)**
 

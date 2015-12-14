@@ -18,7 +18,7 @@ the Identity service.
 
 **Managing the cloud with nova client**
 
-#. The python-novaclient package provides a ``nova`` shell that enables
+#. The ``python-novaclient`` package provides a ``nova`` shell that enables
    Compute API interactions from the command line. Install the client, and
    provide your user name and password (which can be set as environment
    variables for convenience), for the ability to administer the cloud from
@@ -28,7 +28,7 @@ the Identity service.
    `http://pypi.python.org/pypi/python-novaclient/#downloads <http://pypi.python.org/pypi/python-novaclient/#downloads>`__ and then
    install it in your favorite Python environment:
 
-   ..  code:: console
+   .. code-block:: console
 
        $ curl -O http://pypi.python.org/packages/source/p/python-novaclient/python-novaclient-2.6.3.tar.gz
        $ tar -zxvf python-novaclient-2.6.3.tar.gz
@@ -36,35 +36,35 @@ the Identity service.
 
    As root, run:
 
-   ..  code:: console
+   .. code-block:: console
 
-       # python setup.py install
+      # python setup.py install
 
 #. Confirm the installation was successful:
 
-   ..  code:: console
+   .. code-block:: console
 
-       $ nova help
-       usage: nova [--version] [--debug] [--os-cache] [--timings]
-                   [--timeout SECONDS] [--os-username AUTH_USER_NAME]
-                   [--os-password AUTH_PASSWORD]
-                   [--os-tenant-name AUTH_TENANT_NAME]
-                   [--os-tenant-id AUTH_TENANT_ID] [--os-auth-url AUTH_URL]
-                   [--os-region-name REGION_NAME] [--os-auth-system AUTH_SYSTEM]
-                   [--service-type SERVICE_TYPE] [--service-name SERVICE_NAME]
-                   [--volume-service-name VOLUME_SERVICE_NAME]
-                   [--endpoint-type ENDPOINT_TYPE]
-                   [--os-compute-api-version COMPUTE_API_VERSION]
-                   [--os-cacert CA_CERTIFICATE] [--insecure]
-                   [--bypass-url BYPASS_URL]
-                   SUBCOMMAND ...
+      $ nova help
+      usage: nova [--version] [--debug] [--os-cache] [--timings]
+                  [--timeout SECONDS] [--os-username AUTH_USER_NAME]
+                  [--os-password AUTH_PASSWORD]
+                  [--os-tenant-name AUTH_TENANT_NAME]
+                  [--os-tenant-id AUTH_TENANT_ID] [--os-auth-url AUTH_URL]
+                  [--os-region-name REGION_NAME] [--os-auth-system AUTH_SYSTEM]
+                  [--service-type SERVICE_TYPE] [--service-name SERVICE_NAME]
+                  [--volume-service-name VOLUME_SERVICE_NAME]
+                  [--endpoint-type ENDPOINT_TYPE]
+                  [--os-compute-api-version COMPUTE_API_VERSION]
+                  [--os-cacert CA_CERTIFICATE] [--insecure]
+                  [--bypass-url BYPASS_URL]
+                  SUBCOMMAND ...
 
    Running :command:`nova help` returns a list of ``nova`` commands and
    parameters. To get help for a subcommand, run:
 
-   ..  code:: console
+   .. code-block:: console
 
-       $ nova help SUBCOMMAND
+      $ nova help SUBCOMMAND
 
    For a complete list of ``nova`` commands and parameters, see the
    `OpenStack Command-Line Reference
@@ -75,16 +75,16 @@ the Identity service.
    ``nova`` option, or set it as an environment variable. To set the user
    name, password, and tenant as environment variables, use:
 
-   ..  code:: console
+   .. code-block:: console
 
-       $ export OS_USERNAME=joecool
-       $ export OS_PASSWORD=coolword
-       $ export OS_TENANT_NAME=coolu
+      $ export OS_USERNAME=joecool
+      $ export OS_PASSWORD=coolword
+      $ export OS_TENANT_NAME=coolu
 
 #. The Identity service will give you an authentication endpoint,
    which Compute recognizes as ``OS_AUTH_URL``:
 
-   .. code:: console
+   .. code-block:: console
 
       $ export OS_AUTH_URL=http://hostname:5000/v2.0
       $ export NOVA_VERSION=1.1

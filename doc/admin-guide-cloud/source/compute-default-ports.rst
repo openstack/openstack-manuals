@@ -15,18 +15,18 @@ connections to the Compute services.
 
 #. Log in to the server that hosts the Compute service, as root.
 
-#. Edit the :file:`/etc/sysconfig/iptables` file, to add an INPUT rule that
+#. Edit the ``/etc/sysconfig/iptables`` file, to add an INPUT rule that
    allows TCP traffic on ports from ``5900`` to ``5999``. Make sure the new
    rule appears before any INPUT rules that REJECT traffic:
 
-   .. code:: ini
+   .. code-block:: console
 
       -A INPUT -p tcp -m multiport --dports 5900:5999 -j ACCEPT
 
-#. Save the changes to :file:`/etc/sysconfig/iptables` file, and restart the
-   iptables service to pick up the changes:
+#. Save the changes to the ``/etc/sysconfig/iptables`` file, and restart the
+   ``iptables`` service to pick up the changes:
 
-   .. code:: console
+   .. code-block:: console
 
       $ service iptables restart
 

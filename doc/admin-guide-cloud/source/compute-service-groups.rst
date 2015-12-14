@@ -68,10 +68,10 @@ Python libraries must be installed on every compute node:
 This example assumes the ZooKeeper server addresses and ports are
 ``192.168.2.1:2181``, ``192.168.2.2:2181``, and ``192.168.2.3:2181``.
 
-These values in the :file:`/etc/nova/nova.conf` file are required on every
+These values in the ``/etc/nova/nova.conf`` file are required on every
 node for the ZooKeeper driver:
 
-.. code:: ini
+.. code-block:: ini
 
    # Driver for the ServiceGroup service
    servicegroup_driver="zk"
@@ -97,20 +97,18 @@ already have it installed, as the same driver is also used for the
 OpenStack Object Storage and OpenStack dashboard. If you need to install
 memcached, see the instructions in the `OpenStack Installation Guide <http://docs.openstack.org/index.html#install-guides>`_.
 
-These values in the :file:`/etc/nova/nova.conf` file are required on every
+These values in the ``/etc/nova/nova.conf`` file are required on every
 node for the memcache driver:
 
-.. code:: ini
+.. code-block:: ini
 
-    # Driver for the ServiceGroup service
-    servicegroup_driver="mc"
+   # Driver for the ServiceGroup service
+   servicegroup_driver = "mc"
 
-    # Memcached servers. Use either a list of memcached servers to use for
-    caching (list value),
-    # or "<None>" for in-process caching (default).
-    memcached_servers=<None>
+   # Memcached servers. Use either a list of memcached servers to use for caching (list value),
+   # or "<None>" for in-process caching (default).
+   memcached_servers = <None>
 
-    # Timeout; maximum time since last check-in for up service
-    (integer value).
-    # Helps to define whether a node is dead
-    service_down_time=60
+   # Timeout; maximum time since last check-in for up service (integer value).
+   # Helps to define whether a node is dead
+   service_down_time = 60

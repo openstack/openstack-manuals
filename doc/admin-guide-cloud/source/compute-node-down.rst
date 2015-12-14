@@ -28,7 +28,7 @@ To manually recover a failed compute node:
    For example, this command displays information about the i-000015b9
    instance that runs on the np-rcc54 node:
 
-   ..  code:: console
+   ..  code-block:: console
 
        $ euca-describe-instances
        i-000015b9 at3-ui02 running nectarkey (376, np-rcc54) 0 m1.xxlarge 2012-06-19T00:48:11.000Z 115.146.93.60
@@ -38,7 +38,7 @@ To manually recover a failed compute node:
    :command:`nova` commands, you can substitute the ID directly. This example
    output is truncated:
 
-   .. code:: ini
+   .. code-block:: mysql
 
       mysql> SELECT * FROM instances WHERE id = CONV('15b9', 16, 10) \G;
       *************************** 1. row ***************************
@@ -59,14 +59,14 @@ To manually recover a failed compute node:
       task_state: NULL
       ...
 
-   ..  note::
+   .. note::
 
-       Find the credentials for your database in ``/etc/nova.conf`` file.
+      Find the credentials for your database in ``/etc/nova.conf`` file.
 
 #. Decide to which compute host to move the affected VM. Run this database
    command to move the VM to that host:
 
-   .. code:: console
+   .. code-block:: mysql
 
       mysql> UPDATE instances SET host = 'np-rcc46' WHERE uuid = '3f57699a-e773-4650-a443-b4b37eed5a06';
 
@@ -81,7 +81,7 @@ To manually recover a failed compute node:
 
 #. Reboot the VM:
 
-   .. code:: console
+   .. code-block:: console
 
       $ nova reboot 3f57699a-e773-4650-a443-b4b37eed5a06
 
@@ -102,7 +102,7 @@ configuration tool, files on your compute node might use the wrong UID or GID.
 This UID or GID mismatch can prevent you from running live migrations or
 starting virtual machines.
 
-This procedure runs on nova-compute hosts, based on the KVM hypervisor:
+This procedure runs on ``nova-compute`` hosts, based on the KVM hypervisor:
 
 #. Set the nova UID to the same number in ``/etc/passwd`` on all hosts. For
    example, set the UID to ``112``.
@@ -153,11 +153,12 @@ A disk crash, network loss, or power failure can affect several components in
 your cloud architecture. The worst disaster for a cloud is a power loss. A
 power loss affects these components:
 
--  A cloud controller (nova-api, nova-objectstore, nova-network)
--  A compute node (nova-compute)
--  A storage area network (SAN) that Block Storage (cinder-volumes) uses
+-  A cloud controller (``nova-api``, ``nova-objectstore``, ``nova-network``)
 
-The following example configures these components.
+-  A compute node (``nova-compute``)
+
+-  A storage area network (SAN) used by OpenStack Block Storage
+   (``cinder-volumes``)
 
 Before a power loss:
 
@@ -165,12 +166,12 @@ Before a power loss:
    (used for the ``cinder-volumes`` LVM's VG).
 
 -  Create an active iSCSI session from the cloud controller to the compute
-   node (managed by cinder-volume).
+   node (managed by ``cinder-volume``).
 
 -  Create an iSCSI session for every volume (so 14 EBS volumes requires 14
    iSCSI sessions).
 
--  Create iptables or ebtables rules from the cloud controller to the
+-  Create ``iptables`` or ``ebtables`` rules from the cloud controller to the
    compute node. This allows access from the cloud controller to the
    running instance.
 
@@ -197,9 +198,9 @@ After power resumes and all hardware components restart:
 
 **Begin recovery**
 
-..  warning::
+.. warning::
 
-    Do not add any steps or change the order of steps in this procedure.
+   Do not add any steps or change the order of steps in this procedure.
 
 #. Check the current relationship between the volume and its instance, so
    that you can recreate the attachment.
@@ -211,7 +212,7 @@ After power resumes and all hardware components restart:
 #. Update the database to clean the stalled state. Do this for every
    volume by using these queries:
 
-   .. code:: console
+   .. code-block:: mysql
 
       mysql> use cinder;
       mysql> update volumes set mountpoint=NULL;
@@ -242,7 +243,7 @@ After power resumes and all hardware components restart:
    volumes to their respective instances. This example uses a file of listed
    volumes to reattach them:
 
-   .. code:: bash
+   .. code-block:: bash
 
       #!/bin/bash
 
@@ -265,7 +266,7 @@ After power resumes and all hardware components restart:
    you can now restart the instance. Restart directly from the instance itself
    and not through :command:`nova`:
 
-   .. code:: console
+   .. code-block:: console
 
       # shutdown -r now
 
@@ -285,7 +286,7 @@ After power resumes and all hardware components restart:
    your cloud-controller. To re-run the session manually, run this
    command before performing the mount:
 
-   .. code:: console
+   .. code-block:: console
 
       # iscsiadm -m discovery -t st -p $SAN_IP $ iscsiadm -m node --target-name $IQN -p $SAN_IP -l
 
@@ -320,8 +321,8 @@ instance and close the iSCSI session. Do not detach the volume by using the
 :command:`nova volume-detach` command. You must manually close the iSCSI
 session. This example closes an iSCSI session with the number ``15``:
 
-..  code:: console
+.. code-block:: console
 
-    # iscsiadm -m session -u -r 15
+   # iscsiadm -m session -u -r 15
 
 Do not forget the :option:`-r` option. Otherwise, all sessions close.

@@ -7,7 +7,7 @@ Flavors
 Admin users can use the :command:`nova flavor-` commands to customize and
 manage flavors. To see the available flavor-related commands, run:
 
-.. code:: console
+.. code-block:: console
 
    $ nova help | grep flavor-
      flavor-access-add     Add flavor access for the given tenant.
@@ -23,8 +23,8 @@ manage flavors. To see the available flavor-related commands, run:
 
    -  Configuration rights can be delegated to additional users by
       redefining the access controls for
-      ``compute_extension:flavormanage`` in :file:`/etc/nova/policy.json`
-      on the nova-api server.
+      ``compute_extension:flavormanage`` in ``/etc/nova/policy.json``
+      on the ``nova-api`` server.
 
    -  You can modify an existing flavor from the :guilabel:`Edit Flavor`
       button in the Dashboard.
@@ -61,7 +61,7 @@ Flavors define these elements:
 |             | or NSX based systems.                                         |
 +-------------+---------------------------------------------------------------+
 | Is_Public   | Boolean value, whether flavor is available to all users or p\ |
-|             | rivate to the tenant it was created in. Defaults to True.     |
+|             | rivate to the tenant it was created in. Defaults to ``True``. |
 +-------------+---------------------------------------------------------------+
 | extra_specs | Key and value pairs that define on which compute nodes a fla\ |
 |             | vor can run. These pairs must match corresponding pairs on t\ |
@@ -80,10 +80,10 @@ CPU limits
     You can configure the CPU limits with control parameters with the
     ``nova`` client. For example, to configure the I/O limit, use:
 
-    .. code:: console
+    .. code-block:: console
 
-        $ nova flavor-key m1.small set quota:read_bytes_sec=10240000
-        $ nova flavor-key m1.small set quota:write_bytes_sec=10240000
+       $ nova flavor-key m1.small set quota:read_bytes_sec=10240000
+       $ nova flavor-key m1.small set quota:write_bytes_sec=10240000
 
     Use these optional parameters to control weight shares, enforcement
     intervals for runtime quotas, and a quota for maximum allowed
@@ -124,10 +124,10 @@ CPU limits
        value. You can use this feature to ensure that all vCPUs run at the
        same speed. For example:
 
-       .. code:: console
+       .. code-block:: console
 
-           $ nova flavor-key m1.low_cpu set quota:cpu_quota=10000
-           $ nova flavor-key m1.low_cpu set quota:cpu_period=20000
+          $ nova flavor-key m1.low_cpu set quota:cpu_quota=10000
+          $ nova flavor-key m1.low_cpu set quota:cpu_period=20000
 
        In this example, the instance of ``m1.low_cpu`` can only consume
        a maximum of 50% CPU of a physical CPU computing capability.
@@ -158,10 +158,10 @@ Memory limits
        value. It is a relative measure based on the settings for other VMs.
        For example:
 
-       .. code:: console
+       .. code-block:: console
 
-           $ nova flavor-key m1.medium set quota:memory_shares_level=custom
-           $ nova flavor-key m1.medium set quota:memory_shares_share=15
+          $ nova flavor-key m1.medium set quota:memory_shares_level=custom
+          $ nova flavor-key m1.medium set quota:memory_shares_share=15
 
 Disk I/O limits
     For VMware, you can configure the resource limits for disk
@@ -179,7 +179,7 @@ Disk I/O limits
        is -1 which indicates unlimited usage.
 
     -  ``disk_io_reservation``: Specifies the guaranteed minimum disk
-       allocation in terms of IOPS.
+       allocation in terms of :term:`IOPS`.
 
     -  ``disk_io_shares_level``: Specifies the allocation
        level. This can be ``custom``, ``high``, ``normal`` or ``low``.
@@ -193,17 +193,17 @@ Disk I/O limits
 
        The example below sets the ``disk_io_reservation`` to 2000 IOPS.
 
-       .. code:: console
+       .. code-block:: console
 
-           $ nova flavor-key m1.medium set quota:disk_io_reservation=2000
+          $ nova flavor-key m1.medium set quota:disk_io_reservation=2000
 
 Disk tuning
     Using disk I/O quotas, you can set maximum disk write to 10 MB per
     second for a VM user. For example:
 
-    .. code:: console
+    .. code-block:: console
 
-        $ nova flavor-key m1.medium set quota:disk_write_bytes_sec=10485760
+       $ nova flavor-key m1.medium set quota:disk_write_bytes_sec=10485760
 
     The disk I/O options are:
 
@@ -268,14 +268,14 @@ Bandwidth I/O
 
        -  burst: 65536 kilobytes
 
-    .. code:: console
+    .. code-block:: console
 
-        $ nova flavor-key nlimit set quota:vif_outbound_average=32768
-        $ nova flavor-key nlimit set quota:vif_outbound_peak=65536
-        $ nova flavor-key nlimit set quota:vif_outbound_burst=65536
-        $ nova flavor-key nlimit set quota:vif_inbound_average=32768
-        $ nova flavor-key nlimit set quota:vif_inbound_peak=65536
-        $ nova flavor-key nlimit set quota:vif_inbound_burst=65536
+       $ nova flavor-key nlimit set quota:vif_outbound_average=32768
+       $ nova flavor-key nlimit set quota:vif_outbound_peak=65536
+       $ nova flavor-key nlimit set quota:vif_outbound_burst=65536
+       $ nova flavor-key nlimit set quota:vif_inbound_average=32768
+       $ nova flavor-key nlimit set quota:vif_inbound_peak=65536
+       $ nova flavor-key nlimit set quota:vif_inbound_burst=65536
 
 
     .. note::
@@ -293,9 +293,9 @@ Watchdog behavior
 
     To set the behavior, use:
 
-    .. code:: console
+    .. code-block:: console
 
-        $ nova flavor-key FLAVOR-NAME set hw:watchdog_action=ACTION
+       $ nova flavor-key FLAVOR-NAME set hw:watchdog_action=ACTION
 
     Valid ACTION values are:
 
@@ -312,19 +312,19 @@ Watchdog behavior
 
     .. note::
 
-        Watchdog behavior set using a specific image's properties will
-        override behavior set using flavors.
+       Watchdog behavior set using a specific image's properties will
+       override behavior set using flavors.
 
 Random-number generator
     If a random-number generator device has been added to the instance
     through its image properties, the device can be enabled and
     configured using:
 
-    .. code:: console
+    .. code-block:: console
 
-        $ nova flavor-key FLAVOR-NAME set hw_rng:allowed=True
-        $ nova flavor-key FLAVOR-NAME set hw_rng:rate_bytes=RATE-BYTES
-        $ nova flavor-key FLAVOR-NAME set hw_rng:rate_period=RATE-PERIOD
+       $ nova flavor-key FLAVOR-NAME set hw_rng:allowed=True
+       $ nova flavor-key FLAVOR-NAME set hw_rng:rate_bytes=RATE-BYTES
+       $ nova flavor-key FLAVOR-NAME set hw_rng:rate_period=RATE-PERIOD
 
     Where:
 
@@ -338,14 +338,14 @@ CPU topology
     in the virtual machine using properties. The properties with ``max``
     limit the number that can be selected by the user with image properties.
 
-    .. code:: console
+    .. code-block:: console
 
-        $ nova flavor-key FLAVOR-NAME set hw:cpu_sockets=FLAVOR-SOCKETS
-        $ nova flavor-key FLAVOR-NAME set hw:cpu_cores=FLAVOR-CORES
-        $ nova flavor-key FLAVOR-NAME set hw:cpu_threads=FLAVOR-THREADS
-        $ nova flavor-key FLAVOR-NAME set hw:cpu_max_sockets=FLAVOR-SOCKETS
-        $ nova flavor-key FLAVOR-NAME set hw:cpu_max_cores=FLAVOR-CORES
-        $ nova flavor-key FLAVOR-NAME set hw:cpu_max_threads=FLAVOR-THREADS
+       $ nova flavor-key FLAVOR-NAME set hw:cpu_sockets=FLAVOR-SOCKETS
+       $ nova flavor-key FLAVOR-NAME set hw:cpu_cores=FLAVOR-CORES
+       $ nova flavor-key FLAVOR-NAME set hw:cpu_threads=FLAVOR-THREADS
+       $ nova flavor-key FLAVOR-NAME set hw:cpu_max_sockets=FLAVOR-SOCKETS
+       $ nova flavor-key FLAVOR-NAME set hw:cpu_max_cores=FLAVOR-CORES
+       $ nova flavor-key FLAVOR-NAME set hw:cpu_max_threads=FLAVOR-THREADS
 
     Where:
 
@@ -388,7 +388,7 @@ Project private flavors
     other projects. To create and assign a private flavor to a project,
     run these commands:
 
-    .. code:: console
+    .. code-block:: console
 
-        $ nova flavor-create --is-public false p1.medium auto 512 40 4
-        $ nova flavor-access-add 259d06a0-ba6d-4e60-b42d-ab3144411d58 86f94150ed744e08be565c2ff608eef9
+       $ nova flavor-create --is-public false p1.medium auto 512 40 4
+       $ nova flavor-access-add 259d06a0-ba6d-4e60-b42d-ab3144411d58 86f94150ed744e08be565c2ff608eef9

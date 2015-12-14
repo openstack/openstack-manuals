@@ -8,22 +8,22 @@ This section discusses how to migrate running instances from one
 OpenStack Compute server to another OpenStack Compute server.
 
 Before starting a migration, review the Configure migrations section.
+:ref:`section_configuring-compute-migrations`.
 
-.. `_section_configuring-compute-migrations`:ref:
+.. note::
 
-    .. note::
-
-       Although the :command:`nova` command is called :command:`live-migration`,
-       under the default Compute configuration options, the instances
-       are suspended before migration. For more information, see
-       `Configure migrations <http://docs.openstack.org/liberty/config-reference/content/list-of-compute-config-options.html>`_.
-       in the OpenStack Configuration Reference.
+   Although the :command:`nova` command is called :command:`live-migration`,
+   under the default Compute configuration options, the instances
+   are suspended before migration. For more information, see
+   `Configure migrations
+   <http://docs.openstack.org/liberty/config-reference/content/list-of-compute-config-options.html>`_.
+   in the OpenStack Configuration Reference.
 
 **Migrating instances**
 
 #. Check the ID of the instance to be migrated:
 
-   ..  code:: console
+   ..  code-block:: console
 
        $ nova list
 
@@ -47,7 +47,7 @@ Before starting a migration, review the Configure migrations section.
 #. Check the information associated with the instance. In this example,
    ``vm1`` is running on ``HostB``:
 
-   ..  code:: console
+   ..  code-block:: console
 
        $ nova show d1df1b5a-70c4-4fed-98b7-423362f2c47c
 
@@ -97,7 +97,7 @@ Before starting a migration, review the Configure migrations section.
 
 #. Select the compute node the instance will be migrated to. In this
    example, we will migrate the instance to ``HostC``, because
-   nova-compute is running on it:
+   ``nova-compute`` is running on it:
 
    .. list-table:: **nova service-list**
       :widths: 20 9 12 11 9 30 24
@@ -155,7 +155,7 @@ Before starting a migration, review the Configure migrations section.
 
 #. Check that ``HostC`` has enough resources for migration:
 
-   ..  code:: console
+   ..  code-block:: console
 
        # nova host-describe HostC
 
@@ -207,14 +207,14 @@ Before starting a migration, review the Configure migrations section.
 
 #. Migrate the instance using the :command:`nova live-migration` command:
 
-   .. code:: console
+   .. code-block:: console
 
       $ nova live-migration SERVER HOST_NAME
 
    In this example, SERVER can be the ID or name of the instance. Another
    example:
 
-   .. code:: console
+   .. code-block:: console
 
       $ nova live-migration d1df1b5a-70c4-4fed-98b7-423362f2c47c HostC
       Migration of d1df1b5a-70c4-4fed-98b7-423362f2c47c initiated.
@@ -229,5 +229,5 @@ Before starting a migration, review the Configure migrations section.
 
 #. Check that the instance has been migrated successfully, using
    :command:`nova list`. If the instance is still running on ``HostB``,
-   check the log files at :file:`src/dest` for nova-compute and nova-scheduler
-   to determine why.
+   check the log files at ``src/dest`` for ``nova-compute`` and
+   ``nova-scheduler`` to determine why.

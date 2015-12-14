@@ -3,9 +3,9 @@ Compute
 =======
 
 The OpenStack Compute service allows you to control an
-Infrastructure-as-a-Service (IaaS) cloud computing platform. It gives
-you control over instances and networks, and allows you to manage access
-to the cloud through users and projects.
+:term:`Infrastructure-as-a-Service (IaaS) <IaaS>` cloud computing platform.
+It gives you control over instances and networks, and allows you to manage
+access to the cloud through users and projects.
 
 Compute does not include virtualization software. Instead, it defines
 drivers that interact with underlying virtualization mechanisms that run

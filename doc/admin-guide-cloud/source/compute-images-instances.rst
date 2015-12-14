@@ -2,7 +2,6 @@
 Images and instances
 ====================
 
-
 Virtual machine images contain a virtual disk that holds a
 bootable operating system on it. Disk images provide templates for
 virtual machine file systems. The Image service controls image storage
@@ -279,97 +278,103 @@ core properties and the image owner can manage additional properties.
 To configure property protection, the cloud administrator completes
 these steps:
 
-#. Define roles or policies in the ``policy.json`` file::
+#. Define roles or policies in the ``policy.json`` file:
 
-    {
-        "context_is_admin":  "role:admin",
-        "default": "",
+   .. code-block:: json
 
-        "add_image": "",
-        "delete_image": "",
-        "get_image": "",
-        "get_images": "",
-        "modify_image": "",
-        "publicize_image": "role:admin",
-        "copy_from": "",
+      {
+          "context_is_admin":  "role:admin",
+          "default": "",
 
-        "download_image": "",
-        "upload_image": "",
+          "add_image": "",
+          "delete_image": "",
+          "get_image": "",
+          "get_images": "",
+          "modify_image": "",
+          "publicize_image": "role:admin",
+          "copy_from": "",
 
-        "delete_image_location": "",
-        "get_image_location": "",
-        "set_image_location": "",
+          "download_image": "",
+          "upload_image": "",
 
-        "add_member": "",
-        "delete_member": "",
-        "get_member": "",
-        "get_members": "",
-        "modify_member": "",
+          "delete_image_location": "",
+          "get_image_location": "",
+          "set_image_location": "",
 
-        "manage_image_cache": "role:admin",
+          "add_member": "",
+          "delete_member": "",
+          "get_member": "",
+          "get_members": "",
+          "modify_member": "",
 
-        "get_task": "",
-        "get_tasks": "",
-        "add_task": "",
-        "modify_task": "",
+          "manage_image_cache": "role:admin",
 
-        "deactivate": "",
-        "reactivate": "",
+          "get_task": "",
+          "get_tasks": "",
+          "add_task": "",
+          "modify_task": "",
 
-        "get_metadef_namespace": "",
-        "get_metadef_namespaces":"",
-        "modify_metadef_namespace":"",
-        "add_metadef_namespace":"",
-        "delete_metadef_namespace":"",
+          "deactivate": "",
+          "reactivate": "",
 
-        "get_metadef_object":"",
-        "get_metadef_objects":"",
-        "modify_metadef_object":"",
-        "add_metadef_object":"",
+          "get_metadef_namespace": "",
+          "get_metadef_namespaces":"",
+          "modify_metadef_namespace":"",
+          "add_metadef_namespace":"",
+          "delete_metadef_namespace":"",
 
-        "list_metadef_resource_types":"",
-        "get_metadef_resource_type":"",
-        "add_metadef_resource_type_association":"",
+          "get_metadef_object":"",
+          "get_metadef_objects":"",
+          "modify_metadef_object":"",
+          "add_metadef_object":"",
 
-        "get_metadef_property":"",
-        "get_metadef_properties":"",
-        "modify_metadef_property":"",
-        "add_metadef_property":"",
+          "list_metadef_resource_types":"",
+          "get_metadef_resource_type":"",
+          "add_metadef_resource_type_association":"",
 
-        "get_metadef_tag":"",
-        "get_metadef_tags":"",
-        "modify_metadef_tag":"",
-        "add_metadef_tag":"",
-        "add_metadef_tags":""
-     }
+          "get_metadef_property":"",
+          "get_metadef_properties":"",
+          "modify_metadef_property":"",
+          "add_metadef_property":"",
+
+          "get_metadef_tag":"",
+          "get_metadef_tags":"",
+          "modify_metadef_tag":"",
+          "add_metadef_tag":"",
+          "add_metadef_tags":""
+       }
 
    For each parameter, use ``"rule:restricted"`` to restrict access to all
    users or ``"role:admin"`` to limit access to administrator roles.
-   For example::
+   For example:
 
-     "download_image":
-     "upload_image":
+   .. code-block:: json
+
+      "download_image":
+      "upload_image":
 
 #. Define which roles or policies can manage which properties in a property
-   protections configuration file. For example::
+   protections configuration file. For example:
 
-     [x_none_read]
-     create = context_is_admin
-     read = !
-     update = !
-     delete = !
+   .. code-block:: ini
 
-     [x_none_update]
-     create = context_is_admin
-     read = context_is_admin
-     update = !
-     delete = context_is_admin
+      [x_none_read]
+      create = context_is_admin
+      read = !
+      update = !
+      delete = !
 
-     [x_none_delete]
-     create = context_is_admin
-     read = context_is_admin
-     update = context_is_admin
-     delete = !
+      [x_none_update]
+      create = context_is_admin
+      read = context_is_admin
+      update = !
+      delete = context_is_admin
+
+      [x_none_delete]
+      create = context_is_admin
+      read = context_is_admin
+      update = context_is_admin
+      delete = !
 
    -  A value of ``@`` allows the corresponding operation for a property.
 
@@ -377,9 +382,11 @@ these steps:
       property.
 
 #. In the ``glance-api.conf`` file, define the location of a property
-   protections configuration file::
+   protections configuration file.
 
-     property_protection_file = {file_name}
+   .. code-block:: ini
+
+      property_protection_file = {file_name}
 
    This file contains the rules for property protections and the roles and
    policies associated with it.
@@ -387,16 +394,18 @@ these steps:
    By default, property protections are not enforced.
 
    If you specify a file name value and the file is not found, the
-   `glance-api` service does not start.
+   ``glance-api`` service does not start.
 
    To view a sample configuration file, see
    `glance-api.conf
    <http://docs.openstack.org/liberty/config-reference/content/section_glance-api.conf.html>`__.
 
 #. Optionally, in the ``glance-api.conf`` file, specify whether roles or
-   policies are used in the property protections configuration file::
+   policies are used in the property protections configuration file
 
-     property_protection_rule_format = roles
+   .. code-block:: ini
+
+      property_protection_rule_format = roles
 
    The default is ``roles``.
 
@@ -455,19 +464,19 @@ restarts. To get a list of available images on your system, run:
 
 .. code-block:: console
 
-    $ nova image-list
-    +---------------------------+------------------+--------+----------------+
-    | ID                        | Name             | Status | Server         |
-    +---------------------------+------------------+--------+----------------+
-    | aee1d242-730f-431f-88c1-  |                  |        |                |
-    | 87630c0f07ba              | Ubuntu 14.04     |        |                |
-    |                           | cloudimg amd64   | ACTIVE |                |
-    | 0b27baa1-0ca6-49a7-b3f4-  |                  |        |                |
-    | 48388e440245              | Ubuntu 14.10     |        |                |
-    |                           | cloudimg amd64   | ACTIVE |                |
-    | df8d56fc-9cea-4dfd-a8d3-  |                  |        |                |
-    | 28764de3cb08              | jenkins          | ACTIVE |                |
-    +---------------------------+------------------+--------+----------------+
+   $ nova image-list
+   +---------------------------+------------------+--------+----------------+
+   | ID                        | Name             | Status | Server         |
+   +---------------------------+------------------+--------+----------------+
+   | aee1d242-730f-431f-88c1-  |                  |        |                |
+   | 87630c0f07ba              | Ubuntu 14.04     |        |                |
+   |                           | cloudimg amd64   | ACTIVE |                |
+   | 0b27baa1-0ca6-49a7-b3f4-  |                  |        |                |
+   | 48388e440245              | Ubuntu 14.10     |        |                |
+   |                           | cloudimg amd64   | ACTIVE |                |
+   | df8d56fc-9cea-4dfd-a8d3-  |                  |        |                |
+   | 28764de3cb08              | jenkins          | ACTIVE |                |
+   +---------------------------+------------------+--------+----------------+
 
 The displayed image attributes are:
 
@@ -493,16 +502,16 @@ For a list of flavors that are available on your system, run:
 
 .. code-block:: console
 
-    $ nova flavor-list
-    +----+----------+----------+-----+----------+-----+------+------------+----------+
-    | ID | Name     | Memory_MB| Disk| Ephemeral| Swap| VCPUs| RXTX_Factor| Is_Public|
-    +----+----------+----------+-----+----------+-----+------+------------+----------+
-    | 1  | m1.tiny  | 512      | 1   | 0        |     | 1    | 1.0        | True     |
-    | 2  | m1.small | 2048     | 20  | 0        |     | 1    | 1.0        | True     |
-    | 3  | m1.medium| 4096     | 40  | 0        |     | 2    | 1.0        | True     |
-    | 4  | m1.large | 8192     | 80  | 0        |     | 4    | 1.0        | True     |
-    | 5  | m1.xlarge| 16384    | 160 | 0        |     | 8    | 1.0        | True     |
-    +----+----------+----------+-----+----------+-----+------+------------+----------+
+   $ nova flavor-list
+   +----+----------+----------+-----+----------+-----+------+------------+----------+
+   | ID | Name     | Memory_MB| Disk| Ephemeral| Swap| VCPUs| RXTX_Factor| Is_Public|
+   +----+----------+----------+-----+----------+-----+------+------------+----------+
+   | 1  | m1.tiny  | 512      | 1   | 0        |     | 1    | 1.0        | True     |
+   | 2  | m1.small | 2048     | 20  | 0        |     | 1    | 1.0        | True     |
+   | 3  | m1.medium| 4096     | 40  | 0        |     | 2    | 1.0        | True     |
+   | 4  | m1.large | 8192     | 80  | 0        |     | 4    | 1.0        | True     |
+   | 5  | m1.xlarge| 16384    | 160 | 0        |     | 8    | 1.0        | True     |
+   +----+----------+----------+-----+----------+-----+------+------------+----------+
 
 By default, administrative users can configure the flavors. You can
 change this behavior by redefining the access controls for
@@ -524,7 +533,7 @@ version using the pip python package installer:
 
 .. code-block:: console
 
-    # pip install python-novaclient
+   # pip install python-novaclient
 
 For more information about python-novaclient and other command-line
 tools, see the `OpenStack End User
@@ -533,6 +542,7 @@ Guide <http://docs.openstack.org/user-guide/index.html>`__.
 
 Control where instances run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The `OpenStack Configuration
 Reference <http://docs.openstack.org/liberty/config-reference/content/>`__
 provides detailed information on controlling where your instances run,
@@ -695,7 +705,7 @@ be set to ``uefi`` when the image is created. For example:
 
 .. code-block:: console
 
-    glance image-create --container-format bare --disk-format qcow2 \
-    --property hw_firmware_type=uefi --file /tmp/cloud-uefi.qcow --name uefi
+   $ glance image-create --container-format bare --disk-format qcow2 \
+     --property hw_firmware_type=uefi --file /tmp/cloud-uefi.qcow --name uefi
 
 After that, you can launch instances from this UEFI image.

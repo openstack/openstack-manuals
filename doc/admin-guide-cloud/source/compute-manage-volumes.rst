@@ -45,11 +45,11 @@ volumes.
 
 For example, to list IDs and names of Compute volumes, run:
 
-.. code:: console
+.. code-block:: console
 
-    $ nova volume-list
-    +-----------+-----------+--------------+------+-------------+-------------+
-    | ID        | Status    | Display Name | Size | Volume Type | Attached to |
-    +-----------+-----------+--------------+------+-------------+-------------+
-    | 1af4cb9...| available | PerfBlock    | 1    | Performance |             |
-    +-----------+-----------+--------------+------+-------------+-------------+
+   $ nova volume-list
+   +-----------+-----------+--------------+------+-------------+-------------+
+   | ID        | Status    | Display Name | Size | Volume Type | Attached to |
+   +-----------+-----------+--------------+------+-------------+-------------+
+   | 1af4cb9...| available | PerfBlock    | 1    | Performance |             |
+   +-----------+-----------+--------------+------+-------------+-------------+

@@ -29,11 +29,11 @@ OpenStack Compute contains several main components.
 
 Compute uses a messaging-based, ``shared nothing`` architecture. All
 major components exist on multiple servers, including the compute,
-volume, and network controllers, and the object store or image service.
+volume, and network controllers, and the Object Storage or Image service.
 The state of the entire system is stored in a database. The cloud
 controller communicates with the internal object store using HTTP, but
 it communicates with the scheduler, network controller, and volume
-controller using AMQP (advanced message queuing protocol). To avoid
+controller using Advanced Message Queuing Protocol (AMQP). To avoid
 blocking a component while waiting for a response, Compute uses
 asynchronous calls, with a callback that is triggered when a response is
 received.
@@ -104,7 +104,7 @@ For tenants, you can use quota controls to limit the:
 
 Roles control the actions a user is allowed to perform. By default, most
 actions do not require a particular role, but you can configure them by
-editing the :file:`policy.json` file for user roles. For example, a rule can
+editing the ``policy.json`` file for user roles. For example, a rule can
 be defined so that a user must have the ``admin`` role in order to be
 able to allocate a public IP address.
 
@@ -118,7 +118,7 @@ resources.
 
    Earlier versions of OpenStack used the term ``project`` instead of
    ``tenant``. Because of this legacy terminology, some command-line tools
-   use ``--project_id`` where you would normally expect to enter a
+   use :option:`--project_id` where you would normally expect to enter a
    tenant ID.
 
 Block storage
@@ -153,7 +153,7 @@ other filesystem type by using ``virt_mkfs`` or
 
    For example, the ``cloud-init`` package included into an Ubuntu's stock
    cloud image, by default, formats this space as an Ext4 file system
-   and mounts it on :file:`/mnt`. This is a cloud-init feature, and is not
+   and mounts it on ``/mnt``. This is a cloud-init feature, and is not
    an OpenStack mechanism. OpenStack only provisions the raw storage.
 
 **Persistent volume**
@@ -251,16 +251,18 @@ OpenStack Block Storage volume system. This gives a more traditional
 persistent system that accumulates states which are preserved on the
 OpenStack Block Storage volume across the deletion and re-creation of
 the virtual machine. To get a list of available images on your system,
-run::
+run:
 
-    $ nova image-list
-    +--------------------------------------+-----------------------------+--------+---------+
-    | ID                                   | Name                        | Status | Server  |
-    +--------------------------------------+-----------------------------+--------+---------+
-    | aee1d242-730f-431f-88c1-87630c0f07ba | Ubuntu 14.04 cloudimg amd64 | ACTIVE |         |
-    | 0b27baa1-0ca6-49a7-b3f4-48388e440245 | Ubuntu 14.10 cloudimg amd64 | ACTIVE |         |
-    | df8d56fc-9cea-4dfd-a8d3-28764de3cb08 | jenkins                     | ACTIVE |         |
-    +--------------------------------------+-----------------------------+--------+---------+
+.. code-block:: console
+
+   $ nova image-list
+   +--------------------------------------+-----------------------------+--------+---------+
+   | ID                                   | Name                        | Status | Server  |
+   +--------------------------------------+-----------------------------+--------+---------+
+   | aee1d242-730f-431f-88c1-87630c0f07ba | Ubuntu 14.04 cloudimg amd64 | ACTIVE |         |
+   | 0b27baa1-0ca6-49a7-b3f4-48388e440245 | Ubuntu 14.10 cloudimg amd64 | ACTIVE |         |
+   | df8d56fc-9cea-4dfd-a8d3-28764de3cb08 | jenkins                     | ACTIVE |         |
+   +--------------------------------------+-----------------------------+--------+---------+
 
 The displayed image attributes are:
 
@@ -283,20 +285,22 @@ Virtual hardware templates are called ``flavors``. The default
 installation provides five flavors. By default, these are configurable
 by admin users, however that behavior can be changed by redefining the
 access controls for ``compute_extension:flavormanage`` in
-:file:`/etc/nova/policy.json` on the ``compute-api`` server.
+``/etc/nova/policy.json`` on the ``compute-api`` server.
 
-For a list of flavors that are available on your system::
+For a list of flavors that are available on your system:
 
-    $ nova flavor-list
-    +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
-    | ID  | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
-    +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
-    | 1   | m1.tiny   | 512       | 1    | 0         |      | 1     | 1.0         | True      |
-    | 2   | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True      |
-    | 3   | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |
-    | 4   | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
-    | 5   | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True      |
-    +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+.. code-block:: console
+
+   $ nova flavor-list
+   +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+   | ID  | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
+   +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
+   | 1   | m1.tiny   | 512       | 1    | 0         |      | 1     | 1.0         | True      |
+   | 2   | m1.small  | 2048      | 20   | 0         |      | 1     | 1.0         | True      |
+   | 3   | m1.medium | 4096      | 40   | 0         |      | 2     | 1.0         | True      |
+   | 4   | m1.large  | 8192      | 80   | 0         |      | 4     | 1.0         | True      |
+   | 5   | m1.xlarge | 16384     | 160  | 0         |      | 8     | 1.0         | True      |
+   +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
 
 Compute service architecture
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

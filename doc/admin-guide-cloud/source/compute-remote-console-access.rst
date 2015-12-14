@@ -79,7 +79,7 @@ The VNC console connection works as follows:
    server for an instance.
 
    The compute host specifies the address that the proxy should use to
-   connect through the :file:`nova.conf` file option,
+   connect through the ``nova.conf`` file option,
    ``vncserver_proxyclient_address``. In this way, the VNC proxy works
    as a bridge between the public network and private host network.
 
@@ -137,7 +137,7 @@ VNC configuration options
 -------------------------
 
 To customize the VNC console, use the following configuration options in
-your :file:`nova.conf`:
+your ``nova.conf`` file:
 
 .. note::
 
@@ -224,13 +224,13 @@ To restart the service, run:
 
    # service nova-novncproxy restart
 
-The configuration option parameter should point to your :file:`nova.conf`
+The configuration option parameter should point to your ``nova.conf``
 file, which includes the message queue server address and credentials.
 
 By default, ``nova-novncproxy`` binds on ``0.0.0.0:6080``.
 
 To connect the service to your Compute deployment, add the following
-configuration options to your :file:`nova.conf`:
+configuration options to your ``nova.conf`` file:
 
 - ``vncserver_listen=0.0.0.0``
 
@@ -281,12 +281,12 @@ Frequently asked questions about VNC access to virtual machines
   must be made on your compute hosts once you start to build a cluster.
   As an example, suppose you have two servers:
 
-  .. code:: bash
+  .. code-block:: bash
 
      PROXYSERVER (public_ip=172.24.1.1, management_ip=192.168.1.1)
      COMPUTESERVER (management_ip=192.168.1.2)
 
-  Your :file:`nova-compute` configuration file must set the following values:
+  Your ``nova-compute`` configuration file must set the following values:
 
   .. code-block:: console
 
@@ -316,7 +316,7 @@ Frequently asked questions about VNC access to virtual machines
   OpenStack dashboard?**
 
   A: These values are hard-coded in a Django HTML template. To alter
-  them, edit the :file:`_detail_vnc.html` template file. The location of
+  them, edit the ``_detail_vnc.html`` template file. The location of
   this file varies based on Linux distribution. On Ubuntu 14.04, the
   file is at
   ``/usr/share/pyshared/horizon/dashboards/nova/instances/templates/instances/_detail_vnc.html``.

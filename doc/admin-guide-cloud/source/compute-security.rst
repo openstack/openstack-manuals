@@ -40,14 +40,16 @@ implement an attestation service, see the `Open
 Attestation <https://github.com/OpenAttestation/OpenAttestation>`__
 project.
 
-|image0|
+
+.. figure:: figures/OpenStackTrustedComputePool1.png
+
 
 **Configuring Compute to use trusted compute pools**
 
 #. Enable scheduling support for trusted compute pools by adding these
-   lines to the ``DEFAULT`` section of the :file:`/etc/nova/nova.conf` file:
+   lines to the ``DEFAULT`` section of the ``/etc/nova/nova.conf`` file:
 
-   .. code:: ini
+   .. code-block:: ini
 
       [DEFAULT]
       compute_scheduler_driver=nova.scheduler.filter_scheduler.FilterScheduler
@@ -56,7 +58,7 @@ project.
 
 #. Specify the connection information for your attestation service by
    adding these lines to the ``trusted_computing`` section of the
-   :file:`/etc/nova/nova.conf` file:
+   ``/etc/nova/nova.conf`` file:
 
    .. code-block:: ini
 
@@ -90,8 +92,8 @@ project.
    auth_blob
      An authentication blob, required by the attestation service.
 
-#. Save the file, and restart the nova-compute and nova-scheduler services
-   to pick up the changes.
+#. Save the file, and restart the ``nova-compute`` and ``nova-scheduler``
+   service to pick up the changes.
 
 To customize the trusted compute pools, use these configuration option
 settings:
@@ -120,25 +122,23 @@ settings:
 
 **Specifying trusted flavors**
 
-#. Flavors can be designated as trusted using the ``nova flavor-key set``
-   command. In this example, the ``m1.tiny`` flavor is being set as
-   trusted:
+#. Flavors can be designated as trusted using the
+   :command:`nova flavor-key set` command. In this example, the ``m1.tiny``
+   flavor is being set as trusted:
 
-   .. code:: console
+   .. code-block:: console
 
       $ nova flavor-key m1.tiny set trust:trusted_host=trusted
 
 #. You can request that your instance is run on a trusted host by
    specifying a trusted flavor when booting the instance:
 
-   .. code:: console
+   .. code-block:: console
 
       $ nova boot --flavor m1.tiny --key_name myKeypairName --image myImageID newInstanceName
 
-|Trusted compute pool|
 
-.. |image0| image:: figures/OpenStackTrustedComputePool1.png
-.. |Trusted compute pool| image:: figures/OpenStackTrustedComputePool2.png
+.. figure:: figures/OpenStackTrustedComputePool2.png
 
 
 Encrypt Compute metadata traffic
@@ -147,21 +147,29 @@ Encrypt Compute metadata traffic
 **Enabling SSL encryption**
 
 OpenStack supports encrypting Compute metadata traffic with HTTPS.
-Enable SSL encryption in the :file:`metadata_agent.ini` file.
+Enable SSL encryption in the ``metadata_agent.ini`` file.
 
-#. Enable the HTTPS protocol::
+#. Enable the HTTPS protocol.
 
-    nova_metadata_protocol = https
+   .. code-block:: ini
+
+      nova_metadata_protocol = https
 
 #. Determine whether insecure SSL connections are accepted for Compute
-   metadata server requests. The default value is ``False``::
+   metadata server requests. The default value is ``False``.
 
-    nova_metadata_insecure = False
+   .. code-block:: ini
 
-#. Specify the path to the client certificate::
+      nova_metadata_insecure = False
 
-    nova_client_cert = PATH_TO_CERT
+#. Specify the path to the client certificate.
 
-#. Specify the path to the private key::
+   .. code-block:: ini
 
-    nova_client_priv_key = PATH_TO_KEY
+      nova_client_cert = PATH_TO_CERT
+
+#. Specify the path to the private key.
+
+   .. code-block:: ini
+
+      nova_client_priv_key = PATH_TO_KEY

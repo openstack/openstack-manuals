@@ -5,9 +5,9 @@ Networking with nova-network
 Understanding the networking configuration options helps you design the
 best configuration for your Compute instances.
 
-You can choose to either install and configure nova-network or use the
+You can choose to either install and configure ``nova-network`` or use the
 OpenStack Networking service (neutron). This section contains a brief
-overview of nova-network. For more information about OpenStack
+overview of ``nova-network``. For more information about OpenStack
 Networking, see :ref:`networking`.
 
 Networking concepts
@@ -47,7 +47,7 @@ Flat Network Manager
 
    Configuration injection currently only works on Linux-style
    systems that keep networking configuration in
-   :file:`/etc/network/interfaces`.
+   ``/etc/network/interfaces``.
 
 Flat DHCP Network Manager
     In this mode, OpenStack starts a DHCP server (dnsmasq) to allocate
@@ -99,7 +99,7 @@ VLAN Network Manager
     switch that supports VLAN tagging (IEEE 802.1Q). The tenant gets a
     range of private IPs that are only accessible from inside the VLAN.
     In order for a user to access the instances in their tenant, a
-    special VPN instance (code named cloudpipe) needs to be created.
+    special VPN instance (code named ``cloudpipe``) needs to be created.
     Compute generates a certificate and key for the user to access the
     VPN and starts the VPN automatically. It provides a private network
     segment for each tenant's instances that can be accessed through a
@@ -160,10 +160,10 @@ internal or tenant network.
 For flat and flat DHCP modes, use the :command:`nova network-create` command
 to create a network:
 
-.. code:: console
+.. code-block:: console
 
-    $ nova network-create vmnet \
-    --fixed-range-v4 10.0.0.0/16 --fixed-cidr 10.0.20.0/24 --bridge br100
+   $ nova network-create vmnet \
+     --fixed-range-v4 10.0.0.0/16 --fixed-cidr 10.0.20.0/24 --bridge br100
 
 This example uses the following parameters:
    --fixed-range-v4       specifies the network subnet.
@@ -189,9 +189,9 @@ The behavior of dnsmasq can be customized by creating a dnsmasq
 configuration file. Specify the configuration file using the
 ``dnsmasq_config_file`` configuration option:
 
-.. code:: ini
+.. code-block:: ini
 
-    dnsmasq_config_file=/etc/dnsmasq-nova.conf
+   dnsmasq_config_file=/etc/dnsmasq-nova.conf
 
 For more information about creating a dnsmasq configuration file, see
 the `OpenStack Configuration
@@ -201,24 +201,24 @@ documentation <http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq.conf.example>`_
 
 Dnsmasq also acts as a caching DNS server for instances. You can specify
 the DNS server that dnsmasq uses by setting the ``dns_server``
-configuration option in :file:`/etc/nova/nova.conf`. This example configures
+configuration option in ``/etc/nova/nova.conf``. This example configures
 dnsmasq to use Google's public DNS server:
 
-.. code:: ini
+.. code-block:: ini
 
-    dns_server=8.8.8.8
+   dns_server=8.8.8.8
 
-Dnsmasq logs to syslog (typically :file:`/var/log/syslog` or
-:file:`/var/log/messages`, depending on Linux distribution). Logs can be
+Dnsmasq logs to syslog (typically ``/var/log/syslog`` or
+``/var/log/messages``, depending on Linux distribution). Logs can be
 useful for troubleshooting, especially in a situation where VM instances
 boot successfully but are not reachable over the network.
 
 Administrators can specify the starting point IP address to reserve with
 the DHCP server (in the format n.n.n.n) with this command:
 
-.. code:: console
+.. code-block:: console
 
-    $nova-manage fixed reserve --address IP_ADDRESS
+   $ nova-manage fixed reserve --address IP_ADDRESS
 
 This reservation only affects which IP address the VMs start at, not the
 fixed IP addresses that ``nova-network`` places on the bridges.
@@ -250,20 +250,20 @@ installed.
 
 #. For every node running a ``nova-*`` service, install python-netaddr:
 
-   .. code:: console
+   .. code-block:: console
 
       # apt-get install python-netaddr
 
 #. For every node running ``nova-network``, install ``radvd`` and configure
    IPv6 networking:
 
-   .. code:: console
+   .. code-block:: console
 
       # apt-get install radvd
       # echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
       # echo 0 > /proc/sys/net/ipv6/conf/all/accept_ra
 
-#. On all nodes, edit the :file:`nova.conf` file and specify
+#. On all nodes, edit the ``nova.conf`` file and specify
    ``use_ipv6 = True``.
 
 #. Restart all ``nova-*`` services.
@@ -277,7 +277,7 @@ command:
   command. Specify ``public`` or ``private`` after the ``network-create``
   parameter.
 
-  .. code:: console
+  .. code-block:: console
 
      $ nova network-create public --fixed-range-v4 FIXED_RANGE_V4 \
        --vlan VLAN_ID --vpn VPN_START --fixed-range-v6 FIXED_RANGE_V6
@@ -289,7 +289,7 @@ command:
   When you use ``FlatDHCPManager``, the command uses the original
   ``--fixed_range_v6`` value. For example:
 
-  .. code:: console
+  .. code-block:: console
 
      $ nova network-create public  --fixed-range-v4 10.0.2.0/24 \
        --fixed-range-v6 fd00:1::/48
@@ -298,7 +298,7 @@ command:
   to create subnet prefixes. Guest VMs use this prefix to generate
   their IPv6 global unicast addresses. For example:
 
-  .. code:: console
+  .. code-block:: console
 
      $ nova network-create public --fixed-range-v4 10.0.1.0/24 --vlan 100 \
        --vpn 1000 --fixed-range-v6 fd00:1::/48
@@ -331,30 +331,30 @@ versioned by date.
 To retrieve a list of supported versions for the OpenStack metadata API,
 make a GET request to ``http://169.254.169.254/openstack``:
 
-.. code:: console
+.. code-block:: console
 
-    $ curl http://169.254.169.254/openstack
-    2012-08-10
-    2013-04-04
-    2013-10-17
-    latest
+   $ curl http://169.254.169.254/openstack
+   2012-08-10
+   2013-04-04
+   2013-10-17
+   latest
 
 To list supported versions for the EC2-compatible metadata API, make a
 GET request to ``http://169.254.169.254``:
 
-.. code:: console
+.. code-block:: console
 
-    $ curl http://169.254.169.254
-    1.0
-    2007-01-19
-    2007-03-01
-    2007-08-29
-    2007-10-10
-    2007-12-15
-    2008-02-01
-    2008-09-01
-    2009-04-04
-    latest
+   $ curl http://169.254.169.254
+   1.0
+   2007-01-19
+   2007-03-01
+   2007-08-29
+   2007-10-10
+   2007-12-15
+   2008-02-01
+   2008-09-01
+   2009-04-04
+   latest
 
 If you write a consumer for one of these APIs, always attempt to access
 the most recent API version supported by your consumer first, then fall
@@ -364,9 +364,9 @@ Metadata from the OpenStack API is distributed in JSON format. To
 retrieve the metadata, make a GET request to
 ``http://169.254.169.254/openstack/2012-08-10/meta_data.json``:
 
-.. code:: console
+.. code-block:: console
 
-    $ curl http://169.254.169.254/openstack/2012-08-10/meta_data.json
+   $ curl http://169.254.169.254/openstack/2012-08-10/meta_data.json
 
 .. code-block:: json
 
@@ -390,15 +390,15 @@ retrieve the metadata, make a GET request to
    }
 
 Instances also retrieve user data (passed as the ``user_data`` parameter
-in the API call or by the ``--user_data`` flag in the :command:`nova boot`
-command) through the metadata service, by making a GET request to
-``http://169.254.169.254/openstack/2012-08-10/user_data``:
+in the API call or by the :option:`--user_data` flag in the
+:command:`nova boot` command) through the metadata service, by making a
+GET request to ``http://169.254.169.254/openstack/2012-08-10/user_data``:
 
-.. code:: json
+.. code-block:: console
 
-    $ curl http://169.254.169.254/openstack/2012-08-10/user_data
-    #!/bin/bash
-    echo 'Extra user data here'
+   $ curl http://169.254.169.254/openstack/2012-08-10/user_data
+   #!/bin/bash
+   echo 'Extra user data here'
 
 The metadata service has an API that is compatible with version
 2009-04-04 of the `Amazon EC2 metadata
@@ -410,70 +410,70 @@ The EC2 API exposes a separate URL for each metadata element. Retrieve a
 listing of these elements by making a GET query to
 ``http://169.254.169.254/2009-04-04/meta-data/``:
 
-.. code:: console
+.. code-block:: console
 
-    $ curl http://169.254.169.254/2009-04-04/meta-data/
-    ami-id
-    ami-launch-index
-    ami-manifest-path
-    block-device-mapping/
-    hostname
-    instance-action
-    instance-id
-    instance-type
-    kernel-id
-    local-hostname
-    local-ipv4
-    placement/
-    public-hostname
-    public-ipv4
-    public-keys/
-    ramdisk-id
-    reservation-id
-    security-groups
+   $ curl http://169.254.169.254/2009-04-04/meta-data/
+   ami-id
+   ami-launch-index
+   ami-manifest-path
+   block-device-mapping/
+   hostname
+   instance-action
+   instance-id
+   instance-type
+   kernel-id
+   local-hostname
+   local-ipv4
+   placement/
+   public-hostname
+   public-ipv4
+   public-keys/
+   ramdisk-id
+   reservation-id
+   security-groups
 
-.. code:: console
+.. code-block:: console
 
-    $ curl http://169.254.169.254/2009-04-04/meta-data/block-device-mapping/
-    ami
+   $ curl http://169.254.169.254/2009-04-04/meta-data/block-device-mapping/
+   ami
 
-.. code:: console
+.. code-block:: console
 
-    $ curl http://169.254.169.254/2009-04-04/meta-data/placement/
-    availability-zone
+   $ curl http://169.254.169.254/2009-04-04/meta-data/placement/
+   availability-zone
 
-.. code:: console
+.. code-block:: console
 
-    $ curl http://169.254.169.254/2009-04-04/meta-data/public-keys/
-    0=mykey
+   $ curl http://169.254.169.254/2009-04-04/meta-data/public-keys/
+   0=mykey
 
 Instances can retrieve the public SSH key (identified by keypair name
 when a user requests a new instance) by making a GET request to
 ``http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key``:
 
-.. code:: console
+.. code-block:: console
 
-    $ curl http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key
-    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDYVEprvtYJXVOBN0XNKVVRNCRX6BlnNbI+US\
-    LGais1sUWPwtSg7z9K9vhbYAPUZcq8c/s5S9dg5vTHbsiyPCIDOKyeHba4MUJq8Oh5b2i71/3B\
-    ISpyxTBH/uZDHdslW2a+SrPDCeuMMoss9NFhBdKtDkdG9zyi0ibmCP6yMdEX8Q== Generated\
-    by Nova
+   $ curl http://169.254.169.254/2009-04-04/meta-data/public-keys/0/openssh-key
+   ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDYVEprvtYJXVOBN0XNKVVRNCRX6BlnNbI+US\
+   LGais1sUWPwtSg7z9K9vhbYAPUZcq8c/s5S9dg5vTHbsiyPCIDOKyeHba4MUJq8Oh5b2i71/3B\
+   ISpyxTBH/uZDHdslW2a+SrPDCeuMMoss9NFhBdKtDkdG9zyi0ibmCP6yMdEX8Q== Generated\
+   by Nova
 
 Instances can retrieve user data by making a GET request to
 ``http://169.254.169.254/2009-04-04/user-data``:
 
-.. code:: console
+.. code-block:: console
 
-    $ curl http://169.254.169.254/2009-04-04/user-data
-    #!/bin/bash
-    echo 'Extra user data here'
+   $ curl http://169.254.169.254/2009-04-04/user-data
+   #!/bin/bash
+   echo 'Extra user data here'
 
-The metadata service is implemented by either the nova-api service or
-the nova-api-metadata service. Note that the nova-api-metadata service
+The metadata service is implemented by either the ``nova-api`` service or
+the ``nova-api-metadata`` service. Note that the ``nova-api-metadata`` service
 is generally only used when running in multi-host mode, as it retrieves
-instance-specific metadata. If you are running the nova-api service, you
+instance-specific metadata. If you are running the ``nova-api`` service, you
 must have ``metadata`` as one of the elements listed in the
-``enabled_apis`` configuration option in :file:`/etc/nova/nova.conf`. The
+``enabled_apis`` configuration option in ``/etc/nova/nova.conf``. The
 default ``enabled_apis`` configuration setting includes the metadata
 service, so you do not need to modify it.
 
@@ -487,18 +487,18 @@ must configure iptables to NAT port ``80`` of the ``169.254.169.254``
 address to the IP address specified in ``metadata_host`` (this defaults
 to ``$my_ip``, which is the IP address of the ``nova-network`` service) and
 port specified in ``metadata_port`` (which defaults to ``8775``) in
-:file:`/etc/nova/nova.conf`.
+``/etc/nova/nova.conf``.
 
 .. note::
 
-    The ``metadata_host`` configuration option must be an IP address,
-    not a host name.
+   The ``metadata_host`` configuration option must be an IP address,
+   not a host name.
 
 The default Compute service settings assume that ``nova-network`` and
 ``nova-api`` are running on the same host. If this is not the case, in the
-:file:`/etc/nova/nova.conf` file on the host running ``nova-network``, set the
+``/etc/nova/nova.conf`` file on the host running ``nova-network``, set the
 ``metadata_host`` configuration option to the IP address of the host
-where nova-api is running.
+where ``nova-api`` is running.
 
 .. list-table:: Description of metadata configuration options
    :header-rows: 2
@@ -539,34 +539,34 @@ commands.
 
 .. note::
 
-    Run these commands as root only if the credentials used to interact
-    with nova-api are in :file:`/root/.bashrc`. If the EC2 credentials in
-    the :file:`.bashrc` file are for an unprivileged user, you must run
-    these commands as that user instead.
+   Run these commands as root only if the credentials used to interact
+   with ``nova-api`` are in ``/root/.bashrc``. If the EC2 credentials in
+   the ``.bashrc`` file are for an unprivileged user, you must run
+   these commands as that user instead.
 
 Enable ping and SSH with :command:`nova` commands:
 
-.. code:: console
+.. code-block:: console
 
-    $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
-    $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
+   $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+   $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
 
 Enable ping and SSH with ``euca2ools``:
 
-.. code:: console
+.. code-block:: console
 
-    $ euca-authorize -P icmp -t -1:-1 -s 0.0.0.0/0 default
-    $ euca-authorize -P tcp -p 22 -s 0.0.0.0/0 default
+   $ euca-authorize -P icmp -t -1:-1 -s 0.0.0.0/0 default
+   $ euca-authorize -P tcp -p 22 -s 0.0.0.0/0 default
 
 If you have run these commands and still cannot ping or SSH your
 instances, check the number of running ``dnsmasq`` processes, there
 should be two. If not, kill the processes and restart the service with
 these commands:
 
-.. code:: console
+.. code-block:: console
 
-    # killall dnsmasq
-    # service nova-network restart
+   # killall dnsmasq
+   # service nova-network restart
 
 Configure public (floating) IP addresses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -588,30 +588,30 @@ OpenStack Compute uses network address translation (NAT) to assign
 floating IPs to virtual instances.
 
 To be able to assign a floating IP address, edit the
-:file:`/etc/nova/nova.conf` file to specify which interface the
+``/etc/nova/nova.conf`` file to specify which interface the
 ``nova-network`` service should bind public IP addresses to:
 
-.. code:: ini
+.. code-block:: ini
 
-    public_interface=VLAN100
+   public_interface=VLAN100
 
-If you make changes to the :file:`/etc/nova/nova.conf` file while the
+If you make changes to the ``/etc/nova/nova.conf`` file while the
 ``nova-network`` service is running, you will need to restart the service to
 pick up the changes.
 
 .. Note::
 
-    Floating IPs are implemented by using a source NAT (SNAT rule in
-    iptables), so security groups can sometimes display inconsistent
-    behavior if VMs use their floating IP to communicate with other VMs,
-    particularly on the same physical host. Traffic from VM to VM across
-    the fixed network does not have this issue, and so this is the
-    recommended setup. To ensure that traffic does not get SNATed to the
-    floating range, explicitly set:
+   Floating IPs are implemented by using a source NAT (SNAT rule in
+   iptables), so security groups can sometimes display inconsistent
+   behavior if VMs use their floating IP to communicate with other VMs,
+   particularly on the same physical host. Traffic from VM to VM across
+   the fixed network does not have this issue, and so this is the
+   recommended setup. To ensure that traffic does not get SNATed to the
+   floating range, explicitly set:
 
-    .. code:: ini
+   .. code-block:: ini
 
-        dmz_cidr=x.x.x.x/y
+      dmz_cidr=x.x.x.x/y
 
     The ``x.x.x.x/y`` value specifies the range of floating IPs for each
     pool of floating IPs that you define. This configuration is also
@@ -625,64 +625,64 @@ will need to enable it in order to use floating IPs.
 
 .. Note::
 
-    IP forwarding only needs to be enabled on the nodes that run
-    ``nova-network``. However, you will need to enable it on all compute
-    nodes if you use ``multi_host`` mode.
+   IP forwarding only needs to be enabled on the nodes that run
+   ``nova-network``. However, you will need to enable it on all compute
+   nodes if you use ``multi_host`` mode.
 
 To check if IP forwarding is enabled, run:
 
-.. code:: console
+.. code-block:: console
 
-    $ cat /proc/sys/net/ipv4/ip_forward
-    0
+   $ cat /proc/sys/net/ipv4/ip_forward
+   0
 
 Alternatively, run:
 
-.. code:: console
+.. code-block:: console
 
-    $ sysctl net.ipv4.ip_forward
-    net.ipv4.ip_forward = 0
+   $ sysctl net.ipv4.ip_forward
+   net.ipv4.ip_forward = 0
 
 In these examples, IP forwarding is disabled.
 
 To enable IP forwarding dynamically, run:
 
-.. code:: console
+.. code-block:: console
 
-    # sysctl -w net.ipv4.ip_forward=1
+   # sysctl -w net.ipv4.ip_forward=1
 
 Alternatively, run:
 
-.. code:: console
+.. code-block:: console
 
-    # echo 1 > /proc/sys/net/ipv4/ip_forward
+   # echo 1 > /proc/sys/net/ipv4/ip_forward
 
 To make the changes permanent, edit the ``/etc/sysctl.conf`` file and
 update the IP forwarding setting:
 
-.. code:: ini
+.. code-block:: ini
 
-    net.ipv4.ip_forward = 1
+   net.ipv4.ip_forward = 1
 
 Save the file and run this command to apply the changes:
 
-.. code:: console
+.. code-block:: console
 
-    # sysctl -p
+   # sysctl -p
 
 You can also apply the changes by restarting the network service:
 
 -  on Ubuntu, Debian:
 
-   .. code:: console
+   .. code-block:: console
 
-       # /etc/init.d/networking restart
+      # /etc/init.d/networking restart
 
 -  on RHEL, Fedora, CentOS, openSUSE and SLES:
 
-   .. code:: console
+   .. code-block:: console
 
-       # service network restart
+      # service network restart
 
 Create a list of available floating IP addresses
 ------------------------------------------------
@@ -693,27 +693,27 @@ to perform floating IP operations:
 
 - Add entries to the list:
 
-  .. code:: console
+  .. code-block:: console
 
      # nova-manage floating create --pool nova --ip_range 68.99.26.170/31
 
 - List the floating IP addresses in the pool:
 
-  .. code:: console
+  .. code-block:: console
 
      # nova-manage floating list
 
 - Create specific floating IPs for either a single address or a
   subnet:
 
-  .. code:: console
+  .. code-block:: console
 
      # nova-manage floating create --pool POOL_NAME --ip_range CIDR
 
 - Remove floating IP addresses using the same parameters as the create
   command:
 
-  .. code:: console
+  .. code-block:: console
 
      # nova-manage floating delete CIDR
 
@@ -727,9 +727,9 @@ Automatically add floating IPs
 
 You can configure ``nova-network`` to automatically allocate and assign a
 floating IP address to virtual instances when they are launched. Add
-this line to the :file:`/etc/nova/nova.conf` file:
+this line to the ``/etc/nova/nova.conf`` file:
 
-.. code:: ini
+.. code-block:: ini
 
    auto_assign_floating_ip=True
 
@@ -754,7 +754,7 @@ to be an administrator.
 Disassociate the network from the project using the :command:`scrub` command,
 with the project ID as the final parameter:
 
-.. code:: console
+.. code-block:: console
 
    # nova-manage project scrub --project ID
 
@@ -775,11 +775,14 @@ instances. This is useful in several scenarios:
 Each VIP represents a separate network with its own IP block. Every
 network mode has its own set of changes regarding multinic usage:
 
-|multinic flat manager|
+.. figure:: figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-manager.jpg
+   :width: 600
 
-|multinic flatdhcp manager|
+.. figure:: figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-DHCP-manager.jpg
+   :width: 600
 
-|multinic VLAN manager|
+.. figure:: figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-VLAN-manager.jpg
+   :width: 600
 
 Using multinic
 --------------
@@ -787,7 +790,7 @@ Using multinic
 In order to use multinic, create two networks, and attach them to the
 tenant (named ``project`` on the command line):
 
-.. code:: console
+.. code-block:: console
 
    $ nova network-create first-net --fixed-range-v4 20.20.0.0/24 --project-id $your-project
    $ nova network-create second-net --fixed-range-v4 20.20.10.0/24 --project-id $your-project
@@ -795,9 +798,10 @@ tenant (named ``project`` on the command line):
 Each new instance will now receive two IP addresses from their
 respective DHCP servers:
 
-.. code:: console
+.. code-block:: console
 
    $ nova list
+
      +-----+------------+--------+----------------------------------------+
      |  ID |    Name    | Status |                Networks                |
      +-----+------------+--------+----------------------------------------+
@@ -813,7 +817,7 @@ This example demonstrates how to set up the interfaces within the
 instance. This is the configuration that needs to be applied inside the
 image.
 
-Edit the :file:`/etc/network/interfaces` file:
+Edit the ``/etc/network/interfaces`` file:
 
 .. code-block:: bash
 
@@ -828,12 +832,12 @@ Edit the :file:`/etc/network/interfaces` file:
    iface eth1 inet dhcp
 
 If the Virtual Network Service Neutron is installed, you can specify the
-networks to attach to the interfaces by using the ``--nic`` flag with
+networks to attach to the interfaces by using the :option:`--nic` flag with
 the :command:`nova` command:
 
-.. code:: console
+.. code-block:: console
 
-    $ nova boot --image ed8b2a37-5535-4a5f-a615-443513036d71 --flavor 1 --nic net-id=NETWORK1_ID --nic net-id=NETWORK2_ID test-vm1
+   $ nova boot --image ed8b2a37-5535-4a5f-a615-443513036d71 --flavor 1 --nic net-id=NETWORK1_ID --nic net-id=NETWORK2_ID test-vm1
 
 Troubleshooting Networking
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -846,38 +850,38 @@ If you cannot reach your instances through the floating IP address:
 -  Check that the default security group allows ICMP (ping) and SSH
    (port 22), so that you can reach the instances:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ nova secgroup-list-rules default
-       +-------------+-----------+---------+-----------+--------------+
-       | IP Protocol | From Port | To Port |  IP Range | Source Group |
-       +-------------+-----------+---------+-----------+--------------+
-       | icmp        | -1        | -1      | 0.0.0.0/0 |              |
-       | tcp         | 22        | 22      | 0.0.0.0/0 |              |
-       +-------------+-----------+---------+-----------+--------------+
+      $ nova secgroup-list-rules default
+      +-------------+-----------+---------+-----------+--------------+
+      | IP Protocol | From Port | To Port |  IP Range | Source Group |
+      +-------------+-----------+---------+-----------+--------------+
+      | icmp        | -1        | -1      | 0.0.0.0/0 |              |
+      | tcp         | 22        | 22      | 0.0.0.0/0 |              |
+      +-------------+-----------+---------+-----------+--------------+
 
 -  Check the NAT rules have been added to iptables on the node that is
    running ``nova-network``:
 
-   .. code:: console
+   .. code-block:: console
 
-       # iptables -L -nv -t nat
-       -A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
-       -A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170
+      # iptables -L -nv -t nat
+      -A nova-network-PREROUTING -d 68.99.26.170/32 -j DNAT --to-destination 10.0.0.3
+      -A nova-network-floating-snat -s 10.0.0.3/32 -j SNAT --to-source 68.99.26.170
 
 -  Check that the public address (`68.99.26.170 <68.99.26.170>`__ in
    this example), has been added to your public interface. You should
    see the address in the listing when you use the :command:`ip addr` command:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ ip addr
-       2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP qlen 1000
-       link/ether xx:xx:xx:17:4b:c2 brd ff:ff:ff:ff:ff:ff
-       inet 13.22.194.80/24 brd 13.22.194.255 scope global eth0
-       inet 68.99.26.170/32 scope global eth0
-       inet6 fe80::82b:2bf:fe1:4b2/64 scope link
-       valid_lft forever preferred_lft forever
+      $ ip addr
+      2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP qlen 1000
+      link/ether xx:xx:xx:17:4b:c2 brd ff:ff:ff:ff:ff:ff
+      inet 13.22.194.80/24 brd 13.22.194.255 scope global eth0
+      inet 68.99.26.170/32 scope global eth0
+      inet6 fe80::82b:2bf:fe1:4b2/64 scope link
+      valid_lft forever preferred_lft forever
 
    .. note::
 
@@ -892,26 +896,26 @@ If you cannot reach your instances through the floating IP address:
    disabling reverse-path filtering on the inbound interface. For
    example, if the inbound interface is ``eth2``, run:
 
-   .. code:: console
+   .. code-block:: console
 
       # sysctl -w net.ipv4.conf.ETH2.rp_filter=0
 
    If this solves the problem, add the following line to
-   :file:`/etc/sysctl.conf` so that the reverse-path filter is persistent:
+   ``/etc/sysctl.conf`` so that the reverse-path filter is persistent:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       net.ipv4.conf.rp_filter=0
+      net.ipv4.conf.rp_filter=0
 
 Temporarily disable firewall
 ----------------------------
 
 To help debug networking issues with reaching VMs, you can disable the
-firewall by setting this option in :file:`/etc/nova/nova.conf`:
+firewall by setting this option in ``/etc/nova/nova.conf``:
 
-.. code:: ini
+.. code-block:: ini
 
-    firewall_driver=nova.virt.firewall.NoopFirewallDriver
+   firewall_driver=nova.virt.firewall.NoopFirewallDriver
 
 We strongly recommend you remove this line to re-enable the firewall
 once your networking issues have been resolved.
@@ -937,7 +941,7 @@ and run the following commands:
    ``tcpdump`` on the VLAN interface to monitor DNS-related traffic
    (UDP, port 53). As root, run:
 
-   .. code:: console
+   .. code-block:: console
 
       # tcpdump -K -p -i vlan100 -v -vv udp port 53
 
@@ -945,14 +949,14 @@ and run the following commands:
    ``tcpdump`` to monitor DNS-related traffic on the bridge interface.
    As root, run:
 
-   .. code:: console
+   .. code-block:: console
 
       # tcpdump -K -p -i br100 -v -vv udp port 53
 
 #. In the third terminal, use ``SSH`` to access the instance and generate DNS
    requests by using the :command:`nslookup` command:
 
-   .. code:: console
+   .. code-block:: console
 
       $ nslookup www.google.com
 
@@ -966,16 +970,16 @@ and run the following commands:
    problem may be due to filtering done on the bridges. Try disabling
    filtering, and running these commands as root:
 
-   .. code:: console
+   .. code-block:: console
 
       # sysctl -w net.bridge.bridge-nf-call-arptables=0
       # sysctl -w net.bridge.bridge-nf-call-iptables=0
       # sysctl -w net.bridge.bridge-nf-call-ip6tables=0
 
    If this solves your issue, add the following line to
-   :file:`/etc/sysctl.conf` so that the changes are persistent:
+   ``/etc/sysctl.conf`` so that the changes are persistent:
 
-   .. code:: ini
+   .. code-block:: ini
 
       net.bridge.bridge-nf-call-arptables=0
       net.bridge.bridge-nf-call-iptables=0
@@ -993,17 +997,10 @@ issue (see `bug
 performance <http://www.linux-kvm.org/page/VhostNet>`__ on KVM. To load
 the kernel module:
 
-.. code:: console
+.. code-block:: console
 
    # modprobe vhost_net
 
 .. note::
 
    Loading the module has no effect on running instances.
-
-.. |multinic flat manager| image:: figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-manager.jpg
-   :width: 600
-.. |multinic flatdhcp manager| image:: figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-DHCP-manager.jpg
-   :width: 600
-.. |multinic VLAN manager| image:: figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-VLAN-manager.jpg
-   :width: 600

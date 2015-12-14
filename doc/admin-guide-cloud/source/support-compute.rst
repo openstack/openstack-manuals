@@ -209,11 +209,13 @@ To disable injection in libvirt, set the following in ``nova.conf``:
    [libvirt]
    inject_partition = -2
 
-.. note:: If you have not enabled the configuration drive and
-         you want to make user-specified files available from
-         the metadata server for to improve performance and
-         avoid boot failure if injection fails, you must
-         disable injection.
+.. note::
+
+   If you have not enabled the configuration drive and
+   you want to make user-specified files available from
+   the metadata server for to improve performance and
+   avoid boot failure if injection fails, you must
+   disable injection.
 
 
 .. _live-snapshotting-fail:
