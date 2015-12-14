@@ -9,7 +9,7 @@ Identity uses the
 `dogpile.cache <http://dogpilecache.readthedocs.org/en/latest/>`__
 library which allows flexible cache back ends. The majority of the
 caching configuration options are set in the ``[cache]`` section of the
-:file:`keystone.conf` file. However, each section that has the capability to
+``keystone.conf`` file. However, each section that has the capability to
 be cached usually has a caching boolean value that toggles caching.
 
 So to enable only the token back end caching, set the values as follows:

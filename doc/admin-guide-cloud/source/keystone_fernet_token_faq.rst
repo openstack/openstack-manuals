@@ -56,19 +56,20 @@ keystone configuration file. The keystone process should be able to read and
 write to this location but it should be kept secret otherwise. Currently,
 keystone only supports file-backed key repositories.
 
-..code-block:: ini
+.. code-block:: ini
 
-  [fernet_tokens]
-  key_repository = /etc/keystone/fernet-keys/
+   [fernet_tokens]
+   key_repository = /etc/keystone/fernet-keys/
 
 What is the recommended way to rotate and distribute keys?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``keystone-manage`` command line utility includes a key rotation mechanism.
-This mechanism will initialize and rotate keys but does not make an effort to
-distribute keys across keystone nodes. The distribution of keys across a
-keystone deployment is best handled through configuration management tooling.
-Use ``keystone-manage fernet_rotate`` to rotate the key repository.
+The :command:`keystone-manage` command line utility includes a key rotation
+mechanism. This mechanism will initialize and rotate keys but does not make
+an effort to distribute keys across keystone nodes. The distribution of keys
+across a keystone deployment is best handled through configuration management
+tooling. Use :command:`keystone-manage fernet_rotate` to rotate the key
+repository.
 
 Do fernet tokens still expires?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -245,79 +246,91 @@ and adding two. Better illustrated as::
 The reason for adding two additional keys to the count is to include the staged
 key and a buffer key. This can be shown based on the previous example. We
 initially setup the key repository at 6:00 AM on Monday, and the initial state
-looks like::
+looks like:
 
-    $ ls -la /etc/keystone/fernet-keys/
-    drwx------ 2 keystone keystone 4096 .
-    drwxr-xr-x 3 keystone keystone 4096 ..
-    -rw------- 1 keystone keystone   44 0    (staged key)
-    -rw------- 1 keystone keystone   44 1    (primary key)
+.. code-block:: console
+
+   $ ls -la /etc/keystone/fernet-keys/
+   drwx------ 2 keystone keystone 4096 .
+   drwxr-xr-x 3 keystone keystone 4096 ..
+   -rw------- 1 keystone keystone   44 0    (staged key)
+   -rw------- 1 keystone keystone   44 1    (primary key)
 
 All tokens created after 6:00 AM are encrypted with key ``1``. At 12:00 PM we
-will rotate keys again, resulting in::
+will rotate keys again, resulting in,
 
-    $ ls -la /etc/keystone/fernet-keys/
-    drwx------ 2 keystone keystone 4096 .
-    drwxr-xr-x 3 keystone keystone 4096 ..
-    -rw------- 1 keystone keystone   44 0    (staged key)
-    -rw------- 1 keystone keystone   44 1    (secondary key)
-    -rw------- 1 keystone keystone   44 2    (primary key)
+.. code-block:: console
+
+   $ ls -la /etc/keystone/fernet-keys/
+   drwx------ 2 keystone keystone 4096 .
+   drwxr-xr-x 3 keystone keystone 4096 ..
+   -rw------- 1 keystone keystone   44 0    (staged key)
+   -rw------- 1 keystone keystone   44 1    (secondary key)
+   -rw------- 1 keystone keystone   44 2    (primary key)
 
 We are still able to validate tokens created between 6:00 - 11:59 AM because
 the ``1`` key still exists as a secondary key. All tokens issued after 12:00 PM
 will be encrypted with key ``2``. At 6:00 PM we do our next rotation, resulting
-in::
+in:
 
-    $ ls -la /etc/keystone/fernet-keys/
-    drwx------ 2 keystone keystone 4096 .
-    drwxr-xr-x 3 keystone keystone 4096 ..
-    -rw------- 1 keystone keystone   44 0    (staged key)
-    -rw------- 1 keystone keystone   44 1    (secondary key)
-    -rw------- 1 keystone keystone   44 2    (secondary key)
-    -rw------- 1 keystone keystone   44 3    (primary key)
+.. code-block:: console
+
+   $ ls -la /etc/keystone/fernet-keys/
+   drwx------ 2 keystone keystone 4096 .
+   drwxr-xr-x 3 keystone keystone 4096 ..
+   -rw------- 1 keystone keystone   44 0    (staged key)
+   -rw------- 1 keystone keystone   44 1    (secondary key)
+   -rw------- 1 keystone keystone   44 2    (secondary key)
+   -rw------- 1 keystone keystone   44 3    (primary key)
 
 It is still possible to validate tokens issued from 6:00 AM - 5:59 PM because
 keys ``1`` and ``2`` exist as secondary keys. Every token issued until 11:59 PM
-will be encrypted with key ``3``, and at 12:00 AM we do our next rotation::
+will be encrypted with key ``3``, and at 12:00 AM we do our next rotation:
 
-    $ ls -la /etc/keystone/fernet-keys/
-    drwx------ 2 keystone keystone 4096 .
-    drwxr-xr-x 3 keystone keystone 4096 ..
-    -rw------- 1 keystone keystone   44 0    (staged key)
-    -rw------- 1 keystone keystone   44 1    (secondary key)
-    -rw------- 1 keystone keystone   44 2    (secondary key)
-    -rw------- 1 keystone keystone   44 3    (secondary key)
-    -rw------- 1 keystone keystone   44 4    (primary key)
+.. code-block:: console
+
+   $ ls -la /etc/keystone/fernet-keys/
+   drwx------ 2 keystone keystone 4096 .
+   drwxr-xr-x 3 keystone keystone 4096 ..
+   -rw------- 1 keystone keystone   44 0    (staged key)
+   -rw------- 1 keystone keystone   44 1    (secondary key)
+   -rw------- 1 keystone keystone   44 2    (secondary key)
+   -rw------- 1 keystone keystone   44 3    (secondary key)
+   -rw------- 1 keystone keystone   44 4    (primary key)
 
 Just like before, we can still validate tokens issued from 6:00 AM the previous
 day until 5:59 AM today because keys ``1`` - ``4`` are present. At 6:00 AM,
 tokens issued from the previous day will start to expire and we do our next
-scheduled rotation::
+scheduled rotation:
 
-    $ ls -la /etc/keystone/fernet-keys/
-    drwx------ 2 keystone keystone 4096 .
-    drwxr-xr-x 3 keystone keystone 4096 ..
-    -rw------- 1 keystone keystone   44 0    (staged key)
-    -rw------- 1 keystone keystone   44 1    (secondary key)
-    -rw------- 1 keystone keystone   44 2    (secondary key)
-    -rw------- 1 keystone keystone   44 3    (secondary key)
-    -rw------- 1 keystone keystone   44 4    (secondary key)
-    -rw------- 1 keystone keystone   44 5    (primary key)
+.. code-block:: console
+
+   $ ls -la /etc/keystone/fernet-keys/
+   drwx------ 2 keystone keystone 4096 .
+   drwxr-xr-x 3 keystone keystone 4096 ..
+   -rw------- 1 keystone keystone   44 0    (staged key)
+   -rw------- 1 keystone keystone   44 1    (secondary key)
+   -rw------- 1 keystone keystone   44 2    (secondary key)
+   -rw------- 1 keystone keystone   44 3    (secondary key)
+   -rw------- 1 keystone keystone   44 4    (secondary key)
+   -rw------- 1 keystone keystone   44 5    (primary key)
 
 Tokens will naturally expire after 6:00 AM, but we will not be able to remove
 key ``1`` until the next rotation because it encrypted all tokens from 6:00 AM
 to 12:00 PM the day before. Once we do our next rotation, which is at 12:00 PM,
-the ``1`` key will be pruned from the repository::
+the ``1`` key will be pruned from the repository:
 
-    $ ls -la /etc/keystone/fernet-keys/
-    drwx------ 2 keystone keystone 4096 .
-    drwxr-xr-x 3 keystone keystone 4096 ..
-    -rw------- 1 keystone keystone   44 0    (staged key)
-    -rw------- 1 keystone keystone   44 2    (secondary key)
-    -rw------- 1 keystone keystone   44 3    (secondary key)
-    -rw------- 1 keystone keystone   44 4    (secondary key)
-    -rw------- 1 keystone keystone   44 5    (secondary key)
-    -rw------- 1 keystone keystone   44 6    (primary key)
+.. code-block:: console
+
+   $ ls -la /etc/keystone/fernet-keys/
+   drwx------ 2 keystone keystone 4096 .
+   drwxr-xr-x 3 keystone keystone 4096 ..
+   -rw------- 1 keystone keystone   44 0    (staged key)
+   -rw------- 1 keystone keystone   44 2    (secondary key)
+   -rw------- 1 keystone keystone   44 3    (secondary key)
+   -rw------- 1 keystone keystone   44 4    (secondary key)
+   -rw------- 1 keystone keystone   44 5    (secondary key)
+   -rw------- 1 keystone keystone   44 6    (primary key)
 
 If keystone were to receive a token that was created between 6:00 AM and 12:00
 PM the day before, encrypted with the ``1`` key, it would not be valid because

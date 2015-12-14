@@ -26,7 +26,7 @@ administrators to use users and groups in LDAP.
       driver = keystone.identity.backends.ldap.Identity
 
 #. Create the organizational units (OU) in the LDAP directory, and define
-   the corresponding location in the :file:`keystone.conf` file:
+   the corresponding location in the ``keystone.conf`` file:
 
    .. code-block:: ini
 
@@ -43,12 +43,12 @@ administrators to use users and groups in LDAP.
       various schemas. For example, this entry maps to the person
       attribute in Active Directory:
 
-      .. code:: ini
+      .. code-block:: ini
 
          user_objectclass = person
 
 #. A read-only implementation is recommended for LDAP integration. These
-   permissions are applied to object types in the :file:`keystone.conf`:
+   permissions are applied to object types in the ``keystone.conf``:
 
    .. code-block:: ini
 
@@ -61,22 +61,25 @@ administrators to use users and groups in LDAP.
       group_allow_update = False
       group_allow_delete = False
 
-   Restart the OpenStack Identity service::
+   Restart the OpenStack Identity service:
+
+   .. code-block:: console
 
       # service keystone restart
 
-   ..  warning::
+   .. warning::
 
       During service restart, authentication and authorization are
       unavailable.
 
 **To integrate multiple Identity back ends with LDAP**
 
-#. Set the following options in the :file:`/etc/keystone/keystone.conf` file:
+#. Set the following options in the ``/etc/keystone/keystone.conf``
+   file:
 
    #. Enable the LDAP driver:
 
-      .. code:: ini
+      .. code-block:: ini
 
          [identity]
          #driver = keystone.identity.backends.sql.Identity
@@ -84,15 +87,17 @@ administrators to use users and groups in LDAP.
 
    #. Enable domain-specific drivers:
 
-      .. code:: ini
+      .. code-block:: ini
 
          [identity]
          domain_specific_drivers_enabled = True
          domain_config_dir = /etc/keystone/domains
 
-#. Restart the service::
+#. Restart the service:
 
-   # service keystone restart
+   .. code-block:: console
+
+      # service keystone restart
 
 #. List the domains using the dashboard, or the OpenStackClient CLI. Refer
    to the `Command List
@@ -102,18 +107,18 @@ administrators to use users and groups in LDAP.
 #. Create domains using OpenStack dashboard, or the OpenStackClient CLI.
 
 #. For each domain, create a domain-specific configuration file in the
-   :file:`/etc/keystone/domains` directory. Use the file naming convention
-   :file:`keystone.DOMAIN_NAME.conf`, where DOMAIN\_NAME is the domain name
+   ``/etc/keystone/domains`` directory. Use the file naming convention
+   ``keystone.DOMAIN_NAME.conf``, where DOMAIN\_NAME is the domain name
    assigned in the previous step.
 
    .. note::
 
       The options set in the
-      :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf` file will
-      override options in the :file:`/etc/keystone/keystone.conf` file.
+      ``/etc/keystone/domains/keystone.DOMAIN_NAME.conf`` file will
+      override options in the ``/etc/keystone/keystone.conf`` file.
 
 #. Define the destination LDAP server in the
-   :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf` file. For example:
+   ``/etc/keystone/domains/keystone.DOMAIN_NAME.conf`` file. For example:
 
    .. code-block:: ini
 
@@ -127,7 +132,7 @@ administrators to use users and groups in LDAP.
 
 #. Create the organizational units (OU) in the LDAP directories, and define
    their corresponding locations in the
-   :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf` file. For example:
+   ``/etc/keystone/domains/keystone.DOMAIN_NAME.conf`` file. For example:
 
    .. code-block:: ini
 
@@ -144,15 +149,15 @@ administrators to use users and groups in LDAP.
       various schemas. For example, this entry maps to the person
       attribute in Active Directory:
 
-      .. code:: ini
+      .. code-block:: ini
 
          user_objectclass = person
 
 #. A read-only implementation is recommended for LDAP integration. These
    permissions are applied to object types in the
-   :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf` file:
+   ``/etc/keystone/domains/keystone.DOMAIN_NAME.conf`` file:
 
-   .. code:: ini
+   .. code-block:: ini
 
       [ldap]
       user_allow_create = False
@@ -163,9 +168,11 @@ administrators to use users and groups in LDAP.
       group_allow_update = False
       group_allow_delete = False
 
-#. Restart the OpenStack Identity service::
+#. Restart the OpenStack Identity service:
 
-   # service keystone restart
+   .. code-block:: console
+
+      # service keystone restart
 
    .. warning::
 
@@ -174,8 +181,8 @@ administrators to use users and groups in LDAP.
 
 **Additional LDAP integration settings**
 
-Set these options in the :file:`/etc/keystone/keystone.conf` file for a
-single LDAP server, or :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf`
+Set these options in the ``/etc/keystone/keystone.conf`` file for a
+single LDAP server, or ``/etc/keystone/domains/keystone.DOMAIN_NAME.conf``
 files for multiple back ends. Example configurations appear below each
 setting summary:
 
@@ -184,9 +191,9 @@ Filters
 
    .. code-block:: ini
 
-       [ldap]
-       user_filter = (memberof=cn=openstack-users,ou=workgroups,dc=example,dc=org)
-       group_filter =
+      [ldap]
+      user_filter = (memberof=cn=openstack-users,ou=workgroups,dc=example,dc=org)
+      group_filter =
 
 Identity attribute mapping
    Mask account status values (include any additional attribute
@@ -197,7 +204,7 @@ Identity attribute mapping
    update.
 
    For example, you can mask Active Directory account status attributes
-   in the :file:`keystone.conf` file:
+   in the ``keystone.conf`` file:
 
    .. code-block:: ini
 
@@ -235,9 +242,11 @@ Enabled emulation
       user_enabled_emulation_dn = false
 
 When you have finished configuration, restart the OpenStack Identity
-service::
+service:
 
-   # service keystone restart
+   .. code-block:: console
+
+      # service keystone restart
 
 .. warning::
 

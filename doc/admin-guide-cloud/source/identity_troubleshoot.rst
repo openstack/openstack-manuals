@@ -5,10 +5,10 @@ Troubleshoot the Identity service
 To troubleshoot the Identity service, review the logs in the
 ``/var/log/keystone/keystone.log`` file.
 
-.. note
+.. note::
 
-    Use the :file:`/etc/keystone/logging.conf` file to configure the
-    location of log files.
+   Use the ``/etc/keystone/logging.conf`` file to configure the
+   location of log files.
 
 The logs show the components that have come in to the WSGI request, and
 ideally show an error that explains why an authorization request failed.
@@ -32,56 +32,54 @@ section like this:
 
 .. code-block:: ini
 
-    [keystone_authtoken]
-    signing_dir = /var/cache/glance/api
-    auth_uri = http://controller:5000/v2.0
-    identity_uri = http://controller:35357
-    admin_tenant_name = service
-    admin_user = glance
+   [keystone_authtoken]
+   signing_dir = /var/cache/glance/api
+   auth_uri = http://controller:5000/v2.0
+   identity_uri = http://controller:35357
+   admin_tenant_name = service
+   admin_user = glance
 
 The first thing to check is that the ``signing_dir`` does, in fact,
 exist. If it does, check for certificate files:
 
-.. code::
+.. code-block:: console
 
-    $ ls -la /var/cache/glance/api/
+   $ ls -la /var/cache/glance/api/
 
-.. code::
-
-    total 24
-    drwx------. 2 ayoung root 4096 Jul 22 10:58 .
-    drwxr-xr-x. 4 root root 4096 Nov 7 2012 ..
-    -rw-r-----. 1 ayoung ayoung 1424 Jul 22 10:58 cacert.pem
-    -rw-r-----. 1 ayoung ayoung 15 Jul 22 10:58 revoked.pem
-    -rw-r-----. 1 ayoung ayoung 4518 Jul 22 10:58 signing_cert.pem
+   total 24
+   drwx------. 2 ayoung root 4096 Jul 22 10:58 .
+   drwxr-xr-x. 4 root root 4096 Nov 7 2012 ..
+   -rw-r-----. 1 ayoung ayoung 1424 Jul 22 10:58 cacert.pem
+   -rw-r-----. 1 ayoung ayoung 15 Jul 22 10:58 revoked.pem
+   -rw-r-----. 1 ayoung ayoung 4518 Jul 22 10:58 signing_cert.pem
 
 This directory contains two certificates and the token revocation list.
 If these files are not present, your service cannot fetch them from
 Identity. To troubleshoot, try to talk to Identity to make sure it
 correctly serves files, as follows:
 
-.. code::
+.. code-block:: console
 
-    $ curl http://localhost:35357/v2.0/certificates/signing
+   $ curl http://localhost:35357/v2.0/certificates/signing
 
 This command fetches the signing certificate:
 
-.. code::
+.. code-block:: yaml
 
-    Certificate:
-        Data:
-            Version: 3 (0x2)
-            Serial Number: 1 (0x1)
-        Signature Algorithm: sha1WithRSAEncryption
-            Issuer: C=US, ST=Unset, L=Unset, O=Unset, CN=www.example.com
-            Validity
-                Not Before: Jul 22 14:57:31 2013 GMT
-                Not After : Jul 20 14:57:31 2023 GMT
-            Subject: C=US, ST=Unset, O=Unset, CN=www.example.com
+   Certificate:
+       Data:
+           Version: 3 (0x2)
+           Serial Number: 1 (0x1)
+       Signature Algorithm: sha1WithRSAEncryption
+           Issuer: C=US, ST=Unset, L=Unset, O=Unset, CN=www.example.com
+           Validity
+               Not Before: Jul 22 14:57:31 2013 GMT
+               Not After : Jul 20 14:57:31 2023 GMT
+           Subject: C=US, ST=Unset, O=Unset, CN=www.example.com
 
 Note the expiration dates of the certificate:
 
-.. code::
+.. code-block:: console
 
     Not Before: Jul 22 14:57:31 2013 GMT
     Not After : Jul 20 14:57:31 2023 GMT
@@ -96,7 +94,7 @@ files. You might have to turn up your logging levels. Set
 ``debug = True`` and ``verbose = True`` in your Identity configuration
 file and restart the Identity server.
 
-.. code::
+.. code-block:: console
 
     (keystone.common.wsgi): 2013-07-24 12:18:11,461 DEBUG wsgi __call__
     arg_dict: {}
@@ -122,9 +120,9 @@ Run the ``setenforce permissive`` command. If that makes a difference,
 you should relabel the directory. If you are using a sub-directory of
 the ``/var/cache/`` directory, run the following command:
 
-.. code::
+.. code-block:: console
 
-    # restorecon /var/cache/
+   # restorecon /var/cache/
 
 If you are not using a ``/var/cache`` sub-directory, you should. Modify
 the ``signing_dir`` configuration option for your service and restart.
@@ -141,33 +139,34 @@ Debug signing key file errors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If an error occurs when the signing key file opens, it is possible that
-the person who ran the ``keystone-manage pki_setup`` command to generate
-certificates and keys did not use the correct user. When you run the
-``keystone-manage pki_setup`` command, Identity generates a set of
-certificates and keys in ``/etc/keystone/ssl*``, which is owned by
+the person who ran the :command:`keystone-manage pki_setup` command to
+generate certificates and keys did not use the correct user. When you
+run the :command:`keystone-manage pki_setup` command, Identity generates
+a set of certificates and keys in ``/etc/keystone/ssl*``, which is owned by
 ``root:root``.
 
 This can present a problem when you run the Identity daemon under the
 keystone user account (nologin) when you try to run PKI. Unless you run
-the ``chown`` command against the files ``keystone:keystone``, or run the
-``keystone-manage pki_setup`` command with the :option:`--keystone-user` and
-:option:`--keystone-group` parameters, you will get an error. For example:
+the :command:`chown` command against the files ``keystone:keystone``, or run
+the :command:`keystone-manage pki_setup` command with the
+:option:`--keystone-user` and :option:`--keystone-group` parameters, you
+will get an error. For example:
 
-.. code::
+.. code-block:: console
 
-    2012-07-31 11:10:53 ERROR [keystone.common.cms] Error opening signing key file
-    /etc/keystone/ssl/private/signing_key.pem
-    140380567730016:error:0200100D:system library:fopen:Permission
-    denied:bss_file.c:398:fopen('/etc/keystone/ssl/private/signing_key.pem','r')
-    140380567730016:error:20074002:BIO routines:FILE_CTRL:system lib:bss_file.c:400:
-    unable to load signing key file
+   2012-07-31 11:10:53 ERROR [keystone.common.cms] Error opening signing key file
+   /etc/keystone/ssl/private/signing_key.pem
+   140380567730016:error:0200100D:system library:fopen:Permission
+   denied:bss_file.c:398:fopen('/etc/keystone/ssl/private/signing_key.pem','r')
+   140380567730016:error:20074002:BIO routines:FILE_CTRL:system lib:bss_file.c:400:
+   unable to load signing key file
 
 Flush expired tokens from the token database table
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As you generate tokens, the token database table on the Identity server
 grows. To clear the token table, an administrative user must run the
-``keystone-manage token_flush`` command to flush the tokens. When you
+:command:`keystone-manage token_flush` command to flush the tokens. When you
 flush tokens, expired tokens are deleted and traceability is eliminated.
 
 Use ``cron`` to schedule this command to run frequently based on your

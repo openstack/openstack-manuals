@@ -21,7 +21,7 @@ assignments in LDAP.
 .. important::
 
    For OpenStack Identity assignments to access LDAP servers, you must
-   define the destination LDAP server in the :file:`keystone.conf` file.
+   define the destination LDAP server in the ``keystone.conf`` file.
    For more information, see :ref:`integrate-identity-with-ldap`.
 
 **To integrate assignment back ends with LDAP**
@@ -54,7 +54,7 @@ assignments in LDAP.
       various schemas. For example, this entry maps to the groupOfNames
       attribute in Active Directory:
 
-      .. code:: ini
+      .. code-block:: ini
 
          project_objectclass = groupOfNames
 
@@ -72,10 +72,11 @@ assignments in LDAP.
       project_allow_update = False
       project_allow_delete = False
 
-#. Restart the OpenStack Identity service::
+#. Restart the OpenStack Identity service:
 
+   .. code-block:: console
 
-   # service keystone restart
+      # service keystone restart
 
    .. warning::
 
@@ -84,8 +85,8 @@ assignments in LDAP.
 
 **Additional LDAP integration settings.**
 
-Set these options in the :file:`/etc/keystone/keystone.conf` file for a
-single LDAP server, or :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf`
+Set these options in the ``/etc/keystone/keystone.conf`` file for a
+single LDAP server, or ``/etc/keystone/domains/keystone.DOMAIN_NAME.conf``
 files for multiple back ends.
 
 Filters

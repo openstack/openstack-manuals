@@ -11,7 +11,7 @@ Once you verify the location of your certificate authority file:
 
 **To configure TLS encryption on LDAP traffic**
 
-#. Open the :file:`/etc/keystone/keystone.conf` configuration file.
+#. Open the ``/etc/keystone/keystone.conf`` configuration file.
 
 #. Find the ``[ldap]`` section.
 
@@ -50,7 +50,9 @@ Once you verify the location of your certificate authority file:
       * ``never`` - A certificate will never be requested.
 
 On distributions that include openstack-config, you can configure TLS
-encryption on LDAP traffic by running the following commands instead::
+encryption on LDAP traffic by running the following commands instead.
+
+.. code-block:: console
 
    # openstack-config --set /etc/keystone/keystone.conf \
      ldap use_tls True

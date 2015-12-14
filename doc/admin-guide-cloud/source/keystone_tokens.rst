@@ -3,9 +3,9 @@ Keystone token providers
 ========================
 
 Tokens are used to interact with the various OpenStack APIs. The token type
-issued by keystone is configurable through the :file:`etc/keystone.conf` file.
-Currently, there are four supported token types and they include UUID, fernet,
-PKI, and PKIZ.
+issued by keystone is configurable through the ``etc/keystone.conf`` file.
+Currently, there are four supported token types and they include ``UUID``,
+``fernet``, ``PKI``, and ``PKIZ``.
 
 UUID tokens
 ~~~~~~~~~~~

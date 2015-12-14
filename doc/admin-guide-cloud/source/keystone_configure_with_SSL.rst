@@ -7,7 +7,7 @@ You can configure the Identity service to support two-way SSL.
 You must obtain the x509 certificates externally and configure them.
 
 The Identity service provides a set of sample certificates in the
-:file:`examples/pki/certs` and :file:`examples/pki/private` directories:
+``examples/pki/certs`` and ``examples/pki/private`` directories:
 
 cacert.pem
    Certificate Authority chain to validate against.
@@ -36,23 +36,23 @@ Client authentication with keystone-all
 
 When running ``keystone-all``, the server can be configured to enable SSL
 with client authentication using the following instructions. Modify the
-``[eventlet_server_ssl]`` section in the :file:`/etc/keystone/keystone.conf`
+``[eventlet_server_ssl]`` section in the ``/etc/keystone/keystone.conf``
 file. The following SSL configuration example uses the included sample
 certificates:
 
 .. code-block:: ini
 
-    [eventlet_server_ssl]
-    enable = True
-    certfile = <path to keystone.pem>
-    keyfile = <path to keystonekey.pem>
-    ca_certs = <path to ca.pem>
-    cert_required = True
+   [eventlet_server_ssl]
+   enable = True
+   certfile = <path to keystone.pem>
+   keyfile = <path to keystonekey.pem>
+   ca_certs = <path to ca.pem>
+   cert_required = True
 
 **Options**
 
 - ``enable``
-    True enables SSL. Default is False.
+    ``True`` enables SSL. Default is ``False``.
 
 - ``certfile``
     Path to the Identity service public certificate file.
@@ -66,7 +66,7 @@ certificates:
     Path to the CA trust chain.
 
 -  ``cert_required``
-    Requires client certificate. Default is False.
+    Requires client certificate. Default is ``False``.
 
 When running the Identity service as a WSGI service in a web server such
 as Apache httpd, this configuration is done in the web server instead.
