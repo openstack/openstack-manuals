@@ -31,7 +31,7 @@ Networking handles two kind of authorization policies:
    The actual authorization policies enforced in Networking might vary
    from deployment to deployment.
 
-The policy engine reads entries from the :file:`policy.json` file. The
+The policy engine reads entries from the ``policy.json`` file. The
 actual location of this file might vary from distribution to
 distribution. Entries can be updated while the system is running, and no
 service restart is required. Every time the policy file is updated, the
@@ -84,7 +84,7 @@ terminal rules:
    in the resource is equal to the tenant identifier of the user
    submitting the request.
 
-This extract is from the default :file:`policy.json` file:
+This extract is from the default ``policy.json`` file:
 
 -  A rule that evaluates successfully if the current user is an
    administrator or the owner of the resource specified in the request
@@ -92,36 +92,36 @@ This extract is from the default :file:`policy.json` file:
 
    .. code-block:: json
 
-       {
-        "admin_or_owner": [
-            [
-                "role:admin"
-            ],
-            [
-                "tenant_id:%(tenant_id)s"
-            ]
-        ],
-        "admin_or_network_owner": [
-            [
-                "role:admin"
-            ],
-            [
-                "tenant_id:%(network_tenant_id)s"
-            ]
-        ],
-        "admin_only": [
-            [
-                "role:admin"
-        ]
-        ],
-        "regular_user": [],
-        "shared": [
-            [
-                "field:networks:shared=True"
-            ]
-        ],
-        "default": [
-            [
+      {
+       "admin_or_owner": [
+           [
+               "role:admin"
+           ],
+           [
+               "tenant_id:%(tenant_id)s"
+           ]
+       ],
+       "admin_or_network_owner": [
+           [
+               "role:admin"
+           ],
+           [
+               "tenant_id:%(network_tenant_id)s"
+           ]
+       ],
+       "admin_only": [
+           [
+               "role:admin"
+       ]
+       ],
+       "regular_user": [],
+       "shared": [
+           [
+               "field:networks:shared=True"
+           ]
+       ],
+       "default": [
+           [
 
 -  The default policy that is always evaluated if an API operation does
    not match any of the policies in ``policy.json``.

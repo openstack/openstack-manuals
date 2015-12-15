@@ -14,8 +14,8 @@ network.
 
 This section shows you how to install and configure a subset of the
 available plug-ins, which might include the installation of switching
-software (for example, Open vSwitch) and as agents used to communicate
-with the neutron-server process running elsewhere in the data center.
+software (for example, ``Open vSwitch``) and as agents used to communicate
+with the ``neutron-server`` process running elsewhere in the data center.
 
 Configure data-forwarding nodes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -27,13 +27,13 @@ If you use the NSX plug-in, you must also install Open vSwitch on each
 data-forwarding node. However, you do not need to install an additional
 agent on each node.
 
-.. Warning::
+.. warning::
 
-    It is critical that you run an Open vSwitch version that is
-    compatible with the current version of the NSX Controller software.
-    Do not use the Open vSwitch version that is installed by default on
-    Ubuntu. Instead, use the Open vSwitch version that is provided on
-    the VMware support portal for your NSX Controller version.
+   It is critical that you run an Open vSwitch version that is
+   compatible with the current version of the NSX Controller software.
+   Do not use the Open vSwitch version that is installed by default on
+   Ubuntu. Instead, use the Open vSwitch version that is provided on
+   the VMware support portal for your NSX Controller version.
 
 **To set up each node for the NSX plug-in**
 
@@ -66,24 +66,24 @@ addresses through DHCP.
 
 #. Install the DHCP agent:
 
-   .. code:: console
+   .. code-block:: console
 
-       # apt-get install neutron-dhcp-agent
+      # apt-get install neutron-dhcp-agent
 
-#. Update any options in the :file:`/etc/neutron/dhcp_agent.ini` file
+#. Update any options in the ``/etc/neutron/dhcp_agent.ini`` file
    that depend on the plug-in in use. See the sub-sections.
 
-   .. Important::
+   .. important::
 
-    If you reboot a node that runs the DHCP agent, you must run the
-    :command:`neutron-ovs-cleanup` command before the neutron-dhcp-agent
-    service starts.
+      If you reboot a node that runs the DHCP agent, you must run the
+      :command:`neutron-ovs-cleanup` command before the ``neutron-dhcp-agent``
+      service starts.
 
-    On Red Hat, SUSE, and Ubuntu based systems, the
-    ``neutron-ovs-cleanup`` service runs the :command:`neutron-ovs-cleanup`
-    command automatically. However, on Debian-based systems, you
-    must manually run this command or write your own system script
-    that runs on boot before the ``neutron-dhcp-agent`` service starts.
+      On Red Hat, SUSE, and Ubuntu based systems, the
+      ``neutron-ovs-cleanup`` service runs the :command:`neutron-ovs-cleanup`
+      command automatically. However, on Debian-based systems, you
+      must manually run this command or write your own system script
+      that runs on boot before the ``neutron-dhcp-agent`` service starts.
 
 Networking dhcp-agent can use
 `dnsmasq <http://www.thekelleys.org.uk/dnsmasq/doc.html>`__ driver which
@@ -93,15 +93,15 @@ supports stateful and stateless DHCPv6 for subnets created with
 
 For example:
 
-.. code:: console
+.. code-block:: console
 
-    $ neutron subnet-create --ip-version 6 --ipv6_ra_mode dhcpv6-stateful
-     --ipv6_address_mode dhcpv6-stateful NETWORK CIDR
+   $ neutron subnet-create --ip-version 6 --ipv6_ra_mode dhcpv6-stateful
+    --ipv6_address_mode dhcpv6-stateful NETWORK CIDR
 
-.. code:: console
+.. code-block:: console
 
-    $ neutron subnet-create --ip-version 6 --ipv6_ra_mode dhcpv6-stateless
-     --ipv6_address_mode dhcpv6-stateless NETWORK CIDR
+   $ neutron subnet-create --ip-version 6 --ipv6_ra_mode dhcpv6-stateless
+    --ipv6_address_mode dhcpv6-stateless NETWORK CIDR
 
 If no dnsmasq process for subnet's network is launched, Networking will
 launch a new one on subnet's dhcp port in ``qdhcp-XXX`` namespace. If
@@ -111,9 +111,9 @@ configuration.
 Networking will update dnsmasq process and restart it when subnet gets
 updated.
 
-.. Note::
+.. note::
 
-    For dhcp-agent to operate in IPv6 mode use at least dnsmasq v2.63.
+   For dhcp-agent to operate in IPv6 mode use at least dnsmasq v2.63.
 
 After a certain, configured timeframe, networks uncouple from DHCP
 agents when the agents are no longer in use. You can configure the DHCP
@@ -130,28 +130,28 @@ DHCP agent setup: OVS plug-in
 -----------------------------
 
 These DHCP agent options are required in the
-:file:`/etc/neutron/dhcp_agent.ini` file for the OVS plug-in:
+``/etc/neutron/dhcp_agent.ini`` file for the OVS plug-in:
 
-.. code:: bash
+.. code-block:: bash
 
-    [DEFAULT]
-    enable_isolated_metadata = True
-    use_namespaces = True
-    interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+   [DEFAULT]
+   enable_isolated_metadata = True
+   use_namespaces = True
+   interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 
 DHCP agent setup: NSX plug-in
 -----------------------------
 
 These DHCP agent options are required in the
-:file:`/etc/neutron/dhcp_agent.ini` file for the NSX plug-in:
+``/etc/neutron/dhcp_agent.ini`` file for the NSX plug-in:
 
-.. code:: bash
+.. code-block:: bash
 
-    [DEFAULT]
-    enable_metadata_network = True
-    enable_isolated_metadata = True
-    use_namespaces = True
-    interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+   [DEFAULT]
+   enable_metadata_network = True
+   enable_isolated_metadata = True
+   use_namespaces = True
+   interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 
 Configure L3 agent
 ~~~~~~~~~~~~~~~~~~
@@ -169,11 +169,11 @@ capabilities:
    `Floodlight <http://www.projectfloodlight.org/floodlight/>`__
    controller and the proprietary Big Switch controller.
 
-   .. Note::
+   .. note::
 
-       Only the proprietary BigSwitch controller implements L3
-       functionality. When using Floodlight as your OpenFlow controller,
-       L3 functionality is not available.
+      Only the proprietary BigSwitch controller implements L3
+      functionality. When using Floodlight as your OpenFlow controller,
+      L3 functionality is not available.
 
 -  IBM SDN-VE plug-in
 
@@ -183,43 +183,43 @@ capabilities:
 
 -  PLUMgrid plug-in
 
-.. Warning::
+.. warning::
 
-    Do not configure or use neutron-l3-agent if you use one of these
-    plug-ins.
+   Do not configure or use ``neutron-l3-agent`` if you use one of these
+   plug-ins.
 
 **To install the L3 agent for all other plug-ins**
 
-#. Install the neutron-l3-agent binary on the network node:
+#. Install the ``neutron-l3-agent`` binary on the network node:
 
-   .. code:: console
+   .. code-block:: console
 
-       # apt-get install neutron-l3-agent
+      # apt-get install neutron-l3-agent
 
-#. To uplink the node that runs neutron-l3-agent to the external network,
-   create a bridge named "br-ex" and attach the NIC for the external
+#. To uplink the node that runs ``neutron-l3-agent`` to the external network,
+   create a bridge named ``br-ex`` and attach the NIC for the external
    network to this bridge.
 
    For example, with Open vSwitch and NIC eth1 connected to the external
    network, run:
 
-   .. code:: console
+   .. code-block:: console
 
-       # ovs-vsctl add-br br-ex
-       # ovs-vsctl add-port br-ex eth1
+      # ovs-vsctl add-br br-ex
+      # ovs-vsctl add-port br-ex eth1
 
    Do not manually configure an IP address on the NIC connected to the
-   external network for the node running neutron-l3-agent. Rather, you must
-   have a range of IP addresses from the external network that can be used
-   by OpenStack Networking for routers that uplink to the external network.
-   This range must be large enough to have an IP address for each router in
-   the deployment, as well as each floating IP.
+   external network for the node running ``neutron-l3-agent``. Rather, you
+   must have a range of IP addresses from the external network that can be
+   used by OpenStack Networking for routers that uplink to the external
+   network. This range must be large enough to have an IP address for each
+   router in the deployment, as well as each floating IP.
 
-#. The neutron-l3-agent uses the Linux IP stack and iptables to perform L3
+#. The ``neutron-l3-agent`` uses the Linux IP stack and iptables to perform L3
    forwarding and NAT. In order to support multiple routers with
-   potentially overlapping IP addresses, neutron-l3-agent defaults to using
-   Linux network namespaces to provide isolated forwarding contexts. As a
-   result, the IP addresses of routers are not visible simply by running
+   potentially overlapping IP addresses, ``neutron-l3-agent`` defaults to
+   using Linux network namespaces to provide isolated forwarding contexts.
+   As a result, the IP addresses of routers are not visible simply by running
    the :command:`ip addr list` or :command:`ifconfig` command on the node.
    Similarly, you cannot directly :command:`ping` fixed IPs.
 
@@ -228,43 +228,43 @@ capabilities:
    ``qrouter-ROUTER_UUID``. These example commands run in the router
    namespace with UUID 47af3868-0fa8-4447-85f6-1304de32153b:
 
-   .. code:: console
+   .. code-block:: console
 
-       # ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ip addr list
+      # ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ip addr list
 
-   .. code:: console
+   .. code-block:: console
 
-       # ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping FIXED_IP
+      # ip netns exec qrouter-47af3868-0fa8-4447-85f6-1304de32153b ping FIXED_IP
 
-   .. Note::
+   .. note::
 
-       For iproute version 3.12.0 and above, networking namespaces
-       are configured to be deleted by default. This behavior can be
-       changed for both DHCP and L3 agents. The configuration files are
-       :file:`/etc/neutron/dhcp_agent.ini` and
-       :file:`/etc/neutron/l3_agent.ini` respectively.
+      For iproute version 3.12.0 and above, networking namespaces
+      are configured to be deleted by default. This behavior can be
+      changed for both DHCP and L3 agents. The configuration files are
+      ``/etc/neutron/dhcp_agent.ini`` and
+      ``/etc/neutron/l3_agent.ini`` respectively.
 
-       For DHCP namespace the configuration key:
-       ``dhcp_delete_namespaces = True``. You can set it to False
-       in case namespaces cannot be deleted cleanly on the host running the
-       DHCP agent.
+      For DHCP namespace the configuration key:
+      ``dhcp_delete_namespaces = True``. You can set it to ``False``
+      in case namespaces cannot be deleted cleanly on the host running the
+      DHCP agent.
 
-       For L3 namespace, the configuration key:
-       ``router_delete_namespaces = True``. You can set it to False
-       in case namespaces cannot be deleted cleanly on the host running the
-       L3 agent.
+      For L3 namespace, the configuration key:
+      ``router_delete_namespaces = True``. You can set it to False
+      in case namespaces cannot be deleted cleanly on the host running the
+      L3 agent.
 
-   .. Important::
+   .. important::
 
-       If you reboot a node that runs the L3 agent, you must run the
-       :command:`neutron-ovs-cleanup` command before the neutron-l3-agent
-       service starts.
+      If you reboot a node that runs the L3 agent, you must run the
+      :command:`neutron-ovs-cleanup` command before the ``neutron-l3-agent``
+      service starts.
 
-       On Red Hat, SUSE and Ubuntu based systems, the neutron-ovs-cleanup
-       service runs the :command:`neutron-ovs-cleanup` command
-       automatically. However, on Debian-based systems, you must manually
-       run this command or write your own system script that runs on boot
-       before the neutron-l3-agent service starts.
+      On Red Hat, SUSE and Ubuntu based systems, the neutron-ovs-cleanup
+      service runs the :command:`neutron-ovs-cleanup` command
+      automatically. However, on Debian-based systems, you must manually
+      run this command or write your own system script that runs on boot
+      before the neutron-l3-agent service starts.
 
 Configure metering agent
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -275,46 +275,46 @@ The Neutron Metering agent resides beside neutron-l3-agent.
 
 #. Install the agent by running:
 
-   .. code:: console
+   .. code-block:: console
 
-       # apt-get install neutron-metering-agent
+      # apt-get install neutron-metering-agent
 
 #. If you use one of the following plug-ins, you need to configure the
    metering agent with these lines as well:
 
    -  An OVS-based plug-in such as OVS, NSX, NEC, BigSwitch/Floodlight:
 
-      .. code:: ini
+      .. code-block:: ini
 
-          interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+         interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 
    -  A plug-in that uses LinuxBridge:
 
-      .. code:: ini
+      .. code-block:: ini
 
-          interface_driver = neutron.agent.linux.interface.
-          BridgeInterfaceDriver
+         interface_driver = neutron.agent.linux.interface.
+         BridgeInterfaceDriver
 
 #. To use the reference implementation, you must set:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       driver = neutron.services.metering.drivers.iptables.iptables_driver
-       .IptablesMeteringDriver
+      driver = neutron.services.metering.drivers.iptables.iptables_driver
+      .IptablesMeteringDriver
 
-#. Set the ``service_plugins`` option in the :file:`/etc/neutron/neutron.conf`
-   file on the host that runs neutron-server:
+#. Set the ``service_plugins`` option in the ``/etc/neutron/neutron.conf``
+   file on the host that runs ``neutron-server``:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       service_plugins = metering
+      service_plugins = metering
 
    If this option is already defined, add ``metering`` to the list, using a
    comma as separator. For example:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       service_plugins = router,metering
+      service_plugins = router,metering
 
 Configure Load-Balancer-as-a-Service (LBaaS v2)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -326,70 +326,65 @@ For the back end, use either Octavia or Haproxy. This example uses Octavia.
 #. Install Octavia using your distribution's package manager.
 
 
-#. Edit the :file:`/etc/neutron/neutron_lbaas.conf` file and change
+#. Edit the ``/etc/neutron/neutron_lbaas.conf`` file and change
    the ``service_provider`` parameter to enable Octavia:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.
-       drivers.octavia.driver.OctaviaDriver:default
+      service_provider = LOADBALANCERV2:Octavia:neutron_lbaas.
+      drivers.octavia.driver.OctaviaDriver:default
 
-   .. Warning::
+   .. warning::
 
-       The ``service_provider`` option is already
-       defined in the :file:`/usr/share/neutron/neutron-dist.conf` file on
-       Red Hat based systems. Do not define it in :file:`neutron_lbaas.conf`
-       otherwise the Networking services will fail to restart.
+      The ``service_provider`` option is already
+      defined in the ``/usr/share/neutron/neutron-dist.conf`` file on
+      Red Hat based systems. Do not define it in ``neutron_lbaas.conf``
+      otherwise the Networking services will fail to restart.
 
 
-#. Edit the :file:`/etc/neutron/neutron.conf` file and add the
+#. Edit the ``/etc/neutron/neutron.conf`` file and add the
    ``service_plugins`` parameter to enable the load-balancing plug-in:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       device_driver = neutron_lbaas.services.loadbalancer.plugin.
-       LoadBalancerPluginv2
+      device_driver = neutron_lbaas.services.loadbalancer.plugin.
+      LoadBalancerPluginv2
 
    If this option is already defined, add the load-balancing plug-in to
    the list using a comma as a separator. For example:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       service_plugins = [already defined plugins],
-       neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
+      service_plugins = [already defined plugins],
+      neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2
 
 
 
 #. Create the required tables in the database:
 
-   .. code:: console
+   .. code-block:: console
 
-       # neutron-db-manage --service lbaas upgrade head
+      # neutron-db-manage --service lbaas upgrade head
 
-#. Restart the neutron-server service.
+#. Restart the ``neutron-server`` service.
 
 
 #. Enable load balancing in the Project section of the dashboard.
 
-   .. Warning::
+   .. warning::
 
-       Horizon panels are enabled only for LBaaSV1. LBaaSV2 panels are still
-       being developed.
+      Horizon panels are enabled only for LBaaSV1. LBaaSV2 panels are still
+      being developed.
 
-   Change the ``enable_lb`` option to ``True`` in the :file:`local_settings`
-   file (on Fedora, RHEL, and CentOS:
-   :file:`/etc/openstack-dashboard/local_settings`, on Ubuntu and Debian:
-   :file:`/etc/openstack-dashboard/local_settings.py`, and on openSUSE and
-   SLES:
-   :file:`/srv/www/openstack-dashboard/openstack_dashboard/local/local_settings
-   .py`):
+   Change the ``enable_lb`` option to ``True`` in the `local_settings.py`
+   file
 
-   .. code:: python
+   .. code-block:: python
 
-       OPENSTACK_NEUTRON_NETWORK = {
-           'enable_lb': True,
-           ...
-       }
+      OPENSTACK_NEUTRON_NETWORK = {
+          'enable_lb': True,
+          ...
+      }
 
    Apply the settings by restarting the web server. You can now view the
    Load Balancer management options in the Project view in the dashboard.
@@ -407,25 +402,25 @@ hyper-v-virtualization-platform.html>`__.
 
 #. Download the OpenStack Networking code from the repository:
 
-   .. code:: console
+   .. code-block:: console
 
-       > cd C:\OpenStack\
-       > git clone https://git.openstack.org/cgit/openstack/neutron
+      > cd C:\OpenStack\
+      > git clone https://git.openstack.org/cgit/openstack/neutron
 
 #. Install the OpenStack Networking Hyper-V Agent:
 
-   .. code:: console
+   .. code-block:: console
 
-       > cd C:\OpenStack\neutron\
-       > python setup.py install
+      > cd C:\OpenStack\neutron\
+      > python setup.py install
 
-#. Copy the :file:`policy.json` file:
+#. Copy the ``policy.json`` file:
 
-   .. code:: console
+   .. code-block:: console
 
-       > xcopy C:\OpenStack\neutron\etc\policy.json C:\etc\
+      > xcopy C:\OpenStack\neutron\etc\policy.json C:\etc\
 
-#. Create the :file:`C:\etc\neutron-hyperv-agent.conf` file and add the proper
+#. Create the ``C:\etc\neutron-hyperv-agent.conf`` file and add the proper
    configuration options and the `Hyper-V related
    options <http://docs.openstack.org/liberty/config-reference/content/
    networking-plugin-hyperv_agent.html>`__. Here is a sample config file:
@@ -456,10 +451,10 @@ hyper-v-virtualization-platform.html>`__.
 
 #. Start the OpenStack Networking Hyper-V agent:
 
-   .. code:: console
+   .. code-block:: console
 
-       > C:\Python27\Scripts\neutron-hyperv-agent.exe --config-file
-       C:\etc\neutron-hyperv-agent.conf
+      > C:\Python27\Scripts\neutron-hyperv-agent.exe --config-file
+      C:\etc\neutron-hyperv-agent.conf
 
 Basic operations on agents
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -482,7 +477,8 @@ complete basic operations on agents:
 | Update the admin status and description|                                    |
 | for a specified agent. The command can |                                    |
 | be used to enable and disable agents by|                                    |
-| using ``--admin-state-up`` parameter   |                                    |
+| using :option:`--admin-state-up`       |                                    |
+| parameter                              |                                    |
 | set to ``False`` or ``True``.          |                                    |
 |                                        |                                    |
 |                                        | ``$ neutron agent-update --admin`` |

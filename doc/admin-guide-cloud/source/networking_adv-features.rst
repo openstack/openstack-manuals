@@ -3,7 +3,7 @@ Advanced features through API extensions
 ========================================
 
 Several plug-ins implement API extensions that provide capabilities
-similar to what was available in nova-network. These plug-ins are likely
+similar to what was available in ``nova-network``. These plug-ins are likely
 to be of interest to the OpenStack community.
 
 Provider networks
@@ -337,7 +337,7 @@ to change the behavior.
 To use the Compute security group APIs or use Compute to orchestrate the
 creation of ports for instances on specific security groups, you must
 complete additional configuration. You must configure the
-:file:`/etc/nova/nova.conf` file and set the ``security_group_api=neutron``
+``/etc/nova/nova.conf`` file and set the ``security_group_api=neutron``
 option on every node that runs nova-compute and nova-api. After you make
 this change, restart nova-api and nova-compute to pick up this change.
 Then, you can use both the Compute and OpenStack Network security group
@@ -374,43 +374,43 @@ basic security group operations:
    * - Operation
      - Command
    * - Creates a security group for our web servers.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron security-group-create webservers --description "security group for webservers"
    * - Lists security groups.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron security-group-list
    * - Creates a security group rule to allow port 80 ingress.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron security-group-rule-create --direction ingress \
             --protocol tcp --port_range_min 80 --port_range_max 80 SECURITY_GROUP_UUID
    * - Lists security group rules.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron security-group-rule-list
    * - Deletes a security group rule.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron security-group-rule-delete SECURITY_GROUP_RULE_UUID
    * - Deletes a security group.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron security-group-delete SECURITY_GROUP_UUID
    * - Creates a port and associates two security groups.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron port-create --security-group SECURITY_GROUP_ID1 --security-group SECURITY_GROUP_ID2 NETWORK_ID
    * - Removes security groups from a port.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron port-update --no-security-groups PORT_ID
 
 Basic Load-Balancer-as-a-Service operations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. Note::
+.. note::
 
    The Load-Balancer-as-a-Service (LBaaS) API provisions and configures
    load balancers. The reference implementation is based on the HAProxy
@@ -423,42 +423,42 @@ basic LBaaS operations:
 
    :option:`--provider` is an optional argument. If not used, the pool is
    created with default provider for LBaaS service. You should configure
-   the default provider in the ``[service_providers]`` section of
-   :file:`neutron.conf` file. If no default provider is specified for LBaaS,
+   the default provider in the ``[service_providers]`` section of the
+   ``neutron.conf`` file. If no default provider is specified for LBaaS,
    the :option:`--provider` parameter is required for pool creation.
 
-   .. code:: console
+   .. code-block:: console
 
-      $ neutron lb-pool-create --lb-method ROUND_ROBIN --name mypool
-      --protocol HTTP --subnet-id SUBNET_UUID --provider PROVIDER_NAME
+      $ neutron lb-pool-create --lb-method ROUND_ROBIN --name mypool \
+        --protocol HTTP --subnet-id SUBNET_UUID --provider PROVIDER_NAME
 
 -  Associates two web servers with pool.
 
-   .. code:: console
+   .. code-block:: console
 
-       $ neutron lb-member-create --address  WEBSERVER1_IP --protocol-port 80 mypool
-       $ neutron lb-member-create --address  WEBSERVER2_IP --protocol-port 80 mypool
+      $ neutron lb-member-create --address  WEBSERVER1_IP --protocol-port 80 mypool
+      $ neutron lb-member-create --address  WEBSERVER2_IP --protocol-port 80 mypool
 
 -  Creates a health monitor that checks to make sure our instances are
    still running on the specified protocol-port.
 
-   .. code:: console
+   .. code-block:: console
 
-       $ neutron lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 --timeout 3
+      $ neutron lb-healthmonitor-create --delay 3 --type HTTP --max-retries 3 --timeout 3
 
 -  Associates a health monitor with pool.
 
-   .. code:: console
+   .. code-block:: console
 
-       $ neutron lb-healthmonitor-associate  HEALTHMONITOR_UUID mypool
+      $ neutron lb-healthmonitor-associate  HEALTHMONITOR_UUID mypool
 
 -  Creates a virtual IP (VIP) address that, when accessed through the
    load balancer, directs the requests to one of the pool members.
 
-   .. code:: console
+   .. code-block:: console
 
-       $ neutron lb-vip-create --name myvip --protocol-port 80 --protocol
-       HTTP --subnet-id SUBNET_UUID mypool
+      $ neutron lb-vip-create --name myvip --protocol-port 80 --protocol \
+        HTTP --subnet-id SUBNET_UUID mypool
 
 Plug-in specific extensions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -477,7 +477,7 @@ VMware NSX QoS extension
 The VMware NSX QoS extension rate-limits network ports to guarantee a
 specific amount of bandwidth for each port. This extension, by default,
 is only accessible by a tenant with an admin role but is configurable
-through the :file:`policy.json` file. To use this extension, create a queue
+through the ``policy.json`` file. To use this extension, create a queue
 and specify the min/max bandwidth rates (kbps) and optionally set the
 QoS Marking and DSCP value (if your network fabric uses these values to
 make forwarding decisions). Once created, you can associate a queue with
@@ -509,25 +509,25 @@ basic queue operations:
    * - Operation
      - Command
    * - Creates QoS queue (admin-only).
-     - .. code::
+     - .. code-block:: console
 
           $ neutron queue-create --min 10 --max 1000 myqueue
    * - Associates a queue with a network.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron net-create network --queue_id QUEUE_ID
    * - Creates a default system queue.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron queue-create --default True --min 10 --max 2000 default
    * - Lists QoS queues.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron queue-list
    * - Deletes a QoS queue.
-     - .. code::
+     - .. code-block:: console
 
-          $ neutron queue-delete QUEUE_ID_OR_NAME'
+          $ neutron queue-delete QUEUE_ID_OR_NAME
 
 VMware NSX provider networks extension
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -569,7 +569,7 @@ VMware NSX L3 extension
 NSX exposes its L3 capabilities through gateway services which are
 usually configured out of band from OpenStack. To use NSX with L3
 capabilities, first create an L3 gateway service in the NSX Manager.
-Next, in :file:`/etc/neutron/plugins/vmware/nsx.ini` set
+Next, in ``/etc/neutron/plugins/vmware/nsx.ini`` set
 ``default_l3_gw_service_uuid`` to this value. By default, routers are
 mapped to this gateway service.
 
@@ -578,17 +578,17 @@ VMware NSX L3 extension operations
 
 Create external network and map it to a specific NSX gateway service:
 
-.. code:: console
+.. code-block:: console
 
-    $ neutron net-create public --router:external True --provider:network_type l3_ext \
-    --provider:physical_network L3_GATEWAY_SERVICE_UUID
+   $ neutron net-create public --router:external True --provider:network_type l3_ext \
+   --provider:physical_network L3_GATEWAY_SERVICE_UUID
 
 Terminate traffic on a specific VLAN from a NSX gateway service:
 
-.. code:: console
+.. code-block:: console
 
-    $ neutron net-create public --router:external True --provider:network_type l3_ext \
-    --provider:physical_network L3_GATEWAY_SERVICE_UUID --provider:segmentation_id VLAN_ID
+   $ neutron net-create public --router:external True --provider:network_type l3_ext \
+   --provider:physical_network L3_GATEWAY_SERVICE_UUID --provider:segmentation_id VLAN_ID
 
 Operational status synchronization in the VMware NSX plug-in
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -751,27 +751,27 @@ provided at the same time.
 Update a router with rules to permit traffic by default but block
 traffic from external networks to the 10.10.10.0/24 subnet:
 
-.. code:: console
+.. code-block:: console
 
-    $ neutron router-update ROUTER_UUID --router_rules type=dict list=true\
-    source=any,destination=any,action=permit \
-    source=external,destination=10.10.10.0/24,action=deny
+   $ neutron router-update ROUTER_UUID --router_rules type=dict list=true\
+     source=any,destination=any,action=permit \
+     source=external,destination=10.10.10.0/24,action=deny
 
 Specify alternate next-hop addresses for a specific subnet:
 
-.. code:: console
+.. code-block:: console
 
-    $ neutron router-update ROUTER_UUID --router_rules type=dict list=true\
-    source=any,destination=any,action=permit \
-    source=10.10.10.0/24,destination=any,action=permit,nexthops=10.10.10.254+10.10.10.253
+   $ neutron router-update ROUTER_UUID --router_rules type=dict list=true\
+     source=any,destination=any,action=permit \
+     source=10.10.10.0/24,destination=any,action=permit,nexthops=10.10.10.254+10.10.10.253
 
 Block traffic between two subnets while allowing everything else:
 
-.. code:: console
+.. code-block:: console
 
-    $ neutron router-update ROUTER_UUID --router_rules type=dict list=true\
-    source=any,destination=any,action=permit \
-    source=10.10.10.0/24,destination=10.20.20.20/24,action=deny
+   $ neutron router-update ROUTER_UUID --router_rules type=dict list=true\
+     source=any,destination=any,action=permit \
+     source=10.10.10.0/24,destination=10.20.20.20/24,action=deny
 
 L3 metering
 ~~~~~~~~~~~
@@ -801,56 +801,56 @@ complete basic L3 metering operations:
    * - Operation
      - Command
    * - Creates a metering label.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron meter-label-create LABEL1 --description "DESCRIPTION_LABEL1"
    * - Lists metering labels.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron meter-label-list
    * - Shows information for a specified label.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron meter-label-show LABEL_UUID
           $ neutron meter-label-show LABEL1
    * - Deletes a metering label.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron meter-label-delete LABEL_UUID
           $ neutron meter-label-delete LABEL1
    * - Creates a metering rule.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron meter-label-rule-create LABEL_UUID CIDR --direction DIRECTION
             excluded
 
        For example:
 
-       .. code::
+       .. code-block:: console
 
           $ neutron meter-label-rule-create label1 10.0.0.0/24 --direction ingress
           $ neutron meter-label-rule-create label1 20.0.0.0/24 --excluded
 
    * - Lists metering all label rules.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron meter-label-rule-list
    * - Shows information for a specified label rule.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron meter-label-rule-show RULE_UUID
    * - Deletes a metering label rule.
-     - .. code::
+     - .. code-block:: console
 
           $ neutron meter-label-rule-delete RULE_UUID
    * - Lists the value of created metering label rules.
-     - .. code::
+     - .. code-block:: console
 
           $ ceilometer sample-list -m SNMP_MEASUREMENT
 
        For example:
 
-       .. code::
+       .. code-block:: console
 
           $ ceilometer sample-list -m hardware.network.bandwidth.bytes
           $ ceilometer sample-list -m hardware.network.incoming.bytes

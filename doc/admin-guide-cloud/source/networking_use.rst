@@ -5,16 +5,16 @@ Use Networking
 You can manage OpenStack Networking services by using the service
 command. For example:
 
-.. code:: console
+.. code-block:: console
 
-    # service neutron-server stop
-    # service neutron-server status
-    # service neutron-server start
-    # service neutron-server restart
+   # service neutron-server stop
+   # service neutron-server status
+   # service neutron-server start
+   # service neutron-server restart
 
-Log files are in the :file:`/var/log/neutron` directory.
+Log files are in the ``/var/log/neutron`` directory.
 
-Configuration files are in the :file:`/etc/neutron` directory.
+Configuration files are in the ``/etc/neutron`` directory.
 
 Cloud administrators and tenants can use OpenStack Networking to build
 rich network topologies. Cloud administrators can create network
@@ -78,14 +78,14 @@ basic network operations:
 
 **Basic Networking operations**
 
-.. Note::
+.. note::
 
-    The ``device_owner`` field describes who owns the port. A port whose
-    ``device_owner`` begins with:
+   The ``device_owner`` field describes who owns the port. A port whose
+   ``device_owner`` begins with:
 
-    -  ``network`` is created by Networking.
+   -  ``network`` is created by Networking.
 
-    -  ``compute`` is created by Compute.
+   -  ``compute`` is created by Compute.
 
 Administrative operations
 -------------------------
@@ -94,24 +94,24 @@ The cloud administrator can run any :command:`neutron` command on behalf of
 tenants by specifying an Identity ``tenant_id`` in the command, as
 follows:
 
-.. code:: console
+.. code-block:: console
 
-    $ neutron net-create --tenant-id TENANT_ID NETWORK_NAME
+   $ neutron net-create --tenant-id TENANT_ID NETWORK_NAME
 
 For example:
 
-.. code:: console
+.. code-block:: console
 
-    $ neutron net-create --tenant-id 5e4bbe24b67a4410bc4d9fae29ec394e net1
+   $ neutron net-create --tenant-id 5e4bbe24b67a4410bc4d9fae29ec394e net1
 
-.. Note::
+.. note::
 
-    To view all tenant IDs in Identity, run the following command as an
-    Identity service admin user:
+   To view all tenant IDs in Identity, run the following command as an
+   Identity service admin user:
 
-    .. code:: console
+   .. code-block:: console
 
-        $ keystone tenant-list
+      $ keystone tenant-list
 
 Advanced Networking operations
 ------------------------------
@@ -215,17 +215,17 @@ complete basic VM networking operations:
 
 **Basic Compute and Networking operations**
 
-.. Note::
+.. note::
 
-    The ``device_id`` can also be a logical router ID.
+   The ``device_id`` can also be a logical router ID.
 
-.. Note::
+.. note::
 
-    -  When you boot a Compute VM, a port on the network that
-       corresponds to the VM NIC is automatically created and associated
-       with the default security group. You can configure `security
-       group rules <#enabling_ping_and_ssh>`__ to enable users to access
-       the VM.
+   -  When you boot a Compute VM, a port on the network that
+      corresponds to the VM NIC is automatically created and associated
+      with the default security group. You can configure `security
+      group rules <#enabling_ping_and_ssh>`__ to enable users to access
+      the VM.
 
 .. _Create and delete VMs:
     -  When you delete a Compute VM, the underlying Networking port is
@@ -267,28 +267,28 @@ complete advanced VM creation operations:
 
 **Advanced VM creation operations**
 
-.. Note::
+.. note::
 
-    Cloud images that distribution vendors offer usually have only one
-    active NIC configured. When you boot with multiple NICs, you must
-    configure additional interfaces on the image or the NICs are not
-    reachable.
+   Cloud images that distribution vendors offer usually have only one
+   active NIC configured. When you boot with multiple NICs, you must
+   configure additional interfaces on the image or the NICs are not
+   reachable.
 
-    The following Debian/Ubuntu-based example shows how to set up the
-    interfaces within the instance in the ``/etc/network/interfaces``
-    file. You must apply this configuration to the image.
+   The following Debian/Ubuntu-based example shows how to set up the
+   interfaces within the instance in the ``/etc/network/interfaces``
+   file. You must apply this configuration to the image.
 
-    .. code:: bash
+   .. code-block:: bash
 
-        # The loopback network interface
-        auto lo
-        iface lo inet loopback
+      # The loopback network interface
+      auto lo
+      iface lo inet loopback
 
-        auto eth0
-        iface eth0 inet dhcp
+      auto eth0
+      iface eth0 inet dhcp
 
-        auto eth1
-        iface eth1 inet dhcp
+      auto eth1
+      iface eth1 inet dhcp
 
 Enable ping and SSH on VMs (security groups)
 --------------------------------------------
@@ -300,30 +300,30 @@ you are using. If you are using a plug-in that:
    group rules directly by using the :command:`neutron security-group-rule-create`
    command. This example enables ``ping`` and ``ssh`` access to your VMs.
 
-   .. code:: console
+   .. code-block:: console
 
-       $ neutron security-group-rule-create --protocol icmp \
-           --direction ingress default
+      $ neutron security-group-rule-create --protocol icmp \
+          --direction ingress default
 
-   .. code:: console
+   .. code-block:: console
 
-       $ neutron security-group-rule-create --protocol tcp --port-range-min 22 \
-           --port-range-max 22 --direction ingress default
+      $ neutron security-group-rule-create --protocol tcp --port-range-min 22 \
+          --port-range-max 22 --direction ingress default
 
 -  Does not implement Networking security groups, you can configure
    security group rules by using the :command:`nova secgroup-add-rule` or
    :command:`euca-authorize` command. These :command:`nova` commands enable
    ``ping`` and ``ssh`` access to your VMs.
 
-   .. code:: console
+   .. code-block:: console
 
-       $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
-       $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
+      $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+      $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
 
-.. Note::
+.. note::
 
     If your plug-in implements Networking security groups, you can also
     leverage Compute security groups by setting
-    ``security_group_api = neutron`` in the :file:`nova.conf` file. After
+    ``security_group_api = neutron`` in the ``nova.conf`` file. After
     you set this option, all Compute security group commands are proxied
     to Networking.

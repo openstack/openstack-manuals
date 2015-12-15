@@ -14,12 +14,12 @@ For a detailed description of the Networking API abstractions and their
 attributes, see the `OpenStack Networking API v2.0
 Reference <http://developer.openstack.org/api-ref-networking-v2.html>`__.
 
-.. Note::
+.. note::
 
-    If you use the Networking service, do not run the Compute
-    nova-network service (like you do in traditional Compute deployments).
-    When you configure networking, see the Compute-related topics in this
-    Networking section.
+   If you use the Networking service, do not run the Compute
+   ``nova-network`` service (like you do in traditional Compute deployments).
+   When you configure networking, see the Compute-related topics in this
+   Networking section.
 
 Networking API
 ~~~~~~~~~~~~~~
@@ -73,7 +73,7 @@ Configure SSL support for networking API
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack Networking supports SSL for the Networking API server. By
-default, SSL is disabled but you can enable it in the :file:`neutron.conf`
+default, SSL is disabled but you can enable it in the ``neutron.conf``
 file.
 
 Set these options to configure SSL:
@@ -138,7 +138,7 @@ Least connections
 |                         | administration and scripting. Users perform       |
 |                         | administrative management of load balancers       |
 |                         | through either the CLI (``neutron``) or the       |
-|                         | OpenStack dashboard.                              |
+|                         | OpenStack Dashboard.                              |
 +-------------------------+---------------------------------------------------+
 | **Connection limits**   | Ingress traffic can be shaped with *connection    |
 |                         | limits*. This feature allows workload control,    |
@@ -164,63 +164,64 @@ policy and logical firewall instance per project.
 Whereas security groups operate at the instance-level, FWaaS operates at
 the perimeter to filter traffic at the neutron router.
 
-.. Note::
+.. note::
 
-    FWaaS is currently in technical preview; untested operation is not
-    recommended.
+   FWaaS is currently in technical preview; untested operation is not
+   recommended.
 
 The example diagram illustrates the flow of ingress and egress traffic
 for the VM2 instance:
 
-|FWaaS architecture|
+.. figure:: ../../common/figures/fwaas.png
 
 **To enable FWaaS**
 
 FWaaS management options are also available in the OpenStack dashboard.
 
-#. Enable the FWaaS plug-in in the :file:`/etc/neutron/neutron.conf` file:
+#. Enable the FWaaS plug-in in the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
 
-       service_plugins = firewall
-       [service_providers]
-       ...
-       service_provider = FIREWALL:Iptables:neutron.agent.linux.iptables_
-       firewall.OVSHybridIptablesFirewallDriver:default
+      service_plugins = firewall
+      [service_providers]
+      ...
+      service_provider = FIREWALL:Iptables:neutron.agent.linux.iptables_
+      firewall.OVSHybridIptablesFirewallDriver:default
 
-       [fwaas]
-       driver = neutron_fwaas.services.firewall.drivers.linux.iptables_
-       fwaas.IptablesFwaasDriver
-       enabled = True
+      [fwaas]
+      driver = neutron_fwaas.services.firewall.drivers.linux.iptables_
+      fwaas.IptablesFwaasDriver
+      enabled = True
 
-   .. Note::
+   .. note::
 
-       On Ubuntu, modify the ``[fwaas]`` section in the
-       :file:`/etc/neutron/fwaas_driver.ini` file instead of
-       :file:`/etc/neutron/neutron.conf`.
+      On Ubuntu, modify the ``[fwaas]`` section in the
+      ``/etc/neutron/fwaas_driver.ini`` file instead of
+      ``/etc/neutron/neutron.conf``.
 
 #. Create the required tables in the database:
 
-   .. code:: console
+   .. code-block:: console
 
-       # neutron-db-manage --service fwaas upgrade head
+      # neutron-db-manage --service fwaas upgrade head
 
 #. Enable the option in the
-   :file:`/usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py`
+   ``/usr/share/openstack-dashboard/openstack_dashboard/
+   local/local_settings.py``
    file, which is typically located on the controller node:
 
-   .. code:: ini
+   .. code-block:: ini
 
-        OPENSTACK_NEUTRON_NETWORK = {
-            ...
-            'enable_firewall' = True,
-            ...
-        }
+      OPENSTACK_NEUTRON_NETWORK = {
+          ...
+          'enable_firewall' = True,
+          ...
+      }
 
    Apply the settings by restarting the web server.
 
-#. Restart the neutron-l3-agent and neutron-server services to apply the
-   settings.
+#. Restart the ``neutron-l3-agent`` and ``neutron-server`` services
+   to apply the settings.
 
 **To configure Firewall-as-a-Service**
 
@@ -229,20 +230,20 @@ create a firewall that applies the policy.
 
 #. Create a firewall rule:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ neutron firewall-rule-create --protocol {tcp|udp|icmp|any}
-       --destination-port PORT_RANGE --action {allow|deny}
+      $ neutron firewall-rule-create --protocol {tcp|udp|icmp|any}
+      --destination-port PORT_RANGE --action {allow|deny}
 
    The Networking client requires a protocol value; if the rule is protocol
    agnostic, you can use the ``any`` value.
 
 #. Create a firewall policy:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ neutron firewall-policy-create --firewall-rules
-       "FIREWALL_RULE_IDS_OR_NAMES" myfirewallpolicy
+      $ neutron firewall-policy-create --firewall-rules
+      "FIREWALL_RULE_IDS_OR_NAMES" myfirewallpolicy
 
    Separate firewall rule IDs or names with spaces. The order in which you
    specify the rules is important.
@@ -260,22 +261,22 @@ create a firewall that applies the policy.
    firewall-policy-create>`__
    in the OpenStack Command-Line Interface Reference.
 
-   .. Note::
+   .. note::
 
-       FWaaS always adds a default ``deny all`` rule at the lowest precedence of
-       each policy. Consequently, a firewall policy with no rules blocks
-       all traffic by default.
+      FWaaS always adds a default ``deny all`` rule at the lowest precedence of
+      each policy. Consequently, a firewall policy with no rules blocks
+      all traffic by default.
 
 #. Create a firewall:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ neutron firewall-create  FIREWALL_POLICY_UUID
+      $ neutron firewall-create  FIREWALL_POLICY_UUID
 
-   .. Note::
+   .. note::
 
-       The firewall remains in PENDING\_CREATE state until you create a
-       Networking router and attach an interface to it.
+      The firewall remains in PENDING\_CREATE state until you create a
+      Networking router and attach an interface to it.
 
 **Allowed-address-pairs.**
 
@@ -284,7 +285,7 @@ mac_address/ip_address(cidr) pairs that pass through a port regardless
 of subnet. This enables the use of protocols such as VRRP, which floats
 an IP address between two instances to enable fast data plane failover.
 
-.. Note::
+.. note::
 
    Currently, only the ML2, Open vSwitch, and VMware NSX plug-ins
    support the allowed-address-pairs extension.
@@ -293,19 +294,17 @@ an IP address between two instances to enable fast data plane failover.
 
 - Create a port with a specified allowed address pair:
 
-  .. code:: console
+  .. code-block:: console
 
      $ neutron port-create net1 --allowed-address-pairs type=dict
        list=true mac_address=MAC_ADDRESS,ip_address=IP_CIDR
 
 - Update a port by adding allowed address pairs:
 
-  .. code:: console
+  .. code-block:: console
 
      $ neutron port-update PORT_UUID --allowed-address-pairs type=dict
      list=true mac_address=MAC_ADDRESS,ip_address=IP_CIDR
-
-.. |FWaaS architecture| image:: ../../common/figures/fwaas.png
 
 
 Virtual-Private-Network-as-a-Service (VPNaaS)

@@ -9,17 +9,17 @@ Configure Identity service for Networking
    The ``get_id()`` function stores the ID of created objects, and removes
    the need to copy and paste object IDs in later steps:
 
-   a. Add the following function to your :file:`.bashrc` file:
+   a. Add the following function to your ``.bashrc`` file:
 
-      .. code:: ini
+      .. code-block:: ini
 
          function get_id () {
          echo `"$@" | awk '/ id / { print $4 }'`
          }
 
-   b. Source the :file:`.bashrc` file:
+   b. Source the ``.bashrc`` file:
 
-      .. code:: console
+      .. code-block:: console
 
          $ source .bashrc
 
@@ -28,7 +28,7 @@ Configure Identity service for Networking
    Networking must be available in the Compute service catalog. Create the
    service:
 
-   .. code:: console
+   .. code-block:: console
 
       $ NEUTRON_SERVICE_ID=$(get_id keystone service-create --name
       neutron --type network --description 'OpenStack Networking Service')
@@ -38,12 +38,12 @@ Configure Identity service for Networking
    The way that you create a Networking endpoint entry depends on whether
    you are using the SQL or the template catalog driver:
 
-   -  If you are using the *SQL driver*, run the following command with the
+   -  If you are using the ``SQL driver``, run the following command with the
       specified region (``$REGION``), IP address of the Networking server
       (``$IP``), and service ID (``$NEUTRON_SERVICE_ID``, obtained in the
       previous step).
 
-      .. code:: console
+      .. code-block:: console
 
          $ keystone endpoint-create --region $REGION --service-id
            $NEUTRON_SERVICE_ID \
@@ -52,7 +52,7 @@ Configure Identity service for Networking
 
       For example:
 
-      .. code:: console
+      .. code-block:: console
 
          $ keystone endpoint-create --region myregion --service-id
            $NEUTRON_SERVICE_ID \
@@ -60,12 +60,12 @@ Configure Identity service for Networking
           "http://10.211.55.17:9696/" --internalurl
           "http://10.211.55.17:9696/"
 
-   -  If you are using the *template driver*, specify the following
+   -  If you are using the ``template driver``, specify the following
       parameters in your Compute catalog template file
-      (:file:`default_catalog.templates`), along with the region (``$REGION``)
+      (``default_catalog.templates``), along with the region (``$REGION``)
       and IP address of the Networking server (``$IP``).
 
-      .. code:: bash
+      .. code-block:: bash
 
          catalog.$REGION.network.publicURL = http://$IP:9696
          catalog.$REGION.network.adminURL = http://$IP:9696
@@ -74,7 +74,7 @@ Configure Identity service for Networking
 
       For example:
 
-      .. code:: bash
+      .. code-block:: bash
 
          catalog.$Region.network.publicURL = http://10.211.55.17:9696
          catalog.$Region.network.adminURL = http://10.211.55.17:9696
@@ -90,27 +90,27 @@ Configure Identity service for Networking
 
    a. Create the ``admin`` role:
 
-      .. code:: console
+      .. code-block:: console
 
          $ ADMIN_ROLE=$(get_id keystone role-create --name admin)
 
    b. Create the ``neutron`` user:
 
-      .. code:: console
+      .. code-block:: console
 
          $ NEUTRON_USER=$(get_id keystone user-create --name neutron\
          --pass "$NEUTRON_PASSWORD" --email demo@example.com --tenant-id service)
 
    c. Create the ``service`` tenant:
 
-      .. code:: console
+      .. code-block:: console
 
          $ SERVICE_TENANT=$(get_id keystone tenant-create --name
          service --description "Services Tenant")
 
    d. Establish the relationship among the tenant, user, and role:
 
-      .. code:: console
+      .. code-block:: console
 
          $ keystone user-role-add --user_id $NEUTRON_USER
          --role_id $ADMIN_ROLE --tenant_id $SERVICE_TENANT
@@ -122,11 +122,11 @@ OpenStack Installation Guide for your distribution
 Compute
 ~~~~~~~
 
-If you use Networking, do not run the Compute nova-network service (like
+If you use Networking, do not run the Compute ``nova-network`` service (like
 you do in traditional Compute deployments). Instead, Compute delegates
 most network-related decisions to Networking. Compute proxies
 tenant-facing API calls to manage security groups and floating IPs to
-Networking APIs. However, operator-facing tools such as nova-manage, are
+Networking APIs. However, operator-facing tools such as ``nova-manage``, are
 not proxied and should not be used.
 
 .. warning::
@@ -141,23 +141,23 @@ not proxied and should not be used.
 
 .. note::
 
-   Uninstall nova-network and reboot any physical nodes that have been
-   running nova-network before using them to run Networking.
-   Inadvertently running the nova-network process while using
+   Uninstall ``nova-network`` and reboot any physical nodes that have been
+   running ``nova-network`` before using them to run Networking.
+   Inadvertently running the ``nova-network`` process while using
    Networking can cause problems, as can stale iptables rules pushed
-   down by previously running nova-network.
+   down by previously running ``nova-network``.
 
 To ensure that Compute works properly with Networking (rather than the
-legacy nova-network mechanism), you must adjust settings in the
-:file:`nova.conf` configuration file.
+legacy ``nova-network`` mechanism), you must adjust settings in the
+``nova.conf`` configuration file.
 
 Networking API and credential configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Each time you provision or de-provision a VM in Compute, nova-\*
+Each time you provision or de-provision a VM in Compute, ``nova-\*``
 services communicate with Networking using the standard API. For this to
-happen, you must configure the following items in the :file:`nova.conf` file
-(used by each nova-compute and nova-api instance).
+happen, you must configure the following items in the ``nova.conf`` file
+(used by each ``nova-compute`` and ``nova-api`` instance).
 
 .. list-table:: **nova.conf API and credential settings**
    :widths: 20 50
@@ -170,7 +170,7 @@ happen, you must configure the following items in the :file:`nova.conf` file
        indicate that Networking should be used rather than the traditional
        nova-network networking model.
    * - ``[neutron] url``
-     - Update to the hostname/IP and port of the neutron-server instance
+     - Update to the host name/IP and port of the neutron-server instance
        for this deployment.
    * - ``[neutron] auth_strategy``
      - Keep the default ``keystone`` value for all production deployments.
@@ -199,7 +199,7 @@ group calls to the Networking API. If you do not, security policies
 will conflict by being simultaneously applied by both services.
 
 To proxy security groups to Networking, use the following configuration
-values in :file:`nova.conf`:
+values in the ``nova.conf`` file:
 
 **nova.conf security group settings**
 
@@ -224,7 +224,7 @@ made from isolated networks, or from multiple networks that use
 overlapping IP addresses.
 
 To enable proxying the requests, you must update the following fields in
-``[neutron]`` section in :file:`nova.conf`.
+``[neutron]`` section in the ``nova.conf``.
 
 **nova.conf metadata settings**
 
@@ -255,7 +255,7 @@ To enable proxying the requests, you must update the following fields in
    run a dedicated set of nova-api instances for metadata that are
    available only on your management network. Whether a given nova-api
    instance exposes metadata APIs is determined by the value of
-   ``enabled_apis`` in its :file:`nova.conf`.
+   ``enabled_apis`` in its ``nova.conf``.
 
 Example nova.conf (for nova-compute and nova-api)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
