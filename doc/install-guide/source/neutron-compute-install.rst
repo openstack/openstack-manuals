@@ -180,15 +180,6 @@ Finalize installation
 
 .. only:: rdo
 
-   #. The Networking service initialization scripts expect a symbolic link
-      ``/etc/neutron/plugin.ini`` pointing to the ML2 plug-in configuration
-      file, ``/etc/neutron/plugins/ml2/ml2_conf.ini``. If this symbolic
-      link does not exist, create it using the following command:
-
-      .. code-block:: console
-
-         # ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
-
    #. Restart the Compute service:
 
       .. code-block:: console
