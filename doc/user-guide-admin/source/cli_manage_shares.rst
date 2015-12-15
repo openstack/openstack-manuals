@@ -24,11 +24,13 @@ Possible use cases for data migration include:
 -  Free up space in a thinly-provisioned back end.
 
 Migrate a share with the :command:`manila migrate` command, as shown in the
-following example::
+following example:
 
-  $ manila migrate shareID destinationHost --force-host-copy True|False
+.. code-block:: console
 
-In this example, ``--force-host-copy True`` forces the generic
+   $ manila migrate shareID destinationHost --force-host-copy True|False
+
+In this example, :option:`--force-host-copy True` forces the generic
 host-based migration mechanism and bypasses any driver optimizations.
 ``destinationHost`` is in this format ``host#pool`` which includes
 destination host and pool.

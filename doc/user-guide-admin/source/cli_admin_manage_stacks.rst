@@ -27,7 +27,7 @@ As an administrator, you can also carry out stack functions
 on behalf of your users. For example, to resume, suspend,
 or delete a stack, run:
 
-.. code::
+.. code-block:: console
 
    $ heat action-resume stackID
    $ heat action-suspend stackID

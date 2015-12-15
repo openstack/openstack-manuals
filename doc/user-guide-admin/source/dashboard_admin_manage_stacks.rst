@@ -19,12 +19,13 @@ high availability.
 
 For information about:
 
-* administrative tasks on the command line, see
+* administrative tasks on the command-line, see
   :doc:`cli_admin_manage_stacks`.
 
   .. note::
-    There are no administration-specific tasks that can be done through
-    the Dashboard.
+
+     There are no administration-specific tasks that can be done through
+     the Dashboard.
 
 * the basic creation and deletion of Orchestration stacks, refer to
   the `OpenStack End User Guide

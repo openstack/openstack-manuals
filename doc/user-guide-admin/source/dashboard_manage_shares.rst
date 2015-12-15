@@ -36,7 +36,9 @@ Create a share type
 
 #. Click :guilabel:`Create Share Type` button to confirm your changes.
 
-.. note:: A message indicates whether the action succeeded.
+.. note::
+
+   A message indicates whether the action succeeded.
 
 Update share type
 ~~~~~~~~~~~~~~~~~
@@ -59,7 +61,9 @@ Update share type
 
 #. Click :guilabel:`Update Share Type` button to confirm your changes.
 
-.. note:: A message indicates whether the action succeeded.
+.. note::
+
+   A message indicates whether the action succeeded.
 
 Delete share types
 ~~~~~~~~~~~~~~~~~~
@@ -80,7 +84,9 @@ When you delete a share type, shares of that type are not deleted.
 #. In the :guilabel:`Confirm Delete Share Types` window, click the
    :guilabel:`Delete Share Types` button to confirm the action.
 
-.. note:: A message indicates whether the action succeeded.
+.. note::
+
+   A message indicates whether the action succeeded.
 
 Delete shares
 ~~~~~~~~~~~~~
@@ -98,7 +104,9 @@ Delete shares
 #. In the :guilabel:`Confirm Delete Shares` window, click the
    :guilabel:`Delete Shares` button to confirm the action.
 
-.. note:: A message indicates whether the action succeeded.
+.. note::
+
+   A message indicates whether the action succeeded.
 
 Delete share server
 ~~~~~~~~~~~~~~~~~~~
@@ -116,7 +124,9 @@ Delete share server
 #. In the :guilabel:`Confirm Delete Share Server` window, click the
    :guilabel:`Delete Share Server` button to confirm the action.
 
-.. note:: A message indicates whether the action succeeded.
+.. note::
+
+   A message indicates whether the action succeeded.
 
 Delete share networks
 ~~~~~~~~~~~~~~~~~~~~~
@@ -134,4 +144,6 @@ Delete share networks
 #. In the :guilabel:`Confirm Delete Share Networks` window, click the
    :guilabel:`Delete Share Networks` button to confirm the action.
 
-.. note:: A message indicates whether the action succeeded.
+.. note::
+
+   A message indicates whether the action succeeded.

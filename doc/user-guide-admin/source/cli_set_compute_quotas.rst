@@ -44,204 +44,256 @@ tenant user, as well as update the quota defaults for a new tenant.
 
 View and update Compute quotas for a tenant (project)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 To view and update default quota values
 ---------------------------------------
-#. List all default quotas for all tenants, as follows::
+#. List all default quotas for all tenants:
 
-    $ nova quota-defaults
+   .. code-block:: console
 
-   For example::
+      $ nova quota-defaults
 
-    $ nova quota-defaults
-    +-----------------------------+-------+
-    | Quota                       | Limit |
-    +-----------------------------+-------+
-    | instances                   | 10    |
-    | cores                       | 20    |
-    | ram                         | 51200 |
-    | floating_ips                | 10    |
-    | fixed_ips                   | -1    |
-    | metadata_items              | 128   |
-    | injected_files              | 5     |
-    | injected_file_content_bytes | 10240 |
-    | injected_file_path_bytes    | 255   |
-    | key_pairs                   | 100   |
-    | security_groups             | 10    |
-    | security_group_rules        | 20    |
-    +-----------------------------+-------+
+   For example:
 
-#. Update a default value for a new tenant, as follows::
+   .. code-block:: console
 
-   $ nova quota-class-update --KEY VALUE default
+      $ nova quota-defaults
+      +-----------------------------+-------+
+      | Quota                       | Limit |
+      +-----------------------------+-------+
+      | instances                   | 10    |
+      | cores                       | 20    |
+      | ram                         | 51200 |
+      | floating_ips                | 10    |
+      | fixed_ips                   | -1    |
+      | metadata_items              | 128   |
+      | injected_files              | 5     |
+      | injected_file_content_bytes | 10240 |
+      | injected_file_path_bytes    | 255   |
+      | key_pairs                   | 100   |
+      | security_groups             | 10    |
+      | security_group_rules        | 20    |
+      +-----------------------------+-------+
 
-   For example::
+#. Update a default value for a new tenant.
 
-   $ nova quota-class-update --instances 15 default
+   .. code-block:: console
+
+      $ nova quota-class-update --KEY VALUE default
+
+   For example:
+
+   .. code-block:: console
+
+      $ nova quota-class-update --instances 15 default
 
 To view quota values for an existing tenant (project)
 -----------------------------------------------------
 
-#. Place the tenant ID in a usable variable, as follows::
+#. Place the tenant ID in a usable variable.
 
-   $ tenant=$(openstack project show -f value -c id TENANT_NAME)
+   .. code-block:: console
 
-#. List the currently set quota values for a tenant, as follows::
+      $ tenant=$(openstack project show -f value -c id TENANT_NAME)
 
-   $ nova quota-show --tenant $tenant
+#. List the currently set quota values for a tenant.
 
-   For example::
+   .. code-block:: console
 
-    $ nova quota-show --tenant $tenant
-    +-----------------------------+-------+
-    | Quota                       | Limit |
-    +-----------------------------+-------+
-    | instances                   | 10    |
-    | cores                       | 20    |
-    | ram                         | 51200 |
-    | floating_ips                | 10    |
-    | fixed_ips                   | -1    |
-    | metadata_items              | 128   |
-    | injected_files              | 5     |
-    | injected_file_content_bytes | 10240 |
-    | injected_file_path_bytes    | 255   |
-    | key_pairs                   | 100   |
-    | security_groups             | 10    |
-    | security_group_rules        | 20    |
-    +-----------------------------+-------+
+      $ nova quota-show --tenant $tenant
+
+   For example:
+
+   .. code-block:: console
+
+      $ nova quota-show --tenant $tenant
+      +-----------------------------+-------+
+      | Quota                       | Limit |
+      +-----------------------------+-------+
+      | instances                   | 10    |
+      | cores                       | 20    |
+      | ram                         | 51200 |
+      | floating_ips                | 10    |
+      | fixed_ips                   | -1    |
+      | metadata_items              | 128   |
+      | injected_files              | 5     |
+      | injected_file_content_bytes | 10240 |
+      | injected_file_path_bytes    | 255   |
+      | key_pairs                   | 100   |
+      | security_groups             | 10    |
+      | security_group_rules        | 20    |
+      +-----------------------------+-------+
 
 To update quota values for an existing tenant (project)
 -------------------------------------------------------
-#. Obtain the tenant ID, as follows::
 
-   $ tenant=$(openstack project show -f value -c id TENANT_NAME)
+#. Obtain the tenant ID.
 
-#. Update a particular quota value, as follows::
+   .. code-block:: console
 
-   $ nova quota-update --QUOTA_NAME QUOTA_VALUE TENANT_ID
+      $ tenant=$(openstack project show -f value -c id TENANT_NAME)
 
-   For example::
+#. Update a particular quota value.
 
-    $ nova quota-update --floating-ips 20 $tenant
-    $ nova quota-show --tenant $tenant
-    +-----------------------------+-------+
-    | Quota                       | Limit |
-    +-----------------------------+-------+
-    | instances                   | 10    |
-    | cores                       | 20    |
-    | ram                         | 51200 |
-    | floating_ips                | 20    |
-    | fixed_ips                   | -1    |
-    | metadata_items              | 128   |
-    | injected_files              | 5     |
-    | injected_file_content_bytes | 10240 |
-    | injected_file_path_bytes    | 255   |
-    | key_pairs                   | 100   |
-    | security_groups             | 10    |
-    | security_group_rules        | 20    |
-    +-----------------------------+-------+
+   .. code-block:: console
 
-   .. note:: To view a list of options for the :command:`quota-update` command, run::
+      $ nova quota-update --QUOTA_NAME QUOTA_VALUE TENANT_ID
 
-       $ nova help quota-update
+   For example:
+
+   .. code-block:: console
+
+      $ nova quota-update --floating-ips 20 $tenant
+      $ nova quota-show --tenant $tenant
+      +-----------------------------+-------+
+      | Quota                       | Limit |
+      +-----------------------------+-------+
+      | instances                   | 10    |
+      | cores                       | 20    |
+      | ram                         | 51200 |
+      | floating_ips                | 20    |
+      | fixed_ips                   | -1    |
+      | metadata_items              | 128   |
+      | injected_files              | 5     |
+      | injected_file_content_bytes | 10240 |
+      | injected_file_path_bytes    | 255   |
+      | key_pairs                   | 100   |
+      | security_groups             | 10    |
+      | security_group_rules        | 20    |
+      +-----------------------------+-------+
+
+   .. note::
+
+      To view a list of options for the :command:`quota-update` command, run:
+
+      .. code-block:: console
+
+         $ nova help quota-update
 
 View and update Compute quotas for a tenant user
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 To view quota values for a tenant user
 --------------------------------------
-#. Place the user ID in a usable variable, as follows::
 
-    $ tenantUser=$(openstack user show -f value -c id USER_NAME)
+#. Place the user ID in a usable variable.
 
-#. Place the user's tenant ID in a usable variable, as follows::
+   .. code-block:: console
 
-    $ tenant=$(openstack project show -f value -c id TENANT_NAME)
+      $ tenantUser=$(openstack user show -f value -c id USER_NAME)
 
-#. List the currently set quota values for a tenant user, as follows::
+#. Place the user's tenant ID in a usable variable, as follows:
 
-    $ nova quota-show --user $tenantUser --tenant $tenant
+   .. code-block:: console
 
-   For example::
+      $ tenant=$(openstack project show -f value -c id TENANT_NAME)
 
-    $ nova quota-show --user $tenantUser --tenant $tenant
-    +-----------------------------+-------+
-    | Quota                       | Limit |
-    +-----------------------------+-------+
-    | instances                   | 10    |
-    | cores                       | 20    |
-    | ram                         | 51200 |
-    | floating_ips                | 20    |
-    | fixed_ips                   | -1    |
-    | metadata_items              | 128   |
-    | injected_files              | 5     |
-    | injected_file_content_bytes | 10240 |
-    | injected_file_path_bytes    | 255   |
-    | key_pairs                   | 100   |
-    | security_groups             | 10    |
-    | security_group_rules        | 20    |
-    +-----------------------------+-------+
+#. List the currently set quota values for a tenant user.
+
+   .. code-block:: console
+
+      $ nova quota-show --user $tenantUser --tenant $tenant
+
+   For example:
+
+   .. code-block:: console
+
+      $ nova quota-show --user $tenantUser --tenant $tenant
+      +-----------------------------+-------+
+      | Quota                       | Limit |
+      +-----------------------------+-------+
+      | instances                   | 10    |
+      | cores                       | 20    |
+      | ram                         | 51200 |
+      | floating_ips                | 20    |
+      | fixed_ips                   | -1    |
+      | metadata_items              | 128   |
+      | injected_files              | 5     |
+      | injected_file_content_bytes | 10240 |
+      | injected_file_path_bytes    | 255   |
+      | key_pairs                   | 100   |
+      | security_groups             | 10    |
+      | security_group_rules        | 20    |
+      +-----------------------------+-------+
 
 To update quota values for a tenant user
 ----------------------------------------
-#. Place the user ID in a usable variable, as follows::
 
-    $ tenantUser=$(openstack user show -f value -c id USER_NAME)
+#. Place the user ID in a usable variable.
 
-#. Place the user's tenant ID in a usable variable, as follows::
+   .. code-block:: console
 
-    $ tenant=$(openstack project show -f value -c id TENANT_NAME)
+      $ tenantUser=$(openstack user show -f value -c id USER_NAME)
 
-#. Update a particular quota value, as follows::
+#. Place the user's tenant ID in a usable variable, as follows:
 
-    $ nova quota-update  --user $tenantUser --QUOTA_NAME QUOTA_VALUE $tenant
+   .. code-block:: console
 
-   For example::
+      $ tenant=$(openstack project show -f value -c id TENANT_NAME)
 
-    $ nova quota-update --user $tenantUser --floating-ips 12 $tenant
-    $ nova quota-show --user $tenantUser --tenant $tenant
-    +-----------------------------+-------+
-    | Quota                       | Limit |
-    +-----------------------------+-------+
-    | instances                   | 10    |
-    | cores                       | 20    |
-    | ram                         | 51200 |
-    | floating_ips                | 12    |
-    | fixed_ips                   | -1    |
-    | metadata_items              | 128   |
-    | injected_files              | 5     |
-    | injected_file_content_bytes | 10240 |
-    | injected_file_path_bytes    | 255   |
-    | key_pairs                   | 100   |
-    | security_groups             | 10    |
-    | security_group_rules        | 20    |
-    +-----------------------------+-------+
+#. Update a particular quota value, as follows:
 
-   .. note:: To view a list of options for the :command:`quota-update` command, run::
+   .. code-block:: console
 
-       $ nova help quota-update
+      $ nova quota-update  --user $tenantUser --QUOTA_NAME QUOTA_VALUE $tenant
+
+   For example:
+
+   .. code-block:: console
+
+      $ nova quota-update --user $tenantUser --floating-ips 12 $tenant
+      $ nova quota-show --user $tenantUser --tenant $tenant
+      +-----------------------------+-------+
+      | Quota                       | Limit |
+      +-----------------------------+-------+
+      | instances                   | 10    |
+      | cores                       | 20    |
+      | ram                         | 51200 |
+      | floating_ips                | 12    |
+      | fixed_ips                   | -1    |
+      | metadata_items              | 128   |
+      | injected_files              | 5     |
+      | injected_file_content_bytes | 10240 |
+      | injected_file_path_bytes    | 255   |
+      | key_pairs                   | 100   |
+      | security_groups             | 10    |
+      | security_group_rules        | 20    |
+      +-----------------------------+-------+
+
+   .. note::
+
+      To view a list of options for the :command:`quota-update` command, run:
+
+      .. code-block:: console
+
+         $ nova help quota-update
 
 To display the current quota usage for a tenant user
 ----------------------------------------------------
-Use :command:`nova absolute-limits` to get a list of the
-current quota values and the current quota usage::
 
- $ nova absolute-limits --tenant TENANT_NAME
-  +-------------------------+-------+
-  | Name                    | Value |
-  +-------------------------+-------+
-  | maxServerMeta           | 128   |
-  | maxPersonality          | 5     |
-  | maxImageMeta            | 128   |
-  | maxPersonalitySize      | 10240 |
-  | maxTotalRAMSize         | 51200 |
-  | maxSecurityGroupRules   | 20    |
-  | maxTotalKeypairs        | 100   |
-  | totalRAMUsed            | 0     |
-  | maxSecurityGroups       | 10    |
-  | totalFloatingIpsUsed    | 0     |
-  | totalInstancesUsed      | 0     |
-  | totalSecurityGroupsUsed | 0     |
-  | maxTotalFloatingIps     | 10    |
-  | maxTotalInstances       | 10    |
-  | totalCoresUsed          | 0     |
-  | maxTotalCores           | 20    |
-  +-------------------------+-------+
+Use :command:`nova absolute-limits` to get a list of the
+current quota values and the current quota usage:
+
+.. code-block:: console
+
+   $ nova absolute-limits --tenant TENANT_NAME
+   +-------------------------+-------+
+   | Name                    | Value |
+   +-------------------------+-------+
+   | maxServerMeta           | 128   |
+   | maxPersonality          | 5     |
+   | maxImageMeta            | 128   |
+   | maxPersonalitySize      | 10240 |
+   | maxTotalRAMSize         | 51200 |
+   | maxSecurityGroupRules   | 20    |
+   | maxTotalKeypairs        | 100   |
+   | totalRAMUsed            | 0     |
+   | maxSecurityGroups       | 10    |
+   | totalFloatingIpsUsed    | 0     |
+   | totalInstancesUsed      | 0     |
+   | totalSecurityGroupsUsed | 0     |
+   | maxTotalFloatingIps     | 10    |
+   | maxTotalInstances       | 10    |
+   | totalCoresUsed          | 0     |
+   | maxTotalCores           | 20    |
+   +-------------------------+-------+
