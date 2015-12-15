@@ -167,26 +167,31 @@ Before starting a migration, review the Configure migrations section.
          - PROJECT
          - cpu
          - memory_mb
-         - disk_bg
+         - disk_gb
        * - HostC
-         - HostC
-         - HostC
-         - HostC
-         - HostC
-       * - (total)
+         - (total)
+         - 16
+         - 32232
+         - 878
+       * - HostC
          - (used_now)
-         - (used_max)
-         - p1
-         - p2
-       * - 32232
+         - 22
          - 21284
-         - 21284
-         - 21284
-         - 21284
-       * - 878
          - 442
+       * - HostC
+         - (used_max)
+         - 22
+         - 21284
          - 422
+       * - HostC
+         - p1
+         - 22
+         - 21284
          - 422
+       * - HostC
+         - p2
+         - 22
+         - 21284
          - 422
 
    -  ``cpu``: Number of CPUs
