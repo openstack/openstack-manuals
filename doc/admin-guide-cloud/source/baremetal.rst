@@ -66,7 +66,7 @@ Use Bare Metal
 
 #. Install the Bare Metal service.
 
-#. Setup the Bare Metal driver in the compute node's :file:`nova.conf`.
+#. Setup the Bare Metal driver in the compute node's ``nova.conf`` file.
 
 #. Setup TFTP folder and prepare PXE boot loader file.
 
@@ -92,22 +92,23 @@ No valid host found error
 
 Sometimes ``/var/log/nova/nova-conductor.log`` contains the following error:
 
-.. code::
+.. code-block:: console
 
    NoValidHost: No valid host was found. There are not enough hosts available.
 
-The message "No valid host was found" means that the Compute service scheduler
-could not find a bare metal node suitable for booting the new instance.
+The message ``No valid host was found`` means that the Compute service
+scheduler could not find a bare metal node suitable for booting the new
+instance.
 
 This means there will be some mismatch between resources that the Compute
 service expects to find and resources that Bare Metal service advertised to
 the Compute service.
 
-If this is true, check the following:
+If you get this message, check the following:
 
 #. Introspection should have succeeded for you before, or you should have
    entered the required bare-metal node properties manually.
-   For each node in ``ironic node-list`` use:
+   For each node in :command:`ironic node-list` use:
 
    .. code-block:: console
 
@@ -124,11 +125,11 @@ If this is true, check the following:
       $ nova flavor-show <FLAVOR NAME>
 
 #. Make sure that enough nodes are in ``available`` state according to
-   ``ironic node-list``. Nodes in ``manageable`` state usually mean they
+   :command:`ironic node-list`. Nodes in ``manageable`` state usually mean they
    have failed introspection.
 
 #. Make sure nodes you are going to deploy to are not in maintenance mode.
-   Use ``ironic node-list`` to check. A node automatically going to
+   Use :command:`ironic node-list` to check. A node automatically going to
    maintenance mode usually means the incorrect credentials for this node.
    Check them and then remove maintenance mode:
 
@@ -140,5 +141,5 @@ If this is true, check the following:
    service to the Compute service after introspection. Our tooling usually
    accounts for it, but if you did some steps manually, there may be a period
    of time when nodes are not available to the Compute service yet. Check that
-   ``nova hypervisor-stats`` correctly shows total amount of resources in your
-   system.
+   :command:`nova hypervisor-stats` correctly shows total amount of resources
+   in your system.
