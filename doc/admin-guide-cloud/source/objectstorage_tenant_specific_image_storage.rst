@@ -15,9 +15,9 @@ created image:
 **To configure tenant-specific image locations**
 
 #. Configure swift as your ``default_store`` in the
-   :file:`glance-api.conf` file.
+   ``glance-api.conf`` file.
 
-#. Set these configuration options in the :file:`glance-api.conf` file:
+#. Set these configuration options in the ``glance-api.conf`` file:
 
    - swift_store_multi_tenant
       Set to ``True`` to enable tenant-specific storage locations.

@@ -2,7 +2,7 @@
 Introduction to Object Storage
 ==============================
 
-OpenStack Object Storage (code-named swift) is open source software for
+OpenStack Object Storage (code-named swift) is an open source software for
 creating redundant, scalable data storage using clusters of standardized
 servers to store petabytes of accessible data. It is a long-term storage
 system for large amounts of static data that can be retrieved,

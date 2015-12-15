@@ -25,6 +25,7 @@ loss is possible, but data would be unreachable for an extended time.
 
 Ring data structure
 ~~~~~~~~~~~~~~~~~~~
+
 The ring data structure consists of three top level fields: a list of
 devices in the cluster, a list of lists of device ids indicating
 partition to device assignments, and an integer indicating the number of
@@ -32,6 +33,7 @@ bits to shift an MD5 hash to calculate the partition for the hash.
 
 Partition assignment list
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
 This is a list of ``array('H')`` of devices ids. The outermost list
 contains an ``array('H')`` for each replica. Each ``array('H')`` has a
 length equal to the partition count for the ring. Each integer in the
@@ -39,10 +41,12 @@ length equal to the partition count for the ring. Each integer in the
 list is known internally to the Ring class as ``_replica2part2dev_id``.
 
 So, to create a list of device dictionaries assigned to a partition, the
-Python code would look like::
+Python code would look like:
 
-  devices = [self.devs[part2dev_id[partition]] for
-  part2dev_id in self._replica2part2dev_id]
+.. code-block:: python
+
+   devices = [self.devs[part2dev_id[partition]] for
+   part2dev_id in self._replica2part2dev_id]
 
 That code is a little simplistic because it does not account for the
 removal of duplicate devices. If a ring has more replicas than devices,
@@ -91,6 +95,7 @@ and B's disks are only 72.7% full.
 
 Replica counts
 ~~~~~~~~~~~~~~
+
 To support the gradual change in replica counts, a ring can have a real
 number of replicas and is not restricted to an integer number of
 replicas.
@@ -100,12 +105,12 @@ partitions. It indicates the average number of replicas for each
 partition. For example, a replica count of 3.2 means that 20 percent of
 partitions have four replicas and 80 percent have three replicas.
 
-The replica count is adjustable.
+The replica count is adjustable. For example:
 
-Example::
+.. code-block:: console
 
-  $ swift-ring-builder account.builder set_replicas 4
-  $ swift-ring-builder account.builder rebalance
+   $ swift-ring-builder account.builder set_replicas 4
+   $ swift-ring-builder account.builder rebalance
 
 You must rebalance the replica ring in globally distributed clusters.
 Operators of these clusters generally want an equal number of replicas
@@ -114,42 +119,46 @@ operator adds or removes a replica. Removing unneeded replicas saves on
 the cost of disks.
 
 You can gradually increase the replica count at a rate that does not
-adversely affect cluster performance.
+adversely affect cluster performance. For example:
 
-For example::
+.. code-block:: console
 
-  $ swift-ring-builder object.builder set_replicas 3.01
-  $ swift-ring-builder object.builder rebalance
-  <distribute rings and wait>...
+   $ swift-ring-builder object.builder set_replicas 3.01
+   $ swift-ring-builder object.builder rebalance
+   <distribute rings and wait>...
 
-  $ swift-ring-builder object.builder set_replicas 3.02
-  $ swift-ring-builder object.builder rebalance
-  <distribute rings and wait>...
+   $ swift-ring-builder object.builder set_replicas 3.02
+   $ swift-ring-builder object.builder rebalance
+   <distribute rings and wait>...
 
 Changes take effect after the ring is rebalanced. Therefore, if you
 intend to change from 3 replicas to 3.01 but you accidentally type
 2.01, no data is lost.
 
-Additionally, the ``swift-ring-builder X.builder create`` command can now
-take a decimal argument for the number of replicas.
+Additionally, the :command:`swift-ring-builder X.builder create` command can
+now take a decimal argument for the number of replicas.
 
 Partition shift value
 ~~~~~~~~~~~~~~~~~~~~~
+
 The partition shift value is known internally to the Ring class as
 ``_part_shift``. This value is used to shift an MD5 hash to calculate
 the partition where the data for that hash should reside. Only the top
 four bytes of the hash is used in this process. For example, to compute
-the partition for the :file:`/account/container/object` path using Python::
+the partition for the ``/account/container/object`` path using Python:
 
-  partition = unpack_from('>I',
-  md5('/account/container/object').digest())[0] >>
-  self._part_shift
+.. code-block:: python
+
+   partition = unpack_from('>I',
+   md5('/account/container/object').digest())[0] >>
+   self._part_shift
 
 For a ring generated with part\_power P, the partition shift value is
 ``32 - P``.
 
 Build the ring
 ~~~~~~~~~~~~~~
+
 The ring builder process includes these high-level steps:
 
 #. The utility calculates the number of partitions to assign to each

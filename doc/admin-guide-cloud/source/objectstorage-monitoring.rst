@@ -146,29 +146,29 @@ method (see the list below) overrides it. Currently, no logging calls
 override the sample rate, but it is conceivable that some meters may
 require accuracy (sample\_rate == 1) while others may not.
 
-.. code::
+.. code-block:: ini
 
-    [DEFAULT]
-         ...
-    log_statsd_host = 127.0.0.1
-    log_statsd_port = 8125
-    log_statsd_default_sample_rate = 1
+   [DEFAULT]
+        ...
+   log_statsd_host = 127.0.0.1
+   log_statsd_port = 8125
+   log_statsd_default_sample_rate = 1
 
 Then the LogAdapter object returned by ``get_logger()``, usually stored
 in ``self.logger``, has these new methods:
 
 -  ``set_statsd_prefix(self, prefix)`` Sets the client library stat
    prefix value which gets prefixed to every meter. The default prefix
-   is the "name" of the logger such as "object-server",
-   "container-auditor", and so on. This is currently used to turn
-   "proxy-server" into one of "proxy-server.Account",
-   "proxy-server.Container", or "proxy-server.Object" as soon as the
+   is the ``name`` of the logger such as ``object-server``,
+   ``container-auditor``, and so on. This is currently used to turn
+   ``proxy-server`` into one of ``proxy-server.Account``,
+   ``proxy-server.Container``, or ``proxy-server.Object`` as soon as the
    Controller object is determined and instantiated for the request.
 
 -  ``update_stats(self, metric, amount, sample_rate=1)`` Increments
    the supplied meter by the given amount. This is used when you need
    to add or subtract more that one from a counter, like incrementing
-   "suffix.hashes" by the number of computed hashes in the object
+   ``suffix.hashes`` by the number of computed hashes in the object
    replicator.
 
 -  ``increment(self, metric, sample_rate=1)`` Increments the given counter
@@ -189,49 +189,49 @@ logger object. If StatsD logging has not been configured, the methods
 are no-ops. This avoids messy conditional logic each place a meter is
 recorded. These example usages show the new logging methods:
 
-.. code-block:: bash
+.. code-block:: python
 
-    # swift/obj/replicator.py
-    def update(self, job):
-        # ...
-        begin = time.time()
-        try:
-            hashed, local_hash = tpool.execute(tpooled_get_hashes, job['path'],
-                    do_listdir=(self.replication_count % 10) == 0,
-                    reclaim_age=self.reclaim_age)
-            # See tpooled_get_hashes "Hack".
-            if isinstance(hashed, BaseException):
-                raise hashed
-            self.suffix_hash += hashed
-            self.logger.update_stats('suffix.hashes', hashed)
-            # ...
-        finally:
-            self.partition_times.append(time.time() - begin)
-            self.logger.timing_since('partition.update.timing', begin)
+   # swift/obj/replicator.py
+   def update(self, job):
+       # ...
+       begin = time.time()
+       try:
+           hashed, local_hash = tpool.execute(tpooled_get_hashes, job['path'],
+                   do_listdir=(self.replication_count % 10) == 0,
+                   reclaim_age=self.reclaim_age)
+           # See tpooled_get_hashes "Hack".
+           if isinstance(hashed, BaseException):
+               raise hashed
+           self.suffix_hash += hashed
+           self.logger.update_stats('suffix.hashes', hashed)
+           # ...
+       finally:
+           self.partition_times.append(time.time() - begin)
+           self.logger.timing_since('partition.update.timing', begin)
 
-.. code-block:: bash
+.. code-block:: python
 
-    # swift/container/updater.py
-    def process_container(self, dbfile):
-        # ...
-        start_time = time.time()
-        # ...
-            for event in events:
-                if 200 <= event.wait() < 300:
-                    successes += 1
-                else:
-                    failures += 1
-            if successes > failures:
-                self.logger.increment('successes')
-                # ...
-            else:
-                self.logger.increment('failures')
-                # ...
-            # Only track timing data for attempted updates:
-            self.logger.timing_since('timing', start_time)
-        else:
-            self.logger.increment('no_changes')
-            self.no_changes += 1
+   # swift/container/updater.py
+   def process_container(self, dbfile):
+       # ...
+       start_time = time.time()
+       # ...
+           for event in events:
+               if 200 <= event.wait() < 300:
+                   successes += 1
+               else:
+                   failures += 1
+           if successes > failures:
+               self.logger.increment('successes')
+               # ...
+           else:
+               self.logger.increment('failures')
+               # ...
+           # Only track timing data for attempted updates:
+           self.logger.timing_since('timing', start_time)
+       else:
+           self.logger.increment('no_changes')
+           self.no_changes += 1
 
 The development team of StatsD wanted to use the
 `pystatsd <https://github.com/sivy/py-statsd>`__ client library (not to
@@ -240,7 +240,7 @@ project <https://github.com/sivy/py-statsd>`__ also hosted on GitHub),
 but the released version on PyPI was missing two desired features the
 latest version in GitHub had: the ability to configure a meters prefix
 in the client object and a convenience method for sending timing data
-between "now" and a "start" timestamp you already have. So they just
+between ``now`` and a ``start`` timestamp you already have. So they just
 implemented a simple StatsD client library from scratch with the same
 interface. This has the nice fringe benefit of not introducing another
 external library dependency into Object Storage.
