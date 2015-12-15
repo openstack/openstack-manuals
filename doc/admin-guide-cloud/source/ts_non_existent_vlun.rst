@@ -9,7 +9,7 @@ This error occurs if the 3PAR host exists with the correct host name
 that the OpenStack Block Storage drivers expect but the volume was
 created in a different Domain.
 
-::
+.. code-block:: console
 
    HTTPNotFound: Not found (HTTP 404) NON_EXISTENT_VLUN - VLUN 'osv-DqT7CE3mSrWi4gZJmHAP-Q' was not found.
 

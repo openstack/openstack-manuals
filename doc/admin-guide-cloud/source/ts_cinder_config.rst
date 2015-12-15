@@ -6,25 +6,25 @@ Most Block Storage errors are caused by incorrect volume configurations
 that result in volume creation failures. To resolve these failures,
 review these logs:
 
--  cinder-api log (:file:`/var/log/cinder/api.log`)
+-  ``cinder-api`` log (``/var/log/cinder/api.log``)
 
--  cinder-volume log (:file:`/var/log/cinder/volume.log`)
+-  ``cinder-volume`` log (``/var/log/cinder/volume.log``)
 
-The cinder-api log is useful for determining if you have endpoint or
+The ``cinder-api`` log is useful for determining if you have endpoint or
 connectivity issues. If you send a request to create a volume and it
-fails, review the cinder-api log to determine whether the request made
+fails, review the ``cinder-api`` log to determine whether the request made
 it to the Block Storage service. If the request is logged and you see no
-errors or tracebacks, check the cinder-volume log for errors or
+errors or tracebacks, check the ``cinder-volume`` log for errors or
 tracebacks.
 
 .. note::
 
-    Create commands are listed in the ``cinder-api`` log.
+   Create commands are listed in the ``cinder-api`` log.
 
-These entries in the :file:`cinder.openstack.common.log` file can be used to
-assist in troubleshooting your block storage configuration.
+These entries in the ``cinder.openstack.common.log`` file can be used to
+assist in troubleshooting your Block Storage configuration.
 
-.. code:: ini
+.. code-block:: console
 
    # Print debugging output (set logging level to DEBUG instead
    # of default WARNING level). (boolean value)
@@ -113,10 +113,10 @@ these suggested solutions.
    be stored in a file on creation that can be queried in case of
    restart of the ``tgt daemon``. By default, Block Storage uses a
    ``state_path`` variable, which if installing with Yum or APT should
-   be set to :file:`/var/lib/cinder/`. The next part is the ``volumes_dir``
-   variable, by default this just simply appends a :file:`volumes`
+   be set to ``/var/lib/cinder/``. The next part is the ``volumes_dir``
+   variable, by default this just simply appends a ``volumes``
    directory to the ``state_path``. The result is a file-tree
-   :file:`/var/lib/cinder/volumes/`.
+   ``/var/lib/cinder/volumes/``.
 
    While the installer should handle all this, it can go wrong. If you have
    trouble creating volumes and this directory does not exist you should
@@ -128,9 +128,9 @@ these suggested solutions.
 
    Along with the ``volumes_dir`` option, the iSCSI target driver also
    needs to be configured to look in the correct place for the persistent
-   files. This is a simple entry in the :file:`/etc/tgt/conf.d` file that you
+   files. This is a simple entry in the ``/etc/tgt/conf.d`` file that you
    should have set when you installed OpenStack. If issues occur, verify
-   that you have a :file:`/etc/tgt/conf.d/cinder.conf` file.
+   that you have a ``/etc/tgt/conf.d/cinder.conf`` file.
 
    If the file is not present, create it with this command
 
@@ -140,30 +140,30 @@ these suggested solutions.
 
 -  No sign of attach call in the ``cinder-api`` log.
 
-   This is most likely going to be a minor adjustment to your :file:`nova.conf`
-   file. Make sure that your :file:`nova.conf` has this entry
+   This is most likely going to be a minor adjustment to your ``nova.conf``
+   file. Make sure that your ``nova.conf`` has this entry:
 
-   .. code:: ini
+   .. code-block:: ini
 
       volume_api_class=nova.volume.cinder.API
 
--  Failed to create iscsi target error in the :file:`cinder-volume.log` file.
+-  Failed to create iscsi target error in the ``cinder-volume.log`` file.
 
-   ::
+   .. code-block:: console
 
       2013-03-12 01:35:43 1248 TRACE cinder.openstack.common.rpc.amqp \
       ISCSITargetCreateFailed: \
       Failed to create iscsi target for volume \
       volume-137641b2-af72-4a2f-b243-65fdccd38780.
 
-   You might see this error in :file:`cinder-volume.log` after trying to
+   You might see this error in ``cinder-volume.log`` after trying to
    create a volume that is 1 GB. To fix this issue:
 
-   Change contents of the :file:`/etc/tgt/targets.conf` from
+   Change contents of the ``/etc/tgt/targets.conf`` from
    ``include /etc/tgt/conf.d/*.conf`` to ``include /etc/tgt/conf.d/cinder_tgt.conf``,
    as follows:
 
-   ::
+   .. code-block:: ini
 
       include /etc/tgt/conf.d/cinder_tgt.conf
       include /etc/tgt/conf.d/cinder.conf

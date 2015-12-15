@@ -13,7 +13,7 @@ If the ``multipath-tools`` package is installed on the compute node,
 it is used to perform the volume attachment.
 The IDs in your message are unique to your system.
 
-::
+.. code-block:: console
 
    WARNING nova.storage.linuxscsi [req-cac861e3-8b29-4143-8f1b-705d0084e571
        admin admin|req-cac861e3-8b29-4143-8f1b-705d0084e571 admin admin]
