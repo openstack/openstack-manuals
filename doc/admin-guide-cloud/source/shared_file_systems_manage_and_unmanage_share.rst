@@ -28,7 +28,7 @@ To unmanage managed share, run :command:`manila unmanage <share>` command.
 Then try to print the information about it. The expected behavior is that
 Shared File Systems service won't find the share:
 
-.. code:: console
+.. code-block:: console
 
    $ manila unmanage Share3
    $ manila show Share3
@@ -41,7 +41,7 @@ Manage share
 To register the non-managed share in File System service you need to run
 :command:`manila manage` command which has such arguments:
 
-.. code:: console
+.. code-block:: console
 
    manila manage [--name <name>] [--description <description>]
                  [--share_type <share-type>]
@@ -75,7 +75,7 @@ that describe driver options. Note that the share type must have
 
 To manage share, run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila manage manila@cannes#CANNES nfs 10.254.0.7:/shares/share-d1a66eed-a724-4cbb-a886-2f97926bd3b3 --name Share --description "We manage share." --share_type for_managing
    +-----------------------------+---------------------------------------------------------------+
@@ -108,7 +108,7 @@ To manage share, run:
 
 Check that the share is available:
 
-.. code:: console
+.. code-block:: console
 
    $ manila show Share
    +-----------------------------+---------------------------------------------------------------+

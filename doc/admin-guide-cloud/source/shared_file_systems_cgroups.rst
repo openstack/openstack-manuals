@@ -15,17 +15,19 @@ consistency group and restore all shares that were associated with a
 consistency group.
 
 .. note::
+
    The **consistency groups and snapshots** are realized as an
    **experimental** Shared File Systems API in Liberty release. Contributors
    can change or remove the experimental part of the Shared File Systems API
    in further releases without maintaining backward compatibility. The
-   experimental API has ``"X-OpenStack-Manila-API-Experimental: true"`` header
+   experimental API has ``X-OpenStack-Manila-API-Experimental: true`` header
    in their HTTP requests.
 
 Consistency groups
 ------------------
 
 .. note::
+
    Before using consistency groups, make sure the Shared File System driver
    that you are running has consistency group support. You can check it in the
    ``manila-scheduler`` service reports. The ``consistency_group_support`` can
@@ -40,7 +42,7 @@ Create a new consistency group, specify a share network and one or more share
 types. In the example a consistency group ``cgroup1`` was created with
 specifying two comma-separated share types:
 
-.. code:: console
+.. code-block:: console
 
    $ manila cg-create --name cgroup1 --description "My first CG." --share-types my_type1,default --share-network my_share_net
    +----------------------+--------------------------------------+
@@ -62,7 +64,7 @@ specifying two comma-separated share types:
 
 Check that consistency group is in available status:
 
-.. code:: console
+.. code-block:: console
 
    $ manila cg-show cgroup1
    +----------------------+--------------------------------------+
@@ -83,10 +85,10 @@ Check that consistency group is in available status:
    +----------------------+--------------------------------------+
 
 To add a share to the consistency group you need to create a share with a
-``--consistency-group`` option where you specify the ID of the consistency
+:option:`--consistency-group` option where you specify the ID of the consistency
 group in ``available`` status:
 
-.. code:: console
+.. code-block:: console
 
    $ manila create nfs 1 --name "Share2" --description "My second share" --share-type default --share-network my_share_net --consistency-group cgroup1
    +-----------------------------+--------------------------------------+
@@ -118,36 +120,39 @@ group in ``available`` status:
    +-----------------------------+--------------------------------------+
 
 Admin can rename the consistency group or change its description using
-**manila cg-update** command, or delete it by **manila cg-delete**.
+:command:`manila cg-update` command, or delete it by
+:command:`manila cg-delete` command.
 
 As an administrator, you can also reset the state of a consistency group and
 force-delete a specified consistency group in any state. Use the
-:file:`policy.json` file to grant permissions for these actions to other roles.
+``policy.json`` file to grant permissions for these actions to other roles.
 
-Use **manila cg-reset-state [--state <state>] <consistency_group>** to update
-the state of a consistency group explicitly. A valid value of a status are
-``available``, ``error``, ``creating``, ``deleting``, ``error_deleting``.
-If no state is provided, available will be used.
+Use :command:`manila cg-reset-state [--state <state>] <consistency_group>`
+to update the state of a consistency group explicitly. A valid value of a
+status are ``available``, ``error``, ``creating``, ``deleting``,
+``error_deleting``. If no state is provided, available will be used.
 
-.. code:: console
+.. code-block:: console
 
    $ manila cg-reset-state cgroup1 --state error
 
-Use **manila cg-delete <consistency_group> [<consistency_group> ...]** to
-soft-delete one or more consistency group.
+Use :command:`manila cg-delete <consistency_group> [<consistency_group> ...]`
+to soft-delete one or more consistency group.
 
 .. note::
+
    The consistency group can be deleted only if it has no dependent
    :ref:`shared_file_systems_cgsnapshots`.
 
-.. code:: console
+.. code-block:: console
 
    $ manila cg-delete cgroup1
 
-Use **manila cg-delete --force <consistency_group> [<consistency_group> ...]**
+Use :command:`manila cg-delete --force <consistency_group>
+[<consistency_group> ...]`
 to force-delete a specified consistency group in any state.
 
-.. code:: console
+.. code-block:: console
 
    $ manila cg-delete --force cgroup1
 
@@ -163,7 +168,7 @@ group from it.
 
 Create a snapshot of consistency group ``cgroup1``:
 
-.. code:: console
+.. code-block:: console
 
    $ manila cg-snapshot-create cgroup1 --name CG_snapshot1 --description "A snapshot of the first CG."
    +----------------------+--------------------------------------+
@@ -180,7 +185,7 @@ Create a snapshot of consistency group ``cgroup1``:
 
 Check the status of created consistency group snapshot:
 
-.. code:: console
+.. code-block:: console
 
    $ manila cg-snapshot-show CG_snapshot1
    +----------------------+--------------------------------------+
@@ -195,14 +200,15 @@ Check the status of created consistency group snapshot:
    | description          | A snapshot of the first CG.          |
    +----------------------+--------------------------------------+
 
-Admin can rename the consistency group snapshot or change its description using
-**cg-snapshot-update** command, or delete it by **cg-snapshot-delete**.
+Admin can rename the consistency group snapshot or change its description
+using :command:`cg-snapshot-update` command, or delete it by
+:command:`cg-snapshot-delete`.
 
-A consistency group snapshot can have **members**. The consistency group
-snapshot members are the shares that belong to some consistency group. To add a
-member, include the ``--consistency-group`` optional parameter in the create
-share command. This ID must match the ID of the consistency group from which
-the consistency group snapshot was created. Then, while restoring data,
+A consistency group snapshot can have ``members``. The consistency group
+snapshot members are the shares that belong to some consistency group. To add
+a member, include the :option:`--consistency-group` optional parameter in the
+create share command. This ID must match the ID of the consistency group from
+which the consistency group snapshot was created. Then, while restoring data,
 for example, and operating with consistency group snapshots you can quickly
 find which shares belong to a specified consistency group.
 
@@ -210,7 +216,7 @@ You created the share ``Share2`` in ``cgroup1`` consistency group. Since
 you made a snapshot of it, you can see that the only member of the consistency
 group snapshot is ``Share2`` share:
 
-.. code:: console
+.. code-block:: console
 
    $ manila cg-snapshot-members CG_snapshot1
    +--------------+------+----------------------------+----------------+--------------+--------------+
@@ -222,7 +228,7 @@ group snapshot is ``Share2`` share:
 After you create a consistency group snapshot, you can create a consistency
 group from it:
 
-.. code:: console
+.. code-block:: console
 
    $ manila cg-create --source-cgsnapshot-id 876ad24c-1efd-4607-a2b1-6a2c90034fa5 --name cgroup2 --description "A consistency group from a CG snapshot."
    +----------------------+-----------------------------------------+
@@ -244,7 +250,7 @@ group from it:
 
 Check the list of consistency group. There are two groups now:
 
-.. code:: console
+.. code-block:: console
 
    $ manila cg-list
    +-------------------+---------+-----------------------------------------+-----------+
@@ -258,7 +264,7 @@ Check a list of the shares. New share with
 ``ba52454e-2ea3-47fa-a683-3176a01295e6`` ID was created when you created a
 consistency group ``cgroup2`` from a snapshot with a member.
 
-.. code:: console
+.. code-block:: console
 
    $ manila list
    +------+-------+-----+------------+----------+----------+-----------+--------------------------+
@@ -271,13 +277,14 @@ consistency group ``cgroup2`` from a snapshot with a member.
 Print detailed information about new share:
 
 .. note::
+
    Pay attention on the ``source_cgsnapshot_member_id`` and
    ``consistency_group_id`` fields in a new share. It has
    ``source_cgsnapshot_member_id`` that is equal to the ID of the consistency
    group snapshot and ``consistency_group_id`` that is equal to the ID of
    ``cgroup2`` that was created from a snapshot.
 
-.. code:: console
+.. code-block:: console
 
    $ manila show ba52454e-2ea3-47fa-a683-3176a01295e6
    +-----------------------------+---------------------------------------------------------------+
@@ -308,7 +315,7 @@ Print detailed information about new share:
    +-----------------------------+---------------------------------------------------------------+
 
 As an administrator, you can also reset the state of a consistency group
-snapshot with **cg-snapshot-reset-state** and force-delete a specified
-consistency group snapshot in any state using **cg-snapshot-delete** with
-``--force`` key. Use the :file:`policy.json` file to grant permissions for
+snapshot with :command:`cg-snapshot-reset-state` and force-delete a specified
+consistency group snapshot in any state using :command:`cg-snapshot-delete`
+with :option:`--force` key. Use the ``policy.json`` file to grant permissions for
 these actions to other roles.

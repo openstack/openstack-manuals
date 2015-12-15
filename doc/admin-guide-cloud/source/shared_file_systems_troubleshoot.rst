@@ -12,7 +12,7 @@ If new shares go into ``error`` state during creation, follow next steps:
 #. Make sure, that share services are running in debug mode. If the debug mode
    is not set, you will not get any tips from logs how to fix your issue.
 
-#. Find what share service holds a specified share. Do to that, run command
+#. Find what share service holds a specified share. To do that, run command
    :command:`manila show <share_id_or_name>` and find a share host in the
    output. Host uniquely identifies what share service holds the broken share.
 

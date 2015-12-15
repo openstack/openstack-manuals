@@ -34,8 +34,8 @@ Initially there are two driver modes for the back ends:
 * share servers mode
 
 Each share driver supports one or two of possible back end modes that can be
-configured in :file:`manila.conf` file. The configuration option
-``driver_handles_share_servers`` in :file:`manila.conf` file sets the share
+configured in the ``manila.conf`` file. The configuration option
+``driver_handles_share_servers`` in the ``manila.conf`` file sets the share
 servers mode or no share servers mode, and defines the driver mode for share
 storage life cycle management:
 
@@ -116,7 +116,7 @@ is used.
 
 Check share types that exist, run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila type-list
    +------+--------+-----------+------------------------------------+----------------------+
@@ -128,7 +128,7 @@ Check share types that exist, run:
 Create a private share with ``my_type`` share type, NFS shared file system
 protocol, and size 1 GB:
 
-.. code:: console
+.. code-block:: console
 
    $ manila create nfs 1 --name Share2 --description "My share" --share-type my_type
    +-----------------------------+--------------------------------------+
@@ -161,7 +161,7 @@ protocol, and size 1 GB:
 
 New share ``Share2`` should have a status ``available``:
 
-.. code:: console
+.. code-block:: console
 
    $ manila show Share2
    +-----------------------------+---------------------------------------------------------------+
@@ -228,6 +228,7 @@ In the example to create a share, the default share type and the already
 existing share network are used.
 
 .. note::
+
    There is no default share type just after you started manila as the
    administrator. See :ref:`shared_file_systems_share_types` to
    create the default share type. To create a share network, use
@@ -235,7 +236,7 @@ existing share network are used.
 
 Check share types that exist, run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila type-list
    +------+--------+-----------+-----------+----------------------------------+----------------------+
@@ -246,7 +247,7 @@ Check share types that exist, run:
 
 Check share networks that exist, run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila share-network-list
    +--------------------------------------+--------------+
@@ -258,7 +259,7 @@ Check share networks that exist, run:
 Create a public share with ``my_share_net`` network, ``default``
 share type, NFS shared file system protocol, and size 1 GB:
 
-.. code:: console
+.. code-block:: console
 
    $ manila create nfs 1 --name "Share1" --description "My first share" --share-type default --share-network my_share_net --metadata aim=testing --public
    +-----------------------------+--------------------------------------+
@@ -294,7 +295,7 @@ The share also can be created from a share snapshot. For details, see
 
 See the share in a share list:
 
-.. code:: console
+.. code-block:: console
 
    $ manila list
    +----+-------+-----+------------+-----------+-------------------------------+----------------------+
@@ -306,7 +307,7 @@ See the share in a share list:
 Check the share status and see the share export location. After ``creating``
 status share should have status ``available``:
 
-.. code:: console
+.. code-block:: console
 
    $ manila show Share1
    +-----------------------------+-------------------------------------------+
@@ -345,7 +346,7 @@ Update share
 Update the name, or description, or level of visibility for all tenants for
 the share if you need:
 
-.. code:: console
+.. code-block:: console
 
    $ manila update Share1 --description "My first share. Updated" --is-public False
 
@@ -423,13 +424,13 @@ Share metadata
 
 If you want to set the metadata key-value pairs on the share, run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila metadata Share1 set project=my_abc deadline=01/20/16
 
 Get all metadata key-value pairs of the share:
 
-.. code:: console
+.. code-block:: console
 
    $ manila metadata-show Share1
    +----------+----------+
@@ -442,7 +443,7 @@ Get all metadata key-value pairs of the share:
 
 You can update the metadata:
 
-.. code:: console
+.. code-block:: console
 
    $ manila metadata-update-all Share1 deadline=01/30/16
    +----------+----------+
@@ -464,7 +465,7 @@ state, where ``state`` indicates which state to assign the share. Options
 include ``available``, ``error``, ``creating``, ``deleting``,
 ``error_deleting`` states.
 
-.. code:: console
+.. code-block:: console
 
    $ manila reset-state Share2 --state deleting
 
@@ -504,25 +505,27 @@ You also can force-delete a share.
 The shares cannot be deleted in transitional states. The transitional
 states are ``creating``, ``deleting``, ``managing``, ``unmanaging``,
 ``extending``, and ``shrinking`` statuses for the shares. Force-deletion
-deletes an object in any state. Use the :file:`policy.json` file to grant
+deletes an object in any state. Use the ``policy.json`` file to grant
 permissions for this action to other roles.
 
 .. tip::
+
    The configuration file ``policy.json`` may be used from different places.
    The path ``/etc/manila/policy.json`` is one of expected paths by default.
 
 Use **manila delete <share_name_or_ID>** command to delete a specified share:
 
-.. code:: console
+.. code-block:: console
 
    $ manila delete Share2
 
 .. note::
+
    If you specified :ref:`the consistency group <shared_file_systems_cgroups>`
-   while creating a share, you should provide the ``--consistency-group``
+   while creating a share, you should provide the :option:`--consistency-group`
    parameter to delete the share:
 
-.. code:: console
+.. code-block:: console
 
    $ manila delete ba52454e-2ea3-47fa-a683-3176a01295e6 --consistency-group ffee08d9-c86c-45e5-861e-175c731daca2
 
@@ -530,7 +533,7 @@ Use **manila delete <share_name_or_ID>** command to delete a specified share:
 If you try to delete the share in one of the transitional
 state using soft-deletion you'll get an error:
 
-.. code:: console
+.. code-block:: console
 
    $ manila delete b6b0617c-ea51-4450-848e-e7cff69238c7
    Delete for share b6b0617c-ea51-4450-848e-e7cff69238c7 failed: Invalid share: Share status must be one of ('available', 'error', 'inactive'). (HTTP 403) (Request-ID: req-9a77b9a0-17d2-4d97-8a7a-b7e23c27f1fe)
@@ -541,7 +544,7 @@ A share cannot be deleted in a transitional status, that it why an error from
 
 Print the list of all shares for all tenants:
 
-.. code:: console
+.. code-block:: console
 
    $ manila list --all-tenants
    +------+-------+-----+------------+-------+-----------+-----------------------------+-------------+
@@ -554,7 +557,7 @@ Print the list of all shares for all tenants:
 Force-delete Share2 and check that it is absent in the list of shares,
 run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila force-delete b6b0617c-ea51-4450-848e-e7cff69238c7
 
@@ -598,7 +601,7 @@ Try to mount NFS share with export path
 ``10.254.0.5:/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a`` on the
 node with IP address ``10.254.0.4``:
 
-.. code:: console
+.. code-block:: console
 
    $ sudo mount -v -t nfs 10.254.0.5:/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a /mnt/
    mount.nfs: timeout set for Tue Oct  6 10:37:23 2015
@@ -610,7 +613,7 @@ An error message "Permission denied" appeared, so you are not allowed to mount
 a share without an access rule. Allow access to the share with ``ip`` access
 type and ``10.254.0.4`` IP address:
 
-.. code:: console
+.. code-block:: console
 
    $ manila access-allow Share2 ip 10.254.0.4 --access-level rw
    +--------------+--------------------------------------+
@@ -626,14 +629,14 @@ type and ``10.254.0.4`` IP address:
 
 Try to mount a share again. This time it is mounted successfully:
 
-.. code:: console
+.. code-block:: console
 
    $ sudo mount -v -t nfs 10.254.0.5:/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a /mnt/
 
 Since it is allowed node on 10.254.0.4 read and write access, try to create
 a file on a mounted share:
 
-.. code:: console
+.. code-block:: console
 
    $ cd /mnt
    $ ls
@@ -643,7 +646,7 @@ a file on a mounted share:
 Connect via SSH to the 10.254.0.5 node and check new file `my_file.txt`
 in the ``/shares/share-5789ddcf-35c9-4b64-a28a-7f6a4a574b6a`` directory:
 
-.. code:: console
+.. code-block:: console
 
    $ ssh manila@10.254.0.5
    $ cd /shares
@@ -658,7 +661,7 @@ its IP address.
 
 Allow access to the share with ``user`` access type:
 
-.. code:: console
+.. code-block:: console
 
    $ manila access-allow Share2 user demo --access-level rw
    +--------------+--------------------------------------+
@@ -673,6 +676,7 @@ Allow access to the share with ``user`` access type:
    +--------------+--------------------------------------+
 
 .. note::
+
    Different share features are supported by different share drivers.
    For the example, the Generic driver with the Block Storage service as a
    back-end doesn't support ``user`` and ``cert`` authentications methods. For
@@ -683,7 +687,7 @@ Allow access to the share with ``user`` access type:
 To verify that the access rules (ACL) were configured correctly for a share,
 you list permissions for a share:
 
-.. code:: console
+.. code-block:: console
 
    $ manila access-list Share2
    +--------------------------------------+-------------+------------+--------------+--------+
@@ -696,7 +700,7 @@ you list permissions for a share:
 Deny access to the share and check that deleted access rule is absent in the
 access rule list:
 
-.. code:: console
+.. code-block:: console
 
    $ manila access-deny Share2 de715226-da00-4cfc-b1ab-c11f3393745e
 

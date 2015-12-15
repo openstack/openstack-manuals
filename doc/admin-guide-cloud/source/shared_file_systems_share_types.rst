@@ -8,13 +8,13 @@ A share type enables you to filter or choose back ends before you create a
 share and to set data for the share driver. A share type behaves in the same
 way as a Block Storage volume type behaves.
 
-In the Shared File Systems configuration file :file:`manila.conf`, the
-administrator can set the share type used by default for the share creation and
-then create a default share type.
+In the Shared File Systems configuration file ``manila.conf``, the
+administrator can set the share type used by default for the share creation
+and then create a default share type.
 
-To create a share type, use **manila type-create** command as:
+To create a share type, use :command:`manila type-create` command as:
 
-.. code:: console
+.. code-block:: console
 
    manila type-create [--snapshot_support <snapshot_support>]
                       [--is_public <is_public>]
@@ -66,13 +66,13 @@ capabilities_and_extra_specs.html>`_.
 Each driver implementation determines which extra specification keys it uses.
 For details, see the documentation for the driver.
 
-An administrator can use the :file:`policy.json` file to grant permissions for
+An administrator can use the ``policy.json`` file to grant permissions for
 share type creation with extra specifications to other roles.
 
 You set a share type to private or public and
 :ref:`manage the access<share_type_access>` to the private share types. By
-default a share type is created as publicly accessible. Set ``--is_public`` to
-``False`` to make the share type private.
+default a share type is created as publicly accessible. Set
+:option:`--is_public` to ``False`` to make the share type private.
 
 Share type operations
 ---------------------
@@ -81,7 +81,7 @@ To create a new share type you need to specify name of new share type and
 required extra spec ``driver_handles_share_servers``. Also, the new share type
 can be public.
 
-.. code:: console
+.. code-block:: console
 
    $ manila type-create netapp1 False --is_public True
 
@@ -97,14 +97,14 @@ using **manila type-key <share_type> set <key=value>** command. Since it is up
 to each driver what extra specification keys it uses, see the documentation
 for a specified driver.
 
-.. code:: console
+.. code-block:: console
 
    $ manila type-key netapp1 set thin_provisioned=True
 
 It is also possible for administrator to see a list of current share types and
 extra specifications:
 
-.. code:: console
+.. code-block:: console
 
    $ manila extra-specs-list
    +-------------+---------+-------------------------------------+
@@ -115,11 +115,11 @@ extra specifications:
    |             |         | driver_handles_share_servers : True |
    +-------------+---------+-------------------------------------+
 
-Use **manila type-key <share_type> unset <key>** to unset an extra
+Use :command:`manila type-key <share_type> unset <key>` to unset an extra
 specification.
 
 The public or private share type can be deleted by means of
-**manila type-delete <share_type>** command.
+:command:`manila type-delete <share_type>` command.
 
 .. _share_type_access:
 
@@ -132,7 +132,7 @@ private share type.
 
 Create a private type:
 
-.. code:: console
+.. code-block:: console
 
    $ manila type-create my_type1 True --is_public False
    +-----+---------+-----------+-----------+----------------------------------+----------------------+
@@ -142,21 +142,22 @@ Create a private type:
    +-----+---------+-----------+-----------+----------------------------------+----------------------+
 
 .. note::
-   If you run **manila type-list** you see only public types. To see the
-   private types also, run **manila type-list** with ``-all`` optional
-   argument.
+
+   If you run :command:`manila type-list` you see only public types.
+   To see the private types also, run :command:`manila type-list` with
+   :option:`-all` optional argument.
 
 Grant access to created private type for a demo and alt_demo projects
 by providing their IDs:
 
-.. code:: console
+.. code-block:: console
 
    $ manila type-access-add my_type1 d8f9af6915404114ae4f30668a4f5ba7
    $ manila type-access-add my_type1 e4970f57f1824faab2701db61ee7efdf
 
 Get information about access for a private share type ``my_type1``:
 
-.. code:: console
+.. code-block:: console
 
    $ manila type-access-list my_type1
    +----------------------------------+
@@ -171,4 +172,4 @@ with granted access can see the type in the list and create shares with
 allowed private share type.
 
 To deny access for a specified project, use
-**manila type-access-remove <share_type> <project_id>** command.
+:command:`manila type-access-remove <share_type> <project_id>` command.

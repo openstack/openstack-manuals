@@ -13,5 +13,6 @@ authentication services, like LDAP, Kerberos protocols, or Microsoft Active
 Directory.
 
 .. toctree::
+
     shared_file_systems_share_networks.rst
     shared_file_systems_network_plugins.rst

@@ -5,16 +5,16 @@ Quotas and limits
 =================
 
 Limits
-------
+~~~~~~
 
 Limits are the resource limitations that are allowed for each tenant (project).
-An administrator can configure limits in the :file:`manila.conf` file.
+An administrator can configure limits in the ``manila.conf`` file.
 
 Users can query their rate and absolute limits.
 
 To see the absolute limits, run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila absolute-limits
    +----------------------------+-------+
@@ -39,9 +39,9 @@ a rate limit can control the number of GET requests that can be processed
 during a one-minute period.
 
 To set the API rate limits, add configuration to the
-:file:`etc/manila/api-paste.ini` file that is a part of the WSGI pipeline and
+``etc/manila/api-paste.ini`` file that is a part of the WSGI pipeline and
 defines the actual limits. You need to restart ``manila-api`` service after
-you edited :file:`etc/manila/api-paste.ini` file.
+you edit the ``etc/manila/api-paste.ini`` file.
 
 .. code-block:: ini
 
@@ -61,7 +61,7 @@ parameters in the ``[composite:openstack_share_api]`` group.
 
 To see the rate limits, run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila rate-limits
    +--------+------------+-------+--------+--------+----------------------+
@@ -73,16 +73,16 @@ To see the rate limits, run:
    +--------+------------+-------+--------+--------+----------------------+
 
 Quotas
-------
+~~~~~~
 
 Quota sets provide quotas management support.
 
-To list the quotas for a tenant or user, use the **manila quota-show** command.
-If you specify the optional ``--user`` parameter, you get the quotas for this
-user in the specified tenant. If you omit this parameter, you get the quotas
-for the specified project.
+To list the quotas for a tenant or user, use the :command:`manila quota-show`
+command. If you specify the optional :option:`--user` parameter, you get the
+quotas for this user in the specified tenant. If you omit this parameter,
+you get the quotas for the specified project.
 
-.. code:: console
+.. code-block:: console
 
    $ manila quota-show --tenant demo --user demo
    +--------------------+-------+
@@ -96,10 +96,10 @@ for the specified project.
    +--------------------+-------+
 
 There are default quotas for a project that are set from the
-:file:`manila.conf` file. To list the default quotas for a project, use
-the **manila quota-defaults** command:
+``manila.conf`` file. To list the default quotas for a project, use
+the :command:`manila quota-defaults` command:
 
-.. code:: console
+.. code-block:: console
 
    $ manila quota-defaults --tenant demo
    +--------------------+-------+
@@ -117,7 +117,7 @@ specified user by providing both the ``--tenant`` and ``--user`` optional
 arguments. It is possible to update the ``snapshots``, ``gigabytes``,
 ``snapshot-gigabytes``, and ``share-networks`` quotas.
 
-.. code:: console
+.. code-block:: console
 
    $ manila quota-update demo --user demo --shares 49 --snapshots 49
 
@@ -125,12 +125,12 @@ As administrator, you can also permit or deny the force-update of a quota that
 is already used and the requested value exceeds the configured quota. To
 force-update a quota, use ``force`` optional key.
 
-.. code:: console
+.. code-block:: console
 
    $ manila quota-update demo --shares 51 --snapshots 51 --force
 
 To revert quotas to default for a project or for a user, delete quotas:
 
-.. code:: console
+.. code-block:: console
 
    $ manila quota-delete --tenant demo --user demo

@@ -14,7 +14,7 @@ How to create share network
 
 List networks in a tenant, run:
 
-.. code:: console
+.. code-block:: console
 
    $ neutron net-list
    +--------------+---------+---------------------------------------+
@@ -58,7 +58,7 @@ VXLAN, and GRE networks use segmentation.
 
 To create a share network with private network and subnetwork, run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila share-network-create --neutron-net-id 5ed5a854-21dc-4ed3-870a-117b7064eb21 --neutron-subnet-id 74dcfb5a-b4d7-4855-86f5-a669729428dc --name my_share_net --description "My first share network"
    +-------------------+--------------------------------------+
@@ -85,7 +85,7 @@ network provider.
 
 Check network list, run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila share-network-list
    +--------------------------------------+--------------+
@@ -99,7 +99,7 @@ True`` (with the share servers) and had already some operations in the Shared
 File Systems service, you can see ``manila_service_network`` in the neutron
 list of networks. This network was created by Generic driver for inner usage.
 
-.. code:: console
+.. code-block:: console
 
    $ neutron net-list
    +--------------+------------------------+------------------------------------+
@@ -115,7 +115,7 @@ list of networks. This network was created by Generic driver for inner usage.
 You also can see detailed information about the share network including
 ``network_type``, ``segmentation_id`` fields:
 
-.. code:: console
+.. code-block:: console
 
    $ neutron net-show manila_service_network
    +---------------------------+--------------------------------------+

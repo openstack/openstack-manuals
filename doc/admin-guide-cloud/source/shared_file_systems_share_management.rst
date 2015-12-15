@@ -21,7 +21,7 @@ The shares are based on of the supported Shared File Systems protocols:
 
 The Shared File Systems service provides set of drivers that enable you to use
 various network file storage devices, instead of the base implementation. That
-is the real purpose of the Shared File Systems service service in production.
+is the real purpose of the Shared File Systems service in production.
 
 .. toctree::
     shared_file_systems_crud_share.rst
