@@ -5,6 +5,7 @@ Cross-origin resource sharing
 =============================
 
 .. note::
+
    This is a new feature in OpenStack Liberty.
 
 OpenStack supports :term:`Cross-Origin Resource Sharing (CORS)`, a W3C
@@ -45,11 +46,11 @@ configuration file, or add it yourself according to the pattern below.
    expose_headers = Content-Type,Cache-Control,Content-Language,Expires,Last-Modified,Pragma,X-Custom-Header
 
 This method also enables you to define multiple origins. To express this in
-your configuration file, first begin with a :code:`[cors]` group as above,
+your configuration file, first begin with a ``[cors]`` group as above,
 into which you place your default configuration values. Then, add as many
 additional configuration groups as necessary, naming them
-:code:`[cors.{something}]` (each name must be unique). The purpose of the
-suffix to :code:`cors.` is legibility, we recommend using a reasonable
+``[cors.{something}]`` (each name must be unique). The purpose of the
+suffix to ``cors.`` is legibility, we recommend using a reasonable
 human-readable string:
 
 .. code-block:: ini
@@ -74,10 +75,10 @@ Enabling CORS with PasteDeploy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In other services, CORS is configured via PasteDeploy. In this case,
-you must first make sure that OpenStack's :code:`oslo_middleware` package
+you must first make sure that OpenStack's ``oslo_middleware`` package
 (version 2.4.0 or later) is available in the Python environment that is
 running the service. Then, add the following configuration block to your
-:file:`paste.ini` file.
+``paste.ini`` file.
 
 .. code-block:: ini
 
@@ -89,24 +90,29 @@ running the service. Then, add the following configuration block to your
    allow_headers = Content-Type,Cache-Control,Content-Language,Expires,Last-Modified,Pragma,X-Custom-Header
    expose_headers = Content-Type,Cache-Control,Content-Language,Expires,Last-Modified,Pragma,X-Custom-Header
 
-.. note:: To add another domain, simply add another filter.
+.. note::
+
+   To add another domain, simply add another filter.
 
 Security concerns
 ~~~~~~~~~~~~~~~~~
 
-CORS specifies a wildcard character `*`, which permits access to all user
+CORS specifies a wildcard character ``*``, which permits access to all user
 agents, regardless of domain, protocol, or host. While there are valid use
 cases for this approach, it also permits a malicious actor to create a
 convincing facsimile of a user interface, and trick users into revealing
 authentication credentials. Please carefully evaluate your use case and the
 relevant documentation for any risk to your organization.
 
-.. note:: The CORS specification does not support using this wildcard as
-          a part of a URI. Setting allowed-origin to `*` would work, while
-          :code:`*.openstack.org` would not.
+.. note::
+
+   The CORS specification does not support using this wildcard as
+   a part of a URI. Setting ``allowed_origin`` to ``*`` would work, while
+   ``*.openstack.org`` would not.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
+
 CORS is very easy to get wrong, as even one incorrect property will violate
 the prescribed contract. Here are some steps you can take to troubleshoot
 your configuration.
@@ -118,8 +124,8 @@ The CORS middleware used by OpenStack provides verbose debug logging that
 should reveal most configuration problems. Here are some example log
 messages, and how to resolve them.
 
-``CORS request from origin 'http://foo.com' not permitted.``
-  A request was received from the origin 'http://foo.com', however this
+``CORS request from origin 'http://example.com' not permitted.``
+  A request was received from the origin ``http://example.com``, however this
   origin was not found in the permitted list. The cause may be a superfluous
   port notation (ports 80 and 443 do not need to be specified). To correct,
   ensure that the configuration property for this host is identical to the
@@ -128,11 +134,11 @@ messages, and how to resolve them.
 ``Request method 'DELETE' not in permitted list: GET,PUT,POST``
   A user agent has requested permission to perform a DELETE request, however
   the CORS configuration for the domain does not permit this. To correct, add
-  this method to the :code:`allow_methods` configuration property.
+  this method to the ``allow_methods`` configuration property.
 
 ``Request header 'X-Custom-Header' not in permitted list: X-Other-Header``
-  A request was received with the header 'X-Custom-Header', which is not
-  permitted. Add this header to the :code:`allow_headers` configuration
+  A request was received with the header ``X-Custom-Header``, which is not
+  permitted. Add this header to the ``allow_headers`` configuration
   property.
 
 Open your browser's console log
@@ -145,24 +151,29 @@ to access.
 
 Manually construct a CORS request
 ---------------------------------
+
 By using ``curl`` or a similar tool, you can trigger a CORS response with a
 properly constructed HTTP request. An example request and response might look
 like this.
 
-Request::
+Request example:
 
-  $ curl -I -X OPTIONS https://api.example.com/api -H "Origin: https://ui.example.com"
+.. code-block:: console
 
-Response::
+   $ curl -I -X OPTIONS https://api.example.com/api -H "Origin: https://ui.example.com"
 
-  HTTP/1.1 204 No Content
-  Content-Length: 0
-  Access-Control-Allow-Origin: https://ui.example.com
-  Access-Control-Allow-Methods: GET,POST,PUT,DELETE
-  Access-Control-Expose-Headers: origin,authorization,accept,x-total,x-limit,x-marker,x-client,content-type
-  Access-Control-Allow-Headers: origin,authorization,accept,x-total,x-limit,x-marker,x-client,content-type
-  Access-Control-Max-Age: 3600
+Response example:
+
+.. code-block:: console
+
+   HTTP/1.1 204 No Content
+   Content-Length: 0
+   Access-Control-Allow-Origin: https://ui.example.com
+   Access-Control-Allow-Methods: GET,POST,PUT,DELETE
+   Access-Control-Expose-Headers: origin,authorization,accept,x-total,x-limit,x-marker,x-client,content-type
+   Access-Control-Allow-Headers: origin,authorization,accept,x-total,x-limit,x-marker,x-client,content-type
+   Access-Control-Max-Age: 3600
 
 If the service does not return any access control headers, check the service
-log, such as :code:`/var/log/upstart/ironic-api.log` for an indication on what
+log, such as ``/var/log/upstart/ironic-api.log`` for an indication on what
 went wrong.
