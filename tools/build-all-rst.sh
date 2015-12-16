@@ -22,7 +22,7 @@ done
 # Draft guides
 # This includes guides that we publish from stable branches
 # as versioned like the networking-guide.
-for guide in config-ref-rst networking-guide; do
+for guide in config-ref-rst networking-guide arch-design-draft; do
     tools/build-rst.sh doc/$guide --build build \
         --target "draft/$guide" $LINKCHECK
 done
