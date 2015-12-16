@@ -4,16 +4,18 @@
 Back up and restore volumes
 ===========================
 
-The **cinder** command-line interface provides the tools for creating a
+The ``cinder`` command-line interface provides the tools for creating a
 volume backup. You can restore a volume from a backup as long as the
 backup's associated database information (or backup metadata) is intact
 in the Block Storage database.
 
-Run this command to create a backup of a volume::
+Run this command to create a backup of a volume:
 
- $ cinder backup-create [--incremental] [--force] VOLUME
+.. code-block:: console
 
-Where *VOLUME* is the name or ID of the volume, ``incremental`` is
+   $ cinder backup-create [--incremental] [--force] VOLUME
+
+Where ``VOLUME`` is the name or ID of the volume, ``incremental`` is
 a flag that indicates whether an incremental backup should be performed,
 and ``force`` is a flag that allows or disallows backup of a volume
 when the volume is attached to an instance.
@@ -30,11 +32,12 @@ flag is False by default.
 
 .. note::
 
-    The ``incremental`` and ``force`` flags are only available for block
-    storage API v2. You have to specify [--os-volume-api-version 2] in the
-    **cinder** command-line interface to use this parameter.
+   The ``incremental`` and ``force`` flags are only available for block
+   storage API v2. You have to specify ``[--os-volume-api-version 2]`` in the
+   ``cinder`` command-line interface to use this parameter.
 
 .. note::
+
    The ``force`` flag is new in OpenStack Liberty.
 
 The incremental backup is based on a parent backup which is an existing
@@ -44,16 +47,16 @@ or an incremental backup depending on the timestamp.
 
 .. note::
 
-    The first backup of a volume has to be a full backup. Attempting to do
-    an incremental backup without any existing backups will fail.
-    There is an ``is_incremental`` flag that indicates whether a backup is
-    incremental when showing details on the backup.
-    Another flag, ``has_dependent_backups``, returned when showing backup
-    details, will indicate whether the backup has dependent backups.
-    If it is true, attempting to delete this backup will fail.
+   The first backup of a volume has to be a full backup. Attempting to do
+   an incremental backup without any existing backups will fail.
+   There is an ``is_incremental`` flag that indicates whether a backup is
+   incremental when showing details on the backup.
+   Another flag, ``has_dependent_backups``, returned when showing backup
+   details, will indicate whether the backup has dependent backups.
+   If it is ``true``, attempting to delete this backup will fail.
 
 A new configure option ``backup_swift_block_size`` is introduced into
-:file:`cinder.conf` for the default Swift backup driver. This is the size in
+``cinder.conf`` for the default Swift backup driver. This is the size in
 bytes that changes are tracked for incremental backups. The existing
 ``backup_swift_object_size`` option, the size in bytes of Swift backup
 objects, has to be a multiple of ``backup_swift_block_size``. The default
@@ -66,9 +69,11 @@ back end. This option enables or disables the timer. It is enabled by default
 to send the periodic progress notifications to the Telemetry service.
 
 This command also returns a backup ID. Use this backup ID when restoring
-the volume::
+the volume:
 
- $ cinder backup-restore BACKUP_ID
+.. code-block:: console
+
+   $ cinder backup-restore BACKUP_ID
 
 When restoring from a full backup, it is a full restore.
 
@@ -79,42 +84,42 @@ laying on top of it in order.
 
 You can view a backup list with the :command:`cinder backup-list`
 command. Optional arguments to clarify the status of your backups
-include: running ``--name``, ``--status``, and ``--volume-id`` to filter
-through backups by the specified name, status, or volume-id. Search
-with ``--all-tenants`` for details of the tenants associated
-with the listed backups.
+include: running :option:`--name`, :option:`--status`, and
+:option:`--volume-id` to filter through backups by the specified name,
+status, or volume-id. Search with :option:`--all-tenants` for details of the
+tenants associated with the listed backups.
 
 Because volume backups are dependent on the Block Storage database, you must
 also back up your Block Storage database regularly to ensure data recovery.
 
 .. note::
 
-    Alternatively, you can export and save the metadata of selected volume
-    backups. Doing so precludes the need to back up the entire Block Storage
-    database. This is useful if you need only a small subset of volumes to
-    survive a catastrophic database failure.
+   Alternatively, you can export and save the metadata of selected volume
+   backups. Doing so precludes the need to back up the entire Block Storage
+   database. This is useful if you need only a small subset of volumes to
+   survive a catastrophic database failure.
 
-    If you specify a UUID encryption key when setting up the volume
-    specifications, the backup metadata ensures that the key will remain valid
-    when you back up and restore the volume.
+   If you specify a UUID encryption key when setting up the volume
+   specifications, the backup metadata ensures that the key will remain valid
+   when you back up and restore the volume.
 
-    For more information about how to export and import volume backup metadata,
-    see the section called :ref:`volume_backups_export_import`.
+   For more information about how to export and import volume backup metadata,
+   see the section called :ref:`volume_backups_export_import`.
 
 By default, the swift object store is used for the backup repository.
 
 If instead you want to use an NFS export as the backup repository, add the
 following configuration options to the ``[DEFAULT]`` section of the
-:file:`cinder.conf` file and restart the Block Storage services:
+``cinder.conf`` file and restart the Block Storage services:
 
 .. code-block:: ini
 
    backup_driver = cinder.backup.drivers.nfs
    backup_share = HOST:EXPORT_PATH
 
-For the ``backup_share`` option, replace *HOST* with the DNS resolvable
+For the ``backup_share`` option, replace ``HOST`` with the DNS resolvable
 host name or the IP address of the storage server for the NFS share, and
-*EXPORT_PATH* with the path to that share. If your environment requires
+``EXPORT_PATH`` with the path to that share. If your environment requires
 that non-default mount options be specified for the share, set these as
 follows:
 
@@ -122,7 +127,7 @@ follows:
 
    backup_mount_options = MOUNT_OPTIONS
 
-*MOUNT_OPTIONS* is a comma-separated string of NFS mount options as detailed
+``MOUNT_OPTIONS`` is a comma-separated string of NFS mount options as detailed
 in the NFS man page.
 
 There are several other options whose default values may be overridden as
@@ -153,6 +158,8 @@ states due to problems like the database or rabbitmq being down. In situations
 like these resetting the state of the backup can restore it to a functional
 status.
 
-Run this command to restore the state of a backup::
+Run this command to restore the state of a backup:
+
+.. code-block:: console
 
    $ cinder backup-reset-state [--state STATE] BACKUP_ID-1 BACKUP_ID-2 ...

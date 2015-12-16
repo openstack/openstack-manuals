@@ -5,22 +5,13 @@ Gracefully remove a GlusterFS volume from usage
 ===============================================
 
 Configuring the ``cinder`` volume service to use GlusterFS involves creating a
-shares file (for example, :file:`/etc/cinder/glusterfs`). This shares file
+shares file (for example, ``/etc/cinder/glusterfs``). This shares file
 lists each GlusterFS volume (with its corresponding storage server) that
 the ``cinder`` volume service can use for back end storage.
 
 To remove a GlusterFS volume from usage as a back end, delete the volume's
 corresponding entry from the shares file. After doing so, restart the Block
 Storage services.
-
-To restart the Block Storage services on CentOS, Fedora, openSUSE,
-Red Hat Enterprise Linux, or SUSE Linux Enterprise, run::
-
-   # for i in api scheduler volume; do service openstack-cinder-$i restart; done
-
-To restart the Block Storage services on Ubuntu or Debian, run::
-
-   # for i in api scheduler volume; do service cinder-${i} restart; done
 
 Restarting the Block Storage services will prevent the ``cinder`` volume
 service from exporting the deleted GlusterFS volume. This will prevent any

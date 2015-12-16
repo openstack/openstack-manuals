@@ -16,11 +16,13 @@ the database used by the Block Storage service.
 
 You can, however, export the metadata of a volume backup. To do so, run
 this command as an OpenStack ``admin`` user (presumably, after creating
-a volume backup)::
+a volume backup):
 
- $ cinder backup-export BACKUP_ID
+.. code-block:: console
 
-Where *BACKUP_ID* is the volume backup's ID. This command should return the
+   $ cinder backup-export BACKUP_ID
+
+Where ``BACKUP_ID`` is the volume backup's ID. This command should return the
 backup's corresponding database information as encoded string metadata.
 
 Exporting and storing this encoded string metadata allows you to completely
@@ -44,11 +46,13 @@ import the backup metadata to the Block Storage database and then restore
 the backup.
 
 To import backup metadata, run the following command as an OpenStack
-``admin``::
+``admin``:
 
- $ cinder backup-import METADATA
+.. code-block:: console
 
-Where *METADATA* is the backup metadata exported earlier.
+   $ cinder backup-import METADATA
+
+Where ``METADATA`` is the backup metadata exported earlier.
 
 Once you have imported the backup metadata into a Block Storage database,
 restore the volume (see the section called :ref:`volume_backups`).

@@ -38,11 +38,11 @@ volume from one to the other. This scenario uses the third migration flow.
 
 First, list the available back-ends:
 
-.. code::
+.. code-block:: console
 
    # cinder get-pools
 
-.. code::
+.. code-block:: console
 
    +----------+----------------------------------------------------+
    | Property |                       Value                        |
@@ -61,7 +61,7 @@ First, list the available back-ends:
 
 You can also get available back-ends like following:
 
-.. code::
+.. code-block:: console
 
    # cinder-manage host list
    server1@lvmstorage-1    zone1
@@ -73,11 +73,11 @@ But it needs to add pool name in the end. For example,
 Next, as the admin user, you can see the current status of the volume
 (replace the example ID with your own):
 
-.. code::
+.. code-block:: console
 
    $ cinder show 6088f80a-f116-4331-ad48-9afb0dfb196c
 
-.. code::
+.. code-block:: console
 
    +--------------------------------+--------------------------------------+
    |            Property            |                Value                 |
@@ -125,14 +125,14 @@ Note these attributes:
      On nodes that run CentOS, Fedora, openSUSE, Red Hat Enterprise Linux,
      or SUSE Linux Enterprise, run:
 
-     .. code::
+     .. code-block:: console
 
         # service openstack-cinder-volume stop
         # chkconfig openstack-cinder-volume off
 
      On nodes that run Ubuntu or Debian, run:
 
-     .. code::
+     .. code-block:: console
 
         # service cinder-volume stop
         # chkconfig cinder-volume off
@@ -142,7 +142,7 @@ Note these attributes:
 
 Migrate this volume to the second LVM back-end:
 
-.. code::
+.. code-block:: console
 
    $ cinder migrate 6088f80a-f116-4331-ad48-9afb0dfb196c \
      server2@lvmstorage-2#lvmstorage-2
@@ -153,7 +153,7 @@ migration. While migrating, the ``migstat`` attribute shows states such as
 host attribute shows the original ``host``. On success, in this example, the
 output looks like:
 
-.. code::
+.. code-block:: console
 
    +--------------------------------+--------------------------------------+
    |            Property            |                Value                 |

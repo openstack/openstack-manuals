@@ -15,12 +15,11 @@ Enable volume number weigher
 
 To enable a volume number weigher, set the
 ``scheduler_default_weighers`` to ``VolumeNumberWeigher`` flag in the
-:file:`cinder.conf` file to define ``VolumeNumberWeigher``
+``cinder.conf`` file to define ``VolumeNumberWeigher``
 as the selected weigher.
 
 Configure multiple-storage back ends
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 To configure ``VolumeNumberWeigher``, use ``LVMVolumeDriver``
 as the volume driver.
@@ -46,13 +45,17 @@ This example configuration defines two back ends:
 Volume type
 ~~~~~~~~~~~
 
-Define a volume type in Block Storage::
+Define a volume type in Block Storage:
 
-   $ cinder type-create lvm
+   .. code-block:: console
 
-Create an extra specification that links the volume type to a back-end name::
+      $ cinder type-create lvm
 
-   $ cinder type-key lvm set volume_backend_name=LVM
+Create an extra specification that links the volume type to a back-end name:
+
+   .. code-block:: console
+
+      $ cinder type-key lvm set volume_backend_name=LVM
 
 This example creates a lvm volume type with
 ``volume_backend_name=LVM`` as extra specifications.
@@ -61,14 +64,18 @@ Usage
 ~~~~~
 
 To create six 1-GB volumes, run the
-:command:`cinder create --volume-type lvm 1` command six times::
+:command:`cinder create --volume-type lvm 1` command six times:
+
+.. code-block:: console
 
    $ cinder create --volume-type lvm 1
 
 This command creates three volumes in ``stack-volumes`` and
 three volumes in ``stack-volumes-1``.
 
-List the available volumes::
+List the available volumes:
+
+.. code-block:: console
 
    # lvs
    LV                                          VG              Attr      LSize  Pool Origin Data%  Move Log Copy%  Convert

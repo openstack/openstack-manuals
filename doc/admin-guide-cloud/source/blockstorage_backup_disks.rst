@@ -52,16 +52,18 @@ You can apply this process to volumes of any size.
         # lvdisplay
 
    * Create the snapshot; you can do this while the volume is attached
-     to an instance::
+     to an instance:
 
-      # lvcreate --size 10G --snapshot --name volume-00000001-snapshot \
-        /dev/cinder-volumes/volume-00000001
+     .. code-block:: console
+
+        # lvcreate --size 10G --snapshot --name volume-00000001-snapshot \
+          /dev/cinder-volumes/volume-00000001
 
      Use the :option:`--snapshot` configuration option to tell LVM that you want a
      snapshot of an already existing volume. The command includes the size
      of the space reserved for the snapshot volume, the name of the snapshot,
      and the path of an already existing volume. Generally, this path
-     is :file:`/dev/cinder-volumes/VOLUME_NAME`.
+     is ``/dev/cinder-volumes/VOLUME_NAME``.
 
      The size does not have to be the same as the volume of the snapshot.
      The :option:`--size` parameter defines the space that LVM reserves
@@ -69,44 +71,46 @@ You can apply this process to volumes of any size.
      as that of the original volume, even if the whole space is not
      currently used by the snapshot.
 
-   * Run the :command:`lvdisplay` command again to verify the snapshot::
+   * Run the :command:`lvdisplay` command again to verify the snapshot:
 
-      --- Logical volume ---
-      LV Name                /dev/cinder-volumes/volume-00000001
-      VG Name                cinder-volumes
-      LV UUID                gI8hta-p21U-IW2q-hRN1-nTzN-UC2G-dKbdKr
-      LV Write Access        read/write
-      LV snapshot status     source of
-                       /dev/cinder-volumes/volume-00000026-snap [active]
-      LV Status              available
-      # open                 1
-      LV Size                15,00 GiB
-      Current LE             3840
-      Segments               1
-      Allocation             inherit
-      Read ahead sectors     auto
-      - currently set to     256
-      Block device           251:13
+     .. code-block:: console
 
-      --- Logical volume ---
-      LV Name                /dev/cinder-volumes/volume-00000001-snap
-      VG Name                cinder-volumes
-      LV UUID                HlW3Ep-g5I8-KGQb-IRvi-IRYU-lIKe-wE9zYr
-      LV Write Access        read/write
-      LV snapshot status     active destination for /dev/cinder-volumes/volume-00000026
-      LV Status              available
-      # open                 0
-      LV Size                15,00 GiB
-      Current LE             3840
-      COW-table size         10,00 GiB
-      COW-table LE           2560
-      Allocated to snapshot  0,00%
-      Snapshot chunk size    4,00 KiB
-      Segments               1
-      Allocation             inherit
-      Read ahead sectors     auto
-      - currently set to     256
-      Block device           251:14
+        --- Logical volume ---
+        LV Name                /dev/cinder-volumes/volume-00000001
+        VG Name                cinder-volumes
+        LV UUID                gI8hta-p21U-IW2q-hRN1-nTzN-UC2G-dKbdKr
+        LV Write Access        read/write
+        LV snapshot status     source of
+                               /dev/cinder-volumes/volume-00000026-snap [active]
+        LV Status              available
+        # open                 1
+        LV Size                15,00 GiB
+        Current LE             3840
+        Segments               1
+        Allocation             inherit
+        Read ahead sectors     auto
+        - currently set to     256
+        Block device           251:13
+
+        --- Logical volume ---
+        LV Name                /dev/cinder-volumes/volume-00000001-snap
+        VG Name                cinder-volumes
+        LV UUID                HlW3Ep-g5I8-KGQb-IRvi-IRYU-lIKe-wE9zYr
+        LV Write Access        read/write
+        LV snapshot status     active destination for /dev/cinder-volumes/volume-00000026
+        LV Status              available
+        # open                 0
+        LV Size                15,00 GiB
+        Current LE             3840
+        COW-table size         10,00 GiB
+        COW-table LE           2560
+        Allocated to snapshot  0,00%
+        Snapshot chunk size    4,00 KiB
+        Segments               1
+        Allocation             inherit
+        Read ahead sectors     auto
+        - currently set to     256
+        Block device           251:14
 
 #. Partition table discovery
 
@@ -131,9 +135,11 @@ You can apply this process to volumes of any size.
      If the tools successfully find and map the partition table,
      no errors are returned.
 
-   * To check the partition table map, run this command::
+   * To check the partition table map, run this command:
 
-      $ ls /dev/mapper/nova*
+     .. code-block:: console
+
+        $ ls /dev/mapper/nova*
 
      You can see the ``cinder--volumes-volume--00000001--snapshot1``
      partition.
@@ -160,12 +166,14 @@ You can apply this process to volumes of any size.
 
 #. Use the :command:`tar` command to create archives
 
-   Create a backup of the volume::
+   Create a backup of the volume:
 
-    $ tar --exclude="lost+found" --exclude="some/data/to/exclude" -czf \
-      volume-00000001.tar.gz -C /mnt/ /backup/destination
+   .. code-block:: console
 
-   This command creates a :file:`tar.gz` file that contains the data,
+      $ tar --exclude="lost+found" --exclude="some/data/to/exclude" -czf \
+        volume-00000001.tar.gz -C /mnt/ /backup/destination
+
+   This command creates a ``tar.gz`` file that contains the data,
    *and data only*. This ensures that you do not waste space by backing
    up empty sectors.
 
@@ -178,9 +186,11 @@ You can apply this process to volumes of any size.
    different, the file is corrupted.
 
    Run this command to run a checksum for your file and save the result
-   to a file::
+   to a file:
 
-    $ sha1sum volume-00000001.tar.gz > volume-00000001.checksum
+   .. code-block:: console
+
+      $ sha1sum volume-00000001.tar.gz > volume-00000001.checksum
 
    .. note::
 
@@ -196,17 +206,23 @@ You can apply this process to volumes of any size.
    Now that you have an efficient and consistent backup, use this command
    to clean up the file system:
 
-   * Unmount the volume::
+   * Unmount the volume.
 
-     $ umount /mnt
+     .. code-block:: console
 
-   * Delete the partition table::
+        $ umount /mnt
 
-     $ kpartx -dv /dev/cinder-volumes/volume-00000001-snapshot
+   * Delete the partition table.
 
-   * Remove the snapshot::
+     .. code-block:: console
 
-     $ lvremove -f /dev/cinder-volumes/volume-00000001-snapshot
+        $ kpartx -dv /dev/cinder-volumes/volume-00000001-snapshot
+
+   * Remove the snapshot.
+
+     .. code-block:: console
+
+        $ lvremove -f /dev/cinder-volumes/volume-00000001-snapshot
 
    Repeat these steps for all your volumes.
 
@@ -221,21 +237,23 @@ You can apply this process to volumes of any size.
 
    Launch this script from the server that runs the Block Storage service.
 
-   This example shows a mail report::
+   This example shows a mail report:
 
-    Backup Start Time - 07/10 at 01:00:01
-    Current retention - 7 days
+   .. code-block:: console
 
-    The backup volume is mounted. Proceed...
-    Removing old backups...  : /BACKUPS/EBS-VOL/volume-00000019/volume-00000019_28_09_2011.tar.gz
-         /BACKUPS/EBS-VOL/volume-00000019 - 0 h 1 m and 21 seconds. Size - 3,5G
+      Backup Start Time - 07/10 at 01:00:01
+      Current retention - 7 days
 
-    The backup volume is mounted. Proceed...
-    Removing old backups...  : /BACKUPS/EBS-VOL/volume-0000001a/volume-0000001a_28_09_2011.tar.gz
-         /BACKUPS/EBS-VOL/volume-0000001a - 0 h 4 m and 15 seconds. Size - 6,9G
-    ---------------------------------------
-    Total backups size - 267G - Used space : 35%
-    Total execution time - 1 h 75 m and 35 seconds
+      The backup volume is mounted. Proceed...
+      Removing old backups...  : /BACKUPS/EBS-VOL/volume-00000019/volume-00000019_28_09_2011.tar.gz
+           /BACKUPS/EBS-VOL/volume-00000019 - 0 h 1 m and 21 seconds. Size - 3,5G
+
+      The backup volume is mounted. Proceed...
+      Removing old backups...  : /BACKUPS/EBS-VOL/volume-0000001a/volume-0000001a_28_09_2011.tar.gz
+           /BACKUPS/EBS-VOL/volume-0000001a - 0 h 4 m and 15 seconds. Size - 6,9G
+      ---------------------------------------
+      Total backups size - 267G - Used space : 35%
+      Total execution time - 1 h 75 m and 35 seconds
 
    The script also enables you to SSH to your instances and run a
    :command:`mysqldump` command into them. To make this work, enable
