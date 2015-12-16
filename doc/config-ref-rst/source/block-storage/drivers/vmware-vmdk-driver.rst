@@ -7,12 +7,6 @@ volumes on vCenter-managed data stores. Volumes are backed by VMDK files on
 data stores that use any VMware-compatible storage technology such as NFS,
 iSCSI, FiberChannel, and vSAN.
 
-.. warning::
-
-   The VMware ESX VMDK driver is deprecated as of the Icehouse release and
-   might be removed in Juno or a subsequent release. The VMware vCenter VMDK
-   driver continues to be fully supported.
-
 Functional context
 ~~~~~~~~~~~~~~~~~~
 
@@ -145,11 +139,6 @@ created from an image:
    $ cinder create --source-volid 25743b9d-3605-462b-b9eb-71459fe2bb35 \
      --display-name dest-vol 1
 
-.. note::
-
-   The VMware ESX VMDK driver ignores the extra spec entry and always creates
-   a ``full`` clone.
-
 Use vCenter storage policies to specify back-end data stores
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -210,7 +199,7 @@ automatically supported.
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
-The VMware vCenter and ESX VMDK drivers support these operations:
+The VMware vCenter VMDK driver supports these operations:
 
 -  Create, delete, attach, and detach volumes.
 
@@ -270,11 +259,6 @@ The VMware vCenter and ESX VMDK drivers support these operations:
       This operation is supported only if the volume state is ``available``.
 
 -  Extend a volume.
-
-   .. note::
-
-      Although the VMware ESX VMDK driver supports these operations, it has
-      not been extensively tested.
 
 
 .. _vmware-spbm:
