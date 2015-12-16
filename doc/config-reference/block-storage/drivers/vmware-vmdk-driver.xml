@@ -10,12 +10,6 @@
         stores. Volumes are backed by VMDK files on data stores that
         use any VMware-compatible storage technology such as NFS,
         iSCSI, FiberChannel, and vSAN.</para>
-    <warning>
-        <para>The VMware ESX VMDK driver is deprecated as of the
-            Icehouse release and might be removed in Juno or a
-            subsequent release. The VMware vCenter VMDK driver
-            continues to be fully supported.</para>
-    </warning>
     <section xml:id="vmdk_functional_context">
         <title>Functional context</title>
         <para>The VMware VMDK driver connects to vCenter, through
@@ -156,11 +150,6 @@
 <prompt>$</prompt> <userinput>cinder type-key fast_clone set vmware:clone_type=linked</userinput>
 <prompt>$</prompt> <userinput>cinder create --image-id 9cb87f4f-a046-47f5-9b7c-d9487b3c7cd4 --volume-type fast_clone --display-name source-vol 1</userinput>
 <prompt>$</prompt> <userinput>cinder create --source-volid 25743b9d-3605-462b-b9eb-71459fe2bb35 --display-name dest-vol 1</userinput></screen>
-        <note>
-            <para>The VMware ESX VMDK driver ignores the extra spec
-                entry and always creates a <literal>full</literal>
-                clone.</para>
-        </note>
     </section>
     <section xml:id="vcenter_storage_policies">
         <title>Use vCenter storage policies to specify back-end data
@@ -250,7 +239,7 @@
     </section>
     <section xml:id="vmdk_supported_operations">
         <title>Supported operations</title>
-        <para>The VMware vCenter and ESX VMDK drivers support these
+        <para>The VMware vCenter VMDK driver supports these
             operations:</para>
         <itemizedlist>
           <listitem>
@@ -333,10 +322,6 @@
             <para>Extend a volume.</para>
           </listitem>
         </itemizedlist>
-        <note>
-          <para>Although the VMware ESX VMDK driver supports these
-            operations, it has not been extensively tested.</para>
-        </note>
     </section>
 
     <section xml:id="vmware-spbm">
