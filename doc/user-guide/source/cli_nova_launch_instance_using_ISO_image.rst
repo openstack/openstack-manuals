@@ -9,7 +9,9 @@ Boot an instance from an ISO image
 
 OpenStack supports booting instances using ISO images. But before you
 make such instances functional, use the :command:`nova boot` command
-with the following parameters to boot an instance::
+with the following parameters to boot an instance.
+
+.. code-block:: console
 
     $ nova boot \
         --image ubuntu-14.04.2-server-amd64.iso \
@@ -56,9 +58,9 @@ is a valid network id in your system.
 
 .. note::
 
-    You need the Block Storage service, and the parameter
-    ``shutdown=preserve`` is also mandatory, thus the volume will be
-    preserved after the shutdown of the instance.
+   You need the Block Storage service, and the parameter
+   ``shutdown=preserve`` is also mandatory, thus the volume will be
+   preserved after the shutdown of the instance.
 
 After the instance is successfully launched, connect to the instance
 using a remote console and follow the instructions to install the
@@ -77,34 +79,40 @@ Make the instances booted from ISO image functional
 Now complete the following steps to make your instances created
 using ISO image actually functional.
 
-#. Delete the instance using the following command::
+#. Delete the instance using the following command.
 
-    $ nova delete INSTANCE_NAME
+   .. code-block:: console
+
+      $ nova delete INSTANCE_NAME
 
 #. After you delete the instance, the system you have just installed
    using your ISO image remains, because the parameter
-   ``shutdown=preserve`` was set, so run the following command::
+   ``shutdown=preserve`` was set, so run the following command.
 
-    $ cinder list
-    +-----------------+-----------+--------------+------+-------------+----------+-------------+
-    |       ID        |   Status  |      Name    | Size | Volume Type | Bootable | Attached to |
-    +-----------------+-----------+--------------+------+-------------+----------+-------------+
-    | d620d971-b16... | available | 655ef3e4-... |  8   |     None    |  false   |             |
-    +-----------------+-----------+--------------+------+-------------+----------+-------------+
+   .. code-block:: console
+
+      $ cinder list
+      +-----------------+-----------+--------------+------+-------------+----------+-------------+
+      |       ID        |   Status  |      Name    | Size | Volume Type | Bootable | Attached to |
+      +-----------------+-----------+--------------+------+-------------+----------+-------------+
+      | d620d971-b16... | available | 655ef3e4-... |  8   |     None    |  false   |             |
+      +-----------------+-----------+--------------+------+-------------+----------+-------------+
 
    You get a list with all the volumes in your system. In this list,
    you can find the volume that is attached to your ISO created
    instance, with the false bootable property.
 
-#. Upload the volume to glance::
+#. Upload the volume to glance.
 
-    $ cinder upload-to-image VOLUME_UUID IMAGE_NAME
-    $ glance image-list
-    +-------------------+------------+-------------+------------------+------------+--------+
-    | ID                | Name       | Disk Format | Container Format | Size       | Status |
-    +-------------------+------------+-------------+------------------+------------+--------+
-    | 74303284-f802-... | IMAGE_NAME | iso         | bare             | 764321792  | active |
-    +-------------------+------------+-------------+------------------+------------+--------+
+   .. code-block:: console
+
+      $ cinder upload-to-image VOLUME_UUID IMAGE_NAME
+      $ glance image-list
+      +-------------------+------------+-------------+------------------+------------+--------+
+      | ID                | Name       | Disk Format | Container Format | Size       | Status |
+      +-------------------+------------+-------------+------------------+------------+--------+
+      | 74303284-f802-... | IMAGE_NAME | iso         | bare             | 764321792  | active |
+      +-------------------+------------+-------------+------------------+------------+--------+
 
    The ``VOLUME_UUID`` is the uuid of the volume that is attached to
    your ISO created instance, and the ``IMAGE_NAME`` is the name that

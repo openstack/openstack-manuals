@@ -21,6 +21,7 @@ belong to a project. For more information, see the section
 :ref:`dashboard_import_keypair`.
 
 .. note::
+
    A key pair belongs to an individual user, not to a project.
    To share a key pair across multiple users, each user
    needs to import that key pair.
@@ -46,7 +47,9 @@ access to the instances.
 This procedure can be adjusted as necessary to add additional security
 group rules to a project, if your cloud requires them.
 
-.. note:: When adding a rule, you must specify the protocol used with the
+.. note::
+
+   When adding a rule, you must specify the protocol used with the
    destination port or source port.
 
 #. Log in to the dashboard.
@@ -68,7 +71,9 @@ group rules to a project, if your cloud requires them.
    * **Remote**: ``CIDR``
    * **CIDR**: ``0.0.0.0/0``
 
-   .. note:: To accept requests from a particular range of IP
+   .. note::
+
+      To accept requests from a particular range of IP
       addresses, specify the IP address block in the
       :guilabel:`CIDR` box.
 
@@ -120,7 +125,6 @@ Create at least one key pair for each project.
 Import a key pair
 ~~~~~~~~~~~~~~~~~
 
-
 #. Log in to the dashboard.
 
 #. Select the appropriate project from the drop down menu at the top left.
@@ -142,20 +146,22 @@ Import a key pair
 #. To change its permissions so that only you can read and write to the
    file, run the following command:
 
-   .. code::
+   .. code-block:: console
 
-       $ chmod 0600 yourPrivateKey.pem
+      $ chmod 0600 yourPrivateKey.pem
 
-   .. note:: If you are using the Dashboard from a Windows computer, use PuTTYgen
+   .. note::
+
+      If you are using the Dashboard from a Windows computer, use PuTTYgen
       to load the ``*.pem`` file and convert and save it as ``*.ppk``. For
       more information see the `WinSCP web page for
       PuTTYgen <http://winscp.net/eng/docs/ui_puttygen>`__.
 
-#. To make the key pair known to SSH, run the **ssh-add** command.
+#. To make the key pair known to SSH, run the :command:`ssh-add` command.
 
-   .. code::
+   .. code-block:: console
 
-       $ ssh-add yourPrivateKey.pem
+      $ ssh-add yourPrivateKey.pem
 
 The Compute database registers the public key of the key pair.
 
@@ -209,7 +215,9 @@ and the association of that address with a specific instance.
 
 #. Click :guilabel:`Associate`.
 
-.. note:: To disassociate an IP address from an instance, click the
+.. note::
+
+   To disassociate an IP address from an instance, click the
    :guilabel:`Disassociate` button.
 
 To release the floating IP address back into the pool of addresses,

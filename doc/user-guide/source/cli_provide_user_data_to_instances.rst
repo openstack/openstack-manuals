@@ -11,6 +11,8 @@ Linux distributions and which handles early initialization of a cloud
 instance.
 
 You can place user data in a local file and pass it through the
-``--user-data <user-data-file>`` parameter at instance creation::
+``--user-data <user-data-file>`` parameter at instance creation.
 
-  $ nova boot --image ubuntu-cloudimage --flavor 1 --user-data mydata.file
+.. code-block:: console
+
+   $ nova boot --image ubuntu-cloudimage --flavor 1 --user-data mydata.file

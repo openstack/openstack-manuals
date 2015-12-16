@@ -58,7 +58,9 @@ copy of the image on the compute node where the instance starts.
    Instance Name
       Assign a name to the virtual machine.
 
-      .. note:: The name you assign here becomes the initial host name
+      .. note::
+
+         The name you assign here becomes the initial host name
          of the server.
 
          After the server is built, if you change the server name in the API
@@ -71,7 +73,9 @@ copy of the image on the compute node where the instance starts.
    Flavor
       Specify the size of the instance to launch.
 
-      .. note:: The flavor is selected based on the size of the image selected
+      .. note::
+
+         The flavor is selected based on the size of the image selected
          for launching an instance. For example, while creating an image, if
          you have entered the value in the :guilabel:`Minimum RAM (MB)` field
          as 2048, then on selecting the image, the default flavor is
@@ -188,14 +192,18 @@ Connect to your instance by using SSH
 To use SSH to connect to your instance, you use the downloaded keypair
 file.
 
-.. note:: The user name is ``ubuntu`` for the Ubuntu cloud images on TryStack.
+.. note::
+
+   The user name is ``ubuntu`` for the Ubuntu cloud images on TryStack.
 
 #. Copy the IP address for your instance.
 
 #. Use the :command:`ssh` command to make a secure connection to the instance.
-   For example::
+   For example:
 
-    $ ssh -i MyKey.pem ubuntu@10.0.0.2
+   .. code-block:: console
+
+      $ ssh -i MyKey.pem ubuntu@10.0.0.2
 
 #. At the prompt, type ``yes``.
 

@@ -107,5 +107,3 @@ Create a router
 
 You have successfully created the router. You can view the new topology
 from the :guilabel:`Network Topology` tab.
-
-

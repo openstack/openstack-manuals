@@ -74,7 +74,9 @@ You can attach a volume to one instance at a time.
 #. Enter the name of the device from which the volume is accessible by
    the instance.
 
-   .. note:: The actual device name might differ from the volume name because
+   .. note::
+
+      The actual device name might differ from the volume name because
       of hypervisor settings.
 
 #. Click :guilabel:`Attach Volume`.
@@ -143,7 +145,9 @@ Edit a volume
 
 #. Click :guilabel:`Edit Volume`.
 
-   .. note:: You can extend a volume by using the :guilabel:`Extend Volume`
+   .. note::
+
+      You can extend a volume by using the :guilabel:`Extend Volume`
       option available in the :guilabel:`More` dropdown list and entering the
       new value for volume size.
 

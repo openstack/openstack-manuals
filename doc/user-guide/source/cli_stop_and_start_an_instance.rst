@@ -7,28 +7,36 @@ Use one of the following methods to stop and start an instance.
 Pause and unpause an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To pause an instance, run the following command::
+To pause an instance, run the following command:
 
-  $ nova pause INSTANCE_NAME
+.. code-block:: console
+
+   $ nova pause INSTANCE_NAME
 
 This command stores the state of the VM in RAM. A paused instance
 continues to run in a frozen state.
 
-To unpause an instance, run the following command::
+To unpause an instance, run the following command:
 
-  $ nova unpause INSTANCE_NAME
+.. code-block:: console
+
+   $ nova unpause INSTANCE_NAME
 
 Suspend and resume an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To initiate a hypervisor-level suspend operation, run the following
-command::
+command:
 
-  $ nova suspend INSTANCE_NAME
+.. code-block:: console
 
-To resume a suspended instance, run the following command::
+   $ nova suspend INSTANCE_NAME
 
-  $ nova resume INSTANCE_NAME
+To resume a suspended instance, run the following command:
+
+.. code-block:: console
+
+   $ nova resume INSTANCE_NAME
 
 Shelve and unshelve an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,9 +54,9 @@ You can run the following shelving tasks:
   with associated data and resources (a snapshot is taken if not volume
   backed). Anything in memory is lost.
 
-.. code::
+.. code-block:: console
 
-  $ nova shelve SERVERNAME
+   $ nova shelve SERVERNAME
 
 .. note::
 
@@ -56,7 +64,7 @@ You can run the following shelving tasks:
    system a chance to perform a controlled shutdown before the instance
    is powered off. The shutdown behavior is configured by the
    ``shutdown_timeout`` parameter that can be set in the
-   :file:`nova.conf` file. Its value stands for the overall
+   ``nova.conf`` file. Its value stands for the overall
    period (in seconds) a guest operation system is allowed
    to complete the shutdown. The default timeout is 60 seconds.
    See `Description of Compute configuration options
@@ -70,15 +78,15 @@ You can run the following shelving tasks:
 
 - Unshelve an instance - Restores the instance.
 
-.. code::
+.. code-block:: console
 
-  $ nova unshelve SERVERNAME
+   $ nova unshelve SERVERNAME
 
 - Remove a shelved instance - Removes the instance from the server;
   data and resource associations are deleted. If an instance is no longer
   needed, you can move the instance off the hypervisor in order to minimize
   resource usage.
 
-.. code::
+.. code-block:: console
 
-  $ nova shelve-offload SERVERNAME
+   $ nova shelve-offload SERVERNAME

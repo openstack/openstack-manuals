@@ -80,7 +80,9 @@ Enable and access the configuration drive
 
    The following example enables the configuration drive and passes user
    data, two files, and two key/value metadata pairs, all of which are
-   accessible from the configuration drive::
+   accessible from the configuration drive:
+
+   .. code-block:: console
 
       $ nova boot --config-drive true --image my-image-name --key-name mykey \
         --flavor 1 --user-data ./my-user-data.txt myinstance \
@@ -90,7 +92,9 @@ Enable and access the configuration drive
 
    You can also configure the Compute service to always create a
    configuration drive by setting the following option in the
-   :file:`/etc/nova/nova.conf` file::
+   ``/etc/nova/nova.conf`` file:
+
+   .. code-block:: console
 
       force_config_drive=true
 
@@ -104,7 +108,9 @@ Enable and access the configuration drive
    can mount the configuration drive as the
    ``/dev/disk/by-label/configurationDriveVolumeLabel`` device. In the
    following example, the configuration drive has the ``config-2``
-   volume label::
+   volume label:
+
+   .. code-block:: console
 
       # mkdir -p /mnt/config
       # mount /dev/disk/by-label/config-2 /mnt/config
@@ -122,21 +128,23 @@ Enable and access the configuration drive
    the CirrOS image with the ``m1.tiny`` flavor, the device is
    ``/dev/vdb``:
 
-   .. code::
+   .. code-block:: console
 
       # blkid -t LABEL="config-2" -odevice
 
-   .. code::
+   .. code-block:: console
 
       /dev/vdb
 
-   Once identified, you can mount the device::
+   Once identified, you can mount the device:
+
+   .. code-block:: console
 
       # mkdir -p /mnt/config
       # mount /dev/vdb /mnt/config
 
 Configuration drive contents
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 In this example, the contents of the configuration drive are as follows::
 
@@ -156,14 +164,14 @@ The files that appear on the configuration drive depend on the arguments
 that you pass to the :command:`nova boot` command.
 
 OpenStack metadata format
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
 
 The following example shows the contents of the
-:file:`openstack/2012-08-10/meta_data.json` and
-:file:`openstack/latest/meta_data.json` files. These files are identical.
+``openstack/2012-08-10/meta_data.json`` and
+``openstack/latest/meta_data.json`` files. These files are identical.
 The file contents are formatted for readability.
 
-.. code::
+.. code-block:: json
 
    {
        "availability_zone": "nova",
@@ -193,19 +201,19 @@ The file contents are formatted for readability.
 Note the effect of the
 ``--file /etc/network/interfaces=/home/myuser/instance-interfaces``
 argument that was passed to the :command:`nova boot` command. The contents of
-this file are contained in the :file:`openstack/content/0000` file on the
+this file are contained in the ``openstack/content/0000`` file on the
 configuration drive, and the path is specified as
-:file:`/etc/network/interfaces` in the :file:`meta_data.json` file.
+``/etc/network/interfaces`` in the ``meta_data.json`` file.
 
 EC2 metadata format
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 The following example shows the contents of the
-:file:`ec2/2009-04-04/meta-data.json` and the :file:`ec2/latest/meta-data.json`
+``ec2/2009-04-04/meta-data.json`` and the ``ec2/latest/meta-data.json``
 files. These files are identical. The file contents are formatted to
 improve readability.
 
-.. code::
+.. code-block:: json
 
    {
        "ami-id": "ami-00000001",
@@ -242,25 +250,29 @@ improve readability.
    }
 
 User data
-^^^^^^^^^
+---------
 
-The :file:`openstack/2012-08-10/user_data`, :file:`openstack/latest/user_data`,
-:file:`ec2/2009-04-04/user-data`, and :file:`ec2/latest/user-data` file are
+The ``openstack/2012-08-10/user_data``, ``openstack/latest/user_data``,
+``ec2/2009-04-04/user-data``, and ``ec2/latest/user-data`` file are
 present only if the ``--user-data`` flag and the contents of the user
 data file are passed to the :command:`nova boot` command.
 
 Configuration drive format
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------
 
 The default format of the configuration drive as an ISO 9660 file
 system. To explicitly specify the ISO 9660 format, add the following
-line to the :file:`/etc/nova/nova.conf` file::
+line to the ``/etc/nova/nova.conf`` file:
+
+.. code-block:: console
 
    config_drive_format=iso9660
 
 By default, you cannot attach the configuration drive image as a CD
 drive instead of as a disk drive. To attach a CD drive, add the
-following line to the :file:`/etc/nova/nova.conf` file::
+following line to the ``/etc/nova/nova.conf`` file:
+
+.. code-block:: console
 
    config_drive_cdrom=true
 
@@ -268,7 +280,9 @@ For legacy reasons, you can configure the configuration drive to use
 VFAT format instead of ISO 9660. It is unlikely that you would require
 VFAT format because ISO 9660 is widely supported across operating
 systems. However, to use the VFAT format, add the following line to the
-:file:`/etc/nova/nova.conf` file::
+``/etc/nova/nova.conf`` file:
+
+.. code-block:: console
 
    config_drive_format=vfat
 
