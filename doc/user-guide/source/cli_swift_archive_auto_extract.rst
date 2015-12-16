@@ -93,10 +93,10 @@ define the response format:
 The following auto-extract archive files example shows a ``text/plain``
 response body where no failures occurred:
 
-.. code::
+.. code-block:: console
 
-    Number Files Created: 10
-    Errors:
+   Number Files Created: 10
+   Errors:
 
 The following auto-extract archive files example shows a ``text/plain``
 response where some failures occurred. In this example, the Object
@@ -104,17 +104,17 @@ Storage system is configured to reject certain character strings so that
 the 400 Bad Request error occurs for any objects that use the restricted
 strings.
 
-.. code::
+.. code-block:: console
 
-    Number Files Created: 8
-    Errors:
-    /v1/12345678912345/mycontainer/home/xx%3Cyy, 400 Bad Request
-    /v1/12345678912345/mycontainer/../image.gif, 400 Bad Request
+   Number Files Created: 8
+   Errors:
+   /v1/12345678912345/mycontainer/home/xx%3Cyy, 400 Bad Request
+   /v1/12345678912345/mycontainer/../image.gif, 400 Bad Request
 
 The following example shows the failure response in ``application/json``
 format.
 
-.. code::
+.. code-block:: json
 
     {
        "Number Files Created":1,

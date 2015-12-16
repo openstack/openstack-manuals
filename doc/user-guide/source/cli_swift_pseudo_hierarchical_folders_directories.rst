@@ -24,15 +24,15 @@ List pseudo-hierarchical folders request: HTTP
 To display a list of all the objects in the storage container, use
 ``GET`` without a ``delimiter`` or ``prefix``.
 
-.. code::
+.. code-block:: console
 
-    $ curl -X GET -i -H "X-Auth-Token: $token" \
+   $ curl -X GET -i -H "X-Auth-Token: $token" \
     $publicurl/v1/AccountString/backups
 
 The system returns status code 2xx (between 200 and 299, inclusive) and
 the requested list of the objects.
 
-.. code::
+.. code-block:: console
 
     photos/animals/cats/persian.jpg
     photos/animals/cats/siamese.jpg
@@ -47,9 +47,9 @@ Use the delimiter parameter to limit the displayed results. To use
 ``delimiter`` with pseudo-directories, you must use the parameter slash
 (``/``).
 
-.. code::
+.. code-block:: console
 
-    $ curl -X GET -i -H "X-Auth-Token: $token" \
+   $ curl -X GET -i -H "X-Auth-Token: $token" \
     $publicurl/v1/AccountString/backups?delimiter=/
 
 The system returns status code 2xx (between 200 and 299, inclusive) and
@@ -59,23 +59,23 @@ pseudo-directory ``photos/`` displays. The returned values from a slash
 ``application/directory`` and are in the ``subdir`` section of JSON and
 XML results.
 
-.. code::
+.. code-block:: console
 
     photos/
 
 Use the ``prefix`` and ``delimiter`` parameters to view the objects
 inside a pseudo-directory, including further nested pseudo-directories.
 
-.. code::
+.. code-block:: console
 
-    $ curl -X GET -i -H "X-Auth-Token: $token" \
+   $ curl -X GET -i -H "X-Auth-Token: $token" \
     $publicurl/v1/AccountString/backups?prefix=photos/&delimiter=/
 
 The system returns status code 2xx (between 200 and 299, inclusive) and
 the objects and pseudo-directories within the top level
 pseudo-directory.
 
-.. code::
+.. code-block:: console
 
     photos/animals/
     photos/me.jpg
@@ -88,15 +88,15 @@ pseudo-directory called ``dogs`` within the pseudo-directory
 ``animals``. To navigate directly to the files contained within
 ``dogs``, enter the following command:
 
-.. code::
+.. code-block:: console
 
-    $ curl -X GET -i -H "X-Auth-Token: $token" \
+   $ curl -X GET -i -H "X-Auth-Token: $token" \
     $publicurl/v1/AccountString/backups?prefix=photos/animals/dogs/&delimiter=/
 
 The system returns status code 2xx (between 200 and 299, inclusive) and
 the objects and pseudo-directories within the nested pseudo-directory.
 
-.. code::
+.. code-block:: console
 
     photos/animals/dogs/corgi.jpg
     photos/animals/dogs/poodle.jpg

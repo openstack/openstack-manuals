@@ -29,6 +29,7 @@ X-Delete-After
   seconds.
 
 .. note::
+
    Use http://www.epochconverter.com/ to convert dates to and from
    epoch timestamps and for batch conversions.
 
@@ -38,16 +39,16 @@ that you want to expire.
 In this example, the ``X-Delete-At`` header is assigned a UNIX epoch
 timestamp in integer form for ``Mon, 11 Jun 2012 15:38:25 GMT``.
 
-.. code::
+.. code-block:: console
 
    $ curl -i publicURL/marktwain/goodbye -X PUT -H "X-Auth-Token: token" \
-   -H "X-Delete-At: 1390581073" -H "Content-Length: 14" -H \
-   "Content-Type: application/octet-stream"
+     -H "X-Delete-At: 1390581073" -H "Content-Length: 14" -H \
+     "Content-Type: application/octet-stream"
 
 In this example, the ``X-Delete-After`` header is set to 864000 seconds.
 The object expires after this time.
 
-.. code::
+.. code-block:: console
 
    PUT /<api version>/<account>/<container>/<object> HTTP/1.1
    Host: storage.example.com

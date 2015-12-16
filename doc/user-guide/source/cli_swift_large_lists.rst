@@ -34,24 +34,24 @@ To page through a large list of containers
 
 Assume the following list of container names:
 
-.. code::
+.. code-block:: console
 
-    apples
-    bananas
-    kiwis
-    oranges
-    pears
+   apples
+   bananas
+   kiwis
+   oranges
+   pears
 
 #. Use a ``limit`` of two:
 
-   .. code::
+   .. code-block:: console
 
-       # curl -i $publicURL/?limit=2 -X GET -H "X-Auth-Token: $token"
+      # curl -i $publicURL/?limit=2 -X GET -H "X-Auth-Token: $token"
 
-   .. code::
+   .. code-block:: console
 
-       apples
-       bananas
+      apples
+      bananas
 
    Because two container names are returned, there are more names to
    list.
@@ -59,28 +59,28 @@ Assume the following list of container names:
 #. Make another request with a ``marker`` parameter set to the name of
    the last item returned:
 
-   .. code::
+   .. code-block:: console
 
-       # curl -i $publicURL/?limit=2&amp;marker=bananas -X GET -H \
-       “X-Auth-Token: $token"
+      # curl -i $publicURL/?limit=2&amp;marker=bananas -X GET -H \
+        “X-Auth-Token: $token"
 
-   .. code::
+   .. code-block:: console
 
-       kiwis
-       oranges
+      kiwis
+      oranges
 
    Again, two items are returned, and there might be more.
 
 #. Make another request with a ``marker`` of the last item returned:
 
-   .. code::
+   .. code-block:: console
 
-       # curl -i $publicURL/?limit=2&amp;marker=oranges -X GET -H \”
-       X-Auth-Token: $token"
+      # curl -i $publicURL/?limit=2&amp;marker=oranges -X GET -H \”
+        X-Auth-Token: $token"
 
-   .. code::
+   .. code-block:: console
 
-       pears
+      pears
 
    You receive a one-item response, which is fewer than the ``limit``
    number of names. This indicates that this is the end of the list.
@@ -88,16 +88,16 @@ Assume the following list of container names:
 #. Use the ``end_marker`` parameter to limit the result set to object
    names that are less than the ``end_marker`` parameter value:
 
-   .. code::
+   .. code-block:: console
 
-       # curl -i $publicURL/?end_marker=oranges -X GET -H \”
+      # curl -i $publicURL/?end_marker=oranges -X GET -H \”
        X-Auth-Token: $token"
 
-   .. code::
+   .. code-block:: console
 
-       apples
-       bananas
-       kiwis
+      apples
+      bananas
+      kiwis
 
    You receive a result set of all container names before the
    ``end-marker`` value.

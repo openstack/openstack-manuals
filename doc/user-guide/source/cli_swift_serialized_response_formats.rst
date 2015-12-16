@@ -38,28 +38,28 @@ Example 1. JSON example with format query parameter
 For example, this request uses the ``format`` query parameter to ask
 for a JSON response:
 
-.. code::
+.. code-block:: console
 
-    $ curl -i $publicURL?format=json -X GET -H "X-Auth-Token: $token"
+   $ curl -i $publicURL?format=json -X GET -H "X-Auth-Token: $token"
 
-.. code::
+.. code-block:: console
 
-    HTTP/1.1 200 OK
-    Content-Length: 96
-    X-Account-Object-Count: 1
-    X-Timestamp: 1389453423.35964
-    X-Account-Meta-Subject: Literature
-    X-Account-Bytes-Used: 14
-    X-Account-Container-Count: 2
-    Content-Type: application/json; charset=utf-8
-    Accept-Ranges: bytes
-    X-Trans-Id: tx274a77a8975c4a66aeb24-0052d95365
-    Date: Fri, 17 Jan 2014 15:59:33 GMT
+   HTTP/1.1 200 OK
+   Content-Length: 96
+   X-Account-Object-Count: 1
+   X-Timestamp: 1389453423.35964
+   X-Account-Meta-Subject: Literature
+   X-Account-Bytes-Used: 14
+   X-Account-Container-Count: 2
+   Content-Type: application/json; charset=utf-8
+   Accept-Ranges: bytes
+   X-Trans-Id: tx274a77a8975c4a66aeb24-0052d95365
+   Date: Fri, 17 Jan 2014 15:59:33 GMT
 
 Object Storage lists container names with additional information in JSON
 format:
 
-.. code::
+.. code-block:: json
 
     [
        {
@@ -81,29 +81,29 @@ Example 2. XML example with Accept header
 This request uses the ``Accept`` request header to ask for an XML
 response:
 
-.. code::
+.. code-block:: console
 
-    $ curl -i $publicURL -X GET -H "X-Auth-Token: $token" -H \
-    ”Accept: application/xml; charset=utf-8"
+   $ curl -i $publicURL -X GET -H "X-Auth-Token: $token" -H \
+     ”Accept: application/xml; charset=utf-8"
 
-.. code::
+.. code-block:: console
 
-    HTTP/1.1 200 OK
-    Content-Length: 263
-    X-Account-Object-Count: 3
-    X-Account-Meta-Book: MobyDick
-    X-Timestamp: 1389453423.35964
-    X-Account-Bytes-Used: 47
-    X-Account-Container-Count: 2
-    Content-Type: application/xml; charset=utf-8
-    Accept-Ranges: bytes
-    X-Trans-Id: txf0b4c9727c3e491694019-0052e03420
-    Date: Wed, 22 Jan 2014 21:12:00 GMT
+   HTTP/1.1 200 OK
+   Content-Length: 263
+   X-Account-Object-Count: 3
+   X-Account-Meta-Book: MobyDick
+   X-Timestamp: 1389453423.35964
+   X-Account-Bytes-Used: 47
+   X-Account-Container-Count: 2
+   Content-Type: application/xml; charset=utf-8
+   Accept-Ranges: bytes
+   X-Trans-Id: txf0b4c9727c3e491694019-0052e03420
+   Date: Wed, 22 Jan 2014 21:12:00 GMT
 
 Object Storage lists container names with additional information in XML
 format:
 
-.. code::
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8"?>
     <account name="AUTH_73f0aa26640f4971864919d0eb0f0880">

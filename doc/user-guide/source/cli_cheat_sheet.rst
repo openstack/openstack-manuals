@@ -9,219 +9,221 @@ Identity (keystone)
 
 List all users
 
-.. code:: console
+.. code-block:: console
 
-    $ keystone user-list
+   $ keystone user-list
 
 List Identity service catalog
 
-.. code:: console
+.. code-block:: console
 
-    $ keystone catalog
+   $ keystone catalog
 
 Images (glance)
 ~~~~~~~~~~~~~~~
 
 List images you can access
 
-.. code:: console
+.. code-block:: console
 
-    $ glance image-list
+   $ glance image-list
 
 Delete specified image
 
-.. code:: console
+.. code-block:: console
 
-    $ glance image-delete IMAGE
+   $ glance image-delete IMAGE
 
 Describe a specific image
 
-.. code:: console
+.. code-block:: console
 
-    $ glance image-show IMAGE
+   $ glance image-show IMAGE
 
 Update image
 
-.. code:: console
+.. code-block:: console
 
-    $ glance image-update IMAGE
+   $ glance image-update IMAGE
 
 Upload kernel image
 
-.. code:: console
+.. code-block:: console
 
-    $ glance image-create --name "cirros-threepart-kernel" \
-      --disk-format aki --container-format aki --is-public False \
-      --file ~/images/cirros-0.3.1~pre4-x86_64-vmlinuz
+   $ glance image-create --name "cirros-threepart-kernel" \
+     --disk-format aki --container-format aki --is-public False \
+     --file ~/images/cirros-0.3.1~pre4-x86_64-vmlinuz
 
 Upload RAM image
 
-.. code:: console
+.. code-block:: console
 
-    $ glance image-create --name "cirros-threepart-ramdisk" \
-      --disk-format ari --container-format ari --is-public False \
-      --file ~/images/cirros-0.3.1~pre4-x86_64-initrd
+   $ glance image-create --name "cirros-threepart-ramdisk" \
+     --disk-format ari --container-format ari --is-public False \
+     --file ~/images/cirros-0.3.1~pre4-x86_64-initrd
 
 Upload three-part image
 
-.. code:: console
+.. code-block:: console
 
-    $ glance image-create --name "cirros-threepart" --disk-format ami \
-      --container-format ami --is-public False \
-      --property kernel_id=$KID-property ramdisk_id=$RID \
-      --file ~/images/cirros-0.3.1~pre4-x86_64-blank.img
+   $ glance image-create --name "cirros-threepart" --disk-format ami \
+     --container-format ami --is-public False \
+     --property kernel_id=$KID-property ramdisk_id=$RID \
+     --file ~/images/cirros-0.3.1~pre4-x86_64-blank.img
 
 Register raw image
 
-.. code:: console
+.. code-block:: console
 
-    $ glance image-create --name "cirros-qcow2" --disk-format qcow2 \
-      --container-format bare --is-public False \
-      --file ~/images/cirros-0.3.1~pre4-x86_64-disk.img
+   $ glance image-create --name "cirros-qcow2" --disk-format qcow2 \
+     --container-format bare --is-public False \
+     --file ~/images/cirros-0.3.1~pre4-x86_64-disk.img
 
 Compute (nova)
 ~~~~~~~~~~~~~~
 
 List instances, check status of instance
 
-.. code:: console
+.. code-block:: console
 
-    $ nova list
+   $ nova list
 
 List images
 
-.. code:: console
+.. code-block:: console
 
-    $ nova image-list
+   $ nova image-list
 
 List flavors
 
-.. code:: console
+.. code-block:: console
 
-    $ nova flavor-list
+   $ nova flavor-list
 
 Boot an instance using flavor and image names (if names are unique)
 
-.. code:: console
+.. code-block:: console
 
-    $ nova boot --image IMAGE --flavor FLAVOR INSTANCE_NAME
-    $ nova boot --image cirros-0.3.1-x86_64-uec --flavor m1.tiny \
-      MyFirstInstance
+   $ nova boot --image IMAGE --flavor FLAVOR INSTANCE_NAME
+   $ nova boot --image cirros-0.3.1-x86_64-uec --flavor m1.tiny \
+     MyFirstInstance
 
 Login to instance
 
-.. code:: console
+.. code-block:: console
 
-    # ip netns
-    # ip netns exec NETNS_NAME ssh USER@SERVER
-    # ip netns exec qdhcp-6021a3b4-8587-4f9c-8064-0103885dfba2 \
-      ssh cirros@10.0.0.2
+   # ip netns
+   # ip netns exec NETNS_NAME ssh USER@SERVER
+   # ip netns exec qdhcp-6021a3b4-8587-4f9c-8064-0103885dfba2 \
+     ssh cirros@10.0.0.2
 
-.. note:: In CirrOS the password for user ``cirros`` is "cubswin:)" without
+.. note::
+
+   In CirrOS the password for user ``cirros`` is "cubswin:)" without
    the quotes.
 
 Show details of instance
 
-.. code:: console
+.. code-block:: console
 
-    $ nova show NAME
-    $ nova show MyFirstInstance
+   $ nova show NAME
+   $ nova show MyFirstInstance
 
 View console log of instance
 
-.. code:: console
+.. code-block:: console
 
-    $ nova console-log MyFirstInstance
+   $ nova console-log MyFirstInstance
 
 Set metadata on an instance
 
-.. code:: console
+.. code-block:: console
 
-    $ nova meta volumeTwoImage set newmeta='my meta data'
+   $ nova meta volumeTwoImage set newmeta='my meta data'
 
 Create an instance snapshot
 
-.. code:: console
+.. code-block:: console
 
-    $ nova image-create volumeTwoImage snapshotOfVolumeImage
-    $ nova image-show snapshotOfVolumeImage
+   $ nova image-create volumeTwoImage snapshotOfVolumeImage
+   $ nova image-show snapshotOfVolumeImage
 
 Pause, suspend, stop, rescue, resize, rebuild, reboot an instance
 -----------------------------------------------------------------
 
 Pause
 
-.. code:: console
+.. code-block:: console
 
-    $ nova pause NAME
-    $ nova pause volumeTwoImage
+   $ nova pause NAME
+   $ nova pause volumeTwoImage
 
 Unpause
 
-.. code:: console
+.. code-block:: console
 
-    $ nova unpause NAME
+   $ nova unpause NAME
 
 Suspend
 
-.. code:: console
+.. code-block:: console
 
-    $ nova suspend NAME
+   $ nova suspend NAME
 
 Unsuspend
 
-.. code:: console
+.. code-block:: console
 
-    $ nova resume NAME
+   $ nova resume NAME
 
 Stop
 
-.. code:: console
+.. code-block:: console
 
-    $ nova stop NAME
+   $ nova stop NAME
 
 Start
 
-.. code:: console
+.. code-block:: console
 
-    $ nova start NAME
+   $ nova start NAME
 
 Rescue
 
-.. code:: console
+.. code-block:: console
 
-    $ nova rescue NAME
-    $ nova rescue NAME --rescue_image_ref RESCUE_IMAGE
+   $ nova rescue NAME
+   $ nova rescue NAME --rescue_image_ref RESCUE_IMAGE
 
 Resize
 
-.. code:: console
+.. code-block:: console
 
-    $ nova resize NAME FLAVOR
-    $ nova resize my-pem-server m1.small
-    $ nova resize-confirm my-pem-server1
+   $ nova resize NAME FLAVOR
+   $ nova resize my-pem-server m1.small
+   $ nova resize-confirm my-pem-server1
 
 Rebuild
 
-.. code:: console
+.. code-block:: console
 
-    $ nova rebuild NAME IMAGE
-    $ nova rebuild newtinny cirros-qcow2
+   $ nova rebuild NAME IMAGE
+   $ nova rebuild newtinny cirros-qcow2
 
 Reboot
 
-.. code:: console
+.. code-block:: console
 
-    $ nova reboot NAME
-    $ nova reboot newtinny
+   $ nova reboot NAME
+   $ nova reboot newtinny
 
 Inject user data and files into an instance
 
-.. code:: console
+.. code-block:: console
 
-    $ nova boot --user-data FILE INSTANCE
-    $ nova boot --user-data userdata.txt --image cirros-qcow2 \
-      --flavor m1.tiny MyUserdataInstance2
+   $ nova boot --user-data FILE INSTANCE
+   $ nova boot --user-data userdata.txt --image cirros-qcow2 \
+     --flavor m1.tiny MyUserdataInstance2
 
 To validate that the file was injected, use ssh to connect to the instance,
 and look in ``/var/lib/cloud`` for the file.
@@ -231,50 +233,50 @@ keypair
 
 Create keypair
 
-.. code:: console
+.. code-block:: console
 
-    $ nova keypair-add test > test.pem
-    $ chmod 600 test.pem
+   $ nova keypair-add test > test.pem
+   $ chmod 600 test.pem
 
 Start an instance (boot)
 
-.. code:: console
+.. code-block:: console
 
-    $ nova boot --image cirros-0.3.0-x86_64 --flavor m1.small \
-      --key_name test MyFirstServer
+   $ nova boot --image cirros-0.3.0-x86_64 --flavor m1.small \
+     --key_name test MyFirstServer
 
 Use ssh to connect to the instance
 
-.. code:: console
+.. code-block:: console
 
-    # ip netns exec qdhcp-98f09f1e-64c4-4301-a897-5067ee6d544f \
-      ssh -i test.pem cirros@10.0.0.4
+   # ip netns exec qdhcp-98f09f1e-64c4-4301-a897-5067ee6d544f \
+     ssh -i test.pem cirros@10.0.0.4
 
 Manage security groups
 
 Add rules to default security group allowing ping and SSH between
 instances in the default security group
 
-.. code:: console
+.. code-block:: console
 
-    $ nova secgroup-add-group-rule default default icmp -1 -1
-    $ nova secgroup-add-group-rule default default tcp 22 22
+   $ nova secgroup-add-group-rule default default icmp -1 -1
+   $ nova secgroup-add-group-rule default default tcp 22 22
 
 Networking (neutron)
 ~~~~~~~~~~~~~~~~~~~~
 
 Create network
 
-.. code:: console
+.. code-block:: console
 
-    $ neutron net-create NAME
+   $ neutron net-create NAME
 
 Create a subnet
 
-.. code:: console
+.. code-block:: console
 
-    $ neutron subnet-create NETWORK_NAME CIDR
-    $ neutron subnet-create my-network 10.0.0.0/29
+   $ neutron subnet-create NETWORK_NAME CIDR
+   $ neutron subnet-create my-network 10.0.0.0/29
 
 Block Storage (cinder)
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -283,85 +285,85 @@ Used to manage volumes and volume snapshots that attach to instances.
 
 Create a new volume
 
-.. code:: console
+.. code-block:: console
 
-    $ cinder create SIZE_IN_GB --display-name NAME
-    $ cinder create 1 --display-name MyFirstVolume
+   $ cinder create SIZE_IN_GB --display-name NAME
+   $ cinder create 1 --display-name MyFirstVolume
 
 Boot an instance and attach to volume
 
-.. code:: console
+.. code-block:: console
 
-    $ nova boot --image cirros-qcow2 --flavor m1.tiny MyVolumeInstance
+   $ nova boot --image cirros-qcow2 --flavor m1.tiny MyVolumeInstance
 
 List volumes, notice status of volume
 
-.. code:: console
+.. code-block:: console
 
-    $ cinder list
+   $ cinder list
 
 Attach volume to instance after instance is active, and volume is
 available
 
-.. code:: console
+.. code-block:: console
 
-    $ nova volume-attach INSTANCE_ID VOLUME_ID auto
-    $ nova volume-attach MyVolumeInstance /dev/vdb auto
+   $ nova volume-attach INSTANCE_ID VOLUME_ID auto
+   $ nova volume-attach MyVolumeInstance /dev/vdb auto
 
 Manage volumes after login into the instance
 
 List storage devices
 
-.. code:: console
+.. code-block:: console
 
-    # fdisk -l
+   # fdisk -l
 
 Make filesystem on volume
 
-.. code:: console
+.. code-block:: console
 
-    # mkfs.ext3 /dev/vdb
+   # mkfs.ext3 /dev/vdb
 
 Create a mountpoint
 
-.. code:: console
+.. code-block:: console
 
-    # mkdir /myspace
+   # mkdir /myspace
 
 Mount the volume at the mountpoint
 
-.. code:: console
+.. code-block:: console
 
-    # mount /dev/vdb /myspace
+   # mount /dev/vdb /myspace
 
 Create a file on the volume
 
-.. code:: console
+.. code-block:: console
 
-    # touch /myspace/helloworld.txt
-    # ls /myspace
+   # touch /myspace/helloworld.txt
+   # ls /myspace
 
 Unmount the volume
 
-.. code:: console
+.. code-block:: console
 
-    # umount /myspace
+   # umount /myspace
 
 Object Storage (swift)
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Display information for the account, container, or object
 
-.. code:: console
+.. code-block:: console
 
-    $ swift stat
-    $ swift stat ACCOUNT
-    $ swift stat CONTAINER
-    $ swift stat OBJECT
+   $ swift stat
+   $ swift stat ACCOUNT
+   $ swift stat CONTAINER
+   $ swift stat OBJECT
 
 List containers
 
-.. code:: console
+.. code-block:: console
 
-    $ swift list
+   $ swift list
 
