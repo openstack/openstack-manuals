@@ -74,7 +74,7 @@ Getting the code
 Git can be used to download the necessary source code. The installer to run Git
 on Windows can be downloaded here:
 
-https://github.com/msysgit/msysgit/releases/download/Git-1.9.2-preview20140411/Git-1.9.2-preview20140411.exe
+https://git-for-windows.github.io/
 
 Once installed, run the following to clone the OpenStack Block Storage code:
 
