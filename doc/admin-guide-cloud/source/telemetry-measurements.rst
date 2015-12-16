@@ -17,13 +17,13 @@ below.
 
 .. note::
 
-    You may need to configure Telemetry or other OpenStack services in
-    order to be able to collect all the samples you need. For further
-    information about configuration requirements see the `Telemetry chapter
-    <http://docs.openstack.org/liberty/install-guide-ubuntu/ceilometer.html>`__
-    in the OpenStack Installation Guide. Also check the `Telemetry manual
-    installation <http://docs.openstack.org/developer/ceilometer/install/manual.html>`__
-    description.
+   You may need to configure Telemetry or other OpenStack services in
+   order to be able to collect all the samples you need. For further
+   information about configuration requirements see the `Telemetry chapter
+   <http://docs.openstack.org/liberty/install-guide-ubuntu/ceilometer.html>`__
+   in the OpenStack Installation Guide. Also check the `Telemetry manual
+   installation <http://docs.openstack.org/developer/ceilometer/install/manual.html>`__
+   description.
 
 Telemetry uses the following meter types:
 
@@ -49,15 +49,17 @@ have two options to choose from. The first one is to specify them when
 you boot up a new instance. The additional information will be stored
 with the sample in the form of ``resource_metadata.user_metadata.*``.
 The new field should be defined by using the prefix ``metering.``. The
-modified boot command look like the following::
+modified boot command look like the following:
 
-    $ nova boot --meta metering.custom_metadata=a_value my_vm
+.. code-block:: console
+
+   $ nova boot --meta metering.custom_metadata=a_value my_vm
 
 The other option is to set the ``reserved_metadata_keys`` to the list of
 metadata keys that you would like to be included in
 ``resource_metadata`` of the instance related samples that are collected
 for OpenStack Compute. This option is included in the ``DEFAULT``
-section of the :file:`ceilometer.conf` configuration file.
+section of the ``ceilometer.conf`` configuration file.
 
 You might also specify headers whose values will be stored along with
 the sample data of OpenStack Object Storage. The additional information
@@ -75,22 +77,23 @@ Telemetry or emit notifications that this service consumes.
 
 .. note::
 
-    The Telemetry service supports storing notifications as events. This
-    functionality was added later, therefore the list of meters still
-    contains existence type and other event related items. The proper
-    way of using Telemetry is to configure it to use the event store and
-    turn off the collection of the event related meters. For further
-    information about events see `Events section
-    <http://docs.openstack.org/developer/ceilometer/events.html>`__
-    in the Telemetry documentation. For further information about how to
-    turn on and off meters see :ref:`telemetry-pipeline-configuration`. Please
-    also note that currently no migration is available to move the already
-    existing event type samples to the event store.
+   The Telemetry service supports storing notifications as events. This
+   functionality was added later, therefore the list of meters still
+   contains existence type and other event related items. The proper
+   way of using Telemetry is to configure it to use the event store and
+   turn off the collection of the event related meters. For further
+   information about events see `Events section
+   <http://docs.openstack.org/developer/ceilometer/events.html>`__
+   in the Telemetry documentation. For further information about how to
+   turn on and off meters see :ref:`telemetry-pipeline-configuration`. Please
+   also note that currently no migration is available to move the already
+   existing event type samples to the event store.
 
 .. _telemetry-compute-meters:
 
 OpenStack Compute
 ~~~~~~~~~~~~~~~~~
+
 The following meters are collected for OpenStack Compute:
 
 +-----------+-------+------+----------+----------+---------+------------------+
@@ -361,9 +364,10 @@ The following meters are collected for OpenStack Compute:
 
 .. note::
 
-    The ``instance:<type>`` meter can be replaced by using extra parameters in
-    both the samples and statistics queries. Sample queries look like the
-    following::
+   The ``instance:<type>`` meter can be replaced by using extra parameters in
+   both the samples and statistics queries. Sample queries look like:
+
+   .. code-block:: console
 
       statistics:
 
@@ -418,7 +422,7 @@ above table is the following:
 OpenStack Compute is capable of collecting ``CPU`` related meters from
 the compute host machines. In order to use that you need to set the
 ``compute_monitors`` option to ``ComputeDriverCPUMonitor`` in the
-:file:`nova.conf` configuration file. For further information see the
+``nova.conf`` configuration file. For further information see the
 Compute configuration section in the `Compute chapter
 <http://docs.openstack.org/liberty/config-reference/content/list-of-compute-config-options.html>`__
 of the OpenStack Configuration Reference.
@@ -466,17 +470,18 @@ Compute:
 
 Bare metal service
 ~~~~~~~~~~~~~~~~~~
+
 Telemetry captures notifications that are emitted by the Bare metal
 service. The source of the notifications are IPMI sensors that collect
 data from the host machine.
 
 .. note::
 
-    The sensor data is not available in the Bare metal service by
-    default. To enable the meters and configure this module to emit
-    notifications about the measured values see the `Installation
-    Guide <http://docs.openstack.org/developer/ironic/deploy/install-guide.html>`__
-    for the Bare metal service.
+   The sensor data is not available in the Bare metal service by
+   default. To enable the meters and configure this module to emit
+   notifications about the measured values see the `Installation
+   Guide <http://docs.openstack.org/developer/ironic/deploy/install-guide.html>`__
+   for the Bare metal service.
 
 The following meters are recorded for the Bare metal service:
 
@@ -515,11 +520,11 @@ IPMI agent see :ref:`telemetry-ipmi-agent`.
 
 .. warning::
 
-    To avoid duplication of metering data and unnecessary load on the
-    IPMI interface, do not deploy the IPMI agent on nodes that are
-    managed by the Bare metal service and keep the
-    ``conductor.send_sensor_data`` option set to ``False`` in the
-    :file:`ironic.conf` configuration file.
+   To avoid duplication of metering data and unnecessary load on the
+   IPMI interface, do not deploy the IPMI agent on nodes that are
+   managed by the Bare metal service and keep the
+   ``conductor.send_sensor_data`` option set to ``False`` in the
+   ``ironic.conf`` configuration file.
 
 Besides generic IPMI sensor data, the following Intel Node Manager
 meters are recorded from capable platform:
@@ -579,6 +584,7 @@ meters are recorded from capable platform:
 
 SNMP based meters
 ~~~~~~~~~~~~~~~~~
+
 Telemetry supports gathering SNMP based generic host meters. In order to
 be able to collect this data you need to run smpd on each target host.
 
@@ -658,6 +664,7 @@ SNMP:
 
 OpenStack Image service
 ~~~~~~~~~~~~~~~~~~~~~~~
+
 The following meters are collected for OpenStack Image service:
 
 +--------------------+--------+------+----------+----------+------------------+
@@ -691,6 +698,7 @@ The following meters are collected for OpenStack Image service:
 
 OpenStack Block Storage
 ~~~~~~~~~~~~~~~~~~~~~~~
+
 The following meters are collected for OpenStack Block Storage:
 
 +--------------------+-------+--------+----------+----------+-----------------+
@@ -756,6 +764,7 @@ The following meters are collected for OpenStack Block Storage:
 
 OpenStack Object Storage
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
 The following meters are collected for OpenStack Object Storage:
 
 +--------------------+-------+-------+------------+---------+-----------------+
@@ -843,6 +852,7 @@ The following meters are collected for Ceph Object Storage:
 
 OpenStack Identity
 ~~~~~~~~~~~~~~~~~~
+
 The following meters are collected for OpenStack Identity:
 
 +-------------------+------+--------+-----------+-----------+-----------------+
@@ -914,6 +924,7 @@ The following meters are collected for OpenStack Identity:
 
 OpenStack Networking
 ~~~~~~~~~~~~~~~~~~~~
+
 The following meters are collected for OpenStack Networking:
 
 +-----------------+-------+--------+-----------+-----------+------------------+
@@ -977,6 +988,7 @@ The following meters are collected for OpenStack Networking:
 
 SDN controllers
 ~~~~~~~~~~~~~~~
+
 The following meters are collected for SDN:
 
 +-----------------+---------+--------+-----------+----------+-----------------+
@@ -1063,6 +1075,7 @@ enable these meters, each driver needs to be properly configured.
 
 Load-Balancer-as-a-Service (LBaaS)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The following meters are collected for LBaaS:
 
 +---------------+---------+---------+-----------+-----------+-----------------+
@@ -1139,8 +1152,9 @@ The following meters are collected for LBaaS:
 | pdate         |         |         |           |           |                 |
 +---------------+---------+---------+-----------+-----------+-----------------+
 
-VPN as a Service (VPNaaS)
+VPN-as-a-Service (VPNaaS)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The following meters are collected for VPNaaS:
 
 +---------------+-------+---------+------------+-----------+------------------+
@@ -1204,8 +1218,9 @@ The following meters are collected for VPNaaS:
 | policy.update |       |         |            |           |                  |
 +---------------+-------+---------+------------+-----------+------------------+
 
-Firewall as a Service (FWaaS)
+Firewall-as-a-Service (FWaaS)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The following meters are collected for FWaaS:
 
 +---------------+-------+---------+------------+-----------+------------------+
@@ -1282,6 +1297,7 @@ The following meters are collected for the Orchestration service:
 
 Data processing service for OpenStack
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 The following meters are collected for the Data processing service for
 OpenStack:
 
@@ -1306,6 +1322,7 @@ OpenStack:
 
 Key Value Store module
 ~~~~~~~~~~~~~~~~~~~~~~
+
 The following meters are collected for the Key Value Store module:
 
 +------------------+-------+------+----------+-------------+------------------+
@@ -1326,6 +1343,7 @@ The following meters are collected for the Key Value Store module:
 
 Energy
 ~~~~~~
+
 The following energy related meters are available:
 
 +---------------+------------+------+----------+----------+-------------------+

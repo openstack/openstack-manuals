@@ -10,7 +10,7 @@ environment are metering, rating, and billing. Because the provider's
 requirements may be far too specific for a shared solution, rating
 and billing solutions cannot be designed in a common module that
 satisfies all. Providing users with measurements on cloud services is
-required to meet the "measured service" definition of cloud computing.
+required to meet the ``measured service`` definition of cloud computing.
 
 The Telemetry service was originally designed to support billing
 systems for OpenStack cloud resources. This project only covers the
@@ -40,7 +40,7 @@ troubleshooting guide, which mentions error situations and possible
 solutions to the problems.
 
 You can retrieve the collected samples in three different ways: with
-the REST API, with the command line interface, or with the Metering
+the REST API, with the command-line interface, or with the Metering
 tab on an OpenStack dashboard.
 
 
