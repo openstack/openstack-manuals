@@ -63,8 +63,10 @@
                  [--inspector-api-version INSPECTOR_API_VERSION]
                  [--inspector-url INSPECTOR_URL]
                  [--os-queues-api-version &lt;queues-api-version&gt;]
+                 [--os-mb-api-version &lt;mb-api-version&gt;]
                  [--os-dns-api-version &lt;dns-api-version&gt;]
-                 [--os-baremetal-api-version &lt;baremetal-api-version&gt;]</computeroutput></screen>
+                 [--os-baremetal-api-version &lt;baremetal-api-version&gt;]
+                 [--os-management-api-version &lt;management-api-version&gt;]</computeroutput></screen>
     </section>
     <section xml:id="openstackclient_command_optional">
         <title>openstack optional arguments</title>
@@ -573,6 +575,14 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--os-mb-api-version &lt;mb-api-version&gt;</command></term>
+    <listitem>
+      <para>
+      MB API version, default=1 (Env: OS_MB_API_VERSION)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--os-dns-api-version &lt;dns-api-version&gt;</command></term>
     <listitem>
       <para>
@@ -586,6 +596,15 @@
       <para>
       Baremetal API version, default=1.6 (Env:
       OS_BAREMETAL_API_VERSION)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-management-api-version &lt;management-api-version&gt;</command></term>
+    <listitem>
+      <para>
+      Management API version, default=2 (Env:
+      OS_MANAGEMENT_API_VERSION)
       </para>
     </listitem>
   </varlistentry>
@@ -5122,6 +5141,509 @@ Show compute and volume limits
       <para>
         Domain that owns --project (name or ID) [only valid
       with --absolute]
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_management_plan_add_role_with_identity_api_v2">
+        <title>openstack management plan add role</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan add role [-h]
+                                          [-f {json,shell,table,value,yaml}]
+                                          [-c COLUMN] [--max-width &lt;integer&gt;]
+                                          [--noindent] [--prefix PREFIX]</computeroutput></screen>
+        <para>
+Add a Role to a Management Plan.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_management_plan_create_with_identity_api_v2">
+        <title>openstack management plan create</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan create [-h]
+                                        [-f {json,shell,table,value,yaml}]
+                                        [-c COLUMN] [--max-width &lt;integer&gt;]
+                                        [--noindent] [--prefix PREFIX]
+                                        [-d DESCRIPTION]
+                                        name</computeroutput></screen>
+        <para>
+Create a Management Plan.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>name</command></term>
+    <listitem>
+      <para>
+        Name of the plan being created.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-d DESCRIPTION, --description DESCRIPTION</command></term>
+    <listitem>
+      <para>
+      A textual description of the plan.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_management_plan_delete_with_identity_api_v2">
+        <title>openstack management plan delete</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan delete [-h] plan_uuid</computeroutput></screen>
+        <para>
+Delete a Management Plan.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>plan_uuid</command></term>
+    <listitem>
+      <para>
+        The UUID of the plan being deleted.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_management_plan_download_with_identity_api_v2">
+        <title>openstack management plan download</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan download [-h]</computeroutput></screen>
+        <para>
+Download the a Management Plan.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_management_plan_list_with_identity_api_v2">
+        <title>openstack management plan list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan list [-h] [-f {csv,json,table,value,yaml}]
+                                      [-c COLUMN] [--max-width &lt;integer&gt;]
+                                      [--noindent]
+                                      [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
+        <para>
+List the Management Plans.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_management_plan_remove_role_with_identity_api_v2">
+        <title>openstack management plan remove role</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan remove role [-h]
+                                             [-f {json,shell,table,value,yaml}]
+                                             [-c COLUMN]
+                                             [--max-width &lt;integer&gt;]
+                                             [--noindent] [--prefix PREFIX]</computeroutput></screen>
+        <para>
+Remove a Role from a Management Plan.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_management_plan_set_with_identity_api_v2">
+        <title>openstack management plan set</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan set [-h] [-f {json,shell,table,value,yaml}]
+                                     [-c COLUMN] [--max-width &lt;integer&gt;]
+                                     [--noindent] [--prefix PREFIX]
+                                     [-P &lt;KEY1=VALUE1&gt;] [-F &lt;ROLE=FLAVOR&gt;]
+                                     [-S &lt;ROLE=SCALE-COUNT&gt;]
+                                     plan_uuid</computeroutput></screen>
+        <para>
+Update a Management Plans properties.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>plan_uuid</command></term>
+    <listitem>
+      <para>
+        The UUID of the plan being updated.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-P &lt;KEY1=VALUE1&gt;, --parameter &lt;KEY1=VALUE1&gt;</command></term>
+    <listitem>
+      <para>
+      Set a parameter in the Plan. This can be specified
+      multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-F &lt;ROLE=FLAVOR&gt;, --flavor &lt;ROLE=FLAVOR&gt;</command></term>
+    <listitem>
+      <para>
+      Set the flavor for a role in the Plan. This can be
+      specified multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>-S &lt;ROLE=SCALE-COUNT&gt;, --scale &lt;ROLE=SCALE-COUNT&gt;</command></term>
+    <listitem>
+      <para>
+      Set the Scale count for a role in the Plan. This can
+      be specified multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_management_plan_show_with_identity_api_v2">
+        <title>openstack management plan show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan show [-h] [-f {json,shell,table,value,yaml}]
+                                      [-c COLUMN] [--max-width &lt;integer&gt;]
+                                      [--noindent] [--prefix PREFIX]</computeroutput></screen>
+        <para>
+Show a Management Plan.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_management_role_list_with_identity_api_v2">
+        <title>openstack management role list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management role list [-h] [-f {csv,json,table,value,yaml}]
+                                      [-c COLUMN] [--max-width &lt;integer&gt;]
+                                      [--noindent]
+                                      [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
+        <para>
+List Roles.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_message-broker_with_identity_api_v2">
+        <title>openstack message-broker</title>
+        <screen><computeroutput>Command "message-broker" matches:
+  message-broker cluster create
+  message-broker cluster delete
+  message-broker cluster list
+  message-broker cluster set
+  message-broker cluster show</computeroutput></screen>
+        <para>
+        </para>
+    </section>
+    <section xml:id="openstackclient_subcommand_message-broker_cluster_with_identity_api_v2">
+        <title>openstack message-broker cluster</title>
+        <screen><computeroutput>Command "message-broker cluster" matches:
+  message-broker cluster create
+  message-broker cluster delete
+  message-broker cluster list
+  message-broker cluster set
+  message-broker cluster show</computeroutput></screen>
+        <para>
+        </para>
+    </section>
+    <section xml:id="openstackclient_subcommand_message-broker_cluster_create_with_identity_api_v2">
+        <title>openstack message-broker cluster create</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster create [-h]
+                                               [-f {json,shell,table,value,yaml}]
+                                               [-c COLUMN]
+                                               [--max-width &lt;integer&gt;]
+                                               [--noindent] [--prefix PREFIX]
+                                               --name NAME --nic NIC --flavor
+                                               FLAVOR --size SIZE
+                                               [--volume_size VOLUME_SIZE]
+                                               [--auth &lt;type=type,user=user,pass=pass&gt;]</computeroutput></screen>
+        <para>
+Create Cluster
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--name NAME</command></term>
+    <listitem>
+      <para>
+        Cluster Name
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--nic NIC</command></term>
+    <listitem>
+      <para>
+        Network to place nodes on
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--flavor FLAVOR</command></term>
+    <listitem>
+      <para>
+        Flavor to use.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--size SIZE</command></term>
+    <listitem>
+      <para>
+        Number of nodes
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--volume_size VOLUME_SIZE</command></term>
+    <listitem>
+      <para>
+      Volume size
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--auth &lt;type=type,user=user,pass=pass&gt;</command></term>
+    <listitem>
+      <para>
+      broker authentication,type=type,user=user,pass=pass
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_message-broker_cluster_delete_with_identity_api_v2">
+        <title>openstack message-broker cluster delete</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster delete [-h] id</computeroutput></screen>
+        <para>
+Delete Cluster
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>id</command></term>
+    <listitem>
+      <para>
+        Cluster ID
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_message-broker_cluster_list_with_identity_api_v2">
+        <title>openstack message-broker cluster list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster list [-h]
+                                             [-f {csv,json,table,value,yaml}]
+                                             [-c COLUMN]
+                                             [--max-width &lt;integer&gt;]
+                                             [--noindent]
+                                             [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
+        <para>
+List Clusters
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_message-broker_cluster_set_with_identity_api_v2">
+        <title>openstack message-broker cluster set</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster set [-h] [--name NAME] [--email EMAIL]
+                                            [--ttl TTL]
+                                            [--description DESCRIPTION | --no-description]
+                                            [--masters MASTERS [MASTERS ...]]
+                                            id</computeroutput></screen>
+        <para>
+Set Cluster
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>id</command></term>
+    <listitem>
+      <para>
+        Cluster ID
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--name NAME</command></term>
+    <listitem>
+      <para>
+        Cluster Name
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--email EMAIL</command></term>
+    <listitem>
+      <para>
+        Cluster Email
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--ttl TTL</command></term>
+    <listitem>
+      <para>
+        Time To Live (Seconds)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description DESCRIPTION</command></term>
+    <listitem>
+      <para>
+      Description
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--no-description</command></term>
+    <listitem>
+      <para>
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--masters MASTERS [MASTERS ...]</command></term>
+    <listitem>
+      <para>
+      Cluster Masters
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_message-broker_cluster_show_with_identity_api_v2">
+        <title>openstack message-broker cluster show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster show [-h]
+                                             [-f {json,shell,table,value,yaml}]
+                                             [-c COLUMN]
+                                             [--max-width &lt;integer&gt;]
+                                             [--noindent] [--prefix PREFIX]
+                                             id</computeroutput></screen>
+        <para>
+Show Cluster
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>id</command></term>
+    <listitem>
+      <para>
+        Cluster ID
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
       </para>
     </listitem>
   </varlistentry>
