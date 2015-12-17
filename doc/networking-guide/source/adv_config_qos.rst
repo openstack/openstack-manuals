@@ -2,7 +2,7 @@
 Using OpenStack Networking with QoS
 ===================================
 
-This page serves as a guide for how to use the "Quality of Service" (QoS)
+This page serves as a guide for how to use the ``Quality of Service`` (QoS)
 functionality of OpenStack Networking.
 
 QoS is defined as the ability to guarantee certain network requirements
@@ -20,7 +20,7 @@ delivery to customers.
 
 
 The basics
-----------
+~~~~~~~~~~
 
 QoS is an advanced service plug-in. QoS is decoupled from the rest of the
 Neutron code on multiple levels and it is available through the ml2 extension
@@ -32,14 +32,16 @@ of this guide but can be found in the
 
 
 Supported QoS rule types
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Any plug-in or ml2 mechanism driver can claim support for some QoS rule types
-by providing a plug-in/driver class property called 'supported_qos_rule_types'
-that returns a list of strings that correspond to QoS rule types:
-`<https://git.openstack.org/cgit/openstack/neutron/tree/neutron/services/qos/qos_consts.py>`
+by providing a plug-in/driver class property called
+``supported_qos_rule_types`` that returns a list of strings that correspond
+to `QoS rule types
+<https://git.openstack.org/cgit/openstack/neutron/tree/neutron/services/qos/qos_consts.py>`_.
 
 .. note::
+
    For the Liberty release only egress bandwidth limit rules are supported.
 
 In the most simple case, the property can be represented by a simple Python
@@ -49,6 +51,7 @@ For an ml2 plug-in, the list of supported QoS rule types is defined as a common
 subset of rules supported by all active mechanism drivers.
 
 .. note::
+
    The list of supported rule types reported by core plug-in is not
    enforced when accessing QoS rule resources. This is mostly because
    then we would not be able to create any rules while at least one ml2
@@ -57,46 +60,49 @@ subset of rules supported by all active mechanism drivers.
 
 
 Configuration
--------------
+~~~~~~~~~~~~~
 
 To enable the service, follow the steps below:
 
 On server side:
 
 * Enable ``qos`` service in ``service_plugins``.
-* Set the needed notification_drivers in [qos] section
-  (message_queue is the default).
-* For ml2, add 'qos' to extension_drivers in [ml2] section.
+* Set the needed ``notification_drivers`` in ``[qos]`` section
+  (``message_queue`` is the default).
+* For ml2, add ``qos`` to ``extension_drivers`` in ``[ml2]`` section.
 
 On agent side (OVS):
 
-* Add 'qos' to extensions in [agent] section.
+* Add ``qos`` to extensions in ``[agent]`` section.
 
 .. note::
+
    QoS currently works with ml2 only (SR-IOV and Open vSwitch are the only
    drivers that are enabled for QoS in Liberty release).
 
 Trusted tenants policy.json configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 If tenants are trusted to administrate their own QoS policies in
-your cloud, neutron's file :file:`policy.json` can be modified to allow this.
+your cloud, neutron's file ``policy.json`` can be modified to allow this.
 
-Modify ``/etc/neutron/policy.json`` policy entries as follows::
+Modify ``/etc/neutron/policy.json`` policy entries as follows:
 
-     "get_policy": "rule:regular_user",
-     "create_policy": "rule:regular_user",
-     "update_policy": "rule:regular_user",
-     "delete_policy": "rule:regular_user",
-     "get_policy_bandwidth_limit_rule": "rule:regular_user",
-     "create_policy_bandwidth_limit_rule": "rule:regular_user",
-     "delete_policy_bandwidth_limit_rule": "rule:regular_user",
-     "update_policy_bandwidth_limit_rule": "rule:regular_user",
-     "get_rule_type": "rule:regular_user",
+.. code-block:: json
+
+   "get_policy": "rule:regular_user",
+   "create_policy": "rule:regular_user",
+   "update_policy": "rule:regular_user",
+   "delete_policy": "rule:regular_user",
+   "get_policy_bandwidth_limit_rule": "rule:regular_user",
+   "create_policy_bandwidth_limit_rule": "rule:regular_user",
+   "delete_policy_bandwidth_limit_rule": "rule:regular_user",
+   "update_policy_bandwidth_limit_rule": "rule:regular_user",
+   "get_rule_type": "rule:regular_user",
 
 
 User workflow
--------------
+~~~~~~~~~~~~~
 
 QoS policies are only created by admins with the default ``policy.json``.
 Therefore, you should have the Cloud Operator to set up them on
@@ -109,30 +115,31 @@ First, create a QoS policy and its bandwidth limit rules:
 
 .. code-block:: console
 
-    $ neutron qos-policy-create bw-limiter
-    Created a new policy:
-    +-------------+--------------------------------------+
-    | Field       | Value                                |
-    +-------------+--------------------------------------+
-    | description |                                      |
-    | id          | 0ee1c673-5671-40ca-b55f-4cd4bbd999c7 |
-    | name        | bw-limiter                           |
-    | rules       |                                      |
-    | shared      | False                                |
-    | tenant_id   | 85b859134de2428d94f6ee910dc545d8     |
-    +-------------+--------------------------------------+
+   $ neutron qos-policy-create bw-limiter
 
-    $ neutron qos-bandwidth-limit-rule-create bw-limiter --max-kbps 3000 \
-      --max-burst-kbps 300
+   Created a new policy:
+   +-------------+--------------------------------------+
+   | Field       | Value                                |
+   +-------------+--------------------------------------+
+   | description |                                      |
+   | id          | 0ee1c673-5671-40ca-b55f-4cd4bbd999c7 |
+   | name        | bw-limiter                           |
+   | rules       |                                      |
+   | shared      | False                                |
+   | tenant_id   | 85b859134de2428d94f6ee910dc545d8     |
+   +-------------+--------------------------------------+
 
-    Created a new bandwidth_limit_rule:
-    +----------------+--------------------------------------+
-    | Field          | Value                                |
-    +----------------+--------------------------------------+
-    | id             | 92ceb52f-170f-49d0-9528-976e2fee2d6f |
-    | max_burst_kbps | 300                                  |
-    | max_kbps       | 3000                                 |
-    +----------------+--------------------------------------+
+   $ neutron qos-bandwidth-limit-rule-create bw-limiter --max-kbps 3000 \
+     --max-burst-kbps 300
+
+   Created a new bandwidth_limit_rule:
+   +----------------+--------------------------------------+
+   | Field          | Value                                |
+   +----------------+--------------------------------------+
+   | id             | 92ceb52f-170f-49d0-9528-976e2fee2d6f |
+   | max_burst_kbps | 300                                  |
+   | max_kbps       | 3000                                 |
+   +----------------+--------------------------------------+
 
 Second, associate the created policy with an existing neutron port.
 In order to do this, user extracts the port id to be associated to
@@ -142,6 +149,7 @@ the already created policy. In the next example, we will assign the
 .. code-block:: console
 
    $ neutron port-list
+
    +--------------------------------------+----------------------------------+
    | id                                   | fixed_ips                        |
    +--------------------------------------+----------------------------------+
@@ -167,6 +175,7 @@ Ports can be created with a policy attached to them too.
 .. code-block:: console
 
    $ neutron port-create private --qos-policy-id bw-limiter
+
    Created a new port:
    +-----------------------+--------------------------------------------------+
    | Field                 | Value                                            |
@@ -179,8 +188,8 @@ Ports can be created with a policy attached to them too.
    | dns_assignment        | {"hostname": "host-10-0-0-4", ...   }            |
    | dns_name              |                                                  |
    | fixed_ips             | {"subnet_id":                                    |
-   |                                 "fabaf9b6-7a84-43b6-9d23-543591b531b8",  |
-   |                                 "ip_address": "10.0.0.4"}                |
+   |                       |         "fabaf9b6-7a84-43b6-9d23-543591b531b8",  |
+   |                       |          "ip_address": "10.0.0.4"}               |
    | id                    | c3cb8faa-db36-429d-bd25-6003fafe63c5             |
    | mac_address           | fa:16:3e:02:65:15                                |
    | name                  |                                                  |
@@ -231,6 +240,7 @@ attached port.
 
     $ neutron qos-bandwidth-limit-rule-show \
         a49f02fe-6ab5-4cd2-8a68-f4589f58a010 bw-limiter
+
     +----------------+--------------------------------------+
     | Field          | Value                                |
     +----------------+--------------------------------------+

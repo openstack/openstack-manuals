@@ -79,13 +79,13 @@ OpenStack services - controller node
 ------------------------------------
 
 #.  Operational SQL server with ``neutron`` database and appropriate
-    configuration in the :file:`neutron.conf` file.
+    configuration in the ``neutron.conf`` file.
 #.  Operational message queue service with appropriate configuration in
-    the :file:`neutron.conf` file.
+    the ``neutron.conf`` file.
 #.  Operational OpenStack Identity service with appropriate
-    configuration in the :file:`neutron.conf` file.
+    configuration in the ``neutron.conf`` file.
 #.  Operational OpenStack Compute controller/management service with
-    appropriate configuration to use neutron in the :file:`nova.conf` file.
+    appropriate configuration to use neutron in the ``nova.conf`` file.
 #.  Neutron server service, Open vSwitch service, ML2 plug-in, Open
     vSwitch agent, DHCP agent, and any dependencies.
 
@@ -93,9 +93,9 @@ OpenStack services - compute nodes
 ----------------------------------
 
 #.  Operational OpenStack Identity service with appropriate
-    configuration in the :file:`neutron.conf` file.
+    configuration in the ``neutron.conf`` file.
 #.  Operational OpenStack Compute controller/management service with
-    appropriate configuration to use neutron in the :file:`nova.conf` file.
+    appropriate configuration to use neutron in the ``nova.conf`` file.
 #.  Open vSwitch service, ML2 plug-in, Open vSwitch agent, and any
     dependencies.
 
@@ -123,6 +123,7 @@ The controller node contains the following network components:
    :alt: Controller node components - connectivity
 
 .. note::
+
    For illustration purposes, the diagram contains two different provider
    networks.
 
@@ -134,6 +135,7 @@ The compute nodes contain the following network components:
 #. Linux bridges handling security groups.
 
    .. note::
+
       Due to limitations with Open vSwitch and *iptables*, the Networking
       service uses a Linux bridge to manage security groups for instances.
 
@@ -144,6 +146,7 @@ The compute nodes contain the following network components:
    :alt: Compute node components - connectivity
 
 .. note::
+
    For illustration purposes, the diagram contains two different provider
    networks.
 
@@ -151,11 +154,13 @@ Packet flow
 ~~~~~~~~~~~
 
 .. note::
+
    *North-south* network traffic travels between an instance and
    external network, typically the Internet. *East-west* network
    traffic travels between instances.
 
 .. note::
+
    Open vSwitch uses VLANs internally to segregate networks that traverse
    bridges. The VLAN ID usually differs from the segmentation ID of the
    virtual network.
@@ -216,6 +221,7 @@ The following steps involve the physical network infrastructure:
 #. A switch (3) forwards the packet to the external network.
 
 .. note::
+
    Return traffic follows similar steps in reverse.
 
 .. figure:: figures/scenario-provider-ovs-flowns1.png
@@ -293,6 +299,7 @@ The following steps involve compute node 2:
    on instance 2.
 
 .. note::
+
    Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-provider-ovs-flowew1.png
@@ -359,6 +366,7 @@ The following steps involve compute node 2:
    on instance 2.
 
 .. note::
+
    Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-provider-ovs-flowew2.png
@@ -371,6 +379,7 @@ Use the following example configuration as a template to deploy this
 scenario in your environment.
 
 .. note::
+
    The lack of L3 agents in this scenario prevents operation of the
    conventional metadata agent. You must use a configuration drive to
    provide instance metadata.
@@ -379,7 +388,7 @@ Controller node
 ---------------
 
 #. Configure the kernel to disable reverse path filtering. Edit the
-   :file:`/etc/sysctl.conf` file:
+   ``/etc/sysctl.conf`` file:
 
    .. code-block:: ini
 
@@ -392,7 +401,7 @@ Controller node
 
       $ sysctl -p
 
-#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
 
@@ -402,12 +411,13 @@ Controller node
       service_plugins =
 
    .. note::
+
       The ``service_plugins`` option contains no value because the
       Networking service does not provide layer-3 services such as
       routing.
 
 #. Configure the ML2 plug-in and Open vSwitch agent. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
+   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
 
    .. code-block:: ini
 
@@ -431,14 +441,16 @@ Controller node
       enable_ipset = True
 
    .. note::
+
       The ``tenant_network_types`` option contains no value because the
       architecture does not support project (private) networks.
 
    .. note::
+
       The ``provider`` value in the ``network_vlan_ranges`` option lacks VLAN
       ID ranges to support use of arbitrary VLAN IDs.
 
-#. Configure the DHCP agent. Edit the :file:`/etc/neutron/dhcp_agent.ini`
+#. Configure the DHCP agent. Edit the ``/etc/neutron/dhcp_agent.ini``
    file:
 
    .. code-block:: ini
@@ -479,7 +491,7 @@ Compute nodes
 -------------
 
 #. Configure the kernel to disable reverse path filtering. Edit the
-   :file:`/etc/sysctl.conf` file:
+   ``/etc/sysctl.conf`` file:
 
    .. code-block:: ini
 
@@ -492,7 +504,7 @@ Compute nodes
 
       $ sysctl -p
 
-#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
 
@@ -500,7 +512,7 @@ Compute nodes
       verbose = True
 
 #. Configure the Open vSwitch agent. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
+   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
 
    .. code-block:: ini
 
@@ -545,6 +557,7 @@ Verify service operation
    .. code-block:: console
 
       $ neutron agent-list
+
       +--------------------------------------+--------------------+------------+-------+----------------+---------------------------+
       | id                                   | agent_type         | host       | alive | admin_state_up | binary                    |
       +--------------------------------------+--------------------+------------+-------+----------------+---------------------------+
@@ -568,6 +581,7 @@ address range to values suitable for your environment.
       $ neutron net-create provider-101 --shared \
         --provider:physical_network provider --provider:network_type vlan \
         --provider:segmentation_id 101
+
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
@@ -586,6 +600,7 @@ address range to values suitable for your environment.
       +---------------------------+--------------------------------------+
 
    .. note::
+
       The ``shared`` option allows any project to use this network.
 
 #. Create a subnet on the provider network:
@@ -594,6 +609,7 @@ address range to values suitable for your environment.
 
       $ neutron subnet-create provider-101 203.0.113.0/24 \
         --name provider-101-subnet --gateway 203.0.113.1
+
       Created a new subnet:
       +-------------------+--------------------------------------------------+
       | Field             | Value                                            |
@@ -624,6 +640,7 @@ Verify network operation
       qdhcp-8b868082-e312-4110-8627-298109d4401c
 
    .. note::
+
       The ``qdhcp`` namespace might not exist until launching an instance.
 
 #. Source the regular project credentials. The following steps use the
@@ -634,6 +651,7 @@ Verify network operation
    .. code-block:: console
 
       $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+
       +-------------+-----------+---------+-----------+--------------+
       | IP Protocol | From Port | To Port | IP Range  | Source Group |
       +-------------+-----------+---------+-----------+--------------+
@@ -641,6 +659,7 @@ Verify network operation
       +-------------+-----------+---------+-----------+--------------+
 
       $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
+
       +-------------+-----------+---------+-----------+--------------+
       | IP Protocol | From Port | To Port | IP Range  | Source Group |
       +-------------+-----------+---------+-----------+--------------+
@@ -650,11 +669,13 @@ Verify network operation
 #. Launch an instance with an interface on the provider network.
 
    .. note::
+
       This example uses a CirrOS image that was manually uploaded into the Image Service
 
    .. code-block:: console
 
       $ nova boot --flavor m1.tiny --image cirros-0.3.3-x86_64-disk test_server
+
       +--------------------------------------+-----------------------------------------------------------------+
       | Property                             | Value                                                           |
       +--------------------------------------+-----------------------------------------------------------------+
@@ -695,6 +716,7 @@ Verify network operation
    .. code-block:: console
 
       $ nova list
+
       +--------------------------------------+-------------+--------+------------+-------------+--------------------------+
       | ID                                   | Name        | Status | Task State | Power State | Networks                 |
       +--------------------------------------+-------------+--------+------------+-------------+--------------------------+

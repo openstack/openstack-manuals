@@ -19,25 +19,26 @@ First, we create a network we want to share:
 
 .. code-block:: console
 
-      $ neutron net-create secret_network
-      Created a new network:
-      +---------------------------+--------------------------------------+
-      | Field                     | Value                                |
-      +---------------------------+--------------------------------------+
-      | admin_state_up            | True                                 |
-      | id                        | 6532a265-43fb-4c8c-8edb-e26b39f2277c |
-      | mtu                       | 0                                    |
-      | name                      | secret_network                       |
-      | port_security_enabled     | True                                 |
-      | provider:network_type     | vxlan                                |
-      | provider:physical_network |                                      |
-      | provider:segmentation_id  | 1031                                 |
-      | router:external           | False                                |
-      | shared                    | False                                |
-      | status                    | ACTIVE                               |
-      | subnets                   |                                      |
-      | tenant_id                 | de56db175c1d48b0bbe72f09a24a3b66     |
-      +---------------------------+--------------------------------------+
+   $ neutron net-create secret_network
+
+   Created a new network:
+   +---------------------------+--------------------------------------+
+   | Field                     | Value                                |
+   +---------------------------+--------------------------------------+
+   | admin_state_up            | True                                 |
+   | id                        | 6532a265-43fb-4c8c-8edb-e26b39f2277c |
+   | mtu                       | 0                                    |
+   | name                      | secret_network                       |
+   | port_security_enabled     | True                                 |
+   | provider:network_type     | vxlan                                |
+   | provider:physical_network |                                      |
+   | provider:segmentation_id  | 1031                                 |
+   | router:external           | False                                |
+   | shared                    | False                                |
+   | status                    | ACTIVE                               |
+   | subnets                   |                                      |
+   | tenant_id                 | de56db175c1d48b0bbe72f09a24a3b66     |
+   +---------------------------+--------------------------------------+
 
 Now we create the policy entry using the :command:`rbac-create` command (In
 this example, the ID of the project we want to share with is
@@ -45,19 +46,20 @@ this example, the ID of the project we want to share with is
 
 .. code-block:: console
 
-      $ neutron rbac-create --target-tenant e28769db97d9449da658bc6931fcb683 \
-        --action access_as_shared --type network 6532a265-43fb-4c8c-8edb-e26b39f2277c
-      Created a new rbac_policy:
-      +---------------+--------------------------------------+
-      | Field         | Value                                |
-      +---------------+--------------------------------------+
-      | action        | access_as_shared                     |
-      | id            | 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411 |
-      | object_id     | 6532a265-43fb-4c8c-8edb-e26b39f2277c |
-      | object_type   | network                              |
-      | target_tenant | e28769db97d9449da658bc6931fcb683     |
-      | tenant_id     | de56db175c1d48b0bbe72f09a24a3b66     |
-      +---------------+--------------------------------------+
+   $ neutron rbac-create --target-tenant e28769db97d9449da658bc6931fcb683 \
+     --action access_as_shared --type network 6532a265-43fb-4c8c-8edb-e26b39f2277c
+
+   Created a new rbac_policy:
+   +---------------+--------------------------------------+
+   | Field         | Value                                |
+   +---------------+--------------------------------------+
+   | action        | access_as_shared                     |
+   | id            | 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411 |
+   | object_id     | 6532a265-43fb-4c8c-8edb-e26b39f2277c |
+   | object_type   | network                              |
+   | target_tenant | e28769db97d9449da658bc6931fcb683     |
+   | tenant_id     | de56db175c1d48b0bbe72f09a24a3b66     |
+   +---------------+--------------------------------------+
 
 The ``target-tenant`` parameter specifies the project that we wanted to
 gain access to the network. The ``action`` parameter specifies what we
@@ -75,17 +77,17 @@ it using the :command:`rbac-delete` command:
 
 .. code-block:: console
 
-      $ neutron rbac-delete 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411
-      Deleted rbac_policy: 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411
+   $ neutron rbac-delete 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411
+   Deleted rbac_policy: 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411
 
 If that project has ports on the network, the server will prevent the
 policy from being deleted until the ports have been deleted:
 
 .. code-block:: console
 
-      $ neutron rbac-delete 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411
-      RBAC policy on object 6532a265-43fb-4c8c-8edb-e26b39f2277c
-      cannot be removed because other objects depend on it.
+   $ neutron rbac-delete 1edebaf8-3fa5-47b9-b3dd-ccce2bd44411
+   RBAC policy on object 6532a265-43fb-4c8c-8edb-e26b39f2277c
+   cannot be removed because other objects depend on it.
 
 This process can be repeated any number of times to share a network
 with an arbitrary number of projects.
@@ -99,25 +101,26 @@ using the ``shared`` flag on the network:
 
 .. code-block:: console
 
-      $ neutron net-create global_network --shared
-      Created a new network:
-      +---------------------------+--------------------------------------+
-      | Field                     | Value                                |
-      +---------------------------+--------------------------------------+
-      | admin_state_up            | True                                 |
-      | id                        | 9a4af544-7158-456d-b180-95f2e11eaa8c |
-      | mtu                       | 0                                    |
-      | name                      | global_network                       |
-      | port_security_enabled     | True                                 |
-      | provider:network_type     | vxlan                                |
-      | provider:physical_network |                                      |
-      | provider:segmentation_id  | 1010                                 |
-      | router:external           | False                                |
-      | shared                    | True                                 |
-      | status                    | ACTIVE                               |
-      | subnets                   |                                      |
-      | tenant_id                 | de56db175c1d48b0bbe72f09a24a3b66     |
-      +---------------------------+--------------------------------------+
+   $ neutron net-create global_network --shared
+
+   Created a new network:
+   +---------------------------+--------------------------------------+
+   | Field                     | Value                                |
+   +---------------------------+--------------------------------------+
+   | admin_state_up            | True                                 |
+   | id                        | 9a4af544-7158-456d-b180-95f2e11eaa8c |
+   | mtu                       | 0                                    |
+   | name                      | global_network                       |
+   | port_security_enabled     | True                                 |
+   | provider:network_type     | vxlan                                |
+   | provider:physical_network |                                      |
+   | provider:segmentation_id  | 1010                                 |
+   | router:external           | False                                |
+   | shared                    | True                                 |
+   | status                    | ACTIVE                               |
+   | subnets                   |                                      |
+   | tenant_id                 | de56db175c1d48b0bbe72f09a24a3b66     |
+   +---------------------------+--------------------------------------+
 
 This is the equivalent of creating a policy on the network that permits
 every project to perform the action ``access_as_shared`` on that network.
@@ -127,28 +130,30 @@ command:
 
 .. code-block:: console
 
-      $ neutron rbac-list
-      +--------------------------------------+--------------------------------------+
-      | id                                   | object_id                            |
-      +--------------------------------------+--------------------------------------+
-      | fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55 | 9a4af544-7158-456d-b180-95f2e11eaa8c |
-      +--------------------------------------+--------------------------------------+
+   $ neutron rbac-list
+
+   +--------------------------------------+--------------------------------------+
+   | id                                   | object_id                            |
+   +--------------------------------------+--------------------------------------+
+   | fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55 | 9a4af544-7158-456d-b180-95f2e11eaa8c |
+   +--------------------------------------+--------------------------------------+
 
 Then we can use the :command:`rbac-show` command to see the details:
 
 .. code-block:: console
 
-      $ neutron rbac-show fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55
-      +---------------+--------------------------------------+
-      | Field         | Value                                |
-      +---------------+--------------------------------------+
-      | action        | access_as_shared                     |
-      | id            | fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55 |
-      | object_id     | 9a4af544-7158-456d-b180-95f2e11eaa8c |
-      | object_type   | network                              |
-      | target_tenant | *                                    |
-      | tenant_id     | de56db175c1d48b0bbe72f09a24a3b66     |
-      +---------------+--------------------------------------+
+   $ neutron rbac-show fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55
+
+   +---------------+--------------------------------------+
+   | Field         | Value                                |
+   +---------------+--------------------------------------+
+   | action        | access_as_shared                     |
+   | id            | fcc63ae1-c56e-449d-8fb0-4f49f3cc8b55 |
+   | object_id     | 9a4af544-7158-456d-b180-95f2e11eaa8c |
+   | object_type   | network                              |
+   | target_tenant | *                                    |
+   | tenant_id     | de56db175c1d48b0bbe72f09a24a3b66     |
+   +---------------+--------------------------------------+
 
 Above we can see that the entry allows the action ``access_as_shared``
 on object ``9a4af544-7158-456d-b180-95f2e11eaa8c`` of type ``network``

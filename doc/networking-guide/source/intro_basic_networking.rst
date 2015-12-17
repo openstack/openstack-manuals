@@ -22,10 +22,12 @@ compute host. A MAC address has 48 bits and is typically represented as a
 hexadecimal string, such as ``08:00:27:b9:88:74``. The MAC address is
 hard-coded into the NIC by the manufacturer, although modern NICs
 allow you to change the MAC address programatically. In Linux, you can
-retrieve the MAC address of a NIC using the ``ip`` command::
+retrieve the MAC address of a NIC using the :command:`ip` command:
 
-    $ ip link show eth0
-    2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+.. code-block:: console
+
+   $ ip link show eth0
+   2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
         link/ether 08:00:27:b9:88:74 brd ff:ff:ff:ff:ff:ff
 
 Conceptually, you can think of an Ethernet network as a single bus
@@ -169,6 +171,7 @@ IP address and netmask, and this example would be written as
 ``192.168.1.5/24``.
 
 .. note::
+
    Creating CIDR subnets including a multicast address or a loopback address
    cannot be used in an OpenStack environment. For example, creating a subnet
    using ``224.0.0.0/16`` or ``127.0.1.0/24`` is not supported.
@@ -201,25 +204,30 @@ address 54:78:1a:86:00:a5.*
 
 Host *A* then sends Ethernet frames to host *B*.
 
-You can initiate an ARP request manually using the *arping* command. For
-example, to send an ARP request to IP address ``10.30.0.132``::
+You can initiate an ARP request manually using the :command:`arping` command.
+For example, to send an ARP request to IP address ``10.30.0.132``:
 
-    $ arping 10.30.0.132
-    ARPING 10.30.0.132 from 10.30.0.131 eth0
-    Unicast reply from 10.30.0.132 [54:78:1A:86:1C:0B]  0.670ms
-    Unicast reply from 10.30.0.132 [54:78:1A:86:1C:0B]  0.722ms
-    Unicast reply from 10.30.0.132 [54:78:1A:86:1C:0B]  0.723ms
-    Sent 3 probes (1 broadcast(s))
-    Received 3 response(s)
+.. code-block:: console
+
+   $ arping 10.30.0.132
+   ARPING 10.30.0.132 from 10.30.0.131 eth0
+   Unicast reply from 10.30.0.132 [54:78:1A:86:1C:0B]  0.670ms
+   Unicast reply from 10.30.0.132 [54:78:1A:86:1C:0B]  0.722ms
+   Unicast reply from 10.30.0.132 [54:78:1A:86:1C:0B]  0.723ms
+   Sent 3 probes (1 broadcast(s))
+   Received 3 response(s)
 
 To reduce the number of ARP requests, operating systems maintain an ARP cache
 that contains the mappings of IP addresses to MAC address. On a Linux machine,
-you can view the contents of the ARP cache by using the *arp* command::
+you can view the contents of the ARP cache by using the :command:`arp`
+command:
 
-    $ arp -n
-    Address                  HWtype  HWaddress           Flags Mask            Iface
-    10.0.2.3                 ether   52:54:00:12:35:03   C                     eth0
-    10.0.2.2                 ether   52:54:00:12:35:02   C                     eth0
+.. code-block:: console
+
+   $ arp -n
+   Address                  HWtype  HWaddress           Flags Mask            Iface
+   10.0.2.3                 ether   52:54:00:12:35:03   C                     eth0
+   10.0.2.2                 ether   52:54:00:12:35:02   C                     eth0
 
 .. _DHCP:
 
@@ -289,19 +297,23 @@ be sent to. The routing table maintains a list of the subnets
 associated with each local network that the host is directly connected
 to, as well as a list of routers that are on these local networks.
 
-On a Linux machine, any of the following commands displays the routing table::
+On a Linux machine, any of the following commands displays the routing table:
 
-    $ ip route show
-    $ route -n
-    $ netstat -rn
+.. code-block:: console
 
-Here is an example of output from ``ip route show``::
+   $ ip route show
+   $ route -n
+   $ netstat -rn
 
-    $ ip route show
-    default via 10.0.2.2 dev eth0
-    10.0.2.0/24 dev eth0  proto kernel  scope link  src 10.0.2.15
-    192.168.27.0/24 dev eth1  proto kernel  scope link  src 192.168.27.100
-    192.168.122.0/24 dev virbr0  proto kernel  scope link  src 192.168.122.1
+Here is an example of output from :command:`ip route show`:
+
+.. code-block:: console
+
+   $ ip route show
+   default via 10.0.2.2 dev eth0
+   10.0.2.0/24 dev eth0  proto kernel  scope link  src 10.0.2.15
+   192.168.27.0/24 dev eth1  proto kernel  scope link  src 192.168.27.100
+   192.168.122.0/24 dev virbr0  proto kernel  scope link  src 192.168.122.1
 
 Line 1 of the output specifies the location of the default route,
 which is the effective routing rule if none of the other rules match.
@@ -319,30 +331,36 @@ are on the local network associated with the network interface eth1.
 Line 4 of the output specifies that IPs in the 192.168.122/24 subnet are on the
 local network associated with the network interface virbr0.
 
-The output of the ``route -n`` and ``netstat -rn`` commands are
+The output of the :command:`route -n` and :command:`netstat -rn` commands are
 formatted in a slightly different way. This example shows how the same
-routes would be formatted using these commands::
+routes would be formatted using these commands:
 
-    $ route -n
-    Kernel IP routing table
-    Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
-    0.0.0.0         10.0.2.2        0.0.0.0         UG        0 0          0 eth0
-    10.0.2.0        0.0.0.0         255.255.255.0   U         0 0          0 eth0
-    192.168.27.0    0.0.0.0         255.255.255.0   U         0 0          0 eth1
-    192.168.122.0   0.0.0.0         255.255.255.0   U         0 0          0 virbr0
+.. code-block:: console
 
-The ``ip route get`` command outputs the route for a destination IP address.
-From the below example, destination IP address 10.0.2.14 is on the
-local network of eth0 and would be sent directly::
+   $ route -n
+   Kernel IP routing table
+   Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+   0.0.0.0         10.0.2.2        0.0.0.0         UG        0 0          0 eth0
+   10.0.2.0        0.0.0.0         255.255.255.0   U         0 0          0 eth0
+   192.168.27.0    0.0.0.0         255.255.255.0   U         0 0          0 eth1
+   192.168.122.0   0.0.0.0         255.255.255.0   U         0 0          0 virbr0
 
-    $ ip route get 10.0.2.14
-    10.0.2.14 dev eth0  src 10.0.2.15
+The :command:`ip route get` command outputs the route for a destination
+IP address. From the below example, destination IP address 10.0.2.14 is on the
+local network of eth0 and would be sent directly:
+
+.. code-block:: console
+
+   $ ip route get 10.0.2.14
+   10.0.2.14 dev eth0  src 10.0.2.15
 
 The destination IP address 93.184.216.34 is not on any of the connected local
-networks and would be forwarded to the default gateway at 10.0.2.2::
+networks and would be forwarded to the default gateway at 10.0.2.2:
 
-    $ ip route get 93.184.216.34
-    93.184.216.34 via 10.0.2.2 dev eth0  src 10.0.2.15
+.. code-block:: console
+
+   $ ip route get 93.184.216.34
+   93.184.216.34 via 10.0.2.2 dev eth0  src 10.0.2.15
 
 It is common for a packet to hop across multiple routers to reach its final
 destination. On a Linux machine, the ``traceroute`` and more recent ``mtr``
@@ -465,5 +483,5 @@ router's routing table that corresponds to the destination address
 large for the router to handle (ICMP code 4, fragmentation required
 and "don't fragment" flag is set).
 
-The *ping* and *mtr* Linux command-line tools are two examples of network
-utilities that use ICMP.
+The :command:`ping` and :command:`mtr` Linux command-line tools are two
+examples of network utilities that use ICMP.

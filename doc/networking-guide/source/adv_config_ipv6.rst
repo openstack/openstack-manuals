@@ -66,7 +66,6 @@ The attributes can also be left unset.
 IPv6 addressing
 ---------------
 
-
 The ``ipv6_address_mode`` attribute is used to control how addressing is
 handled by OpenStack. There are a number of different ways that guest
 instances can obtain an IPv6 address, and this attribute exposes these
@@ -217,9 +216,11 @@ to tenants:
 Address modes for ports
 -----------------------
 
-.. note:: That an external DHCPv6 server in theory could override the full
-          address OpenStack assigns based on the EUI-64 address, but that
-          would not be wise as it would not be consistent through the system.
+.. note::
+
+   That an external DHCPv6 server in theory could override the full
+   address OpenStack assigns based on the EUI-64 address, but that
+   would not be wise as it would not be consistent through the system.
 
 IPv6 supports three different addressing schemes for address configuration and
 for providing optional network information.
@@ -360,10 +361,12 @@ next hop that is accomplished by allocating a subnet to the external
 router port and assigning the upstream routers GUA address as the
 gateway for the subnet.
 
-.. note:: That it should be possible for tenants to communicate with each other
-          on an isolated network (a network without a router port) using LLA
-          with little to no participation on the part of OpenStack. The authors
-          of this section have not proven that to be true for all scenarios.
+.. note::
+
+   That it should be possible for tenants to communicate with each other
+   on an isolated network (a network without a router port) using LLA
+   with little to no participation on the part of OpenStack. The authors
+   of this section have not proven that to be true for all scenarios.
 
 Neutron's Distributed Router feature and IPv6
 ---------------------------------------------
@@ -456,6 +459,7 @@ external (to the OpenStack Networking service) DHCPv6 server to manage your
 tenant network prefixes.
 
 .. note::
+
    Prefix delegation became available in the Liberty release, it is
    not available in the Kilo release. HA and DVR routers
    are not currently supported by this feature.
@@ -463,25 +467,31 @@ tenant network prefixes.
 Configuring OpenStack Networking for prefix delegation
 ------------------------------------------------------
 
-To enable prefix delegation, edit the :file:`etc/neutron.conf` file. If you
-are running OpenStack Liberty, make the following change::
+To enable prefix delegation, edit the ``etc/neutron.conf`` file. If you
+are running OpenStack Liberty, make the following change:
 
-    default_ipv6_subnet_pool = prefix_delegation
+.. code-block:: console
 
-Otherwise if you are running OpenStack Mitaka, make this change::
+   default_ipv6_subnet_pool = prefix_delegation
 
-    ipv6_pd_enabled = True
+Otherwise if you are running OpenStack Mitaka, make this change:
 
-.. Note::
+.. code-block:: console
 
-    If you are not using the default dibbler-based driver for prefix
-    delegation, then you also need to set the driver in
-    :file:`etc/neutron.conf`::
+   ipv6_pd_enabled = True
+
+.. note::
+
+   If you are not using the default dibbler-based driver for prefix
+   delegation, then you also need to set the driver in
+   ``etc/neutron.conf``:
+
+   .. code-block:: console
 
       pd_dhcp_driver = <class path to driver>
 
-    Drivers other than the default one may require extra configuration,
-    please refer to :ref:`extra-driver-conf`
+   Drivers other than the default one may require extra configuration,
+   please refer to :ref:`extra-driver-conf`
 
 This tells OpenStack Networking to use the prefix delegation mechanism for
 subnet allocation when the user does not provide a CIDR or subnet pool id when
@@ -509,7 +519,7 @@ section.
 Configuring the Dibbler server
 ------------------------------
 
-After installing Dibbler, edit the :file:`/etc/dibbler/server.conf` file:
+After installing Dibbler, edit the ``/etc/dibbler/server.conf`` file:
 
 .. code-block:: none
 
@@ -524,56 +534,67 @@ After installing Dibbler, edit the :file:`/etc/dibbler/server.conf` file:
 
 The options used in the configuration file above are:
 
-- :code:`script`: Points to a script to be run when a prefix is delegated or
+- ``script``
+  Points to a script to be run when a prefix is delegated or
   released. This is only needed if you want instances on your
   subnets to have external network access. More on this below.
-- :code:`iface`: The name of the network interface on which to listen for
+- ``iface``
+  The name of the network interface on which to listen for
   prefix delegation messages.
-- :code:`pd-pool`: The larger prefix from which you want your delegated
+- ``pd-pool``
+  The larger prefix from which you want your delegated
   prefixes to come. The example given is sufficient if you do
   not need external network access, otherwise a unique
   globally routable prefix is necessary.
-- :code:`pd-length`: The length that delegated prefixes will be. This must be
+- ``pd-length``
+  The length that delegated prefixes will be. This must be
   64 to work with the current OpenStack Networking reference implementation.
 
 To provide external network access to your instances, your Dibbler server also
 needs to create new routes for each delegated prefix. This is done using the
 script file named in the config file above. Edit the
-:file:`/var/lib/dibbler/pd-server.sh` file:
+``/var/lib/dibbler/pd-server.sh`` file:
 
 .. code-block:: bash
 
-    if [ "$PREFIX1" != "" ]; then
-        if [ "$1" == "add" ]; then
-            sudo ip -6 route add ${PREFIX1}/64 via $REMOTE_ADDR dev $IFACE
-        fi
-        if [ "$1" == "delete" ]; then
-            sudo ip -6 route del ${PREFIX1}/64 via $REMOTE_ADDR dev $IFACE
-        fi
-    fi
+   if [ "$PREFIX1" != "" ]; then
+       if [ "$1" == "add" ]; then
+           sudo ip -6 route add ${PREFIX1}/64 via $REMOTE_ADDR dev $IFACE
+       fi
+       if [ "$1" == "delete" ]; then
+           sudo ip -6 route del ${PREFIX1}/64 via $REMOTE_ADDR dev $IFACE
+       fi
+   fi
 
 The variables used in the script file above are:
 
-- :code:`$PREFIX1`: The prefix being added/deleted by the Dibbler server.
-- :code:`$1`: The operation being performed.
-- :code:`$REMOTE_ADDR`: The IP address of the requesting Dibbler client.
-- :code:`$IFACE`: The network interface upon which the request was
-  received.
+- ``$PREFIX1``
+  The prefix being added/deleted by the Dibbler server.
+- ``$1``
+  The operation being performed.
+- ``$REMOTE_ADDR``
+  The IP address of the requesting Dibbler client.
+- ``$IFACE``
+  The network interface upon which the request was received.
 
 The above is all you need in this scenario, but more information on
 installing, configuring, and running Dibbler is available in the Dibbler user
 guide, at http://klub.com.pl/dhcpv6/doc/dibbler-user.pdf.
 
-To start your Dibbler server, run::
+To start your Dibbler server, run:
 
-    # dibbler-server run
+.. code-block:: console
 
-Or to run in headless mode::
+   # dibbler-server run
 
-    # dibbler-server start
+Or to run in headless mode:
+
+.. code-block:: console
+
+   # dibbler-server start
 
 When using DevStack, it is important to start your server after the
-:file:`stack.sh` script has finished to ensure that the required network
+``stack.sh`` script has finished to ensure that the required network
 interfaces have been created.
 
 User workflow
@@ -583,48 +604,50 @@ First, create a network and IPv6 subnet:
 
 .. code-block:: console
 
-    $ neutron net-create ipv6-pd
-    Created a new network:
-    +-----------------+--------------------------------------+
-    | Field           | Value                                |
-    +-----------------+--------------------------------------+
-    | admin_state_up  | True                                 |
-    | id              | 31ef3e85-111f-4772-8172-8e4a404a7476 |
-    | mtu             | 0                                    |
-    | name            | ipv6-pd                              |
-    | router:external | False                                |
-    | shared          | False                                |
-    | status          | ACTIVE                               |
-    | subnets         |                                      |
-    | tenant_id       | 28b39bcce66e4a648f82e2362b958b60     |
-    +-----------------+--------------------------------------+
+   $ neutron net-create ipv6-pd
 
-    $ neutron subnet-create ipv6-pd --name ipv6-pd-1 --ip_version 6 \
-      --ipv6_ra_mode slaac --ipv6_address_mode slaac
-    Created a new subnet:
-    +-------------------+--------------------------------------------------+
-    | Field             | Value                                            |
-    +-------------------+--------------------------------------------------+
-    | allocation_pools  | {"start": "::2", "end": "::ffff:ffff:ffff:fffe"} |
-    | cidr              | ::/64                                            |
-    | dns_nameservers   |                                                  |
-    | enable_dhcp       | True                                             |
-    | gateway_ip        | ::1                                              |
-    | host_routes       |                                                  |
-    | id                | ea139dcd-17a3-4f0a-8cca-dff8b4e03f8a             |
-    | ip_version        | 6                                                |
-    | ipv6_address_mode | slaac                                            |
-    | ipv6_ra_mode      | slaac                                            |
-    | name              | ipv6-pd-1                                        |
-    | network_id        | 31ef3e85-111f-4772-8172-8e4a404a7476             |
-    | subnetpool_id     | prefix_delegation                                |
-    | tenant_id         | 28b39bcce66e4a648f82e2362b958b60                 |
-    +-------------------+--------------------------------------------------+
+   Created a new network:
+   +-----------------+--------------------------------------+
+   | Field           | Value                                |
+   +-----------------+--------------------------------------+
+   | admin_state_up  | True                                 |
+   | id              | 31ef3e85-111f-4772-8172-8e4a404a7476 |
+   | mtu             | 0                                    |
+   | name            | ipv6-pd                              |
+   | router:external | False                                |
+   | shared          | False                                |
+   | status          | ACTIVE                               |
+   | subnets         |                                      |
+   | tenant_id       | 28b39bcce66e4a648f82e2362b958b60     |
+   +-----------------+--------------------------------------+
+
+   $ neutron subnet-create ipv6-pd --name ipv6-pd-1 --ip_version 6 \
+     --ipv6_ra_mode slaac --ipv6_address_mode slaac
+
+   Created a new subnet:
+   +-------------------+--------------------------------------------------+
+   | Field             | Value                                            |
+   +-------------------+--------------------------------------------------+
+   | allocation_pools  | {"start": "::2", "end": "::ffff:ffff:ffff:fffe"} |
+   | cidr              | ::/64                                            |
+   | dns_nameservers   |                                                  |
+   | enable_dhcp       | True                                             |
+   | gateway_ip        | ::1                                              |
+   | host_routes       |                                                  |
+   | id                | ea139dcd-17a3-4f0a-8cca-dff8b4e03f8a             |
+   | ip_version        | 6                                                |
+   | ipv6_address_mode | slaac                                            |
+   | ipv6_ra_mode      | slaac                                            |
+   | name              | ipv6-pd-1                                        |
+   | network_id        | 31ef3e85-111f-4772-8172-8e4a404a7476             |
+   | subnetpool_id     | prefix_delegation                                |
+   | tenant_id         | 28b39bcce66e4a648f82e2362b958b60                 |
+   +-------------------+--------------------------------------------------+
 
 The subnet is initially created with a temporary CIDR before one can be
 assigned by prefix delegation. Any number of subnets with this temporary CIDR
 can exist without raising an overlap error. The subnetpool_id is automatically
-set to :code:`prefix_delegation`.
+set to ``prefix_delegation``.
 
 To trigger the prefix delegation process, create a router interface between
 this subnet and a router with an active interface on the external network:
@@ -644,6 +667,7 @@ to all ports:
 .. code-block:: console
 
     $ neutron subnet-show ipv6-pd-1
+
     +-------------------+-------------------------------------------------+
     | Field             | Value                                           |
     +-------------------+-------------------------------------------------+
@@ -686,16 +710,22 @@ Extra configuration
 Neutron dhcpv6_pd_agent
 ^^^^^^^^^^^^^^^^^^^^^^^
 To enable the driver for the dhcpv6_pd_agent, set pd_dhcp_driver to this in
-:file:`etc/neutron.conf`::
+``etc/neutron.conf``:
 
-    pd_dhcp_driver = neutron_pd_agent
+.. code-block:: console
+
+   pd_dhcp_driver = neutron_pd_agent
 
 To allow the neutron-pd-agent to communicate with prefix delegation servers,
 you must set which network interface to use for external communication. In
-DevStack the default for this is br-ex::
+DevStack the default for this is ``br-ex``:
 
-    pd_interface = br-ex
+.. code-block:: console
 
-Once you have stacked run the command below to start the neutron-pd-agent::
+   pd_interface = br-ex
 
-    neutron-pd-agent --config-file /etc/neutron/neutron.conf
+Once you have stacked run the command below to start the neutron-pd-agent:
+
+.. code-block:: console
+
+   neutron-pd-agent --config-file /etc/neutron/neutron.conf

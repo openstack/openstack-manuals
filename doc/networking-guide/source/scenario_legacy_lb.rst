@@ -31,6 +31,7 @@ includes the following components:
   ranges.
 
   .. note::
+
      A flat network essentially uses the untagged or native VLAN. Similar to
      layer-2 properties of physical networks, only one flat network can exist
      per external bridge. In most cases, production deployments should use
@@ -101,31 +102,33 @@ because it only handles layer-2 connectivity.
    :alt: Service layout
 
 .. note::
+
    For VLAN external and project networks, the physical network infrastructure
    must support VLAN tagging. For best performance with VXLAN project networks,
    the network infrastructure should support jumbo frames.
 
 .. warning::
+
    Proper operation of this scenario requires kernel 3.13 or newer.
 
 OpenStack services - controller node
 ------------------------------------
 
 #. Operational SQL server with ``neutron`` database and appropriate
-   configuration in the :file:`neutron.conf` file.
+   configuration in the ``neutron.conf`` file.
 #. Operational message queue service with appropriate configuration
-   in the :file:`neutron.conf` file.
+   in the ``neutron.conf`` file.
 #. Operational OpenStack Identity service with appropriate configuration
-   in the :file:`neutron.conf` file.
+   in the ``neutron.conf`` file.
 #. Operational OpenStack Compute controller/management service with
-   appropriate configuration to use neutron in the :file:`nova.conf` file.
+   appropriate configuration to use neutron in the ``nova.conf`` file.
 #. Neutron server service, ML2 plug-in, and any dependencies.
 
 OpenStack services - network node
 ---------------------------------
 
 #. Operational OpenStack Identity service with appropriate configuration
-   in the :file:`neutron.conf` file.
+   in the ``neutron.conf`` file.
 #. ML2 plug-in, Linux bridge agent, L3 agent, DHCP agent, metadata agent,
    and any dependencies.
 
@@ -133,9 +136,9 @@ OpenStack services - compute nodes
 ----------------------------------
 
 #. Operational OpenStack Identity service with appropriate configuration
-   in the :file:`neutron.conf` file.
+   in the ``neutron.conf`` file.
 #. Operational OpenStack Compute controller/management service with
-   appropriate configuration to use neutron in the :file:`nova.conf` file.
+   appropriate configuration to use neutron in the ``nova.conf`` file.
 #. ML2 plug-in, Linux bridge agent, and any dependencies.
 
 Architecture
@@ -188,6 +191,7 @@ Packet flow
 ~~~~~~~~~~~
 
 .. note::
+
    *North-south* network traffic travels between an instance and
    external network, typically the Internet. *East-west* network
    traffic travels between instances.
@@ -217,6 +221,7 @@ network traffic between project and external networks.
 * The instance sends a packet to a host on the external network.
 
 .. note::
+
    Although the diagram shows both VXLAN and VLAN project networks, the packet
    flow only considers one instance using a VXLAN project network.
 
@@ -283,6 +288,7 @@ The following steps involve the network node:
    via the physical external interface.
 
 .. note::
+
    Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-legacy-lb-flowns1.png
@@ -314,6 +320,7 @@ For instances with a floating IP address, the network node routes
 * The instance receives a packet from a host on the external network.
 
 .. note::
+
    Although the diagram shows both VXLAN and VLAN project networks, the packet
    flow only considers one instance using a VXLAN project network.
 
@@ -374,6 +381,7 @@ The following steps involve compute node 1:
       on instance 1.
 
 .. note::
+
    Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-legacy-lb-flowns2.png
@@ -456,6 +464,7 @@ The following steps involve compute node 2:
    on instance 2.
 
 .. note::
+
    Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-legacy-lb-flowew1.png
@@ -512,6 +521,7 @@ The following steps involve compute node 2:
    on instance 2.
 
 .. note::
+
    Return traffic follows similar steps in reverse.
 
 .. image:: figures/scenario-legacy-lb-flowew2.png
@@ -526,7 +536,7 @@ scenario in your environment.
 Controller node
 ---------------
 
-#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
 
@@ -537,7 +547,7 @@ Controller node
       allow_overlapping_ips = True
 
 #. Configure the ML2 plug-in. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
+   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
 
    .. code-block:: ini
 
@@ -566,10 +576,12 @@ Controller node
    for your environment.
 
    .. note::
+
       The first value in the ``tenant_network_types`` option becomes the
       default project network type when a regular user creates a network.
 
    .. note::
+
       The ``external`` value in the ``network_vlan_ranges`` option lacks VLAN
       ID ranges to support use of arbitrary VLAN IDs by administrative users.
 
@@ -581,7 +593,7 @@ Network node
 ------------
 
 #. Configure the kernel to enable packet forwarding and disable reverse path
-   filtering. Edit the :file:`/etc/sysctl.conf` file:
+   filtering. Edit the ``/etc/sysctl.conf`` file:
 
    .. code-block:: ini
 
@@ -595,7 +607,7 @@ Network node
 
       $ sysctl -p
 
-#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
 
@@ -603,7 +615,7 @@ Network node
       verbose = True
 
 #. Configure the Linux bridge agent. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
+   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
 
    .. code-block:: ini
 
@@ -625,7 +637,7 @@ Network node
    networks, respectively. Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP
    address of the interface that handles project tunnel networks.
 
-#. Configure the L3 agent. Edit the :file:`/etc/neutron/l3_agent.ini` file:
+#. Configure the L3 agent. Edit the ``/etc/neutron/l3_agent.ini`` file:
 
    .. code-block:: ini
 
@@ -636,7 +648,7 @@ Network node
       external_network_bridge =
       router_delete_namespaces = True
 
-#. Configure the DHCP agent. Edit the :file:`/etc/neutron/dhcp_agent.ini`
+#. Configure the DHCP agent. Edit the ``/etc/neutron/dhcp_agent.ini``
    file:
 
    .. code-block:: ini
@@ -650,21 +662,21 @@ Network node
 
 #. (Optional) Reduce MTU for VXLAN project networks.
 
-   #. Edit the :file:`/etc/neutron/dhcp_agent.ini` file:
+   #. Edit the ``/etc/neutron/dhcp_agent.ini`` file:
 
       .. code-block:: ini
 
          [DEFAULT]
          dnsmasq_config_file = /etc/neutron/dnsmasq-neutron.conf
 
-   #. Edit the :file:`/etc/neutron/dnsmasq-neutron.conf` file:
+   #. Edit the ``/etc/neutron/dnsmasq-neutron.conf`` file:
 
       .. code-block:: ini
 
          dhcp-option-force=26,1450
 
 #. Configure the metadata agent. Edit the
-   :file:`/etc/neutron/metadata_agent.ini` file:
+   ``/etc/neutron/metadata_agent.ini`` file:
 
    .. code-block:: ini
 
@@ -686,7 +698,7 @@ Compute nodes
 -------------
 
 #. Configure the kernel to enable *iptables* on bridges and disable reverse
-   path filtering. Edit the :file:`/etc/sysctl.conf` file:
+   path filtering. Edit the ``/etc/sysctl.conf`` file:
 
    .. code-block:: ini
 
@@ -701,7 +713,7 @@ Compute nodes
 
       $ sysctl -p
 
-#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
 
@@ -709,7 +721,7 @@ Compute nodes
       verbose = True
 
 #. Configure the Linux bridge agent. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
+   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
 
    .. code-block:: ini
 
@@ -744,6 +756,7 @@ Verify service operation
    .. code-block:: console
 
       $ neutron agent-list
+
       +--------------------------------------+--------------------+-------------+-------+----------------+---------------------------+
       | id                                   | agent_type         | host        | alive | admin_state_up | binary                    |
       +--------------------------------------+--------------------+-------------+-------+----------------+---------------------------+
@@ -767,6 +780,7 @@ This example creates a flat external network and a VXLAN project network.
 
       $ neutron net-create ext-net --router:external True \
         --provider:physical_network external --provider:network_type flat
+
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
@@ -791,6 +805,7 @@ This example creates a flat external network and a VXLAN project network.
       $ neutron subnet-create ext-net --name ext-subnet --allocation-pool \
         start=203.0.113.101,end=203.0.113.200 --disable-dhcp \
         --gateway 203.0.113.1 203.0.113.0/24
+
       Created a new subnet:
       +-------------------+----------------------------------------------------+
       | Field             | Value                                              |
@@ -811,6 +826,7 @@ This example creates a flat external network and a VXLAN project network.
       +-------------------+----------------------------------------------------+
 
 .. note::
+
    The example configuration contains ``vlan`` as the first project network
    type. Only an administrative user can create other types of networks such as
    VXLAN. The following commands use the ``admin`` project credentials to
@@ -821,6 +837,7 @@ This example creates a flat external network and a VXLAN project network.
    .. code-block:: console
 
       $ openstack project show demo
+
       +-------------+----------------------------------+
       | Field       | Value                            |
       +-------------+----------------------------------+
@@ -836,6 +853,7 @@ This example creates a flat external network and a VXLAN project network.
 
       $ neutron net-create demo-net --tenant-id 8dbcb34c59a741b18e71c19073a47ed5 \
         --provider:network_type vxlan
+
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
@@ -861,6 +879,7 @@ This example creates a flat external network and a VXLAN project network.
 
       $ neutron subnet-create demo-net --name demo-subnet --gateway 192.168.1.1 \
         192.168.1.0/24
+
       Created a new subnet:
       +-------------------+--------------------------------------------------+
       | Field             | Value                                            |
@@ -885,6 +904,7 @@ This example creates a flat external network and a VXLAN project network.
    .. code-block:: console
 
       $ neutron router-create demo-router
+
       +-----------------------+--------------------------------------+
       | Field                 | Value                                |
       +-----------------------+--------------------------------------+
@@ -924,6 +944,7 @@ Verify network operation
       qrouter-299b2363-d656-401d-a3a5-55b4378e7fbb
 
    .. note::
+
       The ``qdhcp`` namespace might not exist until launching an instance.
 
 #. Determine the external network gateway IP address for the project network
@@ -933,6 +954,7 @@ Verify network operation
    .. code-block:: console
 
       $ neutron router-port-list demo-router
+
       +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------+
       | id                                   | name | mac_address       | fixed_ips                                                                            |
       +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------+
@@ -997,6 +1019,7 @@ Verify network operation
    .. code-block:: console
 
      $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+
       +-------------+-----------+---------+-----------+--------------+
       | IP Protocol | From Port | To Port | IP Range  | Source Group |
       +-------------+-----------+---------+-----------+--------------+
@@ -1004,6 +1027,7 @@ Verify network operation
       +-------------+-----------+---------+-----------+--------------+
 
       $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
+
       +-------------+-----------+---------+-----------+--------------+
       | IP Protocol | From Port | To Port | IP Range  | Source Group |
       +-------------+-----------+---------+-----------+--------------+
@@ -1015,6 +1039,7 @@ Verify network operation
    .. code-block:: console
 
       $ neutron floatingip-create ext-net
+
       +---------------------+--------------------------------------+
       | Field               | Value                                |
       +---------------------+--------------------------------------+
@@ -1039,6 +1064,7 @@ Verify network operation
    .. code-block:: console
 
       $ nova list
+
       +--------------------------------------+----------------+--------+------------+-------------+-----------------------------------------+
       | ID                                   | Name           | Status | Task State | Power State | Networks                                |
       +--------------------------------------+----------------+--------+------------+-------------+-----------------------------------------+
