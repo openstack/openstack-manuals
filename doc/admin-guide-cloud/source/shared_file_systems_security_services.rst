@@ -34,12 +34,12 @@ The security service can be added to the
 
 To create a security service, specify the security service type and optionally
 name, description of a security service, DNS IP address used inside tenant's
-network, security service IP address or hostname, domain, security service user
-or group used by tenant, a password of user.
+network, security service IP address or host name, domain, security
+service user or group used by tenant, a password of user.
 
 Create a ``ldap`` security service:
 
-.. code:: console
+.. code-block:: console
 
    $ manila security-service-create ldap --dns-ip 8.8.8.8 --server 10.254.0.3 --name my_ldap_security_service
    +-------------+--------------------------------------+
@@ -62,7 +62,7 @@ Create a ``ldap`` security service:
 
 To create ``kerberos`` security service, run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila security-service-create kerberos --server 10.254.0.3 --user demo --password secret --name my_kerberos_security_service --description "Kerberos security service"
    +-------------+--------------------------------------+
@@ -84,9 +84,9 @@ To create ``kerberos`` security service, run:
    +-------------+--------------------------------------+
 
 To see the list of created security service use
-**manila security-service-list**:
+:command:`manila security-service-list`:
 
-.. code:: console
+.. code-block:: console
 
    $ manila security-service-list
    +--------------------------------------+------------------------------+--------+----------+
@@ -101,11 +101,11 @@ You can add a security service to the existing
 (is not associated with a share).
 
 Add a security service to the share network with
-**share-network-security-service-add** specifying share network, security
+``share-network-security-service-add`` specifying share network, security
 service and print the information about the security service. You can see
 new attribute ``share_networks`` with associated share network ID.
 
-.. code:: console
+.. code-block:: console
 
    $ manila share-network-security-service-add share_net2 my_ldap_security_service
 
@@ -132,7 +132,7 @@ new attribute ``share_networks`` with associated share network ID.
 It is possible to see the list of security services associated with
 given share network. List security services for ``share_net2`` share network:
 
-.. code:: console
+.. code-block:: console
 
    $ manila share-network-security-service-list share_net2
    +--------------------------------------+--------------------------+--------+------+
@@ -144,7 +144,7 @@ given share network. List security services for ``share_net2`` share network:
 You also can dissociate a security service from the share network
 and see that a security service now has empty list of share networks:
 
-.. code:: console
+.. code-block:: console
 
    $ manila share-network-security-service-remove share_net2 my_ldap_security_service
 
@@ -169,13 +169,13 @@ and see that a security service now has empty list of share networks:
    +----------------+--------------------------------------+
 
 Shared File Systems service allows you to update a security service fields
-using **manila security-service-update** command with optional arguments
-such as ``--dns-ip``, ``--server``, ``--domain``, ``--user``, ``--password``,
-``--name``, or ``--description``.
+using :command:`manila security-service-update` command with optional
+arguments such as ``--dns-ip``, ``--server``, ``--domain``, ``--user``,
+``--password``, ``--name``, or ``--description``.
 
 To remove a security service, that is not associated with any share networks,
 run:
 
-.. code:: console
+.. code-block:: console
 
    $ manila security-service-delete my_ldap_security_service

@@ -9,8 +9,8 @@ back ends. In general, the workflow with multiple back ends looks very similar
 to the Block Storage service one, see :ref:`Configure multiple-storage back
 ends in Openstack Block Storage service <multi_backend>`.
 
-Using `manila.conf`, you can spawn multiple share services. To do it, you
-should set the `enabled_share_backends` flag in the `manila.conf` file. This
+Using ``manila.conf``, you can spawn multiple share services. To do it, you
+should set the `enabled_share_backends` flag in the ``manila.conf`` file. This
 flag defines the comma-separated names of the configuration stanzas for the
 different back ends: one name is associated to one configuration group for a
 back end.
@@ -56,5 +56,6 @@ files. If it is necessary to control each back end in a separate way, you
 should provide a single configuration file per each back end.
 
 .. toctree::
+
     shared_file_systems_scheduling.rst
     shared_file_systems_services_manage.rst

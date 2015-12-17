@@ -14,6 +14,7 @@ OpenStack compute instances, or clients outside of OpenStack, which depends on
 deployment configuration.
 
 .. note::
+
    A ``share`` is an abstract storage object that may or may not directly
    map to a "share" concept from the underlying storage provider.
 
