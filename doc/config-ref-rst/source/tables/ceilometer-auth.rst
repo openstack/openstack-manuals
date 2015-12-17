@@ -18,21 +18,21 @@
      - Description
    * - **[service_credentials]**
      -
+   * - ``auth_section`` = ``None``
+     - (Opt) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Opt) Authentication type to load
+   * - ``cafile`` = ``None``
+     - (StrOpt) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``certfile`` = ``None``
+     - (StrOpt) PEM encoded client certificate cert file
    * - ``insecure`` = ``False``
-     - (BoolOpt) Disables X.509 certificate validation when an SSL connection to Identity Service is established.
-   * - ``os_auth_url`` = ``http://localhost:5000/v2.0``
-     - (StrOpt) Auth URL to use for OpenStack service access.
-   * - ``os_cacert`` = ``None``
-     - (StrOpt) Certificate chain for SSL validation.
-   * - ``os_endpoint_type`` = ``publicURL``
+     - (BoolOpt) Verify HTTPS connections.
+   * - ``interface`` = ``public``
      - (StrOpt) Type of endpoint in Identity service catalog to use for communication with OpenStack services.
-   * - ``os_password`` = ``admin``
-     - (StrOpt) Password to use for OpenStack service access.
-   * - ``os_region_name`` = ``None``
+   * - ``keyfile`` = ``None``
+     - (StrOpt) PEM encoded client certificate key file
+   * - ``region_name`` = ``None``
      - (StrOpt) Region name to use for OpenStack service endpoints.
-   * - ``os_tenant_id`` =
-     - (StrOpt) Tenant ID to use for OpenStack service access.
-   * - ``os_tenant_name`` = ``admin``
-     - (StrOpt) Tenant name to use for OpenStack service access.
-   * - ``os_username`` = ``ceilometer``
-     - (StrOpt) User name to use for OpenStack service access.
+   * - ``timeout`` = ``None``
+     - (IntOpt) Timeout value for http requests

@@ -30,14 +30,14 @@
      - (StrOpt) Prefix to prepend at the beginning of the path. Deprecated, use identity_uri.
    * - ``auth_host`` = ``127.0.0.1``
      - (StrOpt) Host providing the admin Identity API endpoint. Deprecated, use identity_uri.
-   * - ``auth_plugin`` = ``None``
-     - (StrOpt) Name of the plugin to load
    * - ``auth_port`` = ``35357``
      - (IntOpt) Port of the admin Identity API endpoint. Deprecated, use identity_uri.
    * - ``auth_protocol`` = ``https``
      - (StrOpt) Protocol of the admin Identity API endpoint (http or https). Deprecated, use identity_uri.
    * - ``auth_section`` = ``None``
-     - (StrOpt) Config Section from which to load plugin specific options
+     - (Opt) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Opt) Authentication type to load
    * - ``auth_uri`` = ``None``
      - (StrOpt) Complete public Identity API endpoint.
    * - ``auth_version`` = ``None``

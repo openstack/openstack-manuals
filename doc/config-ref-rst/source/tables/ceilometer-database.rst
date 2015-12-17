@@ -22,10 +22,6 @@
      - (StrOpt) DEPRECATED - Database connection string.
    * - **[database]**
      -
-   * - ``alarm_connection`` = ``None``
-     - (StrOpt) The connection string used to connect to the alarm database. (if unset, connection is used)
-   * - ``alarm_history_time_to_live`` = ``-1``
-     - (IntOpt) Number of seconds that alarm histories are kept in the database for (<= 0 means forever).
    * - ``backend`` = ``sqlalchemy``
      - (StrOpt) The back end to use for the database.
    * - ``connection`` = ``None``
