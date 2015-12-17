@@ -3,21 +3,24 @@ Images and instances
 ====================
 
 
-Disk images provide templates for virtual machine file systems. The
-Image service controls storage and management of images.
+Virtual machine images contain a virtual disk that holds a
+bootable operating system on it. Disk images provide templates for
+virtual machine file systems. The Image service controls image storage
+and management.
 
 Instances are the individual virtual machines that run on physical
-compute nodes. Users can launch any number of instances from the same
-image. Each launched instance runs from a copy of the base image so that
-any changes made to the instance do not affect the base image. You can
-take snapshots of running instances to create an image based on the
-current disk state of a particular instance. The Compute service manages
-instances.
+compute nodes inside the cloud. Users can launch any number of instances
+from the same image. Each launched instance runs from a copy of the
+base image. Any changes made to the instance do not affect
+the base image. Snapshots capture the state of an instances
+running disk. Users can create a snapshot, and build a new image based
+on these snapshots. The Compute service controls instance, image, and
+snapshot storage and management.
 
 When you launch an instance, you must choose a ``flavor``, which
-represents a set of virtual resources. Flavors define how many virtual
-CPUs an instance has, the amount of RAM available to it, and the size of
-its ephemeral disks. Users must select from the set of available flavors
+represents a set of virtual resources. Flavors define virtual
+CPU number, RAM amount available, and ephemeral disks size. Users
+must select from the set of available flavors
 defined on their cloud. OpenStack provides a number of predefined
 flavors that you can edit or add to.
 
@@ -28,13 +31,13 @@ flavors that you can edit or add to.
       Guide <http://docs.openstack.org/image-guide/>`__.
 
    -  For more information about image configuration options, see the
-      `Image
-      services <http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-image-service.html>`__
+      `Image services
+      <http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-image-service.html>`__
       section of the OpenStack Configuration Reference.
 
-   -  For more information about flavors, see :ref:`compute-flavors` or
-      `Flavors <http://docs.openstack.org/openstack-ops/content/flavors.html>`__
-      in the OpenStack Operations Guide.
+   -  For more information about flavors, see :ref:`compute-flavors`.
+
+
 
 You can add and remove additional resources from running instances, such
 as persistent volume storage, or public IP addresses. The example used
@@ -44,28 +47,48 @@ block storage, instead of the ephemeral storage provided by the selected
 instance flavor.
 
 This diagram shows the system state prior to launching an instance. The
-image store, fronted by the Image service (glance) has a number of
-predefined images. Inside the cloud, a compute node contains the
+image store has a number of predefined images, supported by the Image
+service. Inside the cloud, a compute node contains the
 available vCPU, memory, and local disk resources. Additionally, the
-``cinder-volume`` service provides a number of predefined volumes.
+``cinder-volume`` service stores predefined volumes.
 
-|Base image state with no running instances|
+|
 
-To launch an instance select an image, flavor, and any optional
+.. _Figure Base Image:
+
+**The base image state with no running instances**
+
+.. figure:: ../../admin-guide-cloud/source/figures/instance-life-1.png
+
+|
+
+Instance Launch
+~~~~~~~~~~~~~~~
+
+To launch an instance, select an image, flavor, and any optional
 attributes. The selected flavor provides a root volume, labeled ``vda``
 in this diagram, and additional ephemeral storage, labeled ``vdb``. In
 this example, the ``cinder-volume`` store is mapped to the third virtual
 disk on this instance, ``vdc``.
 
-|Instance creation from image and runtime state|
+|
 
-The base image is copied from the image store to the local disk. The
-local disk is the first disk that the instance accesses, labeled ``vda``
-in this diagram. Your instances will start up faster if you use smaller
-images, as less data needs to be copied across the network.
+.. _Figure Instance creation:
 
-A new empty ephemeral disk is also created, labeled ``vdb`` in this
-diagram. This disk is deleted when you delete the instance.
+**Instance creation from an image**
+
+.. figure:: ../../admin-guide-cloud/source/figures/instance-life-2.png
+
+|
+
+The Image service copies the base image from the image store to the
+local disk. The local disk is the first disk that the instance
+accesses, which is the root volume labeled ``vda``. Smaller
+instances start faster. Less data needs to be copied across
+the network.
+
+The new empty ephemeral disk is also created, labeled ``vdb``.
+This disk is deleted when you delete the instance.
 
 The compute node connects to the attached ``cinder-volume`` using iSCSI. The
 ``cinder-volume`` is mapped to the third disk, labeled ``vdc`` in this
@@ -84,13 +107,93 @@ configuration file directs image traffic to the compute node.
    the ephemeral storage used for volumes ``vda`` and ``vdb`` could be
    backed by network storage rather than a local disk.
 
-When the instance is deleted, the state is reclaimed with the exception
-of the persistent volume. The ephemeral storage is purged; memory and
+When you delete an instance, the state is reclaimed with the exception
+of the persistent volume. The ephemeral storage is purged. Memory and
 vCPU resources are released. The image remains unchanged throughout this
 process.
 
-|End state of image and volume after instance exits|
+|
 
+.. _End of state:
+
+**The end state of an image and volume after the instance exits**
+
+.. figure:: ../../admin-guide-cloud/source/figures/instance-life-3.png
+
+|
+
+Manage instances
+~~~~~~~~~~~~~~~~
+
+Administrative users can manage instances for users in various projects. As
+an administrative user, you can view, terminate, edit, perform, or migrate
+an instance. You can perform a soft or hard reboot if needed. You can also
+view instance logs, or launch a VNC console for an instance.
+
+For information about using the Dashboard to launch instances as an end
+user, see the
+`OpenStack End User Guide
+<http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__.
+
+Create instance snapshots
+-------------------------
+
+#. Log in to the Dashboard and choose the admin project from the
+   drop-down list at the top of the page.
+
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
+   and click the :guilabel:`Instances` category.
+
+#. Select an instance to create a snapshot from it. From the
+   :guilabel:`Actions` drop-down list, select :guilabel:`Create Snapshot`.
+
+#. In the :guilabel:`Create Snapshot` window, enter a name for the snapshot.
+
+#. Click :guilabel:`Create Snapshot`. The Dashboard shows the instance snapshot
+   in the :guilabel:`Images` category.
+
+#. To launch an instance from the snapshot, select the snapshot and
+   click :guilabel:`Launch Instance`. For information about launching
+   instances, see the
+   `OpenStack End User Guide
+   <http://docs.openstack.org/user-guide/dashboard_launch_instances.html>`__.
+
+Control the state of an instance
+--------------------------------
+
+#. Log in to the Dashboard and choose the admin project from the
+   drop-down list at the top of the page.
+
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
+   and click the :guilabel:`Instances` category.
+
+#. Select the instance for which you want to change the state.
+
+#. From the drop-down list in the :guilabel:`Actions` column,
+   select the state.
+
+   Depending on the current state of the instance, you can choose to
+   pause, un-pause, suspend, resume, soft or hard reboot, or terminate
+   an instance (actions in red color are dangerous).
+
+Track usage
+-----------
+
+Use the :guilabel:`Overview` category to track usage of instances
+for each project.
+
+You can track costs per month by showing meters like number of VCPUs,
+disks, RAM, and uptime of all your instances.
+
+#. Log in to the Dashboard and choose the admin project from the
+   drop-down list at the top of the page.
+
+#. On the :guilabel:`Admin` tab, click the :guilabel:`Instances` category.
+
+#. Select a month and click :guilabel:`Submit` to query the instance usage for
+   that month.
+
+#. Click :guilabel:`Download CSV Summary` to download a CSV summary.
 
 Image management
 ~~~~~~~~~~~~~~~~
@@ -109,8 +212,8 @@ see the `Manage
 Images <http://docs.openstack.org/user-guide/common/cli_manage_images.html>`__
 section in the OpenStack End User Guide.
 
-Virtual images that have been made available through the Image service
-can be stored in a variety of ways. In order to use these services, you
+You can store virtual images made available through the Image service
+in a variety of ways. In order to use these services, you
 must have a working installation of the Image service, with a working
 endpoint, and users that have been created in OpenStack Identity.
 Additionally, you must meet the environment variables required by the
@@ -152,6 +255,7 @@ GridFS
 
 Image properties and property protection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 An image property is a key and value pair that the cloud administrator
 or the image owner attaches to an OpenStack Image service image, as
 follows:
@@ -170,13 +274,12 @@ which only cloud administrators have access.
 For unprotected image properties, the cloud administrator can manage
 core properties and the image owner can manage additional properties.
 
-
 **To configure property protection**
 
 To configure property protection, the cloud administrator completes
 these steps:
 
-#. Define roles or policies in the :file:`policy.json` file::
+#. Define roles or policies in the ``policy.json`` file::
 
     {
         "context_is_admin":  "role:admin",
@@ -273,7 +376,7 @@ these steps:
    -  A value of ``!`` disallows the corresponding operation for a
       property.
 
-#. In the :file:`glance-api.conf` file, define the location of a property
+#. In the ``glance-api.conf`` file, define the location of a property
    protections configuration file::
 
      property_protection_file = {file_name}
@@ -287,9 +390,10 @@ these steps:
    `glance-api` service does not start.
 
    To view a sample configuration file, see
-   `glance-api.conf <http://docs.openstack.org/liberty/config-reference/content/section_glance-api.conf.html>`__.
+   `glance-api.conf
+   <http://docs.openstack.org/liberty/config-reference/content/section_glance-api.conf.html>`__.
 
-#. Optionally, in the :file:`glance-api.conf` file, specify whether roles or
+#. Optionally, in the ``glance-api.conf`` file, specify whether roles or
    policies are used in the property protections configuration file::
 
      property_protection_rule_format = roles
@@ -297,12 +401,14 @@ these steps:
    The default is ``roles``.
 
    To view a sample configuration file, see
-   `glance-api.conf <http://docs.openstack.org/liberty/config-reference/content/section_glance-api.conf.html>`__.
+   `glance-api.conf
+   <http://docs.openstack.org/liberty/config-reference/content/section_glance-api.conf.html>`__.
 
 Image download: how it works
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Prior to starting a virtual machine, the virtual machine image used must
-be transferred to the compute node from the Image service. How this
+
+Prior to starting a virtual machine, transfer the virtual machine image
+to the compute node from the Image service. How this
 works can change depending on the settings chosen for the compute node
 and the Image service.
 
@@ -317,15 +423,16 @@ image from the back end to the compute node.
 It is possible to set up the Object Storage node on a separate network,
 and still allow image traffic to flow between the Compute and Object
 Storage nodes. Configure the ``my_block_storage_ip`` option in the
-storage node configuration to allow block storage traffic to reach the
-Compute node.
+storage node configuration file to allow block storage traffic to reach
+the Compute node.
 
 Certain back ends support a more direct method, where on request the
-Image service will return a URL that can be used to download the image
-directly from the back-end store. Currently the only store to support
-the direct download approach is the filesystem store. It can be
-configured using the ``filesystems`` option in the ``image_file_url``
-section of the :file:`nova.conf` file on compute nodes.
+Image service will return a URL that links directly to the back-end store.
+You can download the image using this approach. Currently, the only store
+to support the direct download approach is the filesystem store.
+Configured the approach using the ``filesystems`` option in
+the ``image_file_url``section of the ``nova.conf`` file on
+compute nodes.
 
 Compute nodes also implement caching of images, meaning that if an image
 has been used before it won't necessarily be downloaded every time.
@@ -346,7 +453,7 @@ or the Block Storage volume system. This gives a more traditional,
 persistent system that accumulates states that are preserved across
 restarts. To get a list of available images on your system, run:
 
-.. code:: console
+.. code-block:: console
 
     $ nova image-list
     +---------------------------+------------------+--------+----------------+
@@ -384,7 +491,7 @@ installation provides five predefined flavors.
 
 For a list of flavors that are available on your system, run:
 
-.. code:: console
+.. code-block:: console
 
     $ nova flavor-list
     +----+----------+----------+-----+----------+-----+------+------------+----------+
@@ -399,7 +506,7 @@ For a list of flavors that are available on your system, run:
 
 By default, administrative users can configure the flavors. You can
 change this behavior by redefining the access controls for
-``compute_extension:flavormanage`` in :file:`/etc/nova/policy.json` on the
+``compute_extension:flavormanage`` in ``/etc/nova/policy.json`` on the
 ``compute-api`` server.
 
 
@@ -415,7 +522,7 @@ utility, which uses the :command:`nova` command. This is available as a native
 package for most Linux distributions, or you can install the latest
 version using the pip python package installer:
 
-::
+.. code-block:: console
 
     # pip install python-novaclient
 
@@ -437,6 +544,123 @@ Administrative users can specify which compute node their instances
 run on. To do this, specify the ``--availability-zone
 AVAILABILITY_ZONE:COMPUTE_HOST`` parameter.
 
-.. |Base image state with no running instances| image:: figures/instance-life-1.png
-.. |Instance creation from image and runtime state| image:: figures/instance-life-2.png
-.. |End state of image and volume after instance exits| image:: figures/instance-life-3.png
+Create and manage images
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Administrative users can create and manage images for the projects to
+which you belong. You can create and manage images for users in all
+projects to which you have administative access.
+
+To create and manage images in specified projects as an end
+user, see the `OpenStack End User Guide
+<http://docs.openstack.org/user-guide/>`_.
+
+To create and manage images as an administrator for other
+users, use the following procedures.
+
+Create images
+-------------
+
+For details about image creation, see the `Virtual Machine Image
+Guide <http://docs.openstack.org/image-guide/>`_.
+
+#. Log in to the dashboard.
+
+   Choose the :guilabel:`admin` project from the drop-down list
+   at the top of the page.
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
+   and click the :guilabel:`Images` category. The images that you
+   can administer for cloud users appear on this page.
+#. Click :guilabel:`Create Image`, which opens the
+   :guilabel:`Create An Image` window.
+
+|
+
+.. _Figure Dashboard — Create images:
+
+**Create images**
+
+.. figure:: figures/create_image.png
+
+|
+
+#. In the :guilabel:`Create An Image` window, enter or select the
+   following values:
+
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Name`              | Enter a name for the image.     |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Description`       | Enter a brief description of    |
+   |                               | the image.                      |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Image Source`      | Choose the image source from    |
+   |                               | the dropdown list. Your choices |
+   |                               | are :guilabel:`Image Location`  |
+   |                               | and :guilabel:`Image File`.     |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Image File` or     | Based on your selection, there  |
+   | :guilabel:`Image Location`    | is an :guilabel:`Image File` or |
+   |                               | :guilabel:`Image Location`      |
+   |                               | field. You can include the      |
+   |                               | location URL or browse for the  |
+   |                               | image file on your file system  |
+   |                               | and add it.                     |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Format`            | Select the image format.        |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Architecture`      | Specify the architecture. For   |
+   |                               | example, ``i386`` for a 32-bit  |
+   |                               | architecture or ``x86_64`` for  |
+   |                               | a 64-bit architecture.          |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Minimum Disk (GB)` | Leave this field empty.         |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Minimum RAM (MB)`  | Leave this field empty.         |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Copy Data`         | Specify this option to copy     |
+   |                               | image data to the Image service.|
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Public`            | Select this option to make the  |
+   |                               | image public to all users.      |
+   +-------------------------------+---------------------------------+
+   | :guilabel:`Protected`         | Select this option to ensure    |
+   |                               | that only users with            |
+   |                               | permissions can delete it.      |
+   +-------------------------------+---------------------------------+
+
+#. Click :guilabel:`Create Image`.
+
+   The image is queued to be uploaded. It might take several minutes
+   before the status changes from ``Queued`` to ``Active``.
+
+Update images
+-------------
+
+#. Log in to the Dashboard.
+   Choose the :guilabel:`admin` project from the drop-down list
+   at the top of the page.
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
+   and click the :guilabel:`Images` category.
+#. Select the images that you want to edit. Click :guilabel:`Edit Image`.
+#. In the :guilabel:`Update Image` window, you can change the image name.
+
+   Select the :guilabel:`Public` check box to make the image public.
+   Clear this check box to make the image private. You cannot change
+   the :guilabel:`Kernel ID`, :guilabel:`Ramdisk ID`, or
+   :guilabel:`Architecture` attributes for an image.
+#. Click :guilabel:`Update Image`.
+
+Delete images
+-------------
+
+#. Log in to the Dashboard.
+   Choose the :guilabel:`admin` project from the drop-down list
+   at the top of the page.
+#. On the :guilabel:`Admin tab`, open the :guilabel:`System` tab
+   and click the :guilabel:`Images` category.
+#. Select the images that you want to delete.
+#. Click :guilabel:`Delete Images`.
+#. In the :guilabel:`Confirm Delete Images` window, click :guilabel:`Delete
+   Images` to confirm the deletion.
+
+   You cannot undo this action.
