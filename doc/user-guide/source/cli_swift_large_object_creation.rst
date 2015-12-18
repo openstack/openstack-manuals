@@ -91,7 +91,7 @@ This example shows three segment objects. You can use several containers
 and the object names do not have to conform to a specific pattern, in
 contrast to dynamic large objects.
 
-.. code::
+.. code-block:: json
 
     [
         {
@@ -184,14 +184,14 @@ manifest is still available to download the first set of segments.
 Upload segment of large object request: HTTP
 --------------------------------------------
 
-.. code::
+.. code-block:: console
 
-    PUT /API_VERSION/ACCOUNT/CONTAINER/OBJECT HTTP/1.1
-    Host: storage.example.com
-    X-Auth-Token: eaaafd18-0fed-4b3a-81b4-663c99ec1cbb
-    ETag: 8a964ee2a5e88be344f36c22562a6486
-    Content-Length: 1
-    X-Object-Meta-PIN: 1234
+   PUT /API_VERSION/ACCOUNT/CONTAINER/OBJECT HTTP/1.1
+   Host: storage.example.com
+   X-Auth-Token: eaaafd18-0fed-4b3a-81b4-663c99ec1cbb
+   ETag: 8a964ee2a5e88be344f36c22562a6486
+   Content-Length: 1
+   X-Object-Meta-PIN: 1234
 
 No response body is returned. A status code of 2``nn`` (between 200
 and 299, inclusive) indicates a successful write; status 411 Length
@@ -206,14 +206,14 @@ uploading the manifest.
 Upload next segment of large object request: HTTP
 -------------------------------------------------
 
-.. code::
+.. code-block:: console
 
-    PUT /API_VERSION/ACCOUNT/CONTAINER/OBJECT HTTP/1.1
-    Host: storage.example.com
-    X-Auth-Token: eaaafd18-0fed-4b3a-81b4-663c99ec1cbb
-    ETag: 8a964ee2a5e88be344f36c22562a6486
-    Content-Length: 1
-    X-Object-Meta-PIN: 1234
+   PUT /API_VERSION/ACCOUNT/CONTAINER/OBJECT HTTP/1.1
+   Host: storage.example.com
+   X-Auth-Token: eaaafd18-0fed-4b3a-81b4-663c99ec1cbb
+   ETag: 8a964ee2a5e88be344f36c22562a6486
+   Content-Length: 1
+   X-Object-Meta-PIN: 1234
 
 Next, upload the manifest you created that indicates the container where
 the object segments reside. Note that uploading additional segments
@@ -224,18 +224,18 @@ subsequent additional segments.
 Upload manifest request: HTTP
 -----------------------------
 
-.. code::
+.. code-block:: console
 
-    PUT /API_VERSION/ACCOUNT/CONTAINER/OBJECT HTTP/1.1
-    Host: storage.clouddrive.com
-    X-Auth-Token: eaaafd18-0fed-4b3a-81b4-663c99ec1cbb
-    Content-Length: 0
-    X-Object-Meta-PIN: 1234
-    X-Object-Manifest: CONTAINER/PREFIX
+   PUT /API_VERSION/ACCOUNT/CONTAINER/OBJECT HTTP/1.1
+   Host: storage.clouddrive.com
+   X-Auth-Token: eaaafd18-0fed-4b3a-81b4-663c99ec1cbb
+   Content-Length: 0
+   X-Object-Meta-PIN: 1234
+   X-Object-Manifest: CONTAINER/PREFIX
 
 Upload manifest response: HTTP
 ------------------------------
-.. code::
+.. code-block:: console
 
     [...]
 

@@ -36,5 +36,6 @@ If the OpenStack cloud is configured to use public-key infrastructure
    fhuUpJT-s9mU7+WEC3-8qkcBjEpqVCvMpmM4INI=
 
 .. note::
+
    This example shows a subset of a PKI token. A complete token is over
    5000 characters long.

@@ -25,23 +25,27 @@ Create a stack from an example template file
 
 -  To create a stack, or template, from an `example template
    file <https://git.openstack.org/cgit/openstack/heat-templates>`__, run
-   the following command::
+   the following command:
 
-       $ heat stack-create mystack --template-file /PATH_TO_HEAT_TEMPLATES/WordPress_Single_Instance.template \
-         --parameters "InstanceType=m1.large;DBUsername=USERNAME;DBPassword=PASSWORD;KeyName=HEAT_KEY;LinuxDistribution=F17"
+   .. code-block:: console
+
+      $ heat stack-create mystack --template-file /PATH_TO_HEAT_TEMPLATES/WordPress_Single_Instance.template \
+        --parameters "InstanceType=m1.large;DBUsername=USERNAME;DBPassword=PASSWORD;KeyName=HEAT_KEY;LinuxDistribution=F17"
 
    The :option:`--parameters` values that you specify depend on the parameters
    that are defined in the template. If a website hosts the template
    file, you can specify the URL with the :option:`--template-url` parameter
    instead of the :option:`--template-file` parameter.
 
-   The command returns the following output::
+   The command returns the following output:
 
-       +------------------+---------------+--------------------+----------------------+
-       | id               | stack_name    | stack_status       | creation_time        |
-       +------------------+---------------+--------------------+----------------------+
-       | 4c712026-dcd5... | mystack       | CREATE_IN_PROGRESS | 2013-04-03T23:22:08Z |
-       +------------------+---------------+--------------------+----------------------+
+   .. code-block:: console
+
+      +------------------+---------------+--------------------+----------------------+
+      | id               | stack_name    | stack_status       | creation_time        |
+      +------------------+---------------+--------------------+----------------------+
+      | 4c712026-dcd5... | mystack       | CREATE_IN_PROGRESS | 2013-04-03T23:22:08Z |
+      +------------------+---------------+--------------------+----------------------+
 
 -  You can also use the :command:`template-validate` command to validate a
    template file without creating a stack from it.
@@ -52,9 +56,11 @@ Create a stack from an example template file
       :command:`template-validate`, but it has been deprecated in favor of
       :command:`template-validate`.
 
-   To do so, run the following command::
+   To do so, run the following command:
 
-       $ heat template-validate --template-file /PATH_TO_HEAT_TEMPLATES/WordPress_Single_Instance.template
+   .. code-block:: console
+
+      $ heat template-validate --template-file /PATH_TO_HEAT_TEMPLATES/WordPress_Single_Instance.template
 
    If validation fails, the response returns an error message.
 
@@ -65,22 +71,28 @@ To explore the state and history of a particular stack, you can run a
 number of commands.
 
 -  To see which stacks are visible to the current user, run the
-   following command::
+   following command:
 
-       $ heat stack-list
-       +------------------+---------------+-----------------+----------------------+
-       | id               | stack_name    | stack_status    | creation_time        |
-       +------------------+---------------+-----------------+----------------------+
-       | 4c712026-dcd5... | mystack       | CREATE_COMPLETE | 2013-04-03T23:22:08Z |
-       | 7edc7480-bda5... | my-otherstack | CREATE_FAILED   | 2013-04-03T23:28:20Z |
-       +------------------+---------------+-----------------+----------------------+
+   .. code-block:: console
 
--  To show the details of a stack, run the following command::
+      $ heat stack-list
+      +------------------+---------------+-----------------+----------------------+
+      | id               | stack_name    | stack_status    | creation_time        |
+      +------------------+---------------+-----------------+----------------------+
+      | 4c712026-dcd5... | mystack       | CREATE_COMPLETE | 2013-04-03T23:22:08Z |
+      | 7edc7480-bda5... | my-otherstack | CREATE_FAILED   | 2013-04-03T23:28:20Z |
+      +------------------+---------------+-----------------+----------------------+
+
+-  To show the details of a stack, run the following command:
+
+   .. code-block:: console
 
       $ heat stack-show mystack
 
 -  A stack consists of a collection of resources. To list the resources
-   and their status, run the following command::
+   and their status, run the following command:
+
+   .. code-block:: console
 
       $ heat resource-list mystack
       +---------------------+--------------------+-----------------+----------------------+
@@ -90,18 +102,24 @@ number of commands.
       +---------------------+--------------------+-----------------+----------------------+
 
 -  To show the details for a specific resource in a stack, run the
-   following command::
+   following command:
+
+   .. code-block:: console
 
       $ heat resource-show mystack WikiDatabase
 
 -  Some resources have associated metadata which can change throughout
    the life cycle of a resource. Show the metadata by running the
-   following command::
+   following command:
+
+   .. code-block:: console
 
       $ heat resource-metadata mystack WikiDatabase
 
 -  A series of events is generated during the life cycle of a stack. To
-   display life cycle events, run the following command::
+   display life cycle events, run the following command:
+
+   .. code-block:: console
 
       $ heat event-list mystack
       +---------------------+----+------------------------+-----------------+----------------------+
@@ -112,15 +130,19 @@ number of commands.
       +---------------------+----+------------------------+-----------------+----------------------+
 
 -  To show the details for a particular event, run the following
-   command::
+   command:
 
-     $ heat event-show WikiDatabase 1
+   .. code-block:: console
+
+      $ heat event-show WikiDatabase 1
 
 Update a stack
 ~~~~~~~~~~~~~~
 
 To update an existing stack from a modified template file, run a command
-like the following command::
+like the following command:
+
+.. code-block:: console
 
    $ heat stack-update mystack --template-file \
      /path/to/heat/templates/WordPress_Single_Instance_v2.template \

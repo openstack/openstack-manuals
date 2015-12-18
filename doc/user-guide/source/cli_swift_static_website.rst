@@ -51,15 +51,15 @@ The following sections show how to use Static Web middleware through
 Object Storage.
 
 Make container publicly readable
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Make the container publicly readable. Once the container is publicly
 readable, you can access your objects directly, but you must set the
 index file to browse the main site URL and its sub-directories.
 
-.. code::
+.. code-block:: console
 
-    $ swift post -r '.r:*' container
+   $ swift post -r '.r:*' container
 
 
 Set site index file
@@ -68,9 +68,9 @@ Set site index file
 Set the index file. In this case, ``index.html`` is the default file
 displayed when the site appears.
 
-.. code::
+.. code-block:: console
 
-    $ swift post -m 'web-index:index.html' container
+   $ swift post -m 'web-index:index.html' container
 
 Enable file listing
 ^^^^^^^^^^^^^^^^^^^
@@ -79,18 +79,18 @@ Turn on file listing. If you do not set the index file, the URL displays
 a list of the objects in the container. Instructions on styling the list
 with a CSS follow.
 
-.. code::
+.. code-block:: console
 
-    $ swift post -m 'web-listings: true' container
+   $ swift post -m 'web-listings: true' container
 
 Enable CSS for file listing
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Style the file listing using a CSS.
 
-.. code::
+.. code-block:: console
 
-    $ swift post -m 'web-listings-css:listings.css' container
+   $ swift post -m 'web-listings-css:listings.css' container
 
 .. _set_error_static_website:
 
@@ -116,9 +116,9 @@ for your entire static website.
 Set error pages for static website request
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code::
+.. code-block:: console
 
-    $ swift post -m 'web-error:error.html' container
+   $ swift post -m 'web-error:error.html' container
 
 
 Any 2\ ``nn`` response indicates success.

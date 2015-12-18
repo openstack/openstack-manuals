@@ -22,7 +22,7 @@ To list the available images, call the
 The images method returns a Python generator, as shown in the following
 interaction with the Python interpreter:
 
-::
+.. code-block:: python
 
     >>> images = glance.images.list()
     >>> images

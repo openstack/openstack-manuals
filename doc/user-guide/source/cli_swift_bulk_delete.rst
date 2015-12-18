@@ -18,7 +18,7 @@ parameter to the path of a ``POST`` or ``DELETE`` operation.
 
 .. note::
 
-  The ``DELETE`` operation is supported for backwards compatibility.
+   The ``DELETE`` operation is supported for backwards compatibility.
 
 The path is the account, such as ``/v1/12345678912345``, that contains
 the objects and containers.
@@ -78,16 +78,16 @@ The following bulk delete response is in ``application/xml`` format. In
 this example, the ``mycontainer`` container is not empty, so it cannot
 be deleted.
 
-.. code::
+.. code-block:: xml
 
-    <delete>
-        <number_deleted>2</number_deleted>
-        <number_not_found>4</number_not_found>
-        <errors>
-            <object>
-                <name>/v1/12345678912345/mycontainer</name>
-                <status>409 Conflict</status>
-            </object>
-        </errors>
-    </delete>
+   <delete>
+       <number_deleted>2</number_deleted>
+       <number_not_found>4</number_not_found>
+       <errors>
+           <object>
+               <name>/v1/12345678912345/mycontainer</name>
+               <status>409 Conflict</status>
+           </object>
+       </errors>
+   </delete>
 

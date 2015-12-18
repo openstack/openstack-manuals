@@ -21,7 +21,9 @@ Each cluster includes:
 
 This example shows you how to set up a MongoDB sharded cluster.
 
-.. note:: **Before you begin.** Make sure that:
+.. note::
+
+   **Before you begin.** Make sure that:
 
    -  The administrative user has registered a MongoDB datastore type and
       version.
@@ -34,7 +36,7 @@ Set up clustering
 
 #. **Create a cluster**
 
-   Create a cluster by using the trove ``cluster-create`` command. This
+   Create a cluster by using the :command:`trove cluster-create` command. This
    command creates a one-shard cluster. Pass in:
 
    -  The name of the cluster.
@@ -42,17 +44,18 @@ Set up clustering
    -  The name and version of the datastore you want to use.
 
    -  The three instances you want to include in the replication set for
-      the first shard. Specify each instance by using the ``--instance``
+      the first shard. Specify each instance by using the :option:`--instance`
       argument and the associated flavor ID and volume size. Use the
       same flavor ID and volume size for each instance. In this example,
       flavor ``7`` is a custom flavor that meets the MongoDB minimum
       requirements.
 
-   .. code::
+   .. code-block:: console
 
-       $ trove cluster-create cluster1 mongodb "2.4" \
-         --instance flavor_id=7,volume=2 --instance flavor_id=7,volume=2 \
-         --instance flavor_id=7,volume=2
+      $ trove cluster-create cluster1 mongodb "2.4" \
+        --instance flavor_id=7,volume=2 --instance flavor_id=7,volume=2 \
+        --instance flavor_id=7,volume=2
+
        +-------------------+--------------------------------------+
        | Property          | Value                                |
        +-------------------+--------------------------------------+
@@ -68,16 +71,17 @@ Set up clustering
 
 #. **Display cluster information**
 
-   Display information about a cluster by using the trove
-   ``cluster-show`` command. Pass in the ID of the cluster.
+   Display information about a cluster by using the
+   :command:`trove cluster-show` command. Pass in the ID of the cluster.
 
    The cluster ID displays when you first create a cluster. (If you need
-   to find it later on, use the trove ``cluster-list`` command to list
+   to find it later on, use the :command:`trove cluster-list` command to list
    the names and IDs of all the clusters in your system.)
 
-   .. code::
+   .. code-block:: console
 
-       $ trove cluster-show CLUSTER_ID
+      $ trove cluster-show CLUSTER_ID
+
        +-------------------+--------------------------------------+
        | Property          | Value                                |
        +-------------------+--------------------------------------+
@@ -93,26 +97,29 @@ Set up clustering
        +-------------------+--------------------------------------+
 
 
-   .. note:: **Your application connects to this IP address.** The trove
-      ``cluster-show`` command displays the IP address of the query router.
+   .. note::
+
+      **Your application connects to this IP address.** The trove
+      :command:`cluster-show` command displays the IP address of the query router.
       This is the IP address your application uses to retrieve data from
       the database.
 
 #. **List cluster instances**
 
-   List the instances in a cluster by using the trove
-   ``cluster-instances`` command.
+   List the instances in a cluster by using the
+   :command:`trove cluster-instances` command.
 
-   .. code::
+   .. code-block:: console
 
-       $ trove cluster-instances CLUSTER_ID
-       +--------------------------------------+----------------+-----------+------+
-       | ID                                   | Name           | Flavor ID | Size |
-       +--------------------------------------+----------------+-----------+------+
-       | 45532fc4-661c-4030-8ca4-18f02aa2b337 | cluster1-rs1-1 | 7         |    2 |
-       | 7458a98d-6f89-4dfd-bb61-5cf1dd65c121 | cluster1-rs1-2 | 7         |    2 |
-       | b37634fb-e33c-4846-8fe8-cf2b2c95e731 | cluster1-rs1-3 | 7         |    2 |
-       +--------------------------------------+----------------+-----------+------+
+      $ trove cluster-instances CLUSTER_ID
+
+      +--------------------------------------+----------------+-----------+------+
+      | ID                                   | Name           | Flavor ID | Size |
+      +--------------------------------------+----------------+-----------+------+
+      | 45532fc4-661c-4030-8ca4-18f02aa2b337 | cluster1-rs1-1 | 7         |    2 |
+      | 7458a98d-6f89-4dfd-bb61-5cf1dd65c121 | cluster1-rs1-2 | 7         |    2 |
+      | b37634fb-e33c-4846-8fe8-cf2b2c95e731 | cluster1-rs1-3 | 7         |    2 |
+      +--------------------------------------+----------------+-----------+------+
 
    **Naming conventions for replication sets and instances.** Note
    that the ``Name`` column displays an instance name that includes the
@@ -134,26 +141,27 @@ Set up clustering
 
 #. **List clusters**
 
-   List all the clusters in your system, using the trove
-   ``cluster-list`` command.
+   List all the clusters in your system, using the
+   :command:`trove cluster-list` command.
 
-   .. code::
+   .. code-block:: console
 
-       $ trove cluster-list
-       +--------------------------------------+----------+-----------+-------------------+-----------+
-       | ID                                   | Name     | Datastore | Datastore Version | Task Name |
-       +--------------------------------------+----------+-----------+-------------------+-----------+
-       | aa6ef0f5-dbef-48cd-8952-573ad881e717 | cluster1 | mongodb   | 2.4               | NONE      |
-       | b8829c2a-b03a-49d3-a5b1-21ec974223ee | cluster2 | mongodb   | 2.4               | BUILDING  |
-       +--------------------------------------+----------+-----------+-------------------+-----------+
+      $ trove cluster-list
+
+      +--------------------------------------+----------+-----------+-------------------+-----------+
+      | ID                                   | Name     | Datastore | Datastore Version | Task Name |
+      +--------------------------------------+----------+-----------+-------------------+-----------+
+      | aa6ef0f5-dbef-48cd-8952-573ad881e717 | cluster1 | mongodb   | 2.4               | NONE      |
+      | b8829c2a-b03a-49d3-a5b1-21ec974223ee | cluster2 | mongodb   | 2.4               | BUILDING  |
+      +--------------------------------------+----------+-----------+-------------------+-----------+
 
 #. **Delete a cluster**
 
-   Delete a cluster, using the trove ``cluster-delete`` command.
+   Delete a cluster, using the :command:`trove cluster-delete` command.
 
-   .. code::
+   .. code-block:: console
 
-       $ trove cluster-delete CLUSTER_ID
+      $ trove cluster-delete CLUSTER_ID
 
 Query routers and config servers
 --------------------------------

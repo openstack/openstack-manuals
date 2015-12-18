@@ -18,25 +18,25 @@ use the ``/info`` request.
 To use the ``/info`` request, send a ``GET`` request using the ``/info``
 path to the Object Store endpoint as shown in this example:
 
-.. code::
+.. code-block:: console
 
-    $ curl https://storage.example.com/info
+   $ curl https://storage.example.com/info
 
 This example shows a truncated response body:
 
-.. code::
+.. code-block:: json
 
-    {
-       "swift":{
-          "version":"1.11.0"
-       },
-       "staticweb":{
+   {
+      "swift":{
+         "version":"1.11.0"
+      },
+      "staticweb":{
 
-       },
-       "tempurl":{
+      },
+      "tempurl":{
 
-       }
-    }
+      }
+   }
 
 This output shows that the Object Storage system has enabled the static
 website and temporary URL features.
