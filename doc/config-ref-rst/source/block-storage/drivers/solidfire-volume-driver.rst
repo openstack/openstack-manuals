@@ -32,4 +32,66 @@ To configure the use of a SolidFire cluster with Block Storage, modify your
    default behavior can be configured by using the keyword ``hostname`` in
    sf_account_prefix.
 
+.. note::
+
+   The SolidFire driver creates names for volumes on the back end using the
+   format UUID-<cinder-id>. This works well, but there is a possibility of a
+   UUID collision for customers running multiple clouds against the same
+   cluster. In Mitaka the ability was added to eliminate the possibility of
+   collisions by introducing the **sf_volume_prefix** configuration variable.
+   On the SolidFire cluster each volume will be labeled with the prefix,
+   providing the ability to configure unique volume names for each cloud.
+   The default prefix is 'UUID-'.
+
+   Changing the setting on an existing deployment will result in the existing
+   volumes being inaccessible. To introduce this change to an existing
+   deployment it is recommended to add the Cluster as if it were a second
+   backend and disable new deployments to the current back end.
+
 .. include:: ../../tables/cinder-solidfire.rst
+
+Supported operations
+~~~~~~~~~~~~~~~~~~~~
+
+* Create, delete, attach, and detach volumes.
+
+* Create, list, and delete volume snapshots.
+
+* Create a volume from a snapshot.
+
+* Copy an image to a volume.
+
+* Copy a volume to an image.
+
+* Clone a volume.
+
+* Extend a volume.
+
+* Retype a volume.
+
+* Manage and unmanage a volume.
+
+QoS support for the SolidFire drivers includes the ability to set the
+following capabilities in the OpenStack Block Storage API
+``cinder.api.contrib.qos_specs_manage`` qos specs extension module:
+
+* **minIOPS** - The minimum number of IOPS guaranteed for this volume.
+  Default = 100.
+
+* **maxIOPS** - The maximum number of IOPS allowed for this volume.
+  Default = 15,000.
+
+* **burstIOPS** - The maximum number of IOPS allowed over a short period of
+  time. Default = 15,000.
+
+The QoS keys above no longer require to be scoped but must be created and
+associated to a volume type. For information about how to set the key-value
+pairs and associate them with a volume type, run the following commands:
+
+.. code-block:: console
+
+   $ cinder help qos-create
+
+   $ cinder help qos-key
+
+   $ cinder help qos-associate
