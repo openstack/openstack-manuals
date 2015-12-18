@@ -12,18 +12,17 @@ and authentication services. It runs the (distributed) brain of the
 Object Storage system: the proxy server processes.
 
 .. note::
+
    If you want to use OpenStack Identity API v3 for authentication, you
-   have the following options available in :file:`/etc/swift/dispersion.conf`:
+   have the following options available in ``/etc/swift/dispersion.conf``:
    ``auth_version``, ``user_domain_name``, ``project_domain_name``,
    and ``project_name``.
 
 **Object Storage architecture**
 
-|
 
-.. image:: figures/objectstorage-arch.png
+.. figure:: figures/objectstorage-arch.png
 
-|
 
 Because access servers are collocated in their own tier, you can scale
 out read/write access regardless of the storage capacity. For example,
@@ -39,11 +38,12 @@ Typically, the tier consists of a collection of 1U servers. These
 machines use a moderate amount of RAM and are network I/O intensive.
 Since these systems field each incoming API request, you should
 provision them with two high-throughput (10GbE) interfaces - one for the
-incoming "front-end" requests and the other for the "back-end" access to
+incoming ``front-end`` requests and the other for the ``back-end`` access to
 the object storage nodes to put and fetch data.
 
 Factors to consider
 -------------------
+
 For most publicly facing deployments as well as private deployments
 available across a wide-reaching corporate network, you use SSL to
 encrypt traffic to the client. SSL adds significant processing load to
@@ -53,6 +53,7 @@ deployments on trusted networks.
 
 Storage nodes
 ~~~~~~~~~~~~~
+
 In most configurations, each of the five zones should have an equal
 amount of storage capacity. Storage nodes use a reasonable amount of
 memory and CPU. Metadata needs to be readily available to return objects
@@ -64,11 +65,10 @@ workload and desired performance.
 
 **Object Storage (swift)**
 
-|
 
-.. image:: figures/objectstorage-nodes.png
+.. figure:: figures/objectstorage-nodes.png
 
-|
+
 
 Currently, a 2 TB or 3 TB SATA disk delivers good performance for the
 price. You can use desktop-grade drives if you have responsive remote
@@ -76,6 +76,7 @@ hands in the datacenter and enterprise-grade drives if you don't.
 
 Factors to consider
 -------------------
+
 You should keep in mind the desired I/O performance for single-threaded
 requests. This system does not use RAID, so a single disk handles each
 request for an object. Disk performance impacts single-threaded response

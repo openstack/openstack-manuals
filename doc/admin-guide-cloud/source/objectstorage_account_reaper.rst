@@ -12,7 +12,7 @@ the account\_stat table in the account database and replicas to
 
 Typically, a specific retention time or undelete are not provided.
 However, you can set a ``delay_reaping`` value in the
-``[account-reaper]`` section of the :file:`account-server.conf` file to
+``[account-reaper]`` section of the ``account-server.conf`` file to
 delay the actual deletion of data. At this time, to undelete you have to update
 the account database replicas directly, set the status column to an
 empty string and update the put\_timestamp to be greater than the
@@ -41,10 +41,12 @@ which point the database reclaim process within the db\_replicator will
 remove the database files.
 
 A persistent error state may prevent the deletion of an object or
-container. If this happens, you will see a message in the log, for example::
+container. If this happens, you will see a message in the log, for example:
 
-  "Account <name> has not been reaped since <date>"
+.. code-block:: console
+
+   Account <name> has not been reaped since <date>
 
 You can control when this is logged with the ``reap_warn_after`` value in the
-``[account-reaper]`` section of the :file:`account-server.conf` file.
+``[account-reaper]`` section of the ``account-server.conf`` file.
 The default value is 30 days.

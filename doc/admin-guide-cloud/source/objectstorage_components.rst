@@ -25,7 +25,6 @@ high durability, and high concurrency are:
    container databases and helps manage locations where data lives in
    the cluster.
 
-|
 
 .. _objectstorage-building-blocks-figure:
 
@@ -33,7 +32,6 @@ high durability, and high concurrency are:
 
 .. figure:: figures/objectstorage-buildingblocks.png
 
-|
 
 Proxy servers
 -------------
@@ -85,7 +83,6 @@ sized drives are used in a cluster.
 The ring is used by the proxy server and several background processes
 (like replication).
 
-|
 
 .. _objectstorage-ring-figure:
 
@@ -93,7 +90,6 @@ The ring is used by the proxy server and several background processes
 
 .. figure:: figures/objectstorage-ring.png
 
-|
 
 These rings are externally managed, in that the server processes
 themselves do not modify the rings, they are instead given new rings
@@ -134,7 +130,6 @@ durability. This means that when choosing a replica location, Object
 Storage chooses a server in an unused zone before an unused server in a
 zone that already has a replica of the data.
 
-|
 
 .. _objectstorage-zones-figure:
 
@@ -142,7 +137,6 @@ zone that already has a replica of the data.
 
 .. figure:: figures/objectstorage-zones.png
 
-|
 
 When a disk fails, replica data is automatically distributed to the
 other zones to ensure there are three copies of the data.
@@ -155,7 +149,6 @@ distributed across the cluster. An account database contains the list of
 containers in that account. A container database contains the list of
 objects in that container.
 
-|
 
 .. _objectstorage-accountscontainers-figure:
 
@@ -163,7 +156,6 @@ objects in that container.
 
 .. figure:: figures/objectstorage-accountscontainers.png
 
-|
 
 To keep track of object data locations, each account in the system has a
 database that references all of its containers, and each container
@@ -190,7 +182,6 @@ Implementing a partition is conceptually simple, a partition is just a
 directory sitting on a disk with a corresponding hash table of what it
 contains.
 
-|
 
 .. _objectstorage-partitions-figure:
 
@@ -198,7 +189,6 @@ contains.
 
 .. figure:: figures/objectstorage-partitions.png
 
-|
 
 Replicators
 -----------
@@ -224,7 +214,6 @@ of hashes to compare.
 The cluster eventually has a consistent behavior where the newest data
 has a priority.
 
-|
 
 .. _objectstorage-replication-figure:
 
@@ -232,7 +221,6 @@ has a priority.
 
 .. figure:: figures/objectstorage-replication.png
 
-|
 
 If a zone goes down, one of the nodes containing a replica notices and
 proactively copies data to a handoff location.
@@ -263,7 +251,6 @@ successful before the client is notified that the upload was successful.
 Next, the container database is updated asynchronously to reflect that
 there is a new object in it.
 
-|
 
 .. _objectstorage-usecase-figure:
 
@@ -271,7 +258,6 @@ there is a new object in it.
 
 .. figure:: figures/objectstorage-usecase.png
 
-|
 
 Download
 ~~~~~~~~

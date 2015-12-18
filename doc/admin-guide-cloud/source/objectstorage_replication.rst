@@ -20,8 +20,8 @@ that data gets to where it belongs. The ring handles replica placement.
 
 To replicate deletions in addition to creations, every deleted record or
 file in the system is marked by a tombstone. The replication process
-cleans up tombstones after a time period known as the *consistency
-window*. This window defines the duration of the replication and how
+cleans up tombstones after a time period known as the ``consistency
+window``. This window defines the duration of the replication and how
 long transient failure can remove a node from the cluster. Tombstone
 cleanup must be tied to replication to reach replica convergence.
 
@@ -47,6 +47,7 @@ The main replication types are:
 
 Database replication
 ~~~~~~~~~~~~~~~~~~~~
+
 Database replication completes a low-cost hash comparison to determine
 whether two replicas already match. Normally, this check can quickly
 verify that most databases in the system are already synchronized. If
@@ -73,6 +74,7 @@ performed.
 
 Object replication
 ~~~~~~~~~~~~~~~~~~
+
 The initial implementation of object replication performed an rsync to
 push data from a local partition to all remote servers where it was
 expected to reside. While this worked at small scale, replication times

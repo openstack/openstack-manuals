@@ -2,8 +2,8 @@
 Troubleshoot Object Storage
 ===========================
 
-For Object Storage, everything is logged in :file:`/var/log/syslog` (or
-:file:`messages` on some distros). Several settings enable further
+For Object Storage, everything is logged in ``/var/log/syslog`` (or
+``messages`` on some distros). Several settings enable further
 customization of logging, such as ``log_name``, ``log_facility``, and
 ``log_level``, within the object server configuration files.
 
@@ -22,7 +22,7 @@ replicas that were on that drive to be replicated elsewhere until the
 drive is replaced. Once the drive is replaced, it can be re-added to the
 ring.
 
-You can look at error messages in :file:`/var/log/kern.log` for hints of
+You can look at error messages in the ``/var/log/kern.log`` file for hints of
 drive failure.
 
 Server failure
@@ -49,7 +49,7 @@ Detect failed drives
 ~~~~~~~~~~~~~~~~~~~~
 
 It has been our experience that when a drive is about to fail, error
-messages appear in :file:`/var/log/kern.log`. There is a script called
+messages appear in the ``/var/log/kern.log`` file. There is a script called
 ``swift-drive-audit`` that can be run via cron to watch for bad drives. If
 errors are detected, it will unmount the bad drive, so that Object
 Storage can work around it. The script takes a configuration file with
@@ -79,7 +79,7 @@ the following settings:
    * - ``log_to_console = False``
      - No help text available for this option.
    * - ``minutes = 60``
-     - Number of minutes to look back in :file:`/var/log/kern.log`
+     - Number of minutes to look back in ``/var/log/kern.log``
    * - ``recon_cache_path = /var/cache/swift``
      - Directory where stats for a few items will be stored
    * - ``regex_pattern_1 = \berror\b.*\b(dm-[0-9]{1,2}\d?)\b``
@@ -100,7 +100,7 @@ an emergency occurs, this procedure may assist in returning your cluster
 to an operational state.
 
 Using existing swift tools, there is no way to recover a builder file
-from a :file:`ring.gz` file. However, if you have a knowledge of Python, it
+from a ``ring.gz`` file. However, if you have a knowledge of Python, it
 is possible to construct a builder file that is pretty close to the one
 you have lost.
 
@@ -161,13 +161,13 @@ you have lost.
       >>> pickle.dump(builder.to_dict(), open('account.builder', 'wb'), protocol=2)
       >>> exit ()
 
-#. You should now have a file called :file:`account.builder` in the current
+#. You should now have a file called ``account.builder`` in the current
    working directory. Run
    :command:`swift-ring-builder account.builder write_ring` and compare the new
-   :file:`account.ring.gz` to the :file:`account.ring.gz` that you started
+   ``account.ring.gz`` to the ``account.ring.gz`` that you started
    from. They probably are not byte-for-byte identical, but if you load them
    in a REPL and their ``_replica2part2dev_id`` and ``devs`` attributes are
    the same (or nearly so), then you are in good shape.
 
-#. Repeat the procedure for :file:`container.ring.gz` and
-   :file:`object.ring.gz`, and you might get usable builder files.
+#. Repeat the procedure for ``container.ring.gz`` and
+   ``object.ring.gz``, and you might get usable builder files.
