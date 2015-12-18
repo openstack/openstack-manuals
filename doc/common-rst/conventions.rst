@@ -9,14 +9,17 @@ Notices
 
 Notices take these forms:
 
-.. note:: A handy tip or reminder.
+.. note:: A comment with additional information that explains a part of the
+          text.
 
 .. important:: Something you must be aware of before proceeding.
 
 .. tip:: An extra but helpful piece of practical advice.
 
+.. caution:: Helpful information that prevents the user from making mistakes.
+
 .. warning:: Critical information about the risk of data loss or security
-       issues.
+             issues.
 
 Command prompts
 ~~~~~~~~~~~~~~~
