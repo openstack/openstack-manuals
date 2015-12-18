@@ -9,8 +9,8 @@ Overview
 ~~~~~~~~
 
 Networking is a standalone component in the OpenStack modular
-architecture. It's positioned alongside OpenStack components such as
-Compute, Image service, Identity, or dashboard. Like those
+architecture. It is positioned alongside OpenStack components such as
+Compute, Image service, Identity, or Dashboard. Like those
 components, a deployment of Networking often involves deploying several
 services to a variety of hosts.
 
@@ -57,7 +57,7 @@ ways:
    authentication and authorization of all API requests.
 
 -  Compute (nova) interacts with Networking through calls to its
-   standard API. As part of creating a VM, the nova-compute service
+   standard API. As part of creating a VM, the ``nova-compute`` service
    communicates with the Networking API to plug each virtual NIC on the
    VM into a particular network.
 
@@ -72,7 +72,7 @@ OpenStack Networking uses the NSX plug-in to integrate with an existing
 VMware vCenter deployment. When installed on the network nodes, the NSX
 plug-in enables a NSX controller to centrally manage configuration
 settings and push them to managed network nodes. Network nodes are
-considered managed when they're added as hypervisors to the NSX
+considered managed when they are added as hypervisors to the NSX
 controller.
 
 The diagrams below depict some VMware NSX deployment examples. The first
@@ -82,11 +82,7 @@ Note the placement of the VMware NSX plug-in and the neutron-server
 service on the network node. The green arrow indicates the management
 relationship between the NSX controller and the network node.
 
-|VMware NSX deployment example - two Compute nodes|
 
-|VMware NSX deployment example - single Compute node|
+.. figure:: ../../common/figures/vmware_nsx_ex1.png
 
-.. |VMware NSX deployment example - two Compute nodes|
- image:: ../../common/figures/vmware_nsx_ex1.png
-.. |VMware NSX deployment example - single Compute node|
- image:: ../../common/figures/vmware_nsx_ex2.png
+.. figure:: ../../common/figures/vmware_nsx_ex2.png

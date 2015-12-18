@@ -3,7 +3,7 @@ Plug-in configurations
 ======================
 
 For configurations options, see `Networking configuration
-options <http://docs.openstack.org/kilo/config-reference
+options <http://docs.openstack.org/liberty/config-reference
 /content/section_networking-options-reference.html>`__
 in Configuration Reference. These sections explain how to configure
 specific plug-ins.
@@ -11,23 +11,23 @@ specific plug-ins.
 Configure Big Switch (Floodlight REST Proxy) plug-in
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Edit the :file:`/etc/neutron/neutron.conf` file and add this line:
+#. Edit the ``/etc/neutron/neutron.conf`` file and add this line:
 
-   .. code:: ini
+   .. code-block:: ini
 
       core_plugin = bigswitch
 
-#. In the :file:`/etc/neutron/neutron.conf` file, set the ``service_plugins``
+#. In the ``/etc/neutron/neutron.conf`` file, set the ``service_plugins``
    option:
 
-   ::
+   .. code-block:: ini
 
       service_plugins = neutron.plugins.bigswitch.l3_router_plugin.L3RestProxy
 
-#. Edit the :file:`/etc/neutron/plugins/bigswitch/restproxy.ini` file for the
+#. Edit the ``/etc/neutron/plugins/bigswitch/restproxy.ini`` file for the
    plug-in and specify a comma-separated list of controller\_ip:port pairs:
 
-   .. code:: ini
+   .. code-block:: ini
 
       server = CONTROLLER_IP:PORT
 
@@ -38,11 +38,11 @@ Configure Big Switch (Floodlight REST Proxy) plug-in
    index <http://docs.openstack.org>`__. (The link defaults to the Ubuntu
    version.)
 
-#. Restart neutron-server to apply the settings:
+#. Restart the ``neutron-server`` to apply the settings:
 
-   .. code:: console
+   .. code-block:: console
 
-       # service neutron-server restart
+      # service neutron-server restart
 
 Configure Brocade plug-in
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,34 +50,34 @@ Configure Brocade plug-in
 #. Install the Brocade-modified Python netconf client (ncclient) library,
    which is available at https://github.com/brocade/ncclient:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ git clone https://github.com/brocade/ncclient
+      $ git clone https://github.com/brocade/ncclient
 
 #. As root, run this command:
 
-   .. code:: console
+   .. code-block:: console
 
-       # cd ncclient;python setup.py install
+      # cd ncclient;python setup.py install
 
-#. Edit the :file:`/etc/neutron/neutron.conf` file and set the following
+#. Edit the ``/etc/neutron/neutron.conf`` file and set the following
    option:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       core_plugin = brocade
+      core_plugin = brocade
 
-#. Edit the :file:`/etc/neutron/plugins/brocade/brocade.ini` file for the
+#. Edit the ``/etc/neutron/plugins/brocade/brocade.ini`` file for the
    Brocade plug-in and specify the admin user name, password, and IP
    address of the Brocade switch:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       [SWITCH]
-       username = ADMIN
-       password = PASSWORD
-       address  = SWITCH_MGMT_IP_ADDRESS
-       ostype   = NOS
+      [SWITCH]
+      username = ADMIN
+      password = PASSWORD
+      address  = SWITCH_MGMT_IP_ADDRESS
+      ostype   = NOS
 
    For database configuration, see `Install Networking
    Services <http://docs.openstack.org/liberty/install-guide-ubuntu/
@@ -86,11 +86,11 @@ Configure Brocade plug-in
    index <http://docs.openstack.org>`__. (The link defaults to the Ubuntu
    version.)
 
-#. Restart the neutron-server service to apply the settings:
+#. Restart the ``neutron-server`` service to apply the settings:
 
-   .. code:: console
+   .. code-block:: console
 
-       # service neutron-server restart
+      # service neutron-server restart
 
 Configure NSX-mh plug-in
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -100,27 +100,27 @@ formerly known as Nicira NVP.
 
 #. Install the NSX plug-in:
 
-   .. code:: console
+   .. code-block:: console
 
-       # apt-get install neutron-plugin-vmware
+      # apt-get install neutron-plugin-vmware
 
-#. Edit the :file:`/etc/neutron/neutron.conf` file and set this line:
+#. Edit the ``/etc/neutron/neutron.conf`` file and set this line:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       core_plugin = vmware
+      core_plugin = vmware
 
-   Example :file:`neutron.conf`: file for NSX-mh integration:
+   Example ``neutron.conf``: file for NSX-mh integration:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       core_plugin = vmware
-       rabbit_host = 192.168.203.10
-       allow_overlapping_ips = True
+      core_plugin = vmware
+      rabbit_host = 192.168.203.10
+      allow_overlapping_ips = True
 
 #. To configure the NSX-mh controller cluster for OpenStack Networking,
    locate the ``[default]`` section in the
-   :file:`/etc/neutron/plugins/vmware/nsx.ini` file and add the following
+   ``/etc/neutron/plugins/vmware/nsx.ini`` file and add the following
    entries:
 
    -  To establish and configure the connection with the controller cluster
@@ -128,14 +128,14 @@ formerly known as Nicira NVP.
       credentials, and optionally specify settings for HTTP timeouts,
       redirects and retries in case of connection failures:
 
-      .. code:: ini
+      .. code-block:: ini
 
-          nsx_user = ADMIN_USER_NAME
-          nsx_password = NSX_USER_PASSWORD
-          http_timeout = HTTP_REQUEST_TIMEOUT # (seconds) default 75 seconds
-          retries = HTTP_REQUEST_RETRIES # default 2
-          redirects = HTTP_REQUEST_MAX_REDIRECTS # default 2
-          nsx_controllers = API_ENDPOINT_LIST # comma-separated list
+         nsx_user = ADMIN_USER_NAME
+         nsx_password = NSX_USER_PASSWORD
+         http_timeout = HTTP_REQUEST_TIMEOUT # (seconds) default 75 seconds
+         retries = HTTP_REQUEST_RETRIES # default 2
+         redirects = HTTP_REQUEST_MAX_REDIRECTS # default 2
+         nsx_controllers = API_ENDPOINT_LIST # comma-separated list
 
       To ensure correct operations, the ``nsx_user`` user must have
       administrator credentials on the NSX-mh platform.
@@ -157,22 +157,22 @@ formerly known as Nicira NVP.
       Alternatively the transport zone identifier can be retrieved by query
       the NSX-mh API: ``/ws.v1/transport-zone``
 
-      .. code:: ini
+      .. code-block:: ini
 
-          default_tz_uuid = TRANSPORT_ZONE_UUID
+         default_tz_uuid = TRANSPORT_ZONE_UUID
 
-   -  .. code:: ini
+   -  .. code-block:: ini
 
          default_l3_gw_service_uuid = GATEWAY_SERVICE_UUID
 
-      .. Warning::
+      .. warning::
 
          Ubuntu packaging currently does not update the neutron init
          script to point to the NSX-mh configuration file. Instead, you
-         must manually update :file:`/etc/default/neutron-server` to add this
+         must manually update ``/etc/default/neutron-server`` to add this
          line:
 
-         .. code:: ini
+         .. code-block:: ini
 
             NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/vmware/nsx.ini
 
@@ -181,58 +181,58 @@ formerly known as Nicira NVP.
       neutron-controller-install.html>`__
       in the Installation Guide.
 
-#. Restart neutron-server to apply settings:
+#. Restart ``neutron-server`` to apply settings:
 
-   .. code:: console
+   .. code-block:: console
 
       # service neutron-server restart
 
-   .. Warning::
+   .. warning::
 
-     The neutron NSX-mh plug-in does not implement initial
-     re-synchronization of Neutron resources. Therefore resources that
-     might already exist in the database when Neutron is switched to the
-     NSX-mh plug-in will not be created on the NSX-mh backend upon
-     restart.
+      The neutron NSX-mh plug-in does not implement initial
+      re-synchronization of Neutron resources. Therefore resources that
+      might already exist in the database when Neutron is switched to the
+      NSX-mh plug-in will not be created on the NSX-mh backend upon
+      restart.
 
-Example :file:`nsx.ini` file:
+Example ``nsx.ini`` file:
 
-.. code:: ini
+.. code-block:: ini
 
-      [DEFAULT]
-      default_tz_uuid = d3afb164-b263-4aaa-a3e4-48e0e09bb33c
-      default_l3_gw_service_uuid=5c8622cc-240a-40a1-9693-e6a5fca4e3cf
-      nsx_user=admin
-      nsx_password=changeme
-      nsx_controllers=10.127.0.100,10.127.0.200:8888
+   [DEFAULT]
+   default_tz_uuid = d3afb164-b263-4aaa-a3e4-48e0e09bb33c
+   default_l3_gw_service_uuid=5c8622cc-240a-40a1-9693-e6a5fca4e3cf
+   nsx_user=admin
+   nsx_password=changeme
+   nsx_controllers=10.127.0.100,10.127.0.200:8888
 
-   .. Note::
+.. note::
 
-     To debug :file:`nsx.ini` configuration issues, run this command from the
-     host that runs neutron-server:
+   To debug :file:`nsx.ini` configuration issues, run this command from the
+   host that runs neutron-server:
 
-   ..code:: console
+.. code-block:: console
 
-        # neutron-check-nsx-config PATH_TO_NSX.INI
+   # neutron-check-nsx-config PATH_TO_NSX.INI
 
-   This command tests whether neutron-server can log into all of the
-   NSX-mh controllers and the SQL server, and whether all UUID values
-   are correct.
+This command tests whether ``neutron-server`` can log into all of the
+NSX-mh controllers and the SQL server, and whether all UUID values
+are correct.
 
 Configure PLUMgrid plug-in
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Edit the :file:`/etc/neutron/neutron.conf` file and set this line:
+#. Edit the ``/etc/neutron/neutron.conf`` file and set this line:
 
-   .. code:: ini
+   .. code-block:: ini
 
-       core_plugin = plumgrid
+      core_plugin = plumgrid
 
 #. Edit the [PLUMgridDirector] section in the
-   :file:`/etc/neutron/plugins/plumgrid/plumgrid.ini` file and specify the IP
+   ``/etc/neutron/plugins/plumgrid/plumgrid.ini`` file and specify the IP
    address, port, admin user name, and password of the PLUMgrid Director:
 
-   .. code:: ini
+   .. code-block:: ini
 
       [PLUMgridDirector]
       director_server = "PLUMgrid-director-ip-address"
@@ -245,8 +245,8 @@ Configure PLUMgrid plug-in
    neutron-controller-install.html>`__
    in the Installation Guide.
 
-#. Restart the neutron-server service to apply the settings:
+#. Restart the ``neutron-server`` service to apply the settings:
 
-   .. code:: console
+   .. code-block:: console
 
       # service neutron-server restart

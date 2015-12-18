@@ -6,8 +6,8 @@ Logging settings
 ~~~~~~~~~~~~~~~~
 
 Networking components use Python logging module to do logging. Logging
-configuration can be provided in :file:`neutron.conf` or as command-line
-options. Command options override ones in :file:`neutron.conf`.
+configuration can be provided in ``neutron.conf`` or as command-line
+options. Command options override ones in ``neutron.conf``.
 
 To configure logging for Networking components, use one of these
 methods:
@@ -18,7 +18,7 @@ methods:
    how-to <http://docs.python.org/howto/logging.html>`__ to learn more
    about logging.
 
--  Provide logging setting in :file:`neutron.conf`.
+-  Provide logging setting in ``neutron.conf``.
 
    .. code-block:: ini
 
@@ -53,7 +53,7 @@ Notification options
 --------------------
 
 To support DHCP agent, rpc\_notifier driver must be set. To set up the
-notification, edit notification options in :file:`neutron.conf`:
+notification, edit notification options in ``neutron.conf``:
 
 .. code-block:: ini
 
@@ -75,7 +75,7 @@ These options configure the Networking server to send notifications
 through logging and RPC. The logging options are described in OpenStack
 Configuration Reference . RPC notifications go to ``notifications.info``
 queue bound to a topic exchange defined by ``control_exchange`` in
-:file:`neutron.conf`.
+``neutron.conf``.
 
 .. code-block:: ini
 
@@ -123,7 +123,7 @@ Multiple RPC topics
 These options configure the Networking server to send notifications to
 multiple RPC topics. RPC notifications go to ``notifications_one.info``
 and ``notifications_two.info`` queues bound to a topic exchange defined
-by ``control_exchange`` in :file:`neutron.conf`.
+by ``control_exchange`` in ``neutron.conf``.
 
 .. code-block:: ini
 
