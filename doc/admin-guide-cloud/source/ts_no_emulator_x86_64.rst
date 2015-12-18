@@ -11,7 +11,7 @@ When you attempt to create a VM, the error shows the VM is in the
 Solution
 ~~~~~~~~
 
-On the KVM host, run ``cat /proc/cpuinfo``. Make sure the ``vmx`` or
+On the KVM host, run :command:`cat /proc/cpuinfo`. Make sure the ``vmx`` or
 ``svm`` flags are set.
 
 Follow the instructions in the `enabling KVM

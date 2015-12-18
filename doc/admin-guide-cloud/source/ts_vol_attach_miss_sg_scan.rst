@@ -9,7 +9,7 @@ Failed to attach volume to an instance, ``sg_scan`` file not found. This
 warning and error occur when the sg3-utils package is not installed on
 the compute node. The IDs in your message are unique to your system:
 
-::
+.. code-block:: console
 
    ERROR nova.compute.manager [req-cf2679fd-dd9e-4909-807f-48fe9bda3642 admin admin|req-cf2679fd-dd9e-4909-807f-48fe9bda3642 admin admin]
    [instance: 7d7c92e0-49fa-4a8e-87c7-73f22a9585d5|instance:  7d7c92e0-49fa-4a8e-87c7-73f22a9585d5]
@@ -21,8 +21,7 @@ the compute node. The IDs in your message are unique to your system:
 Solution
 ~~~~~~~~
 
-
-Run this command on the compute node to install the sg3-utils package:
+Run this command on the compute node to install the ``sg3-utils`` package:
 
 .. code-block:: console
 

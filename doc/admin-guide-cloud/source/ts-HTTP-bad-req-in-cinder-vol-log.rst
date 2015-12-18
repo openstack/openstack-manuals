@@ -5,7 +5,9 @@ HTTP bad request in cinder volume log
 Problem
 ~~~~~~~
 
-These errors appear in the :file:`cinder-volume.log` file::
+These errors appear in the ``cinder-volume.log`` file:
+
+.. code-block:: console
 
     2013-05-03 15:16:33 INFO [cinder.volume.manager] Updating volume status
     2013-05-03 15:16:33 DEBUG [hp3parclient.http]
@@ -40,5 +42,5 @@ These errors appear in the :file:`cinder-volume.log` file::
 Solution
 ~~~~~~~~
 
-You need to update your copy of the :file:`hp_3par_fc.py` driver which
+You need to update your copy of the ``hp_3par_fc.py`` driver which
 contains the synchronization code.
