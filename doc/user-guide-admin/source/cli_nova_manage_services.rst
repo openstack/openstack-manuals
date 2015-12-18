@@ -7,7 +7,7 @@ examples disable and enable the ``nova-compute`` service.
 
 #. List the Compute services:
 
-   .. code::
+   .. code-block:: console
 
       $ nova service-list
       +------------------+----------+----------+---------+-------+----------------------------+-----------------+
@@ -23,7 +23,7 @@ examples disable and enable the ``nova-compute`` service.
 
 #. Disable a nova service:
 
-   .. code::
+   .. code-block:: console
 
       $ nova service-disable localhost.localdomain nova-compute --reason 'trial log'
       +----------+--------------+----------+-------------------+
@@ -34,7 +34,7 @@ examples disable and enable the ``nova-compute`` service.
 
 #. Check the service list:
 
-   .. code::
+   .. code-block:: console
 
       $ nova service-list
       +------------------+----------+----------+---------+-------+----------------------------+------------------+
@@ -50,7 +50,7 @@ examples disable and enable the ``nova-compute`` service.
 
 #. Enable the service:
 
-   .. code::
+   .. code-block:: console
 
       $ nova service-enable localhost.localdomain nova-compute
       +----------+--------------+---------+
@@ -61,7 +61,7 @@ examples disable and enable the ``nova-compute`` service.
 
 #. Check the service list:
 
-   .. code::
+   .. code-block:: console
 
       $ nova service-list
       +------------------+----------+----------+---------+-------+----------------------------+-----------------+

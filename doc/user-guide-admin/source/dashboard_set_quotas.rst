@@ -20,6 +20,7 @@ Using the Dashboard, you can view default Compute and Block Storage
 quotas for new tenants, as well as update quotas for existing tenants.
 
 .. note::
+
    Using the command-line interface, you can manage quotas for the
    OpenStack Compute service, the OpenStack Block Storage service, and
    the OpenStack Networking service (see :doc:`cli_set_quotas`).
@@ -84,6 +85,7 @@ View default project quotas
 #. The default quota values are displayed.
 
 .. note::
+
    You can sort the table by clicking on either the
    :guilabel:`Quota Name` or :guilabel:`Limit` column headers.
 
@@ -105,6 +107,7 @@ Update project quotas
 #. Click the :guilabel:`Update Defaults` button.
 
 .. note::
+
    The dashboard does not show all possible project quotas.
    To view and update the quotas for a service, use its
    command-line client. See :doc:`cli_set_quotas`.

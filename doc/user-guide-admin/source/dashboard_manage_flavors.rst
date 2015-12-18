@@ -83,7 +83,7 @@ Update flavors
 #. Click :guilabel:`Save`.
 
 Update Metadata
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 #. Log in to the dashboard.
 

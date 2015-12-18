@@ -18,27 +18,32 @@ tenant requires more than ten volumes or 1 TB on a compute
 node.
 
 .. note::
-   To view all tenants (projects), run::
 
-    $ openstack project list
-     +----------------------------------+----------+
-     | ID                               | Name     |
-     +----------------------------------+----------+
-     | e66d97ac1b704897853412fc8450f7b9 | admin    |
-     | bf4a37b885fe46bd86e999e50adad1d3 | services |
-     | 21bd1c7c95234fd28f589b60903606fa | tenant01 |
-     | f599c5cd1cba4125ae3d7caed08e288c | tenant02 |
-     +----------------------------------+----------+
+   To view all tenants (projects), run:
 
-   To display all current users for a tenant, run::
+   .. code-block:: console
 
-    $ openstack user list --project PROJECT_NAME
-     +----------------------------------+--------+
-     | ID                               | Name   |
-     +----------------------------------+--------+
-     | ea30aa434ab24a139b0e85125ec8a217 | demo00 |
-     | 4f8113c1d838467cad0c2f337b3dfded | demo01 |
-     +----------------------------------+--------+
+      $ openstack project list
+      +----------------------------------+----------+
+      | ID                               | Name     |
+      +----------------------------------+----------+
+      | e66d97ac1b704897853412fc8450f7b9 | admin    |
+      | bf4a37b885fe46bd86e999e50adad1d3 | services |
+      | 21bd1c7c95234fd28f589b60903606fa | tenant01 |
+      | f599c5cd1cba4125ae3d7caed08e288c | tenant02 |
+      +----------------------------------+----------+
+
+   To display all current users for a tenant, run:
+
+   .. code-block:: console
+
+      $ openstack user list --project PROJECT_NAME
+      +----------------------------------+--------+
+      | ID                               | Name   |
+      +----------------------------------+--------+
+      | ea30aa434ab24a139b0e85125ec8a217 | demo00 |
+      | 4f8113c1d838467cad0c2f337b3dfded | demo01 |
+      +----------------------------------+--------+
 
 
 .. toctree::

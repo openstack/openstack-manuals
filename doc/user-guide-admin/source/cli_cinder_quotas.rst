@@ -23,7 +23,7 @@ Administrative users can view Block Storage service quotas.
 
 #. List the default quotas for all projects:
 
-   .. code::
+   .. code-block:: console
 
       $ cinder quota-defaults TENANT_ID
       +-----------+-------+
@@ -34,13 +34,15 @@ Administrative users can view Block Storage service quotas.
       |  volumes  |   10  |
       +-----------+-------+
 
-#. View Block Storage service quotas for a project::
+#. View Block Storage service quotas for a project.
+
+   .. code-block:: console
 
       $ cinder quota-show TENANT_NAME
 
    For example:
 
-   .. code::
+   .. code-block:: console
 
       $ cinder quota-show tenant01
       +-----------+-------+
@@ -53,7 +55,7 @@ Administrative users can view Block Storage service quotas.
 
 #. Show the current usage of a per-tenant quota:
 
-   .. code::
+   .. code-block:: console
 
       $ cinder quota-usage tenantID
       +-----------+--------+----------+-------+
@@ -70,28 +72,34 @@ Edit and update Block Storage service quotas
 Administrative users can edit and update Block Storage
 service quotas.
 
-#. Clear per-tenant quota limits::
+#. Clear per-tenant quota limits.
+
+   .. code-block:: console
 
       $ cinder quota-delete tenantID
 
 #. To update a default value for a new project,
    update the property in the :guilabel:`cinder.quota`
-   section of the :file:`/etc/cinder/cinder.conf` file.
+   section of the ``/etc/cinder/cinder.conf`` file.
    For more information, see the `Block Storage
    Configuration Reference <http://docs.openstack.org/liberty/config-reference/content/ch_configuring-openstack-block-storage.html>`_.
 
 #. To update Block Storage service quotas, place
-   the tenant ID in a variable::
+   the tenant ID in a variable.
+
+   .. code-block:: console
 
       $ tenant=$(openstack project show -f value -c id tenantName)
 
-#. Update a particular quota value::
+#. Update a particular quota value.
+
+   .. code-block:: console
 
       $ cinder quota-update --quotaName NewValue tenantID
 
    For example:
 
-   .. code::
+   .. code-block:: console
 
       $ cinder quota-update --volumes 15 $tenant
       $ cinder quota-show tenant01
@@ -103,14 +111,18 @@ service quotas.
       |  volumes  |   15  |
       +-----------+-------+
 
-#. Clear per-tenant quota limits::
+#. Clear per-tenant quota limits.
+
+   .. code-block:: console
 
       $ cinder quota-delete tenantID
 
 Remove a service
 ~~~~~~~~~~~~~~~~
 
-#. Determine the binary and host of the service you want to remove::
+#. Determine the binary and host of the service you want to remove.
+
+   .. code-block:: console
 
       $ cinder service-list
       +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
@@ -120,10 +132,14 @@ Remove a service
       |  cinder-volume   | devstack@lvmdriver-1 | nova | enabled |   up  | 2015-10-13T15:21:52.000000 |        -        |
       +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
 
-#. Disable the service::
+#. Disable the service.
+
+   .. code-block:: console
 
       $ cinder service-disable <host> <binary>
 
-#. Remove the service from the database::
+#. Remove the service from the database.
+
+   .. code-block:: console
 
       $ cinder-manage service remove <binary> <host>

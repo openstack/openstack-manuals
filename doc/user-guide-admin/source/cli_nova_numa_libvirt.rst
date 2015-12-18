@@ -19,7 +19,7 @@ on the instance to the corresponding NUMA cells on the host. It will also
 expose the NUMA topology of the instance to the guest OS.
 
 If you want Compute to pin a particular vCPU as part of this process,
-set the ``vcpu_pin_set`` parameter in the :file:`nova.conf` configuration
+set the ``vcpu_pin_set`` parameter in the ``nova.conf`` configuration
 file. For more information about the ``vcpu_pin_set`` parameter, see the
 Configuration Reference Guide.
 

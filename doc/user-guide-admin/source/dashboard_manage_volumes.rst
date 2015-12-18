@@ -30,7 +30,9 @@ Create a volume type
 
 #. Click :guilabel:`Create Volume Type` button to confirm your changes.
 
-.. note:: A message indicates whether the action succeeded.
+.. note::
+
+   A message indicates whether the action succeeded.
 
 Create an encrypted volume type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -56,6 +58,7 @@ Create an encrypted volume type
 #. Click :guilabel:`Create Volume Type Encryption`.
 
    .. note::
+
       Once a volume type is updated by the :guilabel:`Create
       Encryption` option, the volume type cannot be deleted.
 
@@ -133,7 +136,9 @@ When you delete a volume type, volumes of that type are not deleted.
 #. In the :guilabel:`Confirm Delete Volume Types` window, click the
    :guilabel:`Delete Volume Types` button to confirm the action.
 
-.. note:: A message indicates whether the action succeeded.
+.. note::
+
+   A message indicates whether the action succeeded.
 
 Delete volumes
 ~~~~~~~~~~~~~~
@@ -154,4 +159,6 @@ destroyed.
 #. In the :guilabel:`Confirm Delete Volumes` window, click the
    :guilabel:`Delete Volumes` button to confirm the action.
 
-.. note:: A message indicates whether the action succeeded.
+.. note::
+
+   A message indicates whether the action succeeded.

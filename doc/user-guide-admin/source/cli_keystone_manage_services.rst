@@ -1,19 +1,20 @@
 ============================================
 Create and manage services and service users
 ============================================
-The Identity Service enables you to define services, as
+
+The Identity service enables you to define services, as
 follows:
 
-- Service catalog template. The Identity Service acts
+- Service catalog template. The Identity service acts
   as a service catalog of endpoints for other OpenStack
-  services. The :file:`etc/default_catalog.templates`
+  services. The ``etc/default_catalog.templates``
   template file defines the endpoints for services. When
-  the Identity Service uses a template file back end,
+  the Identity service uses a template file back end,
   any changes that are made to the endpoints are cached.
   These changes do not persist when you restart the
   service or reboot the machine.
 - An SQL back end for the catalog service. When the
-  Identity Service is online, you must add the services
+  Identity service is online, you must add the services
   to the catalog. When you deploy a system for
   production, use the SQL back end.
 
@@ -21,7 +22,7 @@ The ``auth_token`` middleware supports the
 use of either a shared secret or users for each
 service.
 
-To authenticate users against the Identity Service, you must
+To authenticate users against the Identity service, you must
 create a service user for each OpenStack service. For example,
 create a service user for the Compute, Block Storage, and
 Networking services.
@@ -37,7 +38,7 @@ Create a service
 
 #. List the available services:
 
-   .. code::
+   .. code-block:: console
 
       $ openstack service list
       +----------------------------------+----------+------------+
@@ -54,9 +55,11 @@ Create a service
       | 6feb2e0b98874d88bee221974770e372 |    s3    |    s3      |
       +----------------------------------+----------+------------+
 
-#. To create a service, run this command::
+#. To create a service, run this command:
 
-   $ openstack service create --name SERVICE_NAME --description SERVICE_DESCRIPTION SERVICE_TYPE
+   .. code-block:: console
+
+      $ openstack service create --name SERVICE_NAME --description SERVICE_DESCRIPTION SERVICE_TYPE
 
    The arguments are:
       - ``service_name``: the unique name of the new service.
@@ -68,7 +71,7 @@ Create a service
    For example, to create a ``swift`` service of type
    ``object-store``, run this command:
 
-   .. code::
+   .. code-block:: console
 
       $ openstack service create --name swift --description "object store service" object-store
       +-------------+----------------------------------+
@@ -81,13 +84,15 @@ Create a service
       | type        | object-store                     |
       +-------------+----------------------------------+
 
-#. To get details for a service, run this command::
+#. To get details for a service, run this command:
+
+   .. code-block:: console
 
       $ openstack service show SERVICE_TYPE|SERVICE_NAME|SERVICE_ID
 
    For example:
 
-   .. code::
+   .. code-block:: console
 
       $ openstack service show object-store
       +-------------+----------------------------------+
@@ -105,11 +110,13 @@ Create service users
 
 #. Create a project for the service users.
    Typically, this project is named ``service``,
-   but choose any name you like::
+   but choose any name you like:
+
+   .. code-block:: console
 
       $ openstack project create service
 
-   .. code::
+   .. code-block:: console
 
       +-------------+----------------------------------+
       | Field       | Value                            |
@@ -123,11 +130,13 @@ Create service users
 #. Create service users for the relevant services for your
    deployment.
 
-#. Assign the admin role to the user-project pair::
+#. Assign the admin role to the user-project pair.
+
+   .. code-block:: console
 
       $ openstack role add --project service --user SERVICE_USER_NAME admin
 
-   .. code::
+   .. code-block:: console
 
       +-------+----------------------------------+
       | Field | Value                            |
@@ -138,12 +147,15 @@ Create service users
 
 Delete a service
 ~~~~~~~~~~~~~~~~
-To delete a specified service, specify its ID::
 
-$ openstack service delete SERVICE_TYPE|SERVICE_NAME|SERVICE_ID
+To delete a specified service, specify its ID.
+
+.. code-block:: console
+
+   $ openstack service delete SERVICE_TYPE|SERVICE_NAME|SERVICE_ID
 
 For example:
 
-.. code::
+.. code-block:: console
 
    $ openstack service delete object-store

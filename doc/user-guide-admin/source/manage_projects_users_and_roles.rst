@@ -44,7 +44,7 @@ List projects
 List all projects with their ID, name, and whether they are
 enabled or disabled:
 
-.. code:: console
+.. code-block:: console
 
    $ openstack project list
    +----------------------------------+--------------------+
@@ -63,7 +63,7 @@ Create a project
 
 Create a project named ``new-project``:
 
-.. code:: console
+.. code-block:: console
 
    $ openstack project create --description 'my new project' new-project
    +-------------+----------------------------------+
@@ -83,42 +83,42 @@ description, and enabled status of a project.
 
 -  To temporarily disable a project:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ openstack project set PROJECT_ID --disable
+      $ openstack project set PROJECT_ID --disable
 
 -  To enable a disabled project:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ openstack project set PROJECT_ID --enable
+      $ openstack project set PROJECT_ID --enable
 
 -  To update the name of a project:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ openstack project set PROJECT_ID --name project-new
+      $ openstack project set PROJECT_ID --name project-new
 
 -  To verify your changes, show information for the updated project:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ openstack project show PROJECT_ID
-       +-------------+----------------------------------+
-       | Field       | Value                            |
-       +-------------+----------------------------------+
-       | description | my new project                   |
-       | enabled     | True                             |
-       | id          | 1a4a0618b306462c9830f876b0bd6af2 |
-       | name        | project-new                      |
-       +-------------+----------------------------------+
+      $ openstack project show PROJECT_ID
+      +-------------+----------------------------------+
+      | Field       | Value                            |
+      +-------------+----------------------------------+
+      | description | my new project                   |
+      | enabled     | True                             |
+      | id          | 1a4a0618b306462c9830f876b0bd6af2 |
+      | name        | project-new                      |
+      +-------------+----------------------------------+
 
 Delete a project
 ^^^^^^^^^^^^^^^^
 
 Specify the project ID to delete a project:
 
-.. code:: console
+.. code-block:: console
 
    $ openstack project delete PROJECT_ID
 
@@ -130,7 +130,7 @@ List users
 
 List all users:
 
-.. code:: console
+.. code-block:: console
 
    $ openstack user list
    +----------------------------------+----------+
@@ -152,7 +152,7 @@ log in to the dashboard without this information.
 
 Create the ``new-user`` user:
 
-.. code:: console
+.. code-block:: console
 
    $ openstack user create --project new-project --password PASSWORD new-user
    +----------+----------------------------------+
@@ -172,9 +172,9 @@ You can update the name, email address, and enabled status for a user.
 
 -  To temporarily disable a user account:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ openstack user set USER_NAME --disable
+      $ openstack user set USER_NAME --disable
 
    If you disable a user account, the user cannot log in to the
    dashboard. However, data for the user account is maintained, so you
@@ -182,23 +182,23 @@ You can update the name, email address, and enabled status for a user.
 
 -  To enable a disabled user account:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ openstack user set USER_NAME --enable
+      $ openstack user set USER_NAME --enable
 
 -  To change the name and description for a user account:
 
-   .. code:: console
+   .. code-block:: console
 
-       $ openstack user set USER_NAME --name user-new --email new-user@example.com
-       User has been updated.
+      $ openstack user set USER_NAME --name user-new --email new-user@example.com
+      User has been updated.
 
 Delete a user
 ^^^^^^^^^^^^^
 
 Delete a specified user account:
 
-.. code:: console
+.. code-block:: console
 
    $ openstack user delete USER_NAME
 
@@ -210,7 +210,7 @@ List available roles
 
 List the available roles:
 
-.. code:: console
+.. code-block:: console
 
    $ openstack role list
    +----------------------------------+---------------+
@@ -231,7 +231,7 @@ projects, define a role and assign that role to a user-project pair.
 
 Create the ``new-role`` role:
 
-.. code:: console
+.. code-block:: console
 
    $ openstack role create new-role
    +--------+----------------------------------+
@@ -250,7 +250,7 @@ IDs.
 
 #. List users and note the user ID you want to assign to the role:
 
-   .. code:: console
+   .. code-block:: console
 
       $ openstack user list
       +----------------------------------+----------+---------+----------------------+
@@ -266,7 +266,7 @@ IDs.
 
 #. List role IDs and note the role ID you want to assign:
 
-   .. code:: console
+   .. code-block:: console
 
       $ openstack role list
       +----------------------------------+---------------+
@@ -282,7 +282,7 @@ IDs.
 
 #. List projects and note the project ID you want to assign to the role:
 
-   .. code:: console
+   .. code-block:: console
 
       $ openstack project list
       +----------------------------------+--------------------+---------+
@@ -301,13 +301,13 @@ IDs.
 #. Assign a role to a user-project pair. In this example, assign the
    ``new-role`` role to the ``demo`` and ``test-project`` pair:
 
-   .. code:: console
+   .. code-block:: console
 
       $ openstack role add --user USER_NAME --project TENANT_ID ROLE_NAME
 
 #. Verify the role assignment:
 
-   .. code:: console
+   .. code-block:: console
 
       $ openstack role list --user USER_NAME --project TENANT_ID
       +--------------+----------+---------------------------+--------------+
@@ -321,7 +321,7 @@ View role details
 
 View details for a specified role:
 
-.. code:: console
+.. code-block:: console
 
    $ openstack role show ROLE_NAME
    +----------+----------------------------------+
@@ -336,15 +336,15 @@ Remove a role
 
 Remove a role from a user-project pair:
 
-#. Run :command:`openstack role remove`:
+#. Run the :command:`openstack role remove` command:
 
-   .. code:: console
+   .. code-block:: console
 
       $ openstack role remove --user USER_NAME --project TENANT_ID ROLE_NAME
 
 #. Verify the role removal:
 
-   .. code:: console
+   .. code-block:: console
 
       $ openstack role list --user USER_NAME --project TENANT_ID
 
