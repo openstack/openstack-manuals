@@ -52,7 +52,9 @@ To create a non-bootable volume, do not create it from an image. The
 volume must be entirely empty with no partition table and no file
 system.
 
-#. Create a non-bootable volume::
+#. Create a non-bootable volume.
+
+   .. code-block:: console
 
       $ cinder create --display-name my-volume 8
       +--------------------------------+--------------------------------------+
@@ -79,7 +81,9 @@ system.
       |          volume_type           |                 None                 |
       +--------------------------------+--------------------------------------+
 
-#. List volumes::
+#. List volumes.
+
+   .. code-block:: console
 
       $ cinder list
       +-----------------+-----------+-----------+------+-------------+----------+-------------+
@@ -89,7 +93,9 @@ system.
       +-----------------+-----------+-----------+------+-------------+----------+-------------+
 
 #. Boot an instance from an image and attach the empty volume to the
-   instance::
+   instance.
+
+   .. code-block:: console
 
       $ nova boot --flavor 2 --image 98901246-af91-43d8-b5e6-a4506aa8f369 \
         --block-device source=volume,id=d620d971-b160-4c4e-8652-2513d74e2080,dest=volume,shutdown=preserve \
@@ -137,7 +143,9 @@ You can create a volume from an existing image, volume, or snapshot.
 This procedure shows you how to create a volume from an image, and use
 the volume to boot an instance.
 
-#. List the available images::
+#. List the available images.
+
+   .. code-block:: console
 
       $ nova image-list
       +-----------------+---------------------------------+--------+--------+
@@ -151,7 +159,9 @@ the volume to boot an instance.
 
    Note the ID of the image that you want to use to create a volume.
 
-#. List the available flavors::
+#. List the available flavors.
+
+   .. code-block:: console
 
       $ nova flavor-list
       +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
@@ -169,7 +179,9 @@ the volume to boot an instance.
 #. To create a bootable volume from an image and launch an instance from
    this volume, use the ``--block-device`` parameter.
 
-   For example::
+   For example:
+
+   .. code-block:: console
 
       $ nova boot --flavor FLAVOR --block-device \
         source=SOURCE,id=ID,dest=DEST,size=SIZE,shutdown=PRESERVE,bootindex=INDEX \
@@ -207,7 +219,9 @@ the volume to boot an instance.
    - ``NAME``. The name for the server.
 
 #. Create a bootable volume from an image, before the instance boots. The
-   volume is not deleted when the instance is terminated::
+   volume is not deleted when the instance is terminated.
+
+   .. code-block:: console
 
       $ nova boot --flavor 2 \
         --block-device source=image,id=484e05af-a14d-4567-812b-28122d1c2260,dest=volume,size=10,shutdown=preserve,bootindex=0 \
@@ -248,7 +262,9 @@ the volume to boot an instance.
       +--------------------------------------+--------------------------------+
 
 #. List volumes to see the bootable volume and its attached
-   ``myInstanceFromVolume`` instance::
+   ``myInstanceFromVolume`` instance.
+
+   .. code-block:: console
 
       $ cinder list
       +-------------+--------+--------------+------+-------------+----------+-------------+
@@ -266,9 +282,11 @@ Use the nova ``boot`` ``--swap`` parameter to attach a swap disk on boot
 or the nova ``boot`` ``--ephemeral`` parameter to attach an ephemeral
 disk on boot. When you terminate the instance, both disks are deleted.
 
-Boot an instance with a 512 MB swap disk and 2 GB ephemeral disk::
+Boot an instance with a 512 MB swap disk and 2 GB ephemeral disk.
 
-    $ nova boot --flavor FLAVOR --image IMAGE_ID --swap 512 --ephemeral size=2 NAME
+.. code-block:: console
+
+   $ nova boot --flavor FLAVOR --image IMAGE_ID --swap 512 --ephemeral size=2 NAME
 
 .. note::
 

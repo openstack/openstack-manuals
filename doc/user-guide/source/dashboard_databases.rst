@@ -24,29 +24,29 @@ flavor for the type of database instance you want.
 
    #. Add the following line to ``/etc/trove/trove.conf``:
 
-      .. code::
+      .. code-block:: console
 
-          default_datastore = DATASTORE_NAME
+         default_datastore = DATASTORE_NAME
 
-      Replace *``DATASTORE_NAME``* with the name that the administrative
-      user set when issuing the **trove-manage** command to create the
-      datastore. You can use the trove **datastore-list** command to
+      Replace ``DATASTORE_NAME`` with the name that the administrative
+      user set when issuing the :command:`trove-manage` command to create the
+      datastore. You can use the trove :command:`datastore-list` command to
       display the datastores that are available in your environment.
 
-      For example, if your MySQL datastore name is set to ``mysql``,
+      For example, if your MySQL data store name is set to ``mysql``,
       your entry would look like this:
 
-      .. code::
+      .. code-block:: console
 
-          default_datastore = mysql
+         default_datastore = mysql
 
    #. Restart Database services on the controller node:
 
-      .. code::
+      .. code-block:: console
 
-          # service trove-api restart
-          # service trove-taskmanager restart
-          # service trove-conductor restart
+         # service trove-api restart
+         # service trove-taskmanager restart
+         # service trove-conductor restart
 
 #. **Verify flavor.**
 

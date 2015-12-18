@@ -25,25 +25,25 @@ Example:
 To access an instance through a remote console, run the following
 command:
 
-.. code::
+.. code-block:: console
 
-  $ nova get-vnc-console INSTANCE_NAME VNC_TYPE
+   $ nova get-vnc-console INSTANCE_NAME VNC_TYPE
 
 The command returns a URL from which you can access your instance:
 
-.. code::
+.. code-block:: console
 
-  +--------+------------------------------------------------------------------------------+
-  | Type   | Url                                                                          |
-  +--------+------------------------------------------------------------------------------+
-  | xvpvnc | http://192.168.5.96:6081/console?token=c83ae3a3-15c4-4890-8d45-aefb494a8d6c  |
-  +--------+------------------------------------------------------------------------------+
+   +--------+------------------------------------------------------------------------------+
+   | Type   | Url                                                                          |
+   +--------+------------------------------------------------------------------------------+
+   | xvpvnc | http://192.168.5.96:6081/console?token=c83ae3a3-15c4-4890-8d45-aefb494a8d6c  |
+   +--------+------------------------------------------------------------------------------+
 
 VNC\_TYPE can be replaced by any of the above values as connection
 types.
 
 When using SPICE to view the console of an instance, a browser plugin
-can be used directly on the instance page, or the ``get-vnc-console``
+can be used directly on the instance page, or the :command:`get-vnc-console`
 command can be used with it, as well, by returning a token-authenticated
 address, as in the example above.
 

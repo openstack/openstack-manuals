@@ -11,6 +11,7 @@ pair for multiple instances that belong to that project. If you generate
 a key pair with an external tool, you can import it into OpenStack.
 
 .. note::
+
    A key pair belongs to an individual user, not to a project.
    To share a key pair across multiple users, each user
    needs to import that key pair.
@@ -67,16 +68,20 @@ Add a key pair
 
 You can generate a key pair or upload an existing public key.
 
-#. To generate a key pair, run the following command::
+#. To generate a key pair, run the following command.
+
+   .. code-block:: console
 
       $ nova keypair-add KEY_NAME > MY_KEY.pem
 
    This command generates a key pair with the name that you specify for
-   KEY\_NAME, writes the private key to the :file:`.pem` file that you specify,
+   KEY\_NAME, writes the private key to the ``.pem`` file that you specify,
    and registers the public key to the Nova database.
 
-#. To set the permissions of the :file:`.pem` file so that only you can read
-   and write to it, run the following command::
+#. To set the permissions of the ``.pem`` file so that only you can read
+   and write to it, run the following command.
+
+   .. code-block:: console
 
       $ chmod 600 MY_KEY.pem
 
@@ -85,7 +90,9 @@ Import a key pair
 
 #. If you have already generated a key pair and the public key is located
    at ``~/.ssh/id_rsa.pub``, run the following command to upload the public
-   key::
+   key.
+
+   .. code-block:: console
 
       $ nova keypair-add --pub_key ~/.ssh/id_rsa.pub KEY_NAME
 
@@ -93,7 +100,9 @@ Import a key pair
    key pair the name that you specify for ``KEY_NAME``.
 
 #. To ensure that the key pair has been successfully imported, list key
-   pairs as follows::
+   pairs as follows:
+
+   .. code-block:: console
 
       $ nova keypair-list
 
@@ -101,16 +110,22 @@ Create and manage security groups
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. To list the security groups for the current project, including
-   descriptions, enter the following command::
+   descriptions, enter the following command:
+
+   .. code-block:: console
 
       $ nova secgroup-list
 
 #. To create a security group with a specified name and description, enter
-   the following command::
+   the following command:
+
+   .. code-block:: console
 
       $ nova secgroup-create SECURITY_GROUP_NAME GROUP_DESCRIPTION
 
-#. To delete a specified group, enter the following command::
+#. To delete a specified group, enter the following command:
+
+   .. code-block:: console
 
       $ nova secgroup-delete SECURITY_GROUP_NAME
 
@@ -127,20 +142,26 @@ Modify security group rules with the :command:`nova secgroup-*-rule`
 commands. Before you begin, source the OpenStack RC file. For details,
 see :doc:`../common/cli_set_environment_variables_using_openstack_rc`.
 
-#. To list the rules for a security group, run the following command::
+#. To list the rules for a security group, run the following command:
 
-   $ nova secgroup-list-rules SECURITY_GROUP_NAME
+   .. code-block:: console
+
+      $ nova secgroup-list-rules SECURITY_GROUP_NAME
 
 #. To allow SSH access to the instances, choose one of the following
    options:
 
    -  Allow access from all IP addresses, specified as IP subnet ``0.0.0.0/0``
-      in CIDR notation::
+      in CIDR notation:
+
+      .. code-block:: console
 
          $ nova secgroup-add-rule SECURITY_GROUP_NAME tcp 22 22 0.0.0.0/0
 
    -  Allow access only from IP addresses from other security groups
-      (source groups) to access the specified port::
+      (source groups) to access the specified port:
+
+      .. code-block:: console
 
          $ nova secgroup-add-group-rule --ip_proto tcp --from_port 22 \
                --to_port 22 SECURITY_GROUP_NAME SOURCE_GROUP_NAME
@@ -148,14 +169,18 @@ see :doc:`../common/cli_set_environment_variables_using_openstack_rc`.
 #. To allow pinging of the instances, choose one of the following options:
 
    -  Allow pinging from all IP addresses, specified as IP subnet
-      ``0.0.0.0/0`` in CIDR notation::
+      ``0.0.0.0/0`` in CIDR notation.
+
+      .. code-block:: console
 
          $ nova secgroup-add-rule SECURITY_GROUP_NAME icmp -1 -1 0.0.0.0/0
 
       This allows access to all codes and all types of ICMP traffic.
 
    -  Allow only members of other security groups (source groups) to ping
-      instances::
+      instances.
+
+      .. code-block:: console
 
          $ nova secgroup-add-group-rule --ip_proto icmp --from_port -1 \
               --to_port -1 SECURITY_GROUP_NAME SOURCE_GROUP_NAME
@@ -164,12 +189,16 @@ see :doc:`../common/cli_set_environment_variables_using_openstack_rc`.
    server that runs on a VM, choose one of the following options:
 
    -  Allow UDP access from IP addresses, specified as IP subnet
-      ``0.0.0.0/0`` in CIDR notation::
+      ``0.0.0.0/0`` in CIDR notation.
+
+      .. code-block:: console
 
          $ nova secgroup-add-rule SECURITY_GROUP_NAME udp 53 53 0.0.0.0/0
 
    -  Allow only IP addresses from other security groups (source groups) to
-      access the specified port::
+      access the specified port.
+
+      .. code-block:: console
 
          $ nova secgroup-add-group-rule --ip_proto udp --from_port 53 \
                --to_port 53 SECURITY_GROUP_NAME SOURCE_GROUP_NAME
@@ -181,6 +210,8 @@ To delete a security group rule, specify the same arguments that you
 used to create the rule.
 
 For example, to delete the security group rule that permits SSH access
-from all IP addresses, run the following command::
+from all IP addresses, run the following command.
+
+.. code-block:: console
 
    $ nova secgroup-delete-rule SECURITY_GROUP_NAME tcp 22 22 0.0.0.0/0
