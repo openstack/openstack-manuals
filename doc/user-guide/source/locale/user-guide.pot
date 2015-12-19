@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: End User Guide 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-11 06:14+0000\n"
+"POT-Creation-Date: 2015-12-19 06:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,125 +70,126 @@ msgstr ""
 
 #: ../backup_db.rst:28
 msgid ""
-"First, get the ID of the ``guest1`` database instance by using the trove "
-"``list`` command:"
+"First, get the ID of the ``guest1`` database instance by using the :command:"
+"`trove list` command:"
 msgstr ""
 
-#: ../backup_db.rst:40
+#: ../backup_db.rst:41
 msgid ""
-"Back up the database instance by using the trove ``backup-create`` command. "
-"In this example, the backup is called ``backup1``. In this example, replace "
-"``INSTANCE_ID`` with ``97b4b853-80f6-414f-ba6f-c6f455a79ae6``:"
+"Back up the database instance by using the :command:`trove backup-create` "
+"command. In this example, the backup is called ``backup1``. In this example, "
+"replace ``INSTANCE_ID`` with ``97b4b853-80f6-414f-ba6f-c6f455a79ae6``:"
 msgstr ""
 
-#: ../backup_db.rst:45
+#: ../backup_db.rst:48
 msgid ""
 "This command syntax pertains only to python-troveclient version 1.0.6 and "
 "later. Earlier versions require you to pass in the backup name as the first "
 "argument."
 msgstr ""
 
-#: ../backup_db.rst:67
+#: ../backup_db.rst:71
 msgid ""
 "Note that the command returns both the ID of the original instance "
 "(``instance_id``) and the ID of the backup artifact (``id``)."
 msgstr ""
 
-#: ../backup_db.rst:70
+#: ../backup_db.rst:74
 msgid ""
-"Later on, use the trove ``backup-list`` command to get this information:"
+"Later on, use the :command:`trove backup-list` command to get this "
+"information:"
 msgstr ""
 
-#: ../backup_db.rst:82
+#: ../backup_db.rst:86
 msgid ""
-"You can get additional information about the backup by using the trove "
-"``backup-show`` command and passing in the ``BACKUP_ID``, which is "
+"You can get additional information about the backup by using the :command:"
+"`trove backup-show` command and passing in the ``BACKUP_ID``, which is "
 "``8af30763-61fd-4aab-8fe8-57d528911138``."
 msgstr ""
 
-#: ../backup_db.rst:104
+#: ../backup_db.rst:109
 msgid "**Restore a database instance**"
 msgstr ""
 
-#: ../backup_db.rst:106
+#: ../backup_db.rst:111
 msgid ""
 "Now assume that your ``guest1`` database instance is damaged and you need to "
-"restore it. In this example, you use the trove ``create`` command to create "
-"a new database instance called ``guest2``."
+"restore it. In this example, you use the :command:`trove create` command to "
+"create a new database instance called ``guest2``."
 msgstr ""
 
-#: ../backup_db.rst:110
+#: ../backup_db.rst:115
 msgid ""
 "You specify that the new ``guest2`` instance has the same flavor (``10``) "
 "and the same root volume size (``2``) as the original ``guest1`` instance."
 msgstr ""
 
-#: ../backup_db.rst:114
+#: ../backup_db.rst:119
 msgid ""
-"You use the ``--backup`` argument to indicate that this new instance is "
-"based on the backup artifact identified by ``BACKUP_ID``. In this example, "
-"replace ``BACKUP_ID`` with ``8af30763-61fd-4aab-8fe8-57d528911138``."
+"You use the :option:`--backup` argument to indicate that this new instance "
+"is based on the backup artifact identified by ``BACKUP_ID``. In this "
+"example, replace ``BACKUP_ID`` with ``8af30763-61fd-4aab-8fe8-57d528911138``."
 msgstr ""
 
-#: ../backup_db.rst:136
+#: ../backup_db.rst:142
 msgid "**Verify backup**"
 msgstr ""
 
-#: ../backup_db.rst:138
+#: ../backup_db.rst:144
 msgid ""
 "Now check that the new ``guest2`` instance has the same characteristics as "
 "the original ``guest1`` instance."
 msgstr ""
 
-#: ../backup_db.rst:141
+#: ../backup_db.rst:147
 msgid "Start by getting the ID of the new ``guest2`` instance."
 msgstr ""
 
-#: ../backup_db.rst:153
+#: ../backup_db.rst:160
 msgid ""
-"Use the trove ``show`` command to display information about the new guest2 "
-"instance. Pass in guest2's ``INSTANCE_ID``, which is ``ac7a2b35-a9b4-4ff6-"
-"beac-a1bcee86d04b``."
+"Use the :command:`trove show` command to display information about the new "
+"guest2 instance. Pass in guest2's ``INSTANCE_ID``, which is ``ac7a2b35-"
+"a9b4-4ff6-beac-a1bcee86d04b``."
 msgstr ""
 
-#: ../backup_db.rst:176
+#: ../backup_db.rst:184
 msgid ""
 "Note that the data store, flavor ID, and volume size have the same values as "
 "in the original ``guest1`` instance."
 msgstr ""
 
-#: ../backup_db.rst:179
+#: ../backup_db.rst:187
 msgid ""
-"Use the trove ``database-list`` command to check that the original databases "
-"(``db1`` and ``db2``) are present on the restored instance."
+"Use the :command:`trove database-list` command to check that the original "
+"databases (``db1`` and ``db2``) are present on the restored instance."
 msgstr ""
 
-#: ../backup_db.rst:194
+#: ../backup_db.rst:203
 msgid ""
-"Use the trove ``user-list`` command to check that the original user "
+"Use the :command:`trove user-list` command to check that the original user "
 "(``user1``) is present on the restored instance."
 msgstr ""
 
-#: ../backup_db.rst:206
+#: ../backup_db.rst:216
 msgid "**Notify users**"
 msgstr ""
 
-#: ../backup_db.rst:208
+#: ../backup_db.rst:218
 msgid ""
 "Tell the users who were accessing the now-disabled ``guest1`` database "
 "instance that they can now access ``guest2``. Provide them with ``guest2``'s "
 "name, IP address, and any other information they might need. (You can get "
-"this information by using the trove ``show`` command.)"
+"this information by using the :command:`trove show` command.)"
 msgstr ""
 
-#: ../backup_db.rst:214
+#: ../backup_db.rst:224
 msgid "**Clean up**"
 msgstr ""
 
-#: ../backup_db.rst:216
+#: ../backup_db.rst:226
 msgid ""
 "At this point, you might want to delete the disabled ``guest1`` instance, by "
-"using the trove ``delete`` command."
+"using the :command:`trove delete` command."
 msgstr ""
 
 #: ../backup_db_incremental.rst:3
@@ -245,7 +246,7 @@ msgid "**Create your first incremental backup**"
 msgstr ""
 
 #: ../backup_db_incremental.rst:32
-msgid "Use the trove ``backup-create`` command and specify:"
+msgid "Use the :command:`trove backup-create` command and specify:"
 msgstr ""
 
 #: ../backup_db_incremental.rst:34
@@ -264,18 +265,18 @@ msgid ""
 "regular backup, with an ID of ``6dc3a9b7-1f3e-4954-8582-3f2e4942cddd``"
 msgstr ""
 
-#: ../backup_db_incremental.rst:62
+#: ../backup_db_incremental.rst:63
 msgid ""
 "Note that this command returns both the ID of the database instance you are "
 "incrementally backing up (``instance_id``) and a new ID for the new "
 "incremental backup artifact you just created (``id``)."
 msgstr ""
 
-#: ../backup_db_incremental.rst:66
+#: ../backup_db_incremental.rst:67
 msgid "**Create your second incremental backup**"
 msgstr ""
 
-#: ../backup_db_incremental.rst:68
+#: ../backup_db_incremental.rst:69
 msgid ""
 "The name of your second incremental backup is ``backup1.2``. This time, when "
 "you specify the parent, pass in the ID of the incremental backup you just "
@@ -283,23 +284,24 @@ msgid ""
 "``1d474981-a006-4f62-b25f-43d7b8a7097e``."
 msgstr ""
 
-#: ../backup_db_incremental.rst:91
+#: ../backup_db_incremental.rst:93
 msgid "**Restore using incremental backups**"
 msgstr ""
 
-#: ../backup_db_incremental.rst:93
+#: ../backup_db_incremental.rst:95
 msgid ""
 "Now assume that your ``guest1`` database instance is damaged and you need to "
-"restore it from your incremental backups. In this example, you use the trove "
-"``create`` command to create a new database instance called ``guest2``."
+"restore it from your incremental backups. In this example, you use the :"
+"command:`trove create` command to create a new database instance called "
+"``guest2``."
 msgstr ""
 
-#: ../backup_db_incremental.rst:98
+#: ../backup_db_incremental.rst:100
 msgid ""
-"To incorporate your incremental backups, you simply use the ``--backup`` "
-"parameter to pass in the ``BACKUP_ID`` of your most recent incremental "
-"backup. The Database service handles the complexities of applying the chain "
-"of all previous incremental backups."
+"To incorporate your incremental backups, you simply use the :option:`--"
+"backup` parameter to pass in the ``BACKUP_ID`` of your most recent "
+"incremental backup. The Database service handles the complexities of "
+"applying the chain of all previous incremental backups."
 msgstr ""
 
 #: ../cli.rst:3
@@ -369,9 +371,9 @@ msgstr ""
 #: ../cli_access_instance_through_a_console.rst:45
 msgid ""
 "When using SPICE to view the console of an instance, a browser plugin can be "
-"used directly on the instance page, or the ``get-vnc-console`` command can "
-"be used with it, as well, by returning a token-authenticated address, as in "
-"the example above."
+"used directly on the instance page, or the :command:`get-vnc-console` "
+"command can be used with it, as well, by returning a token-authenticated "
+"address, as in the example above."
 msgstr ""
 
 #: ../cli_access_instance_through_a_console.rst:50
@@ -499,27 +501,27 @@ msgstr ""
 msgid ""
 "Create an auto-scaling stack by running the following command. The :option:`-"
 "f` option specifies the name of the stack template file, and the :option:`-"
-"P` option specifies the ``KeyName`` parameter as ``heat_key``::"
+"P` option specifies the ``KeyName`` parameter as ``heat_key``:"
 msgstr ""
 
-#: ../cli_ceilometer.rst:72
-msgid "List the heat resources that were created::"
+#: ../cli_ceilometer.rst:74
+msgid "List the heat resources that were created:"
 msgstr ""
 
-#: ../cli_ceilometer.rst:89
-msgid "List the alarms that are set::"
+#: ../cli_ceilometer.rst:94
+msgid "List the alarms that are set:"
 msgstr ""
 
-#: ../cli_ceilometer.rst:99
-msgid "List the meters that are set::"
-msgstr ""
-
-#: ../cli_ceilometer.rst:110
-msgid "List samples::"
+#: ../cli_ceilometer.rst:106
+msgid "List the meters that are set:"
 msgstr ""
 
 #: ../cli_ceilometer.rst:119
-msgid "View statistics::"
+msgid "List samples:"
+msgstr ""
+
+#: ../cli_ceilometer.rst:130
+msgid "View statistics:"
 msgstr ""
 
 #: ../cli_change_the_size_of_your_server.rst:3
@@ -533,33 +535,33 @@ msgstr ""
 #: ../cli_change_the_size_of_your_server.rst:7
 msgid ""
 "Show information about your server, including its size, which is shown as "
-"the value of the flavor property::"
-msgstr ""
-
-#: ../cli_change_the_size_of_your_server.rst:42
-msgid "The size (flavor) of the server is ``m1.small (2)``."
+"the value of the flavor property:"
 msgstr ""
 
 #: ../cli_change_the_size_of_your_server.rst:44
-msgid "List the available flavors with the following command::"
+msgid "The size (flavor) of the server is ``m1.small (2)``."
 msgstr ""
 
-#: ../cli_change_the_size_of_your_server.rst:57
+#: ../cli_change_the_size_of_your_server.rst:46
+msgid "List the available flavors with the following command:"
+msgstr ""
+
+#: ../cli_change_the_size_of_your_server.rst:61
 msgid ""
-"To resize the server, use the ``nova resize`` command and add the server ID "
-"or name and the new flavor. Include the ``--poll`` parameter to display the "
-"resize progress. For example::"
+"To resize the server, use the :command:`nova resize` command and add the "
+"server ID or name and the new flavor. Include the :option:`--poll` parameter "
+"to display the resize progress. For example:"
 msgstr ""
 
-#: ../cli_change_the_size_of_your_server.rst:68
+#: ../cli_change_the_size_of_your_server.rst:74
 msgid ""
 "By default, the :command:`nova resize` command gives the guest operating "
 "system a chance to perform a controlled shutdown before the instance is "
 "powered off and the instance is resized. The shutdown behavior is configured "
-"by the ``shutdown_timeout`` parameter that can be set in the :file:`nova."
-"conf` file. Its value stands for the overall period (in seconds) a guest "
-"operation system is allowed to complete the shutdown. The default timeout is "
-"60 seconds. See `Description of Compute configuration options <http://docs."
+"by the ``shutdown_timeout`` parameter that can be set in the ``nova.conf`` "
+"file. Its value stands for the overall period (in seconds) a guest operation "
+"system is allowed to complete the shutdown. The default timeout is 60 "
+"seconds. See `Description of Compute configuration options <http://docs."
 "openstack.org/liberty/config-reference/content/list-of-compute-config-"
 "options.html>`_ for details."
 msgstr ""
@@ -567,8 +569,8 @@ msgstr ""
 # #-#-#-#-#  cli_change_the_size_of_your_server.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  cli_reboot_an_instance.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  cli_stop_and_start_an_instance.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_change_the_size_of_your_server.rst:80
-#: ../cli_reboot_an_instance.rst:54 ../cli_stop_and_start_an_instance.rst:66
+#: ../cli_change_the_size_of_your_server.rst:86
+#: ../cli_reboot_an_instance.rst:58 ../cli_stop_and_start_an_instance.rst:74
 msgid ""
 "The timeout value can be overridden on a per image basis by means of "
 "``os_shutdown_timeout`` that is an image metadata setting allowing different "
@@ -576,27 +578,27 @@ msgid ""
 "cleanly."
 msgstr ""
 
-#: ../cli_change_the_size_of_your_server.rst:85
-msgid "Show the status for your server::"
-msgstr ""
-
-#: ../cli_change_the_size_of_your_server.rst:94
-msgid "When the resize completes, the status becomes VERIFY\\_RESIZE."
-msgstr ""
-
-#: ../cli_change_the_size_of_your_server.rst:96
-msgid "Confirm the resize,for example::"
-msgstr ""
-
-#: ../cli_change_the_size_of_your_server.rst:100
-#: ../cli_change_the_size_of_your_server.rst:108
-msgid "The server status becomes ACTIVE."
+#: ../cli_change_the_size_of_your_server.rst:91
+msgid "Show the status for your server."
 msgstr ""
 
 #: ../cli_change_the_size_of_your_server.rst:102
+msgid "When the resize completes, the status becomes VERIFY\\_RESIZE."
+msgstr ""
+
+#: ../cli_change_the_size_of_your_server.rst:104
+msgid "Confirm the resize,for example:"
+msgstr ""
+
+#: ../cli_change_the_size_of_your_server.rst:110
+#: ../cli_change_the_size_of_your_server.rst:119
+msgid "The server status becomes ACTIVE."
+msgstr ""
+
+#: ../cli_change_the_size_of_your_server.rst:112
 msgid ""
 "If the resize fails or does not work as expected, you can revert the resize. "
-"For example::"
+"For example:"
 msgstr ""
 
 #: ../cli_cheat_sheet.rst:3
@@ -681,187 +683,187 @@ msgstr ""
 msgid "Login to instance"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:120
+#: ../cli_cheat_sheet.rst:122
 msgid ""
 "In CirrOS the password for user ``cirros`` is \"cubswin:)\" without the "
 "quotes."
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:123
+#: ../cli_cheat_sheet.rst:125
 msgid "Show details of instance"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:130
+#: ../cli_cheat_sheet.rst:132
 msgid "View console log of instance"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:136
+#: ../cli_cheat_sheet.rst:138
 msgid "Set metadata on an instance"
 msgstr ""
 
 # #-#-#-#-#  cli_cheat_sheet.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_cheat_sheet.rst:142 ../dashboard_launch_instances.rst:222
+#: ../cli_cheat_sheet.rst:144 ../dashboard_launch_instances.rst:230
 msgid "Create an instance snapshot"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:150
+#: ../cli_cheat_sheet.rst:152
 msgid "Pause, suspend, stop, rescue, resize, rebuild, reboot an instance"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:152
+#: ../cli_cheat_sheet.rst:154
 msgid "Pause"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:159
+#: ../cli_cheat_sheet.rst:161
 msgid "Unpause"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:165
+#: ../cli_cheat_sheet.rst:167
 msgid "Suspend"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:171
+#: ../cli_cheat_sheet.rst:173
 msgid "Unsuspend"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:177
+#: ../cli_cheat_sheet.rst:179
 msgid "Stop"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:183
+#: ../cli_cheat_sheet.rst:185
 msgid "Start"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:189
+#: ../cli_cheat_sheet.rst:191
 msgid "Rescue"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:196
+#: ../cli_cheat_sheet.rst:198
 msgid "Resize"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:204
+#: ../cli_cheat_sheet.rst:206
 msgid "Rebuild"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:211
+#: ../cli_cheat_sheet.rst:213
 msgid "Reboot"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:218
+#: ../cli_cheat_sheet.rst:220
 msgid "Inject user data and files into an instance"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:226
+#: ../cli_cheat_sheet.rst:228
 msgid ""
 "To validate that the file was injected, use ssh to connect to the instance, "
 "and look in ``/var/lib/cloud`` for the file."
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:229
+#: ../cli_cheat_sheet.rst:231
 msgid ""
 "Inject a keypair into an instance and access the instance with that keypair"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:232
+#: ../cli_cheat_sheet.rst:234
 msgid "Create keypair"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:239
+#: ../cli_cheat_sheet.rst:241
 msgid "Start an instance (boot)"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:246
+#: ../cli_cheat_sheet.rst:248
 msgid "Use ssh to connect to the instance"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:253
+#: ../cli_cheat_sheet.rst:255
 msgid "Manage security groups"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:255
+#: ../cli_cheat_sheet.rst:257
 msgid ""
 "Add rules to default security group allowing ping and SSH between instances "
 "in the default security group"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:264
+#: ../cli_cheat_sheet.rst:266
 msgid "Networking (neutron)"
 msgstr ""
 
 # #-#-#-#-#  cli_cheat_sheet.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  sdk_neutron_apis.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_cheat_sheet.rst:266 ../sdk_neutron_apis.rst:124
+#: ../cli_cheat_sheet.rst:268 ../sdk_neutron_apis.rst:124
 msgid "Create network"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:272
+#: ../cli_cheat_sheet.rst:274
 msgid "Create a subnet"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:280
+#: ../cli_cheat_sheet.rst:282
 msgid "Block Storage (cinder)"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:282
+#: ../cli_cheat_sheet.rst:284
 msgid "Used to manage volumes and volume snapshots that attach to instances."
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:284
+#: ../cli_cheat_sheet.rst:286
 msgid "Create a new volume"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:291
+#: ../cli_cheat_sheet.rst:293
 msgid "Boot an instance and attach to volume"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:297
+#: ../cli_cheat_sheet.rst:299
 msgid "List volumes, notice status of volume"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:303
+#: ../cli_cheat_sheet.rst:305
 msgid ""
 "Attach volume to instance after instance is active, and volume is available"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:311
+#: ../cli_cheat_sheet.rst:313
 msgid "Manage volumes after login into the instance"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:313
+#: ../cli_cheat_sheet.rst:315
 msgid "List storage devices"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:319
+#: ../cli_cheat_sheet.rst:321
 msgid "Make filesystem on volume"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:325
+#: ../cli_cheat_sheet.rst:327
 msgid "Create a mountpoint"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:331
+#: ../cli_cheat_sheet.rst:333
 msgid "Mount the volume at the mountpoint"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:337
+#: ../cli_cheat_sheet.rst:339
 msgid "Create a file on the volume"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:344
+#: ../cli_cheat_sheet.rst:346
 msgid "Unmount the volume"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:351
+#: ../cli_cheat_sheet.rst:353
 msgid "Object Storage (swift)"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:353
+#: ../cli_cheat_sheet.rst:355
 msgid "Display information for the account, container, or object"
 msgstr ""
 
-#: ../cli_cheat_sheet.rst:362
+#: ../cli_cheat_sheet.rst:364
 msgid "List containers"
 msgstr ""
 
@@ -998,143 +1000,142 @@ msgstr ""
 msgid ""
 "The following example enables the configuration drive and passes user data, "
 "two files, and two key/value metadata pairs, all of which are accessible "
-"from the configuration drive::"
+"from the configuration drive:"
 msgstr ""
 
-#: ../cli_config_drive.rst:91
+#: ../cli_config_drive.rst:93
 msgid ""
 "You can also configure the Compute service to always create a configuration "
-"drive by setting the following option in the :file:`/etc/nova/nova.conf` "
-"file::"
+"drive by setting the following option in the ``/etc/nova/nova.conf`` file:"
 msgstr ""
 
-#: ../cli_config_drive.rst:99
+#: ../cli_config_drive.rst:103
 msgid ""
 "If a user passes the ``--config-drive true`` flag to the :command:`nova "
 "boot` command, an administrator cannot disable the configuration drive."
 msgstr ""
 
-#: ../cli_config_drive.rst:103
+#: ../cli_config_drive.rst:107
 msgid ""
 "If your guest operating system supports accessing disk by label, you can "
 "mount the configuration drive as the ``/dev/disk/by-label/"
 "configurationDriveVolumeLabel`` device. In the following example, the "
-"configuration drive has the ``config-2`` volume label::"
+"configuration drive has the ``config-2`` volume label:"
 msgstr ""
 
-#: ../cli_config_drive.rst:114
+#: ../cli_config_drive.rst:120
 msgid ""
 "Ensure that you use at least version 0.3.1 of CirrOS for configuration drive "
 "support."
 msgstr ""
 
-#: ../cli_config_drive.rst:117
+#: ../cli_config_drive.rst:123
 msgid ""
 "If your guest operating system does not use ``udev``, the ``/dev/disk/by-"
 "label`` directory is not present."
 msgstr ""
 
-#: ../cli_config_drive.rst:120
+#: ../cli_config_drive.rst:126
 msgid ""
 "You can use the :command:`blkid` command to identify the block device that "
 "corresponds to the configuration drive. For example, when you boot the "
 "CirrOS image with the ``m1.tiny`` flavor, the device is ``/dev/vdb``:"
 msgstr ""
 
-#: ../cli_config_drive.rst:133
-msgid "Once identified, you can mount the device::"
+#: ../cli_config_drive.rst:139
+msgid "Once identified, you can mount the device:"
 msgstr ""
 
-#: ../cli_config_drive.rst:139
+#: ../cli_config_drive.rst:147
 msgid "Configuration drive contents"
 msgstr ""
 
-#: ../cli_config_drive.rst:141
+#: ../cli_config_drive.rst:149
 msgid ""
 "In this example, the contents of the configuration drive are as follows::"
 msgstr ""
 
-#: ../cli_config_drive.rst:155
+#: ../cli_config_drive.rst:163
 msgid ""
 "The files that appear on the configuration drive depend on the arguments "
 "that you pass to the :command:`nova boot` command."
 msgstr ""
 
-#: ../cli_config_drive.rst:159
+#: ../cli_config_drive.rst:167
 msgid "OpenStack metadata format"
 msgstr ""
 
-#: ../cli_config_drive.rst:161
+#: ../cli_config_drive.rst:169
 msgid ""
-"The following example shows the contents of the :file:`openstack/2012-08-10/"
-"meta_data.json` and :file:`openstack/latest/meta_data.json` files. These "
-"files are identical. The file contents are formatted for readability."
-msgstr ""
-
-#: ../cli_config_drive.rst:193
-msgid ""
-"Note the effect of the ``--file /etc/network/interfaces=/home/myuser/"
-"instance-interfaces`` argument that was passed to the :command:`nova boot` "
-"command. The contents of this file are contained in the :file:`openstack/"
-"content/0000` file on the configuration drive, and the path is specified as :"
-"file:`/etc/network/interfaces` in the :file:`meta_data.json` file."
+"The following example shows the contents of the ``openstack/2012-08-10/"
+"meta_data.json`` and ``openstack/latest/meta_data.json`` files. These files "
+"are identical. The file contents are formatted for readability."
 msgstr ""
 
 #: ../cli_config_drive.rst:201
+msgid ""
+"Note the effect of the ``--file /etc/network/interfaces=/home/myuser/"
+"instance-interfaces`` argument that was passed to the :command:`nova boot` "
+"command. The contents of this file are contained in the ``openstack/"
+"content/0000`` file on the configuration drive, and the path is specified as "
+"``/etc/network/interfaces`` in the ``meta_data.json`` file."
+msgstr ""
+
+#: ../cli_config_drive.rst:209
 msgid "EC2 metadata format"
 msgstr ""
 
-#: ../cli_config_drive.rst:203
+#: ../cli_config_drive.rst:211
 msgid ""
-"The following example shows the contents of the :file:`ec2/2009-04-04/meta-"
-"data.json` and the :file:`ec2/latest/meta-data.json` files. These files are "
+"The following example shows the contents of the ``ec2/2009-04-04/meta-data."
+"json`` and the ``ec2/latest/meta-data.json`` files. These files are "
 "identical. The file contents are formatted to improve readability."
 msgstr ""
 
-#: ../cli_config_drive.rst:245
-msgid "User data"
-msgstr ""
-
-#: ../cli_config_drive.rst:247
-msgid ""
-"The :file:`openstack/2012-08-10/user_data`, :file:`openstack/latest/"
-"user_data`, :file:`ec2/2009-04-04/user-data`, and :file:`ec2/latest/user-"
-"data` file are present only if the ``--user-data`` flag and the contents of "
-"the user data file are passed to the :command:`nova boot` command."
-msgstr ""
-
 #: ../cli_config_drive.rst:253
-msgid "Configuration drive format"
+msgid "User data"
 msgstr ""
 
 #: ../cli_config_drive.rst:255
 msgid ""
-"The default format of the configuration drive as an ISO 9660 file system. To "
-"explicitly specify the ISO 9660 format, add the following line to the :file:"
-"`/etc/nova/nova.conf` file::"
+"The ``openstack/2012-08-10/user_data``, ``openstack/latest/user_data``, "
+"``ec2/2009-04-04/user-data``, and ``ec2/latest/user-data`` file are present "
+"only if the ``--user-data`` flag and the contents of the user data file are "
+"passed to the :command:`nova boot` command."
 msgstr ""
 
 #: ../cli_config_drive.rst:261
+msgid "Configuration drive format"
+msgstr ""
+
+#: ../cli_config_drive.rst:263
+msgid ""
+"The default format of the configuration drive as an ISO 9660 file system. To "
+"explicitly specify the ISO 9660 format, add the following line to the ``/etc/"
+"nova/nova.conf`` file:"
+msgstr ""
+
+#: ../cli_config_drive.rst:271
 msgid ""
 "By default, you cannot attach the configuration drive image as a CD drive "
 "instead of as a disk drive. To attach a CD drive, add the following line to "
-"the :file:`/etc/nova/nova.conf` file::"
+"the ``/etc/nova/nova.conf`` file:"
 msgstr ""
 
-#: ../cli_config_drive.rst:267
+#: ../cli_config_drive.rst:279
 msgid ""
 "For legacy reasons, you can configure the configuration drive to use VFAT "
 "format instead of ISO 9660. It is unlikely that you would require VFAT "
 "format because ISO 9660 is widely supported across operating systems. "
-"However, to use the VFAT format, add the following line to the :file:`/etc/"
-"nova/nova.conf` file::"
+"However, to use the VFAT format, add the following line to the ``/etc/nova/"
+"nova.conf`` file:"
 msgstr ""
 
-#: ../cli_config_drive.rst:275
+#: ../cli_config_drive.rst:289
 msgid "If you choose VFAT, the configuration drive is 64 MB."
 msgstr ""
 
-#: ../cli_config_drive.rst:279
+#: ../cli_config_drive.rst:293
 msgid ""
 "In current version (Liberty) of OpenStack Compute, live migration with "
 "``config_drive`` on local disk is forbidden due to the bug in libvirt of "
@@ -1157,105 +1158,105 @@ msgid "Create networks"
 msgstr ""
 
 #: ../cli_create_and_manage_networks.rst:17
-msgid "List the extensions of the system::"
+msgid "List the extensions of the system:"
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:34
-msgid "Create a network::"
+#: ../cli_create_and_manage_networks.rst:36
+msgid "Create a network:"
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:57
+#: ../cli_create_and_manage_networks.rst:61
 msgid "Some fields of the created network are invisible to non-admin users."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:59
-msgid "Create a network with specified provider network type::"
+#: ../cli_create_and_manage_networks.rst:63
+msgid "Create a network with specified provider network type."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:80
+#: ../cli_create_and_manage_networks.rst:86
 msgid ""
 "Just as shown previously, the unknown option ``--provider:network-type`` is "
 "used to create a ``local`` provider network."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:84
+#: ../cli_create_and_manage_networks.rst:90
 msgid "Create subnets"
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:86
-msgid "Create a subnet::"
+#: ../cli_create_and_manage_networks.rst:92
+msgid "Create a subnet:"
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:107
+#: ../cli_create_and_manage_networks.rst:115
 msgid ""
 "The ``subnet-create`` command has the following positional and optional "
 "parameters:"
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:110
+#: ../cli_create_and_manage_networks.rst:118
 msgid "The name or ID of the network to which the subnet belongs."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:112
+#: ../cli_create_and_manage_networks.rst:120
 msgid ""
 "In this example, ``net1`` is a positional argument that specifies the "
 "network name."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:115
+#: ../cli_create_and_manage_networks.rst:123
 msgid "The CIDR of the subnet."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:117
+#: ../cli_create_and_manage_networks.rst:125
 msgid ""
 "In this example, ``192.168.2.0/24`` is a positional argument that specifies "
 "the CIDR."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:120
+#: ../cli_create_and_manage_networks.rst:128
 msgid "The subnet name, which is optional."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:122
+#: ../cli_create_and_manage_networks.rst:130
 msgid "In this example, ``--name subnet1`` specifies the name of the subnet."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:125
+#: ../cli_create_and_manage_networks.rst:133
 msgid ""
 "For information and examples on more advanced use of neutron's ``subnet`` "
 "subcommand, see the `Cloud Administrator Guide <http://docs.openstack.org/"
 "admin-guide-cloud/networking_use.html#advanced-networking-operations>`__."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:130
+#: ../cli_create_and_manage_networks.rst:138
 msgid "Create routers"
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:132
-msgid "Create a router::"
+#: ../cli_create_and_manage_networks.rst:140
+msgid "Create a router:"
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:148
+#: ../cli_create_and_manage_networks.rst:158
 msgid ""
 "Take note of the unique router identifier returned, this will be required in "
 "subsequent steps."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:151
-msgid "Link the router to the external provider network::"
+#: ../cli_create_and_manage_networks.rst:161
+msgid "Link the router to the external provider network:"
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:155
+#: ../cli_create_and_manage_networks.rst:167
 msgid ""
 "Replace ROUTER with the unique identifier of the router, replace NETWORK "
 "with the unique identifier of the external provider network."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:158
-msgid "Link the router to the subnet::"
+#: ../cli_create_and_manage_networks.rst:170
+msgid "Link the router to the subnet:"
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:162
+#: ../cli_create_and_manage_networks.rst:176
 msgid ""
 "Replace ROUTER with the unique identifier of the router, replace SUBNET with "
 "the unique identifier of the subnet."
@@ -1263,54 +1264,54 @@ msgstr ""
 
 # #-#-#-#-#  cli_create_and_manage_networks.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  sdk_neutron_apis.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_create_and_manage_networks.rst:166 ../sdk_neutron_apis.rst:179
+#: ../cli_create_and_manage_networks.rst:180 ../sdk_neutron_apis.rst:179
 msgid "Create ports"
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:168
-msgid "Create a port with specified IP address::"
+#: ../cli_create_and_manage_networks.rst:182
+msgid "Create a port with specified IP address:"
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:190
+#: ../cli_create_and_manage_networks.rst:206
 msgid ""
 "In the previous command, ``net1`` is the network name, which is a positional "
-"argument. ``--fixed-ip ip_address=192.168.2.40`` is an option, which "
+"argument. :option:`--fixed-ip ip_address=192.168.2.40` is an option which "
 "specifies the port's fixed IP address we wanted."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:196
+#: ../cli_create_and_manage_networks.rst:212
 msgid ""
 "When creating a port, you can specify any unallocated IP in the subnet even "
 "if the address is not in a pre-defined pool of allocated IP addresses (set "
 "by your cloud provider)."
 msgstr ""
 
-#: ../cli_create_and_manage_networks.rst:200
-msgid "Create a port without specified IP address::"
-msgstr ""
-
-#: ../cli_create_and_manage_networks.rst:224
-msgid ""
-"Note that the system allocates one IP address if you do not specify an IP "
-"address in the ``neutron port-create`` command."
-msgstr ""
-
-#: ../cli_create_and_manage_networks.rst:227
-msgid "Query ports with specified fixed IP addresses::"
-msgstr ""
-
-#: ../cli_create_and_manage_networks.rst:239
-msgid ""
-"``--fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40`` is one "
-"unknown option."
+#: ../cli_create_and_manage_networks.rst:216
+msgid "Create a port without specified IP address:"
 msgstr ""
 
 #: ../cli_create_and_manage_networks.rst:242
 msgid ""
+"Note that the system allocates one IP address if you do not specify an IP "
+"address in the :command:`neutron port-create` command."
+msgstr ""
+
+#: ../cli_create_and_manage_networks.rst:245
+msgid "Query ports with specified fixed IP addresses:"
+msgstr ""
+
+#: ../cli_create_and_manage_networks.rst:259
+msgid ""
+":option:`--fixed-ips ip_address=192.168.2.2 ip_address=192.168.2.40` is one "
+"unknown option."
+msgstr ""
+
+#: ../cli_create_and_manage_networks.rst:262
+msgid ""
 "**How to find unknown options** The unknown options can be easily found by "
-"watching the output of ``create_xxx`` or ``show_xxx`` command. For example, "
-"in the port creation command, we see the fixed\\_ips fields, which can be "
-"used as an unknown option."
+"watching the output of :command:`create_xxx` or :command:`show_xxx` command. "
+"For example, in the port creation command, we see the fixed\\_ips fields, "
+"which can be used as an unknown option."
 msgstr ""
 
 #: ../cli_create_and_manage_stacks.rst:3
@@ -1349,10 +1350,10 @@ msgstr ""
 #: ../cli_create_and_manage_stacks.rst:26
 msgid ""
 "To create a stack, or template, from an `example template file <https://git."
-"openstack.org/cgit/openstack/heat-templates>`__, run the following command::"
+"openstack.org/cgit/openstack/heat-templates>`__, run the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:33
+#: ../cli_create_and_manage_stacks.rst:35
 msgid ""
 "The :option:`--parameters` values that you specify depend on the parameters "
 "that are defined in the template. If a website hosts the template file, you "
@@ -1360,90 +1361,90 @@ msgid ""
 "the :option:`--template-file` parameter."
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:38
-msgid "The command returns the following output::"
+#: ../cli_create_and_manage_stacks.rst:40
+msgid "The command returns the following output:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:46
+#: ../cli_create_and_manage_stacks.rst:50
 msgid ""
 "You can also use the :command:`template-validate` command to validate a "
 "template file without creating a stack from it."
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:51
+#: ../cli_create_and_manage_stacks.rst:55
 msgid ""
 "Previous versions of the heat client used :command:`validate` instead of :"
 "command:`template-validate`, but it has been deprecated in favor of :command:"
 "`template-validate`."
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:55
-msgid "To do so, run the following command::"
+#: ../cli_create_and_manage_stacks.rst:59
+msgid "To do so, run the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:59
+#: ../cli_create_and_manage_stacks.rst:65
 msgid "If validation fails, the response returns an error message."
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:62
+#: ../cli_create_and_manage_stacks.rst:68
 msgid "Get information about stacks"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:64
+#: ../cli_create_and_manage_stacks.rst:70
 msgid ""
 "To explore the state and history of a particular stack, you can run a number "
 "of commands."
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:67
+#: ../cli_create_and_manage_stacks.rst:73
 msgid ""
 "To see which stacks are visible to the current user, run the following "
-"command::"
+"command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:78
-msgid "To show the details of a stack, run the following command::"
-msgstr ""
-
-#: ../cli_create_and_manage_stacks.rst:82
-msgid ""
-"A stack consists of a collection of resources. To list the resources and "
-"their status, run the following command::"
+#: ../cli_create_and_manage_stacks.rst:86
+msgid "To show the details of a stack, run the following command:"
 msgstr ""
 
 #: ../cli_create_and_manage_stacks.rst:92
 msgid ""
-"To show the details for a specific resource in a stack, run the following "
-"command::"
+"A stack consists of a collection of resources. To list the resources and "
+"their status, run the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:97
+#: ../cli_create_and_manage_stacks.rst:104
+msgid ""
+"To show the details for a specific resource in a stack, run the following "
+"command:"
+msgstr ""
+
+#: ../cli_create_and_manage_stacks.rst:111
 msgid ""
 "Some resources have associated metadata which can change throughout the life "
-"cycle of a resource. Show the metadata by running the following command::"
+"cycle of a resource. Show the metadata by running the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:103
+#: ../cli_create_and_manage_stacks.rst:119
 msgid ""
 "A series of events is generated during the life cycle of a stack. To display "
-"life cycle events, run the following command::"
+"life cycle events, run the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:114
-msgid "To show the details for a particular event, run the following command::"
+#: ../cli_create_and_manage_stacks.rst:132
+msgid "To show the details for a particular event, run the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:120
+#: ../cli_create_and_manage_stacks.rst:140
 msgid "Update a stack"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:122
+#: ../cli_create_and_manage_stacks.rst:142
 msgid ""
 "To update an existing stack from a modified template file, run a command "
-"like the following command::"
+"like the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:135
+#: ../cli_create_and_manage_stacks.rst:157
 msgid ""
 "Some resources are updated in-place, while others are replaced with new "
 "resources."
@@ -1458,26 +1459,26 @@ msgid "When you no longer need an instance, you can delete it."
 msgstr ""
 
 #: ../cli_delete_an_instance.rst:7
-msgid "List all instances::"
+msgid "List all instances:"
 msgstr ""
 
-#: ../cli_delete_an_instance.rst:19
+#: ../cli_delete_an_instance.rst:20
 msgid ""
 "Run the :command:`nova delete` command to delete the instance. The following "
 "example shows deletion of the ``newServer`` instance, which is in ``ERROR`` "
-"state::"
+"state:"
 msgstr ""
 
-#: ../cli_delete_an_instance.rst:25
+#: ../cli_delete_an_instance.rst:28
 msgid "The command does not notify that your server was deleted."
 msgstr ""
 
-#: ../cli_delete_an_instance.rst:27
+#: ../cli_delete_an_instance.rst:30
 msgid ""
-"To verify that the server was deleted, run the :command:`nova list` command::"
+"To verify that the server was deleted, run the :command:`nova list` command:"
 msgstr ""
 
-#: ../cli_delete_an_instance.rst:38
+#: ../cli_delete_an_instance.rst:43
 msgid "The deleted instance does not appear in the list."
 msgstr ""
 
@@ -1559,7 +1560,7 @@ msgstr ""
 # #-#-#-#-#  cli_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  cli_nova_configure_access_security_for_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 #: ../cli_launch_instances.rst:57
-#: ../cli_nova_configure_access_security_for_instances.rst:56
+#: ../cli_nova_configure_access_security_for_instances.rst:57
 msgid ""
 "Instances that use the default security group cannot, by default, be "
 "accessed from any IP address outside of the cloud. If you want those IP "
@@ -1570,7 +1571,7 @@ msgstr ""
 # #-#-#-#-#  cli_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  cli_nova_configure_access_security_for_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 #: ../cli_launch_instances.rst:62
-#: ../cli_nova_configure_access_security_for_instances.rst:61
+#: ../cli_nova_configure_access_security_for_instances.rst:62
 msgid ""
 "You can also assign a floating IP address to a running instance to make it "
 "accessible from outside the cloud. See :doc:`cli_manage_ip_addresses`."
@@ -1596,73 +1597,73 @@ msgstr ""
 # #-#-#-#-#  cli_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  cli_nova_launch_instance_from_volume.pot (End User Guide 1.0.0)  #-#-#-#-#
 #: ../cli_launch_instances.rst:78
-#: ../cli_nova_launch_instance_from_volume.rst:154
-msgid "List the available flavors::"
+#: ../cli_nova_launch_instance_from_volume.rst:162
+msgid "List the available flavors."
 msgstr ""
 
-#: ../cli_launch_instances.rst:82
+#: ../cli_launch_instances.rst:84
 msgid "Note the ID of the flavor that you want to use for your instance::"
 msgstr ""
 
 # #-#-#-#-#  cli_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  cli_nova_launch_instance_from_volume.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_launch_instances.rst:94
-#: ../cli_nova_launch_instance_from_volume.rst:140
-msgid "List the available images::"
+#: ../cli_launch_instances.rst:96
+#: ../cli_nova_launch_instance_from_volume.rst:146
+msgid "List the available images."
 msgstr ""
 
-#: ../cli_launch_instances.rst:98
+#: ../cli_launch_instances.rst:102
 msgid "Note the ID of the image from which you want to boot your instance::"
 msgstr ""
 
-#: ../cli_launch_instances.rst:108
+#: ../cli_launch_instances.rst:112
 msgid ""
-"You can also filter the image list by using ``grep`` to find a specific "
-"image, as follows::"
-msgstr ""
-
-#: ../cli_launch_instances.rst:115
-msgid "List the available security groups::"
+"You can also filter the image list by using :command:`grep` to find a "
+"specific image, as follows:"
 msgstr ""
 
 #: ../cli_launch_instances.rst:121
-msgid ""
-"If you are an admin user, specify the ``--all-tenants`` parameter to list "
-"groups for all tenants."
+msgid "List the available security groups."
 msgstr ""
 
-#: ../cli_launch_instances.rst:126
+#: ../cli_launch_instances.rst:129
+msgid ""
+"If you are an admin user, specify the :option:`--all-tenants` parameter to "
+"list groups for all tenants."
+msgstr ""
+
+#: ../cli_launch_instances.rst:134
 msgid ""
 "Note the ID of the security group that you want to use for your instance::"
 msgstr ""
 
-#: ../cli_launch_instances.rst:136
+#: ../cli_launch_instances.rst:144
 msgid ""
 "If you have not created any security groups, you can assign the instance to "
 "only the default security group."
 msgstr ""
 
-#: ../cli_launch_instances.rst:139
-msgid "You can view rules for a specified security group::"
-msgstr ""
-
-#: ../cli_launch_instances.rst:143
-msgid ""
-"List the available key pairs, and note the key pair name that you use for "
-"SSH access::"
-msgstr ""
-
-#: ../cli_launch_instances.rst:151
-msgid "Launch an instance from an image"
+#: ../cli_launch_instances.rst:147
+msgid "You can view rules for a specified security group:"
 msgstr ""
 
 #: ../cli_launch_instances.rst:153
 msgid ""
-"After you gather required parameters, run the following command to launch an "
-"instance. Specify the server name, flavor ID, and image ID::"
+"List the available key pairs, and note the key pair name that you use for "
+"SSH access."
 msgstr ""
 
-#: ../cli_launch_instances.rst:160
+#: ../cli_launch_instances.rst:163
+msgid "Launch an instance from an image"
+msgstr ""
+
+#: ../cli_launch_instances.rst:165
+msgid ""
+"After you gather required parameters, run the following command to launch an "
+"instance. Specify the server name, flavor ID, and image ID."
+msgstr ""
+
+#: ../cli_launch_instances.rst:174
 msgid ""
 "Optionally, you can provide a key name for access control and a security "
 "group for security. You can also include metadata key and value pairs. For "
@@ -1670,87 +1671,125 @@ msgid ""
 "description=\"My Server\"`` parameter."
 msgstr ""
 
-#: ../cli_launch_instances.rst:165
+#: ../cli_launch_instances.rst:179
 msgid ""
 "You can pass user data in a local file at instance launch by using the ``--"
 "user-data USER-DATA-FILE`` parameter."
 msgstr ""
 
-#: ../cli_launch_instances.rst:169
+#: ../cli_launch_instances.rst:184
 msgid ""
 "If you boot an instance with an INSTANCE_NAME greater than 63 characters, "
-"Compute truncates it automatically when turning it into a hostname to ensure "
-"the correct work of dnsmasq. The corresponding warning is written into the "
-"nova-network.log file."
+"Compute truncates it automatically when turning it into a host name to "
+"ensure the correct work of dnsmasq. The corresponding warning is written "
+"into the ``nova-network.log`` file."
 msgstr ""
 
-#: ../cli_launch_instances.rst:174
+#: ../cli_launch_instances.rst:189
 msgid ""
 "The following command launches the ``MyCirrosServer`` instance with the ``m1."
 "small`` flavor (ID of ``1``), ``cirros-0.3.2-x86_64-uec`` image (ID of "
 "``397e713c-b95b-4186-ad46-6126863ea0a9``), ``default`` security group, "
-"``KeyPair01`` key, and a user data file called ``cloudinit.file``::"
+"``KeyPair01`` key, and a user data file called ``cloudinit.file``:"
 msgstr ""
 
-#: ../cli_launch_instances.rst:184
+#: ../cli_launch_instances.rst:201
 msgid ""
 "Depending on the parameters that you provide, the command returns a list of "
-"server properties::"
+"server properties. .. code-block:: console"
 msgstr ""
 
-#: ../cli_launch_instances.rst:218
+#: ../cli_launch_instances.rst:206
+msgid "Property"
+msgstr ""
+
+#: ../cli_launch_instances.rst:206
+msgid "Value"
+msgstr ""
+
+#: ../cli_launch_instances.rst:208
+msgid ""
+"OS-EXT-STS:task_state image OS-EXT-STS:vm_state OS-EXT-SRV-ATTR:"
+"instance_name flavor id security_groups user_id OS-DCF:diskConfig accessIPv4 "
+"accessIPv6 progress OS-EXT-STS:power_state OS-EXT-AZ:availability_zone "
+"config_drive status updated hostId OS-EXT-SRV-ATTR:host key_name OS-EXT-SRV-"
+"ATTR:hypervisor_hostname name adminPass tenant_id created metadata"
+msgstr ""
+
+#: ../cli_launch_instances.rst:208
+msgid ""
+"scheduling cirros-0.3.2-x86_64-uec building instance-00000002 m1.small "
+"b3cdc6c0-85a7-4904-ae85-71918f734048 [{u'name': u'default'}] "
+"376744b5910b4b4da7d8e6cb483b06a8 MANUAL"
+msgstr ""
+
+#: ../cli_launch_instances.rst:219
+msgid "0 0 nova"
+msgstr ""
+
+#: ../cli_launch_instances.rst:223
+msgid "BUILD 2013-07-16T16:25:34Z"
+msgstr ""
+
+#: ../cli_launch_instances.rst:226
+msgid ""
+"None KeyPair01 None myCirrosServer tVs5pL8HcPGw "
+"66265572db174a7aa66eba661f58eb9e 2013-07-16T16:25:34Z {u'KEY': u'VALUE'}"
+msgstr ""
+
+#: ../cli_launch_instances.rst:236
 msgid ""
 "A status of ``BUILD`` indicates that the instance has started, but is not "
 "yet online."
 msgstr ""
 
-#: ../cli_launch_instances.rst:221
+#: ../cli_launch_instances.rst:239
 msgid "A status of ``ACTIVE`` indicates that the instance is active."
 msgstr ""
 
-#: ../cli_launch_instances.rst:223
+#: ../cli_launch_instances.rst:241
 msgid ""
 "Copy the server ID value from the ``id`` field in the output. Use the ID to "
 "get server details or to delete your server."
 msgstr ""
 
-#: ../cli_launch_instances.rst:226
+#: ../cli_launch_instances.rst:244
 msgid ""
 "Copy the administrative password value from the ``adminPass`` field. Use the "
 "password to log in to your server."
 msgstr ""
 
-#: ../cli_launch_instances.rst:231
+#: ../cli_launch_instances.rst:249
 msgid ""
 "You can also place arbitrary local files into the instance file system at "
 "creation time by using the ``--file <dst-path=src-path>`` option. You can "
 "store up to five files. For example, if you have a special authorized keys "
 "file named ``special_authorized_keysfile`` that you want to put on the "
-"instance rather than using the regular SSH key injection, you can use the "
-"``--file`` option as shown in the following example."
+"instance rather than using the regular SSH key injection, you can use the :"
+"option:`--file` option as shown in the following example."
 msgstr ""
 
-#: ../cli_launch_instances.rst:244
-msgid "Check if the instance is online::"
-msgstr ""
-
-#: ../cli_launch_instances.rst:248
-msgid ""
-"The list shows the ID, name, status, and private (and if assigned, public) "
-"IP addresses for all instances in the project to which you belong::"
-msgstr ""
-
-#: ../cli_launch_instances.rst:259
-msgid "If the status for the instance is ACTIVE, the instance is online."
-msgstr ""
-
-#: ../cli_launch_instances.rst:261
-msgid ""
-"To view the available options for the :command:`nova list` command, run the "
-"following command::"
+#: ../cli_launch_instances.rst:262
+msgid "Check if the instance is online."
 msgstr ""
 
 #: ../cli_launch_instances.rst:268
+msgid ""
+"The list shows the ID, name, status, and private (and if assigned, public) "
+"IP addresses for all instances in the project to which you belong:"
+msgstr ""
+
+#: ../cli_launch_instances.rst:281
+msgid "If the status for the instance is ACTIVE, the instance is online."
+msgstr ""
+
+#: ../cli_launch_instances.rst:283
+msgid ""
+"To view the available options for the :command:`nova list` command, run the "
+"following command:"
+msgstr ""
+
+#: ../cli_launch_instances.rst:292
 msgid ""
 "If you did not provide a key pair, security groups, or rules, you can access "
 "the instance only from inside the cloud through VNC. Even pinging the "
@@ -1993,22 +2032,22 @@ msgid "List floating IP address information"
 msgstr ""
 
 #: ../cli_manage_ip_addresses.rst:32
-msgid "To list all pools that provide floating IP addresses, run::"
+msgid "To list all pools that provide floating IP addresses, run:"
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:43
+#: ../cli_manage_ip_addresses.rst:46
 msgid ""
 "If this list is empty, the cloud administrator must configure a pool of "
 "floating IP addresses."
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:46
+#: ../cli_manage_ip_addresses.rst:49
 msgid ""
 "To list all floating IP addresses that are allocated to the current project, "
-"run::"
+"run:"
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:57
+#: ../cli_manage_ip_addresses.rst:62
 msgid ""
 "For each floating IP address that is allocated to the current project, the "
 "command outputs the floating IP address, the ID for the instance to which "
@@ -2016,75 +2055,75 @@ msgid ""
 "the pool from which the floating IP address was allocated."
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:64
+#: ../cli_manage_ip_addresses.rst:69
 msgid "Associate floating IP addresses"
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:66
+#: ../cli_manage_ip_addresses.rst:71
 msgid "You can assign a floating IP address to a project and to an instance."
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:68
+#: ../cli_manage_ip_addresses.rst:73
 msgid ""
 "Run the following command to allocate a floating IP address to the current "
 "project. By default, the floating IP address is allocated from the public "
-"pool. The command outputs the allocated IP address::"
+"pool. The command outputs the allocated IP address:"
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:81
+#: ../cli_manage_ip_addresses.rst:88
 msgid ""
 "If more than one IP address pool is available, you can specify from which "
 "pool to allocate the IP address, using the pool's name. For example, to "
-"allocate a floating IP address from the ``test`` pool, run::"
+"allocate a floating IP address from the ``test`` pool, run:"
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:87
+#: ../cli_manage_ip_addresses.rst:96
 msgid ""
 "List all project instances with which a floating IP address could be "
-"associated::"
+"associated."
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:98
-msgid "Associate an IP address with an instance in the project, as follows::"
+#: ../cli_manage_ip_addresses.rst:109
+msgid "Associate an IP address with an instance in the project, as follows:"
 msgstr ""
 
 # #-#-#-#-#  cli_manage_ip_addresses.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  cli_nova_launch_instance_from_volume.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_manage_ip_addresses.rst:102
-#: ../cli_nova_launch_instance_from_volume.rst:172
-msgid "For example::"
+#: ../cli_manage_ip_addresses.rst:115
+#: ../cli_nova_launch_instance_from_volume.rst:182
+msgid "For example:"
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:106
-msgid "The instance is now associated with two IP addresses::"
+#: ../cli_manage_ip_addresses.rst:121
+msgid "The instance is now associated with two IP addresses:"
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:116
+#: ../cli_manage_ip_addresses.rst:133
 msgid ""
 "After you associate the IP address and configure security group rules for "
 "the instance, the instance is publicly available at the floating IP address."
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:122
+#: ../cli_manage_ip_addresses.rst:139
 msgid ""
 "If an instance is connected to multiple networks, you can associate a "
-"floating IP address with a specific fixed IP address using the optional ``--"
-"fixed-address`` parameter:"
+"floating IP address with a specific fixed IP address using the optional :"
+"option:`--fixed-address` parameter:"
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:132
+#: ../cli_manage_ip_addresses.rst:149
 msgid "Disassociate floating IP addresses"
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:134
-msgid "To disassociate a floating IP address from an instance::"
+#: ../cli_manage_ip_addresses.rst:151
+msgid "To disassociate a floating IP address from an instance:"
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:138
-msgid "To remove the floating IP address from a project::"
+#: ../cli_manage_ip_addresses.rst:157
+msgid "To remove the floating IP address from a project:"
 msgstr ""
 
-#: ../cli_manage_ip_addresses.rst:142
+#: ../cli_manage_ip_addresses.rst:163
 msgid ""
 "The IP address is returned to the pool of IP addresses that is available for "
 "all projects. If the IP address is still associated with a running instance, "
@@ -2106,174 +2145,152 @@ msgid "Create a share network"
 msgstr ""
 
 #: ../cli_manage_shares.rst:13
-msgid "Create a share network::"
+msgid "Create a share network."
 msgstr ""
 
-#: ../cli_manage_shares.rst:37
-msgid "List share networks::"
+#: ../cli_manage_shares.rst:39
+msgid "List share networks."
 msgstr ""
 
 # #-#-#-#-#  cli_manage_shares.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_manage_shares.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_manage_shares.rst:50 ../dashboard_manage_shares.rst:12
+#: ../cli_manage_shares.rst:54 ../dashboard_manage_shares.rst:12
 msgid "Create a share"
 msgstr ""
 
-#: ../cli_manage_shares.rst:52
-msgid "Create a share::"
+#: ../cli_manage_shares.rst:56
+msgid "Create a share."
 msgstr ""
 
-#: ../cli_manage_shares.rst:80
-msgid "Show a share::"
+#: ../cli_manage_shares.rst:86
+msgid "Show a share."
 msgstr ""
 
-#: ../cli_manage_shares.rst:108 ../cli_manage_shares.rst:246
-#: ../cli_manage_shares.rst:293
-msgid "List shares::"
+#: ../cli_manage_shares.rst:116 ../cli_manage_shares.rst:270
+#: ../cli_manage_shares.rst:323
+msgid "List shares."
 msgstr ""
 
 # #-#-#-#-#  cli_manage_shares.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_manage_shares.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_manage_shares.rst:121 ../dashboard_manage_shares.rst:51
+#: ../cli_manage_shares.rst:131 ../dashboard_manage_shares.rst:51
 msgid "Allow access"
 msgstr ""
 
-#: ../cli_manage_shares.rst:123
-msgid "Allow access::"
+#: ../cli_manage_shares.rst:133
+msgid "Allow access."
 msgstr ""
 
-#: ../cli_manage_shares.rst:145 ../cli_manage_shares.rst:166
-msgid "List access::"
+#: ../cli_manage_shares.rst:157 ../cli_manage_shares.rst:182
+msgid "List access."
 msgstr ""
 
-#: ../cli_manage_shares.rst:157
+#: ../cli_manage_shares.rst:171
 msgid "The access is created."
 msgstr ""
 
 # #-#-#-#-#  cli_manage_shares.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_manage_shares.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_manage_shares.rst:160 ../dashboard_manage_shares.rst:71
+#: ../cli_manage_shares.rst:174 ../dashboard_manage_shares.rst:71
 msgid "Deny access"
 msgstr ""
 
-#: ../cli_manage_shares.rst:162
-msgid "Deny access::"
+#: ../cli_manage_shares.rst:176
+msgid "Deny access."
 msgstr ""
 
-#: ../cli_manage_shares.rst:177
+#: ../cli_manage_shares.rst:195
 msgid "The access is removed."
 msgstr ""
 
-#: ../cli_manage_shares.rst:180
+#: ../cli_manage_shares.rst:198
 msgid "Create snapshot"
 msgstr ""
 
-#: ../cli_manage_shares.rst:182
-msgid "Create a snapshot::"
+#: ../cli_manage_shares.rst:200
+msgid "Create a snapshot."
 msgstr ""
 
-#: ../cli_manage_shares.rst:202
-msgid "List snapshots::"
+#: ../cli_manage_shares.rst:222
+msgid "List snapshots."
 msgstr ""
 
-#: ../cli_manage_shares.rst:215
+#: ../cli_manage_shares.rst:237
 msgid "Create share from snapshot"
 msgstr ""
 
-#: ../cli_manage_shares.rst:217
-msgid "Create a share from a snapshot::"
+#: ../cli_manage_shares.rst:239
+msgid "Create a share from a snapshot."
 msgstr ""
 
-#: ../cli_manage_shares.rst:259
-msgid "Show the share created from snapshot::"
+#: ../cli_manage_shares.rst:285
+msgid "Show the share created from snapshot."
 msgstr ""
 
-#: ../cli_manage_shares.rst:287
+#: ../cli_manage_shares.rst:315
 msgid "Delete share"
 msgstr ""
 
-#: ../cli_manage_shares.rst:289
-msgid "Delete a share::"
+#: ../cli_manage_shares.rst:317
+msgid "Delete a share."
 msgstr ""
 
-#: ../cli_manage_shares.rst:306
+#: ../cli_manage_shares.rst:338
 msgid "The share is being deleted."
 msgstr ""
 
-#: ../cli_manage_shares.rst:309
+#: ../cli_manage_shares.rst:341
 msgid "Delete snapshot"
 msgstr ""
 
-#: ../cli_manage_shares.rst:311
-msgid "List snapshots before deleting::"
+#: ../cli_manage_shares.rst:343
+msgid "List snapshots before deleting."
 msgstr ""
 
-#: ../cli_manage_shares.rst:323
-msgid "Delete a snapshot::"
+#: ../cli_manage_shares.rst:357
+msgid "Delete a snapshot."
 msgstr ""
 
-#: ../cli_manage_shares.rst:327
-msgid "List snapshots after deleting::"
+#: ../cli_manage_shares.rst:363
+msgid "List snapshots after deleting."
 msgstr ""
 
-#: ../cli_manage_shares.rst:332
-msgid "ID"
-msgstr ""
-
-# #-#-#-#-#  cli_manage_shares.pot (End User Guide 1.0.0)  #-#-#-#-#
-# #-#-#-#-#  dashboard_databases.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_manage_shares.rst:332 ../dashboard_databases.rst:129
-msgid "Name"
-msgstr ""
-
-#: ../cli_manage_shares.rst:332
-msgid "Share ID"
-msgstr ""
-
-#: ../cli_manage_shares.rst:332
-msgid "Share Size"
-msgstr ""
-
-#: ../cli_manage_shares.rst:332
-msgid "Status"
-msgstr ""
-
-#: ../cli_manage_shares.rst:336
+#: ../cli_manage_shares.rst:372
 msgid "The snapshot is deleted."
 msgstr ""
 
 # #-#-#-#-#  cli_manage_shares.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_manage_shares.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_manage_shares.rst:339 ../dashboard_manage_shares.rst:116
+#: ../cli_manage_shares.rst:375 ../dashboard_manage_shares.rst:116
 msgid "Extend share"
 msgstr ""
 
-#: ../cli_manage_shares.rst:341
-msgid "Extend share::"
+#: ../cli_manage_shares.rst:377
+msgid "Extend share."
 msgstr ""
 
-#: ../cli_manage_shares.rst:345
-msgid "Show the share while it is being extended::"
+#: ../cli_manage_shares.rst:383
+msgid "Show the share while it is being extended."
 msgstr ""
 
-#: ../cli_manage_shares.rst:372
-msgid "Show the share after it is extended::"
+#: ../cli_manage_shares.rst:412
+msgid "Show the share after it is extended."
 msgstr ""
 
-#: ../cli_manage_shares.rst:400
+#: ../cli_manage_shares.rst:442
 msgid "Shrink share"
 msgstr ""
 
-#: ../cli_manage_shares.rst:402
-msgid "Shrink a share::"
+#: ../cli_manage_shares.rst:444
+msgid "Shrink a share."
 msgstr ""
 
-#: ../cli_manage_shares.rst:406
-msgid "Show the share while it is being shrunk::"
+#: ../cli_manage_shares.rst:450
+msgid "Show the share while it is being shrunk."
 msgstr ""
 
-#: ../cli_manage_shares.rst:433
-msgid "Show the share after it is being shrunk::"
+#: ../cli_manage_shares.rst:479
+msgid "Show the share after it is being shrunk."
 msgstr ""
 
 # #-#-#-#-#  cli_nova_configure_access_security_for_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
@@ -2301,20 +2318,20 @@ msgstr ""
 
 # #-#-#-#-#  cli_nova_configure_access_security_for_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  configure_access_and_security_for_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_nova_configure_access_security_for_instances.rst:14
-#: ../configure_access_and_security_for_instances.rst:24
+#: ../cli_nova_configure_access_security_for_instances.rst:15
+#: ../configure_access_and_security_for_instances.rst:25
 msgid ""
 "A key pair belongs to an individual user, not to a project. To share a key "
 "pair across multiple users, each user needs to import that key pair."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:18
+#: ../cli_nova_configure_access_security_for_instances.rst:19
 msgid ""
 "If an image uses a static root password or a static key set (neither is "
 "recommended), you must not provide a key pair when you launch the instance."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:22
+#: ../cli_nova_configure_access_security_for_instances.rst:23
 msgid ""
 "A *security group* is a named collection of network access rules that are "
 "use to limit the types of traffic that have access to instances. When you "
@@ -2324,7 +2341,7 @@ msgid ""
 "security group."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:29
+#: ../cli_nova_configure_access_security_for_instances.rst:30
 msgid ""
 "The associated *rules* in each security group control the traffic to "
 "instances in the group. Any incoming traffic that is not matched by a rule "
@@ -2333,7 +2350,7 @@ msgid ""
 "security group."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:35
+#: ../cli_nova_configure_access_security_for_instances.rst:36
 msgid ""
 "You can modify the rules in a security group to allow access to instances "
 "through different ports and protocols. For example, you can modify rules to "
@@ -2342,17 +2359,17 @@ msgid ""
 "the following parameters for rules:"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:41
+#: ../cli_nova_configure_access_security_for_instances.rst:42
 msgid ""
 "**Source of traffic**. Enable traffic to instances from either IP addresses "
 "inside the cloud from other group members or from all IP addresses."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:45
+#: ../cli_nova_configure_access_security_for_instances.rst:46
 msgid "**Protocol**. Choose TCP for SSH, ICMP for pings, or UDP."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:47
+#: ../cli_nova_configure_access_security_for_instances.rst:48
 msgid ""
 "**Destination port on virtual machine**. Define a port range. To open a "
 "single port only, enter the same value twice. ICMP does not support ports; "
@@ -2360,87 +2377,87 @@ msgid ""
 "be allowed."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:52
+#: ../cli_nova_configure_access_security_for_instances.rst:53
 msgid "Rules are automatically enforced as soon as you create or modify them."
 msgstr ""
 
 # #-#-#-#-#  cli_nova_configure_access_security_for_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  configure_access_and_security_for_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_nova_configure_access_security_for_instances.rst:66
-#: ../configure_access_and_security_for_instances.rst:96
+#: ../cli_nova_configure_access_security_for_instances.rst:67
+#: ../configure_access_and_security_for_instances.rst:101
 msgid "Add a key pair"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:68
+#: ../cli_nova_configure_access_security_for_instances.rst:69
 msgid "You can generate a key pair or upload an existing public key."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:70
-msgid "To generate a key pair, run the following command::"
+#: ../cli_nova_configure_access_security_for_instances.rst:71
+msgid "To generate a key pair, run the following command."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:74
+#: ../cli_nova_configure_access_security_for_instances.rst:77
 msgid ""
 "This command generates a key pair with the name that you specify for KEY"
-"\\_NAME, writes the private key to the :file:`.pem` file that you specify, "
-"and registers the public key to the Nova database."
+"\\_NAME, writes the private key to the ``.pem`` file that you specify, and "
+"registers the public key to the Nova database."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:78
+#: ../cli_nova_configure_access_security_for_instances.rst:81
 msgid ""
-"To set the permissions of the :file:`.pem` file so that only you can read "
-"and write to it, run the following command::"
+"To set the permissions of the ``.pem`` file so that only you can read and "
+"write to it, run the following command."
 msgstr ""
 
 # #-#-#-#-#  cli_nova_configure_access_security_for_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  configure_access_and_security_for_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_nova_configure_access_security_for_instances.rst:84
-#: ../configure_access_and_security_for_instances.rst:121
+#: ../cli_nova_configure_access_security_for_instances.rst:89
+#: ../configure_access_and_security_for_instances.rst:126
 msgid "Import a key pair"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:86
+#: ../cli_nova_configure_access_security_for_instances.rst:91
 msgid ""
 "If you have already generated a key pair and the public key is located at "
-"``~/.ssh/id_rsa.pub``, run the following command to upload the public key::"
+"``~/.ssh/id_rsa.pub``, run the following command to upload the public key."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:92
+#: ../cli_nova_configure_access_security_for_instances.rst:99
 msgid ""
 "This command registers the public key at the Nova database and names the key "
 "pair the name that you specify for ``KEY_NAME``."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:95
+#: ../cli_nova_configure_access_security_for_instances.rst:102
 msgid ""
 "To ensure that the key pair has been successfully imported, list key pairs "
-"as follows::"
+"as follows:"
 msgstr ""
 
 # #-#-#-#-#  cli_nova_configure_access_security_for_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  sdk_configure_access_security_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_nova_configure_access_security_for_instances.rst:101
+#: ../cli_nova_configure_access_security_for_instances.rst:110
 #: ../sdk_configure_access_security_instances.rst:99
 msgid "Create and manage security groups"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:103
+#: ../cli_nova_configure_access_security_for_instances.rst:112
 msgid ""
 "To list the security groups for the current project, including descriptions, "
-"enter the following command::"
-msgstr ""
-
-#: ../cli_nova_configure_access_security_for_instances.rst:108
-msgid ""
-"To create a security group with a specified name and description, enter the "
-"following command::"
-msgstr ""
-
-#: ../cli_nova_configure_access_security_for_instances.rst:113
-msgid "To delete a specified group, enter the following command::"
+"enter the following command:"
 msgstr ""
 
 #: ../cli_nova_configure_access_security_for_instances.rst:119
+msgid ""
+"To create a security group with a specified name and description, enter the "
+"following command:"
+msgstr ""
+
+#: ../cli_nova_configure_access_security_for_instances.rst:126
+msgid "To delete a specified group, enter the following command:"
+msgstr ""
+
+#: ../cli_nova_configure_access_security_for_instances.rst:134
 msgid ""
 "You cannot delete the default security group for a project. Also, you cannot "
 "delete a security group that is assigned to a running instance."
@@ -2448,91 +2465,91 @@ msgstr ""
 
 # #-#-#-#-#  cli_nova_configure_access_security_for_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  sdk_configure_access_security_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_nova_configure_access_security_for_instances.rst:124
+#: ../cli_nova_configure_access_security_for_instances.rst:139
 #: ../sdk_configure_access_security_instances.rst:148
 msgid "Create and manage security group rules"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:126
+#: ../cli_nova_configure_access_security_for_instances.rst:141
 msgid ""
 "Modify security group rules with the :command:`nova secgroup-*-rule` "
 "commands. Before you begin, source the OpenStack RC file. For details, see :"
 "doc:`../common/cli_set_environment_variables_using_openstack_rc`."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:130
-msgid "To list the rules for a security group, run the following command::"
+#: ../cli_nova_configure_access_security_for_instances.rst:145
+msgid "To list the rules for a security group, run the following command:"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:134
+#: ../cli_nova_configure_access_security_for_instances.rst:151
 msgid ""
 "To allow SSH access to the instances, choose one of the following options:"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:137
+#: ../cli_nova_configure_access_security_for_instances.rst:154
 msgid ""
 "Allow access from all IP addresses, specified as IP subnet ``0.0.0.0/0`` in "
-"CIDR notation::"
+"CIDR notation:"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:142
+#: ../cli_nova_configure_access_security_for_instances.rst:161
 msgid ""
 "Allow access only from IP addresses from other security groups (source "
-"groups) to access the specified port::"
+"groups) to access the specified port:"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:148
+#: ../cli_nova_configure_access_security_for_instances.rst:169
 msgid "To allow pinging of the instances, choose one of the following options:"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:150
+#: ../cli_nova_configure_access_security_for_instances.rst:171
 msgid ""
 "Allow pinging from all IP addresses, specified as IP subnet ``0.0.0.0/0`` in "
-"CIDR notation::"
+"CIDR notation."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:155
+#: ../cli_nova_configure_access_security_for_instances.rst:178
 msgid "This allows access to all codes and all types of ICMP traffic."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:157
+#: ../cli_nova_configure_access_security_for_instances.rst:180
 msgid ""
 "Allow only members of other security groups (source groups) to ping "
-"instances::"
+"instances."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:163
+#: ../cli_nova_configure_access_security_for_instances.rst:188
 msgid ""
 "To allow access through a UDP port, such as allowing access to a DNS server "
 "that runs on a VM, choose one of the following options:"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:166
+#: ../cli_nova_configure_access_security_for_instances.rst:191
 msgid ""
 "Allow UDP access from IP addresses, specified as IP subnet ``0.0.0.0/0`` in "
-"CIDR notation::"
+"CIDR notation."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:171
+#: ../cli_nova_configure_access_security_for_instances.rst:198
 msgid ""
 "Allow only IP addresses from other security groups (source groups) to access "
-"the specified port::"
+"the specified port."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:178
+#: ../cli_nova_configure_access_security_for_instances.rst:207
 msgid "Delete a security group rule"
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:180
+#: ../cli_nova_configure_access_security_for_instances.rst:209
 msgid ""
 "To delete a security group rule, specify the same arguments that you used to "
 "create the rule."
 msgstr ""
 
-#: ../cli_nova_configure_access_security_for_instances.rst:183
+#: ../cli_nova_configure_access_security_for_instances.rst:212
 msgid ""
 "For example, to delete the security group rule that permits SSH access from "
-"all IP addresses, run the following command::"
+"all IP addresses, run the following command."
 msgstr ""
 
 #: ../cli_nova_launch_instance_from_volume.rst:3
@@ -2635,143 +2652,143 @@ msgid ""
 msgstr ""
 
 #: ../cli_nova_launch_instance_from_volume.rst:55
-msgid "Create a non-bootable volume::"
+msgid "Create a non-bootable volume."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:82
-msgid "List volumes::"
+#: ../cli_nova_launch_instance_from_volume.rst:84
+msgid "List volumes."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:91
+#: ../cli_nova_launch_instance_from_volume.rst:95
 msgid ""
-"Boot an instance from an image and attach the empty volume to the instance::"
+"Boot an instance from an image and attach the empty volume to the instance."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:134
+#: ../cli_nova_launch_instance_from_volume.rst:140
 msgid "Create volume from image and boot instance"
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:136
+#: ../cli_nova_launch_instance_from_volume.rst:142
 msgid ""
 "You can create a volume from an existing image, volume, or snapshot. This "
 "procedure shows you how to create a volume from an image, and use the volume "
 "to boot an instance."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:152
+#: ../cli_nova_launch_instance_from_volume.rst:160
 msgid "Note the ID of the image that you want to use to create a volume."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:167
+#: ../cli_nova_launch_instance_from_volume.rst:177
 msgid "Note the ID of the flavor that you want to use to create a volume."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:169
+#: ../cli_nova_launch_instance_from_volume.rst:179
 msgid ""
 "To create a bootable volume from an image and launch an instance from this "
 "volume, use the ``--block-device`` parameter."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:178
+#: ../cli_nova_launch_instance_from_volume.rst:190
 msgid "The parameters are:"
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:180
+#: ../cli_nova_launch_instance_from_volume.rst:192
 msgid "``--flavor`` FLAVOR. The flavor ID or name."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:182
+#: ../cli_nova_launch_instance_from_volume.rst:194
 msgid ""
 "``--block-device`` source=SOURCE,id=ID,dest=DEST,size=SIZE,shutdown=PRESERVE,"
 "bootindex=INDEX"
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:186
+#: ../cli_nova_launch_instance_from_volume.rst:198
 msgid ""
 "The type of object used to create the block device. Valid values are "
 "``volume``, ``snapshot``, ``image``, and ``blank``."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:187
+#: ../cli_nova_launch_instance_from_volume.rst:199
 msgid "**source=SOURCE**"
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:190
+#: ../cli_nova_launch_instance_from_volume.rst:202
 msgid "**id=ID**"
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:190
+#: ../cli_nova_launch_instance_from_volume.rst:202
 msgid "The ID of the source object."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:193
+#: ../cli_nova_launch_instance_from_volume.rst:205
 msgid ""
 "The type of the target virtual device. Valid values are ``volume`` and "
 "``local``."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:194
+#: ../cli_nova_launch_instance_from_volume.rst:206
 msgid "**dest=DEST**"
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:197
+#: ../cli_nova_launch_instance_from_volume.rst:209
 msgid "**size=SIZE**"
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:197
+#: ../cli_nova_launch_instance_from_volume.rst:209
 msgid "The size of the volume that is created."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:200
+#: ../cli_nova_launch_instance_from_volume.rst:212
 msgid ""
 "What to do with the volume when the instance is deleted. ``preserve`` does "
 "not delete the volume. ``remove`` deletes the volume."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:202
+#: ../cli_nova_launch_instance_from_volume.rst:214
 msgid "**shutdown={preserve\\|remove}**"
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:205
+#: ../cli_nova_launch_instance_from_volume.rst:217
 msgid "**bootindex=INDEX**"
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:205
+#: ../cli_nova_launch_instance_from_volume.rst:217
 msgid "Orders the boot disks. Use ``0`` to boot from this volume."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:207
+#: ../cli_nova_launch_instance_from_volume.rst:219
 msgid "``NAME``. The name for the server."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:209
+#: ../cli_nova_launch_instance_from_volume.rst:221
 msgid ""
 "Create a bootable volume from an image, before the instance boots. The "
-"volume is not deleted when the instance is terminated::"
+"volume is not deleted when the instance is terminated."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:250
+#: ../cli_nova_launch_instance_from_volume.rst:264
 msgid ""
 "List volumes to see the bootable volume and its attached "
-"``myInstanceFromVolume`` instance::"
+"``myInstanceFromVolume`` instance."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:263
+#: ../cli_nova_launch_instance_from_volume.rst:279
 msgid "Attach swap or ephemeral disk to an instance"
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:265
+#: ../cli_nova_launch_instance_from_volume.rst:281
 msgid ""
 "Use the nova ``boot`` ``--swap`` parameter to attach a swap disk on boot or "
 "the nova ``boot`` ``--ephemeral`` parameter to attach an ephemeral disk on "
 "boot. When you terminate the instance, both disks are deleted."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:269
-msgid "Boot an instance with a 512 MB swap disk and 2 GB ephemeral disk::"
+#: ../cli_nova_launch_instance_from_volume.rst:285
+msgid "Boot an instance with a 512 MB swap disk and 2 GB ephemeral disk."
 msgstr ""
 
-#: ../cli_nova_launch_instance_from_volume.rst:275
+#: ../cli_nova_launch_instance_from_volume.rst:293
 msgid ""
 "The flavor defines the maximum swap and ephemeral disk size. You cannot "
 "exceed these maximum values."
@@ -2789,24 +2806,24 @@ msgstr ""
 msgid ""
 "OpenStack supports booting instances using ISO images. But before you make "
 "such instances functional, use the :command:`nova boot` command with the "
-"following parameters to boot an instance::"
+"following parameters to boot an instance."
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:53
+#: ../cli_nova_launch_instance_using_ISO_image.rst:55
 msgid ""
 "In this command, ``ubuntu-14.04.2-server-amd64.iso`` is the ISO image, and "
 "``INSTANCE_NAME`` is the name of the new instance. ``NETWORK_UUID`` is a "
 "valid network id in your system."
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:59
+#: ../cli_nova_launch_instance_using_ISO_image.rst:61
 msgid ""
 "You need the Block Storage service, and the parameter ``shutdown=preserve`` "
 "is also mandatory, thus the volume will be preserved after the shutdown of "
 "the instance."
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:63
+#: ../cli_nova_launch_instance_using_ISO_image.rst:65
 msgid ""
 "After the instance is successfully launched, connect to the instance using a "
 "remote console and follow the instructions to install the system as using "
@@ -2817,52 +2834,52 @@ msgid ""
 "openstack.org/image-guide/create_images_manually.html>`_ for reference."
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:75
+#: ../cli_nova_launch_instance_using_ISO_image.rst:77
 msgid "Make the instances booted from ISO image functional"
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:77
+#: ../cli_nova_launch_instance_using_ISO_image.rst:79
 msgid ""
 "Now complete the following steps to make your instances created using ISO "
 "image actually functional."
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:80
-msgid "Delete the instance using the following command::"
+#: ../cli_nova_launch_instance_using_ISO_image.rst:82
+msgid "Delete the instance using the following command."
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:84
+#: ../cli_nova_launch_instance_using_ISO_image.rst:88
 msgid ""
 "After you delete the instance, the system you have just installed using your "
 "ISO image remains, because the parameter ``shutdown=preserve`` was set, so "
-"run the following command::"
+"run the following command."
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:95
+#: ../cli_nova_launch_instance_using_ISO_image.rst:101
 msgid ""
 "You get a list with all the volumes in your system. In this list, you can "
 "find the volume that is attached to your ISO created instance, with the "
 "false bootable property."
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:99
-msgid "Upload the volume to glance::"
+#: ../cli_nova_launch_instance_using_ISO_image.rst:105
+msgid "Upload the volume to glance."
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:109
+#: ../cli_nova_launch_instance_using_ISO_image.rst:117
 msgid ""
 "The ``VOLUME_UUID`` is the uuid of the volume that is attached to your ISO "
 "created instance, and the ``IMAGE_NAME`` is the name that you give to your "
 "new image."
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:113
+#: ../cli_nova_launch_instance_using_ISO_image.rst:121
 msgid ""
 "After the image is successfully uploaded, you can use the new image to boot "
 "instances."
 msgstr ""
 
-#: ../cli_nova_launch_instance_using_ISO_image.rst:116
+#: ../cli_nova_launch_instance_using_ISO_image.rst:124
 msgid ""
 "The instances launched using this image contain the system that you have "
 "just installed using the ISO image."
@@ -2885,7 +2902,7 @@ msgstr ""
 #: ../cli_provide_user_data_to_instances.rst:13
 msgid ""
 "You can place user data in a local file and pass it through the ``--user-"
-"data <user-data-file>`` parameter at instance creation::"
+"data <user-data-file>`` parameter at instance creation."
 msgstr ""
 
 #: ../cli_reboot_an_instance.rst:3
@@ -2904,58 +2921,58 @@ msgid "By default, when you reboot an instance, it is a soft reboot."
 msgstr ""
 
 #: ../cli_reboot_an_instance.rst:15
-msgid "To perform a hard reboot, pass the ``--hard`` parameter, as follows::"
+msgid ""
+"To perform a hard reboot, pass the :option:`--hard` parameter, as follows:"
 msgstr ""
 
-#: ../cli_reboot_an_instance.rst:19
+#: ../cli_reboot_an_instance.rst:21
 msgid ""
 "It is also possible to reboot a running instance into rescue mode. For "
 "example, this operation may be required, if a filesystem of an instance "
 "becomes corrupted with prolonged use."
 msgstr ""
 
-#: ../cli_reboot_an_instance.rst:25
+#: ../cli_reboot_an_instance.rst:27
 msgid ""
 "Pause, suspend, and stop operations are not allowed when an instance is "
 "running in rescue mode, as triggering these actions causes the loss of the "
 "original instance state, and makes it impossible to unrescue the instance."
 msgstr ""
 
-#: ../cli_reboot_an_instance.rst:30
+#: ../cli_reboot_an_instance.rst:32
 msgid ""
 "Rescue mode provides a mechanism for access, even if an image renders the "
 "instance inaccessible. By default, it starts an instance from the initial "
 "image attaching the current boot disk as a secondary one."
 msgstr ""
 
-#: ../cli_reboot_an_instance.rst:34
+#: ../cli_reboot_an_instance.rst:36
 msgid ""
-"To perform an instance reboot into rescue mode, run the following command::"
+"To perform an instance reboot into rescue mode, run the following command:"
 msgstr ""
 
-#: ../cli_reboot_an_instance.rst:41
+#: ../cli_reboot_an_instance.rst:45
 msgid ""
 "On running the :command:`nova rescue` command, an instance performs a soft "
 "shutdown first. This means that the guest operating system has a chance to "
 "perform a controlled shutdown before the instance is powered off. The "
 "shutdown behavior is configured by the ``shutdown_timeout`` parameter that "
-"can be set in the :file:`nova.conf` file. Its value stands for the overall "
+"can be set in the ``nova.conf`` file. Its value stands for the overall "
 "period (in seconds) a guest operation system is allowed to complete the "
 "shutdown. The default timeout is 60 seconds. See `Description of Compute "
 "configuration options <http://docs.openstack.org/liberty/config-reference/"
 "content/list-of-compute-config-options.html>`_ for details."
 msgstr ""
 
-#: ../cli_reboot_an_instance.rst:59
+#: ../cli_reboot_an_instance.rst:63
 msgid ""
-"To restart the instance from the normal boot disk, run the following "
-"command::"
+"To restart the instance from the normal boot disk, run the following command:"
 msgstr ""
 
-#: ../cli_reboot_an_instance.rst:64
+#: ../cli_reboot_an_instance.rst:70
 msgid ""
 "If you want to rescue an instance with a specific image, rather than the "
-"default one, use the ``--rescue_image_ref`` parameter::"
+"default one, use the :option:`--rescue_image_ref` parameter:"
 msgstr ""
 
 #: ../cli_search_instance_with_ip_address.rst:3
@@ -2964,8 +2981,8 @@ msgstr ""
 
 #: ../cli_search_instance_with_ip_address.rst:5
 msgid ""
-"You can search for an instance using the IP address parameter, ``--ip``, "
-"with the :command:`nova list` command."
+"You can search for an instance using the IP address parameter, :option:`--"
+"ip`, with the :command:`nova list` command."
 msgstr ""
 
 #: ../cli_search_instance_with_ip_address.rst:12
@@ -2985,37 +3002,37 @@ msgid "Pause and unpause an instance"
 msgstr ""
 
 #: ../cli_stop_and_start_an_instance.rst:10
-msgid "To pause an instance, run the following command::"
+msgid "To pause an instance, run the following command:"
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:14
+#: ../cli_stop_and_start_an_instance.rst:16
 msgid ""
 "This command stores the state of the VM in RAM. A paused instance continues "
 "to run in a frozen state."
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:17
-msgid "To unpause an instance, run the following command::"
+#: ../cli_stop_and_start_an_instance.rst:19
+msgid "To unpause an instance, run the following command:"
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:22
+#: ../cli_stop_and_start_an_instance.rst:26
 msgid "Suspend and resume an instance"
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:24
+#: ../cli_stop_and_start_an_instance.rst:28
 msgid ""
-"To initiate a hypervisor-level suspend operation, run the following command::"
+"To initiate a hypervisor-level suspend operation, run the following command:"
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:29
-msgid "To resume a suspended instance, run the following command::"
+#: ../cli_stop_and_start_an_instance.rst:35
+msgid "To resume a suspended instance, run the following command:"
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:34
+#: ../cli_stop_and_start_an_instance.rst:42
 msgid "Shelve and unshelve an instance"
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:36
+#: ../cli_stop_and_start_an_instance.rst:44
 msgid ""
 "Shelving is useful if you have an instance that you are not using, but would "
 "like retain in your list of servers. For example, you can stop an instance "
@@ -3025,34 +3042,34 @@ msgid ""
 "also be entirely removed."
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:43
+#: ../cli_stop_and_start_an_instance.rst:51
 msgid "You can run the following shelving tasks:"
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:45
+#: ../cli_stop_and_start_an_instance.rst:53
 msgid ""
 "Shelve an instance - Shuts down the instance, and stores it together with "
 "associated data and resources (a snapshot is taken if not volume backed). "
 "Anything in memory is lost."
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:55
+#: ../cli_stop_and_start_an_instance.rst:63
 msgid ""
 "By default, the :command:`nova shelve` command gives the guest operating "
 "system a chance to perform a controlled shutdown before the instance is "
 "powered off. The shutdown behavior is configured by the ``shutdown_timeout`` "
-"parameter that can be set in the :file:`nova.conf` file. Its value stands "
-"for the overall period (in seconds) a guest operation system is allowed to "
+"parameter that can be set in the ``nova.conf`` file. Its value stands for "
+"the overall period (in seconds) a guest operation system is allowed to "
 "complete the shutdown. The default timeout is 60 seconds. See `Description "
 "of Compute configuration options <http://docs.openstack.org/liberty/config-"
 "reference/content/list-of-compute-config-options.html>`_ for details."
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:71
+#: ../cli_stop_and_start_an_instance.rst:79
 msgid "Unshelve an instance - Restores the instance."
 msgstr ""
 
-#: ../cli_stop_and_start_an_instance.rst:77
+#: ../cli_stop_and_start_an_instance.rst:85
 msgid ""
 "Remove a shelved instance - Removes the instance from the server; data and "
 "resource associations are deleted. If an instance is no longer needed, you "
@@ -3388,7 +3405,7 @@ msgstr ""
 
 #: ../cli_swift_create_containers.rst:34
 msgid ""
-"You can also use the ``swift stat`` command with the ``ACCOUNT`` or "
+"You can also use the :command:`swift stat` command with the ``ACCOUNT`` or "
 "``CONTAINER`` names as parameters."
 msgstr ""
 
@@ -3477,7 +3494,7 @@ msgid "token"
 msgstr ""
 
 #: ../cli_swift_env_vars.rst:19
-msgid "To obtain these values, run the ``swift stat -v`` command."
+msgid "To obtain these values, run the :command:`swift stat -v` command."
 msgstr ""
 
 #: ../cli_swift_env_vars.rst:21
@@ -4018,8 +4035,9 @@ msgstr ""
 
 #: ../cli_swift_manage_access_swift.rst:11
 msgid ""
-"To give a user read access, use the ``swift post`` command with the ``-r`` "
-"parameter. To give a user write access, use the ``-w`` parameter."
+"To give a user read access, use the :command:`swift post` command with the :"
+"option:`-r` parameter. To give a user write access, use the :option:`-w` "
+"parameter."
 msgstr ""
 
 #: ../cli_swift_manage_access_swift.rst:15
@@ -4577,68 +4595,68 @@ msgstr ""
 msgid ""
 "Shut down the source VM before you take the snapshot to ensure that all data "
 "is flushed to disk. If necessary, list the instances to view the instance "
-"name::"
+"name:"
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:42
+#: ../cli_use_snapshots_to_migrate_instances.rst:44
 msgid ""
 "Use the :command:`nova list` command to confirm that the instance shows a "
-"``SHUTOFF`` status::"
+"``SHUTOFF`` status:"
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:52
-msgid "Use the :command:`nova image-create` command to take a snapshot::"
+#: ../cli_use_snapshots_to_migrate_instances.rst:56
+msgid "Use the :command:`nova image-create` command to take a snapshot:"
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:57
+#: ../cli_use_snapshots_to_migrate_instances.rst:63
 msgid ""
 "Use the :command:`nova image-list` command to check the status until the "
-"status is ``ACTIVE``::"
+"status is ``ACTIVE``:"
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:73
+#: ../cli_use_snapshots_to_migrate_instances.rst:81
 msgid "Download the snapshot as an image"
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:75
-msgid "Get the image ID::"
+#: ../cli_use_snapshots_to_migrate_instances.rst:83
+msgid "Get the image ID:"
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:84
+#: ../cli_use_snapshots_to_migrate_instances.rst:94
 msgid ""
 "Download the snapshot by using the image ID that was returned in the "
-"previous step::"
+"previous step:"
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:92
+#: ../cli_use_snapshots_to_migrate_instances.rst:104
 msgid ""
 "The :command:`glance image-download` command requires the image ID and "
 "cannot use the image name. Check there is sufficient space on the "
 "destination file system for the image file."
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:97
+#: ../cli_use_snapshots_to_migrate_instances.rst:109
 msgid ""
 "Make the image available to the new environment, either through HTTP or "
 "direct upload to a machine (``scp``)."
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:103
+#: ../cli_use_snapshots_to_migrate_instances.rst:115
 msgid "Import the snapshot to the new environment"
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:105
+#: ../cli_use_snapshots_to_migrate_instances.rst:117
 msgid "In the new project or cloud environment, import the snapshot:"
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:114
+#: ../cli_use_snapshots_to_migrate_instances.rst:126
 msgid "Boot a new instance from the snapshot"
 msgstr ""
 
-#: ../cli_use_snapshots_to_migrate_instances.rst:116
+#: ../cli_use_snapshots_to_migrate_instances.rst:128
 msgid ""
 "In the new project or cloud environment, use the snapshot to create the new "
-"instance::"
+"instance:"
 msgstr ""
 
 #: ../configure_access_and_security_for_instances.rst:5
@@ -4667,7 +4685,7 @@ msgid ""
 "`dashboard_import_keypair`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:28
+#: ../configure_access_and_security_for_instances.rst:29
 msgid ""
 "When an instance is created in OpenStack, it is automatically assigned a "
 "fixed IP address in the network to which the instance is assigned. This IP "
@@ -4678,11 +4696,11 @@ msgid ""
 "time, regardless of the state of the instances involved."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:39
+#: ../configure_access_and_security_for_instances.rst:40
 msgid "Add a rule to the default security group"
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:41
+#: ../configure_access_and_security_for_instances.rst:42
 msgid ""
 "This procedure enables SSH and ICMP (ping) access to instances. The rules "
 "apply to all instances within a given project, and should be set for every "
@@ -4690,13 +4708,13 @@ msgid ""
 "instances."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:46
+#: ../configure_access_and_security_for_instances.rst:47
 msgid ""
 "This procedure can be adjusted as necessary to add additional security group "
 "rules to a project, if your cloud requires them."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:49
+#: ../configure_access_and_security_for_instances.rst:52
 msgid ""
 "When adding a rule, you must specify the protocol used with the destination "
 "port or source port."
@@ -4710,24 +4728,24 @@ msgstr ""
 # #-#-#-#-#  dashboard_manage_images.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_manage_volumes.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_stacks.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../configure_access_and_security_for_instances.rst:52
-#: ../configure_access_and_security_for_instances.rst:101
-#: ../configure_access_and_security_for_instances.rst:124
-#: ../configure_access_and_security_for_instances.rst:180
+#: ../configure_access_and_security_for_instances.rst:55
+#: ../configure_access_and_security_for_instances.rst:106
+#: ../configure_access_and_security_for_instances.rst:128
+#: ../configure_access_and_security_for_instances.rst:186
 #: ../dashboard_create_networks.rst:19 ../dashboard_create_networks.rst:72
 #: ../dashboard_databases.rst:60 ../dashboard_databases.rst:115
 #: ../dashboard_databases.rst:146 ../dashboard_databases.rst:175
 #: ../dashboard_databases.rst:198 ../dashboard_launch_instances.rst:33
-#: ../dashboard_launch_instances.rst:209 ../dashboard_launch_instances.rst:224
-#: ../dashboard_launch_instances.rst:246 ../dashboard_manage_containers.rst:19
-#: ../dashboard_manage_containers.rst:39 ../dashboard_manage_containers.rst:71
-#: ../dashboard_manage_containers.rst:93
-#: ../dashboard_manage_containers.rst:123
-#: ../dashboard_manage_containers.rst:150 ../dashboard_manage_images.rst:29
+#: ../dashboard_launch_instances.rst:217 ../dashboard_launch_instances.rst:232
+#: ../dashboard_launch_instances.rst:254 ../dashboard_manage_containers.rst:19
+#: ../dashboard_manage_containers.rst:41 ../dashboard_manage_containers.rst:75
+#: ../dashboard_manage_containers.rst:99
+#: ../dashboard_manage_containers.rst:129
+#: ../dashboard_manage_containers.rst:156 ../dashboard_manage_images.rst:29
 #: ../dashboard_manage_images.rst:98 ../dashboard_manage_images.rst:122
 #: ../dashboard_manage_volumes.rst:14 ../dashboard_manage_volumes.rst:62
-#: ../dashboard_manage_volumes.rst:93 ../dashboard_manage_volumes.rst:109
-#: ../dashboard_manage_volumes.rst:130 ../dashboard_manage_volumes.rst:156
+#: ../dashboard_manage_volumes.rst:95 ../dashboard_manage_volumes.rst:111
+#: ../dashboard_manage_volumes.rst:132 ../dashboard_manage_volumes.rst:160
 #: ../dashboard_stacks.rst:28 ../dashboard_stacks.rst:122
 #: ../dashboard_stacks.rst:141
 msgid "Log in to the dashboard."
@@ -4740,147 +4758,148 @@ msgstr ""
 # #-#-#-#-#  dashboard_manage_images.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_manage_volumes.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_stacks.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../configure_access_and_security_for_instances.rst:54
-#: ../configure_access_and_security_for_instances.rst:103
-#: ../configure_access_and_security_for_instances.rst:126
-#: ../configure_access_and_security_for_instances.rst:182
+#: ../configure_access_and_security_for_instances.rst:57
+#: ../configure_access_and_security_for_instances.rst:108
+#: ../configure_access_and_security_for_instances.rst:130
+#: ../configure_access_and_security_for_instances.rst:188
 #: ../dashboard_create_networks.rst:21 ../dashboard_create_networks.rst:74
-#: ../dashboard_launch_instances.rst:35 ../dashboard_launch_instances.rst:211
-#: ../dashboard_launch_instances.rst:226 ../dashboard_launch_instances.rst:248
-#: ../dashboard_manage_containers.rst:21 ../dashboard_manage_containers.rst:41
-#: ../dashboard_manage_containers.rst:73 ../dashboard_manage_containers.rst:95
-#: ../dashboard_manage_containers.rst:125
-#: ../dashboard_manage_containers.rst:152 ../dashboard_manage_images.rst:31
+#: ../dashboard_launch_instances.rst:35 ../dashboard_launch_instances.rst:219
+#: ../dashboard_launch_instances.rst:234 ../dashboard_launch_instances.rst:256
+#: ../dashboard_manage_containers.rst:21 ../dashboard_manage_containers.rst:43
+#: ../dashboard_manage_containers.rst:77
+#: ../dashboard_manage_containers.rst:101
+#: ../dashboard_manage_containers.rst:131
+#: ../dashboard_manage_containers.rst:158 ../dashboard_manage_images.rst:31
 #: ../dashboard_manage_images.rst:100 ../dashboard_manage_images.rst:124
 #: ../dashboard_manage_volumes.rst:16 ../dashboard_manage_volumes.rst:64
-#: ../dashboard_manage_volumes.rst:95 ../dashboard_manage_volumes.rst:111
-#: ../dashboard_manage_volumes.rst:132 ../dashboard_manage_volumes.rst:158
+#: ../dashboard_manage_volumes.rst:97 ../dashboard_manage_volumes.rst:113
+#: ../dashboard_manage_volumes.rst:134 ../dashboard_manage_volumes.rst:162
 #: ../dashboard_stacks.rst:29 ../dashboard_stacks.rst:123
 #: ../dashboard_stacks.rst:142
 msgid "Select the appropriate project from the drop down menu at the top left."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:56
+#: ../configure_access_and_security_for_instances.rst:59
 msgid ""
 "On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click :"
 "guilabel:`Access & Security` category. The :guilabel:`Security Groups` tab "
 "shows the security groups that are available for this project."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:61
+#: ../configure_access_and_security_for_instances.rst:64
 msgid "Select the default security group and click :guilabel:`Manage Rules`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:63
+#: ../configure_access_and_security_for_instances.rst:66
 msgid "To allow SSH access, click :guilabel:`Add Rule`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:65
-#: ../configure_access_and_security_for_instances.rst:82
+#: ../configure_access_and_security_for_instances.rst:68
+#: ../configure_access_and_security_for_instances.rst:87
 msgid "In the :guilabel:`Add Rule` dialog box, enter the following values:"
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:67
+#: ../configure_access_and_security_for_instances.rst:70
 msgid "**Rule**: ``SSH``"
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:68
-#: ../configure_access_and_security_for_instances.rst:86
+#: ../configure_access_and_security_for_instances.rst:71
+#: ../configure_access_and_security_for_instances.rst:91
 msgid "**Remote**: ``CIDR``"
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:69
-#: ../configure_access_and_security_for_instances.rst:87
+#: ../configure_access_and_security_for_instances.rst:72
+#: ../configure_access_and_security_for_instances.rst:92
 msgid "**CIDR**: ``0.0.0.0/0``"
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:71
+#: ../configure_access_and_security_for_instances.rst:76
 msgid ""
 "To accept requests from a particular range of IP addresses, specify the IP "
 "address block in the :guilabel:`CIDR` box."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:75
-#: ../configure_access_and_security_for_instances.rst:89
+#: ../configure_access_and_security_for_instances.rst:80
+#: ../configure_access_and_security_for_instances.rst:94
 msgid "Click :guilabel:`Add`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:77
+#: ../configure_access_and_security_for_instances.rst:82
 msgid ""
 "Instances will now have SSH port 22 open for requests from any IP address."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:80
+#: ../configure_access_and_security_for_instances.rst:85
 msgid "To add an ICMP rule, click :guilabel:`Add Rule`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:84
+#: ../configure_access_and_security_for_instances.rst:89
 msgid "**Rule**: ``All ICMP``"
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:85
+#: ../configure_access_and_security_for_instances.rst:90
 msgid "**Direction**: ``Ingress``"
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:91
+#: ../configure_access_and_security_for_instances.rst:96
 msgid "Instances will now accept all incoming ICMP packets."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:98
+#: ../configure_access_and_security_for_instances.rst:103
 msgid "Create at least one key pair for each project."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:105
-#: ../configure_access_and_security_for_instances.rst:128
-#: ../configure_access_and_security_for_instances.rst:184
+#: ../configure_access_and_security_for_instances.rst:110
+#: ../configure_access_and_security_for_instances.rst:132
+#: ../configure_access_and_security_for_instances.rst:190
 msgid ""
 "On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click :"
 "guilabel:`Access & Security` category."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:108
-#: ../configure_access_and_security_for_instances.rst:131
+#: ../configure_access_and_security_for_instances.rst:113
+#: ../configure_access_and_security_for_instances.rst:135
 msgid ""
 "Click the :guilabel:`Key Pairs` tab, which shows the key pairs that are "
 "available for this project."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:111
+#: ../configure_access_and_security_for_instances.rst:116
 msgid "Click :guilabel:`Create Key Pair`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:113
+#: ../configure_access_and_security_for_instances.rst:118
 msgid ""
 "In the :guilabel:`Create Key Pair` dialog box, enter a name for your key "
 "pair, and click :guilabel:`Create Key Pair`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:116
+#: ../configure_access_and_security_for_instances.rst:121
 msgid "Respond to the prompt to download the key pair."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:134
+#: ../configure_access_and_security_for_instances.rst:138
 msgid "Click :guilabel:`Import Key Pair`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:136
+#: ../configure_access_and_security_for_instances.rst:140
 msgid ""
 "In the :guilabel:`Import Key Pair` dialog box, enter the name of your key "
 "pair, copy the public key into the :guilabel:`Public Key` box, and then "
 "click :guilabel:`Import Key Pair`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:140
+#: ../configure_access_and_security_for_instances.rst:144
 msgid "Save the ``*.pem`` file locally."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:142
+#: ../configure_access_and_security_for_instances.rst:146
 msgid ""
 "To change its permissions so that only you can read and write to the file, "
 "run the following command:"
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:149
+#: ../configure_access_and_security_for_instances.rst:155
 msgid ""
 "If you are using the Dashboard from a Windows computer, use PuTTYgen to load "
 "the ``*.pem`` file and convert and save it as ``*.ppk``. For more "
@@ -4888,24 +4907,24 @@ msgid ""
 "docs/ui_puttygen>`__."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:154
-msgid "To make the key pair known to SSH, run the **ssh-add** command."
+#: ../configure_access_and_security_for_instances.rst:160
+msgid "To make the key pair known to SSH, run the :command:`ssh-add` command."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:160
+#: ../configure_access_and_security_for_instances.rst:166
 msgid "The Compute database registers the public key of the key pair."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:162
+#: ../configure_access_and_security_for_instances.rst:168
 msgid ""
 "The Dashboard lists the key pair on the :guilabel:`Access & Security` tab."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:165
+#: ../configure_access_and_security_for_instances.rst:171
 msgid "Allocate a floating IP address to an instance"
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:167
+#: ../configure_access_and_security_for_instances.rst:173
 msgid ""
 "When an instance is created in OpenStack, it is automatically assigned a "
 "fixed IP address in the network to which the instance is assigned. This IP "
@@ -4913,7 +4932,7 @@ msgid ""
 "terminated."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:172
+#: ../configure_access_and_security_for_instances.rst:178
 msgid ""
 "However, in addition to the fixed IP address, a floating IP address can also "
 "be attached to an instance. Unlike fixed IP addresses, floating IP addresses "
@@ -4923,60 +4942,60 @@ msgid ""
 "address with a specific instance."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:187
+#: ../configure_access_and_security_for_instances.rst:193
 msgid ""
 "Click the :guilabel:`Floating IPs` tab, which shows the floating IP "
 "addresses allocated to instances."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:190
+#: ../configure_access_and_security_for_instances.rst:196
 msgid "Click :guilabel:`Allocate IP To Project`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:192
+#: ../configure_access_and_security_for_instances.rst:198
 msgid "Choose the pool from which to pick the IP address."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:194
+#: ../configure_access_and_security_for_instances.rst:200
 msgid "Click :guilabel:`Allocate IP`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:196
+#: ../configure_access_and_security_for_instances.rst:202
 msgid "In the :guilabel:`Floating IPs` list, click :guilabel:`Associate`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:198
+#: ../configure_access_and_security_for_instances.rst:204
 msgid ""
 "In the :guilabel:`Manage Floating IP Associations` dialog box, choose the "
 "following options:"
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:201
+#: ../configure_access_and_security_for_instances.rst:207
 msgid ""
 "The :guilabel:`IP Address` field is filled automatically, but you can add a "
 "new IP address by clicking the :guilabel:`+` button."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:205
+#: ../configure_access_and_security_for_instances.rst:211
 msgid ""
 "In the :guilabel:`Port to be associated` field, select a port from the list."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:208
+#: ../configure_access_and_security_for_instances.rst:214
 msgid "The list shows all the instances with their fixed IP addresses."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:210
+#: ../configure_access_and_security_for_instances.rst:216
 msgid "Click :guilabel:`Associate`."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:212
+#: ../configure_access_and_security_for_instances.rst:220
 msgid ""
 "To disassociate an IP address from an instance, click the :guilabel:"
 "`Disassociate` button."
 msgstr ""
 
-#: ../configure_access_and_security_for_instances.rst:215
+#: ../configure_access_and_security_for_instances.rst:223
 msgid ""
 "To release the floating IP address back into the pool of addresses, the :"
 "guilabel:`Release Floating IP` option at the :guilabel:`Actions` column."
@@ -5012,7 +5031,8 @@ msgstr ""
 
 #: ../create_db.rst:23
 msgid ""
-"The first step is to list flavors by using the nova ``flavor-list`` command."
+"The first step is to list flavors by using the :command:`nova flavor-list` "
+"command."
 msgstr ""
 
 #: ../create_db.rst:26
@@ -5021,174 +5041,176 @@ msgid ""
 "flavors in your environment:"
 msgstr ""
 
-#: ../create_db.rst:42
+#: ../create_db.rst:43
 msgid ""
 "Now take a look at the minimum requirements for various database instances:"
 msgstr ""
 
-#: ../create_db.rst:46
+#: ../create_db.rst:47
 msgid "Database"
 msgstr ""
 
-#: ../create_db.rst:46
+#: ../create_db.rst:47
 msgid "Disk (GB)"
 msgstr ""
 
-#: ../create_db.rst:46
+#: ../create_db.rst:47
 msgid "RAM (MB)"
 msgstr ""
 
-#: ../create_db.rst:46
+#: ../create_db.rst:47
 msgid "VCPUs"
 msgstr ""
 
-#: ../create_db.rst:48 ../create_db.rst:50 ../create_db.rst:52
-#: ../create_db.rst:54
+#: ../create_db.rst:49 ../create_db.rst:51 ../create_db.rst:53
+#: ../create_db.rst:55
 msgid "1"
 msgstr ""
 
-#: ../create_db.rst:48 ../create_db.rst:50 ../create_db.rst:52
-#: ../create_db.rst:54
+#: ../create_db.rst:49 ../create_db.rst:51 ../create_db.rst:53
+#: ../create_db.rst:55
 msgid "5"
 msgstr ""
 
-#: ../create_db.rst:48 ../create_db.rst:54
+#: ../create_db.rst:49 ../create_db.rst:55
 msgid "512"
 msgstr ""
 
-#: ../create_db.rst:48
+#: ../create_db.rst:49
 msgid "MySQL"
 msgstr ""
 
-#: ../create_db.rst:50
+#: ../create_db.rst:51
 msgid "2048"
 msgstr ""
 
-#: ../create_db.rst:50
+#: ../create_db.rst:51
 msgid "Cassandra"
 msgstr ""
 
-#: ../create_db.rst:52
+#: ../create_db.rst:53
 msgid "1024"
 msgstr ""
 
-#: ../create_db.rst:52
+#: ../create_db.rst:53
 msgid "MongoDB"
 msgstr ""
 
-#: ../create_db.rst:54
+#: ../create_db.rst:55
 msgid "Redis"
 msgstr ""
 
-#: ../create_db.rst:57
+#: ../create_db.rst:58
 msgid ""
 "If you have a custom flavor that meets the needs of the database that you "
 "want to create, proceed to :ref:`Step 2 <create-database-instance>` and use "
 "that flavor."
 msgstr ""
 
-#: ../create_db.rst:61
+#: ../create_db.rst:62
 msgid ""
 "If your environment does not have a suitable flavor, an administrative user "
-"must create a custom flavor by using the nova ``flavor-create`` command."
+"must create a custom flavor by using the :command:`nova flavor-create` "
+"command."
 msgstr ""
 
-#: ../create_db.rst:65
+#: ../create_db.rst:66
 msgid ""
 "**MySQL example.** This example creates a flavor that you can use with a "
 "MySQL database. This example has the following attributes:"
 msgstr ""
 
-#: ../create_db.rst:68
+#: ../create_db.rst:69
 msgid "Flavor name: ``mysql_minimum``"
 msgstr ""
 
-#: ../create_db.rst:70
+#: ../create_db.rst:71
 msgid ""
 "Flavor ID: You must use an ID that is not already in use. In this example, "
 "IDs 1 through 5 are in use, so use ID ``6``."
 msgstr ""
 
-#: ../create_db.rst:73
+#: ../create_db.rst:74
 msgid "RAM: ``512``"
 msgstr ""
 
-#: ../create_db.rst:75
+#: ../create_db.rst:76
 msgid "Root volume size in GB: ``5``"
 msgstr ""
 
-#: ../create_db.rst:77
+#: ../create_db.rst:78
 msgid "Virtual CPUs: ``1``"
 msgstr ""
 
-#: ../create_db.rst:90
+#: ../create_db.rst:91
 msgid "**Create a database instance**"
 msgstr ""
 
-#: ../create_db.rst:92
+#: ../create_db.rst:93
 msgid ""
 "This example creates a database instance with the following characteristics:"
 msgstr ""
 
-#: ../create_db.rst:95
+#: ../create_db.rst:96
 msgid "Name of the instance: ``mysql_instance_1``"
 msgstr ""
 
-#: ../create_db.rst:97
+#: ../create_db.rst:98
 msgid "Database flavor: ``6``"
 msgstr ""
 
-#: ../create_db.rst:99
+#: ../create_db.rst:100
 msgid "In addition, this command specifies these options for the instance:"
 msgstr ""
 
-#: ../create_db.rst:101
+#: ../create_db.rst:102
 msgid "A volume size of ``5`` (5 GB)."
 msgstr ""
 
-#: ../create_db.rst:103
+#: ../create_db.rst:104
 msgid "The ``myDB`` database."
 msgstr ""
 
-#: ../create_db.rst:105
+#: ../create_db.rst:106
 msgid ""
 "The database is based on the ``mysql`` data store and the ``mysql-5.5`` "
 "datastore\\_version."
 msgstr ""
 
-#: ../create_db.rst:108
+#: ../create_db.rst:109
 msgid "The ``userA`` user with the ``password`` password."
 msgstr ""
 
-#: ../create_db.rst:129
+#: ../create_db.rst:130
 msgid "**Get the IP address of the database instance**"
 msgstr ""
 
-#: ../create_db.rst:131
+#: ../create_db.rst:132
 msgid ""
-"First, use the trove ``list`` command to list all instances and their IDs:"
+"First, use the :command:`trove list` command to list all instances and their "
+"IDs:"
 msgstr ""
 
-#: ../create_db.rst:143
+#: ../create_db.rst:144
 msgid "This command returns the instance ID of your new instance."
 msgstr ""
 
-#: ../create_db.rst:145
+#: ../create_db.rst:146
 msgid ""
-"You can now pass in the instance ID with the trove ``show`` command to get "
-"the IP address of the instance. In this example, replace ``INSTANCE_ID`` "
-"with ``5599dad6-731e-44df-bb60-488da3da9cfe``."
-msgstr ""
-
-#: ../create_db.rst:167
-msgid "This command returns the IP address of the database instance."
+"You can now pass in the instance ID with the :command:`trove show` command "
+"to get the IP address of the instance. In this example, replace "
+"``INSTANCE_ID`` with ``5599dad6-731e-44df-bb60-488da3da9cfe``."
 msgstr ""
 
 #: ../create_db.rst:169
-msgid "**Access the new database**"
+msgid "This command returns the IP address of the database instance."
 msgstr ""
 
 #: ../create_db.rst:171
+msgid "**Access the new database**"
+msgstr ""
+
+#: ../create_db.rst:173
 msgid ""
 "You can now access the new database you just created (myDB) by using typical "
 "database access commands. In this MySQL example, replace ``IP_ADDRESS`` with "
@@ -5314,7 +5336,7 @@ msgstr ""
 
 # #-#-#-#-#  dashboard_create_networks.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_manage_containers.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../dashboard_create_networks.rst:65 ../dashboard_manage_containers.rst:170
+#: ../dashboard_create_networks.rst:65 ../dashboard_manage_containers.rst:176
 msgid "Click :guilabel:`Create`."
 msgstr ""
 
@@ -5403,7 +5425,7 @@ msgstr ""
 
 # #-#-#-#-#  dashboard_databases.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  trove-manage-db.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../dashboard_databases.rst:5 ../trove-manage-db.rst:4
+#: ../dashboard_databases.rst:5 ../trove-manage-db.rst:5
 msgid ""
 "The Database service provides scalable and reliable cloud provisioning "
 "functionality for both relational and non-relational database engines. Users "
@@ -5439,15 +5461,15 @@ msgstr ""
 
 #: ../dashboard_databases.rst:31
 msgid ""
-"Replace *``DATASTORE_NAME``* with the name that the administrative user set "
-"when issuing the **trove-manage** command to create the datastore. You can "
-"use the trove **datastore-list** command to display the datastores that are "
-"available in your environment."
+"Replace ``DATASTORE_NAME`` with the name that the administrative user set "
+"when issuing the :command:`trove-manage` command to create the datastore. "
+"You can use the trove :command:`datastore-list` command to display the "
+"datastores that are available in your environment."
 msgstr ""
 
 #: ../dashboard_databases.rst:36
 msgid ""
-"For example, if your MySQL datastore name is set to ``mysql``, your entry "
+"For example, if your MySQL data store name is set to ``mysql``, your entry "
 "would look like this:"
 msgstr ""
 
@@ -5574,6 +5596,10 @@ msgid ""
 "In the :guilabel:`Backup Database` dialog box, specify the following values:"
 msgstr ""
 
+#: ../dashboard_databases.rst:129
+msgid "Name"
+msgstr ""
+
 #: ../dashboard_databases.rst:131
 msgid "Specify a name for the backup."
 msgstr ""
@@ -5625,7 +5651,7 @@ msgstr ""
 
 # #-#-#-#-#  dashboard_databases.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../dashboard_databases.rst:162 ../dashboard_launch_instances.rst:174
+#: ../dashboard_databases.rst:162 ../dashboard_launch_instances.rst:178
 msgid "Click :guilabel:`Launch`."
 msgstr ""
 
@@ -5791,31 +5817,31 @@ msgstr ""
 msgid "Assign a name to the virtual machine."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:61
+#: ../dashboard_launch_instances.rst:63
 msgid "The name you assign here becomes the initial host name of the server."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:64
+#: ../dashboard_launch_instances.rst:66
 msgid ""
 "After the server is built, if you change the server name in the API or "
 "change the host name directly, the names are not updated in the dashboard."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:68
+#: ../dashboard_launch_instances.rst:70
 msgid ""
 "Server names are not guaranteed to be unique when created so you could have "
 "two instances with the same host name."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:69
+#: ../dashboard_launch_instances.rst:71
 msgid "Instance Name"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:72
+#: ../dashboard_launch_instances.rst:74
 msgid "Specify the size of the instance to launch."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:74
+#: ../dashboard_launch_instances.rst:78
 msgid ""
 "The flavor is selected based on the size of the image selected for launching "
 "an instance. For example, while creating an image, if you have entered the "
@@ -5823,55 +5849,55 @@ msgid ""
 "the image, the default flavor is ``m1.small``."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:78
+#: ../dashboard_launch_instances.rst:82
 msgid "Flavor"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:81
+#: ../dashboard_launch_instances.rst:85
 msgid ""
 "To launch multiple instances, enter a value greater than ``1``. The default "
 "is ``1``."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:82
+#: ../dashboard_launch_instances.rst:86
 msgid "Instance Count"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:85
+#: ../dashboard_launch_instances.rst:89
 msgid "Your options are:"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:88
+#: ../dashboard_launch_instances.rst:92
 msgid ""
 "If you choose this option, a new field for :guilabel:`Image Name` displays. "
 "You can select the image from the list."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:89
+#: ../dashboard_launch_instances.rst:93
 msgid "Boot from image"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:92
+#: ../dashboard_launch_instances.rst:96
 msgid ""
 "If you choose this option, a new field for :guilabel:`Instance Snapshot` "
 "displays. You can select the snapshot from the list."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:93
+#: ../dashboard_launch_instances.rst:97
 msgid "Boot from snapshot"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:96
+#: ../dashboard_launch_instances.rst:100
 msgid ""
 "If you choose this option, a new field for :guilabel:`Volume` displays. You "
 "can select the volume from the list."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:97
+#: ../dashboard_launch_instances.rst:101
 msgid "Boot from volume"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:100
+#: ../dashboard_launch_instances.rst:104
 msgid ""
 "With this option, you can boot from an image and create a volume by entering "
 "the :guilabel:`Device Size` and :guilabel:`Device Name` for your volume. "
@@ -5879,11 +5905,11 @@ msgid ""
 "terminating the instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:103
+#: ../dashboard_launch_instances.rst:107
 msgid "Boot from image (creates a new volume)"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:106
+#: ../dashboard_launch_instances.rst:110
 msgid ""
 "Using this option, you can boot from a volume snapshot and create a new "
 "volume by choosing :guilabel:`Volume Snapshot` from a list and adding a :"
@@ -5891,43 +5917,43 @@ msgid ""
 "Terminate` option to delete the volume on terminating the instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:110
+#: ../dashboard_launch_instances.rst:114
 msgid "Boot from volume snapshot (creates a new volume)"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:112
+#: ../dashboard_launch_instances.rst:116
 msgid ""
 "Since you are launching an instance from an image, :guilabel:`Boot from "
 "image` is chosen by default."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:113
+#: ../dashboard_launch_instances.rst:117
 msgid "Instance Boot Source"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:116
+#: ../dashboard_launch_instances.rst:120
 msgid ""
 "This field changes based on your previous selection. If you have chosen to "
 "launch an instance using an image, the :guilabel:`Image Name` field "
 "displays. Select the image name from the dropdown list."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:118
+#: ../dashboard_launch_instances.rst:122
 msgid "Image Name"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:121
+#: ../dashboard_launch_instances.rst:125
 msgid ""
 "This field changes based on your previous selection. If you have chosen to "
 "launch an instance using a snapshot, the :guilabel:`Instance Snapshot` field "
 "displays. Select the snapshot name from the dropdown list."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:124
+#: ../dashboard_launch_instances.rst:128
 msgid "Instance Snapshot"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:127
+#: ../dashboard_launch_instances.rst:131
 msgid ""
 "This field changes based on your previous selection. If you have chosen to "
 "launch an instance using a volume, the :guilabel:`Volume` field displays. "
@@ -5936,224 +5962,224 @@ msgid ""
 "option."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:131
+#: ../dashboard_launch_instances.rst:135
 msgid "Volume"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:133
+#: ../dashboard_launch_instances.rst:137
 msgid ":guilabel:`Access & Security` tab"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:136
+#: ../dashboard_launch_instances.rst:140
 msgid "Specify a key pair."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:138
+#: ../dashboard_launch_instances.rst:142
 msgid ""
 "If the image uses a static root password or a static key set (neither is "
 "recommended), you do not need to provide a key pair to launch the instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:140
+#: ../dashboard_launch_instances.rst:144
 msgid "Key Pair"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:143
+#: ../dashboard_launch_instances.rst:147
 msgid "Activate the security groups that you want to assign to the instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:145
+#: ../dashboard_launch_instances.rst:149
 msgid ""
 "Security groups are a kind of cloud firewall that define which incoming "
 "network traffic is forwarded to instances."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:148
+#: ../dashboard_launch_instances.rst:152
 msgid ""
 "If you have not created any security groups, you can assign only the default "
 "security group to the instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:149
+#: ../dashboard_launch_instances.rst:153
 msgid "Security Groups"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:151
+#: ../dashboard_launch_instances.rst:155
 msgid ":guilabel:`Networking` tab"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:154
+#: ../dashboard_launch_instances.rst:158
 msgid ""
 "To add a network to the instance, click the :guilabel:`+` in the :guilabel:"
 "`Available Networks` field."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:155
+#: ../dashboard_launch_instances.rst:159
 msgid "Selected Networks"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:157
+#: ../dashboard_launch_instances.rst:161
 msgid ":guilabel:`Post-Creation` tab"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:160
+#: ../dashboard_launch_instances.rst:164
 msgid "Specify a customization script that runs after your instance launches."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:161
+#: ../dashboard_launch_instances.rst:165
 msgid "Customization Script Source"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:163
+#: ../dashboard_launch_instances.rst:167
 msgid ":guilabel:`Advanced Options` tab"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:166
+#: ../dashboard_launch_instances.rst:170
 msgid "Select the type of disk partition from the dropdown list:"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:169
+#: ../dashboard_launch_instances.rst:173
 msgid "Automatic"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:169
+#: ../dashboard_launch_instances.rst:173
 msgid "Entire disk is single partition and automatically resizes."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:172
+#: ../dashboard_launch_instances.rst:176
 msgid "Disk Partition"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:172
+#: ../dashboard_launch_instances.rst:176
 msgid "Faster build times but requires manual partitioning."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:172
+#: ../dashboard_launch_instances.rst:176
 msgid "Manual"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:176
+#: ../dashboard_launch_instances.rst:180
 msgid "The instance starts on a compute node in the cloud."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:178
+#: ../dashboard_launch_instances.rst:182
 msgid ""
 "The :guilabel:`Instances` tab shows the instance's name, its private and "
 "public IP addresses, size, status, task, and power state."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:181
+#: ../dashboard_launch_instances.rst:185
 msgid ""
 "If you did not provide a key pair, security groups, or rules, users can "
 "access the instance only from inside the cloud through VNC. Even pinging the "
 "instance is not possible without an ICMP rule configured."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:186
+#: ../dashboard_launch_instances.rst:190
 msgid "Connect to your instance by using SSH"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:188
+#: ../dashboard_launch_instances.rst:192
 msgid ""
 "To use SSH to connect to your instance, you use the downloaded keypair file."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:191
+#: ../dashboard_launch_instances.rst:197
 msgid "The user name is ``ubuntu`` for the Ubuntu cloud images on TryStack."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:193
+#: ../dashboard_launch_instances.rst:199
 msgid "Copy the IP address for your instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:195
+#: ../dashboard_launch_instances.rst:201
 msgid ""
 "Use the :command:`ssh` command to make a secure connection to the instance. "
-"For example::"
+"For example:"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:200
+#: ../dashboard_launch_instances.rst:208
 msgid "At the prompt, type ``yes``."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:203
+#: ../dashboard_launch_instances.rst:211
 msgid "Track usage for instances"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:205
+#: ../dashboard_launch_instances.rst:213
 msgid ""
 "You can track usage for instances for each project. You can track costs per "
 "month by showing meters like number of vCPUs, disks, RAM, and uptime for all "
 "your instances."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:213
+#: ../dashboard_launch_instances.rst:221
 msgid ""
 "On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click :"
 "guilabel:`Overview` category."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:216
+#: ../dashboard_launch_instances.rst:224
 msgid ""
 "To query the instance usage for a month, select a month and click :guilabel:"
 "`Submit`."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:219
+#: ../dashboard_launch_instances.rst:227
 msgid "To download a summary, click :guilabel:`Download CSV Summary`."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:228
+#: ../dashboard_launch_instances.rst:236
 msgid ""
 "On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click "
 "the :guilabel:`Instances` category."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:231
+#: ../dashboard_launch_instances.rst:239
 msgid "Select the instance from which to create a snapshot."
 msgstr ""
 
 # #-#-#-#-#  dashboard_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_manage_volumes.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../dashboard_launch_instances.rst:233 ../dashboard_manage_volumes.rst:118
+#: ../dashboard_launch_instances.rst:241 ../dashboard_manage_volumes.rst:120
 msgid "In the :guilabel:`Actions` column, click :guilabel:`Create Snapshot`."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:235
+#: ../dashboard_launch_instances.rst:243
 msgid ""
 "In the :guilabel:`Create Snapshot` dialog box, enter a name for the "
 "snapshot, and click :guilabel:`Create Snapshot`."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:238
+#: ../dashboard_launch_instances.rst:246
 msgid "The Images category shows the instance snapshot."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:240
+#: ../dashboard_launch_instances.rst:248
 msgid ""
 "To launch an instance from the snapshot, select the snapshot and click :"
 "guilabel:`Launch`. Proceed with launching an instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:244
+#: ../dashboard_launch_instances.rst:252
 msgid "Manage an instance"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:250
+#: ../dashboard_launch_instances.rst:258
 msgid ""
 "On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click :"
 "guilabel:`Instances` category."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:253
+#: ../dashboard_launch_instances.rst:261
 msgid "Select an instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:255
+#: ../dashboard_launch_instances.rst:263
 msgid "In the menu list in the :guilabel:`Actions` column, select the state."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:257
+#: ../dashboard_launch_instances.rst:265
 msgid ""
 "You can resize or rebuild an instance. You can also choose to view the "
 "instance console log, edit instance or the security groups. Depending on the "
@@ -6186,10 +6212,11 @@ msgstr ""
 msgid "Create a container"
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:23 ../dashboard_manage_containers.rst:43
-#: ../dashboard_manage_containers.rst:75 ../dashboard_manage_containers.rst:97
-#: ../dashboard_manage_containers.rst:127
-#: ../dashboard_manage_containers.rst:154
+#: ../dashboard_manage_containers.rst:23 ../dashboard_manage_containers.rst:45
+#: ../dashboard_manage_containers.rst:79
+#: ../dashboard_manage_containers.rst:103
+#: ../dashboard_manage_containers.rst:133
+#: ../dashboard_manage_containers.rst:160
 msgid ""
 "On the :guilabel:`Project` tab, open the :guilabel:`Object Store` tab and "
 "click :guilabel:`Containers` category."
@@ -6209,123 +6236,123 @@ msgstr ""
 msgid "You have successfully created a container."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:33
+#: ../dashboard_manage_containers.rst:35
 msgid ""
 "To delete a container, click the :guilabel:`More` button and select :"
 "guilabel:`Delete Container`."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:37
+#: ../dashboard_manage_containers.rst:39
 msgid "Upload an object"
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:46 ../dashboard_manage_containers.rst:78
-#: ../dashboard_manage_containers.rst:100
-#: ../dashboard_manage_containers.rst:130
-#: ../dashboard_manage_containers.rst:157
+#: ../dashboard_manage_containers.rst:48 ../dashboard_manage_containers.rst:82
+#: ../dashboard_manage_containers.rst:106
+#: ../dashboard_manage_containers.rst:136
+#: ../dashboard_manage_containers.rst:163
 msgid "Select the container in which you want to store your object."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:48 ../dashboard_manage_containers.rst:59
-#: ../dashboard_manage_containers.rst:132
+#: ../dashboard_manage_containers.rst:50 ../dashboard_manage_containers.rst:61
+#: ../dashboard_manage_containers.rst:138
 msgid "Click :guilabel:`Upload Object`."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:50
+#: ../dashboard_manage_containers.rst:52
 msgid ""
 "The :guilabel:`Upload Object To Container: <name>` dialog box appears. "
 "``<name>`` is the name of the container to which you are uploading the "
 "object."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:55
-#: ../dashboard_manage_containers.rst:140
+#: ../dashboard_manage_containers.rst:57
+#: ../dashboard_manage_containers.rst:146
 msgid "Enter a name for the object."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:57 ../dashboard_manage_containers.rst:84
+#: ../dashboard_manage_containers.rst:59 ../dashboard_manage_containers.rst:88
 msgid "Browse to and select the file that you want to upload."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:61
+#: ../dashboard_manage_containers.rst:63
 msgid "You have successfully uploaded an object to the container."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:63
+#: ../dashboard_manage_containers.rst:67
 msgid ""
 "To delete an object, click the :guilabel:`More button` and select :guilabel:"
 "`Delete Object`."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:67
+#: ../dashboard_manage_containers.rst:71
 msgid "Manage an object"
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:69
+#: ../dashboard_manage_containers.rst:73
 msgid "**To edit an object**"
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:80
+#: ../dashboard_manage_containers.rst:84
 msgid ""
 "Click the menu button and choose :guilabel:`Edit` from the dropdown list."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:82
+#: ../dashboard_manage_containers.rst:86
 msgid "The :guilabel:`Edit Object` dialog box is displayed."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:86
-#: ../dashboard_manage_containers.rst:142
+#: ../dashboard_manage_containers.rst:90
+#: ../dashboard_manage_containers.rst:148
 msgid "Click :guilabel:`Update Object`."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:88
+#: ../dashboard_manage_containers.rst:94
 msgid ""
 "To delete an object, click the menu button and select :guilabel:`Delete "
 "Object`."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:91
+#: ../dashboard_manage_containers.rst:97
 msgid "**To copy an object from one container to another**"
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:102
+#: ../dashboard_manage_containers.rst:108
 msgid ""
 "Click the menu button and choose :guilabel:`Copy` from the dropdown list."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:104
+#: ../dashboard_manage_containers.rst:110
 msgid ""
 "In the :guilabel:`Copy Object` launch dialog box, enter the following values:"
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:107
+#: ../dashboard_manage_containers.rst:113
 msgid ""
 ":guilabel:`Destination Container`: Choose the destination container from the "
 "list."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:109
+#: ../dashboard_manage_containers.rst:115
 msgid ""
 ":guilabel:`Path`: Specify a path in which the new copy should be stored "
 "inside of the selected container."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:111
+#: ../dashboard_manage_containers.rst:117
 msgid ""
 ":guilabel:`Destination object name`: Enter a name for the object in the new "
 "container."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:114
+#: ../dashboard_manage_containers.rst:120
 msgid "Click :guilabel:`Copy Object`."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:116
+#: ../dashboard_manage_containers.rst:122
 msgid "**To create a metadata-only object without a file**"
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:118
+#: ../dashboard_manage_containers.rst:124
 msgid ""
 "You can create a new object in container without a file available and can "
 "upload the file later when it is ready. This temporary object acts a place-"
@@ -6333,44 +6360,44 @@ msgid ""
 "URL info in advance."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:134
+#: ../dashboard_manage_containers.rst:140
 msgid ""
 "The :guilabel:`Upload Object To Container`: ``<name>`` dialog box is "
 "displayed."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:137
+#: ../dashboard_manage_containers.rst:143
 msgid ""
 "``<name>`` is the name of the container to which you are uploading the "
 "object."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:144
+#: ../dashboard_manage_containers.rst:150
 msgid "**To create a pseudo-folder**"
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:146
+#: ../dashboard_manage_containers.rst:152
 msgid ""
 "Pseudo-folders are similar to folders in your desktop operating system. They "
 "are virtual collections defined by a common prefix on the object's name."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:159
+#: ../dashboard_manage_containers.rst:165
 msgid "Click :guilabel:`Create Pseudo-folder`."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:161
+#: ../dashboard_manage_containers.rst:167
 msgid ""
 "The :guilabel:`Create Pseudo-Folder in Container` ``<name>`` dialog box is "
 "displayed. ``<name>`` is the name of the container to which you are "
 "uploading the object."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:165
+#: ../dashboard_manage_containers.rst:171
 msgid "Enter a name for the pseudo-folder."
 msgstr ""
 
-#: ../dashboard_manage_containers.rst:167
+#: ../dashboard_manage_containers.rst:173
 msgid ""
 "A slash (/) character is used as the delimiter for pseudo-folders in Object "
 "Storage."
@@ -6678,7 +6705,7 @@ msgstr ""
 #: ../dashboard_manage_shares.rst:113 ../dashboard_manage_shares.rst:127
 #: ../dashboard_manage_shares.rst:162 ../dashboard_manage_shares.rst:179
 #: ../dashboard_manage_shares.rst:225 ../dashboard_manage_shares.rst:242
-#: ../dashboard_manage_volumes.rst:104 ../dashboard_manage_volumes.rst:167
+#: ../dashboard_manage_volumes.rst:106 ../dashboard_manage_volumes.rst:171
 msgid "A message indicates whether the action was successful."
 msgstr ""
 
@@ -6956,8 +6983,8 @@ msgid "Create a volume"
 msgstr ""
 
 #: ../dashboard_manage_volumes.rst:18 ../dashboard_manage_volumes.rst:66
-#: ../dashboard_manage_volumes.rst:113 ../dashboard_manage_volumes.rst:134
-#: ../dashboard_manage_volumes.rst:160
+#: ../dashboard_manage_volumes.rst:115 ../dashboard_manage_volumes.rst:136
+#: ../dashboard_manage_volumes.rst:164
 msgid ""
 "On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click :"
 "guilabel:`Volumes` category."
@@ -7048,114 +7075,114 @@ msgid ""
 "instance."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:77
+#: ../dashboard_manage_volumes.rst:79
 msgid ""
 "The actual device name might differ from the volume name because of "
 "hypervisor settings."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:80
+#: ../dashboard_manage_volumes.rst:82
 msgid "Click :guilabel:`Attach Volume`."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:82
+#: ../dashboard_manage_volumes.rst:84
 msgid ""
 "The dashboard shows the instance to which the volume is now attached and the "
 "device name."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:85
+#: ../dashboard_manage_volumes.rst:87
 msgid ""
 "You can view the status of a volume in the Volumes tab of the dashboard. The "
 "volume is either Available or In-Use."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:88
+#: ../dashboard_manage_volumes.rst:90
 msgid "Now you can log in to the instance and mount, format, and use the disk."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:91
+#: ../dashboard_manage_volumes.rst:93
 msgid "Detach a volume from an instance"
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:97
+#: ../dashboard_manage_volumes.rst:99
 msgid ""
 "On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click "
 "the :guilabel:`Volumes` category."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:100
+#: ../dashboard_manage_volumes.rst:102
 msgid "Select the volume and click :guilabel:`Edit Attachments`."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:102
+#: ../dashboard_manage_volumes.rst:104
 msgid "Click :guilabel:`Detach Volume` and confirm your changes."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:107
+#: ../dashboard_manage_volumes.rst:109
 msgid "Create a snapshot from a volume"
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:116
+#: ../dashboard_manage_volumes.rst:118
 msgid "Select a volume from which to create a snapshot."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:120
+#: ../dashboard_manage_volumes.rst:122
 msgid ""
 "In the dialog box that opens, enter a snapshot name and a brief description."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:123
+#: ../dashboard_manage_volumes.rst:125
 msgid "Confirm your changes."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:125
+#: ../dashboard_manage_volumes.rst:127
 msgid "The dashboard shows the new volume snapshot in Volume Snapshots tab."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:128
+#: ../dashboard_manage_volumes.rst:130
 msgid "Edit a volume"
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:137
+#: ../dashboard_manage_volumes.rst:139
 msgid "Select the volume that you want to edit."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:139
+#: ../dashboard_manage_volumes.rst:141
 msgid "In the :guilabel:`Actions` column, click :guilabel:`Edit Volume`."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:141
+#: ../dashboard_manage_volumes.rst:143
 msgid ""
 "In the :guilabel:`Edit Volume` dialog box, update the name and description "
 "of the volume."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:144
+#: ../dashboard_manage_volumes.rst:146
 msgid "Click :guilabel:`Edit Volume`."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:146
+#: ../dashboard_manage_volumes.rst:150
 msgid ""
 "You can extend a volume by using the :guilabel:`Extend Volume` option "
 "available in the :guilabel:`More` dropdown list and entering the new value "
 "for volume size."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:151
+#: ../dashboard_manage_volumes.rst:155
 msgid "Delete a volume"
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:153
+#: ../dashboard_manage_volumes.rst:157
 msgid ""
 "When you delete an instance, the data in its attached volumes is not deleted."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:163
+#: ../dashboard_manage_volumes.rst:167
 msgid "Select the check boxes for the volumes that you want to delete."
 msgstr ""
 
-#: ../dashboard_manage_volumes.rst:165
+#: ../dashboard_manage_volumes.rst:169
 msgid "Click :guilabel:`Delete Volumes` and confirm your choice."
 msgstr ""
 
@@ -7593,170 +7620,170 @@ msgid ""
 "List the names and IDs of all available versions of the ``mysql`` data store:"
 msgstr ""
 
-#: ../manage_db_config.rst:37
+#: ../manage_db_config.rst:38
 msgid ""
-"Pass in the data store version ID with the trove ``configuration-parameter-"
-"list`` command to get the available options:"
+"Pass in the data store version ID with the :command:`trove configuration-"
+"parameter-list` command to get the available options:"
 msgstr ""
 
-#: ../manage_db_config.rst:83
+#: ../manage_db_config.rst:85
 msgid ""
-"In this example, the ``configuration-parameter-list`` command returns a list "
-"of options that work with MySQL 5.5."
-msgstr ""
-
-#: ../manage_db_config.rst:86
-msgid "**Create a configuration group**"
+"In this example, the :command:`configuration-parameter-list` command returns "
+"a list of options that work with MySQL 5.5."
 msgstr ""
 
 #: ../manage_db_config.rst:88
+msgid "**Create a configuration group**"
+msgstr ""
+
+#: ../manage_db_config.rst:90
 msgid ""
 "A configuration group contains a comma-separated list of key-value pairs. "
 "Each pair consists of a configuration option and its value."
 msgstr ""
 
-#: ../manage_db_config.rst:91
+#: ../manage_db_config.rst:93
 msgid ""
-"You can create a configuration group by using the trove ``configuration-"
-"create`` command. The general syntax for this command is:"
-msgstr ""
-
-#: ../manage_db_config.rst:99
-msgid "*NAME*. The name you want to use for this group."
+"You can create a configuration group by using the :command:`trove "
+"configuration-create` command. The general syntax for this command is:"
 msgstr ""
 
 #: ../manage_db_config.rst:101
-msgid "*VALUES*. The list of key-value pairs."
+msgid "*NAME*. The name you want to use for this group."
 msgstr ""
 
 #: ../manage_db_config.rst:103
-msgid "*DATASTORE_NAME*. The name of the associated data store."
+msgid "*VALUES*. The list of key-value pairs."
 msgstr ""
 
 #: ../manage_db_config.rst:105
+msgid "*DATASTORE_NAME*. The name of the associated data store."
+msgstr ""
+
+#: ../manage_db_config.rst:107
 msgid "Set *VALUES* as a JSON dictionary, for example:"
 msgstr ""
 
-#: ../manage_db_config.rst:111
+#: ../manage_db_config.rst:113
 msgid ""
 "This example creates a configuration group called ``group1``. ``group1`` "
 "contains just one key and value pair, and this pair sets the ``sync_binlog`` "
 "option to ``1``."
 msgstr ""
 
-#: ../manage_db_config.rst:128
+#: ../manage_db_config.rst:131
 msgid "**Examine your existing configuration**"
 msgstr ""
 
-#: ../manage_db_config.rst:130
+#: ../manage_db_config.rst:133
 msgid ""
 "Before you use the newly-created configuration group, look at how the "
 "``sync_binlog`` option is configured on your database. Replace the following "
 "sample connection values with values that connect to your database:"
 msgstr ""
 
-#: ../manage_db_config.rst:147
+#: ../manage_db_config.rst:150
 msgid ""
 "As you can see, the ``sync_binlog`` option is currently set to ``0`` for the "
 "``myDB7`` database."
 msgstr ""
 
-#: ../manage_db_config.rst:150
+#: ../manage_db_config.rst:153
 msgid "**Change the database configuration using a configuration group**"
 msgstr ""
 
-#: ../manage_db_config.rst:152
+#: ../manage_db_config.rst:155
 msgid ""
 "You can change a database's configuration by attaching a configuration group "
-"to a database instance. You do this by using the trove ``configuration-"
-"attach`` command and passing in the ID of the database instance and the ID "
-"of the configuration group."
+"to a database instance. You do this by using the :command:`trove "
+"configuration-attach` command and passing in the ID of the database instance "
+"and the ID of the configuration group."
 msgstr ""
 
-#: ../manage_db_config.rst:157
+#: ../manage_db_config.rst:160
 msgid "Get the ID of the database instance:"
 msgstr ""
 
-#: ../manage_db_config.rst:168
+#: ../manage_db_config.rst:172
 msgid "Get the ID of the configuration group:"
 msgstr ""
 
-#: ../manage_db_config.rst:179
+#: ../manage_db_config.rst:184
 msgid "Attach the configuration group to the database instance:"
 msgstr ""
 
-#: ../manage_db_config.rst:181
+#: ../manage_db_config.rst:188
 msgid ""
 "This command syntax pertains only to python-troveclient version 1.0.6 and "
 "later. Earlier versions require you to pass in the configuration group ID as "
 "the first argument."
 msgstr ""
 
-#: ../manage_db_config.rst:189
+#: ../manage_db_config.rst:196
 msgid "**Re-examine the database configuration**"
 msgstr ""
 
-#: ../manage_db_config.rst:191
+#: ../manage_db_config.rst:198
 msgid "Display the ``sync_binlog`` setting again:"
 msgstr ""
 
-#: ../manage_db_config.rst:202
+#: ../manage_db_config.rst:209
 msgid ""
 "As you can see, the ``sync_binlog`` option is now set to ``1``, as specified "
 "in the ``group1`` configuration group."
 msgstr ""
 
-#: ../manage_db_config.rst:205
+#: ../manage_db_config.rst:212
 msgid ""
 "**Conclusion.** Using a configuration group to set a single option on a "
 "single database is obviously a trivial example. However, configuration "
 "groups can provide major efficiencies when you consider that:"
 msgstr ""
 
-#: ../manage_db_config.rst:209
+#: ../manage_db_config.rst:216
 msgid "A configuration group can specify a large number of option values."
 msgstr ""
 
-#: ../manage_db_config.rst:211
+#: ../manage_db_config.rst:218
 msgid ""
 "You can apply a configuration group to hundreds or thousands of database "
 "instances in your environment."
 msgstr ""
 
-#: ../manage_db_config.rst:214
+#: ../manage_db_config.rst:221
 msgid ""
 "Used in this way, configuration groups let you modify your database cloud "
 "configuration, on the fly, on a massive scale."
 msgstr ""
 
-#: ../manage_db_config.rst:217
+#: ../manage_db_config.rst:224
 msgid ""
 "**Maintenance.** There are also a number of useful maintenance features for "
 "working with configuration groups. You can:"
 msgstr ""
 
-#: ../manage_db_config.rst:220
+#: ../manage_db_config.rst:227
 msgid ""
-"Disassociate a configuration group from a database instance, using the trove "
-"``configuration-detach`` command."
+"Disassociate a configuration group from a database instance, using the :"
+"command:`trove configuration-detach` command."
 msgstr ""
 
-#: ../manage_db_config.rst:223
+#: ../manage_db_config.rst:230
 msgid ""
-"Modify a configuration group on the fly, using the trove ``configuration-"
-"patch`` command."
+"Modify a configuration group on the fly, using the :command:`trove "
+"configuration-patch` command."
 msgstr ""
 
-#: ../manage_db_config.rst:226
+#: ../manage_db_config.rst:233
 msgid ""
-"Find out what instances are using a configuration group, using the trove "
-"``configuration-instances`` command."
+"Find out what instances are using a configuration group, using the :command:"
+"`trove configuration-instances` command."
 msgstr ""
 
-#: ../manage_db_config.rst:229
+#: ../manage_db_config.rst:236
 msgid ""
-"Delete a configuration group, using the trove ``configuration-delete`` "
-"command. You might want to do this if no instances use a group."
+"Delete a configuration group, using the :command:`trove configuration-"
+"delete` command. You might want to to do this if no instances use a group."
 msgstr ""
 
 #: ../managing-openstack-object-storage-with-swift-cli.rst:3
@@ -7863,7 +7890,7 @@ msgstr ""
 #: ../sdk_assign_cors_headers.rst:22
 msgid ""
 "This example assigns the file origin to the ``Origin`` header, which ensures "
-"that the file originated from a reputable source::"
+"that the file originated from a reputable source."
 msgstr ""
 
 #: ../sdk_authenticate.rst:5
@@ -7959,7 +7986,7 @@ msgid ""
 "tokens, the Python script output looks something like this::"
 msgstr ""
 
-#: ../sdk_authenticate_against_identity_endpoint.rst:39
+#: ../sdk_authenticate_against_identity_endpoint.rst:40
 msgid ""
 "This example shows a subset of a PKI token. A complete token is over 5000 "
 "characters long."
@@ -8727,25 +8754,25 @@ msgstr ""
 msgid "X-Delete-After"
 msgstr ""
 
-#: ../sdk_schedule_objects_for_deletion.rst:32
+#: ../sdk_schedule_objects_for_deletion.rst:33
 msgid ""
 "Use http://www.epochconverter.com/ to convert dates to and from epoch "
 "timestamps and for batch conversions."
 msgstr ""
 
-#: ../sdk_schedule_objects_for_deletion.rst:35
+#: ../sdk_schedule_objects_for_deletion.rst:36
 msgid ""
 "Use the POST method to assign expiration headers to existing objects that "
 "you want to expire."
 msgstr ""
 
-#: ../sdk_schedule_objects_for_deletion.rst:38
+#: ../sdk_schedule_objects_for_deletion.rst:39
 msgid ""
 "In this example, the ``X-Delete-At`` header is assigned a UNIX epoch "
 "timestamp in integer form for ``Mon, 11 Jun 2012 15:38:25 GMT``."
 msgstr ""
 
-#: ../sdk_schedule_objects_for_deletion.rst:47
+#: ../sdk_schedule_objects_for_deletion.rst:48
 msgid ""
 "In this example, the ``X-Delete-After`` header is set to 864000 seconds. The "
 "object expires after this time."
@@ -8790,87 +8817,87 @@ msgstr ""
 msgid "This example shows you how to set up a MongoDB sharded cluster."
 msgstr ""
 
-#: ../set_up_clustering.rst:24
+#: ../set_up_clustering.rst:26
 msgid "**Before you begin.** Make sure that:"
 msgstr ""
 
-#: ../set_up_clustering.rst:26
+#: ../set_up_clustering.rst:28
 msgid ""
 "The administrative user has registered a MongoDB datastore type and version."
 msgstr ""
 
-#: ../set_up_clustering.rst:29
+#: ../set_up_clustering.rst:31
 msgid ""
 "The administrative user has created an appropriate :ref:`flavor that meets "
 "the MongoDB minimum requirements <create_db>`."
 msgstr ""
 
-#: ../set_up_clustering.rst:33
+#: ../set_up_clustering.rst:35
 msgid "Set up clustering"
 msgstr ""
 
-#: ../set_up_clustering.rst:35
+#: ../set_up_clustering.rst:37
 msgid "**Create a cluster**"
 msgstr ""
 
-#: ../set_up_clustering.rst:37
+#: ../set_up_clustering.rst:39
 msgid ""
-"Create a cluster by using the trove ``cluster-create`` command. This command "
-"creates a one-shard cluster. Pass in:"
-msgstr ""
-
-#: ../set_up_clustering.rst:40
-msgid "The name of the cluster."
+"Create a cluster by using the :command:`trove cluster-create` command. This "
+"command creates a one-shard cluster. Pass in:"
 msgstr ""
 
 #: ../set_up_clustering.rst:42
-msgid "The name and version of the datastore you want to use."
+msgid "The name of the cluster."
 msgstr ""
 
 #: ../set_up_clustering.rst:44
+msgid "The name and version of the datastore you want to use."
+msgstr ""
+
+#: ../set_up_clustering.rst:46
 msgid ""
 "The three instances you want to include in the replication set for the first "
-"shard. Specify each instance by using the ``--instance`` argument and the "
-"associated flavor ID and volume size. Use the same flavor ID and volume size "
-"for each instance. In this example, flavor ``7`` is a custom flavor that "
-"meets the MongoDB minimum requirements."
+"shard. Specify each instance by using the :option:`--instance` argument and "
+"the associated flavor ID and volume size. Use the same flavor ID and volume "
+"size for each instance. In this example, flavor ``7`` is a custom flavor "
+"that meets the MongoDB minimum requirements."
 msgstr ""
 
-#: ../set_up_clustering.rst:69
+#: ../set_up_clustering.rst:72
 msgid "**Display cluster information**"
-msgstr ""
-
-#: ../set_up_clustering.rst:71
-msgid ""
-"Display information about a cluster by using the trove ``cluster-show`` "
-"command. Pass in the ID of the cluster."
 msgstr ""
 
 #: ../set_up_clustering.rst:74
 msgid ""
-"The cluster ID displays when you first create a cluster. (If you need to "
-"find it later on, use the trove ``cluster-list`` command to list the names "
-"and IDs of all the clusters in your system.)"
+"Display information about a cluster by using the :command:`trove cluster-"
+"show` command. Pass in the ID of the cluster."
 msgstr ""
 
-#: ../set_up_clustering.rst:96
+#: ../set_up_clustering.rst:77
 msgid ""
-"**Your application connects to this IP address.** The trove ``cluster-show`` "
-"command displays the IP address of the query router. This is the IP address "
-"your application uses to retrieve data from the database."
+"The cluster ID displays when you first create a cluster. (If you need to "
+"find it later on, use the :command:`trove cluster-list` command to list the "
+"names and IDs of all the clusters in your system.)"
 msgstr ""
 
-#: ../set_up_clustering.rst:101
+#: ../set_up_clustering.rst:102
+msgid ""
+"**Your application connects to this IP address.** The trove :command:"
+"`cluster-show` command displays the IP address of the query router. This is "
+"the IP address your application uses to retrieve data from the database."
+msgstr ""
+
+#: ../set_up_clustering.rst:107
 msgid "**List cluster instances**"
 msgstr ""
 
-#: ../set_up_clustering.rst:103
+#: ../set_up_clustering.rst:109
 msgid ""
-"List the instances in a cluster by using the trove ``cluster-instances`` "
-"command."
+"List the instances in a cluster by using the :command:`trove cluster-"
+"instances` command."
 msgstr ""
 
-#: ../set_up_clustering.rst:117
+#: ../set_up_clustering.rst:124
 msgid ""
 "**Naming conventions for replication sets and instances.** Note that the "
 "``Name`` column displays an instance name that includes the replication set "
@@ -8878,7 +8905,7 @@ msgid ""
 "generated, following these rules:"
 msgstr ""
 
-#: ../set_up_clustering.rst:122
+#: ../set_up_clustering.rst:129
 msgid ""
 "**Replication set name.** This name consists of the cluster name, followed "
 "by the string -rs\\ *n*, where *n* is 1 for the first replication set you "
@@ -8887,7 +8914,7 @@ msgid ""
 "replication set name is ``cluster1-rs1``."
 msgstr ""
 
-#: ../set_up_clustering.rst:129
+#: ../set_up_clustering.rst:136
 msgid ""
 "**Instance name.** This name consists of the replication set name followed "
 "by the string -*n*, where *n* is 1 for the first instance in a replication "
@@ -8895,29 +8922,29 @@ msgid ""
 "names are ``cluster1-rs1-1``, ``cluster1-rs1-2``, and ``cluster1-rs1-3``."
 msgstr ""
 
-#: ../set_up_clustering.rst:135
+#: ../set_up_clustering.rst:142
 msgid "**List clusters**"
 msgstr ""
 
-#: ../set_up_clustering.rst:137
+#: ../set_up_clustering.rst:144
 msgid ""
-"List all the clusters in your system, using the trove ``cluster-list`` "
-"command."
+"List all the clusters in your system, using the :command:`trove cluster-"
+"list` command."
 msgstr ""
 
-#: ../set_up_clustering.rst:150
+#: ../set_up_clustering.rst:158
 msgid "**Delete a cluster**"
 msgstr ""
 
-#: ../set_up_clustering.rst:152
-msgid "Delete a cluster, using the trove ``cluster-delete`` command."
+#: ../set_up_clustering.rst:160
+msgid "Delete a cluster, using the :command:`trove cluster-delete` command."
 msgstr ""
 
-#: ../set_up_clustering.rst:159
+#: ../set_up_clustering.rst:167
 msgid "Query routers and config servers"
 msgstr ""
 
-#: ../set_up_clustering.rst:161
+#: ../set_up_clustering.rst:169
 msgid ""
 "Each cluster includes at least one query router and one config server. Query "
 "routers and config servers count against your quota. When you delete a "
@@ -8942,8 +8969,8 @@ msgstr ""
 
 #: ../set_up_replication.rst:11
 msgid ""
-"When you create a replica, do not specify the ``--users`` or ``--databases`` "
-"options."
+"When you create a replica, do not specify the :option:`--users` or :option:"
+"`--databases` options."
 msgstr ""
 
 #: ../set_up_replication.rst:14
@@ -8969,49 +8996,49 @@ msgstr ""
 msgid "Get the ID of the original instance you want to replicate:"
 msgstr ""
 
-#: ../set_up_replication.rst:36
+#: ../set_up_replication.rst:37
 msgid "**Create the replica**"
 msgstr ""
 
-#: ../set_up_replication.rst:38
+#: ../set_up_replication.rst:39
 msgid ""
 "Create a new instance that will be a replica of the original instance. You "
-"do this by passing in the ``--replica_of`` option with the trove ``create`` "
-"command. This example creates a replica called ``replica_1``. ``replica_1`` "
-"is a replica of the original instance, ``base_1``:"
+"do this by passing in the :option:`--replica_of` option with the :command:"
+"`trove create` command. This example creates a replica called ``replica_1``. "
+"``replica_1`` is a replica of the original instance, ``base_1``:"
 msgstr ""
 
-#: ../set_up_replication.rst:49
+#: ../set_up_replication.rst:50
 msgid "**Verify replication status**"
 msgstr ""
 
-#: ../set_up_replication.rst:51
+#: ../set_up_replication.rst:52
 msgid ""
-"Pass in ``replica_1``'s instance ID with the trove ``show`` command to "
-"verify that the newly created ``replica_1`` instance is a replica of the "
+"Pass in ``replica_1``'s instance ID with the :command:`trove show` command "
+"to verify that the newly created ``replica_1`` instance is a replica of the "
 "original ``base_1``. Note that the ``replica_of`` property is set to the ID "
 "of ``base_1``."
 msgstr ""
 
-#: ../set_up_replication.rst:74
+#: ../set_up_replication.rst:76
 msgid ""
-"Now pass in ``base_1``'s instance ID with the trove ``show`` command to list "
-"the replica(s) associated with the original instance. Note that the "
+"Now pass in ``base_1``'s instance ID with the :command:`trove show` command "
+"to list the replica(s) associated with the original instance. Note that the "
 "``replicas`` property is set to the ID of ``replica_1``. If there are "
 "multiple replicas, they appear as a comma-separated list."
 msgstr ""
 
-#: ../set_up_replication.rst:99
+#: ../set_up_replication.rst:102
 msgid "**Detach the replica**"
 msgstr ""
 
-#: ../set_up_replication.rst:101
+#: ../set_up_replication.rst:104
 msgid ""
 "If the original instance goes down, you can detach the replica. The replica "
 "becomes a standalone database instance. You can then take the new standalone "
 "instance and create a new replica of that instance."
 msgstr ""
 
-#: ../set_up_replication.rst:105
-msgid "You detach a replica using the trove ``detach-replica`` command:"
+#: ../set_up_replication.rst:108
+msgid "You detach a replica using the :command:`trove detach-replica` command:"
 msgstr ""
