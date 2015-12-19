@@ -84,7 +84,7 @@ following parameter:
 
 .. code-block:: ini
 
-    sio_protection_domain = ScaleIO Protection Domain
+    sio_protection_domain_name = ScaleIO Protection Domain
 
 ScaleIO storage pool name
 -------------------------
@@ -162,7 +162,7 @@ parameters as follows:
     volume_driver = cinder.volume.drivers.emc.scaleio.ScaleIODriver
     volume_backend_name = scaleio
     san_ip = MDM_IP
-    sio_protection_domain = Default_domain
+    sio_protection_domain_name = Default_domain
     sio_storage_pool_name = Default_pool
     sio_storage_pools = Domain1:Pool1,Domain2:Pool2
     san_login = SIO_USER
