@@ -40,7 +40,7 @@ providing user authentication through the LDAP directory.
 The Identity configuration is split into two separate back ends; identity
 (back end for users and groups), and assignments (back end for domains,
 projects, roles, role assignments). To configure Identity, set options
-in the :file:`/etc/keystone/keystone.conf` file. See
+in the ``/etc/keystone/keystone.conf`` file. See
 :ref:`integrate-identity-backend-ldap` for Identity back end configuration
 examples and :ref:`integrate-assignment-backend-ldap` for assignment back
 end configuration examples. Modify these examples as needed.
@@ -56,7 +56,7 @@ end configuration examples. Modify these examples as needed.
 
 **To define the destination LDAP server**
 
-#. Define the destination LDAP server in the  :file:`keystone.conf` file:
+#. Define the destination LDAP server in the ``keystone.conf`` file:
 
    .. code-block:: ini
 
@@ -78,8 +78,8 @@ end configuration examples. Modify these examples as needed.
 
 **Additional LDAP integration settings**
 
-Set these options in the :file:`/etc/keystone/keystone.conf` file for a
-single LDAP server, or :file:`/etc/keystone/domains/keystone.DOMAIN_NAME.conf`
+Set these options in the ``/etc/keystone/keystone.conf`` file for a
+single LDAP server, or ``/etc/keystone/domains/keystone.DOMAIN_NAME.conf``
 files for multiple back ends. Example configurations appear below each
 setting summary:
 
@@ -129,13 +129,13 @@ indicates indefinite wait) and lifetime in seconds.
 
 .. code-block:: ini
 
-      [ldap]
-      use_pool = true
-      pool_size = 10
-      pool_retry_max = 3
-      pool_retry_delay = 0.1
-      pool_connection_timeout = -1
-      pool_connection_lifetime = 600
+   [ldap]
+   use_pool = true
+   pool_size = 10
+   pool_retry_max = 3
+   pool_retry_delay = 0.1
+   pool_connection_timeout = -1
+   pool_connection_lifetime = 600
 
 **Connection pooling for end user authentication**
 
@@ -151,7 +151,9 @@ seconds.
    auth_pool_connection_lifetime = 60
 
 When you have finished the configuration, restart the OpenStack Identity
-service::
+service.
+
+.. code-block:: console
 
    # service keystone restart
 

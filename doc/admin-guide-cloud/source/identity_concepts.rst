@@ -131,38 +131,38 @@ The Identity service assigns a tenant and a role to a user. You might
 assign the ``compute-user`` role to the ``alice`` user in the ``acme``
 tenant:
 
-.. code::
+.. code-block:: console
 
-    $ openstack role add --project acme --user alice compute-user
+   $ openstack role add --project acme --user alice compute-user
 
 A user can have different roles in different tenants. For example, Alice
 might also have the ``admin`` role in the ``Cyberdyne`` tenant. A user
 can also have multiple roles in the same tenant.
 
-The :file:`/etc/[SERVICE_CODENAME]/policy.json` file controls the
+The ``/etc/[SERVICE_CODENAME]/policy.json`` file controls the
 tasks that users can perform for a given service. For example, the
-:file:`/etc/nova/policy.json` file specifies the access policy for the
-Compute service, the :file:`/etc/glance/policy.json` file specifies
+``/etc/nova/policy.json`` file specifies the access policy for the
+Compute service, the ``/etc/glance/policy.json`` file specifies
 the access policy for the Image service, and the
-:file:`/etc/keystone/policy.json` file specifies the access policy for
+``/etc/keystone/policy.json`` file specifies the access policy for
 the Identity service.
 
-The default :file:`policy.json` files in the Compute, Identity, and
+The default ``policy.json`` files in the Compute, Identity, and
 Image services recognize only the ``admin`` role. Any user with
 any role in a tenant can access all operations that do not require the
 ``admin`` role.
 
 To restrict users from performing operations in, for example, the
 Compute service, you must create a role in the Identity service and
-then modify the :file:`/etc/nova/policy.json` file so that this role
+then modify the ``/etc/nova/policy.json`` file so that this role
 is required for Compute operations.
 
-For example, the following line in the :file:`/etc/nova/policy.json`
+For example, the following line in the ``/etc/nova/policy.json``
 file does not restrict which users can create volumes:
 
-.. code:: json
+.. code-block:: json
 
-    "volume:create": "",
+   "volume:create": "",
 
 If the user has any role in a tenant, he can create volumes in that
 tenant.
@@ -170,9 +170,9 @@ tenant.
 To restrict the creation of volumes to users who have the
 ``compute-user`` role in a particular tenant, you add ``"role:compute-user"``:
 
-.. code:: json
+.. code-block:: json
 
-    "volume:create": "role:compute-user",
+   "volume:create": "role:compute-user",
 
 To restrict all Compute service requests to require this role, the
 resulting file looks like:
@@ -337,10 +337,10 @@ Identity API V3 provides the following group-related operations:
 
 .. note::
 
-    The Identity service server might not allow all operations. For
-    example, if you use the Identity server with the LDAP Identity
-    back end and group updates are disabled, a request to create,
-    delete, or update a group fails.
+   The Identity service server might not allow all operations. For
+   example, if you use the Identity server with the LDAP Identity
+   back end and group updates are disabled, a request to create,
+   delete, or update a group fails.
 
 Here are a couple of examples:
 
