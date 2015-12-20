@@ -235,5 +235,5 @@ features for working with configuration groups. You can:
 
 -  Delete a configuration group, using the
    :command:`trove configuration-delete` command. You might want to
-   to do this if no instances use a group.
+   do this if no instances use a group.
 
