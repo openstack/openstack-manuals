@@ -9,9 +9,9 @@ Each node can have multiple aggregates and each aggregate can have
 multiple key-value pairs. You can assign the same key-value pair to
 multiple aggregates.
 
-The scheduler uses this information to make scheduling decisions. For
-information, see `Scheduling <http://docs.openstack.org/liberty/
-config-reference/content/section_compute-scheduler.html>`__.
+The scheduler uses this information to make scheduling decisions.
+For information, see
+`Scheduling <http://docs.openstack.org/liberty/config-reference/content/section_compute-scheduler.html>`__.
 
 To create a host aggregate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
