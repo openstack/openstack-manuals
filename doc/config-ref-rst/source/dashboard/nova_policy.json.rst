@@ -44,8 +44,8 @@ the dashboard that apply to the Compute service.
        "compute:stop": "rule:admin_or_owner",
 
        "compute:get_lock": "",
-       "compute:lock": "",
-       "compute:unlock": "",
+       "compute:lock": "rule:admin_or_owner",
+       "compute:unlock": "rule:admin_or_owner",
        "compute:unlock_override": "rule:admin_api",
 
        "compute:get_vnc_console": "",
