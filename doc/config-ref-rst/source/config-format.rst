@@ -25,10 +25,11 @@ For example:
    connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@controller/keystone
 
 Options can have different types for values.
-The comments in the sample config files always mention these.
+The comments in the sample config files always mention these and the
+tables mention the ``Opt`` value as first item like ``(BoolOpt) Toggle...``.
 The following types are used by OpenStack:
 
-boolean value
+boolean value (``BoolOpt``)
  Enables or disables an option. The allowed values are ``true`` and ``false``.
 
  .. code-block:: ini
@@ -37,7 +38,7 @@ boolean value
     # connection lost (boolean value)
     use_db_reconnect = false
 
-floating point value
+floating point value (``FloatOpt``)
  A floating point number like ``0.25`` or ``1000``.
 
  .. code-block:: ini
@@ -46,7 +47,7 @@ floating point value
     # (floating point value)
     task_poll_interval = 0.5
 
-integer value
+integer value (``IntOpt``)
  An integer number is a number without fractional components,
  like ``0`` or ``42``.
 
@@ -56,7 +57,27 @@ integer value
     # (integer value)
     compute_port = 8774
 
-list value
+IP address (``IPOpt``)
+ An IPv4 or IPv6 address.
+
+ .. code-block:: ini
+
+    # Address to bind the server. Useful when selecting a particular network
+    # interface. (ip address value)
+    bind_host = 0.0.0.0
+
+key-value pairs (``DictOpt``)
+ A key-value pairs, also known as a dictonary. The key value pairs are
+ separated by commas and a colon is used to separate key and value.
+ Example: ``key1:value1,key2:value2``.
+
+ .. code-block:: ini
+
+    # Parameter for l2_l3 workflow setup. (dict value)
+    l2_l3_setup_params = data_ip_address:192.168.200.99, \
+       data_ip_mask:255.255.255.0,data_port:1,gateway:192.168.200.1,ha_port:2
+
+list value (``ListOpt``)
  Represents values of other types, separated by commas.
  As an example, the following sets ``allowed_rpc_exception_modules``
  to a list containing the four elements ``oslo.messaging.exceptions``,
@@ -68,7 +89,7 @@ list value
     # upon receiving exception data from an rpc call. (list value)
     allowed_rpc_exception_modules = oslo.messaging.exceptions,nova.exception
 
-multi valued
+multi valued (``MultiStrOpt``)
  A multi-valued option is a string value and can be given
  more than once, all values will be used.
 
@@ -78,7 +99,17 @@ multi valued
     notification_driver = nova.openstack.common.notifier.rpc_notifier
     notification_driver = ceilometer.compute.nova_notifier
 
-string value
+port value (``PortOpt``)
+ A TCP/IP port number.  Ports can range from 1 to 65535.
+
+ .. code-block:: ini
+
+   # Port to which the UDP socket is bound. (port value)
+   # Minimum value: 1
+   # Maximum value: 65535
+   udp_port = 4952
+
+string value (``StrOpt``)
  Strings can be optionally enclosed with single or double quotes.
 
  .. code-block:: ini
