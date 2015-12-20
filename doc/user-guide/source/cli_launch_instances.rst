@@ -200,6 +200,7 @@ Launch an instance from an image
 
    Depending on the parameters that you provide, the command returns a list
    of server properties.
+
    .. code-block:: console
 
       +-------------------------------------+-------------------------------------+
