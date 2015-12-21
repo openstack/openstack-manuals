@@ -447,7 +447,7 @@ retrieve specific events:
    As of the Liberty release, the number of items returned will be
    restricted to the value defined by ``default_api_return_limit`` in the
    ``ceilometer.conf`` configuration file. Alternatively, the value can
-   be set per query by passing the :option:`limit` option in the request.
+   be set per query by passing the ``limit`` option in the request.
 
 
 Telemetry Python bindings

@@ -2,13 +2,12 @@
 User CRUD
 =========
 
-Identity provides a user CRUD (Create, Read, Update, and Delete) filter
-that can be added to the ``public_api`` pipeline. The user CRUD filter
-enables users to use a HTTP PATCH to change their own password. To
-enable this extension you should define a ``user_crud_extension``
-filter, insert it after the :option:`*_body` middleware and before the
-``public_service`` application in the ``public_api`` WSGI pipeline in
-``keystone-paste.ini``. For example:
+Identity provides a user CRUD (Create, Read, Update, and Delete) filter that
+can be added to the ``public_api`` pipeline. The user CRUD filter enables users
+to use a HTTP PATCH to change their own password. To enable this extension you
+should define a ``user_crud_extension`` filter, insert it after the ``*_body``
+middleware and before the ``public_service`` application in the ``public_api``
+WSGI pipeline in ``keystone-paste.ini``. For example:
 
 .. code-block:: ini
 

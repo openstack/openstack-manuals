@@ -9,7 +9,7 @@ computing experts from around the world contribute to the project.
 
 OpenStack provides an :term:`Infrastructure-as-a-Service (IaaS)<IaaS>` solution
 through a variety of complemental services. Each service offers an
-:term:`application programming interface (API)<API>` that facilitates this
+:term:`Application Programming Interface (API)` that facilitates this
 integration.
 
 This guide covers step-by-step deployment of the following major OpenStack
