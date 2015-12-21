@@ -20,6 +20,11 @@ Next release: Mitaka
 
 * Tracking of release notes in RELEASENOTES.rst file.
 
+Configuration Reference
+-----------------------
+
+* RST conversion completed
+
 HA Guide
 --------
 
