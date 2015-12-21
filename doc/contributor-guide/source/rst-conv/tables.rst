@@ -44,7 +44,7 @@ List tables
 ~~~~~~~~~~~
 
 Use the ``list-table`` directive to create a table that contains a large
-number of raws and columns with the long lines within the cells.
+number of rows and columns with the long lines within the cells.
 
 **Input**
 
