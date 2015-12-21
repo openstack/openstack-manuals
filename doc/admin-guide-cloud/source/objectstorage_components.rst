@@ -47,9 +47,9 @@ needed based on projected workloads. A minimum of two proxy servers
 should be deployed for redundancy. If one proxy server fails, the others
 take over.
 
-For more information concerning proxy server configuration, please see
-the `Configuration
-Reference <http://docs.openstack.org/trunk/config-reference/content/proxy-server-configuration.html>`__.
+For more information concerning proxy server configuration, please see the
+`Configuration Reference
+<http://docs.openstack.org/liberty/config-reference/content/proxy-server-configuration.html>`__.
 
 Rings
 -----

@@ -132,9 +132,8 @@ this support on the system or find a system with this support.
    enter the system BIOS, and enable the VT option.
 
 If KVM acceleration is not supported, configure Compute to use a different
-hypervisor, such as `QEMU <http://docs.openstack.org/liberty/
-config-reference/content/qemu.html>`_ or `Xen <http://docs.openstack.org/
-liberty/config-reference/content/xen_libvirt.html>`_.
+hypervisor, such as ``QEMU`` or ``Xen``. See :ref:`compute_qemu` or
+:ref:`compute_xen_api` for details.
 
 These procedures help you load the kernel modules for Intel-based and
 AMD-based processors if they do not load automatically during KVM

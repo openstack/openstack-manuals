@@ -1,3 +1,5 @@
+.. _block_storage_vmdk_driver:
+
 ==================
 VMware VMDK driver
 ==================

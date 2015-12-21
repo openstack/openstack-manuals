@@ -765,12 +765,11 @@ Volumes with VMware vSphere
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The VMware driver supports attaching volumes from the Block Storage service.
-The VMware VMDK driver for OpenStack Block Storage is recommended and should
-be used for managing volumes based on vSphere data stores. For more
-information about the VMware VMDK driver, see `VMware VMDK Driver <http://
-docs.openstack.org/trunk/config-reference/content/vmware-vmdk-driver.html>`_
-Also an iSCSI volume driver provides limited support and can be used only
-for attachments.
+The VMware VMDK driver for OpenStack Block Storage is recommended and should be
+used for managing volumes based on vSphere data stores. For more information
+about the VMware VMDK driver, see :ref:`block_storage_vmdk_driver`.  Also an
+iSCSI volume driver provides limited support and can be used only for
+attachments.
 
 .. _vmware-additional:
 

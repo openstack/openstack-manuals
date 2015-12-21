@@ -1,3 +1,5 @@
+.. _compute_xen_api:
+
 =============================================
 XenServer (and other XAPI based Xen variants)
 =============================================
