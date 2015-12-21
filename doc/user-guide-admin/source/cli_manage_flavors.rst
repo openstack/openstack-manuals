@@ -92,7 +92,7 @@ Create a flavor
 
    Here is an example with additional optional
    parameters filled in that creates a public ``extra
-   tin`` flavor that automatically gets an ID
+   tiny`` flavor that automatically gets an ID
    assigned, with 256 MB memory, no disk space, and
    one VCPU. The rxtx-factor indicates the slice of
    bandwidth that the instances with this flavor can
