@@ -8,15 +8,17 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _ceilometer-alarms:
+.. _ceilometer-storage:
 
-.. list-table:: Description of alarms configuration options
+.. list-table:: Description of storage configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[alarms]**
+   * - **[storage]**
      -
-   * - ``gnocchi_url`` = ``http://localhost:8041``
-     - (StrOpt) URL to Gnocchi.
+   * - ``max_retries`` = ``10``
+     - (IntOpt) Maximum number of connection retries during startup. Set to -1 to specify an infinite retry count.
+   * - ``retry_interval`` = ``10``
+     - (IntOpt) Interval (in seconds) between retries of connection.

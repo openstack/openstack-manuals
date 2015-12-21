@@ -84,7 +84,3 @@
      - (StrOpt) The topic that ceilometer uses for metering notifications.
    * - ``telemetry_driver`` = ``messagingv2``
      - (StrOpt) The driver that ceilometer uses for metering notifications.
-   * - **[publisher_rpc]**
-     -
-   * - ``metering_topic`` = ``metering``
-     - (StrOpt) The topic that ceilometer uses for metering messages.

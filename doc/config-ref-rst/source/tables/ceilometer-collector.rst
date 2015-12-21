@@ -18,8 +18,6 @@
      - Description
    * - **[collector]**
      -
-   * - ``enable_rpc`` = ``False``
-     - (BoolOpt) Enable the RPC functionality of collector. This functionality is now deprecated in favour of notifier publisher and queues.
    * - ``requeue_event_on_dispatcher_error`` = ``False``
      - (BoolOpt) Requeue the event on the collector event queue when the collector fails to dispatch it.
    * - ``requeue_sample_on_dispatcher_error`` = ``False``

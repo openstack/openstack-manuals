@@ -5,8 +5,6 @@ Telemetry configuration options
 The following tables provide a comprehensive list of the Telemetry
 configuration options.
 
-.. include:: ../tables/ceilometer-alarm.rst
-.. include:: ../tables/ceilometer-alarms.rst
 .. include:: ../tables/ceilometer-amqp.rst
 .. include:: ../tables/ceilometer-api.rst
 .. include:: ../tables/ceilometer-auth.rst
@@ -33,6 +31,7 @@ configuration options.
 .. include:: ../tables/ceilometer-rgw.rst
 .. include:: ../tables/ceilometer-rpc.rst
 .. include:: ../tables/ceilometer-service_types.rst
+.. include:: ../tables/ceilometer-storage.rst
 .. include:: ../tables/ceilometer-swift.rst
 .. include:: ../tables/ceilometer-tripleo.rst
 .. include:: ../tables/ceilometer-vmware.rst
