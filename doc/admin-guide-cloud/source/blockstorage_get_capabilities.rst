@@ -34,6 +34,7 @@ First, get a list of the services:
 .. code-block:: console
 
    $ cinder service-list
+
    +------------------+-------------------+------+---------+-------+------+
    |      Binary      |        Host       | Zone |  Status | State | ...  |
    +------------------+-------------------+------+---------+-------+------+
@@ -48,6 +49,7 @@ as listed below.
 .. code-block:: console
 
    $ cinder get-capabilities block1@ABC-driver
+
    +---------------------+----------------------------------------------+
    |     Volume stats    |                    Value                     |
    +---------------------+----------------------------------------------+
@@ -165,6 +167,7 @@ Create a public volume type by setting ``is_public`` field to ``True``:
 .. code-block:: console
 
    $ cinder type-create --description test1 --is-public True vol_Type1
+
    +--------------------------------------+-----------+-------------+-----------+
    |                  ID                  |    Name   | Description | Is_Public |
    +--------------------------------------+-----------+-------------+-----------+
@@ -176,6 +179,7 @@ Create a private volume type by setting ``is_public`` field to ``False``:
 .. code-block:: console
 
    $ cinder type-create --description test2 --is-public False vol_Type2
+
    +--------------------------------------+-----------+-------------+-----------+
    |                  ID                  |    Name   | Description | Is_Public |
    +--------------------------------------+-----------+-------------+-----------+
@@ -187,6 +191,7 @@ Get a list of the volume types:
 .. code-block:: console
 
    $ cinder type-list
+
    +--------------------------------------+-------------+-------------+-----------+
    |                  ID                  |     Name    | Description | Is_Public |
    +--------------------------------------+-------------+-------------+-----------+
@@ -200,6 +205,7 @@ Get a list of the projects:
 .. code-block:: console
 
    $ openstack project list
+
    +----------------------------------+--------------------+
    | ID                               | Name               |
    +----------------------------------+--------------------+
@@ -221,6 +227,7 @@ List the access information about the given volume type:
 .. code-block:: console
 
    $ cinder type-access-list --volume-type vol_Type2
+
    +--------------------------------------+----------------------------------+
    |            Volume_type_ID            |            Project_ID            |
    +--------------------------------------+----------------------------------+
@@ -234,6 +241,7 @@ Remove volume type access for the given project:
    $ cinder type-access-remove --volume-type vol_Type2 --project-id
    c4860af62ffe465e99ed1bc08ef6082e
    $ cinder type-access-list --volume-type vol_Type2
+
    +----------------+------------+
    | Volume_type_ID | Project_ID |
    +----------------+------------+

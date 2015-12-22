@@ -17,6 +17,7 @@ List networks in a tenant, run:
 .. code-block:: console
 
    $ neutron net-list
+
    +--------------+---------+---------------------------------------+
    | id           | name    | subnets                               |
    +--------------+---------+---------------------------------------+
@@ -61,6 +62,7 @@ To create a share network with private network and subnetwork, run:
 .. code-block:: console
 
    $ manila share-network-create --neutron-net-id 5ed5a854-21dc-4ed3-870a-117b7064eb21 --neutron-subnet-id 74dcfb5a-b4d7-4855-86f5-a669729428dc --name my_share_net --description "My first share network"
+
    +-------------------+--------------------------------------+
    | Property          | Value                                |
    +-------------------+--------------------------------------+
@@ -88,6 +90,7 @@ Check network list, run:
 .. code-block:: console
 
    $ manila share-network-list
+
    +--------------------------------------+--------------+
    | id                                   | name         |
    +--------------------------------------+--------------+
@@ -102,6 +105,7 @@ list of networks. This network was created by Generic driver for inner usage.
 .. code-block:: console
 
    $ neutron net-list
+
    +--------------+------------------------+------------------------------------+
    | id           | name                   | subnets                            |
    +--------------+------------------------+------------------------------------+
@@ -118,6 +122,7 @@ You also can see detailed information about the share network including
 .. code-block:: console
 
    $ neutron net-show manila_service_network
+
    +---------------------------+--------------------------------------+
    | Field                     | Value                                |
    +---------------------------+--------------------------------------+

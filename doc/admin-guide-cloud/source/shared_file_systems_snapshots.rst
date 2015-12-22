@@ -22,6 +22,7 @@ Create a snapshot from the share:
 .. code-block:: console
 
    $ manila snapshot-create Share1 --name Snapshot1 --description "Snapshot of Share1"
+
    +-------------+--------------------------------------+
    | Property    | Value                                |
    +-------------+--------------------------------------+
@@ -47,6 +48,7 @@ Check that status of a snapshot is ``available``:
 .. code-block:: console
 
    $ manila snapshot-show Snapshot1
+
    +-------------+--------------------------------------+
    | Property    | Value                                |
    +-------------+--------------------------------------+
@@ -68,6 +70,7 @@ Create a share from a snapshot and check whether it is available:
 .. code-block:: console
 
    $ manila create nfs 1 --name Share2 --metadata source=snapshot --description "Share from a snapshot." --snapshot-id 962e8126-35c3-47bb-8c00-f0ee37f42ddd
+
    +-----------------------------+--------------------------------------+
    | Property                    | Value                                |
    +-----------------------------+--------------------------------------+
@@ -97,6 +100,7 @@ Create a share from a snapshot and check whether it is available:
    +-----------------------------+--------------------------------------+
 
    $ manila show Share2
+
    +-----------------------------+-------------------------------------------+
    | Property                    | Value                                     |
    +-----------------------------+-------------------------------------------+

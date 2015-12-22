@@ -161,4 +161,3 @@ service.
 
    During the service restart, authentication and authorization are
    unavailable.
-

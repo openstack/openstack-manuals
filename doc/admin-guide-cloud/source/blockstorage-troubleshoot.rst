@@ -20,4 +20,3 @@ Storage installation.
    ts_no_emulator_x86_64.rst
    ts_non_existent_host.rst
    ts_non_existent_vlun.rst
-

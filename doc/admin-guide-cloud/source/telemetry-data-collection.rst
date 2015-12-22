@@ -516,6 +516,7 @@ following command should be invoked:
 
    $ ceilometer sample-create -r 37128ad6-daaa-4d22-9509-b7e1c6b08697 \
      -m memory.usage --meter-type gauge --meter-unit MB --sample-volume 48
+
    +-------------------+--------------------------------------------+
    | Property          | Value                                      |
    +-------------------+--------------------------------------------+

@@ -45,6 +45,7 @@ specifying two comma-separated share types:
 .. code-block:: console
 
    $ manila cg-create --name cgroup1 --description "My first CG." --share-types my_type1,default --share-network my_share_net
+
    +----------------------+--------------------------------------+
    | Property             | Value                                |
    +----------------------+--------------------------------------+
@@ -67,6 +68,7 @@ Check that consistency group is in available status:
 .. code-block:: console
 
    $ manila cg-show cgroup1
+
    +----------------------+--------------------------------------+
    | Property             | Value                                |
    +----------------------+--------------------------------------+
@@ -91,6 +93,7 @@ group in ``available`` status:
 .. code-block:: console
 
    $ manila create nfs 1 --name "Share2" --description "My second share" --share-type default --share-network my_share_net --consistency-group cgroup1
+
    +-----------------------------+--------------------------------------+
    | Property                    | Value                                |
    +-----------------------------+--------------------------------------+
@@ -171,6 +174,7 @@ Create a snapshot of consistency group ``cgroup1``:
 .. code-block:: console
 
    $ manila cg-snapshot-create cgroup1 --name CG_snapshot1 --description "A snapshot of the first CG."
+
    +----------------------+--------------------------------------+
    | Property             | Value                                |
    +----------------------+--------------------------------------+
@@ -188,6 +192,7 @@ Check the status of created consistency group snapshot:
 .. code-block:: console
 
    $ manila cg-snapshot-show CG_snapshot1
+
    +----------------------+--------------------------------------+
    | Property             | Value                                |
    +----------------------+--------------------------------------+
@@ -219,6 +224,7 @@ group snapshot is ``Share2`` share:
 .. code-block:: console
 
    $ manila cg-snapshot-members CG_snapshot1
+
    +--------------+------+----------------------------+----------------+--------------+--------------+
    | Id           | Size | Created_at                 | Share_protocol | Share_id     | Share_type_id|
    +--------------+------+----------------------------+----------------+--------------+--------------+
@@ -231,6 +237,7 @@ group from it:
 .. code-block:: console
 
    $ manila cg-create --source-cgsnapshot-id 876ad24c-1efd-4607-a2b1-6a2c90034fa5 --name cgroup2 --description "A consistency group from a CG snapshot."
+
    +----------------------+-----------------------------------------+
    | Property             | Value                                   |
    +----------------------+-----------------------------------------+
@@ -253,6 +260,7 @@ Check the list of consistency group. There are two groups now:
 .. code-block:: console
 
    $ manila cg-list
+
    +-------------------+---------+-----------------------------------------+-----------+
    | id                | name    | description                             | status    |
    +-------------------+---------+-----------------------------------------+-----------+
@@ -267,6 +275,7 @@ consistency group ``cgroup2`` from a snapshot with a member.
 .. code-block:: console
 
    $ manila list
+
    +------+-------+-----+------------+----------+----------+-----------+--------------------------+
    | ID   | Name  | Size| Share Proto| Status   | Is Public| Share Type| Host                     |
    +------+-------+-----+------------+----------+----------+-----------+--------------------------+
@@ -287,6 +296,7 @@ Print detailed information about new share:
 .. code-block:: console
 
    $ manila show ba52454e-2ea3-47fa-a683-3176a01295e6
+
    +-----------------------------+---------------------------------------------------------------+
    | Property                    | Value                                                         |
    +-----------------------------+---------------------------------------------------------------+

@@ -15,15 +15,15 @@ The Shared File Systems service serves same purpose as the Amazon Elastic File
 System (EFS) does.
 
 .. toctree::
-      :maxdepth: 1
+   :maxdepth: 1
 
-      shared_file_systems_intro.rst
-      shared_file_systems_key_concepts.rst
-      shared_file_systems_share_management.rst
-      shared_file_systems_share_types.rst
-      shared_file_systems_snapshots.rst
-      shared_file_systems_security_services.rst
-      shared_file_systems_cgroups.rst
-      shared_file_systems_multi_backend.rst
-      shared_file_systems_networking.rst
-      shared_file_systems_troubleshoot.rst
+   shared_file_systems_intro.rst
+   shared_file_systems_key_concepts.rst
+   shared_file_systems_share_management.rst
+   shared_file_systems_share_types.rst
+   shared_file_systems_snapshots.rst
+   shared_file_systems_security_services.rst
+   shared_file_systems_cgroups.rst
+   shared_file_systems_multi_backend.rst
+   shared_file_systems_networking.rst
+   shared_file_systems_troubleshoot.rst
