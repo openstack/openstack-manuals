@@ -149,7 +149,7 @@ UUID of the instance that runs on it:
 Show details for a bare-metal node
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the :command:`nova baremetal-node-list` command to view the details for a
+Use the :command:`nova baremetal-node-show` command to view the details for a
 bare-metal node:
 
 .. code-block:: console
