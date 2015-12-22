@@ -118,8 +118,6 @@ Security groups
 VNC
   The port range 5900 - 6105 (inclusive) is automatically enabled for VNC
   connections on every ESX host in all clusters under OpenStack control.
-  For more information about using a VNC client to connect to virtual machine,
-  see http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1246.
 
   .. note::
 
