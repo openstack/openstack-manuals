@@ -22,4 +22,3 @@ If you want Compute to pin a particular vCPU as part of this process,
 set the ``vcpu_pin_set`` parameter in the ``nova.conf`` configuration
 file. For more information about the ``vcpu_pin_set`` parameter, see the
 Configuration Reference Guide.
-

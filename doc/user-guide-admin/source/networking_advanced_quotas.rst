@@ -147,6 +147,7 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron ext-show quotas
+
       +-------------+------------------------------------------------------------+
       | Field       | Value                                                      |
       +-------------+------------------------------------------------------------+
@@ -175,6 +176,7 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-list
+
       +------------+---------+------+--------+--------+----------------------------------+
       | floatingip | network | port | router | subnet | tenant_id                        |
       +------------+---------+------+--------+--------+----------------------------------+
@@ -194,6 +196,7 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723
+
       +------------+-------+
       | Field      | Value |
       +------------+-------+
@@ -210,6 +213,7 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-show
+
       +------------+-------+
       | Field      | Value |
       +------------+-------+
@@ -228,6 +232,7 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 5
+
       +------------+-------+
       | Field      | Value |
       +------------+-------+
@@ -244,6 +249,7 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --subnet 5 --port 20
+
       +------------+-------+
       | Field      | Value |
       +------------+-------+
@@ -264,6 +270,7 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 -- --floatingip 20
+
       +------------+-------+
       | Field      | Value |
       +------------+-------+
@@ -281,6 +288,7 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 3 --subnet 3 --port 3 -- --floatingip 3 --router 3
+
       +------------+-------+
       | Field      | Value |
       +------------+-------+
@@ -307,6 +315,7 @@ the default set of quotas are enforced for all tenants, so no
    .. code-block:: console
 
       $ neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723
+
       +------------+-------+
       | Field      | Value |
       +------------+-------+

@@ -32,6 +32,7 @@ To list all floating IP addresses for all projects, run:
 .. code-block:: console
 
    $ nova floating-ip-bulk-list
+
    +------------+---------------+---------------+--------+-----------+
    | project_id | address       | instance_uuid | pool   | interface |
    +------------+---------------+---------------+--------+-----------+
