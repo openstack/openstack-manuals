@@ -3,7 +3,7 @@ How can I use an OpenStack cloud?
 =================================
 
 As an OpenStack cloud end user, you can provision your own resources
-within the limits set by administrators.
+within the limits set by cloud administrators.
 
 The examples in this guide show you how to perform tasks by using the
 following methods:
