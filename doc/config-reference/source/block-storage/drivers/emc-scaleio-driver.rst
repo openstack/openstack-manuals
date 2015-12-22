@@ -67,7 +67,7 @@ Configure the MDM server IP by adding the following parameter:
 
 .. code-block:: ini
 
-    san_ip = ScaleIO MDM IP
+    san_ip = ScaleIO GATEWAY IP
 
 ScaleIO protection domain name
 ------------------------------
@@ -161,7 +161,7 @@ parameters as follows:
     [scaleio]
     volume_driver = cinder.volume.drivers.emc.scaleio.ScaleIODriver
     volume_backend_name = scaleio
-    san_ip = MDM_IP
+    san_ip = GATEWAY_IP
     sio_protection_domain_name = Default_domain
     sio_storage_pool_name = Default_pool
     sio_storage_pools = Domain1:Pool1,Domain2:Pool2
