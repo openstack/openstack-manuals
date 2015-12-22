@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Virtual Machine Image Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-11 06:14+0000\n"
+"POT-Creation-Date: 2015-12-22 06:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1507,181 +1507,44 @@ msgstr ""
 
 #: ../introduction.rst:28
 msgid ""
-"The ``raw`` image format is the simplest one, and is natively supported by "
-"both KVM and Xen hypervisors. You can think of a raw image as being the bit-"
-"equivalent of a block device file, created as if somebody had copied, say, "
-"``/dev/sda`` to a file using the :command:`dd` command."
-msgstr ""
-
-#: ../introduction.rst:36
-msgid ""
-"We do not recommend creating raw images by dd'ing block device files, we "
-"discuss how to create raw images later."
-msgstr ""
-
-#: ../introduction.rst:37
-msgid "Raw"
-msgstr ""
-
-#: ../introduction.rst:40
-msgid ""
-"The `QCOW2 <http://en.wikibooks.org/wiki/QEMU/Images>`_ (QEMU copy-on-write "
-"version 2) format is commonly used with the KVM hypervisor. It has some "
-"additional features over the raw format, such as:"
-msgstr ""
-
-#: ../introduction.rst:45
-msgid "Using sparse representation, so the image size is smaller."
-msgstr ""
-
-#: ../introduction.rst:46
-msgid "Support for snapshots."
-msgstr ""
-
-#: ../introduction.rst:48
-msgid ""
-"Because qcow2 is sparse, qcow2 images are typically smaller than raw images. "
-"Smaller images mean faster uploads, so it is often faster to convert a raw "
-"image to qcow2 for uploading instead of uploading the raw file directly."
-msgstr ""
-
-#: ../introduction.rst:55
-msgid ""
-"Because raw images do not support snapshots, OpenStack Compute will "
-"automatically convert raw image files to qcow2 as needed."
-msgstr ""
-
-#: ../introduction.rst:56
-msgid "QCOW2"
-msgstr ""
-
-#: ../introduction.rst:59
-msgid ""
-"The `AMI/AKI/ARI <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs."
+"The `AKI/AMI/ARI <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs."
 "html>`_ format was the initial image format supported by Amazon EC2. The "
 "image consists of three files:"
 msgstr ""
 
-#: ../introduction.rst:65
-msgid "AMI (Amazon Machine Image)"
-msgstr ""
-
-#: ../introduction.rst:65
-msgid "This is a virtual machine image in raw format, as described above."
-msgstr ""
-
-#: ../introduction.rst:68
+#: ../introduction.rst:34
 msgid ""
 "A kernel file that the hypervisor will load initially to boot the image. For "
 "a Linux machine, this would be a ``vmlinuz`` file."
 msgstr ""
 
-#: ../introduction.rst:69
+#: ../introduction.rst:35
 msgid "AKI (Amazon Kernel Image)"
 msgstr ""
 
-#: ../introduction.rst:72
+#: ../introduction.rst:38
+msgid "AMI (Amazon Machine Image)"
+msgstr ""
+
+#: ../introduction.rst:38
+msgid "This is a virtual machine image in raw format, as described above."
+msgstr ""
+
+#: ../introduction.rst:41
 msgid ""
 "An optional ramdisk file mounted at boot time. For a Linux machine, this "
 "would be an ``initrd`` file."
 msgstr ""
 
-#: ../introduction.rst:73
-msgid "AMI/AKI/ARI"
+#: ../introduction.rst:42
+msgid "AKI/AMI/ARI"
 msgstr ""
 
-#: ../introduction.rst:73
+#: ../introduction.rst:42
 msgid "ARI (Amazon Ramdisk Image)"
 msgstr ""
 
-#: ../introduction.rst:76
-msgid ""
-"A UEC (Ubuntu Enterprise Cloud) tarball is a gzipped tarfile that contains "
-"an AMI file, AKI file, and ARI file."
-msgstr ""
-
-#: ../introduction.rst:81
-msgid ""
-"Ubuntu Enterprise Cloud refers to a discontinued Eucalyptus-based Ubuntu "
-"cloud solution that has been replaced by the OpenStack-based Ubuntu Cloud "
-"Infrastructure."
-msgstr ""
-
-#: ../introduction.rst:83
-msgid "UEC tarball"
-msgstr ""
-
-#: ../introduction.rst:86
-msgid ""
-"VMware ESXi hypervisor uses the `VMDK <https://developercenter.vmware.com/"
-"web/sdk/60/vddk>`_ (Virtual Machine Disk) format for images."
-msgstr ""
-
-#: ../introduction.rst:88
-msgid "VMDK"
-msgstr ""
-
-#: ../introduction.rst:91
-msgid ""
-"VirtualBox uses the `VDI <https://forums.virtualbox.org/viewtopic.php?"
-"t=8046>`_ (Virtual Disk Image) format for image files. None of the OpenStack "
-"Compute hypervisors support VDI directly, so you will need to convert these "
-"files to a different format to use them with OpenStack."
-msgstr ""
-
-#: ../introduction.rst:95
-msgid "VDI"
-msgstr ""
-
-#: ../introduction.rst:98
-msgid "Microsoft Hyper-V uses the VHD (Virtual Hard Disk) format for images."
-msgstr ""
-
-#: ../introduction.rst:98
-msgid "VHD"
-msgstr ""
-
-#: ../introduction.rst:101
-msgid ""
-"The version of Hyper-V that ships with Microsoft Server 2012 uses the newer "
-"`VHDX <http://technet.microsoft.com/en-us/library/hh831446.aspx>`_ format, "
-"which has some additional features over VHD such as support for larger disk "
-"sizes and protection against data corruption during power failures."
-msgstr ""
-
-#: ../introduction.rst:104
-msgid "VHDX"
-msgstr ""
-
-#: ../introduction.rst:107
-msgid ""
-"`OVF <http://dmtf.org/sites/default/files/OVF_Overview_Document_2010.pdf>`_ "
-"(Open Virtualization Format) is a packaging format for virtual machines, "
-"defined by the Distributed Management Task Force (DMTF) standards group. An "
-"OVF package contains one or more image files, a .ovf XML metadata file that "
-"contains information about the virtual machine, and possibly other files as "
-"well."
-msgstr ""
-
-#: ../introduction.rst:114
-msgid ""
-"An OVF package can be distributed in different ways. For example, it could "
-"be distributed as a set of discrete files, or as a tar archive file with an "
-"``.ova`` (open virtual appliance/application) extension."
-msgstr ""
-
-#: ../introduction.rst:118
-msgid ""
-"OpenStack Compute does not currently have support for OVF packages, so you "
-"will need to extract the image file(s) from an OVF package if you wish to "
-"use it with OpenStack."
-msgstr ""
-
-#: ../introduction.rst:120
-msgid "OVF"
-msgstr ""
-
-#: ../introduction.rst:123
+#: ../introduction.rst:45
 msgid ""
 "The `ISO <http://www.ecma-international.org/publications/standards/Ecma-119."
 "htm>`_ format is a disk image formatted with the read-only ISO 9660 (also "
@@ -1691,8 +1554,145 @@ msgid ""
 "treat them the same as you treat other virtual machine image files."
 msgstr ""
 
-#: ../introduction.rst:128
+#: ../introduction.rst:51
 msgid "ISO"
+msgstr ""
+
+#: ../introduction.rst:54
+msgid ""
+"`OVF <http://dmtf.org/sites/default/files/OVF_Overview_Document_2010.pdf>`_ "
+"(Open Virtualization Format) is a packaging format for virtual machines, "
+"defined by the Distributed Management Task Force (DMTF) standards group. An "
+"OVF package contains one or more image files, a .ovf XML metadata file that "
+"contains information about the virtual machine, and possibly other files as "
+"well."
+msgstr ""
+
+#: ../introduction.rst:61
+msgid ""
+"An OVF package can be distributed in different ways. For example, it could "
+"be distributed as a set of discrete files, or as a tar archive file with an "
+"``.ova`` (open virtual appliance/application) extension."
+msgstr ""
+
+#: ../introduction.rst:65
+msgid ""
+"OpenStack Compute does not currently have support for OVF packages, so you "
+"will need to extract the image file(s) from an OVF package if you wish to "
+"use it with OpenStack."
+msgstr ""
+
+#: ../introduction.rst:67
+msgid "OVF"
+msgstr ""
+
+#: ../introduction.rst:70
+msgid ""
+"The `QCOW2 <http://en.wikibooks.org/wiki/QEMU/Images>`_ (QEMU copy-on-write "
+"version 2) format is commonly used with the KVM hypervisor. It has some "
+"additional features over the raw format, such as:"
+msgstr ""
+
+#: ../introduction.rst:75
+msgid "Using sparse representation, so the image size is smaller."
+msgstr ""
+
+#: ../introduction.rst:76
+msgid "Support for snapshots."
+msgstr ""
+
+#: ../introduction.rst:78
+msgid ""
+"Because qcow2 is sparse, qcow2 images are typically smaller than raw images. "
+"Smaller images mean faster uploads, so it is often faster to convert a raw "
+"image to qcow2 for uploading instead of uploading the raw file directly."
+msgstr ""
+
+#: ../introduction.rst:85
+msgid ""
+"Because raw images do not support snapshots, OpenStack Compute will "
+"automatically convert raw image files to qcow2 as needed."
+msgstr ""
+
+#: ../introduction.rst:86
+msgid "QCOW2"
+msgstr ""
+
+#: ../introduction.rst:89
+msgid ""
+"The ``raw`` image format is the simplest one, and is natively supported by "
+"both KVM and Xen hypervisors. You can think of a raw image as being the bit-"
+"equivalent of a block device file, created as if somebody had copied, say, "
+"``/dev/sda`` to a file using the :command:`dd` command."
+msgstr ""
+
+#: ../introduction.rst:97
+msgid ""
+"We do not recommend creating raw images by dd'ing block device files, we "
+"discuss how to create raw images later."
+msgstr ""
+
+#: ../introduction.rst:98
+msgid "Raw"
+msgstr ""
+
+#: ../introduction.rst:101
+msgid ""
+"A UEC (Ubuntu Enterprise Cloud) tarball is a gzipped tarfile that contains "
+"an AMI file, AKI file, and ARI file."
+msgstr ""
+
+#: ../introduction.rst:106
+msgid ""
+"Ubuntu Enterprise Cloud refers to a discontinued Eucalyptus-based Ubuntu "
+"cloud solution that has been replaced by the OpenStack-based Ubuntu Cloud "
+"Infrastructure."
+msgstr ""
+
+#: ../introduction.rst:108
+msgid "UEC tarball"
+msgstr ""
+
+#: ../introduction.rst:111
+msgid ""
+"VirtualBox uses the `VDI <https://forums.virtualbox.org/viewtopic.php?"
+"t=8046>`_ (Virtual Disk Image) format for image files. None of the OpenStack "
+"Compute hypervisors support VDI directly, so you will need to convert these "
+"files to a different format to use them with OpenStack."
+msgstr ""
+
+#: ../introduction.rst:115
+msgid "VDI"
+msgstr ""
+
+#: ../introduction.rst:118
+msgid "Microsoft Hyper-V uses the VHD (Virtual Hard Disk) format for images."
+msgstr ""
+
+#: ../introduction.rst:118
+msgid "VHD"
+msgstr ""
+
+#: ../introduction.rst:121
+msgid ""
+"The version of Hyper-V that ships with Microsoft Server 2012 uses the newer "
+"`VHDX <http://technet.microsoft.com/en-us/library/hh831446.aspx>`_ format, "
+"which has some additional features over VHD such as support for larger disk "
+"sizes and protection against data corruption during power failures."
+msgstr ""
+
+#: ../introduction.rst:124
+msgid "VHDX"
+msgstr ""
+
+#: ../introduction.rst:127
+msgid ""
+"VMware ESXi hypervisor uses the `VMDK <https://developercenter.vmware.com/"
+"web/sdk/60/vddk>`_ (Virtual Machine Disk) format for images."
+msgstr ""
+
+#: ../introduction.rst:128
+msgid "VMDK"
 msgstr ""
 
 #: ../modify-images.rst:3
