@@ -339,7 +339,7 @@ dispatches commands to compute workers to complete these tasks:
 
 -  Run instances
 
--  Terminate instances
+-  Delete instances (Terminate instances)
 
 -  Reboot instances
 
