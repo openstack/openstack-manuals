@@ -77,6 +77,8 @@ Supported operations
 
 * Manage and unmanage a volume.
 
+* Manage and unmanage a snapshot.
+
 Volume type support for both HPE 3PAR drivers includes the ability to set the
 following capabilities in the OpenStack Block Storage API
 ``cinder.api.contrib.types_extra_specs`` volume type extra specs extension
