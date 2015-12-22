@@ -57,6 +57,7 @@ system.
    .. code-block:: console
 
       $ cinder create --display-name my-volume 8
+
       +--------------------------------+--------------------------------------+
       |            Property            |                Value                 |
       +--------------------------------+--------------------------------------+
@@ -86,6 +87,7 @@ system.
    .. code-block:: console
 
       $ cinder list
+
       +-----------------+-----------+-----------+------+-------------+----------+-------------+
       |       ID        |   Status  |    Name   | Size | Volume Type | Bootable | Attached to |
       +-----------------+-----------+-----------+------+-------------+----------+-------------+
@@ -100,6 +102,7 @@ system.
       $ nova boot --flavor 2 --image 98901246-af91-43d8-b5e6-a4506aa8f369 \
         --block-device source=volume,id=d620d971-b160-4c4e-8652-2513d74e2080,dest=volume,shutdown=preserve \
         myInstanceWithVolume
+
       +--------------------------------------+--------------------------------------------+
       | Property                             | Value                                      |
       +--------------------------------------+--------------------------------------------+
@@ -148,6 +151,7 @@ the volume to boot an instance.
    .. code-block:: console
 
       $ nova image-list
+
       +-----------------+---------------------------------+--------+--------+
       | ID              | Name                            | Status | Server |
       +-----------------+---------------------------------+--------+--------+
@@ -164,6 +168,7 @@ the volume to boot an instance.
    .. code-block:: console
 
       $ nova flavor-list
+
       +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
       | ID  | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public |
       +-----+-----------+-----------+------+-----------+------+-------+-------------+-----------+
@@ -226,6 +231,7 @@ the volume to boot an instance.
       $ nova boot --flavor 2 \
         --block-device source=image,id=484e05af-a14d-4567-812b-28122d1c2260,dest=volume,size=10,shutdown=preserve,bootindex=0 \
         myInstanceFromVolume
+
       +--------------------------------------+--------------------------------+
       | Property                             | Value                          |
       +--------------------------------------+--------------------------------+
@@ -267,6 +273,7 @@ the volume to boot an instance.
    .. code-block:: console
 
       $ cinder list
+
       +-------------+--------+--------------+------+-------------+----------+-------------+
       |      ID     | Status | Display Name | Size | Volume Type | Bootable | Attached to |
       +-------------+--------+--------------+------+-------------+----------+-------------+

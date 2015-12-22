@@ -15,7 +15,7 @@ types, such as instances, floating IP addresses, volumes, security
 groups, and users. The resources, once created, are referred to as
 stacks.
 
-The template languages are described in `the Template
+The template languages are described in the `Template
 Guide <http://docs.openstack.org/developer/heat/template_guide/index.html>`__
 in the `Heat developer
 documentation <http://docs.openstack.org/developer/heat/>`__.
@@ -76,6 +76,7 @@ number of commands.
    .. code-block:: console
 
       $ heat stack-list
+
       +------------------+---------------+-----------------+----------------------+
       | id               | stack_name    | stack_status    | creation_time        |
       +------------------+---------------+-----------------+----------------------+
@@ -95,6 +96,7 @@ number of commands.
    .. code-block:: console
 
       $ heat resource-list mystack
+
       +---------------------+--------------------+-----------------+----------------------+
       | logical_resource_id | resource_type      | resource_status | updated_time         |
       +---------------------+--------------------+-----------------+----------------------+
@@ -122,6 +124,7 @@ number of commands.
    .. code-block:: console
 
       $ heat event-list mystack
+
       +---------------------+----+------------------------+-----------------+----------------------+
       | logical_resource_id | id | resource_status_reason | resource_status | event_time           |
       +---------------------+----+------------------------+-----------------+----------------------+
@@ -147,6 +150,7 @@ like the following command:
    $ heat stack-update mystack --template-file \
      /path/to/heat/templates/WordPress_Single_Instance_v2.template \
      --parameters "InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"
+
    +--------------------------------------+---------------+-----------------+----------------------+
    | id                                   | stack_name    | stack_status    | creation_time        |
    +--------------------------------------+---------------+-----------------+----------------------+

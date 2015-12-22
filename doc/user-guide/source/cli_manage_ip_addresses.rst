@@ -34,6 +34,7 @@ To list all pools that provide floating IP addresses, run:
 .. code-block:: console
 
    $ nova floating-ip-pool-list
+
    +--------+
    | name   |
    +--------+
@@ -52,6 +53,7 @@ run:
 .. code-block:: console
 
    $ nova floating-ip-list
+
    +--------------+--------------------------------------+----------+--------+
    | Ip           | Instance Id                          | Fixed Ip | Pool   |
    +--------------+--------------------------------------+----------+--------+
@@ -77,6 +79,7 @@ You can assign a floating IP address to a project and to an instance.
    .. code-block:: console
 
       $ nova floating-ip-create
+
       +--------------+-------------+----------+--------+
       | IP           | Instance Id | Fixed IP | Pool   |
       +--------------+-------------+----------+--------+
@@ -99,6 +102,7 @@ You can assign a floating IP address to a project and to an instance.
    .. code-block:: console
 
       $ nova list
+
       +---------------------+------+---------+------------+-------------+------------------+
       | ID                  | Name | Status  | Task State | Power State | Networks         |
       +---------------------+------+---------+------------+-------------+------------------+
@@ -123,6 +127,7 @@ You can assign a floating IP address to a project and to an instance.
    .. code-block:: console
 
       $ nova list
+
       +------------------+------+--------+------------+-------------+-------------------------------+
       | ID               | Name | Status | Task State | Power State | Networks                      |
       +------------------+------+--------+------------+-------------+-------------------------------+
