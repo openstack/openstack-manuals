@@ -16,5 +16,3 @@ handling complex administrative tasks.
    manage_db_config.rst
    set_up_replication.rst
    set_up_clustering.rst
-
-

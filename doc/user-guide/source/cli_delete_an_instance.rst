@@ -9,6 +9,7 @@ When you no longer need an instance, you can delete it.
    .. code-block:: console
 
       $ nova list
+
       +-------------+----------------------+--------+------------+-------------+------------------+
       | ID          | Name                 | Status | Task State | Power State | Networks         |
       +-------------+----------------------+--------+------------+-------------+------------------+
@@ -33,6 +34,7 @@ When you no longer need an instance, you can delete it.
    .. code-block:: console
 
       $ nova list
+
       +-------------+----------------------+--------+------------+-------------+------------------+
       | ID          | Name                 | Status | Task State | Power State | Networks         |
       +-------------+----------------------+--------+------------+-------------+------------------+

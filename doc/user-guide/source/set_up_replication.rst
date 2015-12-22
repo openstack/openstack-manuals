@@ -110,4 +110,3 @@ Set up replication
    .. code-block:: console
 
       $ trove detach-replica INSTANCE_ID_OF_REPLICA
-

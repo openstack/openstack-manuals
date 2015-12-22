@@ -8,7 +8,9 @@ within the limits set by administrators.
 The examples in this guide show you how to perform tasks by using the
 following methods:
 
-* OpenStack dashboard. Use this web-based graphical interface, code named `horizon <https://git.openstack.org/cgit/openstack/horizon>`__, to view, create, and manage resources.
+* OpenStack dashboard. Use this web-based graphical interface, code named
+  `horizon <https://git.openstack.org/cgit/openstack/horizon>`__, to view,
+  create, and manage resources.
 
 * OpenStack command-line clients. Each core OpenStack project has a
   command-line client that you can use to run simple commands to view,
@@ -18,9 +20,9 @@ following methods:
 You can modify these examples for your specific use cases.
 
 In addition to these ways of interacting with a cloud, you can access
-the OpenStack APIs directly or indirectly through `cURL <http://curl.haxx.se>`__ commands or
-open SDKs. You can automate access or build tools to manage resources
-and services by using the native OpenStack APIs or the EC2
+the OpenStack APIs directly or indirectly through `cURL <http://curl.haxx.se>`__
+commands or open SDKs. You can automate access or build tools to manage
+resources and services by using the native OpenStack APIs or the EC2
 compatibility API.
 
 To use the OpenStack APIs, it helps to be familiar with HTTP/1.1,

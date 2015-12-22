@@ -16,8 +16,6 @@ Create a share network
 
       $ manila share-network-create --name mysharenetwork --description "My Manila network" --neutron-net-id 394246ed-d3fd-4a30-a456-7042ce3429b9 --neutron-subnet-id 8f56d97d-8495-4a5b-8544-9ae4ee9390fc
 
-   .. code-block:: console
-
       +-------------------+--------------------------------------+
       | Property          | Value                                |
       +-------------------+--------------------------------------+
@@ -42,8 +40,6 @@ Create a share network
 
       $ manila share-network-list
 
-   .. code-block:: console
-
       +--------------------------------------+----------------+
       | id                                   | name           |
       +--------------------------------------+----------------+
@@ -58,8 +54,6 @@ Create a share
    .. code-block:: console
 
       $ manila create --name myshare --description "My Manila share" --share-network ccd6b453-8b05-4508-bbce-93bfe660451f NFS 1
-
-   .. code-block:: console
 
       +-------------------+--------------------------------------+
       | Property          | Value                                |
@@ -89,8 +83,6 @@ Create a share
 
       $ manila show 2fe736d1-08ac-46f9-a482-8f224405f2a7
 
-   .. code-block:: console
-
       +-------------------+--------------------------------------+
       | Property          | Value                                |
       +-------------------+--------------------------------------+
@@ -119,8 +111,6 @@ Create a share
 
       $ manila list
 
-   .. code-block:: console
-
      +--------------------------------------+---------+------+-------------+-----------+-----------+------------+---------------------------------------------------------------+--------------------------------+
      | ID                                   | Name    | Size | Share Proto | Status    | Is Public | Share Type | Export location                                               | Host                           |
      +--------------------------------------+---------+------+-------------+-----------+-----------+------------+---------------------------------------------------------------+--------------------------------+
@@ -135,8 +125,6 @@ Allow access
    .. code-block:: console
 
       $ manila access-allow 2fe736d1-08ac-46f9-a482-8f224405f2a7 ip 192.100.00.168
-
-   .. code-block:: console
 
       +--------------+--------------------------------------+
       | Property     | Value                                |
@@ -159,8 +147,6 @@ Allow access
    .. code-block:: console
 
       $ manila access-list 2fe736d1-08ac-46f9-a482-8f224405f2a7
-
-   .. code-block:: console
 
      +--------------------------------------+-------------+----------------+--------------+--------+
      | id                                   | access type | access to      | access level | state  |
@@ -185,8 +171,6 @@ Deny access
 
       $ manila access-list 2fe736d1-08ac-46f9-a482-8f224405f2a7
 
-   .. code-block:: console
-
       +----+-------------+-----------+--------------+-------+
       | id | access type | access to | access level | state |
       +----+-------------+-----------+--------------+-------+
@@ -202,8 +186,6 @@ Create snapshot
    .. code-block:: console
 
       $ manila snapshot-create --name mysnapshot --description "My Manila snapshot" 2fe736d1-08ac-46f9-a482-8f224405f2a7
-
-   .. code-block:: console
 
      +-------------+--------------------------------------+
      | Property    | Value                                |
@@ -225,8 +207,6 @@ Create snapshot
 
       $ manila snapshot-list
 
-   .. code-block:: console
-
       +--------------------------------------+--------------------------------------+-----------+------------+------------+
       | ID                                   | Share ID                             | Status    | Name       | Share Size |
       +--------------------------------------+--------------------------------------+-----------+------------+------------+
@@ -241,8 +221,6 @@ Create share from snapshot
    .. code-block:: console
 
       $ manila create --snapshot-id 1a411703-baef-495f-8e9c-b60e68f2e657 --share-network ccd6b453-8b05-4508-bbce-93bfe660451f --name mysharefromsnap NFS 1
-
-   .. code-block:: console
 
       +-------------------+--------------------------------------+
       | Property          | Value                                |
@@ -273,8 +251,6 @@ Create share from snapshot
 
       $ manila list
 
-   .. code-block:: console
-
      +--------------------------------------+-----------------+------+-------------+-----------+-----------+------------+---------------------------------------------------------------+--------------------------------+
      | ID                                   | Name            | Size | Share Proto | Status    | Is Public | Share Type | Export location                                               | Host                           |
      +--------------------------------------+-----------------+------+-------------+-----------+-----------+------------+---------------------------------------------------------------+--------------------------------+
@@ -287,8 +263,6 @@ Create share from snapshot
    .. code-block:: console
 
       $ manila show bcc5b2a7-862b-418a-9607-5d669619d652
-
-   .. code-block:: console
 
       +-------------------+---------------------------------------------------------------+
       | Property          | Value                                                         |
@@ -326,8 +300,6 @@ Delete share
 
       $ manila list
 
-   .. code-block:: console
-
      +--------------------------------------+-----------------+------+-------------+-----------+-----------+------------+---------------------------------------------------------------+--------------------------------+
      | ID                                   | Name            | Size | Share Proto | Status    | Is Public | Share Type | Export location                                               | Host                           |
      +--------------------------------------+-----------------+------+-------------+-----------+-----------+------------+---------------------------------------------------------------+--------------------------------+
@@ -345,8 +317,6 @@ Delete snapshot
    .. code-block:: console
 
       $ manila snapshot-list
-
-   .. code-block:: console
 
       +--------------------------------------+--------------------------------------+-----------+------------+------------+
       | ID                                   | Share ID                             | Status    | Name       | Share Size |
@@ -386,8 +356,6 @@ Extend share
 
       $ manila show 2fe736d1-08ac-46f9-a482-8f224405f2a7
 
-   .. code-block:: console
-
       +-------------------+---------------------------------------------------------------+
       | Property          | Value                                                         |
       +-------------------+---------------------------------------------------------------+
@@ -414,8 +382,6 @@ Extend share
    .. code-block:: console
 
       $ manila show 2fe736d1-08ac-46f9-a482-8f224405f2a7
-
-   .. code-block:: console
 
       +-------------------+---------------------------------------------------------------+
       | Property          | Value                                                         |
@@ -453,8 +419,6 @@ Shrink share
 
       $ manila show 2fe736d1-08ac-46f9-a482-8f224405f2a7
 
-   .. code-block:: console
-
       +-------------------+---------------------------------------------------------------+
       | Property          | Value                                                         |
       +-------------------+---------------------------------------------------------------+
@@ -481,8 +445,6 @@ Shrink share
    .. code-block:: console
 
       $ manila show 2fe736d1-08ac-46f9-a482-8f224405f2a7
-
-   .. code-block:: console
 
       +-------------------+---------------------------------------------------------------+
       | Property          | Value                                                         |

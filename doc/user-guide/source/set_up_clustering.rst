@@ -170,4 +170,3 @@ Each cluster includes at least one query router and one config server.
 Query routers and config servers count against your quota. When you
 delete a cluster, the system deletes the associated query router(s) and
 config server(s).
-

@@ -14,6 +14,7 @@ The following example shows the results of a search on ``10.0.0.4``.
 .. code-block:: console
 
    $ nova list --ip 10.0.0.4
+
    +------------------+----------------------+--------+------------+-------------+------------------+
    | ID               | Name                 | Status | Task State | Power State | Networks         |
    +------------------+----------------------+--------+------------+-------------+------------------+

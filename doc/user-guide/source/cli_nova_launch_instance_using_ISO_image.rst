@@ -18,6 +18,7 @@ with the following parameters to boot an instance.
         --block-device source=blank,dest=volume,size=10,shutdown=preserve \
         --nic net-id = NETWORK_UUID \
         --flavor 2 INSTANCE_NAME
+
     +--------------------------------------+--------------------------------------------+
     | Property                             | Value                                      |
     +--------------------------------------+--------------------------------------------+
@@ -92,6 +93,7 @@ using ISO image actually functional.
    .. code-block:: console
 
       $ cinder list
+
       +-----------------+-----------+--------------+------+-------------+----------+-------------+
       |       ID        |   Status  |      Name    | Size | Volume Type | Bootable | Attached to |
       +-----------------+-----------+--------------+------+-------------+----------+-------------+
@@ -108,6 +110,7 @@ using ISO image actually functional.
 
       $ cinder upload-to-image VOLUME_UUID IMAGE_NAME
       $ glance image-list
+
       +-------------------+------------+-------------+------------------+------------+--------+
       | ID                | Name       | Disk Format | Container Format | Size       | Status |
       +-------------------+------------+-------------+------------------+------------+--------+
