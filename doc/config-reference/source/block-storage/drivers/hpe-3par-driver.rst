@@ -46,6 +46,10 @@ the HPE 3PAR storage system:
     volume snapshots. This applies to the volume :command:`snapshot-*`
     commands.
 
+* HPE 3PAR drivers will now check the licenses installed on the array and
+  disable driver capabilities based on available licenses. This will apply to
+  thin provisioning, QoS support and volume replication.
+
 * HPE 3PAR Web Services API Server must be enabled and running.
 
 * One Common Provisioning Group (CPG).
