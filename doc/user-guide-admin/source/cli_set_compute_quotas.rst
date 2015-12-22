@@ -58,6 +58,7 @@ To view and update default quota values
    .. code-block:: console
 
       $ nova quota-defaults
+
       +-----------------------------+-------+
       | Quota                       | Limit |
       +-----------------------------+-------+
@@ -107,6 +108,7 @@ To view quota values for an existing tenant (project)
    .. code-block:: console
 
       $ nova quota-show --tenant $tenant
+
       +-----------------------------+-------+
       | Quota                       | Limit |
       +-----------------------------+-------+
@@ -145,6 +147,7 @@ To update quota values for an existing tenant (project)
 
       $ nova quota-update --floating-ips 20 $tenant
       $ nova quota-show --tenant $tenant
+
       +-----------------------------+-------+
       | Quota                       | Limit |
       +-----------------------------+-------+
@@ -199,6 +202,7 @@ To view quota values for a tenant user
    .. code-block:: console
 
       $ nova quota-show --user $tenantUser --tenant $tenant
+
       +-----------------------------+-------+
       | Quota                       | Limit |
       +-----------------------------+-------+
@@ -243,6 +247,7 @@ To update quota values for a tenant user
 
       $ nova quota-update --user $tenantUser --floating-ips 12 $tenant
       $ nova quota-show --user $tenantUser --tenant $tenant
+
       +-----------------------------+-------+
       | Quota                       | Limit |
       +-----------------------------+-------+
@@ -277,6 +282,7 @@ current quota values and the current quota usage:
 .. code-block:: console
 
    $ nova absolute-limits --tenant TENANT_NAME
+
    +-------------------------+-------+
    | Name                    | Value |
    +-------------------------+-------+

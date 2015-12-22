@@ -27,6 +27,7 @@ on this host.
    .. code-block:: console
 
       $ nova hypervisor-list
+
       +----+---------------------+
       | ID | Hypervisor hostname |
       +----+---------------------+

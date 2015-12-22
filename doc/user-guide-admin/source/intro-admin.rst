@@ -9,7 +9,8 @@ The examples in this guide show you how to perform tasks by using the
 following methods:
 
 * OpenStack dashboard. Use this web-based graphical interface, code
-  named `horizon <https://git.openstack.org/cgit/openstack/horizon>`__, to view, create, and manage resources and services.
+  named `horizon <https://git.openstack.org/cgit/openstack/horizon>`__,
+  to view, create, and manage resources and services.
 
 * OpenStack command-line clients. Each core OpenStack project has a
   command-line client that you can use to run simple commands to view,

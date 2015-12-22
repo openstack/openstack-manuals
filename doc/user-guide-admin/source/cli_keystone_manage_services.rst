@@ -41,6 +41,7 @@ Create a service
    .. code-block:: console
 
       $ openstack service list
+
       +----------------------------------+----------+------------+
       | ID                               | Name     | Type       |
       +----------------------------------+----------+------------+
@@ -74,6 +75,7 @@ Create a service
    .. code-block:: console
 
       $ openstack service create --name swift --description "object store service" object-store
+
       +-------------+----------------------------------+
       | Field       | Value                            |
       +-------------+----------------------------------+
@@ -95,6 +97,7 @@ Create a service
    .. code-block:: console
 
       $ openstack service show object-store
+
       +-------------+----------------------------------+
       | Field       | Value                            |
       +-------------+----------------------------------+
@@ -116,8 +119,6 @@ Create service users
 
       $ openstack project create service
 
-   .. code-block:: console
-
       +-------------+----------------------------------+
       | Field       | Value                            |
       +-------------+----------------------------------+
@@ -135,8 +136,6 @@ Create service users
    .. code-block:: console
 
       $ openstack role add --project service --user SERVICE_USER_NAME admin
-
-   .. code-block:: console
 
       +-------+----------------------------------+
       | Field | Value                            |
