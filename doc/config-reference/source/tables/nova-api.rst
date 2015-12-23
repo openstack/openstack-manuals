@@ -26,7 +26,7 @@
      - (IntOpt) Timeout for client connections' socket operations. If an incoming connection is idle for this number of seconds it will be closed. A value of '0' means wait forever.
    * - ``enable_new_services`` = ``True``
      - (BoolOpt) Services to be added to the available pool on create
-   * - ``enabled_apis`` = ``ec2, osapi_compute, metadata``
+   * - ``enabled_apis`` = ``osapi_compute, metadata``
      - (ListOpt) A list of APIs to enable by default
    * - ``enabled_ssl_apis`` =
      - (ListOpt) A list of APIs with enabled SSL
