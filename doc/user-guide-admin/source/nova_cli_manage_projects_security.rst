@@ -101,7 +101,7 @@ easier to understand than "bobs\_group" or "secgrp1".
 
    .. code-block:: console
 
-      $ nova secgroup-create Group Name Description
+      $ nova secgroup-create GroupName Description
 
    For example:
 
