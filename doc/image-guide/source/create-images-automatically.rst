@@ -194,3 +194,32 @@ for building and testing software applications in a web browser.
 It supports the creation of physical, virtual or cloud-based
 applications and includes support for building images for OpenStack
 based clouds using SUSE Linux Enterprise and openSUSE as distributions.
+
+virt-builder
+~~~~~~~~~~~~
+
+`Virt-builder <http://libguestfs.org/virt-builder.1.html>`_ is a tool for
+quickly building new virtual machines. You can build a variety of VMs for
+local or cloud use, usually within a few minutes or less. Virt-builder also
+has many ways to customize these VMs. Everything is run from the command line
+and nothing requires root privileges, so automation and scripting is simple.
+
+To build an image, call the following script:
+
+.. code-block:: console
+
+   # virt-builder fedora-23 -o image.qcow2 --format qcow2 \
+     --update --selinux-relabel --size 20G
+
+To list the operating systems available to install:
+
+.. code-block:: console
+
+   $ virt-builder --list
+
+To import it into libvirt with :command:`virsh`:
+
+.. code-block:: console
+
+   # virt-install --name fedora --ram 2048 \
+     --disk path=image.qcow2,format=qcow2 --import
