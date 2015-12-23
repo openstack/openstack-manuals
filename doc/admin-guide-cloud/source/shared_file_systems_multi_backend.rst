@@ -57,5 +57,5 @@ should provide a single configuration file per each back end.
 
 .. toctree::
 
-    shared_file_systems_scheduling.rst
-    shared_file_systems_services_manage.rst
+   shared_file_systems_scheduling.rst
+   shared_file_systems_services_manage.rst

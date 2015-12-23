@@ -24,7 +24,8 @@ various network file storage devices, instead of the base implementation. That
 is the real purpose of the Shared File Systems service in production.
 
 .. toctree::
-    shared_file_systems_crud_share.rst
-    shared_file_systems_manage_and_unmanage_share.rst
-    shared_file_systems_share_resize.rst
-    shared_file_systems_quotas.rst
+
+   shared_file_systems_crud_share.rst
+   shared_file_systems_manage_and_unmanage_share.rst
+   shared_file_systems_share_resize.rst
+   shared_file_systems_quotas.rst

@@ -42,8 +42,6 @@ First, list the available back-ends:
 
    # cinder get-pools
 
-.. code-block:: console
-
    +----------+----------------------------------------------------+
    | Property |                       Value                        |
    +----------+----------------------------------------------------+
@@ -76,8 +74,6 @@ Next, as the admin user, you can see the current status of the volume
 .. code-block:: console
 
    $ cinder show 6088f80a-f116-4331-ad48-9afb0dfb196c
-
-.. code-block:: console
 
    +--------------------------------+--------------------------------------+
    |            Property            |                Value                 |
@@ -193,4 +189,3 @@ end, you find the logical volume
 .. note::
 
    Migrating volumes that have snapshots are currently not allowed.
-

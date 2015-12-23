@@ -11,8 +11,8 @@ the database used by the Block Storage service.
 
 .. note::
 
-    For information about how to back up and restore a volume, see
-    the section called :ref:`volume_backups`.
+   For information about how to back up and restore a volume, see
+   the section called :ref:`volume_backups`.
 
 You can, however, export the metadata of a volume backup. To do so, run
 this command as an OpenStack ``admin`` user (presumably, after creating
