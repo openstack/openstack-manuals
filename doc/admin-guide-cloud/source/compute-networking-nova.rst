@@ -1001,9 +1001,9 @@ the kernel module:
 
    Loading the module has no effect on running instances.
 
-.. |multinic flat manager| image:: ../../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-manager.jpg
+.. |multinic flat manager| image:: figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-manager.jpg
    :width: 600
-.. |multinic flatdhcp manager| image:: ../../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-DHCP-manager.jpg
+.. |multinic flatdhcp manager| image:: figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-Flat-DHCP-manager.jpg
    :width: 600
-.. |multinic VLAN manager| image:: ../../common/figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-VLAN-manager.jpg
+.. |multinic VLAN manager| image:: figures/SCH_5007_V00_NUAC-multi_nic_OpenStack-VLAN-manager.jpg
    :width: 600

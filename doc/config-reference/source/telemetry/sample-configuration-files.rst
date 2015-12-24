@@ -13,7 +13,7 @@ The configuration for the Telemetry services and agents is found in the
 
 This file must be modified after installation.
 
-.. literalinclude:: ../../../common/samples/ceilometer.conf
+.. literalinclude:: ../samples/ceilometer.conf
    :language: ini
 
 event_definitions.yaml

@@ -137,8 +137,8 @@ settings:
 
 |Trusted compute pool|
 
-.. |image0| image:: ../../common/figures/OpenStackTrustedComputePool1.png
-.. |Trusted compute pool| image:: ../../common/figures/OpenStackTrustedComputePool2.png
+.. |image0| image:: figures/OpenStackTrustedComputePool1.png
+.. |Trusted compute pool| image:: figures/OpenStackTrustedComputePool2.png
 
 
 Encrypt Compute metadata traffic

@@ -436,6 +436,6 @@ Administrative users can specify which compute node their instances
 run on. To do this, specify the ``--availability-zone
 AVAILABILITY_ZONE:COMPUTE_HOST`` parameter.
 
-.. |Base image state with no running instances| image:: ../../common/figures/instance-life-1.png
-.. |Instance creation from image and runtime state| image:: ../../common/figures/instance-life-2.png
-.. |End state of image and volume after instance exits| image:: ../../common/figures/instance-life-3.png
+.. |Base image state with no running instances| image:: figures/instance-life-1.png
+.. |Instance creation from image and runtime state| image:: figures/instance-life-2.png
+.. |End state of image and volume after instance exits| image:: figures/instance-life-3.png

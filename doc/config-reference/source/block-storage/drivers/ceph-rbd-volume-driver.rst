@@ -15,7 +15,7 @@ kernel and is integrated with the OpenStack cloud operating system. Due
 to its open-source nature, you can install and use this portable storage
 platform in public or private clouds.
 
-.. figure:: ../../../../common/figures/ceph/ceph-architecture.png
+.. figure:: ../../figures/ceph-architecture.png
 
     Ceph architecture
 
