@@ -144,3 +144,7 @@ Finalize installation
 
    2. Secure the database service by running the
       ``mysql_secure_installation`` script.
+
+      .. code-block:: console
+
+         # mysql_secure_installation
