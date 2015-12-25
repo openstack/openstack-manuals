@@ -83,6 +83,6 @@ service on the network node. The green arrow indicates the management
 relationship between the NSX controller and the network node.
 
 
-.. figure:: ../../common/figures/vmware_nsx_ex1.png
+.. figure:: figures/vmware_nsx_ex1.png
 
-.. figure:: ../../common/figures/vmware_nsx_ex2.png
+.. figure:: figures/vmware_nsx_ex2.png

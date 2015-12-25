@@ -172,7 +172,7 @@ the perimeter to filter traffic at the neutron router.
 The example diagram illustrates the flow of ingress and egress traffic
 for the VM2 instance:
 
-.. figure:: ../../common/figures/fwaas.png
+.. figure:: figures/fwaas.png
 
 **To enable FWaaS**
 

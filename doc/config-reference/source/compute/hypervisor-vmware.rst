@@ -31,7 +31,7 @@ architecture:
 
 **VMware driver architecture**
 
-.. figure:: ../../../common/figures/vmware-nova-driver-architecture.jpg
+.. figure:: ../figures/vmware-nova-driver-architecture.jpg
    :width: 100%
 
 As the figure shows, the OpenStack Compute Scheduler sees

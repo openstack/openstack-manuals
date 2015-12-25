@@ -16,7 +16,7 @@ When you manually install the Block Storage service, the options in the
 The ``cinder.conf`` file contains most of the options to configure the
 Block Storage service.
 
-.. literalinclude:: ../../../common/samples/cinder.conf.sample
+.. literalinclude:: ../samples/cinder.conf.sample
    :language: ini
 
 api-paste.ini

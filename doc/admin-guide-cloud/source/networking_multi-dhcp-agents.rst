@@ -28,7 +28,7 @@ scalability and HA.
        | extraroute      | Neutron Extra Route      |
        +-----------------+--------------------------+
 
-.. figure:: ../../common/figures/demo_multiple_dhcp_agents.png
+.. figure:: figures/demo_multiple_dhcp_agents.png
 
 There will be three hosts in the setup.
 

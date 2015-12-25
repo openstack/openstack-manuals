@@ -118,7 +118,7 @@ XenAPI deployment architecture
 A basic OpenStack deployment on a XAPI-managed server, assuming
 that the network provider is nova-network, looks like this:
 
-.. figure:: ../../../common/figures/xenserver_architecture.png
+.. figure:: ../figures/xenserver_architecture.png
    :width: 100%
 
 Key things to note:
