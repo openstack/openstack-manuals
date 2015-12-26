@@ -15,7 +15,7 @@
         interface (CLI) for the Workflow service API and its extensions.
 
        This chapter documents <command>mistral</command> version
-        <literal>1.1.0</literal>.
+        <literal>1.2.0</literal>.
     </para>
 
     <para>For help on a specific <command>mistral</command>
@@ -33,7 +33,7 @@
                [--os-username USERNAME] [--os-password PASSWORD]
                [--os-tenant-id TENANT_ID] [--os-tenant-name TENANT_NAME]
                [--os-auth-token TOKEN] [--os-auth-url AUTH_URL]
-               [--os-cacert CACERT]</computeroutput></screen>
+               [--os-cacert CACERT] [--insecure]</computeroutput></screen>
     </section>
     <section xml:id="mistralclient_command_optional">
         <title>mistral optional arguments</title>
@@ -179,6 +179,15 @@
     <listitem>
       <para>
         Authentication CA Certificate (Env: OS_CACERT)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--insecure</command></term>
+    <listitem>
+      <para>
+        Disables SSL/TLS certificate verification
+      (Env: MISTRALCLIENT_INSECURE)
       </para>
     </listitem>
   </varlistentry>
@@ -1043,7 +1052,10 @@ Show execution output data.
         <title>mistral execution-list</title>
         <screen><computeroutput>usage: mistral execution-list [-h] [-f {csv,json,table,value,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
-                              [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
+                              [--quote {all,minimal,none,nonnumeric}]
+                              [--marker [MARKER]] [--limit [LIMIT]]
+                              [--sort_keys [SORT_KEYS]]
+                              [--sort_dirs [SORT_DIRS]]</computeroutput></screen>
         <para>
 List all executions.
         </para>  <variablelist wordsize="10">
@@ -1053,6 +1065,44 @@ List all executions.
     <listitem>
       <para>
         show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--marker [MARKER]</command></term>
+    <listitem>
+      <para>
+        The last execution uuid of the previous page, displays
+      list of executions after "marker".
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--limit [LIMIT]</command></term>
+    <listitem>
+      <para>
+        Maximum number of executions to return in a single
+      result.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort_keys [SORT_KEYS]</command></term>
+    <listitem>
+      <para>
+      Comma-separated list of sort keys to sort results by.
+      Default: created_at. Example: mistral execution-list
+      --sort_keys=id,description
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--sort_dirs [SORT_DIRS]</command></term>
+    <listitem>
+      <para>
+      Comma-separated list of sort directions. Default: asc.
+      Example: mistral execution-list
+      --sort_keys=id,description --sort_dirs=asc,desc
       </para>
     </listitem>
   </varlistentry>
