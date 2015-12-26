@@ -53,16 +53,45 @@ The following table contains the options supported by the NFS driver.
 How to use the NFS driver
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Access to one or more NFS servers. Creating an NFS server is outside
-   the scope of this document. This example assumes access to the
-   following NFS servers and mount points:
+Creating an NFS server is outside the scope of this document.
 
-   * 192.168.1.200:/storage
-   * 192.168.1.201:/storage
-   * 192.168.1.202:/storage
+Configure with one NFS server
+-----------------------------
 
-   This example demonstrates the use of with this driver with multiple
-   NFS servers. Multiple servers are not required. One is usually enough.
+This example assumes access to the following NFS server and mount point:
+
+* 192.168.1.200:/storage
+
+This example demonstrates the usage of this driver with one NFS server.
+
+Set the ``nas_ip`` option to the IP address or host name of your NFS
+server, and the ``nas_share_path`` option to the NFS export path:
+
+.. code-block:: ini
+
+   nas_ip = 192.168.1.200
+   nas_share_path = /storage
+
+Configure with multiple NFS servers
+-----------------------------------
+
+.. note::
+
+   You can use the multiple NFS servers with `cinder multi back ends
+   <https://wiki.openstack.org/wiki/Cinder-multi-backend>`_ feature.
+   Configure the :ref:`cinder-storage <enabled_backends>` option with
+   mutliple values, and use the ``nas_ip`` and ``nas_share`` options
+   for each back end as described above.
+
+The below example is another method to use multiple NFS servers,
+and demonstrates the usage of this driver with multiple NFS servers.
+Multiple servers are not required. One is usually enough.
+
+This example assumes access to the following NFS servers and mount points:
+
+* 192.168.1.200:/storage
+* 192.168.1.201:/storage
+* 192.168.1.202:/storage
 
 #. Add your list of NFS servers to the file you specified with the
    ``nfs_shares_config`` option. For example, if the value of this option
