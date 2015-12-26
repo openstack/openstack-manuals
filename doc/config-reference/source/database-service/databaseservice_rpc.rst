@@ -10,21 +10,24 @@ supports three implementations of AMQP: RabbitMQ, Qpid, and ZeroMQ.
 Configure RabbitMQ
 ~~~~~~~~~~~~~~~~~~
 
-Use these options to configure the RabbitMQ messaging system:
+Use these options to configure the RabbitMQ messaging system
+in the ``trove.conf`` file:
 
 .. include:: ../tables/trove-rabbitmq.rst
 
 Configure Qpid
 ~~~~~~~~~~~~~~
 
-Use these options to configure the Qpid messaging system:
+Use these options to configure the Qpid messaging system
+in the ``trove.conf`` file:
 
 .. include:: ../tables/trove-qpid.rst
 
 Configure ZeroMQ
 ~~~~~~~~~~~~~~~~
 
-Use these options to configure the ZeroMQ messaging system:
+Use these options to configure the ZeroMQ messaging system
+in the ``trove.conf`` file:
 
 .. include:: ../tables/trove-zeromq.rst
 
@@ -32,7 +35,7 @@ Configure messaging
 ~~~~~~~~~~~~~~~~~~~
 
 Use these common options to configure the RabbitMQ, Qpid, and ZeroMq
-messaging drivers:
+messaging drivers in the ``trove.conf`` file:
 
 .. include:: ../tables/trove-amqp.rst
 .. include:: ../tables/trove-rpc.rst

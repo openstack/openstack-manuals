@@ -27,19 +27,16 @@ scenarios, tune retries for RabbitMQ, and define the size of the RPC
 thread pool. To monitor notifications through RabbitMQ, you must set
 the ``notification_driver`` option to
 ``heat.openstack.common.notifier.rpc_notifier`` in the ``heat.conf``
-file:
+file.
 
 .. include:: ../tables/heat-rabbitmq.rst
 
 Configure Qpid
 ~~~~~~~~~~~~~~
 
-Use these options to configure the
-Qpid messaging system for OpenStack
-Oslo RPC. Qpid is not the default
-messaging system, so you must enable it by setting the
-``rpc_backend`` option in the
-``heat.conf`` file:
+Use these options to configure the Qpid messaging system for OpenStack
+Oslo RPC. Qpid is not the default messaging system, so you must enable
+it by setting the ``rpc_backend`` option in the ``heat.conf`` file:
 
 .. code-block:: ini
 
@@ -58,10 +55,8 @@ broker runs in the ``heat.conf`` file.
 
    qpid_hostname = hostname.example.com
 
-If the Qpid broker listens on a
-port other than the AMQP default of 5672, you
-must set the ``qpid_port`` option to that
-value:
+If the Qpid broker listens on a port other than the AMQP default of 5672,
+you must set the ``qpid_port`` option to that value:
 
 .. code-block:: ini
 
@@ -84,7 +79,7 @@ the ``qpid_protocol`` option:
 
 Use these additional options to configure the Qpid messaging
 driver for OpenStack Oslo RPC. These options are used
-infrequently.
+infrequently in the ``heat.conf`` file.
 
 .. include:: ../tables/heat-qpid.rst
 
@@ -102,7 +97,7 @@ Configure messaging
 ~~~~~~~~~~~~~~~~~~~
 
 Use these common options to configure the RabbitMQ, Qpid, and ZeroMq
-messaging drivers:
+messaging drivers in the ``heat.conf`` file.
 
 .. include:: ../tables/heat-amqp.rst
 .. include:: ../tables/heat-rpc.rst

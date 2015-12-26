@@ -8,8 +8,9 @@ run on multiple servers to talk to each other. The OpenStack common
 library project, oslo, supports three implementations of AMQP: RabbitMQ,
 Qpid, and ZeroMQ.
 
-The following tables contain settings to configure the messaging
-middleware for the Image service:
+The following tables contain settings to configure the messaging middleware
+for the Image service. Use these options to configure the messaging drivers
+in the ``glance-api.conf`` and ``glance-registry.conf`` files:
 
 .. include:: ../tables/glance-zeromq.rst
 .. include:: ../tables/glance-amqp.rst

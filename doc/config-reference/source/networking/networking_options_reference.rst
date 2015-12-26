@@ -172,7 +172,7 @@ scenarios, tune retries for RabbitMQ, and define the size of the
 RPC thread pool. To monitor notifications through RabbitMQ, you
 must set the ``notification_driver`` option to
 ``neutron.openstack.common.notifier.rpc_notifier`` in the
-``neutron.conf`` file:
+``neutron.conf`` file.
 
 .. include:: ../tables/neutron-rabbitmq.rst
 
@@ -232,12 +232,10 @@ infrequently.
 Configure ZeroMQ
 ----------------
 
-Use these options to configure the
-ZeroMQ messaging system for
-OpenStack Oslo RPC. ZeroMQ is not the
-default messaging system, so you must enable it by setting the
-``rpc_backend`` option in the
-``neutron.conf`` file:
+Use these options to configure the ZeroMQ messaging system for
+OpenStack Oslo RPC. ZeroMQ is not the default messaging system,
+so you must enable it by setting the ``rpc_backend`` option in
+the ``neutron.conf`` file.
 
 .. include:: ../tables/neutron-zeromq.rst
 
@@ -245,7 +243,7 @@ Configure messaging
 -------------------
 
 Use these common options to configure the RabbitMQ, Qpid, and ZeroMq
-messaging drivers:
+messaging drivers in the ``neutron.conf`` file.
 
 .. include:: ../tables/neutron-rpc.rst
 .. include:: ../tables/neutron-redis.rst
