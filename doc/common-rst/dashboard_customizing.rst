@@ -21,11 +21,19 @@ and feels to suit your own needs.
 
 .. note::
 
-   This guide focuses on the ``local_settings.py`` file, stored in
-   ``/openstack-dashboard/openstack_dashboard/local/``.
+   This guide focuses on the ``local_settings.py`` file.
 
-This guide is adapted from `How To Custom Brand The OpenStack "Horizon"
-Dashboard <http://www.prestonlee.com/2012/05/09/how-to-custom-brand-the-openstack-horizon-dashboard/>`__.
+This guide is adapted from
+`How To Custom Brand The OpenStack "Horizon" Dashboard
+<http://www.prestonlee.com/2012/05/09/how-to-custom-brand-the-openstack-horizon-dashboard/>`_.
+
+The following can easily be customized:
+
+* Logo
+* Site colors
+* HTML title
+* Logo link
+* Help URL
 
 Logo and site colors
 ~~~~~~~~~~~~~~~~~~~~
@@ -87,8 +95,8 @@ Logo and site colors
 
       /usr/share/openstack-dashboard/openstack_dashboard/templates/_stylesheets.html
 
-#. Add a line to include your newly created style sheet. For example
-   ``custom.css``:
+#. Add a line to include your newly created style sheet. For example,
+   ``custom.css`` file:
 
    .. code-block:: html
 
