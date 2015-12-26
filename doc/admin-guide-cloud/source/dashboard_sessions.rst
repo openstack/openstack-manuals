@@ -129,7 +129,7 @@ far beyond the scope of this documentation.
 
 #. In the ``local_settings.py`` file, change these options:
 
-  .. code-block:: python
+   .. code-block:: python
 
       SESSION_ENGINE = 'django.contrib.sessions.backends.db'
       DATABASES = {
