@@ -98,10 +98,13 @@ to schedule instances to a non-default availability zone of nova.
 Segregation example
 -------------------
 
-In this example the cloud is divided into two regions, one for each site, with
-two availability zones in each based on the power layout of the data centers.
+In this example, the cloud is divided into two regions, an API cell and
+three child cells for each region, with three availability zones in each
+cell based on the power layout of the data centers.
+The below figure describes the relationship between them within one region.
+
+.. figure:: figures/Massively_Scalable_Cells_regions_azs.png
+
 A number of host aggregates enable targeting of virtual machine instances
 using flavors, that require special capabilities shared by the target hosts
 such as SSDs, 10 GbE networks, or GPU cards.
-
-.. figure:: figures/Massively_Scalable_Cells_regions_azs.png
