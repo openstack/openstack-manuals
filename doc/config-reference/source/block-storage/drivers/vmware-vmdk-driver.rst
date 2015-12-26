@@ -9,6 +9,10 @@ volumes on vCenter-managed data stores. Volumes are backed by VMDK files on
 data stores that use any VMware-compatible storage technology such as NFS,
 iSCSI, FiberChannel, and vSAN.
 
+.. note::
+
+   The VMware VMDK driver requires vCenter version 5.1 at minimum.
+
 Functional context
 ~~~~~~~~~~~~~~~~~~
 
