@@ -217,6 +217,7 @@ these steps:
         "get_metadef_namespaces":"",
         "modify_metadef_namespace":"",
         "add_metadef_namespace":"",
+        "delete_metadef_namespace":"",
 
         "get_metadef_object":"",
         "get_metadef_objects":"",
