@@ -18,8 +18,6 @@
      - Description
    * - **[DEFAULT]**
      -
-   * - ``api_paste_config`` = ``api-paste.ini``
-     - (StrOpt) File name for the paste.deploy config for cinder-api
    * - ``api_rate_limit`` = ``True``
      - (BoolOpt) Enables or disables rate limit of the API.
    * - ``az_cache_duration`` = ``3600``
