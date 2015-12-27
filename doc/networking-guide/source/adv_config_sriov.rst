@@ -275,7 +275,7 @@ Enable neutron sriov-agent (Compute)
    If you set ``agent_required=False``, you can safely skip this step.
 
 #. On each compute node edit the file
-   :file:`/etc/neutron/plugins/ml2/ml2_conf_sriov.ini`:
+   :file:`/etc/neutron/plugins/ml2/sriov_agent.ini`:
 
    .. code-block:: ini
 
@@ -298,7 +298,7 @@ Enable neutron sriov-agent (Compute)
 
    .. code-block:: console
 
-      # neutron-sriov-nic-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf_sriov.ini
+      # neutron-sriov-nic-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/sriov_agent.ini
 
 #. Enable the neutron-sriov-agent to start automatically at system start.
    If your distribution does not come with a daemon file for your init
