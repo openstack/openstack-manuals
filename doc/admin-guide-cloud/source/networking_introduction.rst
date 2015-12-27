@@ -174,9 +174,10 @@ for the VM2 instance:
 
 .. figure:: figures/fwaas.png
 
-**To enable FWaaS**
+Enable FWaaS
+------------
 
-FWaaS management options are also available in the OpenStack dashboard.
+FWaaS management options are also available in the Dashboard.
 
 #. Enable the FWaaS plug-in in the ``/etc/neutron/neutron.conf`` file:
 
@@ -205,10 +206,8 @@ FWaaS management options are also available in the OpenStack dashboard.
 
       # neutron-db-manage --service fwaas upgrade head
 
-#. Enable the option in the
-   ``/usr/share/openstack-dashboard/openstack_dashboard/
-   local/local_settings.py``
-   file, which is typically located on the controller node:
+#. Enable the option in the ``local_settings.py`` file,
+   which is typically located on the controller node:
 
    .. code-block:: ini
 
@@ -223,17 +222,19 @@ FWaaS management options are also available in the OpenStack dashboard.
 #. Restart the ``neutron-l3-agent`` and ``neutron-server`` services
    to apply the settings.
 
-**To configure Firewall-as-a-Service**
+Configure Firewall-as-a-Service
+-------------------------------
 
-Create the firewall rules and create a policy that contains them. Then,
-create a firewall that applies the policy.
+Create the firewall rules and create a policy that contains them.
+Then, create a firewall that applies the policy.
 
 #. Create a firewall rule:
 
    .. code-block:: console
 
-      $ neutron firewall-rule-create --protocol {tcp|udp|icmp|any}
-      --destination-port PORT_RANGE --action {allow|deny}
+      $ neutron firewall-rule-create --protocol {tcp,udp,icmp,any} \
+        --source-port SOURCE_PORT_RANGE --destination-port DEST_PORT_RANGE \
+        --action {allow,deny,reject}
 
    The Networking client requires a protocol value; if the rule is protocol
    agnostic, you can use the ``any`` value.
@@ -242,8 +243,8 @@ create a firewall that applies the policy.
 
    .. code-block:: console
 
-      $ neutron firewall-policy-create --firewall-rules
-      "FIREWALL_RULE_IDS_OR_NAMES" myfirewallpolicy
+      $ neutron firewall-policy-create --firewall-rules \
+        "FIREWALL_RULE_IDS_OR_NAMES" myfirewallpolicy
 
    Separate firewall rule IDs or names with spaces. The order in which you
    specify the rules is important.
@@ -251,37 +252,36 @@ create a firewall that applies the policy.
    You can create a firewall policy without any rules and add rules later,
    as follows:
 
-   -  To add multiple rules, use the update operation.
+   * To add multiple rules, use the update operation.
 
-   -  To add a single rule, use the insert-rule operation.
+   * To add a single rule, use the insert-rule operation.
 
-   For more details, see `Networking command-line
-   client <http://docs.openstack.org/cli-reference/content/
-   neutronclient_commands.html#neutronclient_subcommand_
-   firewall-policy-create>`__
+   For more details, see `Networking command-line client
+   <http://docs.openstack.org/cli-reference/content/neutronclient_commands.html#neutronclient_subcommand_firewall-policy-create>`_
    in the OpenStack Command-Line Interface Reference.
 
    .. note::
 
-      FWaaS always adds a default ``deny all`` rule at the lowest precedence of
-      each policy. Consequently, a firewall policy with no rules blocks
+      FWaaS always adds a default ``deny all`` rule at the lowest precedence
+      of each policy. Consequently, a firewall policy with no rules blocks
       all traffic by default.
 
 #. Create a firewall:
 
    .. code-block:: console
 
-      $ neutron firewall-create  FIREWALL_POLICY_UUID
+      $ neutron firewall-create FIREWALL_POLICY_UUID
 
    .. note::
 
       The firewall remains in PENDING\_CREATE state until you create a
       Networking router and attach an interface to it.
 
-**Allowed-address-pairs.**
+Allowed-address-pairs
+---------------------
 
 ``Allowed-address-pairs`` enables you to specify
-mac_address/ip_address(cidr) pairs that pass through a port regardless
+mac_address and ip_address(cidr) pairs that pass through a port regardless
 of subnet. This enables the use of protocols such as VRRP, which floats
 an IP address between two instances to enable fast data plane failover.
 
