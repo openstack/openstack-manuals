@@ -6,7 +6,7 @@ Dashboard
    :maxdepth: 1
 
    dashboard/configure.rst
-   dashboard/customize.rst
+   common/dashboard_customizing.rst
    dashboard/sample-configuration-files.rst
    dashboard/log-files.rst
 
