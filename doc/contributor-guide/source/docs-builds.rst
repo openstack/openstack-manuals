@@ -82,6 +82,10 @@ Guides for deployers and administrators
      - http://git.openstack.org/cgit/openstack/ha-guide
      - http://docs.openstack.org/ha-guide
 
+   * - Networking Guide
+     - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/networking-guide
+     - http://docs.openstack.org/liberty/networking-guide
+
    * - Operations Guide
      - http://git.openstack.org/cgit/openstack/operations-guide/
      - http://docs.openstack.org/openstack-ops/content
