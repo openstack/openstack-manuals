@@ -9,13 +9,13 @@
 
     <?dbhtml stop-chunking?>
 
-    <title>Application catalog command-line client</title>
+    <title>Application Catalog service command-line client</title>
 
     <para>The <command>murano</command> client is the command-line
-        interface (CLI) for the Application catalog API and its extensions.
+        interface (CLI) for the Application Catalog service API and its extensions.
 
        This chapter documents <command>murano</command> version
-        <literal>0.7.1</literal>.
+        <literal>0.8.0</literal>.
     </para>
 
     <para>For help on a specific <command>murano</command>
@@ -25,18 +25,29 @@
 
     <section xml:id="muranoclient_command_usage">
        <title>murano usage</title>
-        <screen><computeroutput>usage: murano [--version] [-d] [-v] [-k] [--os-cacert &lt;ca-certificate&gt;]
-              [--cert-file CERT_FILE] [--key-file KEY_FILE]
+        <screen><computeroutput>usage: murano [--version] [-d] [-v] [--cert-file OS_CERT] [--key-file OS_KEY]
               [--ca-file OS_CACERT] [--api-timeout API_TIMEOUT]
-              [--os-username OS_USERNAME] [--os-password OS_PASSWORD]
               [--os-tenant-id OS_TENANT_ID] [--os-tenant-name OS_TENANT_NAME]
-              [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
+              [--os-region-name OS_REGION_NAME]
               [--os-auth-token OS_AUTH_TOKEN] [--os-no-client-auth]
               [--murano-url MURANO_URL] [--glance-url GLANCE_URL]
               [--murano-api-version MURANO_API_VERSION]
               [--os-service-type OS_SERVICE_TYPE]
               [--os-endpoint-type OS_ENDPOINT_TYPE] [--include-password]
-              [--murano-repo-url MURANO_REPO_URL]
+              [--murano-repo-url MURANO_REPO_URL] [--insecure]
+              [--os-cacert &lt;ca-certificate&gt;] [--os-cert &lt;certificate&gt;]
+              [--os-key &lt;key&gt;] [--timeout &lt;seconds&gt;]
+              [--os-auth-url OS_AUTH_URL] [--os-domain-id OS_DOMAIN_ID]
+              [--os-domain-name OS_DOMAIN_NAME]
+              [--os-project-id OS_PROJECT_ID]
+              [--os-project-name OS_PROJECT_NAME]
+              [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
+              [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
+              [--os-trust-id OS_TRUST_ID] [--os-user-id OS_USER_ID]
+              [--os-username OS_USERNAME]
+              [--os-user-domain-id OS_USER_DOMAIN_ID]
+              [--os-user-domain-name OS_USER_DOMAIN_NAME]
+              [--os-password OS_PASSWORD]
               &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
@@ -117,6 +128,14 @@
     <listitem>
       <para>
       Create an environment template.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>env-template-create-env</command></term>
+    <listitem>
+      <para>
+      Create a new environment from template.
       </para>
     </listitem>
   </varlistentry>
@@ -352,43 +371,18 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>-k, --insecure</command></term>
+    <term><command>--cert-file OS_CERT</command></term>
     <listitem>
       <para>
-        Explicitly allow muranoclient to perform "insecure"
-      SSL (https) requests. The server's certificate will
-      not be verified against any certificate authorities.
-      This option should be used with caution.
+        <emphasis>DEPRECATED!</emphasis> Use --os-cert.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
+    <term><command>--key-file OS_KEY</command></term>
     <listitem>
       <para>
-      Specify a CA bundle file to use in verifying a TLS
-      (https) server certificate. Defaults to
-      <code>env[OS_CACERT]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--cert-file CERT_FILE</command></term>
-    <listitem>
-      <para>
-      Path of certificate file to use in SSL connection.
-      This file can optionally be prepended with the private
-      key.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--key-file KEY_FILE</command></term>
-    <listitem>
-      <para>
-        Path of client key to use in SSL connection. This
-      option is not necessary if your key is prepended to
-      your cert file.
+        <emphasis>DEPRECATED!</emphasis> Use --os-key.
       </para>
     </listitem>
   </varlistentry>
@@ -410,22 +404,6 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-username OS_USERNAME</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_USERNAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-password OS_PASSWORD</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_PASSWORD]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
     <term><command>--os-tenant-id OS_TENANT_ID</command></term>
     <listitem>
       <para>
@@ -438,14 +416,6 @@
     <listitem>
       <para>
       Defaults to <code>env[OS_TENANT_NAME]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-auth-url OS_AUTH_URL</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_AUTH_URL]</code>.
       </para>
     </listitem>
   </varlistentry>
@@ -528,6 +498,155 @@
       <para>
       Defaults to <code>env[MURANO_REPO_URL]</code> or
       http://apps.openstack.org/api/v1/murano_repo/liberty/
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--insecure</command></term>
+    <listitem>
+      <para>
+        Explicitly allow client to perform "insecure" TLS
+      (https) requests. The server's certificate will not be
+      verified against any certificate authorities. This
+      option should be used with caution.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Specify a CA bundle file to use in verifying a TLS
+      (https) server certificate. Defaults to
+      <code>env[OS_CACERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-cert &lt;certificate&gt;</command></term>
+    <listitem>
+      <para>
+      Defaults to <code>env[OS_CERT]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-key &lt;key&gt;</command></term>
+    <listitem>
+      <para>
+        Defaults to <code>env[OS_KEY]</code>.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--timeout &lt;seconds&gt;</command></term>
+    <listitem>
+      <para>
+        Set request timeout (in seconds).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-auth-url OS_AUTH_URL</command></term>
+    <listitem>
+      <para>
+      Authentication URL
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-id OS_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Domain ID to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-domain-name OS_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Domain name to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-id OS_PROJECT_ID</command></term>
+    <listitem>
+      <para>
+      Project ID to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-name OS_PROJECT_NAME</command></term>
+    <listitem>
+      <para>
+      Project name to scope to
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-id OS_PROJECT_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      Domain ID containing project
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-project-domain-name OS_PROJECT_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      Domain name containing project
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-trust-id OS_TRUST_ID</command></term>
+    <listitem>
+      <para>
+      Trust ID
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-id OS_USER_ID</command></term>
+    <listitem>
+      <para>
+      User ID
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-username OS_USERNAME, --os-user_name OS_USERNAME</command></term>
+    <listitem>
+      <para>
+      Username
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-id OS_USER_DOMAIN_ID</command></term>
+    <listitem>
+      <para>
+      User's domain id
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-user-domain-name OS_USER_DOMAIN_NAME</command></term>
+    <listitem>
+      <para>
+      User's domain name
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-password OS_PASSWORD</command></term>
+    <listitem>
+      <para>
+      User's password
       </para>
     </listitem>
   </varlistentry>
@@ -752,6 +871,31 @@ Create an environment template.
     <listitem>
       <para>
         Environment template name.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="muranoclient_subcommand_env-template-create-env">
+        <title>murano env-template-create-env</title>
+        <screen><computeroutput>usage: murano env-template-create-env &lt;ID&gt; &lt;ENV_TEMPLATE_NAME&gt;</computeroutput></screen>
+        <para>
+Create a new environment from template.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;ID&gt;</command></term>
+    <listitem>
+      <para>
+        Environment template ID.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;ENV_TEMPLATE_NAME&gt;</command></term>
+    <listitem>
+      <para>
+        New environment name.
       </para>
     </listitem>
   </varlistentry>
@@ -1366,11 +1510,18 @@ be separated with a space and have to be already present in murano.
     </section>
     <section xml:id="muranoclient_subcommand_package-list">
         <title>murano package-list</title>
-        <screen><computeroutput>usage: murano package-list [--include-disabled]</computeroutput></screen>
+        <screen><computeroutput>usage: murano package-list [--limit LIMIT] [--include-disabled]</computeroutput></screen>
         <para>
 List available packages.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--limit LIMIT</command></term>
+    <listitem>
+      <para>
+      </para>
+    </listitem>
+  </varlistentry>
   <varlistentry>
     <term><command>--include-disabled</command></term>
     <listitem>
