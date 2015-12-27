@@ -98,11 +98,11 @@ Enable and access the configuration drive
 
       force_config_drive=true
 
-.. note::
+   .. note::
 
-   If a user passes the ``--config-drive true`` flag to the :command:`nova
-   boot` command, an administrator cannot disable the configuration
-   drive.
+      If a user passes the ``--config-drive true`` flag to the :command:`nova
+      boot` command, an administrator cannot disable the configuration
+      drive.
 
 #. If your guest operating system supports accessing disk by label, you
    can mount the configuration drive as the
