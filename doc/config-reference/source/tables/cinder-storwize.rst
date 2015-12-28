@@ -44,6 +44,8 @@
      - (IntOpt) The I/O group in which to allocate volumes
    * - ``storwize_svc_vol_nofmtdisk`` = ``False``
      - (BoolOpt) Specifies that the volume not be formatted during creation.
+   * - ``storwize_svc_flashcopy_rate`` = ``50``
+     - (IntOpt) Specifies the storwize Flashcopy rate to be used when creating a full volume copy.
    * - ``storwize_svc_vol_rsize`` = ``2``
      - (IntOpt) Storage system space-efficiency parameter for volumes (percentage)
    * - ``storwize_svc_vol_warning`` = ``0``
