@@ -199,6 +199,12 @@ about this compatibility API, see the `OpenStack Configuration
 Reference <http://docs.openstack.org/liberty/config-reference/content/
 configuring-ec2-api.html>`__.
 
+.. warning::
+
+   Nova in tree EC2-compatible API is deprecated.
+   The `ec2-api project <http://git.openstack.org/cgit/openstack/ec2-api/>`_
+   is working on implementation of EC2 API.
+
 Numerous third-party tools and language-specific SDKs can be used to
 interact with OpenStack clouds, using both native and compatibility
 APIs. Some of the more popular third-party tools are:
