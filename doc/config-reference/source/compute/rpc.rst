@@ -100,7 +100,7 @@ Configure messaging
 ~~~~~~~~~~~~~~~~~~~
 
 Use these options to configure the ``RabbitMQ`` and ``Qpid``
-messaging drivers.
+messaging drivers in the ``nova.conf`` file.
 
 .. include:: ../tables/nova-amqp.rst
 .. include:: ../tables/nova-rpc.rst
