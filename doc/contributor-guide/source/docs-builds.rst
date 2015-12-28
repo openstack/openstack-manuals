@@ -7,12 +7,18 @@ Documentation builds
 Documentation source and target locations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Most documents are continously published, they are published only from the
+master branch and there is no specific version for a stable release,
+instead they document the releases that the OpenStack community
+currently maintains. There are also version dependent documents.
+
 In addition to this page, the `release`_ and master branches of the
-openstack-manuals and other repositories indicate where docs are published.
-For example, from the stable/kilo release branch, doc source files are
-published to docs.openstack.org/kilo, and from the master branch, doc
-source files are published to docs.openstack.org/draft by our lovely Jenkins
-butlers always at the ready.
+openstack-manuals and other repositories indicate where docs are
+published. For example, from the stable/liberty release branch, doc
+source files are published to docs.openstack.org/liberty, and from the
+master branch, doc source files are published for versioned documents to
+docs.openstack.org/draft and for continously published documents to
+docs.openstack.org/ by our lovely Jenkins butlers always at the ready.
 
 Some content is completely generated using openstack-doc-tools, such as the
 configuration option tables and the CLI reference information. You will see
@@ -26,12 +32,8 @@ config tables`_ or CLI references.
 Installation guides
 -------------------
 
-These guides are only built from the release branches (stable/release_name)
-like the example above of stable/kilo.
-
-.. note::
-   Installation guides are being migrated to RST/Sphinx. See
-   `Documentation/Migrate`_ for more information.
+These guides are versioned and only built from the release branches
+(stable/release_name) like the example above of stable/liberty.
 
 .. list-table::
    :header-rows: 1
@@ -97,6 +99,10 @@ Guides for deployers and administrators
    * - Virtual Machine Image Guide
      - http://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/image-guide
      - http://docs.openstack.org/image-guide/
+
+.. note::
+   The Configuration Reference and the Networking Guide are versioned,
+   all other guides are continously published.
 
 Guides for end users
 --------------------
