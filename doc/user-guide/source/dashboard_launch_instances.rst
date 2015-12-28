@@ -1,50 +1,32 @@
 ===========================
 Launch and manage instances
 ===========================
-Instances are virtual machines that run inside the cloud. You can launch
-an instance from the following sources:
 
--  Images uploaded to the OpenStack Image service.
+Instances are virtual machines that run inside the cloud.
+You can launch an instance from the following sources:
 
--  Image that you have copied to a persistent volume. The instance
-   launches from the volume, which is provided by the ``cinder-volume``
-   API through iSCSI.
+* Images uploaded to the Image service.
+
+* Image that you have copied to a persistent volume. The instance
+  launches from the volume, which is provided by the ``cinder-volume``
+  API through iSCSI.
+
+* Instance snapshot that you took.
 
 Launch an instance
 ~~~~~~~~~~~~~~~~~~
-
-When you launch an instance from a volume, note the following steps:
-
--  To select the volume from which to launch, launch an instance from
-   an arbitrary image on the volume. The arbitrary image that you select
-   does not boot. Instead, it is replaced by the image on the volume that
-   you choose in the next steps.
-
-   To boot a Xen image from a volume, the image you launch in must be
-   the same type, fully virtualized or paravirtualized, as the one on
-   the volume.
-
--  Select the volume or volume snapshot from which to boot. Enter a
-   device name. Enter ``vda`` for KVM images or ``xvda`` for Xen images.
-
-When you launch an instance from an image, OpenStack creates a local
-copy of the image on the compute node where the instance starts.
 
 #. Log in to the dashboard.
 
 #. Select the appropriate project from the drop down menu at the top left.
 
 #. On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and
-   click :guilabel:`Images` category.
+   click :guilabel:`Instances` category.
 
-   The dashboard shows the images that have been uploaded to OpenStack
-   Image service and are available for this project.
+   The dashboard shows the instances with its name, its private and
+   floating IP addresses, size, status, task, power state, and so on.
 
-   For details on creating images, see `Creating images
-   manually <http://docs.openstack.org/image-guide/create-images-manually.html>`__
-   in the *OpenStack Virtual Machine Image Guide*.
-
-#. Select an image and click :guilabel:`Launch Instance`.
+#. Click :guilabel:`Launch Instance`.
 
 #. In the :guilabel:`Launch Instance` dialog box, specify the following values:
 
@@ -113,9 +95,6 @@ copy of the image on the compute node where the instance starts.
           :guilabel:`Delete on Terminate` option to delete the volume on
           terminating the instance.
 
-      Since you are launching an instance from an image, :guilabel:`Boot
-      from image` is chosen by default.
-
    Image Name
       This field changes based on your previous selection. If you have
       chosen to launch an instance using an image, the :guilabel:`Image Name`
@@ -179,12 +158,36 @@ copy of the image on the compute node where the instance starts.
 
    The instance starts on a compute node in the cloud.
 
-The :guilabel:`Instances` tab shows the instance's name, its private
-and public IP addresses, size, status, task, and power state.
+.. note::
 
-If you did not provide a key pair, security groups, or rules, users can
-access the instance only from inside the cloud through VNC. Even pinging
-the instance is not possible without an ICMP rule configured.
+   If you did not provide a key pair, security groups, or rules, users
+   can access the instance only from inside the cloud through VNC. Even
+   pinging the instance is not possible without an ICMP rule configured.
+
+You can also launch an instance from the :guilabel:`Images` or
+:guilabel:`Volumes` category when you launch an instance from
+an image or a volume respectively.
+
+When you launch an instance from an image, OpenStack creates a local
+copy of the image on the compute node where the instance starts.
+
+For details on creating images, see `Creating images
+manually <http://docs.openstack.org/image-guide/create-images-manually.html>`_
+in the *OpenStack Virtual Machine Image Guide*.
+
+When you launch an instance from a volume, note the following steps:
+
+* To select the volume from which to launch, launch an instance from
+  an arbitrary image on the volume. The arbitrary image that you select
+  does not boot. Instead, it is replaced by the image on the volume that
+  you choose in the next steps.
+
+  To boot a Xen image from a volume, the image you launch in must be
+  the same type, fully virtualized or paravirtualized, as the one on
+  the volume.
+
+* Select the volume or volume snapshot from which to boot. Enter a
+  device name. Enter ``vda`` for KVM images or ``xvda`` for Xen images.
 
 Connect to your instance by using SSH
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
