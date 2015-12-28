@@ -28,6 +28,8 @@ requirements for the compute host and image.
 -  The following hypervisors support the configuration drive: libvirt,
    XenServer, Hyper-V, and VMware.
 
+   Also, the Bare Matal service supports the configuration drive.
+
 -  To use configuration drive with libvirt, XenServer, or VMware, you
    must first install the genisoimage package on each compute host.
    Otherwise, instances do not boot properly.
@@ -41,6 +43,10 @@ requirements for the compute host and image.
    installation. Additionally, you must set the ``qemu_img_cmd`` value
    in the ``hyperv`` configuration section to the full path to an
    :command:`qemu-img` command installation.
+
+-  To use configuration drive with the Bare Metal service,
+   you do not need to prepare anything because the Bare Metal
+   service treats the configuration drive properly.
 
 **Image requirements**
 
