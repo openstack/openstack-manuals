@@ -162,12 +162,18 @@ data store version.
           the data store manager is identified by one of the following
           strings, depending on the database:
 
-          * mysql
-          * redis
-          * mongodb
           * cassandra
           * couchbase
+          * couchdb
+          * db2
+          * mariadb
+          * mongodb
+          * mysql
           * percona
+          * postgresql
+          * pxc
+          * redis
+          * vertica
         - ``mysql``
 
       * - glance ID
