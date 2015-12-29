@@ -169,6 +169,7 @@ The details of consistency group operations are shown in the following.
    |         id        | 2a6b2bda-1f43-42ce-9de8-249fa5cbae9a |
    |        name       |              bronzeCG2               |
    |       status      |              available               |
+   |     volume_types  |              volume_type_1           |
    +-------------------+--------------------------------------+
 
 **List consistency groups**:
