@@ -308,7 +308,7 @@ Download the nova code
 
    .. code-block:: powershell
 
-      PS C:\> git.exe clone https://github.com/openstack/nova.git
+      PS C:\> git.exe clone https://git.openstack.org/openstack/nova
 
 Install nova-compute service
 ----------------------------

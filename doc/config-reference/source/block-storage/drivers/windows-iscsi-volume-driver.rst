@@ -80,7 +80,7 @@ Once installed, run the following to clone the OpenStack Block Storage code:
 
 .. code-block:: none
 
-   PS C:\> git.exe clone https://github.com/openstack/cinder.git
+   PS C:\> git.exe clone https://git.openstack.org/openstack/cinder
 
 Configure cinder-volume
 ~~~~~~~~~~~~~~~~~~~~~~~
