@@ -205,10 +205,15 @@ products for either iSCSI or Fibre Channel storage products.
      .. code-block:: ini
 
         # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.Huawei18000ISCSIDriver
+        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiISCSIDriver
 
         # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.Huawei18000FCDriver
+        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
+
+     .. note::
+
+        In Mitaka, ``Huawei18000ISCSIDriver`` and ``Huawei18000FCDriver`` have
+        been renamed to ``HuaweiISCSIDriver`` and ``HuaweiFCDriver``.
 
 #. Run the service :command:`cinder-volume restart` command to restart the
    Block Storage service.
@@ -279,9 +284,9 @@ Example for configuring multiple storage systems:
    cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_t_fc.xml
    volume_backend_name = HuaweiTFCDriver
    [18000_fc]
-   volume_driver = cinder.volume.drivers.huawei.huawei_driver.Huawei18000FCDriver
+   volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
    cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_18000_fc.xml
-   volume_backend_name = Huawei18000FCDriver
+   volume_backend_name = HuaweiFCDriver
 
 Parameters in the Configuration File
 ------------------------------------
