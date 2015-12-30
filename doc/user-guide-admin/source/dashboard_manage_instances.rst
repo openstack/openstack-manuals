@@ -67,7 +67,8 @@ disks, RAM, and uptime of all your instances.
 #. Log in to the Dashboard and choose the :guilabel:`admin` project from the
    drop-down list at the top of the page.
 
-#. On the :guilabel:`Admin` tab, click the :guilabel:`Instances` category.
+#. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
+   and click the :guilabel:`Overview` category.
 
 #. Select a month and click :guilabel:`Submit` to query the instance usage for
    that month.
