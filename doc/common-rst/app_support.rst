@@ -79,6 +79,9 @@ for the OpenStack APIs:
 -  `API Complete Reference
    (PDF) <http://developer.openstack.org/api-ref-guides/bk-api-ref.pdf>`__
 
+The following guide provides how to contribute to OpenStack documentation:
+
+-  `Documentation contributor guide <http://docs.openstack.org/contributor-guide/>`__
 
 ask.openstack.org
 ~~~~~~~~~~~~~~~~~
