@@ -57,6 +57,16 @@ data store version.
    This example assumes you have created a MySQL 5.5 image called
    ``mysql-5.5.qcow2``.
 
+   .. important::
+
+      If you have a guest image that was created with an Openstack version
+      before Kilo, modify the guest agent init script for the guest image to
+      read the configuration files from the directory ``/etc/trove/conf.d``.
+
+      For a backwards compatibility with pre-Kilo guest instances, set the
+      database service configuration options ``injected_config_location`` to
+      ``/etc/trove`` and ``guest_info`` to ``/etc/guest_info``.
+
 #. **Register image with Image service**
 
    You need to register your guest image with the Image service.
