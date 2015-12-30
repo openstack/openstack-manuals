@@ -78,7 +78,8 @@ The following table describes the Compute and Block Storage service quotas:
 View default project quotas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the OpenStack dashboard.
+#. Log in to the dashboard and select the :guilabel:`admin` project
+   from the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Defaults` category.
@@ -95,7 +96,8 @@ View default project quotas
 Update project quotas
 ~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the OpenStack dashboard.
+#. Log in to the dashboard and select the :guilabel:`admin` project
+   from the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Defaults` category.

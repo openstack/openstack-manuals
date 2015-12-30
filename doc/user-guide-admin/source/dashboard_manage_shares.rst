@@ -17,8 +17,8 @@ and delete shares.
 Create a share type
 ~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin`
-   project from the drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin`
+   project from the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Shares` category.
@@ -43,8 +43,8 @@ Create a share type
 Update share type
 ~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project from
-   the drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project from
+   the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Shares` category.
@@ -70,8 +70,8 @@ Delete share types
 
 When you delete a share type, shares of that type are not deleted.
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project from
-   the drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project from
+   the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Shares` category.
@@ -91,8 +91,8 @@ When you delete a share type, shares of that type are not deleted.
 Delete shares
 ~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project
-   from the drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project
+   from the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Shares` category.
@@ -111,8 +111,8 @@ Delete shares
 Delete share server
 ~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project
-   from the drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project
+   from the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Share Servers` category.
@@ -131,8 +131,8 @@ Delete share server
 Delete share networks
 ~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the dashboard and choose the :guilabel:`admin` project
-   from the drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project
+   from the drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Share Networks` category.

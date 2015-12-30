@@ -13,8 +13,8 @@ user, see the `OpenStack End User Guide <http://docs.openstack.org/user-guide/da
 Create instance snapshots
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the Dashboard and choose the :guilabel:`admin` project from the
-   drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project from the
+   drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Instances` category.
@@ -35,8 +35,8 @@ Create instance snapshots
 Control the state of an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Log in to the Dashboard and choose the :guilabel:`admin` project from the
-   drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project from the
+   drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Instances` category.
@@ -65,8 +65,8 @@ for each project.
 You can track costs per month by showing meters like number of VCPUs,
 disks, RAM, and uptime of all your instances.
 
-#. Log in to the Dashboard and choose the :guilabel:`admin` project from the
-   drop-down list at the top of the page.
+#. Log in to the dashboard and select the :guilabel:`admin` project from the
+   drop-down list.
 
 #. On the :guilabel:`Admin` tab, open the :guilabel:`System` tab
    and click the :guilabel:`Overview` category.
