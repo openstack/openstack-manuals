@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: End User Guide 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-25 06:14+0000\n"
+"POT-Creation-Date: 2015-12-30 06:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -703,7 +703,7 @@ msgstr ""
 
 # #-#-#-#-#  cli_cheat_sheet.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../cli_cheat_sheet.rst:144 ../dashboard_launch_instances.rst:230
+#: ../cli_cheat_sheet.rst:144 ../dashboard_launch_instances.rst:233
 msgid "Create an instance snapshot"
 msgstr ""
 
@@ -917,20 +917,24 @@ msgid ""
 msgstr ""
 
 #: ../cli_config_drive.rst:31
+msgid "Also, the Bare Matal service supports the configuration drive."
+msgstr ""
+
+#: ../cli_config_drive.rst:33
 msgid ""
 "To use configuration drive with libvirt, XenServer, or VMware, you must "
 "first install the genisoimage package on each compute host. Otherwise, "
 "instances do not boot properly."
 msgstr ""
 
-#: ../cli_config_drive.rst:35
+#: ../cli_config_drive.rst:37
 msgid ""
 "Use the ``mkisofs_cmd`` flag to set the path where you install the "
 "genisoimage program. If genisoimage is in same path as the ``nova-compute`` "
 "service, you do not need to set this flag."
 msgstr ""
 
-#: ../cli_config_drive.rst:39
+#: ../cli_config_drive.rst:41
 msgid ""
 "To use configuration drive with Hyper-V, you must set the ``mkisofs_cmd`` "
 "value to the full path to an ``mkisofs.exe`` installation. Additionally, you "
@@ -938,11 +942,18 @@ msgid ""
 "to the full path to an :command:`qemu-img` command installation."
 msgstr ""
 
-#: ../cli_config_drive.rst:45
+#: ../cli_config_drive.rst:47
+msgid ""
+"To use configuration drive with the Bare Metal service, you do not need to "
+"prepare anything because the Bare Metal service treats the configuration "
+"drive properly."
+msgstr ""
+
+#: ../cli_config_drive.rst:51
 msgid "**Image requirements**"
 msgstr ""
 
-#: ../cli_config_drive.rst:47
+#: ../cli_config_drive.rst:53
 msgid ""
 "An image built with a recent version of the cloud-init package can "
 "automatically access metadata passed through the configuration drive. The "
@@ -950,7 +961,7 @@ msgid ""
 "such as Red Hat Enterprise Linux."
 msgstr ""
 
-#: ../cli_config_drive.rst:52
+#: ../cli_config_drive.rst:58
 msgid ""
 "If an image does not have the cloud-init package installed, you must "
 "customize the image to run a script that mounts the configuration drive on "
@@ -959,24 +970,24 @@ msgid ""
 "data is organized on the configuration drive."
 msgstr ""
 
-#: ../cli_config_drive.rst:58
+#: ../cli_config_drive.rst:64
 msgid ""
 "If you use Xen with a configuration drive, use the ``xenapi_disable_agent`` "
 "configuration parameter to disable the agent."
 msgstr ""
 
-#: ../cli_config_drive.rst:62
+#: ../cli_config_drive.rst:68
 msgid "**Guidelines**"
 msgstr ""
 
-#: ../cli_config_drive.rst:64
+#: ../cli_config_drive.rst:70
 msgid ""
 "Do not rely on the presence of the EC2 metadata in the configuration drive, "
 "because this content might be removed in a future release. For example, do "
 "not rely on files in the ``ec2`` directory."
 msgstr ""
 
-#: ../cli_config_drive.rst:68
+#: ../cli_config_drive.rst:74
 msgid ""
 "When you create images that access configuration drive data and multiple "
 "directories are under the ``openstack`` directory, always select the highest "
@@ -986,36 +997,36 @@ msgid ""
 "present."
 msgstr ""
 
-#: ../cli_config_drive.rst:76
+#: ../cli_config_drive.rst:82
 msgid "Enable and access the configuration drive"
 msgstr ""
 
-#: ../cli_config_drive.rst:78
+#: ../cli_config_drive.rst:84
 msgid ""
 "To enable the configuration drive, pass the ``--config-drive true`` "
 "parameter to the :command:`nova boot` command."
 msgstr ""
 
-#: ../cli_config_drive.rst:81
+#: ../cli_config_drive.rst:87
 msgid ""
 "The following example enables the configuration drive and passes user data, "
 "two files, and two key/value metadata pairs, all of which are accessible "
 "from the configuration drive:"
 msgstr ""
 
-#: ../cli_config_drive.rst:93
+#: ../cli_config_drive.rst:99
 msgid ""
 "You can also configure the Compute service to always create a configuration "
 "drive by setting the following option in the ``/etc/nova/nova.conf`` file:"
 msgstr ""
 
-#: ../cli_config_drive.rst:103
+#: ../cli_config_drive.rst:109
 msgid ""
 "If a user passes the ``--config-drive true`` flag to the :command:`nova "
 "boot` command, an administrator cannot disable the configuration drive."
 msgstr ""
 
-#: ../cli_config_drive.rst:107
+#: ../cli_config_drive.rst:113
 msgid ""
 "If your guest operating system supports accessing disk by label, you can "
 "mount the configuration drive as the ``/dev/disk/by-label/"
@@ -1023,56 +1034,56 @@ msgid ""
 "configuration drive has the ``config-2`` volume label:"
 msgstr ""
 
-#: ../cli_config_drive.rst:120
+#: ../cli_config_drive.rst:126
 msgid ""
 "Ensure that you use at least version 0.3.1 of CirrOS for configuration drive "
 "support."
 msgstr ""
 
-#: ../cli_config_drive.rst:123
+#: ../cli_config_drive.rst:129
 msgid ""
 "If your guest operating system does not use ``udev``, the ``/dev/disk/by-"
 "label`` directory is not present."
 msgstr ""
 
-#: ../cli_config_drive.rst:126
+#: ../cli_config_drive.rst:132
 msgid ""
 "You can use the :command:`blkid` command to identify the block device that "
 "corresponds to the configuration drive. For example, when you boot the "
 "CirrOS image with the ``m1.tiny`` flavor, the device is ``/dev/vdb``:"
 msgstr ""
 
-#: ../cli_config_drive.rst:139
+#: ../cli_config_drive.rst:145
 msgid "Once identified, you can mount the device:"
 msgstr ""
 
-#: ../cli_config_drive.rst:147
+#: ../cli_config_drive.rst:153
 msgid "Configuration drive contents"
 msgstr ""
 
-#: ../cli_config_drive.rst:149
+#: ../cli_config_drive.rst:155
 msgid ""
 "In this example, the contents of the configuration drive are as follows::"
 msgstr ""
 
-#: ../cli_config_drive.rst:163
+#: ../cli_config_drive.rst:169
 msgid ""
 "The files that appear on the configuration drive depend on the arguments "
 "that you pass to the :command:`nova boot` command."
 msgstr ""
 
-#: ../cli_config_drive.rst:167
+#: ../cli_config_drive.rst:173
 msgid "OpenStack metadata format"
 msgstr ""
 
-#: ../cli_config_drive.rst:169
+#: ../cli_config_drive.rst:175
 msgid ""
 "The following example shows the contents of the ``openstack/2012-08-10/"
 "meta_data.json`` and ``openstack/latest/meta_data.json`` files. These files "
 "are identical. The file contents are formatted for readability."
 msgstr ""
 
-#: ../cli_config_drive.rst:201
+#: ../cli_config_drive.rst:207
 msgid ""
 "Note the effect of the ``--file /etc/network/interfaces=/home/myuser/"
 "instance-interfaces`` argument that was passed to the :command:`nova boot` "
@@ -1081,22 +1092,22 @@ msgid ""
 "``/etc/network/interfaces`` in the ``meta_data.json`` file."
 msgstr ""
 
-#: ../cli_config_drive.rst:209
+#: ../cli_config_drive.rst:215
 msgid "EC2 metadata format"
 msgstr ""
 
-#: ../cli_config_drive.rst:211
+#: ../cli_config_drive.rst:217
 msgid ""
 "The following example shows the contents of the ``ec2/2009-04-04/meta-data."
 "json`` and the ``ec2/latest/meta-data.json`` files. These files are "
 "identical. The file contents are formatted to improve readability."
 msgstr ""
 
-#: ../cli_config_drive.rst:253
+#: ../cli_config_drive.rst:259
 msgid "User data"
 msgstr ""
 
-#: ../cli_config_drive.rst:255
+#: ../cli_config_drive.rst:261
 msgid ""
 "The ``openstack/2012-08-10/user_data``, ``openstack/latest/user_data``, "
 "``ec2/2009-04-04/user-data``, and ``ec2/latest/user-data`` file are present "
@@ -1104,25 +1115,25 @@ msgid ""
 "passed to the :command:`nova boot` command."
 msgstr ""
 
-#: ../cli_config_drive.rst:261
+#: ../cli_config_drive.rst:267
 msgid "Configuration drive format"
 msgstr ""
 
-#: ../cli_config_drive.rst:263
+#: ../cli_config_drive.rst:269
 msgid ""
 "The default format of the configuration drive as an ISO 9660 file system. To "
 "explicitly specify the ISO 9660 format, add the following line to the ``/etc/"
 "nova/nova.conf`` file:"
 msgstr ""
 
-#: ../cli_config_drive.rst:271
+#: ../cli_config_drive.rst:277
 msgid ""
 "By default, you cannot attach the configuration drive image as a CD drive "
 "instead of as a disk drive. To attach a CD drive, add the following line to "
 "the ``/etc/nova/nova.conf`` file:"
 msgstr ""
 
-#: ../cli_config_drive.rst:279
+#: ../cli_config_drive.rst:285
 msgid ""
 "For legacy reasons, you can configure the configuration drive to use VFAT "
 "format instead of ISO 9660. It is unlikely that you would require VFAT "
@@ -1131,11 +1142,11 @@ msgid ""
 "nova.conf`` file:"
 msgstr ""
 
-#: ../cli_config_drive.rst:289
+#: ../cli_config_drive.rst:295
 msgid "If you choose VFAT, the configuration drive is 64 MB."
 msgstr ""
 
-#: ../cli_config_drive.rst:293
+#: ../cli_config_drive.rst:299
 msgid ""
 "In current version (Liberty) of OpenStack Compute, live migration with "
 "``config_drive`` on local disk is forbidden due to the bug in libvirt of "
@@ -1365,86 +1376,94 @@ msgstr ""
 msgid "The command returns the following output:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:50
+#: ../cli_create_and_manage_stacks.rst:52
+msgid ""
+"When you run the :command:`heat stack-create` command with the :option:`--"
+"poll` option, it prints the :command:`heat stack-show` output first, and "
+"then continously prints the events in log format until the stack completes "
+"its action with success or failure."
+msgstr ""
+
+#: ../cli_create_and_manage_stacks.rst:57
 msgid ""
 "You can also use the :command:`template-validate` command to validate a "
 "template file without creating a stack from it."
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:55
+#: ../cli_create_and_manage_stacks.rst:62
 msgid ""
 "Previous versions of the heat client used :command:`validate` instead of :"
 "command:`template-validate`, but it has been deprecated in favor of :command:"
 "`template-validate`."
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:59
+#: ../cli_create_and_manage_stacks.rst:66
 msgid "To do so, run the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:65
+#: ../cli_create_and_manage_stacks.rst:72
 msgid "If validation fails, the response returns an error message."
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:68
+#: ../cli_create_and_manage_stacks.rst:75
 msgid "Get information about stacks"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:70
+#: ../cli_create_and_manage_stacks.rst:77
 msgid ""
 "To explore the state and history of a particular stack, you can run a number "
 "of commands."
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:73
+#: ../cli_create_and_manage_stacks.rst:80
 msgid ""
 "To see which stacks are visible to the current user, run the following "
 "command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:87
+#: ../cli_create_and_manage_stacks.rst:94
 msgid "To show the details of a stack, run the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:93
+#: ../cli_create_and_manage_stacks.rst:100
 msgid ""
 "A stack consists of a collection of resources. To list the resources and "
 "their status, run the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:106
+#: ../cli_create_and_manage_stacks.rst:113
 msgid ""
 "To show the details for a specific resource in a stack, run the following "
 "command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:113
+#: ../cli_create_and_manage_stacks.rst:120
 msgid ""
 "Some resources have associated metadata which can change throughout the life "
 "cycle of a resource. Show the metadata by running the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:121
+#: ../cli_create_and_manage_stacks.rst:128
 msgid ""
 "A series of events is generated during the life cycle of a stack. To display "
 "life cycle events, run the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:135
+#: ../cli_create_and_manage_stacks.rst:142
 msgid "To show the details for a particular event, run the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:143
+#: ../cli_create_and_manage_stacks.rst:150
 msgid "Update a stack"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:145
+#: ../cli_create_and_manage_stacks.rst:152
 msgid ""
 "To update an existing stack from a modified template file, run a command "
 "like the following command:"
 msgstr ""
 
-#: ../cli_create_and_manage_stacks.rst:161
+#: ../cli_create_and_manage_stacks.rst:168
 msgid ""
 "Some resources are updated in-place, while others are replaced with new "
 "resources."
@@ -4697,9 +4716,9 @@ msgstr ""
 #: ../dashboard_create_networks.rst:19 ../dashboard_create_networks.rst:72
 #: ../dashboard_databases.rst:60 ../dashboard_databases.rst:115
 #: ../dashboard_databases.rst:146 ../dashboard_databases.rst:175
-#: ../dashboard_databases.rst:198 ../dashboard_launch_instances.rst:33
-#: ../dashboard_launch_instances.rst:217 ../dashboard_launch_instances.rst:232
-#: ../dashboard_launch_instances.rst:254 ../dashboard_manage_containers.rst:19
+#: ../dashboard_databases.rst:198 ../dashboard_launch_instances.rst:19
+#: ../dashboard_launch_instances.rst:220 ../dashboard_launch_instances.rst:235
+#: ../dashboard_launch_instances.rst:257 ../dashboard_manage_containers.rst:19
 #: ../dashboard_manage_containers.rst:41 ../dashboard_manage_containers.rst:75
 #: ../dashboard_manage_containers.rst:99
 #: ../dashboard_manage_containers.rst:129
@@ -4725,8 +4744,8 @@ msgstr ""
 #: ../configure_access_and_security_for_instances.rst:130
 #: ../configure_access_and_security_for_instances.rst:188
 #: ../dashboard_create_networks.rst:21 ../dashboard_create_networks.rst:74
-#: ../dashboard_launch_instances.rst:35 ../dashboard_launch_instances.rst:219
-#: ../dashboard_launch_instances.rst:234 ../dashboard_launch_instances.rst:256
+#: ../dashboard_launch_instances.rst:21 ../dashboard_launch_instances.rst:222
+#: ../dashboard_launch_instances.rst:237 ../dashboard_launch_instances.rst:259
 #: ../dashboard_manage_containers.rst:21 ../dashboard_manage_containers.rst:43
 #: ../dashboard_manage_containers.rst:77
 #: ../dashboard_manage_containers.rst:101
@@ -5471,7 +5490,9 @@ msgid ""
 "in your environment."
 msgstr ""
 
-#: ../dashboard_databases.rst:69
+# #-#-#-#-#  dashboard_databases.pot (End User Guide 1.0.0)  #-#-#-#-#
+# #-#-#-#-#  dashboard_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
+#: ../dashboard_databases.rst:69 ../dashboard_launch_instances.rst:29
 msgid "Click :guilabel:`Launch Instance`."
 msgstr ""
 
@@ -5613,7 +5634,7 @@ msgstr ""
 
 # #-#-#-#-#  dashboard_databases.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../dashboard_databases.rst:162 ../dashboard_launch_instances.rst:178
+#: ../dashboard_databases.rst:162 ../dashboard_launch_instances.rst:157
 msgid "Click :guilabel:`Launch`."
 msgstr ""
 
@@ -5678,17 +5699,17 @@ msgstr ""
 msgid "Launch and manage instances"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:4
+#: ../dashboard_launch_instances.rst:5
 msgid ""
 "Instances are virtual machines that run inside the cloud. You can launch an "
 "instance from the following sources:"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:7
-msgid "Images uploaded to the OpenStack Image service."
+#: ../dashboard_launch_instances.rst:8
+msgid "Images uploaded to the Image service."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:9
+#: ../dashboard_launch_instances.rst:10
 msgid ""
 "Image that you have copied to a persistent volume. The instance launches "
 "from the volume, which is provided by the ``cinder-volume`` API through "
@@ -5696,114 +5717,74 @@ msgid ""
 msgstr ""
 
 #: ../dashboard_launch_instances.rst:14
+msgid "Instance snapshot that you took."
+msgstr ""
+
+#: ../dashboard_launch_instances.rst:17
 msgid "Launch an instance"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:16
-msgid "When you launch an instance from a volume, note the following steps:"
-msgstr ""
-
-#: ../dashboard_launch_instances.rst:18
-msgid ""
-"To select the volume from which to launch, launch an instance from an "
-"arbitrary image on the volume. The arbitrary image that you select does not "
-"boot. Instead, it is replaced by the image on the volume that you choose in "
-"the next steps."
-msgstr ""
-
-#: ../dashboard_launch_instances.rst:23
-msgid ""
-"To boot a Xen image from a volume, the image you launch in must be the same "
-"type, fully virtualized or paravirtualized, as the one on the volume."
-msgstr ""
-
-#: ../dashboard_launch_instances.rst:27
-msgid ""
-"Select the volume or volume snapshot from which to boot. Enter a device "
-"name. Enter ``vda`` for KVM images or ``xvda`` for Xen images."
-msgstr ""
-
-#: ../dashboard_launch_instances.rst:30
-msgid ""
-"When you launch an instance from an image, OpenStack creates a local copy of "
-"the image on the compute node where the instance starts."
-msgstr ""
-
-# #-#-#-#-#  dashboard_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
-# #-#-#-#-#  dashboard_manage_images.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../dashboard_launch_instances.rst:37 ../dashboard_manage_images.rst:33
-#: ../dashboard_manage_images.rst:126
+#: ../dashboard_launch_instances.rst:23 ../dashboard_launch_instances.rst:261
 msgid ""
 "On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click :"
-"guilabel:`Images` category."
+"guilabel:`Instances` category."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:40
+#: ../dashboard_launch_instances.rst:26
 msgid ""
-"The dashboard shows the images that have been uploaded to OpenStack Image "
-"service and are available for this project."
+"The dashboard shows the instances with its name, its private and floating IP "
+"addresses, size, status, task, power state, and so on."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:43
-msgid ""
-"For details on creating images, see `Creating images manually <http://docs."
-"openstack.org/image-guide/create-images-manually.html>`__ in the *OpenStack "
-"Virtual Machine Image Guide*."
-msgstr ""
-
-#: ../dashboard_launch_instances.rst:47
-msgid "Select an image and click :guilabel:`Launch Instance`."
-msgstr ""
-
-#: ../dashboard_launch_instances.rst:49
+#: ../dashboard_launch_instances.rst:31
 msgid ""
 "In the :guilabel:`Launch Instance` dialog box, specify the following values:"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:51
+#: ../dashboard_launch_instances.rst:33
 msgid ":guilabel:`Details` tab"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:54
+#: ../dashboard_launch_instances.rst:36
 msgid ""
 "By default, this value is set to the availability zone given by the cloud "
 "provider (for example, ``us-west`` or ``apac-south``). For some cases, it "
 "could be ``nova``."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:56
+#: ../dashboard_launch_instances.rst:38
 msgid "Availability Zone"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:59
+#: ../dashboard_launch_instances.rst:41
 msgid "Assign a name to the virtual machine."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:63
+#: ../dashboard_launch_instances.rst:45
 msgid "The name you assign here becomes the initial host name of the server."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:66
+#: ../dashboard_launch_instances.rst:48
 msgid ""
 "After the server is built, if you change the server name in the API or "
 "change the host name directly, the names are not updated in the dashboard."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:70
+#: ../dashboard_launch_instances.rst:52
 msgid ""
 "Server names are not guaranteed to be unique when created so you could have "
 "two instances with the same host name."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:71
+#: ../dashboard_launch_instances.rst:53
 msgid "Instance Name"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:74
+#: ../dashboard_launch_instances.rst:56
 msgid "Specify the size of the instance to launch."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:78
+#: ../dashboard_launch_instances.rst:60
 msgid ""
 "The flavor is selected based on the size of the image selected for launching "
 "an instance. For example, while creating an image, if you have entered the "
@@ -5811,55 +5792,55 @@ msgid ""
 "the image, the default flavor is ``m1.small``."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:82
+#: ../dashboard_launch_instances.rst:64
 msgid "Flavor"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:85
+#: ../dashboard_launch_instances.rst:67
 msgid ""
 "To launch multiple instances, enter a value greater than ``1``. The default "
 "is ``1``."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:86
+#: ../dashboard_launch_instances.rst:68
 msgid "Instance Count"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:89
+#: ../dashboard_launch_instances.rst:71
 msgid "Your options are:"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:92
+#: ../dashboard_launch_instances.rst:74
 msgid ""
 "If you choose this option, a new field for :guilabel:`Image Name` displays. "
 "You can select the image from the list."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:93
+#: ../dashboard_launch_instances.rst:75
 msgid "Boot from image"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:96
+#: ../dashboard_launch_instances.rst:78
 msgid ""
 "If you choose this option, a new field for :guilabel:`Instance Snapshot` "
 "displays. You can select the snapshot from the list."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:97
+#: ../dashboard_launch_instances.rst:79
 msgid "Boot from snapshot"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:100
+#: ../dashboard_launch_instances.rst:82
 msgid ""
 "If you choose this option, a new field for :guilabel:`Volume` displays. You "
 "can select the volume from the list."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:101
+#: ../dashboard_launch_instances.rst:83
 msgid "Boot from volume"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:104
+#: ../dashboard_launch_instances.rst:86
 msgid ""
 "With this option, you can boot from an image and create a volume by entering "
 "the :guilabel:`Device Size` and :guilabel:`Device Name` for your volume. "
@@ -5867,11 +5848,11 @@ msgid ""
 "terminating the instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:107
+#: ../dashboard_launch_instances.rst:89
 msgid "Boot from image (creates a new volume)"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:110
+#: ../dashboard_launch_instances.rst:92
 msgid ""
 "Using this option, you can boot from a volume snapshot and create a new "
 "volume by choosing :guilabel:`Volume Snapshot` from a list and adding a :"
@@ -5879,43 +5860,37 @@ msgid ""
 "Terminate` option to delete the volume on terminating the instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:114
+#: ../dashboard_launch_instances.rst:96
 msgid "Boot from volume snapshot (creates a new volume)"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:116
-msgid ""
-"Since you are launching an instance from an image, :guilabel:`Boot from "
-"image` is chosen by default."
-msgstr ""
-
-#: ../dashboard_launch_instances.rst:117
+#: ../dashboard_launch_instances.rst:96
 msgid "Instance Boot Source"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:120
+#: ../dashboard_launch_instances.rst:99
 msgid ""
 "This field changes based on your previous selection. If you have chosen to "
 "launch an instance using an image, the :guilabel:`Image Name` field "
 "displays. Select the image name from the dropdown list."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:122
+#: ../dashboard_launch_instances.rst:101
 msgid "Image Name"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:125
+#: ../dashboard_launch_instances.rst:104
 msgid ""
 "This field changes based on your previous selection. If you have chosen to "
 "launch an instance using a snapshot, the :guilabel:`Instance Snapshot` field "
 "displays. Select the snapshot name from the dropdown list."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:128
+#: ../dashboard_launch_instances.rst:107
 msgid "Instance Snapshot"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:131
+#: ../dashboard_launch_instances.rst:110
 msgid ""
 "This field changes based on your previous selection. If you have chosen to "
 "launch an instance using a volume, the :guilabel:`Volume` field displays. "
@@ -5924,224 +5899,256 @@ msgid ""
 "option."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:135
+#: ../dashboard_launch_instances.rst:114
 msgid "Volume"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:137
+#: ../dashboard_launch_instances.rst:116
 msgid ":guilabel:`Access & Security` tab"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:140
+#: ../dashboard_launch_instances.rst:119
 msgid "Specify a key pair."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:142
+#: ../dashboard_launch_instances.rst:121
 msgid ""
 "If the image uses a static root password or a static key set (neither is "
 "recommended), you do not need to provide a key pair to launch the instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:144
+#: ../dashboard_launch_instances.rst:123
 msgid "Key Pair"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:147
+#: ../dashboard_launch_instances.rst:126
 msgid "Activate the security groups that you want to assign to the instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:149
+#: ../dashboard_launch_instances.rst:128
 msgid ""
 "Security groups are a kind of cloud firewall that define which incoming "
 "network traffic is forwarded to instances."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:152
+#: ../dashboard_launch_instances.rst:131
 msgid ""
 "If you have not created any security groups, you can assign only the default "
 "security group to the instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:153
+#: ../dashboard_launch_instances.rst:132
 msgid "Security Groups"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:155
+#: ../dashboard_launch_instances.rst:134
 msgid ":guilabel:`Networking` tab"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:158
+#: ../dashboard_launch_instances.rst:137
 msgid ""
 "To add a network to the instance, click the :guilabel:`+` in the :guilabel:"
 "`Available Networks` field."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:159
+#: ../dashboard_launch_instances.rst:138
 msgid "Selected Networks"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:161
+#: ../dashboard_launch_instances.rst:140
 msgid ":guilabel:`Post-Creation` tab"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:164
+#: ../dashboard_launch_instances.rst:143
 msgid "Specify a customization script that runs after your instance launches."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:165
+#: ../dashboard_launch_instances.rst:144
 msgid "Customization Script Source"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:167
+#: ../dashboard_launch_instances.rst:146
 msgid ":guilabel:`Advanced Options` tab"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:170
+#: ../dashboard_launch_instances.rst:149
 msgid "Select the type of disk partition from the dropdown list:"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:173
+#: ../dashboard_launch_instances.rst:152
 msgid "Automatic"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:173
+#: ../dashboard_launch_instances.rst:152
 msgid "Entire disk is single partition and automatically resizes."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:176
+#: ../dashboard_launch_instances.rst:155
 msgid "Disk Partition"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:176
+#: ../dashboard_launch_instances.rst:155
 msgid "Faster build times but requires manual partitioning."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:176
+#: ../dashboard_launch_instances.rst:155
 msgid "Manual"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:180
+#: ../dashboard_launch_instances.rst:159
 msgid "The instance starts on a compute node in the cloud."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:182
-msgid ""
-"The :guilabel:`Instances` tab shows the instance's name, its private and "
-"public IP addresses, size, status, task, and power state."
-msgstr ""
-
-#: ../dashboard_launch_instances.rst:185
+#: ../dashboard_launch_instances.rst:163
 msgid ""
 "If you did not provide a key pair, security groups, or rules, users can "
 "access the instance only from inside the cloud through VNC. Even pinging the "
 "instance is not possible without an ICMP rule configured."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:190
+#: ../dashboard_launch_instances.rst:167
+msgid ""
+"You can also launch an instance from the :guilabel:`Images` or :guilabel:"
+"`Volumes` category when you launch an instance from an image or a volume "
+"respectively."
+msgstr ""
+
+#: ../dashboard_launch_instances.rst:171
+msgid ""
+"When you launch an instance from an image, OpenStack creates a local copy of "
+"the image on the compute node where the instance starts."
+msgstr ""
+
+#: ../dashboard_launch_instances.rst:174
+msgid ""
+"For details on creating images, see `Creating images manually <http://docs."
+"openstack.org/image-guide/create-images-manually.html>`_ in the *OpenStack "
+"Virtual Machine Image Guide*."
+msgstr ""
+
+#: ../dashboard_launch_instances.rst:178
+msgid "When you launch an instance from a volume, note the following steps:"
+msgstr ""
+
+#: ../dashboard_launch_instances.rst:180
+msgid ""
+"To select the volume from which to launch, launch an instance from an "
+"arbitrary image on the volume. The arbitrary image that you select does not "
+"boot. Instead, it is replaced by the image on the volume that you choose in "
+"the next steps."
+msgstr ""
+
+#: ../dashboard_launch_instances.rst:185
+msgid ""
+"To boot a Xen image from a volume, the image you launch in must be the same "
+"type, fully virtualized or paravirtualized, as the one on the volume."
+msgstr ""
+
+#: ../dashboard_launch_instances.rst:189
+msgid ""
+"Select the volume or volume snapshot from which to boot. Enter a device "
+"name. Enter ``vda`` for KVM images or ``xvda`` for Xen images."
+msgstr ""
+
+#: ../dashboard_launch_instances.rst:193
 msgid "Connect to your instance by using SSH"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:192
+#: ../dashboard_launch_instances.rst:195
 msgid ""
 "To use SSH to connect to your instance, you use the downloaded keypair file."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:197
+#: ../dashboard_launch_instances.rst:200
 msgid "The user name is ``ubuntu`` for the Ubuntu cloud images on TryStack."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:199
+#: ../dashboard_launch_instances.rst:202
 msgid "Copy the IP address for your instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:201
+#: ../dashboard_launch_instances.rst:204
 msgid ""
 "Use the :command:`ssh` command to make a secure connection to the instance. "
 "For example:"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:208
+#: ../dashboard_launch_instances.rst:211
 msgid "At the prompt, type ``yes``."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:211
+#: ../dashboard_launch_instances.rst:214
 msgid "Track usage for instances"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:213
+#: ../dashboard_launch_instances.rst:216
 msgid ""
 "You can track usage for instances for each project. You can track costs per "
 "month by showing meters like number of vCPUs, disks, RAM, and uptime for all "
 "your instances."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:221
+#: ../dashboard_launch_instances.rst:224
 msgid ""
 "On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click :"
 "guilabel:`Overview` category."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:224
+#: ../dashboard_launch_instances.rst:227
 msgid ""
 "To query the instance usage for a month, select a month and click :guilabel:"
 "`Submit`."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:227
+#: ../dashboard_launch_instances.rst:230
 msgid "To download a summary, click :guilabel:`Download CSV Summary`."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:236
+#: ../dashboard_launch_instances.rst:239
 msgid ""
 "On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click "
 "the :guilabel:`Instances` category."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:239
+#: ../dashboard_launch_instances.rst:242
 msgid "Select the instance from which to create a snapshot."
 msgstr ""
 
 # #-#-#-#-#  dashboard_launch_instances.pot (End User Guide 1.0.0)  #-#-#-#-#
 # #-#-#-#-#  dashboard_manage_volumes.pot (End User Guide 1.0.0)  #-#-#-#-#
-#: ../dashboard_launch_instances.rst:241 ../dashboard_manage_volumes.rst:120
+#: ../dashboard_launch_instances.rst:244 ../dashboard_manage_volumes.rst:120
 msgid "In the :guilabel:`Actions` column, click :guilabel:`Create Snapshot`."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:243
+#: ../dashboard_launch_instances.rst:246
 msgid ""
 "In the :guilabel:`Create Snapshot` dialog box, enter a name for the "
 "snapshot, and click :guilabel:`Create Snapshot`."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:246
+#: ../dashboard_launch_instances.rst:249
 msgid "The Images category shows the instance snapshot."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:248
+#: ../dashboard_launch_instances.rst:251
 msgid ""
 "To launch an instance from the snapshot, select the snapshot and click :"
 "guilabel:`Launch`. Proceed with launching an instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:252
+#: ../dashboard_launch_instances.rst:255
 msgid "Manage an instance"
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:258
-msgid ""
-"On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click :"
-"guilabel:`Instances` category."
-msgstr ""
-
-#: ../dashboard_launch_instances.rst:261
+#: ../dashboard_launch_instances.rst:264
 msgid "Select an instance."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:263
+#: ../dashboard_launch_instances.rst:266
 msgid "In the menu list in the :guilabel:`Actions` column, select the state."
 msgstr ""
 
-#: ../dashboard_launch_instances.rst:265
+#: ../dashboard_launch_instances.rst:268
 msgid ""
 "You can resize or rebuild an instance. You can also choose to view the "
 "instance console log, edit instance or the security groups. Depending on the "
@@ -6403,6 +6410,12 @@ msgstr ""
 
 #: ../dashboard_manage_images.rst:27
 msgid "Follow this procedure to upload an image to a project:"
+msgstr ""
+
+#: ../dashboard_manage_images.rst:33 ../dashboard_manage_images.rst:126
+msgid ""
+"On the :guilabel:`Project` tab, open the :guilabel:`Compute` tab and click :"
+"guilabel:`Images` category."
 msgstr ""
 
 #: ../dashboard_manage_images.rst:36 ../dashboard_manage_images.rst:88
