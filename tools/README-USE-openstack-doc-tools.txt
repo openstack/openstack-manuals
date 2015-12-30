@@ -2,7 +2,7 @@ With the exception of the autogenerate-config-flagmappings and
 www-generator directories, the tools directory has been moved to a
 separate repository openstack-doc-tools:
 
-https://github.com/openstack/openstack-doc-tools
+https://git.openstack.org/cgit/openstack/openstack-doc-tools
 
 Please do not make changes here, commit instead to openstack-doc-tools
 unless you need those for gating jobs.

@@ -242,18 +242,18 @@ version the following procedure can be used.
 
    .. code-block:: console
 
-      $ NOVA_ZIPBALL=$(mktemp)
+      $ NOVA_TARBALL=$(mktemp)
       $ NOVA_SOURCES=$(mktemp -d)
 
-#. Get the source from GitHub. The example assumes the master branch
-   is used, and the XenServer host is accessible as xenserver.
-   Match those parameters to your setup.
+#. Get the source from the openstack.org archives. The example assumes
+   the master branch is used, and the XenServer host is accessible as
+   xenserver. Match those parameters to your setup.
 
    .. code-block:: console
 
-      $ NOVA_URL=https://github.com/openstack/nova/archive/master.zip
-      $ wget -qO "$NOVA_ZIPBALL" "$NOVA_URL"
-      $ unzip "$NOVA_ZIPBALL" -d "$NOVA_SOURCES"
+      $ NOVA_URL=https://tarballs.openstack.org/nova/nova-master.tar.gz
+      $ wget -qO "$NOVA_TARBALL" "$NOVA_URL"
+      $ tar xvf "$NOVA_TARBALL" -d "$NOVA_SOURCES"
 
 #. Copy the plug-ins to the hypervisor:
 
