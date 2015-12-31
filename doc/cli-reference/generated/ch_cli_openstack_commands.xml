@@ -59,14 +59,15 @@
                  [--os-endpoint &lt;auth-endpoint&gt;] [--os-url &lt;auth-url&gt;]
                  [--os-token &lt;auth-token&gt;] [--os-project-id &lt;auth-project-id&gt;]
                  [--os-object-api-version &lt;object-api-version&gt;]
-                 [--os-policy-api-version &lt;policy-api-version&gt;]
+                 [--os-mb-api-version &lt;mb-api-version&gt;]
                  [--inspector-api-version INSPECTOR_API_VERSION]
                  [--inspector-url INSPECTOR_URL]
-                 [--os-queues-api-version &lt;queues-api-version&gt;]
-                 [--os-mb-api-version &lt;mb-api-version&gt;]
                  [--os-dns-api-version &lt;dns-api-version&gt;]
-                 [--os-baremetal-api-version &lt;baremetal-api-version&gt;]
-                 [--os-management-api-version &lt;management-api-version&gt;]</computeroutput></screen>
+                 [--os-policy-api-version &lt;policy-api-version&gt;]
+                 [--os-queues-api-version &lt;queues-api-version&gt;]
+                 [--os-data-processing-api-version &lt;data-processing-api-version&gt;]
+                 [--os-management-api-version &lt;management-api-version&gt;]
+                 [--os-baremetal-api-version &lt;baremetal-api-version&gt;]</computeroutput></screen>
     </section>
     <section xml:id="openstackclient_command_optional">
         <title>openstack optional arguments</title>
@@ -235,10 +236,10 @@
     <listitem>
       <para>
       Select an authentication type. Available types:
-      osc_password, token_endpoint, v2token, admin_token,
-      v2password, v3password, v3scopedsaml, v3oidcpassword,
-      v3unscopedadfs, token, v3token, password,
-      v3unscopedsaml. Default: selected based on --os-
+      v2token, admin_token, v2password, v3password,
+      v3scopedsaml, v3oidcpassword, v3unscopedadfs, token,
+      v3token, password, v3unscopedsaml, osc_password,
+      token_endpoint. Default: selected based on --os-
       username/--os-token (Env: OS_AUTH_TYPE)
       </para>
     </listitem>
@@ -247,14 +248,14 @@
     <term><command>--os-project-domain-id &lt;auth-project-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Domain ID containing project With
-      v3password: Domain ID containing project With
+      With v3password: Domain ID containing project With
       v3scopedsaml: Domain ID containing project With
       v3oidcpassword: Domain ID containing project With
       v3unscopedadfs: Domain ID containing project With
       token: Domain ID containing project With v3token:
       Domain ID containing project With password: Domain ID
       containing project With v3unscopedsaml: Domain ID
+      containing project With osc_password: Domain ID
       containing project (Env: OS_PROJECT_DOMAIN_ID)
       </para>
     </listitem>
@@ -275,14 +276,14 @@
     <term><command>--os-project-name &lt;auth-project-name&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Project name to scope to With
-      v3password: Project name to scope to With
+      With v3password: Project name to scope to With
       v3scopedsaml: Project name to scope to With
       v3oidcpassword: Project name to scope to With
       v3unscopedadfs: Project name to scope to With token:
       Project name to scope to With v3token: Project name to
       scope to With password: Project name to scope to With
-      v3unscopedsaml: Project name to scope to (Env:
+      v3unscopedsaml: Project name to scope to With
+      osc_password: Project name to scope to (Env:
       OS_PROJECT_NAME)
       </para>
     </listitem>
@@ -291,12 +292,12 @@
     <term><command>--os-trust-id &lt;auth-trust-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Trust ID With v2token: Trust ID
-      With v2password: Trust ID With v3password: Trust ID
-      With v3scopedsaml: Trust ID With v3oidcpassword: Trust
-      ID With v3unscopedadfs: Trust ID With token: Trust ID
-      With v3token: Trust ID With password: Trust ID With
-      v3unscopedsaml: Trust ID (Env: OS_TRUST_ID)
+      With v2token: Trust ID With v2password: Trust ID With
+      v3password: Trust ID With v3scopedsaml: Trust ID With
+      v3oidcpassword: Trust ID With v3unscopedadfs: Trust ID
+      With token: Trust ID With v3token: Trust ID With
+      password: Trust ID With v3unscopedsaml: Trust ID With
+      osc_password: Trust ID (Env: OS_TRUST_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -313,14 +314,15 @@
     <term><command>--os-domain-name &lt;auth-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Domain name to scope to With
-      v3password: Domain name to scope to With v3scopedsaml:
-      Domain name to scope to With v3oidcpassword: Domain
-      name to scope to With v3unscopedadfs: Domain name to
-      scope to With token: Domain name to scope to With
-      v3token: Domain name to scope to With password: Domain
-      name to scope to With v3unscopedsaml: Domain name to
-      scope to (Env: OS_DOMAIN_NAME)
+      With v3password: Domain name to scope to With
+      v3scopedsaml: Domain name to scope to With
+      v3oidcpassword: Domain name to scope to With
+      v3unscopedadfs: Domain name to scope to With token:
+      Domain name to scope to With v3token: Domain name to
+      scope to With password: Domain name to scope to With
+      v3unscopedsaml: Domain name to scope to With
+      osc_password: Domain name to scope to (Env:
+      OS_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -328,9 +330,9 @@
     <term><command>--os-user-domain-id &lt;auth-user-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User's domain id With v3password:
-      User's domain id With password: User's domain id (Env:
-      OS_USER_DOMAIN_ID)
+      With v3password: User's domain id With password:
+      User's domain id With osc_password: User's domain id
+      (Env: OS_USER_DOMAIN_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -357,13 +359,14 @@
     <term><command>--os-domain-id &lt;auth-domain-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Domain ID to scope to With
-      v3password: Domain ID to scope to With v3scopedsaml:
-      Domain ID to scope to With v3oidcpassword: Domain ID
-      to scope to With v3unscopedadfs: Domain ID to scope to
-      With token: Domain ID to scope to With v3token: Domain
-      ID to scope to With password: Domain ID to scope to
-      With v3unscopedsaml: Domain ID to scope to (Env:
+      With v3password: Domain ID to scope to With
+      v3scopedsaml: Domain ID to scope to With
+      v3oidcpassword: Domain ID to scope to With
+      v3unscopedadfs: Domain ID to scope to With token:
+      Domain ID to scope to With v3token: Domain ID to scope
+      to With password: Domain ID to scope to With
+      v3unscopedsaml: Domain ID to scope to With
+      osc_password: Domain ID to scope to (Env:
       OS_DOMAIN_ID)
       </para>
     </listitem>
@@ -372,9 +375,9 @@
     <term><command>--os-user-domain-name &lt;auth-user-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User's domain name With v3password:
-      User's domain name With password: User's domain name
-      (Env: OS_USER_DOMAIN_NAME)
+      With v3password: User's domain name With password:
+      User's domain name With osc_password: User's domain
+      name (Env: OS_USER_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -391,9 +394,9 @@
     <term><command>--os-user-id &lt;auth-user-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User id With v2password: User ID to
-      login with With v3password: User ID With password:
-      User id (Env: OS_USER_ID)
+      With v2password: User ID to login with With
+      v3password: User ID With password: User id With
+      osc_password: User id (Env: OS_USER_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -412,11 +415,11 @@
     <term><command>--os-username &lt;auth-username&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Username With v2password: Username
-      to login with With v3password: Username With
-      v3oidcpassword: Username With v3unscopedadfs: Username
-      With password: Username With v3unscopedsaml: Username
-      (Env: OS_USERNAME)
+      With v2password: Username to login with With
+      v3password: Username With v3oidcpassword: Username
+      With v3unscopedadfs: Username With password: Username
+      With v3unscopedsaml: Username With osc_password:
+      Username (Env: OS_USERNAME)
       </para>
     </listitem>
   </varlistentry>
@@ -424,14 +427,15 @@
     <term><command>--os-auth-url &lt;auth-auth-url&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Authentication URL With v2token:
-      Authentication URL With v2password: Authentication URL
-      With v3password: Authentication URL With v3scopedsaml:
-      Authentication URL With v3oidcpassword: Authentication
-      URL With v3unscopedadfs: Authentication URL With
-      token: Authentication URL With v3token: Authentication
-      URL With password: Authentication URL With
-      v3unscopedsaml: Authentication URL (Env: OS_AUTH_URL)
+      With v2token: Authentication URL With v2password:
+      Authentication URL With v3password: Authentication URL
+      With v3scopedsaml: Authentication URL With
+      v3oidcpassword: Authentication URL With
+      v3unscopedadfs: Authentication URL With token:
+      Authentication URL With v3token: Authentication URL
+      With password: Authentication URL With v3unscopedsaml:
+      Authentication URL With osc_password: Authentication
+      URL (Env: OS_AUTH_URL)
       </para>
     </listitem>
   </varlistentry>
@@ -457,15 +461,15 @@
     <term><command>--os-project-domain-name &lt;auth-project-domain-name&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Domain name containing project With
-      v3password: Domain name containing project With
+      With v3password: Domain name containing project With
       v3scopedsaml: Domain name containing project With
       v3oidcpassword: Domain name containing project With
       v3unscopedadfs: Domain name containing project With
       token: Domain name containing project With v3token:
       Domain name containing project With password: Domain
       name containing project With v3unscopedsaml: Domain
-      name containing project (Env: OS_PROJECT_DOMAIN_NAME)
+      name containing project With osc_password: Domain name
+      containing project (Env: OS_PROJECT_DOMAIN_NAME)
       </para>
     </listitem>
   </varlistentry>
@@ -473,11 +477,11 @@
     <term><command>--os-password &lt;auth-password&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: User's password With v2password:
-      Password to use With v3password: User's password With
-      v3oidcpassword: Password With v3unscopedadfs: Password
-      With password: User's password With v3unscopedsaml:
-      Password (Env: OS_PASSWORD)
+      With v2password: Password to use With v3password:
+      User's password With v3oidcpassword: Password With
+      v3unscopedadfs: Password With password: User's
+      password With v3unscopedsaml: Password With
+      osc_password: User's password (Env: OS_PASSWORD)
       </para>
     </listitem>
   </varlistentry>
@@ -485,9 +489,9 @@
     <term><command>--os-endpoint &lt;auth-endpoint&gt;</command></term>
     <listitem>
       <para>
-      With token_endpoint: The endpoint that will always be
-      used With admin_token: The endpoint that will always
-      be used (Env: OS_ENDPOINT)
+      With admin_token: The endpoint that will always be
+      used With token_endpoint: The endpoint that will
+      always be used (Env: OS_ENDPOINT)
       </para>
     </listitem>
   </varlistentry>
@@ -504,12 +508,12 @@
     <term><command>--os-token &lt;auth-token&gt;</command></term>
     <listitem>
       <para>
-      With token_endpoint: The token that will always be
-      used With token_endpoint: Authentication token to use
       With v2token: Token With admin_token: The token that
       will always be used With v3scopedsaml: Token to
       authenticate with With token: Token to authenticate
-      with With v3token: Token to authenticate with (Env:
+      with With v3token: Token to authenticate with With
+      token_endpoint: The token that will always be used
+      With token_endpoint: Authentication token to use (Env:
       OS_TOKEN)
       </para>
     </listitem>
@@ -518,14 +522,15 @@
     <term><command>--os-project-id &lt;auth-project-id&gt;</command></term>
     <listitem>
       <para>
-      With osc_password: Project ID to scope to With
-      v3password: Project ID to scope to With v3scopedsaml:
-      Project ID to scope to With v3oidcpassword: Project ID
-      to scope to With v3unscopedadfs: Project ID to scope
-      to With token: Project ID to scope to With v3token:
-      Project ID to scope to With password: Project ID to
-      scope to With v3unscopedsaml: Project ID to scope to
-      (Env: OS_PROJECT_ID)
+      With v3password: Project ID to scope to With
+      v3scopedsaml: Project ID to scope to With
+      v3oidcpassword: Project ID to scope to With
+      v3unscopedadfs: Project ID to scope to With token:
+      Project ID to scope to With v3token: Project ID to
+      scope to With password: Project ID to scope to With
+      v3unscopedsaml: Project ID to scope to With
+      osc_password: Project ID to scope to (Env:
+      OS_PROJECT_ID)
       </para>
     </listitem>
   </varlistentry>
@@ -539,11 +544,10 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-policy-api-version &lt;policy-api-version&gt;</command></term>
+    <term><command>--os-mb-api-version &lt;mb-api-version&gt;</command></term>
     <listitem>
       <para>
-      Policy API version, default=1 (Env:
-      OS_POLICY_API_VERSION)
+      MB API version, default=1 (Env: OS_MB_API_VERSION)
       </para>
     </listitem>
   </varlistentry>
@@ -566,6 +570,23 @@
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--os-dns-api-version &lt;dns-api-version&gt;</command></term>
+    <listitem>
+      <para>
+      DNS API version, default=2 (Env: OS_DNS_API_VERSION)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--os-policy-api-version &lt;policy-api-version&gt;</command></term>
+    <listitem>
+      <para>
+      Policy API version, default=1 (Env:
+      OS_POLICY_API_VERSION)
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--os-queues-api-version &lt;queues-api-version&gt;</command></term>
     <listitem>
       <para>
@@ -575,27 +596,11 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>--os-mb-api-version &lt;mb-api-version&gt;</command></term>
+    <term><command>--os-data-processing-api-version &lt;data-processing-api-version&gt;</command></term>
     <listitem>
       <para>
-      MB API version, default=1 (Env: OS_MB_API_VERSION)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-dns-api-version &lt;dns-api-version&gt;</command></term>
-    <listitem>
-      <para>
-      DNS API version, default=2 (Env: OS_DNS_API_VERSION)
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-baremetal-api-version &lt;baremetal-api-version&gt;</command></term>
-    <listitem>
-      <para>
-      Baremetal API version, default=1.6 (Env:
-      OS_BAREMETAL_API_VERSION)
+      Data processing API version, default=1.1 (Env:
+      OS_DATA_PROCESSING_API_VERSION)
       </para>
     </listitem>
   </varlistentry>
@@ -608,6 +613,15 @@
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--os-baremetal-api-version &lt;baremetal-api-version&gt;</command></term>
+    <listitem>
+      <para>
+      Baremetal API version, default=1.6 (Env:
+      OS_BAREMETAL_API_VERSION)
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
 
@@ -615,7 +629,8 @@
        <title>OpenStack with Identity API v2 commands</title>
     <section xml:id="openstackclient_subcommand_aggregate_add_host_with_identity_api_v2">
         <title>openstack aggregate add host</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate add host [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate add host [-h]
+                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--noindent] [--prefix PREFIX]
                                     &lt;aggregate&gt; &lt;host&gt;</computeroutput></screen>
@@ -654,7 +669,8 @@ Add host to aggregate
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_create_with_identity_api_v2">
         <title>openstack aggregate create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate create [-h]
+                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
                                   [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--noindent] [--prefix PREFIX]
                                   [--zone &lt;availability-zone&gt;]
@@ -732,7 +748,8 @@ Delete an existing aggregate
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_list_with_identity_api_v2">
         <title>openstack aggregate list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate list [-h]
+                                [-f {csv,html,json,json,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
@@ -761,7 +778,8 @@ List all aggregates
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_remove_host_with_identity_api_v2">
         <title>openstack aggregate remove host</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate remove host [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate remove host [-h]
+                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
                                        [--noindent] [--prefix PREFIX]
                                        &lt;aggregate&gt; &lt;host&gt;</computeroutput></screen>
@@ -800,7 +818,8 @@ Remove host from aggregate
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_set_with_identity_api_v2">
         <title>openstack aggregate set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate set [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate set [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX] [--name &lt;name&gt;]
                                [--zone &lt;availability-zone&gt;]
@@ -858,7 +877,8 @@ Set aggregate properties
     </section>
     <section xml:id="openstackclient_subcommand_aggregate_show_with_identity_api_v2">
         <title>openstack aggregate show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 aggregate show [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent] [--prefix PREFIX]
                                 &lt;aggregate&gt;</computeroutput></screen>
@@ -889,7 +909,8 @@ Display aggregate details
     </section>
     <section xml:id="openstackclient_subcommand_availability_zone_list_with_identity_api_v2">
         <title>openstack availability zone list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 availability zone list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 availability zone list [-h]
+                                        [-f {csv,html,json,json,table,value,yaml,yaml}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
@@ -918,7 +939,8 @@ List availability zones and their status
     </section>
     <section xml:id="openstackclient_subcommand_backup_create_with_identity_api_v2">
         <title>openstack backup create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 backup create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 backup create [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX]
                                [--container &lt;container&gt;] [--name &lt;name&gt;]
@@ -1003,8 +1025,9 @@ Delete backup(s)
     </section>
     <section xml:id="openstackclient_subcommand_backup_list_with_identity_api_v2">
         <title>openstack backup list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 backup list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 backup list [-h]
+                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
         <para>
 List backups
@@ -1066,7 +1089,8 @@ Restore backup
     </section>
     <section xml:id="openstackclient_subcommand_backup_show_with_identity_api_v2">
         <title>openstack backup show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 backup show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 backup show [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX]
                              &lt;backup&gt;</computeroutput></screen>
@@ -1097,7 +1121,8 @@ Display backup details
     </section>
     <section xml:id="openstackclient_subcommand_baremetal_create_with_identity_api_v2">
         <title>openstack baremetal create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal create [-h]
+                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
                                   [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--noindent] [--prefix PREFIX]
                                   [--chassis-uuid &lt;chassis&gt;] --driver &lt;driver&gt;
@@ -1267,7 +1292,7 @@ Import one or several introspection rules from a json file.
     <section xml:id="openstackclient_subcommand_baremetal_introspection_rule_list_with_identity_api_v2">
         <title>openstack baremetal introspection rule list</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule list [-h]
-                                                   [-f {csv,json,table,value,yaml}]
+                                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
                                                    [-c COLUMN]
                                                    [--max-width &lt;integer&gt;]
                                                    [--noindent]
@@ -1306,7 +1331,7 @@ Drop all introspection rules.
     <section xml:id="openstackclient_subcommand_baremetal_introspection_rule_show_with_identity_api_v2">
         <title>openstack baremetal introspection rule show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection rule show [-h]
-                                                   [-f {json,shell,table,value,yaml}]
+                                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
                                                    [-c COLUMN]
                                                    [--max-width &lt;integer&gt;]
                                                    [--noindent]
@@ -1389,7 +1414,7 @@ Start the introspection.
     <section xml:id="openstackclient_subcommand_baremetal_introspection_status_with_identity_api_v2">
         <title>openstack baremetal introspection status</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal introspection status [-h]
-                                                [-f {json,shell,table,value,yaml}]
+                                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                                 [-c COLUMN]
                                                 [--max-width &lt;integer&gt;]
                                                 [--noindent] [--prefix PREFIX]
@@ -1421,7 +1446,8 @@ Get introspection status.
     </section>
     <section xml:id="openstackclient_subcommand_baremetal_list_with_identity_api_v2">
         <title>openstack baremetal list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal list [-h]
+                                [-f {csv,html,json,json,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
@@ -1535,7 +1561,8 @@ Set baremetal properties
     </section>
     <section xml:id="openstackclient_subcommand_baremetal_show_with_identity_api_v2">
         <title>openstack baremetal show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 baremetal show [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent] [--prefix PREFIX] [--instance]
                                 [--long]
@@ -1620,7 +1647,8 @@ Unset baremetal properties
     </section>
     <section xml:id="openstackclient_subcommand_catalog_list_with_identity_api_v2">
         <title>openstack catalog list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 catalog list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 catalog list [-h]
+                              [-f {csv,html,json,json,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
@@ -1639,7 +1667,8 @@ List services in the service catalog
     </section>
     <section xml:id="openstackclient_subcommand_catalog_show_with_identity_api_v2">
         <title>openstack catalog show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 catalog show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 catalog show [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX]
                               &lt;service&gt;</computeroutput></screen>
@@ -1670,7 +1699,8 @@ Display service catalog details
     </section>
     <section xml:id="openstackclient_subcommand_command_list_with_identity_api_v2">
         <title>openstack command list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 command list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 command list [-h]
+                              [-f {csv,html,json,json,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
@@ -1689,7 +1719,8 @@ List recognized commands by group
     </section>
     <section xml:id="openstackclient_subcommand_compute_agent_create_with_identity_api_v2">
         <title>openstack compute agent create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 compute agent create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 compute agent create [-h]
+                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent] [--prefix PREFIX]
                                       &lt;os&gt; &lt;architecture&gt; &lt;version&gt; &lt;url&gt;
@@ -1789,7 +1820,8 @@ Delete compute agent command
     </section>
     <section xml:id="openstackclient_subcommand_compute_agent_list_with_identity_api_v2">
         <title>openstack compute agent list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 compute agent list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 compute agent list [-h]
+                                    [-f {csv,html,json,json,table,value,yaml,yaml}]
                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}]
@@ -1818,7 +1850,8 @@ List compute agent command
     </section>
     <section xml:id="openstackclient_subcommand_compute_agent_set_with_identity_api_v2">
         <title>openstack compute agent set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 compute agent set [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 compute agent set [-h]
+                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
                                    [-c COLUMN] [--max-width &lt;integer&gt;]
                                    [--noindent] [--prefix PREFIX]
                                    &lt;id&gt; &lt;version&gt; &lt;url&gt; &lt;md5hash&gt;</computeroutput></screen>
@@ -1901,7 +1934,8 @@ Delete service command
     </section>
     <section xml:id="openstackclient_subcommand_compute_service_list_with_identity_api_v2">
         <title>openstack compute service list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 compute service list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 compute service list [-h]
+                                      [-f {csv,html,json,json,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
@@ -1938,7 +1972,8 @@ List service command
     </section>
     <section xml:id="openstackclient_subcommand_compute_service_set_with_identity_api_v2">
         <title>openstack compute service set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 compute service set [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 compute service set [-h]
+                                     [-f {csv,html,json,json,table,value,yaml,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
@@ -1995,7 +2030,8 @@ Set service command
     </section>
     <section xml:id="openstackclient_subcommand_configuration_show_with_identity_api_v2">
         <title>openstack configuration show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 configuration show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 configuration show [-h]
+                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--noindent] [--prefix PREFIX]
                                     [--mask | --unmask]</computeroutput></screen>
@@ -2032,7 +2068,7 @@ Display configuration details
     <section xml:id="openstackclient_subcommand_congress_datasource_create_with_identity_api_v2">
         <title>openstack congress datasource create</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource create [-h]
-                                            [-f {json,shell,table,value,yaml}]
+                                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                                             [-c COLUMN]
                                             [--max-width &lt;integer&gt;]
                                             [--noindent] [--prefix PREFIX]
@@ -2120,7 +2156,7 @@ Delete a datasource.
     <section xml:id="openstackclient_subcommand_congress_datasource_list_with_identity_api_v2">
         <title>openstack congress datasource list</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource list [-h]
-                                          [-f {csv,json,table,value,yaml}]
+                                          [-f {csv,html,json,json,table,value,yaml,yaml}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
                                           [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -2141,7 +2177,7 @@ List Datasources.
     <section xml:id="openstackclient_subcommand_congress_datasource_row_list_with_identity_api_v2">
         <title>openstack congress datasource row list</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource row list [-h]
-                                              [-f {csv,json,table,value,yaml}]
+                                              [-f {csv,html,json,json,table,value,yaml,yaml}]
                                               [-c COLUMN]
                                               [--max-width &lt;integer&gt;]
                                               [--noindent]
@@ -2183,7 +2219,7 @@ List datasource rows.
     <section xml:id="openstackclient_subcommand_congress_datasource_schema_show_with_identity_api_v2">
         <title>openstack congress datasource schema show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource schema show [-h]
-                                                 [-f {csv,json,table,value,yaml}]
+                                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
                                                  [-c COLUMN]
                                                  [--max-width &lt;integer&gt;]
                                                  [--noindent]
@@ -2217,7 +2253,7 @@ Show schema for datasource.
     <section xml:id="openstackclient_subcommand_congress_datasource_status_show_with_identity_api_v2">
         <title>openstack congress datasource status show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource status show [-h]
-                                                 [-f {json,shell,table,value,yaml}]
+                                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
                                                  [-c COLUMN]
                                                  [--max-width &lt;integer&gt;]
                                                  [--noindent]
@@ -2251,7 +2287,7 @@ List status for datasource.
     <section xml:id="openstackclient_subcommand_congress_datasource_table_list_with_identity_api_v2">
         <title>openstack congress datasource table list</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource table list [-h]
-                                                [-f {csv,json,table,value,yaml}]
+                                                [-f {csv,html,json,json,table,value,yaml,yaml}]
                                                 [-c COLUMN]
                                                 [--max-width &lt;integer&gt;]
                                                 [--noindent]
@@ -2285,7 +2321,7 @@ List datasource tables.
     <section xml:id="openstackclient_subcommand_congress_datasource_table_schema_show_with_identity_api_v2">
         <title>openstack congress datasource table schema show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource table schema show [-h]
-                                                       [-f {csv,json,table,value,yaml}]
+                                                       [-f {csv,html,json,json,table,value,yaml,yaml}]
                                                        [-c COLUMN]
                                                        [--max-width &lt;integer&gt;]
                                                        [--noindent]
@@ -2328,7 +2364,7 @@ Show schema for datasource table.
     <section xml:id="openstackclient_subcommand_congress_datasource_table_show_with_identity_api_v2">
         <title>openstack congress datasource table show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress datasource table show [-h]
-                                                [-f {json,shell,table,value,yaml}]
+                                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                                 [-c COLUMN]
                                                 [--max-width &lt;integer&gt;]
                                                 [--noindent] [--prefix PREFIX]
@@ -2369,7 +2405,7 @@ Show Datasource Table properties.
     <section xml:id="openstackclient_subcommand_congress_driver_config_show_with_identity_api_v2">
         <title>openstack congress driver config show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress driver config show [-h]
-                                             [-f {json,shell,table,value,yaml}]
+                                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                                              [-c COLUMN]
                                              [--max-width &lt;integer&gt;]
                                              [--noindent] [--prefix PREFIX]
@@ -2401,7 +2437,8 @@ List driver tables.
     </section>
     <section xml:id="openstackclient_subcommand_congress_driver_list_with_identity_api_v2">
         <title>openstack congress driver list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress driver list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress driver list [-h]
+                                      [-f {csv,html,json,json,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -2422,7 +2459,7 @@ List drivers.
     <section xml:id="openstackclient_subcommand_congress_driver_schema_show_with_identity_api_v2">
         <title>openstack congress driver schema show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress driver schema show [-h]
-                                             [-f {csv,json,table,value,yaml}]
+                                             [-f {csv,html,json,json,table,value,yaml,yaml}]
                                              [-c COLUMN]
                                              [--max-width &lt;integer&gt;]
                                              [--noindent]
@@ -2456,7 +2493,7 @@ List datasource tables.
     <section xml:id="openstackclient_subcommand_congress_policy_create_with_identity_api_v2">
         <title>openstack congress policy create</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy create [-h]
-                                        [-f {json,shell,table,value,yaml}]
+                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
                                         [--noindent] [--prefix PREFIX]
                                         [--description &lt;description&gt;]
@@ -2543,7 +2580,8 @@ Delete a policy.
     </section>
     <section xml:id="openstackclient_subcommand_congress_policy_list_with_identity_api_v2">
         <title>openstack congress policy list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy list [-h]
+                                      [-f {csv,html,json,json,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -2564,7 +2602,7 @@ List Policy.
     <section xml:id="openstackclient_subcommand_congress_policy_row_list_with_identity_api_v2">
         <title>openstack congress policy row list</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy row list [-h]
-                                          [-f {csv,json,table,value,yaml}]
+                                          [-f {csv,html,json,json,table,value,yaml,yaml}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
                                           [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
@@ -2614,7 +2652,7 @@ List policy rows.
     <section xml:id="openstackclient_subcommand_congress_policy_rule_create_with_identity_api_v2">
         <title>openstack congress policy rule create</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy rule create [-h]
-                                             [-f {json,shell,table,value,yaml}]
+                                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                                              [-c COLUMN]
                                              [--max-width &lt;integer&gt;]
                                              [--noindent] [--prefix PREFIX]
@@ -2738,7 +2776,7 @@ List policy rules.
     <section xml:id="openstackclient_subcommand_congress_policy_rule_show_with_identity_api_v2">
         <title>openstack congress policy rule show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy rule show [-h]
-                                           [-f {json,shell,table,value,yaml}]
+                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
                                            [-c COLUMN] [--max-width &lt;integer&gt;]
                                            [--noindent] [--prefix PREFIX]
                                            &lt;policy-name&gt; &lt;rule-id/rule-name&gt;</computeroutput></screen>
@@ -2777,7 +2815,8 @@ Show a policy rule.
     </section>
     <section xml:id="openstackclient_subcommand_congress_policy_show_with_identity_api_v2">
         <title>openstack congress policy show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy show [-h]
+                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent] [--prefix PREFIX]
                                       &lt;policy-name&gt;</computeroutput></screen>
@@ -2879,7 +2918,7 @@ Show the result of simulation.
     <section xml:id="openstackclient_subcommand_congress_policy_table_list_with_identity_api_v2">
         <title>openstack congress policy table list</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy table list [-h]
-                                            [-f {csv,json,table,value,yaml}]
+                                            [-f {csv,html,json,json,table,value,yaml,yaml}]
                                             [-c COLUMN]
                                             [--max-width &lt;integer&gt;]
                                             [--noindent]
@@ -2913,7 +2952,7 @@ List policy tables.
     <section xml:id="openstackclient_subcommand_congress_policy_table_show_with_identity_api_v2">
         <title>openstack congress policy table show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 congress policy table show [-h]
-                                            [-f {json,shell,table,value,yaml}]
+                                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                                             [-c COLUMN]
                                             [--max-width &lt;integer&gt;]
                                             [--noindent] [--prefix PREFIX]
@@ -2990,7 +3029,8 @@ Show server's console output
     </section>
     <section xml:id="openstackclient_subcommand_console_url_show_with_identity_api_v2">
         <title>openstack console url show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 console url show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 console url show [-h]
+                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
                                   [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--noindent] [--prefix PREFIX]
                                   [--novnc | --xvpvnc | --spice]
@@ -3046,7 +3086,8 @@ Show server's remote console URL
     </section>
     <section xml:id="openstackclient_subcommand_container_create_with_identity_api_v2">
         <title>openstack container create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 container create [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 container create [-h]
+                                  [-f {csv,html,json,json,table,value,yaml,yaml}]
                                   [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
@@ -3106,7 +3147,8 @@ Delete container
     </section>
     <section xml:id="openstackclient_subcommand_container_list_with_identity_api_v2">
         <title>openstack container list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 container list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 container list [-h]
+                                [-f {csv,html,json,json,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
@@ -3242,7 +3284,8 @@ Set container properties
     </section>
     <section xml:id="openstackclient_subcommand_container_show_with_identity_api_v2">
         <title>openstack container show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 container show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 container show [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent] [--prefix PREFIX]
                                 &lt;container&gt;</computeroutput></screen>
@@ -3308,10 +3351,300 @@ Unset container properties
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="openstackclient_subcommand_dataprocessing_data_source_create_with_identity_api_v2">
+        <title>openstack dataprocessing data source create</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing data source create [-h]
+                                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                                   [-c COLUMN]
+                                                   [--max-width &lt;integer&gt;]
+                                                   [--noindent]
+                                                   [--prefix PREFIX] --type
+                                                   &lt;type&gt; --url &lt;url&gt;
+                                                   [--username &lt;username&gt;]
+                                                   [--password &lt;password&gt;]
+                                                   [--description &lt;description&gt;]
+                                                   &lt;name&gt;</computeroutput></screen>
+        <para>
+Creates data source
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;name&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the data source
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--type &lt;type&gt;</command></term>
+    <listitem>
+      <para>
+        Type of the data source (swift, hdfs or maprfs)
+      [REQUIRED]
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--url &lt;url&gt;</command></term>
+    <listitem>
+      <para>
+        Url for the data source [REQUIRED]
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--username &lt;username&gt;</command></term>
+    <listitem>
+      <para>
+      Username for accessing the data source url
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--password &lt;password&gt;</command></term>
+    <listitem>
+      <para>
+      Password for accessing the data source url
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--description &lt;description&gt;</command></term>
+    <listitem>
+      <para>
+      Description of the data source
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_dataprocessing_data_source_delete_with_identity_api_v2">
+        <title>openstack dataprocessing data source delete</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing data source delete [-h] &lt;data-source&gt;</computeroutput></screen>
+        <para>
+Delete data source
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;data-source&gt;</command></term>
+    <listitem>
+      <para>
+        Name or id of the data source to delete
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_dataprocessing_data_source_list_with_identity_api_v2">
+        <title>openstack dataprocessing data source list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing data source list [-h]
+                                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                                 [-c COLUMN]
+                                                 [--max-width &lt;integer&gt;]
+                                                 [--noindent]
+                                                 [--quote {all,minimal,none,nonnumeric}]
+                                                 [--long] [--type &lt;type&gt;]</computeroutput></screen>
+        <para>
+Lists data sources
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--long</command></term>
+    <listitem>
+      <para>
+        List additional fields in output
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--type &lt;type&gt;</command></term>
+    <listitem>
+      <para>
+        List data sources of specific type (swift, hdfs or
+      maprfs)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_dataprocessing_data_source_show_with_identity_api_v2">
+        <title>openstack dataprocessing data source show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing data source show [-h]
+                                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                                 [-c COLUMN]
+                                                 [--max-width &lt;integer&gt;]
+                                                 [--noindent]
+                                                 [--prefix PREFIX]
+                                                 &lt;data-source&gt;</computeroutput></screen>
+        <para>
+Display data source details
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;data-source&gt;</command></term>
+    <listitem>
+      <para>
+        Name or id of the data source to display
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_dataprocessing_plugin_configs_get_with_identity_api_v2">
+        <title>openstack dataprocessing plugin configs get</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing plugin configs get [-h] [--file &lt;file&gt;]
+                                                   &lt;plugin&gt; &lt;version&gt;</computeroutput></screen>
+        <para>
+Get plugin configs
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;plugin&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the plugin to provide config information about
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;version&gt;</command></term>
+    <listitem>
+      <para>
+        Version of the plugin to provide config information about
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--file &lt;file&gt;</command></term>
+    <listitem>
+      <para>
+        Destination file (defaults to plugin name)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_dataprocessing_plugin_list_with_identity_api_v2">
+        <title>openstack dataprocessing plugin list</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing plugin list [-h]
+                                            [-f {csv,html,json,json,table,value,yaml,yaml}]
+                                            [-c COLUMN]
+                                            [--max-width &lt;integer&gt;]
+                                            [--noindent]
+                                            [--quote {all,minimal,none,nonnumeric}]
+                                            [--long]</computeroutput></screen>
+        <para>
+Lists plugins
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--long</command></term>
+    <listitem>
+      <para>
+        List additional fields in output
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="openstackclient_subcommand_dataprocessing_plugin_show_with_identity_api_v2">
+        <title>openstack dataprocessing plugin show</title>
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 dataprocessing plugin show [-h]
+                                            [-f {html,json,json,shell,table,value,yaml,yaml}]
+                                            [-c COLUMN]
+                                            [--max-width &lt;integer&gt;]
+                                            [--noindent] [--prefix PREFIX]
+                                            &lt;plugin&gt;</computeroutput></screen>
+        <para>
+Display plugin details
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;plugin&gt;</command></term>
+    <listitem>
+      <para>
+        Name of the plugin to display
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>-h, --help</command></term>
+    <listitem>
+      <para>
+        show this help message and exit
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_create_with_identity_api_v2">
         <title>openstack ec2 credentials create</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ec2 credentials create [-h]
-                                        [-f {json,shell,table,value,yaml}]
+                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
                                         [--noindent] [--prefix PREFIX]
                                         [--project &lt;project&gt;] [--user &lt;user&gt;]</computeroutput></screen>
@@ -3385,7 +3718,8 @@ Delete EC2 credentials
     </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_list_with_identity_api_v2">
         <title>openstack ec2 credentials list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ec2 credentials list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ec2 credentials list [-h]
+                                      [-f {csv,html,json,json,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
@@ -3414,7 +3748,8 @@ List EC2 credentials
     </section>
     <section xml:id="openstackclient_subcommand_ec2_credentials_show_with_identity_api_v2">
         <title>openstack ec2 credentials show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ec2 credentials show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ec2 credentials show [-h]
+                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent] [--prefix PREFIX]
                                       [--user &lt;user&gt;]
@@ -3454,7 +3789,8 @@ Display EC2 credentials details
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_create_with_identity_api_v2">
         <title>openstack endpoint create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 endpoint create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 endpoint create [-h]
+                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--noindent] [--prefix PREFIX] --publicurl
                                  &lt;url&gt; [--adminurl &lt;url&gt;]
@@ -3547,7 +3883,8 @@ Delete endpoint
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_list_with_identity_api_v2">
         <title>openstack endpoint list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 endpoint list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 endpoint list [-h]
+                               [-f {csv,html,json,json,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
@@ -3576,7 +3913,8 @@ List endpoints
     </section>
     <section xml:id="openstackclient_subcommand_endpoint_show_with_identity_api_v2">
         <title>openstack endpoint show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 endpoint show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 endpoint show [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX]
                                &lt;endpoint-id&gt;</computeroutput></screen>
@@ -3607,7 +3945,8 @@ Display endpoint details
     </section>
     <section xml:id="openstackclient_subcommand_extension_list_with_identity_api_v2">
         <title>openstack extension list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 extension list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 extension list [-h]
+                                [-f {csv,html,json,json,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
@@ -3669,7 +4008,8 @@ List API extensions
     </section>
     <section xml:id="openstackclient_subcommand_flavor_create_with_identity_api_v2">
         <title>openstack flavor create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 flavor create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 flavor create [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX] [--id &lt;id&gt;]
                                [--ram &lt;size-mb&gt;] [--disk &lt;size-gb&gt;]
@@ -3805,8 +4145,9 @@ Delete flavor
     </section>
     <section xml:id="openstackclient_subcommand_flavor_list_with_identity_api_v2">
         <title>openstack flavor list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 flavor list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 flavor list [-h]
+                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--public | --private | --all] [--long]
                              [--marker &lt;marker&gt;] [--limit &lt;limit&gt;]</computeroutput></screen>
@@ -3874,7 +4215,8 @@ List flavors
     </section>
     <section xml:id="openstackclient_subcommand_flavor_set_with_identity_api_v2">
         <title>openstack flavor set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 flavor set [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 flavor set [-h]
+                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--prefix PREFIX] [--property &lt;key=value&gt;]
                             &lt;flavor&gt;</computeroutput></screen>
@@ -3914,7 +4256,8 @@ Set flavor properties
     </section>
     <section xml:id="openstackclient_subcommand_flavor_show_with_identity_api_v2">
         <title>openstack flavor show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 flavor show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 flavor show [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX]
                              &lt;flavor&gt;</computeroutput></screen>
@@ -3945,7 +4288,8 @@ Display flavor details
     </section>
     <section xml:id="openstackclient_subcommand_flavor_unset_with_identity_api_v2">
         <title>openstack flavor unset</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 flavor unset [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 flavor unset [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX] --property &lt;key&gt;
                               &lt;flavor&gt;</computeroutput></screen>
@@ -3985,8 +4329,9 @@ Unset flavor properties
     </section>
     <section xml:id="openstackclient_subcommand_host_list_with_identity_api_v2">
         <title>openstack host list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 host list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 host list [-h]
+                           [-f {csv,html,json,json,table,value,yaml,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--zone &lt;zone&gt;]</computeroutput></screen>
         <para>
@@ -4013,8 +4358,9 @@ List host command
     </section>
     <section xml:id="openstackclient_subcommand_host_show_with_identity_api_v2">
         <title>openstack host show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 host show [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 host show [-h]
+                           [-f {csv,html,json,json,table,value,yaml,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            &lt;host&gt;</computeroutput></screen>
         <para>
@@ -4044,7 +4390,8 @@ Show host command
     </section>
     <section xml:id="openstackclient_subcommand_hypervisor_list_with_identity_api_v2">
         <title>openstack hypervisor list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 hypervisor list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 hypervisor list [-h]
+                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]
@@ -4073,7 +4420,8 @@ List hypervisors
     </section>
     <section xml:id="openstackclient_subcommand_hypervisor_show_with_identity_api_v2">
         <title>openstack hypervisor show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 hypervisor show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 hypervisor show [-h]
+                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--noindent] [--prefix PREFIX]
                                  &lt;hypervisor&gt;</computeroutput></screen>
@@ -4104,7 +4452,8 @@ Display hypervisor details
     </section>
     <section xml:id="openstackclient_subcommand_hypervisor_stats_show_with_identity_api_v2">
         <title>openstack hypervisor stats show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 hypervisor stats show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 hypervisor stats show [-h]
+                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
                                        [--noindent] [--prefix PREFIX]</computeroutput></screen>
         <para>
@@ -4123,7 +4472,8 @@ Display hypervisor stats details
     </section>
     <section xml:id="openstackclient_subcommand_image_add_project_with_identity_api_v2">
         <title>openstack image add project</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 image add project [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 image add project [-h]
+                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
                                    [-c COLUMN] [--max-width &lt;integer&gt;]
                                    [--noindent] [--prefix PREFIX]
                                    [--project-domain &lt;project-domain&gt;]
@@ -4173,7 +4523,8 @@ Associate project with image
     </section>
     <section xml:id="openstackclient_subcommand_image_create_with_identity_api_v2">
         <title>openstack image create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 image create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 image create [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX] [--id &lt;id&gt;]
                               [--container-format &lt;container-format&gt;]
@@ -4344,8 +4695,9 @@ Delete image(s)
     </section>
     <section xml:id="openstackclient_subcommand_image_list_with_identity_api_v2">
         <title>openstack image list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 image list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 image list [-h]
+                            [-f {csv,html,json,json,table,value,yaml,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--quote {all,minimal,none,nonnumeric}]
                             [--public | --private | --shared]
                             [--property &lt;key=value&gt;] [--long]
@@ -4684,7 +5036,8 @@ Set image properties
     </section>
     <section xml:id="openstackclient_subcommand_image_show_with_identity_api_v2">
         <title>openstack image show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 image show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 image show [-h]
+                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--prefix PREFIX]
                             &lt;image&gt;</computeroutput></screen>
@@ -4823,7 +5176,8 @@ Add floating IP address to server
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_create_with_identity_api_v2">
         <title>openstack ip floating create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating create [-h]
+                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--noindent] [--prefix PREFIX]
                                     &lt;pool&gt;</computeroutput></screen>
@@ -4882,7 +5236,8 @@ Delete a floating IP address
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_list_with_identity_api_v2">
         <title>openstack ip floating list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating list [-h]
+                                  [-f {csv,html,json,json,table,value,yaml,yaml}]
                                   [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -4902,7 +5257,8 @@ List floating IP addresses
     </section>
     <section xml:id="openstackclient_subcommand_ip_floating_pool_list_with_identity_api_v2">
         <title>openstack ip floating pool list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating pool list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ip floating pool list [-h]
+                                       [-f {csv,html,json,json,table,value,yaml,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
                                        [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -4958,7 +5314,8 @@ Remove floating IP address from server
     </section>
     <section xml:id="openstackclient_subcommand_keypair_create_with_identity_api_v2">
         <title>openstack keypair create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 keypair create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 keypair create [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent] [--prefix PREFIX]
                                 [--public-key &lt;file&gt;]
@@ -5026,7 +5383,8 @@ Delete public key
     </section>
     <section xml:id="openstackclient_subcommand_keypair_list_with_identity_api_v2">
         <title>openstack keypair list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 keypair list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 keypair list [-h]
+                              [-f {csv,html,json,json,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
@@ -5045,7 +5403,8 @@ List public key fingerprints
     </section>
     <section xml:id="openstackclient_subcommand_keypair_show_with_identity_api_v2">
         <title>openstack keypair show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 keypair show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 keypair show [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX] [--public-key]
                               &lt;key&gt;</computeroutput></screen>
@@ -5084,8 +5443,9 @@ Display public key details
     </section>
     <section xml:id="openstackclient_subcommand_limits_show_with_identity_api_v2">
         <title>openstack limits show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 limits show [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 limits show [-h]
+                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
                              (--absolute | --rate) [--reserved]
                              [--project &lt;project&gt;] [--domain &lt;domain&gt;]</computeroutput></screen>
@@ -5149,7 +5509,7 @@ Show compute and volume limits
     <section xml:id="openstackclient_subcommand_management_plan_add_role_with_identity_api_v2">
         <title>openstack management plan add role</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan add role [-h]
-                                          [-f {json,shell,table,value,yaml}]
+                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
                                           [--noindent] [--prefix PREFIX]</computeroutput></screen>
         <para>
@@ -5169,7 +5529,7 @@ Add a Role to a Management Plan.
     <section xml:id="openstackclient_subcommand_management_plan_create_with_identity_api_v2">
         <title>openstack management plan create</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan create [-h]
-                                        [-f {json,shell,table,value,yaml}]
+                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
                                         [--noindent] [--prefix PREFIX]
                                         [-d DESCRIPTION]
@@ -5254,7 +5614,8 @@ Download the a Management Plan.
     </section>
     <section xml:id="openstackclient_subcommand_management_plan_list_with_identity_api_v2">
         <title>openstack management plan list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan list [-h]
+                                      [-f {csv,html,json,json,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -5275,7 +5636,7 @@ List the Management Plans.
     <section xml:id="openstackclient_subcommand_management_plan_remove_role_with_identity_api_v2">
         <title>openstack management plan remove role</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan remove role [-h]
-                                             [-f {json,shell,table,value,yaml}]
+                                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                                              [-c COLUMN]
                                              [--max-width &lt;integer&gt;]
                                              [--noindent] [--prefix PREFIX]</computeroutput></screen>
@@ -5295,7 +5656,8 @@ Remove a Role from a Management Plan.
     </section>
     <section xml:id="openstackclient_subcommand_management_plan_set_with_identity_api_v2">
         <title>openstack management plan set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan set [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan set [-h]
+                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--noindent] [--prefix PREFIX]
                                      [-P &lt;KEY1=VALUE1&gt;] [-F &lt;ROLE=FLAVOR&gt;]
@@ -5355,7 +5717,8 @@ Update a Management Plans properties.
     </section>
     <section xml:id="openstackclient_subcommand_management_plan_show_with_identity_api_v2">
         <title>openstack management plan show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management plan show [-h]
+                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent] [--prefix PREFIX]</computeroutput></screen>
         <para>
@@ -5374,7 +5737,8 @@ Show a Management Plan.
     </section>
     <section xml:id="openstackclient_subcommand_management_role_list_with_identity_api_v2">
         <title>openstack management role list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management role list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 management role list [-h]
+                                      [-f {csv,html,json,json,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -5417,7 +5781,7 @@ List Roles.
     <section xml:id="openstackclient_subcommand_message-broker_cluster_create_with_identity_api_v2">
         <title>openstack message-broker cluster create</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster create [-h]
-                                               [-f {json,shell,table,value,yaml}]
+                                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                                [-c COLUMN]
                                                [--max-width &lt;integer&gt;]
                                                [--noindent] [--prefix PREFIX]
@@ -5518,7 +5882,7 @@ Delete Cluster
     <section xml:id="openstackclient_subcommand_message-broker_cluster_list_with_identity_api_v2">
         <title>openstack message-broker cluster list</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster list [-h]
-                                             [-f {csv,json,table,value,yaml}]
+                                             [-f {csv,html,json,json,table,value,yaml,yaml}]
                                              [-c COLUMN]
                                              [--max-width &lt;integer&gt;]
                                              [--noindent]
@@ -5619,7 +5983,7 @@ Set Cluster
     <section xml:id="openstackclient_subcommand_message-broker_cluster_show_with_identity_api_v2">
         <title>openstack message-broker cluster show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 message-broker cluster show [-h]
-                                             [-f {json,shell,table,value,yaml}]
+                                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                                              [-c COLUMN]
                                              [--max-width &lt;integer&gt;]
                                              [--noindent] [--prefix PREFIX]
@@ -5679,7 +6043,8 @@ Delete a flavor.
     </section>
     <section xml:id="openstackclient_subcommand_module_list_with_identity_api_v2">
         <title>openstack module list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 module list [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 module list [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX] [--all]</computeroutput></screen>
         <para>
@@ -5706,7 +6071,8 @@ List module versions
     </section>
     <section xml:id="openstackclient_subcommand_network_create_with_identity_api_v2">
         <title>openstack network create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 network create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 network create [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent] [--prefix PREFIX]
                                 [--enable | --disable] [--share | --no-share]
@@ -5818,7 +6184,8 @@ Delete network(s)
     </section>
     <section xml:id="openstackclient_subcommand_network_list_with_identity_api_v2">
         <title>openstack network list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 network list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 network list [-h]
+                              [-f {csv,html,json,json,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]
                               [--external] [--long]</computeroutput></screen>
@@ -5924,7 +6291,8 @@ Set network properties
     </section>
     <section xml:id="openstackclient_subcommand_network_show_with_identity_api_v2">
         <title>openstack network show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 network show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 network show [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX]
                               &lt;network&gt;</computeroutput></screen>
@@ -5955,7 +6323,8 @@ Show network details
     </section>
     <section xml:id="openstackclient_subcommand_object_create_with_identity_api_v2">
         <title>openstack object create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object create [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object create [-h]
+                               [-f {csv,html,json,json,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
@@ -6031,8 +6400,9 @@ Delete object from container
     </section>
     <section xml:id="openstackclient_subcommand_object_list_with_identity_api_v2">
         <title>openstack object list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object list [-h]
+                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--prefix &lt;prefix&gt;] [--delimiter &lt;delimiter&gt;]
                              [--marker &lt;marker&gt;] [--end-marker &lt;end-marker&gt;]
@@ -6210,7 +6580,8 @@ Set object properties
     </section>
     <section xml:id="openstackclient_subcommand_object_show_with_identity_api_v2">
         <title>openstack object show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object show [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX]
                              &lt;container&gt; &lt;object&gt;</computeroutput></screen>
@@ -6276,7 +6647,7 @@ Set account properties
     <section xml:id="openstackclient_subcommand_object_store_account_show_with_identity_api_v2">
         <title>openstack object store account show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 object store account show [-h]
-                                           [-f {json,shell,table,value,yaml}]
+                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
                                            [-c COLUMN] [--max-width &lt;integer&gt;]
                                            [--noindent] [--prefix PREFIX]</computeroutput></screen>
         <para>
@@ -6366,7 +6737,8 @@ Unset object properties
     </section>
     <section xml:id="openstackclient_subcommand_pool_create_with_identity_api_v2">
         <title>openstack pool create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 pool create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 pool create [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX]
                              &lt;pool_name&gt; &lt;pool_uri&gt; &lt;pool_weight&gt; &lt;pool_group&gt;</computeroutput></screen>
@@ -6421,7 +6793,8 @@ Create a pool.
     </section>
     <section xml:id="openstackclient_subcommand_project_create_with_identity_api_v2">
         <title>openstack project create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 project create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 project create [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent] [--prefix PREFIX]
                                 [--description &lt;description&gt;]
@@ -6524,7 +6897,8 @@ Delete project(s)
     </section>
     <section xml:id="openstackclient_subcommand_project_list_with_identity_api_v2">
         <title>openstack project list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 project list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 project list [-h]
+                              [-f {csv,html,json,json,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
         <para>
@@ -6623,7 +6997,8 @@ Set project properties
     </section>
     <section xml:id="openstackclient_subcommand_project_show_with_identity_api_v2">
         <title>openstack project show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 project show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 project show [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX]
                               &lt;project&gt;</computeroutput></screen>
@@ -6654,7 +7029,8 @@ Display project details
     </section>
     <section xml:id="openstackclient_subcommand_ptr_record_list_with_identity_api_v2">
         <title>openstack ptr record list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ptr record list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ptr record list [-h]
+                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -6674,7 +7050,8 @@ List floatingip ptr records
     </section>
     <section xml:id="openstackclient_subcommand_ptr_record_set_with_identity_api_v2">
         <title>openstack ptr record set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ptr record set [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ptr record set [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent] [--prefix PREFIX]
                                 [--description DESCRIPTION | --no-description]
@@ -6745,7 +7122,8 @@ Set floatingip ptr record
     </section>
     <section xml:id="openstackclient_subcommand_ptr_record_show_with_identity_api_v2">
         <title>openstack ptr record show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ptr record show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 ptr record show [-h]
+                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--noindent] [--prefix PREFIX]
                                  floatingip_id</computeroutput></screen>
@@ -6804,7 +7182,8 @@ Unset floatingip ptr record
     </section>
     <section xml:id="openstackclient_subcommand_queue_create_with_identity_api_v2">
         <title>openstack queue create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 queue create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 queue create [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX]
                               &lt;queue_name&gt;</computeroutput></screen>
@@ -6863,7 +7242,8 @@ Delete a queue.
     </section>
     <section xml:id="openstackclient_subcommand_queue_exists_with_identity_api_v2">
         <title>openstack queue exists</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 queue exists [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 queue exists [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX]
                               &lt;queue_name&gt;</computeroutput></screen>
@@ -6894,7 +7274,8 @@ Check queue existence.
     </section>
     <section xml:id="openstackclient_subcommand_queue_get_metadata_with_identity_api_v2">
         <title>openstack queue get metadata</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 queue get metadata [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 queue get metadata [-h]
+                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--noindent] [--prefix PREFIX]
                                     &lt;queue_name&gt;</computeroutput></screen>
@@ -6925,8 +7306,9 @@ Get queue metadata.
     </section>
     <section xml:id="openstackclient_subcommand_queue_list_with_identity_api_v2">
         <title>openstack queue list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 queue list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 queue list [-h]
+                            [-f {csv,html,json,json,table,value,yaml,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--quote {all,minimal,none,nonnumeric}]
                             [--marker &lt;queue_id&gt;] [--limit &lt;limit&gt;]</computeroutput></screen>
         <para>
@@ -6997,7 +7379,8 @@ Set queue metadata.
     </section>
     <section xml:id="openstackclient_subcommand_queue_stats_with_identity_api_v2">
         <title>openstack queue stats</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 queue stats [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 queue stats [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX]
                              &lt;queue_name&gt;</computeroutput></screen>
@@ -7204,7 +7587,8 @@ Set quotas for project or class
     </section>
     <section xml:id="openstackclient_subcommand_quota_show_with_identity_api_v2">
         <title>openstack quota show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 quota show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 quota show [-h]
+                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--prefix PREFIX] [--class | --default]
                             &lt;project/class&gt;</computeroutput></screen>
@@ -7251,7 +7635,8 @@ Show quotas for project or class
     </section>
     <section xml:id="openstackclient_subcommand_recordset_create_with_identity_api_v2">
         <title>openstack recordset create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 recordset create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 recordset create [-h]
+                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
                                   [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--noindent] [--prefix PREFIX] --records
                                   RECORDS [RECORDS ...] --type TYPE
@@ -7360,7 +7745,8 @@ Delete recordset
     </section>
     <section xml:id="openstackclient_subcommand_recordset_list_with_identity_api_v2">
         <title>openstack recordset list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 recordset list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 recordset list [-h]
+                                [-f {csv,html,json,json,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
@@ -7392,7 +7778,8 @@ List recordsets
     </section>
     <section xml:id="openstackclient_subcommand_recordset_set_with_identity_api_v2">
         <title>openstack recordset set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 recordset set [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 recordset set [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX] [--name NAME]
                                [--records RECORDS [RECORDS ...]]
@@ -7480,7 +7867,8 @@ Set recordset properties
     </section>
     <section xml:id="openstackclient_subcommand_recordset_show_with_identity_api_v2">
         <title>openstack recordset show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 recordset show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 recordset show [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent] [--prefix PREFIX]
                                 zone_id id</computeroutput></screen>
@@ -7519,8 +7907,9 @@ Show recordset details
     </section>
     <section xml:id="openstackclient_subcommand_role_add_with_identity_api_v2">
         <title>openstack role add</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 role add [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
-                          [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 role add [-h]
+                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+                          [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                           [--prefix PREFIX] --project &lt;project&gt; --user &lt;user&gt;
                           &lt;role&gt;</computeroutput></screen>
         <para>
@@ -7566,7 +7955,8 @@ Add role to project:user
     </section>
     <section xml:id="openstackclient_subcommand_role_create_with_identity_api_v2">
         <title>openstack role create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 role create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 role create [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX] [--or-show]
                              &lt;name&gt;</computeroutput></screen>
@@ -7633,8 +8023,9 @@ Delete role(s)
     </section>
     <section xml:id="openstackclient_subcommand_role_list_with_identity_api_v2">
         <title>openstack role list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 role list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 role list [-h]
+                           [-f {csv,html,json,json,table,value,yaml,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--project &lt;project&gt;] [--user &lt;user&gt;]</computeroutput></screen>
         <para>
@@ -7713,8 +8104,9 @@ Remove role from project : user
     </section>
     <section xml:id="openstackclient_subcommand_role_show_with_identity_api_v2">
         <title>openstack role show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 role show [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 role show [-h]
+                           [-f {html,json,json,shell,table,value,yaml,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                            [--prefix PREFIX]
                            &lt;role&gt;</computeroutput></screen>
         <para>
@@ -7744,7 +8136,8 @@ Display role details
     </section>
     <section xml:id="openstackclient_subcommand_security_group_create_with_identity_api_v2">
         <title>openstack security group create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 security group create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 security group create [-h]
+                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
                                        [--noindent] [--prefix PREFIX]
                                        [--description &lt;description&gt;]
@@ -7812,7 +8205,8 @@ Delete a security group
     </section>
     <section xml:id="openstackclient_subcommand_security_group_list_with_identity_api_v2">
         <title>openstack security group list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 security group list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 security group list [-h]
+                                     [-f {csv,html,json,json,table,value,yaml,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]
@@ -7842,7 +8236,7 @@ List security groups
     <section xml:id="openstackclient_subcommand_security_group_rule_create_with_identity_api_v2">
         <title>openstack security group rule create</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 security group rule create [-h]
-                                            [-f {json,shell,table,value,yaml}]
+                                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                                             [-c COLUMN]
                                             [--max-width &lt;integer&gt;]
                                             [--noindent] [--prefix PREFIX]
@@ -7931,7 +8325,7 @@ Delete a security group rule
     <section xml:id="openstackclient_subcommand_security_group_rule_list_with_identity_api_v2">
         <title>openstack security group rule list</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 security group rule list [-h]
-                                          [-f {csv,json,table,value,yaml}]
+                                          [-f {csv,html,json,json,table,value,yaml,yaml}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
                                           [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
@@ -7963,7 +8357,8 @@ List security group rules
     </section>
     <section xml:id="openstackclient_subcommand_security_group_set_with_identity_api_v2">
         <title>openstack security group set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 security group set [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 security group set [-h]
+                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--noindent] [--prefix PREFIX]
                                     [--name &lt;new-name&gt;]
@@ -8012,7 +8407,8 @@ Set security group properties
     </section>
     <section xml:id="openstackclient_subcommand_security_group_show_with_identity_api_v2">
         <title>openstack security group show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 security group show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 security group show [-h]
+                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--noindent] [--prefix PREFIX]
                                      &lt;group&gt;</computeroutput></screen>
@@ -8123,7 +8519,8 @@ Add volume to server
     </section>
     <section xml:id="openstackclient_subcommand_server_create_with_identity_api_v2">
         <title>openstack server create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server create [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX]
                                (--image &lt;image&gt; | --volume &lt;volume&gt;) --flavor
@@ -8344,7 +8741,8 @@ Delete server(s)
     </section>
     <section xml:id="openstackclient_subcommand_server_image_create_with_identity_api_v2">
         <title>openstack server image create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server image create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server image create [-h]
+                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--noindent] [--prefix PREFIX]
                                      [--name &lt;image-name&gt;] [--wait]
@@ -8392,8 +8790,9 @@ Create a new disk image from a running server
     </section>
     <section xml:id="openstackclient_subcommand_server_list_with_identity_api_v2">
         <title>openstack server list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server list [-h]
+                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--reservation-id &lt;reservation-id&gt;]
                              [--ip &lt;ip-address-regex&gt;]
@@ -8754,7 +9153,8 @@ Perform a hard or soft server reboot
     </section>
     <section xml:id="openstackclient_subcommand_server_rebuild_with_identity_api_v2">
         <title>openstack server rebuild</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server rebuild [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server rebuild [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent] [--prefix PREFIX] --image &lt;image&gt;
                                 [--password &lt;password&gt;] [--wait]
@@ -8882,7 +9282,8 @@ Remove volume from server
     </section>
     <section xml:id="openstackclient_subcommand_server_rescue_with_identity_api_v2">
         <title>openstack server rescue</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server rescue [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server rescue [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX]
                                &lt;server&gt;</computeroutput></screen>
@@ -9086,7 +9487,8 @@ Shelve server(s)
     </section>
     <section xml:id="openstackclient_subcommand_server_show_with_identity_api_v2">
         <title>openstack server show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 server show [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX] [--diagnostics]
                              &lt;server&gt;</computeroutput></screen>
@@ -9462,7 +9864,8 @@ Unshelve server(s)
     </section>
     <section xml:id="openstackclient_subcommand_service_create_with_identity_api_v2">
         <title>openstack service create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 service create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 service create [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent] [--prefix PREFIX] [--name &lt;name&gt;]
                                 [--description &lt;description&gt;]
@@ -9539,7 +9942,8 @@ Delete service
     </section>
     <section xml:id="openstackclient_subcommand_service_list_with_identity_api_v2">
         <title>openstack service list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 service list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 service list [-h]
+                              [-f {csv,html,json,json,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
         <para>
@@ -9566,7 +9970,8 @@ List services
     </section>
     <section xml:id="openstackclient_subcommand_service_show_with_identity_api_v2">
         <title>openstack service show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 service show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 service show [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX] [--catalog]
                               &lt;service&gt;</computeroutput></screen>
@@ -9605,7 +10010,8 @@ Display service details
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_create_with_identity_api_v2">
         <title>openstack snapshot create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot create [-h]
+                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--noindent] [--prefix PREFIX] --name &lt;name&gt;
                                  [--description &lt;description&gt;] [--force]
@@ -9690,7 +10096,8 @@ Delete snapshot(s)
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_list_with_identity_api_v2">
         <title>openstack snapshot list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot list [-h]
+                               [-f {csv,html,json,json,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
@@ -9783,7 +10190,8 @@ Set snapshot properties
     </section>
     <section xml:id="openstackclient_subcommand_snapshot_show_with_identity_api_v2">
         <title>openstack snapshot show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 snapshot show [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX]
                                &lt;snapshot&gt;</computeroutput></screen>
@@ -9851,7 +10259,8 @@ Unset snapshot properties
     </section>
     <section xml:id="openstackclient_subcommand_tld_create_with_identity_api_v2">
         <title>openstack tld create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 tld create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 tld create [-h]
+                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--prefix PREFIX] --name NAME
                             [--description DESCRIPTION]</computeroutput></screen>
@@ -9915,8 +10324,8 @@ Delete tld
     </section>
     <section xml:id="openstackclient_subcommand_tld_list_with_identity_api_v2">
         <title>openstack tld list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 tld list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                          [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 tld list [-h] [-f {csv,html,json,json,table,value,yaml,yaml}]
+                          [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                           [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List tlds
@@ -9934,8 +10343,9 @@ List tlds
     </section>
     <section xml:id="openstackclient_subcommand_tld_set_with_identity_api_v2">
         <title>openstack tld set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 tld set [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
-                         [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 tld set [-h]
+                         [-f {html,json,json,shell,table,value,yaml,yaml}]
+                         [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                          [--prefix PREFIX] [--name NAME]
                          [--description DESCRIPTION | --no-description]
                          id</computeroutput></screen>
@@ -9989,8 +10399,9 @@ Set tld properties
     </section>
     <section xml:id="openstackclient_subcommand_tld_show_with_identity_api_v2">
         <title>openstack tld show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 tld show [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
-                          [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 tld show [-h]
+                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+                          [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                           [--prefix PREFIX]
                           id</computeroutput></screen>
         <para>
@@ -10020,7 +10431,8 @@ Show tld details
     </section>
     <section xml:id="openstackclient_subcommand_token_issue_with_identity_api_v2">
         <title>openstack token issue</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 token issue [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 token issue [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX]</computeroutput></screen>
         <para>
@@ -10067,8 +10479,9 @@ Revoke existing token
     </section>
     <section xml:id="openstackclient_subcommand_usage_list_with_identity_api_v2">
         <title>openstack usage list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 usage list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 usage list [-h]
+                            [-f {csv,html,json,json,table,value,yaml,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--quote {all,minimal,none,nonnumeric}]
                             [--start &lt;start&gt;] [--end &lt;end&gt;]</computeroutput></screen>
         <para>
@@ -10105,7 +10518,8 @@ List resource usage per project
     </section>
     <section xml:id="openstackclient_subcommand_usage_show_with_identity_api_v2">
         <title>openstack usage show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 usage show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 usage show [-h]
+                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--prefix PREFIX] [--project &lt;project&gt;]
                             [--start &lt;start&gt;] [--end &lt;end&gt;]</computeroutput></screen>
@@ -10151,7 +10565,8 @@ Show resource usage for a single project
     </section>
     <section xml:id="openstackclient_subcommand_user_create_with_identity_api_v2">
         <title>openstack user create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 user create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 user create [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX] [--project &lt;project&gt;]
                              [--password &lt;password&gt;] [--password-prompt]
@@ -10269,8 +10684,9 @@ Delete user(s)
     </section>
     <section xml:id="openstackclient_subcommand_user_list_with_identity_api_v2">
         <title>openstack user list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 user list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 user list [-h]
+                           [-f {csv,html,json,json,table,value,yaml,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--project &lt;project&gt;] [--long]</computeroutput></screen>
         <para>
@@ -10305,7 +10721,8 @@ List users
     </section>
     <section xml:id="openstackclient_subcommand_user_role_list_with_identity_api_v2">
         <title>openstack user role list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 user role list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 user role list [-h]
+                                [-f {csv,html,json,json,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
@@ -10433,8 +10850,9 @@ Set user properties
     </section>
     <section xml:id="openstackclient_subcommand_user_show_with_identity_api_v2">
         <title>openstack user show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 user show [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 user show [-h]
+                           [-f {html,json,json,shell,table,value,yaml,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                            [--prefix PREFIX]
                            &lt;user&gt;</computeroutput></screen>
         <para>
@@ -10464,7 +10882,8 @@ Display user details
     </section>
     <section xml:id="openstackclient_subcommand_volume_create_with_identity_api_v2">
         <title>openstack volume create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume create [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX] --size &lt;size&gt;
                                [--snapshot &lt;snapshot&gt;]
@@ -10620,8 +11039,9 @@ Delete volume(s)
     </section>
     <section xml:id="openstackclient_subcommand_volume_list_with_identity_api_v2">
         <title>openstack volume list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume list [-h]
+                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--name &lt;name&gt;] [--status &lt;status&gt;]
                              [--all-projects] [--long]</computeroutput></screen>
@@ -10709,7 +11129,8 @@ Associate a QoS specification to a volume type
     </section>
     <section xml:id="openstackclient_subcommand_volume_qos_create_with_identity_api_v2">
         <title>openstack volume qos create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos create [-h]
+                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
                                    [-c COLUMN] [--max-width &lt;integer&gt;]
                                    [--noindent] [--prefix PREFIX]
                                    [--consumer &lt;consumer&gt;]
@@ -10834,7 +11255,8 @@ Disassociate a QoS specification from a volume type
     </section>
     <section xml:id="openstackclient_subcommand_volume_qos_list_with_identity_api_v2">
         <title>openstack volume qos list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos list [-h]
+                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -10891,7 +11313,8 @@ Set QoS specification properties
     </section>
     <section xml:id="openstackclient_subcommand_volume_qos_show_with_identity_api_v2">
         <title>openstack volume qos show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume qos show [-h]
+                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--noindent] [--prefix PREFIX]
                                  &lt;qos-spec&gt;</computeroutput></screen>
@@ -11022,7 +11445,8 @@ Set volume properties
     </section>
     <section xml:id="openstackclient_subcommand_volume_show_with_identity_api_v2">
         <title>openstack volume show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume show [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX]
                              &lt;volume&gt;</computeroutput></screen>
@@ -11053,7 +11477,8 @@ Show volume details
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_create_with_identity_api_v2">
         <title>openstack volume type create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume type create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume type create [-h]
+                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--noindent] [--prefix PREFIX]
                                     [--property &lt;key=value&gt;]
@@ -11122,7 +11547,8 @@ Delete volume type
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_list_with_identity_api_v2">
         <title>openstack volume type list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume type list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume type list [-h]
+                                  [-f {csv,html,json,json,table,value,yaml,yaml}]
                                   [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--noindent]
                                   [--quote {all,minimal,none,nonnumeric}]
@@ -11188,7 +11614,8 @@ Set volume type properties
     </section>
     <section xml:id="openstackclient_subcommand_volume_type_show_with_identity_api_v2">
         <title>openstack volume type show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume type show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 volume type show [-h]
+                                  [-f {html,json,json,shell,table,value,yaml,yaml}]
                                   [-c COLUMN] [--max-width &lt;integer&gt;]
                                   [--noindent] [--prefix PREFIX]
                                   &lt;volume-type&gt;</computeroutput></screen>
@@ -11349,7 +11776,8 @@ AXFR a zone
     </section>
     <section xml:id="openstackclient_subcommand_zone_blacklist_create_with_identity_api_v2">
         <title>openstack zone blacklist create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist create [-h]
+                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
                                        [--noindent] [--prefix PREFIX]
                                        --pattern PATTERN
@@ -11414,7 +11842,8 @@ Delete blacklist
     </section>
     <section xml:id="openstackclient_subcommand_zone_blacklist_list_with_identity_api_v2">
         <title>openstack zone blacklist list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist list [-h]
+                                     [-f {csv,html,json,json,table,value,yaml,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--noindent]
                                      [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -11434,7 +11863,8 @@ List blacklists
     </section>
     <section xml:id="openstackclient_subcommand_zone_blacklist_set_with_identity_api_v2">
         <title>openstack zone blacklist set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist set [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist set [-h]
+                                    [-f {html,json,json,shell,table,value,yaml,yaml}]
                                     [-c COLUMN] [--max-width &lt;integer&gt;]
                                     [--noindent] [--prefix PREFIX] --pattern
                                     PATTERN
@@ -11490,7 +11920,8 @@ Set blacklist properties
     </section>
     <section xml:id="openstackclient_subcommand_zone_blacklist_show_with_identity_api_v2">
         <title>openstack zone blacklist show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone blacklist show [-h]
+                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--noindent] [--prefix PREFIX]
                                      id</computeroutput></screen>
@@ -11521,7 +11952,8 @@ Show blacklist details
     </section>
     <section xml:id="openstackclient_subcommand_zone_create_with_identity_api_v2">
         <title>openstack zone create</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone create [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX] [--email EMAIL] [--type TYPE]
                              [--ttl TTL] [--description DESCRIPTION]
@@ -11622,8 +12054,9 @@ Delete zone
     </section>
     <section xml:id="openstackclient_subcommand_zone_list_with_identity_api_v2">
         <title>openstack zone list</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone list [-h]
+                           [-f {csv,html,json,json,table,value,yaml,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]
                            [--type TYPE]</computeroutput></screen>
         <para>
@@ -11650,8 +12083,9 @@ List zones
     </section>
     <section xml:id="openstackclient_subcommand_zone_set_with_identity_api_v2">
         <title>openstack zone set</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone set [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
-                          [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone set [-h]
+                          [-f {html,json,json,shell,table,value,yaml,yaml}]
+                          [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                           [--prefix PREFIX] [--name NAME] [--email EMAIL]
                           [--ttl TTL]
                           [--description DESCRIPTION | --no-description]
@@ -11731,8 +12165,9 @@ Set zone properties
     </section>
     <section xml:id="openstackclient_subcommand_zone_show_with_identity_api_v2">
         <title>openstack zone show</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone show [-h] [-f {json,shell,table,value,yaml}] [-c COLUMN]
-                           [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone show [-h]
+                           [-f {html,json,json,shell,table,value,yaml,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                            [--prefix PREFIX]
                            id</computeroutput></screen>
         <para>
@@ -11797,7 +12232,7 @@ Accept a Zone Transfer Request
     <section xml:id="openstackclient_subcommand_zone_transfer_accept_show_with_identity_api_v2">
         <title>openstack zone transfer accept show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone transfer accept show [-h]
-                                           [-f {json,shell,table,value,yaml}]
+                                           [-f {html,json,json,shell,table,value,yaml,yaml}]
                                            [-c COLUMN] [--max-width &lt;integer&gt;]
                                            [--noindent] [--prefix PREFIX]
                                            id</computeroutput></screen>
@@ -11829,7 +12264,7 @@ Show Zone Transfer Accept
     <section xml:id="openstackclient_subcommand_zone_transfer_request_create_with_identity_api_v2">
         <title>openstack zone transfer request create</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone transfer request create [-h]
-                                              [-f {json,shell,table,value,yaml}]
+                                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                                               [-c COLUMN]
                                               [--max-width &lt;integer&gt;]
                                               [--noindent] [--prefix PREFIX]
@@ -11908,7 +12343,7 @@ Create new zone transfer request
     <section xml:id="openstackclient_subcommand_zone_transfer_request_list_with_identity_api_v2">
         <title>openstack zone transfer request list</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone transfer request list [-h]
-                                            [-f {csv,json,table,value,yaml}]
+                                            [-f {csv,html,json,json,table,value,yaml,yaml}]
                                             [-c COLUMN]
                                             [--max-width &lt;integer&gt;]
                                             [--noindent]
@@ -11975,7 +12410,7 @@ Set Transfer
     <section xml:id="openstackclient_subcommand_zone_transfer_request_show_with_identity_api_v2">
         <title>openstack zone transfer request show</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 2 zone transfer request show [-h]
-                                            [-f {json,shell,table,value,yaml}]
+                                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                                             [-c COLUMN]
                                             [--max-width &lt;integer&gt;]
                                             [--noindent] [--prefix PREFIX]
@@ -12021,7 +12456,8 @@ This section documents only the difference in subcommands available for the open
 </para>
     <section xml:id="openstackclient_subcommand_access_token_create_with_identity_api_v3">
         <title>openstack access token create (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 access token create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 access token create [-h]
+                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
                                      [--noindent] [--prefix PREFIX]
                                      --consumer-key &lt;consumer-key&gt;
@@ -12085,7 +12521,8 @@ Create an access token
     </section>
     <section xml:id="openstackclient_subcommand_consumer_create_with_identity_api_v3">
         <title>openstack consumer create (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 consumer create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 consumer create [-h]
+                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--noindent] [--prefix PREFIX]
                                  [--description &lt;description&gt;]</computeroutput></screen>
@@ -12141,7 +12578,8 @@ Delete consumer
     </section>
     <section xml:id="openstackclient_subcommand_consumer_list_with_identity_api_v3">
         <title>openstack consumer list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 consumer list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 consumer list [-h]
+                               [-f {csv,html,json,json,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -12197,7 +12635,8 @@ Set consumer properties
     </section>
     <section xml:id="openstackclient_subcommand_consumer_show_with_identity_api_v3">
         <title>openstack consumer show (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 consumer show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 consumer show [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX]
                                &lt;consumer&gt;</computeroutput></screen>
@@ -12228,7 +12667,8 @@ Display consumer details
     </section>
     <section xml:id="openstackclient_subcommand_credential_create_with_identity_api_v3">
         <title>openstack credential create (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 credential create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 credential create [-h]
+                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
                                    [-c COLUMN] [--max-width &lt;integer&gt;]
                                    [--noindent] [--prefix PREFIX]
                                    [--type &lt;type&gt;] [--project &lt;project&gt;]
@@ -12313,7 +12753,8 @@ Delete credential command
     </section>
     <section xml:id="openstackclient_subcommand_credential_list_with_identity_api_v3">
         <title>openstack credential list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 credential list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 credential list [-h]
+                                 [-f {csv,html,json,json,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--noindent]
                                  [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -12396,7 +12837,8 @@ Set credential command
     </section>
     <section xml:id="openstackclient_subcommand_credential_show_with_identity_api_v3">
         <title>openstack credential show (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 credential show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 credential show [-h]
+                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
                                  [--noindent] [--prefix PREFIX]
                                  &lt;credential-id&gt;</computeroutput></screen>
@@ -12427,7 +12869,8 @@ Show credential command
     </section>
     <section xml:id="openstackclient_subcommand_domain_create_with_identity_api_v3">
         <title>openstack domain create (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 domain create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 domain create [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX]
                                [--description &lt;description&gt;]
@@ -12520,8 +12963,9 @@ Delete domain
     </section>
     <section xml:id="openstackclient_subcommand_domain_list_with_identity_api_v3">
         <title>openstack domain list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 domain list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 domain list [-h]
+                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List domains
@@ -12601,7 +13045,8 @@ Set domain properties
     </section>
     <section xml:id="openstackclient_subcommand_domain_show_with_identity_api_v3">
         <title>openstack domain show (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 domain show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 domain show [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX]
                              &lt;domain&gt;</computeroutput></screen>
@@ -12712,7 +13157,8 @@ Set endpoint properties
     </section>
     <section xml:id="openstackclient_subcommand_federation_domain_list_with_identity_api_v3">
         <title>openstack federation domain list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 federation domain list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 federation domain list [-h]
+                                        [-f {csv,html,json,json,table,value,yaml,yaml}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -12732,7 +13178,8 @@ List accessible domains
     </section>
     <section xml:id="openstackclient_subcommand_federation_project_list_with_identity_api_v3">
         <title>openstack federation project list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 federation project list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 federation project list [-h]
+                                         [-f {csv,html,json,json,table,value,yaml,yaml}]
                                          [-c COLUMN] [--max-width &lt;integer&gt;]
                                          [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -12753,7 +13200,7 @@ List accessible projects
     <section xml:id="openstackclient_subcommand_federation_protocol_create_with_identity_api_v3">
         <title>openstack federation protocol create (Identity API v3)</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 federation protocol create [-h]
-                                            [-f {json,shell,table,value,yaml}]
+                                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                                             [-c COLUMN]
                                             [--max-width &lt;integer&gt;]
                                             [--noindent] [--prefix PREFIX]
@@ -12846,7 +13293,7 @@ Delete federation protocol
     <section xml:id="openstackclient_subcommand_federation_protocol_list_with_identity_api_v3">
         <title>openstack federation protocol list (Identity API v3)</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 federation protocol list [-h]
-                                          [-f {csv,json,table,value,yaml}]
+                                          [-f {csv,html,json,json,table,value,yaml,yaml}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
                                           [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
@@ -12925,7 +13372,7 @@ Set federation protocol properties
     <section xml:id="openstackclient_subcommand_federation_protocol_show_with_identity_api_v3">
         <title>openstack federation protocol show (Identity API v3)</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 federation protocol show [-h]
-                                          [-f {json,shell,table,value,yaml}]
+                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
                                           [--noindent] [--prefix PREFIX]
                                           --identity-provider
@@ -13079,7 +13526,8 @@ Check user membership in group
     </section>
     <section xml:id="openstackclient_subcommand_group_create_with_identity_api_v3">
         <title>openstack group create (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 group create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 group create [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX] [--domain &lt;domain&gt;]
                               [--description &lt;description&gt;] [--or-show]
@@ -13171,8 +13619,9 @@ Delete group(s)
     </section>
     <section xml:id="openstackclient_subcommand_group_list_with_identity_api_v3">
         <title>openstack group list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 group list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 group list [-h]
+                            [-f {csv,html,json,json,table,value,yaml,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--quote {all,minimal,none,nonnumeric}]
                             [--domain &lt;domain&gt;] [--user &lt;user&gt;]
                             [--user-domain &lt;user-domain&gt;] [--long]</computeroutput></screen>
@@ -13335,7 +13784,8 @@ Set group properties
     </section>
     <section xml:id="openstackclient_subcommand_group_show_with_identity_api_v3">
         <title>openstack group show (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 group show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 group show [-h]
+                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--prefix PREFIX] [--domain &lt;domain&gt;]
                             &lt;group&gt;</computeroutput></screen>
@@ -13375,7 +13825,7 @@ Display group details
     <section xml:id="openstackclient_subcommand_identity_provider_create_with_identity_api_v3">
         <title>openstack identity provider create (Identity API v3)</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 identity provider create [-h]
-                                          [-f {json,shell,table,value,yaml}]
+                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
                                           [--noindent] [--prefix PREFIX]
                                           [--remote-id &lt;remote-id&gt; | --remote-id-file &lt;file-name&gt;]
@@ -13479,7 +13929,8 @@ Delete identity provider
     </section>
     <section xml:id="openstackclient_subcommand_identity_provider_list_with_identity_api_v3">
         <title>openstack identity provider list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 identity provider list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 identity provider list [-h]
+                                        [-f {csv,html,json,json,table,value,yaml,yaml}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
                                         [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -13573,7 +14024,7 @@ Set identity provider properties
     <section xml:id="openstackclient_subcommand_identity_provider_show_with_identity_api_v3">
         <title>openstack identity provider show (Identity API v3)</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 identity provider show [-h]
-                                        [-f {json,shell,table,value,yaml}]
+                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
                                         [--noindent] [--prefix PREFIX]
                                         &lt;identity-provider&gt;</computeroutput></screen>
@@ -13604,7 +14055,8 @@ Display identity provider details
     </section>
     <section xml:id="openstackclient_subcommand_mapping_create_with_identity_api_v3">
         <title>openstack mapping create (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 mapping create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 mapping create [-h]
+                                [-f {html,json,json,shell,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
                                 [--noindent] [--prefix PREFIX] --rules
                                 &lt;filename&gt;
@@ -13673,7 +14125,8 @@ Delete mapping
     </section>
     <section xml:id="openstackclient_subcommand_mapping_list_with_identity_api_v3">
         <title>openstack mapping list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 mapping list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 mapping list [-h]
+                              [-f {csv,html,json,json,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
@@ -13728,7 +14181,8 @@ Set mapping properties
     </section>
     <section xml:id="openstackclient_subcommand_mapping_show_with_identity_api_v3">
         <title>openstack mapping show (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 mapping show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 mapping show [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX]
                               &lt;mapping&gt;</computeroutput></screen>
@@ -13759,7 +14213,8 @@ Display mapping details
     </section>
     <section xml:id="openstackclient_subcommand_policy_create_with_identity_api_v3">
         <title>openstack policy create (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 policy create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 policy create [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX] [--type &lt;type&gt;]
                                &lt;filename&gt;</computeroutput></screen>
@@ -13827,8 +14282,9 @@ Delete policy
     </section>
     <section xml:id="openstackclient_subcommand_policy_list_with_identity_api_v3">
         <title>openstack policy list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 policy list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 policy list [-h]
+                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}] [--long]</computeroutput></screen>
         <para>
 List policies
@@ -13898,7 +14354,8 @@ Set policy properties
     </section>
     <section xml:id="openstackclient_subcommand_policy_show_with_identity_api_v3">
         <title>openstack policy show (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 policy show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 policy show [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX]
                              &lt;policy&gt;</computeroutput></screen>
@@ -13929,7 +14386,8 @@ Display policy details
     </section>
     <section xml:id="openstackclient_subcommand_region_create_with_identity_api_v3">
         <title>openstack region create (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 region create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 region create [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
                                [--noindent] [--prefix PREFIX]
                                [--parent-region &lt;region-id&gt;]
@@ -14006,8 +14464,9 @@ Delete region
     </section>
     <section xml:id="openstackclient_subcommand_region_list_with_identity_api_v3">
         <title>openstack region list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 region list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                             [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 region list [-h]
+                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--parent-region &lt;region-id&gt;]</computeroutput></screen>
         <para>
@@ -14080,7 +14539,8 @@ Set region properties
     </section>
     <section xml:id="openstackclient_subcommand_region_show_with_identity_api_v3">
         <title>openstack region show (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 region show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 region show [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
                              [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX]
                              &lt;region-id&gt;</computeroutput></screen>
@@ -14112,7 +14572,7 @@ Display region details
     <section xml:id="openstackclient_subcommand_request_token_authorize_with_identity_api_v3">
         <title>openstack request token authorize (Identity API v3)</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 request token authorize [-h]
-                                         [-f {json,shell,table,value,yaml}]
+                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
                                          [-c COLUMN] [--max-width &lt;integer&gt;]
                                          [--noindent] [--prefix PREFIX]
                                          --request-key &lt;request-key&gt; --role
@@ -14150,7 +14610,8 @@ Authorize a request token
     </section>
     <section xml:id="openstackclient_subcommand_request_token_create_with_identity_api_v3">
         <title>openstack request token create (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 request token create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 request token create [-h]
+                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent] [--prefix PREFIX]
                                       --consumer-key &lt;consumer-key&gt;
@@ -14205,7 +14666,8 @@ Create a request token
     </section>
     <section xml:id="openstackclient_subcommand_role_assignment_list_with_identity_api_v3">
         <title>openstack role assignment list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 role assignment list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 role assignment list [-h]
+                                      [-f {csv,html,json,json,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
                                       [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
@@ -14355,7 +14817,7 @@ Set role properties
     <section xml:id="openstackclient_subcommand_service_provider_create_with_identity_api_v3">
         <title>openstack service provider create (Identity API v3)</title>
         <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 service provider create [-h]
-                                         [-f {json,shell,table,value,yaml}]
+                                         [-f {html,json,json,shell,table,value,yaml,yaml}]
                                          [-c COLUMN] [--max-width &lt;integer&gt;]
                                          [--noindent] [--prefix PREFIX]
                                          --auth-url &lt;auth-url&gt;
@@ -14460,7 +14922,8 @@ Delete service provider
     </section>
     <section xml:id="openstackclient_subcommand_service_provider_list_with_identity_api_v3">
         <title>openstack service provider list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 service provider list [-h] [-f {csv,json,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 service provider list [-h]
+                                       [-f {csv,html,json,json,table,value,yaml,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
                                        [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
@@ -14554,7 +15017,8 @@ Set service provider properties
     </section>
     <section xml:id="openstackclient_subcommand_service_provider_show_with_identity_api_v3">
         <title>openstack service provider show (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 service provider show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 service provider show [-h]
+                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
                                        [--noindent] [--prefix PREFIX]
                                        &lt;service-provider&gt;</computeroutput></screen>
@@ -14657,7 +15121,8 @@ Set service properties
     </section>
     <section xml:id="openstackclient_subcommand_trust_create_with_identity_api_v3">
         <title>openstack trust create (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 trust create [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 trust create [-h]
+                              [-f {html,json,json,shell,table,value,yaml,yaml}]
                               [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                               [--prefix PREFIX] --project &lt;project&gt; --role
                               &lt;role&gt; [--impersonate]
@@ -14790,8 +15255,9 @@ Delete trust(s)
     </section>
     <section xml:id="openstackclient_subcommand_trust_list_with_identity_api_v3">
         <title>openstack trust list (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 trust list [-h] [-f {csv,json,table,value,yaml}] [-c COLUMN]
-                            [--max-width &lt;integer&gt;] [--noindent]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 trust list [-h]
+                            [-f {csv,html,json,json,table,value,yaml,yaml}]
+                            [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List trusts
@@ -14809,7 +15275,8 @@ List trusts
     </section>
     <section xml:id="openstackclient_subcommand_trust_show_with_identity_api_v3">
         <title>openstack trust show (Identity API v3)</title>
-        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 trust show [-h] [-f {json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: openstack --os-auth-type token --os-identity-api-version 3 trust show [-h]
+                            [-f {html,json,json,shell,table,value,yaml,yaml}]
                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                             [--prefix PREFIX]
                             &lt;trust&gt;</computeroutput></screen>
