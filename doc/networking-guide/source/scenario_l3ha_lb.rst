@@ -22,6 +22,7 @@ networks continue to operate normally. Consider deploying
 of the Liberty release, you cannot combine the DVR and L3HA mechanisms.
 
 .. note::
+
    The failover process only retains the state of network connections for
    instances with a floating IP address.
 
@@ -30,6 +31,7 @@ project (tenant) network. However, this configuration also supports VLAN
 external and project networks.
 
 .. note::
+
    In the releases prior to Liberty, L3HA with Linux bridge supports
    VLAN and VXLAN project networks. However, due to a bug, VXLAN project
    networks must use multicast instead of the layer-2 population mechanism.
@@ -83,31 +85,33 @@ require an IP address range because it only handles layer-2 connectivity.
    :alt: Service layout
 
 .. note::
+
    For VLAN external and project networks, the network infrastructure
    must support VLAN tagging. For best performance with VXLAN project
    networks, the network infrastructure should support jumbo frames.
 
 .. warning::
+
    Proper operation of VXLAN requires kernel 3.13 or newer.
 
 OpenStack services - controller node
 ------------------------------------
 
 #. Operational SQL server with ``neutron`` database and appropriate
-   configuration in the :file:`neutron.conf` file.
+   configuration in the ``neutron.conf`` file.
 #. Operational message queue service with appropriate configuration
-   in the :file:`neutron.conf` file.
+   in the ``neutron.conf`` file.
 #. Operational OpenStack Identity service with appropriate configuration
-   in the :file:`neutron.conf` file.
+   in the ``neutron.conf`` file.
 #. Operational OpenStack Compute controller/management service with
-   appropriate configuration to use neutron in the :file:`nova.conf` file.
+   appropriate configuration to use neutron in the ``nova.conf`` file.
 #. Neutron server service, ML2 plug-in, and any dependencies.
 
 OpenStack services - network node
 ---------------------------------
 
 #. Operational OpenStack Identity service with appropriate configuration
-   in the :file:`neutron.conf` file.
+   in the ``neutron.conf`` file.
 #. ML2 plug-in, Linux bridge agent, L3 agent, DHCP agent, metadata agent,
    and any dependencies.
 
@@ -115,9 +119,9 @@ OpenStack services - compute nodes
 ----------------------------------
 
 #. Operational OpenStack Identity service with appropriate configuration
-   in the :file:`neutron.conf` file.
+   in the ``neutron.conf`` file.
 #. Operational OpenStack Compute hypervisor service with appropriate
-   configuration to use neutron in the :file:`nova.conf` file.
+   configuration to use neutron in the ``nova.conf`` file.
 #. ML2 plug-in, Linux bridge agent, and any dependencies.
 
 Architecture
@@ -146,6 +150,7 @@ The network nodes contain the following components:
    :alt: Network node components - connectivity
 
 .. note::
+
    For simplicity, the hidden project network that connects all HA routers for
    a particular project uses the VXLAN network type.
 
@@ -174,7 +179,7 @@ During normal operation, the master router periodically transmits *heartbeat*
 packets over a hidden project network that connects all HA routers for a
 particular project. By default, this network uses the type indicated by the
 first value in the ``tenant_network_types`` option in the
-:file:`/etc/neutron/plugins/ml2_conf.ini` file.
+``/etc/neutron/plugins/ml2_conf.ini`` file.
 
 If the backup router stops receiving these packets, it assumes failure
 of the master router and promotes itself to the master router by configuring
@@ -183,6 +188,7 @@ with more than one backup router, the router with the next highest priority
 becomes the master router.
 
 .. note::
+
    The L3HA mechanism uses the same priority for all routers. Therefore, VRRP
    promotes the backup router with the highest IP address to the master
    router.
@@ -196,7 +202,7 @@ scenario in your environment.
 Controller node
 ---------------
 
-#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
 
@@ -213,7 +219,7 @@ Controller node
       dhcp_agents_per_network = 2
 
 #. Configure the ML2 plug-in. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
+   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
 
    .. code-block:: ini
 
@@ -242,10 +248,12 @@ Controller node
    for your environment.
 
    .. note::
+
       The first value in the ``tenant_network_types`` option becomes the
       default project network type when a regular user creates a network.
 
    .. note::
+
       The ``external`` value in the ``network_vlan_ranges`` option lacks VLAN
       ID ranges to support use of arbitrary VLAN IDs by administrative users.
 
@@ -257,7 +265,7 @@ Network nodes
 -------------
 
 #. Configure the kernel to enable packet forwarding and disable reverse path
-   filtering. Edit the :file:`/etc/sysctl.conf` file:
+   filtering. Edit the ``/etc/sysctl.conf`` file:
 
    .. code-block:: ini
 
@@ -271,7 +279,7 @@ Network nodes
 
       $ sysctl -p
 
-#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
 
@@ -279,7 +287,7 @@ Network nodes
       verbose = True
 
 #. Configure the Linux bridge agent. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
+   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
 
    .. code-block:: ini
 
@@ -301,7 +309,7 @@ Network nodes
    networks, respectively. Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP
    address of the interface that handles project tunnel networks.
 
-#. Configure the L3 agent. Edit the :file:`/etc/neutron/l3_agent.ini` file:
+#. Configure the L3 agent. Edit the ``/etc/neutron/l3_agent.ini`` file:
 
    .. code-block:: ini
 
@@ -314,10 +322,11 @@ Network nodes
       agent_mode = legacy
 
    .. note::
+
       The ``external_network_bridge`` option intentionally contains
       no value.
 
-#. Configure the DHCP agent. Edit the :file:`/etc/neutron/dhcp_agent.ini`
+#. Configure the DHCP agent. Edit the ``/etc/neutron/dhcp_agent.ini``
    file:
 
    .. code-block:: ini
@@ -331,21 +340,21 @@ Network nodes
 
 #. (Optional) Reduce MTU for VXLAN project networks.
 
-   #. Edit the :file:`/etc/neutron/dhcp_agent.ini` file:
+   #. Edit the ``/etc/neutron/dhcp_agent.ini`` file:
 
       .. code-block:: ini
 
          [DEFAULT]
          dnsmasq_config_file = /etc/neutron/dnsmasq-neutron.conf
 
-   #. Edit the :file:`/etc/neutron/dnsmasq-neutron.conf` file:
+   #. Edit the ``/etc/neutron/dnsmasq-neutron.conf`` file:
 
       .. code-block:: ini
 
          dhcp-option-force=26,1450
 
 #. Configure the metadata agent. Edit the
-   :file:`/etc/neutron/metadata_agent.ini` file:
+   ``/etc/neutron/metadata_agent.ini`` file:
 
    .. code-block:: ini
 
@@ -367,7 +376,7 @@ Compute nodes
 -------------
 
 #. Configure the kernel to enable *iptables* on bridges and disable reverse
-   path filtering. Edit the :file:`/etc/sysctl.conf` file:
+   path filtering. Edit the ``/etc/sysctl.conf`` file:
 
    .. code-block:: ini
 
@@ -382,7 +391,7 @@ Compute nodes
 
       $ sysctl -p
 
-#. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
+#. Configure common options. Edit the ``/etc/neutron/neutron.conf`` file:
 
    .. code-block:: ini
 
@@ -390,7 +399,7 @@ Compute nodes
       verbose = True
 
 #. Configure the Linux bridge agent. Edit the
-   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
+   ``/etc/neutron/plugins/ml2/ml2_conf.ini`` file:
 
    .. code-block:: ini
 
@@ -425,6 +434,7 @@ Verify service operation
    .. code-block:: console
 
       $ neutron agent-list
+
       +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
       | id                                   | agent_type         | host     | alive | admin_state_up | binary                    |
       +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
@@ -451,7 +461,8 @@ This example creates a flat external network and a VXLAN project network.
    .. code-block:: console
 
       $ neutron net-create ext-net --router:external \
-      --provider:physical_network external --provider:network_type flat
+        --provider:physical_network external --provider:network_type flat
+
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
@@ -474,8 +485,9 @@ This example creates a flat external network and a VXLAN project network.
    .. code-block:: console
 
       $ neutron subnet-create ext-net 203.0.113.0/24 --name ext-subnet \
-      --allocation-pool start=203.0.113.101,end=203.0.113.200 \
-      --disable-dhcp --gateway 203.0.113.1
+        --allocation-pool start=203.0.113.101,end=203.0.113.200 \
+        --disable-dhcp --gateway 203.0.113.1
+
       Created a new subnet:
       +-------------------+----------------------------------------------------+
       | Field             | Value                                              |
@@ -496,6 +508,7 @@ This example creates a flat external network and a VXLAN project network.
       +-------------------+----------------------------------------------------+
 
 .. note::
+
    The example configuration contains ``vlan`` as the first project network
    type. Only an administrative user can create other types of networks such as
    VXLAN. The following commands use the ``admin`` project credentials to
@@ -506,6 +519,7 @@ This example creates a flat external network and a VXLAN project network.
    .. code-block:: console
 
       $ openstack project show demo
+
       +-------------+----------------------------------+
       |   Field     |              Value               |
       +-------------+----------------------------------+
@@ -522,6 +536,7 @@ This example creates a flat external network and a VXLAN project network.
       $ neutron net-create demo-net \
         --tenant-id f8207c03fd1e4b4aaf123efea4662819 \
         --provider:network_type vxlan
+
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
@@ -547,6 +562,7 @@ This example creates a flat external network and a VXLAN project network.
 
       $ neutron subnet-create demo-net 192.168.1.0/24 --name demo-subnet \
         --gateway 192.168.1.1
+
       Created a new subnet:
       +-------------------+--------------------------------------------------+
       | Field             | Value                                            |
@@ -564,13 +580,14 @@ This example creates a flat external network and a VXLAN project network.
       | name              | demo-subnet                                      |
       | network_id        | d990778b-49ea-4beb-9336-6ea2248edf7d             |
       | tenant_id         | f8207c03fd1e4b4aaf123efea4662819                 |
-     +-------------------+--------------------------------------------------+
+      +-------------------+--------------------------------------------------+
 
 #. Create a project router:
 
    .. code-block:: console
 
       $ neutron router-create demo-router
+
       Created a new router:
       +-----------------------+--------------------------------------+
       | Field                 | Value                                |
@@ -587,7 +604,8 @@ This example creates a flat external network and a VXLAN project network.
       +-----------------------+--------------------------------------+
 
    .. note::
-      The default :file:`policy.json` file allows only administrative projects
+
+      The default ``policy.json`` file allows only administrative projects
       to enable/disable HA during router creation and view the ``ha`` flag
       for a router.
 
@@ -614,6 +632,7 @@ Verify network operation
    .. code-block:: console
 
       $ neutron net-list
+
       +--------------------------------------+----------------------------------------------------+-------------------------------------------------------+
       | id                                   | name                                               | subnets                                               |
       +--------------------------------------+----------------------------------------------------+-------------------------------------------------------+
@@ -628,6 +647,7 @@ Verify network operation
    .. code-block:: console
 
       $ neutron l3-agent-list-hosting-router demo-router
+
       +--------------------------------------+----------+----------------+-------+----------+
       | id                                   | host     | admin_state_up | alive | ha_state |
       +--------------------------------------+----------+----------------+-------+----------+
@@ -636,6 +656,7 @@ Verify network operation
       +--------------------------------------+----------+----------------+-------+----------+
 
    .. note::
+
       Older versions of *python-neutronclient* do not support the ``ha_state`` field.
 
 #. On the controller node, verify creation of the HA ports on the
@@ -644,6 +665,7 @@ Verify network operation
    .. code-block:: console
 
       $ neutron router-port-list demo-router
+
       +--------------------------------------+-------------------------------------------------+-------------------+----------------------------------------------------------------------------------------+
       | id                                   | name                                            | mac_address       | fixed_ips                                                                              |
       +--------------------------------------+-------------------------------------------------+-------------------+----------------------------------------------------------------------------------------+
@@ -762,6 +784,7 @@ Verify network operation
    .. code-block:: console
 
       $ neutron router-port-list demo-router
+
       +--------------------------------------+-------------------------------------------------+-------------------+----------------------------------------------------------------------------------------+
       | id                                   | name                                            | mac_address       | fixed_ips                                                                              |
       +--------------------------------------+-------------------------------------------------+-------------------+----------------------------------------------------------------------------------------+
@@ -795,6 +818,7 @@ Verify network operation
    .. code-block:: console
 
       $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+
       +-------------+-----------+---------+-----------+--------------+
       | IP Protocol | From Port | To Port | IP Range  | Source Group |
       +-------------+-----------+---------+-----------+--------------+
@@ -802,6 +826,7 @@ Verify network operation
       +-------------+-----------+---------+-----------+--------------+
 
       $ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
+
       +-------------+-----------+---------+-----------+--------------+
       | IP Protocol | From Port | To Port | IP Range  | Source Group |
       +-------------+-----------+---------+-----------+--------------+
@@ -815,6 +840,7 @@ Verify network operation
 
       $ nova boot --flavor m1.tiny --image cirros \
         --nic net-id=d990778b-49ea-4beb-9336-6ea2248edf7d demo-instance1
+
       +--------------------------------------+-----------------------------------------------+
       | Property                             | Value                                         |
       +--------------------------------------+-----------------------------------------------+
@@ -883,6 +909,7 @@ Verify network operation
    .. code-block:: console
 
       $ neutron floatingip-create ext-net
+
       Created a new floatingip:
       +---------------------+--------------------------------------+
       | Field               | Value                                |
@@ -908,6 +935,7 @@ Verify network operation
    .. code-block:: console
 
       $ nova list
+
       +--------------------------------------+----------------+--------+------------+-------------+-----------------------------------------+
       | ID                                   | Name           | Status | Task State | Power State | Networks                                |
       +--------------------------------------+----------------+--------+------------+-------------+-----------------------------------------+

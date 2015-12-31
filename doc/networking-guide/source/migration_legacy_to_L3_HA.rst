@@ -27,6 +27,7 @@ router to L3 HA and then setting the router's ``admin_state_up`` attribute back
 to ``True``.
 
 .. warning::
+
    Once starting the migration, south-north connections (instances to internet)
    will be severed. New connections will be able to start only when the
    migration is complete.
@@ -36,6 +37,7 @@ Here is the router we have used in our demonstration:
 .. code-block:: console
 
    $ neutron router-show router
+
    +-----------------------+--------------------------------------+
    | Field                 | Value                                |
    +-----------------------+--------------------------------------+
@@ -79,6 +81,7 @@ Here is the router we have used in our demonstration:
    .. code-block:: console
 
       $ neutron router-show router
+
       +-----------------------+--------------------------------------+
       | Field                 | Value                                |
       +-----------------------+--------------------------------------+
@@ -101,6 +104,7 @@ To return to legacy mode, you turn down the router again, turning off L3 HA and
 starting the router again
 
 .. warning::
+
    Once starting the migration, south-north connections (instances to internet)
    will be severed. New connections will be able to start only when the
    migration is complete.
@@ -110,6 +114,7 @@ Here is the router we have used in our demonstration:
 .. code-block:: console
 
    $ neutron router-show router
+
    +-----------------------+--------------------------------------+
    | Field                 | Value                                |
    +-----------------------+--------------------------------------+
@@ -153,6 +158,7 @@ Here is the router we have used in our demonstration:
    .. code-block:: console
 
       $ neutron router-show router
+
       +-----------------------+--------------------------------------+
       | Field                 | Value                                |
       +-----------------------+--------------------------------------+

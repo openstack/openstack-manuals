@@ -83,24 +83,32 @@ distract an operator engaged in network troubleshooting.
 Unless you need to start up virtual machines using libvirt directly, you can
 safely disable libvirt's network.
 
-To view the defined libvirt networks and their state::
+To view the defined libvirt networks and their state:
 
-    # virsh net-list
-     Name                 State      Autostart     Persistent
-    ----------------------------------------------------------
-     default              active     yes           yes
+.. code-block:: console
 
-To deactivate the libvirt network named *default*::
+   # virsh net-list
+    Name                 State      Autostart     Persistent
+   ----------------------------------------------------------
+    default              active     yes           yes
 
-    # virsh net-destroy default
+To deactivate the libvirt network named ``default``:
+
+.. code-block:: console
+
+   # virsh net-destroy default
 
 Deactivating the network will remove the ``virbr0`` bridge, terminate
 the dnsmasq process, and remove the iptables rules.
 
-To prevent the network from automatically starting on boot::
+To prevent the network from automatically starting on boot:
 
-    # virsh net-autostart --network default --disable
+.. code-block:: console
 
-To activate the network after it has been deactivated::
+   # virsh net-autostart --network default --disable
 
-    # virsh net-start default
+To activate the network after it has been deactivated:
+
+.. code-block:: console
+
+   # virsh net-start default

@@ -54,6 +54,7 @@ port security (enable and disable spoofchecking) and QoS rate limit settings.
 
 
 .. note::
+
    With the sriov-agent mode is default in Liberty.
    Without the sriov-agent mode is deprecated in Liberty and
    removed in Mitaka.
@@ -71,6 +72,7 @@ Known limitations
 * Live migration is not supported for instances with SR-IOV ports.
 
   .. note::
+
      ARP spoofing filtering is supported since Liberty when using
      sriov-agent.
 
@@ -82,6 +84,7 @@ and instances with SR-IOV ports on a single neutron
 network.
 
 .. note::
+
    Throughout this guide, eth3 is used as the PF and
    physnet2 is used as the provider network configured as a VLAN range.
    You are expected to change this according to your actual
@@ -113,7 +116,7 @@ do the following:
 #. Make sure SR-IOV is enabled in BIOS, check for VT-d and
    make sure it is enabled.  After enabling VT-d, enable IOMMU on
    Linux by adding ``intel_iommu=on`` to kernel parameters. Edit the file
-   :file:`/etc/default/grub`:
+   ``/etc/default/grub``:
 
    .. code-block:: ini
 
@@ -151,6 +154,7 @@ do the following:
 
 
    .. note::
+
       The suggested way of making PCI SYS settings persistent
       is through :file:`sysfs.conf` but for unknown reason
       changing :file:`sysfs.conf` does not have any effect on Ubuntu 14.04.
@@ -164,7 +168,7 @@ Whitelist PCI devices nova-compute (Compute)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Tell nova-compute which pci devices are allowed to be passed
-through. Edit the file :file:`/etc/nova/nova.conf`:
+through. Edit the file ``/etc/nova/nova.conf``:
 
 .. code-block:: ini
 
@@ -208,7 +212,7 @@ Configure neutron-server (Controller)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Add ``sriovnicswitch`` as mechanism driver. Edit the file
-   :file:`/etc/neutron/plugins/ml2/ml2_conf.ini`:
+   ``/etc/neutron/plugins/ml2/ml2_conf.ini``:
 
    .. code-block:: ini
 
@@ -219,12 +223,12 @@ Configure neutron-server (Controller)
 
    .. code-block:: console
 
-     # lspci -nn | grep -i ethernet
-     87:00.0 Ethernet controller [0200]: Intel Corporation 82599 10 Gigabit Dual Port Backplane Connection [8086:10f8] (rev 01)
-     87:10.1 Ethernet controller [0200]: Intel Corporation 82599 Ethernet Controller Virtual Function [8086:10ed] (rev 01)
-     87:10.3 Ethernet controller [0200]: Intel Corporation 82599 Ethernet Controller Virtual Function [8086:10ed] (rev 01)
+      # lspci -nn | grep -i ethernet
+      87:00.0 Ethernet controller [0200]: Intel Corporation 82599 10 Gigabit Dual Port Backplane Connection [8086:10f8] (rev 01)
+      87:10.1 Ethernet controller [0200]: Intel Corporation 82599 Ethernet Controller Virtual Function [8086:10ed] (rev 01)
+      87:10.3 Ethernet controller [0200]: Intel Corporation 82599 Ethernet Controller Virtual Function [8086:10ed] (rev 01)
 
-#. Update the :file:`/etc/neutron/plugins/ml2/ml2_conf_sriov.ini` on each
+#. Update the ``/etc/neutron/plugins/ml2/ml2_conf_sriov.ini`` on each
    controller. In our case the vendor_id is 8086 and the product_id is 10ed.
    Tell neutron the vendor_id and product_id of the VFs that are supported.
 
@@ -233,9 +237,9 @@ Configure neutron-server (Controller)
       supported_pci_vendor_devs = 8086:10ed
 
 
-#. Add the newly configured :file:`ml2_conf_sriov.ini` as parameter to
+#. Add the newly configured ``ml2_conf_sriov.ini`` as parameter to
    the neutron-server daemon.  Edit the file
-   :file:`/etc/init/neutron-server.conf`:
+   ``/etc/init/neutron-server.conf``:
 
    .. code-block:: ini
 
@@ -251,8 +255,8 @@ Configure nova-scheduler (Controller)
 #. On every controller node running nova-scheduler add
    PCIDeviceScheduler to the scheduler_default_filters parameter
    and add a new line for scheduler_available_filters parameter
-   under the [default] section in
-   :file:`/etc/nova/nova.conf`:
+   under the ``[default]`` section in
+   ``/etc/nova/nova.conf``:
 
    .. code-block:: ini
 
@@ -270,12 +274,13 @@ Enable neutron sriov-agent (Compute)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note::
+
    You only need to enable the sriov-agent if you decided to keep
    ``agent_required=True`` in the step :ref:`configure_sriov_neutron_server`.
    If you set ``agent_required=False``, you can safely skip this step.
 
 #. On each compute node edit the file
-   :file:`/etc/neutron/plugins/ml2/sriov_agent.ini`:
+   ``/etc/neutron/plugins/ml2/sriov_agent.ini``:
 
    .. code-block:: ini
 

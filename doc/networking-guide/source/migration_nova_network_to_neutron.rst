@@ -18,7 +18,7 @@ the features required in both Networking and Compute.
 
 The current process as designed is a minimally viable migration with
 the goal of deprecating and then removing legacy networking. Both the
-Compute and Networking teams agree that a "one-button" migration
+Compute and Networking teams agree that a one-button migration
 process from legacy networking to OpenStack Networking (neutron) is
 not an essential requirement for the deprecation and removal of the
 legacy networking at a future date. This section includes a process
@@ -102,8 +102,9 @@ Migration process overview
    those new changes.
 
 .. note::
-    At this moment the Networking DB is the source of truth, but
-    nova-api is the only public read-write API.
+
+   At this moment the Networking DB is the source of truth, but
+   nova-api is the only public read-write API.
 
 Next, you'll need to migrate each hypervisor.  To do that, follow these steps:
 
