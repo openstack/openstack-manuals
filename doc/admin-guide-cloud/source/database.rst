@@ -304,6 +304,103 @@ data store version.
       | 36a6306b-efd8-4d83-9b75-8b30dd756381 | mysql-5.5 |
       +--------------------------------------+-----------+
 
+Data store classifications
+--------------------------
+
+The Database service supports a variety of both relational and
+non-relational database engines, but to a varying degree of support for
+each :term:`data store`. The Database service project has defined
+several classifications that indicate the quality of support for each
+data store. Data stores also implement different extensions.
+An extension is called a :term:`strategy` and is classified similar to
+data stores.
+
+Valid classifications for a data store and a strategy are:
+
+* Experimental
+
+* Technical preview
+
+* Stable
+
+Each classification builds on the previous one. This means that a data store
+that meets the ``technical preview`` requirements must also meet all the
+requirements for ``experimental``, and a data store that meets the ``stable``
+requirements must also meet all the requirements for ``technical preview``.
+
+**Requirements**
+
+* Experimental
+
+  A data store is considered to be ``experimental`` if it meets these criteria:
+
+  * It implements a basic subset of the Database service API including
+    ``create`` and ``delete``.
+
+  * It has guest agent elements that allow guest agent creation.
+
+  * It has a definition of supported operating systems.
+
+  * It meets the other
+    `Documented Technical Requirements <https://specs.openstack.org/openstack/trove-specs/specs/kilo/experimental-datastores.html#requirements>`_.
+
+  A strategy is considered ``experimental`` if:
+
+  * It meets the
+    `Documented Technical Requirements <https://specs.openstack.org/openstack/trove-specs/specs/kilo/experimental-datastores.html#requirements>`_.
+
+* Technical preview
+
+  A data store is considered to be a ``technical preview`` if it meets the
+  requirements of ``experimental`` and further:
+
+  * It implements APIs required to plant and start the capabilities of the
+    data store as defined in the
+    `Datastore Compatibility Matrix <https://wiki.openstack.org/wiki/Trove/DatastoreCompatibilityMatrix>`_.
+
+    .. note::
+
+       It is not required that the data store implements all features like
+       resize, backup, replication, or clustering to meet this classification.
+
+  * It provides a mechanism for building a guest image that allows you to
+    exercise its capabilities.
+
+  * It meets the other
+    `Documented Technical Requirements <https://specs.openstack.org/openstack/trove-specs/specs/kilo/experimental-datastores.html#requirements>`_.
+
+  .. important::
+
+     A strategy is not normally considered to be ``technical
+     preview``.
+
+* Stable
+
+  A data store or a strategy is considered ``stable`` if:
+
+  * It meets the requirements of ``technical preview``.
+
+  * It meets the other
+    `Documented Technical Requirements <https://specs.openstack.org/openstack/trove-specs/specs/kilo/experimental-datastores.html#requirements>`_.
+
+**Initial Classifications**
+
+The following table shows the current classification assignments for the
+different data stores.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 30 30
+
+   * - Classification
+     - Data store
+   * - Stable
+     - MySQL
+   * - Technical Preview
+     - Cassandra, MongoDB
+   * - Experimental
+     - All others
+
 Configure a cluster
 ~~~~~~~~~~~~~~~~~~~
 
