@@ -15,7 +15,7 @@
         interface (CLI) for the Containers service API and its extensions.
 
        This chapter documents <command>magnum</command> version
-        <literal>0.2.1</literal>.
+        <literal>1.1.0</literal>.
     </para>
 
     <para>For help on a specific <command>magnum</command>
@@ -38,6 +38,46 @@
               &lt;subcommand&gt; ...</computeroutput></screen>
   <variablelist wordsize="10">
     <title>Subcommands</title>
+  <varlistentry>
+    <term><command>baymodel-create</command></term>
+    <listitem>
+      <para>
+        Create a baymodel.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>baymodel-delete</command></term>
+    <listitem>
+      <para>
+        Delete specified baymodel.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>baymodel-list</command></term>
+    <listitem>
+      <para>
+        Print a list of bay models.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>baymodel-show</command></term>
+    <listitem>
+      <para>
+        Show details about the given baymodel.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>baymodel-update</command></term>
+    <listitem>
+      <para>
+        Updates one or more baymodel attributes.
+      </para>
+    </listitem>
+  </varlistentry>
   <varlistentry>
     <term><command>bay-create</command></term>
     <listitem>
@@ -79,34 +119,18 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>baymodel-create</command></term>
+    <term><command>ca-show</command></term>
     <listitem>
       <para>
-        Create a baymodel.
+        Show details about the CA certificate for a bay.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>baymodel-delete</command></term>
+    <term><command>ca-sign</command></term>
     <listitem>
       <para>
-        Delete specified baymodel.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>baymodel-list</command></term>
-    <listitem>
-      <para>
-        Print a list of bay models.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>baymodel-show</command></term>
-    <listitem>
-      <para>
-        Show details about the given baymodel.
+        Generate the CA certificate for a bay.
       </para>
     </listitem>
   </varlistentry>
@@ -127,7 +151,7 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>container-execute</command></term>
+    <term><command>container-exec</command></term>
     <listitem>
       <para>
         Execute command in a container.
@@ -195,6 +219,14 @@
     <listitem>
       <para>
         Unpause specified containers.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>service-list</command></term>
+    <listitem>
+      <para>
+        Print a list of magnum services.
       </para>
     </listitem>
   </varlistentry>
@@ -296,42 +328,42 @@
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>service-create</command></term>
+    <term><command>coe-service-create</command></term>
     <listitem>
       <para>
-        Create a service.
+        Create a coe service.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>service-delete</command></term>
+    <term><command>coe-service-delete</command></term>
     <listitem>
       <para>
-        Delete specified service.
+        Delete specified coe service(s).
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>service-list</command></term>
+    <term><command>coe-service-list</command></term>
     <listitem>
       <para>
-        Print a list of services.
+        Print a list of coe services.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>service-show</command></term>
+    <term><command>coe-service-show</command></term>
     <listitem>
       <para>
-        Show details about the given service.
+        Show details about the given coe service.
       </para>
     </listitem>
   </varlistentry>
   <varlistentry>
-    <term><command>service-update</command></term>
+    <term><command>coe-service-update</command></term>
     <listitem>
       <para>
-        Update information about the given service.
+        Update information about the given coe service.
       </para>
     </listitem>
   </varlistentry>
@@ -502,6 +534,7 @@
         <title>magnum bay-create</title>
         <screen><computeroutput>usage: magnum bay-create [--name &lt;name&gt;] --baymodel &lt;baymodel&gt;
                          [--node-count &lt;node-count&gt;]
+                         [--master-count &lt;master-count&gt;]
                          [--discovery-url &lt;discovery-url&gt;]
                          [--timeout &lt;timeout&gt;]</computeroutput></screen>
         <para>
@@ -529,6 +562,14 @@ Create a bay.
     <listitem>
       <para>
       The bay node count.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--master-count &lt;master-count&gt;</command></term>
+    <listitem>
+      <para>
+      The number of master nodes for the bay.
       </para>
     </listitem>
   </varlistentry>
@@ -632,11 +673,17 @@ Update information about the given bay.
                               --keypair-id &lt;keypair-id&gt; --external-network-id
                               &lt;external-network-id&gt; --coe &lt;coe&gt;
                               [--fixed-network &lt;fixed-network&gt;]
+                              [--network-driver &lt;network-driver&gt;]
                               [--ssh-authorized-key &lt;ssh-authorized-key&gt;]
                               [--dns-nameserver &lt;dns-nameserver&gt;]
                               [--flavor-id &lt;flavor-id&gt;]
                               [--master-flavor-id &lt;master-flavor-id&gt;]
-                              [--docker-volume-size &lt;docker-volume-size&gt;]</computeroutput></screen>
+                              [--docker-volume-size &lt;docker-volume-size&gt;]
+                              [--http-proxy &lt;http-proxy&gt;]
+                              [--https-proxy &lt;https-proxy&gt;]
+                              [--no-proxy &lt;no-proxy&gt;]
+                              [--labels &lt;KEY1=VALUE1,KEY2=VALUE2...&gt;]
+                              [--tls-disabled] [--public]</computeroutput></screen>
         <para>
 Create a baymodel.
         </para>  <variablelist wordsize="10">
@@ -694,6 +741,15 @@ Create a baymodel.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>--network-driver &lt;network-driver&gt;</command></term>
+    <listitem>
+      <para>
+      The network driver name for instantiating container
+      networks.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>--ssh-authorized-key &lt;ssh-authorized-key&gt;</command></term>
     <listitem>
       <para>
@@ -722,7 +778,7 @@ Create a baymodel.
     <listitem>
       <para>
       The nova flavor id to use when launching the master
-      nodeof the bay.
+      node of the bay.
       </para>
     </listitem>
   </varlistentry>
@@ -730,7 +786,57 @@ Create a baymodel.
     <term><command>--docker-volume-size &lt;docker-volume-size&gt;</command></term>
     <listitem>
       <para>
-      Specify the size of the docker volume to use.
+      Specify the number of size in GB for the docker volume
+      to use.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--http-proxy &lt;http-proxy&gt;</command></term>
+    <listitem>
+      <para>
+      The http_proxy address to use for nodes in bay.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--https-proxy &lt;https-proxy&gt;</command></term>
+    <listitem>
+      <para>
+      The https_proxy address to use for nodes in bay.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--no-proxy &lt;no-proxy&gt;</command></term>
+    <listitem>
+      <para>
+      The no_proxy address to use for nodes in bay.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--labels &lt;KEY1=VALUE1,KEY2=VALUE2...&gt;</command></term>
+    <listitem>
+      <para>
+      Arbitrary labels in the form of key=value pairs to
+      associate with a baymodel. May be used multiple times.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--tls-disabled</command></term>
+    <listitem>
+      <para>
+        Disable TLS in the Bay.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--public</command></term>
+    <listitem>
+      <para>
+        Make baymodel public.
       </para>
     </listitem>
   </varlistentry>
@@ -777,18 +883,274 @@ Show details about the given baymodel.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="magnumclient_subcommand_baymodel-update">
+        <title>magnum baymodel-update</title>
+        <screen><computeroutput>usage: magnum baymodel-update &lt;baymodel&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
+        <para>
+Updates one or more baymodel attributes.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;baymodel&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or name of baymodel
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;op&gt;</command></term>
+    <listitem>
+      <para>
+        Operations: 'add', 'replace' or 'remove'
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;path=value&gt;</command></term>
+    <listitem>
+      <para>
+        Attributes to add/replace or remove (only PATH is necessary on
+      remove)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="magnumclient_subcommand_ca-show">
+        <title>magnum ca-show</title>
+        <screen><computeroutput>usage: magnum ca-show --bay &lt;bay&gt;</computeroutput></screen>
+        <para>
+Show details about the CA certificate for a bay.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--bay &lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        ID or name of the bay.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="magnumclient_subcommand_ca-sign">
+        <title>magnum ca-sign</title>
+        <screen><computeroutput>usage: magnum ca-sign [--csr &lt;csr&gt;] --bay &lt;bay&gt;</computeroutput></screen>
+        <para>
+Generate the CA certificate for a bay.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--csr &lt;csr&gt;</command></term>
+    <listitem>
+      <para>
+        File path of the csr file to send to Magnum to get signed.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--bay &lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        ID or name of the bay.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="magnumclient_subcommand_coe-service-create">
+        <title>magnum coe-service-create</title>
+        <screen><computeroutput>usage: magnum coe-service-create [--manifest-url &lt;manifest-url&gt;]
+                                 [--manifest &lt;manifest&gt;] --bay &lt;bay&gt;</computeroutput></screen>
+        <para>
+Create a coe service.
+        </para>  <variablelist wordsize="10">
+    <title>Optional arguments</title>
+  <varlistentry>
+    <term><command>--manifest-url &lt;manifest-url&gt;</command></term>
+    <listitem>
+      <para>
+      Name/URL of the serivce file to use for creating
+      services.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--manifest &lt;manifest&gt;</command></term>
+    <listitem>
+      <para>
+      File path of the service file to use for creating
+      services.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--bay &lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        Id or name of the bay.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="magnumclient_subcommand_coe-service-delete">
+        <title>magnum coe-service-delete</title>
+        <screen><computeroutput>usage: magnum coe-service-delete &lt;services&gt; [&lt;services&gt; ...] &lt;bay&gt;</computeroutput></screen>
+        <para>
+Delete specified coe service(s).
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;services&gt;</command></term>
+    <listitem>
+      <para>
+        ID or name of the (service)s to delete.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="magnumclient_subcommand_coe-service-list">
+        <title>magnum coe-service-list</title>
+        <screen><computeroutput>usage: magnum coe-service-list &lt;bay&gt;</computeroutput></screen>
+        <para>
+Print a list of coe services.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="magnumclient_subcommand_coe-service-show">
+        <title>magnum coe-service-show</title>
+        <screen><computeroutput>usage: magnum coe-service-show &lt;service&gt; &lt;bay&gt;</computeroutput></screen>
+        <para>
+Show details about the given coe service.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;service&gt;</command></term>
+    <listitem>
+      <para>
+        ID or name of the service to show.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="magnumclient_subcommand_coe-service-update">
+        <title>magnum coe-service-update</title>
+        <screen><computeroutput>usage: magnum coe-service-update &lt;service&gt; &lt;bay&gt; &lt;op&gt; &lt;path=value&gt;
+                                 [&lt;path=value&gt; ...]</computeroutput></screen>
+        <para>
+Update information about the given coe service.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;service&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or name of service
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;op&gt;</command></term>
+    <listitem>
+      <para>
+        Operations: 'add', 'replace' or 'remove'
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;path=value&gt;</command></term>
+    <listitem>
+      <para>
+        Attributes to add/replace or remove (only PATH is necessary on
+      remove)
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="magnumclient_subcommand_container-create">
         <title>magnum container-create</title>
-        <screen><computeroutput>usage: magnum container-create [--json JSON]</computeroutput></screen>
+        <screen><computeroutput>usage: magnum container-create [--name &lt;name&gt;] --image &lt;image&gt; --bay &lt;bay&gt;
+                               [--command &lt;command&gt;] [--memory &lt;memory&gt;]</computeroutput></screen>
         <para>
 Create a container.
         </para>  <variablelist wordsize="10">
     <title>Optional arguments</title>
   <varlistentry>
-    <term><command>--json JSON</command></term>
+    <term><command>--name &lt;name&gt;</command></term>
     <listitem>
       <para>
-        JSON representation of container.
+        name of the container
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--image &lt;image&gt;</command></term>
+    <listitem>
+      <para>
+        name or ID of the image
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--bay &lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        ID or name of the bay.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--command &lt;command&gt;</command></term>
+    <listitem>
+      <para>
+        Send command to the container
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--memory &lt;memory&gt;</command></term>
+    <listitem>
+      <para>
+        The container memory size (format: &lt;number&gt;&lt;optional
+      unit&gt;, where unit = b, k, m or g)
       </para>
     </listitem>
   </varlistentry>
@@ -811,9 +1173,9 @@ Delete specified containers.
   </varlistentry>
  </variablelist>
     </section>
-    <section xml:id="magnumclient_subcommand_container-execute">
-        <title>magnum container-execute</title>
-        <screen><computeroutput>usage: magnum container-execute --command &lt;command&gt; &lt;container&gt;</computeroutput></screen>
+    <section xml:id="magnumclient_subcommand_container-exec">
+        <title>magnum container-exec</title>
+        <screen><computeroutput>usage: magnum container-exec --command &lt;command&gt; &lt;container&gt;</computeroutput></screen>
         <para>
 Execute command in a container.
         </para>  <variablelist wordsize="10">
@@ -1045,7 +1407,7 @@ Create a pod.
     </section>
     <section xml:id="magnumclient_subcommand_pod-delete">
         <title>magnum pod-delete</title>
-        <screen><computeroutput>usage: magnum pod-delete &lt;pods&gt; [&lt;pods&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: magnum pod-delete &lt;pods&gt; [&lt;pods&gt; ...] &lt;bay&gt;</computeroutput></screen>
         <para>
 Delete specified pod.
         </para>  <variablelist wordsize="10">
@@ -1058,18 +1420,36 @@ Delete specified pod.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="magnumclient_subcommand_pod-list">
         <title>magnum pod-list</title>
-        <screen><computeroutput>usage: magnum pod-list</computeroutput></screen>
+        <screen><computeroutput>usage: magnum pod-list &lt;bay&gt;</computeroutput></screen>
         <para>
 Print a list of registered pods.
-        </para>
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="magnumclient_subcommand_pod-show">
         <title>magnum pod-show</title>
-        <screen><computeroutput>usage: magnum pod-show &lt;pod&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: magnum pod-show &lt;pod&gt; &lt;bay&gt;</computeroutput></screen>
         <para>
 Show details about the given pod.
         </para>  <variablelist wordsize="10">
@@ -1082,11 +1462,19 @@ Show details about the given pod.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="magnumclient_subcommand_pod-update">
         <title>magnum pod-update</title>
-        <screen><computeroutput>usage: magnum pod-update &lt;pod-id&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: magnum pod-update &lt;pod-id&gt; &lt;bay&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
         <para>
 Update information about the given pod.
         </para>  <variablelist wordsize="10">
@@ -1096,6 +1484,14 @@ Update information about the given pod.
     <listitem>
       <para>
         UUID or name of pod
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
       </para>
     </listitem>
   </varlistentry>
@@ -1156,7 +1552,7 @@ Create a replication controller.
     </section>
     <section xml:id="magnumclient_subcommand_rc-delete">
         <title>magnum rc-delete</title>
-        <screen><computeroutput>usage: magnum rc-delete &lt;rcs&gt; [&lt;rcs&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: magnum rc-delete &lt;rcs&gt; [&lt;rcs&gt; ...] &lt;bay&gt;</computeroutput></screen>
         <para>
 Delete specified replication controller.
         </para>  <variablelist wordsize="10">
@@ -1169,18 +1565,36 @@ Delete specified replication controller.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="magnumclient_subcommand_rc-list">
         <title>magnum rc-list</title>
-        <screen><computeroutput>usage: magnum rc-list</computeroutput></screen>
+        <screen><computeroutput>usage: magnum rc-list &lt;bay&gt;</computeroutput></screen>
         <para>
 Print a list of registered replication controllers.
-        </para>
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
     </section>
     <section xml:id="magnumclient_subcommand_rc-show">
         <title>magnum rc-show</title>
-        <screen><computeroutput>usage: magnum rc-show &lt;rc&gt;</computeroutput></screen>
+        <screen><computeroutput>usage: magnum rc-show &lt;rc&gt; &lt;bay&gt;</computeroutput></screen>
         <para>
 Show details about the given replication controller.
         </para>  <variablelist wordsize="10">
@@ -1193,11 +1607,19 @@ Show details about the given replication controller.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="magnumclient_subcommand_rc-update">
         <title>magnum rc-update</title>
-        <screen><computeroutput>usage: magnum rc-update &lt;rc&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
+        <screen><computeroutput>usage: magnum rc-update &lt;rc&gt; &lt;bay&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
         <para>
 Update information about the given replication controller.
         </para>  <variablelist wordsize="10">
@@ -1211,6 +1633,14 @@ Update information about the given replication controller.
     </listitem>
   </varlistentry>
   <varlistentry>
+    <term><command>&lt;bay&gt;</command></term>
+    <listitem>
+      <para>
+        UUID or Name of Bay
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
     <term><command>&lt;op&gt;</command></term>
     <listitem>
       <para>
@@ -1224,59 +1654,6 @@ Update information about the given replication controller.
       <para>
         Attributes to add/replace or remove (only PATH is necessary on
       remove)
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="magnumclient_subcommand_service-create">
-        <title>magnum service-create</title>
-        <screen><computeroutput>usage: magnum service-create [--manifest-url &lt;manifest-url&gt;]
-                             [--manifest &lt;manifest&gt;] --bay &lt;bay&gt;</computeroutput></screen>
-        <para>
-Create a service.
-        </para>  <variablelist wordsize="10">
-    <title>Optional arguments</title>
-  <varlistentry>
-    <term><command>--manifest-url &lt;manifest-url&gt;</command></term>
-    <listitem>
-      <para>
-      Name/URL of the serivce file to use for creating
-      services.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--manifest &lt;manifest&gt;</command></term>
-    <listitem>
-      <para>
-      File path of the service file to use for creating
-      services.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--bay &lt;bay&gt;</command></term>
-    <listitem>
-      <para>
-        Id or name of the bay.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="magnumclient_subcommand_service-delete">
-        <title>magnum service-delete</title>
-        <screen><computeroutput>usage: magnum service-delete &lt;services&gt; [&lt;services&gt; ...]</computeroutput></screen>
-        <para>
-Delete specified service.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;services&gt;</command></term>
-    <listitem>
-      <para>
-        ID or name of the (service)s to delete.
       </para>
     </listitem>
   </varlistentry>
@@ -1286,58 +1663,7 @@ Delete specified service.
         <title>magnum service-list</title>
         <screen><computeroutput>usage: magnum service-list</computeroutput></screen>
         <para>
-Print a list of services.
+Print a list of magnum services.
         </para>
-    </section>
-    <section xml:id="magnumclient_subcommand_service-show">
-        <title>magnum service-show</title>
-        <screen><computeroutput>usage: magnum service-show &lt;service&gt;</computeroutput></screen>
-        <para>
-Show details about the given service.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;service&gt;</command></term>
-    <listitem>
-      <para>
-        ID or name of the service to show.
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
-    </section>
-    <section xml:id="magnumclient_subcommand_service-update">
-        <title>magnum service-update</title>
-        <screen><computeroutput>usage: magnum service-update &lt;service&gt; &lt;op&gt; &lt;path=value&gt; [&lt;path=value&gt; ...]</computeroutput></screen>
-        <para>
-Update information about the given service.
-        </para>  <variablelist wordsize="10">
-    <title>Positional arguments</title>
-  <varlistentry>
-    <term><command>&lt;service&gt;</command></term>
-    <listitem>
-      <para>
-        UUID or name of service
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>&lt;op&gt;</command></term>
-    <listitem>
-      <para>
-        Operations: 'add', 'replace' or 'remove'
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>&lt;path=value&gt;</command></term>
-    <listitem>
-      <para>
-        Attributes to add/replace or remove (only PATH is necessary on
-      remove)
-      </para>
-    </listitem>
-  </varlistentry>
- </variablelist>
     </section>
 </chapter>
