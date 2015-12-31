@@ -7,6 +7,7 @@ Networking
    networking/networking_options_reference.rst
    networking/networking_log.rst
    networking/sample-configuration-files.rst
+   networking/sample-configuration-files-advanced.rst
    tables/conf-changes/neutron.rst
 
 This chapter explains the OpenStack Networking configuration options.
