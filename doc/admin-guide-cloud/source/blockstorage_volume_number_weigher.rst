@@ -47,15 +47,15 @@ Volume type
 
 Define a volume type in Block Storage:
 
-   .. code-block:: console
+.. code-block:: console
 
-      $ cinder type-create lvm
+   $ cinder type-create lvm
 
 Create an extra specification that links the volume type to a back-end name:
 
-   .. code-block:: console
+.. code-block:: console
 
-      $ cinder type-key lvm set volume_backend_name=LVM
+   $ cinder type-key lvm set volume_backend_name=LVM
 
 This example creates a lvm volume type with
 ``volume_backend_name=LVM`` as extra specifications.
