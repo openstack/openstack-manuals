@@ -174,3 +174,7 @@ Create the service entity and API endpoints
       Each service that you add to your OpenStack environment requires one
       or more service entities and three API endpoint variants in the Identity
       service.
+
+   .. note::
+
+      Services can access the v3 API using the v2.0 URL.
