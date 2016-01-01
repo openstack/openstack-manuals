@@ -244,9 +244,9 @@ Enabled emulation
 When you have finished configuration, restart the OpenStack Identity
 service:
 
-   .. code-block:: console
+.. code-block:: console
 
-      # service keystone restart
+   # service keystone restart
 
 .. warning::
 
