@@ -90,6 +90,12 @@ files, ``console`` for console inputs and outputs, and so on.
    [DEFAULT]
    # List of directories to load filter definitions from (separated by ',').
 
+.. note::
+
+   When you write the command example, you should write the input and output
+   as it is from the console in one code block, not add an extra blank line,
+   not split them into input block and output block.
+   You can omit the output where appropriate.
 
 .. _remote-block:
 
