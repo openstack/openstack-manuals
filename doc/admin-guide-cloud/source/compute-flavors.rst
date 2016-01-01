@@ -358,6 +358,29 @@ CPU topology
     -  FLAVOR-THREADS—(Integer) The number of threads per core for the guest VM. By
        this is set to 1.
 
+Core pinning
+    VMs can be pinned to specific physical cores in the hypervisor to improve
+    performance. This should only be done where there is no CPU overcommit
+    (``cpu_allocation_ratio`` is 1.0).
+
+    .. code:: console
+
+        $ nova flavor-key FLAVOR-NAME set hw:dedicated=PIN-POLICY
+
+    Valid PIN-POLICY values are:
+
+    -  ``shared``—(default) The guest vCPUs will be allowed to freely float
+       across host pCPUs, albeit potentially constrained by NUMA policy.
+
+    -  ``dedicated``—the guest vCPUs will be strictly pinned to a set of host
+       pCPUs. In the absence of an explicit vCPU topology request, the drivers
+       typically expose all vCPUs as sockets with 1 core and 1 thread. When strict
+       CPU pinning is in effect the guest CPU topology will be setup to match the
+       topology of the CPUs to which it is pinned. This option assumes the overcommit
+       ratio is 1.0. For example, if a 2 vCPU guest is pinned to a single host core
+       with 2 threads, then the guest will get a topology of 1 socket, 1 core, 2
+       threads.
+
 Project private flavors
     Flavors can also be assigned to particular projects. By default, a
     flavor is public and available to all projects. Private flavors are
