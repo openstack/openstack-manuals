@@ -333,7 +333,7 @@ Random-number generator
 
     -  RATE-PERIOD—(Integer) Duration of the read period in seconds.
 
-CPU toplogy
+CPU topology
     For the libvirt driver, you can define the topology of the processors
     in the virtual machine using properties. The properties with ``max``
     limit the number that can be selected by the user with image properties.
