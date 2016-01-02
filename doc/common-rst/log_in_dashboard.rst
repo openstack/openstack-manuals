@@ -32,8 +32,9 @@ The dashboard is generally installed on the controller node.
 #. On the Log In page, enter your user name and password, and click
    :guilabel:`Sign In`.
 
-   The top of the window displays your user name. You can also access
-   settings or sign out of the dashboard.
+   The top of the window displays your user name. You can also access the
+   :guilabel:`Settings` tab (:ref:`dashboard-settings-tab`) or sign out
+   of the dashboard.
 
    The visible tabs and functions in the dashboard depend on the access
    permissions, or roles, of the user you are logged in as.
@@ -217,6 +218,8 @@ OpenStack dashboard — :guilabel:`Identity` tab
   and delete projects.
 
 * :guilabel:`Users`: View, create, enable, disable, and delete users.
+
+.. _dashboard-settings-tab:
 
 OpenStack dashboard — :guilabel:`Settings` tab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
