@@ -93,6 +93,16 @@ html_context = {"gitsha": gitsha, "bug_tag": bug_tag,
 # directories to ignore when looking for source files.
 exclude_patterns = ['common/cli*', 'common/nova*',
                     'common/log_in_dashboard.rst',
+                    'common/get_started_with_openstack.rst',
+                    'common/get_started_openstack_services.rst',
+                    'common/get_started_feedback.rst',
+                    'common/get_started_logical_architecture.rst',
+                    'common/get_started_dashboard.rst',
+                    'common/get_started_database_service.rst',
+                    'common/get_started_file_storage.rst',
+                    'common/get_started_storage_concepts.rst',
+                    'common/get_started_sahara.rst',
+                    'common/dashboard_customizing.rst',
                     'shared/note_configuration_vary_by_distribution.rst']
 
 # The reST default role (used for this markup: `text`) to use for all

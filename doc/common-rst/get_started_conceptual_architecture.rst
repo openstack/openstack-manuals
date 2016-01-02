@@ -1,3 +1,5 @@
+:orphan:
+
 .. _get_started_conceptual_architecture:
 
 =======================
