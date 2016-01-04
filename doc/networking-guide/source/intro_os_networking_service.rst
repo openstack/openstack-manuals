@@ -68,7 +68,7 @@ Routing services
 VPNaaS
 ------
 
-The Virtual Private Network as a Service (VPNaaS) is a neutron
+The Virtual Private Network-as-a-Service (VPNaaS) is a neutron
 extension that introduces the VPN feature set.
 
 LbaaS

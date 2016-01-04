@@ -2,13 +2,13 @@
 Migrate legacy nova-network to OpenStack Networking (neutron)
 =============================================================
 
-Two networking models exist in OpenStack. The first is called legacy networking
-(nova-network) and it is a sub-process embedded in the Compute project (nova).
-This model has some limitations, such as creating complex network
-topologies, extending its back-end implementation to vendor-specific
-technologies, and providing tenant-specific networking elements. These
-limitations are the main reasons the OpenStack Networking (neutron)
-model was created.
+Two networking models exist in OpenStack. The first is called legacy
+networking (:term:`nova-network`) and it is a sub-process embedded in
+the Compute project (nova). This model has some limitations, such as
+creating complex network topologies, extending its back-end implementation
+to vendor-specific technologies, and providing tenant-specific networking
+elements. These limitations are the main reasons the OpenStack
+Networking (neutron) model was created.
 
 This section describes the process of migrating clouds based on the
 legacy networking model to the OpenStack Networking model. This
