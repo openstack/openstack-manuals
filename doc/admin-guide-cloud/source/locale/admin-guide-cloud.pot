@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Administrator Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-30 06:12+0000\n"
+"POT-Creation-Date: 2016-01-04 06:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3871,8 +3871,8 @@ msgstr ""
 
 #: ../compute-flavors.rst:29
 msgid ""
-"To modify an existing flavor in the dashboard, you must delete the flavor "
-"and create a modified one with the same name."
+"You can modify an existing flavor from the :guilabel:`Edit Flavor` button in "
+"the Dashboard."
 msgstr ""
 
 #: ../compute-flavors.rst:32
@@ -3896,7 +3896,7 @@ msgstr ""
 #: ../compute-networking-nova.rst:310 ../compute-networking-nova.rst:507
 #: ../compute-remote-console-access.rst:36
 #: ../compute-remote-console-access.rst:153 ../compute-security.rst:103
-#: ../database.rst:104 ../database.rst:144 ../networking_adv-features.rst:47
+#: ../database.rst:109 ../database.rst:149 ../networking_adv-features.rst:47
 #: ../networking_adv-features.rst:130 ../networking_adv-features.rst:711
 #: ../networking_arch.rst:29 ../networking_introduction.rst:36
 #: ../networking_introduction.rst:129 ../networking_multi-dhcp-agents.rst:40
@@ -4403,10 +4403,43 @@ msgid ""
 msgstr ""
 
 #: ../compute-flavors.rst:359
-msgid "CPU toplogy"
+msgid "CPU topology"
 msgstr ""
 
 #: ../compute-flavors.rst:362
+msgid ""
+"VMs can be pinned to specific physical cores in the hypervisor to improve "
+"performance. This should only be done where there is no CPU overcommit "
+"(``cpu_allocation_ratio`` is 1.0)."
+msgstr ""
+
+#: ../compute-flavors.rst:370
+msgid "Valid PIN-POLICY values are:"
+msgstr ""
+
+#: ../compute-flavors.rst:372
+msgid ""
+"``shared``—(default) The guest vCPUs will be allowed to freely float across "
+"host pCPUs, albeit potentially constrained by NUMA policy."
+msgstr ""
+
+#: ../compute-flavors.rst:375
+msgid ""
+"``dedicated``—the guest vCPUs will be strictly pinned to a set of host "
+"pCPUs. In the absence of an explicit vCPU topology request, the drivers "
+"typically expose all vCPUs as sockets with 1 core and 1 thread. When strict "
+"CPU pinning is in effect the guest CPU topology will be setup to match the "
+"topology of the CPUs to which it is pinned. This option assumes the "
+"overcommit ratio is 1.0. For example, if a 2 vCPU guest is pinned to a "
+"single host core with 2 threads, then the guest will get a topology of 1 "
+"socket, 1 core, 2 threads."
+msgstr ""
+
+#: ../compute-flavors.rst:382
+msgid "Core pinning"
+msgstr ""
+
+#: ../compute-flavors.rst:385
 msgid ""
 "Flavors can also be assigned to particular projects. By default, a flavor is "
 "public and available to all projects. Private flavors are only accessible to "
@@ -4414,7 +4447,7 @@ msgid ""
 "assign a private flavor to a project, run these commands:"
 msgstr ""
 
-#: ../compute-flavors.rst:370
+#: ../compute-flavors.rst:393
 msgid "Project private flavors"
 msgstr ""
 
@@ -5071,7 +5104,7 @@ msgstr ""
 # #-#-#-#-#  compute-live-migration-usage.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  database.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  telemetry-data-collection.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-live-migration-usage.rst:71 ../database.rst:109
+#: ../compute-live-migration-usage.rst:71 ../database.rst:114
 #: ../telemetry-data-collection.rst:712
 msgid "name"
 msgstr ""
@@ -8206,7 +8239,7 @@ msgstr ""
 
 # #-#-#-#-#  compute-security.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  database.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../compute-security.rst:75 ../database.rst:105 ../database.rst:145
+#: ../compute-security.rst:75 ../database.rst:110 ../database.rst:150
 msgid "In this example:"
 msgstr ""
 
@@ -9688,37 +9721,46 @@ msgid ""
 "configuration, patching, backups, restores, and monitoring."
 msgstr ""
 
-#: ../database.rst:25
+#: ../database.rst:23
+msgid ""
+"You can modify various cluster characteristics by editing the ``/etc/trove/"
+"trove.conf`` file. A comprehensive list of the Database service "
+"configuration options is described in the `Database service <http://docs."
+"openstack.org/liberty/config-reference/content/ch_configuring-trove.html>`_ "
+"chapter in the *Configuration Reference*."
+msgstr ""
+
+#: ../database.rst:30
 msgid "Create a data store"
 msgstr ""
 
-#: ../database.rst:27
+#: ../database.rst:32
 msgid ""
 "An administrative user can create data stores for a variety of databases."
 msgstr ""
 
-#: ../database.rst:30
+#: ../database.rst:35
 msgid ""
 "This section assumes you do not yet have a MySQL data store, and shows you "
 "how to create a MySQL data store and populate it with a MySQL 5.5 data store "
 "version."
 msgstr ""
 
-#: ../database.rst:35
+#: ../database.rst:40
 msgid "**To create a data store**"
 msgstr ""
 
-#: ../database.rst:37
+#: ../database.rst:42
 msgid "**Create a trove image**"
 msgstr ""
 
-#: ../database.rst:39
+#: ../database.rst:44
 msgid ""
 "Create an image for the type of database you want to use, for example, "
 "MySQL, MongoDB, Cassandra."
 msgstr ""
 
-#: ../database.rst:42
+#: ../database.rst:47
 msgid ""
 "This image must have the trove guest agent installed, and it must have the "
 "``trove-guestagent.conf`` file configured to connect to your OpenStack "
@@ -9727,69 +9769,69 @@ msgid ""
 "your image:"
 msgstr ""
 
-#: ../database.rst:57
+#: ../database.rst:62
 msgid ""
 "This example assumes you have created a MySQL 5.5 image called ``mysql-5.5."
 "qcow2``."
 msgstr ""
 
-#: ../database.rst:60
+#: ../database.rst:65
 msgid "**Register image with Image service**"
 msgstr ""
 
-#: ../database.rst:62
+#: ../database.rst:67
 msgid "You need to register your guest image with the Image service."
 msgstr ""
 
-#: ../database.rst:64
+#: ../database.rst:69
 msgid ""
 "In this example, you use the glance :command:`image-create` command to "
 "register a ``mysql-5.5.qcow2`` image."
 msgstr ""
 
-#: ../database.rst:92
+#: ../database.rst:97
 msgid "**Create the data store**"
 msgstr ""
 
-#: ../database.rst:94
+#: ../database.rst:99
 msgid ""
 "Create the data store that will house the new image. To do this, use the :"
 "command:`trove-manage` :command:`datastore_update` command."
 msgstr ""
 
-#: ../database.rst:97 ../database.rst:137
+#: ../database.rst:102 ../database.rst:142
 msgid "This example uses the following arguments:"
 msgstr ""
 
-#: ../database.rst:103 ../database.rst:143
+#: ../database.rst:108 ../database.rst:148
 msgid "Argument"
 msgstr ""
 
-#: ../database.rst:106 ../database.rst:147
+#: ../database.rst:111 ../database.rst:152
 msgid "config file"
 msgstr ""
 
-#: ../database.rst:107 ../database.rst:148
+#: ../database.rst:112 ../database.rst:153
 msgid "The configuration file to use."
 msgstr ""
 
-#: ../database.rst:108 ../database.rst:149
+#: ../database.rst:113 ../database.rst:154
 msgid ":option:`--config-file=/etc/trove/trove.conf`"
 msgstr ""
 
-#: ../database.rst:110
+#: ../database.rst:115
 msgid "Name you want to use for this data store."
 msgstr ""
 
-#: ../database.rst:111 ../database.rst:154 ../database.rst:177
+#: ../database.rst:116 ../database.rst:159 ../database.rst:182
 msgid "``mysql``"
 msgstr ""
 
-#: ../database.rst:112
+#: ../database.rst:117
 msgid "default version"
 msgstr ""
 
-#: ../database.rst:113
+#: ../database.rst:118
 msgid ""
 "You can attach multiple versions/images to a data store. For example, you "
 "might have a MySQL 5.5 version and a MySQL 5.6 version. You can designate "
@@ -9797,137 +9839,137 @@ msgid ""
 "explicitly request a specific version."
 msgstr ""
 
-#: ../database.rst:118 ../database.rst:189
+#: ../database.rst:123 ../database.rst:194
 msgid "``\"\"``"
 msgstr ""
 
-#: ../database.rst:120
+#: ../database.rst:125
 msgid ""
 "At this point, you do not yet have a default version, so pass in an empty "
 "string."
 msgstr ""
 
-#: ../database.rst:125 ../database.rst:202
+#: ../database.rst:130 ../database.rst:207
 msgid "Example:"
 msgstr ""
 
-#: ../database.rst:131
+#: ../database.rst:136
 msgid "**Add a version to the new data store**"
 msgstr ""
 
-#: ../database.rst:133
+#: ../database.rst:138
 msgid ""
 "Now that you have a MySQL data store, you can add a version to it, using "
 "the :command:`trove-manage` :command:`datastore_version_update` command. The "
 "version indicates which guest image to use."
 msgstr ""
 
-#: ../database.rst:151
+#: ../database.rst:156
 msgid "data store"
 msgstr ""
 
-#: ../database.rst:152
+#: ../database.rst:157
 msgid ""
 "The name of the data store you just created via ``trove-manage`` :command:"
 "`datastore_update`."
 msgstr ""
 
-#: ../database.rst:156
+#: ../database.rst:161
 msgid "version name"
 msgstr ""
 
-#: ../database.rst:157
+#: ../database.rst:162
 msgid "The name of the version you are adding to the data store."
 msgstr ""
 
-#: ../database.rst:158
+#: ../database.rst:163
 msgid "``mysql-5.5``"
 msgstr ""
 
-#: ../database.rst:160
+#: ../database.rst:165
 msgid "data store manager"
 msgstr ""
 
-#: ../database.rst:161
+#: ../database.rst:166
 msgid ""
 "Which data store manager to use for this version. Typically, the data store "
 "manager is identified by one of the following strings, depending on the "
 "database:"
 msgstr ""
 
-#: ../database.rst:165
+#: ../database.rst:170
 msgid "cassandra"
 msgstr ""
 
-#: ../database.rst:166
+#: ../database.rst:171
 msgid "couchbase"
 msgstr ""
 
-#: ../database.rst:167
+#: ../database.rst:172
 msgid "couchdb"
 msgstr ""
 
-#: ../database.rst:168
+#: ../database.rst:173
 msgid "db2"
 msgstr ""
 
-#: ../database.rst:169
+#: ../database.rst:174
 msgid "mariadb"
 msgstr ""
 
-#: ../database.rst:170
+#: ../database.rst:175
 msgid "mongodb"
 msgstr ""
 
-#: ../database.rst:171
+#: ../database.rst:176
 msgid "mysql"
 msgstr ""
 
-#: ../database.rst:172
+#: ../database.rst:177
 msgid "percona"
 msgstr ""
 
-#: ../database.rst:173
+#: ../database.rst:178
 msgid "postgresql"
 msgstr ""
 
-#: ../database.rst:174
+#: ../database.rst:179
 msgid "pxc"
 msgstr ""
 
-#: ../database.rst:175
+#: ../database.rst:180
 msgid "redis"
 msgstr ""
 
-#: ../database.rst:176
+#: ../database.rst:181
 msgid "vertica"
 msgstr ""
 
-#: ../database.rst:179
+#: ../database.rst:184
 msgid "glance ID"
 msgstr ""
 
-#: ../database.rst:180
+#: ../database.rst:185
 msgid ""
 "The ID of the guest image you just added to the Image service. You can get "
 "this ID by using the glance :command:`image-show` IMAGE_NAME command."
 msgstr ""
 
-#: ../database.rst:183
+#: ../database.rst:188
 msgid "bb75f870-0c33-4907-8467-1367f8cb15b6"
 msgstr ""
 
-#: ../database.rst:185
+#: ../database.rst:190
 msgid "packages"
 msgstr ""
 
-#: ../database.rst:186
+#: ../database.rst:191
 msgid ""
 "If you want to put additional packages on each guest that you create with "
 "this data store version, you can list the package names here."
 msgstr ""
 
-#: ../database.rst:191
+#: ../database.rst:196
 msgid ""
 "In this example, the guest image already contains all the required packages, "
 "so leave this argument empty."
@@ -9935,59 +9977,59 @@ msgstr ""
 
 # #-#-#-#-#  database.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  ts-eql-volume-size.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../database.rst:194 ../ts-eql-volume-size.rst:112
+#: ../database.rst:199 ../ts-eql-volume-size.rst:112
 msgid "active"
 msgstr ""
 
-#: ../database.rst:196
+#: ../database.rst:201
 msgid "Set this to either 1 or 0:"
 msgstr ""
 
-#: ../database.rst:196
+#: ../database.rst:201
 msgid "``1`` = active"
 msgstr ""
 
-#: ../database.rst:197
+#: ../database.rst:202
 msgid "``0`` = disabled"
 msgstr ""
 
-#: ../database.rst:198
+#: ../database.rst:203
 msgid "1"
 msgstr ""
 
-#: ../database.rst:208
+#: ../database.rst:213
 msgid ""
 "**Optional.** Set your new version as the default version. To do this, use "
 "the :command:`trove-manage` :command:`datastore_update` command again, this "
 "time specifying the version you just created."
 msgstr ""
 
-#: ../database.rst:216
+#: ../database.rst:221
 msgid "**Load validation rules for configuration groups**"
 msgstr ""
 
-#: ../database.rst:220
+#: ../database.rst:225
 msgid "**Applies only to MySQL and Percona data stores**"
 msgstr ""
 
-#: ../database.rst:222
+#: ../database.rst:227
 msgid ""
 "If you just created a MySQL or Percona data store, then you need to load the "
 "appropriate validation rules, as described in this step."
 msgstr ""
 
-#: ../database.rst:225
+#: ../database.rst:230
 msgid "If you just created a different data store, skip this step."
 msgstr ""
 
-#: ../database.rst:227
+#: ../database.rst:232
 msgid ""
 "**Background.** You can manage database configuration tasks by using "
 "configuration groups. Configuration groups let you set configuration "
 "parameters, in bulk, on one or more databases."
 msgstr ""
 
-#: ../database.rst:231
+#: ../database.rst:236
 msgid ""
 "When you set up a configuration group using the trove :command:"
 "`configuration-create` command, this command compares the configuration "
@@ -9995,43 +10037,43 @@ msgid ""
 "stored in the ``validation-rules.json`` file."
 msgstr ""
 
-#: ../database.rst:240
+#: ../database.rst:245
 msgid "Operating System"
 msgstr ""
 
-#: ../database.rst:241
+#: ../database.rst:246
 msgid "Location of :file:`validation-rules.json`"
 msgstr ""
 
 # #-#-#-#-#  database.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
 # #-#-#-#-#  networking_adv-features.pot (Cloud Administrator Guide 0.9)  #-#-#-#-#
-#: ../database.rst:242 ../networking_adv-features.rst:627
+#: ../database.rst:247 ../networking_adv-features.rst:627
 msgid "Notes"
 msgstr ""
 
-#: ../database.rst:244
+#: ../database.rst:249
 msgid "Ubuntu 14.04"
 msgstr ""
 
-#: ../database.rst:245
+#: ../database.rst:250
 msgid ":file:`/usr/lib/python2.7/dist-packages/trove/templates/DATASTORE_NAME`"
 msgstr ""
 
-#: ../database.rst:246 ../database.rst:252
+#: ../database.rst:251 ../database.rst:257
 msgid ""
 "DATASTORE_NAME is the name of either the MySQL data store or the Percona "
 "data store. This is typically either ``mysql`` or ``percona``."
 msgstr ""
 
-#: ../database.rst:250
+#: ../database.rst:255
 msgid "RHEL 7, CentOS 7, Fedora 20, and Fedora 21"
 msgstr ""
 
-#: ../database.rst:251
+#: ../database.rst:256
 msgid ":file:`/usr/lib/python2.7/site-packages/trove/templates/DATASTORE_NAME`"
 msgstr ""
 
-#: ../database.rst:257
+#: ../database.rst:262
 msgid ""
 "Therefore, as part of creating a data store, you need to load the "
 "``validation-rules.json`` file, using the :command:`trove-manage` :command:"
@@ -10039,55 +10081,55 @@ msgid ""
 "following arguments:"
 msgstr ""
 
-#: ../database.rst:262
+#: ../database.rst:267
 msgid "Data store name"
 msgstr ""
 
-#: ../database.rst:263
+#: ../database.rst:268
 msgid "Data store version"
 msgstr ""
 
-#: ../database.rst:264
+#: ../database.rst:269
 msgid "Full path to the ``validation-rules.json`` file"
 msgstr ""
 
-#: ../database.rst:268
+#: ../database.rst:273
 msgid ""
 "This example loads the ``validation-rules.json`` file for a MySQL database "
 "on Ubuntu 14.04:"
 msgstr ""
 
-#: ../database.rst:275
+#: ../database.rst:280
 msgid "**Validate data store**"
 msgstr ""
 
-#: ../database.rst:277
+#: ../database.rst:282
 msgid ""
 "To validate your new data store and version, start by listing the data "
 "stores on your system:"
 msgstr ""
 
-#: ../database.rst:290
+#: ../database.rst:295
 msgid ""
 "Take the ID of the MySQL data store and pass it in with the :command:"
 "`datastore-version-list` command:"
 msgstr ""
 
-#: ../database.rst:303
+#: ../database.rst:308
 msgid "Configure a cluster"
 msgstr ""
 
-#: ../database.rst:305
+#: ../database.rst:310
 msgid ""
 "An administrative user can configure various characteristics of a MongoDB "
 "cluster."
 msgstr ""
 
-#: ../database.rst:308
+#: ../database.rst:313
 msgid "**Query routers and config servers**"
 msgstr ""
 
-#: ../database.rst:310
+#: ../database.rst:315
 msgid ""
 "**Background.** Each cluster includes at least one query router and one "
 "config server. Query routers and config servers count against your quota. "
@@ -10095,30 +10137,30 @@ msgid ""
 "and config server(s)."
 msgstr ""
 
-#: ../database.rst:315
+#: ../database.rst:320
 msgid ""
 "**Configuration.** By default, the system creates one query router and one "
 "config server per cluster. You can change this by editing the ``/etc/trove/"
 "trove.conf`` file. These settings are in the ``mongodb`` section of the file:"
 msgstr ""
 
-#: ../database.rst:324
+#: ../database.rst:329
 msgid "Setting"
 msgstr ""
 
-#: ../database.rst:325
+#: ../database.rst:330
 msgid "Valid values are:"
 msgstr ""
 
-#: ../database.rst:327
+#: ../database.rst:332
 msgid "num_config_servers_per_cluster"
 msgstr ""
 
-#: ../database.rst:328 ../database.rst:331
+#: ../database.rst:333 ../database.rst:336
 msgid "1 or 3"
 msgstr ""
 
-#: ../database.rst:330
+#: ../database.rst:335
 msgid "num_query_routers_per_cluster"
 msgstr ""
 
