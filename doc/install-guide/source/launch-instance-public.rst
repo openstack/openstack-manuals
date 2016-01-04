@@ -120,7 +120,7 @@ Launch the instance
       | hostId                               |                                               |
       | id                                   | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf          |
       | image                                | cirros (38047887-61a7-41ea-9b49-27987d5e8bb9) |
-      | key_name                             | key                                           |
+      | key_name                             | mykey                                         |
       | metadata                             | {}                                            |
       | name                                 | public-instance                               |
       | os-extended-volumes:volumes_attached | []                                            |
