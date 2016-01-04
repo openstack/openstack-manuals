@@ -43,31 +43,6 @@ To get started, complete the following steps:
 To set up the environment for contribution, proceed with the subsections
 below.
 
-
-Install Windows prerequisites
------------------------------
-
-If you use Windows to contribute to OpenStack, install the following
-prerequisites:
-
-* `git <http://msysgit.github.io>`_
-
-* `curl <http://curl.haxx.se/>`_
-
-* `tar <http://gnuwin32.sourceforge.net/packages/gtar.htm>`_
-  or `7-zip <http://sourceforge.net/projects/sevenzip/?source=recommended>`_
-
-* `Python 2.7 environment
-  <http://docs.python-guide.org/en/latest/starting/install/win/>`_
-
-  .. note::
-
-     As part of the Python installation, be sure to install setuptools
-     and pip as instructed.
-
-In the subsequent procedures, run commands from the gitbash command line.
-
-
 Set up a text editor
 --------------------
 
@@ -116,14 +91,19 @@ Set up git and git-review
 
 #. Install git. See `GitHub help`_ for details.
 
-   .. note::
-
-      If you installed Windows prerequisites, you have already installed
-      git as well.
+   If you use Windows to contribute to OpenStack, install
+   `Git for Windows <https://git-for-windows.github.io/>`_.
+   In the subsequent procedures, run commands from the Git Bash console.
 
 #. Install git-review so that you are able to submit patches.
    See `Installing git-review`_ for details.
 
+  .. note::
+
+     If you use Windows to contribute to OpenStack, install
+     `Python <https://docs.python.org/3/using/windows.html>`_
+     as prerequisites. As part of the Python installation,
+     be sure to install setuptools and pip as instructed.
 
 Set up SSH
 ----------
