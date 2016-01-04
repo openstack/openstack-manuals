@@ -33,22 +33,22 @@ to ``True``.
 
 Here is the router we have used in our demonstration:
 
-   .. code-block:: console
+.. code-block:: console
 
-      $ neutron router-show router
-      +-----------------------+--------------------------------------+
-      | Field                 | Value                                |
-      +-----------------------+--------------------------------------+
-      | admin_state_up        | True                                 |
-      | distributed           | False                                |
-      | external_gateway_info |                                      |
-      | ha                    | False                                |
-      | id                    | f8cc0f21-f51f-471d-a03c-37a6966553e0 |
-      | name                  | router                               |
-      | routes                |                                      |
-      | status                | ACTIVE                               |
-      | tenant_id             | ef488829f82c4a36a262011fabe0129f     |
-      +-----------------------+--------------------------------------+
+   $ neutron router-show router
+   +-----------------------+--------------------------------------+
+   | Field                 | Value                                |
+   +-----------------------+--------------------------------------+
+   | admin_state_up        | True                                 |
+   | distributed           | False                                |
+   | external_gateway_info |                                      |
+   | ha                    | False                                |
+   | id                    | f8cc0f21-f51f-471d-a03c-37a6966553e0 |
+   | name                  | router                               |
+   | routes                |                                      |
+   | status                | ACTIVE                               |
+   | tenant_id             | ef488829f82c4a36a262011fabe0129f     |
+   +-----------------------+--------------------------------------+
 
 #. Source the administrative project credentials.
 #. Set the admin_state_up to ``False``. This will severe south-north
@@ -107,22 +107,22 @@ starting the router again
 
 Here is the router we have used in our demonstration:
 
-   .. code-block:: console
+.. code-block:: console
 
-      $ neutron router-show router
-      +-----------------------+--------------------------------------+
-      | Field                 | Value                                |
-      +-----------------------+--------------------------------------+
-      | admin_state_up        | False                                |
-      | distributed           | False                                |
-      | external_gateway_info |                                      |
-      | ha                    | True                                 |
-      | id                    | f8cc0f21-f51f-471d-a03c-37a6966553e0 |
-      | name                  | router                               |
-      | routes                |                                      |
-      | status                | ACTIVE                               |
-      | tenant_id             | ef488829f82c4a36a262011fabe0129f     |
-      +-----------------------+--------------------------------------+
+   $ neutron router-show router
+   +-----------------------+--------------------------------------+
+   | Field                 | Value                                |
+   +-----------------------+--------------------------------------+
+   | admin_state_up        | False                                |
+   | distributed           | False                                |
+   | external_gateway_info |                                      |
+   | ha                    | True                                 |
+   | id                    | f8cc0f21-f51f-471d-a03c-37a6966553e0 |
+   | name                  | router                               |
+   | routes                |                                      |
+   | status                | ACTIVE                               |
+   | tenant_id             | ef488829f82c4a36a262011fabe0129f     |
+   +-----------------------+--------------------------------------+
 
 #. Source the administrative project credentials.
 #. Set the admin_state_up to ``False``. This will severe south-north
