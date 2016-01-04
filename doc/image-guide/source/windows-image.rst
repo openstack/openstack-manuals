@@ -91,5 +91,5 @@ Your image is ready to upload to the Image service:
 .. code-block:: console
 
    $ glance image-create --name WS2012 --disk-format qcow2 \
-     --container-format bare --is-public true \
+     --container-format bare --property visibility=public \
      --file ws2012.qcow2
