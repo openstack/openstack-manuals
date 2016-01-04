@@ -98,7 +98,7 @@ Shared storage
    will not work correctly.
 
 -  You must specify the ``instances_path`` in each node that runs
-   nova-compute. The mount point for ``instances_path`` must be the
+   ``nova-compute``. The mount point for ``instances_path`` must be the
    same value for each node, or live migration will not work
    correctly.
 
@@ -111,11 +111,11 @@ Example Compute installation environment
    servers as ``HostA``, ``HostB``, and ``HostC``:
 
    -  ``HostA`` is the Cloud Controller, and should run these services:
-      nova-api, nova-scheduler, ``nova-network``, cinder-volume, and
-      ``nova-objectstore``.
+      ``nova-api``, ``nova-scheduler``, ``nova-network``, ``cinder-volume``,
+      and ``nova-objectstore``.
 
    -  ``HostB`` and ``HostC`` are the compute nodes that run
-      nova-compute.
+      ``nova-compute``.
 
    Ensure that ``NOVA-INST-DIR`` (set with ``state_path`` in the
    :file:`nova.conf` file) is the same on all hosts.
@@ -143,7 +143,7 @@ Example Compute installation environment
 
 #. Ensure you can access SSH without a password and without
    StrictHostKeyChecking between ``HostB`` and ``HostC`` as ``nova``
-   user (set with the owner of nova-compute service). Direct access
+   user (set with the owner of ``nova-compute`` service). Direct access
    from one compute host to another is needed to copy the VM file
    across. It is also needed to detect if the source and target
    compute nodes share a storage subsystem.
