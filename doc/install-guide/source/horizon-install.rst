@@ -125,6 +125,23 @@ Install and configure components
 
            OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
 
+      * If you chose networking option 1, disable support for layer-3
+        networking services:
+
+        .. code-block:: ini
+
+           OPENSTACK_NEUTRON_NETWORK = {
+               ...
+               'enable_router': False,
+               'enable_quotas': False,
+               'enable_distributed_router': False,
+               'enable_ha_router': False,
+               'enable_lb': False,
+               'enable_firewall': False,
+               'enable_vpn': False,
+               'enable_fip_topology_check': False,
+           }
+
       * Optionally, configure the time zone:
 
         .. code-block:: ini
@@ -176,6 +193,23 @@ Install and configure components
 
            OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
 
+      * If you chose networking option 1, disable support for layer-3
+        networking services:
+
+        .. code-block:: ini
+
+           OPENSTACK_NEUTRON_NETWORK = {
+               ...
+               'enable_router': False,
+               'enable_quotas': False,
+               'enable_distributed_router': False,
+               'enable_ha_router': False,
+               'enable_lb': False,
+               'enable_firewall': False,
+               'enable_vpn': False,
+               'enable_fip_topology_check': False,
+           }
+
       * Optionally, configure the time zone:
 
         .. code-block:: ini
@@ -226,6 +260,23 @@ Install and configure components
         .. code-block:: ini
 
            OPENSTACK_KEYSTONE_DEFAULT_ROLE = "user"
+
+      * If you chose networking option 1, disable support for layer-3
+        networking services:
+
+        .. code-block:: ini
+
+           OPENSTACK_NEUTRON_NETWORK = {
+               ...
+               'enable_router': False,
+               'enable_quotas': False,
+               'enable_distributed_router': False,
+               'enable_ha_router': False,
+               'enable_lb': False,
+               'enable_firewall': False,
+               'enable_vpn': False,
+               'enable_fip_topology_check': False,
+           }
 
       * Optionally, configure the time zone:
 
