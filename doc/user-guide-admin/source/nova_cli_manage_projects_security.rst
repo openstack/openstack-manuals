@@ -193,7 +193,7 @@ selected dynamically. This alleviates the need for individual rules to
 allow each new member of the cluster.
 
 #. Make sure to set the system variables for the user and tenant for
-   which you are deleting a security group for.
+   which you are checking a security group for.
 
 #. Add a source group, as follows:
 
