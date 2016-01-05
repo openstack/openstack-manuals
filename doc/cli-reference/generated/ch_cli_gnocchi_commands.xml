@@ -15,7 +15,7 @@
         interface (CLI) for the A time series storage and resources index service API and its extensions.
 
        This chapter documents <command>gnocchi</command> version
-        <literal>2.0.0</literal>.
+        <literal>2.1.0</literal>.
     </para>
 
     <para>For help on a specific <command>gnocchi</command>
@@ -37,8 +37,10 @@
                [--os-project-name OS_PROJECT_NAME]
                [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
                [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
-               [--os-trust-id OS_TRUST_ID] [--os-user-id OS_USER_ID]
-               [--os-user-name OS_USERNAME]
+               [--os-trust-id OS_TRUST_ID]
+               [--os-default-domain-id OS_DEFAULT_DOMAIN_ID]
+               [--os-default-domain-name OS_DEFAULT_DOMAIN_NAME]
+               [--os-user-id OS_USER_ID] [--os-user-name OS_USERNAME]
                [--os-user-domain-id OS_USER_DOMAIN_ID]
                [--os-user-domain-name OS_USER_DOMAIN_NAME]
                [--os-password OS_PASSWORD] [--gnocchi-endpoint &lt;endpoint&gt;]</computeroutput></screen>
@@ -74,7 +76,7 @@
     <term><command>-q, --quiet</command></term>
     <listitem>
       <para>
-        suppress output except warnings and errors
+        Suppress output except warnings and errors.
       </para>
     </listitem>
   </varlistentry>
@@ -82,7 +84,7 @@
     <term><command>-h, --help</command></term>
     <listitem>
       <para>
-        show this help message and exit
+        Show help message and exit.
       </para>
     </listitem>
   </varlistentry>
@@ -90,7 +92,7 @@
     <term><command>--debug</command></term>
     <listitem>
       <para>
-        show tracebacks on errors
+        Show tracebacks on errors.
       </para>
     </listitem>
   </varlistentry>
@@ -116,51 +118,6 @@
     <listitem>
       <para>
       Defaults to <code>env[GNOCCHI_API_VERSION]</code> or 1.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--insecure</command></term>
-    <listitem>
-      <para>
-        Explicitly allow client to perform "insecure" TLS
-      (https) requests. The server's certificate will not be
-      verified against any certificate authorities. This
-      option should be used with caution.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-cacert &lt;ca-certificate&gt;</command></term>
-    <listitem>
-      <para>
-      Specify a CA bundle file to use in verifying a TLS
-      (https) server certificate. Defaults to
-      <code>env[OS_CACERT]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-cert &lt;certificate&gt;</command></term>
-    <listitem>
-      <para>
-      Defaults to <code>env[OS_CERT]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--os-key &lt;key&gt;</command></term>
-    <listitem>
-      <para>
-        Defaults to <code>env[OS_KEY]</code>.
-      </para>
-    </listitem>
-  </varlistentry>
-  <varlistentry>
-    <term><command>--timeout &lt;seconds&gt;</command></term>
-    <listitem>
-      <para>
-        Set request timeout (in seconds).
       </para>
     </listitem>
   </varlistentry>
@@ -199,10 +156,11 @@
     <section xml:id="gnocchiclient_subcommand_archive-policy_create">
         <title>gnocchi archive-policy create</title>
         <screen><computeroutput>usage: gnocchi archive-policy create [-h]
-                                     [-f {html,json,shell,table,value,yaml}]
+                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
-                                     [--prefix PREFIX] [-b BACK_WINDOW]
-                                     [-m AGGREGATION_METHODS] -d &lt;DEFINITION&gt;
+                                     [--noindent] [--prefix PREFIX]
+                                     [-b BACK_WINDOW] [-m AGGREGATION_METHODS]
+                                     -d &lt;DEFINITION&gt;
                                      name</computeroutput></screen>
         <para>
 Create an archive policy
@@ -285,8 +243,10 @@ Delete an archive policy
     </section>
     <section xml:id="gnocchiclient_subcommand_archive-policy_list">
         <title>gnocchi archive-policy list</title>
-        <screen><computeroutput>usage: gnocchi archive-policy list [-h] [-f {csv,html,json,table,value,yaml}]
+        <screen><computeroutput>usage: gnocchi archive-policy list [-h]
+                                   [-f {csv,html,json,json,table,value,yaml,yaml}]
                                    [-c COLUMN] [--max-width &lt;integer&gt;]
+                                   [--noindent]
                                    [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List archive policies
@@ -305,9 +265,9 @@ List archive policies
     <section xml:id="gnocchiclient_subcommand_archive-policy_show">
         <title>gnocchi archive-policy show</title>
         <screen><computeroutput>usage: gnocchi archive-policy show [-h]
-                                   [-f {html,json,shell,table,value,yaml}]
+                                   [-f {html,json,json,shell,table,value,yaml,yaml}]
                                    [-c COLUMN] [--max-width &lt;integer&gt;]
-                                   [--prefix PREFIX]
+                                   [--noindent] [--prefix PREFIX]
                                    name</computeroutput></screen>
         <para>
 Show an archive policy
@@ -347,9 +307,9 @@ Show an archive policy
     <section xml:id="gnocchiclient_subcommand_archive-policy-rule_create">
         <title>gnocchi archive-policy-rule create</title>
         <screen><computeroutput>usage: gnocchi archive-policy-rule create [-h]
-                                          [-f {html,json,shell,table,value,yaml}]
+                                          [-f {html,json,json,shell,table,value,yaml,yaml}]
                                           [-c COLUMN] [--max-width &lt;integer&gt;]
-                                          [--prefix PREFIX] -a
+                                          [--noindent] [--prefix PREFIX] -a
                                           ARCHIVE_POLICY_NAME -m
                                           METRIC_PATTERN
                                           name</computeroutput></screen>
@@ -425,8 +385,9 @@ Delete an archive policy rule
     <section xml:id="gnocchiclient_subcommand_archive-policy-rule_list">
         <title>gnocchi archive-policy-rule list</title>
         <screen><computeroutput>usage: gnocchi archive-policy-rule list [-h]
-                                        [-f {csv,html,json,table,value,yaml}]
+                                        [-f {csv,html,json,json,table,value,yaml,yaml}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
+                                        [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List archive policy rules
@@ -445,9 +406,9 @@ List archive policy rules
     <section xml:id="gnocchiclient_subcommand_archive-policy-rule_show">
         <title>gnocchi archive-policy-rule show</title>
         <screen><computeroutput>usage: gnocchi archive-policy-rule show [-h]
-                                        [-f {html,json,shell,table,value,yaml}]
+                                        [-f {html,json,json,shell,table,value,yaml,yaml}]
                                         [-c COLUMN] [--max-width &lt;integer&gt;]
-                                        [--prefix PREFIX]
+                                        [--noindent] [--prefix PREFIX]
                                         name</computeroutput></screen>
         <para>
 Show an archive policy rule
@@ -477,10 +438,11 @@ Show an archive policy rule
     <section xml:id="gnocchiclient_subcommand_benchmark_measures_add">
         <title>gnocchi benchmark measures add</title>
         <screen><computeroutput>usage: gnocchi benchmark measures add [-h] [--resource-id RESOURCE_ID]
-                                      [-f {html,json,shell,table,value,yaml}]
+                                      [-f {html,json,json,shell,table,value,yaml,yaml}]
                                       [-c COLUMN] [--max-width &lt;integer&gt;]
-                                      [--prefix PREFIX] [--workers WORKERS]
-                                      --count COUNT [--batch BATCH]
+                                      [--noindent] [--prefix PREFIX]
+                                      [--workers WORKERS] --count COUNT
+                                      [--batch BATCH]
                                       [--timestamp-start TIMESTAMP_START]
                                       [--timestamp-end TIMESTAMP_END]
                                       metric</computeroutput></screen>
@@ -560,9 +522,9 @@ Do benchmark testing of adding measurements
     <section xml:id="gnocchiclient_subcommand_benchmark_measures_show">
         <title>gnocchi benchmark measures show</title>
         <screen><computeroutput>usage: gnocchi benchmark measures show [-h]
-                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
-                                       [--prefix PREFIX]
+                                       [--noindent] [--prefix PREFIX]
                                        [--resource-id RESOURCE_ID]
                                        [--aggregation AGGREGATION]
                                        [--start START] [--stop STOP]
@@ -644,9 +606,9 @@ Do benchmark testing of measurements show
     <section xml:id="gnocchiclient_subcommand_benchmark_metric_create">
         <title>gnocchi benchmark metric create</title>
         <screen><computeroutput>usage: gnocchi benchmark metric create [-h] [--resource-id RESOURCE_ID]
-                                       [-f {html,json,shell,table,value,yaml}]
+                                       [-f {html,json,json,shell,table,value,yaml,yaml}]
                                        [-c COLUMN] [--max-width &lt;integer&gt;]
-                                       [--prefix PREFIX]
+                                       [--noindent] [--prefix PREFIX]
                                        [--archive-policy-name ARCHIVE_POLICY_NAME]
                                        [--workers WORKERS] --count COUNT
                                        [--keep]</computeroutput></screen>
@@ -707,10 +669,10 @@ Do benchmark testing of metric creation
     <section xml:id="gnocchiclient_subcommand_benchmark_metric_show">
         <title>gnocchi benchmark metric show</title>
         <screen><computeroutput>usage: gnocchi benchmark metric show [-h] [--resource-id RESOURCE_ID]
-                                     [-f {html,json,shell,table,value,yaml}]
+                                     [-f {html,json,json,shell,table,value,yaml,yaml}]
                                      [-c COLUMN] [--max-width &lt;integer&gt;]
-                                     [--prefix PREFIX] [--workers WORKERS]
-                                     --count COUNT
+                                     [--noindent] [--prefix PREFIX]
+                                     [--workers WORKERS] --count COUNT
                                      metric [metric ...]</computeroutput></screen>
         <para>
 Do benchmark testing of metric show
@@ -763,9 +725,10 @@ Do benchmark testing of metric show
     </section>
     <section xml:id="gnocchiclient_subcommand_capabilities_list">
         <title>gnocchi capabilities list</title>
-        <screen><computeroutput>usage: gnocchi capabilities list [-h] [-f {html,json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: gnocchi capabilities list [-h]
+                                 [-f {html,json,json,shell,table,value,yaml,yaml}]
                                  [-c COLUMN] [--max-width &lt;integer&gt;]
-                                 [--prefix PREFIX]</computeroutput></screen>
+                                 [--noindent] [--prefix PREFIX]</computeroutput></screen>
         <para>
 List capabilities
         </para>  <variablelist wordsize="10">
@@ -826,14 +789,17 @@ Add measurements to a metric
     </section>
     <section xml:id="gnocchiclient_subcommand_measures_aggregation">
         <title>gnocchi measures aggregation</title>
-        <screen><computeroutput>usage: gnocchi measures aggregation [-h] [-f {csv,html,json,table,value,yaml}]
+        <screen><computeroutput>usage: gnocchi measures aggregation [-h]
+                                    [-f {csv,html,json,json,table,value,yaml,yaml}]
                                     [-c COLUMN] [--max-width &lt;integer&gt;]
+                                    [--noindent]
                                     [--quote {all,minimal,none,nonnumeric}] -m
                                     METRIC [METRIC ...]
                                     [--aggregation AGGREGATION]
                                     [--start START] [--stop STOP]
                                     [--needed-overlap NEEDED_OVERLAP]
-                                    [--query QUERY]</computeroutput></screen>
+                                    [--query QUERY]
+                                    [--resource-type RESOURCE_TYPE]</computeroutput></screen>
         <para>
 Get measurements of aggregated metrics
         </para>  <variablelist wordsize="10">
@@ -894,12 +860,21 @@ Get measurements of aggregated metrics
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--resource-type RESOURCE_TYPE</command></term>
+    <listitem>
+      <para>
+      Resource type to query
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="gnocchiclient_subcommand_measures_show">
         <title>gnocchi measures show</title>
-        <screen><computeroutput>usage: gnocchi measures show [-h] [-f {csv,html,json,table,value,yaml}]
-                             [-c COLUMN] [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: gnocchi measures show [-h]
+                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--resource-id RESOURCE_ID]
                              [--aggregation AGGREGATION] [--start START]
@@ -965,8 +940,8 @@ Get measurements of a metric
     <section xml:id="gnocchiclient_subcommand_metric_create">
         <title>gnocchi metric create</title>
         <screen><computeroutput>usage: gnocchi metric create [-h] [--resource-id RESOURCE_ID]
-                             [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width &lt;integer&gt;]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX]
                              [--archive-policy-name ARCHIVE_POLICY_NAME]
                              [METRIC_NAME]</computeroutput></screen>
@@ -1050,8 +1025,9 @@ Delete a metric
     </section>
     <section xml:id="gnocchiclient_subcommand_metric_list">
         <title>gnocchi metric list</title>
-        <screen><computeroutput>usage: gnocchi metric list [-h] [-f {csv,html,json,table,value,yaml}]
-                           [-c COLUMN] [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: gnocchi metric list [-h]
+                           [-f {csv,html,json,json,table,value,yaml,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                            [--quote {all,minimal,none,nonnumeric}]</computeroutput></screen>
         <para>
 List metrics
@@ -1069,8 +1045,9 @@ List metrics
     </section>
     <section xml:id="gnocchiclient_subcommand_metric_show">
         <title>gnocchi metric show</title>
-        <screen><computeroutput>usage: gnocchi metric show [-h] [-f {html,json,shell,table,value,yaml}]
-                           [-c COLUMN] [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: gnocchi metric show [-h]
+                           [-f {html,json,json,shell,table,value,yaml,yaml}]
+                           [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                            [--prefix PREFIX] [--resource-id RESOURCE_ID]
                            metric</computeroutput></screen>
         <para>
@@ -1108,11 +1085,13 @@ Show a metric
     </section>
     <section xml:id="gnocchiclient_subcommand_resource_create">
         <title>gnocchi resource create</title>
-        <screen><computeroutput>usage: gnocchi resource create [-h] [-f {html,json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: gnocchi resource create [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
-                               [--prefix PREFIX] [--type RESOURCE_TYPE]
-                               [-a ATTRIBUTE] [-m ADD_METRIC]
-                               [-n CREATE_METRIC] [-d DELETE_METRIC]
+                               [--noindent] [--prefix PREFIX]
+                               [--type RESOURCE_TYPE] [-a ATTRIBUTE]
+                               [-m ADD_METRIC] [-n CREATE_METRIC]
+                               [-d DELETE_METRIC]
                                resource_id</computeroutput></screen>
         <para>
 Create a resource
@@ -1209,8 +1188,10 @@ Delete a resource
     </section>
     <section xml:id="gnocchiclient_subcommand_resource_history">
         <title>gnocchi resource history</title>
-        <screen><computeroutput>usage: gnocchi resource history [-h] [-f {csv,html,json,table,value,yaml}]
+        <screen><computeroutput>usage: gnocchi resource history [-h]
+                                [-f {csv,html,json,json,table,value,yaml,yaml}]
                                 [-c COLUMN] [--max-width &lt;integer&gt;]
+                                [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
                                 [--details] [--limit &lt;LIMIT&gt;]
                                 [--marker &lt;MARKER&gt;] [--sort &lt;SORT&gt;]
@@ -1286,8 +1267,9 @@ Show the history of a resource
     </section>
     <section xml:id="gnocchiclient_subcommand_resource_list">
         <title>gnocchi resource list</title>
-        <screen><computeroutput>usage: gnocchi resource list [-h] [-f {csv,html,json,table,value,yaml}]
-                             [-c COLUMN] [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: gnocchi resource list [-h]
+                             [-f {csv,html,json,json,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--quote {all,minimal,none,nonnumeric}]
                              [--details] [--history] [--limit &lt;LIMIT&gt;]
                              [--marker &lt;MARKER&gt;] [--sort &lt;SORT&gt;]
@@ -1359,8 +1341,10 @@ List resources
     </section>
     <section xml:id="gnocchiclient_subcommand_resource_search">
         <title>gnocchi resource search</title>
-        <screen><computeroutput>usage: gnocchi resource search [-h] [-f {csv,html,json,table,value,yaml}]
+        <screen><computeroutput>usage: gnocchi resource search [-h]
+                               [-f {csv,html,json,json,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
+                               [--noindent]
                                [--quote {all,minimal,none,nonnumeric}]
                                [--details] [--history] [--limit &lt;LIMIT&gt;]
                                [--marker &lt;MARKER&gt;] [--sort &lt;SORT&gt;]
@@ -1440,8 +1424,9 @@ Search resources with specified query rules
     </section>
     <section xml:id="gnocchiclient_subcommand_resource_show">
         <title>gnocchi resource show</title>
-        <screen><computeroutput>usage: gnocchi resource show [-h] [-f {html,json,shell,table,value,yaml}]
-                             [-c COLUMN] [--max-width &lt;integer&gt;]
+        <screen><computeroutput>usage: gnocchi resource show [-h]
+                             [-f {html,json,json,shell,table,value,yaml,yaml}]
+                             [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
                              [--prefix PREFIX] [--type RESOURCE_TYPE]
                              resource_id</computeroutput></screen>
         <para>
@@ -1479,11 +1464,13 @@ Show a resource
     </section>
     <section xml:id="gnocchiclient_subcommand_resource_update">
         <title>gnocchi resource update</title>
-        <screen><computeroutput>usage: gnocchi resource update [-h] [-f {html,json,shell,table,value,yaml}]
+        <screen><computeroutput>usage: gnocchi resource update [-h]
+                               [-f {html,json,json,shell,table,value,yaml,yaml}]
                                [-c COLUMN] [--max-width &lt;integer&gt;]
-                               [--prefix PREFIX] [--type RESOURCE_TYPE]
-                               [-a ATTRIBUTE] [-m ADD_METRIC]
-                               [-n CREATE_METRIC] [-d DELETE_METRIC]
+                               [--noindent] [--prefix PREFIX]
+                               [--type RESOURCE_TYPE] [-a ATTRIBUTE]
+                               [-m ADD_METRIC] [-n CREATE_METRIC]
+                               [-d DELETE_METRIC]
                                resource_id</computeroutput></screen>
         <para>
 Update a resource
@@ -1552,8 +1539,9 @@ Update a resource
     </section>
     <section xml:id="gnocchiclient_subcommand_status">
         <title>gnocchi status</title>
-        <screen><computeroutput>usage: gnocchi status [-h] [-f {html,json,shell,table,value,yaml}] [-c COLUMN]
-                      [--max-width &lt;integer&gt;] [--prefix PREFIX]</computeroutput></screen>
+        <screen><computeroutput>usage: gnocchi status [-h] [-f {html,json,json,shell,table,value,yaml,yaml}]
+                      [-c COLUMN] [--max-width &lt;integer&gt;] [--noindent]
+                      [--prefix PREFIX]</computeroutput></screen>
         <para>
 Show the status of measurements processing
         </para>  <variablelist wordsize="10">
