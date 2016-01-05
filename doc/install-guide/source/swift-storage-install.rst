@@ -74,7 +74,7 @@ storage nodes, you must prepare the storage devices.
       # mount /srv/node/sdb
       # mount /srv/node/sdc
 
-#. Edit the ``/etc/rsyncd.conf`` file and add the following to it:
+#. Create or edit the ``/etc/rsyncd.conf`` file to contain the following:
 
    .. code-block:: ini
 
