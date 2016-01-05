@@ -12,7 +12,9 @@ following actions:
      user = swift
      swift_dir = /etc/swift
 
-* In the ``[pipeline:main]`` section, enable the appropriate modules:
+* In the ``[pipeline:main]`` section, remove the ``tempurl`` and
+  ``tempauth`` modules and add the ``authtoken`` and ``keystoneauth``
+  modules:
 
   .. code-block:: ini
 
@@ -20,6 +22,10 @@ following actions:
      pipeline = catch_errors gatekeeper healthcheck proxy-logging cache
      container_sync bulk ratelimit authtoken keystoneauth container-quotas
      account-quotas slo dlo versioned_writes proxy-logging proxy-server
+
+  .. note::
+
+     Do not change the order of the modules.
 
   .. note::
 
