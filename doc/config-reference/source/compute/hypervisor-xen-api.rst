@@ -387,6 +387,23 @@ Another alternative is to use the "default" storage
 
    sr_matching_filter = "default-sr:true"
 
+Image upload in ``tgz`` compressed format
+-----------------------------------------
+
+To start uploading ``tgz`` compressed raw disk images to the Image service,
+configure ``xenapi_image_upload_handler`` by replacing ``GlanceStore``
+with ``VdiThroughDevStore``.
+
+.. code-block:: ini
+
+   xenapi_image_upload_handler=nova.virt.xenapi.image.vdi_through_dev.VdiThroughDevStore
+
+As opposed to:
+
+.. code-block:: ini
+
+   xenapi_image_upload_handler=nova.virt.xenapi.image.glance.GlanceStore
+
 XenAPI configuration reference
 ------------------------------
 
