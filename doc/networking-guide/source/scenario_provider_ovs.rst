@@ -75,6 +75,17 @@ Infrastructure
 .. image:: figures/scenario-provider-ovs-services.png
    :alt: Service layout
 
+.. warning::
+
+   Linux distributions often package older releases of Open vSwitch that can
+   introduce issues during operation with the Networking service. We recommend
+   using at least the latest long-term stable (LTS) release of Open vSwitch
+   for the best experience and support from Open vSwitch. See
+   `<http://www.openvswitch.org>`__ for available releases and the
+   `installation instructions
+   <https://github.com/openvswitch/ovs/blob/master/INSTALL.md>`__ for
+   building newer releases from source on various distributions.
+
 OpenStack services - controller node
 ------------------------------------
 
