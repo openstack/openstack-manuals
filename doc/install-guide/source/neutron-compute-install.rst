@@ -13,7 +13,7 @@ Install the components
 
    .. code-block:: console
 
-      # apt-get install neutron-plugin-linuxbridge-agent
+      # apt-get install neutron-plugin-linuxbridge-agent conntrack
 
 .. only:: rdo
 
