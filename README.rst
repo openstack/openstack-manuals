@@ -49,22 +49,22 @@ The different manuals are in subdirectories of the
 DocBook guides
 --------------
 
-For example, the root directory of the *OpenStack Virtual Machine Image Guide*
-is ``openstack-manuals/doc/image-guide``.
+For example, the root directory of the *OpenStack Command-Line Interface Reference*
+is ``openstack-manuals/doc/cli-reference``.
 
 To build a specific guide, look for a ``pom.xml`` file within a subdirectory,
 then run the ``mvn`` command in that directory. For example::
 
-    cd openstack-manuals/doc/image-guide/
+    cd openstack-manuals/doc/cli-reference/
     mvn clean generate-sources
 
 The generated PDF documentation file is::
 
-    openstack-manuals/doc/image-guide/target/docbkx/webhelp/image-guide/image-guide.pdf
+    openstack-manuals/doc/cli-reference/target/docbkx/webhelp/cli-reference/cli-reference.pdf
 
 The root of the generated HTML documentation is::
 
-    openstack-manuals/doc/image-guide/target/docbkx/webhelp/image-guide/content/index.html
+    openstack-manuals/doc/cli-reference/target/docbkx/webhelp/cli-reference/content/index.html
 
 
 RST guides
