@@ -237,16 +237,6 @@ Cinder service configuration
       The driver does not use the file specified in the ``nfs_shares_config``
       option.
 
-Driver options
-~~~~~~~~~~~~~~
-
-The Oracle ZFS Storage Appliance NFS driver supports these options:
-
-.. include:: ../../tables/cinder-zfssa-nfs.rst
-
-This driver shares additional NFS configuration options with the generic
-NFS driver. For a description of these, see ?.
-
 ZFSSA local cache
 ~~~~~~~~~~~~~~~~~
 
@@ -284,3 +274,13 @@ image_id
 updated_at
   stores the most current timestamp when the image is
   updated in Image service.
+
+Driver options
+~~~~~~~~~~~~~~
+
+The Oracle ZFS Storage Appliance NFS driver supports these options:
+
+.. include:: ../../tables/cinder-zfssa-nfs.rst
+
+This driver shares additional NFS configuration options with the generic
+NFS driver. For a description of these, see :ref:`cinder-storage_nfs`.

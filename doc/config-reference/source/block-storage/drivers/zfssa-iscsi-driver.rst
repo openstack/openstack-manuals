@@ -8,9 +8,34 @@ performance and high availability. Through the Oracle ZFSSA iSCSI
 Driver, OpenStack Block Storage can use an Oracle ZFSSA as a block
 storage resource. The driver enables you to create iSCSI volumes that an
 OpenStack Block Storage server can allocate to any virtual machine
-running on a compute host. The Oracle ZFSSA iSCSI Driver, version
-``1.0.0`` and later, supports ZFSSA software release ``2013.1.2.0`` and
-later.
+running on a compute host.
+
+Requirements
+~~~~~~~~~~~~
+
+The Oracle ZFSSA iSCSI Driver, version ``1.0.0`` and later, supports
+ZFSSA software release ``2013.1.2.0`` and later.
+
+Supported operations
+~~~~~~~~~~~~~~~~~~~~
+
+- Create, delete, attach, and detach volumes.
+
+- Create and delete snapshots.
+
+- Create volume from snapshot.
+
+- Extend a volume.
+
+- Attach and detach volumes.
+
+- Get volume stats.
+
+- Clone volumes.
+
+- Migrate a volume.
+
+- Local cache of a bootable volume.
 
 Configuration
 ~~~~~~~~~~~~~
@@ -98,27 +123,6 @@ Configuration
    .. note::
 
       Do not use management interfaces for ``zfssa_target_interfaces``.
-
-Supported operations
-~~~~~~~~~~~~~~~~~~~~
-
-- Create, delete, attach and detach volumes.
-
-- Create and delete snapshots.
-
-- Create volume from snapshot.
-
-- Extend a volume.
-
-- Attach and detach volumes.
-
-- Get volume stats.
-
-- Clone volumes.
-
-- Volume migration.
-
-- Local cache of a bootable volume.
 
 ZFSSA assisted volume migration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
