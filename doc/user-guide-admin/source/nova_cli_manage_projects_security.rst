@@ -40,7 +40,7 @@ From the command-line you can get a list of security groups for the
 project, using the :command:`nova` command:
 
 #. Ensure your system variables are set for the user and tenant for
-   which you are checking security group rules for. For example:
+   which you are checking security group rules. For example:
 
    .. code-block:: console
 
@@ -95,7 +95,7 @@ example, seeing that an instance is using security group "http" is much
 easier to understand than "bobs\_group" or "secgrp1".
 
 #. Ensure your system variables are set for the user and tenant for
-   which you are checking security group rules for.
+   which you are creating security group rules.
 
 #. Add the new security group, as follows:
 
@@ -169,7 +169,7 @@ Delete a security group
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Ensure your system variables are set for the user and tenant for
-   which you are deleting a security group for.
+   which you are deleting a security group.
 
 #. Delete the new security group, as follows:
 
@@ -193,7 +193,7 @@ selected dynamically. This alleviates the need for individual rules to
 allow each new member of the cluster.
 
 #. Make sure to set the system variables for the user and tenant for
-   which you are checking a security group for.
+   which you are creating a security group rule.
 
 #. Add a source group, as follows:
 
