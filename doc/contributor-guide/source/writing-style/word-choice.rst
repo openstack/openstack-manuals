@@ -60,6 +60,8 @@ The following table lists the preferred word or phrase choice.
 +----------------+----------------------+
 | OpenStack      | openstack, Openstack |
 +----------------+----------------------+
+| plug-in        | plugin               |
++----------------+----------------------+
 | run, issue,    | Avoid using "execute"|
 | start, enter   | unless it is the most|
 |                | appropriate term in  |
