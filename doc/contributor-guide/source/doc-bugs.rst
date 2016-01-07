@@ -125,6 +125,25 @@ Depending on the area a bug affects, it has one or more tags. For example:
 * **doc-builds** for documentation bugs that are in the documentation build
   tool chain, such as the Sphinx theme, openstackdocstheme.
 
+Bugs for third-party drivers
+----------------------------
+
+Bugs to update tables for the configuration references use the tag
+**autogenerate-config-docs**.
+
+For updates of specific sections or adding of new drivers, follow the
+specification `Proprietary driver docs in openstack-manuals
+<http://specs.openstack.org/openstack/docs-specs/specs/kilo/move-driver-docs.html>`_
+and assign the bug to the contact person that is mentioned on the
+`Vendor driver page
+<https://wiki.openstack.org/wiki/Documentation/VendorDrivers>`_. If
+this is a new driver with no documentation yet, assign the bug to the
+committer of the change that triggered the bug report, mark it as
+**Wishlist** and ask the committer to read and follow the
+specification and handle it since the documentation team will not
+document third-party drivers.
+
+
 Doc bug categories
 ------------------
 
