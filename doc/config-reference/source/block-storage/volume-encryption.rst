@@ -34,8 +34,12 @@ Steps to update ``cinder-volume`` servers:
 
 Update ``nova-compute`` servers:
 
-#. Repeat the same steps above to set up the Key management service by
-   editing ``/etc/nova/nova.conf``.
+#. Set up the Key Manager service by editing ``/etc/nova/nova.conf``.
+
+   .. code-block:: ini
+
+      [keymgr]
+      api_class = nova.keymgr.barbican.BarbicanKeyManager
 
 #. Restart ``nova-compute``.
 
