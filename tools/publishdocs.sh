@@ -15,7 +15,7 @@
 PUBLISH=$1
 
 if [[ -z "$PUBLISH" ]] ; then
-    echo "usage $0 (publish|check)"
+    echo "usage $0 (publish|build)"
     exit 1
 fi
 
