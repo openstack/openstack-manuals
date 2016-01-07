@@ -18,7 +18,6 @@ Verify operation
       | alias                 | name                                          |
       +-----------------------+-----------------------------------------------+
       | dns-integration       | DNS Integration                               |
-      | address-scope         | Address scope                                 |
       | ext-gw-mode           | Neutron L3 Configurable external gateway mode |
       | binding               | Port Binding                                  |
       | agent                 | agent                                         |
