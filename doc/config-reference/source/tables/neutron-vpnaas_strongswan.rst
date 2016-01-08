@@ -10,7 +10,7 @@
 
 .. _neutron-vpnaas_strongswan:
 
-.. list-table:: Description of VPNaaS Openswan plug-in configuration options
+.. list-table:: Description of VPNaaS strongSwan plug-in configuration options
    :header-rows: 1
    :class: config-ref-table
 
