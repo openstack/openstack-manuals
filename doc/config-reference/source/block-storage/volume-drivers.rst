@@ -23,7 +23,6 @@ Volume drivers
    drivers/huawei-storage-driver.rst
    drivers/ibm-gpfs-volume-driver.rst
    drivers/ibm-storwize-svc-driver.rst
-   drivers/ibm-sonas-7k-driver.rst
    drivers/ibm-xiv-volume-driver.rst
    drivers/ibm-flashsystem-volume-driver.rst
    drivers/lenovo-driver.rst
