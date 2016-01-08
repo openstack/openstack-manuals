@@ -10,10 +10,12 @@ protocol refers to the protocol used to initiate data storage and access
 operations on those storage systems like iSCSI and NFS. The NetApp
 unified driver can be configured to provision and manage OpenStack
 volumes on a given storage family using a specified storage protocol.
-The OpenStack volumes can then be used for accessing and storing data
-using the storage protocol on the storage family system. The NetApp
-unified driver is an extensible interface that can support new storage
-families and protocols.
+Also, the NetApp unified driver supports over subscription or over
+provisioning when thin provisioned Block Storage volumes are in use
+on an E-Series backend. The OpenStack volumes can then be used for
+accessing and storing data using the storage protocol on the storage
+family system. The NetApp unified driver is an extensible interface
+that can support new storage families and protocols.
 
 .. note::
 
