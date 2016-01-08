@@ -453,3 +453,66 @@ Delete a volume transfer
       | 72bfce9f-ca...  |   error   |     None     |  1   |     None    |  false   |             |
       | a1cdace0-08...  | available |     None     |  1   |     None    |  false   |             |
       +-----------------+-----------+--------------+------+-------------+----------+-------------+
+
+Manage and unmanage a snapshot
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A snapshot is an image created from a running instance. As an administrator,
+you can manage and unmanage snapshots.
+
+Manage a snapshot
+-----------------
+
+Manage a snapshot with the :command:`cinder snapshot-manage` command:
+
+.. code-block:: console
+
+   $ cinder snapshot-manage VOLUME_ID IDENTIFIER --id-type ID-TYPE --name NAME --description DESCRIPTION --metadata METADATA
+
+The arguments to be passed are:
+
+``VOLUME_ID``
+ The ID of an already existent volume.
+
+``IDENTIFIER``
+ Name, ID, or other identifier for an existing snapshot.
+
+:option:`--id-type`
+ Type of back-end device the identifier provided. Is typically ``source-name``
+ or ``source-id``. Defaults to ``source-name``.
+
+:option:`--name`
+ Name of the snapshot. Defaults to ``None``.
+
+:option:`--description`
+ Description of the snapshot. Defaults to ``None``.
+
+:option:`--metadata`
+ Metadata key-value pairs. Defaults to ``None``.
+
+The following example manages the ``my-snapshot-id`` image in the
+``my-volume-id`` volume:
+
+.. code-block:: console
+
+   $ cinder snapshot-manage my-volume-id my-snapshot-id
+
+Unmanage a snapshot
+-------------------
+
+Unmanage a snapshot with the :command:`cinder snapshot-unmanage` command:
+
+.. code-block:: console
+
+   $ cinder snapshot-umanage SNAPSHOT
+
+The arguments to be passed are:
+
+SNAPSHOT
+ Name or ID of the snapshot to unmanage.
+
+The following example unmanages the ``my-snapshot-id`` image:
+
+.. code-block:: console
+
+   $ cinder snapshot-unmanage my-snapshot-id
