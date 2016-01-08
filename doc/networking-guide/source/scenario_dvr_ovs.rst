@@ -75,9 +75,16 @@ because it only handles layer 2 connectivity.
 
 .. warning::
 
-   Proper operation of this scenario requires Open vSwitch 2.1 or newer. VXLAN
-   requires kernel 3.13 or newer. Also, the Kilo release increases stability
-   and reliability of DVR considerably over the Juno release.
+   Linux distributions often package older releases of Open vSwitch that can
+   introduce issues during operation with the Networking service. We recommend
+   using at least the latest long-term stable (LTS) release of Open vSwitch
+   for the best experience and support from Open vSwitch. See
+   `<http://www.openvswitch.org>`__ for available releases and the
+   `installation instructions
+   <https://github.com/openvswitch/ovs/blob/master/INSTALL.md>`__ for
+   building newer releases from source on various distributions.
+
+   Implementing VXLAN networks requires Linux kernel 3.13 or newer.
 
 OpenStack services - controller node
 ------------------------------------
