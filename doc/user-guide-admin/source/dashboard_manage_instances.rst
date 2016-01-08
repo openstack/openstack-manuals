@@ -46,11 +46,12 @@ Control the state of an instance
 #. From the drop-down list in the :guilabel:`Actions` column,
    select the state.
 
-   Depending on the current state of the instance, you can choose to
-   pause, un-pause, suspend, resume, soft or hard reboot, or terminate
-   an instance (actions in red color are dangerous).
+   Depending on the current state of the instance, you can perform various
+   actions on the instance. For example, pause, un-pause, suspend, resume,
+   soft or hard reboot, or terminate (actions in red are dangerous).
 
 .. figure:: figures/change_instance_state.png
+   :width: 100%
 
    **Figure Dashboard — Instance Actions**
 
