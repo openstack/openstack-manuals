@@ -57,11 +57,6 @@ Create an encrypted volume type
 
 #. Click :guilabel:`Create Volume Type Encryption`.
 
-   .. note::
-
-      Once a volume type is updated by the :guilabel:`Create
-      Encryption` option, the volume type cannot be deleted.
-
 **Encryption Options**
 
 The table below provides a few alternatives available for creating encrypted
