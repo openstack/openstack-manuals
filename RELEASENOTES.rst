@@ -23,7 +23,8 @@ Next release: Mitaka
 Configuration Reference
 -----------------------
 
-* RST conversion completed
+* RST conversion completed.
+* Message service (zaqar) is documented.
 
 HA Guide
 --------

@@ -28,6 +28,7 @@ Contents
    data-processing-service.rst
    identity.rst
    image-service.rst
+   messaging.rst
    networking.rst
    object-storage.rst
    orchestration.rst
