@@ -14,6 +14,7 @@ Volume drivers
    drivers/emc-vmax-driver.rst
    drivers/emc-vnx-driver.rst
    drivers/emc-xtremio-driver.rst
+   drivers/fujitsu-eternus-dx-driver.rst
    drivers/glusterfs-driver.rst
    drivers/hds-hnas-driver.rst
    drivers/hitachi-storage-volume-driver.rst
