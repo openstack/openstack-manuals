@@ -17,6 +17,8 @@ Contents
 
    common/conventions
    overview
+   murano
+   ironic
    neutron-misc
 
    common/app_support
