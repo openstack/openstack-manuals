@@ -17,6 +17,7 @@ Contents
 
    common/conventions
    overview
+   neutron-misc
 
    common/app_support
 
