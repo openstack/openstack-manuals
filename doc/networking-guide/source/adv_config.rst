@@ -17,3 +17,4 @@ Advanced configuration
    adv_config_ipv6.rst
    adv_config_sriov.rst
    adv_config_ipam.rst
+   adv_config_availability_zone.rst
