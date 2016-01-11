@@ -98,20 +98,22 @@ command-line clients, and provides installation instructions as needed.
 |                       | that enable yum to install the clients as described |
 |                       | in Installing_from_packages_.                       |
 |                       |                                                     |
-|                       | **SUSE Linux Enterprise Linux 11**                  |
+|                       | **SUSE Linux Enterprise Server**                    |
 |                       |                                                     |
 |                       | A packaged version available in the Open Build      |
 |                       | Service (`https://build.opensuse.org/package/show?  |
 |                       | package=python-pip&project=Cloud:OpenStack:Master   |
 |                       | <https://build.opensuse.org/package/show?package=pyt|
 |                       | hon-pip&project=Cloud:OpenStack:Master>`__)         |
-|                       | enables you to use or zypper to install the package.|
+|                       | enables you to use YaST or zypper to install the    |
+|                       | package.                                            |
+|                       |                                                     |
 |                       | First, add the Open Build Service repository:       |
 |                       |                                                     |
 |                       | .. code-block:: console                             |
 |                       |                                                     |
 |                       |    # zypper addrepo -f obs://Cloud:OpenStack: \     |
-|                       |    Kilo/SLE_12 Kilo                                 |
+|                       |    Liberty/SLE_12 Liberty                           |
 |                       |                                                     |
 |                       | Then install pip and use it to manage client        |
 |                       | installation:                                       |
@@ -256,7 +258,7 @@ that can be installed without ``pip``.
 
    .. code-block:: console
 
-      # zypper addrepo -f obs://Cloud:OpenStack:Kilo/SLE_12 Kilo
+      # zypper addrepo -f obs://Cloud:OpenStack:Liberty/SLE_12 Liberty
 
    Then you can install the packages:
 
