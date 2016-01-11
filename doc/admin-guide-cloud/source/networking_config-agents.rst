@@ -347,7 +347,7 @@ For the back end, use either Octavia or Haproxy. This example uses Octavia.
 
    .. code-block:: ini
 
-      device_driver = neutron_lbaas.services.loadbalancer.plugin.
+      service_plugins = neutron_lbaas.services.loadbalancer.plugin.
       LoadBalancerPluginv2
 
    If this option is already defined, add the load-balancing plug-in to
