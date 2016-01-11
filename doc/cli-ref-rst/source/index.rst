@@ -19,6 +19,7 @@ Contents
    overview
    murano
    ironic
+   cinder
    neutron-misc
 
    common/app_support
