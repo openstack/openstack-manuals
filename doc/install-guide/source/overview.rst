@@ -124,7 +124,7 @@ follows:
 For more information on production architectures, see the
 `Architecture Design Guide <http://docs.openstack.org/arch-design/>`__,
 `Operations Guide <http://docs.openstack.org/ops/>`__, and
-`Networking Guide <http://docs.openstack.org/networking-guide/>`__.
+`Networking Guide <http://docs.openstack.org/liberty/networking-guide/>`__.
 
 .. _figure-hwreqs:
 
