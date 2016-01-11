@@ -42,7 +42,8 @@ To create a host aggregate
          select a flavor and its extra specs to target the host
          aggregate.
 
-#. Assign hosts to the aggregate on the Host within :guilabel:`Aggregate` tab.
+#. Assign hosts to the aggregate using the :guilabel:`Manage Hosts within
+   Aggregate` tab in the same dialog box.
 
    To assign a host to the aggregate, click **+** for the host. The host
    moves from the :guilabel:`All available hosts` list to the
