@@ -31,6 +31,7 @@ Contents
    build-locally.rst
    blueprints-and-specs.rst
    json-conventions.rst
+   ui-text-guidelines.rst
    common/glossary.rst
 
 Search in this guide
