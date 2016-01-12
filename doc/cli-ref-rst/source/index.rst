@@ -23,6 +23,11 @@ Contents
    trove
    trove-misc
    neutron-misc
+   heat
+   cloudkitty
+   ceilometer
+   gnocchi
+   mistral
 
    common/app_support
 
