@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Networking Guide 0.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-09 06:32+0000\n"
+"POT-Creation-Date: 2016-01-12 06:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,6 +81,272 @@ msgstr ""
 #: ../adv_config_group_policy.rst:12 ../adv_config_operational.rst:5
 #: ../adv_config_service_chaining.rst:7 ../migration_legacy_to_dvr.rst:5
 msgid "TBD"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:3
+msgid "Using availability zone"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:5
+msgid ""
+"This page serves as a guide for how to use the ``Availability Zone`` "
+"functionality available in the Networking service as of the Mitaka release."
+msgstr ""
+
+# #-#-#-#-#  adv_config_availability_zone.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  adv_config_ipam.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  adv_config_ipv6.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  adv_config_qos.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  adv_config_sriov.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../adv_config_availability_zone.rst:10 ../adv_config_ipam.rst:12
+#: ../adv_config_ipv6.rst:12 ../adv_config_qos.rst:23
+#: ../adv_config_sriov.rst:11
+msgid "The basics"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:12
+msgid ""
+"An availability zone groups network nodes that run services like DHCP, L3, "
+"FW, and others. It is defined as an agent's attribute on the network node. "
+"This allows users to associate an availability zone with their resources so "
+"that the resources get high availability."
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:19
+msgid "Use case"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:21
+msgid ""
+"An availability zone is used to make network resources highly available. The "
+"operators group the nodes that are attached to different power sources under "
+"separate availability zones and configure scheduling for resources with high "
+"availability so that they are scheduled on different availability zones."
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:28
+msgid "Required extensions"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:30
+msgid ""
+"The core plug-in must support the ``availability_zone`` extension. The core "
+"plug-in also must support the ``network_availability_zone`` extension to "
+"schedule a network according to availability zones. The ``Ml2Plugin`` "
+"supports it. The router service plug-in must support the "
+"``router_availability_zone`` extension to schedule a router according to the "
+"availability zones. The ``L3RouterPlugin`` supports it."
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:54
+msgid "Availability zone of agents"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:56
+msgid ""
+"The ``availability_zone`` attribute can be defined in ``dhcp-agent`` and "
+"``l3-agent``. To define an availability zone for each agent, set the value "
+"into ``[AGENT]`` section of ``/etc/neutron/dhcp_agent.ini`` or ``/etc/"
+"neutron/l3_agent.ini``:"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:66
+msgid "To confirm the agent's availability zone:"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:129
+msgid "Availability zone related attributes"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:131
+msgid "The following attributes are added into network and router:"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:137
+msgid "Attribute name"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:138
+msgid "Access"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:139
+msgid "Required"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:140
+msgid "Input type"
+msgstr ""
+
+# #-#-#-#-#  adv_config_availability_zone.pot (Networking Guide 0.9)  #-#-#-#-#
+# #-#-#-#-#  adv_config_ipv6.pot (Networking Guide 0.9)  #-#-#-#-#
+#: ../adv_config_availability_zone.rst:141 ../adv_config_ipv6.rst:102
+msgid "Description"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:143
+msgid "availability_zone_hints"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:144
+msgid "RW(POST only)"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:145
+msgid "No"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:146
+#: ../adv_config_availability_zone.rst:152
+msgid "list of string"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:147
+msgid "availability zone candidates for the resource"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:149
+msgid "availability_zones"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:150
+msgid "RO"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:151
+msgid "N/A"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:153
+msgid "availability zones for the resource"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:155
+msgid ""
+"Use ``availability_zone_hints`` to specify the zone in which the resource is "
+"hosted:"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:207
+msgid ""
+"Availability zone is selected from ``default_availability_zones`` in ``/etc/"
+"neutron/neutron.conf`` if a resource is created without "
+"``availability_zone_hints``:"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:215
+msgid "To confirm the availability zone defined by the system:"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:229
+msgid ""
+"Look at the ``availability_zones`` attribute of each resource to confirm in "
+"which zone the resource is hosted:"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:280
+msgid ""
+"The ``availability_zones`` attribute does not have a value until the "
+"resource is scheduled. Once the Networking service schedules the resource to "
+"zones according to ``availability_zone_hints``, ``availability_zones`` shows "
+"in which zone the resource is hosted practically. The ``availability_zones`` "
+"may not match ``availability_zone_hints``. For example, even if you specify "
+"a zone with ``availability_zone_hints``, all agents of the zone may be dead "
+"before the resource is scheduled. In general, they should match, unless "
+"there are failures or there is no capacity left in the zone requested."
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:292
+msgid "Availability zone aware scheduler"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:295
+msgid "Network scheduler"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:297
+msgid ""
+"Set ``AZAwareWeightScheduler`` to ``network_scheduler_driver`` in ``/etc/"
+"neutron/neutron.conf`` so that the Networking service schedules a network "
+"according to the availability zone:"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:306
+msgid ""
+"The Networking service schedules a network to one of the agents within the "
+"selected zone as with ``WeightScheduler``. In this case, scheduler refers to "
+"``dhcp_load_type`` as well."
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:312
+msgid "Router scheduler"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:314
+msgid ""
+"Set ``AZLeastRoutersScheduler`` to ``router_scheduler_driver`` in file ``/"
+"etc/neutron/neutron.conf`` so that the Networking service schedules a router "
+"according to the availability zone:"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:322
+msgid ""
+"The Networking service schedules a router to one of the agents within the "
+"selected zone as with ``LeastRouterScheduler``."
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:327
+msgid "Achieving high availability with availability zone"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:329
+msgid ""
+"Although, the Networking service provides high availability for routers and "
+"high availability and fault tolerance for networks' DHCP services, "
+"availability zones provide an extra layer of protection by segmenting a "
+"Networking service deployment in isolated failure domains. By deploying HA "
+"nodes across different availability zones, it is guaranteed that network "
+"services remain available in face of zone-wide failures that affect the "
+"deployment."
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:336
+msgid ""
+"This section explains how to get high availability with the availability "
+"zone for L3 and DHCP. You should naturally set above configuration options "
+"for the availability zone."
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:341
+msgid "L3 high availability"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:343
+msgid ""
+"Set the following configuration options in file ``/etc/neutron/neutron."
+"conf`` so that you get L3 high availability."
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:352
+msgid ""
+"HA routers are created on availability zones you selected when creating the "
+"router."
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:356
+msgid "DHCP high availability"
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:358
+msgid ""
+"Set the following configuration options in file ``/etc/neutron/neutron."
+"conf`` so that you get DHCP high availability."
+msgstr ""
+
+#: ../adv_config_availability_zone.rst:365
+msgid ""
+"DHCP services are created on availability zones you selected when creating "
+"the network."
 msgstr ""
 
 #: ../adv_config_debugging.rst:3
@@ -173,15 +439,6 @@ msgid ""
 "creates a driver framework for the allocation and de-allocation of subnets "
 "and IP addresses, enabling the integration of alternate IPAM implementations "
 "or third-party IP Address Management systems."
-msgstr ""
-
-# #-#-#-#-#  adv_config_ipam.pot (Networking Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  adv_config_ipv6.pot (Networking Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  adv_config_qos.pot (Networking Guide 0.9)  #-#-#-#-#
-# #-#-#-#-#  adv_config_sriov.pot (Networking Guide 0.9)  #-#-#-#-#
-#: ../adv_config_ipam.rst:12 ../adv_config_ipv6.rst:12
-#: ../adv_config_qos.rst:23 ../adv_config_sriov.rst:11
-msgid "The basics"
 msgstr ""
 
 #: ../adv_config_ipam.rst:14
@@ -420,10 +677,6 @@ msgstr ""
 
 #: ../adv_config_ipv6.rst:101
 msgid "External Router A,M,O"
-msgstr ""
-
-#: ../adv_config_ipv6.rst:102
-msgid "Description"
 msgstr ""
 
 #: ../adv_config_ipv6.rst:103 ../adv_config_ipv6.rst:104
