@@ -24,7 +24,7 @@ scalability and HA.
        | agent           | agent                    |
        | provider        | Provider Network         |
        | router          | Neutron L3 Router        |
-       | lbaas           | Load Balancing service    |
+       | lbaas           | Load Balancing service   |
        | extraroute      | Neutron Extra Route      |
        +-----------------+--------------------------+
 
@@ -251,7 +251,6 @@ neutron server when it starts up.
       | binary             | neutron-dhcp-agent                                |
       | configurations     |{                                                  |
       |                    | "subnets": 1,                                     |
-      |                    | "use_namespaces": true,                           |
       |                    | "dhcp_driver": "neutron.agent.linux.dhcp.Dnsmasq",|
       |                    | "networks": 1,                                    |
       |                    | "dhcp_lease_time": 120,                           |
@@ -487,4 +486,3 @@ To run the following commands, you must stop the DHCP agent on HostA.
 
 After deletion, if you restart the DHCP agent, it appears on the agent
 list again.
-
