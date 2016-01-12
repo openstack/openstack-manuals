@@ -21,6 +21,11 @@ Contents
    ironic
    cinder
    neutron-misc
+   heat
+   cloudkitty
+   ceilometer
+   gnocchi
+   mistral
 
    common/app_support
 
