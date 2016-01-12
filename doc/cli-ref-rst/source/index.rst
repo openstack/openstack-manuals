@@ -20,6 +20,8 @@ Contents
    murano
    ironic
    cinder
+   trove
+   trove-misc
    neutron-misc
 
    common/app_support
