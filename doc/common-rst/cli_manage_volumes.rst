@@ -44,7 +44,7 @@ host-based migration mechanism and bypasses any driver optimizations.
 Create a volume
 ~~~~~~~~~~~~~~~
 
-This example creates a my-new-volume volume based on an image.
+This example creates a ``my-new-volume`` volume based on an image.
 
 #. List images, and note the ID of the image that you want to use for your
    volume:
