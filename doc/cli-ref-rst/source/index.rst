@@ -32,6 +32,7 @@ Contents
    sahara
    designate
    monasca
+   glance
    neutron-misc
    heat
    cloudkitty
