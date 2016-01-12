@@ -498,6 +498,10 @@ The following VMDK disk types are supported:
   can be obtained from VMware Fusion or can be created by converting from
   other virtual disk formats using the ``qemu-img`` utility.
 
+* ``Stream-optimized disks``. Stream-optimized disks are compressed sparse
+  disks. They can be obtained from VMware vCenter/ESXi when exporting vm
+  to ovf/ova template.
+
 The following table shows the ``vmware_disktype`` property that applies
 to each of the supported VMDK disk types:
 
@@ -512,6 +516,8 @@ to each of the supported VMDK disk types:
      - VMFS flat, thin provisioned
    * - preallocated (default)
      - VMFS flat, thick/zeroedthick/eagerzeroedthick
+   * - Streamoptimized
+     - Compressed Sparse
 
 The ``vmware_disktype`` property is set when an image is loaded into the
 Image service. For example, the following command creates a Monolithic
