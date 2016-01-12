@@ -12,11 +12,15 @@ This guide documents the OpenStack command-line clients.
 Contents
 ~~~~~~~~
 
+.. sorted by the service name in alphabetical order, except for openstack
+
 .. toctree::
    :maxdepth: 2
 
    common/conventions
    overview
+   openstack
+
    murano
    ironic
    cinder
