@@ -42,7 +42,6 @@ Create a ``ldap`` security service:
 .. code-block:: console
 
    $ manila security-service-create ldap --dns-ip 8.8.8.8 --server 10.254.0.3 --name my_ldap_security_service
-
    +-------------+--------------------------------------+
    | Property    | Value                                |
    +-------------+--------------------------------------+
@@ -66,7 +65,6 @@ To create ``kerberos`` security service, run:
 .. code-block:: console
 
    $ manila security-service-create kerberos --server 10.254.0.3 --user demo --password secret --name my_kerberos_security_service --description "Kerberos security service"
-
    +-------------+--------------------------------------+
    | Property    | Value                                |
    +-------------+--------------------------------------+
@@ -91,7 +89,6 @@ To see the list of created security service use
 .. code-block:: console
 
    $ manila security-service-list
-
    +--------------------------------------+------------------------------+--------+----------+
    | id                                   | name                         | status | type     |
    +--------------------------------------+------------------------------+--------+----------+
@@ -113,7 +110,6 @@ new attribute ``share_networks`` with associated share network ID.
    $ manila share-network-security-service-add share_net2 my_ldap_security_service
 
    $ manila security-service-show my_ldap_security_service
-
    +----------------+-------------------------------------------+
    | Property       | Value                                     |
    +----------------+-------------------------------------------+
@@ -139,7 +135,6 @@ given share network. List security services for ``share_net2`` share network:
 .. code-block:: console
 
    $ manila share-network-security-service-list share_net2
-
    +--------------------------------------+--------------------------+--------+------+
    | id                                   | name                     | status | type |
    +--------------------------------------+--------------------------+--------+------+
@@ -154,7 +149,6 @@ and see that a security service now has empty list of share networks:
    $ manila share-network-security-service-remove share_net2 my_ldap_security_service
 
    $ manila security-service-show my_ldap_security_service
-
    +----------------+--------------------------------------+
    | Property       | Value                                |
    +----------------+--------------------------------------+

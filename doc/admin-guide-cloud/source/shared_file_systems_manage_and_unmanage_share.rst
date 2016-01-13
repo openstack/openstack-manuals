@@ -78,7 +78,6 @@ To manage share, run:
 .. code-block:: console
 
    $ manila manage manila@cannes#CANNES nfs 10.254.0.7:/shares/share-d1a66eed-a724-4cbb-a886-2f97926bd3b3 --name Share --description "We manage share." --share_type for_managing
-
    +-----------------------------+---------------------------------------------------------------+
    | Property                    | Value                                                         |
    +-----------------------------+---------------------------------------------------------------+
@@ -112,7 +111,6 @@ Check that the share is available:
 .. code-block:: console
 
    $ manila show Share
-
    +-----------------------------+---------------------------------------------------------------+
    | Property                    | Value                                                         |
    +-----------------------------+---------------------------------------------------------------+

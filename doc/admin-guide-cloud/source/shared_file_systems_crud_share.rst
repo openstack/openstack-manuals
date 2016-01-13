@@ -119,7 +119,6 @@ Check share types that exist, run:
 .. code-block:: console
 
    $ manila type-list
-
    +------+--------+-----------+------------------------------------+----------------------+
    | ID   | Name   | is_default| required_extra_specs               | optional_extra_specs |
    +------+--------+-----------+------------------------------------+----------------------+
@@ -132,7 +131,6 @@ protocol, and size 1 GB:
 .. code-block:: console
 
    $ manila create nfs 1 --name Share2 --description "My share" --share-type my_type
-
    +-----------------------------+--------------------------------------+
    | Property                    | Value                                |
    +-----------------------------+--------------------------------------+
@@ -166,7 +164,6 @@ New share ``Share2`` should have a status ``available``:
 .. code-block:: console
 
    $ manila show Share2
-
    +-----------------------------+---------------------------------------------------------------+
    | Property                    | Value                                                         |
    +-----------------------------+---------------------------------------------------------------+
@@ -242,7 +239,6 @@ Check share types that exist, run:
 .. code-block:: console
 
    $ manila type-list
-
    +------+--------+-----------+-----------+----------------------------------+----------------------+
    | ID   | Name   | Visibility| is_default| required_extra_specs             | optional_extra_specs |
    +------+--------+-----------+-----------+----------------------------------+----------------------+
@@ -254,7 +250,6 @@ Check share networks that exist, run:
 .. code-block:: console
 
    $ manila share-network-list
-
    +--------------------------------------+--------------+
    | id                                   | name         |
    +--------------------------------------+--------------+
@@ -267,7 +262,6 @@ share type, NFS shared file system protocol, and size 1 GB:
 .. code-block:: console
 
    $ manila create nfs 1 --name "Share1" --description "My first share" --share-type default --share-network my_share_net --metadata aim=testing --public
-
    +-----------------------------+--------------------------------------+
    | Property                    | Value                                |
    +-----------------------------+--------------------------------------+
@@ -304,7 +298,6 @@ See the share in a share list:
 .. code-block:: console
 
    $ manila list
-
    +----+-------+-----+------------+-----------+-------------------------------+----------------------+
    | ID | Name  | Size| Share Proto| Share Type| Export location               | Host                 |
    +----+-------+-----+------------+-----------+-------------------------------+----------------------+
@@ -317,7 +310,6 @@ status share should have status ``available``:
 .. code-block:: console
 
    $ manila show Share1
-
    +-----------------------------+-------------------------------------------+
    | Property                    | Value                                     |
    +-----------------------------+-------------------------------------------+
@@ -359,7 +351,6 @@ the share if you need:
    $ manila update Share1 --description "My first share. Updated" --is-public False
 
    $ manila show Share1
-
    +-----------------------------+--------------------------------------------+
    | Property                    | Value                                      |
    +-----------------------------+--------------------------------------------+
@@ -442,7 +433,6 @@ Get all metadata key-value pairs of the share:
 .. code-block:: console
 
    $ manila metadata-show Share1
-
    +----------+----------+
    | Property | Value    |
    +----------+----------+
@@ -456,7 +446,6 @@ You can update the metadata:
 .. code-block:: console
 
    $ manila metadata-update-all Share1 deadline=01/30/16
-
    +----------+----------+
    | Property | Value    |
    +----------+----------+
@@ -481,7 +470,6 @@ include ``available``, ``error``, ``creating``, ``deleting``,
    $ manila reset-state Share2 --state deleting
 
    $ manila show Share2
-
    +-----------------------------+-------------------------------------------+
    | Property                    | Value                                     |
    +-----------------------------+-------------------------------------------+
@@ -559,7 +547,6 @@ Print the list of all shares for all tenants:
 .. code-block:: console
 
    $ manila list --all-tenants
-
    +------+-------+-----+------------+-------+-----------+-----------------------------+-------------+
    | ID   | Name  | Size| Share Proto| Status| Share Type| Export location             | Host        |
    +------+-------+-----+------------+-------+-----------+-----------------------------+-------------+
@@ -575,7 +562,6 @@ run:
    $ manila force-delete b6b0617c-ea51-4450-848e-e7cff69238c7
 
    $ manila list
-
    +------+-------+-----+------------+-------+-----------+-----------------------------+-------------+
    | ID   | Name  | Size| Share Proto| Status| Share Type| Export location             | Host        |
    +------+-------+-----+------------+-------+-----------+-----------------------------+-------------+
@@ -630,7 +616,6 @@ type and ``10.254.0.4`` IP address:
 .. code-block:: console
 
    $ manila access-allow Share2 ip 10.254.0.4 --access-level rw
-
    +--------------+--------------------------------------+
    | Property     | Value                                |
    +--------------+--------------------------------------+
@@ -679,7 +664,6 @@ Allow access to the share with ``user`` access type:
 .. code-block:: console
 
    $ manila access-allow Share2 user demo --access-level rw
-
    +--------------+--------------------------------------+
    | Property     | Value                                |
    +--------------+--------------------------------------+
@@ -706,7 +690,6 @@ you list permissions for a share:
 .. code-block:: console
 
    $ manila access-list Share2
-
    +--------------------------------------+-------------+------------+--------------+--------+
    | id                                   | access type | access to  | access level | state  |
    +--------------------------------------+-------------+------------+--------------+--------+
@@ -722,7 +705,6 @@ access rule list:
    $ manila access-deny Share2 de715226-da00-4cfc-b1ab-c11f3393745e
 
    $ manila access-list Share2
-
    +--------------------------------------+-------------+-----------+--------------+-------+
    | id                                   | access type | access to | access level | state |
    +--------------------------------------+-------------+-----------+--------------+-------+
