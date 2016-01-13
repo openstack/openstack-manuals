@@ -20,6 +20,9 @@ Contents
    murano
    ironic
    cinder
+   senlin
+   nova
+   magnum
    trove
    trove-misc
    neutron-misc
