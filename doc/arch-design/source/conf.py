@@ -54,7 +54,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Architecture Design Guide'
-bug_tag = u'arch-design-rst'
+bug_tag = u'arch-design'
 copyright = u'2015-2016, OpenStack contributors'
 
 # The version info for the project you're documenting, acts as replacement for

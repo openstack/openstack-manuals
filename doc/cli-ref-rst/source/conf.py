@@ -56,7 +56,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Command-Line Interface Reference'
-bug_tag = u'cli-ref-rst'
+bug_tag = u'cli-reference'
 copyright = u'2015-2016, OpenStack contributors'
 
 # The version info for the project you're documenting, acts as replacement for
