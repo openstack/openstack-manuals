@@ -537,6 +537,195 @@ Sparse image by setting ``vmware_disktype`` to ``sparse``:
    the thin properties of the disk after it is downloaded to a vSphere
    data store.
 
+The following table shows the ``vmware_ostype`` property that applies to
+each of the supported guest OS:
+
+.. list-table:: OpenStack Image service OS type settings
+   :header-rows: 1
+
+   * - vmware_ostype property
+     - Retail Name
+   * - asianux3_64Guest
+     - Asianux Server 3 (64 bit)
+   * - asianux3Guest
+     - Asianux Server 3
+   * - asianux4_64Guest
+     - Asianux Server 4 (64 bit)
+   * - asianux4Guest
+     - Asianux Server 4
+   * - darwin64Guest
+     - Darwin 64 bit
+   * - darwinGuest
+     - Darwin
+   * - debian4_64Guest
+     - Debian GNU/Linux 4 (64 bit)
+   * - debian4Guest
+     - Debian GNU/Linux 4
+   * - debian5_64Guest
+     - Debian GNU/Linux 5 (64 bit)
+   * - debian5Guest
+     - Debian GNU/Linux 5
+   * - dosGuest
+     - MS-DOS
+   * - freebsd64Guest
+     - FreeBSD x64
+   * - freebsdGuest
+     - FreeBSD
+   * - mandrivaGuest
+     - Mandriva Linux
+   * - netware4Guest
+     - Novell NetWare 4
+   * - netware5Guest
+     - Novell NetWare 5.1
+   * - netware6Guest
+     - Novell NetWare 6.x
+   * - nld9Guest
+     - Novell Linux Desktop 9
+   * - oesGuest
+     - Open Enterprise Server
+   * - openServer5Guest
+     - SCO OpenServer 5
+   * - openServer6Guest
+     - SCO OpenServer 6
+   * - opensuse64Guest
+     - openSUSE (64 bit)
+   * - opensuseGuest
+     - openSUSE
+   * - os2Guest
+     - OS/2
+   * - other24xLinux64Guest
+     - Linux 2.4x Kernel (64 bit) (experimental)
+   * - other24xLinuxGuest
+     - Linux 2.4x Kernel
+   * - other26xLinux64Guest
+     - Linux 2.6x Kernel (64 bit) (experimental)
+   * - other26xLinuxGuest
+     - Linux 2.6x Kernel (experimental)
+   * - otherGuest
+     - Other Operating System
+   * - otherGuest64
+     - Other Operating System (64 bit) (experimental)
+   * - otherLinux64Guest
+     - Linux (64 bit) (experimental)
+   * - otherLinuxGuest
+     - Other Linux
+   * - redhatGuest
+     - Red Hat Linux 2.1
+   * - rhel2Guest
+     - Red Hat Enterprise Linux 2
+   * - rhel3_64Guest
+     - Red Hat Enterprise Linux 3 (64 bit)
+   * - rhel3Guest
+     - Red Hat Enterprise Linux 3
+   * - rhel4_64Guest
+     - Red Hat Enterprise Linux 4 (64 bit)
+   * - rhel4Guest
+     - Red Hat Enterprise Linux 4
+   * - rhel5_64Guest
+     - Red Hat Enterprise Linux 5 (64 bit) (experimental)
+   * - rhel5Guest
+     - Red Hat Enterprise Linux 5
+   * - rhel6_64Guest
+     - Red Hat Enterprise Linux 6 (64 bit)
+   * - rhel6Guest
+     - Red Hat Enterprise Linux 6
+   * - sjdsGuest
+     - Sun Java Desktop System
+   * - sles10_64Guest
+     - SUSE Linux Enterprise Server 10 (64 bit) (experimental)
+   * - sles10Guest
+     - SUSE Linux Enterprise Server 10
+   * - sles11_64Guest
+     - SUSE Linux Enterprise Server 11 (64 bit)
+   * - sles11Guest
+     - SUSE Linux Enterprise Server 11
+   * - sles64Guest
+     - SUSE Linux Enterprise Server 9 (64 bit)
+   * - slesGuest
+     - SUSE Linux Enterprise Server 9
+   * - solaris10_64Guest
+     - Solaris 10 (64 bit) (experimental)
+   * - solaris10Guest
+     - Solaris 10 (32 bit) (experimental)
+   * - solaris6Guest
+     - Solaris 6
+   * - solaris7Guest
+     - Solaris 7
+   * - solaris8Guest
+     - Solaris 8
+   * - solaris9Guest
+     - Solaris 9
+   * - suse64Guest
+     - SUSE Linux (64 bit)
+   * - suseGuest
+     - SUSE Linux
+   * - turboLinux64Guest
+     - Turbolinux (64 bit)
+   * - turboLinuxGuest
+     - Turbolinux
+   * - ubuntu64Guest
+     - Ubuntu Linux (64 bit)
+   * - ubuntuGuest
+     - Ubuntu Linux
+   * - unixWare7Guest
+     - SCO UnixWare 7
+   * - win2000AdvServGuest
+     - Windows 2000 Advanced Server
+   * - win2000ProGuest
+     - Windows 2000 Professional
+   * - win2000ServGuest
+     - Windows 2000 Server
+   * - win31Guest
+     - Windows 3.1
+   * - win95Guest
+     - Windows 95
+   * - win98Guest
+     - Windows 98
+   * - windows7_64Guest
+     - Windows 7 (64 bit)
+   * - windows7Guest
+     - Windows 7
+   * - windows7Server64Guest
+     - Windows Server 2008 R2 (64 bit)
+   * - winLonghorn64Guest
+     - Windows Longhorn (64 bit) (experimental)
+   * - winLonghornGuest
+     - Windows Longhorn (experimental)
+   * - winMeGuest
+     - Windows Millenium Edition
+   * - winNetBusinessGuest
+     - Windows Small Business Server 2003
+   * - winNetDatacenter64Guest
+     - Windows Server 2003, Datacenter Edition (64 bit) (experimental)
+   * - winNetDatacenterGuest
+     - Windows Server 2003, Datacenter Edition
+   * - winNetEnterprise64Guest
+     - Windows Server 2003, Enterprise Edition (64 bit)
+   * - winNetEnterpriseGuest
+     - Windows Server 2003, Enterprise Edition
+   * - winNetStandard64Guest
+     - Windows Server 2003, Standard Edition (64 bit)
+   * - winNetEnterpriseGuest
+     - Windows Server 2003, Enterprise Edition
+   * - winNetStandard64Guest
+     - Windows Server 2003, Standard Edition (64 bit)
+   * - winNetStandardGuest
+     - Windows Server 2003, Standard Edition
+   * - winNetWebGuest
+     - Windows Server 2003, Web Edition
+   * - winNTGuest
+     - Windows NT 4
+   * - winVista64Guest
+     - Windows Vista (64 bit)
+   * - winVistaGuest
+     - Windows Vista
+   * - winXPHomeGuest
+     - Windows XP Home Edition
+   * - winXPPro64Guest
+     - Windows XP Professional Edition (64 bit)
+   * - winXPProGuest
+     - Windows XP Professional
+
 Convert and load images
 -----------------------
 
