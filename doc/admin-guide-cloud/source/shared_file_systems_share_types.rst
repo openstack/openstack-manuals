@@ -86,7 +86,6 @@ can be public.
    $ manila type-create netapp1 False --is_public True
 
    $ manila type-list
-
    +-----+--------+-----------+-----------+-----------------------------------+-----------------------+
    | ID  | Name   | Visibility| is_default| required_extra_specs              | optional_extra_specs  |
    +-----+--------+-----------+-----------+-----------------------------------+-----------------------+
@@ -108,7 +107,6 @@ extra specifications:
 .. code-block:: console
 
    $ manila extra-specs-list
-
    +-------------+---------+-------------------------------------+
    | ID          | Name    | all_extra_specs                     |
    +-------------+---------+-------------------------------------+
@@ -137,7 +135,6 @@ Create a private type:
 .. code-block:: console
 
    $ manila type-create my_type1 True --is_public False
-
    +-----+---------+-----------+-----------+----------------------------------+----------------------+
    | ID  | Name    | Visibility| is_default| required_extra_specs             | optional_extra_specs |
    +-----+---------+-----------+-----------+----------------------------------+----------------------+
@@ -163,7 +160,6 @@ Get information about access for a private share type ``my_type1``:
 .. code-block:: console
 
    $ manila type-access-list my_type1
-
    +----------------------------------+
    | Project_ID                       |
    +----------------------------------+

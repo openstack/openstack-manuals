@@ -41,7 +41,6 @@ First, list the available back-ends:
 .. code-block:: console
 
    # cinder get-pools
-
    +----------+----------------------------------------------------+
    | Property |                       Value                        |
    +----------+----------------------------------------------------+
@@ -74,7 +73,6 @@ Next, as the admin user, you can see the current status of the volume
 .. code-block:: console
 
    $ cinder show 6088f80a-f116-4331-ad48-9afb0dfb196c
-
    +--------------------------------+--------------------------------------+
    |            Property            |                Value                 |
    +--------------------------------+--------------------------------------+
