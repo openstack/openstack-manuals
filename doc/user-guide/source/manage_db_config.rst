@@ -141,7 +141,6 @@ Bulk-configure a database or databases
        Welcome to the MySQL monitor. Commands end with ; or \g.
        ...
        mysql> show variables like 'sync_binlog';
-
        +---------------+-------+
        | Variable_name | Value |
        +---------------+-------+

@@ -55,7 +55,6 @@ Set up clustering
       $ trove cluster-create cluster1 mongodb "2.4" \
         --instance flavor_id=7,volume=2 --instance flavor_id=7,volume=2 \
         --instance flavor_id=7,volume=2
-
        +-------------------+--------------------------------------+
        | Property          | Value                                |
        +-------------------+--------------------------------------+
@@ -81,7 +80,6 @@ Set up clustering
    .. code-block:: console
 
       $ trove cluster-show CLUSTER_ID
-
        +-------------------+--------------------------------------+
        | Property          | Value                                |
        +-------------------+--------------------------------------+
@@ -112,7 +110,6 @@ Set up clustering
    .. code-block:: console
 
       $ trove cluster-instances CLUSTER_ID
-
       +--------------------------------------+----------------+-----------+------+
       | ID                                   | Name           | Flavor ID | Size |
       +--------------------------------------+----------------+-----------+------+
@@ -147,7 +144,6 @@ Set up clustering
    .. code-block:: console
 
       $ trove cluster-list
-
       +--------------------------------------+----------+-----------+-------------------+-----------+
       | ID                                   | Name     | Datastore | Datastore Version | Task Name |
       +--------------------------------------+----------+-----------+-------------------+-----------+

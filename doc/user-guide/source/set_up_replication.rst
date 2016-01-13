@@ -27,7 +27,6 @@ Set up replication
    .. code-block:: console
 
       $ trove list
-
       +-----------+------------+-----------+-------------------+--------+-----------+------+
       |     id    |  name      | datastore | datastore_version | status | flavor_id | size |
       +-----------+------------+-----------+-------------------+--------+-----------+------+
@@ -57,7 +56,6 @@ Set up replication
    .. code-block:: console
 
       $ trove show INSTANCE_ID_OF_REPLICA_1
-
       +-------------------+--------------------------------------+
       | Property          | Value                                |
       +-------------------+--------------------------------------+
@@ -81,7 +79,6 @@ Set up replication
    .. code-block:: console
 
       $ trove show INSTANCE_ID_OF_BASE_1
-
       +-------------------+--------------------------------------+
       | Property          | Value                                |
       +-------------------+--------------------------------------+
