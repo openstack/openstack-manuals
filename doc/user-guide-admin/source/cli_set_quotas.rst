@@ -24,7 +24,6 @@ node.
    .. code-block:: console
 
       $ openstack project list
-
       +----------------------------------+----------+
       | ID                               | Name     |
       +----------------------------------+----------+
@@ -39,7 +38,6 @@ node.
    .. code-block:: console
 
       $ openstack user list --project PROJECT_NAME
-
       +----------------------------------+--------+
       | ID                               | Name   |
       +----------------------------------+--------+
