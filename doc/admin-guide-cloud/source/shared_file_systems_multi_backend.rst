@@ -5,14 +5,14 @@ Multi-storage configuration
 ===========================
 
 The Shared File Systems service can provide access to multiple file storage
-back ends. In general, the workflow with multiple back ends looks very similar
+back ends. In general, the workflow with multiple back ends looks similar
 to the Block Storage service one, see :ref:`Configure multiple-storage back
 ends in Openstack Block Storage service <multi_backend>`.
 
 Using ``manila.conf``, you can spawn multiple share services. To do it, you
 should set the `enabled_share_backends` flag in the ``manila.conf`` file. This
 flag defines the comma-separated names of the configuration stanzas for the
-different back ends: one name is associated to one configuration group for a
+different back ends. One name is associated to one configuration group for a
 back end.
 
 The following example runs three configured share services:

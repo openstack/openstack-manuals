@@ -5,7 +5,7 @@ Networking
 ==========
 
 Unlike the OpenStack Block Storage service, the Shared File Systems service
-requires interaction with the Networking service. First of all, it is because
+must connect to the Networking service. First of all, it is because
 the share services require the option to self-manage share servers. Also, for
 authentication and authorization of the clients, the Shared File Systems
 service can be optionally configured to work with different network
