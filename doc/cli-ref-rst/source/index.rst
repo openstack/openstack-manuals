@@ -22,9 +22,13 @@ Contents
    cinder
    trove
    trove-misc
+   sahara
+   designate
+   monasca
    neutron-misc
    heat
    cloudkitty
+   manila
    ceilometer
    gnocchi
    mistral
