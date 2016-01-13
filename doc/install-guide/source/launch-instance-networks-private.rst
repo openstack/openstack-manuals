@@ -66,7 +66,7 @@ Create the private project network
       +-----------------------+--------------------------------------+
 
    Non-privileged users typically cannot supply additional parameters to
-   this command. The service automatically chooses paramters using
+   this command. The service automatically chooses parameters using
    information from the following files:
 
    ``ml2_conf.ini``:
