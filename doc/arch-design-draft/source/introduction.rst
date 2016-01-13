@@ -49,7 +49,7 @@ developing cloud architecture design documents. The sections covered are:
    on storage and networking.
 
 *  :doc:`High Availability<high-availability>`: Separation of data plane and
-   control plane, and how to eliminate single ponits of failure.
+   control plane, and how to eliminate single points of failure.
 
 *  :doc:`Security requirements<security-requirements>`: The security
    requirements you will need to consider for the different OpenStack
