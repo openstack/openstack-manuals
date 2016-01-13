@@ -25,6 +25,10 @@ import sys
 
 sys.path.append(os.path.dirname(__file__))
 
+# Increase the maximum depth of the Python interpreter stack to solve the
+# "RuntimeError: maximum recursion depth exceeded in cmp" issue.
+sys.setrecursionlimit(4000)
+
 import openstackdocstheme
 
 # If extensions (or modules to document with autodoc) are in another directory,
