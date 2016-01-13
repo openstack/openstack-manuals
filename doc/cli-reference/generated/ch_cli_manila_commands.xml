@@ -15,7 +15,7 @@
         interface (CLI) for the Shared file systems API and its extensions.
 
        This chapter documents <command>manila</command> version
-        <literal>1.5.0</literal>.
+        <literal>1.6.0</literal>.
     </para>
 
     <para>For help on a specific <command>manila</command>
@@ -130,7 +130,7 @@
     <term><command>cg-snapshot-create</command></term>
     <listitem>
       <para>
-        Creates a new consistency group.
+        Creates a new consistency group snapshot.
       </para>
     </listitem>
   </varlistentry>
@@ -407,6 +407,23 @@
     <listitem>
       <para>
       Update security service.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>service-disable</command></term>
+    <listitem>
+      <para>
+        Disables 'manila-share' or 'manila-scheduler'
+      services.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>service-enable</command></term>
+    <listitem>
+      <para>
+        Enables 'manila-share' or 'manila-scheduler' services.
       </para>
     </listitem>
   </varlistentry>
@@ -1210,7 +1227,7 @@ Show details about a consistency group.
         <screen><computeroutput>usage: manila cg-snapshot-create [--name &lt;name&gt;] [--description &lt;description&gt;]
                                  &lt;consistency_group&gt;</computeroutput></screen>
         <para>
-Creates a new consistency group.
+Creates a new consistency group snapshot.
         </para>  <variablelist wordsize="10">
     <title>Positional arguments</title>
   <varlistentry>
@@ -1500,7 +1517,7 @@ Creates a new share (NFS, CIFS, GlusterFS or HDFS).
     <term><command>&lt;size&gt;</command></term>
     <listitem>
       <para>
-        Share size in GB.
+        Share size in GiB.
       </para>
     </listitem>
   </varlistentry>
@@ -1648,7 +1665,7 @@ Increases the size of an existing share.
     <term><command>&lt;new_size&gt;</command></term>
     <listitem>
       <para>
-        New size of share, in GBs.
+        New size of share, in GiBs.
       </para>
     </listitem>
   </varlistentry>
@@ -1689,7 +1706,8 @@ Attempt force-delete of share, regardless of state.
                    [--sort-dir &lt;sort_dir&gt;] [--snapshot &lt;snapshot&gt;]
                    [--host &lt;host&gt;] [--share-network &lt;share_network&gt;]
                    [--project-id &lt;project_id&gt;] [--public]
-                   [--consistency-group &lt;consistency_group&gt;]</computeroutput></screen>
+                   [--consistency-group &lt;consistency_group&gt;]
+                   [--columns &lt;columns&gt;]</computeroutput></screen>
         <para>
 List NAS shares with filters.
         </para>  <variablelist wordsize="10">
@@ -1845,6 +1863,15 @@ List NAS shares with filters.
       </para>
     </listitem>
   </varlistentry>
+  <varlistentry>
+    <term><command>--columns &lt;columns&gt;</command></term>
+    <listitem>
+      <para>
+        Comma separated list of columns to be displayed e.g.
+      --columns "export_location,is public"
+      </para>
+    </listitem>
+  </varlistentry>
  </variablelist>
     </section>
     <section xml:id="manilaclient_subcommand_list-extensions">
@@ -1859,6 +1886,7 @@ List all the os-api extensions that are available.
         <screen><computeroutput>usage: manila manage [--name &lt;name&gt;] [--description &lt;description&gt;]
                      [--share_type &lt;share-type&gt;]
                      [--driver_options [&lt;key=value&gt; [&lt;key=value&gt; ...]]]
+                     [--public]
                      &lt;service_host&gt; &lt;protocol&gt; &lt;export_path&gt;</computeroutput></screen>
         <para>
 Manage share not handled by Manila.
@@ -1923,6 +1951,16 @@ Manage share not handled by Manila.
       <para>
       Driver option key=value pairs (Optional,
       Default=None).
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>--public</command></term>
+    <listitem>
+      <para>
+        Level of visibility for share. Defines whether other
+      tenants are able to see it or not. Available only for
+      microversion &gt;= 2.8
       </para>
     </listitem>
   </varlistentry>
@@ -2652,6 +2690,56 @@ Update security service.
   </varlistentry>
  </variablelist>
     </section>
+    <section xml:id="manilaclient_subcommand_service-disable">
+        <title>manila service-disable</title>
+        <screen><computeroutput>usage: manila service-disable &lt;hostname&gt; &lt;binary&gt;</computeroutput></screen>
+        <para>
+Disables 'manila-share' or 'manila-scheduler' services.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;hostname&gt;</command></term>
+    <listitem>
+      <para>
+        Host name as 'foo_host@bar_backend'.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;binary&gt;</command></term>
+    <listitem>
+      <para>
+        Service binary, could be 'manila-share' or 'manila-scheduler'.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
+    <section xml:id="manilaclient_subcommand_service-enable">
+        <title>manila service-enable</title>
+        <screen><computeroutput>usage: manila service-enable &lt;hostname&gt; &lt;binary&gt;</computeroutput></screen>
+        <para>
+Enables 'manila-share' or 'manila-scheduler' services.
+        </para>  <variablelist wordsize="10">
+    <title>Positional arguments</title>
+  <varlistentry>
+    <term><command>&lt;hostname&gt;</command></term>
+    <listitem>
+      <para>
+        Host name as 'foo_host@bar_backend'.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term><command>&lt;binary&gt;</command></term>
+    <listitem>
+      <para>
+        Service binary, could be 'manila-share' or 'manila-scheduler'.
+      </para>
+    </listitem>
+  </varlistentry>
+ </variablelist>
+    </section>
     <section xml:id="manilaclient_subcommand_service-list">
         <title>manila service-list</title>
         <screen><computeroutput>usage: manila service-list [--host &lt;hostname&gt;] [--binary &lt;binary&gt;]
@@ -3284,7 +3372,7 @@ Decreases the size of an existing share.
     <term><command>&lt;new_size&gt;</command></term>
     <listitem>
       <para>
-        New size of share, in GBs.
+        New size of share, in GiBs.
       </para>
     </listitem>
   </varlistentry>
