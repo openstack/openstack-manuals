@@ -10,7 +10,6 @@ Change the size of a server by changing its flavor.
    .. code-block:: console
 
       $ nova show myCirrosServer
-
       +-------------------------------------+-------------------------------------+
       | Property                            | Value                               |
       +-------------------------------------+-------------------------------------+
@@ -49,7 +48,6 @@ Change the size of a server by changing its flavor.
    .. code-block:: console
 
       $ nova flavor-list
-
       +-----+-----------+-----------+------+-----------+------+-------+-------------+----------+
       | ID  | Name      | Memory_MB | Disk | Ephemeral | Swap | VCPUs | RXTX_Factor | Is_Public|
       +-----+-----------+-----------+------+-----------+------+-------+-------------+----------+
@@ -95,7 +93,6 @@ Change the size of a server by changing its flavor.
    .. code-block:: console
 
       $ nova list
-
       +----------------------+----------------+--------+-----------------------------------------+
       | ID                   | Name           | Status | Networks                                |
       +----------------------+----------------+--------+-----------------------------------------+

@@ -76,7 +76,6 @@ number of commands.
    .. code-block:: console
 
       $ heat stack-list
-
       +------------------+---------------+-----------------+----------------------+
       | id               | stack_name    | stack_status    | creation_time        |
       +------------------+---------------+-----------------+----------------------+
@@ -96,7 +95,6 @@ number of commands.
    .. code-block:: console
 
       $ heat resource-list mystack
-
       +---------------------+--------------------+-----------------+----------------------+
       | logical_resource_id | resource_type      | resource_status | updated_time         |
       +---------------------+--------------------+-----------------+----------------------+
@@ -124,7 +122,6 @@ number of commands.
    .. code-block:: console
 
       $ heat event-list mystack
-
       +---------------------+----+------------------------+-----------------+----------------------+
       | logical_resource_id | id | resource_status_reason | resource_status | event_time           |
       +---------------------+----+------------------------+-----------------+----------------------+
@@ -150,7 +147,6 @@ like the following command:
    $ heat stack-update mystack --template-file \
      /path/to/heat/templates/WordPress_Single_Instance_v2.template \
      --parameters "InstanceType=m1.large;DBUsername=wp;DBPassword=verybadpassword;KeyName=heat_key;LinuxDistribution=F17"
-
    +--------------------------------------+---------------+-----------------+----------------------+
    | id                                   | stack_name    | stack_status    | creation_time        |
    +--------------------------------------+---------------+-----------------+----------------------+

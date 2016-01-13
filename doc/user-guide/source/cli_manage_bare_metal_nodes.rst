@@ -62,7 +62,6 @@ with the PM address ``1.2.3.4``, the PM user name ipmi, and password
 
    $ nova baremetal-node-create --pm_address 1.2.3.4 --pm_user ipmi \
      --pm_password ipmi $(hostname -f) 1 512 10 aa:bb:cc:dd:ee:ff
-
    +------------------+-------------------+
    | Property         | Value             |
    +------------------+-------------------+
@@ -89,7 +88,6 @@ interface's MAC address.
 .. code-block:: console
 
    $ nova baremetal-interface-add 1 aa:bb:cc:dd:ee:ff
-
    +-------------+-------------------+
    | Property    | Value             |
    +-------------+-------------------+
@@ -110,7 +108,6 @@ network control via Neutron and OpenFlow.
 .. code-block:: console
 
    $ nova boot --image my-baremetal-image --flavor my-baremetal-flavor test
-
    +-----------------------------+--------------------------------------+
    | Property                    | Value                                |
    +-----------------------------+--------------------------------------+
@@ -143,7 +140,6 @@ UUID of the instance that runs on it:
 .. code-block:: console
 
    $ nova baremetal-node-list
-
    +----+--------+------+-----------+---------+-------------------+------+------------+-------------+-------------+---------------+
    | ID | Host   | CPUs | Memory_MB | Disk_GB | MAC Address       | VLAN | PM Address | PM Username | PM Password | Terminal Port |
    +----+--------+------+-----------+---------+-------------------+------+------------+-------------+-------------+---------------+
@@ -159,7 +155,6 @@ bare-metal node:
 .. code-block:: console
 
    $ nova baremetal-node-show 1
-
    +------------------+--------------------------------------+
    | Property         | Value                                |
    +------------------+--------------------------------------+
