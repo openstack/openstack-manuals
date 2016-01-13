@@ -53,7 +53,7 @@ must add a public key to the Compute service.
    .. code-block:: console
 
       $ ssh-keygen -q -N ""
-      $ nova keypair-add --pub-key .ssh/id_rsa.pub mykey
+      $ nova keypair-add --pub-key ~/.ssh/id_rsa.pub mykey
 
    .. note::
 
