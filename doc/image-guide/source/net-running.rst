@@ -17,7 +17,6 @@ that the ``default`` network is active:
 .. code-block:: console
 
    # virsh net-list
-
    Name                 State      Autostart
    -----------------------------------------
    default              active     yes

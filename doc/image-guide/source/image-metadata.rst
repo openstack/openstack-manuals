@@ -39,7 +39,6 @@ All associated properties for an image can be displayed using the
 .. code-block:: console
 
    $ glance image-show myCirrosImage
-
    +---------------------------------------+--------------------------------------+
    | Property                              | Value                                |
    +---------------------------------------+--------------------------------------+
