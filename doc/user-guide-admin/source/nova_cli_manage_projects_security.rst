@@ -52,7 +52,6 @@ project, using the :command:`nova` command:
    .. code-block:: console
 
       $ nova secgroup-list
-
       +---------+-------------+
       | Name    | Description |
       +---------+-------------+
@@ -71,7 +70,6 @@ project, using the :command:`nova` command:
    .. code-block:: console
 
       $ nova secgroup-list-rules open
-
       +-------------+-----------+---------+-----------+--------------+
       | IP Protocol | From Port | To Port | IP Range  | Source Group |
       +-------------+-----------+---------+-----------+--------------+
@@ -108,7 +106,6 @@ easier to understand than "bobs\_group" or "secgrp1".
    .. code-block:: console
 
       $ nova secgroup-create global_http "Allows Web traffic anywhere on the Internet."
-
       +--------------------------------------+-------------+----------------------------------------------+
       | Id                                   | Name        | Description                                  |
       +--------------------------------------+-------------+----------------------------------------------+
@@ -129,7 +126,6 @@ easier to understand than "bobs\_group" or "secgrp1".
    .. code-block:: console
 
       $ nova secgroup-add-rule global_http tcp 80 80 0.0.0.0/0
-
       +-------------+-----------+---------+-----------+--------------+
       | IP Protocol | From Port | To Port | IP Range  | Source Group |
       +-------------+-----------+---------+-----------+--------------+
@@ -142,7 +138,6 @@ easier to understand than "bobs\_group" or "secgrp1".
    .. code-block:: console
 
       $ nova secgroup-add-rule global_http tcp 443 443 0.0.0.0/0
-
       +-------------+-----------+---------+-----------+--------------+
       | IP Protocol | From Port | To Port | IP Range  | Source Group |
       +-------------+-----------+---------+-----------+--------------+
@@ -157,7 +152,6 @@ easier to understand than "bobs\_group" or "secgrp1".
    .. code-block:: console
 
       $ nova secgroup-list-rules global_http
-
       +-------------+-----------+---------+-----------+--------------+
       | IP Protocol | From Port | To Port | IP Range  | Source Group |
       +-------------+-----------+---------+-----------+--------------+

@@ -47,7 +47,6 @@ enabled or disabled:
 .. code-block:: console
 
    $ openstack project list
-
    +----------------------------------+--------------------+
    | id                               | name               |
    +----------------------------------+--------------------+
@@ -67,7 +66,6 @@ Create a project named ``new-project``:
 .. code-block:: console
 
    $ openstack project create --description 'my new project' new-project
-
    +-------------+----------------------------------+
    | Field       | Value                            |
    +-------------+----------------------------------+
@@ -106,7 +104,6 @@ description, and enabled status of a project.
    .. code-block:: console
 
       $ openstack project show PROJECT_ID
-
       +-------------+----------------------------------+
       | Field       | Value                            |
       +-------------+----------------------------------+
@@ -136,7 +133,6 @@ List all users:
 .. code-block:: console
 
    $ openstack user list
-
    +----------------------------------+----------+
    | id                               | name     |
    +----------------------------------+----------+
@@ -159,7 +155,6 @@ Create the ``new-user`` user:
 .. code-block:: console
 
    $ openstack user create --project new-project --password PASSWORD new-user
-
    +----------+----------------------------------+
    | Field    | Value                            |
    +----------+----------------------------------+
@@ -218,7 +213,6 @@ List the available roles:
 .. code-block:: console
 
    $ openstack role list
-
    +----------------------------------+---------------+
    | id                               | name          |
    +----------------------------------+---------------+
@@ -240,7 +234,6 @@ Create the ``new-role`` role:
 .. code-block:: console
 
    $ openstack role create new-role
-
    +--------+----------------------------------+
    | Field  | Value                            |
    +--------+----------------------------------+
@@ -260,7 +253,6 @@ IDs.
    .. code-block:: console
 
       $ openstack user list
-
       +----------------------------------+----------+---------+----------------------+
       | id                               | name     | enabled | email                |
       +----------------------------------+----------+---------+----------------------+
@@ -277,7 +269,6 @@ IDs.
    .. code-block:: console
 
       $ openstack role list
-
       +----------------------------------+---------------+
       | id                               | name          |
       +----------------------------------+---------------+
@@ -294,7 +285,6 @@ IDs.
    .. code-block:: console
 
       $ openstack project list
-
       +----------------------------------+--------------------+---------+
       | id                               | name               | enabled |
       +----------------------------------+--------------------+---------+
@@ -320,7 +310,6 @@ IDs.
    .. code-block:: console
 
       $ openstack role list --user USER_NAME --project TENANT_ID
-
       +--------------+----------+---------------------------+--------------+
       | id           | name     | user_id                   | tenant_id    |
       +--------------+----------+---------------------------+--------------+
@@ -335,7 +324,6 @@ View details for a specified role:
 .. code-block:: console
 
    $ openstack role show ROLE_NAME
-
    +----------+----------------------------------+
    | Field    | Value                            |
    +----------+----------------------------------+

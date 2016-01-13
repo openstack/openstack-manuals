@@ -26,7 +26,6 @@ Administrative users can view Block Storage service quotas.
    .. code-block:: console
 
       $ cinder quota-defaults TENANT_ID
-
       +-----------+-------+
       |  Property | Value |
       +-----------+-------+
@@ -46,7 +45,6 @@ Administrative users can view Block Storage service quotas.
    .. code-block:: console
 
       $ cinder quota-show tenant01
-
       +-----------+-------+
       |  Property | Value |
       +-----------+-------+
@@ -60,7 +58,6 @@ Administrative users can view Block Storage service quotas.
    .. code-block:: console
 
       $ cinder quota-usage tenantID
-
       +-----------+--------+----------+-------+
       |    Type   | In_use | Reserved | Limit |
       +-----------+--------+----------+-------+
@@ -106,7 +103,6 @@ service quotas.
 
       $ cinder quota-update --volumes 15 $tenant
       $ cinder quota-show tenant01
-
       +-----------+-------+
       |  Property | Value |
       +-----------+-------+
@@ -129,7 +125,6 @@ Remove a service
    .. code-block:: console
 
       $ cinder service-list
-
       +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
       |      Binary      |         Host         | Zone |  Status | State |         Updated_at         | Disabled Reason |
       +------------------+----------------------+------+---------+-------+----------------------------+-----------------+
