@@ -1,3 +1,5 @@
+.. _scenario-l3ha-lb:
+
 ===============================================================
 Scenario: High Availability using VRRP (L3HA) with Linux Bridge
 ===============================================================
@@ -5,10 +7,10 @@ Scenario: High Availability using VRRP (L3HA) with Linux Bridge
 This scenario describes a high-availability implementation of the OpenStack
 Networking service using the ML2 plug-in and Linux bridge.
 
-This high-availability implementation augments the :doc:`scenario_legacy_lb`
+This high-availability implementation augments the :ref:`scenario-classic-lb`
 architecture with Virtual Router Redundancy Protocol (VRRP) using
 ``keepalived`` to provide quick failover of layer-3 services. See
-:ref:`scenario_l3ha_lb-packet_flow` for VRRP operation. Similar to the legacy
+:ref:`scenario_l3ha_lb-packet_flow` for VRRP operation. Similar to the classic
 scenario, all network traffic on a project network that requires routing
 actively traverses only one network node regardless of the quantity of network
 nodes providing HA for the router. Therefore, this high-availability
@@ -18,7 +20,7 @@ of routers on different network nodes to reduce the chances of bandwidth
 constraints and to improve scaling. Also, this implementation does not address
 situations where one or more layer-3 agents fail and the underlying virtual
 networks continue to operate normally. Consider deploying
-:doc:`scenario_dvr_ovs` to increase performance in addition to redundancy. As
+:ref:`scenario-dvr-ovs` to increase performance in addition to redundancy. As
 of the Liberty release, you cannot combine the DVR and L3HA mechanisms.
 
 .. note::
@@ -166,7 +168,7 @@ The compute nodes contain the following network components:
 Packet flow
 ~~~~~~~~~~~
 
-The L3HA mechanism simply augments :doc:`scenario_legacy_lb` with quick
+The L3HA mechanism simply augments :ref:`scenario-classic-lb` with quick
 failover of layer-3 services to another router if the master router
 fails.
 

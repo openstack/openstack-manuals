@@ -1,3 +1,5 @@
+.. _scenario-dvr-ovs:
+
 ===================================================================
 Scenario: High Availability using Distributed Virtual Routing (DVR)
 ===================================================================
@@ -9,11 +11,11 @@ external network and one VXLAN project (tenant) network. However, This
 configuration also supports VLAN external networks, VLAN project networks,
 and GRE project networks.
 
-The DVR architecture augments the legacy architecture by providing direct
+The DVR architecture augments the classic architecture by providing direct
 connectivity to external networks on compute nodes. For instances with a
 floating IP address, routing between project and external networks resides
 completely on the compute nodes to eliminate single point of failure and
-performance issues with legacy network nodes. Routing also resides
+performance issues with classic network nodes. Routing also resides
 completely on the compute nodes for instances with a fixed or floating IP
 address using project networks on the same distributed virtual router.
 However, instances with a fixed IP address still rely on the network node for
@@ -136,16 +138,16 @@ The network node contains the following network components:
    provide DHCP services for instances using project networks.
 #. L3 agent managing the ``qrouter`` and ``snat`` namespaces.
 
-   #. For instances using project networks on legacy routers, the ``qrouter``
+   #. For instances using project networks on classic routers, the ``qrouter``
       namespaces route *north-south* and *east-west* network traffic and
-      perform DNAT/SNAT similar to the legacy scenarios. They also route
+      perform DNAT/SNAT similar to the classic scenarios. They also route
       metadata traffic between instances and the metadata agent.
    #. For instances with a fixed IP address using project networks on
       distributed routers, the ``snat`` namespaces perform SNAT for
       *north-south* network traffic.
 
 #. Metadata agent handling metadata operations for instances using project
-   networks on legacy routers.
+   networks on classic routers.
 
 .. image:: figures/scenario-dvr-network1.png
    :alt: Network node components - overview

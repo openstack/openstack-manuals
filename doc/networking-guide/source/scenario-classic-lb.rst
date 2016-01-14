@@ -1,11 +1,13 @@
-==================================
-Scenario: Legacy with Open vSwitch
-==================================
+.. _scenario-classic-lb:
 
-This scenario describes a legacy (basic) implementation of the
-OpenStack Networking service using the ML2 plug-in with Open vSwitch (OVS).
+===================================
+Scenario: Classic with Linux Bridge
+===================================
 
-The legacy implementation contributes the networking portion of self-service
+This scenario describes a classic implementation of the OpenStack
+Networking service using the ML2 plug-in with Linux bridge.
+
+The classic implementation contributes the networking portion of self-service
 virtual data center infrastructure by providing a method for regular
 (non-privileged) users to manage virtual networks within a project and
 includes the following components:
@@ -55,8 +57,9 @@ includes the following components:
   metadata such as SSH keys.
 
 The example configuration creates one flat external network and one VXLAN
-project (tenant) network. However, this configuration also supports VLAN
-external networks, VLAN project networks, and GRE project networks.
+project network. However, this configuration also supports VLAN external
+and project networks. The Linux bridge agent does not support GRE project
+networks.
 
 Prerequisites
 ~~~~~~~~~~~~~
@@ -77,50 +80,35 @@ Infrastructure
 #. One controller node with one network interface: management.
 #. One network node with four network interfaces: management, project tunnel
    networks, VLAN project networks, and external (typically the Internet).
-   The Open vSwitch bridge ``br-vlan`` must contain a port on the VLAN
-   interface and Open vSwitch bridge ``br-ex`` must contain a port on the
-   external interface.
-#. At least one compute node with three network interfaces: management,
-   project tunnel networks, and VLAN project networks. The Open vSwitch
-   bridge ``br-vlan`` must contain a port on the VLAN interface.
+#. At least one compute nodes with three network interfaces: management,
+   project tunnel networks, and VLAN project networks.
 
 To improve understanding of network traffic flow, the network and compute
 nodes contain a separate network interface for VLAN project networks. In
-production environments, VLAN project networks can use any Open vSwitch
-bridge with access to a network interface. For example, the ``br-tun``
-bridge.
+production environments, you can use any network interface for VLAN project
+networks.
 
 In the example configuration, the management network uses 10.0.0.0/24,
 the tunnel network uses 10.0.1.0/24, and the external network uses
 203.0.113.0/24. The VLAN network does not require an IP address range
 because it only handles layer-2 connectivity.
 
-.. image:: figures/scenario-legacy-hw.png
+.. image:: figures/scenario-classic-hw.png
    :alt: Hardware layout
 
-.. image:: figures/scenario-legacy-networks.png
+.. image:: figures/scenario-classic-networks.png
    :alt: Network layout
 
-.. image:: figures/scenario-legacy-ovs-services.png
+.. image:: figures/scenario-classic-lb-services.png
    :alt: Service layout
 
 .. note::
    For VLAN external and project networks, the physical network infrastructure
-   must support VLAN tagging. For best performance with VXLAN and GRE
-   project networks, the network infrastructure should support jumbo frames.
+   must support VLAN tagging. For best performance with VXLAN project networks,
+   the network infrastructure should support jumbo frames.
 
 .. warning::
-
-   Linux distributions often package older releases of Open vSwitch that can
-   introduce issues during operation with the Networking service. We recommend
-   using at least the latest long-term stable (LTS) release of Open vSwitch
-   for the best experience and support from Open vSwitch. See
-   `<http://www.openvswitch.org>`__ for available releases and the
-   `installation instructions
-   <https://github.com/openvswitch/ovs/blob/master/INSTALL.md>`__ for
-   building newer releases from source on various distributions.
-
-   Implementing VXLAN networks requires Linux kernel 3.13 or newer.
+   Proper operation of this scenario requires kernel 3.13 or newer.
 
 OpenStack services - controller node
 ------------------------------------
@@ -132,8 +120,7 @@ OpenStack services - controller node
 #. Operational OpenStack Identity service with appropriate configuration
    in the :file:`neutron.conf` file.
 #. Operational OpenStack Compute controller/management service with
-   appropriate configuration to use neutron in the
-   :file:`nova.conf` file.
+   appropriate configuration to use neutron in the :file:`nova.conf` file.
 #. Neutron server service, ML2 plug-in, and any dependencies.
 
 OpenStack services - network node
@@ -141,8 +128,8 @@ OpenStack services - network node
 
 #. Operational OpenStack Identity service with appropriate configuration
    in the :file:`neutron.conf` file.
-#. Open vSwitch service, ML2 plug-in, Open vSwitch agent, L3 agent,
-   DHCP agent, metadata agent, and any dependencies.
+#. ML2 plug-in, Linux bridge agent, L3 agent, DHCP agent, metadata agent,
+   and any dependencies.
 
 OpenStack services - compute nodes
 ----------------------------------
@@ -151,28 +138,28 @@ OpenStack services - compute nodes
    in the :file:`neutron.conf` file.
 #. Operational OpenStack Compute controller/management service with
    appropriate configuration to use neutron in the :file:`nova.conf` file.
-#. Open vSwitch service, ML2 plug-in, Open vSwitch agent, and any
-   dependencies.
+#. ML2 plug-in, Linux bridge agent, and any dependencies.
 
 Architecture
 ~~~~~~~~~~~~
 
-The legacy architecture provides basic virtual networking components in
+The classic architecture provides basic virtual networking components in
 your environment. Routing among project and external networks resides
 completely on the network node. Although more simple to deploy than
 other architectures, performing all functions on the network node
 creates a single point of failure and potential performance issues.
 Consider deploying DVR or L3 HA architectures in production environments
-to provide redundancy and increase performance.
+to provide redundancy and increase performance. However, the DVR architecture
+requires Open vSwitch.
 
-.. image:: figures/scenario-legacy-general.png
+.. image:: figures/scenario-classic-general.png
    :alt: Architecture overview
 
 The network node contains the following network components:
 
-#. Open vSwitch agent managing virtual switches, connectivity among
+#. Linux bridge agent managing virtual switches, connectivity among
    them, and interaction via virtual ports with other network components
-   such as namespaces, Linux bridges, and underlying interfaces.
+   such as namespaces and underlying interfaces.
 #. DHCP agent managing the ``qdhcp`` namespaces. The ``qdhcp`` namespaces
    provide DHCP services for instances using project networks.
 #. L3 agent managing the ``qrouter`` namespaces. The ``qrouter`` namespaces
@@ -181,25 +168,22 @@ The network node contains the following network components:
    metadata agent.
 #. Metadata agent handling metadata operations for instances.
 
-.. image:: figures/scenario-legacy-ovs-network1.png
+.. image:: figures/scenario-classic-lb-network1.png
    :alt: Network node components - overview
 
-.. image:: figures/scenario-legacy-ovs-network2.png
+.. image:: figures/scenario-classic-lb-network2.png
    :alt: Network node components - connectivity
 
 The compute nodes contain the following network components:
 
-#. Open vSwitch agent managing virtual switches, connectivity among
+#. Linux bridge agent managing virtual switches, connectivity among
    them, and interaction via virtual ports with other network components
-   such as namespaces, Linux bridges, and underlying interfaces.
-#. Linux bridges handling security groups. Due to limitations with Open
-   vSwitch and *iptables*, the Networking service uses a Linux bridge
-   to manage security groups for instances.
+   such as namespaces, security groups, and underlying interfaces.
 
-.. image:: figures/scenario-legacy-ovs-compute1.png
+.. image:: figures/scenario-classic-lb-compute1.png
    :alt: Compute node components - overview
 
-.. image:: figures/scenario-legacy-ovs-compute2.png
+.. image:: figures/scenario-classic-lb-compute2.png
    :alt: Compute node components - connectivity
 
 Packet flow
@@ -213,8 +197,8 @@ Packet flow
 Case 1: North-south for instances with a fixed IP address
 ---------------------------------------------------------
 
-For instances with a fixed IP address, the network node routes
-*north-south* network traffic between project and external networks.
+For instances with a fixed IP address, the network node routes *north-south*
+network traffic between project and external networks.
 
 * External network
 
@@ -234,72 +218,76 @@ For instances with a fixed IP address, the network node routes
 * Instance 1 resides on compute node 1 and uses a project network.
 * The instance sends a packet to a host on the external network.
 
+.. note::
+   Although the diagram shows both VXLAN and VLAN project networks, the packet
+   flow only considers one instance using a VXLAN project network.
+
 The following steps involve compute node 1:
 
-#. The instance 1 ``tap`` interface (1) forwards the packet to the Linux
-   bridge ``qbr``. The packet contains destination MAC address *TG*
-   because the destination resides on another network.
-#. Security group rules (2) on the Linux bridge ``qbr`` handle state tracking
-   for the packet.
-#. The Linux bridge ``qbr`` forwards the packet to the Open vSwitch
-   integration bridge ``br-int``.
-#. The Open vSwitch integration bridge ``br-int`` adds the internal tag for
-   the project network.
+#. For VXLAN project networks:
+
+   #. The instance 1 ``tap`` interface (1) forwards the packet to the tunnel
+      bridge ``qbr``. The packet contains destination MAC address *TG*
+      because the destination resides on another network.
+   #. Security group rules (2) on the tunnel bridge ``qbr`` handle state
+      tracking for the packet.
+   #. The tunnel bridge ``qbr`` forwards the packet to the logical tunnel
+      interface ``vxlan-sid`` (3) where *sid* contains the project network
+      segmentation ID.
+   #. The physical tunnel interface forwards the packet to the network
+      node.
+
 #. For VLAN project networks:
 
-   #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-      the Open vSwitch VLAN bridge ``br-vlan``.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` replaces the internal tag
-      with the actual VLAN tag of the project network.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` forwards the packet to the
-      network node via the VLAN interface.
-
-#. For VXLAN and GRE project networks:
-
-   #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-      the Open vSwitch tunnel bridge ``br-tun``.
-   #. The Open vSwitch tunnel bridge ``br-tun`` wraps the packet in a VXLAN
-      or GRE tunnel and adds a tag to identify the project network.
-   #. The Open vSwitch tunnel bridge ``br-tun`` forwards the packet to the
-      network node via the tunnel interface.
+   #. The instance 1 ``tap`` interface forwards the packet to the VLAN
+      bridge ``qbr``. The packet contains destination MAC address *TG*
+      because the destination resides on another network.
+   #. Security group rules on the VLAN bridge ``qbr`` handle state tracking
+      for the packet.
+   #. The VLAN bridge ``qbr`` forwards the packet to the logical VLAN
+      interface ``device.sid`` where *device* references the underlying
+      physical VLAN interface and *sid* contains the project network
+      segmentation ID.
+   #. The logical VLAN interface ``device.sid`` forwards the packet to the
+      network node via the physical VLAN interface.
 
 The following steps involve the network node:
 
+#. For VXLAN project networks:
+
+   #. The physical tunnel interface forwards the packet to the logical
+      tunnel interface ``vxlan-sid`` (4) where *sid* contains the project
+      network segmentation ID.
+   #. The logical tunnel interface ``vxlan-sid`` forwards the packet to the
+      tunnel bridge ``qbr``.
+   #. The tunnel bridge ``qbr`` forwards the packet to the ``qr`` interface (5)
+      in the router namespace ``qrouter``. The ``qr`` interface contains the
+      project network router interface IP address *TG*.
+
 #. For VLAN project networks:
 
-   #. The VLAN interface forwards the packet to the Open vSwitch VLAN
-      bridge ``br-vlan``.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` forwards the packet to the
-      Open vSwitch integration bridge ``br-int``.
-   #. The Open vSwitch integration bridge ``br-int`` replaces the actual
-      VLAN tag of the project network with the internal tag.
+   #. The physical VLAN interface forwards the packet to the logical VLAN
+      interface ``device.sid`` where *device* references the underlying
+      physical VLAN interface and *sid* contains the project network
+      segmentation ID.
+   #. The logical VLAN interface ``device.sid`` forwards the packet to the
+      VLAN bridge ``qbr``.
+   #. The VLAN bridge ``qbr`` forwards the packet to the ``qr`` interface in
+      the router namespace ``qrouter``. The ``qr`` interface contains the
+      project network 1 gateway IP address *TG*.
 
-#. For VXLAN and GRE project networks:
-
-   #. The tunnel interface forwards the packet to the Open vSwitch tunnel
-      bridge ``br-tun``.
-   #. The Open vSwitch tunnel bridge ``br-tun`` unwraps the packet and adds
-      the internal tag for the project network.
-   #. The Open vSwitch tunnel bridge ``br-tun`` forwards the packet to the
-      Open vSwitch integration bridge ``br-int``.
-
-#. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-   the ``qr`` interface (3) in the router namespace ``qrouter``. The ``qr``
-   interface contains the project network gateway IP address *TG*.
-#. The *iptables* service (4) performs SNAT on the packet using the ``qg``
-   interface (5) as the source IP address. The ``qg`` interface contains
+#. The *iptables* service (6) performs SNAT on the packet using the ``qg``
+   interface (7) as the source IP address. The ``qg`` interface contains
    the project network router interface IP address *TR*.
-#. The router namespace ``qrouter`` forwards the packet to the Open vSwitch
-   integration bridge ``br-int`` via the ``qg`` interface.
-#. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-   the Open vSwitch external bridge ``br-ex``.
-#. The Open vSwitch external bridge ``br-ex`` forwards the packet to the
-   external network via the external interface.
+#. The router namespace ``qrouter`` forwards the packet to the external
+   bridge ``qbr``.
+#. The external bridge ``qbr`` forwards the packet to the external network
+   via the physical external interface.
 
 .. note::
    Return traffic follows similar steps in reverse.
 
-.. image:: figures/scenario-legacy-ovs-flowns1.png
+.. image:: figures/scenario-classic-lb-flowns1.png
    :alt: Network traffic flow - north/south with fixed IP address
 
 Case 2: North-south for instances with a floating IP address
@@ -327,72 +315,71 @@ For instances with a floating IP address, the network node routes
 * Instance 1 resides on compute node 1 and uses a project network.
 * The instance receives a packet from a host on the external network.
 
+.. note::
+   Although the diagram shows both VXLAN and VLAN project networks, the packet
+   flow only considers one instance using a VXLAN project network.
+
 The following steps involve the network node:
 
-#. The external interface forwards the packet to the Open vSwitch external
-   bridge ``br-ex``.
-#. The Open vSwitch external bridge ``br-ex`` forwards the packet to the
-   Open vSwitch integration bridge ``br-int``.
-#. The Open vSwitch integration bridge forwards the packet to the ``qg``
-   interface (1) in the router namespace ``qrouter``. The ``qg`` interface
-   contains the instance 1 floating IP address *F1*.
+#. The physical external interface forwards the packet to the external
+   bridge ``qbr``.
+#. The external bridge ``qbr`` forwards the packet to the ``qg`` interface (1)
+   in the router namespace ``qrouter``. The ``qg`` interface contains the
+   instance floating IP address *F1*.
 #. The *iptables* service (2) performs DNAT on the packet using the ``qr``
-   interface (3) as the source IP address. The ``qr`` interface contains
-   the project network router interface IP address *TR1*.
-#. The router namespace ``qrouter`` forwards the packet to the Open vSwitch
-   integration bridge ``br-int``.
-#. The Open vSwitch integration bridge ``br-int`` adds the internal tag for
-   the project network.
+   interface (3) as the source IP address. The ``qr`` interface contains the
+   project network gateway IP address *TR*.
+#. For VXLAN project networks:
+
+   #. The router namespace ``qrouter`` forwards the packet to the tunnel
+      bridge ``qbr``.
+   #. The tunnel bridge ``qbr`` forwards the packet to the logical tunnel
+      interface ``vxlan-sid`` (4) where *sid* contains the project network
+      segmentation ID.
+   #. The physical tunnel interface forwards the packet to compute node 1.
+
 #. For VLAN project networks:
 
-   #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-      the Open vSwitch VLAN bridge ``br-vlan``.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` replaces the internal tag
-      with the actual VLAN tag of the project network.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` forwards the packet to the
-      compute node via the VLAN interface.
-
-#. For VXLAN and GRE project networks:
-
-   #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-      the Open vSwitch tunnel bridge ``br-tun``.
-   #. The Open vSwitch tunnel bridge ``br-tun`` wraps the packet in a VXLAN
-      or GRE tunnel and adds a tag to identify the project network.
-   #. The Open vSwitch tunnel bridge ``br-tun`` forwards the packet to the
-      compute node via the tunnel interface.
+   #. The router namespace ``qrouter`` forwards the packet to the VLAN
+      bridge ``qbr``.
+   #. The VLAN bridge ``qbr`` forwards the packet to the logical VLAN
+      interface ``device.sid`` where *device* references the underlying
+      physical VLAN interface and *sid* contains the project network
+      segmentation ID.
+   #. The physical VLAN interface forwards the packet to compute node 1.
 
 The following steps involve compute node 1:
 
+#. For VXLAN project networks:
+
+   #. The physical tunnel interface forwards the packet to the logical
+      tunnel interface ``vxlan-sid`` (5) where *sid* contains the project
+      network segmentation ID.
+   #. The logical tunnel interface ``vxlan-sid`` forwards the packet to the
+      tunnel bridge ``qbr``.
+   #. Security group rules (6) on the tunnel bridge ``qbr`` handle firewalling
+      and state tracking for the packet.
+   #. The tunnel bridge ``qbr`` forwards the packet to the ``tap``
+      interface (7) on instance 1.
+
 #. For VLAN project networks:
 
-   #. The VLAN interface forwards the packet to the Open vSwitch VLAN
-      bridge ``br-vlan``.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` forwards the packet to the
-      Open vSwitch integration bridge ``br-int``.
-   #. The Open vSwitch integration bridge ``br-int`` replaces the actual
-      VLAN tag the project network with the internal tag.
-
-#. For VXLAN and GRE project networks:
-
-   #. The tunnel interface forwards the packet to the Open vSwitch tunnel
-      bridge ``br-tun``.
-   #. The Open vSwitch tunnel bridge ``br-tun`` unwraps the packet and adds
-      the internal tag for the project network.
-   #. The Open vSwitch tunnel bridge ``br-tun`` forwards the packet to the
-      Open vSwitch integration bridge ``br-int``.
-
-#. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-   the Linux bridge ``qbr``.
-#. Security group rules (4) on the Linux bridge ``qbr`` handle firewalling
-   and state tracking for the packet.
-#. The Linux bridge ``qbr`` forwards the packet to the ``tap`` interface (5)
-   on instance 1.
+   #. The physical VLAN interface forwards the packet to the logical
+      VLAN interface ``device.sid`` where *device* references the underlying
+      physical VLAN interface and *sid* contains the project network
+      segmentation ID.
+   #. The logical VLAN interface ``device.sid`` forwards the packet to the
+      VLAN bridge ``qbr``.
+   #. Security group rules on the VLAN bridge ``qbr`` handle firewalling
+      and state tracking for the packet.
+   #. The VLAN bridge ``qbr`` forwards the packet to the ``tap`` interface
+      on instance 1.
 
 .. note::
    Return traffic follows similar steps in reverse.
 
-.. image:: figures/scenario-legacy-ovs-flowns2.png
-   :alt: Network traffic flow - north/south with floating IP address
+.. image:: figures/scenario-classic-lb-flowns2.png
+   :alt: Network traffic flow - north/south with a floating IP address
 
 Case 3: East-west for instances on different networks
 -----------------------------------------------------
@@ -419,119 +406,61 @@ same project router.
 
   * Instance 2: 192.168.2.11 with MAC address *I2*
 
-* Instance 1 resides on compute node 1 and uses project network 1.
-* Instance 2 resides on compute node 2 and uses project network 2.
+* Instance 1 resides on compute node 1 and uses VXLAN project network 1.
+* Instance 2 resides on compute node 2 and uses VLAN project network 2.
 * Both project networks reside on the same router.
 * Instance 1 sends a packet to instance 2.
 
 The following steps involve compute node 1:
 
-#. The instance 1 ``tap`` interface (1) forwards the packet to the Linux
+#. The instance 1 ``tap`` interface (1) forwards the packet to the tunnel
    bridge ``qbr``. The packet contains destination MAC address *TG1*
    because the destination resides on another network.
-#. Security group rules (2) on the Linux bridge ``qbr`` handle state tracking
-   for the packet.
-#. The Linux bridge ``qbr`` forwards the packet to the Open vSwitch
-   integration bridge ``br-int``.
-#. The Open vSwitch integration bridge ``br-int`` adds the internal tag for
-   project network 1.
-#. For VLAN project networks:
-
-   #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-      the Open vSwitch VLAN bridge ``br-vlan``.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` replaces the internal tag
-      with the actual VLAN tag of project network 1.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` forwards the packet to the
-      network node via the VLAN interface.
-
-#. For VXLAN and GRE project networks:
-
-   #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-      the Open vSwitch tunnel bridge ``br-tun``.
-   #. The Open vSwitch tunnel bridge ``br-tun`` wraps the packet in a VXLAN
-      or GRE tunnel and adds a tag to identify project network 1.
-   #. The Open vSwitch tunnel bridge ``br-tun`` forwards the packet to the
-      network node via the tunnel interface.
+#. Security group rules (2) on the tunnel bridge ``qbr`` handle
+   state tracking for the packet.
+#. The tunnel bridge ``qbr`` forwards the packet to the logical tunnel
+   interface ``vxlan-sid`` (3) where *sid* contains the project network
+   segmentation ID.
+#. The physical tunnel interface forwards the packet to the network
+   node.
 
 The following steps involve the network node:
 
-#. For VLAN project networks:
-
-   #. The VLAN interface forwards the packet to the Open vSwitch VLAN
-      bridge ``br-vlan``.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` forwards the packet to the
-      Open vSwitch integration bridge ``br-int``.
-   #. The Open vSwitch integration bridge ``br-int`` replaces the actual
-      VLAN tag of project network 1 with the internal tag.
-
-#. For VXLAN and GRE project networks:
-
-   #. The tunnel interface forwards the packet to the Open vSwitch tunnel
-      bridge ``br-tun``.
-   #. The Open vSwitch tunnel bridge ``br-tun`` unwraps the packet and adds
-      the internal tag for project network 1.
-   #. The Open vSwitch tunnel bridge ``br-tun`` forwards the packet to the
-      Open vSwitch integration bridge ``br-int``.
-
-#. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-   the ``qr-1`` interface (3) in the router namespace ``qrouter``. The ``qr-1``
-   interface contains the project network 1 gateway IP address *TG1*.
-#. The router namespace ``qrouter`` routes the packet to the ``qr-2`` interface
-   (4). The ``qr-2`` interface contains the project network 2 gateway IP
-   address *TG2*.
-#. The router namespace ``qrouter`` forwards the packet to the Open vSwitch
-   integration bridge ``br-int``.
-#. The Open vSwitch integration bridge ``br-int`` adds the internal tag for
-   project network 2.
-#. For VLAN project networks:
-
-   #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-      the Open vSwitch VLAN bridge ``br-vlan``.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` replaces the internal tag
-      with the actual VLAN tag of project network 2.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` forwards the packet to compute
-      node 2 via the VLAN interface.
-
-#. For VXLAN and GRE project networks:
-
-   #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-      the Open vSwitch tunnel bridge ``br-tun``.
-   #. The Open vSwitch tunnel bridge ``br-tun`` wraps the packet in a VXLAN
-      or GRE tunnel and adds a tag to identify project network 2.
-   #. The Open vSwitch tunnel bridge ``br-tun`` forwards the packet to
-      compute node 2 via the tunnel interface.
+#. The physical tunnel interface forwards the packet to the logical
+   tunnel interface ``vxlan-sid`` (4) where *sid* contains the project
+   network segmentation ID.
+#. The logical tunnel interface ``vxlan-sid`` forwards the packet to the
+   tunnel bridge ``qbr``.
+#. The tunnel bridge ``qbr`` forwards the packet to the ``qr-1``
+   interface (5) in the router namespace ``qrouter``. The ``qr-1``
+   interface contains the project network 1 gateway IP address
+   *TG1*.
+#. The router namespace ``qrouter`` routes the packet (6) to the ``qr-2``
+   interface (7). The ``qr-2`` interface contains the project network 2
+   gateway IP address *TG2*.
+#. The router namespace ``qrouter`` forwards the packet to the VLAN
+   bridge ``qbr``.
+#. The VLAN bridge ``qbr`` forwards the packet to the logical VLAN
+   interface ``vlan.sid`` (8) where *sid* contains the project network
+   segmentation ID.
+#. The physical VLAN interface forwards the packet to compute node 2.
 
 The following steps involve compute node 2:
 
-#. For VLAN project networks:
-
-   #. The VLAN interface forwards the packet to the Open vSwitch VLAN
-      bridge ``br-vlan``.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` forwards the packet to the
-      Open vSwitch integration bridge ``br-int``.
-   #. The Open vSwitch integration bridge ``br-int`` replaces the actual
-      VLAN tag of project network 2 with the internal tag.
-
-#. For VXLAN and GRE project networks:
-
-   #. The tunnel interface forwards the packet to the Open vSwitch tunnel
-      bridge ``br-tun``.
-   #. The Open vSwitch tunnel bridge ``br-tun`` unwraps the packet and adds
-      the internal tag for project network 2.
-   #. The Open vSwitch tunnel bridge ``br-tun`` forwards the packet to the
-      Open vSwitch integration bridge ``br-int``.
-
-#. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-   the Linux bridge ``qbr``.
-#. Security group rules (5) on the Linux bridge ``qbr`` handle firewalling
+#. The physical VLAN interface forwards the packet to the logical VLAN
+   interface ``vlan.sid`` (9) where *sid* contains the project network
+   segmentation ID.
+#. The logical VLAN interface ``vlan.sid`` forwards the packet to the
+   VLAN bridge ``qbr``.
+#. Security group rules (10) on the VLAN bridge ``qbr`` handle firewalling
    and state tracking for the packet.
-#. The Linux bridge ``qbr`` forwards the packet to the ``tap`` interface (6)
+#. The VLAN bridge ``qbr`` forwards the packet to the ``tap`` interface (11)
    on instance 2.
 
 .. note::
    Return traffic follows similar steps in reverse.
 
-.. image:: figures/scenario-legacy-ovs-flowew1.png
+.. image:: figures/scenario-classic-lb-flowew1.png
    :alt: Network traffic flow - east/west for instances on different networks
 
 Case 4: East-west for instances on the same network
@@ -555,70 +484,39 @@ project router on the network node.
 
 * Instance 1 resides on compute node 1.
 * Instance 2 resides on compute node 2.
-* Both instances use the same project network.
+* Both instances use the same VXLAN project network.
 * Instance 1 sends a packet to instance 2.
-* The Open vSwitch agent handles switching within the project network.
+* The Linux bridge agent handles switching within the project network.
 
 The following steps involve compute node 1:
 
-#. The instance 1 ``tap`` interface (1) forwards the packet to the VLAN
-   bridge ``qbr``. The packet contains destination MAC address *I2*
-   because the destination resides on the same network.
-#. Security group rules (2) on the provider bridge ``qbr`` handle
+#. The instance 1 ``tap`` interface (1) forwards the packet to the tunnel
+   bridge ``qbr``. The packet contains destination MAC address *TG1*
+   because the destination resides on another network.
+#. Security group rules (2) on the tunnel bridge ``qbr`` handle
    state tracking for the packet.
-#. The Linux bridge ``qbr`` forwards the packet to the Open vSwitch
-   integration bridge ``br-int``.
-#. The Open vSwitch integration bridge ``br-int`` adds the internal tag for
-   provider network 1.
-#. For VLAN project networks:
-
-   #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-      the Open vSwitch VLAN bridge ``br-vlan``.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` replaces the internal tag
-      with the actual VLAN tag of project network 1.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` forwards the packet to the
-      compute node 2 via the VLAN interface.
-
-#. For VXLAN and GRE project networks:
-
-   #. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-      the Open vSwitch tunnel bridge ``br-tun``.
-   #. The Open vSwitch tunnel bridge ``br-tun`` wraps the packet in a VXLAN
-      or GRE tunnel and adds a tag to identify project network 1.
-   #. The Open vSwitch tunnel bridge ``br-tun`` forwards the packet to the
-      compute node 2 via the tunnel interface.
+#. The tunnel bridge ``qbr`` forwards the packet to the logical tunnel
+   interface ``vxlan-sid`` (3) where *sid* contains the project network
+   segmentation ID.
+#. The physical tunnel interface forwards the packet to the network
+   node.
 
 The following steps involve compute node 2:
 
-#. For VLAN project networks:
-
-   #. The VLAN interface forwards the packet to the Open vSwitch VLAN
-      bridge ``br-vlan``.
-   #. The Open vSwitch VLAN bridge ``br-vlan`` forwards the packet to the
-      Open vSwitch integration bridge ``br-int``.
-   #. The Open vSwitch integration bridge ``br-int`` replaces the actual
-      VLAN tag of project network 2 with the internal tag.
-
-#. For VXLAN and GRE project networks:
-
-   #. The tunnel interface forwards the packet to the Open vSwitch tunnel
-      bridge ``br-tun``.
-   #. The Open vSwitch tunnel bridge ``br-tun`` unwraps the packet and adds
-      the internal tag for project network 2.
-   #. The Open vSwitch tunnel bridge ``br-tun`` forwards the packet to the
-      Open vSwitch integration bridge ``br-int``.
-
-#. The Open vSwitch integration bridge ``br-int`` forwards the packet to
-   the Linux bridge ``qbr``.
-#. Security group rules (3) on the Linux bridge ``qbr`` handle firewalling
+#. The physical tunnel interface forwards the packet to the logical
+   tunnel interface ``vxlan-sid`` (4) where *sid* contains the project network
+   segmentation ID.
+#. The logical tunnel interface ``vxlan-sid`` forwards the packet to the
+   tunnel bridge ``qbr``.
+#. Security group rules (5) on the tunnel bridge ``qbr`` handle firewalling
    and state tracking for the packet.
-#. The Linux bridge ``qbr`` forwards the packet to the ``tap`` interface (4)
+#. The tunnel bridge ``qbr`` forwards the packet to the ``tap`` interface (6)
    on instance 2.
 
 .. note::
    Return traffic follows similar steps in reverse.
 
-.. image:: figures/scenario-legacy-ovs-flowew2.png
+.. image:: figures/scenario-classic-lb-flowew2.png
    :alt: Network traffic flow - east/west for instances on the same network
 
 Example configuration
@@ -646,9 +544,9 @@ Controller node
    .. code-block:: ini
 
       [ml2]
-      type_drivers = flat,vlan,gre,vxlan
-      tenant_network_types = vlan,gre,vxlan
-      mechanism_drivers = openvswitch,l2population
+      type_drivers = flat,vlan,vxlan
+      tenant_network_types = vlan,vxlan
+      mechanism_drivers = linuxbridge,l2population
 
       [ml2_type_flat]
       flat_networks = external
@@ -656,21 +554,18 @@ Controller node
       [ml2_type_vlan]
       network_vlan_ranges = external,vlan:MIN_VLAN_ID:MAX_VLAN_ID
 
-      [ml2_type_gre]
-      tunnel_id_ranges = MIN_GRE_ID:MAX_GRE_ID
-
       [ml2_type_vxlan]
       vni_ranges = MIN_VXLAN_ID:MAX_VXLAN_ID
       vxlan_group = 239.1.1.1
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
       enable_security_group = True
       enable_ipset = True
 
-   Replace ``MIN_VLAN_ID``, ``MAX_VLAN_ID``, ``MIN_GRE_ID``, ``MAX_GRE_ID``,
-   ``MIN_VXLAN_ID``, and ``MAX_VXLAN_ID`` with VLAN, GRE, and VXLAN ID minimum
-   and maximum values suitable for your environment.
+   Replace ``MIN_VLAN_ID``, ``MAX_VLAN_ID``, ``MIN_VXLAN_ID``, and
+   ``MAX_VXLAN_ID`` with VLAN and VXLAN ID minimum and maximum values suitable
+   for your environment.
 
    .. note::
       The first value in the ``tenant_network_types`` option becomes the
@@ -704,32 +599,33 @@ Network node
 
 #. Configure common options. Edit the :file:`/etc/neutron/neutron.conf` file:
 
-   .. code-block:: console
+   .. code-block:: ini
 
       [DEFAULT]
       verbose = True
 
-#. Configure the Open vSwitch agent. Edit the
+#. Configure the Linux bridge agent. Edit the
    :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
 
    .. code-block:: ini
 
-      [ovs]
-      local_ip = TUNNEL_INTERFACE_IP_ADDRESS
-      enable_tunneling = True
-      bridge_mappings = vlan:br-vlan,external:br-ex
+      [linux_bridge]
+      physical_interface_mappings = vlan:PROJECT_VLAN_INTERFACE,external:EXTERNAL_INTERFACE
 
-      [agent]
+      [vxlan]
+      enable_vxlan = True
+      local_ip = TUNNEL_INTERFACE_IP_ADDRESS
       l2_population = True
-      tunnel_types = gre,vxlan
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
       enable_security_group = True
       enable_ipset = True
 
-   Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
-   that handles GRE/VXLAN project networks.
+   Replace ``PROJECT_VLAN_INTERFACE`` and ``EXTERNAL_INTERFACE`` with the name
+   of the underlying interface that handles VLAN project networks and external
+   networks, respectively. Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP
+   address of the interface that handles project tunnel networks.
 
 #. Configure the L3 agent. Edit the :file:`/etc/neutron/l3_agent.ini` file:
 
@@ -737,28 +633,24 @@ Network node
 
       [DEFAULT]
       verbose = True
-      interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+      interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
       use_namespaces = True
       external_network_bridge =
       router_delete_namespaces = True
-
-   .. note::
-      The ``external_network_bridge`` option intentionally contains
-      no value.
 
 #. Configure the DHCP agent. Edit the :file:`/etc/neutron/dhcp_agent.ini`
    file:
 
    .. code-block:: ini
 
-      [DEFAULT]
-      verbose = True
-      interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
-      dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
-      use_namespaces = True
-      dhcp_delete_namespaces = True
+         [DEFAULT]
+         verbose = True
+         interface_driver = neutron.agent.linux.interface.BridgeInterfaceDriver
+         dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
+         use_namespaces = True
+         dhcp_delete_namespaces = True
 
-#. (Optional) Reduce MTU for VXLAN/GRE project networks.
+#. (Optional) Reduce MTU for VXLAN project networks.
 
    #. Edit the :file:`/etc/neutron/dhcp_agent.ini` file:
 
@@ -787,8 +679,7 @@ Network node
 
 #. Start the following services:
 
-   * Open vSwitch
-   * Open vSwitch agent
+   * Linux bridge agent
    * L3 agent
    * DHCP agent
    * Metadata agent
@@ -819,32 +710,32 @@ Compute nodes
       [DEFAULT]
       verbose = True
 
-#. Configure the Open vSwitch agent. Edit the
+#. Configure the Linux bridge agent. Edit the
    :file:`/etc/neutron/plugins/ml2/ml2_conf.ini` file:
 
    .. code-block:: ini
 
-      [ovs]
-      local_ip = TUNNEL_INTERFACE_IP_ADDRESS
-      enable_tunneling = True
-      bridge_mappings = vlan:br-vlan
+      [linux_bridge]
+      physical_interface_mappings = vlan:PROJECT_VLAN_INTERFACE
 
-      [agent]
+      [vxlan]
+      enable_vxlan = True
+      local_ip = TUNNEL_INTERFACE_IP_ADDRESS
       l2_population = True
-      tunnel_types = gre,vxlan
 
       [securitygroup]
-      firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+      firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
       enable_security_group = True
       enable_ipset = True
 
-   Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address of the interface
-   that handles GRE/VXLAN project networks.
+   Replace ``PROJECT_VLAN_INTERFACE`` with the name of the underlying
+   interface that handles VLAN project networks and external networks,
+   respectively. Replace ``TUNNEL_INTERFACE_IP_ADDRESS`` with the IP address
+   of the interface that handles VXLAN project networks.
 
 #. Start the following services:
 
-   * Open vSwitch
-   * Open vSwitch agent
+   * Linux bridge agent
 
 Verify service operation
 ------------------------
@@ -855,16 +746,16 @@ Verify service operation
    .. code-block:: console
 
       $ neutron agent-list
-      +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
-      | id                                   | agent_type         | host     | alive | admin_state_up | binary                    |
-      +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
-      | 1eaf6079-41c8-4b5b-876f-73b02753ff57 | Open vSwitch agent | compute1 | :-)   | True           | neutron-openvswitch-agent |
-      | 511c27b3-8317-4e27-8a0f-b158e4fb8368 | Metadata agent     | network1 | :-)   | True           | neutron-metadata-agent    |
-      | 7eae11ef-8157-4fd4-a352-bc841cf709f6 | Open vSwitch agent | network1 | :-)   | True           | neutron-openvswitch-agent |
-      | a9110ce6-22cc-4f78-9b2e-57f83aac68a3 | Open vSwitch agent | compute2 | :-)   | True           | neutron-openvswitch-agent |
-      | c41f3200-8eda-43ab-8135-573e826776d9 | DHCP agent         | network1 | :-)   | True           | neutron-dhcp-agent        |
-      | f897648e-7623-486c-8043-1b219eb2895a | L3 agent           | network1 | :-)   | True           | neutron-l3-agent          |
-      +--------------------------------------+--------------------+----------+-------+----------------+---------------------------+
+      +--------------------------------------+--------------------+-------------+-------+----------------+---------------------------+
+      | id                                   | agent_type         | host        | alive | admin_state_up | binary                    |
+      +--------------------------------------+--------------------+-------------+-------+----------------+---------------------------+
+      | 0146e482-f94a-4996-9e2a-f0cafe2575c5 | L3 agent           | network1    | :-)   | True           | neutron-l3-agent          |
+      | 0dd4af0d-aafd-4036-b240-db12cf2a1aa9 | Linux bridge agent | compute2    | :-)   | True           | neutron-linuxbridge-agent |
+      | 2f9e5434-575e-4079-bcca-5e559c0a5ba7 | Linux bridge agent | network1    | :-)   | True           | neutron-linuxbridge-agent |
+      | 4105fd85-7a8f-4956-b104-26a600670530 | Linux bridge agent | compute1    | :-)   | True           | neutron-linuxbridge-agent |
+      | 8c15992a-3abc-4b14-aebc-60065e5090e6 | Metadata agent     | network1    | :-)   | True           | neutron-metadata-agent    |
+      | aa2e8f3e-b53e-4fb9-8381-67dcad74e940 | DHCP agent         | network1    | :-)   | True           | neutron-dhcp-agent        |
+      +--------------------------------------+--------------------+-------------+-------+----------------+---------------------------+
 
 Create initial networks
 -----------------------
@@ -878,12 +769,12 @@ This example creates a flat external network and a VXLAN project network.
 
       $ neutron net-create ext-net --router:external True \
         --provider:physical_network external --provider:network_type flat
-        Created a new network:
+      Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
       | admin_state_up            | True                                 |
-      | id                        | e5f9be2f-3332-4f2d-9f4d-7f87a5a7692e |
+      | id                        | d57703fd-5571-404c-abca-f59a13f3c507 |
       | name                      | ext-net                              |
       | provider:network_type     | flat                                 |
       | provider:physical_network | external                             |
@@ -892,7 +783,7 @@ This example creates a flat external network and a VXLAN project network.
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tenant_id                 | 96393622940e47728b6dcdb2ef405f50     |
+      | tenant_id                 | 897d7360ac3441209d00fbab5f0b5c8b     |
       +---------------------------+--------------------------------------+
 
 #. Create a subnet on the external network:
@@ -906,26 +797,26 @@ This example creates a flat external network and a VXLAN project network.
       +-------------------+----------------------------------------------------+
       | Field             | Value                                              |
       +-------------------+----------------------------------------------------+
-      | allocation_pools  | {"start": "203.0.113.101", "end": "203.0.113.200"} |
-      | cidr              | 203.0.113.0/24                                     |
+      | allocation_pools  | {"start": "203.1.113.101", "end": "203.0.113.200"} |
+      | cidr              | 201.0.113.0/24                                     |
       | dns_nameservers   |                                                    |
       | enable_dhcp       | False                                              |
       | gateway_ip        | 203.0.113.1                                        |
       | host_routes       |                                                    |
-      | id                | cd9c15a1-0a66-4bbe-b1b4-4b7edd936f7a               |
+      | id                | 020bb28d-0631-4af2-aa97-7374d1d33557               |
       | ip_version        | 4                                                  |
       | ipv6_address_mode |                                                    |
       | ipv6_ra_mode      |                                                    |
       | name              | ext-subnet                                         |
-      | network_id        | e5f9be2f-3332-4f2d-9f4d-7f87a5a7692e               |
-      | tenant_id         | 96393622940e47728b6dcdb2ef405f50                   |
+      | network_id        | d57703fd-5571-404c-abca-f59a13f3c507               |
+      | tenant_id         | 897d7360ac3441209d00fbab5f0b5c8b                   |
       +-------------------+----------------------------------------------------+
 
 .. note::
    The example configuration contains ``vlan`` as the first project network
    type. Only an administrative user can create other types of networks such as
-   GRE or VXLAN. The following commands use the ``admin`` project credentials
-   to create a VXLAN project network.
+   VXLAN. The following commands use the ``admin`` project credentials to
+   create a VXLAN project network.
 
 #. Obtain the ID of a regular project. For example, using the ``demo`` project:
 
@@ -937,7 +828,7 @@ This example creates a flat external network and a VXLAN project network.
       +-------------+----------------------------------+
       | description | Demo Project                     |
       | enabled     | True                             |
-      | id          | 443cd1596b2e46d49965750771ebbfe1 |
+      | id          | 8dbcb34c59a741b18e71c19073a47ed5 |
       | name        | demo                             |
       +-------------+----------------------------------+
 
@@ -945,14 +836,14 @@ This example creates a flat external network and a VXLAN project network.
 
    .. code-block:: console
 
-      $ neutron net-create demo-net --tenant-id 443cd1596b2e46d49965750771ebbfe1 \
+      $ neutron net-create demo-net --tenant-id 8dbcb34c59a741b18e71c19073a47ed5 \
         --provider:network_type vxlan
       Created a new network:
       +---------------------------+--------------------------------------+
       | Field                     | Value                                |
       +---------------------------+--------------------------------------+
       | admin_state_up            | True                                 |
-      | id                        | 6e9c5324-68d1-47a8-98d5-8268db955475 |
+      | id                        | 3a0663f6-9d5d-415e-91f2-0f1bfefbe5ed |
       | name                      | demo-net                             |
       | provider:network_type     | vxlan                                |
       | provider:physical_network |                                      |
@@ -961,7 +852,7 @@ This example creates a flat external network and a VXLAN project network.
       | shared                    | False                                |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tenant_id                 | 443cd1596b2e46d49965750771ebbfe1     |
+      | tenant_id                 | 8dbcb34c59a741b18e71c19073a47ed5     |
       +---------------------------+--------------------------------------+
 
 #. Source the regular project credentials. The following steps use the
@@ -982,13 +873,13 @@ This example creates a flat external network and a VXLAN project network.
       | enable_dhcp       | True                                             |
       | gateway_ip        | 192.168.1.1                                      |
       | host_routes       |                                                  |
-      | id                | c7b42e58-a2f4-4d63-b199-d266504c03c9             |
+      | id                | 1d5ab804-8925-46b0-a7b4-e520dc247284             |
       | ip_version        | 4                                                |
       | ipv6_address_mode |                                                  |
       | ipv6_ra_mode      |                                                  |
       | name              | demo-subnet                                      |
-      | network_id        | 6e9c5324-68d1-47a8-98d5-8268db955475             |
-      | tenant_id         | 443cd1596b2e46d49965750771ebbfe1                 |
+      | network_id        | 3a0663f6-9d5d-415e-91f2-0f1bfefbe5ed             |
+      | tenant_id         | 8dbcb34c59a741b18e71c19073a47ed5                 |
       +-------------------+--------------------------------------------------+
 
 #. Create a project router:
@@ -996,17 +887,16 @@ This example creates a flat external network and a VXLAN project network.
    .. code-block:: console
 
       $ neutron router-create demo-router
-      Created a new router:
       +-----------------------+--------------------------------------+
       | Field                 | Value                                |
       +-----------------------+--------------------------------------+
       | admin_state_up        | True                                 |
       | external_gateway_info |                                      |
-      | id                    | 474a5b1f-d64c-4db9-b3b2-8ae9bb1b5970 |
+      | id                    | 299b2363-d656-401d-a3a5-55b4378e7fbb |
       | name                  | demo-router                          |
       | routes                |                                      |
       | status                | ACTIVE                               |
-      | tenant_id             | 443cd1596b2e46d49965750771ebbfe1     |
+      | tenant_id             | 8dbcb34c59a741b18e71c19073a47ed5     |
       +-----------------------+--------------------------------------+
 
 #. Add the project subnet as an interface on the router:
@@ -1014,7 +904,7 @@ This example creates a flat external network and a VXLAN project network.
    .. code-block:: console
 
       $ neutron router-interface-add demo-router demo-subnet
-      Added interface 0fa57069-29fd-4795-87b7-c123829137e9 to router demo-router.
+      Added interface 4f819fd4-be4d-42ab-bd47-ba1b2cb39006 to router demo-router.
 
 #. Add a gateway to the external network on the router:
 
@@ -1032,8 +922,8 @@ Verify network operation
    .. code-block:: console
 
       $ ip netns
-      qrouter-4d7928a0-4a3c-4b99-b01b-97da2f97e279
-      qdhcp-353f5937-a2d3-41ba-8225-fa1af2538141
+      qdhcp-3a0663f6-9d5d-415e-91f2-0f1bfefbe5ed
+      qrouter-299b2363-d656-401d-a3a5-55b4378e7fbb
 
    .. note::
       The ``qdhcp`` namespace might not exist until launching an instance.
@@ -1048,8 +938,8 @@ Verify network operation
       +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------+
       | id                                   | name | mac_address       | fixed_ips                                                                            |
       +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------+
-      | b1a894fd-aee8-475c-9262-4342afdc1b58 |      | fa:16:3e:c1:20:55 | {"subnet_id": "c7b42e58-a2f4-4d63-b199-d266504c03c9", "ip_address": "192.168.1.1"}   |
-      | ff5f93c6-3760-4902-a401-af78ff61ce99 |      | fa:16:3e:54:d7:8c | {"subnet_id": "cd9c15a1-0a66-4bbe-b1b4-4b7edd936f7a", "ip_address": "203.0.113.101"} |
+      | b1a894fd-aee8-475c-9262-4342afdc1b58 |      | fa:16:3e:c1:20:55 | {"subnet_id": "1d5ab804-8925-46b0-a7b4-e520dc247284", "ip_address": "192.168.1.1"}   |
+      | ff5f93c6-3760-4902-a401-af78ff61ce99 |      | fa:16:3e:54:d7:8c | {"subnet_id": "020bb28d-0631-4af2-aa97-7374d1d33557", "ip_address": "203.0.113.101"} |
       +--------------------------------------+------+-------------------+--------------------------------------------------------------------------------------+
 
 #. On the controller node or any host with access to the external network,
@@ -1108,7 +998,7 @@ Verify network operation
 
    .. code-block:: console
 
-      $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
+     $ nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
       +-------------+-----------+---------+-----------+--------------+
       | IP Protocol | From Port | To Port | IP Range  | Source Group |
       +-------------+-----------+---------+-----------+--------------+

@@ -2,10 +2,10 @@
 Legacy to L3 HA
 ===============
 
-This section describes the process of migrating from a legacy router to an L3
+This section describes the process of migrating from a classic router to an L3
 HA router, which is available starting from the Mitaka release.
 
-Similar to the legacy scenario, all network traffic on a project network that
+Similar to the classic scenario, all network traffic on a project network that
 requires routing actively traverses only one network node regardless of the
 quantity of network nodes providing HA for the router. Therefore, this
 high-availability implementation primarily addresses failure situations instead
@@ -13,8 +13,8 @@ of bandwidth constraints that limit performance. However, it supports random
 distribution of routers on different network nodes to reduce the chances of
 bandwidth constraints and to improve scaling.
 
-This section summarizes parts of :doc:`scenario_l3ha_ovs` and
-:doc:`scenario_l3ha_lb`. For details regarding needed infrastructure and
+This section summarizes parts of :ref:`scenario-l3ha-ovs` and
+:ref:`scenario-l3ha-lb`. For details regarding needed infrastructure and
 configuration to allow actual L3 HA deployment, read the relevant guide
 before continuing with the migration process.
 
@@ -97,8 +97,8 @@ Here is the router we have used in our demonstration:
 L3 HA to Legacy
 ~~~~~~~~~~~~~~~
 
-To return to legacy mode, you turn down the router again, turning off L3 HA and
-starting the router again
+To return to classic mode, you turn down the router again, turning off L3 HA
+and starting the router again
 
 .. warning::
    Once starting the migration, south-north connections (instances to internet)

@@ -9,5 +9,5 @@ the `Configuration Reference
 .. toctree::
    :maxdepth: 2
 
-   config_server.rst
-   config_ml2_plug_in.rst
+   config-server.rst
+   config-ml2-plug-in.rst
