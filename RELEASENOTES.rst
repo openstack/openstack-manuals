@@ -41,6 +41,11 @@ Virtual Machine Image Guide
 
 * RST conversion finished.
 
+Command-Line Interface Reference
+--------------------------------
+
+* RST conversion finished.
+
 Architecture Design Guide
 -------------------------
 
