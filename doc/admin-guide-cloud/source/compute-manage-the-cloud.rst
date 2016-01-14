@@ -14,7 +14,7 @@ commands to manage their clouds.
 
 ``nova`` client and ``euca2ools`` can be used by all users, though
 specific commands might be restricted by Role Based Access Control in
-the Identity Service.
+the Identity service.
 
 **Managing the cloud with nova client**
 
