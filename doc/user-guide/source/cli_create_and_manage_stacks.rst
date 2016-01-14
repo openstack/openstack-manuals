@@ -51,7 +51,7 @@ Create a stack from an example template file
 
       When you run the :command:`heat stack-create` command with the
       :option:`--poll` option, it prints the :command:`heat stack-show`
-      output first, and then continously prints the events in log format
+      output first, and then continuously prints the events in log format
       until the stack completes its action with success or failure.
 
 -  You can also use the :command:`template-validate` command to validate a
