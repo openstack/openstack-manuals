@@ -26,13 +26,13 @@ Contents
    :maxdepth: 2
 
    common/conventions.rst
-   intro_networking.rst
-   intro_os_networking.rst
+   intro-networking.rst
+   intro-os-networking.rst
    config.rst
    deploy.rst
    migration.rst
    miscellaneous.rst
-   adv_config.rst
+   adv-config.rst
 
    common/app_support.rst
 

@@ -1,3 +1,5 @@
+.. _scenario_provider_ovs:
+
 =============================================
 Scenario: Provider networks with Open vSwitch
 =============================================
