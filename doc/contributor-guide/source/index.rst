@@ -23,6 +23,7 @@ Contents
    rst-conv.rst
    docbook-conv.rst
    docs-structure.rst
+   team-structure.rst
    content-specs.rst
    tools-and-content-overview.rst
    doc-bugs.rst
