@@ -34,7 +34,7 @@ Ongoing maintenance operations are made much simpler if there is logical and
 physical separation of Data Plane and Control Plane systems. It then becomes
 possible to, for example, reboot a controller without affecting customers.
 If one service failure affects the operation of an entire server ('noisy
-neighbour'), the separation between Control and Data Planes enables rapid
+neighbor’), the separation between Control and Data Planes enables rapid
 maintenance with a limited effect on customer operations.
 
 
@@ -93,11 +93,11 @@ support layer three routing.
 
 Application design must also be factored into the capabilities of the
 underlying cloud infrastructure. If the compute hosts do not provide a seamless
-live migration capability, then it must be expected that when a compute host
+live migration capability, then it must be expected that if a compute host
 fails, that instance and any data local to that instance will be deleted.
 However, when providing an expectation to users that instances have a
-high-level of uptime guarantees, the infrastructure must be deployed in a way
-that eliminates any single point of failure when a compute host disappears.
+high-level of uptime guaranteed, the infrastructure must be deployed in a way
+that eliminates any single point of failure if a compute host disappears.
 This may include utilizing shared file systems on enterprise storage or
 OpenStack Block storage to provide a level of guarantee to match service
 features.
@@ -151,16 +151,16 @@ should be implemented to understand and plan for recovery scenarios.
 
 *  The deployed applications need to continue to function and, more
    importantly, you must consider the impact on the performance and
-   reliability of the application when a site is unavailable.
+   reliability of the application if a site is unavailable.
 
 *  It is important to understand what happens to the replication of
    objects and data between the sites when a site goes down. If this
    causes queues to start building up, consider how long these queues
    can safely exist until an error occurs.
 
-*  After an outage, ensure the method for resuming proper operations of
-   a site is implemented when it comes back online. We recommend you
-   architect the recovery to avoid race conditions.
+*  After an outage, ensure that operations of a site are resumed when it
+   comes back online. We recommend that you architect the recovery to
+   avoid race conditions.
 
 
 Inter-site replication data
@@ -185,5 +185,5 @@ for applications to perform well.
 .. note::
 
    When running embedded object store methods, ensure that you do not
-   instigate extra data replication as this can cause performance issues.
+   instigate extra data replication as this may cause performance issues.
 
