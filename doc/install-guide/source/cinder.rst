@@ -1,8 +1,8 @@
 .. _cinder:
 
-=============================
-Add the Block Storage service
-=============================
+=====================
+Block Storage service
+=====================
 
 .. toctree::
 

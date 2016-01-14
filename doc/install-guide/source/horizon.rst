@@ -1,6 +1,6 @@
-=================
-Add the dashboard
-=================
+=========
+Dashboard
+=========
 
 The OpenStack Dashboard, also known as
 `horizon <https://git.openstack.org/cgit/openstack/horizon>`__

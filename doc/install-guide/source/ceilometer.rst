@@ -1,8 +1,8 @@
 .. _install_ceilometer:
 
-=========================
-Add the Telemetry service
-=========================
+=================
+Telemetry service
+=================
 
 .. toctree::
 
