@@ -31,8 +31,11 @@ Contents
    trove-misc
    sahara
    designate
-   monasca
+   keystone
    glance
+   barbican
+   monasca
+   neutron
    neutron-misc
    heat
    cloudkitty
