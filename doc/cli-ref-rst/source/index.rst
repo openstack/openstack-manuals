@@ -34,6 +34,7 @@ Contents
    monasca
    glance
    neutron-misc
+   swift
    heat
    cloudkitty
    manila
