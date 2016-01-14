@@ -1,8 +1,8 @@
 .. _networking:
 
-==========================
-Add the Networking service
-==========================
+==================
+Networking service
+==================
 
 This chapter explains how to install and configure the OpenStack Networking
 service (neutron) using the :ref:`provider networks <network1>` or

@@ -1,6 +1,6 @@
-=============================
-Add the Orchestration service
-=============================
+=====================
+Orchestration service
+=====================
 
 .. toctree::
 
