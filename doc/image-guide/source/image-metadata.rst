@@ -88,3 +88,61 @@ All associated properties for an image can be displayed using the
    Amend ``glance_core_properties`` in the ``/etc/cinder/cinder.conf``
    file on all controller nodes to match the core properties you have
    set in the Image service.
+
+Metadata definition service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With this service you can define:
+
+Namespace
+ * Contains metadata definitons.
+
+ * Specifies the access controls for everything defined in the namespace.
+   These access controls determine who can define and use the definitions
+   in the namespace.
+
+ * Associates the definitions with different types of resources.
+
+Property
+ A single property and its primitive constraints. Each property can only
+ be a primitive type. For example, string, integer, number, boolean, or array.
+
+Object
+ Describes a group of one to many properties and their primitive
+ constraints. Each property in the group can only be a primitive type. For
+ example, string, integer, number, boolean, or array.
+
+ The object may optionally define required properties under the semantic
+ understanding that if you use the object, you should provide all required
+ properties.
+
+Resource type association
+ Specifies the relationship between resource types and the namespaces
+ that are applicable to them. This information can be used to drive UI
+ and CLI views. For example, the same namespace of objects, properties,
+ and tags may be used for images, snapshots, volumes, and flavors.
+ Or a namespace may only apply to images.
+
+The Image service has predefined namespaces for the metadata definitions
+catalog. To load files from this directory into the database:
+
+.. code-block:: console
+
+   $ glance-manage db_load_metadefs
+
+To unload the files from the database:
+
+.. code-block:: console
+
+   $ glance-manage db_unload_metadefs
+
+To export the definitions in JSON format:
+
+.. code-block:: console
+
+   $ glance-manage db_export_metadefs
+
+.. note::
+
+   By default, files are loaded from and exported to the Image service's
+   ``/etc/metadefs`` directory.

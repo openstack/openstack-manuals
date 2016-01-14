@@ -4,7 +4,7 @@ OpenStack Image service
 
 The OpenStack Image service is central to Infrastructure-as-a-Service
 (IaaS) as shown in :ref:`get_started_conceptual_architecture`. It accepts API
-requests for disk or server images, and image metadata from end users or
+requests for disk or server images, and metadata definitions from end users or
 OpenStack Compute components. It also supports the storage of disk or server
 images on various repository types, including OpenStack Object Storage.
 
@@ -35,3 +35,11 @@ Storage repository for image files
   Various repository types are supported including normal file
   systems, Object Storage, RADOS block devices, HTTP, and Amazon S3.
   Note that some repositories will only support read-only usage.
+
+Metadata definition service
+  A common API for vendors, admins, services, and users to meaningfully
+  define their own custom metadata. This metadata can be used on
+  different types of resources like images, artifacts, volumes,
+  flavors, and aggregates. A definition includes the new property's key,
+  description, constraints, and the resource types which it can be
+  associated with.
