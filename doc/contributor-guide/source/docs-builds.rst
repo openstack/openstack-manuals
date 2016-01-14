@@ -7,7 +7,7 @@ Documentation builds
 Documentation source and target locations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Most documents are continously published, they are published only from the
+Most documents are continuously published, they are published only from the
 master branch and there is no specific version for a stable release,
 instead they document the releases that the OpenStack community
 currently maintains. There are also version dependent documents.
@@ -17,7 +17,7 @@ openstack-manuals and other repositories indicate where docs are
 published. For example, from the stable/liberty release branch, doc
 source files are published to docs.openstack.org/liberty, and from the
 master branch, doc source files are published for versioned documents to
-docs.openstack.org/draft and for continously published documents to
+docs.openstack.org/draft and for continuously published documents to
 docs.openstack.org/ by our lovely Jenkins butlers always at the ready.
 
 Some content is completely generated using openstack-doc-tools, such as the
@@ -102,7 +102,7 @@ Guides for deployers and administrators
 
 .. note::
    The Configuration Reference and the Networking Guide are versioned,
-   all other guides are continously published.
+   all other guides are continuously published.
 
 Guides for end users
 --------------------
